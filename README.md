@@ -1,0 +1,2 @@
+# fjl
+Functional Javascript Library
