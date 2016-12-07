@@ -1,15 +1,13 @@
 /**
  * Created by elyde on 12/6/2016.
  */
-import {placeholder as _} from "symbols";
+import {placeholder as _} from "./symbols";
 
-function PlaceHolder() {}
+let PlaceHolder = function PlaceHolder() {},
+    placeHolderInstance = new PlaceHolder(),
+    __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
 
-let ___ = new PlaceHolder();
-
-export let __ = Object.freeze ? Object.freeze(___) : ___;
-
-function replacePlaceHolders (array, args) {
+export function replacePlaceHolders (array, args) {
     let out = array.map(element => {
         return ! isPlaceHolder(element) ? element :
             (args.length > 0 ? args.shift() : element);
@@ -17,7 +15,7 @@ function replacePlaceHolders (array, args) {
     return args.length > 0 ? out.concat(args) : out;
 }
 
-function isPlaceHolder (instance) {
+export function isPlaceHolder (instance) {
     return instance instanceof PlaceHolder;
 }
 
@@ -41,45 +39,15 @@ export function curryN (fn, executeArity, ...curriedArgs) {
     };
 }
 
-const all = {
+export let curry1 = fn => curryN(fn, 1);
+export let curry2 = fn => curryN(fn, 2);
+export let curry3 = fn => curryN(fn, 3);
+export let curry4 = fn => curryN(fn, 4);
+export let curry5 = fn => curryN(fn, 5);
+
+export default {
     [_]: __,
     curry,
     curryN,
+    curry2
 };
-
-// Add `fjl.curry[1-5]`
-(function () {
-    var count = 1;
-    while (count <= 5) {
-        (function (curryLen) { all['curry' + curryLen] = fn => curryN(fn, curryLen); }(count));
-        count += 1;
-    }
-}());
-
-/**
- * Curries a function up to arity/args-length 1.
- * @function module:fjl.curry1
- * @return {Function}
- */
-/**
- * Curries a function up to arity/args-length 2.
- * @function module:fjl.curry2
- * @return {Function}
- */
-/**
- * Curries a function up to arity/args-length 3.
- * @function module:fjl.curry3
- * @return {Function}
- */
-/**
- * Curries a function up to arity/args-length 4.
- * @function module:fjl.curry4
- * @return {Function}
- */
-/**
- * Curries a function up to arity/args-length 5.
- * @function module:fjl.curry5
- * @return {Function}
- */
-
-export default all;
