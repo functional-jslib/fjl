@@ -17,7 +17,7 @@
     "mocha": "^3.2.0"
   },
   "scripts": {
-    "test": "mocha tests/test-compose.js --compilers js:babel-register --require babel-polyfill"
+    "test": "mocha tests/test-*.js --compilers js:babel-register --require babel-polyfill"
   },
   "repository": {
     "type": "git",

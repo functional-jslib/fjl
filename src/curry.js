@@ -1,13 +1,10 @@
 /**
  * Created by elyde on 12/6/2016.
  */
-import {placeholder as _} from "./symbols";
-
 let PlaceHolder = function PlaceHolder() {},
-    placeHolderInstance = new PlaceHolder(),
-    __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
+    placeHolderInstance = new PlaceHolder();
 
-export function replacePlaceHolders (array, args) {
+function replacePlaceHolders (array, args) {
     let out = array.map(element => {
         return ! isPlaceHolder(element) ? element :
             (args.length > 0 ? args.shift() : element);
@@ -15,9 +12,11 @@ export function replacePlaceHolders (array, args) {
     return args.length > 0 ? out.concat(args) : out;
 }
 
-export function isPlaceHolder (instance) {
+function isPlaceHolder (instance) {
     return instance instanceof PlaceHolder;
 }
+
+export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
 
 export function curry (fn, ...argsToCurry) {
     return (...args) => {
@@ -39,15 +38,18 @@ export function curryN (fn, executeArity, ...curriedArgs) {
     };
 }
 
-export let curry1 = fn => curryN(fn, 1);
-export let curry2 = fn => curryN(fn, 2);
-export let curry3 = fn => curryN(fn, 3);
-export let curry4 = fn => curryN(fn, 4);
-export let curry5 = fn => curryN(fn, 5);
+export let
+    curry2 = fn => curryN(fn, 2),
+    curry3 = fn => curryN(fn, 3),
+    curry4 = fn => curryN(fn, 4),
+    curry5 = fn => curryN(fn, 5);
 
 export default {
-    [_]: __,
+    __,
     curry,
     curryN,
-    curry2
+    curry2,
+    curry3,
+    curry4,
+    curry5
 };

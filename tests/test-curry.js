@@ -1,40 +1,23 @@
 /**
  * Created by elyde on 11/13/2016.
  */
+
+// ~~~ STRIP ~~~
+// This part gets stripped out when
+// generating browser version of test(s).
+'use strict';
+import {assert, expect} from 'chai';
+import {compose} from './../src/compose';
+import {curry, curry2, __} from './../src/curry';
+// These variables get set at the top IIFE in the browser.
+// ~~~ /STRIP ~~~
+
 describe('curry', function () {
 
-    // ~~~ STRIP ~~~
-    // This part gets stripped out when
-    // generating browser version of test(s).
-    'use strict';
-    var chai = require('chai'),
-        sjl = require('./../../src/sjl'),
-        assert = chai.assert,
-        expect = chai.expect;
-    // These variables get set at the top IIFE in the browser.
-    // ~~~ /STRIP ~~~
-
     // Set curry here to use below
-    var slice = Array.prototype.slice,
-        multiplyRecursive = function () {
-            return slice.call(arguments).reduce(function (agg, num) {
-                return num * agg;
-            }, 1);
-        },
-        addRecursive =function () {
-            return slice.call(arguments).reduce(function (agg, num) {
-                return num + agg;
-            }, 0);
-        },
-        divideR = function () {
-            var args = slice.call(arguments);
-            return args.reduce(function (agg, num) {
-                return agg / num;
-            }, args.shift());
-        },
-        curry = curry,
-        curry2 = curry2,
-        __ = _;
+    let multiplyRecursive = (...args) => args.reduce((agg, num) => num * agg, 1),
+        addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
+        divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
     it ('should be of type function.', function () {
         expect(curry).to.be.instanceOf(Function);
@@ -53,7 +36,7 @@ describe('curry', function () {
     });
 
     it ('should return a properly curried function when correct arity for said function is met.', function () {
-        var min8 = curry(Math.min, 8),
+        let min8 = curry(Math.min, 8),
             max5 = curry(Math.max, 5),
             pow2 = curry(Math.pow, 2);
 
@@ -75,16 +58,15 @@ describe('curry', function () {
     });
 
     it ('should be able to correctly curry functions of different arity as long as their arity is met.', function () {
-        var min = curry2(Math.min),
+        let min = curry2(Math.min),
             max = curry2(Math.max),
             pow = curry2(Math.pow),
             min8 = curry(Math.min, 8),
             max5 = curry(Math.max, 5),
             pow2 = curry(Math.pow, 2),
-            isValidTangentLen = curry(function (a, b, cSqrd) { return pow(a, 2) + pow(b, 2) === cSqrd; }, 2, 2),
-            random = curry(function (start, end) { return Math.round(Math.random() * end + start); }, 0),
-            expectedFor = function (num) { return min(8, max(5, pow(2, num))); };
-
+            isValidTangentLen = curry((a, b, cSqrd) => pow(a, 2) + pow(b, 2) === cSqrd, 2, 2),
+            random = curry((start, end) => Math.round(Math.random() * end + start), 0),
+            expectedFor = (num) => min(8, max(5, pow(2, num)));
 
         // Expect functions returned for `curry` calls
         expect(isValidTangentLen).to.be.instanceOf(Function);
@@ -100,13 +82,13 @@ describe('curry', function () {
 
         // Expect `curry`ed functions to work as expected
         [8,5,3,2,1,0, random(89), random(55), random(34)].forEach(function (num) {
-            var composed = compose(min8, max5, pow2);
+            let composed = compose(min8, max5, pow2);
             expect(composed(num)).to.equal(expectedFor(num));
         });
     });
 
     it ('should enforce `Placeholder` values when currying', function () {
-        var add = curry(addRecursive),
+        let add = curry(addRecursive),
             multiply = curry(multiplyRecursive),
             multiplyExpectedResult = Math.pow(5, 5);
 

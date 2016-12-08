@@ -1,55 +1,36 @@
 /**
  * Created by elyde on 11/25/2016.
  */
-/**
- * Created by elyde on 11/13/2016.
- */
-describe('curry', function () {
 
-    // ~~~ STRIP ~~~
-    // This part gets stripped out when
-    // generating browser version of test(s).
-    'use strict';
-    var chai = require('chai'),
-        sjl = require('./../../src/sjl'),
-        assert = chai.assert,
-        expect = chai.expect;
-    // These variables get set at the top IIFE in the browser.
-    // ~~~ /STRIP ~~~
+// ~~~ STRIP ~~~
+// This part gets stripped out when
+// generating browser version of test(s).
+'use strict';
+import {assert, expect} from 'chai';
+import {compose} from './../src/compose';
+import {curryN, __} from './../src/curry';
+// These variables get set at the top IIFE in the browser.
+// ~~~ /STRIP ~~~
+
+describe('curryN', function () {
 
     // Set curry here to use below
-    var slice = Array.prototype.slice,
-        multiplyRecursive = function () {
-            return slice.call(arguments).reduce(function (agg, num) {
-                return num * agg;
-            }, 1);
-        },
-        addRecursive =function () {
-            return slice.call(arguments).reduce(function (agg, num) {
-                return num + agg;
-            }, 0);
-        },
-        divideR = function () {
-            var args = slice.call(arguments);
-            return args.reduce(function (agg, num) {
-                return agg / num;
-            }, args.shift());
-        },
-        curryN = curryN,
-        __ = _;
+    let multiplyRecursive = (...args) => args.reduce((agg, num) => num * agg, 1),
+        addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
+        divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
     it ('should be of type function.', function () {
         expect(curryN).to.be.instanceOf(Function);
     });
 
     it ('should return a function that throws an error when no arguments are passed.', function () {
-        var result = curryN();
+        let result = curryN();
         expect(result).to.be.instanceOf(Function);
         assert.throws(result, Error);
     });
 
     it ('should enforce `Placeholder` values when currying', function () {
-        var add3Nums = curryN(addRecursive, 3),
+        let add3Nums = curryN(addRecursive, 3),
             multiply5Nums = curryN(multiplyRecursive, 5),
             multiplyExpectedResult = Math.pow(5, 5);
 
@@ -70,7 +51,7 @@ describe('curry', function () {
     });
 
     it ('should pass in any values passed the arity when executing the curried function', function () {
-        var add3Nums = curryN(addRecursive, 3);
+        let add3Nums = curryN(addRecursive, 3);
 
         // Curry add to add 3 numbers
         expect(add3Nums(__, __, __)(1, 2, 3)).to.equal(6);
@@ -86,7 +67,7 @@ describe('curry', function () {
     });
 
     it ('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
-        var multiply5Nums = curryN(multiplyRecursive, 5),
+        let multiply5Nums = curryN(multiplyRecursive, 5),
             multiplyExpectedResult = Math.pow(5, 5),
             argsToTest = [
                 [5, 5, 5, 5, 5],
@@ -112,7 +93,7 @@ describe('curry', function () {
     });
 
     it ('should respect argument order and placeholder order.', function () {
-        var divideC = curryN(divideR, 3);
+        let divideC = curryN(divideR, 3);
 
         // Curry divideR to divde 3 or more numbers
         expect(divideC(25, 5)).to.be.instanceOf(Function);
