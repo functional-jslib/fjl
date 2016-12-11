@@ -6,7 +6,7 @@
 import {isset} from './../type-checking';
 import {curry3} from './../curry';
 import {defineSubClass} from './../defineSubClass';
-import './Monad';
+import Monad from './Monad';
 
 export let maybe = curry3(function (replacement, fn, monad) {
     let subject = monad.join().map(value => value);

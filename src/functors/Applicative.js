@@ -2,7 +2,7 @@
  * Created by u067265 on 12/9/16.
  */
 'use strict';
-import './Applicable';
+import Applicable from './Applicable';
 import {defineSubClass} from './../defineSubClass';
 
 export default defineSubClass (Applicable,

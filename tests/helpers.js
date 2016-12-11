@@ -3,12 +3,26 @@
  */
 'use strict';
 
+import {curry2} from './../src/curry';
 import {expect} from 'chai';
 
-export function expectFunction (value) {
-    return expect(value).to.be.instanceOf(Function)
-}
+export let add = curry2((...args) => {
+    return args.reduce((agg, num) => num + agg, 0);
+});
+
+export let multiply = curry2((...args) => {
+    return args.reduce((agg, num) => num * agg, 1);
+});
+
+export let divide = curry2((...args) => {
+    return args.reduce((agg, num) => agg / num, args.shift());
+});
+
+export let expectFunction = value => expect(value).to.be.instanceOf(Function);
 
 export default {
+    add,
+    multiply,
+    divide,
     expectFunction
 }

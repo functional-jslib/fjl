@@ -2,7 +2,7 @@
  * Created by u067265 on 12/9/16.
  */
 'use strict';
-import './Functor';
+import Functor from './Functor';
 import {defineSubClass} from './../defineSubClass';
 
 let Applicable = defineSubClass(Functor,
@@ -10,7 +10,7 @@ let Applicable = defineSubClass(Functor,
         if (!this) {
             return new Applicable(value);
         }
-        Functor.apply(this, value);
+        Functor.call(this, value);
     },
     {
         ap (functor) {
