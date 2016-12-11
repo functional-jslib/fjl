@@ -13,9 +13,14 @@ let Chainable = defineSubClass (Applicable,
         if (!this) {
             return new Chainable(value);
         }
-        Applicable.apply(this, value);
+        Applicable.call(this, value);
     }, {
-        chain (fn) {
+        join: function () {
+            return this.value instanceof this.constructor ?
+                this.value : new this.constructor(this.value);
+        },
+
+        chain: function (fn) {
             return this.map(fn).join();
         }
     });

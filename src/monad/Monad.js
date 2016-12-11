@@ -2,9 +2,9 @@
  * Created by u067265 on 12/9/16.
  */
 'use strict';
-import Applicative from './Applicative';
-import Chainable from './Chainable';
-import {defineSubClassMulti} from './../defineSubClass';
+import Applicative from '../functor/Applicative';
+import Chainable from '../functor/Chainable';
+import {defineSubClassMulti} from '../defineSubClass';
 
 let Monad = defineSubClassMulti ([Applicative, Chainable],
     function Monad (value) {

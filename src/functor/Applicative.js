@@ -10,7 +10,7 @@ export default defineSubClass (Applicable,
         if (!this) {
             return new Applicative(value);
         }
-        Applicable.apply(this, value);
+        Applicable.call(this, value);
     },
     null,
     {

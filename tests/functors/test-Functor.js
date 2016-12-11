@@ -4,7 +4,7 @@
 'use strict';
 import {expect} from 'chai';
 import {expectFunction} from './../helpers';
-import Functor from './../../src/functors/Functor';
+import Functor from '../../src/functor/Functor';
 let expectFunctor = value => expect(value).to.be.instanceOf(Functor);
 
 describe ('Functor', function () {

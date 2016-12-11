@@ -8,8 +8,8 @@
 
 import {expect} from 'chai';
 import {expectFunction, add, multiply, divide} from './../helpers';
-import Functor from './../../src/functors/Functor';
-import Applicable from './../../src/functors/Applicable';
+import Functor from '../../src/functor/Functor';
+import Applicable from '../../src/functor/Applicable';
 
 let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Instance),
     expectFunctor = value => expectInstanceOf(value, Functor),
