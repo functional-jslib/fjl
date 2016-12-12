@@ -7,22 +7,28 @@ import {curry2} from './../src/curry';
 import {expect} from 'chai';
 
 export let add = curry2((...args) => {
-    return args.reduce((agg, num) => num + agg, 0);
-});
+        return args.reduce((agg, num) => num + agg, 0);
+    }),
 
-export let multiply = curry2((...args) => {
-    return args.reduce((agg, num) => num * agg, 1);
-});
+    multiply = curry2((...args) => {
+        return args.reduce((agg, num) => num * agg, 1);
+    }),
 
-export let divide = curry2((...args) => {
-    return args.reduce((agg, num) => agg / num, args.shift());
-});
+    divide = curry2((...args) => {
+        return args.reduce((agg, num) => agg / num, args.shift());
+    }),
 
-export let expectFunction = value => expect(value).to.be.instanceOf(Function);
+    expectInstanceOf = curry2((value, Instance) => expect(value).to.be.instanceOf(Instance)),
+
+    expectFunction = value => expect(value).to.be.instanceOf(Function),
+
+    expectEqual = curry2((value, value2) => expect(value).to.be.equal(value2));
 
 export default {
     add,
     multiply,
     divide,
-    expectFunction
-}
+    expectFunction,
+    expectInstanceOf,
+    expectEqual
+};

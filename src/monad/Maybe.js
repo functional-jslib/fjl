@@ -8,24 +8,30 @@ import {curry3} from '../curry';
 import {defineSubClass} from '../defineSubClass';
 import Monad from './Monad';
 
-export let nothing = () => Nothing.of(null);
-
-    let Nothing = defineSubClass(Monad, {
+let Nothing = defineSubClass(Monad, {
         constructor: function Nothing() {
             if (!(this instanceof Nothing)) {
-                return nothing();
+                return Nothing.of(null);
             }
             Object.defineProperty(this, 'value', {
                 value: null
             });
         },
-        map: nothing,
-        join: nothing,
-        ap: nothing,
-        chain: nothing
-    });
+        map () {
+            return Nothing.of(null);
+        },
+        join() {
+            return Nothing.of(null);
+        },
+        ap() {
+            return Nothing.of(null);
+        },
+        chain() {
+            return Nothing.of(null);
+        }
+    }),
 
-    let Just = defineSubClass(Monad, {
+    Just = defineSubClass(Monad, {
         constructor: function Just(value) {
             if (!(this instanceof Just)) {
                 return Just.of(value);
@@ -39,11 +45,14 @@ export let nothing = () => Nothing.of(null);
         }
     }, {
         counterConstructor: Nothing
-    });
+    }),
 
-    let Maybe = defineSubClass(Monad,
+    Maybe = defineSubClass(Monad,
         function Maybe(value) {
-            return isset(value) ? Just(value) : Nothing();
+            if (!(this instanceof Maybe)) {
+                return Maybe.of(value);
+            }
+            Monad.call(this, Just(value));
         }),
 
     maybe = curry3(function (replacement, fn, monad) {
@@ -56,4 +65,4 @@ export default {
     Just,
     Nothing,
     maybe
-};
+}
