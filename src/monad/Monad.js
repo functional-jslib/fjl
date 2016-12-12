@@ -6,7 +6,7 @@ import Applicative from '../functor/Applicative';
 import Chainable from '../functor/Chainable';
 import {defineSubClassMulti} from '../defineSubClass';
 
-let Monad = defineSubClassMulti ([Applicative, Chainable],
+export let Monad = defineSubClassMulti ([Applicative, Chainable],
     function Monad (value) {
         if (!this) {
             return new Monad(value);

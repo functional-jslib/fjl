@@ -58,11 +58,10 @@ export function normalizeArgsForDefineSubClass (superClass, constructor, methods
 }
 
 export function defineSubClassMulti (ctorOrCtors, methodsAndCtor, statics) {
-    const arg0 = args.shift();
-    if (notEmptyAndOfType(arg0, Array)) {
-        return arg0.reduce(function (agg, Constructor) {
+    if (notEmptyAndOfType(ctorOrCtors, Array)) {
+        return ctorOrCtors.reduce(function (agg, Constructor) {
             return defineSubClass(Constructor, agg);
-        }, defineSubClass(arg0.shift(), methodsAndCtor, statics));
+        }, defineSubClass(ctorOrCtors.shift(), methodsAndCtor, statics));
     }
     return defineSubClass.apply(null, arguments);
 }

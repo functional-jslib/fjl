@@ -35,7 +35,7 @@ describe('Applicative', function () {
     });
 
     describe('Statics', function () {
-        it('should have a static `of` property.', function () {
+        it('should have a static `of` property that acts as unit.', function () {
             let result = Applicative.of(multiply(4)).ap(Applicative(25));
             expectFunction(Applicative.of);
             expectApplicative(Applicative.of());

@@ -8,14 +8,9 @@ import {curry3} from '../curry';
 import {defineSubClass} from '../defineSubClass';
 import Monad from './Monad';
 
-export let maybe = curry3(function (replacement, fn, monad) {
-    let subject = monad.chain(value => value);
-    return subject instanceof Nothing ? replacement : Just(fn).ap(subject);
-});
+export let nothing = () => Nothing.of(null);
 
-let nothing =  () => Nothing.of(null);
-
-export let Nothing = defineSubClass(Monad, {
+    let Nothing = defineSubClass(Monad, {
         constructor: function Nothing() {
             if (!(this instanceof Nothing)) {
                 return nothing();
@@ -30,7 +25,7 @@ export let Nothing = defineSubClass(Monad, {
         chain: nothing
     });
 
-export let Just = defineSubClass(Monad, {
+    let Just = defineSubClass(Monad, {
         constructor: function Just(value) {
             if (!(this instanceof Just)) {
                 return Just.of(value);
@@ -46,17 +41,19 @@ export let Just = defineSubClass(Monad, {
         counterConstructor: Nothing
     });
 
-export let Maybe = defineSubClass(Monad, {
-    constructor: function Maybe(value) {
-        if (!(this instanceof Maybe)) {
-            return Maybe.of(value);
-        }
-        return isset(value) ? Maybe.Just(value) : Maybe.Nothing();
-    }
-}, {
-    maybe,
-    Just,
-    Nothing
-});
+    let Maybe = defineSubClass(Monad,
+        function Maybe(value) {
+            return isset(value) ? Just(value) : Nothing();
+        }),
 
-export default Maybe;
+    maybe = curry3(function (replacement, fn, monad) {
+        let subject = monad.chain(value => value);
+        return subject instanceof Nothing ? replacement : Just(fn).ap(subject);
+    });
+
+export default {
+    Maybe,
+    Just,
+    Nothing,
+    maybe
+};
