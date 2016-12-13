@@ -6,6 +6,7 @@
 import {isset} from '../type-checking';
 import {curry3} from '../curry';
 import {defineSubClass} from '../defineSubClass';
+import {ap, map, chain, join} from '../operators';
 import Monad from './Monad';
 
 export let Nothing = defineSubClass(Monad, {
@@ -17,20 +18,20 @@ export let Nothing = defineSubClass(Monad, {
                 value: null
             });
         },
-        map () {
-            return Nothing.of(null);
+        map: function () {
+            return this;
         },
-        join() {
-            return Nothing.of(null);
+        join: function () {
+            return this;
         },
-        ap() {
-            return Nothing.of(null);
+        ap: function () {
+            return this;
         },
-        chain() {
-            return Nothing.of(null);
+        chain: function () {
+            return this;
         }
     }, {
-        of () {
+        of: function () {
             return new Nothing();
         }
     }),
@@ -48,23 +49,36 @@ export let Nothing = defineSubClass(Monad, {
                 constructor.counterConstructor.of(this.value);
         }
     }, {
-        of (value) {
+        of: function (value) {
             return new Just(value);
         },
         counterConstructor: Nothing
     }),
 
-    Maybe = defineSubClass(Monad,
-        function Maybe(value) {
+    Maybe = defineSubClass(Monad, {
+        constructor: function Maybe(value) {
             if (!(this instanceof Maybe)) {
                 return Maybe.of(value);
             }
             Monad.call(this, Just(value));
-        }, {
-            of: function (value) {
-                return new Maybe(value);
-            },
-        }),
+        },
+        join: function () {
+            return join(this.value);
+        },
+        map: function (fn) {
+            return map(fn, this.value);
+        },
+        ap: function (functor) {
+            return ap(this.value, functor);
+        },
+        chain: function (fn) {
+            return chain(fn, this.value);
+        }
+    }, {
+        of: function (value) {
+            return new Maybe(value);
+        },
+    }),
 
     maybe = curry3(function (replacement, fn, monad) {
         let subject = monad.chain(value => value);

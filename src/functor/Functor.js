@@ -18,4 +18,6 @@ Functor.prototype.map = function (fn) {
     return new this.constructor(fn(this.value));
 };
 
+Object.defineProperty(Functor.prototype, 'constructor', { value: Functor });
+
 export default Functor;

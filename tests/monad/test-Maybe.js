@@ -5,35 +5,47 @@
 'use strict';
 
 import {expect} from 'chai';
+import compose from '../../src/compose';
+import {__} from '../../src/curry';
 import {expectInstanceOf, expectFunction, expectEqual, add, multiply, divide} from './../helpers';
 import Monad from '../../src/monad/Monad';
+import {id} from '../../src/operators';
+
 import {Maybe, Just, Nothing} from '../../src/monad/Maybe';
 
 let expectMonad = value => expectInstanceOf(value, Monad),
+    expectMaybe = value => expectInstanceOf(value, Maybe) && expectMonad(value),
     expectJust = value => expectInstanceOf(value, Just),
     expectNothing = value => expectInstanceOf(value, Nothing);
 
 describe('Maybe', function () {
 
-    it('should return `Nothing` when called as a function and passed in value is `null` or `undefined`', function () {
-        let result = Maybe();
-        expectMonad(result);
-        expectNothing(result);
-    });
+    describe('Construction:', function () {
 
-    it('should return `Just` when called as a function and passed in value is not `null` and not `undefined`', function () {
-        let result = Maybe('something');
-        expectJust(result);
-    });
+        it('should map to `Nothing` when constructed using function syntax and passed in value is `null` or `undefined`', function () {
+            let result = Maybe();
+            expectMaybe(result);
+            expectNothing(result.map(id));
+        });
 
-    it('should return `Nothing` when called with new and passed in value is `null` or `undefined`', function () {
-        let result = new Maybe();
-        expectNothing(result);
-    });
+        it('should map to `Just` when constructed using function syntax function and passed in value is not `null` and not `undefined`', function () {
+            let result = Maybe('something');
+            expectMaybe(result);
+            expectJust(result.map(id));
+        });
 
-    it('should return `Just` when called with new and passed in value is not `null` and not `undefined`', function () {
-        let result = new Maybe('something');
-        expectJust(result);
+        it('should map to `Nothing` when constructed with new and passed in value is `null` or `undefined`', function () {
+            let result = new Maybe();
+            expectMaybe(result);
+            expectNothing(result.map(id));
+        });
+
+        it('should map to `Just` when constructed with new and passed in value is not `null` and not `undefined`', function () {
+            let result = new Maybe('something');
+            expectMaybe(result);
+            expectJust(result.map(id));
+        });
+
     });
 
 });

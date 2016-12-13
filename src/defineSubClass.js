@@ -4,25 +4,6 @@
 import {isFunction, isObject, isset, notEmptyAndOfType} from './type-checking';
 import {objDiff} from './obj-math';
 
-
-/**
- * Generates a 'stand-in' constructor that calls `superClass` internally.
- * Used in methods that require a super class or constructor as a parameter
- * and none is given.
- * @param superClass {Function} - Super class constructor.  Required.
- * @returns {Function}
- */
-export function standInConstructor(superClass) {
-    return function StandInConstructor() {
-        console.warn(
-            'An anonymous constructor was used!  Please ' +
-            'replace it with a named constructor for best ' +
-            'interoperability.'
-        );
-        superClass.apply(this, arguments);
-    };
-}
-
 /**
  * Normalized the parameters required for `defineSubClassPure` and `defineSubClass` to operate.
  * @param superClass {Function} - Superclass to inherit from.
@@ -32,27 +13,20 @@ export function standInConstructor(superClass) {
  * @returns {{constructor: (Function|*), methods: *, statics: *, superClass: (*|Object)}}
  */
 export function normalizeArgsForDefineSubClass (superClass, constructor, methods, statics) {
-    // Snatched statics
-    var _statics;
-
-    // Should extract statics?
-    if (isFunction(superClass)) {
-        // Extract statics
-        _statics = Object.keys(superClass).reduce(function (agg, key) {
+    let _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
             if (key === 'extend' || key === 'extendWith') { return agg; }
             agg[key] = superClass[key];
             return agg;
-        }, {});
-    }
+        }, {}),
+        isCtorAndMethods = !isFunction(constructor),
+        _constructor = isCtorAndMethods ? constructor.constructor : constructor,
+        _methods = isCtorAndMethods ? objDiff(constructor, {constructor: null}) : methods,
+        _statics = Object.assign(_extractedStatics, isCtorAndMethods ? methods : statics);
 
-    // Ensure constructor
-    constructor = isset(constructor) ? constructor : standInConstructor(superClass);
-
-    // Returned normalized args
     return {
-        constructor: constructor,
-        methods: methods,
-        statics: Object.assign(_statics || {}, statics || {}),
+        constructor: _constructor,
+        methods: _methods,
+        statics: _statics,
         superClass: superClass
     };
 }
