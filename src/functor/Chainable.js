@@ -19,7 +19,6 @@ let Chainable = defineSubClass (Applicable,
             return this.value instanceof this.constructor ?
                 this.value : new this.constructor(this.value);
         },
-
         chain: function (fn) {
             return this.map(fn).join();
         }

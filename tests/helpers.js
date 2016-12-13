@@ -18,7 +18,7 @@ export let add = curry2((...args) => {
         return args.reduce((agg, num) => agg / num, args.shift());
     }),
 
-    expectInstanceOf = curry2((value, Instance) => expect(value).to.be.instanceOf(Instance)),
+    expectInstanceOf = curry2((value, instance) => expect(value).to.be.instanceOf(instance)),
 
     expectFunction = value => expect(value).to.be.instanceOf(Function),
 

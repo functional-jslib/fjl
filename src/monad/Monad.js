@@ -9,11 +9,17 @@ import {defineSubClassMulti} from '../defineSubClass';
 export let Monad = defineSubClassMulti ([Applicative, Chainable],
     function Monad (value) {
         if (!this) {
-            return new Monad(value);
+            return Monad.of(value);
         }
         Applicative.apply(this);
         Chainable.apply(this);
         this.value = value;
+    },
+    null,
+    {
+        of: function (value) {
+            return new Monad(value);
+        }
     });
 
 export default Monad;

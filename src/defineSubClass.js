@@ -57,11 +57,11 @@ export function normalizeArgsForDefineSubClass (superClass, constructor, methods
     };
 }
 
-export function defineSubClassMulti (ctorOrCtors, methodsAndCtor, statics) {
+export function defineSubClassMulti (ctorOrCtors, constructorOrMethods, methods, statics) {
     if (notEmptyAndOfType(ctorOrCtors, Array)) {
         return ctorOrCtors.reduce(function (agg, Constructor) {
             return defineSubClass(Constructor, agg);
-        }, defineSubClass(ctorOrCtors.shift(), methodsAndCtor, statics));
+        }, defineSubClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
     }
     return defineSubClass.apply(null, arguments);
 }

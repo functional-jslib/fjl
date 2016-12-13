@@ -5,16 +5,18 @@
 import Applicable from './Applicable';
 import {defineSubClass} from './../defineSubClass';
 
-export default defineSubClass (Applicable,
+let Applicative = defineSubClass (Applicable,
     function Applicative(value) {
         if (!this) {
-            return new Applicative(value);
+            return Applicative.of(value);
         }
         Applicable.call(this, value);
     },
     null,
     {
-        of (value) {
-            return new this(value);
+        of: function (value) {
+            return new Applicative(value);
         }
     });
+
+export default Applicative;

@@ -6,8 +6,8 @@
 
 import {expect} from 'chai';
 import {expectInstanceOf, expectFunction, expectEqual, add, multiply, divide} from './../helpers';
-import Functor from '../../src/functor/Functor';
-import {Nothing, Just, Maybe} from '../../src/monad/Maybe';
+import Monad from '../../src/monad/Monad';
+import {Maybe, Just, Nothing} from '../../src/monad/Maybe';
 
 let expectMonad = value => expectInstanceOf(value, Monad),
     expectJust = value => expectInstanceOf(value, Just),
@@ -17,6 +17,7 @@ describe('Maybe', function () {
 
     it('should return `Nothing` when called as a function and passed in value is `null` or `undefined`', function () {
         let result = Maybe();
+        expectMonad(result);
         expectNothing(result);
     });
 
