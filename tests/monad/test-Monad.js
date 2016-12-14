@@ -6,8 +6,8 @@
 
 import {expect}     from 'chai';
 import {expectFunction, add, multiply} from './../helpers';
-import {curry2, __}     from './../../src/curry';
-import {compose}    from './../../src/compose';
+import {curry2, __} from './../../src/curry';
+import compose      from './../../src/compose';
 import Functor      from '../../src/functor/Functor';
 import Applicable   from '../../src/functor/Applicable';
 import Applicative  from '../../src/functor/Applicative';

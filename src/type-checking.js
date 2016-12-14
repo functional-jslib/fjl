@@ -96,7 +96,7 @@ export function typeOfIs (obj, type) {
  * Check if `value` is of one of the passed in types.
  * @function module:sjl.typeOfIsMulti
  * @param value {*}
- * @param type {Function|String} - Constructor or string.
+ * @param types {...Function|...String} - Constructor or string.
  * @returns {boolean}
  */
 export function typeOfIsMulti (value, ...types) {
