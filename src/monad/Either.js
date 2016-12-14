@@ -15,52 +15,56 @@ import Maybe, {Just} from './Maybe';
 import {Bifunctor as BiFunctor} from './../functor/Bifunctor';
 import Monad from './Monad';
 
-let either = curry2(function (leftCallback, rightCallback, monad) {
-    let identity = monad.map(value => value);
-    switch (identity.constructor) {
-        case Left:
-            return leftCallback(identity.value);
-        case Right:
-            return rightCallback(identity.value);
-    }
-});
-
-let Left = defineSubClass (Just, {
-    constructor: function Left(value) {
-        if (!(this instanceof Left)) {
-            return Left.of(value);
+let Left = defineSubClass(Just, {
+        constructor: function Left(value) {
+            if (!(this instanceof Left)) {
+                return Left.of(value);
+            }
+            Just.call(this, value);
+        },
+        map: function (fn) {
+            fn(this.value);
+            return this;
         }
-        Just.call(this, value);
+    }),
+
+    Right = defineSubClass(Just, {
+        constructor: function Right(value) {
+            if (!(this instanceof Right)) {
+                return Right.of(value);
+            }
+            Just.call(this, value);
+        }
     },
-    map: function (fn) {
-        fn(this.value);
-        return this;
-    }
-});
+    null,
+    {
+        counterConstructor: Left
+    }),
 
-let Right = defineSubClass (Just, {
-    constructor: function Right(value) {
-        if (!(this instanceof Right)) {
-            return Right.of(value);
+    Either = defineSubClassMulti([Monad, BiFunctor], {
+        constructor: function Either(left, right) {
+            if (!(this instanceof Either)) {
+                return new Either(left, right);
+            }
+            BiFunctor.call(this, left, right);
+            Monad.call(this);
         }
-        Just.call(this, value);
-    }
-}, {
-    counterConstructor: Left
-});
+    },
+    null,
+    {
+        of: function (value) {
+            return new Maybe(value);
+        },
+    }),
 
-export let Either = defineSubClassMulti ([Monad, BiFunctor], {
-    constructor: function Either(left, right) {
-        if (!(this instanceof Either)) {
-            return new Either(left, right);
+    either = curry2(function (leftCallback, rightCallback, monad) {
+        let identity = monad.map(value => value);
+        switch (identity.constructor) {
+            case Left:
+                return leftCallback(identity.value);
+            case Right:
+                return rightCallback(identity.value);
         }
-        BiFunctor.call(this, left, right);
-        Monad.call(this);
-    }
-}, {
-    either,
-    Left,
-    Right
-});
+    });
 
 export default Either;

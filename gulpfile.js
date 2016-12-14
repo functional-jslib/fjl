@@ -20,8 +20,6 @@ let packageJson = require('./package'),
 
 gulp.task('default', () => {
     return gulp.src('src/**/*.js')
-        .pipe(babel({
-            presets: ['env']
-        }))
+        .pipe(babel())
         .pipe(gulp.dest('dist'));
 });
