@@ -9,14 +9,25 @@ import {defineSubClass} from '../defineSubClass';
 import {ap, map, chain, join} from '../operators';
 import Monad from './Monad';
 
-export let Nothing = defineSubClass(Monad, {
+export let NothingSingleton,
+    NothingSingletonCreated,
+    Nothing = defineSubClass(Monad, {
         constructor: function Nothing() {
-            if (!(this instanceof Nothing)) {
-                return Nothing.of(null);
+            if (NothingSingleton) {
+                return NothingSingleton;
             }
-            Object.defineProperty(this, 'value', {
-                value: null
-            });
+            else if (!(this instanceof Nothing)) {
+                return Nothing.of();
+            }
+            else if (!NothingSingletonCreated) {
+                NothingSingletonCreated = true;
+                NothingSingleton = Nothing.of();
+            }
+            else if (!this.hasOwnProperty('value')) {
+                Object.defineProperty(this, 'value', {
+                    value: null
+                });
+            }
         },
         map: function () {
             return this;

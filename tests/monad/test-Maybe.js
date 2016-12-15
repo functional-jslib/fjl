@@ -16,7 +16,8 @@ import {Maybe, Just, Nothing} from '../../src/monad/Maybe';
 let expectMonad = value => expectInstanceOf(value, Monad),
     expectMaybe = value => expectInstanceOf(value, Maybe) && expectMonad(value),
     expectJust = value => expectInstanceOf(value, Just),
-    expectNothing = value => expectInstanceOf(value, Nothing);
+    expectNothing = value => expectInstanceOf(value, Nothing),
+    monadInterface = ['ap', 'map', 'join', 'chain'];
 
 describe('Maybe', function () {
 
@@ -47,5 +48,34 @@ describe('Maybe', function () {
         });
 
     });
+
+    describe('#Nothing', function () {
+        let someInstance = Nothing();
+
+        describe ('Constructor', function () {
+            it('should be a singleton instance even when call `new Nothing()`', function () {
+                [new Nothing(), Nothing(), Nothing()].reduce((aggInstance, instance) => {
+                    expectNothing(aggInstance);
+                    expectEqual(aggInstance, instance);
+                    return instance;
+                }, new Nothing());
+            });
+        });
+
+        monadInterface.forEach(key => {
+            describe ('#' + key, function () {
+                it(`should have a \`${key}\` method`, function () {
+                    expectFunction(someInstance[key]);
+                });
+                it('should return a singleton instance of `Nothing`', function () {
+                    let result = someInstance[key]();
+                    expectNothing(result);
+                    expectEqual(result, someInstance);
+                });
+            });
+        });
+    });
+
+
 
 });
