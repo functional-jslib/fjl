@@ -4,7 +4,6 @@ define(['exports', './is', './not', './math'], function (exports, _is, _not, _ma
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.normalizeArgsForDefineSubClass = normalizeArgsForDefineSubClass;
     exports.subClass = subClass;
     exports.subClassMulti = subClassMulti;
 

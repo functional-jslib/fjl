@@ -5,7 +5,7 @@
 import Monad from './Monad';
 import {subClass} from '../subClass';
 
-let Identity = subClass(Monad, function Identity(value) {
+export let Identity = subClass(Monad, function Identity(value) {
     Monad.call(this, value);
 });
 

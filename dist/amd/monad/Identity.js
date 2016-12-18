@@ -7,6 +7,7 @@ define(['exports', './Monad', '../subClass'], function (exports, _Monad, _subCla
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.Identity = undefined;
 
   var _Monad2 = _interopRequireDefault(_Monad);
 
@@ -16,7 +17,7 @@ define(['exports', './Monad', '../subClass'], function (exports, _Monad, _subCla
     };
   }
 
-  var Identity = (0, _subClass.subClass)(_Monad2.default, function Identity(value) {
+  var Identity = exports.Identity = (0, _subClass.subClass)(_Monad2.default, function Identity(value) {
     _Monad2.default.call(this, value);
   });
 

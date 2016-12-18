@@ -27,7 +27,7 @@ VersionNumberReadStream.prototype._read = function () {
  * Generated ${new Date()} 
  */
 
-let version = '${packageJson.version}';
+export let version = '${packageJson.version}';
 
 export default version;
 `

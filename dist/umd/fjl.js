@@ -36,8 +36,6 @@
 
     var _Monad2 = _interopRequireDefault(_Monad);
 
-    var _Either2 = _interopRequireDefault(_Either);
-
     var _version2 = _interopRequireDefault(_version);
 
     function _interopRequireWildcard(obj) {
@@ -105,7 +103,10 @@
         Just: _Maybe.Just,
         Nothing: _Maybe.Nothing,
         maybe: _Maybe.maybe,
-        Either: _Either2.default,
+        Either: _Either.Either,
+        Left: _Either.Left,
+        Right: _Either.Right,
+        either: _Either.either,
         version: _version2.default
     };
 });

@@ -13,7 +13,7 @@ import {subtractObj} from './math';
  * @param statics {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
  * @returns {{constructor: (Function|*), methods: *, statics: *, superClass: (*|Object)}}
  */
-export function normalizeArgsForDefineSubClass (superClass, constructor, methods, statics) {
+function normalizeArgsForDefineSubClass (superClass, constructor, methods, statics) {
     let _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
             if (key === 'extend' || key === 'extendWith') { return agg; }
             agg[key] = superClass[key];

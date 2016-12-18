@@ -55,8 +55,6 @@ var _Maybe = require('./monad/Maybe');
 
 var _Either = require('./monad/Either');
 
-var _Either2 = _interopRequireDefault(_Either);
-
 var _version = require('./generated/version');
 
 var _version2 = _interopRequireDefault(_version);
@@ -107,6 +105,9 @@ exports.default = {
     Just: _Maybe.Just,
     Nothing: _Maybe.Nothing,
     maybe: _Maybe.maybe,
-    Either: _Either2.default,
+    Either: _Either.Either,
+    Left: _Either.Left,
+    Right: _Either.Right,
+    either: _Either.either,
     version: _version2.default
 };

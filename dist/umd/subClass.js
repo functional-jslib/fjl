@@ -16,7 +16,6 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.normalizeArgsForDefineSubClass = normalizeArgsForDefineSubClass;
     exports.subClass = subClass;
     exports.subClassMulti = subClassMulti;
 

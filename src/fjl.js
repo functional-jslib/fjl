@@ -21,7 +21,7 @@ import Applicative from './functor/Applicative';
 import Chainable from './functor/Chainable';
 import Monad from './monad/Monad';
 import {Maybe, Just, Nothing, maybe} from './monad/Maybe';
-import Either from './monad/Either';
+import {Either, Left, Right, either} from './monad/Either';
 import version from './generated/version';
 
 export default {
@@ -67,5 +67,8 @@ export default {
     Nothing,
     maybe,
     Either,
+    Left,
+    Right,
+    either,
     version
 };
