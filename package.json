@@ -47,14 +47,5 @@
   "bugs": {
     "url": "https://github.com/elycruz/fjl/issues"
   },
-  "homepage": "https://github.com/elycruz/fjl#readme",
-  "gulpConfig": {
-    "paths": {
-      "buildPathRoot": "./dist",
-      "cjsBuildDir": "cjs",
-      "amdBuildDir": "amd",
-      "iifeBuildDir": "iife",
-      "umdBuildDir": "umd"
-    }
-  }
+  "homepage": "https://github.com/elycruz/fjl#readme"
 }

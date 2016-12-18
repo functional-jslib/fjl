@@ -5,9 +5,9 @@
 import Functor from './Functor';
 import {subClass} from './../subClass';
 
-let Bifunctor = subClass(Functor,
+export default subClass(Functor,
     function Bifunctor (value1, value2) {
-        if (!this) {
+        if (!(this instanceof Bifunctor)) {
             return new Bifunctor(value1, value2);
         }
         Functor.call(this, value1);
@@ -40,5 +40,3 @@ let Bifunctor = subClass(Functor,
             );
         }
     });
-
-export default Bifunctor;

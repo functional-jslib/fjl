@@ -10,7 +10,7 @@
 let path = require('path'),
     crypto = require('crypto'),
     packageJson = require('./package'),
-    gulpConfig = packageJson.gulpConfig,
+    gulpConfig = require('./gulpfileConfig'),
 
     /** Gulp Modules (or modules used by gulp) **/
     gulp = require('gulp'),
@@ -30,14 +30,10 @@ let path = require('path'),
     del = require('del'),
 
     /** Paths **/
-    {cjsBuildDir, amdBuildDir,
-     umdBuildDir, iifeBuildDir,
+    {cjsBuildPath, amdBuildPath,
+     umdBuildPath, iifeBuildPath,
      buildPathRoot} = gulpConfig.paths,
     buildPath = (...tails) => path.join.call(path, buildPathRoot, ...tails),
-    amdBuildPath =  buildPath(amdBuildDir),
-    umdBuildPath =  buildPath(umdBuildDir),
-    cjsBuildPath =  buildPath(cjsBuildDir),
-    iifeBuildPath = buildPath(iifeBuildDir),
     iifeMinFileName =   'fjl.min.js',
     iifeFileName =      'fjl.js',
     iifeModuleName =    'fjl',
@@ -52,6 +48,21 @@ let path = require('path'),
         .pipe(rollup, {moduleName: iifeModuleName, format: 'iife'})
         .pipe(babel)
         .pipe(concat, buildPath(iifeBuildPath, iifeFileName));
+
+gulp.task('clean', () => {
+    let paths = [cjsBuildPath, amdBuildPath, umdBuildPath, iifeBuildPath]
+        .map(partialPath => buildPath(partialPath, '**', '*.js'));
+    return del(paths)
+        .then(paths => {
+        if (paths.length > 0) {
+            console.log(chalk.dim('\nThe following paths have been deleted: \n - ' + paths.join('\n - ') + '\n'));
+        }
+        else {
+            console.log(chalk.dim(' - No paths to clean.') + '\n', '--mandatory');
+        }
+    })
+    .catch(console.log);
+});
 
 gulp.task('eslint', () => {
     return gulp.src(['./src/**/*.js', '!node_modules/**']).pipe(eslintPipe());
@@ -91,12 +102,21 @@ gulp.task('uglify', ['iife'], function () {
             data.fileHash = hasher.digest('hex');
             cb();
         }))
-        .pipe(uglify())
+        .pipe(uglify(gulpConfig.uglifyOptions))
         .pipe(header('/**! ' + iifeFileName + ' <%= version %> | License: <%= license %> | ' +
-            'md5checksum: <%= fileHash %> | Built-on: <%= (new Date()) %> **/', data))
+            'md5checksum: <%= fileHash %> | Built-on: <%= (new Date()) %> **/', Object.assign(data, packageJson)))
         .pipe(gulp.dest('./'));
 });
 
 gulp.task('build-js', ['iife', 'cjs', 'amd', 'umd']);
 
-gulp.task('default', ['build-js']);
+gulp.task('watch', () => {
+    return gulp.watch([
+        './src/**/*.js',
+        './node_modules/**'
+    ], [
+        'uglify'
+    ]);
+});
+
+gulp.task('default', ['uglify', 'watch']);

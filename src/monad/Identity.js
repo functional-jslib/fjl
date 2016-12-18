@@ -6,7 +6,7 @@ import Monad from './Monad';
 import {subClass} from '../subClass';
 
 let Identity = subClass(Monad, function Identity(value) {
-    Monad.apply(this, arguments);
+    Monad.call(this, value);
 });
 
 export default Identity;

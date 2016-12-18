@@ -66,6 +66,18 @@ export let NothingSingleton,
         counterConstructor: Nothing
     }),
 
+    /**
+     * @param replacement {*} - Replacement value to return if functor maps to a functor with an empty
+     *  value (a value of undefined | null).
+     * @param fn {Function} - Function to map to.
+     * @param monad {Function<map {Function}> - Functor
+     * @returns {*}
+     */
+    maybe = curry3(function (replacement, fn, monad) {
+        let subject = monad.chain(value => value);
+        return subject instanceof Nothing ? replacement : subject.map(fn).value;
+    }),
+
     Maybe = subClass(Monad, {
         constructor: function Maybe(value) {
             if (!(this instanceof Maybe)) {
@@ -89,11 +101,14 @@ export let NothingSingleton,
         of: function (value) {
             return new Maybe(value);
         },
-    }),
-
-    maybe = curry3(function (replacement, fn, monad) {
-        let subject = monad.chain(value => value);
-        return subject instanceof Nothing ? replacement : Just(fn).ap(subject);
+        Just,
+        Nothing,
+        maybe
     });
 
-export default Maybe;
+export default {
+    Maybe,
+    Just,
+    Nothing,
+    maybe
+};

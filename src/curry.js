@@ -13,13 +13,7 @@ const PlaceHolder = function PlaceHolder() {},
      * Placeholder instance.
      * @type {PlaceHolder}
      */
-    placeHolderInstance = new PlaceHolder(),
-
-    /**
-     * Place holder object (frozen) used by curry.
-     * @type {PlaceHolder}
-     */
-    __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
+    placeHolderInstance = new PlaceHolder();
 
 /**
  * Checks to see if value is a `PlaceHolder`.
@@ -83,11 +77,17 @@ export function curryN (fn, executeArity, ...curriedArgs) {
 }
 
 /**
+     * Place holder object (frozen) used by curry.
+     * @type {PlaceHolder}
+     */
+export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance,
+
+    /**
  * Curry's a function up to an arity of 2 (won't call function until 2 or more args).
  * @param fn {Function}
  * @returns {Function}
  */
-export let curry2 = fn => curryN(fn, 2),
+    curry2 = fn => curryN(fn, 2),
 
     /**
      * Curry's a function up to an arity of 3 (won't call function until 3 or more args).

@@ -9,10 +9,10 @@
 'use strict';
 
 import {curry2} from './../curry';
-import {isset} from './../type-checking';
+import {map} from './../operators';
 import {subClass, subClassMulti} from './../subClass';
 import Maybe, {Just} from './Maybe';
-import {Bifunctor as BiFunctor} from './../functor/Bifunctor';
+import BiFunctor from './../functor/Bifunctor';
 import Monad from './Monad';
 
 let Left = subClass(Just, {
@@ -23,7 +23,7 @@ let Left = subClass(Just, {
             Just.call(this, value);
         },
         map: function (fn) {
-            fn(this.value);
+            map(fn, this.value);
             return this;
         }
     }),
@@ -41,6 +41,17 @@ let Left = subClass(Just, {
         counterConstructor: Left
     }),
 
+    either = curry2((leftCallback, rightCallback, monad) => {
+        let identity = map(value => value, monad),
+            ctor = identity.constructor;
+        if (ctor === Left) {
+            return map(leftCallback, identity);
+        }
+        else if (ctor === Right) {
+            return map(rightCallback, identity);
+        }
+    }),
+
     Either = subClassMulti([Monad, BiFunctor], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
@@ -55,16 +66,9 @@ let Left = subClass(Just, {
         of: function (value) {
             return new Maybe(value);
         },
-    }),
-
-    either = curry2(function (leftCallback, rightCallback, monad) {
-        let identity = monad.map(value => value);
-        switch (identity.constructor) {
-            case Left:
-                return leftCallback(identity.value);
-            case Right:
-                return rightCallback(identity.value);
-        }
+        Left,
+        Right,
+        either
     });
 
 export default Either;

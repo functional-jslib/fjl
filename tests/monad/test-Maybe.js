@@ -9,7 +9,7 @@ import {expectInstanceOf, expectFunction, expectEqual, add, multiply} from './..
 import Monad from '../../src/monad/Monad';
 import {id} from '../../src/operators';
 
-import {Maybe, Just, Nothing} from '../../src/monad/Maybe';
+import {Maybe, Just, Nothing, maybe} from '../../src/monad/Maybe';
 
 let expectMonad = value => expectInstanceOf(value, Monad),
     expectMaybe = value => expectInstanceOf(value, Maybe) && expectMonad(value),
@@ -174,6 +174,23 @@ describe('Maybe', function () {
             });
         });
 
+    });
+
+    describe('#maybe', function () {
+        it ('should be a function', function () {
+            expectFunction(maybe);
+        });
+        it ('should return the `left` when passed in functor maps to a functor with a value of ' +
+            '`null` or `undefined` (or if it is `Nothing`) and it should return the value contained' +
+            'within the passed in functor otherwise', function () {
+            [[maybe(99, (value => value * 2), Nothing()), 99],
+             [maybe(99, (value => value * 2), Just(100)), 200],
+             [maybe(99, (value => value * 2), Just(null)), 99],
+             [maybe(99, (value => value * 2), Just()), 99]
+            ].forEach(tuple => {
+                expectEqual(tuple[0], tuple[1]);
+            });
+        });
     });
 
 });

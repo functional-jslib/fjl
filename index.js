@@ -14,11 +14,13 @@ import {isset, issetMulti, issetAndOfType, typeOf, typeOfIs,
     from './src/type-checking';
 import * as symbols from './src/symbols';
 import Functor from './src/functor/Functor';
+import Bifunctor from './src/functor/Bifunctor';
 import Applicable from './src/functor/Applicable';
 import Applicative from './src/functor/Applicative';
 import Chainable from './src/functor/Chainable';
 import Monad from './src/monad/Monad';
-import Maybe from './src/monad/Maybe';
+import {Maybe, Just, Nothing, maybe} from './src/monad/Maybe';
+import Either from './src/monad/Either';
 
 export default {
     compose,
@@ -53,9 +55,14 @@ export default {
     notEmptyAndOfType,
     symbols,
     Functor,
+    Bifunctor,
     Applicable,
     Applicative,
     Chainable,
     Monad,
-    Maybe
+    Maybe,
+    Just,
+    Nothing,
+    maybe,
+    Either
 }

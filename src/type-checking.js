@@ -15,34 +15,33 @@ let _String = String.name,
     _undefined = 'undefined';
 
 /**
- * Checks to see if value passed in is set (not undefined and not null).
- * @function module:sjl.isset
- * @param value {*} - Value to check.
+ * Returns whether a value is a function or not.
+ * @function module:sjl.isFunction
+ * @param value {*}
  * @returns {Boolean}
  */
-export function isset (value) {
-    return typeof value !== _undefined && value !== null;
+export function isFunction (value) {
+    return value instanceof Function;
 }
 
 /**
- * Checks if one or more parameters are set (not null and not undefined).
- * @function module:sjl.issetMulti
- * @params {*} - One or more values to check of any type.
- * @returns {Boolean} - True if all params passed in are not null or undefined.
+ * Checks if value is an array.
+ * @function module:sjl.isArray
+ * @param value {*}
+ * @returns {boolean}
  */
-export function issetMulti (...args) {
-    return !args.some(value => !isset(value));
+export function isArray (value) {
+    return Array.isArray(value);
 }
 
 /**
- * Checks whether a value isset and if it's type is the same as the type name passed in.
- * @function module:sjl.issetAndOfType
- * @param value {*} - Value to check on.
- * @param type {String|Function} - Constructor name string or Constructor.  You can pass one or more types.
+ * Checks whether value is an object or not.
+ * @function module:sjl.isObject
+ * @param value
  * @returns {Boolean}
  */
-export function issetAndOfType (value, type) {
-    return isset(value) && typeOfIs(value, type);
+export function isObject (value) {
+    return value instanceof Object;
 }
 
 /**
@@ -104,33 +103,34 @@ export function typeOfIsMulti (value, ...types) {
 }
 
 /**
- * Checks if value is a valid number (also checks if isNaN so that you don't have to).
- * @function module:sjl.isNumber
- * @param value {*}
+ * Checks to see if value passed in is set (not undefined and not null).
+ * @function module:sjl.isset
+ * @param value {*} - Value to check.
  * @returns {Boolean}
  */
-export function isNumber (value) {
-    return typeOfIs(value, _Number);
+export function isset (value) {
+    return typeof value !== _undefined && value !== null;
 }
 
 /**
- * Returns whether a value is a function or not.
- * @function module:sjl.isFunction
- * @param value {*}
- * @returns {Boolean}
+ * Checks if one or more parameters are set (not null and not undefined).
+ * @function module:sjl.issetMulti
+ * @params {*} - One or more values to check of any type.
+ * @returns {Boolean} - True if all params passed in are not null or undefined.
  */
-export function isFunction (value) {
-    return value instanceof Function;
+export function issetMulti (...args) {
+    return !args.some(value => !isset(value));
 }
 
 /**
- * Checks if value is an array.
- * @function module:sjl.isArray
- * @param value {*}
- * @returns {boolean}
+ * Checks whether a value isset and if it's type is the same as the type name passed in.
+ * @function module:sjl.issetAndOfType
+ * @param value {*} - Value to check on.
+ * @param type {String|Function} - Constructor name string or Constructor.  You can pass one or more types.
+ * @returns {Boolean}
  */
-export function isArray (value) {
-    return Array.isArray(value);
+export function issetAndOfType (value, type) {
+    return isset(value) && typeOfIs(value, type);
 }
 
 /**
@@ -144,13 +144,13 @@ export function isBoolean (value) {
 }
 
 /**
- * Checks whether value is an object or not.
- * @function module:sjl.isObject
- * @param value
+ * Checks if value is a valid number (also checks if isNaN so that you don't have to).
+ * @function module:sjl.isNumber
+ * @param value {*}
  * @returns {Boolean}
  */
-export function isObject (value) {
-    return value instanceof Object;
+export function isNumber (value) {
+    return typeOfIs(value, _Number);
 }
 
 /**

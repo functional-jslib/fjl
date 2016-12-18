@@ -1,7 +1,7 @@
 /**
  * Created by elyde on 12/10/2016.
  */
-import {isFunction, isObject, isset, notEmptyAndOfType} from './type-checking';
+import {isFunction, notEmptyAndOfType} from './type-checking';
 import {objDiff} from './obj-math';
 
 /**
@@ -41,7 +41,8 @@ export function normalizeArgsForDefineSubClass (superClass, constructor, methods
  * @returns {Function} - Constructor with extended prototype and added statics.
  */
 export function subClass (superClass, constructor, methods, statics) {
-    const normalizedArgs = normalizeArgsForDefineSubClass.apply(null, arguments),
+    const normalizedArgs = normalizeArgsForDefineSubClass
+            .call(null, superClass, constructor, methods, statics),
         _superClass = normalizedArgs.superClass,
         _statics = normalizedArgs.statics,
         _constructor = normalizedArgs.constructor,

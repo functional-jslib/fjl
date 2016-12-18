@@ -1,0 +1,31 @@
+{
+  "paths": {
+    "buildPathRoot": "./dist",
+    "cjsBuildPath": "cjs",
+    "amdBuildPath": "amd",
+    "iifeBuildPath": "iife",
+    "umdBuildPath": "umd"
+  },
+  "uglifyOptions": {
+    "passed": 2,
+    "mangle": {
+      "except": [
+        "Applicable",
+        "Bifunctor",
+        "Comonad",
+        "Extractable",
+        "Profunctor",
+        "Applicative",
+        "Chainable",
+        "Extendable",
+        "Functor",
+        "Either",
+        "Identity",
+        "Maybe",
+        "Just",
+        "Nothing",
+        "Monad"
+      ]
+    }
+  }
+}
