@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import {isset} from '../type-checking';
+import {isset} from '../is';
 import {curry3} from '../curry';
 import {subClass} from '../subClass';
 import {ap, map, chain, join} from '../operators';

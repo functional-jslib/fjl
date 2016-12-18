@@ -36,7 +36,7 @@ let fs = require('fs'),
     iifeMinFileName =   'fjl.min.js',
     iifeFileName =      'fjl.js',
     iifeModuleName =    'fjl',
-    srcGlob = './src/**/*.js',
+    srcsGlob = './src/**/*.js',
 
     /** Lazy Pipes **/
     eslintPipe = lazyPipe()
@@ -74,19 +74,19 @@ gulp.task('generate-version-js', function () {
 });
 
 gulp.task('umd', ['eslint'], () => {
-    return gulp.src(srcGlob)
+    return gulp.src(srcsGlob)
         .pipe(babel(gulpConfig.buildUmdOptions.babel))
         .pipe(gulp.dest(buildPath(umdBuildPath)));
 });
 
 gulp.task('amd', ['eslint'], () => {
-    return gulp.src(srcGlob)
+    return gulp.src(srcsGlob)
         .pipe(babel(gulpConfig.buildAmdOptions.babel))
         .pipe(gulp.dest(buildPath(amdBuildPath)));
 });
 
 gulp.task('cjs', ['eslint'], () => {
-    return gulp.src(srcGlob)
+    return gulp.src(srcsGlob)
         .pipe(babel(gulpConfig.buildCjsOptions.babel))
         .pipe(gulp.dest(buildPath(cjsBuildPath)));
 });
@@ -117,9 +117,15 @@ gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd']);
 
 gulp.task('build', ['build-js']);
 
+gulp.task('tests', ['eslint'], function () {
+    return gulp.src(gulpConfig.tests.srcs)
+        .pipe(babel(gulpConfig.tests.babel))
+        .pipe(mocha(gulpConfig.tests.mocha));
+});
+
 gulp.task('watch', () => {
     return gulp.watch([
-        './src/**/*.js',
+        srcsGlob,
         './node_modules/**'
     ], [
         'build-js'

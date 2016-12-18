@@ -3,7 +3,33 @@
  */
 'use strict';
 
-let _String = String.name,
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.isFunction = isFunction;
+exports.isArray = isArray;
+exports.typeOf = typeOf;
+exports.typeOfIs = typeOfIs;
+exports.typeOfIsMulti = typeOfIsMulti;
+exports.isset = isset;
+exports.issetMulti = issetMulti;
+exports.issetAndOfType = issetAndOfType;
+exports.isObject = isObject;
+exports.isBoolean = isBoolean;
+exports.isNumber = isNumber;
+exports.isString = isString;
+exports.isUndefined = isUndefined;
+exports.isNull = isNull;
+exports.isSymbol = isSymbol;
+exports.isEmptyObj = isEmptyObj;
+exports.isEmpty = isEmpty;
+exports.isEmptyMulti = isEmptyMulti;
+exports.notTypeOrEmpty = notTypeOrEmpty;
+exports.notEmptyAndOfType = notEmptyAndOfType;
+var _String = String.name,
     _Function = Function.name,
     _Array = Array.name,
     _Number = Number.name,
@@ -20,8 +46,18 @@ let _String = String.name,
  * @param value {*}
  * @returns {Boolean}
  */
-export function isFunction (value) {
+function isFunction(value) {
     return value instanceof Function;
+}
+
+/**
+ * Checks if value is an array.
+ * @function module:sjl.isArray
+ * @param value {*}
+ * @returns {boolean}
+ */
+function isArray(value) {
+    return Array.isArray(value);
 }
 
 /**
@@ -32,18 +68,15 @@ export function isFunction (value) {
  * @param value {*}
  * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
  */
-export function typeOf (value) {
+function typeOf(value) {
     var retVal;
-    if (typeof value === _undefined) {
+    if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined) {
         retVal = _Undefined;
-    }
-    else if (value === null) {
+    } else if (value === null) {
         retVal = _Null;
-    }
-    else {
-        let constructorName = (value).constructor.name;
-        retVal = constructorName === _Number && isNaN(value) ?
-            _NaN : constructorName;
+    } else {
+        var constructorName = value.constructor.name;
+        retVal = constructorName === _Number && isNaN(value) ? _NaN : constructorName;
     }
     return retVal;
 }
@@ -62,7 +95,7 @@ export function typeOf (value) {
  * @param type {String|Function} - Either a constructor name or an constructor itself.
  * @returns {Boolean} - Whether object matches class string or not.
  */
-export function typeOfIs (obj, type) {
+function typeOfIs(obj, type) {
     return typeOf(obj) === (isFunction(type) ? type.name : type);
 }
 
@@ -73,8 +106,14 @@ export function typeOfIs (obj, type) {
  * @param types {...Function|...String} - Constructor or string.
  * @returns {boolean}
  */
-export function typeOfIsMulti (value, ...types) {
-    return types.some(_type => typeOfIs(value, _type));
+function typeOfIsMulti(value) {
+    for (var _len = arguments.length, types = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        types[_key - 1] = arguments[_key];
+    }
+
+    return types.some(function (_type) {
+        return typeOfIs(value, _type);
+    });
 }
 
 /**
@@ -83,8 +122,8 @@ export function typeOfIsMulti (value, ...types) {
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
-export function isset (value) {
-    return typeof value !== _undefined && value !== null;
+function isset(value) {
+    return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== _undefined && value !== null;
 }
 
 /**
@@ -93,8 +132,14 @@ export function isset (value) {
  * @params {*} - One or more values to check of any type.
  * @returns {Boolean} - True if all params passed in are not null or undefined.
  */
-export function issetMulti (...args) {
-    return !args.some(value => !isset(value));
+function issetMulti() {
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+    }
+
+    return !args.some(function (value) {
+        return !isset(value);
+    });
 }
 
 /**
@@ -104,18 +149,8 @@ export function issetMulti (...args) {
  * @param type {String|Function} - Constructor name string or Constructor.  You can pass one or more types.
  * @returns {Boolean}
  */
-export function issetAndOfType (value, type) {
+function issetAndOfType(value, type) {
     return isset(value) && typeOfIs(value, type);
-}
-
-/**
- * Checks if value is an array.
- * @function module:sjl.isArray
- * @param value {*}
- * @returns {boolean}
- */
-export function isArray (value) {
-    return Array.isArray(value);
 }
 
 /**
@@ -124,7 +159,7 @@ export function isArray (value) {
  * @param value
  * @returns {Boolean}
  */
-export function isObject (value) {
+function isObject(value) {
     return typeOfIs(value, _Object);
 }
 
@@ -134,7 +169,7 @@ export function isObject (value) {
  * @param value {*}
  * @returns {Boolean}
  */
-export function isBoolean (value) {
+function isBoolean(value) {
     return typeOfIs(value, _Boolean);
 }
 
@@ -144,7 +179,7 @@ export function isBoolean (value) {
  * @param value {*}
  * @returns {Boolean}
  */
-export function isNumber (value) {
+function isNumber(value) {
     return typeOfIs(value, _Number);
 }
 
@@ -154,7 +189,7 @@ export function isNumber (value) {
  * @param value {*}
  * @returns {Boolean}
  */
-export function isString(value) {
+function isString(value) {
     return typeOfIs(value, _String);
 }
 
@@ -164,7 +199,7 @@ export function isString(value) {
  * @param value {*}
  * @returns {Boolean}
  */
-export function isUndefined (value) {
+function isUndefined(value) {
     return typeOfIs(value, _Undefined);
 }
 
@@ -174,7 +209,7 @@ export function isUndefined (value) {
  * @param value {*}
  * @returns {Boolean}
  */
-export function isNull (value) {
+function isNull(value) {
     return typeOfIs(value, _Null);
 }
 
@@ -184,7 +219,7 @@ export function isNull (value) {
  * @param value {*}
  * @returns {Boolean}
  */
-export function isSymbol (value) {
+function isSymbol(value) {
     return typeOfIs(value, 'Symbol');
 }
 
@@ -194,7 +229,7 @@ export function isSymbol (value) {
  * @param obj object to be checked
  * @returns {Boolean}
  */
-export function isEmptyObj(obj) {
+function isEmptyObj(obj) {
     return Object.keys(obj).length === 0;
 }
 
@@ -204,20 +239,17 @@ export function isEmptyObj(obj) {
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
-export function isEmpty(value) {
-    let typeOfValue = typeOf(value);
+function isEmpty(value) {
+    var typeOfValue = typeOf(value);
     var retVal;
 
     if (typeOfValue === _Array || typeOfValue === _String || typeOfValue === _Function) {
         retVal = value.length === 0;
-    }
-    else if (typeOfValue === _Number && value !== 0) {
+    } else if (typeOfValue === _Number && value !== 0) {
         retVal = false;
-    }
-    else if (typeOfValue === _Object) {
+    } else if (typeOfValue === _Object) {
         retVal = isEmptyObj(value);
-    }
-    else {
+    } else {
         retVal = !value;
     }
 
@@ -230,8 +262,14 @@ export function isEmpty(value) {
  * @params {*} - One or more params of any type.
  * @returns {Boolean} - Returns true if any of the values passed in are empty (null, undefined, empty object, empty array, or empty string).
  */
-export function isEmptyMulti (...args) {
-    return args.some(value => isEmpty(value));
+function isEmptyMulti() {
+    for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
+    }
+
+    return args.some(function (value) {
+        return isEmpty(value);
+    });
 }
 
 /**
@@ -242,7 +280,7 @@ export function isEmptyMulti (...args) {
  * @deprecated - Will be removed in version 6.0.0.  Use `notEmptyAndOfType` instead.
  * @returns {Boolean}
  */
-export function notTypeOrEmpty (value, type) {
+function notTypeOrEmpty(value, type) {
     return isEmpty(value) || !typeOfIs(value, type);
 }
 
@@ -253,29 +291,29 @@ export function notTypeOrEmpty (value, type) {
  * @param type {String|Function} - Type to check against (string name or actual constructor).
  * @returns {Boolean}
  */
-export function notEmptyAndOfType (value, type) {
+function notEmptyAndOfType(value, type) {
     return !isEmpty(value) && typeOfIs(value, type);
 }
 
-export default {
-    isset,
-    issetMulti,
-    issetAndOfType,
-    typeOf,
-    typeOfIs,
-    typeOfIsMulti,
-    isNumber,
-    isFunction,
-    isArray,
-    isBoolean,
-    isObject,
-    isString,
-    isUndefined,
-    isNull,
-    isSymbol,
-    isEmpty,
-    isEmptyMulti,
-    isEmptyObj,
-    notTypeOrEmpty,
-    notEmptyAndOfType
+exports.default = {
+    isset: isset,
+    issetMulti: issetMulti,
+    issetAndOfType: issetAndOfType,
+    typeOf: typeOf,
+    typeOfIs: typeOfIs,
+    typeOfIsMulti: typeOfIsMulti,
+    isNumber: isNumber,
+    isFunction: isFunction,
+    isArray: isArray,
+    isBoolean: isBoolean,
+    isObject: isObject,
+    isString: isString,
+    isUndefined: isUndefined,
+    isNull: isNull,
+    isSymbol: isSymbol,
+    isEmpty: isEmpty,
+    isEmptyMulti: isEmptyMulti,
+    isEmptyObj: isEmptyObj,
+    notTypeOrEmpty: notTypeOrEmpty,
+    notEmptyAndOfType: notEmptyAndOfType
 };

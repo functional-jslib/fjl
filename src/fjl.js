@@ -6,12 +6,13 @@
 import compose from './compose';
 import {curry, curryN, curry2, curry3, curry4, curry5} from './curry';
 import {subClass, subClassMulti} from './subClass';
-import {objDiff} from './obj-math';
-import {isset, issetMulti, issetAndOfType, typeOf, typeOfIs,
-    typeOfIsMulti, isNumber, isFunction, isArray, isBoolean,
+import {subtractObj} from './math';
+import {typeOf, typeOfIs, typeOfIsMulti} from './typeOf';
+import {isset, issetMulti, issetAndOfType, isNumber,
+    isFunction, isArray, isBoolean,
     isObject, isString, isUndefined, isNull, isSymbol, isEmpty,
-    isEmptyMulti, isEmptyObj, notTypeOrEmpty, notEmptyAndOfType}
-    from './type-checking';
+    isEmptyMulti, isEmptyObj} from './is';
+import {notOfTypeOrEmpty, notEmptyAndOfType} from './not';
 import * as symbols from './symbols';
 import Functor from './functor/Functor';
 import Bifunctor from './functor/Bifunctor';
@@ -33,7 +34,7 @@ export default {
     curry5,
     subClass,
     subClassMulti,
-    objDiff,
+    subtractObj,
     isset,
     issetMulti,
     issetAndOfType,
@@ -52,7 +53,7 @@ export default {
     isEmpty,
     isEmptyMulti,
     isEmptyObj,
-    notTypeOrEmpty,
+    notOfTypeOrEmpty,
     notEmptyAndOfType,
     symbols,
     Functor,

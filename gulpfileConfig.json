@@ -27,6 +27,25 @@
       ]
     }
   },
+  "tests": {
+    "srcs": [
+      "./tests/**/test-*.js"
+    ],
+    "babel": {
+      "presets": ["latest"],
+      "plugins": [
+        "transform-es2015-modules-commonjs"
+      ]
+    },
+    "mocha": {
+      "compilers": [
+        "js:babel-register"
+      ],
+      "require": [
+        "babel-polyfill"
+      ]
+    }
+  },
   "uglifyOptions": {
     "passed": 2,
     "mangle": {

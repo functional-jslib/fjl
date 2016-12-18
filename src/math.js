@@ -4,7 +4,7 @@
 
 'use strict';
 
-export function objDiff (obj1, obj2) {
+export function subtractObj (obj1, obj2) {
     return Object.keys(obj1).reduce((agg, key) => {
         if (!obj2.hasOwnProperty(key)) {
             agg[key] = obj1[key];
@@ -14,5 +14,5 @@ export function objDiff (obj1, obj2) {
 }
 
 export default {
-    objDiff
+    subtractObj
 };

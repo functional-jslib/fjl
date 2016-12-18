@@ -4,7 +4,7 @@
 'use strict';
 
 import {curry2, curry3} from './curry';
-import {isFunction} from './type-checking';
+import {isFunction} from './is';
 
 export let id = value => value,
 
