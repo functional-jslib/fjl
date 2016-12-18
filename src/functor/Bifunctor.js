@@ -25,7 +25,15 @@ let Bifunctor = defineSubClass(Functor,
             return new this.constructor(this.value, fn(this.value2));
         },
 
-        bimap (fn1, fn2) {
+        first (fn) {
+            return this.map1(fn);
+        },
+
+        second (fn) {
+            return this.map2(fn);
+        },
+
+        bimap: function (fn1, fn2) {
             return new this.constructor(
                 fn1(this.value),
                 fn2(this.value2)

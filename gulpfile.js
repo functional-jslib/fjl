@@ -9,6 +9,7 @@
 
 let packageJson = require('./package'),
     gulp = require('gulp'),
+    concat = require('gulp-concat'),
     // mocha = require('gulp-mocha'),
     // uglify = require('gulp-uglify'),
     // duration = require('gulp-duration'),
@@ -16,10 +17,17 @@ let packageJson = require('./package'),
     // lazypipe = require('lazypipe'),
     // chalk = require('chalk'),
     // del = require('del');
+    rollup = require('gulp-better-rollup'),
     babel = require('gulp-babel');
 
-gulp.task('default', () => {
-    return gulp.src('src/**/*.js')
+gulp.task('default', ['babel']);
+gulp.task('babel', () => {
+    return gulp.src('index.js')
+        .pipe(rollup({
+            moduleName: 'fjl',
+            format: 'iife'
+        }))
         .pipe(babel())
-        .pipe(gulp.dest('dist'));
+        .pipe(concat('dist/fjl.js'))
+        .pipe(gulp.dest('./'));
 });

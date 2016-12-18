@@ -13,7 +13,7 @@ let Applicable = defineSubClass(Functor,
         Functor.call(this, value);
     },
     {
-        ap (functor) {
+        ap:function  (functor) {
             return functor.map(this.value);
         }
     });

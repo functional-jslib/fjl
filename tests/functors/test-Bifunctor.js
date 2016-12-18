@@ -66,7 +66,6 @@ describe('Bifunctor', function () {
         });
     });
 
-
     describe('#bimap', function () {
         let functor = Bifunctor(21, 34),
             times2 = num => num * 2,
@@ -84,6 +83,5 @@ describe('Bifunctor', function () {
             expect(result.value2).to.equal(34 * 2);
         });
     });
-
 
 });
