@@ -9,10 +9,14 @@ import {subClass} from '../subClass';
 import {ap, map, chain, join} from '../operators';
 import Monad from './Monad';
 
-export let NothingSingleton,
-    NothingSingletonCreated,
-    Nothing = subClass(Monad, {
+const _protected = {
+    NothingSingleton: null,
+    NothingSingletonCreated: null
+};
+
+export let Nothing = subClass(Monad, {
         constructor: function Nothing() {
+            let {NothingSingleton, NothingSingletonCreated} = _protected;
             if (NothingSingleton) {
                 return NothingSingleton;
             }
@@ -20,8 +24,9 @@ export let NothingSingleton,
                 return Nothing.of();
             }
             else if (!NothingSingletonCreated) {
-                NothingSingletonCreated = true;
-                NothingSingleton = Nothing.of();
+                _protected.NothingSingletonCreated = true;
+                _protected.NothingSingleton = Nothing.of();
+                Object.freeze(_protected);
             }
             else if (!this.hasOwnProperty('value')) {
                 Object.defineProperty(this, 'value', {
@@ -106,9 +111,4 @@ export let NothingSingleton,
         maybe
     });
 
-export default {
-    Maybe,
-    Just,
-    Nothing,
-    maybe
-};
+export default Maybe;

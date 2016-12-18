@@ -3,24 +3,25 @@
  */
 'use strict';
 
-import compose from './src/compose';
-import {curry, curryN, curry2, curry3, curry4, curry5} from './src/curry';
-import {subClass, subClassMulti} from './src/subClass';
-import {objDiff} from './src/obj-math';
+import compose from './compose';
+import {curry, curryN, curry2, curry3, curry4, curry5} from './curry';
+import {subClass, subClassMulti} from './subClass';
+import {objDiff} from './obj-math';
 import {isset, issetMulti, issetAndOfType, typeOf, typeOfIs,
     typeOfIsMulti, isNumber, isFunction, isArray, isBoolean,
     isObject, isString, isUndefined, isNull, isSymbol, isEmpty,
-    isEmptyMulti, isEmptyObj, isEmptyOrNotOfType, notEmptyAndOfType}
-    from './src/type-checking';
-import * as symbols from './src/symbols';
-import Functor from './src/functor/Functor';
-import Bifunctor from './src/functor/Bifunctor';
-import Applicable from './src/functor/Applicable';
-import Applicative from './src/functor/Applicative';
-import Chainable from './src/functor/Chainable';
-import Monad from './src/monad/Monad';
-import {Maybe, Just, Nothing, maybe} from './src/monad/Maybe';
-import Either from './src/monad/Either';
+    isEmptyMulti, isEmptyObj, notTypeOrEmpty, notEmptyAndOfType}
+    from './type-checking';
+import * as symbols from './symbols';
+import Functor from './functor/Functor';
+import Bifunctor from './functor/Bifunctor';
+import Applicable from './functor/Applicable';
+import Applicative from './functor/Applicative';
+import Chainable from './functor/Chainable';
+import Monad from './monad/Monad';
+import {Maybe, Just, Nothing, maybe} from './monad/Maybe';
+import Either from './monad/Either';
+import version from './generated/version';
 
 export default {
     compose,
@@ -51,7 +52,7 @@ export default {
     isEmpty,
     isEmptyMulti,
     isEmptyObj,
-    isEmptyOrNotOfType,
+    notTypeOrEmpty,
     notEmptyAndOfType,
     symbols,
     Functor,
@@ -64,5 +65,6 @@ export default {
     Just,
     Nothing,
     maybe,
-    Either
-}
+    Either,
+    version
+};

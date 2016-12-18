@@ -1,13 +1,11 @@
 /**
  * Created by elyde on 12/13/2016.
  */
-/**
- * Created by edelacruz on 4/14/14.
- */
 
 'use strict';
 
-let path = require('path'),
+let fs = require('fs'),
+    path = require('path'),
     crypto = require('crypto'),
     packageJson = require('./package'),
     gulpConfig = require('./gulpfileConfig'),
@@ -28,6 +26,7 @@ let path = require('path'),
     /** Util Modules **/
     chalk = require('chalk'),
     del = require('del'),
+    VersionNumberStream = require('./other-gulp-scripts/VersionNumberReadStream'),
 
     /** Paths **/
     {cjsBuildPath, amdBuildPath,
@@ -37,6 +36,7 @@ let path = require('path'),
     iifeMinFileName =   'fjl.min.js',
     iifeFileName =      'fjl.js',
     iifeModuleName =    'fjl',
+    srcGlob = './src/**/*.js',
 
     /** Lazy Pipes **/
     eslintPipe = lazyPipe()
@@ -68,26 +68,31 @@ gulp.task('eslint', () => {
     return gulp.src(['./src/**/*.js', '!node_modules/**']).pipe(eslintPipe());
 });
 
+gulp.task('generate-version-js', function () {
+    return (new VersionNumberStream())
+        .pipe(fs.createWriteStream('./src/generated/version.js'));
+});
+
 gulp.task('umd', ['eslint'], () => {
-    return gulp.src('src/**/*.js')
-        .pipe(babel())
+    return gulp.src(srcGlob)
+        .pipe(babel(gulpConfig.buildUmdOptions.babel))
         .pipe(gulp.dest(buildPath(umdBuildPath)));
 });
 
 gulp.task('amd', ['eslint'], () => {
-    return gulp.src('src/**/*.js')
-        .pipe(babel())
+    return gulp.src(srcGlob)
+        .pipe(babel(gulpConfig.buildAmdOptions.babel))
         .pipe(gulp.dest(buildPath(amdBuildPath)));
 });
 
 gulp.task('cjs', ['eslint'], () => {
-    return gulp.src('src/**/*.js')
-        .pipe(babel())
+    return gulp.src(srcGlob)
+        .pipe(babel(gulpConfig.buildCjsOptions.babel))
         .pipe(gulp.dest(buildPath(cjsBuildPath)));
 });
 
-gulp.task('iife', ['eslint'], () => {
-    return gulp.src('index.js')
+gulp.task('iife', ['eslint', 'generate-version-js'], () => {
+    return gulp.src('./src/fjl.js')
         .pipe(iifePipe())
         .pipe(gulp.dest('./'));
 });
@@ -108,15 +113,17 @@ gulp.task('uglify', ['iife'], function () {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('build-js', ['iife', 'cjs', 'amd', 'umd']);
+gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd']);
+
+gulp.task('build', ['build-js']);
 
 gulp.task('watch', () => {
     return gulp.watch([
         './src/**/*.js',
         './node_modules/**'
     ], [
-        'uglify'
+        'build-js'
     ]);
 });
 
-gulp.task('default', ['uglify', 'watch']);
+gulp.task('default', ['build', 'watch']);

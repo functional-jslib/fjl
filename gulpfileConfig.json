@@ -6,6 +6,27 @@
     "iifeBuildPath": "iife",
     "umdBuildPath": "umd"
   },
+  "buildAmdOptions": {
+    "babel": {
+      "plugins": [
+        "transform-es2015-modules-amd"
+      ]
+    }
+  },
+  "buildCjsOptions": {
+    "babel": {
+      "plugins": [
+        "transform-es2015-modules-commonjs"
+      ]
+    }
+  },
+  "buildUmdOptions": {
+    "babel": {
+      "plugins": [
+        "transform-es2015-modules-umd"
+      ]
+    }
+  },
   "uglifyOptions": {
     "passed": 2,
     "mangle": {

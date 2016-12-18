@@ -15,7 +15,7 @@ import Maybe, {Just} from './Maybe';
 import BiFunctor from './../functor/Bifunctor';
 import Monad from './Monad';
 
-let Left = subClass(Just, {
+export let Left = subClass(Just, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
                 return Left.of(value);

@@ -25,26 +25,6 @@ export function isFunction (value) {
 }
 
 /**
- * Checks if value is an array.
- * @function module:sjl.isArray
- * @param value {*}
- * @returns {boolean}
- */
-export function isArray (value) {
-    return Array.isArray(value);
-}
-
-/**
- * Checks whether value is an object or not.
- * @function module:sjl.isObject
- * @param value
- * @returns {Boolean}
- */
-export function isObject (value) {
-    return value instanceof Object;
-}
-
-/**
  * Returns the class name of an object from it's class string.
  * @note Returns 'NaN' if value type is 'Number' and value isNaN evaluates to true as of version 0.4.85.
  * @note If your type (constructor/class) overrides it's `toString` method use a named `toString` method to get the accurate constructor name out of `typeOf`;  E.g., If you do override `toString` on your class(es) and don't set them to named functions then `sjl.typeOf*` will use Object.prototype.toString to pull your classes type out.
@@ -53,9 +33,7 @@ export function isObject (value) {
  * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
  */
 export function typeOf (value) {
-    var retVal,
-        valueType,
-        toString;
+    var retVal;
     if (typeof value === _undefined) {
         retVal = _Undefined;
     }
@@ -63,12 +41,9 @@ export function typeOf (value) {
         retVal = _Null;
     }
     else {
-        toString = value.toString.name === 'toString' ? Object.prototype.toString : value.toString;
-        valueType = toString.call(value);
-        retVal = valueType.substring(8, valueType.length - 1);
-        if (retVal === _Number && isNaN(value)) {
-            retVal = _NaN;
-        }
+        let constructorName = (value).constructor.name;
+        retVal = constructorName === _Number && isNaN(value) ?
+            _NaN : constructorName;
     }
     return retVal;
 }
@@ -88,7 +63,7 @@ export function typeOf (value) {
  * @returns {Boolean} - Whether object matches class string or not.
  */
 export function typeOfIs (obj, type) {
-    return isFunction(type) ? obj instanceof type : typeOf(obj) === type;
+    return typeOf(obj) === (isFunction(type) ? type.name : type);
 }
 
 /**
@@ -131,6 +106,26 @@ export function issetMulti (...args) {
  */
 export function issetAndOfType (value, type) {
     return isset(value) && typeOfIs(value, type);
+}
+
+/**
+ * Checks if value is an array.
+ * @function module:sjl.isArray
+ * @param value {*}
+ * @returns {boolean}
+ */
+export function isArray (value) {
+    return Array.isArray(value);
+}
+
+/**
+ * Checks whether value is an object or not.
+ * @function module:sjl.isObject
+ * @param value
+ * @returns {Boolean}
+ */
+export function isObject (value) {
+    return typeOfIs(value, _Object);
 }
 
 /**
@@ -241,13 +236,13 @@ export function isEmptyMulti (...args) {
 
 /**
  * Retruns a boolean based on whether a key on an object has an empty value or is empty (not set, undefined, null)
- * @function module:sjl.isEmptyOrNotOfType
+ * @function module:sjl.notTypeOrEmpty
  * @param value {Object} - Object to search on.
  * @param type {String} - Optional. Type Name to check for match for;  E.g., 'Number', 'Array', 'HTMLMediaElement' etc..
  * @deprecated - Will be removed in version 6.0.0.  Use `notEmptyAndOfType` instead.
  * @returns {Boolean}
  */
-export function isEmptyOrNotOfType (value, type) {
+export function notTypeOrEmpty (value, type) {
     return isEmpty(value) || !typeOfIs(value, type);
 }
 
@@ -281,6 +276,6 @@ export default {
     isEmpty,
     isEmptyMulti,
     isEmptyObj,
-    isEmptyOrNotOfType,
+    notTypeOrEmpty,
     notEmptyAndOfType
 };
