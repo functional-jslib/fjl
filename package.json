@@ -18,9 +18,18 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-latest": "^6.16.0",
     "babel-register": "^6.18.0",
+    "chalk": "^1.1.3",
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.1",
+    "gulp-duration": "0.0.0",
+    "gulp-eslint": "^3.0.1",
+    "gulp-fncallback": "^2.0.2",
+    "gulp-header": "^1.8.8",
+    "gulp-mocha": "^3.0.1",
+    "gulp-uglify": "^2.0.0",
+    "lazypipe": "^1.0.1",
     "mocha": "^3.2.0",
     "rollup": "^0.37.0"
   },
@@ -38,5 +47,14 @@
   "bugs": {
     "url": "https://github.com/elycruz/fjl/issues"
   },
-  "homepage": "https://github.com/elycruz/fjl#readme"
+  "homepage": "https://github.com/elycruz/fjl#readme",
+  "gulpConfig": {
+    "paths": {
+      "buildPathRoot": "./dist",
+      "cjsBuildDir": "cjs",
+      "amdBuildDir": "amd",
+      "iifeBuildDir": "iife",
+      "umdBuildDir": "umd"
+    }
+  }
 }

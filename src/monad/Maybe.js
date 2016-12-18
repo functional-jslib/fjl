@@ -5,13 +5,13 @@
 
 import {isset} from '../type-checking';
 import {curry3} from '../curry';
-import {defineSubClass} from '../defineSubClass';
+import {subClass} from '../subClass';
 import {ap, map, chain, join} from '../operators';
 import Monad from './Monad';
 
 export let NothingSingleton,
     NothingSingletonCreated,
-    Nothing = defineSubClass(Monad, {
+    Nothing = subClass(Monad, {
         constructor: function Nothing() {
             if (NothingSingleton) {
                 return NothingSingleton;
@@ -47,7 +47,7 @@ export let NothingSingleton,
         }
     }),
 
-    Just = defineSubClass(Monad, {
+    Just = subClass(Monad, {
         constructor: function Just(value) {
             if (!(this instanceof Just)) {
                 return Just.of(value);
@@ -66,7 +66,7 @@ export let NothingSingleton,
         counterConstructor: Nothing
     }),
 
-    Maybe = defineSubClass(Monad, {
+    Maybe = subClass(Monad, {
         constructor: function Maybe(value) {
             if (!(this instanceof Maybe)) {
                 return Maybe.of(value);

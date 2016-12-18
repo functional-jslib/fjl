@@ -30,7 +30,7 @@ describe('curry', function () {
         expect(curry(console.log)).to.be.instanceOf(Function);
     });
 
-    it('should return a function that fails when no function is passed (as it\'s first param).', function () {
+    it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
         assert.throws(curry(), Error);
         assert.throws(curry(99), Error);
     });

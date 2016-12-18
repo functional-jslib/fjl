@@ -10,12 +10,12 @@
 
 import {curry2} from './../curry';
 import {isset} from './../type-checking';
-import {defineSubClass, defineSubClassMulti} from './../defineSubClass';
+import {subClass, subClassMulti} from './../subClass';
 import Maybe, {Just} from './Maybe';
 import {Bifunctor as BiFunctor} from './../functor/Bifunctor';
 import Monad from './Monad';
 
-let Left = defineSubClass(Just, {
+let Left = subClass(Just, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
                 return Left.of(value);
@@ -28,7 +28,7 @@ let Left = defineSubClass(Just, {
         }
     }),
 
-    Right = defineSubClass(Just, {
+    Right = subClass(Just, {
         constructor: function Right(value) {
             if (!(this instanceof Right)) {
                 return Right.of(value);
@@ -41,7 +41,7 @@ let Left = defineSubClass(Just, {
         counterConstructor: Left
     }),
 
-    Either = defineSubClassMulti([Monad, BiFunctor], {
+    Either = subClassMulti([Monad, BiFunctor], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
                 return new Either(left, right);

@@ -12,3 +12,7 @@ export function objDiff (obj1, obj2) {
         return agg;
     }, {});
 }
+
+export default {
+    objDiff
+};

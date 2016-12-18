@@ -7,27 +7,19 @@
  * @constructor PlaceHolder
  * @private
  */
-let PlaceHolder = function PlaceHolder() {},
+const PlaceHolder = function PlaceHolder() {},
 
     /**
      * Placeholder instance.
      * @type {PlaceHolder}
      */
-    placeHolderInstance = new PlaceHolder();
+    placeHolderInstance = new PlaceHolder(),
 
-/**
- * Replaces `placeholder` values in `array`.
- * @param array {Array} - Array to replace placeholders in.
- * @param args {Array} - Args from to choose from to replace placeholders.
- * @returns {Array|*} - Returns passed in `array` with placeholders replaced by values in `args`.
- */
-function replacePlaceHolders (array, args) {
-    let out = array.map(element => {
-        return ! isPlaceHolder(element) ? element :
-            (args.length > 0 ? args.shift() : element);
-    });
-    return args.length > 0 ? out.concat(args) : out;
-}
+    /**
+     * Place holder object (frozen) used by curry.
+     * @type {PlaceHolder}
+     */
+    __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
 
 /**
  * Checks to see if value is a `PlaceHolder`.
@@ -39,10 +31,23 @@ function isPlaceHolder (instance) {
 }
 
 /**
- * Place holder object (frozen) used by curry.
- * @type {PlaceHolder}
+ * Replaces `placeholder` values in `array`.
+ * @param array {Array} - Array to replace placeholders in.
+ * @param args {Array} - Args from to choose from to replace placeholders.
+ * @returns {Array|*} - Returns passed in `array` with placeholders replaced by values in `args`.
  */
-export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
+function replacePlaceHolders (array, args) {
+    let out = array.map(element => {
+        if (!isPlaceHolder(element)) {
+            return element;
+        }
+        else if (args.length > 0) {
+            return args.shift();
+        }
+        return element;
+    });
+    return args.length > 0 ? out.concat(args) : out;
+}
 
 /**
  * Curry's passed in function along with passed in arguments passed.
@@ -77,14 +82,12 @@ export function curryN (fn, executeArity, ...curriedArgs) {
     };
 }
 
-export let
-
-    /**
-     * Curry's a function up to an arity of 2 (won't call function until 2 or more args).
-     * @param fn {Function}
-     * @returns {Function}
-     */
-    curry2 = fn => curryN(fn, 2),
+/**
+ * Curry's a function up to an arity of 2 (won't call function until 2 or more args).
+ * @param fn {Function}
+ * @returns {Function}
+ */
+export let curry2 = fn => curryN(fn, 2),
 
     /**
      * Curry's a function up to an arity of 3 (won't call function until 3 or more args).

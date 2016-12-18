@@ -3,9 +3,9 @@
  */
 'use strict';
 import Functor from './Functor';
-import {defineSubClass} from './../defineSubClass';
+import {subClass} from './../subClass';
 
-let Bifunctor = defineSubClass(Functor,
+let Bifunctor = subClass(Functor,
     function Bifunctor (value1, value2) {
         if (!this) {
             return new Bifunctor(value1, value2);

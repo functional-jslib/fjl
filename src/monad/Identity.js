@@ -3,9 +3,9 @@
  */
 'use strict';
 import Monad from './Monad';
-import {defineSubClass} from '../defineSubClass';
+import {subClass} from '../subClass';
 
-let Identity = defineSubClass(Monad, function Identity(value) {
+let Identity = subClass(Monad, function Identity(value) {
     Monad.apply(this, arguments);
 });
 

@@ -31,15 +31,6 @@ export function normalizeArgsForDefineSubClass (superClass, constructor, methods
     };
 }
 
-export function subClassMulti (ctorOrCtors, constructorOrMethods, methods, statics) {
-    if (notEmptyAndOfType(ctorOrCtors, Array)) {
-        return ctorOrCtors.reduce(function (agg, Constructor) {
-            return subClass(Constructor, agg);
-        }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
-    }
-    return subClass.apply(null, arguments);
-}
-
 /**
  * Same as `subClass` with out side-effect of `extend` method and `toString` method.
  * @function module:sjl.subClassPure
@@ -70,7 +61,24 @@ export function subClass (superClass, constructor, methods, statics) {
     return _constructor;
 }
 
+/**
+ * Same as subClass multi but takes an array of Constructor or one constructor at position one.
+ * @param ctorOrCtors {Function|Array<Function>} - SuperClass(es)
+ * @param constructorOrMethods {Function|Object}
+ * @param methods {Object|undefined}
+ * @param statics {Object|undefined}
+ * @returns {Function}
+ */
+export function subClassMulti (ctorOrCtors, constructorOrMethods, methods, statics) {
+    if (notEmptyAndOfType(ctorOrCtors, Array)) {
+        return ctorOrCtors.reduce(function (agg, Constructor) {
+            return subClass(Constructor, agg);
+        }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
+    }
+    return subClass.apply(null, arguments);
+}
+
 export default {
     subClass,
     subClassMulti
-}
+};

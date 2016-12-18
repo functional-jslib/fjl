@@ -3,9 +3,9 @@
  */
 'use strict';
 import Functor from './Functor';
-import {defineSubClass} from './../defineSubClass';
+import {subClass} from './../subClass';
 
-let Extendable = defineSubClass (Functor,
+let Extendable = subClass (Functor,
     function Extendable (value) {
         if (!this) {
             return new Extendable(value);
