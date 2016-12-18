@@ -5,7 +5,7 @@ import {isFunction, isObject, isset, notEmptyAndOfType} from './type-checking';
 import {objDiff} from './obj-math';
 
 /**
- * Normalized the parameters required for `defineSubClassPure` and `defineSubClass` to operate.
+ * Normalized the parameters required for `subClassPure` and `subClass` to operate.
  * @param superClass {Function} - Superclass to inherit from.
  * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
  * @param methods {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
@@ -31,25 +31,25 @@ export function normalizeArgsForDefineSubClass (superClass, constructor, methods
     };
 }
 
-export function defineSubClassMulti (ctorOrCtors, constructorOrMethods, methods, statics) {
+export function subClassMulti (ctorOrCtors, constructorOrMethods, methods, statics) {
     if (notEmptyAndOfType(ctorOrCtors, Array)) {
         return ctorOrCtors.reduce(function (agg, Constructor) {
-            return defineSubClass(Constructor, agg);
-        }, defineSubClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
+            return subClass(Constructor, agg);
+        }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
     }
-    return defineSubClass.apply(null, arguments);
+    return subClass.apply(null, arguments);
 }
 
 /**
- * Same as `defineSubClass` with out side-effect of `extend` method and `toString` method.
- * @function module:sjl.defineSubClassPure
+ * Same as `subClass` with out side-effect of `extend` method and `toString` method.
+ * @function module:sjl.subClassPure
  * @param superClass {Function} - Superclass to inherit from.
  * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
  * @param [methods] {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
  * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
  * @returns {Function} - Constructor with extended prototype and added statics.
  */
-export function defineSubClass (superClass, constructor, methods, statics) {
+export function subClass (superClass, constructor, methods, statics) {
     const normalizedArgs = normalizeArgsForDefineSubClass.apply(null, arguments),
         _superClass = normalizedArgs.superClass,
         _statics = normalizedArgs.statics,
@@ -71,6 +71,6 @@ export function defineSubClass (superClass, constructor, methods, statics) {
 }
 
 export default {
-    defineSubClass,
-    defineSubClassMulti
+    subClass,
+    subClassMulti
 }
