@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../is', '../curry', '../subClass', '../operators', './Monad'], factory);
+        define(['exports', '../is', '../curry', '../subClassOf', '../operators', './Monad'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../is'), require('../curry'), require('../subClass'), require('../operators'), require('./Monad'));
+        factory(exports, require('../is'), require('../curry'), require('../subClassOf'), require('../operators'), require('./Monad'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.curry, global.subClass, global.operators, global.Monad);
+        factory(mod.exports, global.is, global.curry, global.subClassOf, global.operators, global.Monad);
         global.Maybe = mod.exports;
     }
-})(this, function (exports, _is, _curry, _subClass, _operators, _Monad) {
+})(this, function (exports, _is, _curry, _subClassOf, _operators, _Monad) {
     /**
      * Created by elyde on 12/10/2016.
      */
@@ -34,7 +34,7 @@
         NothingSingletonCreated: null
     };
 
-    var Nothing = exports.Nothing = (0, _subClass.subClass)(_Monad2.default, {
+    var Nothing = exports.Nothing = (0, _subClassOf.subClassOf)(_Monad2.default, {
         constructor: function Nothing() {
             var NothingSingleton = _protected.NothingSingleton,
                 NothingSingletonCreated = _protected.NothingSingletonCreated;
@@ -70,7 +70,7 @@
             return new Nothing();
         }
     }),
-        Just = exports.Just = (0, _subClass.subClass)(_Monad2.default, {
+        Just = exports.Just = (0, _subClassOf.subClassOf)(_Monad2.default, {
         constructor: function Just(value) {
             if (!(this instanceof Just)) {
                 return Just.of(value);
@@ -102,7 +102,7 @@
         });
         return subject instanceof Nothing ? replacement : subject.map(fn).value;
     }),
-        Maybe = exports.Maybe = (0, _subClass.subClass)(_Monad2.default, {
+        Maybe = exports.Maybe = (0, _subClassOf.subClassOf)(_Monad2.default, {
         constructor: function Maybe(value) {
             if (!(this instanceof Maybe)) {
                 return Maybe.of(value);

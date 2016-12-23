@@ -5,7 +5,7 @@
 
 import {isset} from '../is';
 import {curry3} from '../curry';
-import {subClass} from '../subClass';
+import {subClassOf} from '../subClassOf';
 import {ap, map, chain, join} from '../operators';
 import Monad from './Monad';
 
@@ -14,7 +14,7 @@ const _protected = {
     NothingSingletonCreated: null
 };
 
-export let Nothing = subClass(Monad, {
+export let Nothing = subClassOf(Monad, {
         constructor: function Nothing() {
             let {NothingSingleton, NothingSingletonCreated} = _protected;
             if (NothingSingleton) {
@@ -52,7 +52,7 @@ export let Nothing = subClass(Monad, {
         }
     }),
 
-    Just = subClass(Monad, {
+    Just = subClassOf(Monad, {
         constructor: function Just(value) {
             if (!(this instanceof Just)) {
                 return Just.of(value);
@@ -83,7 +83,7 @@ export let Nothing = subClass(Monad, {
         return subject instanceof Nothing ? replacement : subject.map(fn).value;
     }),
 
-    Maybe = subClass(Monad, {
+    Maybe = subClassOf(Monad, {
         constructor: function Maybe(value) {
             if (!(this instanceof Maybe)) {
                 return Maybe.of(value);

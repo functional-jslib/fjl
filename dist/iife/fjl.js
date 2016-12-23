@@ -431,7 +431,7 @@ var fjl = function () {
      * Created by elyde on 12/10/2016.
      */
     /**
-     * Normalized the parameters required for `subClassPure` and `subClass` to operate.
+     * Normalized the parameters required for `subClassOfPure` and `subClassOf` to operate.
      * @param superClass {Function} - Superclass to inherit from.
      * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
      * @param methods {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
@@ -440,9 +440,6 @@ var fjl = function () {
      */
     function normalizeArgsForDefineSubClass(superClass, constructor, methods, statics) {
         var _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
-            if (key === 'extend' || key === 'extendWith') {
-                return agg;
-            }
             agg[key] = superClass[key];
             return agg;
         }, {}),
@@ -460,15 +457,15 @@ var fjl = function () {
     }
 
     /**
-     * Same as `subClass` with out side-effect of `extend` method and `toString` method.
-     * @function module:sjl.subClassPure
+     * Same as `subClassOf` with out side-effect of `extend` method and `toString` method.
+     * @function module:sjl.subClassOfPure
      * @param superClass {Function} - Superclass to inherit from.
      * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
      * @param [methods] {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
      * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
      * @returns {Function} - Constructor with extended prototype and added statics.
      */
-    function subClass(superClass, constructor, methods, statics) {
+    function subClassOf(superClass, constructor, methods, statics) {
         var normalizedArgs = normalizeArgsForDefineSubClass.call(null, superClass, constructor, methods, statics),
             _superClass = normalizedArgs.superClass,
             _statics = normalizedArgs.statics,
@@ -490,20 +487,20 @@ var fjl = function () {
     }
 
     /**
-     * Same as subClass multi but takes an array of Constructor or one constructor at position one.
+     * Same as subClassOf multi but takes an array of Constructor or one constructor at position one.
      * @param ctorOrCtors {Function|Array<Function>} - SuperClass(es)
      * @param constructorOrMethods {Function|Object}
      * @param methods {Object|undefined}
      * @param statics {Object|undefined}
      * @returns {Function}
      */
-    function subClassMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
+    function subClassOfMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
         if (notEmptyAndOfType(ctorOrCtors, Array)) {
             return ctorOrCtors.reduce(function (agg, Constructor) {
-                return subClass(Constructor, agg);
-            }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
+                return subClassOf(Constructor, agg);
+            }, subClassOf(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
         }
-        return subClass.apply(null, arguments);
+        return subClassOf.apply(null, arguments);
     }
 
     /**
@@ -554,7 +551,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var BiFunctor = subClass(Functor, function Bifunctor(value1, value2) {
+    var BiFunctor = subClassOf(Functor, function Bifunctor(value1, value2) {
         if (!(this instanceof Bifunctor)) {
             return new Bifunctor(value1, value2);
         }
@@ -586,7 +583,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Applicable = subClass(Functor, function Applicable(value) {
+    var Applicable = subClassOf(Functor, function Applicable(value) {
         if (!this) {
             return new Applicable(value);
         }
@@ -600,7 +597,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Applicative = subClass(Applicable, function Applicative(value) {
+    var Applicative = subClassOf(Applicable, function Applicative(value) {
         if (!this) {
             return Applicative.of(value);
         }
@@ -617,7 +614,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Chainable = subClass(Applicable, function Chainable(value) {
+    var Chainable = subClassOf(Applicable, function Chainable(value) {
         if (!this) {
             return new Chainable(value);
         }
@@ -634,7 +631,21 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Monad = subClassMulti([Applicative, Chainable], function Monad(value) {
+    var Extendable = subClassOf(Functor, function Extendable(value) {
+        if (!(this instanceof Extendable)) {
+            return new Extendable(value);
+        }
+        Functor.call(this, value);
+    }, {
+        extend: function extend(fn) {
+            return this.map(fn);
+        }
+    });
+
+    /**
+     * Created by edlc on 12/9/16.
+     */
+    var Monad = subClassOfMulti([Applicative, Chainable], function Monad(value) {
         if (!this) {
             return Monad.of(value);
         }
@@ -674,7 +685,7 @@ var fjl = function () {
         NothingSingletonCreated: null
     };
 
-    var Nothing = subClass(Monad, {
+    var Nothing = subClassOf(Monad, {
         constructor: function Nothing() {
             var NothingSingleton = _protected.NothingSingleton,
                 NothingSingletonCreated = _protected.NothingSingletonCreated;
@@ -710,7 +721,7 @@ var fjl = function () {
             return new Nothing();
         }
     });
-    var Just = subClass(Monad, {
+    var Just = subClassOf(Monad, {
         constructor: function Just(value) {
             if (!(this instanceof Just)) {
                 return Just.of(value);
@@ -733,7 +744,7 @@ var fjl = function () {
         });
         return subject instanceof Nothing ? replacement : subject.map(fn).value;
     });
-    var Maybe = subClass(Monad, {
+    var Maybe = subClassOf(Monad, {
         constructor: function Maybe(value) {
             if (!(this instanceof Maybe)) {
                 return Maybe.of(value);
@@ -764,7 +775,7 @@ var fjl = function () {
     /**
      * Created by elyde on 12/10/2016.
      */
-    var Left = subClass(Just, {
+    var Left = subClassOf(Just, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
                 return Left.of(value);
@@ -776,7 +787,7 @@ var fjl = function () {
             return this;
         }
     });
-    var Right = subClass(Just, {
+    var Right = subClassOf(Just, {
         constructor: function Right(value) {
             if (!(this instanceof Right)) {
                 return Right.of(value);
@@ -797,7 +808,7 @@ var fjl = function () {
             return _map(rightCallback, identity);
         }
     });
-    var Either = subClassMulti([Monad, BiFunctor], {
+    var Either = subClassOfMulti([Monad, BiFunctor], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
                 return new Either(left, right);
@@ -816,7 +827,7 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sun Dec 18 2016 16:19:19 GMT-0500 (Eastern Standard Time) 
+     * Generated Thu Dec 22 2016 22:34:33 GMT-0500 (Eastern Standard Time) 
      */
 
     var version = '1.0.0';
@@ -832,8 +843,8 @@ var fjl = function () {
         curry3: curry3,
         curry4: curry4,
         curry5: curry5,
-        subClass: subClass,
-        subClassMulti: subClassMulti,
+        subClassOf: subClassOf,
+        subClassOfMulti: subClassOfMulti,
         subtractObj: subtractObj,
         isset: isset,
         issetMulti: issetMulti,
@@ -861,6 +872,7 @@ var fjl = function () {
         Applicable: Applicable,
         Applicative: Applicative,
         Chainable: Chainable,
+        Extendable: Extendable,
         Monad: Monad,
         Maybe: Maybe,
         Just: Just,

@@ -5,7 +5,7 @@
 
 import compose from './compose';
 import {curry, curryN, curry2, curry3, curry4, curry5} from './curry';
-import {subClass, subClassMulti} from './subClass';
+import {subClassOf, subClassOfMulti} from './subClassOf';
 import {subtractObj} from './math';
 import {typeOf, typeOfIs, typeOfIsMulti} from './typeOf';
 import {isset, issetMulti, issetAndOfType, isNumber,
@@ -19,6 +19,7 @@ import Bifunctor from './functor/Bifunctor';
 import Applicable from './functor/Applicable';
 import Applicative from './functor/Applicative';
 import Chainable from './functor/Chainable';
+import Extendable from './functor/Extendable';
 import Monad from './monad/Monad';
 import {Maybe, Just, Nothing, maybe} from './monad/Maybe';
 import {Either, Left, Right, either} from './monad/Either';
@@ -32,8 +33,8 @@ export default {
     curry3,
     curry4,
     curry5,
-    subClass,
-    subClassMulti,
+    subClassOf,
+    subClassOfMulti,
     subtractObj,
     isset,
     issetMulti,
@@ -61,6 +62,7 @@ export default {
     Applicable,
     Applicative,
     Chainable,
+    Extendable,
     Monad,
     Maybe,
     Just,

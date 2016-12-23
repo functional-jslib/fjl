@@ -13,7 +13,7 @@ var _compose2 = _interopRequireDefault(_compose);
 
 var _curry = require('./curry');
 
-var _subClass = require('./subClass');
+var _subClassOf = require('./subClassOf');
 
 var _math = require('./math');
 
@@ -47,6 +47,10 @@ var _Chainable = require('./functor/Chainable');
 
 var _Chainable2 = _interopRequireDefault(_Chainable);
 
+var _Extendable = require('./functor/Extendable');
+
+var _Extendable2 = _interopRequireDefault(_Extendable);
+
 var _Monad = require('./monad/Monad');
 
 var _Monad2 = _interopRequireDefault(_Monad);
@@ -71,8 +75,8 @@ exports.default = {
     curry3: _curry.curry3,
     curry4: _curry.curry4,
     curry5: _curry.curry5,
-    subClass: _subClass.subClass,
-    subClassMulti: _subClass.subClassMulti,
+    subClassOf: _subClassOf.subClassOf,
+    subClassOfMulti: _subClassOf.subClassOfMulti,
     subtractObj: _math.subtractObj,
     isset: _is.isset,
     issetMulti: _is.issetMulti,
@@ -100,6 +104,7 @@ exports.default = {
     Applicable: _Applicable2.default,
     Applicative: _Applicative2.default,
     Chainable: _Chainable2.default,
+    Extendable: _Extendable2.default,
     Monad: _Monad2.default,
     Maybe: _Maybe.Maybe,
     Just: _Maybe.Just,

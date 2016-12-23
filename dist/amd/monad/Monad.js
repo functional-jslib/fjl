@@ -1,4 +1,4 @@
-define(['exports', '../functor/Applicative', '../functor/Chainable', '../subClass'], function (exports, _Applicative, _Chainable, _subClass) {
+define(['exports', '../functor/Applicative', '../functor/Chainable', '../subClassOf'], function (exports, _Applicative, _Chainable, _subClassOf) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -19,7 +19,7 @@ define(['exports', '../functor/Applicative', '../functor/Chainable', '../subClas
         };
     }
 
-    var Monad = exports.Monad = (0, _subClass.subClassMulti)([_Applicative2.default, _Chainable2.default], function Monad(value) {
+    var Monad = exports.Monad = (0, _subClassOf.subClassOfMulti)([_Applicative2.default, _Chainable2.default], function Monad(value) {
         if (!this) {
             return Monad.of(value);
         }

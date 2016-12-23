@@ -12,7 +12,7 @@ var _is = require('../is');
 
 var _curry = require('../curry');
 
-var _subClass = require('../subClass');
+var _subClassOf = require('../subClassOf');
 
 var _operators = require('../operators');
 
@@ -27,7 +27,7 @@ var _protected = {
     NothingSingletonCreated: null
 };
 
-var Nothing = exports.Nothing = (0, _subClass.subClass)(_Monad2.default, {
+var Nothing = exports.Nothing = (0, _subClassOf.subClassOf)(_Monad2.default, {
     constructor: function Nothing() {
         var NothingSingleton = _protected.NothingSingleton,
             NothingSingletonCreated = _protected.NothingSingletonCreated;
@@ -63,7 +63,7 @@ var Nothing = exports.Nothing = (0, _subClass.subClass)(_Monad2.default, {
         return new Nothing();
     }
 }),
-    Just = exports.Just = (0, _subClass.subClass)(_Monad2.default, {
+    Just = exports.Just = (0, _subClassOf.subClassOf)(_Monad2.default, {
     constructor: function Just(value) {
         if (!(this instanceof Just)) {
             return Just.of(value);
@@ -95,7 +95,7 @@ maybe = exports.maybe = (0, _curry.curry3)(function (replacement, fn, monad) {
     });
     return subject instanceof Nothing ? replacement : subject.map(fn).value;
 }),
-    Maybe = exports.Maybe = (0, _subClass.subClass)(_Monad2.default, {
+    Maybe = exports.Maybe = (0, _subClassOf.subClassOf)(_Monad2.default, {
     constructor: function Maybe(value) {
         if (!(this instanceof Maybe)) {
             return Maybe.of(value);

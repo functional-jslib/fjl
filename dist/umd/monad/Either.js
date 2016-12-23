@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './../curry', './../operators', './../subClass', './Maybe', './../functor/Bifunctor', './Monad'], factory);
+        define(['exports', './../curry', './../operators', './../subClassOf', './Maybe', './../functor/Bifunctor', './Monad'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./../curry'), require('./../operators'), require('./../subClass'), require('./Maybe'), require('./../functor/Bifunctor'), require('./Monad'));
+        factory(exports, require('./../curry'), require('./../operators'), require('./../subClassOf'), require('./Maybe'), require('./../functor/Bifunctor'), require('./Monad'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry, global.operators, global.subClass, global.Maybe, global.Bifunctor, global.Monad);
+        factory(mod.exports, global.curry, global.operators, global.subClassOf, global.Maybe, global.Bifunctor, global.Monad);
         global.Either = mod.exports;
     }
-})(this, function (exports, _curry, _operators, _subClass, _Maybe, _Bifunctor, _Monad) {
+})(this, function (exports, _curry, _operators, _subClassOf, _Maybe, _Bifunctor, _Monad) {
     /**
      * Created by elyde on 12/10/2016.
      */
@@ -38,7 +38,7 @@
         };
     }
 
-    var Left = exports.Left = (0, _subClass.subClass)(_Maybe.Just, {
+    var Left = exports.Left = (0, _subClassOf.subClassOf)(_Maybe.Just, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
                 return Left.of(value);
@@ -50,7 +50,7 @@
             return this;
         }
     }),
-        Right = exports.Right = (0, _subClass.subClass)(_Maybe.Just, {
+        Right = exports.Right = (0, _subClassOf.subClassOf)(_Maybe.Just, {
         constructor: function Right(value) {
             if (!(this instanceof Right)) {
                 return Right.of(value);
@@ -71,7 +71,7 @@
             return (0, _operators.map)(rightCallback, identity);
         }
     }),
-        Either = exports.Either = (0, _subClass.subClassMulti)([_Monad2.default, _Bifunctor2.default], {
+        Either = exports.Either = (0, _subClassOf.subClassOfMulti)([_Monad2.default, _Bifunctor2.default], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
                 return new Either(left, right);

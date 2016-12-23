@@ -11,12 +11,12 @@ var _Functor = require('./Functor');
 
 var _Functor2 = _interopRequireDefault(_Functor);
 
-var _subClass = require('./../subClass');
+var _subClassOf = require('./../subClassOf');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Extendable = (0, _subClass.subClass)(_Functor2.default, function Extendable(value) {
-    if (!this) {
+var Extendable = (0, _subClassOf.subClassOf)(_Functor2.default, function Extendable(value) {
+    if (!(this instanceof Extendable)) {
         return new Extendable(value);
     }
     _Functor2.default.call(this, value);

@@ -17,7 +17,7 @@ var _curry = require('./../curry');
 
 var _operators = require('./../operators');
 
-var _subClass = require('./../subClass');
+var _subClassOf = require('./../subClassOf');
 
 var _Maybe = require('./Maybe');
 
@@ -33,7 +33,7 @@ var _Monad2 = _interopRequireDefault(_Monad);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Left = exports.Left = (0, _subClass.subClass)(_Maybe.Just, {
+var Left = exports.Left = (0, _subClassOf.subClassOf)(_Maybe.Just, {
     constructor: function Left(value) {
         if (!(this instanceof Left)) {
             return Left.of(value);
@@ -45,7 +45,7 @@ var Left = exports.Left = (0, _subClass.subClass)(_Maybe.Just, {
         return this;
     }
 }),
-    Right = exports.Right = (0, _subClass.subClass)(_Maybe.Just, {
+    Right = exports.Right = (0, _subClassOf.subClassOf)(_Maybe.Just, {
     constructor: function Right(value) {
         if (!(this instanceof Right)) {
             return Right.of(value);
@@ -66,7 +66,7 @@ var Left = exports.Left = (0, _subClass.subClass)(_Maybe.Just, {
         return (0, _operators.map)(rightCallback, identity);
     }
 }),
-    Either = exports.Either = (0, _subClass.subClassMulti)([_Monad2.default, _Bifunctor2.default], {
+    Either = exports.Either = (0, _subClassOf.subClassOfMulti)([_Monad2.default, _Bifunctor2.default], {
     constructor: function Either(left, right) {
         if (!(this instanceof Either)) {
             return new Either(left, right);

@@ -11,11 +11,11 @@ var _Functor = require('./Functor');
 
 var _Functor2 = _interopRequireDefault(_Functor);
 
-var _subClass = require('./../subClass');
+var _subClassOf = require('./../subClassOf');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = (0, _subClass.subClass)(_Functor2.default, function Bifunctor(value1, value2) {
+exports.default = (0, _subClassOf.subClassOf)(_Functor2.default, function Bifunctor(value1, value2) {
     if (!(this instanceof Bifunctor)) {
         return new Bifunctor(value1, value2);
     }

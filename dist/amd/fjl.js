@@ -1,4 +1,4 @@
-define(['exports', './compose', './curry', './subClass', './math', './typeOf', './is', './not', './symbols', './functor/Functor', './functor/Bifunctor', './functor/Applicable', './functor/Applicative', './functor/Chainable', './monad/Monad', './monad/Maybe', './monad/Either', './generated/version'], function (exports, _compose, _curry, _subClass, _math, _typeOf, _is, _not, _symbols, _Functor, _Bifunctor, _Applicable, _Applicative, _Chainable, _Monad, _Maybe, _Either, _version) {
+define(['exports', './compose', './curry', './subClassOf', './math', './typeOf', './is', './not', './symbols', './functor/Functor', './functor/Bifunctor', './functor/Applicable', './functor/Applicative', './functor/Chainable', './functor/Extendable', './monad/Monad', './monad/Maybe', './monad/Either', './generated/version'], function (exports, _compose, _curry, _subClassOf, _math, _typeOf, _is, _not, _symbols, _Functor, _Bifunctor, _Applicable, _Applicative, _Chainable, _Extendable, _Monad, _Maybe, _Either, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -21,6 +21,8 @@ define(['exports', './compose', './curry', './subClass', './math', './typeOf', '
     var _Applicative2 = _interopRequireDefault(_Applicative);
 
     var _Chainable2 = _interopRequireDefault(_Chainable);
+
+    var _Extendable2 = _interopRequireDefault(_Extendable);
 
     var _Monad2 = _interopRequireDefault(_Monad);
 
@@ -57,8 +59,8 @@ define(['exports', './compose', './curry', './subClass', './math', './typeOf', '
         curry3: _curry.curry3,
         curry4: _curry.curry4,
         curry5: _curry.curry5,
-        subClass: _subClass.subClass,
-        subClassMulti: _subClass.subClassMulti,
+        subClassOf: _subClassOf.subClassOf,
+        subClassOfMulti: _subClassOf.subClassOfMulti,
         subtractObj: _math.subtractObj,
         isset: _is.isset,
         issetMulti: _is.issetMulti,
@@ -86,6 +88,7 @@ define(['exports', './compose', './curry', './subClass', './math', './typeOf', '
         Applicable: _Applicable2.default,
         Applicative: _Applicative2.default,
         Chainable: _Chainable2.default,
+        Extendable: _Extendable2.default,
         Monad: _Monad2.default,
         Maybe: _Maybe.Maybe,
         Just: _Maybe.Just,

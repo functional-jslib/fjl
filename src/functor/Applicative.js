@@ -3,9 +3,9 @@
  */
 'use strict';
 import Applicable from './Applicable';
-import {subClass} from './../subClass';
+import {subClassOf} from './../subClassOf';
 
-let Applicative = subClass (Applicable,
+let Applicative = subClassOf (Applicable,
     function Applicative(value) {
         if (!this) {
             return Applicative.of(value);

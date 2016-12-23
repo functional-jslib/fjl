@@ -1,4 +1,4 @@
-define(['exports', './../curry', './../operators', './../subClass', './Maybe', './../functor/Bifunctor', './Monad'], function (exports, _curry, _operators, _subClass, _Maybe, _Bifunctor, _Monad) {
+define(['exports', './../curry', './../operators', './../subClassOf', './Maybe', './../functor/Bifunctor', './Monad'], function (exports, _curry, _operators, _subClassOf, _Maybe, _Bifunctor, _Monad) {
     /**
      * Created by elyde on 12/10/2016.
      */
@@ -26,7 +26,7 @@ define(['exports', './../curry', './../operators', './../subClass', './Maybe', '
         };
     }
 
-    var Left = exports.Left = (0, _subClass.subClass)(_Maybe.Just, {
+    var Left = exports.Left = (0, _subClassOf.subClassOf)(_Maybe.Just, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
                 return Left.of(value);
@@ -38,7 +38,7 @@ define(['exports', './../curry', './../operators', './../subClass', './Maybe', '
             return this;
         }
     }),
-        Right = exports.Right = (0, _subClass.subClass)(_Maybe.Just, {
+        Right = exports.Right = (0, _subClassOf.subClassOf)(_Maybe.Just, {
         constructor: function Right(value) {
             if (!(this instanceof Right)) {
                 return Right.of(value);
@@ -59,7 +59,7 @@ define(['exports', './../curry', './../operators', './../subClass', './Maybe', '
             return (0, _operators.map)(rightCallback, identity);
         }
     }),
-        Either = exports.Either = (0, _subClass.subClassMulti)([_Monad2.default, _Bifunctor2.default], {
+        Either = exports.Either = (0, _subClassOf.subClassOfMulti)([_Monad2.default, _Bifunctor2.default], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
                 return new Either(left, right);

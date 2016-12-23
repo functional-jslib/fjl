@@ -10,12 +10,12 @@
 
 import {curry2} from './../curry';
 import {map} from './../operators';
-import {subClass, subClassMulti} from './../subClass';
+import {subClassOf, subClassOfMulti} from './../subClassOf';
 import Maybe, {Just} from './Maybe';
 import BiFunctor from './../functor/Bifunctor';
 import Monad from './Monad';
 
-export let Left = subClass(Just, {
+export let Left = subClassOf(Just, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
                 return Left.of(value);
@@ -28,7 +28,7 @@ export let Left = subClass(Just, {
         }
     }),
 
-    Right = subClass(Just, {
+    Right = subClassOf(Just, {
         constructor: function Right(value) {
             if (!(this instanceof Right)) {
                 return Right.of(value);
@@ -52,7 +52,7 @@ export let Left = subClass(Just, {
         }
     }),
 
-    Either = subClassMulti([Monad, BiFunctor], {
+    Either = subClassOfMulti([Monad, BiFunctor], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
                 return new Either(left, right);

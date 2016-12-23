@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './Functor', './../subClass'], factory);
+        define(['exports', './Functor', './../subClassOf'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./Functor'), require('./../subClass'));
+        factory(exports, require('./Functor'), require('./../subClassOf'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.Functor, global.subClass);
+        factory(mod.exports, global.Functor, global.subClassOf);
         global.Extendable = mod.exports;
     }
-})(this, function (exports, _Functor, _subClass) {
+})(this, function (exports, _Functor, _subClassOf) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -28,8 +28,8 @@
         };
     }
 
-    var Extendable = (0, _subClass.subClass)(_Functor2.default, function Extendable(value) {
-        if (!this) {
+    var Extendable = (0, _subClassOf.subClassOf)(_Functor2.default, function Extendable(value) {
+        if (!(this instanceof Extendable)) {
             return new Extendable(value);
         }
         _Functor2.default.call(this, value);

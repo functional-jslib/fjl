@@ -4,9 +4,9 @@
 'use strict';
 import Applicative from '../functor/Applicative';
 import Chainable from '../functor/Chainable';
-import {subClassMulti} from '../subClass';
+import {subClassOfMulti} from '../subClassOf';
 
-export let Monad = subClassMulti ([Applicative, Chainable],
+export let Monad = subClassOfMulti ([Applicative, Chainable],
     function Monad (value) {
         if (!this) {
             return Monad.of(value);

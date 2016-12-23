@@ -3,9 +3,9 @@
  */
 'use strict';
 import Functor from './Functor';
-import {subClass} from './../subClass';
+import {subClassOf} from './../subClassOf';
 
-let Applicable = subClass(Functor,
+let Applicable = subClassOf(Functor,
     function Applicable (value) {
         if (!this) {
             return new Applicable(value);

@@ -3,9 +3,9 @@
  */
 'use strict';
 import Monad from './Monad';
-import {subClass} from '../subClass';
+import {subClassOf} from '../subClassOf';
 
-export let Identity = subClass(Monad, function Identity(value) {
+export let Identity = subClassOf(Monad, function Identity(value) {
     Monad.call(this, value);
 });
 

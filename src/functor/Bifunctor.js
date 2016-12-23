@@ -3,9 +3,9 @@
  */
 'use strict';
 import Functor from './Functor';
-import {subClass} from './../subClass';
+import {subClassOf} from './../subClassOf';
 
-export default subClass(Functor,
+export default subClassOf(Functor,
     function Bifunctor (value1, value2) {
         if (!(this instanceof Bifunctor)) {
             return new Bifunctor(value1, value2);

@@ -6,9 +6,9 @@
  */
 'use strict';
 import Applicable from './Applicable';
-import {subClass} from './../subClass';
+import {subClassOf} from './../subClassOf';
 
-let Chainable = subClass (Applicable,
+let Chainable = subClassOf (Applicable,
     function Chainable (value) {
         if (!this) {
             return new Chainable(value);

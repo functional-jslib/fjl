@@ -3,11 +3,11 @@
  */
 'use strict';
 import Functor from './Functor';
-import {subClass} from './../subClass';
+import {subClassOf} from './../subClassOf';
 
-let Extendable = subClass (Functor,
+let Extendable = subClassOf (Functor,
     function Extendable (value) {
-        if (!this) {
+        if (!(this instanceof  Extendable)) {
             return new Extendable(value);
         }
         Functor.call(this, value);
