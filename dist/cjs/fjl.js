@@ -13,19 +13,15 @@ var _compose2 = _interopRequireDefault(_compose);
 
 var _curry = require('./curry');
 
-var _subClassOf = require('./subClassOf');
+var _subClass = require('./subClass');
 
-var _math = require('./math');
+var _objMath = require('./objMath');
 
 var _typeOf = require('./typeOf');
 
 var _is = require('./is');
 
 var _not = require('./not');
-
-var _symbols = require('./symbols');
-
-var symbols = _interopRequireWildcard(_symbols);
 
 var _Functor = require('./functor/Functor');
 
@@ -63,11 +59,10 @@ var _version = require('./generated/version');
 
 var _version2 = _interopRequireDefault(_version);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
+    complement: _objMath.complement,
     compose: _compose2.default,
     curry: _curry.curry,
     curryN: _curry.curryN,
@@ -75,9 +70,9 @@ exports.default = {
     curry3: _curry.curry3,
     curry4: _curry.curry4,
     curry5: _curry.curry5,
-    subClassOf: _subClassOf.subClassOf,
-    subClassOfMulti: _subClassOf.subClassOfMulti,
-    subtractObj: _math.subtractObj,
+    subClass: _subClass.subClass,
+    subClassMulti: _subClass.subClassMulti,
+    difference: _objMath.difference,
     isset: _is.isset,
     issetMulti: _is.issetMulti,
     issetAndOfType: _is.issetAndOfType,
@@ -96,9 +91,10 @@ exports.default = {
     isEmpty: _is.isEmpty,
     isEmptyMulti: _is.isEmptyMulti,
     isEmptyObj: _is.isEmptyObj,
+    intersect: _objMath.intersect,
     notOfTypeOrEmpty: _not.notOfTypeOrEmpty,
     notEmptyAndOfType: _not.notEmptyAndOfType,
-    symbols: symbols,
+    union: _objMath.union,
     Functor: _Functor2.default,
     Bifunctor: _Bifunctor2.default,
     Applicable: _Applicable2.default,

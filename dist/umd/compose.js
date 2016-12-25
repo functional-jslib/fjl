@@ -31,8 +31,8 @@
     }
 
     return function (arg0) {
-      return args.reduceRight(function (value, arg) {
-        return arg(value);
+      return args.reduceRight(function (value, fn) {
+        return fn(value);
       }, arg0);
     };
   }

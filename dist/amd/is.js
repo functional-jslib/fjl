@@ -1,4 +1,4 @@
-define(['exports', './typeOf'], function (exports, _typeOf) {
+define(['exports', './typeOf', './compose'], function (exports, _typeOf, _compose) {
     /**
      * Created by elyde on 12/18/2016.
      */
@@ -25,6 +25,15 @@ define(['exports', './typeOf'], function (exports, _typeOf) {
     exports.isEmptyObj = isEmptyObj;
     exports.isEmpty = isEmpty;
     exports.isEmptyMulti = isEmptyMulti;
+    exports.isPrimitive = isPrimitive;
+
+    var _compose2 = _interopRequireDefault(_compose);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
 
     var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
@@ -218,6 +227,15 @@ define(['exports', './typeOf'], function (exports, _typeOf) {
         });
     }
 
+    /**
+     * Checks to see if value is a primitive.
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    function isPrimitive(value) {
+        return (0, _compose2.default)(isNumber, isString, isObject, isArray, isFunction, isSymbol, isBoolean, isNull, isUndefined)(value);
+    }
+
     exports.default = {
         isset: isset,
         issetMulti: issetMulti,
@@ -233,6 +251,7 @@ define(['exports', './typeOf'], function (exports, _typeOf) {
         isSymbol: isSymbol,
         isEmpty: isEmpty,
         isEmptyMulti: isEmptyMulti,
-        isEmptyObj: isEmptyObj
+        isEmptyObj: isEmptyObj,
+        isPrimitive: isPrimitive
     };
 });

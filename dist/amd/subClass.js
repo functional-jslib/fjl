@@ -1,4 +1,4 @@
-define(['exports', './is', './not', './math'], function (exports, _is, _not, _math) {
+define(['exports', './is', './not', './objMath', './assign'], function (exports, _is, _not, _objMath, _assign) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -16,18 +16,18 @@ define(['exports', './is', './not', './math'], function (exports, _is, _not, _ma
      * @param statics {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
      * @returns {{constructor: (Function|*), methods: *, statics: *, superClass: (*|Object)}}
      */
+    /**
+     * Created by elyde on 12/10/2016.
+     */
     function normalizeArgsForDefineSubClass(superClass, constructor, methods, statics) {
         var _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
-            if (key === 'extend' || key === 'extendWith') {
-                return agg;
-            }
             agg[key] = superClass[key];
             return agg;
         }, {}),
             isCtorAndMethods = !(0, _is.isFunction)(constructor),
             _constructor = isCtorAndMethods ? constructor.constructor : constructor,
-            _methods = isCtorAndMethods ? (0, _math.subtractObj)(constructor, { constructor: null }) : methods,
-            _statics = Object.assign(_extractedStatics, isCtorAndMethods ? methods : statics);
+            _methods = isCtorAndMethods ? (0, _objMath.difference)(constructor, { constructor: null }) : methods,
+            _statics = (0, _assign.assign)(_extractedStatics, isCtorAndMethods ? methods : statics);
 
         return {
             constructor: _constructor,
@@ -46,9 +46,6 @@ define(['exports', './is', './not', './math'], function (exports, _is, _not, _ma
      * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
      * @returns {Function} - Constructor with extended prototype and added statics.
      */
-    /**
-     * Created by elyde on 12/10/2016.
-     */
     function subClass(superClass, constructor, methods, statics) {
         var normalizedArgs = normalizeArgsForDefineSubClass.call(null, superClass, constructor, methods, statics),
             _superClass = normalizedArgs.superClass,
@@ -63,8 +60,8 @@ define(['exports', './is', './not', './math'], function (exports, _is, _not, _ma
         Object.defineProperty(_constructor.prototype, 'constructor', { value: _constructor });
 
         // Extend constructor
-        Object.assign(_constructor.prototype, _methods);
-        Object.assign(_constructor, _statics);
+        (0, _assign.assign)(_constructor.prototype, _methods);
+        (0, _assign.assign)(_constructor, _statics);
 
         // Return constructor
         return _constructor;
@@ -74,8 +71,8 @@ define(['exports', './is', './not', './math'], function (exports, _is, _not, _ma
      * Same as subClass multi but takes an array of Constructor or one constructor at position one.
      * @param ctorOrCtors {Function|Array<Function>} - SuperClass(es)
      * @param constructorOrMethods {Function|Object}
-     * @param methods {Object|undefined}
-     * @param statics {Object|undefined}
+     * @param [methods] {Object|undefined}
+     * @param [statics] {Object|undefined}
      * @returns {Function}
      */
     function subClassMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
@@ -84,7 +81,7 @@ define(['exports', './is', './not', './math'], function (exports, _is, _not, _ma
                 return subClass(Constructor, agg);
             }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
         }
-        return subClass.apply(null, arguments);
+        return subClass(ctorOrCtors, constructorOrMethods, methods, statics);
     }
 
     exports.default = {

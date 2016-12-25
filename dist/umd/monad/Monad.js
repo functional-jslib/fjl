@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../functor/Applicative', '../functor/Chainable', '../subClassOf'], factory);
+        define(['exports', '../functor/Applicative', '../functor/Chainable', '../subClass'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../functor/Applicative'), require('../functor/Chainable'), require('../subClassOf'));
+        factory(exports, require('../functor/Applicative'), require('../functor/Chainable'), require('../subClass'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.Applicative, global.Chainable, global.subClassOf);
+        factory(mod.exports, global.Applicative, global.Chainable, global.subClass);
         global.Monad = mod.exports;
     }
-})(this, function (exports, _Applicative, _Chainable, _subClassOf) {
+})(this, function (exports, _Applicative, _Chainable, _subClass) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -31,7 +31,7 @@
         };
     }
 
-    var Monad = exports.Monad = (0, _subClassOf.subClassOfMulti)([_Applicative2.default, _Chainable2.default], function Monad(value) {
+    var Monad = exports.Monad = (0, _subClass.subClassMulti)([_Applicative2.default, _Chainable2.default], function Monad(value) {
         if (!this) {
             return Monad.of(value);
         }

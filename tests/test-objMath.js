@@ -10,7 +10,7 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {complement, difference, union, intersect} from '../src/obj-math';
+import {complement, difference, union, intersect} from '../src/objMath';
 import {expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -77,12 +77,10 @@ describe('intersect', function () {
     });
     it ('should return an object that contains values from both passed in objects', function () {
         let subj1 = {a: 1, b: 2, c: 3},
-            subj2 = {e: 5, f: 6, g: 7},
+            subj2 = {a: 5, b: 6, c: 7},
             result = intersect(subj1, subj2);
-        [subj2, subj1].forEach(function (subj) {
-            Object.keys(subj).forEach(key => {
-                expectEqual(result[key], subj[key]);
-            });
+        Object.keys(subj2).forEach(key => {
+            expectEqual(result[key], subj2[key]);
         });
-    })
+    });
 });

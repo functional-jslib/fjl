@@ -1,4 +1,4 @@
-define(['exports', './Functor', './../subClassOf'], function (exports, _Functor, _subClassOf) {
+define(['exports', './Functor', './../subClass'], function (exports, _Functor, _subClass) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -16,7 +16,7 @@ define(['exports', './Functor', './../subClassOf'], function (exports, _Functor,
         };
     }
 
-    exports.default = (0, _subClassOf.subClassOf)(_Functor2.default, function Bifunctor(value1, value2) {
+    exports.default = (0, _subClass.subClass)(_Functor2.default, function Bifunctor(value1, value2) {
         if (!(this instanceof Bifunctor)) {
             return new Bifunctor(value1, value2);
         }
@@ -26,17 +26,11 @@ define(['exports', './Functor', './../subClassOf'], function (exports, _Functor,
             writable: true
         });
     }, {
-        map1: function map1(fn) {
-            return this.map(fn);
-        },
-        map2: function map2(fn) {
-            return new this.constructor(this.value, fn(this.value2));
-        },
         first: function first(fn) {
-            return this.map1(fn);
+            return new this.constructor(fn(this.value), this.value2);
         },
         second: function second(fn) {
-            return this.map2(fn);
+            return new this.constructor(this.value, fn(this.value2));
         },
 
 

@@ -11,11 +11,11 @@ var _Functor = require('./Functor');
 
 var _Functor2 = _interopRequireDefault(_Functor);
 
-var _subClassOf = require('./../subClassOf');
+var _subClass = require('./../subClass');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Applicable = (0, _subClassOf.subClassOf)(_Functor2.default, function Applicable(value) {
+var Applicable = (0, _subClass.subClass)(_Functor2.default, function Applicable(value) {
     if (!this) {
         return new Applicable(value);
     }

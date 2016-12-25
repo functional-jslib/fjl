@@ -20,8 +20,8 @@ var fjl = function () {
         }
 
         return function (arg0) {
-            return args.reduceRight(function (value, arg) {
-                return arg(value);
+            return args.reduceRight(function (value, fn) {
+                return fn(value);
             }, arg0);
         };
     }
@@ -149,7 +149,7 @@ var fjl = function () {
      * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
      */
     function typeOf(value) {
-        var retVal;
+        var retVal = void 0;
         if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined$1) {
             retVal = _Undefined$1;
         } else if (value === null) {
@@ -389,6 +389,15 @@ var fjl = function () {
     }
 
     /**
+     * Checks to see if value is a primitive.
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    function isPrimitive(value) {
+        return compose(isNumber, isString, isObject, isArray, isFunction, isSymbol, isBoolean, isNull, isUndefined)(value);
+    }
+
+    /**
      * Created by elyde on 12/18/2016.
      */
 
@@ -415,15 +424,85 @@ var fjl = function () {
     }
 
     /**
-     * Created by elyde on 12/10/2016.
+     * Created by elyde on 12/25/2016.
      */
 
-    function subtractObj(obj1, obj2) {
+    var hasOwnProperty$1 = Object.prototype.hasOwnProperty;
+
+    function assignDeep(obj0) {
+        for (var _len9 = arguments.length, objs = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
+            objs[_key9 - 1] = arguments[_key9];
+        }
+
+        return objs.reduce(function (topAgg, obj) {
+            return Object.keys(obj).reduce(function (agg, key) {
+                var propDescription = Object.getOwnPropertyDescriptor(agg, key);
+                // If property is not writable move to next item in collection
+                if (hasOwnProperty$1.call(agg, key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+                    return agg;
+                }
+                if (isObject(agg[key]) && isObject(obj[key])) {
+                    assignDeep(agg[key], obj[key]);
+                } else {
+                    agg[key] = obj[key];
+                }
+                return agg;
+            }, topAgg);
+        }, obj0);
+    }
+
+    function assign(obj0) {
+        for (var _len10 = arguments.length, objs = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
+            objs[_key10 - 1] = arguments[_key10];
+        }
+
+        if (Object.assign) {
+            return Object.assign.apply(Object, [obj0].concat(objs));
+        }
+        return objs.reduce(function (topAgg, obj) {
+            return Object.keys(obj).reduce(function (agg, key) {
+                agg[key] = obj[key];
+                return agg;
+            }, topAgg);
+        }, obj0);
+    }
+
+    /**
+     * Created by elyde on 12/10/2016.
+     * Set functions for objects.
+     */
+
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+    function union(obj1, obj2) {
+        return assignDeep(obj1, obj2);
+    }
+
+    function intersect(obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
-            if (!obj2.hasOwnProperty(key)) {
+            if (hasOwnProperty.call(obj2, key)) {
+                agg[key] = obj2[key];
+            }
+            return agg;
+        }, {});
+    }
+
+    function difference(obj1, obj2) {
+        return Object.keys(obj1).reduce(function (agg, key) {
+            if (!hasOwnProperty.call(obj2, key)) {
                 agg[key] = obj1[key];
             }
             return agg;
+        }, {});
+    }
+
+    function complement(obj0) {
+        for (var _len11 = arguments.length, objs = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
+            objs[_key11 - 1] = arguments[_key11];
+        }
+
+        return objs.reduce(function (agg, obj) {
+            return assignDeep(agg, difference(obj, obj0));
         }, {});
     }
 
@@ -431,7 +510,7 @@ var fjl = function () {
      * Created by elyde on 12/10/2016.
      */
     /**
-     * Normalized the parameters required for `subClassOfPure` and `subClassOf` to operate.
+     * Normalized the parameters required for `subClassPure` and `subClass` to operate.
      * @param superClass {Function} - Superclass to inherit from.
      * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
      * @param methods {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
@@ -445,8 +524,8 @@ var fjl = function () {
         }, {}),
             isCtorAndMethods = !isFunction(constructor),
             _constructor = isCtorAndMethods ? constructor.constructor : constructor,
-            _methods = isCtorAndMethods ? subtractObj(constructor, { constructor: null }) : methods,
-            _statics = Object.assign(_extractedStatics, isCtorAndMethods ? methods : statics);
+            _methods = isCtorAndMethods ? difference(constructor, { constructor: null }) : methods,
+            _statics = assign(_extractedStatics, isCtorAndMethods ? methods : statics);
 
         return {
             constructor: _constructor,
@@ -457,15 +536,15 @@ var fjl = function () {
     }
 
     /**
-     * Same as `subClassOf` with out side-effect of `extend` method and `toString` method.
-     * @function module:sjl.subClassOfPure
+     * Same as `subClass` with out side-effect of `extend` method and `toString` method.
+     * @function module:sjl.subClassPure
      * @param superClass {Function} - Superclass to inherit from.
      * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
      * @param [methods] {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
      * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
      * @returns {Function} - Constructor with extended prototype and added statics.
      */
-    function subClassOf(superClass, constructor, methods, statics) {
+    function subClass(superClass, constructor, methods, statics) {
         var normalizedArgs = normalizeArgsForDefineSubClass.call(null, superClass, constructor, methods, statics),
             _superClass = normalizedArgs.superClass,
             _statics = normalizedArgs.statics,
@@ -479,54 +558,29 @@ var fjl = function () {
         Object.defineProperty(_constructor.prototype, 'constructor', { value: _constructor });
 
         // Extend constructor
-        Object.assign(_constructor.prototype, _methods);
-        Object.assign(_constructor, _statics);
+        assign(_constructor.prototype, _methods);
+        assign(_constructor, _statics);
 
         // Return constructor
         return _constructor;
     }
 
     /**
-     * Same as subClassOf multi but takes an array of Constructor or one constructor at position one.
+     * Same as subClass multi but takes an array of Constructor or one constructor at position one.
      * @param ctorOrCtors {Function|Array<Function>} - SuperClass(es)
      * @param constructorOrMethods {Function|Object}
-     * @param methods {Object|undefined}
-     * @param statics {Object|undefined}
+     * @param [methods] {Object|undefined}
+     * @param [statics] {Object|undefined}
      * @returns {Function}
      */
-    function subClassOfMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
+    function subClassMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
         if (notEmptyAndOfType(ctorOrCtors, Array)) {
             return ctorOrCtors.reduce(function (agg, Constructor) {
-                return subClassOf(Constructor, agg);
-            }, subClassOf(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
+                return subClass(Constructor, agg);
+            }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
         }
-        return subClassOf.apply(null, arguments);
+        return subClass(ctorOrCtors, constructorOrMethods, methods, statics);
     }
-
-    /**
-     * Created by elyde on 12/6/2016.
-     */
-    var createSymbol = function createSymbol(value) {
-        return Symbol ? Symbol(value) : value;
-    };
-    var createFjlSymbol = function createFjlSymbol(key) {
-        return createSymbol('@@fjl/' + key);
-    };
-
-    var symbols = Object.freeze(['equals', 'concat', 'empty', 'map', 'ap', 'of', 'alt', 'zero', 'reduce', 'traverse', 'chain', 'chainRec', 'extend', 'extract', 'bimap', 'promap', 'placeholder'].reduce(function (agg, key) {
-        Object.defineProperty(agg, key, {
-            value: createFjlSymbol(key),
-            enumerable: true
-        });
-        return agg;
-    }, {
-        createFjlSymbol: createFjlSymbol,
-        createSymbol: createSymbol
-    }));
-
-    var symbols$1 = Object.freeze({
-        default: symbols
-    });
 
     /**
      * Created by edlc on 12/9/16.
@@ -536,10 +590,12 @@ var fjl = function () {
         if (!this) {
             return new Functor(value);
         }
-        Object.defineProperty(this, 'value', {
-            value: value,
-            writable: true
-        });
+        if (!this.hasOwnProperty('value')) {
+            Object.defineProperty(this, 'value', {
+                value: value,
+                writable: true
+            });
+        }
     }
 
     Functor.prototype.map = function (fn) {
@@ -551,7 +607,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var BiFunctor = subClassOf(Functor, function Bifunctor(value1, value2) {
+    var BiFunctor = subClass(Functor, function Bifunctor(value1, value2) {
         if (!(this instanceof Bifunctor)) {
             return new Bifunctor(value1, value2);
         }
@@ -561,17 +617,11 @@ var fjl = function () {
             writable: true
         });
     }, {
-        map1: function map1(fn) {
-            return this.map(fn);
-        },
-        map2: function map2(fn) {
-            return new this.constructor(this.value, fn(this.value2));
-        },
         first: function first(fn) {
-            return this.map1(fn);
+            return new this.constructor(fn(this.value), this.value2);
         },
         second: function second(fn) {
-            return this.map2(fn);
+            return new this.constructor(this.value, fn(this.value2));
         },
 
 
@@ -583,7 +633,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Applicable = subClassOf(Functor, function Applicable(value) {
+    var Applicable = subClass(Functor, function Applicable(value) {
         if (!this) {
             return new Applicable(value);
         }
@@ -597,7 +647,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Applicative = subClassOf(Applicable, function Applicative(value) {
+    var Applicative = subClass(Applicable, function Applicative(value) {
         if (!this) {
             return Applicative.of(value);
         }
@@ -614,7 +664,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Chainable = subClassOf(Applicable, function Chainable(value) {
+    var Chainable = subClass(Applicable, function Chainable(value) {
         if (!this) {
             return new Chainable(value);
         }
@@ -631,7 +681,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Extendable = subClassOf(Functor, function Extendable(value) {
+    var Extendable = subClass(Functor, function Extendable(value) {
         if (!(this instanceof Extendable)) {
             return new Extendable(value);
         }
@@ -645,7 +695,7 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Monad = subClassOfMulti([Applicative, Chainable], function Monad(value) {
+    var Monad = subClassMulti([Applicative, Chainable], function Monad(value) {
         if (!this) {
             return Monad.of(value);
         }
@@ -661,14 +711,14 @@ var fjl = function () {
     /**
      * Created by elyde on 12/11/2016.
      */
+    var id = function id(value) {
+        return value;
+    };
     var _map = curry2(function (fn, functor) {
         return functor.map(fn);
     });
     var _ap = curry2(function (obj1, obj2) {
         return obj1.ap(obj2);
-    });
-    var _chain = curry2(function (fn, functor) {
-        return functor.map(fn).join();
     });
     var _join = function _join(monad) {
         var value = monad.value,
@@ -676,6 +726,9 @@ var fjl = function () {
 
         return value instanceof constructor ? value : constructor.of(value);
     };
+    var _chain = curry2(function (fn, functor) {
+        return _join(_map(fn, functor));
+    });
 
     /**
      * Created by elyde on 12/10/2016.
@@ -684,8 +737,11 @@ var fjl = function () {
         NothingSingleton: null,
         NothingSingletonCreated: null
     };
+    var returnThis = function returnThis() {
+        return this;
+    };
 
-    var Nothing = subClassOf(Monad, {
+    var Nothing = subClass(Monad, {
         constructor: function Nothing() {
             var NothingSingleton = _protected.NothingSingleton,
                 NothingSingletonCreated = _protected.NothingSingletonCreated;
@@ -696,32 +752,25 @@ var fjl = function () {
                 return Nothing.of();
             } else if (!NothingSingletonCreated) {
                 _protected.NothingSingletonCreated = true;
-                _protected.NothingSingleton = Nothing.of();
+                _protected.NothingSingleton = this;
                 Object.freeze(_protected);
-            } else if (!this.hasOwnProperty('value')) {
+            }
+            if (!this.hasOwnProperty('value')) {
                 Object.defineProperty(this, 'value', {
                     value: null
                 });
             }
         },
-        map: function map() {
-            return this;
-        },
-        join: function join() {
-            return this;
-        },
-        ap: function ap() {
-            return this;
-        },
-        chain: function chain() {
-            return this;
-        }
+        map: returnThis,
+        join: returnThis,
+        ap: returnThis,
+        chain: returnThis
     }, {
         of: function of() {
             return new Nothing();
         }
     });
-    var Just = subClassOf(Monad, {
+    var Just = subClass(Monad, {
         constructor: function Just(value) {
             if (!(this instanceof Just)) {
                 return Just.of(value);
@@ -744,7 +793,7 @@ var fjl = function () {
         });
         return subject instanceof Nothing ? replacement : subject.map(fn).value;
     });
-    var Maybe = subClassOf(Monad, {
+    var Maybe = subClass(Monad, {
         constructor: function Maybe(value) {
             if (!(this instanceof Maybe)) {
                 return Maybe.of(value);
@@ -752,16 +801,16 @@ var fjl = function () {
             Monad.call(this, Just(value));
         },
         join: function join() {
-            return _join(this.value);
+            return _join(Maybe.of(_join(_map(id, this.value))));
         },
         map: function map(fn) {
-            return _map(fn, this.value);
+            return Maybe.of(fn(_map(id, this.value)));
         },
         ap: function ap(functor) {
-            return _ap(this.value, functor);
+            return Maybe.of(_ap(_map(id, this.value), functor));
         },
         chain: function chain(fn) {
-            return _chain(fn, this.value);
+            return Maybe.of(_chain(fn, _map(id, this.value)));
         }
     }, {
         of: function of(value) {
@@ -775,26 +824,37 @@ var fjl = function () {
     /**
      * Created by elyde on 12/10/2016.
      */
-    var Left = subClassOf(Just, {
+    var Left = subClass(Monad, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
                 return Left.of(value);
             }
-            Just.call(this, value);
+            Monad.call(this, value);
         },
         map: function map(fn) {
-            _map(fn, this.value);
+            fn(this.value);
             return this;
         }
+    }, {
+        of: function of(value) {
+            return new Left(value);
+        }
     });
-    var Right = subClassOf(Just, {
+    var Right = subClass(Monad, {
         constructor: function Right(value) {
             if (!(this instanceof Right)) {
                 return Right.of(value);
             }
-            Just.call(this, value);
+            Monad.call(this, value);
+        },
+        map: function map(fn) {
+            var constructor = this.constructor;
+            return isset(this.value) ? constructor.of(fn(this.value)) : constructor.counterConstructor.of(this.value);
         }
-    }, null, {
+    }, {
+        of: function of(value) {
+            return new Right(value);
+        },
         counterConstructor: Left
     });
     var either = curry2(function (leftCallback, rightCallback, monad) {
@@ -808,17 +868,16 @@ var fjl = function () {
             return _map(rightCallback, identity);
         }
     });
-    var Either = subClassOfMulti([Monad, BiFunctor], {
+    var Either = subClassMulti([Monad, BiFunctor], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
-                return new Either(left, right);
+                return Either.of(left, right);
             }
             BiFunctor.call(this, left, right);
-            Monad.call(this);
         }
-    }, null, {
-        of: function of(value) {
-            return new Maybe(value);
+    }, {
+        of: function of(left, right) {
+            return new Either(left, right);
         },
         Left: Left,
         Right: Right,
@@ -827,7 +886,7 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Thu Dec 22 2016 22:34:33 GMT-0500 (Eastern Standard Time) 
+     * Generated Sun Dec 25 2016 14:09:18 GMT-0500 (Eastern Standard Time) 
      */
 
     var version = '1.0.0';
@@ -836,6 +895,7 @@ var fjl = function () {
      * Created by elyde on 12/6/2016.
      */
     var fjl = {
+        complement: complement,
         compose: compose,
         curry: curry,
         curryN: curryN,
@@ -843,9 +903,9 @@ var fjl = function () {
         curry3: curry3,
         curry4: curry4,
         curry5: curry5,
-        subClassOf: subClassOf,
-        subClassOfMulti: subClassOfMulti,
-        subtractObj: subtractObj,
+        subClass: subClass,
+        subClassMulti: subClassMulti,
+        difference: difference,
         isset: isset,
         issetMulti: issetMulti,
         issetAndOfType: issetAndOfType,
@@ -864,9 +924,10 @@ var fjl = function () {
         isEmpty: isEmpty,
         isEmptyMulti: isEmptyMulti,
         isEmptyObj: isEmptyObj,
+        intersect: intersect,
         notOfTypeOrEmpty: notOfTypeOrEmpty,
         notEmptyAndOfType: notEmptyAndOfType,
-        symbols: symbols$1,
+        union: union,
         Functor: Functor,
         Bifunctor: BiFunctor,
         Applicable: Applicable,

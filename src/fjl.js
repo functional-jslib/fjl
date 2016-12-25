@@ -6,14 +6,13 @@
 import compose from './compose';
 import {curry, curryN, curry2, curry3, curry4, curry5} from './curry';
 import {subClass, subClassMulti} from './subClass';
-import {complement, difference, union, intersect} from './obj-math';
+import {complement, difference, union, intersect} from './objMath';
 import {typeOf, typeOfIs, typeOfIsMulti} from './typeOf';
 import {isset, issetMulti, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean,
     isObject, isString, isUndefined, isNull, isSymbol, isEmpty,
     isEmptyMulti, isEmptyObj} from './is';
 import {notOfTypeOrEmpty, notEmptyAndOfType} from './not';
-import * as symbols from './symbols';
 import Functor from './functor/Functor';
 import Bifunctor from './functor/Bifunctor';
 import Applicable from './functor/Applicable';
@@ -58,7 +57,6 @@ export default {
     intersect,
     notOfTypeOrEmpty,
     notEmptyAndOfType,
-    symbols,
     union,
     Functor,
     Bifunctor,

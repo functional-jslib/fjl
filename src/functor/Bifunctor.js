@@ -18,7 +18,7 @@ export default subClass(Functor,
     },
     {
         first (fn) {
-            return this.map(fn);
+            return new this.constructor(fn(this.value), this.value2);
         },
 
         second (fn) {

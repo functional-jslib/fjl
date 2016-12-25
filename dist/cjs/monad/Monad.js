@@ -16,11 +16,11 @@ var _Chainable = require('../functor/Chainable');
 
 var _Chainable2 = _interopRequireDefault(_Chainable);
 
-var _subClassOf = require('../subClassOf');
+var _subClass = require('../subClass');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Monad = exports.Monad = (0, _subClassOf.subClassOfMulti)([_Applicative2.default, _Chainable2.default], function Monad(value) {
+var Monad = exports.Monad = (0, _subClass.subClassMulti)([_Applicative2.default, _Chainable2.default], function Monad(value) {
     if (!this) {
         return Monad.of(value);
     }

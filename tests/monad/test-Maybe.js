@@ -21,28 +21,28 @@ describe('Maybe', function () {
 
     describe('Construction:', function () {
 
-        it('should map to `Nothing` when constructed using function syntax and passed in value is `null` or `undefined`', function () {
+        it('should contain a `Nothing` when constructed using function syntax and passed in value is `null` or `undefined`', function () {
             let result = Maybe();
             expectMaybe(result);
-            expectNothing(result.map(id));
+            result.map(expectNothing);
         });
 
-        it('should map to `Just` when constructed using function syntax function and passed in value is not `null` and not `undefined`', function () {
+        it('should contain a `Just` when constructed using function syntax function and passed in value is not `null` and not `undefined`', function () {
             let result = Maybe('something');
             expectMaybe(result);
-            expectJust(result.map(id));
+            result.map(expectJust);
         });
 
-        it('should map to `Nothing` when constructed with new and passed in value is `null` or `undefined`', function () {
+        it('should contain a `Nothing` when constructed with new and passed in value is `null` or `undefined`', function () {
             let result = new Maybe();
             expectMaybe(result);
-            expectNothing(result.map(id));
+            result.map(expectNothing);
         });
 
-        it('should map to `Just` when constructed with new and passed in value is not `null` and not `undefined`', function () {
+        it('should contain a `Just` when constructed with new and passed in value is not `null` and not `undefined`', function () {
             let result = new Maybe('something');
             expectMaybe(result);
-            expectJust(result.map(id));
+            result.map(expectJust);
         });
 
     });

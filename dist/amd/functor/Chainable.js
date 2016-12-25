@@ -1,4 +1,4 @@
-define(['exports', './Applicable', './../subClassOf'], function (exports, _Applicable, _subClassOf) {
+define(['exports', './Applicable', './../subClass'], function (exports, _Applicable, _subClass) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -19,7 +19,7 @@ define(['exports', './Applicable', './../subClassOf'], function (exports, _Appli
         };
     }
 
-    var Chainable = (0, _subClassOf.subClassOf)(_Applicable2.default, function Chainable(value) {
+    var Chainable = (0, _subClass.subClass)(_Applicable2.default, function Chainable(value) {
         if (!this) {
             return new Chainable(value);
         }

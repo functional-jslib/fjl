@@ -6,7 +6,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.liftN = exports.joinR = exports.join = exports.fnOrFn = exports.chain = exports.ap = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.of = exports.empty = exports.concat = exports.equals = exports.id = undefined;
+exports.liftN = exports.chain = exports.joinR = exports.join = exports.ap = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.empty = exports.of = exports.concat = exports.equals = exports.id = undefined;
 
 var _curry = require('./curry');
 
@@ -21,11 +21,20 @@ var id = exports.id = function id(value) {
     concat = exports.concat = (0, _curry.curry2)(function (functor1, functor2) {
     return functor1.concat && (0, _is.isFunction)(functor1.concat) ? functor1.concat(functor2) : functor1 + functor2;
 }),
-    empty = exports.empty = function empty(functor) {
-    return functor.constructor.of();
-},
     of = exports.of = function of(functor) {
-    return functor.constructor.of();
+    var constructor = functor.constructor,
+        retVal = void 0;
+    if (constructor.of) {
+        retVal = constructor.of();
+    } else if (!(0, _is.isPrimitive)(functor)) {
+        retVal = constructor();
+    } else {
+        retVal = new constructor();
+    }
+    return retVal;
+},
+    empty = exports.empty = function empty(functor) {
+    return of(functor);
 },
     map = exports.map = (0, _curry.curry2)(function (fn, functor) {
     return functor.map(fn);
@@ -42,14 +51,6 @@ var id = exports.id = function id(value) {
     ap = exports.ap = (0, _curry.curry2)(function (obj1, obj2) {
     return obj1.ap(obj2);
 }),
-    chain = exports.chain = (0, _curry.curry2)(function (fn, functor) {
-    return functor.map(fn).join();
-}),
-    fnOrFn = exports.fnOrFn = function fnOrFn(fn) {
-    return (0, _is.isFunction)(fn) ? fn : function () {
-        return fn;
-    };
-},
     join = exports.join = function join(monad) {
     var value = monad.value,
         constructor = monad.constructor;
@@ -66,14 +67,17 @@ var id = exports.id = function id(value) {
     }
     return monad instanceof constructor ? monad : constructor.of(monad);
 },
+    chain = exports.chain = (0, _curry.curry2)(function (fn, functor) {
+    return join(map(fn, functor));
+}),
     liftN = exports.liftN = (0, _curry.curry3)(function (fn, functor1) {
     for (var _len = arguments.length, otherFunctors = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
         otherFunctors[_key - 2] = arguments[_key];
     }
 
     return otherFunctors.reduce(function (aggregator, functor) {
-        return aggregator.ap(functor);
-    }, functor1.map(fn));
+        return ap(aggregator, functor);
+    }, map(fn, functor1));
 });
 
 exports.default = {
@@ -88,7 +92,6 @@ exports.default = {
     reduceRight: reduceRight,
     ap: ap,
     chain: chain,
-    fnOrFn: fnOrFn,
     join: join,
     joinR: joinR,
     liftN: liftN

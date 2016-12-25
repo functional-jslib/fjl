@@ -45,7 +45,7 @@
      * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
      */
     function typeOf(value) {
-        var retVal;
+        var retVal = void 0;
         if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined) {
             retVal = _Undefined;
         } else if (value === null) {

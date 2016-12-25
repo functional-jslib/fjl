@@ -1,4 +1,4 @@
-define(['exports', './Monad', '../subClassOf'], function (exports, _Monad, _subClassOf) {
+define(['exports', './Monad', '../subClass'], function (exports, _Monad, _subClass) {
   /**
    * Created by edlc on 12/9/16.
    */
@@ -17,7 +17,7 @@ define(['exports', './Monad', '../subClassOf'], function (exports, _Monad, _subC
     };
   }
 
-  var Identity = exports.Identity = (0, _subClassOf.subClassOf)(_Monad2.default, function Identity(value) {
+  var Identity = exports.Identity = (0, _subClass.subClass)(_Monad2.default, function Identity(value) {
     _Monad2.default.call(this, value);
   });
 

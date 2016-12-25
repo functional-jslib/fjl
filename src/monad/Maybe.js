@@ -6,13 +6,16 @@
 import {isset} from '../is';
 import {curry3} from '../curry';
 import {subClass} from '../subClass';
-import {ap, map, chain, join} from '../operators';
+import {ap, id, map, chain, join} from '../operators';
 import Monad from './Monad';
 
 const _protected = {
-    NothingSingleton: null,
-    NothingSingletonCreated: null
-};
+        NothingSingleton: null,
+        NothingSingletonCreated: null
+    },
+    returnThis = function () {
+        return this;
+    };
 
 export let Nothing = subClass(Monad, {
         constructor: function Nothing() {
@@ -25,27 +28,19 @@ export let Nothing = subClass(Monad, {
             }
             else if (!NothingSingletonCreated) {
                 _protected.NothingSingletonCreated = true;
-                _protected.NothingSingleton = Nothing.of();
+                _protected.NothingSingleton = this;
                 Object.freeze(_protected);
             }
-            else if (!this.hasOwnProperty('value')) {
+            if (!this.hasOwnProperty('value')) {
                 Object.defineProperty(this, 'value', {
                     value: null
                 });
             }
         },
-        map: function () {
-            return this;
-        },
-        join: function () {
-            return this;
-        },
-        ap: function () {
-            return this;
-        },
-        chain: function () {
-            return this;
-        }
+        map: returnThis,
+        join: returnThis,
+        ap: returnThis,
+        chain: returnThis
     }, {
         of: function () {
             return new Nothing();
@@ -91,16 +86,16 @@ export let Nothing = subClass(Monad, {
             Monad.call(this, Just(value));
         },
         join: function () {
-            return join(this.value);
+            return join(Maybe.of(join(map(id, this.value))));
         },
         map: function (fn) {
-            return map(fn, this.value);
+            return Maybe.of(fn(map(id, this.value)));
         },
         ap: function (functor) {
-            return ap(this.value, functor);
+            return Maybe.of(ap(map(id, this.value), functor));
         },
         chain: function (fn) {
-            return chain(fn, this.value);
+            return Maybe.of(chain(fn, map(id, this.value)));
         }
     }, {
         of: function (value) {

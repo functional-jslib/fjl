@@ -1,4 +1,4 @@
-define(['exports', './compose', './curry', './subClassOf', './math', './typeOf', './is', './not', './symbols', './functor/Functor', './functor/Bifunctor', './functor/Applicable', './functor/Applicative', './functor/Chainable', './functor/Extendable', './monad/Monad', './monad/Maybe', './monad/Either', './generated/version'], function (exports, _compose, _curry, _subClassOf, _math, _typeOf, _is, _not, _symbols, _Functor, _Bifunctor, _Applicable, _Applicative, _Chainable, _Extendable, _Monad, _Maybe, _Either, _version) {
+define(['exports', './compose', './curry', './subClass', './objMath', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Applicable', './functor/Applicative', './functor/Chainable', './functor/Extendable', './monad/Monad', './monad/Maybe', './monad/Either', './generated/version'], function (exports, _compose, _curry, _subClass, _objMath, _typeOf, _is, _not, _Functor, _Bifunctor, _Applicable, _Applicative, _Chainable, _Extendable, _Monad, _Maybe, _Either, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -9,8 +9,6 @@ define(['exports', './compose', './curry', './subClassOf', './math', './typeOf',
     });
 
     var _compose2 = _interopRequireDefault(_compose);
-
-    var symbols = _interopRequireWildcard(_symbols);
 
     var _Functor2 = _interopRequireDefault(_Functor);
 
@@ -28,23 +26,6 @@ define(['exports', './compose', './curry', './subClassOf', './math', './typeOf',
 
     var _version2 = _interopRequireDefault(_version);
 
-    function _interopRequireWildcard(obj) {
-        if (obj && obj.__esModule) {
-            return obj;
-        } else {
-            var newObj = {};
-
-            if (obj != null) {
-                for (var key in obj) {
-                    if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
-                }
-            }
-
-            newObj.default = obj;
-            return newObj;
-        }
-    }
-
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
             default: obj
@@ -52,6 +33,7 @@ define(['exports', './compose', './curry', './subClassOf', './math', './typeOf',
     }
 
     exports.default = {
+        complement: _objMath.complement,
         compose: _compose2.default,
         curry: _curry.curry,
         curryN: _curry.curryN,
@@ -59,9 +41,9 @@ define(['exports', './compose', './curry', './subClassOf', './math', './typeOf',
         curry3: _curry.curry3,
         curry4: _curry.curry4,
         curry5: _curry.curry5,
-        subClassOf: _subClassOf.subClassOf,
-        subClassOfMulti: _subClassOf.subClassOfMulti,
-        subtractObj: _math.subtractObj,
+        subClass: _subClass.subClass,
+        subClassMulti: _subClass.subClassMulti,
+        difference: _objMath.difference,
         isset: _is.isset,
         issetMulti: _is.issetMulti,
         issetAndOfType: _is.issetAndOfType,
@@ -80,9 +62,10 @@ define(['exports', './compose', './curry', './subClassOf', './math', './typeOf',
         isEmpty: _is.isEmpty,
         isEmptyMulti: _is.isEmptyMulti,
         isEmptyObj: _is.isEmptyObj,
+        intersect: _objMath.intersect,
         notOfTypeOrEmpty: _not.notOfTypeOrEmpty,
         notEmptyAndOfType: _not.notEmptyAndOfType,
-        symbols: symbols,
+        union: _objMath.union,
         Functor: _Functor2.default,
         Bifunctor: _Bifunctor2.default,
         Applicable: _Applicable2.default,

@@ -12,7 +12,7 @@ var _is = require('../is');
 
 var _curry = require('../curry');
 
-var _subClassOf = require('../subClassOf');
+var _subClass = require('../subClass');
 
 var _operators = require('../operators');
 
@@ -25,9 +25,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _protected = {
     NothingSingleton: null,
     NothingSingletonCreated: null
+},
+    returnThis = function returnThis() {
+    return this;
 };
 
-var Nothing = exports.Nothing = (0, _subClassOf.subClassOf)(_Monad2.default, {
+var Nothing = exports.Nothing = (0, _subClass.subClass)(_Monad2.default, {
     constructor: function Nothing() {
         var NothingSingleton = _protected.NothingSingleton,
             NothingSingletonCreated = _protected.NothingSingletonCreated;
@@ -38,32 +41,25 @@ var Nothing = exports.Nothing = (0, _subClassOf.subClassOf)(_Monad2.default, {
             return Nothing.of();
         } else if (!NothingSingletonCreated) {
             _protected.NothingSingletonCreated = true;
-            _protected.NothingSingleton = Nothing.of();
+            _protected.NothingSingleton = this;
             Object.freeze(_protected);
-        } else if (!this.hasOwnProperty('value')) {
+        }
+        if (!this.hasOwnProperty('value')) {
             Object.defineProperty(this, 'value', {
                 value: null
             });
         }
     },
-    map: function map() {
-        return this;
-    },
-    join: function join() {
-        return this;
-    },
-    ap: function ap() {
-        return this;
-    },
-    chain: function chain() {
-        return this;
-    }
+    map: returnThis,
+    join: returnThis,
+    ap: returnThis,
+    chain: returnThis
 }, {
     of: function of() {
         return new Nothing();
     }
 }),
-    Just = exports.Just = (0, _subClassOf.subClassOf)(_Monad2.default, {
+    Just = exports.Just = (0, _subClass.subClass)(_Monad2.default, {
     constructor: function Just(value) {
         if (!(this instanceof Just)) {
             return Just.of(value);
@@ -95,7 +91,7 @@ maybe = exports.maybe = (0, _curry.curry3)(function (replacement, fn, monad) {
     });
     return subject instanceof Nothing ? replacement : subject.map(fn).value;
 }),
-    Maybe = exports.Maybe = (0, _subClassOf.subClassOf)(_Monad2.default, {
+    Maybe = exports.Maybe = (0, _subClass.subClass)(_Monad2.default, {
     constructor: function Maybe(value) {
         if (!(this instanceof Maybe)) {
             return Maybe.of(value);
@@ -103,16 +99,16 @@ maybe = exports.maybe = (0, _curry.curry3)(function (replacement, fn, monad) {
         _Monad2.default.call(this, Just(value));
     },
     join: function join() {
-        return (0, _operators.join)(this.value);
+        return (0, _operators.join)(Maybe.of((0, _operators.join)((0, _operators.map)(_operators.id, this.value))));
     },
     map: function map(fn) {
-        return (0, _operators.map)(fn, this.value);
+        return Maybe.of(fn((0, _operators.map)(_operators.id, this.value)));
     },
     ap: function ap(functor) {
-        return (0, _operators.ap)(this.value, functor);
+        return Maybe.of((0, _operators.ap)((0, _operators.map)(_operators.id, this.value), functor));
     },
     chain: function chain(fn) {
-        return (0, _operators.chain)(fn, this.value);
+        return Maybe.of((0, _operators.chain)(fn, (0, _operators.map)(_operators.id, this.value)));
     }
 }, {
     of: function of(value) {

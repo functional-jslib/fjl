@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../is', '../curry', '../subClassOf', '../operators', './Monad'], factory);
+        define(['exports', '../is', '../curry', '../subClass', '../operators', './Monad'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../is'), require('../curry'), require('../subClassOf'), require('../operators'), require('./Monad'));
+        factory(exports, require('../is'), require('../curry'), require('../subClass'), require('../operators'), require('./Monad'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.curry, global.subClassOf, global.operators, global.Monad);
+        factory(mod.exports, global.is, global.curry, global.subClass, global.operators, global.Monad);
         global.Maybe = mod.exports;
     }
-})(this, function (exports, _is, _curry, _subClassOf, _operators, _Monad) {
+})(this, function (exports, _is, _curry, _subClass, _operators, _Monad) {
     /**
      * Created by elyde on 12/10/2016.
      */
@@ -32,9 +32,12 @@
     var _protected = {
         NothingSingleton: null,
         NothingSingletonCreated: null
+    },
+        returnThis = function returnThis() {
+        return this;
     };
 
-    var Nothing = exports.Nothing = (0, _subClassOf.subClassOf)(_Monad2.default, {
+    var Nothing = exports.Nothing = (0, _subClass.subClass)(_Monad2.default, {
         constructor: function Nothing() {
             var NothingSingleton = _protected.NothingSingleton,
                 NothingSingletonCreated = _protected.NothingSingletonCreated;
@@ -45,32 +48,25 @@
                 return Nothing.of();
             } else if (!NothingSingletonCreated) {
                 _protected.NothingSingletonCreated = true;
-                _protected.NothingSingleton = Nothing.of();
+                _protected.NothingSingleton = this;
                 Object.freeze(_protected);
-            } else if (!this.hasOwnProperty('value')) {
+            }
+            if (!this.hasOwnProperty('value')) {
                 Object.defineProperty(this, 'value', {
                     value: null
                 });
             }
         },
-        map: function map() {
-            return this;
-        },
-        join: function join() {
-            return this;
-        },
-        ap: function ap() {
-            return this;
-        },
-        chain: function chain() {
-            return this;
-        }
+        map: returnThis,
+        join: returnThis,
+        ap: returnThis,
+        chain: returnThis
     }, {
         of: function of() {
             return new Nothing();
         }
     }),
-        Just = exports.Just = (0, _subClassOf.subClassOf)(_Monad2.default, {
+        Just = exports.Just = (0, _subClass.subClass)(_Monad2.default, {
         constructor: function Just(value) {
             if (!(this instanceof Just)) {
                 return Just.of(value);
@@ -102,7 +98,7 @@
         });
         return subject instanceof Nothing ? replacement : subject.map(fn).value;
     }),
-        Maybe = exports.Maybe = (0, _subClassOf.subClassOf)(_Monad2.default, {
+        Maybe = exports.Maybe = (0, _subClass.subClass)(_Monad2.default, {
         constructor: function Maybe(value) {
             if (!(this instanceof Maybe)) {
                 return Maybe.of(value);
@@ -110,16 +106,16 @@
             _Monad2.default.call(this, Just(value));
         },
         join: function join() {
-            return (0, _operators.join)(this.value);
+            return (0, _operators.join)(Maybe.of((0, _operators.join)((0, _operators.map)(_operators.id, this.value))));
         },
         map: function map(fn) {
-            return (0, _operators.map)(fn, this.value);
+            return Maybe.of(fn((0, _operators.map)(_operators.id, this.value)));
         },
         ap: function ap(functor) {
-            return (0, _operators.ap)(this.value, functor);
+            return Maybe.of((0, _operators.ap)((0, _operators.map)(_operators.id, this.value), functor));
         },
         chain: function chain(fn) {
-            return (0, _operators.chain)(fn, this.value);
+            return Maybe.of((0, _operators.chain)(fn, (0, _operators.map)(_operators.id, this.value)));
         }
     }, {
         of: function of(value) {

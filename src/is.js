@@ -7,6 +7,7 @@
 'use strict';
 
 import {typeOf, typeOfIs} from './typeOf';
+import compose from './compose';
 
 let _String = String.name,
     _Function = Function.name,
@@ -185,6 +186,19 @@ export function isEmptyMulti (...args) {
     return args.some(value => isEmpty(value));
 }
 
+/**
+ * Checks to see if value is a primitive.
+ * @param value {*}
+ * @returns {Boolean}
+ */
+export function isPrimitive (value) {
+    return compose(
+        isNumber, isString, isObject,
+        isArray, isFunction, isSymbol,
+        isBoolean, isNull, isUndefined
+    )(value);
+}
+
 export default {
     isset,
     issetMulti,
@@ -200,5 +214,6 @@ export default {
     isSymbol,
     isEmpty,
     isEmptyMulti,
-    isEmptyObj
+    isEmptyObj,
+    isPrimitive
 };

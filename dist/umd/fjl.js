@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './compose', './curry', './subClassOf', './math', './typeOf', './is', './not', './symbols', './functor/Functor', './functor/Bifunctor', './functor/Applicable', './functor/Applicative', './functor/Chainable', './functor/Extendable', './monad/Monad', './monad/Maybe', './monad/Either', './generated/version'], factory);
+        define(['exports', './compose', './curry', './subClass', './objMath', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Applicable', './functor/Applicative', './functor/Chainable', './functor/Extendable', './monad/Monad', './monad/Maybe', './monad/Either', './generated/version'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./compose'), require('./curry'), require('./subClassOf'), require('./math'), require('./typeOf'), require('./is'), require('./not'), require('./symbols'), require('./functor/Functor'), require('./functor/Bifunctor'), require('./functor/Applicable'), require('./functor/Applicative'), require('./functor/Chainable'), require('./functor/Extendable'), require('./monad/Monad'), require('./monad/Maybe'), require('./monad/Either'), require('./generated/version'));
+        factory(exports, require('./compose'), require('./curry'), require('./subClass'), require('./objMath'), require('./typeOf'), require('./is'), require('./not'), require('./functor/Functor'), require('./functor/Bifunctor'), require('./functor/Applicable'), require('./functor/Applicative'), require('./functor/Chainable'), require('./functor/Extendable'), require('./monad/Monad'), require('./monad/Maybe'), require('./monad/Either'), require('./generated/version'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.compose, global.curry, global.subClassOf, global.math, global.typeOf, global.is, global.not, global.symbols, global.Functor, global.Bifunctor, global.Applicable, global.Applicative, global.Chainable, global.Extendable, global.Monad, global.Maybe, global.Either, global.version);
+        factory(mod.exports, global.compose, global.curry, global.subClass, global.objMath, global.typeOf, global.is, global.not, global.Functor, global.Bifunctor, global.Applicable, global.Applicative, global.Chainable, global.Extendable, global.Monad, global.Maybe, global.Either, global.version);
         global.fjl = mod.exports;
     }
-})(this, function (exports, _compose, _curry, _subClassOf, _math, _typeOf, _is, _not, _symbols, _Functor, _Bifunctor, _Applicable, _Applicative, _Chainable, _Extendable, _Monad, _Maybe, _Either, _version) {
+})(this, function (exports, _compose, _curry, _subClass, _objMath, _typeOf, _is, _not, _Functor, _Bifunctor, _Applicable, _Applicative, _Chainable, _Extendable, _Monad, _Maybe, _Either, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -21,8 +21,6 @@
     });
 
     var _compose2 = _interopRequireDefault(_compose);
-
-    var symbols = _interopRequireWildcard(_symbols);
 
     var _Functor2 = _interopRequireDefault(_Functor);
 
@@ -40,23 +38,6 @@
 
     var _version2 = _interopRequireDefault(_version);
 
-    function _interopRequireWildcard(obj) {
-        if (obj && obj.__esModule) {
-            return obj;
-        } else {
-            var newObj = {};
-
-            if (obj != null) {
-                for (var key in obj) {
-                    if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
-                }
-            }
-
-            newObj.default = obj;
-            return newObj;
-        }
-    }
-
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
             default: obj
@@ -64,6 +45,7 @@
     }
 
     exports.default = {
+        complement: _objMath.complement,
         compose: _compose2.default,
         curry: _curry.curry,
         curryN: _curry.curryN,
@@ -71,9 +53,9 @@
         curry3: _curry.curry3,
         curry4: _curry.curry4,
         curry5: _curry.curry5,
-        subClassOf: _subClassOf.subClassOf,
-        subClassOfMulti: _subClassOf.subClassOfMulti,
-        subtractObj: _math.subtractObj,
+        subClass: _subClass.subClass,
+        subClassMulti: _subClass.subClassMulti,
+        difference: _objMath.difference,
         isset: _is.isset,
         issetMulti: _is.issetMulti,
         issetAndOfType: _is.issetAndOfType,
@@ -92,9 +74,10 @@
         isEmpty: _is.isEmpty,
         isEmptyMulti: _is.isEmptyMulti,
         isEmptyObj: _is.isEmptyObj,
+        intersect: _objMath.intersect,
         notOfTypeOrEmpty: _not.notOfTypeOrEmpty,
         notEmptyAndOfType: _not.notEmptyAndOfType,
-        symbols: symbols,
+        union: _objMath.union,
         Functor: _Functor2.default,
         Bifunctor: _Bifunctor2.default,
         Applicable: _Applicable2.default,

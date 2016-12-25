@@ -1,4 +1,4 @@
-define(['exports', './Functor', './../subClassOf'], function (exports, _Functor, _subClassOf) {
+define(['exports', './Functor', './../subClass'], function (exports, _Functor, _subClass) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -16,7 +16,7 @@ define(['exports', './Functor', './../subClassOf'], function (exports, _Functor,
         };
     }
 
-    var Extendable = (0, _subClassOf.subClassOf)(_Functor2.default, function Extendable(value) {
+    var Extendable = (0, _subClass.subClass)(_Functor2.default, function Extendable(value) {
         if (!(this instanceof Extendable)) {
             return new Extendable(value);
         }

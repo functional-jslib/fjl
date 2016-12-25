@@ -7,5 +7,5 @@
  * @returns {function(*=): *}
  */
 export default function compose (...args) {
-    return arg0 => args.reduceRight((value, arg) => arg(value), arg0);
+    return arg0 => args.reduceRight((value, fn) => fn(value), arg0);
 }

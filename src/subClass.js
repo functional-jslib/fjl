@@ -3,7 +3,8 @@
  */
 import {isFunction} from './is';
 import {notEmptyAndOfType} from './not';
-import {difference} from './obj-math';
+import {difference} from './objMath';
+import {assign} from './assign';
 
 /**
  * Normalized the parameters required for `subClassPure` and `subClass` to operate.
@@ -21,7 +22,7 @@ function normalizeArgsForDefineSubClass (superClass, constructor, methods, stati
         isCtorAndMethods = !isFunction(constructor),
         _constructor = isCtorAndMethods ? constructor.constructor : constructor,
         _methods = isCtorAndMethods ? difference(constructor, {constructor: null}) : methods,
-        _statics = Object.assign(_extractedStatics, isCtorAndMethods ? methods : statics);
+        _statics = assign(_extractedStatics, isCtorAndMethods ? methods : statics);
 
     return {
         constructor: _constructor,
@@ -55,8 +56,8 @@ export function subClass (superClass, constructor, methods, statics) {
     Object.defineProperty(_constructor.prototype, 'constructor', {value: _constructor});
 
     // Extend constructor
-    Object.assign(_constructor.prototype, _methods);
-    Object.assign(_constructor, _statics);
+    assign(_constructor.prototype, _methods);
+    assign(_constructor, _statics);
 
     // Return constructor
     return _constructor;
@@ -66,8 +67,8 @@ export function subClass (superClass, constructor, methods, statics) {
  * Same as subClass multi but takes an array of Constructor or one constructor at position one.
  * @param ctorOrCtors {Function|Array<Function>} - SuperClass(es)
  * @param constructorOrMethods {Function|Object}
- * @param methods {Object|undefined}
- * @param statics {Object|undefined}
+ * @param [methods] {Object|undefined}
+ * @param [statics] {Object|undefined}
  * @returns {Function}
  */
 export function subClassMulti (ctorOrCtors, constructorOrMethods, methods, statics) {
@@ -76,7 +77,7 @@ export function subClassMulti (ctorOrCtors, constructorOrMethods, methods, stati
             return subClass(Constructor, agg);
         }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
     }
-    return subClass.apply(null, arguments);
+    return subClass(ctorOrCtors, constructorOrMethods, methods, statics);
 }
 
 export default {

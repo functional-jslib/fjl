@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './Monad', '../subClassOf'], factory);
+    define(['exports', './Monad', '../subClass'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./Monad'), require('../subClassOf'));
+    factory(exports, require('./Monad'), require('../subClass'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.Monad, global.subClassOf);
+    factory(mod.exports, global.Monad, global.subClass);
     global.Identity = mod.exports;
   }
-})(this, function (exports, _Monad, _subClassOf) {
+})(this, function (exports, _Monad, _subClass) {
   /**
    * Created by edlc on 12/9/16.
    */
@@ -29,7 +29,7 @@
     };
   }
 
-  var Identity = exports.Identity = (0, _subClassOf.subClassOf)(_Monad2.default, function Identity(value) {
+  var Identity = exports.Identity = (0, _subClass.subClass)(_Monad2.default, function Identity(value) {
     _Monad2.default.call(this, value);
   });
 

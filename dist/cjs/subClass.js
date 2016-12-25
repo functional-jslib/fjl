@@ -10,7 +10,9 @@ var _is = require('./is');
 
 var _not = require('./not');
 
-var _math = require('./math');
+var _objMath = require('./objMath');
+
+var _assign = require('./assign');
 
 /**
  * Normalized the parameters required for `subClassPure` and `subClass` to operate.
@@ -20,18 +22,18 @@ var _math = require('./math');
  * @param statics {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
  * @returns {{constructor: (Function|*), methods: *, statics: *, superClass: (*|Object)}}
  */
+/**
+ * Created by elyde on 12/10/2016.
+ */
 function normalizeArgsForDefineSubClass(superClass, constructor, methods, statics) {
     var _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
-        if (key === 'extend' || key === 'extendWith') {
-            return agg;
-        }
         agg[key] = superClass[key];
         return agg;
     }, {}),
         isCtorAndMethods = !(0, _is.isFunction)(constructor),
         _constructor = isCtorAndMethods ? constructor.constructor : constructor,
-        _methods = isCtorAndMethods ? (0, _math.subtractObj)(constructor, { constructor: null }) : methods,
-        _statics = Object.assign(_extractedStatics, isCtorAndMethods ? methods : statics);
+        _methods = isCtorAndMethods ? (0, _objMath.difference)(constructor, { constructor: null }) : methods,
+        _statics = (0, _assign.assign)(_extractedStatics, isCtorAndMethods ? methods : statics);
 
     return {
         constructor: _constructor,
@@ -50,9 +52,6 @@ function normalizeArgsForDefineSubClass(superClass, constructor, methods, static
  * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
  * @returns {Function} - Constructor with extended prototype and added statics.
  */
-/**
- * Created by elyde on 12/10/2016.
- */
 function subClass(superClass, constructor, methods, statics) {
     var normalizedArgs = normalizeArgsForDefineSubClass.call(null, superClass, constructor, methods, statics),
         _superClass = normalizedArgs.superClass,
@@ -67,8 +66,8 @@ function subClass(superClass, constructor, methods, statics) {
     Object.defineProperty(_constructor.prototype, 'constructor', { value: _constructor });
 
     // Extend constructor
-    Object.assign(_constructor.prototype, _methods);
-    Object.assign(_constructor, _statics);
+    (0, _assign.assign)(_constructor.prototype, _methods);
+    (0, _assign.assign)(_constructor, _statics);
 
     // Return constructor
     return _constructor;
@@ -78,8 +77,8 @@ function subClass(superClass, constructor, methods, statics) {
  * Same as subClass multi but takes an array of Constructor or one constructor at position one.
  * @param ctorOrCtors {Function|Array<Function>} - SuperClass(es)
  * @param constructorOrMethods {Function|Object}
- * @param methods {Object|undefined}
- * @param statics {Object|undefined}
+ * @param [methods] {Object|undefined}
+ * @param [statics] {Object|undefined}
  * @returns {Function}
  */
 function subClassMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
@@ -88,7 +87,7 @@ function subClassMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
             return subClass(Constructor, agg);
         }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
     }
-    return subClass.apply(null, arguments);
+    return subClass(ctorOrCtors, constructorOrMethods, methods, statics);
 }
 
 exports.default = {

@@ -1,18 +1,21 @@
 /**
  * Created by elyde on 12/10/2016.
+ * Set functions for objects.
  */
 
 'use strict';
 
-import assign from "./assign";
+import {assignDeep} from './assign';
+
+let hasOwnProperty = Object.prototype.hasOwnProperty;
 
 export function union (obj1, obj2) {
-    return assign(obj1, obj2);
+    return assignDeep(obj1, obj2);
 }
 
 export function intersect (obj1, obj2) {
     return Object.keys(obj1).reduce((agg, key) => {
-        if (obj2.hasOwnProperty(key)) {
+        if (hasOwnProperty.call(obj2, key)) {
             agg[key] = obj2[key];
         }
         return agg;
@@ -21,7 +24,7 @@ export function intersect (obj1, obj2) {
 
 export function difference (obj1, obj2) {
     return Object.keys(obj1).reduce((agg, key) => {
-        if (!obj2.hasOwnProperty(key)) {
+        if (!hasOwnProperty.call(obj2, key)) {
             agg[key] = obj1[key];
         }
         return agg;
@@ -30,7 +33,7 @@ export function difference (obj1, obj2) {
 
 export function complement (obj0, ...objs) {
     return objs.reduce((agg, obj) => {
-        return assign(agg, difference(obj, obj0));
+        return assignDeep(agg, difference(obj, obj0));
     }, {});
 }
 

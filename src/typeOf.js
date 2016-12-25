@@ -17,7 +17,7 @@ let _Number = Number.name,
  * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
  */
 export function typeOf (value) {
-    var retVal;
+    let retVal;
     if (typeof value === _undefined) {
         retVal = _Undefined;
     }

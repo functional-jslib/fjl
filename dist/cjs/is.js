@@ -27,8 +27,15 @@ exports.isSymbol = isSymbol;
 exports.isEmptyObj = isEmptyObj;
 exports.isEmpty = isEmpty;
 exports.isEmptyMulti = isEmptyMulti;
+exports.isPrimitive = isPrimitive;
 
 var _typeOf = require('./typeOf');
+
+var _compose = require('./compose');
+
+var _compose2 = _interopRequireDefault(_compose);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _String = String.name,
     _Function = Function.name,
@@ -216,6 +223,15 @@ function isEmptyMulti() {
     });
 }
 
+/**
+ * Checks to see if value is a primitive.
+ * @param value {*}
+ * @returns {Boolean}
+ */
+function isPrimitive(value) {
+    return (0, _compose2.default)(isNumber, isString, isObject, isArray, isFunction, isSymbol, isBoolean, isNull, isUndefined)(value);
+}
+
 exports.default = {
     isset: isset,
     issetMulti: issetMulti,
@@ -231,5 +247,6 @@ exports.default = {
     isSymbol: isSymbol,
     isEmpty: isEmpty,
     isEmptyMulti: isEmptyMulti,
-    isEmptyObj: isEmptyObj
+    isEmptyObj: isEmptyObj,
+    isPrimitive: isPrimitive
 };

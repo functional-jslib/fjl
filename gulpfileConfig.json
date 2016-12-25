@@ -60,6 +60,8 @@
         "Extendable",
         "Functor",
         "Either",
+        "Left",
+        "Right",
         "Identity",
         "Maybe",
         "Just",

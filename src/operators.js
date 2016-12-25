@@ -4,7 +4,7 @@
 'use strict';
 
 import {curry2, curry3} from './curry';
-import {isFunction} from './is';
+import {isFunction, isPrimitive} from './is';
 
 export let id = value => value,
 
@@ -18,9 +18,22 @@ export let id = value => value,
             functor1.concat(functor2) : functor1 + functor2;
     }),
 
-    empty = functor => functor.constructor.of(),
+    of = functor => {
+        let constructor = functor.constructor,
+            retVal;
+        if (constructor.of) {
+            retVal = constructor.of();
+        }
+        else if (!isPrimitive(functor)) {
+            retVal = constructor();
+        }
+        else {
+            retVal = new constructor();
+        }
+        return retVal;
+    },
 
-    of = functor => functor.constructor.of(),
+    empty = functor => of(functor),
 
     map = curry2((fn, functor) => functor.map(fn)),
 
@@ -31,12 +44,6 @@ export let id = value => value,
     reduceRight = curry2((fn, agg, functor) => functor.reduceRight(fn, agg)),
 
     ap = curry2((obj1, obj2) => obj1.ap(obj2)),
-
-    chain = curry2((fn, functor) => functor.map(fn).join()),
-
-    fnOrFn = fn => isFunction(fn) ? fn : function () {
-        return fn;
-    },
 
     join = monad => {
         let {value, constructor} = monad;
@@ -51,8 +58,10 @@ export let id = value => value,
         return monad instanceof constructor ? monad : constructor.of(monad);
     },
 
+    chain = curry2((fn, functor) => join(map(fn, functor))),
+
     liftN = curry3((fn, functor1, ...otherFunctors) => {
-        return otherFunctors.reduce((aggregator, functor) => aggregator.ap(functor), functor1.map(fn));
+        return otherFunctors.reduce((aggregator, functor) => ap(aggregator, functor), map(fn, functor1));
     });
 
 export default {
@@ -67,7 +76,6 @@ export default {
     reduceRight,
     ap,
     chain,
-    fnOrFn,
     join,
     joinR,
     liftN

@@ -8,36 +8,47 @@
 
 'use strict';
 
+import {isset} from './../is';
 import {curry2} from './../curry';
 import {map} from './../operators';
 import {subClass, subClassMulti} from './../subClass';
-import Maybe, {Just} from './Maybe';
 import BiFunctor from './../functor/Bifunctor';
 import Monad from './Monad';
 
-export let Left = subClass(Just, {
+export let Left = subClass(Monad, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
                 return Left.of(value);
             }
-            Just.call(this, value);
+            Monad.call(this, value);
         },
         map: function (fn) {
-            map(fn, this.value);
+            fn(this.value);
             return this;
+        }
+    }, {
+        of: function (value) {
+            return new Left(value);
         }
     }),
 
-    Right = subClass(Just, {
+    Right = subClass(Monad, {
         constructor: function Right(value) {
             if (!(this instanceof Right)) {
                 return Right.of(value);
             }
-            Just.call(this, value);
+            Monad.call(this, value);
+        },
+        map: function (fn) {
+            let constructor = this.constructor;
+            return isset(this.value) ? constructor.of(fn(this.value)) :
+                constructor.counterConstructor.of(this.value);
         }
     },
-    null,
     {
+        of: function (value) {
+            return new Right(value);
+        },
         counterConstructor: Left
     }),
 
@@ -55,16 +66,14 @@ export let Left = subClass(Just, {
     Either = subClassMulti([Monad, BiFunctor], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
-                return new Either(left, right);
+                return Either.of(left, right);
             }
             BiFunctor.call(this, left, right);
-            Monad.call(this);
         }
     },
-    null,
     {
-        of: function (value) {
-            return new Maybe(value);
+        of: function (left, right) {
+            return new Either(left, right);
         },
         Left,
         Right,

@@ -1,4 +1,4 @@
-define(['exports', './Applicable', './../subClassOf'], function (exports, _Applicable, _subClassOf) {
+define(['exports', './Applicable', './../subClass'], function (exports, _Applicable, _subClass) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -16,7 +16,7 @@ define(['exports', './Applicable', './../subClassOf'], function (exports, _Appli
         };
     }
 
-    var Applicative = (0, _subClassOf.subClassOf)(_Applicable2.default, function Applicative(value) {
+    var Applicative = (0, _subClass.subClass)(_Applicable2.default, function Applicative(value) {
         if (!this) {
             return Applicative.of(value);
         }

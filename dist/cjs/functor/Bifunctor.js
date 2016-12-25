@@ -11,11 +11,11 @@ var _Functor = require('./Functor');
 
 var _Functor2 = _interopRequireDefault(_Functor);
 
-var _subClassOf = require('./../subClassOf');
+var _subClass = require('./../subClass');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = (0, _subClassOf.subClassOf)(_Functor2.default, function Bifunctor(value1, value2) {
+exports.default = (0, _subClass.subClass)(_Functor2.default, function Bifunctor(value1, value2) {
     if (!(this instanceof Bifunctor)) {
         return new Bifunctor(value1, value2);
     }
@@ -25,17 +25,11 @@ exports.default = (0, _subClassOf.subClassOf)(_Functor2.default, function Bifunc
         writable: true
     });
 }, {
-    map1: function map1(fn) {
-        return this.map(fn);
-    },
-    map2: function map2(fn) {
-        return new this.constructor(this.value, fn(this.value2));
-    },
     first: function first(fn) {
-        return this.map1(fn);
+        return new this.constructor(fn(this.value), this.value2);
     },
     second: function second(fn) {
-        return this.map2(fn);
+        return new this.constructor(this.value, fn(this.value2));
     },
 
 

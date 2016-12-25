@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './../curry', './../operators', './../subClassOf', './Maybe', './../functor/Bifunctor', './Monad'], factory);
+        define(['exports', './../is', './../curry', './../operators', './../subClass', './Maybe', './../functor/Bifunctor', './Monad'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./../curry'), require('./../operators'), require('./../subClassOf'), require('./Maybe'), require('./../functor/Bifunctor'), require('./Monad'));
+        factory(exports, require('./../is'), require('./../curry'), require('./../operators'), require('./../subClass'), require('./Maybe'), require('./../functor/Bifunctor'), require('./Monad'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry, global.operators, global.subClassOf, global.Maybe, global.Bifunctor, global.Monad);
+        factory(mod.exports, global.is, global.curry, global.operators, global.subClass, global.Maybe, global.Bifunctor, global.Monad);
         global.Either = mod.exports;
     }
-})(this, function (exports, _curry, _operators, _subClassOf, _Maybe, _Bifunctor, _Monad) {
+})(this, function (exports, _is, _curry, _operators, _subClass, _Maybe, _Bifunctor, _Monad) {
     /**
      * Created by elyde on 12/10/2016.
      */
@@ -26,8 +26,6 @@
     });
     exports.Either = exports.either = exports.Right = exports.Left = undefined;
 
-    var _Maybe2 = _interopRequireDefault(_Maybe);
-
     var _Bifunctor2 = _interopRequireDefault(_Bifunctor);
 
     var _Monad2 = _interopRequireDefault(_Monad);
@@ -38,26 +36,37 @@
         };
     }
 
-    var Left = exports.Left = (0, _subClassOf.subClassOf)(_Maybe.Just, {
+    var Left = exports.Left = (0, _subClass.subClass)(_Monad2.default, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
                 return Left.of(value);
             }
-            _Maybe.Just.call(this, value);
+            _Monad2.default.call(this, value);
         },
         map: function map(fn) {
-            (0, _operators.map)(fn, this.value);
+            fn(this.value);
             return this;
         }
+    }, {
+        of: function of(value) {
+            return new Left(value);
+        }
     }),
-        Right = exports.Right = (0, _subClassOf.subClassOf)(_Maybe.Just, {
+        Right = exports.Right = (0, _subClass.subClass)(_Monad2.default, {
         constructor: function Right(value) {
             if (!(this instanceof Right)) {
                 return Right.of(value);
             }
-            _Maybe.Just.call(this, value);
+            _Monad2.default.call(this, value);
+        },
+        map: function map(fn) {
+            var constructor = this.constructor;
+            return (0, _is.isset)(this.value) ? constructor.of(fn(this.value)) : constructor.counterConstructor.of(this.value);
         }
-    }, null, {
+    }, {
+        of: function of(value) {
+            return new Right(value);
+        },
         counterConstructor: Left
     }),
         either = exports.either = (0, _curry.curry2)(function (leftCallback, rightCallback, monad) {
@@ -71,17 +80,16 @@
             return (0, _operators.map)(rightCallback, identity);
         }
     }),
-        Either = exports.Either = (0, _subClassOf.subClassOfMulti)([_Monad2.default, _Bifunctor2.default], {
+        Either = exports.Either = (0, _subClass.subClassMulti)([_Monad2.default, _Bifunctor2.default], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
-                return new Either(left, right);
+                return Either.of(left, right);
             }
             _Bifunctor2.default.call(this, left, right);
-            _Monad2.default.call(this);
         }
-    }, null, {
-        of: function of(value) {
-            return new _Maybe2.default(value);
+    }, {
+        of: function of(left, right) {
+            return new Either(left, right);
         },
         Left: Left,
         Right: Right,

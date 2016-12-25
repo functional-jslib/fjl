@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './typeOf'], factory);
+        define(['exports', './typeOf', './compose'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./typeOf'));
+        factory(exports, require('./typeOf'), require('./compose'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.typeOf);
+        factory(mod.exports, global.typeOf, global.compose);
         global.is = mod.exports;
     }
-})(this, function (exports, _typeOf) {
+})(this, function (exports, _typeOf, _compose) {
     /**
      * Created by elyde on 12/18/2016.
      */
@@ -37,6 +37,15 @@
     exports.isEmptyObj = isEmptyObj;
     exports.isEmpty = isEmpty;
     exports.isEmptyMulti = isEmptyMulti;
+    exports.isPrimitive = isPrimitive;
+
+    var _compose2 = _interopRequireDefault(_compose);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
 
     var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
@@ -230,6 +239,15 @@
         });
     }
 
+    /**
+     * Checks to see if value is a primitive.
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    function isPrimitive(value) {
+        return (0, _compose2.default)(isNumber, isString, isObject, isArray, isFunction, isSymbol, isBoolean, isNull, isUndefined)(value);
+    }
+
     exports.default = {
         isset: isset,
         issetMulti: issetMulti,
@@ -245,6 +263,7 @@
         isSymbol: isSymbol,
         isEmpty: isEmpty,
         isEmptyMulti: isEmptyMulti,
-        isEmptyObj: isEmptyObj
+        isEmptyObj: isEmptyObj,
+        isPrimitive: isPrimitive
     };
 });
