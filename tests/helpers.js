@@ -22,7 +22,11 @@ export let add = curry2((...args) => {
 
     expectFunction = value => expect(value).to.be.instanceOf(Function),
 
-    expectEqual = curry2((value, value2) => expect(value).to.be.equal(value2));
+    expectEqual = curry2((value, value2) => expect(value).to.be.equal(value2)),
+
+    expectFalse = value => expectEqual(value, false),
+
+    expectTrue = value => expectEqual(value, true);
 
 export default {
     add,
@@ -30,5 +34,7 @@ export default {
     divide,
     expectFunction,
     expectInstanceOf,
-    expectEqual
+    expectEqual,
+    expectFalse,
+    expectTrue
 };

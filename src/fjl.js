@@ -5,8 +5,8 @@
 
 import compose from './compose';
 import {curry, curryN, curry2, curry3, curry4, curry5} from './curry';
-import {subClassOf, subClassOfMulti} from './subClassOf';
-import {subtractObj} from './math';
+import {subClass, subClassMulti} from './subClass';
+import {complement, difference, union, intersect} from './obj-math';
 import {typeOf, typeOfIs, typeOfIsMulti} from './typeOf';
 import {isset, issetMulti, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean,
@@ -26,6 +26,7 @@ import {Either, Left, Right, either} from './monad/Either';
 import version from './generated/version';
 
 export default {
+    complement,
     compose,
     curry,
     curryN,
@@ -33,9 +34,9 @@ export default {
     curry3,
     curry4,
     curry5,
-    subClassOf,
-    subClassOfMulti,
-    subtractObj,
+    subClass,
+    subClassMulti,
+    difference,
     isset,
     issetMulti,
     issetAndOfType,
@@ -54,9 +55,11 @@ export default {
     isEmpty,
     isEmptyMulti,
     isEmptyObj,
+    intersect,
     notOfTypeOrEmpty,
     notEmptyAndOfType,
     symbols,
+    union,
     Functor,
     Bifunctor,
     Applicable,

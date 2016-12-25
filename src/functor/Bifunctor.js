@@ -3,9 +3,9 @@
  */
 'use strict';
 import Functor from './Functor';
-import {subClassOf} from './../subClassOf';
+import {subClass} from './../subClass';
 
-export default subClassOf(Functor,
+export default subClass(Functor,
     function Bifunctor (value1, value2) {
         if (!(this instanceof Bifunctor)) {
             return new Bifunctor(value1, value2);
@@ -17,20 +17,12 @@ export default subClassOf(Functor,
         });
     },
     {
-        map1 (fn) {
+        first (fn) {
             return this.map(fn);
         },
 
-        map2 (fn) {
-            return new this.constructor(this.value, fn(this.value2));
-        },
-
-        first (fn) {
-            return this.map1(fn);
-        },
-
         second (fn) {
-            return this.map2(fn);
+            return new this.constructor(this.value, fn(this.value2));
         },
 
         bimap: function (fn1, fn2) {
