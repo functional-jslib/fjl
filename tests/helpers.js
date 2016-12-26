@@ -8,13 +8,15 @@ import {expect} from 'chai';
 
 export let  expectInstanceOf = curry2((value, instance) => expect(value).to.be.instanceOf(instance)),
 
-    expectFunction = value => expect(value).to.be.instanceOf(Function),
+    expectFunction = value => expectInstanceOf(value, Function),
 
     expectEqual = curry2((value, value2) => expect(value).to.be.equal(value2)),
 
     expectFalse = value => expectEqual(value, false),
 
     expectTrue = value => expectEqual(value, true),
+
+    hasOwnProperty = (instance, key) => Object.prototype.hasOwnProperty.call(instance, key),
 
     add = curry2((...args) => {
         return args.reduce((agg, num) => num + agg, 0);
