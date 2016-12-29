@@ -5,16 +5,13 @@
 import Functor from './Functor';
 import {subClass} from './../subClass';
 
-export default subClass(Functor,
+let Bifunctor = subClass(Functor,
     function Bifunctor (value1, value2) {
         if (!(this instanceof Bifunctor)) {
             return new Bifunctor(value1, value2);
         }
         Functor.call(this, value1);
-        Object.defineProperty(this, 'value2', {
-            value: value2,
-            writable: true
-        });
+        Bifunctor.addValue2Property(this, value2);
     },
     {
         first (fn) {
@@ -32,3 +29,15 @@ export default subClass(Functor,
             );
         }
     });
+
+Bifunctor.addValue2Property = function (instance, value) {
+    if (!instance.hasOwnProperty('value2')) {
+        Object.defineProperty(instance, 'value2', {
+            value: value,
+            writable: true
+        });
+    }
+    return instance;
+};
+
+export default Bifunctor;

@@ -8,16 +8,21 @@ function Functor(value) {
     if (!this) {
         return new Functor(value);
     }
-    if (!this.hasOwnProperty('value')) {
-        Object.defineProperty(this, 'value', {
-            value: value,
-            writable: true
-        });
-    }
+    Functor.addValueProperty(this, value);
 }
 
 Functor.prototype.map = function (fn) {
     return new this.constructor(fn(this.value));
+};
+
+Functor.addValueProperty = function (instance, value) {
+    if (!instance.hasOwnProperty('value')) {
+        Object.defineProperty(instance, 'value', {
+            value: value,
+            writable: true
+        });
+    }
+    return instance;
 };
 
 Object.defineProperty(Functor.prototype, 'constructor', { value: Functor });
