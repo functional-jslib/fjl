@@ -6,7 +6,7 @@
 import compose from './compose';
 import {curry, curryN, curry2, curry3, curry4, curry5} from './curry';
 import {subClass, subClassMulti} from './subClass';
-import {complement, difference, union, intersect} from './objMath';
+import {complement, difference, union, intersect} from './objOperators';
 import {typeOf, typeOfIs, typeOfIsMulti} from './typeOf';
 import {isset, issetMulti, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean,

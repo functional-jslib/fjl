@@ -62,7 +62,31 @@ export let id = value => value,
 
     liftN = curry3((fn, functor1, ...otherFunctors) => {
         return otherFunctors.reduce((aggregator, functor) => ap(aggregator, functor), map(fn, functor1));
-    });
+    }),
+
+    maxLength = (array1, array2) => {
+        if (array1.length > array2.length) {
+            return array1;
+        }
+        else if (array2.length > array1.length) {
+            return array2;
+        }
+        else {
+            return array1;
+        }
+    },
+
+    minLength = (array1, array2) => {
+        if (array1.length < array2.length) {
+            return array1;
+        }
+        else if (array2.length < array1.length) {
+            return array2;
+        }
+        else {
+            return array1;
+        }
+    };
 
 export default {
     id,
@@ -78,5 +102,7 @@ export default {
     chain,
     join,
     joinR,
-    liftN
+    liftN,
+    maxLength,
+    minLength
 };

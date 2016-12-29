@@ -40,6 +40,14 @@ export default function Role (roleId, parents, children) {
                 errorIfNotType(contextName, 'children', value, Map);
                 _children = value;
             },
+        },
+        allowed: {
+            value: new Map(),
+            enumerable: true
+        },
+        denied: {
+            value: new Map(),
+            enumerable: true
         }
     });
 

@@ -5,6 +5,7 @@
 'use strict';
 
 import {typeOf} from '../../../src/typeOf';
+import {difference as arrayDiff} from '../../../src/arrayOperators';
 import {errorIfNotType} from '../utils';
 import Role from './Role';
 import Resource from './Resource';
@@ -72,6 +73,11 @@ function normalizeResource (resource) {
     }
 }
 
+function normalizeResources (resources) {
+    return Array.isArray(resources) ? resources.map(normalizeResource) :
+        [normalizeResource(resources)];
+}
+
 function normalizeRole (role) {
     switch (typeOf(role)) {
         case 'Role':
@@ -81,6 +87,14 @@ function normalizeRole (role) {
         default:
             return role;
     }
+}
+
+function normalizeRoles (roles) {
+    return Array.isArray(roles) ? roles.map(normalizeRole) : [normalizeRole(roles)];
+}
+
+function normalizePrivileges (privileges) {
+    return [];
 }
 
 function getRoleId (role) {
@@ -163,7 +177,18 @@ Acl.prototype = Object.create({
         return this.roles.has(getRoleId(role));
     },
     inheritsResource: function (resource, inherits, fromDirectParent) {
-
+        let _inheritsResourceId = getResourceId(inherits),
+            retVal;
+        if (resource.resourceId === _inheritsResourceId) {
+            retVal = true;
+        }
+        else if (resource.parent) {
+            retVal = this.inheritsResource(resource.parent, _inheritsResourceId, fromDirectParent);
+        }
+        else {
+            retVal = false;
+        }
+        return retVal;
     },
     inheritsRole: function (resource, inherits, fromDirectParent) {
     },
@@ -193,30 +218,62 @@ Acl.prototype = Object.create({
         this.resources.clear();
         return this;
     },
+
     resetRoles: function () {
         this.roles.clear();
         return this;
     },
-    setRule: function (operation, type, roles, resources, privileges, assert) {
 
+    setRule: function (operation, type, roles, resources, privileges, assert) {
+        let _resources = normalizeResources(resources),
+            _roles = normalizeRoles(roles),
+            _privileges = normalizePrivileges(privileges);
+
+        this[operation + 'Rule'](type, _roles, _resources, _privileges, assert);
+
+        _roles.forEach(role => {
+            if (!this.rules.has(role.roleId)) {
+                return;
+            }
+        });
+    },
+
+    addRule: function (ruleType, role, resource, privileges = []) {
+        let {allowed, denied} = role,
+            {resourceId} = resource;
+        allowed.set(resourceId, privileges);
+        if (denied.has(resourceId)) {
+            let privilegesDiff = arrayDiff(denied.get(resourceId), privileges);
+            if (privilegesDiff.length > -1) {
+                denied.set(resourceId, privilegesDiff);
+            }
+            else {
+                denied.delete(resourceId);
+            }
+        }
+        this.rules.set(role.roleId, role);
     }
 });
 
 Object.defineProperties(Acl, {
+    getRoleId: {value: getRoleId, enumerable: true},
+    getResourceId: {value: getResourceId, enumerable: true},
+    normalizeRole: {value: normalizeRole, enumerable: true},
+    normalizeResource: {value: normalizeResource, enumerable: true},
     OP_ADD: {
-        value: 0,
+        value: 'add',
         enumerable: true
     },
     OP_REMOVE: {
-        value: 1,
+        value: 'remove',
         enumerable: true
     },
     TYPE_ALLOW: {
-        value: 2,
+        value: 'allow',
         enumerable: true
     },
     TYPE_DENY: {
-        value: 3,
+        value: 'deny',
         enumerable: true
     }
 });

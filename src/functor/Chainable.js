@@ -21,6 +21,9 @@ let Chainable = subClass (Applicable,
         },
         chain: function (fn) {
             return this.map(fn).join();
+        },
+        flatMap: function (fn) {
+            return this.chain(fn);
         }
     });
 

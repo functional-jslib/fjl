@@ -4,8 +4,8 @@
 
 'use strict';
 
-import {Functor} from './../../../src/functor/Functor';
-import {subClass} from './../../../src/subClass';
+import {Functor} from '../../../src/functor/Functor';
+import {subClass} from '../../../src/subClass';
 
 export default subClass(Functor,
     function Counter (start) {

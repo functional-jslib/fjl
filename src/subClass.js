@@ -3,7 +3,7 @@
  */
 import {isFunction} from './is';
 import {notEmptyAndOfType} from './not';
-import {difference} from './objMath';
+import {difference} from './objOperators';
 import {assign} from './assign';
 
 /**

@@ -18,9 +18,12 @@ let ChainableRecursive = subClass (Chainable,
         }
         Chainable.call(this, value);
     }, null, {
-        chainRec: function (/*fn, baseValue*/) {
+        chainRec: (/*fn, baseValue*/) => {
             return this;
             // return fn(next, done, baseValue);
+        },
+        flatMapRec: () => {
+            return ChainableRecursive.chainRec.apply(null, arguments);
         }
     });
 

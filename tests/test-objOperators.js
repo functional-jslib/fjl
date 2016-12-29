@@ -10,7 +10,7 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {complement, difference, union, intersect} from '../src/objMath';
+import {complement, difference, union, intersect} from '../src/objOperators';
 import {expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -41,7 +41,7 @@ describe('difference', function () {
         expectFunction(difference);
     });
 
-    it('should return the all props from obj1 that aren\'t in obj2', function () {
+    it('should return all the props from obj1 that aren\'t in obj2', function () {
         let subj1 = {a: 1, b: 2, c: 3},
             subj2 = {d: 4},
             result = difference(subj1, subj2);
