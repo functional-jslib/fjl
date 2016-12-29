@@ -5,16 +5,16 @@
 import Functor from './Functor';
 import {subClass} from './../subClass';
 
-let Extendable = subClass (Functor,
-    function Extendable (value) {
-        if (!(this instanceof  Extendable)) {
-            return new Extendable(value);
+let Extend = subClass (Functor,
+    function Extend (value) {
+        if (!(this instanceof  Extend)) {
+            return new Extend(value);
         }
         Functor.call(this, value);
     }, {
         extend: function (fn) {
-            return this.map(fn);
+            return this.constructor.of(fn(this.value));
         }
     });
 
-export default Extendable;
+export default Extend;

@@ -15,10 +15,10 @@ import {isset, issetMulti, issetAndOfType, isNumber,
 import {notOfTypeOrEmpty, notEmptyAndOfType} from './not';
 import Functor from './functor/Functor';
 import Bifunctor from './functor/Bifunctor';
-import Applicable from './functor/Applicable';
+import Apply from './functor/Apply';
 import Applicative from './functor/Applicative';
-import Chainable from './functor/Chainable';
-import Extendable from './functor/Extendable';
+import Chain from './functor/Chain';
+import Extend from './functor/Extend';
 import Monad from './monad/Monad';
 import {Maybe, Just, Nothing, maybe} from './monad/Maybe';
 import {Either, Left, Right, either} from './monad/Either';
@@ -60,10 +60,10 @@ export default {
     union,
     Functor,
     Bifunctor,
-    Applicable,
+    Apply,
     Applicative,
-    Chainable,
-    Extendable,
+    Chain,
+    Extend,
     Monad,
     Maybe,
     Just,

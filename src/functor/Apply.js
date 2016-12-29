@@ -5,10 +5,10 @@
 import Functor from './Functor';
 import {subClass} from './../subClass';
 
-let Applicable = subClass(Functor,
-    function Applicable (value) {
+let Apply = subClass(Functor,
+    function Apply (value) {
         if (!this) {
-            return new Applicable(value);
+            return new Apply(value);
         }
         Functor.call(this, value);
     },
@@ -18,4 +18,4 @@ let Applicable = subClass(Functor,
         }
     });
 
-export default Applicable;
+export default Apply;

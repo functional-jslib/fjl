@@ -9,33 +9,33 @@
 import {expect} from 'chai';
 import {expectFunction, add, multiply, divide} from './../helpers';
 import Functor from '../../src/functor/Functor';
-import Applicable from '../../src/functor/Applicable';
-import Chainable from '../../src/functor/Chainable';
+import Apply from '../../src/functor/Apply';
+import Chain from '../../src/functor/Chain';
 
 let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Instance),
     expectFunctor = value => expectInstanceOf(value, Functor),
-    expectApplicable = value => expectInstanceOf(value, Applicable),
-    expectChainable = value => expectInstanceOf(value, Chainable),
+    expectApply = value => expectInstanceOf(value, Apply),
+    expectChain = value => expectInstanceOf(value, Chain),
     expectValue = (value, expectedValue) => expect(value).to.equal(expectedValue);
 
-describe('Chainable', function () {
+describe('Chain', function () {
 
     it('should return an new instance when called as a function', function () {
-        let result = Chainable();
-        expectChainable(result);
-        expectApplicable(result);
+        let result = Chain();
+        expectChain(result);
+        expectApply(result);
         expectFunctor(result);
     });
 
     it('should construct an instance of `Functor` when called with `new`', function () {
-        let result = new Chainable();
-        expectChainable(result);
-        expectApplicable(result);
+        let result = new Chain();
+        expectChain(result);
+        expectApply(result);
         expectFunctor(result);
     });
 
     describe('Interface', function () {
-        let instance = Chainable();
+        let instance = Chain();
         ['map', 'chain'].forEach((key) => {
             it('should method #' + key, function () {
                 expectFunction(instance[key]);
@@ -50,19 +50,19 @@ describe('Chainable', function () {
 
     describe('#map', function () {
         it('should return a new instance of Functor', function () {
-            let functor = Chainable(99),
+            let functor = Chain(99),
                 result = functor.map(num => num * 2);
-            expectChainable(result);
-            expectApplicable(result);
+            expectChain(result);
+            expectApply(result);
             expectFunctor(result);
             expect(result === functor).to.equal(false);
             expect(result.value).to.equal(99 * 2);
         });
         it('should return a new instance of Functor that contains the return value ' +
             'of passed in function\'s call', function () {
-            let result = Chainable(99).map(num => num * 2);
-            expectChainable(result);
-            expectApplicable(result);
+            let result = Chain(99).map(num => num * 2);
+            expectChain(result);
+            expectApply(result);
             expectFunctor(result);
             expect(result.value).to.equal(99 * 2);
         });
@@ -71,15 +71,15 @@ describe('Chainable', function () {
     describe('#chain', function () {
         it('should map incoming function over it\'s value and flatten it result if it is nested within an ' +
             'instance of it\'s own type', function () {
-            let addReturnsChainable = value => Chainable(add(1, value)),
-                instance = Chainable(99),
-                result1 = instance.chain(addReturnsChainable), // nested result
+            let addReturnsChain = value => Chain(add(1, value)),
+                instance = Chain(99),
+                result1 = instance.chain(addReturnsChain), // nested result
                 result2 = instance.chain(add(1)); // un-nested result
 
             // Check results
             [result1, result2].forEach(result => {
-                expectChainable(result);
-                expectApplicable(result);
+                expectChain(result);
+                expectApply(result);
                 expectFunctor(result);
                 expect(result.value).to.equal(100);
             });

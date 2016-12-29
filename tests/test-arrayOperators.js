@@ -12,7 +12,7 @@ import {expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#complement', function () {
+describe ('complement', function () {
     it ('should return elements not in first array passed to it', function () {
         let testCases = [
             // subj1, subj2, expectLen, expectedElements

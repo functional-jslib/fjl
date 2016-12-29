@@ -2,15 +2,15 @@
  * Created by edlc on 12/9/16.
  */
 'use strict';
-import Applicable from './Applicable';
+import Apply from './Apply';
 import {subClass} from './../subClass';
 
-let Applicative = subClass (Applicable,
+let Applicative = subClass (Apply,
     function Applicative(value) {
         if (!this) {
             return Applicative.of(value);
         }
-        Applicable.call(this, value);
+        Apply.call(this, value);
     },
     null,
     {

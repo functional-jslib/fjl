@@ -9,23 +9,23 @@
 import {expect} from 'chai';
 import {expectFunction, add, multiply, divide} from './../helpers';
 import Functor from '../../src/functor/Functor';
-import Applicable from '../../src/functor/Applicable';
+import Apply from '../../src/functor/Apply';
 
 let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Instance),
     expectFunctor = value => expectInstanceOf(value, Functor),
-    expectApplicable = value => expectInstanceOf(value, Applicable);
+    expectApply = value => expectInstanceOf(value, Apply);
 
-describe('Applicable', function () {
+describe('Apply', function () {
 
     it('should return an new instance when called as a function', function () {
-        let result = Applicable();
-        expectApplicable(result);
+        let result = Apply();
+        expectApply(result);
         expectFunctor(result);
     });
 
     it('should construct an instance of `Functor` when called with `new`', function () {
-        let result = new Applicable();
-        expectApplicable(result);
+        let result = new Apply();
+        expectApply(result);
         expectFunctor(result);
     });
 
@@ -35,7 +35,7 @@ describe('Applicable', function () {
 
 
     describe('Interface', function () {
-        let instance = Applicable();
+        let instance = Apply();
         ['map', 'ap'].forEach((key) => {
             it('should method #' + key, function () {
                 expectFunction(instance[key]);
@@ -50,17 +50,17 @@ describe('Applicable', function () {
 
     describe('#map', function () {
         it('should return a new instance of Functor', function () {
-            let functor = Applicable(99),
+            let functor = Apply(99),
                 result = functor.map(num => num * 2);
-            expectApplicable(result);
+            expectApply(result);
             expectFunctor(result);
             expect(result === functor).to.equal(false);
             expect(result.value).to.equal(99 * 2);
         });
         it('should return a new instance of Functor that contains the return value ' +
             'of passed in function\'s call', function () {
-            let result = Applicable(99).map(num => num * 2);
-            expectApplicable(result);
+            let result = Apply(99).map(num => num * 2);
+            expectApply(result);
             expectFunctor(result);
             expect(result.value).to.equal(99 * 2);
         });
@@ -68,10 +68,10 @@ describe('Applicable', function () {
 
     describe('#ap', function () {
         it('should map incoming functor over it\'s value', function () {
-            let instance = Applicable(add(1)),
-                result = instance.ap(Applicable(99));
+            let instance = Apply(add(1)),
+                result = instance.ap(Apply(99));
             expectFunctor(result);
-            expectApplicable(result);
+            expectApply(result);
             expect(result.value).to.equal(100);
         });
     });

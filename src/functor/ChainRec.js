@@ -8,23 +8,23 @@
  * Created by edlc on 12/9/16.
  */
 'use strict';
-import Chainable from './Chainable';
+import Chain from './Chain';
 import {subClass} from './../subClass';
 
-let ChainableRecursive = subClass (Chainable,
-    function ChainableRecursive (value) {
+let ChainRecursive = subClass (Chain,
+    function ChainRecursive (value) {
         if (!this) {
-            return new Chainable(value);
+            return new Chain(value);
         }
-        Chainable.call(this, value);
+        Chain.call(this, value);
     }, null, {
         chainRec: (/*fn, baseValue*/) => {
             return this;
             // return fn(next, done, baseValue);
         },
         flatMapRec: () => {
-            return ChainableRecursive.chainRec.apply(null, arguments);
+            return ChainRecursive.chainRec.apply(null, arguments);
         }
     });
 
-export default Chainable;
+export default Chain;

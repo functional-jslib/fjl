@@ -9,17 +9,17 @@ import {expectFunction, add, multiply} from './../helpers';
 import {curry2, __} from './../../src/curry';
 import compose      from './../../src/compose';
 import Functor      from '../../src/functor/Functor';
-import Applicable   from '../../src/functor/Applicable';
+import Apply   from '../../src/functor/Apply';
 import Applicative  from '../../src/functor/Applicative';
-import Chainable    from '../../src/functor/Chainable';
+import Chain    from '../../src/functor/Chain';
 import Monad        from '../../src/monad/Monad';
 
 let expectInstanceOf = curry2((value, Instance) => expect(value).to.be.instanceOf(Instance)),
     expectFunctor = value => expectInstanceOf(value, Functor),
-    expectApplicable = value => expectInstanceOf(value, Applicable),
+    expectApply = value => expectInstanceOf(value, Apply),
     expectApplicative = value => expectInstanceOf(value, Applicative),
-    expectChainable = value => expectInstanceOf(value, Chainable),
-    expectMonad = value => compose(expectInstanceOf(__, Monad), expectChainable, expectApplicative, expectApplicable, expectFunctor),
+    expectChain = value => expectInstanceOf(value, Chain),
+    expectMonad = value => compose(expectInstanceOf(__, Monad), expectChain, expectApplicative, expectApply, expectFunctor),
     expectValue = (value, expectedValue) => expect(value).to.equal(expectedValue);
 
 describe('Monad', function () {
@@ -103,9 +103,9 @@ describe('Monad', function () {
     describe('#chain', function () {
         it('should map incoming function over it\'s value and flatten it result if it is nested within an ' +
             'instance of it\'s own type', function () {
-            let addReturnsChainable = value => Monad(add(1, value)),
+            let addReturnsChain = value => Monad(add(1, value)),
                 instance = Monad(99),
-                result1 = instance.chain(addReturnsChainable), // nested result
+                result1 = instance.chain(addReturnsChain), // nested result
                 result2 = instance.chain(add(1)); // un-nested result
 
             // Check results

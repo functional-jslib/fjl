@@ -5,15 +5,15 @@
  * Created by edlc on 12/9/16.
  */
 'use strict';
-import Applicable from './Applicable';
+import Apply from './Apply';
 import {subClass} from './../subClass';
 
-let Chainable = subClass (Applicable,
-    function Chainable (value) {
+let Chain = subClass (Apply,
+    function Chain (value) {
         if (!this) {
-            return new Chainable(value);
+            return new Chain(value);
         }
-        Applicable.call(this, value);
+        Apply.call(this, value);
     }, {
         join: function () {
             return this.value instanceof this.constructor ?
@@ -27,4 +27,4 @@ let Chainable = subClass (Applicable,
         }
     });
 
-export default Chainable;
+export default Chain;
