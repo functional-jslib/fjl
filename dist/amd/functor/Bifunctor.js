@@ -16,15 +16,12 @@ define(['exports', './Functor', './../subClass'], function (exports, _Functor, _
         };
     }
 
-    exports.default = (0, _subClass.subClass)(_Functor2.default, function Bifunctor(value1, value2) {
+    var Bifunctor = (0, _subClass.subClass)(_Functor2.default, function Bifunctor(value1, value2) {
         if (!(this instanceof Bifunctor)) {
             return new Bifunctor(value1, value2);
         }
         _Functor2.default.call(this, value1);
-        Object.defineProperty(this, 'value2', {
-            value: value2,
-            writable: true
-        });
+        Bifunctor.addValue2Property(this, value2);
     }, {
         first: function first(fn) {
             return new this.constructor(fn(this.value), this.value2);
@@ -38,4 +35,16 @@ define(['exports', './Functor', './../subClass'], function (exports, _Functor, _
             return new this.constructor(fn1(this.value), fn2(this.value2));
         }
     });
+
+    Bifunctor.addValue2Property = function (instance, value) {
+        if (!instance.hasOwnProperty('value2')) {
+            Object.defineProperty(instance, 'value2', {
+                value: value,
+                writable: true
+            });
+        }
+        return instance;
+    };
+
+    exports.default = Bifunctor;
 });

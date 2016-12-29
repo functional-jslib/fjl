@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './Applicable', './../subClass'], factory);
+        define(['exports', './Apply', './../subClass'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./Applicable'), require('./../subClass'));
+        factory(exports, require('./Apply'), require('./../subClass'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.Applicable, global.subClass);
+        factory(mod.exports, global.Apply, global.subClass);
         global.Applicative = mod.exports;
     }
-})(this, function (exports, _Applicable, _subClass) {
+})(this, function (exports, _Apply, _subClass) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -20,7 +20,7 @@
         value: true
     });
 
-    var _Applicable2 = _interopRequireDefault(_Applicable);
+    var _Apply2 = _interopRequireDefault(_Apply);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -28,11 +28,11 @@
         };
     }
 
-    var Applicative = (0, _subClass.subClass)(_Applicable2.default, function Applicative(value) {
+    var Applicative = (0, _subClass.subClass)(_Apply2.default, function Applicative(value) {
         if (!this) {
             return Applicative.of(value);
         }
-        _Applicable2.default.call(this, value);
+        _Apply2.default.call(this, value);
     }, null, {
         of: function of(value) {
             return new Applicative(value);

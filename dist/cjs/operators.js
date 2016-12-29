@@ -6,7 +6,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.liftN = exports.chain = exports.joinR = exports.join = exports.ap = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.empty = exports.of = exports.concat = exports.equals = exports.id = undefined;
+exports.minLength = exports.maxLength = exports.liftN = exports.chain = exports.joinR = exports.join = exports.ap = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.empty = exports.of = exports.concat = exports.equals = exports.id = undefined;
 
 var _curry = require('./curry');
 
@@ -78,7 +78,23 @@ var id = exports.id = function id(value) {
     return otherFunctors.reduce(function (aggregator, functor) {
         return ap(aggregator, functor);
     }, map(fn, functor1));
-});
+}),
+    maxLength = exports.maxLength = function maxLength(array1, array2) {
+    if (array1.length > array2.length) {
+        return array1;
+    } else if (array2.length > array1.length) {
+        return array2;
+    }
+    return array1;
+},
+    minLength = exports.minLength = function minLength(array1, array2) {
+    if (array1.length < array2.length) {
+        return array1;
+    } else if (array2.length < array1.length) {
+        return array2;
+    }
+    return array1;
+};
 
 exports.default = {
     id: id,
@@ -94,5 +110,7 @@ exports.default = {
     chain: chain,
     join: join,
     joinR: joinR,
-    liftN: liftN
+    liftN: liftN,
+    maxLength: maxLength,
+    minLength: minLength
 };

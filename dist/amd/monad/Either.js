@@ -1,10 +1,6 @@
-define(['exports', './../is', './../curry', './../operators', './../subClass', './Maybe', './../functor/Bifunctor', './Monad'], function (exports, _is, _curry, _operators, _subClass, _Maybe, _Bifunctor, _Monad) {
+define(['exports', './../is', './../curry', './../operators', './../subClass', './../functor/Bifunctor', './Monad'], function (exports, _is, _curry, _operators, _subClass, _Bifunctor, _Monad) {
     /**
      * Created by elyde on 12/10/2016.
-     */
-    'use strict';
-    /**
-     * Created by elyde on 11/20/2016.
      */
 
     'use strict';

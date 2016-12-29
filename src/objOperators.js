@@ -7,7 +7,7 @@
 
 import {assignDeep} from './assign';
 
-let hasOwnProperty = Object.prototype.hasOwnProperty;
+const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 export let
 

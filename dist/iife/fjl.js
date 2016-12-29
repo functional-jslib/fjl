@@ -474,29 +474,26 @@ var fjl = function () {
 
     var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-    function union(obj1, obj2) {
+    var union = function union(obj1, obj2) {
         return assignDeep(obj1, obj2);
-    }
-
-    function intersect(obj1, obj2) {
+    };
+    var intersect = function intersect(obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
             if (hasOwnProperty.call(obj2, key)) {
                 agg[key] = obj2[key];
             }
             return agg;
         }, {});
-    }
-
-    function difference(obj1, obj2) {
+    };
+    var difference = function difference(obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
             if (!hasOwnProperty.call(obj2, key)) {
                 agg[key] = obj1[key];
             }
             return agg;
         }, {});
-    }
-
-    function complement(obj0) {
+    };
+    var complement = function complement(obj0) {
         for (var _len11 = arguments.length, objs = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
             objs[_key11 - 1] = arguments[_key11];
         }
@@ -504,7 +501,7 @@ var fjl = function () {
         return objs.reduce(function (agg, obj) {
             return assignDeep(agg, difference(obj, obj0));
         }, {});
-    }
+    };
 
     /**
      * Created by elyde on 12/10/2016.
@@ -590,16 +587,21 @@ var fjl = function () {
         if (!this) {
             return new Functor(value);
         }
-        if (!this.hasOwnProperty('value')) {
-            Object.defineProperty(this, 'value', {
-                value: value,
-                writable: true
-            });
-        }
+        Functor.addValueProperty(this, value);
     }
 
     Functor.prototype.map = function (fn) {
         return new this.constructor(fn(this.value));
+    };
+
+    Functor.addValueProperty = function (instance, value) {
+        if (!instance.hasOwnProperty('value')) {
+            Object.defineProperty(instance, 'value', {
+                value: value,
+                writable: true
+            });
+        }
+        return instance;
     };
 
     Object.defineProperty(Functor.prototype, 'constructor', { value: Functor });
@@ -607,15 +609,12 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var BiFunctor = subClass(Functor, function Bifunctor(value1, value2) {
+    var Bifunctor = subClass(Functor, function Bifunctor(value1, value2) {
         if (!(this instanceof Bifunctor)) {
             return new Bifunctor(value1, value2);
         }
         Functor.call(this, value1);
-        Object.defineProperty(this, 'value2', {
-            value: value2,
-            writable: true
-        });
+        Bifunctor.addValue2Property(this, value2);
     }, {
         first: function first(fn) {
             return new this.constructor(fn(this.value), this.value2);
@@ -630,12 +629,22 @@ var fjl = function () {
         }
     });
 
+    Bifunctor.addValue2Property = function (instance, value) {
+        if (!instance.hasOwnProperty('value2')) {
+            Object.defineProperty(instance, 'value2', {
+                value: value,
+                writable: true
+            });
+        }
+        return instance;
+    };
+
     /**
      * Created by edlc on 12/9/16.
      */
-    var Applicable = subClass(Functor, function Applicable(value) {
+    var Apply = subClass(Functor, function Apply(value) {
         if (!this) {
-            return new Applicable(value);
+            return new Apply(value);
         }
         Functor.call(this, value);
     }, {
@@ -647,11 +656,11 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Applicative = subClass(Applicable, function Applicative(value) {
+    var Applicative = subClass(Apply, function Applicative(value) {
         if (!this) {
             return Applicative.of(value);
         }
-        Applicable.call(this, value);
+        Apply.call(this, value);
     }, null, {
         of: function of(value) {
             return new Applicative(value);
@@ -664,43 +673,46 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
-    var Chainable = subClass(Applicable, function Chainable(value) {
+    var Chain = subClass(Apply, function Chain(value) {
         if (!this) {
-            return new Chainable(value);
+            return new Chain(value);
         }
-        Applicable.call(this, value);
+        Apply.call(this, value);
     }, {
         join: function join() {
             return this.value instanceof this.constructor ? this.value : new this.constructor(this.value);
         },
         chain: function chain(fn) {
             return this.map(fn).join();
+        },
+        flatMap: function flatMap(fn) {
+            return this.chain(fn);
         }
     });
 
     /**
      * Created by edlc on 12/9/16.
      */
-    var Extendable = subClass(Functor, function Extendable(value) {
-        if (!(this instanceof Extendable)) {
-            return new Extendable(value);
+    var Extend = subClass(Functor, function Extend(value) {
+        if (!(this instanceof Extend)) {
+            return new Extend(value);
         }
         Functor.call(this, value);
     }, {
         extend: function extend(fn) {
-            return this.map(fn);
+            return fn(this);
         }
     });
 
     /**
      * Created by edlc on 12/9/16.
      */
-    var Monad = subClassMulti([Applicative, Chainable], function Monad(value) {
+    var Monad = subClassMulti([Applicative, Chain], function Monad(value) {
         if (!this) {
             return Monad.of(value);
         }
         Applicative.apply(this);
-        Chainable.apply(this);
+        Chain.apply(this);
         this.value = value;
     }, null, {
         of: function of(value) {
@@ -824,6 +836,7 @@ var fjl = function () {
     /**
      * Created by elyde on 12/10/2016.
      */
+
     var Left = subClass(Monad, {
         constructor: function Left(value) {
             if (!(this instanceof Left)) {
@@ -868,12 +881,12 @@ var fjl = function () {
             return _map(rightCallback, identity);
         }
     });
-    var Either = subClassMulti([Monad, BiFunctor], {
+    var Either = subClassMulti([Monad, Bifunctor], {
         constructor: function Either(left, right) {
             if (!(this instanceof Either)) {
                 return Either.of(left, right);
             }
-            BiFunctor.call(this, left, right);
+            Bifunctor.call(this, left, right);
         }
     }, {
         of: function of(left, right) {
@@ -886,10 +899,10 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sun Dec 25 2016 14:09:18 GMT-0500 (Eastern Standard Time) 
+     * Generated Thu Dec 29 2016 15:31:37 GMT-0500 (Eastern Standard Time) 
      */
 
-    var version = '1.0.0';
+    var version = '0.5.0';
 
     /**
      * Created by elyde on 12/6/2016.
@@ -929,11 +942,11 @@ var fjl = function () {
         notEmptyAndOfType: notEmptyAndOfType,
         union: union,
         Functor: Functor,
-        Bifunctor: BiFunctor,
-        Applicable: Applicable,
+        Bifunctor: Bifunctor,
+        Apply: Apply,
         Applicative: Applicative,
-        Chainable: Chainable,
-        Extendable: Extendable,
+        Chain: Chain,
+        Extend: Extend,
         Monad: Monad,
         Maybe: Maybe,
         Just: Just,

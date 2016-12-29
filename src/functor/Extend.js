@@ -13,7 +13,7 @@ let Extend = subClass (Functor,
         Functor.call(this, value);
     }, {
         extend: function (fn) {
-            return this.constructor.of(fn(this.value));
+            return fn(this);
         }
     });
 

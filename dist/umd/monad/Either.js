@@ -1,22 +1,18 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './../is', './../curry', './../operators', './../subClass', './Maybe', './../functor/Bifunctor', './Monad'], factory);
+        define(['exports', './../is', './../curry', './../operators', './../subClass', './../functor/Bifunctor', './Monad'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./../is'), require('./../curry'), require('./../operators'), require('./../subClass'), require('./Maybe'), require('./../functor/Bifunctor'), require('./Monad'));
+        factory(exports, require('./../is'), require('./../curry'), require('./../operators'), require('./../subClass'), require('./../functor/Bifunctor'), require('./Monad'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.curry, global.operators, global.subClass, global.Maybe, global.Bifunctor, global.Monad);
+        factory(mod.exports, global.is, global.curry, global.operators, global.subClass, global.Bifunctor, global.Monad);
         global.Either = mod.exports;
     }
-})(this, function (exports, _is, _curry, _operators, _subClass, _Maybe, _Bifunctor, _Monad) {
+})(this, function (exports, _is, _curry, _operators, _subClass, _Bifunctor, _Monad) {
     /**
      * Created by elyde on 12/10/2016.
-     */
-    'use strict';
-    /**
-     * Created by elyde on 11/20/2016.
      */
 
     'use strict';

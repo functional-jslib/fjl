@@ -1,10 +1,6 @@
 /**
  * Created by elyde on 12/10/2016.
  */
-'use strict';
-/**
- * Created by elyde on 11/20/2016.
- */
 
 'use strict';
 
@@ -20,8 +16,6 @@ var _curry = require('./../curry');
 var _operators = require('./../operators');
 
 var _subClass = require('./../subClass');
-
-var _Maybe = require('./Maybe');
 
 var _Bifunctor = require('./../functor/Bifunctor');
 

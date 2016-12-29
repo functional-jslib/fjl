@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './Applicable', './../subClass'], factory);
+        define(['exports', './Apply', './../subClass'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./Applicable'), require('./../subClass'));
+        factory(exports, require('./Apply'), require('./../subClass'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.Applicable, global.subClass);
+        factory(mod.exports, global.Apply, global.subClass);
         global.Comonad = mod.exports;
     }
-})(this, function (exports, _Applicable, _subClass) {
+})(this, function (exports, _Apply, _subClass) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -26,7 +26,7 @@
         value: true
     });
 
-    var _Applicable2 = _interopRequireDefault(_Applicable);
+    var _Apply2 = _interopRequireDefault(_Apply);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -34,11 +34,11 @@
         };
     }
 
-    var Chainable = (0, _subClass.subClass)(_Applicable2.default, function Chainable(value) {
+    var Chain = (0, _subClass.subClass)(_Apply2.default, function Chain(value) {
         if (!this) {
-            return new Chainable(value);
+            return new Chain(value);
         }
-        _Applicable2.default.call(this, value);
+        _Apply2.default.call(this, value);
     }, {
         join: function join() {
             return this.value instanceof this.constructor ? this.value : new this.constructor(this.value);
@@ -49,5 +49,5 @@
         }
     });
 
-    exports.default = Chainable;
+    exports.default = Chain;
 });

@@ -7,19 +7,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Applicable = require('./Applicable');
+var _Apply = require('./Apply');
 
-var _Applicable2 = _interopRequireDefault(_Applicable);
+var _Apply2 = _interopRequireDefault(_Apply);
 
 var _subClass = require('./../subClass');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Applicative = (0, _subClass.subClass)(_Applicable2.default, function Applicative(value) {
+var Applicative = (0, _subClass.subClass)(_Apply2.default, function Applicative(value) {
     if (!this) {
         return Applicative.of(value);
     }
-    _Applicable2.default.call(this, value);
+    _Apply2.default.call(this, value);
 }, null, {
     of: function of(value) {
         return new Applicative(value);

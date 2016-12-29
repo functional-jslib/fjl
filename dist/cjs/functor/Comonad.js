@@ -13,19 +13,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Applicable = require('./Applicable');
+var _Apply = require('./Apply');
 
-var _Applicable2 = _interopRequireDefault(_Applicable);
+var _Apply2 = _interopRequireDefault(_Apply);
 
 var _subClass = require('./../subClass');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Chainable = (0, _subClass.subClass)(_Applicable2.default, function Chainable(value) {
+var Chain = (0, _subClass.subClass)(_Apply2.default, function Chain(value) {
     if (!this) {
-        return new Chainable(value);
+        return new Chain(value);
     }
-    _Applicable2.default.call(this, value);
+    _Apply2.default.call(this, value);
 }, {
     join: function join() {
         return this.value instanceof this.constructor ? this.value : new this.constructor(this.value);
@@ -36,4 +36,4 @@ var Chainable = (0, _subClass.subClass)(_Applicable2.default, function Chainable
     }
 });
 
-exports.default = Chainable;
+exports.default = Chain;

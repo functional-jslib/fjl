@@ -71,9 +71,7 @@ export let id = value => value,
         else if (array2.length > array1.length) {
             return array2;
         }
-        else {
-            return array1;
-        }
+        return array1;
     },
 
     minLength = (array1, array2) => {
@@ -83,9 +81,7 @@ export let id = value => value,
         else if (array2.length < array1.length) {
             return array2;
         }
-        else {
-            return array1;
-        }
+        return array1;
     };
 
 export default {

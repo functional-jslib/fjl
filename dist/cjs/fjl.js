@@ -15,7 +15,7 @@ var _curry = require('./curry');
 
 var _subClass = require('./subClass');
 
-var _objMath = require('./objMath');
+var _objOperators = require('./objOperators');
 
 var _typeOf = require('./typeOf');
 
@@ -31,21 +31,21 @@ var _Bifunctor = require('./functor/Bifunctor');
 
 var _Bifunctor2 = _interopRequireDefault(_Bifunctor);
 
-var _Applicable = require('./functor/Applicable');
+var _Apply = require('./functor/Apply');
 
-var _Applicable2 = _interopRequireDefault(_Applicable);
+var _Apply2 = _interopRequireDefault(_Apply);
 
 var _Applicative = require('./functor/Applicative');
 
 var _Applicative2 = _interopRequireDefault(_Applicative);
 
-var _Chainable = require('./functor/Chainable');
+var _Chain = require('./functor/Chain');
 
-var _Chainable2 = _interopRequireDefault(_Chainable);
+var _Chain2 = _interopRequireDefault(_Chain);
 
-var _Extendable = require('./functor/Extendable');
+var _Extend = require('./functor/Extend');
 
-var _Extendable2 = _interopRequireDefault(_Extendable);
+var _Extend2 = _interopRequireDefault(_Extend);
 
 var _Monad = require('./monad/Monad');
 
@@ -62,7 +62,7 @@ var _version2 = _interopRequireDefault(_version);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    complement: _objMath.complement,
+    complement: _objOperators.complement,
     compose: _compose2.default,
     curry: _curry.curry,
     curryN: _curry.curryN,
@@ -72,7 +72,7 @@ exports.default = {
     curry5: _curry.curry5,
     subClass: _subClass.subClass,
     subClassMulti: _subClass.subClassMulti,
-    difference: _objMath.difference,
+    difference: _objOperators.difference,
     isset: _is.isset,
     issetMulti: _is.issetMulti,
     issetAndOfType: _is.issetAndOfType,
@@ -91,16 +91,16 @@ exports.default = {
     isEmpty: _is.isEmpty,
     isEmptyMulti: _is.isEmptyMulti,
     isEmptyObj: _is.isEmptyObj,
-    intersect: _objMath.intersect,
+    intersect: _objOperators.intersect,
     notOfTypeOrEmpty: _not.notOfTypeOrEmpty,
     notEmptyAndOfType: _not.notEmptyAndOfType,
-    union: _objMath.union,
+    union: _objOperators.union,
     Functor: _Functor2.default,
     Bifunctor: _Bifunctor2.default,
-    Applicable: _Applicable2.default,
+    Apply: _Apply2.default,
     Applicative: _Applicative2.default,
-    Chainable: _Chainable2.default,
-    Extendable: _Extendable2.default,
+    Chain: _Chain2.default,
+    Extend: _Extend2.default,
     Monad: _Monad2.default,
     Maybe: _Maybe.Maybe,
     Just: _Maybe.Just,

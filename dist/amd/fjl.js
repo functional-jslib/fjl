@@ -1,4 +1,4 @@
-define(['exports', './compose', './curry', './subClass', './objMath', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Applicable', './functor/Applicative', './functor/Chainable', './functor/Extendable', './monad/Monad', './monad/Maybe', './monad/Either', './generated/version'], function (exports, _compose, _curry, _subClass, _objMath, _typeOf, _is, _not, _Functor, _Bifunctor, _Applicable, _Applicative, _Chainable, _Extendable, _Monad, _Maybe, _Either, _version) {
+define(['exports', './compose', './curry', './subClass', './objOperators', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './monad/Monad', './monad/Maybe', './monad/Either', './generated/version'], function (exports, _compose, _curry, _subClass, _objOperators, _typeOf, _is, _not, _Functor, _Bifunctor, _Apply, _Applicative, _Chain, _Extend, _Monad, _Maybe, _Either, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -14,13 +14,13 @@ define(['exports', './compose', './curry', './subClass', './objMath', './typeOf'
 
     var _Bifunctor2 = _interopRequireDefault(_Bifunctor);
 
-    var _Applicable2 = _interopRequireDefault(_Applicable);
+    var _Apply2 = _interopRequireDefault(_Apply);
 
     var _Applicative2 = _interopRequireDefault(_Applicative);
 
-    var _Chainable2 = _interopRequireDefault(_Chainable);
+    var _Chain2 = _interopRequireDefault(_Chain);
 
-    var _Extendable2 = _interopRequireDefault(_Extendable);
+    var _Extend2 = _interopRequireDefault(_Extend);
 
     var _Monad2 = _interopRequireDefault(_Monad);
 
@@ -33,7 +33,7 @@ define(['exports', './compose', './curry', './subClass', './objMath', './typeOf'
     }
 
     exports.default = {
-        complement: _objMath.complement,
+        complement: _objOperators.complement,
         compose: _compose2.default,
         curry: _curry.curry,
         curryN: _curry.curryN,
@@ -43,7 +43,7 @@ define(['exports', './compose', './curry', './subClass', './objMath', './typeOf'
         curry5: _curry.curry5,
         subClass: _subClass.subClass,
         subClassMulti: _subClass.subClassMulti,
-        difference: _objMath.difference,
+        difference: _objOperators.difference,
         isset: _is.isset,
         issetMulti: _is.issetMulti,
         issetAndOfType: _is.issetAndOfType,
@@ -62,16 +62,16 @@ define(['exports', './compose', './curry', './subClass', './objMath', './typeOf'
         isEmpty: _is.isEmpty,
         isEmptyMulti: _is.isEmptyMulti,
         isEmptyObj: _is.isEmptyObj,
-        intersect: _objMath.intersect,
+        intersect: _objOperators.intersect,
         notOfTypeOrEmpty: _not.notOfTypeOrEmpty,
         notEmptyAndOfType: _not.notEmptyAndOfType,
-        union: _objMath.union,
+        union: _objOperators.union,
         Functor: _Functor2.default,
         Bifunctor: _Bifunctor2.default,
-        Applicable: _Applicable2.default,
+        Apply: _Apply2.default,
         Applicative: _Applicative2.default,
-        Chainable: _Chainable2.default,
-        Extendable: _Extendable2.default,
+        Chain: _Chain2.default,
+        Extend: _Extend2.default,
         Monad: _Monad2.default,
         Maybe: _Maybe.Maybe,
         Just: _Maybe.Just,

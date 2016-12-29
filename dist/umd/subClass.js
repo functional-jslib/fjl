@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './is', './not', './objMath', './assign'], factory);
+        define(['exports', './is', './not', './objOperators', './assign'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./is'), require('./not'), require('./objMath'), require('./assign'));
+        factory(exports, require('./is'), require('./not'), require('./objOperators'), require('./assign'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.not, global.objMath, global.assign);
+        factory(mod.exports, global.is, global.not, global.objOperators, global.assign);
         global.subClass = mod.exports;
     }
-})(this, function (exports, _is, _not, _objMath, _assign) {
+})(this, function (exports, _is, _not, _objOperators, _assign) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -38,7 +38,7 @@
         }, {}),
             isCtorAndMethods = !(0, _is.isFunction)(constructor),
             _constructor = isCtorAndMethods ? constructor.constructor : constructor,
-            _methods = isCtorAndMethods ? (0, _objMath.difference)(constructor, { constructor: null }) : methods,
+            _methods = isCtorAndMethods ? (0, _objOperators.difference)(constructor, { constructor: null }) : methods,
             _statics = (0, _assign.assign)(_extractedStatics, isCtorAndMethods ? methods : statics);
 
         return {
