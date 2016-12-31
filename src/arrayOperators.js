@@ -10,9 +10,18 @@
 
 import {curry2} from './curry';
 
+
+
 export let
 
-    concat = curry2((arr1, arr2) => arr1.concat(arr2)),
+    equals = curry2((arr1, arr2) => {
+        return arr1 === arr2 || (arr1.length === arr2.length &&
+            arr1.every((elm, ind) => {
+                return arr2[ind] === elm;
+            }));
+    }),
+
+    concat = curry2((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
 
     join = curry2((arr, delimiter) => arr.join(delimiter)),
 
@@ -39,15 +48,19 @@ export let
     }),
 
     union = curry2((arr1, arr2) => {
-        let whereNotInArray2 = elm => arr2.indexOf(elm) === -1;
-        return concat(arr1, filter(whereNotInArray2, arr1));
+        let whereNotInArray1 = elm => arr1.indexOf(elm) === -1;
+        return concat(arr1, filter(whereNotInArray1, arr2));
     }),
 
     intersect = curry2((arr1, arr2) => {
-        return filter(elm => arr2.indexOf(elm) > -1, arr1);
+        return arr2.length === 0 ? [] :
+            filter(elm => arr2.indexOf(elm) > -1, arr1);
     }),
 
     difference = curry2((arr1, arr2) => {
+        if (arr2.length === 0) {
+            return arr1.slice();
+        }
         return reduce((agg, elm) => {
             if (arr2.indexOf(elm) === -1) {
                 agg.push(elm);

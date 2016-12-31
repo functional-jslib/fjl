@@ -8,6 +8,8 @@ import {isFunction, isPrimitive} from './is';
 
 export let id = value => value,
 
+    length = functor => functor.length,
+
     equals = curry2((functor1, functor2) => {
         return functor1.equals && isFunction(functor1.equals) ?
             functor1.equals(functor2) : functor1 === functor2;
