@@ -25,7 +25,7 @@ define(['exports', './Chain', './../subClass'], function (exports, _Chain, _subC
     var _arguments = arguments;
 
 
-    var ChainRecursive = (0, _subClass.subClass)(_Chain2.default, function ChainRecursive(value) {
+    var ChainRec = (0, _subClass.subClass)(_Chain2.default, function ChainRec(value) {
         if (!this) {
             return new _Chain2.default(value);
         }
@@ -36,7 +36,7 @@ define(['exports', './Chain', './../subClass'], function (exports, _Chain, _subC
             // return fn(next, done, baseValue);
         },
         flatMapRec: function flatMapRec() {
-            return ChainRecursive.chainRec.apply(null, _arguments);
+            return ChainRec.chainRec.apply(null, _arguments);
         }
     });
 

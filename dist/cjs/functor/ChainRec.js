@@ -22,7 +22,7 @@ var _subClass = require('./../subClass');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ChainRecursive = (0, _subClass.subClass)(_Chain2.default, function ChainRecursive(value) {
+var ChainRec = (0, _subClass.subClass)(_Chain2.default, function ChainRec(value) {
     if (!this) {
         return new _Chain2.default(value);
     }
@@ -33,7 +33,7 @@ var ChainRecursive = (0, _subClass.subClass)(_Chain2.default, function ChainRecu
         // return fn(next, done, baseValue);
     },
     flatMapRec: function flatMapRec() {
-        return ChainRecursive.chainRec.apply(null, _arguments);
+        return ChainRec.chainRec.apply(null, _arguments);
     }
 });
 

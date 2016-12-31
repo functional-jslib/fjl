@@ -6,14 +6,12 @@
 
 import {isObject} from './is';
 
-let hasOwnProperty = Object.prototype.hasOwnProperty;
-
 export function assignDeep (obj0, ...objs) {
     return objs.reduce((topAgg, obj) => {
         return Object.keys(obj).reduce((agg, key) => {
             let propDescription = Object.getOwnPropertyDescriptor(agg, key);
             // If property is not writable move to next item in collection
-            if (hasOwnProperty.call(agg, key) && propDescription &&
+            if (Object.prototype.hasOwnProperty.call(agg, key) && propDescription &&
                 !(propDescription.get && propDescription.set) &&
                 !propDescription.writable) {
                 return agg;
