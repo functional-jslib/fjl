@@ -18,7 +18,7 @@ let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Insta
     expectFunctor = value => expectInstanceOf(value, Functor),
     expectBifunctor = value => expectInstanceOf(value, Bifunctor);
 
-describe('Bifunctor', function () {
+describe('functor.Bifunctor', function () {
 
     it('should return an new instance when called as a function', function () {
         let result = Bifunctor();

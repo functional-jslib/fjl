@@ -10,7 +10,7 @@ import {subClass} from './../subClass';
 
 let Chain = subClass (Apply,
     function Chain (value) {
-        if (!this) {
+        if (!(this instanceof Chain)) {
             return new Chain(value);
         }
         Apply.call(this, value);

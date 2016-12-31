@@ -77,16 +77,16 @@ export function curryN (fn, executeArity, ...curriedArgs) {
 }
 
 /**
-     * Place holder object (frozen) used by curry.
-     * @type {PlaceHolder}
-     */
+ * Place holder object (frozen) used by curry.
+ * @type {PlaceHolder}
+ */
 export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance,
 
     /**
- * Curry's a function up to an arity of 2 (won't call function until 2 or more args).
- * @param fn {Function}
- * @returns {Function}
- */
+     * Curry's a function up to an arity of 2 (won't call function until 2 or more args).
+     * @param fn {Function}
+     * @returns {Function}
+     */
     curry2 = fn => curryN(fn, 2),
 
     /**

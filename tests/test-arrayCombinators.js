@@ -8,14 +8,14 @@
 'use strict';
 import {assert, expect} from 'chai';
 import compose from './../src/compose';
-import {length} from './../src/operators';
+import {length} from '../src/combinators';
 import {__} from './../src/curry';
-import {complement, difference, union, intersect, flatten, flattenMulti, concat, join, equals} from '../src/arrayOperators';
+import {complement, difference, union, intersect, flatten, flattenMulti, concat, join, equals} from '../src/arrayCombinators';
 import {expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('Array Operators', function () {
+describe ('Array Combinators', function () {
 
     describe ('#complement', function () {
         it ('should return an empty array when no parameters are passed in', function () {

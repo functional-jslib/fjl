@@ -5,7 +5,7 @@
 'use strict';
 
 import {expect}     from 'chai';
-import {expectFunction, add, multiply} from './../helpers';
+import {expectEqual, expectInstanceOf, expectFunction, add, multiply} from './../helpers';
 import {curry2, __} from './../../src/curry';
 import compose      from './../../src/compose';
 import Functor      from '../../src/functor/Functor';
@@ -14,15 +14,13 @@ import Applicative  from '../../src/functor/Applicative';
 import Chain    from '../../src/functor/Chain';
 import Monad        from '../../src/monad/Monad';
 
-let expectInstanceOf = curry2((value, Instance) => expect(value).to.be.instanceOf(Instance)),
-    expectFunctor = value => expectInstanceOf(value, Functor),
+let expectFunctor = value => expectInstanceOf(value, Functor),
     expectApply = value => expectInstanceOf(value, Apply),
     expectApplicative = value => expectInstanceOf(value, Applicative),
     expectChain = value => expectInstanceOf(value, Chain),
-    expectMonad = value => compose(expectInstanceOf(__, Monad), expectChain, expectApplicative, expectApply, expectFunctor),
-    expectValue = (value, expectedValue) => expect(value).to.equal(expectedValue);
+    expectMonad = value => compose(expectInstanceOf(__, Monad), expectChain, expectApplicative, expectApply, expectFunctor);
 
-describe('Monad', function () {
+describe('monad.Monad', function () {
 
     describe('Construction', function () {
 
@@ -54,7 +52,7 @@ describe('Monad', function () {
             expectFunction(Monad.of);
             expectMonad(Monad.of());
             expectMonad(result);
-            expectValue(result.value, 100);
+            expectEqual(result.value, 100);
         });
     });
 
@@ -96,7 +94,7 @@ describe('Monad', function () {
             let instance = Monad(add(1)),
                 result = instance.ap(Monad(99));
             expectMonad(result);
-            expectValue(result.value, 100);
+            expectEqual(result.value, 100);
         });
     });
 
@@ -111,7 +109,7 @@ describe('Monad', function () {
             // Check results
             [result1, result2].forEach(result => {
                 expectMonad(result);
-                expectValue(result.value, 100);
+                expectEqual(result.value, 100);
             });
         });
     });
@@ -124,7 +122,7 @@ describe('Monad', function () {
                 monad2 = Monad(monad1),
                 monad3 = Monad(monad2),
                 monad4 = Monad(),
-                expectInnerValueEqual = (value, value2) => expectValue(value, value2),
+                expectInnerValueEqual = (value, value2) => expectEqual(value, value2),
                 expectations = (result, equalTo) => {
                     expectMonad(result);
                     expectInnerValueEqual(result.value, equalTo);

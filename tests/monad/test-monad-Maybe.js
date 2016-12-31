@@ -5,10 +5,8 @@
 'use strict';
 
 import {expect} from 'chai';
-import {expectInstanceOf, expectFunction, expectEqual, add, multiply} from './../helpers';
+import {unwrapMonad, expectInstanceOf, expectFunction, expectEqual, add, multiply} from './../helpers';
 import Monad from '../../src/monad/Monad';
-import {id} from '../../src/operators';
-
 import {Maybe, Just, Nothing, maybe} from '../../src/monad/Maybe';
 
 let expectMonad = value => expectInstanceOf(value, Monad),
@@ -17,7 +15,7 @@ let expectMonad = value => expectInstanceOf(value, Monad),
     expectNothing = value => expectInstanceOf(value, Nothing),
     monadInterface = ['ap', 'map', 'join', 'chain'];
 
-describe('Maybe', function () {
+describe('monad.Maybe', function () {
 
     describe('Construction:', function () {
 
@@ -186,9 +184,10 @@ describe('Maybe', function () {
             [[maybe(99, (value => value * 2), Nothing()), 99],
              [maybe(99, (value => value * 2), Just(100)), 200],
              [maybe(99, (value => value * 2), Just(null)), 99],
-             [maybe(99, (value => value * 2), Just()), 99]
+             [maybe(99, (value => value * 2), Just()), 99],
+             [maybe(99, (value => value * 2), Maybe(99)), 198]
             ].forEach(tuple => {
-                expectEqual(tuple[0], tuple[1]);
+                expectEqual(tuple[0], unwrapMonad(tuple[1]));
             });
         });
     });

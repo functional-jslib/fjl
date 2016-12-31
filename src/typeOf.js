@@ -50,19 +50,7 @@ export function typeOfIs (obj, type) {
     return typeOf(obj) === ((type instanceof Function) ? type.name : type);
 }
 
-/**
- * Check if `value` is of one of the passed in types.
- * @function module:sjl.typeOfIsMulti
- * @param value {*}
- * @param types {...Function|...String} - Constructor or string.
- * @returns {boolean}
- */
-export function typeOfIsMulti (value, ...types) {
-    return types.some(_type => typeOfIs(value, _type));
-}
-
 export default {
     typeOf,
-    typeOfIs,
-    typeOfIsMulti
+    typeOfIs
 };

@@ -11,21 +11,16 @@
 import Apply from './Apply';
 import {subClass} from './../subClass';
 
-let Chain = subClass (Apply,
-    function Chain (value) {
+let Comonad = subClass (Apply,
+    function Comonad (value) {
         if (!this) {
-            return new Chain(value);
+            return new Comonad(value);
         }
         Apply.call(this, value);
     }, {
-        join: function () {
-            return this.value instanceof this.constructor ?
-                this.value : new this.constructor(this.value);
-        },
-
-        chain: function (fn) {
-            return this.map(fn).join();
+        extract: function () {
+            return this.value;
         }
     });
 
-export default Chain;
+export default Comonad;

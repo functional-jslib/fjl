@@ -6,13 +6,14 @@
 import compose from './compose';
 import {curry, curryN, curry2, curry3, curry4, curry5} from './curry';
 import {subClass, subClassMulti} from './subClass';
-import {complement, difference, union, intersect} from './objOperators';
-import {typeOf, typeOfIs, typeOfIsMulti} from './typeOf';
-import {isset, issetMulti, issetAndOfType, isNumber,
-    isFunction, isArray, isBoolean,
-    isObject, isString, isUndefined, isNull, isSymbol, isEmpty,
-    isEmptyMulti, isEmptyObj} from './is';
-import {notOfTypeOrEmpty, notEmptyAndOfType} from './not';
+import {complement, difference, union, intersect} from './objCombinators';
+// import {complement, difference, union, intersect} from './arrayCombinators';
+import {typeOf, typeOfIs} from './typeOf';
+import {isset, issetAndOfType, isNumber,
+    isFunction, isArray, isBoolean, isObject, isString,
+    isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
+    isWeakMap, isWeakSet} from './is';
+import {notEmptyAndOfType} from './not';
 import Functor from './functor/Functor';
 import Bifunctor from './functor/Bifunctor';
 import Apply from './functor/Apply';
@@ -37,25 +38,24 @@ export default {
     subClassMulti,
     difference,
     isset,
-    issetMulti,
     issetAndOfType,
     typeOf,
     typeOfIs,
-    typeOfIsMulti,
     isNumber,
     isFunction,
     isArray,
     isBoolean,
     isObject,
     isString,
+    isMap,
+    isSet,
+    isWeakSet,
+    isWeakMap,
     isUndefined,
     isNull,
     isSymbol,
     isEmpty,
-    isEmptyMulti,
-    isEmptyObj,
     intersect,
-    notOfTypeOrEmpty,
     notEmptyAndOfType,
     union,
     Functor,

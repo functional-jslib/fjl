@@ -6,7 +6,7 @@
 
 import {isset} from './../is';
 import {curry2} from './../curry';
-import {map} from './../operators';
+import {map} from '../combinators';
 import {subClass, subClassMulti} from './../subClass';
 import BiFunctor from './../functor/Bifunctor';
 import Monad from './Monad';

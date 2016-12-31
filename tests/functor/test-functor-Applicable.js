@@ -15,7 +15,7 @@ let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Insta
     expectFunctor = value => expectInstanceOf(value, Functor),
     expectApply = value => expectInstanceOf(value, Apply);
 
-describe('Apply', function () {
+describe('functor.Apply', function () {
 
     it('should return an new instance when called as a function', function () {
         let result = Apply();

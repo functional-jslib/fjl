@@ -3,10 +3,11 @@
  */
 'use strict';
 
+import compose from '../compose';
 import {isset} from '../is';
-import {curry3} from '../curry';
+import {curry3, __} from '../curry';
 import {subClass} from '../subClass';
-import {ap, id, map, chain, join} from '../operators';
+import {ap, id, of, map, chain, join} from '../combinators';
 import Monad from './Monad';
 
 const _protected = {
@@ -74,7 +75,7 @@ export let Nothing = subClass(Monad, {
      * @returns {*}
      */
     maybe = curry3(function (replacement, fn, monad) {
-        let subject = monad.chain(value => value);
+        let subject = monad instanceof Maybe ? monad.value.map(id) : monad.map(id);
         return subject instanceof Nothing ? replacement : subject.map(fn).value;
     }),
 
@@ -86,16 +87,16 @@ export let Nothing = subClass(Monad, {
             Monad.call(this, Just(value));
         },
         join: function () {
-            return join(Maybe.of(join(map(id, this.value))));
+            return compose(Maybe.of, join, map(id))(this.value);
         },
         map: function (fn) {
-            return Maybe.of(fn(map(id, this.value)));
+            return compose(Maybe.of, fn, map(id))(this.value);
         },
         ap: function (functor) {
-            return Maybe.of(ap(map(id, this.value), functor));
+            return compose(Maybe.of, ap(__, functor), map(id))(this.value);
         },
         chain: function (fn) {
-            return Maybe.of(chain(fn, map(id, this.value)));
+            return compose(Maybe.of, chain(fn), map(id))(this.value);
         }
     }, {
         of: function (value) {

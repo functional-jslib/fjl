@@ -7,7 +7,7 @@ import {expectFunction} from './../helpers';
 import Functor from '../../src/functor/Functor';
 let expectFunctor = value => expect(value).to.be.instanceOf(Functor);
 
-describe ('Functor', function () {
+describe ('functor.Functor', function () {
     it ('should return an new instance when called as a function', function () {
         expectFunctor(Functor());
     });

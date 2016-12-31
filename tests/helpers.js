@@ -4,6 +4,7 @@
 'use strict';
 
 import {curry2} from './../src/curry';
+import {Monad} from './../src/monad/Monad';
 import {expect} from 'chai';
 
 export let  expectInstanceOf = curry2((value, instance) => expect(value).to.be.instanceOf(instance)),
@@ -28,7 +29,14 @@ export let  expectInstanceOf = curry2((value, instance) => expect(value).to.be.i
 
     divide = curry2((...args) => {
         return args.reduce((agg, num) => agg / num, args.shift());
-    });
+    }),
+    unwrapMonad = monad => {
+        var value = monad;
+        while (value instanceof Monad) {
+            value = join(monad);
+        }
+        return value;
+    };
 
 export default {
     expectFunction,
@@ -36,6 +44,7 @@ export default {
     expectEqual,
     expectFalse,
     expectTrue,
+    unwrapMonad,
     add,
     multiply,
     divide
