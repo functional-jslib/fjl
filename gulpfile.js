@@ -27,17 +27,19 @@ let fs = require('fs'),
     /** Util Modules **/
     chalk = require('chalk'),
     del = require('del'),
-    VersionNumberStream = require('./other-gulp-scripts/VersionNumberReadStream'),
+    VersionNumberReadStream = require('./node-scripts/VersionNumberReadStream'),
+    ModuleMemberReadStream = require('./node-scripts/ModuleMemberListReadStream'),
+    PackageMemberReadStream = require('./node-scripts/PackageMemberListReadStream'),
 
     /** Paths **/
     {cjsBuildPath, amdBuildPath,
      umdBuildPath, iifeBuildPath,
-     buildPathRoot} = gulpConfig.paths,
+     buildPathRoot, markdownFragsPath} = gulpConfig.paths,
     buildPath = (...tails) => path.join.call(path, buildPathRoot, ...tails),
     iifeMinFileName =   'fjl.min.js',
     iifeFileName =      'fjl.js',
     iifeModuleName =    'fjl',
-    srcsGlob = './src/**/*.js',
+    srcsGlob =          './src/**/*.js',
 
     /** Lazy Pipes **/
     eslintPipe = lazyPipe()
@@ -49,6 +51,35 @@ let fs = require('fs'),
         .pipe(rollup, {moduleName: iifeModuleName, format: 'iife'})
         .pipe(babel)
         .pipe(concat, buildPath(iifeBuildPath, iifeFileName));
+
+gulp.task('package-member-list-md', function () {
+    let outputDir = './markdown-fragments/generated',
+        filePath = outputDir + '/package-member-list.md';
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir);
+    }
+    fs.writeFileSync(filePath, '');
+    return (new PackageMemberReadStream('./src', markdownFragsPath + '/package-member-list'))
+        .pipe(fs.createWriteStream(filePath));
+});
+
+gulp.task('member-list-md', function () {
+    let outputDir = './markdown-fragments/generated',
+        filePath = outputDir + '/member-list.md';
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir);
+    }
+    fs.writeFileSync(filePath, '');
+    return (new ModuleMemberReadStream(
+        require('./dist/cjs/fjl').default, 'fjl', markdownFragsPath + '/member-list'
+    ))
+        .pipe(fs.createWriteStream(filePath));
+});
+
+gulp.task('generate-version-js', function () {
+    return (new VersionNumberReadStream())
+        .pipe(fs.createWriteStream('./src/generated/version.js'));
+});
 
 gulp.task('clean', () => {
     let paths = [cjsBuildPath, amdBuildPath, umdBuildPath, iifeBuildPath]
@@ -67,11 +98,6 @@ gulp.task('clean', () => {
 
 gulp.task('eslint', () => {
     return gulp.src(['./src/**/*.js', '!node_modules/**']).pipe(eslintPipe());
-});
-
-gulp.task('generate-version-js', function () {
-    return (new VersionNumberStream())
-        .pipe(fs.createWriteStream('./src/generated/version.js'));
 });
 
 gulp.task('umd', ['eslint'], () => {
@@ -116,18 +142,28 @@ gulp.task('uglify', ['iife'], function () {
 
 gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd']);
 
-gulp.task('make-browser-test-suite', ['build-js'], function () {
+gulp.task('build-browser-tests', ['build-js'], function () {
     return gulp.src(['tests/for-server/**/*.js'])
-        // .pipe(babel())
         .pipe(replace(/\/\/ ~~~ STRIP ~~~[^~]+\/\/ ~~~ \/STRIP ~~~[\n\r\f]+/gim, ''))
-        // .pipe(concat('tests/for-browser/test-suite.js'))
-        // .pipe(gulp.dest('./'))
-        // .pipe(rollup({exports: 'named', format: 'amd'}))
+        .pipe(babel())
+        .pipe(concat('tests/for-browser/test-suite.js'))
+        .pipe(gulp.dest('./'))
+        .pipe(rollup({exports: 'named', format: 'amd'}))
         .pipe(concat('tests/for-browser/test-suite.js'))
         .pipe(gulp.dest('./'))
 });
 
-gulp.task('build', ['build-js']);
+gulp.task('build-readme', [
+    'package-member-list',
+    'member-list',
+    'generate-version-js'
+], function () {
+    return gulp.src(gulpConfig.readme)
+        .pipe(concat('README.md'))
+        .pipe(gulp.dest('./'));
+});
+
+gulp.task('build', ['build-js', 'build-browser-tests', 'build-readme']);
 
 gulp.task('tests', ['eslint'], function () {
     return gulp.src(gulpConfig.tests.srcs)

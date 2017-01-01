@@ -1,4 +1,4 @@
-define(['exports', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './generated/version'], function (exports, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _version) {
+define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -37,6 +37,8 @@ define(['exports', './compose', './curry', './subClass', './typeOf', './is', './
     }
 
     exports.default = {
+        assign: _assign.assign,
+        assignDeep: _assign.assignDeep,
         compose: _compose2.default,
         __: _curry.__,
         curry: _curry.curry,
@@ -66,10 +68,14 @@ define(['exports', './compose', './curry', './subClass', './typeOf', './is', './
         isSymbol: _is.isSymbol,
         isEmpty: _is.isEmpty,
         notEmptyAndOfType: _not.notEmptyAndOfType,
-        complement: _objCombinators.complement,
-        difference: _objCombinators.difference,
-        intersect: _objCombinators.intersect,
-        union: _objCombinators.union,
+        complement: _combinators.complement,
+        difference: _combinators.difference,
+        intersect: _combinators.intersect,
+        union: _combinators.union,
+        objComplement: _objCombinators.complement,
+        objDifference: _objCombinators.difference,
+        objIntersect: _objCombinators.intersect,
+        objUnion: _objCombinators.union,
         arrayDifference: _arrayCombinators.difference,
         arrayIntersect: _arrayCombinators.intersect,
         arrayComplement: _arrayCombinators.complement,

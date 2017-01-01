@@ -7,6 +7,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _assign = require('./assign');
+
 var _compose = require('./compose');
 
 var _compose2 = _interopRequireDefault(_compose);
@@ -74,6 +76,8 @@ var _version2 = _interopRequireDefault(_version);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
+    assign: _assign.assign,
+    assignDeep: _assign.assignDeep,
     compose: _compose2.default,
     __: _curry.__,
     curry: _curry.curry,
@@ -103,10 +107,14 @@ exports.default = {
     isSymbol: _is.isSymbol,
     isEmpty: _is.isEmpty,
     notEmptyAndOfType: _not.notEmptyAndOfType,
-    complement: _objCombinators.complement,
-    difference: _objCombinators.difference,
-    intersect: _objCombinators.intersect,
-    union: _objCombinators.union,
+    complement: _combinators.complement,
+    difference: _combinators.difference,
+    intersect: _combinators.intersect,
+    union: _combinators.union,
+    objComplement: _objCombinators.complement,
+    objDifference: _objCombinators.difference,
+    objIntersect: _objCombinators.intersect,
+    objUnion: _objCombinators.union,
     arrayDifference: _arrayCombinators.difference,
     arrayIntersect: _arrayCombinators.intersect,
     arrayComplement: _arrayCombinators.complement,

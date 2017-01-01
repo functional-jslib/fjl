@@ -5,6 +5,15 @@
 
 import {curry2, curry3} from './curry';
 import {isFunction, isOfConstructable} from './is';
+import {typeOf} from './typeOf';
+import {complement as objComplement,
+    difference as objDifference,
+    union as objUnion,
+    intersect as objIntersect} from './objCombinators';
+import {complement as arrayComplement,
+    difference as arrayDifference,
+    union as arrayUnion,
+    intersect as arrayIntersect} from './arrayCombinators';
 
 export let id = value => value,
 
@@ -66,9 +75,53 @@ export let id = value => value,
 
     extract = curry2((fn, functor) => functor.extract(fn)),
 
-    // promap,
+    promap = curry2((fn1, fn2, functor) => functor.promap(fn1, fn2)),
 
-    // bimap,
+    bimap = curry2((fn1, fn2, functor) => functor.bimap(fn1, fn2)),
+
+    complement = curry2((functor, ...others) => {
+        switch (typeOf(functor)) {
+            case 'Object':
+                return objComplement(functor, ...others);
+            case 'Array':
+                return arrayComplement(functor, ...others);
+            default:
+                return objComplement(functor, ...others);
+        }
+    }),
+
+    difference = curry2((functor1, functor2) => {
+        switch (typeOf(functor1)) {
+            case 'Object':
+                return objDifference(functor1, functor2);
+            case 'Array':
+                return arrayDifference(functor1, functor2);
+            default:
+                return objDifference(functor1, functor2);
+        }
+    }),
+
+    union = curry2((functor1, functor2) => {
+        switch (typeOf(functor1)) {
+            case 'Object':
+                return objUnion(functor1, functor2);
+            case 'Array':
+                return arrayUnion(functor1, functor2);
+            default:
+                return objUnion(functor1, functor2);
+        }
+    }),
+
+    intersect = curry2((functor1, functor2) => {
+        switch (typeOf(functor1)) {
+            case 'Object':
+                return objIntersect(functor1, functor2);
+            case 'Array':
+                return arrayIntersect(functor1, functor2);
+            default:
+                return objIntersect(functor1, functor2);
+        }
+    }),
 
     maxLength = (array1, array2) => {
         if (array1.length > array2.length) {
@@ -104,6 +157,8 @@ export default {
     chain,
     join,
     liftN,
+    bimap,
+    promap,
     maxLength,
     minLength
 };

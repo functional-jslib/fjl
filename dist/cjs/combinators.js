@@ -6,11 +6,17 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.minLength = exports.maxLength = exports.extract = exports.extend = exports.liftN = exports.chain = exports.join = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.ap = exports.empty = exports.of = exports.concat = exports.equals = exports.length = exports.id = undefined;
+exports.minLength = exports.maxLength = exports.intersect = exports.union = exports.difference = exports.complement = exports.bimap = exports.promap = exports.extract = exports.extend = exports.liftN = exports.chain = exports.join = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.ap = exports.empty = exports.of = exports.concat = exports.equals = exports.length = exports.id = undefined;
 
 var _curry = require('./curry');
 
 var _is = require('./is');
+
+var _typeOf = require('./typeOf');
+
+var _objCombinators = require('./objCombinators');
+
+var _arrayCombinators = require('./arrayCombinators');
 
 var id = exports.id = function id(value) {
     return value;
@@ -87,13 +93,57 @@ liftN = exports.liftN = (0, _curry.curry3)(function (fn, functor1) {
     extract = exports.extract = (0, _curry.curry2)(function (fn, functor) {
     return functor.extract(fn);
 }),
+    promap = exports.promap = (0, _curry.curry2)(function (fn1, fn2, functor) {
+    return functor.promap(fn1, fn2);
+}),
+    bimap = exports.bimap = (0, _curry.curry2)(function (fn1, fn2, functor) {
+    return functor.bimap(fn1, fn2);
+}),
+    complement = exports.complement = (0, _curry.curry2)(function (functor) {
+    for (var _len2 = arguments.length, others = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        others[_key2 - 1] = arguments[_key2];
+    }
 
-
-// promap,
-
-// bimap,
-
-maxLength = exports.maxLength = function maxLength(array1, array2) {
+    switch ((0, _typeOf.typeOf)(functor)) {
+        case 'Object':
+            return _objCombinators.complement.apply(undefined, [functor].concat(others));
+        case 'Array':
+            return _arrayCombinators.complement.apply(undefined, [functor].concat(others));
+        default:
+            return _objCombinators.complement.apply(undefined, [functor].concat(others));
+    }
+}),
+    difference = exports.difference = (0, _curry.curry2)(function (functor1, functor2) {
+    switch ((0, _typeOf.typeOf)(functor1)) {
+        case 'Object':
+            return (0, _objCombinators.difference)(functor1, functor2);
+        case 'Array':
+            return (0, _arrayCombinators.difference)(functor1, functor2);
+        default:
+            return (0, _objCombinators.difference)(functor1, functor2);
+    }
+}),
+    union = exports.union = (0, _curry.curry2)(function (functor1, functor2) {
+    switch ((0, _typeOf.typeOf)(functor1)) {
+        case 'Object':
+            return (0, _objCombinators.union)(functor1, functor2);
+        case 'Array':
+            return (0, _arrayCombinators.union)(functor1, functor2);
+        default:
+            return (0, _objCombinators.union)(functor1, functor2);
+    }
+}),
+    intersect = exports.intersect = (0, _curry.curry2)(function (functor1, functor2) {
+    switch ((0, _typeOf.typeOf)(functor1)) {
+        case 'Object':
+            return (0, _objCombinators.intersect)(functor1, functor2);
+        case 'Array':
+            return (0, _arrayCombinators.intersect)(functor1, functor2);
+        default:
+            return (0, _objCombinators.intersect)(functor1, functor2);
+    }
+}),
+    maxLength = exports.maxLength = function maxLength(array1, array2) {
     if (array1.length > array2.length) {
         return array1;
     } else if (array2.length > array1.length) {
@@ -124,6 +174,8 @@ exports.default = {
     chain: chain,
     join: join,
     liftN: liftN,
+    bimap: bimap,
+    promap: promap,
     maxLength: maxLength,
     minLength: minLength
 };

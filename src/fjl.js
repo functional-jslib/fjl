@@ -3,6 +3,7 @@
  */
 'use strict';
 
+import {assign, assignDeep} from './assign';
 import compose from './compose';
 import {__, curry, curryN, curry2, curry3, curry4, curry5} from './curry';
 import {subClass, subClassMulti} from './subClass';
@@ -23,8 +24,11 @@ import Comonad from './functor/Comonad';
 import Monad from './monad/Monad';
 import {Maybe, Just, Nothing, maybe} from './monad/Maybe';
 import {Either, Left, Right, either} from './monad/Either';
-import {length} from './combinators';
-import {complement, difference, union, intersect} from './objCombinators';
+import {length, complement, difference, union, intersect} from './combinators';
+import {complement as objComplement,
+    difference as objDifference,
+    union as objUnion,
+    intersect as objIntersect} from './objCombinators';
 import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
@@ -32,6 +36,8 @@ import {complement as arrayComplement,
 import version from './generated/version';
 
 export default {
+    assign,
+    assignDeep,
     compose,
     __,
     curry,
@@ -65,6 +71,10 @@ export default {
     difference,
     intersect,
     union,
+    objComplement,
+    objDifference,
+    objIntersect,
+    objUnion,
     arrayDifference,
     arrayIntersect,
     arrayComplement,
