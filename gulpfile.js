@@ -154,8 +154,8 @@ gulp.task('build-browser-tests', ['build-js'], function () {
 });
 
 gulp.task('build-readme', [
-    'package-member-list',
-    'member-list',
+    'package-member-list-md',
+    'member-list-md',
     'generate-version-js'
 ], function () {
     return gulp.src(gulpConfig.readme)
