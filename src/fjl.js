@@ -31,7 +31,6 @@ import {complement as arrayComplement,
 import version from './generated/version';
 
 export default {
-    complement,
     compose,
     curry,
     curryN,
@@ -41,7 +40,6 @@ export default {
     curry5,
     subClass,
     subClassMulti,
-    difference,
     isset,
     issetAndOfType,
     typeOf,
@@ -60,8 +58,10 @@ export default {
     isNull,
     isSymbol,
     isEmpty,
-    intersect,
     notEmptyAndOfType,
+    complement,
+    difference,
+    intersect,
     union,
     arrayDifference,
     arrayIntersect,

@@ -2,7 +2,7 @@
   "name": "fjl",
   "version": "0.5.0",
   "description": "Functional Javascript Library",
-  "main": "src/fjl.js",
+  "main": "dist/cjs/fjl.js",
   "directories": {
     "test": "tests"
   },

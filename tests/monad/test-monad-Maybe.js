@@ -2,12 +2,16 @@
  * Created by edlc on 12/12/16.
  */
 
+// ~~~ STRIP ~~~
+// This part gets stripped out when
+// generating browser version of test(s).
 'use strict';
-
 import {expect} from 'chai';
 import {unwrapMonad, expectInstanceOf, expectFunction, expectEqual, add, multiply} from './../helpers';
 import Monad from '../../src/monad/Monad';
 import {Maybe, Just, Nothing, maybe} from '../../src/monad/Maybe';
+// These variables get set at the top IIFE in the browser.
+// ~~~ /STRIP ~~~
 
 let expectMonad = value => expectInstanceOf(value, Monad),
     expectMaybe = value => expectInstanceOf(value, Maybe) && expectMonad(value),

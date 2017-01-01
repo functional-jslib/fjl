@@ -9,7 +9,7 @@ import {subClass} from './../subClass';
 
 let Apply = subClass(Functor,
     function Apply (value) {
-        if (!this) {
+        if (!(this instanceof Apply)) {
             return new Apply(value);
         }
         Functor.call(this, value);

@@ -4,12 +4,17 @@
 /**
  * Created by elyde on 12/10/2016.
  */
-'use strict';
 
+// ~~~ STRIP ~~~
+// This part gets stripped out when
+// generating browser version of test(s).
+'use strict';
 import {expect} from 'chai';
 import {expectFunction, add, multiply, divide} from './../helpers';
 import Functor from '../../src/functor/Functor';
 import Apply from '../../src/functor/Apply';
+// These variables get set at the top IIFE in the browser.
+// ~~~ /STRIP ~~~
 
 let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Instance),
     expectFunctor = value => expectInstanceOf(value, Functor),

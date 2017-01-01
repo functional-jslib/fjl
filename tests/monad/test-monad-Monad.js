@@ -2,17 +2,21 @@
  * Created by edlc on 12/12/16.
  */
 
+// ~~~ STRIP ~~~
+// This part gets stripped out when
+// generating browser version of test(s).
 'use strict';
-
-import {expect}     from 'chai';
+import {expect} from 'chai';
 import {expectEqual, expectInstanceOf, expectFunction, add, multiply} from './../helpers';
-import {curry2, __} from './../../src/curry';
-import compose      from './../../src/compose';
-import Functor      from '../../src/functor/Functor';
-import Apply   from '../../src/functor/Apply';
-import Applicative  from '../../src/functor/Applicative';
-import Chain    from '../../src/functor/Chain';
-import Monad        from '../../src/monad/Monad';
+import {__} from './../../src/curry';
+import compose from './../../src/compose';
+import Functor from '../../src/functor/Functor';
+import Apply from '../../src/functor/Apply';
+import Applicative from '../../src/functor/Applicative';
+import Chain from '../../src/functor/Chain';
+import Monad from '../../src/monad/Monad';
+// These variables get set at the top IIFE in the browser.
+// ~~~ /STRIP ~~~
 
 let expectFunctor = value => expectInstanceOf(value, Functor),
     expectApply = value => expectInstanceOf(value, Apply),

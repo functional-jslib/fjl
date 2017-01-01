@@ -3,9 +3,14 @@
  */
 'use strict';
 
+// ~~~ STRIP ~~~
+// This part gets stripped out when
+// generating browser version of test(s).
 import {curry2} from './../src/curry';
 import {Monad} from './../src/monad/Monad';
 import {expect} from 'chai';
+// These variables get set at the top IIFE in the browser.
+// ~~~ /STRIP ~~~
 
 export let  expectInstanceOf = curry2((value, instance) => expect(value).to.be.instanceOf(instance)),
 

@@ -1,10 +1,17 @@
 /**
  * Created by elyde on 12/10/2016.
  */
+
+// ~~~ STRIP ~~~
+// This part gets stripped out when
+// generating browser version of test(s).
 'use strict';
 import {expect} from 'chai';
 import {expectFunction} from './../helpers';
 import Functor from '../../src/functor/Functor';
+// These variables get set at the top IIFE in the browser.
+// ~~~ /STRIP ~~~
+
 let expectFunctor = value => expect(value).to.be.instanceOf(Functor);
 
 describe ('functor.Functor', function () {
