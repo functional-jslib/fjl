@@ -6,7 +6,6 @@ define(['exports'], function (exports) {
     });
     exports.typeOf = typeOf;
     exports.typeOfIs = typeOfIs;
-    exports.typeOfIsMulti = typeOfIsMulti;
 
     var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
@@ -63,26 +62,8 @@ define(['exports'], function (exports) {
         return typeOf(obj) === (type instanceof Function ? type.name : type);
     }
 
-    /**
-     * Check if `value` is of one of the passed in types.
-     * @function module:sjl.typeOfIsMulti
-     * @param value {*}
-     * @param types {...Function|...String} - Constructor or string.
-     * @returns {boolean}
-     */
-    function typeOfIsMulti(value) {
-        for (var _len = arguments.length, types = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-            types[_key - 1] = arguments[_key];
-        }
-
-        return types.some(function (_type) {
-            return typeOfIs(value, _type);
-        });
-    }
-
     exports.default = {
         typeOf: typeOf,
-        typeOfIs: typeOfIs,
-        typeOfIsMulti: typeOfIsMulti
+        typeOfIs: typeOfIs
     };
 });

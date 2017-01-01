@@ -8,7 +8,7 @@
             exports: {}
         };
         factory(mod.exports, global.assign);
-        global.objOperators = mod.exports;
+        global.objCombinators = mod.exports;
     }
 })(this, function (exports, _assign) {
     /**

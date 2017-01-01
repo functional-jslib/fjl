@@ -2,6 +2,7 @@ define(['exports', './Functor', './../subClass'], function (exports, _Functor, _
     /**
      * Created by edlc on 12/9/16.
      */
+
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

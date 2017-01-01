@@ -32,7 +32,7 @@
     }
 
     var Chain = (0, _subClass.subClass)(_Apply2.default, function Chain(value) {
-        if (!this) {
+        if (!(this instanceof Chain)) {
             return new Chain(value);
         }
         _Apply2.default.call(this, value);

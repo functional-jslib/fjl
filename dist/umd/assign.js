@@ -22,10 +22,6 @@
     });
     exports.assignDeep = assignDeep;
     exports.assign = assign;
-
-
-    var hasOwnProperty = Object.prototype.hasOwnProperty;
-
     function assignDeep(obj0) {
         for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             objs[_key - 1] = arguments[_key];
@@ -35,7 +31,7 @@
             return Object.keys(obj).reduce(function (agg, key) {
                 var propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection
-                if (hasOwnProperty.call(agg, key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+                if (Object.prototype.hasOwnProperty.call(agg, key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
                     return agg;
                 }
                 if ((0, _is.isObject)(agg[key]) && (0, _is.isObject)(obj[key])) {

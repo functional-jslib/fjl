@@ -8,13 +8,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Maybe = exports.maybe = exports.Just = exports.Nothing = undefined;
 
+var _compose = require('../compose');
+
+var _compose2 = _interopRequireDefault(_compose);
+
 var _is = require('../is');
 
 var _curry = require('../curry');
 
 var _subClass = require('../subClass');
 
-var _operators = require('../operators');
+var _combinators = require('../combinators');
+
+var _typeOf = require('./../typeOf');
 
 var _Monad = require('./Monad');
 
@@ -86,9 +92,7 @@ var Nothing = exports.Nothing = (0, _subClass.subClass)(_Monad2.default, {
  * @returns {*}
  */
 maybe = exports.maybe = (0, _curry.curry3)(function (replacement, fn, monad) {
-    var subject = monad.chain(function (value) {
-        return value;
-    });
+    var subject = (0, _typeOf.typeOfIs)(monad, 'Maybe') ? monad.value.map(_combinators.id) : monad.map(_combinators.id);
     return subject instanceof Nothing ? replacement : subject.map(fn).value;
 }),
     Maybe = exports.Maybe = (0, _subClass.subClass)(_Monad2.default, {
@@ -99,16 +103,16 @@ maybe = exports.maybe = (0, _curry.curry3)(function (replacement, fn, monad) {
         _Monad2.default.call(this, Just(value));
     },
     join: function join() {
-        return (0, _operators.join)(Maybe.of((0, _operators.join)((0, _operators.map)(_operators.id, this.value))));
+        return (0, _compose2.default)(Maybe.of, _combinators.join, (0, _combinators.map)(_combinators.id))(this.value);
     },
     map: function map(fn) {
-        return Maybe.of(fn((0, _operators.map)(_operators.id, this.value)));
+        return (0, _compose2.default)(Maybe.of, fn, (0, _combinators.map)(_combinators.id))(this.value);
     },
     ap: function ap(functor) {
-        return Maybe.of((0, _operators.ap)((0, _operators.map)(_operators.id, this.value), functor));
+        return (0, _compose2.default)(Maybe.of, (0, _combinators.ap)(_curry.__, functor), (0, _combinators.map)(_combinators.id))(this.value);
     },
     chain: function chain(fn) {
-        return Maybe.of((0, _operators.chain)(fn, (0, _operators.map)(_operators.id, this.value)));
+        return (0, _compose2.default)(Maybe.of, (0, _combinators.chain)(fn), (0, _combinators.map)(_combinators.id))(this.value);
     }
 }, {
     of: function of(value) {

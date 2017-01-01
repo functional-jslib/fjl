@@ -8,7 +8,7 @@ import {subClassMulti} from '../subClass';
 
 export let Monad = subClassMulti ([Applicative, Chain],
     function Monad (value) {
-        if (!this) {
+        if (!(this instanceof Monad)) {
             return Monad.of(value);
         }
         Applicative.apply(this);

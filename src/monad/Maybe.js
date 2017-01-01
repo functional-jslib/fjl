@@ -7,7 +7,8 @@ import compose from '../compose';
 import {isset} from '../is';
 import {curry3, __} from '../curry';
 import {subClass} from '../subClass';
-import {ap, id, of, map, chain, join} from '../combinators';
+import {ap, id, map, chain, join} from '../combinators';
+import {typeOfIs} from './../typeOf';
 import Monad from './Monad';
 
 const _protected = {
@@ -75,7 +76,7 @@ export let Nothing = subClass(Monad, {
      * @returns {*}
      */
     maybe = curry3(function (replacement, fn, monad) {
-        let subject = monad instanceof Maybe ? monad.value.map(id) : monad.map(id);
+        let subject = typeOfIs(monad, 'Maybe') ? monad.value.map(id) : monad.map(id);
         return subject instanceof Nothing ? replacement : subject.map(fn).value;
     }),
 

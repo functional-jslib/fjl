@@ -1,4 +1,4 @@
-define(['exports', './../is', './../curry', './../operators', './../subClass', './../functor/Bifunctor', './Monad'], function (exports, _is, _curry, _operators, _subClass, _Bifunctor, _Monad) {
+define(['exports', './../is', './../curry', '../combinators', './../subClass', './../functor/Bifunctor', './Monad'], function (exports, _is, _curry, _combinators, _subClass, _Bifunctor, _Monad) {
     /**
      * Created by elyde on 12/10/2016.
      */
@@ -54,14 +54,14 @@ define(['exports', './../is', './../curry', './../operators', './../subClass', '
         counterConstructor: Left
     }),
         either = exports.either = (0, _curry.curry2)(function (leftCallback, rightCallback, monad) {
-        var identity = (0, _operators.map)(function (value) {
+        var identity = (0, _combinators.map)(function (value) {
             return value;
         }, monad),
             ctor = identity.constructor;
         if (ctor === Left) {
-            return (0, _operators.map)(leftCallback, identity);
+            return (0, _combinators.map)(leftCallback, identity);
         } else if (ctor === Right) {
-            return (0, _operators.map)(rightCallback, identity);
+            return (0, _combinators.map)(rightCallback, identity);
         }
     }),
         Either = exports.Either = (0, _subClass.subClassMulti)([_Monad2.default, _Bifunctor2.default], {

@@ -1,7 +1,9 @@
 /**
  * Created by edlc on 12/9/16.
  */
+
 'use strict';
+
 import Functor from './Functor';
 import {subClass} from './../subClass';
 

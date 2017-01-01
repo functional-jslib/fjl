@@ -13,7 +13,7 @@ var _is = require('./../is');
 
 var _curry = require('./../curry');
 
-var _operators = require('./../operators');
+var _combinators = require('../combinators');
 
 var _subClass = require('./../subClass');
 
@@ -61,14 +61,14 @@ var Left = exports.Left = (0, _subClass.subClass)(_Monad2.default, {
     counterConstructor: Left
 }),
     either = exports.either = (0, _curry.curry2)(function (leftCallback, rightCallback, monad) {
-    var identity = (0, _operators.map)(function (value) {
+    var identity = (0, _combinators.map)(function (value) {
         return value;
     }, monad),
         ctor = identity.constructor;
     if (ctor === Left) {
-        return (0, _operators.map)(leftCallback, identity);
+        return (0, _combinators.map)(leftCallback, identity);
     } else if (ctor === Right) {
-        return (0, _operators.map)(rightCallback, identity);
+        return (0, _combinators.map)(rightCallback, identity);
     }
 }),
     Either = exports.Either = (0, _subClass.subClassMulti)([_Monad2.default, _Bifunctor2.default], {

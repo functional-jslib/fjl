@@ -10,7 +10,7 @@ var _is = require('./is');
 
 var _not = require('./not');
 
-var _objOperators = require('./objOperators');
+var _objCombinators = require('./objCombinators');
 
 var _assign = require('./assign');
 
@@ -32,7 +32,7 @@ function normalizeArgsForDefineSubClass(superClass, constructor, methods, static
     }, {}),
         isCtorAndMethods = !(0, _is.isFunction)(constructor),
         _constructor = isCtorAndMethods ? constructor.constructor : constructor,
-        _methods = isCtorAndMethods ? (0, _objOperators.difference)(constructor, { constructor: null }) : methods,
+        _methods = isCtorAndMethods ? (0, _objCombinators.difference)(constructor, { constructor: null }) : methods,
         _statics = (0, _assign.assign)(_extractedStatics, isCtorAndMethods ? methods : statics);
 
     return {

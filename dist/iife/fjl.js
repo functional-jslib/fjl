@@ -10,6 +10,8 @@ var fjl = function () {
      */
 
     /**
+     * Compose combinator;  Allows to combine many functions into one;  Functions list gets reduced from right to left
+     * and each function on receives the return value of the function that comes after it.
      * @param args {...Function}
      * @returns {function(*=): *}
      */
@@ -113,9 +115,9 @@ var fjl = function () {
     }
 
     /**
-         * Place holder object (frozen) used by curry.
-         * @type {PlaceHolder}
-         */
+     * Place holder object (frozen) used by curry.
+     * @type {PlaceHolder}
+     */
     var __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
     var curry2 = function curry2(fn) {
         return curryN(fn, 2);
@@ -180,23 +182,6 @@ var fjl = function () {
     }
 
     /**
-     * Check if `value` is of one of the passed in types.
-     * @function module:sjl.typeOfIsMulti
-     * @param value {*}
-     * @param types {...Function|...String} - Constructor or string.
-     * @returns {boolean}
-     */
-    function typeOfIsMulti(value) {
-        for (var _len6 = arguments.length, types = Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
-            types[_key6 - 1] = arguments[_key6];
-        }
-
-        return types.some(function (_type) {
-            return typeOfIs(value, _type);
-        });
-    }
-
-    /**
      * Created by elyde on 12/18/2016.
      */
     /**
@@ -208,6 +193,10 @@ var fjl = function () {
     var _Number = Number.name;
     var _Object = Object.name;
     var _Boolean = Boolean.name;
+    var _Map = 'Map';
+    var _Set = 'Set';
+    var _WeakMap = 'WeakMap';
+    var _WeakSet = 'WeakSet';
     var _Null = 'Null';
     var _Undefined = 'Undefined';
     var _undefined = 'undefined';
@@ -230,22 +219,6 @@ var fjl = function () {
      */
     function isset(value) {
         return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== _undefined && value !== null;
-    }
-
-    /**
-     * Checks if one or more parameters are set (not null and not undefined).
-     * @function module:sjl.issetMulti
-     * @params {*} - One or more values to check of any type.
-     * @returns {Boolean} - True if all params passed in are not null or undefined.
-     */
-    function issetMulti() {
-        for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-            args[_key7] = arguments[_key7];
-        }
-
-        return !args.some(function (value) {
-            return !isset(value);
-        });
     }
 
     /**
@@ -310,6 +283,46 @@ var fjl = function () {
     }
 
     /**
+     * Checks whether value is of `Map` or not.
+     * @function module:sjl.isMap
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    function isMap(value) {
+        return typeOfIs(value, _Map);
+    }
+
+    /**
+     * Checks whether value is of `Set` or not.
+     * @function module:sjl.isSet
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    function isSet(value) {
+        return typeOfIs(value, _Set);
+    }
+
+    /**
+     * Checks whether value is of `WeakMap` or not.
+     * @function module:sjl.isWeakMap
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    function isWeakMap(value) {
+        return typeOfIs(value, _WeakMap);
+    }
+
+    /**
+     * Checks whether value is of `WeakSet` or not.
+     * @function module:sjl.isWeakSet
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    function isWeakSet(value) {
+        return typeOfIs(value, _WeakSet);
+    }
+
+    /**
      * Checks if value is undefined.
      * @function module:sjl.isUndefined
      * @param value {*}
@@ -340,16 +353,6 @@ var fjl = function () {
     }
 
     /**
-     * Checks object's own properties to see if it is empty (Object.keys check).
-     * @function module:sjl.isEmptyObj
-     * @param obj object to be checked
-     * @returns {Boolean}
-     */
-    function isEmptyObj(obj) {
-        return Object.keys(obj).length === 0;
-    }
-
-    /**
      * Checks to see if passed in argument is empty.
      * @function module:sjl.empty
      * @param value {*} - Value to check.
@@ -364,53 +367,27 @@ var fjl = function () {
         } else if (typeOfValue === _Number && value !== 0) {
             retVal = false;
         } else if (typeOfValue === _Object) {
-            retVal = isEmptyObj(value);
+            retVal = Object.keys(value).length === 0;
         } else {
             retVal = !value;
         }
-
         return retVal;
     }
 
     /**
-     * Checks to see if any of the values passed in are empty (null, undefined, empty object, empty array, or empty string).
-     * @function module:sjl.emptyMulti
-     * @params {*} - One or more params of any type.
-     * @returns {Boolean} - Returns true if any of the values passed in are empty (null, undefined, empty object, empty array, or empty string).
-     */
-    function isEmptyMulti() {
-        for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-            args[_key8] = arguments[_key8];
-        }
-
-        return args.some(function (value) {
-            return isEmpty(value);
-        });
-    }
-
-    /**
-     * Checks to see if value is a primitive.
+     * Checks to see if value can be constructed from a constructor.
      * @param value {*}
      * @returns {Boolean}
      */
-    function isPrimitive(value) {
-        return compose(isNumber, isString, isObject, isArray, isFunction, isSymbol, isBoolean, isNull, isUndefined)(value);
+    function isOfConstructable(value) {
+        return [isNumber, isBoolean, isString, isObject, isArray, isFunction, isMap, isSet, isWeakMap, isWeakSet].some(function (fn) {
+            return fn(value);
+        });
     }
 
     /**
      * Created by elyde on 12/18/2016.
      */
-
-    /**
-     * Retruns a boolean based on whether a key on an object has an empty value or is empty (not set, undefined, null)
-     * @function module:sjl.notOfTypeOrEmpty
-     * @param value {Object} - Object to search on.
-     * @param type {String} - Optional. Type Name to check for match for;  E.g., 'Number', 'Array', 'HTMLMediaElement' etc..
-     * @returns {Boolean}
-     */
-    function notOfTypeOrEmpty(value, type) {
-        return isEmpty(value) || !typeOfIs(value, type);
-    }
 
     /**
      * Returns true if an element is not empty and is of type.
@@ -427,18 +404,16 @@ var fjl = function () {
      * Created by elyde on 12/25/2016.
      */
 
-    var hasOwnProperty$1 = Object.prototype.hasOwnProperty;
-
     function assignDeep(obj0) {
-        for (var _len9 = arguments.length, objs = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
-            objs[_key9 - 1] = arguments[_key9];
+        for (var _len6 = arguments.length, objs = Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
+            objs[_key6 - 1] = arguments[_key6];
         }
 
         return objs.reduce(function (topAgg, obj) {
             return Object.keys(obj).reduce(function (agg, key) {
                 var propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection
-                if (hasOwnProperty$1.call(agg, key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+                if (Object.prototype.hasOwnProperty.call(agg, key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
                     return agg;
                 }
                 if (isObject(agg[key]) && isObject(obj[key])) {
@@ -452,8 +427,8 @@ var fjl = function () {
     }
 
     function assign(obj0) {
-        for (var _len10 = arguments.length, objs = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
-            objs[_key10 - 1] = arguments[_key10];
+        for (var _len7 = arguments.length, objs = Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
+            objs[_key7 - 1] = arguments[_key7];
         }
 
         if (Object.assign) {
@@ -494,8 +469,8 @@ var fjl = function () {
         }, {});
     };
     var complement = function complement(obj0) {
-        for (var _len11 = arguments.length, objs = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
-            objs[_key11 - 1] = arguments[_key11];
+        for (var _len8 = arguments.length, objs = Array(_len8 > 1 ? _len8 - 1 : 0), _key8 = 1; _key8 < _len8; _key8++) {
+            objs[_key8 - 1] = arguments[_key8];
         }
 
         return objs.reduce(function (agg, obj) {
@@ -584,7 +559,7 @@ var fjl = function () {
      */
 
     function Functor(value) {
-        if (!this) {
+        if (!(this instanceof Functor)) {
             return new Functor(value);
         }
         Functor.addValueProperty(this, value);
@@ -642,6 +617,43 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
+    /**
+     * Created by edlc on 12/9/16.
+     */
+    var Profunctor = subClass(Functor, function Profunctor(value1, value2) {
+        if (!(this instanceof Profunctor)) {
+            return new Profunctor(value1, value2);
+        }
+        Functor.call(this, value1);
+        Profunctor.addValue2Property(this, value2);
+    }, {
+        first: function first(fn) {
+            return new this.constructor(fn(this.value), this.value2);
+        },
+        second: function second(fn) {
+            return new this.constructor(this.value, fn(this.value2));
+        },
+
+
+        promap: function promap(fn1, fn2) {
+            return new this.constructor(fn1(this.value), fn2(this.value2));
+        }
+    });
+
+    Profunctor.addValue2Property = function (instance, value) {
+        if (!instance.hasOwnProperty('value2')) {
+            Object.defineProperty(instance, 'value2', {
+                value: value,
+                writable: true
+            });
+        }
+        return instance;
+    };
+
+    /**
+     * Created by edlc on 12/9/16.
+     */
+
     var Apply = subClass(Functor, function Apply(value) {
         if (!this) {
             return new Apply(value);
@@ -657,7 +669,7 @@ var fjl = function () {
      * Created by edlc on 12/9/16.
      */
     var Applicative = subClass(Apply, function Applicative(value) {
-        if (!this) {
+        if (!(this instanceof Applicative)) {
             return Applicative.of(value);
         }
         Apply.call(this, value);
@@ -674,7 +686,7 @@ var fjl = function () {
      * Created by edlc on 12/9/16.
      */
     var Chain = subClass(Apply, function Chain(value) {
-        if (!this) {
+        if (!(this instanceof Chain)) {
             return new Chain(value);
         }
         Apply.call(this, value);
@@ -707,8 +719,25 @@ var fjl = function () {
     /**
      * Created by edlc on 12/9/16.
      */
+    /**
+     * Created by edlc on 12/9/16.
+     */
+    var Comonad = subClass(Apply, function Comonad(value) {
+        if (!(this instanceof Comonad)) {
+            return new Comonad(value);
+        }
+        Apply.call(this, value);
+    }, {
+        extract: function extract() {
+            return this.value;
+        }
+    });
+
+    /**
+     * Created by edlc on 12/9/16.
+     */
     var Monad = subClassMulti([Applicative, Chain], function Monad(value) {
-        if (!this) {
+        if (!(this instanceof Monad)) {
             return Monad.of(value);
         }
         Applicative.apply(this);
@@ -726,17 +755,26 @@ var fjl = function () {
     var id = function id(value) {
         return value;
     };
+    var of = function of(functor, value) {
+        var constructor = functor.constructor,
+            retVal = void 0;
+        if (constructor.of) {
+            retVal = constructor.of(value);
+        } else if (isOfConstructable(functor)) {
+            retVal = new constructor(value);
+        } else {
+            retVal = constructor(value);
+        }
+        return retVal;
+    };
+    var _ap = curry2(function (obj1, obj2) {
+        return obj1.ap ? obj1.ap(obj2) : obj1(obj2);
+    });
     var _map = curry2(function (fn, functor) {
         return functor.map(fn);
     });
-    var _ap = curry2(function (obj1, obj2) {
-        return obj1.ap(obj2);
-    });
     var _join = function _join(monad) {
-        var value = monad.value,
-            constructor = monad.constructor;
-
-        return value instanceof constructor ? value : constructor.of(value);
+        return Object.prototype.hasOwnProperty.call(monad, 'value') ? monad.value : of(monad);
     };
     var _chain = curry2(function (fn, functor) {
         return _join(_map(fn, functor));
@@ -800,9 +838,7 @@ var fjl = function () {
         counterConstructor: Nothing
     });
     var maybe = curry3(function (replacement, fn, monad) {
-        var subject = monad.chain(function (value) {
-            return value;
-        });
+        var subject = typeOfIs(monad, 'Maybe') ? monad.value.map(id) : monad.map(id);
         return subject instanceof Nothing ? replacement : subject.map(fn).value;
     });
     var Maybe = subClass(Monad, {
@@ -813,16 +849,16 @@ var fjl = function () {
             Monad.call(this, Just(value));
         },
         join: function join() {
-            return _join(Maybe.of(_join(_map(id, this.value))));
+            return compose(Maybe.of, _join, _map(id))(this.value);
         },
         map: function map(fn) {
-            return Maybe.of(fn(_map(id, this.value)));
+            return compose(Maybe.of, fn, _map(id))(this.value);
         },
         ap: function ap(functor) {
-            return Maybe.of(_ap(_map(id, this.value), functor));
+            return compose(Maybe.of, _ap(__, functor), _map(id))(this.value);
         },
         chain: function chain(fn) {
-            return Maybe.of(_chain(fn, _map(id, this.value)));
+            return compose(Maybe.of, _chain(fn), _map(id))(this.value);
         }
     }, {
         of: function of(value) {
@@ -898,8 +934,61 @@ var fjl = function () {
     });
 
     /**
+     * Created by elyde on 12/29/2016.
+     */
+    /**
+     * Created by elyde on 12/10/2016.
+     * Set functions for arrects.
+     */
+
+    var concat$1 = curry2(function (arr0) {
+        for (var _len9 = arguments.length, arrays = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
+            arrays[_key9 - 1] = arguments[_key9];
+        }
+
+        return arr0.concat.apply(arr0, arrays);
+    });
+    var filter$1 = curry2(function (fn, arr) {
+        return arr.filter(fn);
+    });
+    var reduce$1 = curry2(function (fn, agg, arr) {
+        return arr.reduce(fn, agg);
+    });
+    var union$1 = curry2(function (arr1, arr2) {
+        var whereNotInArray1 = function whereNotInArray1(elm) {
+            return arr1.indexOf(elm) === -1;
+        };
+        return concat$1(arr1, filter$1(whereNotInArray1, arr2));
+    });
+    var intersect$1 = curry2(function (arr1, arr2) {
+        return arr2.length === 0 ? [] : filter$1(function (elm) {
+            return arr2.indexOf(elm) > -1;
+        }, arr1);
+    });
+    var difference$1 = curry2(function (arr1, arr2) {
+        if (arr2.length === 0) {
+            return arr1.slice();
+        }
+        return reduce$1(function (agg, elm) {
+            if (arr2.indexOf(elm) === -1) {
+                agg.push(elm);
+            }
+            return agg;
+        }, [], arr1);
+    });
+    var complement$1 = curry2(function (arr0) {
+        for (var _len10 = arguments.length, arrays = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
+            arrays[_key10 - 1] = arguments[_key10];
+        }
+
+        return reduce$1(function (agg, arr) {
+            return concat$1(agg, difference$1(arr, arr0));
+        }, [], arrays);
+    });
+
+    /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Thu Dec 29 2016 15:31:37 GMT-0500 (Eastern Standard Time) 
+     * Generated Sat Dec 31 2016 22:11:12 GMT-0500 (Eastern Standard Time) 
      */
 
     var version = '0.5.0';
@@ -920,33 +1009,38 @@ var fjl = function () {
         subClassMulti: subClassMulti,
         difference: difference,
         isset: isset,
-        issetMulti: issetMulti,
         issetAndOfType: issetAndOfType,
         typeOf: typeOf,
         typeOfIs: typeOfIs,
-        typeOfIsMulti: typeOfIsMulti,
         isNumber: isNumber,
         isFunction: isFunction,
         isArray: isArray,
         isBoolean: isBoolean,
         isObject: isObject,
         isString: isString,
+        isMap: isMap,
+        isSet: isSet,
+        isWeakSet: isWeakSet,
+        isWeakMap: isWeakMap,
         isUndefined: isUndefined,
         isNull: isNull,
         isSymbol: isSymbol,
         isEmpty: isEmpty,
-        isEmptyMulti: isEmptyMulti,
-        isEmptyObj: isEmptyObj,
         intersect: intersect,
-        notOfTypeOrEmpty: notOfTypeOrEmpty,
         notEmptyAndOfType: notEmptyAndOfType,
         union: union,
+        arrayDifference: difference$1,
+        arrayIntersect: intersect$1,
+        arrayComplement: complement$1,
+        arrayUnion: union$1,
         Functor: Functor,
         Bifunctor: Bifunctor,
+        Profunctor: Profunctor,
         Apply: Apply,
         Applicative: Applicative,
         Chain: Chain,
         Extend: Extend,
+        Comonad: Comonad,
         Monad: Monad,
         Maybe: Maybe,
         Just: Just,

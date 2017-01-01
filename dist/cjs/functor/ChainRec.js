@@ -12,7 +12,6 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var _arguments = arguments;
 
 var _Chain = require('./Chain');
 
@@ -23,18 +22,14 @@ var _subClass = require('./../subClass');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ChainRec = (0, _subClass.subClass)(_Chain2.default, function ChainRec(value) {
-    if (!this) {
-        return new _Chain2.default(value);
+    if (!(this instanceof ChainRec)) {
+        return new ChainRec(value);
     }
     _Chain2.default.call(this, value);
 }, null, {
-    chainRec: function chainRec() /*fn, baseValue*/{
-        return undefined;
-        // return fn(next, done, baseValue);
-    },
-    flatMapRec: function flatMapRec() {
-        return ChainRec.chainRec.apply(null, _arguments);
-    }
+    // chainRec: (fn, aggregator) => {
+    //     return fn(next, done, aggregator);
+    // }
 });
 
-exports.default = _Chain2.default;
+exports.default = ChainRec;

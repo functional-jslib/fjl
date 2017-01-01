@@ -21,7 +21,7 @@ var _subClass = require('../subClass');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Monad = exports.Monad = (0, _subClass.subClassMulti)([_Applicative2.default, _Chain2.default], function Monad(value) {
-    if (!this) {
+    if (!(this instanceof Monad)) {
         return Monad.of(value);
     }
     _Applicative2.default.apply(this);

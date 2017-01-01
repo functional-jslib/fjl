@@ -14,18 +14,14 @@ import {subClass} from './../subClass';
 
 let ChainRec = subClass (Chain,
     function ChainRec (value) {
-        if (!this) {
+        if (!(this instanceof ChainRec)) {
             return new ChainRec(value);
         }
         Chain.call(this, value);
     }, null, {
-        chainRec: (/*fn, baseValue*/) => {
-            // return this;
-            return fn(next, done, baseValue);
-        },
-        flatMapRec: () => {
-            return ChainRec.chainRec.apply(null, arguments);
-        }
+        // chainRec: (fn, aggregator) => {
+        //     return fn(next, done, aggregator);
+        // }
     });
 
 export default ChainRec;

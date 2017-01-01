@@ -6,8 +6,6 @@
 import compose from './compose';
 import {curry, curryN, curry2, curry3, curry4, curry5} from './curry';
 import {subClass, subClassMulti} from './subClass';
-import {complement, difference, union, intersect} from './objCombinators';
-// import {complement, difference, union, intersect} from './arrayCombinators';
 import {typeOf, typeOfIs} from './typeOf';
 import {isset, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
@@ -16,13 +14,20 @@ import {isset, issetAndOfType, isNumber,
 import {notEmptyAndOfType} from './not';
 import Functor from './functor/Functor';
 import Bifunctor from './functor/Bifunctor';
+import Profunctor from './functor/Profunctor';
 import Apply from './functor/Apply';
 import Applicative from './functor/Applicative';
 import Chain from './functor/Chain';
 import Extend from './functor/Extend';
+import Comonad from './functor/Comonad';
 import Monad from './monad/Monad';
 import {Maybe, Just, Nothing, maybe} from './monad/Maybe';
 import {Either, Left, Right, either} from './monad/Either';
+import {complement, difference, union, intersect} from './objCombinators';
+import {complement as arrayComplement,
+    difference as arrayDifference,
+    union as arrayUnion,
+    intersect as arrayIntersect} from './arrayCombinators';
 import version from './generated/version';
 
 export default {
@@ -58,12 +63,18 @@ export default {
     intersect,
     notEmptyAndOfType,
     union,
+    arrayDifference,
+    arrayIntersect,
+    arrayComplement,
+    arrayUnion,
     Functor,
     Bifunctor,
+    Profunctor,
     Apply,
     Applicative,
     Chain,
     Extend,
+    Comonad,
     Monad,
     Maybe,
     Just,

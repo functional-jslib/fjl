@@ -7,7 +7,7 @@ import {subClass} from './../subClass';
 
 let Applicative = subClass (Apply,
     function Applicative(value) {
-        if (!this) {
+        if (!(this instanceof Applicative)) {
             return Applicative.of(value);
         }
         Apply.call(this, value);

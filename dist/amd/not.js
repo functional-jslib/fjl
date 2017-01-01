@@ -8,20 +8,8 @@ define(['exports', './is', './typeOf'], function (exports, _is, _typeOf) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.notOfTypeOrEmpty = notOfTypeOrEmpty;
   exports.notEmptyAndOfType = notEmptyAndOfType;
 
-
-  /**
-   * Retruns a boolean based on whether a key on an object has an empty value or is empty (not set, undefined, null)
-   * @function module:sjl.notOfTypeOrEmpty
-   * @param value {Object} - Object to search on.
-   * @param type {String} - Optional. Type Name to check for match for;  E.g., 'Number', 'Array', 'HTMLMediaElement' etc..
-   * @returns {Boolean}
-   */
-  function notOfTypeOrEmpty(value, type) {
-    return (0, _is.isEmpty)(value) || !(0, _typeOf.typeOfIs)(value, type);
-  }
 
   /**
    * Returns true if an element is not empty and is of type.
@@ -35,7 +23,6 @@ define(['exports', './is', './typeOf'], function (exports, _is, _typeOf) {
   }
 
   exports.default = {
-    notOfTypeOrEmpty: notOfTypeOrEmpty,
     notEmptyAndOfType: notEmptyAndOfType
   };
 });

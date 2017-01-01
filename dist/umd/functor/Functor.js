@@ -21,7 +21,7 @@
         value: true
     });
     function Functor(value) {
-        if (!this) {
+        if (!(this instanceof Functor)) {
             return new Functor(value);
         }
         Functor.addValueProperty(this, value);

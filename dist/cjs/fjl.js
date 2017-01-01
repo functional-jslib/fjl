@@ -15,8 +15,6 @@ var _curry = require('./curry');
 
 var _subClass = require('./subClass');
 
-var _objOperators = require('./objOperators');
-
 var _typeOf = require('./typeOf');
 
 var _is = require('./is');
@@ -30,6 +28,10 @@ var _Functor2 = _interopRequireDefault(_Functor);
 var _Bifunctor = require('./functor/Bifunctor');
 
 var _Bifunctor2 = _interopRequireDefault(_Bifunctor);
+
+var _Profunctor = require('./functor/Profunctor');
+
+var _Profunctor2 = _interopRequireDefault(_Profunctor);
 
 var _Apply = require('./functor/Apply');
 
@@ -47,6 +49,10 @@ var _Extend = require('./functor/Extend');
 
 var _Extend2 = _interopRequireDefault(_Extend);
 
+var _Comonad = require('./functor/Comonad');
+
+var _Comonad2 = _interopRequireDefault(_Comonad);
+
 var _Monad = require('./monad/Monad');
 
 var _Monad2 = _interopRequireDefault(_Monad);
@@ -55,6 +61,10 @@ var _Maybe = require('./monad/Maybe');
 
 var _Either = require('./monad/Either');
 
+var _objCombinators = require('./objCombinators');
+
+var _arrayCombinators = require('./arrayCombinators');
+
 var _version = require('./generated/version');
 
 var _version2 = _interopRequireDefault(_version);
@@ -62,7 +72,7 @@ var _version2 = _interopRequireDefault(_version);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    complement: _objOperators.complement,
+    complement: _objCombinators.complement,
     compose: _compose2.default,
     curry: _curry.curry,
     curryN: _curry.curryN,
@@ -72,35 +82,40 @@ exports.default = {
     curry5: _curry.curry5,
     subClass: _subClass.subClass,
     subClassMulti: _subClass.subClassMulti,
-    difference: _objOperators.difference,
+    difference: _objCombinators.difference,
     isset: _is.isset,
-    issetMulti: _is.issetMulti,
     issetAndOfType: _is.issetAndOfType,
     typeOf: _typeOf.typeOf,
     typeOfIs: _typeOf.typeOfIs,
-    typeOfIsMulti: _typeOf.typeOfIsMulti,
     isNumber: _is.isNumber,
     isFunction: _is.isFunction,
     isArray: _is.isArray,
     isBoolean: _is.isBoolean,
     isObject: _is.isObject,
     isString: _is.isString,
+    isMap: _is.isMap,
+    isSet: _is.isSet,
+    isWeakSet: _is.isWeakSet,
+    isWeakMap: _is.isWeakMap,
     isUndefined: _is.isUndefined,
     isNull: _is.isNull,
     isSymbol: _is.isSymbol,
     isEmpty: _is.isEmpty,
-    isEmptyMulti: _is.isEmptyMulti,
-    isEmptyObj: _is.isEmptyObj,
-    intersect: _objOperators.intersect,
-    notOfTypeOrEmpty: _not.notOfTypeOrEmpty,
+    intersect: _objCombinators.intersect,
     notEmptyAndOfType: _not.notEmptyAndOfType,
-    union: _objOperators.union,
+    union: _objCombinators.union,
+    arrayDifference: _arrayCombinators.difference,
+    arrayIntersect: _arrayCombinators.intersect,
+    arrayComplement: _arrayCombinators.complement,
+    arrayUnion: _arrayCombinators.union,
     Functor: _Functor2.default,
     Bifunctor: _Bifunctor2.default,
+    Profunctor: _Profunctor2.default,
     Apply: _Apply2.default,
     Applicative: _Applicative2.default,
     Chain: _Chain2.default,
     Extend: _Extend2.default,
+    Comonad: _Comonad2.default,
     Monad: _Monad2.default,
     Maybe: _Maybe.Maybe,
     Just: _Maybe.Just,

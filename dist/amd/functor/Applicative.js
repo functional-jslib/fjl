@@ -17,7 +17,7 @@ define(['exports', './Apply', './../subClass'], function (exports, _Apply, _subC
     }
 
     var Applicative = (0, _subClass.subClass)(_Apply2.default, function Applicative(value) {
-        if (!this) {
+        if (!(this instanceof Applicative)) {
             return Applicative.of(value);
         }
         _Apply2.default.call(this, value);

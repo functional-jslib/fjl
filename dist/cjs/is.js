@@ -14,28 +14,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.isFunction = isFunction;
 exports.isset = isset;
-exports.issetMulti = issetMulti;
 exports.issetAndOfType = issetAndOfType;
 exports.isArray = isArray;
 exports.isObject = isObject;
 exports.isBoolean = isBoolean;
 exports.isNumber = isNumber;
 exports.isString = isString;
+exports.isMap = isMap;
+exports.isSet = isSet;
+exports.isWeakMap = isWeakMap;
+exports.isWeakSet = isWeakSet;
 exports.isUndefined = isUndefined;
 exports.isNull = isNull;
 exports.isSymbol = isSymbol;
-exports.isEmptyObj = isEmptyObj;
 exports.isEmpty = isEmpty;
-exports.isEmptyMulti = isEmptyMulti;
-exports.isPrimitive = isPrimitive;
+exports.isOfConstructable = isOfConstructable;
 
 var _typeOf = require('./typeOf');
-
-var _compose = require('./compose');
-
-var _compose2 = _interopRequireDefault(_compose);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _String = String.name,
     _Function = Function.name,
@@ -43,6 +38,10 @@ var _String = String.name,
     _Number = Number.name,
     _Object = Object.name,
     _Boolean = Boolean.name,
+    _Map = 'Map',
+    _Set = 'Set',
+    _WeakMap = 'WeakMap',
+    _WeakSet = 'WeakSet',
     _Null = 'Null',
     _Undefined = 'Undefined',
     _undefined = 'undefined';
@@ -65,22 +64,6 @@ function isFunction(value) {
  */
 function isset(value) {
     return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== _undefined && value !== null;
-}
-
-/**
- * Checks if one or more parameters are set (not null and not undefined).
- * @function module:sjl.issetMulti
- * @params {*} - One or more values to check of any type.
- * @returns {Boolean} - True if all params passed in are not null or undefined.
- */
-function issetMulti() {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-    }
-
-    return !args.some(function (value) {
-        return !isset(value);
-    });
 }
 
 /**
@@ -145,6 +128,46 @@ function isString(value) {
 }
 
 /**
+ * Checks whether value is of `Map` or not.
+ * @function module:sjl.isMap
+ * @param value {*}
+ * @returns {Boolean}
+ */
+function isMap(value) {
+    return (0, _typeOf.typeOfIs)(value, _Map);
+}
+
+/**
+ * Checks whether value is of `Set` or not.
+ * @function module:sjl.isSet
+ * @param value {*}
+ * @returns {Boolean}
+ */
+function isSet(value) {
+    return (0, _typeOf.typeOfIs)(value, _Set);
+}
+
+/**
+ * Checks whether value is of `WeakMap` or not.
+ * @function module:sjl.isWeakMap
+ * @param value {*}
+ * @returns {Boolean}
+ */
+function isWeakMap(value) {
+    return (0, _typeOf.typeOfIs)(value, _WeakMap);
+}
+
+/**
+ * Checks whether value is of `WeakSet` or not.
+ * @function module:sjl.isWeakSet
+ * @param value {*}
+ * @returns {Boolean}
+ */
+function isWeakSet(value) {
+    return (0, _typeOf.typeOfIs)(value, _WeakSet);
+}
+
+/**
  * Checks if value is undefined.
  * @function module:sjl.isUndefined
  * @param value {*}
@@ -175,16 +198,6 @@ function isSymbol(value) {
 }
 
 /**
- * Checks object's own properties to see if it is empty (Object.keys check).
- * @function module:sjl.isEmptyObj
- * @param obj object to be checked
- * @returns {Boolean}
- */
-function isEmptyObj(obj) {
-    return Object.keys(obj).length === 0;
-}
-
-/**
  * Checks to see if passed in argument is empty.
  * @function module:sjl.empty
  * @param value {*} - Value to check.
@@ -199,42 +212,26 @@ function isEmpty(value) {
     } else if (typeOfValue === _Number && value !== 0) {
         retVal = false;
     } else if (typeOfValue === _Object) {
-        retVal = isEmptyObj(value);
+        retVal = Object.keys(value).length === 0;
     } else {
         retVal = !value;
     }
-
     return retVal;
 }
 
 /**
- * Checks to see if any of the values passed in are empty (null, undefined, empty object, empty array, or empty string).
- * @function module:sjl.emptyMulti
- * @params {*} - One or more params of any type.
- * @returns {Boolean} - Returns true if any of the values passed in are empty (null, undefined, empty object, empty array, or empty string).
- */
-function isEmptyMulti() {
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-    }
-
-    return args.some(function (value) {
-        return isEmpty(value);
-    });
-}
-
-/**
- * Checks to see if value is a primitive.
+ * Checks to see if value can be constructed from a constructor.
  * @param value {*}
  * @returns {Boolean}
  */
-function isPrimitive(value) {
-    return (0, _compose2.default)(isNumber, isString, isObject, isArray, isFunction, isSymbol, isBoolean, isNull, isUndefined)(value);
+function isOfConstructable(value) {
+    return [isNumber, isBoolean, isString, isObject, isArray, isFunction, isMap, isSet, isWeakMap, isWeakSet].some(function (fn) {
+        return fn(value);
+    });
 }
 
 exports.default = {
     isset: isset,
-    issetMulti: issetMulti,
     issetAndOfType: issetAndOfType,
     isNumber: isNumber,
     isFunction: isFunction,
@@ -242,11 +239,13 @@ exports.default = {
     isBoolean: isBoolean,
     isObject: isObject,
     isString: isString,
+    isMap: isMap,
+    isSet: isSet,
+    isWeakMap: isWeakMap,
+    isWeakSet: isWeakSet,
     isUndefined: isUndefined,
     isNull: isNull,
     isSymbol: isSymbol,
     isEmpty: isEmpty,
-    isEmptyMulti: isEmptyMulti,
-    isEmptyObj: isEmptyObj,
-    isPrimitive: isPrimitive
+    isOfConstructable: isOfConstructable
 };

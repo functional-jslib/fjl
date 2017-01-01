@@ -7,7 +7,6 @@
 'use strict';
 
 import {typeOf, typeOfIs} from './typeOf';
-import compose from './compose';
 
 let _String = String.name,
     _Function = Function.name,
@@ -208,7 +207,7 @@ export function isOfConstructable (value) {
     return [
         isNumber, isBoolean, isString, isObject,
         isArray, isFunction, isMap, isSet,
-        isWeakMap, isWeakSet,
+        isWeakMap, isWeakSet
     ].some(fn => fn(value));
 }
 

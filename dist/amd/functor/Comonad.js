@@ -5,9 +5,6 @@ define(['exports', './Apply', './../subClass'], function (exports, _Apply, _subC
     /**
      * Created by edlc on 12/9/16.
      */
-    /**
-     * Created by edlc on 12/9/16.
-     */
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -22,20 +19,16 @@ define(['exports', './Apply', './../subClass'], function (exports, _Apply, _subC
         };
     }
 
-    var Chain = (0, _subClass.subClass)(_Apply2.default, function Chain(value) {
-        if (!this) {
-            return new Chain(value);
+    var Comonad = (0, _subClass.subClass)(_Apply2.default, function Comonad(value) {
+        if (!(this instanceof Comonad)) {
+            return new Comonad(value);
         }
         _Apply2.default.call(this, value);
     }, {
-        join: function join() {
-            return this.value instanceof this.constructor ? this.value : new this.constructor(this.value);
-        },
-
-        chain: function chain(fn) {
-            return this.map(fn).join();
+        extract: function extract() {
+            return this.value;
         }
     });
 
-    exports.default = Chain;
+    exports.default = Comonad;
 });
