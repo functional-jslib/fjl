@@ -10,48 +10,37 @@
 // generating browser version of test(s).
 'use strict';
 import {expect} from 'chai';
-import {expectFunction, add, multiply, divide} from './../helpers';
-import Functor from '../../src/functor/Functor';
-import Apply from '../../src/functor/Apply';
-import Applicative from '../../src/functor/Applicative';
+import {expectFunction, add} from '../helpers';
+import Functor from '../../../src/functor/Functor';
+import Apply from '../../../src/functor/Apply';
+import Chain from '../../../src/functor/Chain';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Instance),
-    expectFunctor = value => expectInstanceOf(value, Functor),
-    expectApply = value => expectInstanceOf(value, Apply),
-    expectApplicative = value => expectInstanceOf(value, Applicative),
-    expectValue = (value, expectedValue) => expect(value).to.equal(expectedValue);
+describe('functor.Chain', function () {
 
-describe('functor.Applicative', function () {
+    let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Instance),
+        expectFunctor = value => expectInstanceOf(value, Functor),
+        expectApply = value => expectInstanceOf(value, Apply),
+        expectChain = value => expectInstanceOf(value, Chain);
 
     it('should return an new instance when called as a function', function () {
-        let result = Applicative();
-        expectApplicative(result);
+        let result = Chain();
+        expectChain(result);
         expectApply(result);
         expectFunctor(result);
     });
 
     it('should construct an instance of `Functor` when called with `new`', function () {
-        let result = new Applicative();
-        expectApplicative(result);
+        let result = new Chain();
+        expectChain(result);
         expectApply(result);
         expectFunctor(result);
     });
 
-    describe('Statics', function () {
-        it('should have a static `of` property that acts as unit.', function () {
-            let result = Applicative.of(multiply(4)).ap(Applicative(25));
-            expectFunction(Applicative.of);
-            expectApplicative(Applicative.of());
-            expectApply(result);
-            expectValue(result.value, 100);
-        });
-    });
-
     describe('Interface', function () {
-        let instance = Applicative();
-        ['map', 'ap'].forEach((key) => {
+        let instance = Chain();
+        ['map', 'chain'].forEach((key) => {
             it('should method #' + key, function () {
                 expectFunction(instance[key]);
             });
@@ -65,8 +54,9 @@ describe('functor.Applicative', function () {
 
     describe('#map', function () {
         it('should return a new instance of Functor', function () {
-            let functor = Apply(99),
+            let functor = Chain(99),
                 result = functor.map(num => num * 2);
+            expectChain(result);
             expectApply(result);
             expectFunctor(result);
             expect(result === functor).to.equal(false);
@@ -74,20 +64,29 @@ describe('functor.Applicative', function () {
         });
         it('should return a new instance of Functor that contains the return value ' +
             'of passed in function\'s call', function () {
-            let result = Apply(99).map(num => num * 2);
+            let result = Chain(99).map(num => num * 2);
+            expectChain(result);
             expectApply(result);
             expectFunctor(result);
             expect(result.value).to.equal(99 * 2);
         });
     });
 
-    describe('#ap', function () {
-        it('should map incoming functor over it\'s value', function () {
-            let instance = Apply(add(1)),
-                result = instance.ap(Apply(99));
-            expectFunctor(result);
-            expectApply(result);
-            expect(result.value).to.equal(100);
+    describe('#chain', function () {
+        it('should map incoming function over it\'s value and flatten it result if it is nested within an ' +
+            'instance of it\'s own type', function () {
+            let addReturnsChain = value => Chain(add(1, value)),
+                instance = Chain(99),
+                result1 = instance.chain(addReturnsChain), // nested result
+                result2 = instance.chain(add(1)); // un-nested result
+
+            // Check results
+            [result1, result2].forEach(result => {
+                expectChain(result);
+                expectApply(result);
+                expectFunctor(result);
+                expect(result.value).to.equal(100);
+            });
         });
     });
 

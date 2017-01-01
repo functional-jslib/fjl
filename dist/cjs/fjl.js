@@ -61,6 +61,8 @@ var _Maybe = require('./monad/Maybe');
 
 var _Either = require('./monad/Either');
 
+var _combinators = require('./combinators');
+
 var _objCombinators = require('./objCombinators');
 
 var _arrayCombinators = require('./arrayCombinators');
@@ -72,8 +74,8 @@ var _version2 = _interopRequireDefault(_version);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    complement: _objCombinators.complement,
     compose: _compose2.default,
+    __: _curry.__,
     curry: _curry.curry,
     curryN: _curry.curryN,
     curry2: _curry.curry2,
@@ -82,7 +84,6 @@ exports.default = {
     curry5: _curry.curry5,
     subClass: _subClass.subClass,
     subClassMulti: _subClass.subClassMulti,
-    difference: _objCombinators.difference,
     isset: _is.isset,
     issetAndOfType: _is.issetAndOfType,
     typeOf: _typeOf.typeOf,
@@ -101,13 +102,16 @@ exports.default = {
     isNull: _is.isNull,
     isSymbol: _is.isSymbol,
     isEmpty: _is.isEmpty,
-    intersect: _objCombinators.intersect,
     notEmptyAndOfType: _not.notEmptyAndOfType,
+    complement: _objCombinators.complement,
+    difference: _objCombinators.difference,
+    intersect: _objCombinators.intersect,
     union: _objCombinators.union,
     arrayDifference: _arrayCombinators.difference,
     arrayIntersect: _arrayCombinators.intersect,
     arrayComplement: _arrayCombinators.complement,
     arrayUnion: _arrayCombinators.union,
+    length: _combinators.length,
     Functor: _Functor2.default,
     Bifunctor: _Bifunctor2.default,
     Profunctor: _Profunctor2.default,

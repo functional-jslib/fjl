@@ -6,8 +6,8 @@
 // generating browser version of test(s).
 'use strict';
 import {expect} from 'chai';
-import compose from './../src/compose';
-import {curry2} from './../src/curry';
+import compose from '../../src/compose';
+import {curry2} from '../../src/curry';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 

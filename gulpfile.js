@@ -19,6 +19,7 @@ let fs = require('fs'),
     uglify = require('gulp-uglify'),
     duration = require('gulp-duration'),
     fncallback = require('gulp-fncallback'),
+    replace = require('gulp-replace'),
     lazyPipe = require('lazypipe'),
     rollup = require('gulp-better-rollup'),
     babel = require('gulp-babel'),
@@ -114,6 +115,17 @@ gulp.task('uglify', ['iife'], function () {
 });
 
 gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd']);
+
+gulp.task('make-browser-test-suite', ['build-js'], function () {
+    return gulp.src(['tests/for-server/**/*.js'])
+        // .pipe(babel())
+        .pipe(replace(/\/\/ ~~~ STRIP ~~~[^~]+\/\/ ~~~ \/STRIP ~~~[\n\r\f]+/gim, ''))
+        // .pipe(concat('tests/for-browser/test-suite.js'))
+        // .pipe(gulp.dest('./'))
+        // .pipe(rollup({exports: 'named', format: 'amd'}))
+        .pipe(concat('tests/for-browser/test-suite.js'))
+        .pipe(gulp.dest('./'))
+});
 
 gulp.task('build', ['build-js']);
 

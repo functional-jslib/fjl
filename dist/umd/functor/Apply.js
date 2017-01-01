@@ -30,7 +30,7 @@
     }
 
     var Apply = (0, _subClass.subClass)(_Functor2.default, function Apply(value) {
-        if (!this) {
+        if (!(this instanceof Apply)) {
             return new Apply(value);
         }
         _Functor2.default.call(this, value);

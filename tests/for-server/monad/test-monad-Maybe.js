@@ -7,19 +7,19 @@
 // generating browser version of test(s).
 'use strict';
 import {expect} from 'chai';
-import {unwrapMonad, expectInstanceOf, expectFunction, expectEqual, add, multiply} from './../helpers';
-import Monad from '../../src/monad/Monad';
-import {Maybe, Just, Nothing, maybe} from '../../src/monad/Maybe';
+import {unwrapMonad, expectInstanceOf, expectFunction, expectEqual, add, multiply} from '../helpers';
+import Monad from '../../../src/monad/Monad';
+import {Maybe, Just, Nothing, maybe} from '../../../src/monad/Maybe';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-let expectMonad = value => expectInstanceOf(value, Monad),
-    expectMaybe = value => expectInstanceOf(value, Maybe) && expectMonad(value),
-    expectJust = value => expectInstanceOf(value, Just),
-    expectNothing = value => expectInstanceOf(value, Nothing),
-    monadInterface = ['ap', 'map', 'join', 'chain'];
-
 describe('monad.Maybe', function () {
+
+    let expectMonad = value => expectInstanceOf(value, Monad),
+        expectMaybe = value => expectInstanceOf(value, Maybe) && expectMonad(value),
+        expectJust = value => expectInstanceOf(value, Just),
+        expectNothing = value => expectInstanceOf(value, Nothing),
+        monadInterface = ['ap', 'map', 'join', 'chain'];
 
     describe('Construction:', function () {
 

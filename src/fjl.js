@@ -4,7 +4,7 @@
 'use strict';
 
 import compose from './compose';
-import {curry, curryN, curry2, curry3, curry4, curry5} from './curry';
+import {__, curry, curryN, curry2, curry3, curry4, curry5} from './curry';
 import {subClass, subClassMulti} from './subClass';
 import {typeOf, typeOfIs} from './typeOf';
 import {isset, issetAndOfType, isNumber,
@@ -23,6 +23,7 @@ import Comonad from './functor/Comonad';
 import Monad from './monad/Monad';
 import {Maybe, Just, Nothing, maybe} from './monad/Maybe';
 import {Either, Left, Right, either} from './monad/Either';
+import {length} from './combinators';
 import {complement, difference, union, intersect} from './objCombinators';
 import {complement as arrayComplement,
     difference as arrayDifference,
@@ -32,6 +33,7 @@ import version from './generated/version';
 
 export default {
     compose,
+    __,
     curry,
     curryN,
     curry2,
@@ -67,6 +69,7 @@ export default {
     arrayIntersect,
     arrayComplement,
     arrayUnion,
+    length,
     Functor,
     Bifunctor,
     Profunctor,

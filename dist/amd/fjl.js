@@ -1,4 +1,4 @@
-define(['exports', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './objCombinators', './arrayCombinators', './generated/version'], function (exports, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _objCombinators, _arrayCombinators, _version) {
+define(['exports', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './generated/version'], function (exports, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -37,8 +37,8 @@ define(['exports', './compose', './curry', './subClass', './typeOf', './is', './
     }
 
     exports.default = {
-        complement: _objCombinators.complement,
         compose: _compose2.default,
+        __: _curry.__,
         curry: _curry.curry,
         curryN: _curry.curryN,
         curry2: _curry.curry2,
@@ -47,7 +47,6 @@ define(['exports', './compose', './curry', './subClass', './typeOf', './is', './
         curry5: _curry.curry5,
         subClass: _subClass.subClass,
         subClassMulti: _subClass.subClassMulti,
-        difference: _objCombinators.difference,
         isset: _is.isset,
         issetAndOfType: _is.issetAndOfType,
         typeOf: _typeOf.typeOf,
@@ -66,13 +65,16 @@ define(['exports', './compose', './curry', './subClass', './typeOf', './is', './
         isNull: _is.isNull,
         isSymbol: _is.isSymbol,
         isEmpty: _is.isEmpty,
-        intersect: _objCombinators.intersect,
         notEmptyAndOfType: _not.notEmptyAndOfType,
+        complement: _objCombinators.complement,
+        difference: _objCombinators.difference,
+        intersect: _objCombinators.intersect,
         union: _objCombinators.union,
         arrayDifference: _arrayCombinators.difference,
         arrayIntersect: _arrayCombinators.intersect,
         arrayComplement: _arrayCombinators.complement,
         arrayUnion: _arrayCombinators.union,
+        length: _combinators.length,
         Functor: _Functor2.default,
         Bifunctor: _Bifunctor2.default,
         Profunctor: _Profunctor2.default,

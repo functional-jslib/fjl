@@ -10,17 +10,17 @@
 // generating browser version of test(s).
 'use strict';
 import {expect} from 'chai';
-import {expectFunction, add, multiply, divide} from './../helpers';
-import Functor from '../../src/functor/Functor';
-import Bifunctor from '../../src/functor/Bifunctor';
+import {expectFunction, add, multiply, divide} from '../helpers';
+import Functor from '../../../src/functor/Functor';
+import Bifunctor from '../../../src/functor/Bifunctor';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Instance),
-    expectFunctor = value => expectInstanceOf(value, Functor),
-    expectBifunctor = value => expectInstanceOf(value, Bifunctor);
-
 describe('functor.Bifunctor', function () {
+
+    let expectInstanceOf = (value, Instance) => expect(value).to.be.instanceOf(Instance),
+        expectFunctor = value => expectInstanceOf(value, Functor),
+        expectBifunctor = value => expectInstanceOf(value, Bifunctor);
 
     it('should return an new instance when called as a function', function () {
         let result = Bifunctor();

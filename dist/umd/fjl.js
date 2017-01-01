@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './objCombinators', './arrayCombinators', './generated/version'], factory);
+        define(['exports', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './generated/version'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./functor/Functor'), require('./functor/Bifunctor'), require('./functor/Profunctor'), require('./functor/Apply'), require('./functor/Applicative'), require('./functor/Chain'), require('./functor/Extend'), require('./functor/Comonad'), require('./monad/Monad'), require('./monad/Maybe'), require('./monad/Either'), require('./objCombinators'), require('./arrayCombinators'), require('./generated/version'));
+        factory(exports, require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./functor/Functor'), require('./functor/Bifunctor'), require('./functor/Profunctor'), require('./functor/Apply'), require('./functor/Applicative'), require('./functor/Chain'), require('./functor/Extend'), require('./functor/Comonad'), require('./monad/Monad'), require('./monad/Maybe'), require('./monad/Either'), require('./combinators'), require('./objCombinators'), require('./arrayCombinators'), require('./generated/version'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.Functor, global.Bifunctor, global.Profunctor, global.Apply, global.Applicative, global.Chain, global.Extend, global.Comonad, global.Monad, global.Maybe, global.Either, global.objCombinators, global.arrayCombinators, global.version);
+        factory(mod.exports, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.Functor, global.Bifunctor, global.Profunctor, global.Apply, global.Applicative, global.Chain, global.Extend, global.Comonad, global.Monad, global.Maybe, global.Either, global.combinators, global.objCombinators, global.arrayCombinators, global.version);
         global.fjl = mod.exports;
     }
-})(this, function (exports, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _objCombinators, _arrayCombinators, _version) {
+})(this, function (exports, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -49,8 +49,8 @@
     }
 
     exports.default = {
-        complement: _objCombinators.complement,
         compose: _compose2.default,
+        __: _curry.__,
         curry: _curry.curry,
         curryN: _curry.curryN,
         curry2: _curry.curry2,
@@ -59,7 +59,6 @@
         curry5: _curry.curry5,
         subClass: _subClass.subClass,
         subClassMulti: _subClass.subClassMulti,
-        difference: _objCombinators.difference,
         isset: _is.isset,
         issetAndOfType: _is.issetAndOfType,
         typeOf: _typeOf.typeOf,
@@ -78,13 +77,16 @@
         isNull: _is.isNull,
         isSymbol: _is.isSymbol,
         isEmpty: _is.isEmpty,
-        intersect: _objCombinators.intersect,
         notEmptyAndOfType: _not.notEmptyAndOfType,
+        complement: _objCombinators.complement,
+        difference: _objCombinators.difference,
+        intersect: _objCombinators.intersect,
         union: _objCombinators.union,
         arrayDifference: _arrayCombinators.difference,
         arrayIntersect: _arrayCombinators.intersect,
         arrayComplement: _arrayCombinators.complement,
         arrayUnion: _arrayCombinators.union,
+        length: _combinators.length,
         Functor: _Functor2.default,
         Bifunctor: _Bifunctor2.default,
         Profunctor: _Profunctor2.default,

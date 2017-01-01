@@ -28,10 +28,12 @@
     "gulp-fncallback": "^2.0.2",
     "gulp-header": "^1.8.8",
     "gulp-mocha": "^3.0.1",
+    "gulp-replace": "^0.5.4",
     "gulp-uglify": "^2.0.0",
     "lazypipe": "^1.0.1",
     "mocha": "^3.2.0",
     "random-js": "^1.0.8",
+    "requirejs": "^2.3.2",
     "rollup": "^0.37.0",
     "yargs": "^6.5.0"
   },

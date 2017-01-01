@@ -7,10 +7,10 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import compose from './../src/compose';
-import {length} from '../src/combinators';
-import {__} from './../src/curry';
-import {complement, difference, union, intersect, flatten, flattenMulti, concat, join, equals} from '../src/arrayCombinators';
+import compose from '../../src/compose';
+import {length} from '../../src/combinators';
+import {__} from '../../src/curry';
+import {complement, difference, union, intersect, flatten, flattenMulti, concat, join, equals} from '../../src/arrayCombinators';
 import {expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
