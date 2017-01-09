@@ -144,6 +144,7 @@ just do a `require('fjl');`
 - [(m) fjl.Left](#m-fjlleft)
 - [(m) fjl.Right](#m-fjlright)
 - [(m) fjl.either](#m-fjleither)
+- [(m) fjl.DoublyLinkedList](#m-fjldoublylinkedlist)
 - [(m) fjl.version](#m-fjlversion)
 
 

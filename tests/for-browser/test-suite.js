@@ -562,7 +562,7 @@ describe('data.DoublyLinkedList', function () {
 
     describe('#DLLNode', function () {
         describe('Construction', function () {
-            it('should construct `DLLNode`', function () {
+            it('should construct `DLLNode` when called as a function', function () {
                 var dllNode = DLLNode();
                 expectInstanceOf(dllNode, DLLNode);
             });
@@ -570,7 +570,7 @@ describe('data.DoublyLinkedList', function () {
                 var dllNode = new DLLNode();
                 expectInstanceOf(dllNode, DLLNode);
             });
-            it('should construct `DLLNode` when called as a function with an `id` and `value` value', function () {
+            it('should construct `DLLNode` when called as a function with an `id` and a `value` value', function () {
                 var id = 0,
                     value = 'some-value',
                     dllNode = DLLNode(id, value);
@@ -578,7 +578,7 @@ describe('data.DoublyLinkedList', function () {
                 expectEqual(dllNode.id, id);
                 expectEqual(dllNode.value, value);
             });
-            it('should construct `DLLNode` when called with `new` with an `id` and `value` value', function () {
+            it('should construct `DLLNode` when called with `new` with an `id` and a `value` value', function () {
                 var id = 0,
                     value = 'some-value',
                     dllNode = new DLLNode(id, value);
@@ -587,62 +587,70 @@ describe('data.DoublyLinkedList', function () {
                 expectEqual(dllNode.value, value);
             });
         });
-        describe('#map', function () {});
+        describe('#map', function () {
+            it('should be a method on instances', function () {
+                var dllNode = DLLNode();
+                expectFunction(dllNode.map);
+            });
+        });
     });
 
     describe('Construction', function () {
-        it('should construct an instance when called as a function with no values', function () {
+        it('should construct an instance when called as a function', function () {
             var dll = DoublyLinkedList();
             expectInstanceOf(dll, DoublyLinkedList);
             expectEqual(dll.head.next, null);
             expectEqual(dll.head.prev, null);
             expectEqual(dll.head.value, null);
         });
-        it('should construct an instance when called with `new` and no values passed in', function () {
+        it('should construct an instance when called with `new`', function () {
             var dll = new DoublyLinkedList();
             expectInstanceOf(dll, DoublyLinkedList);
             expectEqual(dll.head.next, null);
             expectEqual(dll.head.prev, null);
             expectEqual(dll.head.value, null);
         });
-        it('should construct an instance when called as a function with a `DLLNode` passed in', function () {
-            var node = DLLNode(0, 'some-value-here'),
-                dll = DoublyLinkedList(node);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectEqual(dll.head.id, node.id);
-            expectEqual(dll.head.value, node.value);
+    });
+
+    describe('#reduce', function () {
+        it('should be a method on instances of type `DoublyLinkedList`', function () {
+            var dll = new DoublyLinkedList();
+            expectFunction(dll.reduce);
         });
-        it('should construct an instance when called with `new` and a `DLLNode` passed in', function () {
-            var node = DLLNode(0, 'some-value-here'),
-                dll = new DoublyLinkedList(node);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectEqual(dll.head.id, node.id);
-            expectEqual(dll.head.value, node.value);
-            expectInstanceOf(dll, DoublyLinkedList);
-        });
-        it('should construct an instance when called as a function with an `id` and a `value`', function () {
-            var id = 0,
-                value = 'some-value-here',
-                dll = DoublyLinkedList(id, value);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectEqual(dll.head.id, id);
-            expectEqual(dll.head.value, value);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectInstanceOf(dll, DoublyLinkedList);
-        });
-        it('should construct an instance when called with `new` and  an `id` and a `value` passed in', function () {
-            var id = 0,
-                value = 'some-value-here',
-                dll = new DoublyLinkedList(id, value);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectEqual(dll.head.id, id);
-            expectEqual(dll.head.value, value);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectInstanceOf(dll, DoublyLinkedList);
+        it('should reduce a DoublyLinkedList down to some aggregator', function () {
+            var dll = new DoublyLinkedList(),
+                separator = ' -> ',
+                values = ['value1', 'value2', 'value3'],
+                reduction = void 0;
+            values.forEach(function (value, index) {
+                return dll.insert(index, value);
+            });
+            reduction = dll.reduce(function (agg, node) {
+                return agg + node.value + (node.next && node.next.value !== null ? separator : '');
+            }, '');
+            expectEqual(reduction, values.reverse().join(separator));
         });
     });
 
-    describe('#reduce', function () {});
+    describe('#reduceRight', function () {
+        it('should be a method on instances of type `DoublyLinkedList`', function () {
+            var dll = new DoublyLinkedList();
+            expectFunction(dll.reduceRight);
+        });
+        it('should reduce a DoublyLinkedList down to some aggregator', function () {
+            var dll = new DoublyLinkedList(),
+                separator = ' -> ',
+                values = ['value1', 'value2', 'value3'],
+                reduction = void 0;
+            values.forEach(function (value, index) {
+                return dll.insert(index, value);
+            });
+            reduction = dll.reduceRight(function (agg, node) {
+                return agg + node.value + (node.prev && node.prev.value !== null ? separator : '');
+            }, '');
+            expectEqual(reduction, values.join(separator));
+        });
+    });
 });
 /**
  * Created by edlc on 12/11/16.

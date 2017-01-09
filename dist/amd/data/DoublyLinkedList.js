@@ -37,18 +37,26 @@ define(['exports', '../is', '../subClass', '../monad/Monad', '../functor/Functor
     }, {
         of: function of(id, value) {
             return new DLLNode(id, value);
+        },
+        isDLLNode: function isDLLNode(value) {
+            return value instanceof DLLNode;
         }
     }),
-        DoublyLinkedList = (0, _subClass.subClass)(_Monad2.default, function DoublyLinkedList(id, value) {
+        isDLLNode = DLLNode.isDLLNode,
+        DoublyLinkedList = (0, _subClass.subClass)(_Monad2.default, function DoublyLinkedList() {
         if (!(this instanceof DoublyLinkedList)) {
-            return DoublyLinkedList.of(id, value);
+            return DoublyLinkedList.of();
         }
-        this.value = this.last = this.head = id instanceof DLLNode ? id : DLLNode(id, value);
+        this.value = this.last = this.head = DLLNode();
     }, {
-        insert: function insert(node) {
+        insert: function insert(nodeOrId, valueIfId) {
+            if (!(0, _is.isset)(nodeOrId) || !isDLLNode(nodeOrId) && !(0, _is.isset)(valueIfId)) {
+                return this;
+            }
+            var node = isDLLNode(nodeOrId) ? nodeOrId : DLLNode(nodeOrId, valueIfId);
             this.head.prev = node;
             node.next = this.head;
-            this.head = node;
+            this.value = this.head = node;
             return this;
         },
         fromToStringTemplate: function fromToStringTemplate(value) {
@@ -82,23 +90,23 @@ define(['exports', '../is', '../subClass', '../monad/Monad', '../functor/Functor
         },
         reduce: function reduce(fn, agg) {
             var node = this.head;
-            while (node) {
+            while (node && (0, _is.isset)(node.value)) {
                 agg = fn(agg, node);
                 node = node.next;
             }
             return agg;
         },
         reduceRight: function reduceRight(fn, agg) {
-            var node = this.last;
-            while (node) {
+            var node = this.last.prev;
+            while (node && (0, _is.isset)(node.value)) {
                 agg = fn(agg, node);
                 node = node.prev;
             }
             return agg;
         }
     }, {
-        of: function of(id, value) {
-            return new DoublyLinkedList(id, value);
+        of: function of() {
+            return new DoublyLinkedList();
         },
         DLLNode: DLLNode
     });

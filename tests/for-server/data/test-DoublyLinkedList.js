@@ -54,54 +54,19 @@ describe ('data.DoublyLinkedList', function () {
     });
 
     describe('Construction', function () {
-        it ('should construct an instance when called as a function with no values', function () {
+        it ('should construct an instance when called as a function', function () {
             let dll = DoublyLinkedList();
             expectInstanceOf(dll, DoublyLinkedList);
             expectEqual(dll.head.next, null);
             expectEqual(dll.head.prev, null);
             expectEqual(dll.head.value, null);
         });
-        it ('should construct an instance when called with `new` and no values passed in', function () {
+        it ('should construct an instance when called with `new`', function () {
             let dll = new DoublyLinkedList();
             expectInstanceOf(dll, DoublyLinkedList);
             expectEqual(dll.head.next, null);
             expectEqual(dll.head.prev, null);
             expectEqual(dll.head.value, null);
-        });
-        it ('should construct an instance when called as a function with a `DLLNode` passed in', function () {
-            let node = DLLNode(0, 'some-value-here'),
-                dll = DoublyLinkedList(node);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectEqual(dll.head.id, node.id);
-            expectEqual(dll.head.value, node.value);
-        });
-        it ('should construct an instance when called with `new` and a `DLLNode` passed in', function () {
-            let node = DLLNode(0, 'some-value-here'),
-                dll = new DoublyLinkedList(node);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectEqual(dll.head.id, node.id);
-            expectEqual(dll.head.value, node.value);
-            expectInstanceOf(dll, DoublyLinkedList);
-        });
-        it ('should construct an instance when called as a function with an `id` and a `value`', function () {
-            let id = 0,
-                value = 'some-value-here',
-                dll = DoublyLinkedList(id, value);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectEqual(dll.head.id, id);
-            expectEqual(dll.head.value, value);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectInstanceOf(dll, DoublyLinkedList);
-        });
-        it ('should construct an instance when called with `new` and  an `id` and a `value` passed in', function () {
-            let id = 0,
-                value = 'some-value-here',
-                dll = new DoublyLinkedList(id, value);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectEqual(dll.head.id, id);
-            expectEqual(dll.head.value, value);
-            expectInstanceOf(dll, DoublyLinkedList);
-            expectInstanceOf(dll, DoublyLinkedList);
         });
     });
 
@@ -117,9 +82,27 @@ describe ('data.DoublyLinkedList', function () {
                 reduction;
             values.forEach((value, index) => dll.insert(index, value));
             reduction = dll.reduce((agg, node) => {
-                return agg + node.value + (node.next ? separator : '');
+                return agg + node.value + (node.next && node.next.value !== null ? separator : '');
             }, '');
-            expectEqual(reduction, values.concat(separator));
+            expectEqual(reduction, values.reverse().join(separator));
+        });
+    });
+
+    describe('#reduceRight', function () {
+        it ('should be a method on instances of type `DoublyLinkedList`', function () {
+            let dll = new DoublyLinkedList();
+            expectFunction(dll.reduceRight);
+        });
+        it ('should reduce a DoublyLinkedList down to some aggregator', function () {
+            let dll = new DoublyLinkedList(),
+                separator = ' -> ',
+                values = ['value1', 'value2', 'value3'],
+                reduction;
+            values.forEach((value, index) => dll.insert(index, value));
+            reduction = dll.reduceRight((agg, node) => {
+                return agg + node.value + (node.prev && node.prev.value !== null ? separator : '');
+            }, '');
+            expectEqual(reduction, values.join(separator));
         });
     });
 
