@@ -3,6 +3,8 @@
 - [(f) fjl.combinators](#f-fjlcombinators)
 - [(f) fjl.compose](#f-fjlcompose)
 - [(f) fjl.curry](#f-fjlcurry)
+- [(p) fjl.data](#p-fjldata)
+  - [(f) fjl.data.DoublyLinkedList](#f-fjldatadoublylinkedlist)
 - [(f) fjl](#f-fjl)
 - [(p) fjl.functor](#p-fjlfunctor)
   - [(f) fjl.functor.Applicative](#f-fjlfunctorapplicative)

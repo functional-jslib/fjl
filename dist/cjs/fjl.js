@@ -69,6 +69,10 @@ var _objCombinators = require('./objCombinators');
 
 var _arrayCombinators = require('./arrayCombinators');
 
+var _DoublyLinkedList = require('./data/DoublyLinkedList');
+
+var _DoublyLinkedList2 = _interopRequireDefault(_DoublyLinkedList);
+
 var _version = require('./generated/version');
 
 var _version2 = _interopRequireDefault(_version);
@@ -137,5 +141,6 @@ exports.default = {
     Left: _Either.Left,
     Right: _Either.Right,
     either: _Either.either,
+    DoublyLinkedList: _DoublyLinkedList2.default,
     version: _version2.default
 };

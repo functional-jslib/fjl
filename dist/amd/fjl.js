@@ -1,4 +1,4 @@
-define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _version) {
+define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/DoublyLinkedList', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _DoublyLinkedList, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -27,6 +27,8 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
     var _Comonad2 = _interopRequireDefault(_Comonad);
 
     var _Monad2 = _interopRequireDefault(_Monad);
+
+    var _DoublyLinkedList2 = _interopRequireDefault(_DoublyLinkedList);
 
     var _version2 = _interopRequireDefault(_version);
 
@@ -98,6 +100,7 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
         Left: _Either.Left,
         Right: _Either.Right,
         either: _Either.either,
+        DoublyLinkedList: _DoublyLinkedList2.default,
         version: _version2.default
     };
 });

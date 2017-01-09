@@ -8,7 +8,6 @@ import {isset} from '../is';
 import {subClass} from '../subClass';
 import Monad from '../monad/Monad';
 import Functor from '../functor/Functor';
-import Applicative from '../functor/Applicative';
 
 let DLLNode = subClass(
     Functor,
@@ -16,7 +15,7 @@ let DLLNode = subClass(
         if (!(this instanceof DLLNode)) {
             return DLLNode.of(id, value);
         }
-        Functor.call(this, value);
+        Functor.call(this, isset(value) ? value : null);
         this.id = !isset(id) ? null : id;
         this.prev = null;
         this.next = null;
@@ -28,20 +27,30 @@ let DLLNode = subClass(
             return DLLNode.of(this.id, fn(this.value));
         }
     }, {
-        of: function (id, data) {
-            return new DLLNode(id, data);
+        of: function (id, value) {
+            return new DLLNode(id, value);
+        },
+        isDLLNode: function (value) {
+            return value instanceof DLLNode;
         }
     }),
 
-    DoublyLinkedList = subClass(Monad, function DoublyLinkedList(id, data) {
+    isDLLNode = DLLNode.isDLLNode,
+
+    DoublyLinkedList = subClass(Monad, function DoublyLinkedList(id, value) {
         if (!(this instanceof DoublyLinkedList)) {
-            return DoublyLinkedList.of(id, data);
+            return DoublyLinkedList.of(id, value);
         }
-        this.last =
-            this.head =
-                id instanceof DLLNode ? id : DLLNode(id, data);
+        this.value =
+            this.last =
+                this.head =
+                    isDLLNode(id) ? id : DLLNode(id, value);
     }, {
-        insert: function (node) {
+        insert: function (nodeOrId, valueIfId) {
+            if (!isset(nodeOrId) || (!isDLLNode(nodeOrId) && !isset(valueIfId))) {
+                return this;
+            }
+            let node = isDLLNode(nodeOrId) ? nodeOrId : DLLNode(nodeOrId, valueIfId);
             this.head.prev = node;
             node.next = this.head;
             this.head = node;
@@ -59,7 +68,6 @@ let DLLNode = subClass(
             );
         },
         filter: function (fn) {
-            this.traverse(Applicative(fn),)
             var node = this.head,
                 list = DoublyLinkedList();
             while (node) {
@@ -71,11 +79,17 @@ let DLLNode = subClass(
             return list;
         },
         map: function (fn) {
-            return DoublyLinkedList.of(fn(this.head));
+            var node = this.head,
+                list = DoublyLinkedList();
+            while (node) {
+                list.insert(fn(node));
+                node = node.next;
+            }
+            return list;
         },
         reduce: function (fn, agg) {
             var node = this.head;
-            while (node) {
+            while (node && isset(node.value)) {
                 agg = fn(agg, node);
                 node = node.next;
             }
@@ -83,15 +97,15 @@ let DLLNode = subClass(
         },
         reduceRight: function (fn, agg) {
             var node = this.last;
-            while (node) {
+            while (node && isset(node.value)) {
                 agg = fn(agg, node);
                 node = node.prev;
             }
             return agg;
         }
     }, {
-        of: function (id, data) {
-            return new DoublyLinkedList(id, data);
+        of: function (id, value) {
+            return new DoublyLinkedList(id, value);
         },
         DLLNode
     });
