@@ -7,15 +7,15 @@
 import {isset} from '../is';
 import {subClass} from '../subClass';
 import Monad from '../monad/Monad';
-import Functor from '../functor/Functor';
+import Comonad from '../functor/Comonad';
 
 let DLLNode = subClass(
-    Functor,
+    Comonad,
     function DLLNode(id, value) {
         if (!(this instanceof DLLNode)) {
             return DLLNode.of(id, value);
         }
-        Functor.call(this, isset(value) ? value : null);
+        Comonad.call(this, isset(value) ? value : null);
         this.id = !isset(id) ? null : id;
         this.prev = null;
         this.next = null;
@@ -34,6 +34,10 @@ let DLLNode = subClass(
             return value instanceof DLLNode;
         }
     }),
+
+    nodeHasValidPrev = node => isset(node.prev) && isset(node.prev.extract()),
+
+    nodeHasValidNext = node => isset(node.next) && isset(node.next.extract()),
 
     isDLLNode = DLLNode.isDLLNode,
 
@@ -56,16 +60,43 @@ let DLLNode = subClass(
                 this.head = node;
             return this;
         },
-        fromToStringTemplate: function (value) {
-            return this.constructor.name + '(' + value + ')';
+        delete: function (nodeOrId) {
+            var filteredDll = this.filter(function (node) {
+                return nodeOrId === node || node.id === nodeOrId;
+            }),
+                foundNode,
+                nodeHasPrev,
+                nodeHasNext;
+
+            if (!nodeHasValidNext(filteredDll.head)) {
+                return this;
+            }
+
+            foundNode = filteredDll.head.next;
+            nodeHasNext = nodeHasValidNext(foundNode);
+            nodeHasPrev = nodeHasValidPrev(foundNode);
+
+            if (nodeHasPrev && nodeHasNext) {
+                foundNode.prev.next = foundNode.next;
+            }
+            else if (nodeHasNext && !nodeHasPrev) {
+                this.value =
+                    this.head =
+                        foundNode.next;
+            }
+
+            if (nodeHasValidNext(foundNode.next)) {
+                this.delete(foundNode.next.next);
+            }
+
+            return this;
         },
         toString: function (separator) {
             separator = separator || ' -> ';
-            return this.fromToStringTemplate(
+            return this.constructor.name + '(' +
                 this.reduce((agg, node) => {
                     return separator + node;
-                }, '')
-            );
+                }, '') + ')';
         },
         filter: function (fn) {
             var node = this.head,
@@ -89,7 +120,7 @@ let DLLNode = subClass(
         },
         reduce: function (fn, agg) {
             var node = this.head;
-            while (node && isset(node.value)) {
+            while (node && isset(node.extract())) {
                 agg = fn(agg, node);
                 node = node.next;
             }
@@ -97,7 +128,7 @@ let DLLNode = subClass(
         },
         reduceRight: function (fn, agg) {
             var node = this.last.prev;
-            while (node && isset(node.value)) {
+            while (node && isset(node.extract())) {
                 agg = fn(agg, node);
                 node = node.prev;
             }

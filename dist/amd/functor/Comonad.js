@@ -1,4 +1,4 @@
-define(['exports', './Apply', './../subClass'], function (exports, _Apply, _subClass) {
+define(['exports', './Extend', './../subClass'], function (exports, _Extend, _subClass) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -11,7 +11,7 @@ define(['exports', './Apply', './../subClass'], function (exports, _Apply, _subC
         value: true
     });
 
-    var _Apply2 = _interopRequireDefault(_Apply);
+    var _Extend2 = _interopRequireDefault(_Extend);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -19,11 +19,11 @@ define(['exports', './Apply', './../subClass'], function (exports, _Apply, _subC
         };
     }
 
-    var Comonad = (0, _subClass.subClass)(_Apply2.default, function Comonad(value) {
+    var Comonad = (0, _subClass.subClass)(_Extend2.default, function Comonad(value) {
         if (!(this instanceof Comonad)) {
             return new Comonad(value);
         }
-        _Apply2.default.call(this, value);
+        _Extend2.default.call(this, value);
     }, {
         extract: function extract() {
             return this.value;

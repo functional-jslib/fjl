@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../is', '../subClass', '../monad/Monad', '../functor/Functor'], factory);
+        define(['exports', '../is', '../subClass', '../monad/Monad', '../functor/Comonad'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../is'), require('../subClass'), require('../monad/Monad'), require('../functor/Functor'));
+        factory(exports, require('../is'), require('../subClass'), require('../monad/Monad'), require('../functor/Comonad'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.subClass, global.Monad, global.Functor);
+        factory(mod.exports, global.is, global.subClass, global.Monad, global.Comonad);
         global.DoublyLinkedList = mod.exports;
     }
-})(this, function (exports, _is, _subClass, _Monad, _Functor) {
+})(this, function (exports, _is, _subClass, _Monad, _Comonad) {
     /**
      * Created by elyde on 1/8/2017.
      */
@@ -23,7 +23,7 @@
 
     var _Monad2 = _interopRequireDefault(_Monad);
 
-    var _Functor2 = _interopRequireDefault(_Functor);
+    var _Comonad2 = _interopRequireDefault(_Comonad);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -31,11 +31,11 @@
         };
     }
 
-    var DLLNode = (0, _subClass.subClass)(_Functor2.default, function DLLNode(id, value) {
+    var DLLNode = (0, _subClass.subClass)(_Comonad2.default, function DLLNode(id, value) {
         if (!(this instanceof DLLNode)) {
             return DLLNode.of(id, value);
         }
-        _Functor2.default.call(this, (0, _is.isset)(value) ? value : null);
+        _Comonad2.default.call(this, (0, _is.isset)(value) ? value : null);
         this.id = !(0, _is.isset)(id) ? null : id;
         this.prev = null;
         this.next = null;
@@ -54,6 +54,12 @@
             return value instanceof DLLNode;
         }
     }),
+        nodeHasValidPrev = function nodeHasValidPrev(node) {
+        return (0, _is.isset)(node.prev) && (0, _is.isset)(node.prev.extract());
+    },
+        nodeHasValidNext = function nodeHasValidNext(node) {
+        return (0, _is.isset)(node.next) && (0, _is.isset)(node.next.extract());
+    },
         isDLLNode = DLLNode.isDLLNode,
         DoublyLinkedList = (0, _subClass.subClass)(_Monad2.default, function DoublyLinkedList() {
         if (!(this instanceof DoublyLinkedList)) {
@@ -71,14 +77,39 @@
             this.value = this.head = node;
             return this;
         },
-        fromToStringTemplate: function fromToStringTemplate(value) {
-            return this.constructor.name + '(' + value + ')';
+        delete: function _delete(nodeOrId) {
+            var filteredDll = this.filter(function (node) {
+                return nodeOrId === node || node.id === nodeOrId;
+            }),
+                foundNode,
+                nodeHasPrev,
+                nodeHasNext;
+
+            if (!nodeHasValidNext(filteredDll.head)) {
+                return this;
+            }
+
+            foundNode = filteredDll.head.next;
+            nodeHasNext = nodeHasValidNext(foundNode);
+            nodeHasPrev = nodeHasValidPrev(foundNode);
+
+            if (nodeHasPrev && nodeHasNext) {
+                foundNode.prev.next = foundNode.next;
+            } else if (nodeHasNext && !nodeHasPrev) {
+                this.value = this.head = foundNode.next;
+            }
+
+            if (nodeHasValidNext(foundNode.next)) {
+                this.delete(foundNode.next.next);
+            }
+
+            return this;
         },
         toString: function toString(separator) {
             separator = separator || ' -> ';
-            return this.fromToStringTemplate(this.reduce(function (agg, node) {
+            return this.constructor.name + '(' + this.reduce(function (agg, node) {
                 return separator + node;
-            }, ''));
+            }, '') + ')';
         },
         filter: function filter(fn) {
             var node = this.head,
@@ -102,7 +133,7 @@
         },
         reduce: function reduce(fn, agg) {
             var node = this.head;
-            while (node && (0, _is.isset)(node.value)) {
+            while (node && (0, _is.isset)(node.extract())) {
                 agg = fn(agg, node);
                 node = node.next;
             }
@@ -110,7 +141,7 @@
         },
         reduceRight: function reduceRight(fn, agg) {
             var node = this.last.prev;
-            while (node && (0, _is.isset)(node.value)) {
+            while (node && (0, _is.isset)(node.extract())) {
                 agg = fn(agg, node);
                 node = node.prev;
             }

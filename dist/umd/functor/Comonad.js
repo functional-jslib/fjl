@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './Apply', './../subClass'], factory);
+        define(['exports', './Extend', './../subClass'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./Apply'), require('./../subClass'));
+        factory(exports, require('./Extend'), require('./../subClass'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.Apply, global.subClass);
+        factory(mod.exports, global.Extend, global.subClass);
         global.Comonad = mod.exports;
     }
-})(this, function (exports, _Apply, _subClass) {
+})(this, function (exports, _Extend, _subClass) {
     /**
      * Created by edlc on 12/9/16.
      */
@@ -23,7 +23,7 @@
         value: true
     });
 
-    var _Apply2 = _interopRequireDefault(_Apply);
+    var _Extend2 = _interopRequireDefault(_Extend);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -31,11 +31,11 @@
         };
     }
 
-    var Comonad = (0, _subClass.subClass)(_Apply2.default, function Comonad(value) {
+    var Comonad = (0, _subClass.subClass)(_Extend2.default, function Comonad(value) {
         if (!(this instanceof Comonad)) {
             return new Comonad(value);
         }
-        _Apply2.default.call(this, value);
+        _Extend2.default.call(this, value);
     }, {
         extract: function extract() {
             return this.value;
