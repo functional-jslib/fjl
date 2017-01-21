@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/DoublyLinkedList', './generated/version'], factory);
+        define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/DoublyLinkedList', './generated/version'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./assign'), require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./functor/Functor'), require('./functor/Bifunctor'), require('./functor/Profunctor'), require('./functor/Apply'), require('./functor/Applicative'), require('./functor/Chain'), require('./functor/Extend'), require('./functor/Comonad'), require('./monad/Monad'), require('./monad/Maybe'), require('./monad/Either'), require('./combinators'), require('./objCombinators'), require('./arrayCombinators'), require('./data/DoublyLinkedList'), require('./generated/version'));
+        factory(exports, require('./assign'), require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./errorIfNotTypeFactory'), require('./functor/Functor'), require('./functor/Bifunctor'), require('./functor/Profunctor'), require('./functor/Apply'), require('./functor/Applicative'), require('./functor/Chain'), require('./functor/Extend'), require('./functor/Comonad'), require('./monad/Monad'), require('./monad/Maybe'), require('./monad/Either'), require('./combinators'), require('./objCombinators'), require('./arrayCombinators'), require('./data/DoublyLinkedList'), require('./generated/version'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.assign, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.Functor, global.Bifunctor, global.Profunctor, global.Apply, global.Applicative, global.Chain, global.Extend, global.Comonad, global.Monad, global.Maybe, global.Either, global.combinators, global.objCombinators, global.arrayCombinators, global.DoublyLinkedList, global.version);
+        factory(mod.exports, global.assign, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.errorIfNotTypeFactory, global.Functor, global.Bifunctor, global.Profunctor, global.Apply, global.Applicative, global.Chain, global.Extend, global.Comonad, global.Monad, global.Maybe, global.Either, global.combinators, global.objCombinators, global.arrayCombinators, global.DoublyLinkedList, global.version);
         global.fjl = mod.exports;
     }
-})(this, function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _DoublyLinkedList, _version) {
+})(this, function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _DoublyLinkedList, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -21,6 +21,8 @@
     });
 
     var _compose2 = _interopRequireDefault(_compose);
+
+    var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
 
     var _Functor2 = _interopRequireDefault(_Functor);
 
@@ -82,6 +84,7 @@
         isSymbol: _is.isSymbol,
         isEmpty: _is.isEmpty,
         notEmptyAndOfType: _not.notEmptyAndOfType,
+        errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
         complement: _combinators.complement,
         difference: _combinators.difference,
         intersect: _combinators.intersect,

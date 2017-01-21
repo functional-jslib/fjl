@@ -52,6 +52,8 @@ just do a `require('fjl');`
 - [(f) fjl.curry](#f-fjlcurry)
 - [(p) fjl.data](#p-fjldata)
   - [(f) fjl.data.DoublyLinkedList](#f-fjldatadoublylinkedlist)
+  - [(f) fjl.data.LinkedList](#f-fjldatalinkedlist)
+- [(f) fjl.errorIfNotTypeFactory](#f-fjlerrorifnottypefactory)
 - [(f) fjl](#f-fjl)
 - [(p) fjl.functor](#p-fjlfunctor)
   - [(f) fjl.functor.Applicative](#f-fjlfunctorapplicative)
@@ -169,6 +171,14 @@ just do a `require('fjl');`
 [Back to other packages and members list.](#other-packages-and-members)
 
 ### (f) fjl.data.DoublyLinkedList
+@todo - Added documentation here.
+[Back to other packages and members list.](#other-packages-and-members)
+
+### (f) fjl.data.LinkedList
+@todo - Added documentation here.
+[Back to other packages and members list.](#other-packages-and-members)
+
+### (f) fjl.errorIfNotTypeFactory
 @todo - Added documentation here.
 [Back to other packages and members list.](#other-packages-and-members)
 

@@ -23,6 +23,10 @@ var _is = require('./is');
 
 var _not = require('./not');
 
+var _errorIfNotTypeFactory = require('./errorIfNotTypeFactory');
+
+var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
+
 var _Functor = require('./functor/Functor');
 
 var _Functor2 = _interopRequireDefault(_Functor);
@@ -111,6 +115,7 @@ exports.default = {
     isSymbol: _is.isSymbol,
     isEmpty: _is.isEmpty,
     notEmptyAndOfType: _not.notEmptyAndOfType,
+    errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
     complement: _combinators.complement,
     difference: _combinators.difference,
     intersect: _combinators.intersect,

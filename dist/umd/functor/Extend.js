@@ -35,7 +35,7 @@
         _Functor2.default.call(this, value);
     }, {
         extend: function extend(fn) {
-            return fn(this);
+            return new Extend(fn(this));
         }
     });
 

@@ -1,4 +1,4 @@
-define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/DoublyLinkedList', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _DoublyLinkedList, _version) {
+define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/DoublyLinkedList', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _DoublyLinkedList, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -9,6 +9,8 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
     });
 
     var _compose2 = _interopRequireDefault(_compose);
+
+    var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
 
     var _Functor2 = _interopRequireDefault(_Functor);
 
@@ -70,6 +72,7 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
         isSymbol: _is.isSymbol,
         isEmpty: _is.isEmpty,
         notEmptyAndOfType: _not.notEmptyAndOfType,
+        errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
         complement: _combinators.complement,
         difference: _combinators.difference,
         intersect: _combinators.intersect,

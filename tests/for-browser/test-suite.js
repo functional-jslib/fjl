@@ -473,6 +473,44 @@ describe('curryN', function () {
     });
 });
 /**
+ * Created by elyde on 1/21/2017.
+ */
+describe('errorIfNotTypeFactory', function () {
+
+    it('should be of type function.', function () {
+        expectFunction(errorIfNotTypeFactory);
+    });
+
+    it('should return a function whether or not any parameters were passed in to it.', function () {
+        expectFunction(errorIfNotTypeFactory());
+        expectFunction(errorIfNotTypeFactory('someContextNameHere'));
+    });
+
+    it('should return a function that when fired with error condition should include the shared contextName.', function () {
+        var fn1 = errorIfNotTypeFactory(),
+            fn2 = errorIfNotTypeFactory('someContextNameHere');
+        expectFunction(fn1);
+        expectFunction(fn2);
+        assert.throws(curry(fn1, 'someValueName', 99, Array), '.someValueName is required to be of one of ' + 'the types : ["Array"].  Type received: Number');
+        assert.throws(curry(fn2, 'someValueName', 99, Array), 'someContextNameHere.someValueName is required to be of one of ' + 'the types : ["Array"].  Type received: Number');
+        assert.throws(curry(fn2, 'someValueName', 99, Array, String, Function), 'someContextNameHere.someValueName is required to be of one of ' + 'the types : ["Array", "String", "Function"].  Type received: Number');
+    });
+
+    it('should return a function that throws an error when the passed in value doesn\'t match one of ' + 'the "one-or-more" passed in types.', function () {
+        var errorIfNotType = errorIfNotTypeFactory('someContextName');
+        assert.throws(curry(errorIfNotType, 'someValueName', 99, Array), Error);
+        assert.throws(curry(errorIfNotType, 'someValueName', 99, String, Array), Error);
+        assert.throws(curry(errorIfNotType, 'someValueName', 99, String, Function, Array), Error);
+    });
+
+    it('should return a function that does not throw an error when the passed in value matches one of ' + 'the "one-or-more" passed in types.', function () {
+        var errorIfNotType = errorIfNotTypeFactory('someContextName');
+        assert.doesNotThrow(curry(errorIfNotType, 'someValueName', 99, Array, Number, String), Error);
+        assert.doesNotThrow(curry(errorIfNotType, 'someValueName', 99, Number, Array), Error);
+        assert.doesNotThrow(curry(errorIfNotType, 'someValueName', 99, String, Function, Number), Error);
+    });
+});
+/**
  * Created by elyde on 12/25/2016.
  */
 /**
@@ -649,6 +687,66 @@ describe('data.DoublyLinkedList', function () {
                 return agg + node.value + (node.prev && node.prev.value !== null ? separator : '');
             }, '');
             expectEqual(reduction, values.join(separator));
+        });
+    });
+});
+/**
+ * Created by elyde on 1/8/2017.
+ */
+
+var _LinkedList = LinkedList;
+var LLNode = _LinkedList.LLNode;
+
+
+describe('data.LinkedList', function () {
+
+    describe('#LLNode', function () {
+        describe('Construction', function () {
+            it('should construct `LLNode` when called as a function', function () {
+                var llNode = LLNode();
+                expectInstanceOf(llNode, LLNode);
+            });
+            it('should construct `LLNode` when called with `new`', function () {
+                var llNode = new LLNode();
+                expectInstanceOf(llNode, LLNode);
+            });
+            it('should construct `LLNode` when called as a function with an `id` and a `value` value', function () {
+                var id = 0,
+                    value = 'some-value',
+                    llNode = LLNode(id, value);
+                expectInstanceOf(llNode, LLNode);
+                expectEqual(llNode.id, id);
+                expectEqual(llNode.value, value);
+            });
+            it('should construct `LLNode` when called with `new` with an `id` and a `value` value', function () {
+                var id = 0,
+                    value = 'some-value',
+                    llNode = new LLNode(id, value);
+                expectInstanceOf(llNode, LLNode);
+                expectEqual(llNode.id, id);
+                expectEqual(llNode.value, value);
+            });
+        });
+        describe('#map', function () {
+            it('should be a method on instances', function () {
+                var llNode = LLNode();
+                expectFunction(llNode.map);
+            });
+        });
+    });
+
+    describe('Construction', function () {
+        it('should construct an instance when called as a function', function () {
+            var linkedList = LinkedList();
+            expectInstanceOf(linkedList, LinkedList);
+            expectEqual(linkedList.head.next, null);
+            expectEqual(linkedList.head.value, null);
+        });
+        it('should construct an instance when called with `new`', function () {
+            var linkedList = new LinkedList();
+            expectInstanceOf(linkedList, LinkedList);
+            expectEqual(linkedList.head.next, null);
+            expectEqual(linkedList.head.value, null);
         });
     });
 });

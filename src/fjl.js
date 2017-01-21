@@ -13,6 +13,7 @@ import {isset, issetAndOfType, isNumber,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
     isWeakMap, isWeakSet} from './is';
 import {notEmptyAndOfType} from './not';
+import errorIfNotTypeFactory from './errorIfNotTypeFactory';
 import Functor from './functor/Functor';
 import Bifunctor from './functor/Bifunctor';
 import Profunctor from './functor/Profunctor';
@@ -68,6 +69,7 @@ export default {
     isSymbol,
     isEmpty,
     notEmptyAndOfType,
+    errorIfNotTypeFactory,
     complement,
     difference,
     intersect,

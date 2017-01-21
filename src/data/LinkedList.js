@@ -23,8 +23,8 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
         if (!(this instanceof LLNode)) {
             return LLNode.of(id, value);
         }
+        var _next = null;
         let valueToUse = isset(value) ? value : null;
-        var _next;
         Bifunctor.call(this, valueToUse);
         Comonad.call(this, valueToUse);
         Object.defineProperties(this, {
@@ -35,14 +35,14 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
                 value: !isset(id) ? null : id
             },
             next: {
-                set: function (value) {
-                    errorIfNotTypeForLLNode('next', value, 'Null', LLNode);
-                    _next = value;
+                set: function (valueToSet) {
+                    errorIfNotTypeForLLNode('next', valueToSet, 'Null', LLNode);
+                    _next = valueToSet;
                 },
                 get: function () {
                     return _next;
                 },
-                enumerable: true,
+                enumerable: true
             }
         });
     }, {
@@ -58,7 +58,7 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
     }, {
         of: function (nodeOrId, valueIfIdOrNext) {
             let id = value => value;
-            return isLLNode(nodeOrId) ? nodeOrId.bimap(id, id) :
+            return nodeOrId instanceof LLNode ? nodeOrId.bimap(id, id) :
                 new LLNode(nodeOrId, valueIfIdOrNext);
         },
         isLLNode: function (value) {
@@ -76,10 +76,18 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
         }
         var _head,
             _tail;
-        Monad.call(this, LLNode(firstNodeId, firstNodeValue));
+        Monad.call(this);
         Object.defineProperties(this, {
             size: {
-                get: function () {}
+                get: function () {
+                    var node = this.head,
+                        count = node.value === null &&
+                            node.id === null ? 0 : 1;
+                    while (node.next) {
+                        count++;
+                    }
+                    return count;
+                }
             },
             tail: {
                 get: function () {
@@ -102,7 +110,10 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
                 enumerable: true
             }
         });
-
+        _head =
+            _tail =
+                this.value =
+                    LLNode(firstNodeId, firstNodeValue);
     }, {
         _errorIfUnresolvableNode: function (methodName, ...args) {
             if (!isset(args[0]) || (!isLLNode(args[0]) && !isset(args[1]))) {
@@ -223,7 +234,7 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
         deleteNode: function (nodeOrId) {
             this._errorIfUnresolvableNode('deleteNode', nodeOrId);
             var deleted;
-            let {node, prevNode} = this._getNodeAndPrevWhere(node => nodeOrId === node || node.id === nodeOrId),
+            let {node, prevNode} = this._getNodeAndPrevWhere(elm => nodeOrId === elm || elm.id === nodeOrId),
                 nodeHasNext = nodeHasValidNext(node);
             if (!prevNode) {
                 deleted = this.deleteNodeAtHead();
@@ -288,16 +299,6 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
     }, {
         of: function (nodeOrId, valueIfId) {
             return new LinkedList(nodeOrId, valueIfId);
-        },
-        chainRec: function (fn, agg) {
-            let done = node => node,
-                next = node => node.next ? node.next : done(node);
-            var node = this.head;
-            while (node && isset(node.extract())) {
-                agg = fn(next, done, node);
-                node = node.next;
-            }
-            return agg;
         },
         LLNode
     });

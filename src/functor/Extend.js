@@ -13,7 +13,7 @@ let Extend = subClass (Functor,
         Functor.call(this, value);
     }, {
         extend: function (fn) {
-            return fn(this);
+            return new Extend(fn(this));
         }
     });
 

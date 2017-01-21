@@ -22,7 +22,7 @@ var Extend = (0, _subClass.subClass)(_Functor2.default, function Extend(value) {
     _Functor2.default.call(this, value);
 }, {
     extend: function extend(fn) {
-        return fn(this);
+        return new Extend(fn(this));
     }
 });
 
