@@ -1,10 +1,6 @@
 /**
  * Created by elyde on 1/13/2017.
  */
-/**
- * Created by elyde on 1/8/2017.
- * @todo incorporate the `tail` property into `LinkedList`
- */
 
 'use strict';
 
@@ -12,7 +8,7 @@ import {isset} from '../is';
 import {subClass, subClassMulti} from '../subClass';
 import {typeOf} from '../typeOf';
 import errorIfNotTypeFactory from '../errorIfNotTypeFactory';
-import Monad from '../monad/Monad';
+import Functor from '../functor/Functor';
 import Comonad from '../functor/Comonad';
 import Bifunctor from '../functor/Bifunctor';
 
@@ -70,13 +66,13 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
 
     isLLNode = LLNode.isLLNode,
 
-    LinkedList = subClass(Monad, function LinkedList(firstNodeId, firstNodeValue) {
+    LinkedList = subClass(Functor, function LinkedList(firstNodeId, firstNodeValue) {
         if (!(this instanceof LinkedList)) {
             return LinkedList.of(firstNodeId, firstNodeValue);
         }
         var _head,
             _tail;
-        Monad.call(this);
+        Functor.call(this, LLNode(firstNodeId, firstNodeValue));
         Object.defineProperties(this, {
             size: {
                 get: function () {
@@ -110,10 +106,8 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
                 enumerable: true
             }
         });
-        _head =
-            _tail =
-                this.value =
-                    LLNode(firstNodeId, firstNodeValue);
+        this.head =
+            this.value;
     }, {
         _errorIfUnresolvableNode: function (methodName, ...args) {
             if (!isset(args[0]) || (!isLLNode(args[0]) && !isset(args[1]))) {
@@ -156,11 +150,11 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
             return this;
         },
         _insertNodeAtEnd: function (node) {
-            let {prevNode, lastNode} = this._getLastAndPrev();
+            let {lastNode} = this._getLastAndPrev();
             if (this.head === lastNode) {
                 return this._insertNodeAtHead(node);
             }
-            prevNode.next = lastNode;
+            lastNode.next = node;
             return this;
         },
         _findBy: function (idKeyOrPredicate, value) {
@@ -260,6 +254,12 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
                     return separator + node;
                 }, '') + ')';
         },
+        equals: function (list) {
+            return this === list; // @todo fill this method out
+        },
+        concat: function (...lists) {
+            return lists.reduce((agg, list) => agg.insertNodeAtEnd(list.head), LinkedList());
+        },
         filter: function (fn) {
             var node = this.head,
                 list = LinkedList();
@@ -268,6 +268,14 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
                     list.insert(node);
                 }
                 node = node.next;
+            }
+            return list;
+        },
+        traverse: function (fn, applicative) {
+            var node = this.head;
+            let list = LinkedList();
+            while (node.next) {
+                list.insert(applicative.ap(node));
             }
             return list;
         },
