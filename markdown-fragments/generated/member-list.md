@@ -29,6 +29,7 @@
 - [(m) fjl.isSymbol](#m-fjlissymbol)
 - [(m) fjl.isEmpty](#m-fjlisempty)
 - [(m) fjl.notEmptyAndOfType](#m-fjlnotemptyandoftype)
+- [(m) fjl.errorIfNotTypeFactory](#m-fjlerrorifnottypefactory)
 - [(m) fjl.complement](#m-fjlcomplement)
 - [(m) fjl.difference](#m-fjldifference)
 - [(m) fjl.intersect](#m-fjlintersect)
@@ -60,5 +61,6 @@
 - [(m) fjl.Right](#m-fjlright)
 - [(m) fjl.either](#m-fjleither)
 - [(m) fjl.DoublyLinkedList](#m-fjldoublylinkedlist)
+- [(m) fjl.LinkedList](#m-fjllinkedlist)
 - [(m) fjl.version](#m-fjlversion)
 

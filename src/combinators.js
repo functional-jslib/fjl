@@ -71,9 +71,7 @@ export let id = value => value,
         else if (Object.prototype.hasOwnProperty.call(functor, 'value')) {
             return functor.value;
         }
-        else {
-            return of(functor);
-        }
+        return of(functor);
     }),
 
     chain = curry2((fn, functor) => join(map(fn, functor))),

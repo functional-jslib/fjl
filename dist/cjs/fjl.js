@@ -73,6 +73,10 @@ var _objCombinators = require('./objCombinators');
 
 var _arrayCombinators = require('./arrayCombinators');
 
+var _LinkedList = require('./data/LinkedList');
+
+var _LinkedList2 = _interopRequireDefault(_LinkedList);
+
 var _DoublyLinkedList = require('./data/DoublyLinkedList');
 
 var _DoublyLinkedList2 = _interopRequireDefault(_DoublyLinkedList);
@@ -114,6 +118,7 @@ exports.default = {
     isNull: _is.isNull,
     isSymbol: _is.isSymbol,
     isEmpty: _is.isEmpty,
+    isOfConstructablePrimitive: _is.isOfConstructablePrimitive,
     notEmptyAndOfType: _not.notEmptyAndOfType,
     errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
     complement: _combinators.complement,
@@ -147,5 +152,6 @@ exports.default = {
     Right: _Either.Right,
     either: _Either.either,
     DoublyLinkedList: _DoublyLinkedList2.default,
+    LinkedList: _LinkedList2.default,
     version: _version2.default
 };

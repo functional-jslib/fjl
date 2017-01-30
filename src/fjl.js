@@ -11,7 +11,7 @@ import {typeOf, typeOfIs} from './typeOf';
 import {isset, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet} from './is';
+    isWeakMap, isWeakSet, isOfConstructablePrimitive} from './is';
 import {notEmptyAndOfType} from './not';
 import errorIfNotTypeFactory from './errorIfNotTypeFactory';
 import Functor from './functor/Functor';
@@ -34,6 +34,7 @@ import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
     intersect as arrayIntersect} from './arrayCombinators';
+import LinkedList from './data/LinkedList';
 import DoublyLinkedList from './data/DoublyLinkedList';
 import version from './generated/version';
 
@@ -68,6 +69,7 @@ export default {
     isNull,
     isSymbol,
     isEmpty,
+    isOfConstructablePrimitive,
     notEmptyAndOfType,
     errorIfNotTypeFactory,
     complement,
@@ -101,5 +103,6 @@ export default {
     Right,
     either,
     DoublyLinkedList,
+    LinkedList,
     version
 };

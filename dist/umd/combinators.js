@@ -19,7 +19,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.minLength = exports.maxLength = exports.intersect = exports.union = exports.difference = exports.complement = exports.bimap = exports.promap = exports.extract = exports.extend = exports.liftN = exports.chain = exports.join = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.ap = exports.empty = exports.of = exports.concat = exports.equals = exports.length = exports.id = undefined;
+    exports.intersect = exports.union = exports.difference = exports.complement = exports.bimap = exports.promap = exports.extract = exports.extend = exports.liftN = exports.flatMap = exports.chain = exports.join = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.alt = exports.ap = exports.zero = exports.empty = exports.of = exports.concat = exports.equals = exports.length = exports.id = undefined;
     var id = exports.id = function id(value) {
         return value;
     },
@@ -32,33 +32,31 @@
         concat = exports.concat = (0, _curry.curry2)(function (functor1, functor2) {
         return functor1.concat ? functor1.concat(functor2) : functor1 + functor2;
     }),
-        of = exports.of = function of(functor, value) {
+        of = exports.of = function of(functor) {
         var constructor = functor.constructor,
             retVal = void 0;
         if (constructor.of) {
-            retVal = constructor.of(value);
-        } else if ((0, _is.isOfConstructable)(functor)) {
-            retVal = new constructor(value);
+            retVal = constructor.of();
+        } else if (!(0, _is.isOfConstructablePrimitive)(functor)) {
+            retVal = new constructor();
         } else {
-            retVal = constructor(value);
+            retVal = constructor();
         }
         return retVal;
     },
         empty = exports.empty = function empty(functor) {
-        return functor.empty ? functor.empty() : of(functor);
+        return functor.constructor.empty ? functor.constructor.empty() : of(functor);
     },
-
-
-    // zero = functor => functor.zero ? functor.zero() : of(functor),
-
-    ap = exports.ap = (0, _curry.curry2)(function (obj1, obj2) {
+        zero = exports.zero = function zero(functor) {
+        return functor.constructor.zero ? functor.constructor.zero() : of(functor);
+    },
+        ap = exports.ap = (0, _curry.curry2)(function (obj1, obj2) {
         return obj1.ap ? obj1.ap(obj2) : obj1(obj2);
     }),
-
-
-    // alt = curry2((functor1, functor2) => functor1.alt ? functor1.alt(functor2) : functor1 || functor2),
-
-    map = exports.map = (0, _curry.curry2)(function (fn, functor) {
+        alt = exports.alt = (0, _curry.curry2)(function (functor1, functor2) {
+        return functor1.alt ? functor1.alt(functor2) : functor1 || functor2;
+    }),
+        map = exports.map = (0, _curry.curry2)(function (fn, functor) {
         return functor.map(fn);
     }),
         filter = exports.filter = (0, _curry.curry2)(function (fn, functor) {
@@ -70,15 +68,25 @@
         reduceRight = exports.reduceRight = (0, _curry.curry3)(function (fn, agg, functor) {
         return functor.reduceRight(fn, agg);
     }),
-        join = exports.join = function join(monad) {
-        return Object.prototype.hasOwnProperty.call(monad, 'value') ? monad.value : of(monad);
-    },
+        join = exports.join = (0, _curry.curry2)(function (functor, delimiter) {
+        if (Array.isArray(functor)) {
+            return functor.join(delimiter);
+        } else if (functor.join) {
+            return functor.join();
+        } else if (Object.prototype.hasOwnProperty.call(functor, 'value')) {
+            return functor.value;
+        }
+        return of(functor);
+    }),
         chain = exports.chain = (0, _curry.curry2)(function (fn, functor) {
         return join(map(fn, functor));
     }),
+        flatMap = exports.flatMap = chain,
 
 
-    // chainRec,
+    // chainRec = () => {},
+
+    // flatMapR = chainRec,
 
     liftN = exports.liftN = (0, _curry.curry3)(function (fn, functor1) {
         for (var _len = arguments.length, otherFunctors = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
@@ -144,23 +152,7 @@
             default:
                 return (0, _objCombinators.intersect)(functor1, functor2);
         }
-    }),
-        maxLength = exports.maxLength = function maxLength(array1, array2) {
-        if (array1.length > array2.length) {
-            return array1;
-        } else if (array2.length > array1.length) {
-            return array2;
-        }
-        return array1;
-    },
-        minLength = exports.minLength = function minLength(array1, array2) {
-        if (array1.length < array2.length) {
-            return array1;
-        } else if (array2.length < array1.length) {
-            return array2;
-        }
-        return array1;
-    };
+    });
 
     exports.default = {
         id: id,
@@ -174,11 +166,12 @@
         reduceRight: reduceRight,
         ap: ap,
         chain: chain,
+        flatMap: flatMap,
         join: join,
+        alt: alt,
+        zero: zero,
         liftN: liftN,
         bimap: bimap,
-        promap: promap,
-        maxLength: maxLength,
-        minLength: minLength
+        promap: promap
     };
 });
