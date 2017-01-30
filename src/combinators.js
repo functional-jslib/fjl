@@ -4,12 +4,14 @@
 'use strict';
 
 import {curry2, curry3} from './curry';
-import {isFunction, isOfConstructable} from './is';
+import {isFunction, isOfConstructablePrimitive} from './is';
 import {typeOf} from './typeOf';
+
 import {complement as objComplement,
     difference as objDifference,
     union as objUnion,
     intersect as objIntersect} from './objCombinators';
+
 import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
@@ -28,28 +30,28 @@ export let id = value => value,
         return functor1.concat ? functor1.concat(functor2) : functor1 + functor2;
     }),
 
-    of = (functor, value)=> {
+    of = functor => {
         let constructor = functor.constructor,
             retVal;
         if (constructor.of) {
-            retVal = constructor.of(value);
+            retVal = constructor.of();
         }
-        else if (isOfConstructable(functor)) {
-            retVal = new constructor(value);
+        else if (!isOfConstructablePrimitive(functor)) {
+            retVal = new constructor();
         }
         else {
-            retVal = constructor(value);
+            retVal = constructor();
         }
         return retVal;
     },
 
-    empty = functor => functor.empty ? functor.empty() : of(functor),
+    empty = functor => functor.constructor.empty ? functor.constructor.empty() : of(functor),
 
-    // zero = functor => functor.zero ? functor.zero() : of(functor),
+    zero = functor => functor.constructor.zero ? functor.constructor.zero() : of(functor),
 
     ap = curry2((obj1, obj2) => obj1.ap ? obj1.ap(obj2) : obj1(obj2)),
 
-    // alt = curry2((functor1, functor2) => functor1.alt ? functor1.alt(functor2) : functor1 || functor2),
+    alt = curry2((functor1, functor2) => functor1.alt ? functor1.alt(functor2) : functor1 || functor2),
 
     map = curry2((fn, functor) => functor.map(fn)),
 
@@ -76,7 +78,11 @@ export let id = value => value,
 
     chain = curry2((fn, functor) => join(map(fn, functor))),
 
-    // chainRec,
+    flatMap = chain,
+
+    // chainRec = () => {},
+
+    // flatMapR = chainRec,
 
     liftN = curry3((fn, functor1, ...otherFunctors) => {
         return otherFunctors.reduce((aggregator, functor) => ap(aggregator, functor), map(fn, functor1));
@@ -132,27 +138,7 @@ export let id = value => value,
             default:
                 return objIntersect(functor1, functor2);
         }
-    }),
-
-    maxLength = (array1, array2) => {
-        if (array1.length > array2.length) {
-            return array1;
-        }
-        else if (array2.length > array1.length) {
-            return array2;
-        }
-        return array1;
-    },
-
-    minLength = (array1, array2) => {
-        if (array1.length < array2.length) {
-            return array1;
-        }
-        else if (array2.length < array1.length) {
-            return array2;
-        }
-        return array1;
-    };
+    });
 
 export default {
     id,
@@ -166,10 +152,11 @@ export default {
     reduceRight,
     ap,
     chain,
+    flatMap,
     join,
+    alt,
+    zero,
     liftN,
     bimap,
-    promap,
-    maxLength,
-    minLength
+    promap
 };
