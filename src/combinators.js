@@ -59,9 +59,20 @@ export let id = value => value,
 
     reduceRight = curry3((fn, agg, functor) => functor.reduceRight(fn, agg)),
 
-    join = monad => {
-        return Object.prototype.hasOwnProperty.call(monad, 'value') ? monad.value : of(monad);
-    },
+    join = curry2((functor, delimiter) => {
+        if (Array.isArray(functor)) {
+          return functor.join(delimiter);
+        }
+        else if (functor.join) {
+            return functor.join();
+        }
+        else if (Object.prototype.hasOwnProperty.call(functor, 'value')) {
+            return functor.value;
+        }
+        else {
+            return of(functor);
+        }
+    }),
 
     chain = curry2((fn, functor) => join(map(fn, functor))),
 

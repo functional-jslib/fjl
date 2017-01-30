@@ -10,23 +10,15 @@
 
 import {curry2} from './curry';
 
-export let
-
-    equals = curry2((value1, value2) => {
-        return (value1.equals && value1.equals(value2)) || value1 === value2;
-    }),
+const
 
     concat = curry2((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
 
-    join = curry2((functor, delimiter) => Array.isArray(functor) ? functor.join(delimiter) : functor.join()),
-
     filter = curry2((fn, arr) => arr.filter(fn)),
 
-    map = curry2((fn, functor) => functor.map(fn)),
+    reduce = curry2((fn, agg, arr) => arr.reduce(fn, agg));
 
-    reduce = curry2((fn, agg, arr) => arr.reduce(fn, agg)),
-
-    reduceRight = curry2((fn, agg, arr) => arr.reduceRight(fn, agg)),
+export let
 
     flatten = arr => {
         return arr.reduce((agg, elm) => {
@@ -75,12 +67,6 @@ export default {
     difference,
     intersect,
     union,
-    concat,
-    filter,
-    join,
-    map,
-    reduce,
-    reduceRight,
     flatten,
     flattenMulti
 };
