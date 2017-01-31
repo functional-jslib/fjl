@@ -35,6 +35,7 @@ import {complement as arrayComplement,
     union as arrayUnion,
     intersect as arrayIntersect} from './arrayCombinators';
 import DoublyLinkedList from './data/DoublyLinkedList';
+import LinkedList from './data/LinkedList';
 import version from './generated/version';
 
 export default {
@@ -99,6 +100,7 @@ export default {
     Either,
     Left,
     Right,
+    LinkedList,
     either,
     DoublyLinkedList,
     version

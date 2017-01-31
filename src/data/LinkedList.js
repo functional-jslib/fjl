@@ -4,63 +4,63 @@
 
 'use strict';
 
-import {isset} from '../is';
-import {subClass, subClassMulti} from '../subClass';
-import {typeOf} from '../typeOf';
-import errorIfNotTypeFactory from '../errorIfNotTypeFactory';
-import Functor from '../functor/Functor';
-import Comonad from '../functor/Comonad';
-import Bifunctor from '../functor/Bifunctor';
+import {isset} from "../is";
+import {subClass, subClassMulti} from "../subClass";
+import {typeOf} from "../typeOf";
+import errorIfNotTypeFactory from "../errorIfNotTypeFactory";
+import Functor from "../functor/Functor";
+import Comonad from "../functor/Comonad";
+import Bifunctor from "../functor/Bifunctor";
 
 let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
     errorIfNotTypeForLLNode = errorIfNotTypeFactory('LLNode'),
     LLNode = subClassMulti([Bifunctor, Comonad],
-    function LLNode(id, value) {
-        if (!(this instanceof LLNode)) {
-            return LLNode.of(id, value);
-        }
-        var _next = null;
-        let valueToUse = isset(value) ? value : null;
-        Bifunctor.call(this, valueToUse);
-        Comonad.call(this, valueToUse);
-        Object.defineProperties(this, {
-            id: {
-                writable: true,
-                configurable: false,
-                enumerable: true,
-                value: !isset(id) ? null : id
-            },
-            next: {
-                set: function (valueToSet) {
-                    errorIfNotTypeForLLNode('next', valueToSet, 'Null', LLNode);
-                    _next = valueToSet;
-                },
-                get: function () {
-                    return _next;
-                },
-                enumerable: true
+        function LLNode(id, value) {
+            if (!(this instanceof LLNode)) {
+                return LLNode.of(id, value);
             }
-        });
-    }, {
-        toString: function () {
-            return this.constructor.name + '(' + this.id + ', ' + this.extract() + ')';
-        },
-        map: function (fn) {
-            return LLNode.of(this.id, fn(this.extract()));
-        },
-        bimap: function (fn1, fn2) {
-            return LLNode.of(fn1(this.id), fn2(this.extract()));
-        }
-    }, {
-        of: function (nodeOrId, valueIfIdOrNext) {
-            let id = value => value;
-            return nodeOrId instanceof LLNode ? nodeOrId.bimap(id, id) :
-                new LLNode(nodeOrId, valueIfIdOrNext);
-        },
-        isLLNode: function (value) {
-            return value instanceof LLNode;
-        }
-    }),
+            var _next = null;
+            let valueToUse = isset(value) ? value : null;
+            Bifunctor.call(this, valueToUse);
+            Comonad.call(this, valueToUse);
+            Object.defineProperties(this, {
+                id: {
+                    writable: true,
+                    configurable: false,
+                    enumerable: true,
+                    value: !isset(id) ? null : id
+                },
+                next: {
+                    set: function (valueToSet) {
+                        errorIfNotTypeForLLNode('next', valueToSet, 'Null', LLNode);
+                        _next = valueToSet;
+                    },
+                    get: function () {
+                        return _next;
+                    },
+                    enumerable: true
+                }
+            });
+        }, {
+            toString: function () {
+                return this.constructor.name + '(' + this.id + ', ' + this.extract() + ')';
+            },
+            map: function (fn) {
+                return LLNode.of(this.id, fn(this.extract()));
+            },
+            bimap: function (fn1, fn2) {
+                return LLNode.of(fn1(this.id), fn2(this.extract()));
+            }
+        }, {
+            of: function (nodeOrId, valueIfIdOrNext) {
+                let id = value => value;
+                return nodeOrId instanceof LLNode ? nodeOrId.bimap(id, id) :
+                    new LLNode(nodeOrId, valueIfIdOrNext);
+            },
+            isLLNode: function (value) {
+                return value instanceof LLNode;
+            }
+        }),
 
     nodeHasValidNext = node => isset(node.next) && isset(node.next.extract()),
 
@@ -78,7 +78,7 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
                 get: function () {
                     var node = this.head,
                         count = node.value === null &&
-                            node.id === null ? 0 : 1;
+                        node.id === null ? 0 : 1;
                     while (node.next) {
                         count++;
                     }
@@ -169,7 +169,7 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
                         (node => node.id === value)
                 ).head;
             }
-            throw new Error (this.constructor.name +
+            throw new Error(this.constructor.name +
                 '._findBy expects either a type of "String" or a ' +
                 'type of "Function" for it\'s first parameter.  ' +
                 'Type received: "' + typeOfdKeyOrPredicate + '".');
@@ -245,7 +245,7 @@ let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
         delete: function (nodeOrId) {
             return isset(nodeOrId) ?
                 this.deleteNode(nodeOrId) :
-                    this.deleteNodeAtHead();
+                this.deleteNodeAtHead();
         },
         toString: function (separator) {
             separator = separator || ' -> ';

@@ -46,10 +46,13 @@ describe ('data.LinkedList', function () {
             });
         });
         describe('#map', function () {
+            let llNode = LLNode();
             it ('should be a method on instances', function () {
-                let llNode = LLNode();
                 expectFunction(llNode.map);
             });
+            it ('should return a `LLNode` when called.', function () {
+                expectInstanceOf(llNode.map(x => x), LLNode);
+            })
         });
     });
 
