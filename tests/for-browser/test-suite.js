@@ -511,6 +511,231 @@ describe('errorIfNotTypeFactory', function () {
     });
 });
 /**
+ * Created by elyde on 1/30/2017.
+ */
+
+/*describe('is functions', function () {
+    // Function names
+    [
+        'isset',
+        'issetAndOfType',
+        'isNumber',
+        'isFunction',
+        'isArray',
+        'isBoolean',
+        'isObject',
+        'isString',
+        'isMap',
+        'isSet',
+        'isWeakMap',
+        'isWeakSet',
+        'isUndefined',
+        'isNull',
+        'isSymbol',
+        'isEmpty',
+        'isOfConstructablePrimitive'
+    ]
+        .forEach(key => {
+            it(`should have a \`${key}\` function`, function () {
+                expectFunction(is[key]);
+            });
+        });
+});*/
+
+describe('is#isFunction', function () {
+    it('should return true if value is a function', function () {
+        [function () {}, Math.pow, console.log, function () {}].forEach(function (value) {
+            return expectTrue(isFunction(value));
+        });
+    });
+    it('should return `false` when value is not a function', function () {
+        [-1, 0, 1, [], {}, 'abc'].forEach(function (value) {
+            return expectFalse(isFunction(value));
+        });
+    });
+});
+
+describe('is#isset', function () {
+    it('should return true for any value that is not `null` or `undefined`', function () {
+        [-1, 0, 1, 'a', true, false, function () {}, [], {}, Symbol('hotdog')].forEach(function (value) {
+            return expectTrue(isset(value));
+        });
+    });
+    it('should return `false` for any value that is `null` or `undefined`', function () {
+        [null, undefined].forEach(function (value) {
+            return expectFalse(isset(value));
+        });
+    });
+});
+
+describe('is#issetAndOfType', function () {
+    it('should return true for any value that is "set" and is of given "Type"', function () {
+        [[-1, Number], [0, 'Number'], [1, Number], ['a', String], [true, Boolean], [false, Boolean.name], [function () {}, Function], [[], Array.name], [{}, Object.name], [Symbol('hotdog'), Symbol]].forEach(function (tuple) {
+            return expectTrue(issetAndOfType.apply(null, tuple));
+        });
+    });
+    it('should return `false` for any value that is not "set" or is not of given "Type"', function () {
+        [[-1, Array], [0, 'Function'], [1, Function], ['a', Boolean], [true, Object], [false, String], [function () {}, String.name], [[], 'String'], [{}, 'HotDog'], [Symbol('hotdog'), 'SomeConstructName']].forEach(function (tuple) {
+            return expectFalse(issetAndOfType.apply(null, tuple));
+        });
+    });
+});
+
+describe('is#isArray', function () {
+    it('should return `true` when given value is an array', function () {
+        expectTrue(isArray([]));
+    });
+    it('should return `false` when given value is not an array', function () {
+        expectFalse(isArray(function () {}));
+    });
+});
+
+describe('is#isObject', function () {
+    it('should return `true` when given value is a direct instance of `Object`', function () {
+        expectTrue(isObject({}));
+    });
+    it('should return `false` when given value is not a direct instance of `Object`', function () {
+        expectFalse(isObject(function () {}));
+    });
+});
+
+describe('is#isBoolean', function () {
+    it('should return `true` when given value is a boolean', function () {
+        expectTrue(isBoolean(true));
+        expectTrue(isBoolean(false));
+    });
+    it('should return `false` when given value is not a boolean', function () {
+        expectFalse(isBoolean(function () {}));
+    });
+});
+
+describe('is#isNumber', function () {
+    it('should return `true` when given value is a number', function () {
+        expectTrue(isNumber(99));
+        expectTrue(isNumber(-1.0));
+        expectTrue(isNumber(Number('1e-3')));
+    });
+    it('should return `false` when given value is not a number', function () {
+        expectFalse(isNumber(function () {}));
+        expectFalse(isNumber(NaN));
+    });
+});
+
+describe('is#isString', function () {
+    it('should return `true` when given value is a string', function () {
+        expectTrue(isString('hello'));
+        expectTrue(isString(String('hello')));
+    });
+    it('should return `false` when given value is not a string', function () {
+        expectFalse(isString(function () {}));
+        expectFalse(isString(NaN));
+    });
+});
+
+if (typeof Map !== 'undefined') {
+    describe('is#isMap', function () {
+        it('should return `true` when given value is a map', function () {
+            expectTrue(isMap(new Map()));
+        });
+        it('should return `false` when given value is not a map', function () {
+            expectFalse(isMap(function () {}));
+            expectFalse(isMap(NaN));
+        });
+    });
+}
+
+if (typeof Set !== 'undefined') {
+    describe('is#isSet', function () {
+        it('should return `true` when given value is a set', function () {
+            expectTrue(isSet(new Set()));
+        });
+        it('should return `false` when given value is not a set', function () {
+            expectFalse(isSet(function () {}));
+            expectFalse(isSet(NaN));
+        });
+    });
+}
+
+if (typeof WeakMap !== 'undefined') {
+    describe('is#isWeakMap', function () {
+        it('should return `true` when given value is a weak map', function () {
+            expectTrue(isWeakMap(new WeakMap()));
+        });
+        it('should return `false` when given value is not a weak map', function () {
+            expectFalse(isWeakMap(function () {}));
+            expectFalse(isWeakMap(NaN));
+        });
+    });
+}
+
+if (typeof WeakSet !== 'undefined') {
+    describe('is#isWeakSet', function () {
+        it('should return `true` when given value is a weak set', function () {
+            expectTrue(isWeakSet(new WeakSet()));
+        });
+        it('should return `false` when given value is not a weak set', function () {
+            expectFalse(isWeakSet(function () {}));
+            expectFalse(isWeakSet(NaN));
+        });
+    });
+}
+
+describe('is#isUndefined', function () {
+    it('should return `true` when given value is a undefined', function () {
+        expectTrue(isUndefined(undefined));
+    });
+    it('should return `false` when given value is not a undefined', function () {
+        expectFalse(isUndefined(function () {}));
+        expectFalse(isUndefined(NaN));
+    });
+});
+
+describe('is#isNull', function () {
+    it('should return `true` when given value is a null', function () {
+        expectTrue(isNull(null));
+    });
+    it('should return `false` when given value is not a null', function () {
+        expectFalse(isNull(function () {}));
+        expectFalse(isNull(NaN));
+    });
+});
+
+describe('is#isSymbol', function () {
+    it('should return `true` when given value is a symbol', function () {
+        expectTrue(isSymbol(Symbol('hello123')));
+    });
+    it('should return `false` when given value is not a symbol', function () {
+        expectFalse(isSymbol(function () {}));
+        expectFalse(isSymbol(NaN));
+    });
+});
+
+describe('is#isEmpty', function () {
+    it('should return `true` when given value is empty', function () {
+        [0, null, undefined, '', [], {}, function () {}, function () {}].forEach(function (value) {
+            return expectTrue(isEmpty(value));
+        });
+    });
+    it('should return `false` when given value is not empty', function () {
+        [1, 'something', [1, 2, 3], { a: 'b' }, function (a, b, c) {}, function (id) {
+            return id;
+        }].forEach(function (value) {
+            return expectFalse(isEmpty(value));
+        });
+    });
+});
+
+describe('is#isOfConstructablePrimitive', function () {
+    it('should return `true` when given value is of an "constructable"', function () {
+        [[], {}, 99, 'hello'].forEach(function (value) {
+            return expectTrue(isOfConstructablePrimitive(value));
+        });
+    });
+    it('should return `false` when given value is not of an "constructable"', function () {
+        expectFalse(isOfConstructablePrimitive(NaN));
+    });
+});
+/**
  * Created by elyde on 12/25/2016.
  */
 /**
@@ -757,7 +982,7 @@ describe('data.LinkedList', function () {
  * Created by elyde on 12/10/2016.
  */
 
-describe('functor.Apply', function () {
+describe('functor.Applicative', function () {
 
     var expectInstanceOf = function expectInstanceOf(value, Instance) {
         return expect(value).to.be.instanceOf(Instance);
@@ -767,24 +992,40 @@ describe('functor.Apply', function () {
     },
         expectApply = function expectApply(value) {
         return expectInstanceOf(value, Apply);
+    },
+        expectApplicative = function expectApplicative(value) {
+        return expectInstanceOf(value, Applicative);
+    },
+        expectValue = function expectValue(value, expectedValue) {
+        return expect(value).to.equal(expectedValue);
     };
 
     it('should return an new instance when called as a function', function () {
-        var result = Apply();
+        var result = Applicative();
+        expectApplicative(result);
         expectApply(result);
         expectFunctor(result);
     });
 
     it('should construct an instance of `Functor` when called with `new`', function () {
-        var result = new Apply();
+        var result = new Applicative();
+        expectApplicative(result);
         expectApply(result);
         expectFunctor(result);
     });
 
-    describe('Statics', function () {});
+    describe('Statics', function () {
+        it('should have a static `of` property that acts as unit.', function () {
+            var result = Applicative.of(multiply(4)).ap(Applicative(25));
+            expectFunction(Applicative.of);
+            expectApplicative(Applicative.of());
+            expectApply(result);
+            expectValue(result.value, 100);
+        });
+    });
 
     describe('Interface', function () {
-        var instance = Apply();
+        var instance = Applicative();
         ['map', 'ap'].forEach(function (key) {
             it('should method #' + key, function () {
                 expectFunction(instance[key]);
@@ -835,7 +1076,7 @@ describe('functor.Apply', function () {
  * Created by elyde on 12/10/2016.
  */
 
-describe('functor.Applicative', function () {
+describe('functor.Apply', function () {
 
     var expectInstanceOf = function expectInstanceOf(value, Instance) {
         return expect(value).to.be.instanceOf(Instance);
@@ -845,40 +1086,24 @@ describe('functor.Applicative', function () {
     },
         expectApply = function expectApply(value) {
         return expectInstanceOf(value, Apply);
-    },
-        expectApplicative = function expectApplicative(value) {
-        return expectInstanceOf(value, Applicative);
-    },
-        expectValue = function expectValue(value, expectedValue) {
-        return expect(value).to.equal(expectedValue);
     };
 
     it('should return an new instance when called as a function', function () {
-        var result = Applicative();
-        expectApplicative(result);
+        var result = Apply();
         expectApply(result);
         expectFunctor(result);
     });
 
     it('should construct an instance of `Functor` when called with `new`', function () {
-        var result = new Applicative();
-        expectApplicative(result);
+        var result = new Apply();
         expectApply(result);
         expectFunctor(result);
     });
 
-    describe('Statics', function () {
-        it('should have a static `of` property that acts as unit.', function () {
-            var result = Applicative.of(multiply(4)).ap(Applicative(25));
-            expectFunction(Applicative.of);
-            expectApplicative(Applicative.of());
-            expectApply(result);
-            expectValue(result.value, 100);
-        });
-    });
+    describe('Statics', function () {});
 
     describe('Interface', function () {
-        var instance = Applicative();
+        var instance = Apply();
         ['map', 'ap'].forEach(function (key) {
             it('should method #' + key, function () {
                 expectFunction(instance[key]);

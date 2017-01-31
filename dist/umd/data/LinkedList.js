@@ -1,22 +1,18 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../is', '../subClass', '../typeOf', '../errorIfNotTypeFactory', '../monad/Monad', '../functor/Comonad', '../functor/Bifunctor'], factory);
+        define(['exports', '../is', '../subClass', '../typeOf', '../errorIfNotTypeFactory', '../functor/Functor', '../functor/Comonad', '../functor/Bifunctor'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../is'), require('../subClass'), require('../typeOf'), require('../errorIfNotTypeFactory'), require('../monad/Monad'), require('../functor/Comonad'), require('../functor/Bifunctor'));
+        factory(exports, require('../is'), require('../subClass'), require('../typeOf'), require('../errorIfNotTypeFactory'), require('../functor/Functor'), require('../functor/Comonad'), require('../functor/Bifunctor'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.subClass, global.typeOf, global.errorIfNotTypeFactory, global.Monad, global.Comonad, global.Bifunctor);
+        factory(mod.exports, global.is, global.subClass, global.typeOf, global.errorIfNotTypeFactory, global.Functor, global.Comonad, global.Bifunctor);
         global.LinkedList = mod.exports;
     }
-})(this, function (exports, _is, _subClass, _typeOf, _errorIfNotTypeFactory, _Monad, _Comonad, _Bifunctor) {
+})(this, function (exports, _is, _subClass, _typeOf, _errorIfNotTypeFactory, _Functor, _Comonad, _Bifunctor) {
     /**
      * Created by elyde on 1/13/2017.
-     */
-    /**
-     * Created by elyde on 1/8/2017.
-     * @todo incorporate the `tail` property into `LinkedList`
      */
 
     'use strict';
@@ -27,7 +23,7 @@
 
     var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
 
-    var _Monad2 = _interopRequireDefault(_Monad);
+    var _Functor2 = _interopRequireDefault(_Functor);
 
     var _Comonad2 = _interopRequireDefault(_Comonad);
 
@@ -92,12 +88,12 @@
         return (0, _is.isset)(node.next) && (0, _is.isset)(node.next.extract());
     },
         isLLNode = LLNode.isLLNode,
-        LinkedList = (0, _subClass.subClass)(_Monad2.default, function LinkedList(firstNodeId, firstNodeValue) {
+        LinkedList = (0, _subClass.subClass)(_Functor2.default, function LinkedList(firstNodeId, firstNodeValue) {
         if (!(this instanceof LinkedList)) {
             return LinkedList.of(firstNodeId, firstNodeValue);
         }
         var _head, _tail;
-        _Monad2.default.call(this);
+        _Functor2.default.call(this, LLNode(firstNodeId, firstNodeValue));
         Object.defineProperties(this, {
             size: {
                 get: function get() {
@@ -130,7 +126,7 @@
                 enumerable: true
             }
         });
-        _head = _tail = this.value = LLNode(firstNodeId, firstNodeValue);
+        this.head = this.value;
     }, {
         _errorIfUnresolvableNode: function _errorIfUnresolvableNode(methodName) {
             for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -176,13 +172,12 @@
         },
         _insertNodeAtEnd: function _insertNodeAtEnd(node) {
             var _getLastAndPrev2 = this._getLastAndPrev(),
-                prevNode = _getLastAndPrev2.prevNode,
                 lastNode = _getLastAndPrev2.lastNode;
 
             if (this.head === lastNode) {
                 return this._insertNodeAtHead(node);
             }
-            prevNode.next = lastNode;
+            lastNode.next = node;
             return this;
         },
         _findBy: function _findBy(idKeyOrPredicate, value) {
@@ -275,6 +270,18 @@
                 return separator + node;
             }, '') + ')';
         },
+        equals: function equals(list) {
+            return this === list; // @todo fill this method out
+        },
+        concat: function concat() {
+            for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                lists[_key2] = arguments[_key2];
+            }
+
+            return lists.reduce(function (agg, list) {
+                return agg.insertNodeAtEnd(list.head);
+            }, LinkedList());
+        },
         filter: function filter(fn) {
             var node = this.head,
                 list = LinkedList();
@@ -283,6 +290,14 @@
                     list.insert(node);
                 }
                 node = node.next;
+            }
+            return list;
+        },
+        traverse: function traverse(fn, applicative) {
+            var node = this.head;
+            var list = LinkedList();
+            while (node.next) {
+                list.insert(applicative.ap(node));
             }
             return list;
         },

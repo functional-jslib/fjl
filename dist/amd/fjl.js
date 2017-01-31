@@ -1,4 +1,4 @@
-define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/DoublyLinkedList', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _DoublyLinkedList, _version) {
+define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/LinkedList', './data/DoublyLinkedList', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _LinkedList, _DoublyLinkedList, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -29,6 +29,8 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
     var _Comonad2 = _interopRequireDefault(_Comonad);
 
     var _Monad2 = _interopRequireDefault(_Monad);
+
+    var _LinkedList2 = _interopRequireDefault(_LinkedList);
 
     var _DoublyLinkedList2 = _interopRequireDefault(_DoublyLinkedList);
 
@@ -71,6 +73,7 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
         isNull: _is.isNull,
         isSymbol: _is.isSymbol,
         isEmpty: _is.isEmpty,
+        isOfConstructablePrimitive: _is.isOfConstructablePrimitive,
         notEmptyAndOfType: _not.notEmptyAndOfType,
         errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
         complement: _combinators.complement,
@@ -104,6 +107,7 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
         Right: _Either.Right,
         either: _Either.either,
         DoublyLinkedList: _DoublyLinkedList2.default,
+        LinkedList: _LinkedList2.default,
         version: _version2.default
     };
 });

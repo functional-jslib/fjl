@@ -252,7 +252,7 @@ var fjl = function () {
      * @param value {*}
      * @returns {Boolean}
      */
-    function isOfConstructable(value) {
+    function isOfConstructablePrimitive(value) {
         return [isNumber, isBoolean, isString, isObject, isArray, isFunction, isMap, isSet, isWeakMap, isWeakSet].some(function (fn) {
             return fn(value);
         });
@@ -798,6 +798,7 @@ var fjl = function () {
     var reduce$1 = curry2(function (fn, agg, arr) {
         return arr.reduce(fn, agg);
     });
+
     var union$2 = curry2(function (arr1, arr2) {
         var whereNotInArray1 = function whereNotInArray1(elm) {
             return arr1.indexOf(elm) === -1;
@@ -839,29 +840,36 @@ var fjl = function () {
     var length = function length(something) {
         return something.length;
     };
-    var of = function of(functor, value) {
+    var of = function of(functor) {
         var constructor = functor.constructor,
             retVal = void 0;
         if (constructor.of) {
-            retVal = constructor.of(value);
-        } else if (isOfConstructable(functor)) {
-            retVal = new constructor(value);
+            retVal = constructor.of();
+        } else if (!isOfConstructablePrimitive(functor)) {
+            retVal = new constructor();
         } else {
-            retVal = constructor(value);
+            retVal = constructor();
         }
         return retVal;
     };
     var _ap = curry2(function (obj1, obj2) {
         return obj1.ap ? obj1.ap(obj2) : obj1(obj2);
     });
-    var map$$1 = curry2(function (fn, functor) {
+    var _map = curry2(function (fn, functor) {
         return functor.map(fn);
     });
-    var join$$1 = function join$$1(monad) {
-        return Object.prototype.hasOwnProperty.call(monad, 'value') ? monad.value : of(monad);
-    };
+    var _join = curry2(function (functor, delimiter) {
+        if (Array.isArray(functor)) {
+            return functor.join(delimiter);
+        } else if (functor.join) {
+            return functor.join();
+        } else if (Object.prototype.hasOwnProperty.call(functor, 'value')) {
+            return functor.value;
+        }
+        return of(functor);
+    });
     var _chain = curry2(function (fn, functor) {
-        return join$$1(map$$1(fn, functor));
+        return _join(_map(fn, functor));
     });
     var complement$1 = curry2(function (functor) {
         for (var _len12 = arguments.length, others = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
@@ -977,16 +985,16 @@ var fjl = function () {
             Monad.call(this, Just(value));
         },
         join: function join() {
-            return compose(Maybe.of, join$$1, map$$1(id))(this.value);
+            return compose(Maybe.of, _join, _map(id))(this.value);
         },
         map: function map(fn) {
-            return compose(Maybe.of, fn, map$$1(id))(this.value);
+            return compose(Maybe.of, fn, _map(id))(this.value);
         },
         ap: function ap(functor) {
-            return compose(Maybe.of, _ap(__, functor), map$$1(id))(this.value);
+            return compose(Maybe.of, _ap(__, functor), _map(id))(this.value);
         },
         chain: function chain(fn) {
-            return compose(Maybe.of, _chain(fn), map$$1(id))(this.value);
+            return compose(Maybe.of, _chain(fn), _map(id))(this.value);
         }
     }, {
         of: function of(value) {
@@ -1035,14 +1043,14 @@ var fjl = function () {
         counterConstructor: Left
     });
     var either = curry2(function (leftCallback, rightCallback, monad) {
-        var identity = map$$1(function (value) {
+        var identity = _map(function (value) {
             return value;
         }, monad),
             ctor = identity.constructor;
         if (ctor === Left) {
-            return map$$1(leftCallback, identity);
+            return _map(leftCallback, identity);
         } else if (ctor === Right) {
-            return map$$1(rightCallback, identity);
+            return _map(rightCallback, identity);
         }
     });
     var Either = subClassMulti([Monad, Bifunctor], {
@@ -1059,6 +1067,308 @@ var fjl = function () {
         Left: Left,
         Right: Right,
         either: either
+    });
+
+    /**
+     * Created by elyde on 1/13/2017.
+     */
+
+    var errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList');
+    var errorIfNotTypeForLLNode = errorIfNotTypeFactory('LLNode');
+    var LLNode = subClassMulti([Bifunctor, Comonad], function LLNode(id, value) {
+        if (!(this instanceof LLNode)) {
+            return LLNode.of(id, value);
+        }
+        var _next = null;
+        var valueToUse = isset(value) ? value : null;
+        Bifunctor.call(this, valueToUse);
+        Comonad.call(this, valueToUse);
+        Object.defineProperties(this, {
+            id: {
+                writable: true,
+                configurable: false,
+                enumerable: true,
+                value: !isset(id) ? null : id
+            },
+            next: {
+                set: function set(valueToSet) {
+                    errorIfNotTypeForLLNode('next', valueToSet, 'Null', LLNode);
+                    _next = valueToSet;
+                },
+                get: function get() {
+                    return _next;
+                },
+                enumerable: true
+            }
+        });
+    }, {
+        toString: function toString() {
+            return this.constructor.name + '(' + this.id + ', ' + this.extract() + ')';
+        },
+        map: function map(fn) {
+            return LLNode.of(this.id, fn(this.extract()));
+        },
+        bimap: function bimap(fn1, fn2) {
+            return LLNode.of(fn1(this.id), fn2(this.extract()));
+        }
+    }, {
+        of: function of(nodeOrId, valueIfIdOrNext) {
+            var id = function id(value) {
+                return value;
+            };
+            return nodeOrId instanceof LLNode ? nodeOrId.bimap(id, id) : new LLNode(nodeOrId, valueIfIdOrNext);
+        },
+        isLLNode: function isLLNode(value) {
+            return value instanceof LLNode;
+        }
+    });
+    var nodeHasValidNext = function nodeHasValidNext(node) {
+        return isset(node.next) && isset(node.next.extract());
+    };
+    var isLLNode = LLNode.isLLNode;
+    var LinkedList = subClass(Functor, function LinkedList(firstNodeId, firstNodeValue) {
+        if (!(this instanceof LinkedList)) {
+            return LinkedList.of(firstNodeId, firstNodeValue);
+        }
+        var _head, _tail;
+        Functor.call(this, LLNode(firstNodeId, firstNodeValue));
+        Object.defineProperties(this, {
+            size: {
+                get: function get() {
+                    var node = this.head,
+                        count = node.value === null && node.id === null ? 0 : 1;
+                    while (node.next) {
+                        count++;
+                    }
+                    return count;
+                }
+            },
+            tail: {
+                get: function get() {
+                    return _tail;
+                },
+                set: function set(value) {
+                    errorIfNotTypeForLinkedList('tail', value, LLNode);
+                    _tail = value;
+                },
+                enumerable: true
+            },
+            head: {
+                get: function get() {
+                    return _head;
+                },
+                set: function set(value) {
+                    errorIfNotTypeForLinkedList('head', value, LLNode);
+                    _head = value;
+                },
+                enumerable: true
+            }
+        });
+        this.head = this.value;
+    }, {
+        _errorIfUnresolvableNode: function _errorIfUnresolvableNode(methodName) {
+            for (var _len13 = arguments.length, args = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
+                args[_key13 - 1] = arguments[_key13];
+            }
+
+            if (!isset(args[0]) || !isLLNode(args[0]) && !isset(args[1])) {
+                throw new Error(this.constructor.name + '.' + methodName + ' says: Cannot get node from "' + args.join(', "') + '"');
+            }
+        },
+        _getLastAndPrev: function _getLastAndPrev() {
+            var node = this.head,
+                prevNode;
+            while (node.next) {
+                prevNode = node;
+                node = node.next;
+            }
+            return { lastNode: node, prevNode: prevNode };
+        },
+        _getNodeAndPrevWhere: function _getNodeAndPrevWhere(fn) {
+            var node = this.head,
+                prevNode;
+            while (node.next) {
+                if (fn(node)) {
+                    break;
+                }
+                prevNode = node;
+                node = node.next;
+            }
+            return { node: node, prevNode: prevNode };
+        },
+        _getPrev: function _getPrev(node) {
+            var prevNode = this.head;
+            while (prevNode.next && prevNode.next !== node) {
+                prevNode = prevNode.next;
+            }
+            return prevNode.next !== null ? prevNode : null;
+        },
+        _insertNodeAtHead: function _insertNodeAtHead(node) {
+            node.next = this.head;
+            this.value = this.head = node;
+            return this;
+        },
+        _insertNodeAtEnd: function _insertNodeAtEnd(node) {
+            var _getLastAndPrev2 = this._getLastAndPrev(),
+                lastNode = _getLastAndPrev2.lastNode;
+
+            if (this.head === lastNode) {
+                return this._insertNodeAtHead(node);
+            }
+            lastNode.next = node;
+            return this;
+        },
+        _findBy: function _findBy(idKeyOrPredicate, value) {
+            var typeOfdKeyOrPredicate = typeOf(idKeyOrPredicate);
+            if (typeOfdKeyOrPredicate === Function.name) {
+                return this.filter(idKeyOrPredicate).head;
+            } else if (typeOfdKeyOrPredicate === String.name) {
+                return this.filter(idKeyOrPredicate === 'value' ? function (node) {
+                    return node.value === value;
+                } : function (node) {
+                    return node.id === value;
+                }).head;
+            }
+            throw new Error(this.constructor.name + '._findBy expects either a type of "String" or a ' + 'type of "Function" for it\'s first parameter.  ' + 'Type received: "' + typeOfdKeyOrPredicate + '".');
+        },
+        insertNodeAtHead: function insertNodeAtHead(nodeOrId, valueIfId) {
+            return this._errorIfUnresolvableNode('insertNodeAtHead', nodeOrId, valueIfId)._insertNodeAtHead(LLNode(nodeOrId, valueIfId));
+        },
+        insertNodeBefore: function insertNodeBefore(node, otherNodeOrId) {
+            var prevNode = this._errorIfUnresolvableNode('insertNodeBefore', otherNodeOrId)._errorIfUnresolvableNode('insertNodeBefore', node)._getPrev(otherNodeOrId);
+            if (!prevNode) {
+                return this._insertNodeAtHead(node);
+            }
+            node.next = prevNode.next;
+            prevNode.next = node;
+            return this;
+        },
+        insertNodeAfter: function insertNodeAfter(node, otherNodeOrId) {
+            var parentNode = this._errorIfUnresolvableNode('insertNodeAfter', otherNodeOrId)._errorIfUnresolvableNode('insertNodeAfter', node)._findBy('id', otherNodeOrId);
+            if (!parentNode) {
+                return this._insertNodeAtEnd(node);
+            }
+            node.next = parentNode.next;
+            parentNode.next = node;
+            return this;
+        },
+        insertNodeAtEnd: function insertNodeAtEnd(nodeOrId, valueIfId) {
+            return this._errorIfUnresolvableNode('insertNodeAtEnd', nodeOrId, valueIfId)._insertNodeAtEnd(LLNode(nodeOrId, valueIfId));
+        },
+        insert: function insert(nodeOrId, valueIfId) {
+            return this.insertNodeAtHead(nodeOrId, valueIfId);
+        },
+        deleteNodeAtHead: function deleteNodeAtHead() {
+            var deleted = this.head;
+            // If `head` has next set head to next
+            if (nodeHasValidNext(this.head)) {
+                this.head = this.head.next;
+            }
+            // Else reset `head`
+            else {
+                    this.head = LLNode();
+                }
+            return deleted;
+        },
+        deleteNodeAtEnd: function deleteNodeAtEnd() {
+            var _getLastAndPrev3 = this._getLastAndPrev(),
+                last = _getLastAndPrev3.last,
+                prev = _getLastAndPrev3.prev;
+
+            prev.next = null;
+            return last;
+        },
+        deleteNode: function deleteNode(nodeOrId) {
+            this._errorIfUnresolvableNode('deleteNode', nodeOrId);
+            var deleted;
+
+            var _getNodeAndPrevWhere2 = this._getNodeAndPrevWhere(function (elm) {
+                return nodeOrId === elm || elm.id === nodeOrId;
+            }),
+                node = _getNodeAndPrevWhere2.node,
+                prevNode = _getNodeAndPrevWhere2.prevNode,
+                nodeHasNext = nodeHasValidNext(node);
+
+            if (!prevNode) {
+                deleted = this.deleteNodeAtHead();
+            } else if (!nodeHasNext) {
+                deleted = this.deleteNodeAtEnd();
+            } else {
+                deleted = prevNode.next;
+                prevNode.next = node.next;
+            }
+            return deleted;
+        },
+        delete: function _delete(nodeOrId) {
+            return isset(nodeOrId) ? this.deleteNode(nodeOrId) : this.deleteNodeAtHead();
+        },
+        toString: function toString(separator) {
+            separator = separator || ' -> ';
+            return this.constructor.name + '(' + this.reduce(function (agg, node) {
+                return separator + node;
+            }, '') + ')';
+        },
+        equals: function equals(list) {
+            return this === list; // @todo fill this method out
+        },
+        concat: function concat() {
+            for (var _len14 = arguments.length, lists = Array(_len14), _key14 = 0; _key14 < _len14; _key14++) {
+                lists[_key14] = arguments[_key14];
+            }
+
+            return lists.reduce(function (agg, list) {
+                return agg.insertNodeAtEnd(list.head);
+            }, LinkedList());
+        },
+        filter: function filter(fn) {
+            var node = this.head,
+                list = LinkedList();
+            while (node) {
+                if (fn(node)) {
+                    list.insert(node);
+                }
+                node = node.next;
+            }
+            return list;
+        },
+        traverse: function traverse(fn, applicative) {
+            var node = this.head;
+            var list = LinkedList();
+            while (node.next) {
+                list.insert(applicative.ap(node));
+            }
+            return list;
+        },
+        map: function map(fn) {
+            var node = this.head,
+                list = LinkedList();
+            while (node) {
+                list.insertNodeAtHead(fn(node));
+                node = node.next;
+            }
+            return list;
+        },
+        reduce: function reduce(fn, agg) {
+            var node = this.head;
+            while (node && isset(node.extract())) {
+                agg = fn(agg, node);
+                node = node.next;
+            }
+            return agg;
+        },
+        reduceRight: function reduceRight(fn, agg) {
+            var node = this.last.prev;
+            while (node && isset(node.extract())) {
+                agg = fn(agg, node);
+                node = node.prev;
+            }
+            return agg;
+        }
+    }, {
+        of: function of(nodeOrId, valueIfId) {
+            return new LinkedList(nodeOrId, valueIfId);
+        },
+        LLNode: LLNode
     });
 
     /**
@@ -1091,7 +1401,7 @@ var fjl = function () {
     var nodeHasValidPrev = function nodeHasValidPrev(node) {
         return isset(node.prev) && isset(node.prev.extract());
     };
-    var nodeHasValidNext = function nodeHasValidNext(node) {
+    var nodeHasValidNext$1 = function nodeHasValidNext$1(node) {
         return isset(node.next) && isset(node.next.extract());
     };
     var isDLLNode = DLLNode.isDLLNode;
@@ -1119,12 +1429,12 @@ var fjl = function () {
                 nodeHasPrev,
                 nodeHasNext;
 
-            if (!nodeHasValidNext(filteredDll.head)) {
+            if (!nodeHasValidNext$1(filteredDll.head)) {
                 return this;
             }
 
             foundNode = filteredDll.head.next;
-            nodeHasNext = nodeHasValidNext(foundNode);
+            nodeHasNext = nodeHasValidNext$1(foundNode);
             nodeHasPrev = nodeHasValidPrev(foundNode);
 
             if (nodeHasPrev && nodeHasNext) {
@@ -1133,7 +1443,7 @@ var fjl = function () {
                 this.value = this.head = foundNode.next;
             }
 
-            if (nodeHasValidNext(foundNode.next)) {
+            if (nodeHasValidNext$1(foundNode.next)) {
                 this.delete(foundNode.next.next);
             }
 
@@ -1190,7 +1500,7 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sat Jan 21 2017 11:54:28 GMT-0500 (Eastern Standard Time) 
+     * Generated Mon Jan 30 2017 16:00:41 GMT-0500 (Eastern Standard Time) 
      */
 
     var version = '0.5.1';
@@ -1229,6 +1539,7 @@ var fjl = function () {
         isNull: isNull,
         isSymbol: isSymbol,
         isEmpty: isEmpty,
+        isOfConstructablePrimitive: isOfConstructablePrimitive,
         notEmptyAndOfType: notEmptyAndOfType,
         errorIfNotTypeFactory: errorIfNotTypeFactory,
         complement: complement$1,
@@ -1262,6 +1573,7 @@ var fjl = function () {
         Right: Right,
         either: either,
         DoublyLinkedList: DoublyLinkedList,
+        LinkedList: LinkedList,
         version: version
     };
 

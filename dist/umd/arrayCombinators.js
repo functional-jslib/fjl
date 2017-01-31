@@ -24,33 +24,24 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersect = exports.union = exports.flattenMulti = exports.flatten = exports.reduceRight = exports.reduce = exports.map = exports.filter = exports.join = exports.concat = exports.equals = undefined;
-    var equals = exports.equals = (0, _curry.curry2)(function (value1, value2) {
-        return value1.equals && value1.equals(value2) || value1 === value2;
-    }),
-        concat = exports.concat = (0, _curry.curry2)(function (arr0) {
+    exports.complement = exports.difference = exports.intersect = exports.union = exports.flattenMulti = exports.flatten = undefined;
+
+
+    var concat = (0, _curry.curry2)(function (arr0) {
         for (var _len = arguments.length, arrays = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             arrays[_key - 1] = arguments[_key];
         }
 
         return arr0.concat.apply(arr0, arrays);
     }),
-        join = exports.join = (0, _curry.curry2)(function (functor, delimiter) {
-        return Array.isArray(functor) ? functor.join(delimiter) : functor.join();
-    }),
-        filter = exports.filter = (0, _curry.curry2)(function (fn, arr) {
+        filter = (0, _curry.curry2)(function (fn, arr) {
         return arr.filter(fn);
     }),
-        map = exports.map = (0, _curry.curry2)(function (fn, functor) {
-        return functor.map(fn);
-    }),
-        reduce = exports.reduce = (0, _curry.curry2)(function (fn, agg, arr) {
+        reduce = (0, _curry.curry2)(function (fn, agg, arr) {
         return arr.reduce(fn, agg);
-    }),
-        reduceRight = exports.reduceRight = (0, _curry.curry2)(function (fn, agg, arr) {
-        return arr.reduceRight(fn, agg);
-    }),
-        flatten = exports.flatten = function flatten(arr) {
+    });
+
+    var flatten = exports.flatten = function flatten(arr) {
         return arr.reduce(function (agg, elm) {
             if (Array.isArray(elm)) {
                 return concat(agg, flatten(elm));
@@ -105,12 +96,6 @@
         difference: difference,
         intersect: intersect,
         union: union,
-        concat: concat,
-        filter: filter,
-        join: join,
-        map: map,
-        reduce: reduce,
-        reduceRight: reduceRight,
         flatten: flatten,
         flattenMulti: flattenMulti
     };

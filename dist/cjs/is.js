@@ -28,7 +28,7 @@ exports.isUndefined = isUndefined;
 exports.isNull = isNull;
 exports.isSymbol = isSymbol;
 exports.isEmpty = isEmpty;
-exports.isOfConstructable = isOfConstructable;
+exports.isOfConstructablePrimitive = isOfConstructablePrimitive;
 
 var _typeOf = require('./typeOf');
 
@@ -224,7 +224,7 @@ function isEmpty(value) {
  * @param value {*}
  * @returns {Boolean}
  */
-function isOfConstructable(value) {
+function isOfConstructablePrimitive(value) {
     return [isNumber, isBoolean, isString, isObject, isArray, isFunction, isMap, isSet, isWeakMap, isWeakSet].some(function (fn) {
         return fn(value);
     });
@@ -247,5 +247,5 @@ exports.default = {
     isNull: isNull,
     isSymbol: isSymbol,
     isEmpty: isEmpty,
-    isOfConstructable: isOfConstructable
+    isOfConstructablePrimitive: isOfConstructablePrimitive
 };

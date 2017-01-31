@@ -203,7 +203,7 @@ export function isEmpty(value) {
  * @param value {*}
  * @returns {Boolean}
  */
-export function isOfConstructable (value) {
+export function isOfConstructablePrimitive (value) {
     return [
         isNumber, isBoolean, isString, isObject,
         isArray, isFunction, isMap, isSet,
@@ -228,5 +228,5 @@ export default {
     isNull,
     isSymbol,
     isEmpty,
-    isOfConstructable
+    isOfConstructablePrimitive
 };
