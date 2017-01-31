@@ -71,5 +71,4 @@ describe ('data.LinkedList', function () {
         });
     });
 
-
 });

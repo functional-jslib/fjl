@@ -50,7 +50,6 @@ describe('monad.Maybe', function () {
     });
 
     describe('#Nothing', function () {
-        let someInstance = Nothing();
 
         describe('Constructor', function () {
             it('should be a singleton instance even when call `new Nothing()`', function () {
@@ -63,6 +62,7 @@ describe('monad.Maybe', function () {
         });
 
         monadInterface.forEach(key => {
+            let someInstance = Nothing();
             describe('#' + key, function () {
                 it(`should have a \`${key}\` method`, function () {
                     expectFunction(someInstance[key]);
