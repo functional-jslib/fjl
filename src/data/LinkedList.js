@@ -4,13 +4,13 @@
 
 'use strict';
 
-import {isset} from "../is";
-import {subClass, subClassMulti} from "../subClass";
-import {typeOf} from "../typeOf";
-import errorIfNotTypeFactory from "../errorIfNotTypeFactory";
-import Functor from "../functor/Functor";
-import Comonad from "../functor/Comonad";
-import Bifunctor from "../functor/Bifunctor";
+import {isset} from '../is';
+import {subClass, subClassMulti} from '../subClass';
+import {typeOf} from '../typeOf';
+import errorIfNotTypeFactory from '../errorIfNotTypeFactory';
+import Functor from '../functor/Functor';
+import Comonad from '../functor/Comonad';
+import Bifunctor from '../functor/Bifunctor';
 
 let errorIfNotTypeForLinkedList = errorIfNotTypeFactory('LinkedList'),
     errorIfNotTypeForLLNode = errorIfNotTypeFactory('LLNode'),

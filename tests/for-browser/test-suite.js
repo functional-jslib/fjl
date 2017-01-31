@@ -514,34 +514,6 @@ describe('errorIfNotTypeFactory', function () {
  * Created by elyde on 1/30/2017.
  */
 
-/*describe('is functions', function () {
-    // Function names
-    [
-        'isset',
-        'issetAndOfType',
-        'isNumber',
-        'isFunction',
-        'isArray',
-        'isBoolean',
-        'isObject',
-        'isString',
-        'isMap',
-        'isSet',
-        'isWeakMap',
-        'isWeakSet',
-        'isUndefined',
-        'isNull',
-        'isSymbol',
-        'isEmpty',
-        'isOfConstructablePrimitive'
-    ]
-        .forEach(key => {
-            it(`should have a \`${key}\` function`, function () {
-                expectFunction(is[key]);
-            });
-        });
-});*/
-
 describe('is#isFunction', function () {
     it('should return true if value is a function', function () {
         [function () {}, Math.pow, console.log, function () {}].forEach(function (value) {
@@ -725,14 +697,14 @@ describe('is#isEmpty', function () {
     });
 });
 
-describe('is#isOfConstructablePrimitive', function () {
+describe('is#isConstructablePrimitive', function () {
     it('should return `true` when given value is of an "constructable"', function () {
         [[], {}, 99, 'hello'].forEach(function (value) {
-            return expectTrue(isOfConstructablePrimitive(value));
+            return expectTrue(isConstructablePrimitive(value));
         });
     });
     it('should return `false` when given value is not of an "constructable"', function () {
-        expectFalse(isOfConstructablePrimitive(NaN));
+        expectFalse(isConstructablePrimitive(NaN));
     });
 });
 /**
@@ -810,6 +782,58 @@ describe('Object Combinators', function () {
             Object.keys(subj2).forEach(function (key) {
                 expectEqual(result[key], subj2[key]);
             });
+        });
+    });
+});
+/**
+ * Created by edlc on 1/30/17.
+ */
+
+describe('#typeOf', function () {
+    it('should be a function', function () {
+        expectFunction(typeOf);
+    });
+    it('should require an arity of `1`', function () {
+        expectEqual(typeOf.length, 1);
+    });
+    it('should return "Undefined" when no value is passed in', function () {
+        expectEqual(typeOf(), 'Undefined');
+    });
+    it('should return the passed type\'s name', function () {
+        [[[], 'Array'], [{}, 'Object'], ['', 'String'], [function () {}, 'Function'], [99, 'Number'], [true, 'Boolean'], [false, 'Boolean'], [null, 'Null'], [undefined, 'Undefined']].forEach(function (tuple) {
+            return expectEqual(typeOf(tuple[0]), tuple[1]);
+        });
+    });
+});
+
+describe('#typeOfIs', function () {
+    it('should be a function', function () {
+        expectFunction(typeOfIs);
+    });
+    it('should require an arity of `2`', function () {
+        expectEqual(typeOfIs.length, 2);
+    });
+    it('should return `false` when no value is passed in', function () {
+        expectFalse(typeOfIs());
+    });
+    it('should return `true` when passed in value is of passed in type name/string', function () {
+        [[[], 'Array'], [{}, 'Object'], ['', 'String'], [function () {}, 'Function'], [99, 'Number'], [true, 'Boolean'], [false, 'Boolean'], [null, 'Null'], [undefined, 'Undefined']].forEach(function (tuple) {
+            return expectTrue(typeOfIs.apply(null, tuple));
+        });
+    });
+    it('should return `true` when passed in value is of passed in type constructor', function () {
+        [[[], Array], [{}, Object], ['', String], [function () {}, Function], [99, Number], [true, Boolean], [false, Boolean]].forEach(function (tuple) {
+            return expectTrue(typeOfIs.apply(null, tuple));
+        });
+    });
+    it('should return `false` when passed in value is not of passed in type name/string', function () {
+        [[[], 'Object'], [{}, 'Array'], ['', 'NaN'], [function () {}, 'Number'], [99, 'Function'], [true, 'NaN'], [false, 'Number']].forEach(function (tuple) {
+            return expectFalse(typeOfIs.apply(null, tuple));
+        });
+    });
+    it('should return `false` when passed in value is not of passed in type constructor', function () {
+        [[[], Object], [{}, Array], ['', NaN], [function () {}, Number], [99, Function], [true, NaN], [false, Number]].forEach(function (tuple) {
+            return expectFalse(typeOfIs.apply(null, tuple));
         });
     });
 });
@@ -953,9 +977,14 @@ describe('data.LinkedList', function () {
             });
         });
         describe('#map', function () {
+            var llNode = LLNode();
             it('should be a method on instances', function () {
-                var llNode = LLNode();
                 expectFunction(llNode.map);
+            });
+            it('should return a `LLNode` when called.', function () {
+                expectInstanceOf(llNode.map(function (x) {
+                    return x;
+                }), LLNode);
             });
         });
     });

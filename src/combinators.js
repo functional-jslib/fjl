@@ -4,7 +4,7 @@
 'use strict';
 
 import {curry2, curry3} from './curry';
-import {isFunction, isOfConstructablePrimitive} from './is';
+import {isFunction, isConstructablePrimitive} from './is';
 import {typeOf} from './typeOf';
 
 import {complement as objComplement,
@@ -36,7 +36,7 @@ export let id = value => value,
         if (constructor.of) {
             retVal = constructor.of();
         }
-        else if (!isOfConstructablePrimitive(functor)) {
+        else if (!isConstructablePrimitive(functor)) {
             retVal = new constructor();
         }
         else {

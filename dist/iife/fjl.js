@@ -252,7 +252,7 @@ var fjl = function () {
      * @param value {*}
      * @returns {Boolean}
      */
-    function isOfConstructablePrimitive(value) {
+    function isConstructablePrimitive(value) {
         return [isNumber, isBoolean, isString, isObject, isArray, isFunction, isMap, isSet, isWeakMap, isWeakSet].some(function (fn) {
             return fn(value);
         });
@@ -845,7 +845,7 @@ var fjl = function () {
             retVal = void 0;
         if (constructor.of) {
             retVal = constructor.of();
-        } else if (!isOfConstructablePrimitive(functor)) {
+        } else if (!isConstructablePrimitive(functor)) {
             retVal = new constructor();
         } else {
             retVal = constructor();
@@ -1070,6 +1070,133 @@ var fjl = function () {
     });
 
     /**
+     * Created by elyde on 1/8/2017.
+     */
+
+    var DLLNode = subClass(Comonad, function DLLNode(id, value) {
+        if (!(this instanceof DLLNode)) {
+            return DLLNode.of(id, value);
+        }
+        Comonad.call(this, isset(value) ? value : null);
+        this.id = !isset(id) ? null : id;
+        this.prev = null;
+        this.next = null;
+    }, {
+        toString: function toString() {
+            return this.constructor.name + '(' + this.id + ', ' + this.value + ')';
+        },
+        map: function map(fn) {
+            return DLLNode.of(this.id, fn(this.value));
+        }
+    }, {
+        of: function of(id, value) {
+            return new DLLNode(id, value);
+        },
+        isDLLNode: function isDLLNode(value) {
+            return value instanceof DLLNode;
+        }
+    });
+    var nodeHasValidPrev = function nodeHasValidPrev(node) {
+        return isset(node.prev) && isset(node.prev.extract());
+    };
+    var nodeHasValidNext = function nodeHasValidNext(node) {
+        return isset(node.next) && isset(node.next.extract());
+    };
+    var isDLLNode = DLLNode.isDLLNode;
+    var DoublyLinkedList = subClass(Monad, function DoublyLinkedList() {
+        if (!(this instanceof DoublyLinkedList)) {
+            return DoublyLinkedList.of();
+        }
+        this.value = this.last = this.head = DLLNode();
+    }, {
+        insert: function insert(nodeOrId, valueIfId) {
+            if (!isset(nodeOrId) || !isDLLNode(nodeOrId) && !isset(valueIfId)) {
+                return this;
+            }
+            var node = isDLLNode(nodeOrId) ? nodeOrId : DLLNode(nodeOrId, valueIfId);
+            this.head.prev = node;
+            node.next = this.head;
+            this.value = this.head = node;
+            return this;
+        },
+        delete: function _delete(nodeOrId) {
+            var filteredDll = this.filter(function (node) {
+                return nodeOrId === node || node.id === nodeOrId;
+            }),
+                foundNode,
+                nodeHasPrev,
+                nodeHasNext;
+
+            if (!nodeHasValidNext(filteredDll.head)) {
+                return this;
+            }
+
+            foundNode = filteredDll.head.next;
+            nodeHasNext = nodeHasValidNext(foundNode);
+            nodeHasPrev = nodeHasValidPrev(foundNode);
+
+            if (nodeHasPrev && nodeHasNext) {
+                foundNode.prev.next = foundNode.next;
+            } else if (nodeHasNext && !nodeHasPrev) {
+                this.value = this.head = foundNode.next;
+            }
+
+            if (nodeHasValidNext(foundNode.next)) {
+                this.delete(foundNode.next.next);
+            }
+
+            return this;
+        },
+        toString: function toString(separator) {
+            separator = separator || ' -> ';
+            return this.constructor.name + '(' + this.reduce(function (agg, node) {
+                return separator + node;
+            }, '') + ')';
+        },
+        filter: function filter(fn) {
+            var node = this.head,
+                list = DoublyLinkedList();
+            while (node) {
+                if (fn(node)) {
+                    list.insert(node);
+                }
+                node = node.next;
+            }
+            return list;
+        },
+        map: function map(fn) {
+            var node = this.head,
+                list = DoublyLinkedList();
+            while (node) {
+                list.insert(fn(node));
+                node = node.next;
+            }
+            return list;
+        },
+        reduce: function reduce(fn, agg) {
+            var node = this.head;
+            while (node && isset(node.extract())) {
+                agg = fn(agg, node);
+                node = node.next;
+            }
+            return agg;
+        },
+        reduceRight: function reduceRight(fn, agg) {
+            var node = this.last.prev;
+            while (node && isset(node.extract())) {
+                agg = fn(agg, node);
+                node = node.prev;
+            }
+            return agg;
+        }
+    }, {
+        of: function of() {
+            return new DoublyLinkedList();
+        },
+        DLLNode: DLLNode
+    });
+
+    /**
      * Created by elyde on 1/13/2017.
      */
 
@@ -1122,7 +1249,7 @@ var fjl = function () {
             return value instanceof LLNode;
         }
     });
-    var nodeHasValidNext = function nodeHasValidNext(node) {
+    var nodeHasValidNext$1 = function nodeHasValidNext$1(node) {
         return isset(node.next) && isset(node.next.extract());
     };
     var isLLNode = LLNode.isLLNode;
@@ -1261,7 +1388,7 @@ var fjl = function () {
         deleteNodeAtHead: function deleteNodeAtHead() {
             var deleted = this.head;
             // If `head` has next set head to next
-            if (nodeHasValidNext(this.head)) {
+            if (nodeHasValidNext$1(this.head)) {
                 this.head = this.head.next;
             }
             // Else reset `head`
@@ -1287,7 +1414,7 @@ var fjl = function () {
             }),
                 node = _getNodeAndPrevWhere2.node,
                 prevNode = _getNodeAndPrevWhere2.prevNode,
-                nodeHasNext = nodeHasValidNext(node);
+                nodeHasNext = nodeHasValidNext$1(node);
 
             if (!prevNode) {
                 deleted = this.deleteNodeAtHead();
@@ -1372,135 +1499,8 @@ var fjl = function () {
     });
 
     /**
-     * Created by elyde on 1/8/2017.
-     */
-
-    var DLLNode = subClass(Comonad, function DLLNode(id, value) {
-        if (!(this instanceof DLLNode)) {
-            return DLLNode.of(id, value);
-        }
-        Comonad.call(this, isset(value) ? value : null);
-        this.id = !isset(id) ? null : id;
-        this.prev = null;
-        this.next = null;
-    }, {
-        toString: function toString() {
-            return this.constructor.name + '(' + this.id + ', ' + this.value + ')';
-        },
-        map: function map(fn) {
-            return DLLNode.of(this.id, fn(this.value));
-        }
-    }, {
-        of: function of(id, value) {
-            return new DLLNode(id, value);
-        },
-        isDLLNode: function isDLLNode(value) {
-            return value instanceof DLLNode;
-        }
-    });
-    var nodeHasValidPrev = function nodeHasValidPrev(node) {
-        return isset(node.prev) && isset(node.prev.extract());
-    };
-    var nodeHasValidNext$1 = function nodeHasValidNext$1(node) {
-        return isset(node.next) && isset(node.next.extract());
-    };
-    var isDLLNode = DLLNode.isDLLNode;
-    var DoublyLinkedList = subClass(Monad, function DoublyLinkedList() {
-        if (!(this instanceof DoublyLinkedList)) {
-            return DoublyLinkedList.of();
-        }
-        this.value = this.last = this.head = DLLNode();
-    }, {
-        insert: function insert(nodeOrId, valueIfId) {
-            if (!isset(nodeOrId) || !isDLLNode(nodeOrId) && !isset(valueIfId)) {
-                return this;
-            }
-            var node = isDLLNode(nodeOrId) ? nodeOrId : DLLNode(nodeOrId, valueIfId);
-            this.head.prev = node;
-            node.next = this.head;
-            this.value = this.head = node;
-            return this;
-        },
-        delete: function _delete(nodeOrId) {
-            var filteredDll = this.filter(function (node) {
-                return nodeOrId === node || node.id === nodeOrId;
-            }),
-                foundNode,
-                nodeHasPrev,
-                nodeHasNext;
-
-            if (!nodeHasValidNext$1(filteredDll.head)) {
-                return this;
-            }
-
-            foundNode = filteredDll.head.next;
-            nodeHasNext = nodeHasValidNext$1(foundNode);
-            nodeHasPrev = nodeHasValidPrev(foundNode);
-
-            if (nodeHasPrev && nodeHasNext) {
-                foundNode.prev.next = foundNode.next;
-            } else if (nodeHasNext && !nodeHasPrev) {
-                this.value = this.head = foundNode.next;
-            }
-
-            if (nodeHasValidNext$1(foundNode.next)) {
-                this.delete(foundNode.next.next);
-            }
-
-            return this;
-        },
-        toString: function toString(separator) {
-            separator = separator || ' -> ';
-            return this.constructor.name + '(' + this.reduce(function (agg, node) {
-                return separator + node;
-            }, '') + ')';
-        },
-        filter: function filter(fn) {
-            var node = this.head,
-                list = DoublyLinkedList();
-            while (node) {
-                if (fn(node)) {
-                    list.insert(node);
-                }
-                node = node.next;
-            }
-            return list;
-        },
-        map: function map(fn) {
-            var node = this.head,
-                list = DoublyLinkedList();
-            while (node) {
-                list.insert(fn(node));
-                node = node.next;
-            }
-            return list;
-        },
-        reduce: function reduce(fn, agg) {
-            var node = this.head;
-            while (node && isset(node.extract())) {
-                agg = fn(agg, node);
-                node = node.next;
-            }
-            return agg;
-        },
-        reduceRight: function reduceRight(fn, agg) {
-            var node = this.last.prev;
-            while (node && isset(node.extract())) {
-                agg = fn(agg, node);
-                node = node.prev;
-            }
-            return agg;
-        }
-    }, {
-        of: function of() {
-            return new DoublyLinkedList();
-        },
-        DLLNode: DLLNode
-    });
-
-    /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Mon Jan 30 2017 16:00:41 GMT-0500 (Eastern Standard Time) 
+     * Generated Mon Jan 30 2017 20:35:58 GMT-0500 (EST) 
      */
 
     var version = '0.5.1';
@@ -1539,7 +1539,7 @@ var fjl = function () {
         isNull: isNull,
         isSymbol: isSymbol,
         isEmpty: isEmpty,
-        isOfConstructablePrimitive: isOfConstructablePrimitive,
+        isConstructablePrimitive: isConstructablePrimitive,
         notEmptyAndOfType: notEmptyAndOfType,
         errorIfNotTypeFactory: errorIfNotTypeFactory,
         complement: complement$1,

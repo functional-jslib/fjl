@@ -38,7 +38,7 @@
     exports.isNull = isNull;
     exports.isSymbol = isSymbol;
     exports.isEmpty = isEmpty;
-    exports.isOfConstructablePrimitive = isOfConstructablePrimitive;
+    exports.isConstructablePrimitive = isConstructablePrimitive;
 
     var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
@@ -238,7 +238,7 @@
      * @param value {*}
      * @returns {Boolean}
      */
-    function isOfConstructablePrimitive(value) {
+    function isConstructablePrimitive(value) {
         return [isNumber, isBoolean, isString, isObject, isArray, isFunction, isMap, isSet, isWeakMap, isWeakSet].some(function (fn) {
             return fn(value);
         });
@@ -261,6 +261,6 @@
         isNull: isNull,
         isSymbol: isSymbol,
         isEmpty: isEmpty,
-        isOfConstructablePrimitive: isOfConstructablePrimitive
+        isConstructablePrimitive: isConstructablePrimitive
     };
 });

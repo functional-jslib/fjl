@@ -35,7 +35,7 @@ var id = exports.id = function id(value) {
         retVal = void 0;
     if (constructor.of) {
         retVal = constructor.of();
-    } else if (!(0, _is.isOfConstructablePrimitive)(functor)) {
+    } else if (!(0, _is.isConstructablePrimitive)(functor)) {
         retVal = new constructor();
     } else {
         retVal = constructor();

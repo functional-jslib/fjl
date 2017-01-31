@@ -115,6 +115,7 @@ just do a `require('fjl');`
 - [(m) fjl.isNull](#m-fjlisnull)
 - [(m) fjl.isSymbol](#m-fjlissymbol)
 - [(m) fjl.isEmpty](#m-fjlisempty)
+- [(m) fjl.isOfConstructablePrimitive](#m-fjlisofconstructableprimitive)
 - [(m) fjl.notEmptyAndOfType](#m-fjlnotemptyandoftype)
 - [(m) fjl.errorIfNotTypeFactory](#m-fjlerrorifnottypefactory)
 - [(m) fjl.complement](#m-fjlcomplement)

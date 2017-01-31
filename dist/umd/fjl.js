@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/LinkedList', './data/DoublyLinkedList', './generated/version'], factory);
+        define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/DoublyLinkedList', './data/LinkedList', './generated/version'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./assign'), require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./errorIfNotTypeFactory'), require('./functor/Functor'), require('./functor/Bifunctor'), require('./functor/Profunctor'), require('./functor/Apply'), require('./functor/Applicative'), require('./functor/Chain'), require('./functor/Extend'), require('./functor/Comonad'), require('./monad/Monad'), require('./monad/Maybe'), require('./monad/Either'), require('./combinators'), require('./objCombinators'), require('./arrayCombinators'), require('./data/LinkedList'), require('./data/DoublyLinkedList'), require('./generated/version'));
+        factory(exports, require('./assign'), require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./errorIfNotTypeFactory'), require('./functor/Functor'), require('./functor/Bifunctor'), require('./functor/Profunctor'), require('./functor/Apply'), require('./functor/Applicative'), require('./functor/Chain'), require('./functor/Extend'), require('./functor/Comonad'), require('./monad/Monad'), require('./monad/Maybe'), require('./monad/Either'), require('./combinators'), require('./objCombinators'), require('./arrayCombinators'), require('./data/DoublyLinkedList'), require('./data/LinkedList'), require('./generated/version'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.assign, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.errorIfNotTypeFactory, global.Functor, global.Bifunctor, global.Profunctor, global.Apply, global.Applicative, global.Chain, global.Extend, global.Comonad, global.Monad, global.Maybe, global.Either, global.combinators, global.objCombinators, global.arrayCombinators, global.LinkedList, global.DoublyLinkedList, global.version);
+        factory(mod.exports, global.assign, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.errorIfNotTypeFactory, global.Functor, global.Bifunctor, global.Profunctor, global.Apply, global.Applicative, global.Chain, global.Extend, global.Comonad, global.Monad, global.Maybe, global.Either, global.combinators, global.objCombinators, global.arrayCombinators, global.DoublyLinkedList, global.LinkedList, global.version);
         global.fjl = mod.exports;
     }
-})(this, function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _LinkedList, _DoublyLinkedList, _version) {
+})(this, function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _DoublyLinkedList, _LinkedList, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -42,9 +42,9 @@
 
     var _Monad2 = _interopRequireDefault(_Monad);
 
-    var _LinkedList2 = _interopRequireDefault(_LinkedList);
-
     var _DoublyLinkedList2 = _interopRequireDefault(_DoublyLinkedList);
+
+    var _LinkedList2 = _interopRequireDefault(_LinkedList);
 
     var _version2 = _interopRequireDefault(_version);
 
@@ -85,7 +85,7 @@
         isNull: _is.isNull,
         isSymbol: _is.isSymbol,
         isEmpty: _is.isEmpty,
-        isOfConstructablePrimitive: _is.isOfConstructablePrimitive,
+        isConstructablePrimitive: _is.isConstructablePrimitive,
         notEmptyAndOfType: _not.notEmptyAndOfType,
         errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
         complement: _combinators.complement,

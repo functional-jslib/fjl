@@ -10,38 +10,10 @@ import {expect} from 'chai';
 import {isset, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet, isOfConstructablePrimitive} from '../../src/is';
+    isWeakMap, isWeakSet, isConstructablePrimitive} from '../../src/is';
 import {expectTrue, expectFalse, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
-
-/*describe('is functions', function () {
-    // Function names
-    [
-        'isset',
-        'issetAndOfType',
-        'isNumber',
-        'isFunction',
-        'isArray',
-        'isBoolean',
-        'isObject',
-        'isString',
-        'isMap',
-        'isSet',
-        'isWeakMap',
-        'isWeakSet',
-        'isUndefined',
-        'isNull',
-        'isSymbol',
-        'isEmpty',
-        'isOfConstructablePrimitive'
-    ]
-        .forEach(key => {
-            it(`should have a \`${key}\` function`, function () {
-                expectFunction(is[key]);
-            });
-        });
-});*/
 
 describe('is#isFunction', function () {
     it('should return true if value is a function', function () {
@@ -239,12 +211,12 @@ describe('is#isEmpty', function () {
     });
 });
 
-describe('is#isOfConstructablePrimitive', function () {
+describe('is#isConstructablePrimitive', function () {
     it ('should return `true` when given value is of an "constructable"', function () {
         [[], {}, 99, 'hello']
-            .forEach(value => expectTrue(isOfConstructablePrimitive((value))));
+            .forEach(value => expectTrue(isConstructablePrimitive((value))));
     });
     it ('should return `false` when given value is not of an "constructable"', function () {
-        expectFalse(isOfConstructablePrimitive(NaN));
+        expectFalse(isConstructablePrimitive(NaN));
     });
 });
