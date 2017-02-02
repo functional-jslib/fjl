@@ -27,19 +27,18 @@ let fs = require('fs'),
     /** Util Modules **/
     chalk = require('chalk'),
     del = require('del'),
-    VersionNumberReadStream = require('./node-scripts/VersionNumberReadStream'),
-    ModuleMemberReadStream = require('./node-scripts/ModuleMemberListReadStream'),
-    PackageMemberReadStream = require('./node-scripts/PackageMemberListReadStream'),
 
     /** Paths **/
-    {cjsBuildPath, amdBuildPath,
-     umdBuildPath, iifeBuildPath,
-     buildPathRoot, markdownFragsPath} = gulpConfig.paths,
+    {
+        cjsBuildPath, amdBuildPath,
+        umdBuildPath, iifeBuildPath,
+        buildPathRoot, markdownFragsPath
+    } = gulpConfig.paths,
     buildPath = (...tails) => path.join.call(path, buildPathRoot, ...tails),
-    iifeMinFileName =   'fjl.min.js',
-    iifeFileName =      'fjl.js',
-    iifeModuleName =    'fjl',
-    srcsGlob =          './src/**/*.js',
+    iifeMinFileName = 'fjl.min.js',
+    iifeFileName = 'fjl.js',
+    iifeModuleName = 'fjl',
+    srcsGlob = './src/**/*.js',
 
     /** Lazy Pipes **/
     eslintPipe = lazyPipe()
@@ -54,7 +53,8 @@ let fs = require('fs'),
 
 gulp.task('package-member-list-md', function () {
     let outputDir = './markdown-fragments/generated',
-        filePath = outputDir + '/package-member-list.md';
+        filePath = outputDir + '/package-member-list.md',
+        PackageMemberReadStream = require('./node-scripts/PackageMemberListReadStream');
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir);
     }
@@ -65,7 +65,8 @@ gulp.task('package-member-list-md', function () {
 
 gulp.task('member-list-md', function () {
     let outputDir = './markdown-fragments/generated',
-        filePath = outputDir + '/member-list.md';
+        filePath = outputDir + '/member-list.md',
+        ModuleMemberReadStream = require('./node-scripts/ModuleMemberListReadStream');
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir);
     }
@@ -77,6 +78,7 @@ gulp.task('member-list-md', function () {
 });
 
 gulp.task('generate-version-js', function () {
+    let VersionNumberReadStream = require('./node-scripts/VersionNumberReadStream');
     return (new VersionNumberReadStream())
         .pipe(fs.createWriteStream('./src/generated/version.js'));
 });
@@ -86,14 +88,14 @@ gulp.task('clean', () => {
         .map(partialPath => buildPath(partialPath, '**', '*.js'));
     return del(paths)
         .then(paths => {
-        if (paths.length > 0) {
-            console.log(chalk.dim('\nThe following paths have been deleted: \n - ' + paths.join('\n - ') + '\n'));
-        }
-        else {
-            console.log(chalk.dim(' - No paths to clean.') + '\n', '--mandatory');
-        }
-    })
-    .catch(console.log);
+            if (paths.length > 0) {
+                console.log(chalk.dim('\nThe following paths have been deleted: \n - ' + paths.join('\n - ') + '\n'));
+            }
+            else {
+                console.log(chalk.dim(' - No paths to clean.') + '\n', '--mandatory');
+            }
+        })
+        .catch(console.log);
 });
 
 gulp.task('eslint', () => {

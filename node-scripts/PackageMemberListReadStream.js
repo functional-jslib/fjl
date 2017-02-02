@@ -14,7 +14,7 @@ let fs = require('fs'),
     util = require('util'),
     stream = require('stream'),
     Readable = stream.Readable,
-    fjl = require('./../dist/iife/fjl.js'),
+    fjl = require('./../dist/iife/fjl'),
     isNumber = value => typeof value === 'number' && !isNaN(value);
 
 function repeatStr(str, times) {

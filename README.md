@@ -50,29 +50,11 @@ just do a `require('fjl');`
 - [(f) fjl.combinators](#f-fjlcombinators)
 - [(f) fjl.compose](#f-fjlcompose)
 - [(f) fjl.curry](#f-fjlcurry)
-- [(p) fjl.data](#p-fjldata)
-  - [(f) fjl.data.DoublyLinkedList](#f-fjldatadoublylinkedlist)
-  - [(f) fjl.data.LinkedList](#f-fjldatalinkedlist)
 - [(f) fjl.errorIfNotTypeFactory](#f-fjlerrorifnottypefactory)
 - [(f) fjl](#f-fjl)
-- [(p) fjl.functor](#p-fjlfunctor)
-  - [(f) fjl.functor.Applicative](#f-fjlfunctorapplicative)
-  - [(f) fjl.functor.Apply](#f-fjlfunctorapply)
-  - [(f) fjl.functor.Bifunctor](#f-fjlfunctorbifunctor)
-  - [(f) fjl.functor.Chain](#f-fjlfunctorchain)
-  - [(f) fjl.functor.ChainRec](#f-fjlfunctorchainrec)
-  - [(f) fjl.functor.Comonad](#f-fjlfunctorcomonad)
-  - [(f) fjl.functor.Extend](#f-fjlfunctorextend)
-  - [(f) fjl.functor.Functor](#f-fjlfunctorfunctor)
-  - [(f) fjl.functor.Profunctor](#f-fjlfunctorprofunctor)
 - [(p) fjl.generated](#p-fjlgenerated)
   - [(f) fjl.generated.version](#f-fjlgeneratedversion)
 - [(f) fjl.is](#f-fjlis)
-- [(p) fjl.monad](#p-fjlmonad)
-  - [(f) fjl.monad.Either](#f-fjlmonadeither)
-  - [(f) fjl.monad.Identity](#f-fjlmonadidentity)
-  - [(f) fjl.monad.Maybe](#f-fjlmonadmaybe)
-  - [(f) fjl.monad.Monad](#f-fjlmonadmonad)
 - [(f) fjl.not](#f-fjlnot)
 - [(f) fjl.objCombinators](#f-fjlobjcombinators)
 - [(f) fjl.subClass](#f-fjlsubclass)
@@ -154,51 +136,7 @@ just do a `require('fjl');`
 @todo - Added documentation here.
 [Back to other packages and members list.](#other-packages-and-members)
 
-### (f) fjl.data.DoublyLinkedList
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.data.LinkedList
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
 ### (f) fjl.errorIfNotTypeFactory
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.functor.Applicative
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.functor.Apply
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.functor.Bifunctor
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.functor.Chain
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.functor.ChainRec
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.functor.Comonad
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.functor.Extend
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.functor.Functor
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.functor.Profunctor
 @todo - Added documentation here.
 [Back to other packages and members list.](#other-packages-and-members)
 
@@ -211,22 +149,6 @@ just do a `require('fjl');`
 [Back to other packages and members list.](#other-packages-and-members)
 
 ### (f) fjl
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.monad.Either
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.monad.Identity
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.monad.Maybe
-@todo - Added documentation here.
-[Back to other packages and members list.](#other-packages-and-members)
-
-### (f) fjl.monad.Monad
 @todo - Added documentation here.
 [Back to other packages and members list.](#other-packages-and-members)
 
