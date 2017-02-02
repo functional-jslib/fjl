@@ -27,59 +27,11 @@ var _errorIfNotTypeFactory = require('./errorIfNotTypeFactory');
 
 var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
 
-var _Functor = require('./functor/Functor');
-
-var _Functor2 = _interopRequireDefault(_Functor);
-
-var _Bifunctor = require('./functor/Bifunctor');
-
-var _Bifunctor2 = _interopRequireDefault(_Bifunctor);
-
-var _Profunctor = require('./functor/Profunctor');
-
-var _Profunctor2 = _interopRequireDefault(_Profunctor);
-
-var _Apply = require('./functor/Apply');
-
-var _Apply2 = _interopRequireDefault(_Apply);
-
-var _Applicative = require('./functor/Applicative');
-
-var _Applicative2 = _interopRequireDefault(_Applicative);
-
-var _Chain = require('./functor/Chain');
-
-var _Chain2 = _interopRequireDefault(_Chain);
-
-var _Extend = require('./functor/Extend');
-
-var _Extend2 = _interopRequireDefault(_Extend);
-
-var _Comonad = require('./functor/Comonad');
-
-var _Comonad2 = _interopRequireDefault(_Comonad);
-
-var _Monad = require('./monad/Monad');
-
-var _Monad2 = _interopRequireDefault(_Monad);
-
-var _Maybe = require('./monad/Maybe');
-
-var _Either = require('./monad/Either');
-
 var _combinators = require('./combinators');
 
 var _objCombinators = require('./objCombinators');
 
 var _arrayCombinators = require('./arrayCombinators');
-
-var _DoublyLinkedList = require('./data/DoublyLinkedList');
-
-var _DoublyLinkedList2 = _interopRequireDefault(_DoublyLinkedList);
-
-var _LinkedList = require('./data/LinkedList');
-
-var _LinkedList2 = _interopRequireDefault(_LinkedList);
 
 var _version = require('./generated/version');
 
@@ -134,24 +86,5 @@ exports.default = {
     arrayComplement: _arrayCombinators.complement,
     arrayUnion: _arrayCombinators.union,
     length: _combinators.length,
-    Functor: _Functor2.default,
-    Bifunctor: _Bifunctor2.default,
-    Profunctor: _Profunctor2.default,
-    Apply: _Apply2.default,
-    Applicative: _Applicative2.default,
-    Chain: _Chain2.default,
-    Extend: _Extend2.default,
-    Comonad: _Comonad2.default,
-    Monad: _Monad2.default,
-    Maybe: _Maybe.Maybe,
-    Just: _Maybe.Just,
-    Nothing: _Maybe.Nothing,
-    maybe: _Maybe.maybe,
-    Either: _Either.Either,
-    Left: _Either.Left,
-    Right: _Either.Right,
-    either: _Either.either,
-    DoublyLinkedList: _DoublyLinkedList2.default,
-    LinkedList: _LinkedList2.default,
     version: _version2.default
 };

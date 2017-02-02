@@ -1,4 +1,4 @@
-define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './functor/Functor', './functor/Bifunctor', './functor/Profunctor', './functor/Apply', './functor/Applicative', './functor/Chain', './functor/Extend', './functor/Comonad', './monad/Monad', './monad/Maybe', './monad/Either', './combinators', './objCombinators', './arrayCombinators', './data/DoublyLinkedList', './data/LinkedList', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _Functor, _Bifunctor, _Profunctor, _Apply, _Applicative, _Chain, _Extend, _Comonad, _Monad, _Maybe, _Either, _combinators, _objCombinators, _arrayCombinators, _DoublyLinkedList, _LinkedList, _version) {
+define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './combinators', './objCombinators', './arrayCombinators', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _combinators, _objCombinators, _arrayCombinators, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -11,28 +11,6 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
     var _compose2 = _interopRequireDefault(_compose);
 
     var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
-
-    var _Functor2 = _interopRequireDefault(_Functor);
-
-    var _Bifunctor2 = _interopRequireDefault(_Bifunctor);
-
-    var _Profunctor2 = _interopRequireDefault(_Profunctor);
-
-    var _Apply2 = _interopRequireDefault(_Apply);
-
-    var _Applicative2 = _interopRequireDefault(_Applicative);
-
-    var _Chain2 = _interopRequireDefault(_Chain);
-
-    var _Extend2 = _interopRequireDefault(_Extend);
-
-    var _Comonad2 = _interopRequireDefault(_Comonad);
-
-    var _Monad2 = _interopRequireDefault(_Monad);
-
-    var _DoublyLinkedList2 = _interopRequireDefault(_DoublyLinkedList);
-
-    var _LinkedList2 = _interopRequireDefault(_LinkedList);
 
     var _version2 = _interopRequireDefault(_version);
 
@@ -89,25 +67,6 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
         arrayComplement: _arrayCombinators.complement,
         arrayUnion: _arrayCombinators.union,
         length: _combinators.length,
-        Functor: _Functor2.default,
-        Bifunctor: _Bifunctor2.default,
-        Profunctor: _Profunctor2.default,
-        Apply: _Apply2.default,
-        Applicative: _Applicative2.default,
-        Chain: _Chain2.default,
-        Extend: _Extend2.default,
-        Comonad: _Comonad2.default,
-        Monad: _Monad2.default,
-        Maybe: _Maybe.Maybe,
-        Just: _Maybe.Just,
-        Nothing: _Maybe.Nothing,
-        maybe: _Maybe.maybe,
-        Either: _Either.Either,
-        Left: _Either.Left,
-        Right: _Either.Right,
-        either: _Either.either,
-        DoublyLinkedList: _DoublyLinkedList2.default,
-        LinkedList: _LinkedList2.default,
         version: _version2.default
     };
 });

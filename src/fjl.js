@@ -14,17 +14,6 @@ import {isset, issetAndOfType, isNumber,
     isWeakMap, isWeakSet, isConstructablePrimitive} from './is';
 import {notEmptyAndOfType} from './not';
 import errorIfNotTypeFactory from './errorIfNotTypeFactory';
-import Functor from './functor/Functor';
-import Bifunctor from './functor/Bifunctor';
-import Profunctor from './functor/Profunctor';
-import Apply from './functor/Apply';
-import Applicative from './functor/Applicative';
-import Chain from './functor/Chain';
-import Extend from './functor/Extend';
-import Comonad from './functor/Comonad';
-import Monad from './monad/Monad';
-import {Maybe, Just, Nothing, maybe} from './monad/Maybe';
-import {Either, Left, Right, either} from './monad/Either';
 import {length, complement, difference, union, intersect} from './combinators';
 import {complement as objComplement,
     difference as objDifference,
@@ -34,8 +23,6 @@ import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
     intersect as arrayIntersect} from './arrayCombinators';
-import DoublyLinkedList from './data/DoublyLinkedList';
-import LinkedList from './data/LinkedList';
 import version from './generated/version';
 
 export default {
@@ -85,24 +72,5 @@ export default {
     arrayComplement,
     arrayUnion,
     length,
-    Functor,
-    Bifunctor,
-    Profunctor,
-    Apply,
-    Applicative,
-    Chain,
-    Extend,
-    Comonad,
-    Monad,
-    Maybe,
-    Just,
-    Nothing,
-    maybe,
-    Either,
-    Left,
-    Right,
-    either,
-    DoublyLinkedList,
-    LinkedList,
     version
 };
