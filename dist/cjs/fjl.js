@@ -27,11 +27,11 @@ var _errorIfNotTypeFactory = require('./errorIfNotTypeFactory');
 
 var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
 
-var _combinators = require('./combinators');
+var _operators = require('./operators');
 
-var _objCombinators = require('./objCombinators');
+var _objOperators = require('./objOperators');
 
-var _arrayCombinators = require('./arrayCombinators');
+var _arrayOperators = require('./arrayOperators');
 
 var _version = require('./generated/version');
 
@@ -73,18 +73,18 @@ exports.default = {
     isConstructablePrimitive: _is.isConstructablePrimitive,
     notEmptyAndOfType: _not.notEmptyAndOfType,
     errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
-    complement: _combinators.complement,
-    difference: _combinators.difference,
-    intersect: _combinators.intersect,
-    union: _combinators.union,
-    objComplement: _objCombinators.complement,
-    objDifference: _objCombinators.difference,
-    objIntersect: _objCombinators.intersect,
-    objUnion: _objCombinators.union,
-    arrayDifference: _arrayCombinators.difference,
-    arrayIntersect: _arrayCombinators.intersect,
-    arrayComplement: _arrayCombinators.complement,
-    arrayUnion: _arrayCombinators.union,
-    length: _combinators.length,
+    complement: _operators.complement,
+    difference: _operators.difference,
+    intersect: _operators.intersect,
+    union: _operators.union,
+    objComplement: _objOperators.complement,
+    objDifference: _objOperators.difference,
+    objIntersect: _objOperators.intersect,
+    objUnion: _objOperators.union,
+    arrayDifference: _arrayOperators.difference,
+    arrayIntersect: _arrayOperators.intersect,
+    arrayComplement: _arrayOperators.complement,
+    arrayUnion: _arrayOperators.union,
+    length: _operators.length,
     version: _version2.default
 };

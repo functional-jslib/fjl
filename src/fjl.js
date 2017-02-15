@@ -14,15 +14,15 @@ import {isset, issetAndOfType, isNumber,
     isWeakMap, isWeakSet, isConstructablePrimitive} from './is';
 import {notEmptyAndOfType} from './not';
 import errorIfNotTypeFactory from './errorIfNotTypeFactory';
-import {length, complement, difference, union, intersect} from './combinators';
+import {length, complement, difference, union, intersect} from './operators';
 import {complement as objComplement,
     difference as objDifference,
     union as objUnion,
-    intersect as objIntersect} from './objCombinators';
+    intersect as objIntersect} from './objOperators';
 import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
-    intersect as arrayIntersect} from './arrayCombinators';
+    intersect as arrayIntersect} from './arrayOperators';
 import version from './generated/version';
 
 export default {

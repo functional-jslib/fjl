@@ -10,12 +10,12 @@ import {typeOf} from './typeOf';
 import {complement as objComplement,
     difference as objDifference,
     union as objUnion,
-    intersect as objIntersect} from './objCombinators';
+    intersect as objIntersect} from './objOperators';
 
 import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
-    intersect as arrayIntersect} from './arrayCombinators';
+    intersect as arrayIntersect} from './arrayOperators';
 
 export let id = value => value,
 

@@ -51,13 +51,6 @@ var divide = exports.divide = curry2(function () {
         return agg / num;
     }, args.shift());
 });
-var unwrapMonad = exports.unwrapMonad = function unwrapMonad(monad) {
-    var value = monad;
-    while (value instanceof Monad) {
-        value = join(monad);
-    }
-    return value;
-};
 
 exports.default = {
     expectFunction: expectFunction,
@@ -65,7 +58,6 @@ exports.default = {
     expectEqual: expectEqual,
     expectFalse: expectFalse,
     expectTrue: expectTrue,
-    unwrapMonad: unwrapMonad,
     add: add,
     multiply: multiply,
     divide: divide

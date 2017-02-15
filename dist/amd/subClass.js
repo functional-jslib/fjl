@@ -1,4 +1,4 @@
-define(['exports', './is', './not', './objCombinators', './assign'], function (exports, _is, _not, _objCombinators, _assign) {
+define(['exports', './is', './not', './objOperators', './assign'], function (exports, _is, _not, _objOperators, _assign) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -26,7 +26,7 @@ define(['exports', './is', './not', './objCombinators', './assign'], function (e
         }, {}),
             isCtorAndMethods = !(0, _is.isFunction)(constructor),
             _constructor = isCtorAndMethods ? constructor.constructor : constructor,
-            _methods = isCtorAndMethods ? (0, _objCombinators.difference)(constructor, { constructor: null }) : methods,
+            _methods = isCtorAndMethods ? (0, _objOperators.difference)(constructor, { constructor: null }) : methods,
             _statics = (0, _assign.assign)(_extractedStatics, isCtorAndMethods ? methods : statics);
 
         return {

@@ -1,6 +1,5 @@
-- [(f) fjl.arrayCombinators](#f-fjlarraycombinators)
+- [(f) fjl.arrayOperators](#f-fjlarrayoperators)
 - [(f) fjl.assign](#f-fjlassign)
-- [(f) fjl.combinators](#f-fjlcombinators)
 - [(f) fjl.compose](#f-fjlcompose)
 - [(f) fjl.curry](#f-fjlcurry)
 - [(f) fjl.errorIfNotTypeFactory](#f-fjlerrorifnottypefactory)
@@ -9,7 +8,8 @@
   - [(f) fjl.generated.version](#f-fjlgeneratedversion)
 - [(f) fjl.is](#f-fjlis)
 - [(f) fjl.not](#f-fjlnot)
-- [(f) fjl.objCombinators](#f-fjlobjcombinators)
+- [(f) fjl.objOperators](#f-fjlobjoperators)
+- [(f) fjl.operators](#f-fjloperators)
 - [(f) fjl.subClass](#f-fjlsubclass)
 - [(f) fjl.typeOf](#f-fjltypeof)
 

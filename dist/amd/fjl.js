@@ -1,4 +1,4 @@
-define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './combinators', './objCombinators', './arrayCombinators', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _combinators, _objCombinators, _arrayCombinators, _version) {
+define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './operators', './objOperators', './arrayOperators', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _operators, _objOperators, _arrayOperators, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -54,19 +54,19 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
         isConstructablePrimitive: _is.isConstructablePrimitive,
         notEmptyAndOfType: _not.notEmptyAndOfType,
         errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
-        complement: _combinators.complement,
-        difference: _combinators.difference,
-        intersect: _combinators.intersect,
-        union: _combinators.union,
-        objComplement: _objCombinators.complement,
-        objDifference: _objCombinators.difference,
-        objIntersect: _objCombinators.intersect,
-        objUnion: _objCombinators.union,
-        arrayDifference: _arrayCombinators.difference,
-        arrayIntersect: _arrayCombinators.intersect,
-        arrayComplement: _arrayCombinators.complement,
-        arrayUnion: _arrayCombinators.union,
-        length: _combinators.length,
+        complement: _operators.complement,
+        difference: _operators.difference,
+        intersect: _operators.intersect,
+        union: _operators.union,
+        objComplement: _objOperators.complement,
+        objDifference: _objOperators.difference,
+        objIntersect: _objOperators.intersect,
+        objUnion: _objOperators.union,
+        arrayDifference: _arrayOperators.difference,
+        arrayIntersect: _arrayOperators.intersect,
+        arrayComplement: _arrayOperators.complement,
+        arrayUnion: _arrayOperators.union,
+        length: _operators.length,
         version: _version2.default
     };
 });

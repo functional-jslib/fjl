@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './combinators', './objCombinators', './arrayCombinators', './generated/version'], factory);
+        define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './operators', './objOperators', './arrayOperators', './generated/version'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./assign'), require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./errorIfNotTypeFactory'), require('./combinators'), require('./objCombinators'), require('./arrayCombinators'), require('./generated/version'));
+        factory(exports, require('./assign'), require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./errorIfNotTypeFactory'), require('./operators'), require('./objOperators'), require('./arrayOperators'), require('./generated/version'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.assign, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.errorIfNotTypeFactory, global.combinators, global.objCombinators, global.arrayCombinators, global.version);
+        factory(mod.exports, global.assign, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.errorIfNotTypeFactory, global.operators, global.objOperators, global.arrayOperators, global.version);
         global.fjl = mod.exports;
     }
-})(this, function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _combinators, _objCombinators, _arrayCombinators, _version) {
+})(this, function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _operators, _objOperators, _arrayOperators, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -66,19 +66,19 @@
         isConstructablePrimitive: _is.isConstructablePrimitive,
         notEmptyAndOfType: _not.notEmptyAndOfType,
         errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
-        complement: _combinators.complement,
-        difference: _combinators.difference,
-        intersect: _combinators.intersect,
-        union: _combinators.union,
-        objComplement: _objCombinators.complement,
-        objDifference: _objCombinators.difference,
-        objIntersect: _objCombinators.intersect,
-        objUnion: _objCombinators.union,
-        arrayDifference: _arrayCombinators.difference,
-        arrayIntersect: _arrayCombinators.intersect,
-        arrayComplement: _arrayCombinators.complement,
-        arrayUnion: _arrayCombinators.union,
-        length: _combinators.length,
+        complement: _operators.complement,
+        difference: _operators.difference,
+        intersect: _operators.intersect,
+        union: _operators.union,
+        objComplement: _objOperators.complement,
+        objDifference: _objOperators.difference,
+        objIntersect: _objOperators.intersect,
+        objUnion: _objOperators.union,
+        arrayDifference: _arrayOperators.difference,
+        arrayIntersect: _arrayOperators.intersect,
+        arrayComplement: _arrayOperators.complement,
+        arrayUnion: _arrayOperators.union,
+        length: _operators.length,
         version: _version2.default
     };
 });

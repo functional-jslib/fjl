@@ -10,7 +10,7 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {complement, difference, union, intersect} from '../../src/objCombinators';
+import {complement, difference, union, intersect} from '../../src/objOperators';
 import {expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

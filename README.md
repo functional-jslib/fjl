@@ -45,9 +45,8 @@ just do a `require('fjl');`
 
 #### Packages and Members List list:
 
-- [(f) fjl.arrayCombinators](#f-fjlarraycombinators)
+- [(f) fjl.arrayOperators](#f-fjlarrayoperators)
 - [(f) fjl.assign](#f-fjlassign)
-- [(f) fjl.combinators](#f-fjlcombinators)
 - [(f) fjl.compose](#f-fjlcompose)
 - [(f) fjl.curry](#f-fjlcurry)
 - [(f) fjl.errorIfNotTypeFactory](#f-fjlerrorifnottypefactory)
@@ -56,7 +55,8 @@ just do a `require('fjl');`
   - [(f) fjl.generated.version](#f-fjlgeneratedversion)
 - [(f) fjl.is](#f-fjlis)
 - [(f) fjl.not](#f-fjlnot)
-- [(f) fjl.objCombinators](#f-fjlobjcombinators)
+- [(f) fjl.objOperators](#f-fjlobjoperators)
+- [(f) fjl.operators](#f-fjloperators)
 - [(f) fjl.subClass](#f-fjlsubclass)
 - [(f) fjl.typeOf](#f-fjltypeof)
 
@@ -120,6 +120,10 @@ just do a `require('fjl');`
 @todo - Added documentation here.
 [Back to other packages and members list.](#other-packages-and-members)
 
+### (f) fjl.arrayOperators
+@todo - Added documentation here.
+[Back to other packages and members list.](#other-packages-and-members)
+
 ### (f) fjl.assign
 @todo - Added documentation here.
 [Back to other packages and members list.](#other-packages-and-members)
@@ -157,6 +161,14 @@ just do a `require('fjl');`
 [Back to other packages and members list.](#other-packages-and-members)
 
 ### (f) fjl.objCombinators
+@todo - Added documentation here.
+[Back to other packages and members list.](#other-packages-and-members)
+
+### (f) fjl.objOperators
+@todo - Added documentation here.
+[Back to other packages and members list.](#other-packages-and-members)
+
+### (f) fjl.operators
 @todo - Added documentation here.
 [Back to other packages and members list.](#other-packages-and-members)
 
