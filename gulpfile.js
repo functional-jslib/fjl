@@ -72,7 +72,7 @@ gulp.task('member-list-md', function () {
     }
     fs.writeFileSync(filePath, '');
     return (new ModuleMemberReadStream(
-        require('./dist/cjs/fjl').default, 'fjl', markdownFragsPath + '/member-list'
+        require('./dist/cjs/fjl'), 'fjl', markdownFragsPath + '/member-list'
     ))
         .pipe(fs.createWriteStream(filePath));
 });

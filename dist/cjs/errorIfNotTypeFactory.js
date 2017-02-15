@@ -36,3 +36,4 @@ function errorIfNotTypeFactory(contextName) {
 errorIfNotTypeFactory.typeListToString = typesListToString;
 
 exports.default = errorIfNotTypeFactory;
+module.exports = exports['default'];

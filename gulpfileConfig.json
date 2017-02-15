@@ -16,14 +16,18 @@
   },
   "buildCjsOptions": {
     "babel": {
+      "presets": [
+        "latest"
+      ],
       "plugins": [
-        "transform-es2015-modules-commonjs"
+        "babel-plugin-add-module-exports"
       ]
     }
   },
   "buildUmdOptions": {
     "babel": {
       "plugins": [
+        "babel-plugin-add-module-exports",
         "transform-es2015-modules-umd"
       ]
     }

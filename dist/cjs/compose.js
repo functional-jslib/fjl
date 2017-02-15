@@ -25,3 +25,4 @@ function compose() {
     }, arg0);
   };
 }
+module.exports = exports["default"];

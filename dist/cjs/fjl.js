@@ -88,3 +88,4 @@ exports.default = {
     length: _operators.length,
     version: _version2.default
 };
+module.exports = exports['default'];

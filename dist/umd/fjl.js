@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './operators', './objOperators', './arrayOperators', './generated/version'], factory);
+        define(['module', 'exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './operators', './objOperators', './arrayOperators', './generated/version'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./assign'), require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./errorIfNotTypeFactory'), require('./operators'), require('./objOperators'), require('./arrayOperators'), require('./generated/version'));
+        factory(module, exports, require('./assign'), require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./errorIfNotTypeFactory'), require('./operators'), require('./objOperators'), require('./arrayOperators'), require('./generated/version'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.assign, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.errorIfNotTypeFactory, global.operators, global.objOperators, global.arrayOperators, global.version);
+        factory(mod, mod.exports, global.assign, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.errorIfNotTypeFactory, global.operators, global.objOperators, global.arrayOperators, global.version);
         global.fjl = mod.exports;
     }
-})(this, function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _operators, _objOperators, _arrayOperators, _version) {
+})(this, function (module, exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _operators, _objOperators, _arrayOperators, _version) {
     /**
      * Created by elyde on 12/6/2016.
      */
@@ -81,4 +81,5 @@
         length: _operators.length,
         version: _version2.default
     };
+    module.exports = exports['default'];
 });

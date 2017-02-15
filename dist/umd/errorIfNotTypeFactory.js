@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './typeOf'], factory);
+        define(['module', 'exports', './typeOf'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./typeOf'));
+        factory(module, exports, require('./typeOf'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.typeOf);
+        factory(mod, mod.exports, global.typeOf);
         global.errorIfNotTypeFactory = mod.exports;
     }
-})(this, function (exports, _typeOf) {
+})(this, function (module, exports, _typeOf) {
     /**
      * Created by elyde on 1/20/2017.
      */
@@ -48,4 +48,5 @@
     errorIfNotTypeFactory.typeListToString = typesListToString;
 
     exports.default = errorIfNotTypeFactory;
+    module.exports = exports['default'];
 });
