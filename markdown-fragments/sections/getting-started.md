@@ -1,18 +1,21 @@
 ## Getting Started:
 
-### In the browser:
-Include './dist/iife/fjl[.min].js' .
+### In Browser:
+In the './dist' folder there are three distributed builds available for the
+browser:
+
+- './dist/iife' - Immediately Invoked Function Execution - (exports `fjl` as a global).
+- './dist/cjs' - CommonJs module format.
+- './dist/umd' - Universal module definition format.
 
 ### In NodeJs: 
+
+#### Using CommonJs modules:
+```
+const fjl = require('fjl');
+```
 
 #### Using es2015 modules:
 ```
 import fjl from './node_modules/fjl/src/fjl';
 ```
-@todo add es6 config to package.json so module is importable as an es6 module by default (
- `import fjl from 'fjl';`
-).
-
-#### Using CommonJs modules:
-just do a `require('fjl');`
-
