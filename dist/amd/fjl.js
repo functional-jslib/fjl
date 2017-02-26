@@ -2,6 +2,7 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
     /**
      * Created by elyde on 12/6/2016.
      */
+
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -54,6 +55,25 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
         isConstructablePrimitive: _is.isConstructablePrimitive,
         notEmptyAndOfType: _not.notEmptyAndOfType,
         errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
+        id: _operators.id,
+        equals: _operators.equals,
+        concat: _operators.concat,
+        of: _operators.of,
+        empty: _operators.empty,
+        zero: _operators.zero,
+        ap: _operators.ap,
+        alt: _operators.alt,
+        map: _operators.map,
+        filter: _operators.filter,
+        reduce: _operators.reduce,
+        reduceRight: _operators.reduceRight,
+        join: _operators.join,
+        chain: _operators.chain,
+        liftN: _operators.liftN,
+        extend: _operators.extend,
+        extract: _operators.extract,
+        promap: _operators.promap,
+        bimap: _operators.bimap,
         complement: _operators.complement,
         difference: _operators.difference,
         intersect: _operators.intersect,
@@ -66,7 +86,6 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
         arrayIntersect: _arrayOperators.intersect,
         arrayComplement: _arrayOperators.complement,
         arrayUnion: _arrayOperators.union,
-        length: _operators.length,
         version: _version2.default
     };
 });

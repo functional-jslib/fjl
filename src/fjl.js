@@ -1,6 +1,7 @@
 /**
  * Created by elyde on 12/6/2016.
  */
+
 'use strict';
 
 import {assign, assignDeep} from './assign';
@@ -14,7 +15,9 @@ import {isset, issetAndOfType, isNumber,
     isWeakMap, isWeakSet, isConstructablePrimitive} from './is';
 import {notEmptyAndOfType} from './not';
 import errorIfNotTypeFactory from './errorIfNotTypeFactory';
-import {length, complement, difference, union, intersect} from './operators';
+import {complement, difference, union, intersect,
+    id, equals, concat, of, empty, zero, ap, alt, map, filter, reduce,
+    reduceRight, join, chain, liftN, extend, extract, promap, bimap} from './operators';
 import {complement as objComplement,
     difference as objDifference,
     union as objUnion,
@@ -59,6 +62,25 @@ export default {
     isConstructablePrimitive,
     notEmptyAndOfType,
     errorIfNotTypeFactory,
+    id,
+    equals,
+    concat,
+    of,
+    empty,
+    zero,
+    ap,
+    alt,
+    map,
+    filter,
+    reduce,
+    reduceRight,
+    join,
+    chain,
+    liftN,
+    extend,
+    extract,
+    promap,
+    bimap,
     complement,
     difference,
     intersect,
@@ -71,6 +93,5 @@ export default {
     arrayIntersect,
     arrayComplement,
     arrayUnion,
-    length,
     version
 };

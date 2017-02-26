@@ -8,10 +8,9 @@
 'use strict';
 let {assert, expect}  = require('chai');
 let compose  = require('../../dist/cjs/compose');
-let {length}  = require('../../dist/cjs/operators');
 let {__}  = require('../../dist/cjs/curry');
 let {complement, difference, union, intersect, flatten, flattenMulti, concat, join, equals}  = require('../../dist/cjs/arrayOperators');
-let {expectFalse, expectTrue, expectEqual, expectFunction}  = require('./helpers');
+let {length, expectFalse, expectTrue, expectEqual, expectFunction}  = require('./helpers');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 

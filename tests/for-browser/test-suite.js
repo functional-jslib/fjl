@@ -24,6 +24,9 @@ var expectTrue = exports.expectTrue = function expectTrue(value) {
 var hasOwnProperty = exports.hasOwnProperty = function hasOwnProperty(instance, key) {
     return Object.prototype.hasOwnProperty.call(instance, key);
 };
+var length = exports.length = function length(something) {
+    return something.length;
+};
 var add = exports.add = curry2(function () {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
@@ -58,6 +61,8 @@ exports.default = {
     expectEqual: expectEqual,
     expectFalse: expectFalse,
     expectTrue: expectTrue,
+    hasOwnProperty: hasOwnProperty,
+    length: length,
     add: add,
     multiply: multiply,
     divide: divide

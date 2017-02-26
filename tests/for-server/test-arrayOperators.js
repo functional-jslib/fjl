@@ -8,10 +8,9 @@
 'use strict';
 import {assert, expect} from 'chai';
 import compose from '../../src/compose';
-import {length} from '../../src/operators';
 import {__} from '../../src/curry';
 import {complement, difference, union, intersect, flatten, flattenMulti, concat, join, equals} from '../../src/arrayOperators';
-import {expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
+import {length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 

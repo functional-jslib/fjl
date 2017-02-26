@@ -19,8 +19,6 @@ import {complement as arrayComplement,
 
 export let id = value => value,
 
-    length = something => something.length,
-
     equals = curry2((functor1, functor2) => {
         return functor1.equals && isFunction(functor1.equals) ?
             functor1.equals(functor2) : functor1 === functor2;
@@ -39,10 +37,8 @@ export let id = value => value,
         else if (!isConstructablePrimitive(functor)) {
             retVal = new constructor();
         }
-        else {
-            retVal = constructor();
-        }
-        return retVal;
+
+        return retVal || constructor();
     },
 
     empty = functor => functor.constructor.empty ? functor.constructor.empty() : of(functor),
@@ -63,7 +59,7 @@ export let id = value => value,
 
     join = curry2((functor, delimiter) => {
         if (Array.isArray(functor)) {
-          return functor.join(delimiter);
+            return functor.join(delimiter);
         }
         else if (functor.join) {
             return functor.join();
@@ -76,14 +72,12 @@ export let id = value => value,
 
     chain = curry2((fn, functor) => join(map(fn, functor))),
 
-    flatMap = chain,
-
     // chainRec = () => {},
 
-    // flatMapR = chainRec,
-
     liftN = curry3((fn, functor1, ...otherFunctors) => {
-        return otherFunctors.reduce((aggregator, functor) => ap(aggregator, functor), map(fn, functor1));
+        return otherFunctors.reduce(
+            (aggregator, functor) => ap(aggregator, functor), map(fn, functor1)
+        );
     }),
 
     extend = curry2((fn, functor) => functor.extend(fn)),
@@ -96,8 +90,6 @@ export let id = value => value,
 
     complement = curry2((functor, ...others) => {
         switch (typeOf(functor)) {
-            case 'Object':
-                return objComplement(functor, ...others);
             case 'Array':
                 return arrayComplement(functor, ...others);
             default:
@@ -107,8 +99,6 @@ export let id = value => value,
 
     difference = curry2((functor1, functor2) => {
         switch (typeOf(functor1)) {
-            case 'Object':
-                return objDifference(functor1, functor2);
             case 'Array':
                 return arrayDifference(functor1, functor2);
             default:
@@ -118,8 +108,6 @@ export let id = value => value,
 
     union = curry2((functor1, functor2) => {
         switch (typeOf(functor1)) {
-            case 'Object':
-                return objUnion(functor1, functor2);
             case 'Array':
                 return arrayUnion(functor1, functor2);
             default:
@@ -129,8 +117,6 @@ export let id = value => value,
 
     intersect = curry2((functor1, functor2) => {
         switch (typeOf(functor1)) {
-            case 'Object':
-                return objIntersect(functor1, functor2);
             case 'Array':
                 return arrayIntersect(functor1, functor2);
             default:
@@ -150,7 +136,6 @@ export default {
     reduceRight,
     ap,
     chain,
-    flatMap,
     join,
     alt,
     zero,

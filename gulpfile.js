@@ -173,7 +173,7 @@ gulp.task('tests', ['eslint'], function () {
         .pipe(mocha(gulpConfig.tests.mocha));
 });
 
-gulp.task('watch', () => {
+gulp.task('watch', ['build'], () => {
     return gulp.watch([
         srcsGlob,
         './node_modules/**'

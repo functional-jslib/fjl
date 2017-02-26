@@ -7,12 +7,9 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.intersect = exports.union = exports.difference = exports.complement = exports.bimap = exports.promap = exports.extract = exports.extend = exports.liftN = exports.flatMap = exports.chain = exports.join = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.alt = exports.ap = exports.zero = exports.empty = exports.of = exports.concat = exports.equals = exports.length = exports.id = undefined;
+    exports.intersect = exports.union = exports.difference = exports.complement = exports.bimap = exports.promap = exports.extract = exports.extend = exports.liftN = exports.chain = exports.join = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.alt = exports.ap = exports.zero = exports.empty = exports.of = exports.concat = exports.equals = exports.id = undefined;
     var id = exports.id = function id(value) {
         return value;
-    },
-        length = exports.length = function length(something) {
-        return something.length;
     },
         equals = exports.equals = (0, _curry.curry2)(function (functor1, functor2) {
         return functor1.equals && (0, _is.isFunction)(functor1.equals) ? functor1.equals(functor2) : functor1 === functor2;
@@ -27,10 +24,9 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
             retVal = constructor.of();
         } else if (!(0, _is.isConstructablePrimitive)(functor)) {
             retVal = new constructor();
-        } else {
-            retVal = constructor();
         }
-        return retVal;
+
+        return retVal || constructor();
     },
         empty = exports.empty = function empty(functor) {
         return functor.constructor.empty ? functor.constructor.empty() : of(functor);
@@ -69,12 +65,9 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
         chain = exports.chain = (0, _curry.curry2)(function (fn, functor) {
         return join(map(fn, functor));
     }),
-        flatMap = exports.flatMap = chain,
 
 
     // chainRec = () => {},
-
-    // flatMapR = chainRec,
 
     liftN = exports.liftN = (0, _curry.curry3)(function (fn, functor1) {
         for (var _len = arguments.length, otherFunctors = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
@@ -103,8 +96,6 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
         }
 
         switch ((0, _typeOf.typeOf)(functor)) {
-            case 'Object':
-                return _objOperators.complement.apply(undefined, [functor].concat(others));
             case 'Array':
                 return _arrayOperators.complement.apply(undefined, [functor].concat(others));
             default:
@@ -113,8 +104,6 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
     }),
         difference = exports.difference = (0, _curry.curry2)(function (functor1, functor2) {
         switch ((0, _typeOf.typeOf)(functor1)) {
-            case 'Object':
-                return (0, _objOperators.difference)(functor1, functor2);
             case 'Array':
                 return (0, _arrayOperators.difference)(functor1, functor2);
             default:
@@ -123,8 +112,6 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
     }),
         union = exports.union = (0, _curry.curry2)(function (functor1, functor2) {
         switch ((0, _typeOf.typeOf)(functor1)) {
-            case 'Object':
-                return (0, _objOperators.union)(functor1, functor2);
             case 'Array':
                 return (0, _arrayOperators.union)(functor1, functor2);
             default:
@@ -133,8 +120,6 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
     }),
         intersect = exports.intersect = (0, _curry.curry2)(function (functor1, functor2) {
         switch ((0, _typeOf.typeOf)(functor1)) {
-            case 'Object':
-                return (0, _objOperators.intersect)(functor1, functor2);
             case 'Array':
                 return (0, _arrayOperators.intersect)(functor1, functor2);
             default:
@@ -154,7 +139,6 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
         reduceRight: reduceRight,
         ap: ap,
         chain: chain,
-        flatMap: flatMap,
         join: join,
         alt: alt,
         zero: zero,

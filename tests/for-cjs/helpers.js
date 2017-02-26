@@ -23,6 +23,8 @@ let expectInstanceOf = curry2((value, instance) => expect(value).to.be.instanceO
 
     hasOwnProperty = (instance, key) => Object.prototype.hasOwnProperty.call(instance, key),
 
+    length = something => something.length,
+
     add = curry2((...args) => {
         return args.reduce((agg, num) => num + agg, 0);
     }),
@@ -42,6 +44,7 @@ module.exports = {
     expectFalse,
     expectTrue,
     hasOwnProperty,
+    length,
     add,
     multiply,
     divide
