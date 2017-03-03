@@ -4,7 +4,7 @@
 
 'use strict';
 
-let fs = require('fs'),
+const fs = require('fs'),
     path = require('path'),
     crypto = require('crypto'),
     packageJson = require('./package'),
@@ -40,6 +40,9 @@ let fs = require('fs'),
     iifeModuleName = 'fjl',
     srcsGlob = './src/**/*.js',
 
+    ModuleMemberReadStream = require('./node-scripts/ModuleMemberListReadStream'),
+    VersionNumberReadStream = require('./node-scripts/VersionNumberReadStream'),
+
     /** Lazy Pipes **/
     eslintPipe = lazyPipe()
         .pipe(eslint)
@@ -51,22 +54,9 @@ let fs = require('fs'),
         .pipe(babel)
         .pipe(concat, buildPath(iifeBuildPath, iifeFileName));
 
-gulp.task('package-member-list-md', function () {
-    let outputDir = './markdown-fragments/generated',
-        filePath = outputDir + '/package-member-list.md',
-        PackageMemberReadStream = require('./node-scripts/PackageMemberListReadStream');
-    if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir);
-    }
-    fs.writeFileSync(filePath, '');
-    return (new PackageMemberReadStream('./src', markdownFragsPath + '/package-member-list'))
-        .pipe(fs.createWriteStream(filePath));
-});
-
 gulp.task('member-list-md', function () {
     let outputDir = './markdown-fragments/generated',
-        filePath = outputDir + '/member-list.md',
-        ModuleMemberReadStream = require('./node-scripts/ModuleMemberListReadStream');
+        filePath = outputDir + '/member-list.md';
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir);
     }
@@ -77,8 +67,13 @@ gulp.task('member-list-md', function () {
         .pipe(fs.createWriteStream(filePath));
 });
 
+gulp.task('member-list-md-content', ['member-list-md'], function () {
+    return gulp.src(markdownFragsPath + '/member-list/*.md')
+        .pipe(concat(markdownFragsPath + '/generated/member-list-content.md'))
+        .pipe(gulp.dest('./'));
+});
+
 gulp.task('generate-version-js', function () {
-    let VersionNumberReadStream = require('./node-scripts/VersionNumberReadStream');
     return (new VersionNumberReadStream())
         .pipe(fs.createWriteStream('./src/generated/version.js'));
 });
@@ -156,8 +151,8 @@ gulp.task('build-browser-tests', ['build-js'], function () {
 });
 
 gulp.task('build-readme', [
-    'package-member-list-md',
     'member-list-md',
+    'member-list-md-content',
     'generate-version-js'
 ], function () {
     return gulp.src(gulpConfig.readme)

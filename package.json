@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl.js",
   "directories": {
@@ -41,6 +41,7 @@
   },
   "scripts": {
     "test": "mocha tests/for-server/test-*.js --compilers js:babel-register --require babel-polyfill",
+    "test-cjs": "mocha tests/for-cjs/test-*.js",
     "build": "gulp build"
   },
   "repository": {

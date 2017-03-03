@@ -3,5 +3,4 @@
 [![NPM version](https://badge.fury.io/js/fjl.svg)](http://badge.fury.io/js/fjl)
 [![Dependencies](https://david-dm.org/elycruz/fjl.png)](https://david-dm.org/elycruz/fjl)
 # fjl
-====
 Functional Javascript Library
