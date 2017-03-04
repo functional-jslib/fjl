@@ -4,7 +4,7 @@
 'use strict';
 
 import {curry2, curry3} from './curry';
-import {isFunction, isConstructablePrimitive} from './is';
+import {isConstructablePrimitive} from './is';
 import {typeOf} from './typeOf';
 
 import {complement as objComplement,
@@ -17,11 +17,10 @@ import {complement as arrayComplement,
     union as arrayUnion,
     intersect as arrayIntersect} from './arrayOperators';
 
-export let id = value => value,
+export const id = value => value,
 
     equals = curry2((functor1, functor2) => {
-        return functor1.equals && isFunction(functor1.equals) ?
-            functor1.equals(functor2) : functor1 === functor2;
+        return functor1.equals ? functor1.equals(functor2) : functor1 === functor2;
     }),
 
     concat = curry2((functor1, functor2) => {
@@ -37,7 +36,6 @@ export let id = value => value,
         else if (!isConstructablePrimitive(functor)) {
             retVal = new constructor();
         }
-
         return retVal || constructor();
     },
 
@@ -57,20 +55,9 @@ export let id = value => value,
 
     reduceRight = curry3((fn, agg, functor) => functor.reduceRight(fn, agg)),
 
-    join = curry2((functor, delimiter) => {
-        if (Array.isArray(functor)) {
-            return functor.join(delimiter);
-        }
-        else if (functor.join) {
-            return functor.join();
-        }
-        else if (Object.prototype.hasOwnProperty.call(functor, 'value')) {
-            return functor.value;
-        }
-        return of(functor);
-    }),
+    join = curry2((functor, delimiter) => Array.isArray(functor) ? functor.join(delimiter) : functor.join()),
 
-    chain = curry2((fn, functor) => join(map(fn, functor))),
+    chain = curry2((fn, functor) => functor.chain ? functor.chain(fn) : join(map(fn, functor))),
 
     // chainRec = () => {},
 

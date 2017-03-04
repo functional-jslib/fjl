@@ -12,7 +12,7 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
         return value;
     },
         equals = exports.equals = (0, _curry.curry2)(function (functor1, functor2) {
-        return functor1.equals && (0, _is.isFunction)(functor1.equals) ? functor1.equals(functor2) : functor1 === functor2;
+        return functor1.equals ? functor1.equals(functor2) : functor1 === functor2;
     }),
         concat = exports.concat = (0, _curry.curry2)(function (functor1, functor2) {
         return functor1.concat ? functor1.concat(functor2) : functor1 + functor2;
@@ -25,7 +25,6 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
         } else if (!(0, _is.isConstructablePrimitive)(functor)) {
             retVal = new constructor();
         }
-
         return retVal || constructor();
     },
         empty = exports.empty = function empty(functor) {
@@ -53,17 +52,10 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
         return functor.reduceRight(fn, agg);
     }),
         join = exports.join = (0, _curry.curry2)(function (functor, delimiter) {
-        if (Array.isArray(functor)) {
-            return functor.join(delimiter);
-        } else if (functor.join) {
-            return functor.join();
-        } else if (Object.prototype.hasOwnProperty.call(functor, 'value')) {
-            return functor.value;
-        }
-        return of(functor);
+        return Array.isArray(functor) ? functor.join(delimiter) : functor.join();
     }),
         chain = exports.chain = (0, _curry.curry2)(function (fn, functor) {
-        return join(map(fn, functor));
+        return functor.chain ? functor.chain(fn) : join(map(fn, functor));
     }),
 
 
