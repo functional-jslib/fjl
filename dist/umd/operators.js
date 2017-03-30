@@ -63,9 +63,9 @@
         reduceRight = exports.reduceRight = (0, _curry.curry3)(function (fn, agg, functor) {
         return functor.reduceRight(fn, agg);
     }),
-        join = exports.join = (0, _curry.curry2)(function (functor, delimiter) {
+        join = exports.join = function join(functor, delimiter) {
         return Array.isArray(functor) ? functor.join(delimiter) : functor.join();
-    }),
+    },
         chain = exports.chain = (0, _curry.curry2)(function (fn, functor) {
         return functor.chain ? functor.chain(fn) : join(map(fn, functor));
     }),

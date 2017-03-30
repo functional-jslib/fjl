@@ -55,7 +55,7 @@ export const id = value => value,
 
     reduceRight = curry3((fn, agg, functor) => functor.reduceRight(fn, agg)),
 
-    join = curry2((functor, delimiter) => Array.isArray(functor) ? functor.join(delimiter) : functor.join()),
+    join = (functor, delimiter) => Array.isArray(functor) ? functor.join(delimiter) : functor.join(),
 
     chain = curry2((fn, functor) => functor.chain ? functor.chain(fn) : join(map(fn, functor))),
 
