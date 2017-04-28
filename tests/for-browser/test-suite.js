@@ -783,6 +783,160 @@ describe('Object Combinators', function () {
     });
 });
 /**
+ * Created by elyde on 11/13/2016.
+ */
+
+describe('pureCurry', function () {
+
+    it('should be of type function.', function () {
+        expectFunction(pureCurry);
+    });
+
+    it('should return a function when called with or without args.', function () {
+        expectFunction(pureCurry());
+        expectFunction(pureCurry(99));
+        expectFunction(pureCurry(function () {}));
+        expectFunction(pureCurry(console.log));
+    });
+
+    it('should return a function that fails when no function is passed in (as it\'s first param).', function () {
+        assert.throws(pureCurry(), Error);
+        assert.throws(pureCurry(99), Error);
+    });
+
+    it('should return a curried function.', function () {
+        var min8 = pureCurry(Math.min, 8),
+            max5 = pureCurry(Math.max, 5),
+            pow2 = pureCurry(Math.pow, 2);
+
+        // Expect functions
+        [min8, max5, pow2].forEach(function (func) {
+            expectFunction(func);
+        });
+
+        // Expect functions work correctly
+        expect(min8(9)).to.equal(8);
+        expect(min8(8)).to.equal(8);
+        expect(min8(7)).to.equal(7);
+        expect(max5(6)).to.equal(6);
+        expect(max5(5)).to.equal(5);
+        expect(max5(4)).to.equal(5);
+        expect(pow2(2)).to.equal(4);
+        expect(pow2(3)).to.equal(8);
+        expect(pow2(4)).to.equal(16);
+    });
+
+    it('should be able to correctly pureCurry functions of different arity as long as their arity is met.', function () {
+        var min = pureCurry2(Math.min),
+            max = pureCurry2(Math.max),
+            pow = pureCurry2(Math.pow),
+            min8 = pureCurry(Math.min, 8),
+            max5 = pureCurry(Math.max, 5),
+            pow2 = pureCurry(Math.pow, 2),
+            isValidTangentLen = pureCurry(function (a, b, cSqrd) {
+            return pow(a, 2) + pow(b, 2) === cSqrd;
+        }, 2, 2),
+            random = pureCurry(function (start, end) {
+            return Math.round(Math.random() * end + start);
+        }, 0),
+            expectedFor = function expectedFor(num) {
+            return min(8, max(5, pow(2, num)));
+        };
+
+        // Expect functions returned for `pureCurry` calls
+        expectFunction(isValidTangentLen);
+
+        // Expect functions returned for `pureCurry` calls
+        [min8, max5, pow2].forEach(function (func) {
+            expectFunction(func);
+        });
+
+        // Expect `pureCurry`ed functions to work as expected
+        expect(isValidTangentLen(8)).to.equal(true);
+        expect(isValidTangentLen(21)).to.equal(false);
+
+        // Expect `pureCurry`ed functions to work as expected
+        [8, 5, 3, 2, 1, 0, random(89), random(55), random(34)].forEach(function (num) {
+            var composed = compose(min8, max5, pow2);
+            expect(composed(num)).to.equal(expectedFor(num));
+        });
+    });
+});
+/**
+ * Created by elyde on 11/25/2016.
+ */
+
+describe('pureCurryN', function () {
+
+    // Set pureCurry here to use below
+    var multiplyRecursive = function multiplyRecursive() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return args.reduce(function (agg, num) {
+            return num * agg;
+        }, 1);
+    },
+        addRecursive = function addRecursive() {
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        return args.reduce(function (agg, num) {
+            return num + agg;
+        }, 0);
+    },
+        divideR = function divideR() {
+        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            args[_key3] = arguments[_key3];
+        }
+
+        return args.reduce(function (agg, num) {
+            return agg / num;
+        }, args.shift());
+    };
+
+    it('should be of type function.', function () {
+        expect(pureCurryN).to.be.instanceOf(Function);
+    });
+
+    it('should return a function that throws an error when no arguments are passed.', function () {
+        var result = pureCurryN();
+        expect(result).to.be.instanceOf(Function);
+        assert.throws(result, Error);
+    });
+
+    it('should pass in any values passed the arity when executing the curried function', function () {
+        var add3Nums = pureCurryN(addRecursive, 3);
+
+        // Curry add to add 3 numbers
+        expect(add3Nums()(1, 2, 3)).to.equal(6);
+        expect(add3Nums(1)(2, 3)).to.equal(6);
+        expect(add3Nums(1, 2)(3)).to.equal(6);
+        expect(add3Nums(1, 2, 3)).to.equal(6);
+
+        // Curry `add` to add any numbers passed required arity
+        expect(add3Nums()(1, 2, 3, 5, 6)).to.equal(17);
+        expect(add3Nums(1)(2, 3, 5, 6)).to.equal(17);
+        expect(add3Nums(1, 2)(3, 5, 6)).to.equal(17);
+        expect(add3Nums(1, 2, 3, 5, 6)).to.equal(17);
+    });
+
+    it('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
+        var multiply5Nums = pureCurryN(multiplyRecursive, 5),
+            multiplyExpectedResult = Math.pow(5, 5),
+            argsToTest = [[5, 5, 5, 5, 5], [5, 5, 5, 5], [5, 5, 5], [5, 5], [5]],
+            partiallyAppliedResults = [multiply5Nums(), multiply5Nums(5), multiply5Nums(5, 5), multiply5Nums(5, 5, 5), multiply5Nums(5, 5, 5, 5)];
+
+        // Curry multiply and pass args in non-linear order
+        argsToTest.forEach(function (args, index) {
+            expect(partiallyAppliedResults[index]).to.be.instanceOf(Function);
+            expect(partiallyAppliedResults[index].apply(null, args)).to.equal(multiplyExpectedResult);
+        });
+    });
+});
+/**
  * Created by edlc on 1/30/17.
  */
 

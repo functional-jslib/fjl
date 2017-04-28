@@ -362,7 +362,7 @@ var fjl = function () {
     }
 
     /**
-     * Curry's passed in function along with passed in arguments passed.
+     * Currys passed in function along with passed in arguments passed.
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {function(...[*]=)}
@@ -385,13 +385,20 @@ var fjl = function () {
     }
 
     /**
+     * Pure curry.
+     * @param fn
+     * @param argsToCurry
+     * @returns {function(...[*]=): *}
+     */
+
+    /**
      * Curry's a function passed in `executeArity` also curries any arguments passed in from the `curriedArgs` arg and forward.
      * @param fn {Function}
      * @param executeArity {Number}
      * @param curriedArgs {...*}
      * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
      */
-    function curryN(fn, executeArity) {
+    function pureCurryN(fn, executeArity) {
         for (var _len6 = arguments.length, curriedArgs = Array(_len6 > 2 ? _len6 - 2 : 0), _key6 = 2; _key6 < _len6; _key6++) {
             curriedArgs[_key6 - 2] = arguments[_key6];
         }
@@ -399,6 +406,29 @@ var fjl = function () {
         return function () {
             for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
                 args[_key7] = arguments[_key7];
+            }
+
+            var concatedArgs = curriedArgs.concat(args),
+                canBeCalled = concatedArgs.length >= executeArity || !executeArity;
+            return !canBeCalled ? pureCurryN.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+        };
+    }
+
+    /**
+     * Curry's a function passed in `executeArity` also curries any arguments passed in from the `curriedArgs` arg and forward.
+     * @param fn {Function}
+     * @param executeArity {Number}
+     * @param curriedArgs {...*}
+     * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
+     */
+    function curryN(fn, executeArity) {
+        for (var _len8 = arguments.length, curriedArgs = Array(_len8 > 2 ? _len8 - 2 : 0), _key8 = 2; _key8 < _len8; _key8++) {
+            curriedArgs[_key8 - 2] = arguments[_key8];
+        }
+
+        return function () {
+            for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
+                args[_key9] = arguments[_key9];
             }
 
             var concatedArgs = replacePlaceHolders(curriedArgs, args),
@@ -424,6 +454,18 @@ var fjl = function () {
     };
     var curry5 = function curry5(fn) {
         return curryN(fn, 5);
+    };
+    var pureCurry2 = function pureCurry2(fn) {
+        return pureCurryN(fn, 2);
+    };
+    var pureCurry3 = function pureCurry3(fn) {
+        return pureCurryN(fn, 3);
+    };
+    var pureCurry4 = function pureCurry4(fn) {
+        return pureCurryN(fn, 4);
+    };
+    var pureCurry5 = function pureCurry5(fn) {
+        return pureCurryN(fn, 5);
     };
 
     /**
@@ -468,8 +510,8 @@ var fjl = function () {
         }, {});
     };
     var complement = function complement(obj0) {
-        for (var _len8 = arguments.length, objs = Array(_len8 > 1 ? _len8 - 1 : 0), _key8 = 1; _key8 < _len8; _key8++) {
-            objs[_key8 - 1] = arguments[_key8];
+        for (var _len10 = arguments.length, objs = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
+            objs[_key10 - 1] = arguments[_key10];
         }
 
         return objs.reduce(function (agg, obj) {
@@ -567,8 +609,8 @@ var fjl = function () {
     function errorIfNotTypeFactory(contextName) {
         contextName = contextName || 'unNamedContext';
         return function (key, value) {
-            for (var _len9 = arguments.length, types = Array(_len9 > 2 ? _len9 - 2 : 0), _key9 = 2; _key9 < _len9; _key9++) {
-                types[_key9 - 2] = arguments[_key9];
+            for (var _len11 = arguments.length, types = Array(_len11 > 2 ? _len11 - 2 : 0), _key11 = 2; _key11 < _len11; _key11++) {
+                types[_key11 - 2] = arguments[_key11];
             }
 
             if (types.some(function (Type) {
@@ -591,8 +633,8 @@ var fjl = function () {
      */
 
     var concat$1 = curry2(function (arr0) {
-        for (var _len10 = arguments.length, arrays = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
-            arrays[_key10 - 1] = arguments[_key10];
+        for (var _len12 = arguments.length, arrays = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
+            arrays[_key12 - 1] = arguments[_key12];
         }
 
         return arr0.concat.apply(arr0, arrays);
@@ -627,8 +669,8 @@ var fjl = function () {
         }, [], arr1);
     });
     var complement$2 = curry2(function (arr0) {
-        for (var _len11 = arguments.length, arrays = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
-            arrays[_key11 - 1] = arguments[_key11];
+        for (var _len13 = arguments.length, arrays = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
+            arrays[_key13 - 1] = arguments[_key13];
         }
 
         return reduce$1(function (agg, arr) {
@@ -689,8 +731,8 @@ var fjl = function () {
         return functor.chain ? functor.chain(fn) : join(map(fn, functor));
     });
     var liftN = curry3(function (fn, functor1) {
-        for (var _len12 = arguments.length, otherFunctors = Array(_len12 > 2 ? _len12 - 2 : 0), _key12 = 2; _key12 < _len12; _key12++) {
-            otherFunctors[_key12 - 2] = arguments[_key12];
+        for (var _len14 = arguments.length, otherFunctors = Array(_len14 > 2 ? _len14 - 2 : 0), _key14 = 2; _key14 < _len14; _key14++) {
+            otherFunctors[_key14 - 2] = arguments[_key14];
         }
 
         return otherFunctors.reduce(function (aggregator, functor) {
@@ -710,8 +752,8 @@ var fjl = function () {
         return functor.bimap(fn1, fn2);
     });
     var complement$1 = curry2(function (functor) {
-        for (var _len13 = arguments.length, others = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
-            others[_key13 - 1] = arguments[_key13];
+        for (var _len15 = arguments.length, others = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
+            others[_key15 - 1] = arguments[_key15];
         }
 
         switch (typeOf(functor)) {
@@ -748,10 +790,10 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Wed Mar 29 2017 21:39:24 GMT-0400 (Eastern Daylight Time) 
+     * Generated Fri Apr 28 2017 14:18:13 GMT-0400 (EDT) 
      */
 
-    var version = '0.8.3';
+    var version = '0.9.0';
 
     /**
      * Created by elyde on 12/6/2016.

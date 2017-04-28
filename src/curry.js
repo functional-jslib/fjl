@@ -134,7 +134,35 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
      * @param fn {Function}
      * @returns {Function}
      */
-    curry5 = fn => curryN(fn, 5);
+    curry5 = fn => curryN(fn, 5),
+
+    /**
+     * Curry's a function up to an arity of 2 (won't call function until 2 or more args).
+     * @param fn {Function}
+     * @returns {Function}
+     */
+    pureCurry2 = fn => pureCurryN(fn, 2),
+
+    /**
+     * Curry's a function up to an arity of 3 (won't call function until 3 or more args).
+     * @param fn {Function}
+     * @returns {Function}
+     */
+    pureCurry3 = fn => pureCurryN(fn, 3),
+
+    /**
+     * Curry's a function up to an arity of 4 (won't call function until 4 or more args).
+     * @param fn {Function}
+     * @returns {Function}
+     */
+    pureCurry4 = fn => pureCurryN(fn, 4),
+
+    /**
+     * Curry's a function up to an arity of 5 (won't call function until 5 or more args).
+     * @param fn {Function}
+     * @returns {Function}
+     */
+    pureCurry5 = fn => pureCurryN(fn, 5);
 
 export default {
     __,
@@ -145,5 +173,9 @@ export default {
     curry4,
     curry5,
     pureCurry,
-    pureCurryN
+    pureCurryN,
+    pureCurry2,
+    pureCurry3,
+    pureCurry4,
+    pureCurry5
 };
