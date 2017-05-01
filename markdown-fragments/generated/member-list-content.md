@@ -222,6 +222,30 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.pureCurry
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurry2
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurry3
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurry4
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurry5
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurryN
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.reduce
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)

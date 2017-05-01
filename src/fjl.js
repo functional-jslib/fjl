@@ -6,7 +6,8 @@
 
 import {assign, assignDeep} from './assign';
 import compose from './compose';
-import {__, curry, curryN, curry2, curry3, curry4, curry5} from './curry';
+import {__, curry, curryN, curry2, curry3, curry4, curry5,
+    pureCurry, pureCurryN, pureCurry2, pureCurry3, pureCurry4, pureCurry5} from './curry';
 import {subClass, subClassMulti} from './subClass';
 import {typeOf, typeOfIs} from './typeOf';
 import {isset, issetAndOfType, isNumber,
@@ -39,6 +40,12 @@ export default {
     curry3,
     curry4,
     curry5,
+    pureCurry,
+    pureCurryN,
+    pureCurry2,
+    pureCurry3,
+    pureCurry4,
+    pureCurry5,
     subClass,
     subClassMulti,
     isset,

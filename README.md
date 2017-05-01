@@ -47,6 +47,12 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.curry3](#fjlcurry3)
 - [fjl.curry4](#fjlcurry4)
 - [fjl.curry5](#fjlcurry5)
+- [fjl.pureCurry](#fjlpurecurry)
+- [fjl.pureCurryN](#fjlpurecurryn)
+- [fjl.pureCurry2](#fjlpurecurry2)
+- [fjl.pureCurry3](#fjlpurecurry3)
+- [fjl.pureCurry4](#fjlpurecurry4)
+- [fjl.pureCurry5](#fjlpurecurry5)
 - [fjl.subClass](#fjlsubclass)
 - [fjl.subClassMulti](#fjlsubclassmulti)
 - [fjl.isset](#fjlisset)
@@ -324,6 +330,30 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.promap
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurry
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurry2
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurry3
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurry4
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurry5
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.pureCurryN
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

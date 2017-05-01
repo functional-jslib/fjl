@@ -390,6 +390,19 @@ var fjl = function () {
      * @param argsToCurry
      * @returns {function(...[*]=): *}
      */
+    function pureCurry(fn) {
+        for (var _len6 = arguments.length, argsToCurry = Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
+            argsToCurry[_key6 - 1] = arguments[_key6];
+        }
+
+        return function () {
+            for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+                args[_key7] = arguments[_key7];
+            }
+
+            return fn.apply(null, argsToCurry.concat(args));
+        };
+    }
 
     /**
      * Curry's a function passed in `executeArity` also curries any arguments passed in from the `curriedArgs` arg and forward.
@@ -399,13 +412,13 @@ var fjl = function () {
      * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
      */
     function pureCurryN(fn, executeArity) {
-        for (var _len6 = arguments.length, curriedArgs = Array(_len6 > 2 ? _len6 - 2 : 0), _key6 = 2; _key6 < _len6; _key6++) {
-            curriedArgs[_key6 - 2] = arguments[_key6];
+        for (var _len8 = arguments.length, curriedArgs = Array(_len8 > 2 ? _len8 - 2 : 0), _key8 = 2; _key8 < _len8; _key8++) {
+            curriedArgs[_key8 - 2] = arguments[_key8];
         }
 
         return function () {
-            for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-                args[_key7] = arguments[_key7];
+            for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
+                args[_key9] = arguments[_key9];
             }
 
             var concatedArgs = curriedArgs.concat(args),
@@ -422,13 +435,13 @@ var fjl = function () {
      * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
      */
     function curryN(fn, executeArity) {
-        for (var _len8 = arguments.length, curriedArgs = Array(_len8 > 2 ? _len8 - 2 : 0), _key8 = 2; _key8 < _len8; _key8++) {
-            curriedArgs[_key8 - 2] = arguments[_key8];
+        for (var _len10 = arguments.length, curriedArgs = Array(_len10 > 2 ? _len10 - 2 : 0), _key10 = 2; _key10 < _len10; _key10++) {
+            curriedArgs[_key10 - 2] = arguments[_key10];
         }
 
         return function () {
-            for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
-                args[_key9] = arguments[_key9];
+            for (var _len11 = arguments.length, args = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
+                args[_key11] = arguments[_key11];
             }
 
             var concatedArgs = replacePlaceHolders(curriedArgs, args),
@@ -510,8 +523,8 @@ var fjl = function () {
         }, {});
     };
     var complement = function complement(obj0) {
-        for (var _len10 = arguments.length, objs = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
-            objs[_key10 - 1] = arguments[_key10];
+        for (var _len12 = arguments.length, objs = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
+            objs[_key12 - 1] = arguments[_key12];
         }
 
         return objs.reduce(function (agg, obj) {
@@ -609,8 +622,8 @@ var fjl = function () {
     function errorIfNotTypeFactory(contextName) {
         contextName = contextName || 'unNamedContext';
         return function (key, value) {
-            for (var _len11 = arguments.length, types = Array(_len11 > 2 ? _len11 - 2 : 0), _key11 = 2; _key11 < _len11; _key11++) {
-                types[_key11 - 2] = arguments[_key11];
+            for (var _len13 = arguments.length, types = Array(_len13 > 2 ? _len13 - 2 : 0), _key13 = 2; _key13 < _len13; _key13++) {
+                types[_key13 - 2] = arguments[_key13];
             }
 
             if (types.some(function (Type) {
@@ -633,8 +646,8 @@ var fjl = function () {
      */
 
     var concat$1 = curry2(function (arr0) {
-        for (var _len12 = arguments.length, arrays = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
-            arrays[_key12 - 1] = arguments[_key12];
+        for (var _len14 = arguments.length, arrays = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
+            arrays[_key14 - 1] = arguments[_key14];
         }
 
         return arr0.concat.apply(arr0, arrays);
@@ -669,8 +682,8 @@ var fjl = function () {
         }, [], arr1);
     });
     var complement$2 = curry2(function (arr0) {
-        for (var _len13 = arguments.length, arrays = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
-            arrays[_key13 - 1] = arguments[_key13];
+        for (var _len15 = arguments.length, arrays = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
+            arrays[_key15 - 1] = arguments[_key15];
         }
 
         return reduce$1(function (agg, arr) {
@@ -684,10 +697,10 @@ var fjl = function () {
     var id = function id(value) {
         return value;
     };
-    var equals = curry2(function (functor1, functor2) {
+    var equals = pureCurry2(function (functor1, functor2) {
         return functor1.equals ? functor1.equals(functor2) : functor1 === functor2;
     });
-    var concat = curry2(function (functor1, functor2) {
+    var concat = pureCurry2(function (functor1, functor2) {
         return functor1.concat ? functor1.concat(functor2) : functor1 + functor2;
     });
     var of = function of(functor) {
@@ -706,54 +719,54 @@ var fjl = function () {
     var zero = function zero(functor) {
         return functor.constructor.zero ? functor.constructor.zero() : of(functor);
     };
-    var ap = curry2(function (obj1, obj2) {
+    var ap = pureCurry2(function (obj1, obj2) {
         return obj1.ap ? obj1.ap(obj2) : obj1(obj2);
     });
-    var alt = curry2(function (functor1, functor2) {
+    var alt = pureCurry2(function (functor1, functor2) {
         return functor1.alt ? functor1.alt(functor2) : functor1 || functor2;
     });
-    var map = curry2(function (fn, functor) {
+    var map = pureCurry2(function (fn, functor) {
         return functor.map(fn);
     });
-    var filter = curry2(function (fn, functor) {
+    var filter = pureCurry2(function (fn, functor) {
         return functor.filter(fn);
     });
-    var reduce = curry3(function (fn, agg, functor) {
+    var reduce = pureCurry3(function (fn, agg, functor) {
         return functor.reduce(fn, agg);
     });
-    var reduceRight = curry3(function (fn, agg, functor) {
+    var reduceRight = pureCurry3(function (fn, agg, functor) {
         return functor.reduceRight(fn, agg);
     });
     var join = function join(functor, delimiter) {
         return Array.isArray(functor) ? functor.join(delimiter) : functor.join();
     };
-    var chain = curry2(function (fn, functor) {
+    var chain = pureCurry2(function (fn, functor) {
         return functor.chain ? functor.chain(fn) : join(map(fn, functor));
     });
-    var liftN = curry3(function (fn, functor1) {
-        for (var _len14 = arguments.length, otherFunctors = Array(_len14 > 2 ? _len14 - 2 : 0), _key14 = 2; _key14 < _len14; _key14++) {
-            otherFunctors[_key14 - 2] = arguments[_key14];
+    var liftN = pureCurry3(function (fn, functor1) {
+        for (var _len16 = arguments.length, otherFunctors = Array(_len16 > 2 ? _len16 - 2 : 0), _key16 = 2; _key16 < _len16; _key16++) {
+            otherFunctors[_key16 - 2] = arguments[_key16];
         }
 
         return otherFunctors.reduce(function (aggregator, functor) {
             return ap(aggregator, functor);
         }, map(fn, functor1));
     });
-    var extend = curry2(function (fn, functor) {
+    var extend = pureCurry2(function (fn, functor) {
         return functor.extend(fn);
     });
-    var extract = curry2(function (fn, functor) {
+    var extract = pureCurry2(function (fn, functor) {
         return functor.extract(fn);
     });
-    var promap = curry2(function (fn1, fn2, functor) {
+    var promap = pureCurry2(function (fn1, fn2, functor) {
         return functor.promap(fn1, fn2);
     });
-    var bimap = curry2(function (fn1, fn2, functor) {
+    var bimap = pureCurry2(function (fn1, fn2, functor) {
         return functor.bimap(fn1, fn2);
     });
-    var complement$1 = curry2(function (functor) {
-        for (var _len15 = arguments.length, others = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
-            others[_key15 - 1] = arguments[_key15];
+    var complement$1 = pureCurry2(function (functor) {
+        for (var _len17 = arguments.length, others = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
+            others[_key17 - 1] = arguments[_key17];
         }
 
         switch (typeOf(functor)) {
@@ -763,7 +776,7 @@ var fjl = function () {
                 return complement.apply(undefined, [functor].concat(others));
         }
     });
-    var difference$1 = curry2(function (functor1, functor2) {
+    var difference$1 = pureCurry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
                 return difference$2(functor1, functor2);
@@ -771,7 +784,7 @@ var fjl = function () {
                 return difference(functor1, functor2);
         }
     });
-    var union$1 = curry2(function (functor1, functor2) {
+    var union$1 = pureCurry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
                 return union$2(functor1, functor2);
@@ -779,7 +792,7 @@ var fjl = function () {
                 return union(functor1, functor2);
         }
     });
-    var intersect$1 = curry2(function (functor1, functor2) {
+    var intersect$1 = pureCurry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
                 return intersect$2(functor1, functor2);
@@ -790,10 +803,10 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Fri Apr 28 2017 14:18:13 GMT-0400 (EDT) 
+     * Generated Mon May 01 2017 15:03:48 GMT-0400 (EDT) 
      */
 
-    var version = '0.9.0';
+    var version = '0.9.1';
 
     /**
      * Created by elyde on 12/6/2016.
@@ -810,6 +823,12 @@ var fjl = function () {
         curry3: curry3,
         curry4: curry4,
         curry5: curry5,
+        pureCurry: pureCurry,
+        pureCurryN: pureCurryN,
+        pureCurry2: pureCurry2,
+        pureCurry3: pureCurry3,
+        pureCurry4: pureCurry4,
+        pureCurry5: pureCurry5,
         subClass: subClass,
         subClassMulti: subClassMulti,
         isset: isset,
