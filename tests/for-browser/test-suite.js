@@ -508,6 +508,50 @@ describe('errorIfNotTypeFactory', function () {
     });
 });
 /**
+ * Created by u067265 on 5/1/17.
+ */
+
+describe('Function Operators', function () {
+
+    // @todo implement more extensive tests later
+    describe('#call', function () {
+        it('should be a function', function () {
+            expectFunction(call);
+        });
+        it('should call a function passed into it', function () {
+            expectEqual(call(add, null, 1, 2, 3, 4, 5), 15);
+        });
+        it('should take context into account', function () {
+            var _this = this;
+
+            var sideEffectsOp = function sideEffectsOp() {
+                _this.hello = 'ola';
+                return _this;
+            };
+            expectEqual(call(sideEffectsOp, {}).hello, 'ola');
+        });
+    });
+
+    // @todo implement more extensive tests later
+    describe('#apply', function () {
+        it('should be a function', function () {
+            expectFunction(apply);
+        });
+        it('should call a function passed into it with args array passed in as third parameter', function () {
+            expectEqual(apply(add, null, [1, 2, 3, 4, 5]), 15);
+        });
+        it('should take context into account', function () {
+            var _this2 = this;
+
+            var sideEffectsOp = function sideEffectsOp() {
+                _this2.hello = 'ola';
+                return _this2;
+            };
+            expectEqual(apply(sideEffectsOp, {}).hello, 'ola');
+        });
+    });
+});
+/**
  * Created by elyde on 1/30/2017.
  */
 

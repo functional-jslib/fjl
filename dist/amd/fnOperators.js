@@ -15,12 +15,8 @@ define(["exports"], function (exports) {
 
         return fn.call.apply(fn, [x].concat(args));
     },
-        apply = exports.apply = function apply(fn, x) {
-        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-            args[_key2 - 2] = arguments[_key2];
-        }
-
-        return fn.apply(x, args);
+        apply = exports.apply = function apply(fn, x, argsArray) {
+        return fn.apply(x, argsArray);
     };
 
     exports.default = {
