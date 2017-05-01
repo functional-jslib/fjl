@@ -8,7 +8,7 @@
 
 'use strict';
 
-import {curry2} from './curry';
+import {pureCurry2 as curry2} from './curry';
 
 const
 
@@ -16,7 +16,20 @@ const
 
     filter = curry2((fn, arr) => arr.filter(fn)),
 
-    reduce = curry2((fn, agg, arr) => arr.reduce(fn, agg));
+    reduce = curry2((fn, agg, arr) => arr.reduce(fn, agg)),
+
+    sortAscByLength = (arr1, arr2) => [arr1, arr2].sort((a, b) => {
+        let aLen = a.length,
+            bLen = b.length;
+        if (aLen > bLen) {
+            return -1;
+        }
+        else if (bLen > aLen) {
+            return 1;
+        }
+        return 0;
+
+    });
 
 export let
 
@@ -44,7 +57,8 @@ export let
             filter(elm => arr2.indexOf(elm) > -1, arr1);
     }),
 
-    difference = curry2((arr1, arr2) => {
+    difference = curry2((array1, array2) => { // augment this with max length and min length ordering on op
+        let [arr1, arr2] = sortAscByLength(array1, array2);
         if (arr2.length === 0) {
             return arr1.slice();
         }

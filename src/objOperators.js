@@ -7,9 +7,9 @@
 
 import {assignDeep} from './assign';
 
-const hasOwnProperty = Object.prototype.hasOwnProperty;
-
 export let
+
+    hasOwnProperty = (x, propName) => Object.prototype.hasOwnProperty.call(x, propName),
 
     union = (obj1, obj2) => {
         return assignDeep(obj1, obj2);
@@ -17,7 +17,7 @@ export let
 
     intersect = (obj1, obj2) => {
         return Object.keys(obj1).reduce((agg, key) => {
-            if (hasOwnProperty.call(obj2, key)) {
+            if (hasOwnProperty(obj2, key)) {
                 agg[key] = obj2[key];
             }
             return agg;
@@ -26,7 +26,7 @@ export let
 
     difference = (obj1, obj2) => {
         return Object.keys(obj1).reduce((agg, key) => {
-            if (!hasOwnProperty.call(obj2, key)) {
+            if (!hasOwnProperty(obj2, key)) {
                 agg[key] = obj1[key];
             }
             return agg;
@@ -40,6 +40,7 @@ export let
     };
 
 export default {
+    hasOwnProperty,
     complement,
     difference,
     intersect,

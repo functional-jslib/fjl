@@ -9,17 +9,16 @@ define(['exports', './assign'], function (exports, _assign) {
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersect = exports.union = undefined;
-
-
-    var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-    var union = exports.union = function union(obj1, obj2) {
+    exports.complement = exports.difference = exports.intersect = exports.union = exports.hasOwnProperty = undefined;
+    var hasOwnProperty = exports.hasOwnProperty = function hasOwnProperty(x, propName) {
+        return Object.prototype.hasOwnProperty.call(x, propName);
+    },
+        union = exports.union = function union(obj1, obj2) {
         return (0, _assign.assignDeep)(obj1, obj2);
     },
         intersect = exports.intersect = function intersect(obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
-            if (hasOwnProperty.call(obj2, key)) {
+            if (hasOwnProperty(obj2, key)) {
                 agg[key] = obj2[key];
             }
             return agg;
@@ -27,7 +26,7 @@ define(['exports', './assign'], function (exports, _assign) {
     },
         difference = exports.difference = function difference(obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
-            if (!hasOwnProperty.call(obj2, key)) {
+            if (!hasOwnProperty(obj2, key)) {
                 agg[key] = obj1[key];
             }
             return agg;
@@ -44,6 +43,7 @@ define(['exports', './assign'], function (exports, _assign) {
     };
 
     exports.default = {
+        hasOwnProperty: hasOwnProperty,
         complement: complement,
         difference: difference,
         intersect: intersect,

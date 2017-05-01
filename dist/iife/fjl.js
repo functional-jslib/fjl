@@ -1,5 +1,7 @@
 'use strict';
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var fjl = function () {
@@ -501,14 +503,15 @@ var fjl = function () {
      * Set functions for objects.
      */
 
-    var hasOwnProperty = Object.prototype.hasOwnProperty;
-
+    var hasOwnProperty = function hasOwnProperty(x, propName) {
+        return Object.prototype.hasOwnProperty.call(x, propName);
+    };
     var union = function union(obj1, obj2) {
         return assignDeep(obj1, obj2);
     };
     var intersect = function intersect(obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
-            if (hasOwnProperty.call(obj2, key)) {
+            if (hasOwnProperty(obj2, key)) {
                 agg[key] = obj2[key];
             }
             return agg;
@@ -516,7 +519,7 @@ var fjl = function () {
     };
     var difference = function difference(obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
-            if (!hasOwnProperty.call(obj2, key)) {
+            if (!hasOwnProperty(obj2, key)) {
                 agg[key] = obj1[key];
             }
             return agg;
@@ -638,6 +641,25 @@ var fjl = function () {
     errorIfNotTypeFactory.typeListToString = typesListToString;
 
     /**
+     * Created by u067265 on 5/1/17.
+     */
+
+    var call = function call(fn, x) {
+        for (var _len14 = arguments.length, args = Array(_len14 > 2 ? _len14 - 2 : 0), _key14 = 2; _key14 < _len14; _key14++) {
+            args[_key14 - 2] = arguments[_key14];
+        }
+
+        return fn.call.apply(fn, [x].concat(args));
+    };
+    var apply = function apply(fn, x) {
+        for (var _len15 = arguments.length, args = Array(_len15 > 2 ? _len15 - 2 : 0), _key15 = 2; _key15 < _len15; _key15++) {
+            args[_key15 - 2] = arguments[_key15];
+        }
+
+        return fn.apply(x, args);
+    };
+
+    /**
      * Created by elyde on 12/29/2016.
      */
     /**
@@ -645,32 +667,50 @@ var fjl = function () {
      * Set functions for arrects.
      */
 
-    var concat$1 = curry2(function (arr0) {
-        for (var _len14 = arguments.length, arrays = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
-            arrays[_key14 - 1] = arguments[_key14];
+    var concat$1 = pureCurry2(function (arr0) {
+        for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
+            arrays[_key16 - 1] = arguments[_key16];
         }
 
         return arr0.concat.apply(arr0, arrays);
     });
-    var filter$1 = curry2(function (fn, arr) {
+    var filter$1 = pureCurry2(function (fn, arr) {
         return arr.filter(fn);
     });
-    var reduce$1 = curry2(function (fn, agg, arr) {
+    var reduce$1 = pureCurry2(function (fn, agg, arr) {
         return arr.reduce(fn, agg);
     });
+    var sortAscByLength = function sortAscByLength(arr1, arr2) {
+        return [arr1, arr2].sort(function (a, b) {
+            var aLen = a.length,
+                bLen = b.length;
+            if (aLen > bLen) {
+                return -1;
+            } else if (bLen > aLen) {
+                return 1;
+            }
+            return 0;
+        });
+    };
 
-    var union$2 = curry2(function (arr1, arr2) {
+    var union$2 = pureCurry2(function (arr1, arr2) {
         var whereNotInArray1 = function whereNotInArray1(elm) {
             return arr1.indexOf(elm) === -1;
         };
         return concat$1(arr1, filter$1(whereNotInArray1, arr2));
     });
-    var intersect$2 = curry2(function (arr1, arr2) {
+    var intersect$2 = pureCurry2(function (arr1, arr2) {
         return arr2.length === 0 ? [] : filter$1(function (elm) {
             return arr2.indexOf(elm) > -1;
         }, arr1);
     });
-    var difference$2 = curry2(function (arr1, arr2) {
+    var difference$2 = pureCurry2(function (array1, array2) {
+        // augment this with max length and min length ordering on op
+        var _sortAscByLength = sortAscByLength(array1, array2),
+            _sortAscByLength2 = _slicedToArray(_sortAscByLength, 2),
+            arr1 = _sortAscByLength2[0],
+            arr2 = _sortAscByLength2[1];
+
         if (arr2.length === 0) {
             return arr1.slice();
         }
@@ -681,9 +721,9 @@ var fjl = function () {
             return agg;
         }, [], arr1);
     });
-    var complement$2 = curry2(function (arr0) {
-        for (var _len15 = arguments.length, arrays = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
-            arrays[_key15 - 1] = arguments[_key15];
+    var complement$2 = pureCurry2(function (arr0) {
+        for (var _len17 = arguments.length, arrays = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
+            arrays[_key17 - 1] = arguments[_key17];
         }
 
         return reduce$1(function (agg, arr) {
@@ -744,8 +784,8 @@ var fjl = function () {
         return functor.chain ? functor.chain(fn) : join(map(fn, functor));
     });
     var liftN = pureCurry3(function (fn, functor1) {
-        for (var _len16 = arguments.length, otherFunctors = Array(_len16 > 2 ? _len16 - 2 : 0), _key16 = 2; _key16 < _len16; _key16++) {
-            otherFunctors[_key16 - 2] = arguments[_key16];
+        for (var _len18 = arguments.length, otherFunctors = Array(_len18 > 2 ? _len18 - 2 : 0), _key18 = 2; _key18 < _len18; _key18++) {
+            otherFunctors[_key18 - 2] = arguments[_key18];
         }
 
         return otherFunctors.reduce(function (aggregator, functor) {
@@ -765,8 +805,8 @@ var fjl = function () {
         return functor.bimap(fn1, fn2);
     });
     var complement$1 = pureCurry2(function (functor) {
-        for (var _len17 = arguments.length, others = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
-            others[_key17 - 1] = arguments[_key17];
+        for (var _len19 = arguments.length, others = Array(_len19 > 1 ? _len19 - 1 : 0), _key19 = 1; _key19 < _len19; _key19++) {
+            others[_key19 - 1] = arguments[_key19];
         }
 
         switch (typeOf(functor)) {
@@ -803,38 +843,49 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Mon May 01 2017 15:03:48 GMT-0400 (EDT) 
+     * Generated Mon May 01 2017 17:48:52 GMT-0400 (EDT) 
      */
 
-    var version = '0.9.1';
+    var version = '0.9.5';
 
     /**
      * Created by elyde on 12/6/2016.
      */
 
     var fjl = {
+        __: __,
+        alt: alt,
+        ap: ap,
+        apply: apply,
+        arrayComplement: complement$2,
+        arrayDifference: difference$2,
+        arrayIntersect: intersect$2,
+        arrayUnion: union$2,
         assign: assign,
         assignDeep: assignDeep,
+        bimap: bimap,
+        call: call,
+        chain: chain,
+        complement: complement$1,
         compose: compose,
-        __: __,
+        concat: concat,
         curry: curry,
         curryN: curryN,
         curry2: curry2,
         curry3: curry3,
         curry4: curry4,
         curry5: curry5,
-        pureCurry: pureCurry,
-        pureCurryN: pureCurryN,
-        pureCurry2: pureCurry2,
-        pureCurry3: pureCurry3,
-        pureCurry4: pureCurry4,
-        pureCurry5: pureCurry5,
-        subClass: subClass,
-        subClassMulti: subClassMulti,
+        difference: difference$1,
+        empty: empty,
+        errorIfNotTypeFactory: errorIfNotTypeFactory,
+        equals: equals,
+        extend: extend,
+        extract: extract,
+        filter: filter,
+        id: id,
+        intersect: intersect$1,
         isset: isset,
         issetAndOfType: issetAndOfType,
-        typeOf: typeOf,
-        typeOfIs: typeOfIs,
         isNumber: isNumber,
         isFunction: isFunction,
         isArray: isArray,
@@ -850,40 +901,31 @@ var fjl = function () {
         isSymbol: isSymbol,
         isEmpty: isEmpty,
         isConstructablePrimitive: isConstructablePrimitive,
-        notEmptyAndOfType: notEmptyAndOfType,
-        errorIfNotTypeFactory: errorIfNotTypeFactory,
-        id: id,
-        equals: equals,
-        concat: concat,
-        of: of,
-        empty: empty,
-        zero: zero,
-        ap: ap,
-        alt: alt,
-        map: map,
-        filter: filter,
-        reduce: reduce,
-        reduceRight: reduceRight,
         join: join,
-        chain: chain,
         liftN: liftN,
-        extend: extend,
-        extract: extract,
-        promap: promap,
-        bimap: bimap,
-        complement: complement$1,
-        difference: difference$1,
-        intersect: intersect$1,
-        union: union$1,
+        map: map,
+        notEmptyAndOfType: notEmptyAndOfType,
+        pureCurry: pureCurry,
+        pureCurryN: pureCurryN,
+        pureCurry2: pureCurry2,
+        pureCurry3: pureCurry3,
+        pureCurry4: pureCurry4,
+        pureCurry5: pureCurry5,
         objComplement: complement,
         objDifference: difference,
         objIntersect: intersect,
         objUnion: union,
-        arrayDifference: difference$2,
-        arrayIntersect: intersect$2,
-        arrayComplement: complement$2,
-        arrayUnion: union$2,
-        version: version
+        of: of,
+        promap: promap,
+        reduce: reduce,
+        reduceRight: reduceRight,
+        subClass: subClass,
+        subClassMulti: subClassMulti,
+        typeOf: typeOf,
+        typeOfIs: typeOfIs,
+        union: union$1,
+        version: version,
+        zero: zero
     };
 
     return fjl;

@@ -46,18 +46,18 @@ describe ('Array Combinators', function () {
             compose(expectEqual(__, 0), length, difference)();
         });
         it ('should return a clone of the passed in array if it is only the first array that is passed in', function () {
-            compose(expectEqual(__, 3), length, difference(__, []))([1,2,3]);
+            compose(expectEqual(__, 3), length, difference([]))([1,2,3]);
         });
         it ('should return an empty array when there are no differences between the two arrays passed in', function () {
-            compose(expectEqual(__, 0), length, difference(__, [1, 2, 3]))([1,2,3]);
+            compose(expectEqual(__, 0), length, difference([1, 2, 3]))([1,2,3]);
         });
         it ('should return a clone of the passed in array if it is only the first array that is passed in', function () {
-            compose(expectEqual(__, 3), length, difference(__, []))([1,2,3]);
+            compose(expectEqual(__, 3), length, difference([]))([1,2,3]);
         });
         it ('should return the difference between two arrays passed in', function () {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
-                [[1, 2, 3], [1, 2, 3, 4, 5], 0, []],
+                [[1, 2, 3], [1, 2, 3, 4, 5], 2, [4, 5]],
                 [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 5, [4, 5, 6, 7, 8]],
                 [[1, 2, 3, 4, 5], [1, 2, 3], 2, [4, 5]]
             ];

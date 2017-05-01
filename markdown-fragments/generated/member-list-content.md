@@ -10,6 +10,10 @@
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.apply
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.arrayComplement
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -35,6 +39,10 @@
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.bimap
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.call
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
