@@ -753,9 +753,25 @@ describe('is#isConstructablePrimitive', function () {
  */
 /**
  * Created by elyde on 11/25/2016.
+ * @todo add more extensive tests for `hasOwnProperty`
  */
 
-describe('Object Combinators', function () {
+describe('Object Operators', function () {
+
+    describe('hasOwnProperty', function () {
+        it('should be a function', function () {
+            expectFunction(hasOwnProperty);
+        });
+        it('should return true when passed in object has the passed in property name', function () {
+            var obj = { hello: 'ola', ola: 'mambo' };
+            expectTrue(hasOwnProperty(obj, 'hello'));
+            expectTrue(hasOwnProperty(obj, 'ola'));
+        });
+        it('should return false when passed in object doesn\'t have the passed in property name', function () {
+            expectFalse(hasOwnProperty({}, 'hello'));
+            expectFalse(hasOwnProperty({}, 'mambo'));
+        });
+    });
 
     describe('complement', function () {
         it('should be a function', function () {

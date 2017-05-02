@@ -3,6 +3,7 @@
  */
 /**
  * Created by elyde on 11/25/2016.
+ * @todo add more extensive tests for `hasOwnProperty`
  */
 
 // ~~~ STRIP ~~~
@@ -10,12 +11,27 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {complement, difference, union, intersect} from '../../src/objOperators';
-import {expectFalse, expectEqual, expectFunction} from './helpers';
+import {hasOwnProperty, complement, difference, union, intersect} from '../../src/objOperators';
+import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('Object Combinators', function () {
+describe ('Object Operators', function () {
+
+    describe ('hasOwnProperty', function () {
+        it ('should be a function', function () {
+            expectFunction(hasOwnProperty);
+        });
+        it ('should return true when passed in object has the passed in property name', function () {
+            const obj = {hello: 'ola', ola: 'mambo'};
+            expectTrue(hasOwnProperty(obj, 'hello'));
+            expectTrue(hasOwnProperty(obj, 'ola'));
+        });
+        it ('should return false when passed in object doesn\'t have the passed in property name', function () {
+            expectFalse(hasOwnProperty({}, 'hello'));
+            expectFalse(hasOwnProperty({}, 'mambo'));
+        });
+    });
 
     describe('complement', function () {
         it('should be a function', function () {
