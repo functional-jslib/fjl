@@ -10,7 +10,7 @@ import {expect} from 'chai';
 import {isset, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet, isConstructablePrimitive} from '../../src/is';
+    isWeakMap, isWeakSet, isConstructablePrimitive, instanceOf} from '../../src/is';
 import {expectTrue, expectFalse, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -219,4 +219,13 @@ describe('is#isConstructablePrimitive', function () {
     it ('should return `false` when given value is not of an "constructable"', function () {
         expectFalse(isConstructablePrimitive(NaN));
     });
+});
+
+describe('is#instanceOf', function () {
+    it ('should return true when parameter two is of type parameter one', function () {
+        expectTrue(instanceOf(Function, function () {}));
+    });
+    it ('should return false when parameters two is not of type parameter one', function () {
+        expectFalse(instanceOf(Function, {}));
+    })
 });

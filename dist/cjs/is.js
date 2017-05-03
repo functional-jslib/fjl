@@ -9,6 +9,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.instanceOf = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -30,6 +31,8 @@ exports.isSymbol = isSymbol;
 exports.isEmpty = isEmpty;
 exports.isConstructablePrimitive = isConstructablePrimitive;
 
+var _curry = require('./curry');
+
 var _typeOf = require('./typeOf');
 
 var _String = String.name,
@@ -45,6 +48,10 @@ var _String = String.name,
     _Null = 'Null',
     _Undefined = 'Undefined',
     _undefined = 'undefined';
+
+var instanceOf = exports.instanceOf = (0, _curry.pureCurry2)(function (instanceConstructor, instance) {
+    return instance instanceof instanceConstructor;
+});
 
 /**
  * Returns whether a value is a function or not.
@@ -247,5 +254,6 @@ exports.default = {
     isNull: isNull,
     isSymbol: isSymbol,
     isEmpty: isEmpty,
+    instanceOf: instanceOf,
     isConstructablePrimitive: isConstructablePrimitive
 };

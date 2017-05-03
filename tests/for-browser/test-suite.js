@@ -748,6 +748,15 @@ describe('is#isConstructablePrimitive', function () {
         expectFalse(isConstructablePrimitive(NaN));
     });
 });
+
+describe('is#instanceOf', function () {
+    it('should return true when parameter two is of type parameter one', function () {
+        expectTrue(instanceOf(Function, function () {}));
+    });
+    it('should return false when parameters two is not of type parameter one', function () {
+        expectFalse(instanceOf(Function, {}));
+    });
+});
 /**
  * Created by elyde on 12/25/2016.
  */

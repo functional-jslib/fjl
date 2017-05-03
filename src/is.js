@@ -6,6 +6,7 @@
  */
 'use strict';
 
+import {pureCurry2} from './curry';
 import {typeOf, typeOfIs} from './typeOf';
 
 let _String = String.name,
@@ -21,6 +22,10 @@ let _String = String.name,
     _Null = 'Null',
     _Undefined = 'Undefined',
     _undefined = 'undefined';
+
+export const instanceOf = pureCurry2((instanceConstructor, instance) => {
+        return instance instanceof instanceConstructor;
+    });
 
 /**
  * Returns whether a value is a function or not.
@@ -228,5 +233,6 @@ export default {
     isNull,
     isSymbol,
     isEmpty,
+    instanceOf,
     isConstructablePrimitive
 };

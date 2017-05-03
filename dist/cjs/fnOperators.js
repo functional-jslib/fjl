@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 /**
- * Created by u067265 on 5/1/17.
+ * Created by edlc on 5/1/17.
  */
 
 var call = exports.call = function call(fn, x) {
