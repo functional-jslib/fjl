@@ -4,8 +4,8 @@
 
 'use strict';
 
-import Extract from '../../../src/functor/Extract';
-import Extend from '../../../src/functor/Extend';
+import Extract from '../../../tests/for-server/functor/Extract';
+import Extend from '../../../tests/for-server/functor/Extend';
 import {subClassMulti} from '../../../src/subClass';
 
 export default subClassMulti([Extract, Extend],
