@@ -435,6 +435,7 @@ Run one of the following from your terminal:
 ## Todos:
 ### MVP 1.0.0
 - [ ] - Rename `pureCurry` and `pureCurryN` to `curry` and `curryN` respectively.
-- [ ] - Rename old `curry{suffix}` functions to `curry_{suffix}` in lieu of previous change (also since 
+- [ ] - Rename old `curry{suffix}` functions to `curry{suffix}_` in lieu of previous change (also since 
 these functions are overloaded and aren't pure curry functions due to their placeholder manipulation feature).
-- [ ] - Remove functional operators (`zero`, `alt` etc.)  out into their own package (?) (tentative).
+- [X] - ~~Remove functional operators (`zero`, `alt` etc.)  out into their own package (?) (tentative).~~
+- [ ] - Make all functional members compatible with es6 classes.
