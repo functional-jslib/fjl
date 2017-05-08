@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './typeOf'], factory);
+        define(['exports', './curry', './typeOf'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./typeOf'));
+        factory(exports, require('./curry'), require('./typeOf'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.typeOf);
+        factory(mod.exports, global.curry, global.typeOf);
         global.is = mod.exports;
     }
-})(this, function (exports, _typeOf) {
+})(this, function (exports, _curry, _typeOf) {
     /**
      * Created by elyde on 12/18/2016.
      */
@@ -22,6 +22,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
+    exports.instanceOf = undefined;
     exports.isFunction = isFunction;
     exports.isset = isset;
     exports.issetAndOfType = issetAndOfType;
@@ -59,6 +60,10 @@
         _Null = 'Null',
         _Undefined = 'Undefined',
         _undefined = 'undefined';
+
+    var instanceOf = exports.instanceOf = (0, _curry.pureCurry2)(function (instanceConstructor, instance) {
+        return instance instanceof instanceConstructor;
+    });
 
     /**
      * Returns whether a value is a function or not.
@@ -261,6 +266,7 @@
         isNull: isNull,
         isSymbol: isSymbol,
         isEmpty: isEmpty,
+        instanceOf: instanceOf,
         isConstructablePrimitive: isConstructablePrimitive
     };
 });

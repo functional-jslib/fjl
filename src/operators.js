@@ -128,5 +128,13 @@ export default {
     zero,
     liftN,
     bimap,
-    promap
+    promap,
+    complement,
+    difference,
+    union,
+    intersect,
+    objComplement, objDifference, objUnion, objIntersect,
+    arrayComplement, arrayDifference, arrayUnion,
+    arrayIntersect
+
 };

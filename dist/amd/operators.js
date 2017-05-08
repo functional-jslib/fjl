@@ -136,6 +136,14 @@ define(['exports', './curry', './is', './typeOf', './objOperators', './arrayOper
         zero: zero,
         liftN: liftN,
         bimap: bimap,
-        promap: promap
+        promap: promap,
+        complement: complement,
+        difference: difference,
+        union: union,
+        intersect: intersect,
+        objComplement: _objOperators.complement, objDifference: _objOperators.difference, objUnion: _objOperators.union, objIntersect: _objOperators.intersect,
+        arrayComplement: _arrayOperators.complement, arrayDifference: _arrayOperators.difference, arrayUnion: _arrayOperators.union,
+        arrayIntersect: _arrayOperators.intersect
+
     };
 });
