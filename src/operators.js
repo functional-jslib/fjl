@@ -61,6 +61,10 @@ export const id = value => value,
 
     // chainRec = () => {},
 
+    // lte = () => {},
+
+    // contramap () => {}
+
     liftN = curry3((fn, functor1, ...otherFunctors) => {
         return otherFunctors.reduce(
             (aggregator, functor) => ap(aggregator, functor), map(fn, functor1)
@@ -136,5 +140,4 @@ export default {
     objComplement, objDifference, objUnion, objIntersect,
     arrayComplement, arrayDifference, arrayUnion,
     arrayIntersect
-
 };

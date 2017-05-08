@@ -71,6 +71,10 @@ var id = exports.id = function id(value) {
 
 // chainRec = () => {},
 
+// lte = () => {},
+
+// contramap () => {}
+
 liftN = exports.liftN = (0, _curry.pureCurry3)(function (fn, functor1) {
     for (var _len = arguments.length, otherFunctors = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
         otherFunctors[_key - 2] = arguments[_key];
@@ -154,5 +158,4 @@ exports.default = {
     objComplement: _objOperators.complement, objDifference: _objOperators.difference, objUnion: _objOperators.union, objIntersect: _objOperators.intersect,
     arrayComplement: _arrayOperators.complement, arrayDifference: _arrayOperators.difference, arrayUnion: _arrayOperators.union,
     arrayIntersect: _arrayOperators.intersect
-
 };
