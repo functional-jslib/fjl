@@ -50,7 +50,11 @@
     "type": "git",
     "url": "git+https://github.com/elycruz/fjl.git"
   },
-  "keywords": ["functional", "fp", "programming"],
+  "keywords": [
+    "functional",
+    "fp",
+    "programming"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {

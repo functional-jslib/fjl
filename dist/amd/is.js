@@ -49,6 +49,12 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
         _Undefined = 'Undefined',
         _undefined = 'undefined';
 
+    /**
+     * Returns whether object is an instance of constructor passed in parameter 1.
+     * @instanceConstructor {Function|Class}
+     * @instance {*}
+     * @returns {Boolean}
+     */
     var instanceOf = exports.instanceOf = (0, _curry.pureCurry2)(function (instanceConstructor, instance) {
         return instance instanceof instanceConstructor;
     });

@@ -8,7 +8,7 @@ export let
 
     call = (fn, x, ...args) => fn.call(x, ...args),
 
-    apply = (fn, x, argsArray) => fn.apply(x, argsArray);
+    apply = (fn, x, args) => fn.apply(x, args);
 
 export default {
     call,

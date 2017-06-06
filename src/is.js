@@ -23,6 +23,12 @@ let _String = String.name,
     _Undefined = 'Undefined',
     _undefined = 'undefined';
 
+/**
+ * Returns whether object is an instance of constructor passed in parameter 1.
+ * @instanceConstructor {Function|Class}
+ * @instance {*}
+ * @returns {Boolean}
+ */
 export const instanceOf = pureCurry2((instanceConstructor, instance) => {
         return instance instanceof instanceConstructor;
     });

@@ -27,8 +27,8 @@
 
         return fn.call.apply(fn, [x].concat(args));
     },
-        apply = exports.apply = function apply(fn, x, argsArray) {
-        return fn.apply(x, argsArray);
+        apply = exports.apply = function apply(fn, x, args) {
+        return fn.apply(x, args);
     };
 
     exports.default = {
