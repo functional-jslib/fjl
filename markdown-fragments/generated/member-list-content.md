@@ -2,14 +2,6 @@
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.alt
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.ap
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.apply
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -38,15 +30,7 @@
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.bimap
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.call
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.chain
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -55,10 +39,6 @@
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.compose
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.concat
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -94,31 +74,11 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.empty
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.equals
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.errorIfNotTypeFactory
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.extend
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.extract
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.filter
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.id
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -190,14 +150,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.join
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.liftN
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.map
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -219,14 +171,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.objUnion
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.of
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.promap
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -283,9 +227,5 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.version
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.zero
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
