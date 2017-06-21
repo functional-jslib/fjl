@@ -1,3 +1,7 @@
+### fjl.__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.alt
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -158,14 +162,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.isset
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.issetAndOfType
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.isString
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -183,6 +179,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.isWeakSet
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.isset
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.issetAndOfType
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -283,9 +287,5 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.zero
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.__
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)

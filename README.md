@@ -38,8 +38,6 @@ import fjl from './node_modules/fjl/src/fjl';
 #### Members, Properties and Methods:
 
 - [fjl.__](#fjl__)
-- [fjl.alt](#fjlalt)
-- [fjl.ap](#fjlap)
 - [fjl.apply](#fjlapply)
 - [fjl.arrayComplement](#fjlarraycomplement)
 - [fjl.arrayDifference](#fjlarraydifference)
@@ -47,12 +45,9 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.arrayUnion](#fjlarrayunion)
 - [fjl.assign](#fjlassign)
 - [fjl.assignDeep](#fjlassigndeep)
-- [fjl.bimap](#fjlbimap)
 - [fjl.call](#fjlcall)
-- [fjl.chain](#fjlchain)
 - [fjl.complement](#fjlcomplement)
 - [fjl.compose](#fjlcompose)
-- [fjl.concat](#fjlconcat)
 - [fjl.curry](#fjlcurry)
 - [fjl.curryN](#fjlcurryn)
 - [fjl.curry2](#fjlcurry2)
@@ -60,13 +55,8 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.curry4](#fjlcurry4)
 - [fjl.curry5](#fjlcurry5)
 - [fjl.difference](#fjldifference)
-- [fjl.empty](#fjlempty)
 - [fjl.errorIfNotTypeFactory](#fjlerrorifnottypefactory)
-- [fjl.equals](#fjlequals)
-- [fjl.extend](#fjlextend)
-- [fjl.extract](#fjlextract)
 - [fjl.filter](#fjlfilter)
-- [fjl.id](#fjlid)
 - [fjl.intersect](#fjlintersect)
 - [fjl.isset](#fjlisset)
 - [fjl.issetAndOfType](#fjlissetandoftype)
@@ -85,8 +75,6 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.isSymbol](#fjlissymbol)
 - [fjl.isEmpty](#fjlisempty)
 - [fjl.isConstructablePrimitive](#fjlisconstructableprimitive)
-- [fjl.join](#fjljoin)
-- [fjl.liftN](#fjlliftn)
 - [fjl.map](#fjlmap)
 - [fjl.notEmptyAndOfType](#fjlnotemptyandoftype)
 - [fjl.pureCurry](#fjlpurecurry)
@@ -99,8 +87,6 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.objDifference](#fjlobjdifference)
 - [fjl.objIntersect](#fjlobjintersect)
 - [fjl.objUnion](#fjlobjunion)
-- [fjl.of](#fjlof)
-- [fjl.promap](#fjlpromap)
 - [fjl.reduce](#fjlreduce)
 - [fjl.reduceRight](#fjlreduceright)
 - [fjl.subClass](#fjlsubclass)
@@ -109,7 +95,10 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.typeOfIs](#fjltypeofis)
 - [fjl.union](#fjlunion)
 - [fjl.version](#fjlversion)
-- [fjl.zero](#fjlzero)
+
+### fjl.__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
 
 ### fjl.alt
 @todo - Added documentation here.
@@ -271,14 +260,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.isset
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.issetAndOfType
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.isString
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -296,6 +277,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.isWeakSet
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.isset
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.issetAndOfType
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -396,10 +385,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.zero
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.__
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

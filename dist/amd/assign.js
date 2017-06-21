@@ -19,7 +19,7 @@ define(['exports', './is'], function (exports, _is) {
             return Object.keys(obj).reduce(function (agg, key) {
                 var propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection
-                if (Object.prototype.hasOwnProperty.call(agg, key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+                if (agg.hasOwnProperty(key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
                     return agg;
                 }
                 if ((0, _is.isObject)(agg[key]) && (0, _is.isObject)(obj[key])) {

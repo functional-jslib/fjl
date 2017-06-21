@@ -440,7 +440,7 @@ var fjl = function () {
             return Object.keys(obj).reduce(function (agg, key) {
                 var propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection
-                if (Object.prototype.hasOwnProperty.call(agg, key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+                if (agg.hasOwnProperty(key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
                     return agg;
                 }
                 if (isObject(agg[key]) && isObject(obj[key])) {
@@ -671,7 +671,7 @@ var fjl = function () {
      * Set functions for arrects.
      */
 
-    var concat$1 = pureCurry2(function (arr0) {
+    var concat = pureCurry2(function (arr0) {
         for (var _len15 = arguments.length, arrays = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
             arrays[_key15 - 1] = arguments[_key15];
         }
@@ -701,7 +701,7 @@ var fjl = function () {
         var whereNotInArray1 = function whereNotInArray1(elm) {
             return arr1.indexOf(elm) === -1;
         };
-        return concat$1(arr1, filter$1(whereNotInArray1, arr2));
+        return concat(arr1, filter$1(whereNotInArray1, arr2));
     });
     var intersect$2 = pureCurry2(function (arr1, arr2) {
         return arr2.length === 0 ? [] : filter$1(function (elm) {
@@ -731,44 +731,13 @@ var fjl = function () {
         }
 
         return reduce$1(function (agg, arr) {
-            return concat$1(agg, difference$2(arr, arr0));
+            return concat(agg, difference$2(arr, arr0));
         }, [], arrays);
     });
 
     /**
      * Created by elyde on 12/11/2016.
      */
-    var id = function id(value) {
-        return value;
-    };
-    var equals = pureCurry2(function (functor1, functor2) {
-        return functor1.equals ? functor1.equals(functor2) : functor1 === functor2;
-    });
-    var concat = pureCurry2(function (functor1, functor2) {
-        return functor1.concat ? functor1.concat(functor2) : functor1 + functor2;
-    });
-    var of = function of(functor) {
-        var constructor = functor.constructor,
-            retVal = void 0;
-        if (constructor.of) {
-            retVal = constructor.of();
-        } else if (!isConstructablePrimitive(functor)) {
-            retVal = new constructor();
-        }
-        return retVal || constructor();
-    };
-    var empty = function empty(functor) {
-        return functor.constructor.empty ? functor.constructor.empty() : of(functor);
-    };
-    var zero = function zero(functor) {
-        return functor.constructor.zero ? functor.constructor.zero() : of(functor);
-    };
-    var ap = pureCurry2(function (obj1, obj2) {
-        return obj1.ap ? obj1.ap(obj2) : obj1(obj2);
-    });
-    var alt = pureCurry2(function (functor1, functor2) {
-        return functor1.alt ? functor1.alt(functor2) : functor1 || functor2;
-    });
     var map = pureCurry2(function (fn, functor) {
         return functor.map(fn);
     });
@@ -781,36 +750,9 @@ var fjl = function () {
     var reduceRight = pureCurry3(function (fn, agg, functor) {
         return functor.reduceRight(fn, agg);
     });
-    var join = function join(functor, delimiter) {
-        return Array.isArray(functor) ? functor.join(delimiter) : functor.join();
-    };
-    var chain = pureCurry2(function (fn, functor) {
-        return functor.chain ? functor.chain(fn) : join(map(fn, functor));
-    });
-    var liftN = pureCurry3(function (fn, functor1) {
-        for (var _len17 = arguments.length, otherFunctors = Array(_len17 > 2 ? _len17 - 2 : 0), _key17 = 2; _key17 < _len17; _key17++) {
-            otherFunctors[_key17 - 2] = arguments[_key17];
-        }
-
-        return otherFunctors.reduce(function (aggregator, functor) {
-            return ap(aggregator, functor);
-        }, map(fn, functor1));
-    });
-    var extend = pureCurry2(function (fn, functor) {
-        return functor.extend(fn);
-    });
-    var extract = pureCurry2(function (fn, functor) {
-        return functor.extract(fn);
-    });
-    var promap = pureCurry2(function (fn1, fn2, functor) {
-        return functor.promap(fn1, fn2);
-    });
-    var bimap = pureCurry2(function (fn1, fn2, functor) {
-        return functor.bimap(fn1, fn2);
-    });
     var complement$1 = pureCurry2(function (functor) {
-        for (var _len18 = arguments.length, others = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
-            others[_key18 - 1] = arguments[_key18];
+        for (var _len17 = arguments.length, others = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
+            others[_key17 - 1] = arguments[_key17];
         }
 
         switch (typeOf(functor)) {
@@ -847,10 +789,10 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Tue Jun 06 2017 10:28:01 GMT-0400 (Eastern Daylight Time) 
+     * Generated Wed Jun 21 2017 17:14:04 GMT-0400 (EDT) 
      */
 
-    var version = '0.9.8';
+    var version = '0.10.0';
 
     /**
      * Created by elyde on 12/6/2016.
@@ -858,8 +800,6 @@ var fjl = function () {
 
     var fjl = {
         __: __,
-        alt: alt,
-        ap: ap,
         apply: apply,
         arrayComplement: complement$2,
         arrayDifference: difference$2,
@@ -867,12 +807,9 @@ var fjl = function () {
         arrayUnion: union$2,
         assign: assign,
         assignDeep: assignDeep,
-        bimap: bimap,
         call: call,
-        chain: chain,
         complement: complement$1,
         compose: compose,
-        concat: concat,
         curry: curry,
         curryN: curryN,
         curry2: curry2,
@@ -880,13 +817,8 @@ var fjl = function () {
         curry4: curry4,
         curry5: curry5,
         difference: difference$1,
-        empty: empty,
         errorIfNotTypeFactory: errorIfNotTypeFactory,
-        equals: equals,
-        extend: extend,
-        extract: extract,
         filter: filter,
-        id: id,
         intersect: intersect$1,
         isset: isset,
         issetAndOfType: issetAndOfType,
@@ -905,8 +837,6 @@ var fjl = function () {
         isSymbol: isSymbol,
         isEmpty: isEmpty,
         isConstructablePrimitive: isConstructablePrimitive,
-        join: join,
-        liftN: liftN,
         map: map,
         notEmptyAndOfType: notEmptyAndOfType,
         pureCurry: pureCurry,
@@ -919,8 +849,6 @@ var fjl = function () {
         objDifference: difference,
         objIntersect: intersect,
         objUnion: union,
-        of: of,
-        promap: promap,
         reduce: reduce,
         reduceRight: reduceRight,
         subClass: subClass,
@@ -928,8 +856,7 @@ var fjl = function () {
         typeOf: typeOf,
         typeOfIs: typeOfIs,
         union: union$1,
-        version: version,
-        zero: zero
+        version: version
     };
 
     return fjl;

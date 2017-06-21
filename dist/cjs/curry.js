@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.curry = curry;
 exports.pureCurry = pureCurry;
@@ -31,7 +31,7 @@ placeHolderInstance = new PlaceHolder();
  * @returns {boolean}
  */
 function isPlaceHolder(instance) {
-    return instance instanceof PlaceHolder;
+  return instance instanceof PlaceHolder;
 }
 
 /**
@@ -41,15 +41,15 @@ function isPlaceHolder(instance) {
  * @returns {Array|*} - Returns passed in `array` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders(array, args) {
-    var out = array.map(function (element) {
-        if (!isPlaceHolder(element)) {
-            return element;
-        } else if (args.length > 0) {
-            return args.shift();
-        }
-        return element;
-    });
-    return args.length > 0 ? out.concat(args) : out;
+  var out = array.map(function (element) {
+    if (!isPlaceHolder(element)) {
+      return element;
+    } else if (args.length > 0) {
+      return args.shift();
+    }
+    return element;
+  });
+  return args.length > 0 ? out.concat(args) : out;
 }
 
 /**
@@ -59,20 +59,20 @@ function replacePlaceHolders(array, args) {
  * @returns {function(...[*]=)}
  */
 function curry(fn) {
-    for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        argsToCurry[_key - 1] = arguments[_key];
+  for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    argsToCurry[_key - 1] = arguments[_key];
+  }
+
+  return function () {
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
     }
 
-    return function () {
-        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            args[_key2] = arguments[_key2];
-        }
-
-        var concatedArgs = replacePlaceHolders(argsToCurry, args),
-            placeHolders = concatedArgs.filter(isPlaceHolder),
-            canBeCalled = placeHolders.length === 0;
-        return canBeCalled ? fn.apply(null, concatedArgs) : curry.apply(null, [fn].concat(concatedArgs));
-    };
+    var concatedArgs = replacePlaceHolders(argsToCurry, args),
+        placeHolders = concatedArgs.filter(isPlaceHolder),
+        canBeCalled = placeHolders.length === 0;
+    return canBeCalled ? fn.apply(null, concatedArgs) : curry.apply(null, [fn].concat(concatedArgs));
+  };
 }
 
 /**
@@ -82,17 +82,17 @@ function curry(fn) {
  * @returns {function(...[*]=): *}
  */
 function pureCurry(fn) {
-    for (var _len3 = arguments.length, argsToCurry = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-        argsToCurry[_key3 - 1] = arguments[_key3];
+  for (var _len3 = arguments.length, argsToCurry = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+    argsToCurry[_key3 - 1] = arguments[_key3];
+  }
+
+  return function () {
+    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+      args[_key4] = arguments[_key4];
     }
 
-    return function () {
-        for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-            args[_key4] = arguments[_key4];
-        }
-
-        return fn.apply(null, argsToCurry.concat(args));
-    };
+    return fn.apply(null, argsToCurry.concat(args));
+  };
 }
 
 /**
@@ -103,19 +103,19 @@ function pureCurry(fn) {
  * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
  */
 function pureCurryN(fn, executeArity) {
-    for (var _len5 = arguments.length, curriedArgs = Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
-        curriedArgs[_key5 - 2] = arguments[_key5];
+  for (var _len5 = arguments.length, curriedArgs = Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
+    curriedArgs[_key5 - 2] = arguments[_key5];
+  }
+
+  return function () {
+    for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+      args[_key6] = arguments[_key6];
     }
 
-    return function () {
-        for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-            args[_key6] = arguments[_key6];
-        }
-
-        var concatedArgs = curriedArgs.concat(args),
-            canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-        return !canBeCalled ? pureCurryN.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
-    };
+    var concatedArgs = curriedArgs.concat(args),
+        canBeCalled = concatedArgs.length >= executeArity || !executeArity;
+    return !canBeCalled ? pureCurryN.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+  };
 }
 
 /**
@@ -126,20 +126,20 @@ function pureCurryN(fn, executeArity) {
  * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
  */
 function curryN(fn, executeArity) {
-    for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
-        curriedArgs[_key7 - 2] = arguments[_key7];
+  for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
+    curriedArgs[_key7 - 2] = arguments[_key7];
+  }
+
+  return function () {
+    for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
+      args[_key8] = arguments[_key8];
     }
 
-    return function () {
-        for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-            args[_key8] = arguments[_key8];
-        }
-
-        var concatedArgs = replacePlaceHolders(curriedArgs, args),
-            placeHolders = concatedArgs.filter(isPlaceHolder),
-            canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
-        return !canBeCalled ? curryN.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
-    };
+    var concatedArgs = replacePlaceHolders(curriedArgs, args),
+        placeHolders = concatedArgs.filter(isPlaceHolder),
+        canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
+    return !canBeCalled ? curryN.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+  };
 }
 
 /**
@@ -155,7 +155,7 @@ var __ = exports.__ = Object.freeze ? Object.freeze(placeHolderInstance) : place
  * @returns {Function}
  */
 curry2 = exports.curry2 = function curry2(fn) {
-    return curryN(fn, 2);
+  return curryN(fn, 2);
 },
 
 
@@ -165,7 +165,7 @@ curry2 = exports.curry2 = function curry2(fn) {
  * @returns {Function}
  */
 curry3 = exports.curry3 = function curry3(fn) {
-    return curryN(fn, 3);
+  return curryN(fn, 3);
 },
 
 
@@ -175,7 +175,7 @@ curry3 = exports.curry3 = function curry3(fn) {
  * @returns {Function}
  */
 curry4 = exports.curry4 = function curry4(fn) {
-    return curryN(fn, 4);
+  return curryN(fn, 4);
 },
 
 
@@ -185,7 +185,7 @@ curry4 = exports.curry4 = function curry4(fn) {
  * @returns {Function}
  */
 curry5 = exports.curry5 = function curry5(fn) {
-    return curryN(fn, 5);
+  return curryN(fn, 5);
 },
 
 
@@ -195,7 +195,7 @@ curry5 = exports.curry5 = function curry5(fn) {
  * @returns {Function}
  */
 pureCurry2 = exports.pureCurry2 = function pureCurry2(fn) {
-    return pureCurryN(fn, 2);
+  return pureCurryN(fn, 2);
 },
 
 
@@ -205,7 +205,7 @@ pureCurry2 = exports.pureCurry2 = function pureCurry2(fn) {
  * @returns {Function}
  */
 pureCurry3 = exports.pureCurry3 = function pureCurry3(fn) {
-    return pureCurryN(fn, 3);
+  return pureCurryN(fn, 3);
 },
 
 
@@ -215,7 +215,7 @@ pureCurry3 = exports.pureCurry3 = function pureCurry3(fn) {
  * @returns {Function}
  */
 pureCurry4 = exports.pureCurry4 = function pureCurry4(fn) {
-    return pureCurryN(fn, 4);
+  return pureCurryN(fn, 4);
 },
 
 
@@ -225,21 +225,21 @@ pureCurry4 = exports.pureCurry4 = function pureCurry4(fn) {
  * @returns {Function}
  */
 pureCurry5 = exports.pureCurry5 = function pureCurry5(fn) {
-    return pureCurryN(fn, 5);
+  return pureCurryN(fn, 5);
 };
 
 exports.default = {
-    __: __,
-    curry: curry,
-    curryN: curryN,
-    curry2: curry2,
-    curry3: curry3,
-    curry4: curry4,
-    curry5: curry5,
-    pureCurry: pureCurry,
-    pureCurryN: pureCurryN,
-    pureCurry2: pureCurry2,
-    pureCurry3: pureCurry3,
-    pureCurry4: pureCurry4,
-    pureCurry5: pureCurry5
+  __: __,
+  curry: curry,
+  curryN: curryN,
+  curry2: curry2,
+  curry3: curry3,
+  curry4: curry4,
+  curry5: curry5,
+  pureCurry: pureCurry,
+  pureCurryN: pureCurryN,
+  pureCurry2: pureCurry2,
+  pureCurry3: pureCurry3,
+  pureCurry4: pureCurry4,
+  pureCurry5: pureCurry5
 };

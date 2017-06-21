@@ -22,9 +22,7 @@ import {notEmptyAndOfType} from './not';
 import errorIfNotTypeFactory from './errorIfNotTypeFactory';
 import {call, apply} from './fnOperators';
 
-import {complement, difference, union, intersect,
-    id, equals, concat, of, empty, zero, ap, alt, map, filter, reduce,
-    reduceRight, join, chain, liftN, extend, extract, promap, bimap} from './operators';
+import {complement, difference, union, intersect,  map, filter, reduce, reduceRight} from './operators';
 
 import {complement as objComplement,
     difference as objDifference,
@@ -40,8 +38,6 @@ import version from './generated/version';
 
 export default {
     __,
-    alt,
-    ap,
     apply,
     arrayComplement,
     arrayDifference,
@@ -49,12 +45,9 @@ export default {
     arrayUnion,
     assign,
     assignDeep,
-    bimap,
     call,
-    chain,
     complement,
     compose,
-    concat,
     curry,
     curryN,
     curry2,
@@ -62,13 +55,8 @@ export default {
     curry4,
     curry5,
     difference,
-    empty,
     errorIfNotTypeFactory,
-    equals,
-    extend,
-    extract,
     filter,
-    id,
     intersect,
     isset,
     issetAndOfType,
@@ -87,8 +75,6 @@ export default {
     isSymbol,
     isEmpty,
     isConstructablePrimitive,
-    join,
-    liftN,
     map,
     notEmptyAndOfType,
     pureCurry,
@@ -101,8 +87,6 @@ export default {
     objDifference,
     objIntersect,
     objUnion,
-    of,
-    promap,
     reduce,
     reduceRight,
     subClass,
@@ -110,6 +94,5 @@ export default {
     typeOf,
     typeOfIs,
     union,
-    version,
-    zero
+    version
 };
