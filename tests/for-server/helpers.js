@@ -35,6 +35,29 @@ export let  expectInstanceOf = curry2((value, instance) => expect(value).to.be.i
 
     divide = curry2((...args) => {
         return args.reduce((agg, num) => agg / num, args.shift());
+    }),
+
+    shallowCompareOnLeft = curry2((incoming, against) => Array.isArray(incoming) ?
+        shallowCompareArraysLeft(incoming, against) : shallowCompareObjectsLeft(incoming, against) ),
+
+    shallowCompareArraysLeft = curry2((incoming, against) => !incoming.some((_, ind) => against[ind] !== incoming[ind])),
+
+    shallowCompareObjectsLeft = curry2((incoming, against, keys) => !(keys || Object.keys(incoming))
+        .some(key => against[key] !== incoming[key]) ),
+
+    expectShallowEquals = curry2((a, b) => expectTrue(shallowCompareOnLeft(a, b))),
+
+    range = curry2((from, to, step = 1) => {
+        let inc = from;
+        const out = [];
+        while (inc <= to) {
+            out.push(inc);
+            if (inc > to) {
+                break;
+            }
+            inc += step;
+        }
+        return out;
     });
 
 export default {
@@ -43,9 +66,14 @@ export default {
     expectEqual,
     expectFalse,
     expectTrue,
+    expectShallowEquals,
     hasOwnProperty,
     length,
     add,
     multiply,
-    divide
+    divide,
+    shallowCompareArraysLeft,
+    shallowCompareObjectsLeft,
+    shallowCompareOnLeft,
+    range
 };
