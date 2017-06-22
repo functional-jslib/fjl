@@ -14,7 +14,7 @@ import {length, range, expectEqual, expectShallowEquals, expectInstanceOf} from 
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#arrayOperators', function () {
+describe ('Array Operators', function () {
 
     describe ('#complement', function () {
         it ('should return an empty array when no parameters are passed in', function () {

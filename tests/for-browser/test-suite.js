@@ -54,6 +54,36 @@ var divide = exports.divide = curry2(function () {
         return agg / num;
     }, args.shift());
 });
+var shallowCompareOnLeft = exports.shallowCompareOnLeft = curry2(function (incoming, against) {
+    return Array.isArray(incoming) ? shallowCompareArraysLeft(incoming, against) : shallowCompareObjectsLeft(incoming, against);
+});
+var shallowCompareArraysLeft = exports.shallowCompareArraysLeft = curry2(function (incoming, against) {
+    return !incoming.some(function (_, ind) {
+        return against[ind] !== incoming[ind];
+    });
+});
+var shallowCompareObjectsLeft = exports.shallowCompareObjectsLeft = curry2(function (incoming, against, keys) {
+    return !(keys || Object.keys(incoming)).some(function (key) {
+        return against[key] !== incoming[key];
+    });
+});
+var expectShallowEquals = exports.expectShallowEquals = curry2(function (a, b) {
+    return expectTrue(shallowCompareOnLeft(a, b));
+});
+var range = exports.range = curry2(function (from, to) {
+    var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+
+    var inc = from;
+    var out = [];
+    while (inc <= to) {
+        out.push(inc);
+        if (inc > to) {
+            break;
+        }
+        inc += step;
+    }
+    return out;
+});
 
 exports.default = {
     expectFunction: expectFunction,
@@ -61,19 +91,26 @@ exports.default = {
     expectEqual: expectEqual,
     expectFalse: expectFalse,
     expectTrue: expectTrue,
+    expectShallowEquals: expectShallowEquals,
     hasOwnProperty: hasOwnProperty,
     length: length,
     add: add,
     multiply: multiply,
-    divide: divide
+    divide: divide,
+    shallowCompareArraysLeft: shallowCompareArraysLeft,
+    shallowCompareObjectsLeft: shallowCompareObjectsLeft,
+    shallowCompareOnLeft: shallowCompareOnLeft,
+    range: range
 };
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
  * Created by elyde on 12/29/2016.
  */
 
-describe('Array Combinators', function () {
+describe('Array Operators', function () {
 
     describe('#complement', function () {
         it('should return an empty array when no parameters are passed in', function () {
@@ -185,6 +222,36 @@ describe('Array Combinators', function () {
                 result.forEach(function (elm, ind) {
                     expectEqual(elm, expectedElms[ind]);
                 });
+            });
+        });
+    });
+
+    describe('#flatten', function () {
+        it('should return an array when receiving an array', function () {
+            expectInstanceOf(flatten([]), Array);
+        });
+
+        it('should flatten an array', function () {
+            var expected = [1, 2, 3],
+                subject = [[1], [[2]], [[[3]]]],
+                testData = [[subject, expected], [[[[[1]]], [[2]], [3]], expected], [[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]]], range(1, 15)]];
+            testData.forEach(function (args) {
+                return expectShallowEquals(flatten.apply(undefined, _toConsumableArray(args)));
+            });
+        });
+    });
+
+    describe('#flattenMulti', function () {
+        it('should return an array when receiving many arrays', function () {
+            var result = flattenMulti([], [[]], [[[]]], [[[[]]]]);
+            expectInstanceOf(result, Array);
+            expectShallowEquals(result, []);
+        });
+
+        it('should flatten all passed in arrays into one array no matter their dimensions', function () {
+            // [[ args ], expected] - args is the args to spread on the call of `flattenMulti`
+            [[[[[1], [2, [3], range(4, 9)]], range(10, 21)], range(1, 21)], [[[[[1]]], [[2]], [3]], [1, 2, 3]], [[[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]], range(16, 34)]], range(1, 34)]].map(function (args) {
+                return expectShallowEquals(flattenMulti.apply(undefined, _toConsumableArray(args[0])), args[1]);
             });
         });
     });
