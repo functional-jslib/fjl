@@ -10,7 +10,7 @@ let {assert, expect}  = require('chai');
 let compose  = require('../../dist/cjs/compose');
 let {__}  = require('../../dist/cjs/curry');
 let {complement, difference, union, intersect, flatten, flattenMulti, concat, join, equals}  = require('../../dist/cjs/arrayOperators');
-let {length, expectFalse, expectTrue, expectEqual, expectFunction}  = require('./helpers');
+let {length, range, expectEqual, expectShallowEquals, expectInstanceOf}  = require('./helpers');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -120,6 +120,41 @@ describe ('Array Combinators', function () {
                     expectEqual(elm, expectedElms[ind]);
                 });
             });
+        });
+    });
+
+    describe ('#flatten', function () {
+        it ('should return an array when receiving an array', function () {
+            expectInstanceOf(flatten([]), Array);
+        });
+
+        it ('should flatten an array', function () {
+            const expected = [1, 2, 3],
+                subject = [[1], [[2]], [[[3]]]],
+                testData = [
+                    [subject, expected],
+                    [[[[[1]]], [[2]], [3]], expected],
+                    [[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]]], range(1, 15)],
+                ];
+            testData.forEach(args => expectShallowEquals(flatten(...args)));
+        });
+    });
+
+    describe ('#flattenMulti', function () {
+        it ('should return an array when receiving many arrays', function () {
+            const result = flattenMulti([], [[]], [[[]]], [[[[]]]]);
+            expectInstanceOf(result, Array);
+            expectShallowEquals(result, []);
+        });
+
+        it ('should flatten all passed in arrays into one array no matter their dimensions', function () {
+            // [[ args ], expected] - args is the args to spread on the call of `flattenMulti`
+            [
+                [[[[1], [2, [3], range(4, 9)]], range(10, 21)], range(1, 21)],
+                [[[[[1]]], [[2]], [3]], [1, 2, 3]],
+                [[[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]], range(16, 34)]], range(1, 34)],
+            ]
+                .map(args => expectShallowEquals(flattenMulti(...args[0]), args[1]));
         });
     });
 
