@@ -8,7 +8,7 @@ import {assign, assignDeep} from './assign';
 import compose from './compose';
 
 import {__, curry, curryN, curry2, curry3, curry4, curry5,
-    pureCurry, pureCurryN, pureCurry2, pureCurry3, pureCurry4, pureCurry5} from './curry';
+    pCurry, pCurryN, pCurry2, pCurry3, pCurry4, pCurry5} from './curry';
 
 import {subClass, subClassMulti} from './subClass';
 import {typeOf, typeOfIs} from './typeOf';
@@ -77,12 +77,12 @@ export default {
     isConstructablePrimitive,
     map,
     notEmptyAndOfType,
-    pureCurry,
-    pureCurryN,
-    pureCurry2,
-    pureCurry3,
-    pureCurry4,
-    pureCurry5,
+    pCurry,
+    pCurryN,
+    pCurry2,
+    pCurry3,
+    pCurry4,
+    pCurry5,
     objComplement,
     objDifference,
     objIntersect,

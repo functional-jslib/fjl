@@ -8,7 +8,7 @@
 
 'use strict';
 
-import {pureCurry2 as curry2} from './curry';
+import {curry2} from './curry';
 
 const
 

@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import {pureCurry2 as curry2, pureCurry3 as curry3} from './curry';
+import {curry2, curry3} from './curry';
 import {typeOf} from './typeOf';
 
 import {complement as objComplement,

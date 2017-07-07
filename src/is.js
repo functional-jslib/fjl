@@ -6,7 +6,7 @@
  */
 'use strict';
 
-import {pureCurry2} from './curry';
+import {curry2} from './curry';
 import {typeOf, typeOfIs} from './typeOf';
 
 let _String = String.name,
@@ -24,14 +24,24 @@ let _String = String.name,
     _undefined = 'undefined';
 
 /**
- * Returns whether object is an instance of constructor passed in parameter 1.
+ * Returns whether constructor has derived object.
  * @instanceConstructor {Function|Class}
  * @instance {*}
  * @returns {Boolean}
  */
-export const instanceOf = pureCurry2((instanceConstructor, instance) => {
+export const instanceOf = curry2((instanceConstructor, instance) => {
         return instance instanceof instanceConstructor;
     });
+
+/**
+ * Checks if `value` is an es2015 `class`.
+ * @function module:fjl.isClass
+ * @param value {*}
+ * @returns {boolean}
+ */
+export function isClass (value) {
+    return value && /^\s{0,3}class\s{1,3}/.test(value.toString().substr(0, 10));
+}
 
 /**
  * Returns whether a value is a function or not.
@@ -40,7 +50,7 @@ export const instanceOf = pureCurry2((instanceConstructor, instance) => {
  * @returns {Boolean}
  */
 export function isFunction (value) {
-    return value instanceof Function;
+    return !isClass(value) && value instanceof Function;
 }
 
 /**
@@ -71,7 +81,7 @@ export function issetAndOfType (value, type) {
  * @returns {boolean}
  */
 export function isArray (value) {
-    return Array.isArray(value);
+    return typeOfIs(value, Array);
 }
 
 /**
@@ -192,7 +202,7 @@ export function isSymbol (value) {
  */
 export function isEmpty(value) {
     let typeOfValue = typeOf(value);
-    var retVal;
+    let retVal;
 
     if (typeOfValue === _Array || typeOfValue === _String || typeOfValue === _Function) {
         retVal = value.length === 0;
@@ -227,6 +237,7 @@ export default {
     issetAndOfType,
     isNumber,
     isFunction,
+    isClass,
     isArray,
     isBoolean,
     isObject,

@@ -8,29 +8,29 @@
 'use strict';
 import {assert, expect} from 'chai';
 import compose from '../../src/compose';
-import {pureCurryN, __} from '../../src/curry';
+import {curryN, __} from '../../src/curry';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe('pureCurryN', function () {
+describe('curryN', function () {
 
-    // Set pureCurry here to use below
+    // Set curry here to use below
     let multiplyRecursive = (...args) => args.reduce((agg, num) => num * agg, 1),
         addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
         divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
     it ('should be of type function.', function () {
-        expect(pureCurryN).to.be.instanceOf(Function);
+        expect(curryN).to.be.instanceOf(Function);
     });
 
     it ('should return a function that throws an error when no arguments are passed.', function () {
-        let result = pureCurryN();
+        let result = curryN();
         expect(result).to.be.instanceOf(Function);
         assert.throws(result, Error);
     });
 
     it ('should pass in any values passed the arity when executing the curried function', function () {
-        let add3Nums = pureCurryN(addRecursive, 3);
+        let add3Nums = curryN(addRecursive, 3);
 
         // Curry add to add 3 numbers
         expect(add3Nums()(1, 2, 3)) .to.equal(6);
@@ -46,7 +46,7 @@ describe('pureCurryN', function () {
     });
 
     it ('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
-        let multiply5Nums = pureCurryN(multiplyRecursive, 5),
+        let multiply5Nums = curryN(multiplyRecursive, 5),
             multiplyExpectedResult = Math.pow(5, 5),
             argsToTest = [
                 [5, 5, 5, 5, 5],

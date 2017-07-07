@@ -20,7 +20,7 @@ describe ('Function Operators', function () {
             expectFunction(call);
         });
         it ('should call a function passed into it', function () {
-            expectEqual(call(add, null, 1, 2, 3, 4, 5), 15);
+            expectEqual(call(add, 1, 2, 3, 4, 5), 15);
         });
         it ('should take context into account', function () {
             const sideEffectsOp = () => {
@@ -37,7 +37,7 @@ describe ('Function Operators', function () {
             expectFunction(apply);
         });
         it ('should call a function passed into it with args array passed in as third parameter', function () {
-            expectEqual(apply(add, null, [1, 2, 3, 4, 5]), 15);
+            expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
         it ('should take context into account', function () {
             const sideEffectsOp = () => {
