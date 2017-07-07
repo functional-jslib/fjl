@@ -8,7 +8,7 @@
 'use strict';
 let {assert, expect}  = require('chai');
 let compose  = require('../../dist/cjs/compose');
-let {curry, curry2, __}  = require('../../dist/cjs/curry');
+let {curry__: curry, curry2__: curry2, __}  = require('../../dist/cjs/curry');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -28,11 +28,6 @@ describe('curry', function () {
         expect(curry(99)).to.be.instanceOf(Function);
         expect(curry(() => {})).to.be.instanceOf(Function);
         expect(curry(console.log)).to.be.instanceOf(Function);
-    });
-
-    it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
-        assert.throws(curry(), Error);
-        assert.throws(curry(99), Error);
     });
 
     it ('should return a properly curried function when correct arity for said function is met.', function () {

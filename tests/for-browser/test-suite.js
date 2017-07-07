@@ -1,4 +1,4 @@
-define('testSuite', ['exports'], function (exports) { 'use strict';
+define('test-suite', ['exports'], function (exports) { 'use strict';
 
 /**
  * Created by elyde on 12/10/2016.
@@ -338,10 +338,10 @@ describe('curry', function () {
         expect(curry(console.log)).to.be.instanceOf(Function);
     });
 
-    it('should return a function that fails when no function is passed (as it\'s first param).', function () {
+    /*it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
         assert.throws(curry(), Error);
         assert.throws(curry(99), Error);
-    });
+    });*/
 
     it('should return a properly curried function when correct arity for said function is met.', function () {
         var min8 = curry(Math.min, 8),
@@ -402,8 +402,8 @@ describe('curry', function () {
     });
 
     it('should enforce `Placeholder` values when currying', function () {
-        var add = curry(addRecursive),
-            multiply = curry(multiplyRecursive),
+        var add = curry3(addRecursive),
+            multiply = curry5(multiplyRecursive),
             multiplyExpectedResult = Math.pow(5, 5);
 
         // Curry add to add 3 numbers
@@ -586,7 +586,7 @@ describe('Function Operators', function () {
             expectFunction(call);
         });
         it('should call a function passed into it', function () {
-            expectEqual(call(add, null, 1, 2, 3, 4, 5), 15);
+            expectEqual(call(add, 1, 2, 3, 4, 5), 15);
         });
         it('should take context into account', function () {
             var _this = this;
@@ -605,7 +605,7 @@ describe('Function Operators', function () {
             expectFunction(apply);
         });
         it('should call a function passed into it with args array passed in as third parameter', function () {
-            expectEqual(apply(add, null, [1, 2, 3, 4, 5]), 15);
+            expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
         it('should take context into account', function () {
             var _this2 = this;
@@ -922,28 +922,28 @@ describe('Object Operators', function () {
  * Created by elyde on 11/13/2016.
  */
 
-describe('pureCurry', function () {
+describe('curry', function () {
 
     it('should be of type function.', function () {
-        expectFunction(pureCurry);
+        expectFunction(curry);
     });
 
     it('should return a function when called with or without args.', function () {
-        expectFunction(pureCurry());
-        expectFunction(pureCurry(99));
-        expectFunction(pureCurry(function () {}));
-        expectFunction(pureCurry(console.log));
+        expectFunction(curry());
+        expectFunction(curry(99));
+        expectFunction(curry(function () {}));
+        expectFunction(curry(console.log));
     });
 
     it('should return a function that fails when no function is passed in (as it\'s first param).', function () {
-        assert.throws(pureCurry(), Error);
-        assert.throws(pureCurry(99), Error);
+        assert.throws(curry(), Error);
+        assert.throws(curry(99), Error);
     });
 
     it('should return a curried function.', function () {
-        var min8 = pureCurry(Math.min, 8),
-            max5 = pureCurry(Math.max, 5),
-            pow2 = pureCurry(Math.pow, 2);
+        var min8 = curry(Math.min, 8),
+            max5 = curry(Math.max, 5),
+            pow2 = curry(Math.pow, 2);
 
         // Expect functions
         [min8, max5, pow2].forEach(function (func) {
@@ -962,36 +962,36 @@ describe('pureCurry', function () {
         expect(pow2(4)).to.equal(16);
     });
 
-    it('should be able to correctly pureCurry functions of different arity as long as their arity is met.', function () {
-        var min = pureCurry2(Math.min),
-            max = pureCurry2(Math.max),
-            pow = pureCurry2(Math.pow),
-            min8 = pureCurry(Math.min, 8),
-            max5 = pureCurry(Math.max, 5),
-            pow2 = pureCurry(Math.pow, 2),
-            isValidTangentLen = pureCurry(function (a, b, cSqrd) {
+    it('should be able to correctly curry functions of different arity as long as their arity is met.', function () {
+        var min = curry2(Math.min),
+            max = curry2(Math.max),
+            pow = curry2(Math.pow),
+            min8 = curry(Math.min, 8),
+            max5 = curry(Math.max, 5),
+            pow2 = curry(Math.pow, 2),
+            isValidTangentLen = curry(function (a, b, cSqrd) {
             return pow(a, 2) + pow(b, 2) === cSqrd;
         }, 2, 2),
-            random = pureCurry(function (start, end) {
+            random = curry(function (start, end) {
             return Math.round(Math.random() * end + start);
         }, 0),
             expectedFor = function expectedFor(num) {
             return min(8, max(5, pow(2, num)));
         };
 
-        // Expect functions returned for `pureCurry` calls
+        // Expect functions returned for `curry` calls
         expectFunction(isValidTangentLen);
 
-        // Expect functions returned for `pureCurry` calls
+        // Expect functions returned for `curry` calls
         [min8, max5, pow2].forEach(function (func) {
             expectFunction(func);
         });
 
-        // Expect `pureCurry`ed functions to work as expected
+        // Expect `curry`ed functions to work as expected
         expect(isValidTangentLen(8)).to.equal(true);
         expect(isValidTangentLen(21)).to.equal(false);
 
-        // Expect `pureCurry`ed functions to work as expected
+        // Expect `curry`ed functions to work as expected
         [8, 5, 3, 2, 1, 0, random(89), random(55), random(34)].forEach(function (num) {
             var composed = compose(min8, max5, pow2);
             expect(composed(num)).to.equal(expectedFor(num));
@@ -1002,9 +1002,9 @@ describe('pureCurry', function () {
  * Created by elyde on 11/25/2016.
  */
 
-describe('pureCurryN', function () {
+describe('curryN', function () {
 
-    // Set pureCurry here to use below
+    // Set curry here to use below
     var multiplyRecursive = function multiplyRecursive() {
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
@@ -1034,17 +1034,17 @@ describe('pureCurryN', function () {
     };
 
     it('should be of type function.', function () {
-        expect(pureCurryN).to.be.instanceOf(Function);
+        expect(curryN).to.be.instanceOf(Function);
     });
 
     it('should return a function that throws an error when no arguments are passed.', function () {
-        var result = pureCurryN();
+        var result = curryN();
         expect(result).to.be.instanceOf(Function);
         assert.throws(result, Error);
     });
 
     it('should pass in any values passed the arity when executing the curried function', function () {
-        var add3Nums = pureCurryN(addRecursive, 3);
+        var add3Nums = curryN(addRecursive, 3);
 
         // Curry add to add 3 numbers
         expect(add3Nums()(1, 2, 3)).to.equal(6);
@@ -1060,7 +1060,7 @@ describe('pureCurryN', function () {
     });
 
     it('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
-        var multiply5Nums = pureCurryN(multiplyRecursive, 5),
+        var multiply5Nums = curryN(multiplyRecursive, 5),
             multiplyExpectedResult = Math.pow(5, 5),
             argsToTest = [[5, 5, 5, 5, 5], [5, 5, 5, 5], [5, 5, 5], [5, 5], [5]],
             partiallyAppliedResults = [multiply5Nums(), multiply5Nums(5), multiply5Nums(5, 5), multiply5Nums(5, 5, 5), multiply5Nums(5, 5, 5, 5)];

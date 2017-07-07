@@ -8,7 +8,7 @@
 'use strict';
 import {assert, expect} from 'chai';
 import compose from '../../src/compose';
-import {curryN, __} from '../../src/curry';
+import {curryN__ as curryN, __} from '../../src/curry';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 

@@ -1,7 +1,3 @@
-### fjl.__
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.apply
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -54,7 +50,15 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.curry2__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.curry3
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry3__
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -62,11 +66,27 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.curry4__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.curry5
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.curry5__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.curryN
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curryN__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry__
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -122,6 +142,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.isset
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.issetAndOfType
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.isString
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -139,14 +167,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.isWeakSet
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isset
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.issetAndOfType
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -227,5 +247,9 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.version
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.__
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)

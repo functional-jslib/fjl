@@ -20,19 +20,19 @@
         value: true
     });
     exports.intersect = exports.union = exports.difference = exports.complement = exports.reduceRight = exports.reduce = exports.filter = exports.map = undefined;
-    var map = exports.map = (0, _curry.pureCurry2)(function (fn, functor) {
+    var map = exports.map = (0, _curry.curry2)(function (fn, functor) {
         return functor.map(fn);
     }),
-        filter = exports.filter = (0, _curry.pureCurry2)(function (fn, functor) {
+        filter = exports.filter = (0, _curry.curry2)(function (fn, functor) {
         return functor.filter(fn);
     }),
-        reduce = exports.reduce = (0, _curry.pureCurry3)(function (fn, agg, functor) {
+        reduce = exports.reduce = (0, _curry.curry3)(function (fn, agg, functor) {
         return functor.reduce(fn, agg);
     }),
-        reduceRight = exports.reduceRight = (0, _curry.pureCurry3)(function (fn, agg, functor) {
+        reduceRight = exports.reduceRight = (0, _curry.curry3)(function (fn, agg, functor) {
         return functor.reduceRight(fn, agg);
     }),
-        complement = exports.complement = (0, _curry.pureCurry2)(function (functor) {
+        complement = exports.complement = (0, _curry.curry2)(function (functor) {
         for (var _len = arguments.length, others = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             others[_key - 1] = arguments[_key];
         }
@@ -44,7 +44,7 @@
                 return _objOperators.complement.apply(undefined, [functor].concat(others));
         }
     }),
-        difference = exports.difference = (0, _curry.pureCurry2)(function (functor1, functor2) {
+        difference = exports.difference = (0, _curry.curry2)(function (functor1, functor2) {
         switch ((0, _typeOf.typeOf)(functor1)) {
             case 'Array':
                 return (0, _arrayOperators.difference)(functor1, functor2);
@@ -52,7 +52,7 @@
                 return (0, _objOperators.difference)(functor1, functor2);
         }
     }),
-        union = exports.union = (0, _curry.pureCurry2)(function (functor1, functor2) {
+        union = exports.union = (0, _curry.curry2)(function (functor1, functor2) {
         switch ((0, _typeOf.typeOf)(functor1)) {
             case 'Array':
                 return (0, _arrayOperators.union)(functor1, functor2);
@@ -60,7 +60,7 @@
                 return (0, _objOperators.union)(functor1, functor2);
         }
     }),
-        intersect = exports.intersect = (0, _curry.pureCurry2)(function (functor1, functor2) {
+        intersect = exports.intersect = (0, _curry.curry2)(function (functor1, functor2) {
         switch ((0, _typeOf.typeOf)(functor1)) {
             case 'Array':
                 return (0, _arrayOperators.intersect)(functor1, functor2);

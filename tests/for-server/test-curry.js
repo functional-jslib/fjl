@@ -8,7 +8,7 @@
 'use strict';
 import {assert, expect} from 'chai';
 import compose from '../../src/compose';
-import {curry, curry2, __} from '../../src/curry';
+import {curry__ as curry, curry2__ as curry2, curry3__ as curry3, curry5__ as curry5, __} from '../../src/curry';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -30,10 +30,10 @@ describe('curry', function () {
         expect(curry(console.log)).to.be.instanceOf(Function);
     });
 
-    it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
+    /*it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
         assert.throws(curry(), Error);
         assert.throws(curry(99), Error);
-    });
+    });*/
 
     it ('should return a properly curried function when correct arity for said function is met.', function () {
         let min8 = curry(Math.min, 8),
@@ -88,8 +88,8 @@ describe('curry', function () {
     });
 
     it ('should enforce `Placeholder` values when currying', function () {
-        let add = curry(addRecursive),
-            multiply = curry(multiplyRecursive),
+        let add = curry3(addRecursive),
+            multiply = curry5(multiplyRecursive),
             multiplyExpectedResult = Math.pow(5, 5);
 
         // Curry add to add 3 numbers

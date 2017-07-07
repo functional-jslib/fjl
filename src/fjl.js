@@ -1,5 +1,8 @@
 /**
  * Created by elyde on 12/6/2016.
+ * @todo Evaluate library for places where we can make it more functional; E.g.,
+ *  - Make methods take the functor/monad values as last (where it makes sense)
+ * @todo Rename curry__ and curry*__ to something easier on the eyes (lol).
  */
 
 'use strict';
@@ -8,7 +11,7 @@ import {assign, assignDeep} from './assign';
 import compose from './compose';
 
 import {__, curry, curryN, curry2, curry3, curry4, curry5,
-    pCurry, pCurryN, pCurry2, pCurry3, pCurry4, pCurry5} from './curry';
+    curry__, curryN__, curry2__, curry3__, curry4__, curry5__} from './curry';
 
 import {subClass, subClassMulti} from './subClass';
 import {typeOf, typeOfIs} from './typeOf';
@@ -54,6 +57,12 @@ export default {
     curry3,
     curry4,
     curry5,
+    curry__,
+    curryN__,
+    curry2__,
+    curry3__,
+    curry4__,
+    curry5__,
     difference,
     errorIfNotTypeFactory,
     filter,
@@ -77,12 +86,6 @@ export default {
     isConstructablePrimitive,
     map,
     notEmptyAndOfType,
-    pCurry,
-    pCurryN,
-    pCurry2,
-    pCurry3,
-    pCurry4,
-    pCurry5,
     objComplement,
     objDifference,
     objIntersect,

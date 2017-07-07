@@ -8,7 +8,7 @@
 'use strict';
 let {assert, expect}  = require('chai');
 let compose  = require('../../dist/cjs/compose');
-let {curryN, __}  = require('../../dist/cjs/curry');
+let {curryN__: curryN, __}  = require('../../dist/cjs/curry');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 

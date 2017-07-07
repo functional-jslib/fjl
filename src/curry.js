@@ -3,6 +3,7 @@
  * @created 12/6/2016.
  * @file fjl-curry/src/curry.js
  * @description Different curry implementations for modern javascript currying.
+ * @todo Make code here more minimal (reuse small parts here).
  */
 
 /**
@@ -66,35 +67,36 @@ function replacePlaceHolders (array, args) {
 
 /**
  * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @function pCurry
+ * @function curry__
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {function(...[*]=)}
  */
-export function pCurry (fn, ...argsToCurry) {
+export function curry__ (fn, ...argsToCurry) {
     return (...args) => {
         let concatedArgs = replacePlaceHolders(argsToCurry, args),
             placeHolders = concatedArgs.filter(isPlaceHolder),
-            canBeCalled = placeHolders.length === 0;
+            canBeCalled = placeHolders.length === 0 &&
+                concatedArgs.length >= fn.length;
         return canBeCalled ? fn.apply(null, concatedArgs) :
-            pCurry.apply(null, [fn].concat(concatedArgs));
+            curry__.apply(null, [fn].concat(concatedArgs));
     };
 }
 
 /**
  * Curries a function up to given arity also enforces arity via placeholder values (`__`).
- * @function pCurryN
+ * @function curryN__
  * @param fn {Function}
  * @param executeArity {Number}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
  * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
  */
-export function pCurryN (fn, executeArity, ...curriedArgs) {
+export function curryN__ (fn, executeArity, ...curriedArgs) {
     return (...args) => {
         let concatedArgs = replacePlaceHolders(curriedArgs, args),
             placeHolders = concatedArgs.filter(isPlaceHolder),
             canBeCalled = (concatedArgs.length - placeHolders.length >= executeArity) || !executeArity;
-        return !canBeCalled ? pCurryN.apply(null, [fn, executeArity].concat(concatedArgs)) :
+        return !canBeCalled ? curryN__.apply(null, [fn, executeArity].concat(concatedArgs)) :
             fn.apply(null, concatedArgs);
     };
 }
@@ -135,35 +137,35 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
 
     /**
      * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call function until 2 or more args).
-     * @function pCurry2
+     * @function curry2__
      * @param fn {Function}
      * @returns {Function}
      */
-    pCurry2 = fn => pCurryN(fn, 2),
+    curry2__ = fn => curryN__(fn, 2),
 
     /**
      * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call function until 3 or more args).
-     * @function pCurry3
+     * @function curry3__
      * @param fn {Function}
      * @returns {Function}
      */
-    pCurry3 = fn => pCurryN(fn, 3),
+    curry3__ = fn => curryN__(fn, 3),
 
     /**
      * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call function until 4 or more args).
-     * @function pCurry4
+     * @function curry4__
      * @param fn {Function}
      * @returns {Function}
      */
-    pCurry4 = fn => pCurryN(fn, 4),
+    curry4__ = fn => curryN__(fn, 4),
 
     /**
      * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call function until 5 or more args).
-     * @function pCurry5
+     * @function curry5__
      * @param fn {Function}
      * @returns {Function}
      */
-    pCurry5 = fn => pCurryN(fn, 5),
+    curry5__ = fn => curryN__(fn, 5),
 
     /**
      * Curries a function up to an arity of 2 (won't call function until 2 or more args).
@@ -202,9 +204,10 @@ export default {
     curry4,
     curry5,
     curryOnce,
-    pCurryN,
-    pCurry2,
-    pCurry3,
-    pCurry4,
-    pCurry5
+    curry__,
+    curryN__,
+    curry2__,
+    curry3__,
+    curry4__,
+    curry5__
 };

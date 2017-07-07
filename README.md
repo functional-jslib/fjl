@@ -54,6 +54,12 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.curry3](#fjlcurry3)
 - [fjl.curry4](#fjlcurry4)
 - [fjl.curry5](#fjlcurry5)
+- [fjl.curry__](#fjlcurry__)
+- [fjl.curryN__](#fjlcurryn__)
+- [fjl.curry2__](#fjlcurry2__)
+- [fjl.curry3__](#fjlcurry3__)
+- [fjl.curry4__](#fjlcurry4__)
+- [fjl.curry5__](#fjlcurry5__)
 - [fjl.difference](#fjldifference)
 - [fjl.errorIfNotTypeFactory](#fjlerrorifnottypefactory)
 - [fjl.filter](#fjlfilter)
@@ -77,12 +83,6 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.isConstructablePrimitive](#fjlisconstructableprimitive)
 - [fjl.map](#fjlmap)
 - [fjl.notEmptyAndOfType](#fjlnotemptyandoftype)
-- [fjl.pureCurry](#fjlpurecurry)
-- [fjl.pureCurryN](#fjlpurecurryn)
-- [fjl.pureCurry2](#fjlpurecurry2)
-- [fjl.pureCurry3](#fjlpurecurry3)
-- [fjl.pureCurry4](#fjlpurecurry4)
-- [fjl.pureCurry5](#fjlpurecurry5)
 - [fjl.objComplement](#fjlobjcomplement)
 - [fjl.objDifference](#fjlobjdifference)
 - [fjl.objIntersect](#fjlobjintersect)
@@ -95,10 +95,6 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.typeOfIs](#fjltypeofis)
 - [fjl.union](#fjlunion)
 - [fjl.version](#fjlversion)
-
-### fjl.__
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
 
 ### fjl.apply
 @todo - Added documentation here.
@@ -152,7 +148,15 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.curry2__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.curry3
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry3__
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -160,11 +164,27 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.curry4__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.curry5
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.curry5__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.curryN
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curryN__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry__
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -220,6 +240,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.isset
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.issetAndOfType
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.isString
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -237,14 +265,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.isWeakSet
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isset
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.issetAndOfType
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -325,6 +345,10 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.version
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.__
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

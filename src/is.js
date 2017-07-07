@@ -201,8 +201,8 @@ export function isSymbol (value) {
  * @returns {Boolean}
  */
 export function isEmpty(value) {
-    let typeOfValue = typeOf(value);
-    let retVal;
+    let typeOfValue = typeOf(value),
+        retVal;
 
     if (typeOfValue === _Array || typeOfValue === _String || typeOfValue === _Function) {
         retVal = value.length === 0;

@@ -8,7 +8,11 @@ var fjl = function () {
     'use strict';
 
     /**
-     * Created by elyde on 12/6/2016.
+     * @author elydelacruz
+     * @created 12/6/2016.
+     * @file fjl-curry/src/curry.js
+     * @description Different curry implementations for modern javascript currying.
+     * @todo Make code here more minimal (reuse small parts here).
      */
 
     /**
@@ -21,7 +25,30 @@ var fjl = function () {
     var placeHolderInstance = new PlaceHolder();
 
     /**
+     * Curries a function based on it's defined arity (argument's list expected length).
+     * @function curry
+     * @param fn {Function}
+     * @param argsToCurry {...*}
+     * @returns {function(...[*]=)}
+     */
+    function curry(fn) {
+        for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            argsToCurry[_key - 1] = arguments[_key];
+        }
+
+        return function () {
+            for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                args[_key2] = arguments[_key2];
+            }
+
+            var concatedArgs = argsToCurry.concat(args);
+            return concatedArgs.length < fn.length ? curry.apply(null, [fn].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+        };
+    }
+
+    /**
      * Checks to see if value is a `PlaceHolder`.
+     * @function isPlaceHolder
      * @param instance {*}
      * @returns {boolean}
      */
@@ -31,6 +58,7 @@ var fjl = function () {
 
     /**
      * Replaces `placeholder` values in `array`.
+     * @function replacePlaceHolder
      * @param array {Array} - Array to replace placeholders in.
      * @param args {Array} - Args from to choose from to replace placeholders.
      * @returns {Array|*} - Returns passed in `array` with placeholders replaced by values in `args`.
@@ -48,35 +76,13 @@ var fjl = function () {
     }
 
     /**
-     * Currys passed in function along with passed in arguments passed.
+     * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
+     * @function curry__
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {function(...[*]=)}
      */
-    function curry(fn) {
-        for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-            argsToCurry[_key - 1] = arguments[_key];
-        }
-
-        return function () {
-            for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-                args[_key2] = arguments[_key2];
-            }
-
-            var concatedArgs = replacePlaceHolders(argsToCurry, args),
-                placeHolders = concatedArgs.filter(isPlaceHolder),
-                canBeCalled = placeHolders.length === 0;
-            return canBeCalled ? fn.apply(null, concatedArgs) : curry.apply(null, [fn].concat(concatedArgs));
-        };
-    }
-
-    /**
-     * Pure curry.
-     * @param fn
-     * @param argsToCurry
-     * @returns {function(...[*]=): *}
-     */
-    function pureCurry(fn) {
+    function curry__(fn) {
         for (var _len3 = arguments.length, argsToCurry = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
             argsToCurry[_key3 - 1] = arguments[_key3];
         }
@@ -86,18 +92,22 @@ var fjl = function () {
                 args[_key4] = arguments[_key4];
             }
 
-            return fn.apply(null, argsToCurry.concat(args));
+            var concatedArgs = replacePlaceHolders(argsToCurry, args),
+                placeHolders = concatedArgs.filter(isPlaceHolder),
+                canBeCalled = placeHolders.length === 0 && concatedArgs.length >= fn.length;
+            return canBeCalled ? fn.apply(null, concatedArgs) : curry__.apply(null, [fn].concat(concatedArgs));
         };
     }
 
     /**
-     * Curry's a function passed in `executeArity` also curries any arguments passed in from the `curriedArgs` arg and forward.
+     * Curries a function up to given arity also enforces arity via placeholder values (`__`).
+     * @function curryN__
      * @param fn {Function}
      * @param executeArity {Number}
-     * @param curriedArgs {...*}
+     * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
      * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
      */
-    function pureCurryN(fn, executeArity) {
+    function curryN__(fn, executeArity) {
         for (var _len5 = arguments.length, curriedArgs = Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
             curriedArgs[_key5 - 2] = arguments[_key5];
         }
@@ -107,18 +117,28 @@ var fjl = function () {
                 args[_key6] = arguments[_key6];
             }
 
-            var concatedArgs = curriedArgs.concat(args),
-                canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-            return !canBeCalled ? pureCurryN.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+            var concatedArgs = replacePlaceHolders(curriedArgs, args),
+                placeHolders = concatedArgs.filter(isPlaceHolder),
+                canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
+            return !canBeCalled ? curryN__.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
         };
     }
 
     /**
-     * Curry's a function passed in `executeArity` also curries any arguments passed in from the `curriedArgs` arg and forward.
+     * Curries a function once with any given args (despite passed in function's actual arity).
+     * @function curryOnce
+     * @param fn {Function}
+     * @param argsToCurry {...*}
+     * @returns {function(...[*]=): *}
+     */
+
+    /**
+     * Curries a function up to a given arity.
+     * @function curryN
      * @param fn {Function}
      * @param executeArity {Number}
      * @param curriedArgs {...*}
-     * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
+     * @returns {function(...[*]=)}
      */
     function curryN(fn, executeArity) {
         for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
@@ -130,9 +150,8 @@ var fjl = function () {
                 args[_key8] = arguments[_key8];
             }
 
-            var concatedArgs = replacePlaceHolders(curriedArgs, args),
-                placeHolders = concatedArgs.filter(isPlaceHolder),
-                canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
+            var concatedArgs = curriedArgs.concat(args),
+                canBeCalled = concatedArgs.length >= executeArity || !executeArity;
             return !canBeCalled ? curryN.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
         };
     }
@@ -142,6 +161,18 @@ var fjl = function () {
      * @type {PlaceHolder}
      */
     var __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
+    var curry2__ = function curry2__(fn) {
+        return curryN__(fn, 2);
+    };
+    var curry3__ = function curry3__(fn) {
+        return curryN__(fn, 3);
+    };
+    var curry4__ = function curry4__(fn) {
+        return curryN__(fn, 4);
+    };
+    var curry5__ = function curry5__(fn) {
+        return curryN__(fn, 5);
+    };
     var curry2 = function curry2(fn) {
         return curryN(fn, 2);
     };
@@ -153,18 +184,6 @@ var fjl = function () {
     };
     var curry5 = function curry5(fn) {
         return curryN(fn, 5);
-    };
-    var pureCurry2 = function pureCurry2(fn) {
-        return pureCurryN(fn, 2);
-    };
-    var pureCurry3 = function pureCurry3(fn) {
-        return pureCurryN(fn, 3);
-    };
-    var pureCurry4 = function pureCurry4(fn) {
-        return pureCurryN(fn, 4);
-    };
-    var pureCurry5 = function pureCurry5(fn) {
-        return pureCurryN(fn, 5);
     };
 
     /**
@@ -237,11 +256,21 @@ var fjl = function () {
     var _undefined = 'undefined';
 
     /**
-     * Returns whether object is an instance of constructor passed in parameter 1.
+     * Returns whether constructor has derived object.
      * @instanceConstructor {Function|Class}
      * @instance {*}
      * @returns {Boolean}
      */
+
+    /**
+     * Checks if `value` is an es2015 `class`.
+     * @function module:fjl.isClass
+     * @param value {*}
+     * @returns {boolean}
+     */
+    function isClass(value) {
+        return value && /^\s{0,3}class\s{1,3}/.test(value.toString().substr(0, 10));
+    }
 
     /**
      * Returns whether a value is a function or not.
@@ -250,7 +279,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isFunction(value) {
-        return value instanceof Function;
+        return !isClass(value) && value instanceof Function;
     }
 
     /**
@@ -281,7 +310,7 @@ var fjl = function () {
      * @returns {boolean}
      */
     function isArray(value) {
-        return Array.isArray(value);
+        return typeOfIs(value, Array);
     }
 
     /**
@@ -401,8 +430,8 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isEmpty(value) {
-        var typeOfValue = typeOf(value);
-        var retVal;
+        var typeOfValue = typeOf(value),
+            retVal = void 0;
 
         if (typeOfValue === _Array || typeOfValue === _String || typeOfValue === _Function) {
             retVal = value.length === 0;
@@ -650,17 +679,18 @@ var fjl = function () {
 
     /**
      * Created by edlc on 5/1/17.
+     * Functionally styled `call` and `apply`.
      */
 
-    var call = function call(fn, x) {
-        for (var _len14 = arguments.length, args = Array(_len14 > 2 ? _len14 - 2 : 0), _key14 = 2; _key14 < _len14; _key14++) {
-            args[_key14 - 2] = arguments[_key14];
+    var call = function call(fn) {
+        for (var _len14 = arguments.length, args = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
+            args[_key14 - 1] = arguments[_key14];
         }
 
-        return fn.call.apply(fn, [x].concat(args));
+        return fn.call.apply(fn, [null].concat(args));
     };
-    var apply = function apply(fn, x, args) {
-        return fn.apply(x, args);
+    var apply = function apply(fn, args) {
+        return fn.apply(null, args);
     };
 
     /**
@@ -671,17 +701,17 @@ var fjl = function () {
      * Set functions for arrects.
      */
 
-    var concat = pureCurry2(function (arr0) {
+    var concat = curry2(function (arr0) {
         for (var _len15 = arguments.length, arrays = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
             arrays[_key15 - 1] = arguments[_key15];
         }
 
         return arr0.concat.apply(arr0, arrays);
     });
-    var filter$1 = pureCurry2(function (fn, arr) {
+    var filter$1 = curry2(function (fn, arr) {
         return arr.filter(fn);
     });
-    var reduce$1 = pureCurry2(function (fn, agg, arr) {
+    var reduce$1 = curry2(function (fn, agg, arr) {
         return arr.reduce(fn, agg);
     });
     var sortAscByLength = function sortAscByLength(arr1, arr2) {
@@ -697,18 +727,18 @@ var fjl = function () {
         });
     };
 
-    var union$2 = pureCurry2(function (arr1, arr2) {
+    var union$2 = curry2(function (arr1, arr2) {
         var whereNotInArray1 = function whereNotInArray1(elm) {
             return arr1.indexOf(elm) === -1;
         };
         return concat(arr1, filter$1(whereNotInArray1, arr2));
     });
-    var intersect$2 = pureCurry2(function (arr1, arr2) {
+    var intersect$2 = curry2(function (arr1, arr2) {
         return arr2.length === 0 ? [] : filter$1(function (elm) {
             return arr2.indexOf(elm) > -1;
         }, arr1);
     });
-    var difference$2 = pureCurry2(function (array1, array2) {
+    var difference$2 = curry2(function (array1, array2) {
         // augment this with max length and min length ordering on op
         var _sortAscByLength = sortAscByLength(array1, array2),
             _sortAscByLength2 = _slicedToArray(_sortAscByLength, 2),
@@ -725,7 +755,7 @@ var fjl = function () {
             return agg;
         }, [], arr1);
     });
-    var complement$2 = pureCurry2(function (arr0) {
+    var complement$2 = curry2(function (arr0) {
         for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
             arrays[_key16 - 1] = arguments[_key16];
         }
@@ -738,19 +768,19 @@ var fjl = function () {
     /**
      * Created by elyde on 12/11/2016.
      */
-    var map = pureCurry2(function (fn, functor) {
+    var map = curry2(function (fn, functor) {
         return functor.map(fn);
     });
-    var filter = pureCurry2(function (fn, functor) {
+    var filter = curry2(function (fn, functor) {
         return functor.filter(fn);
     });
-    var reduce = pureCurry3(function (fn, agg, functor) {
+    var reduce = curry3(function (fn, agg, functor) {
         return functor.reduce(fn, agg);
     });
-    var reduceRight = pureCurry3(function (fn, agg, functor) {
+    var reduceRight = curry3(function (fn, agg, functor) {
         return functor.reduceRight(fn, agg);
     });
-    var complement$1 = pureCurry2(function (functor) {
+    var complement$1 = curry2(function (functor) {
         for (var _len17 = arguments.length, others = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
             others[_key17 - 1] = arguments[_key17];
         }
@@ -762,7 +792,7 @@ var fjl = function () {
                 return complement.apply(undefined, [functor].concat(others));
         }
     });
-    var difference$1 = pureCurry2(function (functor1, functor2) {
+    var difference$1 = curry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
                 return difference$2(functor1, functor2);
@@ -770,7 +800,7 @@ var fjl = function () {
                 return difference(functor1, functor2);
         }
     });
-    var union$1 = pureCurry2(function (functor1, functor2) {
+    var union$1 = curry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
                 return union$2(functor1, functor2);
@@ -778,7 +808,7 @@ var fjl = function () {
                 return union(functor1, functor2);
         }
     });
-    var intersect$1 = pureCurry2(function (functor1, functor2) {
+    var intersect$1 = curry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
                 return intersect$2(functor1, functor2);
@@ -789,10 +819,10 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Thu Jun 22 2017 11:29:51 GMT-0400 (EDT) 
+     * Generated Fri Jul 07 2017 00:33:02 GMT-0400 (Eastern Daylight Time) 
      */
 
-    var version = '0.10.5';
+    var version = '0.11.0';
 
     /**
      * Created by elyde on 12/6/2016.
@@ -816,6 +846,12 @@ var fjl = function () {
         curry3: curry3,
         curry4: curry4,
         curry5: curry5,
+        curry__: curry__,
+        curryN__: curryN__,
+        curry2__: curry2__,
+        curry3__: curry3__,
+        curry4__: curry4__,
+        curry5__: curry5__,
         difference: difference$1,
         errorIfNotTypeFactory: errorIfNotTypeFactory,
         filter: filter,
@@ -839,12 +875,6 @@ var fjl = function () {
         isConstructablePrimitive: isConstructablePrimitive,
         map: map,
         notEmptyAndOfType: notEmptyAndOfType,
-        pureCurry: pureCurry,
-        pureCurryN: pureCurryN,
-        pureCurry2: pureCurry2,
-        pureCurry3: pureCurry3,
-        pureCurry4: pureCurry4,
-        pureCurry5: pureCurry5,
         objComplement: complement,
         objDifference: difference,
         objIntersect: intersect,

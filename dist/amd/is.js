@@ -11,6 +11,7 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
         value: true
     });
     exports.instanceOf = undefined;
+    exports.isClass = isClass;
     exports.isFunction = isFunction;
     exports.isset = isset;
     exports.issetAndOfType = issetAndOfType;
@@ -50,14 +51,24 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
         _undefined = 'undefined';
 
     /**
-     * Returns whether object is an instance of constructor passed in parameter 1.
+     * Returns whether constructor has derived object.
      * @instanceConstructor {Function|Class}
      * @instance {*}
      * @returns {Boolean}
      */
-    var instanceOf = exports.instanceOf = (0, _curry.pureCurry2)(function (instanceConstructor, instance) {
+    var instanceOf = exports.instanceOf = (0, _curry.curry2)(function (instanceConstructor, instance) {
         return instance instanceof instanceConstructor;
     });
+
+    /**
+     * Checks if `value` is an es2015 `class`.
+     * @function module:fjl.isClass
+     * @param value {*}
+     * @returns {boolean}
+     */
+    function isClass(value) {
+        return value && /^\s{0,3}class\s{1,3}/.test(value.toString().substr(0, 10));
+    }
 
     /**
      * Returns whether a value is a function or not.
@@ -66,7 +77,7 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
      * @returns {Boolean}
      */
     function isFunction(value) {
-        return value instanceof Function;
+        return !isClass(value) && value instanceof Function;
     }
 
     /**
@@ -97,7 +108,7 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
      * @returns {boolean}
      */
     function isArray(value) {
-        return Array.isArray(value);
+        return (0, _typeOf.typeOfIs)(value, Array);
     }
 
     /**
@@ -217,8 +228,8 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
      * @returns {Boolean}
      */
     function isEmpty(value) {
-        var typeOfValue = (0, _typeOf.typeOf)(value);
-        var retVal;
+        var typeOfValue = (0, _typeOf.typeOf)(value),
+            retVal = void 0;
 
         if (typeOfValue === _Array || typeOfValue === _String || typeOfValue === _Function) {
             retVal = value.length === 0;
@@ -248,6 +259,7 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
         issetAndOfType: issetAndOfType,
         isNumber: isNumber,
         isFunction: isFunction,
+        isClass: isClass,
         isArray: isArray,
         isBoolean: isBoolean,
         isObject: isObject,
