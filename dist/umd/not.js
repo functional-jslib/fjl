@@ -31,7 +31,7 @@
    * @returns {Boolean}
    */
   function notEmptyAndOfType(value, type) {
-    return !(0, _is.isEmpty)(value) && (0, _typeOf.typeOfIs)(value, type);
+    return !(0, _is.isEmpty)(value) && (0, _typeOf.typeOfIs)(type, value);
   }
 
   exports.default = {

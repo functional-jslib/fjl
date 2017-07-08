@@ -11,8 +11,8 @@ import Role from './Role';
 import Resource from './Resource';
 
 let contextName = Acl.name,
-    // isResource = value => typeOfIs(value, Resource),
-    // isRole = value => typeOfIs(value, Role),
+    // isResource = value => typeOfIs(Resource, value),
+    // isRole = value => typeOfIs(Role, value),
     typeOrError = (name, value, type) => errorIfNotType(contextName, name, value, type);
 
 function Acl (config) {

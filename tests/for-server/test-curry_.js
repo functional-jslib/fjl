@@ -6,13 +6,13 @@
 // This part gets stripped out when
 // generating browser version of test(s).
 'use strict';
-let {assert, expect}  = require('chai');
-let compose  = require('../../dist/cjs/compose');
-let {curry__: curry, curry2_: curry2, __}  = require('../../dist/cjs/curry');
+import {assert, expect} from 'chai';
+import compose from '../../src/compose';
+import {curry_, curry2_, curry3_, curry5_, __} from '../../src/curry';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe('curry', function () {
+describe('curry_', function () {
 
     // Set curry here to use below
     let multiplyRecursive = (...args) => args.reduce((agg, num) => num * agg, 1),
@@ -20,20 +20,25 @@ describe('curry', function () {
         divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
     it ('should be of type function.', function () {
-        expect(curry).to.be.instanceOf(Function);
+        expect(curry_).to.be.instanceOf(Function);
     });
 
     it ('should return a function when called with or without args.', function () {
-        expect(curry()).to.be.instanceOf(Function);
-        expect(curry(99)).to.be.instanceOf(Function);
-        expect(curry(() => {})).to.be.instanceOf(Function);
-        expect(curry(console.log)).to.be.instanceOf(Function);
+        expect(curry_()).to.be.instanceOf(Function);
+        expect(curry_(99)).to.be.instanceOf(Function);
+        expect(curry_(() => {})).to.be.instanceOf(Function);
+        expect(curry_(console.log)).to.be.instanceOf(Function);
     });
 
+    /*it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
+     assert.throws(curry_(), Error);
+     assert.throws(curry_(99), Error);
+     });*/
+
     it ('should return a properly curried function when correct arity for said function is met.', function () {
-        let min8 = curry(Math.min, 8),
-            max5 = curry(Math.max, 5),
-            pow2 = curry(Math.pow, 2);
+        let min8 = curry_(Math.min, 8),
+            max5 = curry_(Math.max, 5),
+            pow2 = curry_(Math.pow, 2);
 
         // Expect functions
         [min8, max5, pow2].forEach(function (func) {
@@ -53,14 +58,14 @@ describe('curry', function () {
     });
 
     it ('should be able to correctly curry functions of different arity as long as their arity is met.', function () {
-        let min = curry2(Math.min),
-            max = curry2(Math.max),
-            pow = curry2(Math.pow),
-            min8 = curry(Math.min, 8),
-            max5 = curry(Math.max, 5),
-            pow2 = curry(Math.pow, 2),
-            isValidTangentLen = curry((a, b, cSqrd) => pow(a, 2) + pow(b, 2) === cSqrd, 2, 2),
-            random = curry((start, end) => Math.round(Math.random() * end + start), 0),
+        let min = curry2_(Math.min),
+            max = curry2_(Math.max),
+            pow = curry2_(Math.pow),
+            min8 = curry_(Math.min, 8),
+            max5 = curry_(Math.max, 5),
+            pow2 = curry_(Math.pow, 2),
+            isValidTangentLen = curry_((a, b, cSqrd) => pow(a, 2) + pow(b, 2) === cSqrd, 2, 2),
+            random = curry_((start, end) => Math.round(Math.random() * end + start), 0),
             expectedFor = (num) => min(8, max(5, pow(2, num)));
 
         // Expect functions returned for `curry` calls
@@ -83,8 +88,8 @@ describe('curry', function () {
     });
 
     it ('should enforce `Placeholder` values when currying', function () {
-        let add = curry(addRecursive),
-            multiply = curry(multiplyRecursive),
+        let add = curry3_(addRecursive),
+            multiply = curry5_(multiplyRecursive),
             multiplyExpectedResult = Math.pow(5, 5);
 
         // Curry add to add 3 numbers
@@ -110,9 +115,9 @@ describe('curry', function () {
 
     it ('should respect argument order and placeholder order.', function () {
         // Curry divideR to divde 3 or more numbers
-        expect(curry(divideR, 25, 5)).to.be.instanceOf(Function);
-        expect(curry(divideR, __, 625, __)(3125, 5)).to.equal(1);
-        expect(curry(divideR, Math.pow(3125, 2), 3125, __)(5)).to.equal(625);
+        expect(curry_(divideR, 25, 5)).to.be.instanceOf(Function);
+        expect(curry_(divideR, __, 625, __)(3125, 5)).to.equal(1);
+        expect(curry_(divideR, Math.pow(3125, 2), 3125, __)(5)).to.equal(625);
     });
 
 });

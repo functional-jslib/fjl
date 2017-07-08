@@ -15,7 +15,7 @@ import {typeOfIs} from './typeOf';
  * @returns {Boolean}
  */
 export function notEmptyAndOfType (value, type) {
-    return !isEmpty(value) && typeOfIs(value, type);
+    return !isEmpty(value) && typeOfIs(type, value);
 }
 
 export default {

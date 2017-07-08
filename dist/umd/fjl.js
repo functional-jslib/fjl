@@ -15,7 +15,7 @@
      * Created by elyde on 12/6/2016.
      * @todo Evaluate library for places where we can make it more functional; E.g.,
      *  - Make methods take the functor/monad values as last (where it makes sense)
-     * @todo Rename curry__ and curry*__ to something easier on the eyes (lol).
+     * @todo Rename curry_ and curry*__ to something easier on the eyes (lol).
      */
 
     'use strict';
@@ -54,8 +54,8 @@
         curry3: _curry.curry3,
         curry4: _curry.curry4,
         curry5: _curry.curry5,
-        curry__: _curry.curry__,
-        curryN__: _curry.curryN__,
+        curry_: _curry.curry_,
+        curryN_: _curry.curryN_,
         curry2_: _curry.curry2_,
         curry3_: _curry.curry3_,
         curry4_: _curry.curry4_,
@@ -63,7 +63,10 @@
         difference: _operators.difference,
         errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
         filter: _operators.filter,
+        flatten: _arrayOperators.flatten,
+        flattenMulti: _arrayOperators.flattenMulti,
         intersect: _operators.intersect,
+        instanceOf: _is.instanceOf,
         isset: _is.isset,
         issetAndOfType: _is.issetAndOfType,
         isNumber: _is.isNumber,

@@ -7,6 +7,7 @@
 // generating browser version of test(s).
 'use strict';
 let {typeOf, typeOfIs}  = require('../../dist/cjs/typeOf');
+let {apply}  = require('../../dist/cjs/fnOperators');
 let {expectTrue, expectFalse, expectEqual, expectFunction}  = require('./helpers');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -15,25 +16,22 @@ describe('#typeOf', function () {
     it ('should be a function', function () {
         expectFunction(typeOf);
     });
-    it ('should require an arity of `1`', function () {
-        expectEqual(typeOf.length, 1);
-    });
-    it ('should return "Undefined" when no value is passed in', function () {
+    it ('should return a function when no value is passed in (is curried)', function () {
         expectEqual(typeOf(), 'Undefined');
     });
     it ('should return the passed type\'s name', function () {
         [
-            [[],    'Array'],
-            [{},    'Object'],
-            ['',    'String'],
-            [function () {}, 'Function'],
-            [99,    'Number'],
-            [true,  'Boolean'],
-            [false, 'Boolean'],
-            [null,  'Null'],
-            [undefined, 'Undefined']
+            ['Array', []],
+            ['Object', {}],
+            ['String', ''],
+            ['Function', function () {}],
+            ['Number', 99],
+            ['Boolean', true],
+            ['Boolean', false],
+            ['Null', null],
+            ['Undefined', undefined]
         ]
-            .forEach(tuple => expectEqual(typeOf(tuple[0]), tuple[1]));
+            .forEach(tuple => expectEqual(apply(typeOf, tuple)));
     });
 });
 
@@ -41,60 +39,55 @@ describe('#typeOfIs', function () {
     it ('should be a function', function () {
         expectFunction(typeOfIs);
     });
-    it ('should require an arity of `2`', function () {
-        expectEqual(typeOfIs.length, 2);
-    });
-    it ('should return `false` when no value is passed in', function () {
-        expectFalse(typeOfIs());
-    });
     it ('should return `true` when passed in value is of passed in type name/string', function () {
         [
-            [[],    'Array'],
-            [{},    'Object'],
-            ['',    'String'],
-            [function () {}, 'Function'],
-            [99,    'Number'],
-            [true,  'Boolean'],
-            [false, 'Boolean'],
-            [null,  'Null'],
-            [undefined, 'Undefined']
+            ['Array', []],
+            ['Object', {}],
+            ['String', ''],
+            ['Function', function () {}],
+            ['Number', 99],
+            ['Boolean', true],
+            ['Boolean', false],
+            ['Null', null],
+            ['Undefined', undefined]
         ]
-            .forEach(tuple => expectTrue(typeOfIs.apply(null, tuple)));
+            .forEach(tuple => expectTrue(apply(typeOfIs, tuple)));
     });
     it ('should return `true` when passed in value is of passed in type constructor', function () {
         [
-            [[],    Array],
-            [{},    Object],
-            ['',    String],
-            [function () {}, Function],
-            [99,    Number],
-            [true,  Boolean],
-            [false, Boolean]
+            [Array, []],
+            [Object, {}],
+            [String, ''],
+            [Function, function () {}],
+            [Number, 99],
+            [Boolean, true],
+            [Boolean , false]
         ]
-            .forEach(tuple => expectTrue(typeOfIs.apply(null, tuple)));
+            .forEach(tuple => expectTrue(apply(typeOfIs, tuple)));
     });
     it ('should return `false` when passed in value is not of passed in type name/string', function () {
         [
-            [[],    'Object'],
-            [{},    'Array'],
-            ['',    'NaN'],
-            [function () {}, 'Number'],
-            [99,    'Function'],
-            [true,  'NaN'],
-            [false, 'Number']
+            ['Object', []],
+            ['Array', {}],
+            ['NaN', ''],
+            ['Number', function () {}],
+            ['Function', 99],
+            ['NaN', true],
+            ['Number', false]
         ]
-            .forEach(tuple => expectFalse(typeOfIs.apply(null, tuple)));
+            .forEach(tuple => expectFalse(apply(typeOfIs, tuple)));
     });
     it ('should return `false` when passed in value is not of passed in type constructor', function () {
         [
-            [[],    Object],
-            [{},    Array],
-            ['',    NaN],
-            [function () {}, Number],
-            [99,    Function],
-            [true,  NaN],
-            [false, Number]
+            [Object, []],
+            [Array, {}],
+            [NaN, ''],
+            [Number, function () {}],
+            [Function, 99],
+            [NaN, true],
+            [Number, undefined],
+            [Array, false]
         ]
-            .forEach(tuple => expectFalse(typeOfIs.apply(null, tuple)));
+            .forEach(tuple => expectFalse(apply(typeOfIs, tuple)));
     });
 });

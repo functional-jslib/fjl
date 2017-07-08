@@ -22,7 +22,7 @@ function constructorName (value) {
 }
 
 export function errorIfNotType (contextName, propName, value, type, ErrorConstructor = TypeError) {
-    if (!typeOfIs(value, type)) {
+    if (!typeOfIs(type), value) {
         throw new ErrorConstructor(
             `${contextName}.${propName} is not of type ${constructorName(type)}.` +
             `Type received: "${typeOf(value)}".  Value: ${value}`

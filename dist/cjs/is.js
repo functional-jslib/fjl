@@ -98,7 +98,7 @@ function isset(value) {
  * @returns {Boolean}
  */
 function issetAndOfType(value, type) {
-    return isset(value) && (0, _typeOf.typeOfIs)(value, type);
+    return isset(value) && (0, _typeOf.typeOfIs)(type, value);
 }
 
 /**
@@ -108,7 +108,7 @@ function issetAndOfType(value, type) {
  * @returns {boolean}
  */
 function isArray(value) {
-    return (0, _typeOf.typeOfIs)(value, Array);
+    return (0, _typeOf.typeOfIs)(Array, value);
 }
 
 /**
@@ -118,7 +118,7 @@ function isArray(value) {
  * @returns {Boolean}
  */
 function isObject(value) {
-    return (0, _typeOf.typeOfIs)(value, _Object);
+    return (0, _typeOf.typeOfIs)(_Object, value);
 }
 
 /**
@@ -128,7 +128,7 @@ function isObject(value) {
  * @returns {Boolean}
  */
 function isBoolean(value) {
-    return (0, _typeOf.typeOfIs)(value, _Boolean);
+    return (0, _typeOf.typeOfIs)(_Boolean, value);
 }
 
 /**
@@ -138,7 +138,7 @@ function isBoolean(value) {
  * @returns {Boolean}
  */
 function isNumber(value) {
-    return (0, _typeOf.typeOfIs)(value, _Number);
+    return (0, _typeOf.typeOfIs)(_Number, value);
 }
 
 /**
@@ -148,7 +148,7 @@ function isNumber(value) {
  * @returns {Boolean}
  */
 function isString(value) {
-    return (0, _typeOf.typeOfIs)(value, _String);
+    return (0, _typeOf.typeOfIs)(_String, value);
 }
 
 /**
@@ -158,7 +158,7 @@ function isString(value) {
  * @returns {Boolean}
  */
 function isMap(value) {
-    return (0, _typeOf.typeOfIs)(value, _Map);
+    return (0, _typeOf.typeOfIs)(_Map, value);
 }
 
 /**
@@ -168,7 +168,7 @@ function isMap(value) {
  * @returns {Boolean}
  */
 function isSet(value) {
-    return (0, _typeOf.typeOfIs)(value, _Set);
+    return (0, _typeOf.typeOfIs)(_Set, value);
 }
 
 /**
@@ -178,7 +178,7 @@ function isSet(value) {
  * @returns {Boolean}
  */
 function isWeakMap(value) {
-    return (0, _typeOf.typeOfIs)(value, _WeakMap);
+    return (0, _typeOf.typeOfIs)(_WeakMap, value);
 }
 
 /**
@@ -188,7 +188,7 @@ function isWeakMap(value) {
  * @returns {Boolean}
  */
 function isWeakSet(value) {
-    return (0, _typeOf.typeOfIs)(value, _WeakSet);
+    return (0, _typeOf.typeOfIs)(_WeakSet, value);
 }
 
 /**
@@ -198,7 +198,7 @@ function isWeakSet(value) {
  * @returns {Boolean}
  */
 function isUndefined(value) {
-    return (0, _typeOf.typeOfIs)(value, _Undefined);
+    return (0, _typeOf.typeOfIs)(_Undefined, value);
 }
 
 /**
@@ -208,7 +208,7 @@ function isUndefined(value) {
  * @returns {Boolean}
  */
 function isNull(value) {
-    return (0, _typeOf.typeOfIs)(value, _Null);
+    return (0, _typeOf.typeOfIs)(_Null, value);
 }
 
 /**
@@ -218,7 +218,7 @@ function isNull(value) {
  * @returns {Boolean}
  */
 function isSymbol(value) {
-    return (0, _typeOf.typeOfIs)(value, 'Symbol');
+    return (0, _typeOf.typeOfIs)('Symbol', value);
 }
 
 /**

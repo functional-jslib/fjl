@@ -2,6 +2,10 @@
  * Created by elyde on 12/18/2016.
  */
 
+'use strict';
+
+import {curry2} from './curry';
+
 let _Number = Number.name,
     _NaN = 'NaN',
     _Null = 'Null',
@@ -16,39 +20,37 @@ let _Number = Number.name,
  * @param value {*}
  * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
  */
-export function typeOf (value) {
-    let retVal;
-    if (typeof value === _undefined) {
-        retVal = _Undefined;
-    }
-    else if (value === null) {
-        retVal = _Null;
-    }
-    else {
-        let constructorName = (value).constructor.name;
-        retVal = constructorName === _Number && isNaN(value) ?
-            _NaN : constructorName;
-    }
-    return retVal;
-}
+export const typeOf = value => {
+        let retVal;
+        if (typeof value === _undefined) {
+            retVal = _Undefined;
+        }
+        else if (value === null) {
+            retVal = _Null;
+        }
+        else {
+            let constructorName = (value).constructor.name;
+            retVal = constructorName === _Number && isNaN(value) ?
+                _NaN : constructorName;
+        }
+        return retVal;
+    },
 
-/**
- * Checks to see if an object is of type 'constructor name'.
- * Note: If passing in constructors as your `type` to check, ensure they are *'named' constructors
- * as the `name` property is checked directly on them to use in the class/constructor-name comparison.
- * *'named' constructors - Not anonymous functions/constructors but ones having a name:  E.g.,
- * ```
- * (function Hello () {}) // Named function.
- * (function () {}) // Anonymous function.
- * ```
- * @function module:sjl.typeOfIs
- * @param obj {*} - Object to be checked.
- * @param type {String|Function} - Either a constructor name or an constructor itself.
- * @returns {Boolean} - Whether object matches class string or not.
- */
-export function typeOfIs (obj, type) {
-    return typeOf(obj) === ((type instanceof Function) ? type.name : type);
-}
+    /**
+     * Checks to see if an object is of type 'constructor name'.
+     * Note: If passing in constructors as your `type` to check, ensure they are *'named' constructors
+     * as the `name` property is checked directly on them to use in the class/constructor-name comparison.
+     * *'named' constructors - Not anonymous functions/constructors but ones having a name:  E.g.,
+     * ```
+     * (function Hello () {}) // Named function.
+     * (function () {}) // Anonymous function.
+     * ```
+     * @function module:sjl.typeOfIs
+     * @param type {String|Function} - Either a constructor name or an constructor itself.
+     * @param obj {*} - Object to be checked.
+     * @returns {Boolean} - Whether object matches class string or not.
+     */
+    typeOfIs = curry2((type, obj) => typeOf(obj) === ((type instanceof Function) ? type.name : type));
 
 export default {
     typeOf,

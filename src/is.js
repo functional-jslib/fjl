@@ -71,7 +71,7 @@ export function isset (value) {
  * @returns {Boolean}
  */
 export function issetAndOfType (value, type) {
-    return isset(value) && typeOfIs(value, type);
+    return isset(value) && typeOfIs(type, value);
 }
 
 /**
@@ -81,7 +81,7 @@ export function issetAndOfType (value, type) {
  * @returns {boolean}
  */
 export function isArray (value) {
-    return typeOfIs(value, Array);
+    return typeOfIs(Array, value);
 }
 
 /**
@@ -91,7 +91,7 @@ export function isArray (value) {
  * @returns {Boolean}
  */
 export function isObject (value) {
-    return typeOfIs(value, _Object);
+    return typeOfIs(_Object, value);
 }
 
 /**
@@ -101,7 +101,7 @@ export function isObject (value) {
  * @returns {Boolean}
  */
 export function isBoolean (value) {
-    return typeOfIs(value, _Boolean);
+    return typeOfIs(_Boolean, value);
 }
 
 /**
@@ -111,7 +111,7 @@ export function isBoolean (value) {
  * @returns {Boolean}
  */
 export function isNumber (value) {
-    return typeOfIs(value, _Number);
+    return typeOfIs(_Number, value);
 }
 
 /**
@@ -121,7 +121,7 @@ export function isNumber (value) {
  * @returns {Boolean}
  */
 export function isString(value) {
-    return typeOfIs(value, _String);
+    return typeOfIs(_String, value);
 }
 
 /**
@@ -131,7 +131,7 @@ export function isString(value) {
  * @returns {Boolean}
  */
 export function isMap(value) {
-    return typeOfIs(value, _Map);
+    return typeOfIs(_Map, value);
 }
 
 /**
@@ -141,7 +141,7 @@ export function isMap(value) {
  * @returns {Boolean}
  */
 export function isSet(value) {
-    return typeOfIs(value, _Set);
+    return typeOfIs(_Set, value);
 }
 
 /**
@@ -151,7 +151,7 @@ export function isSet(value) {
  * @returns {Boolean}
  */
 export function isWeakMap(value) {
-    return typeOfIs(value, _WeakMap);
+    return typeOfIs(_WeakMap, value);
 }
 
 /**
@@ -161,7 +161,7 @@ export function isWeakMap(value) {
  * @returns {Boolean}
  */
 export function isWeakSet(value) {
-    return typeOfIs(value, _WeakSet);
+    return typeOfIs(_WeakSet, value);
 }
 
 /**
@@ -171,7 +171,7 @@ export function isWeakSet(value) {
  * @returns {Boolean}
  */
 export function isUndefined (value) {
-    return typeOfIs(value, _Undefined);
+    return typeOfIs(_Undefined, value);
 }
 
 /**
@@ -181,7 +181,7 @@ export function isUndefined (value) {
  * @returns {Boolean}
  */
 export function isNull (value) {
-    return typeOfIs(value, _Null);
+    return typeOfIs(_Null, value);
 }
 
 /**
@@ -191,7 +191,7 @@ export function isNull (value) {
  * @returns {Boolean}
  */
 export function isSymbol (value) {
-    return typeOfIs(value, 'Symbol');
+    return typeOfIs('Symbol', value);
 }
 
 /**

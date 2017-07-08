@@ -37,7 +37,7 @@
             }
 
             if (types.some(function (Type) {
-                return (0, _typeOf.typeOfIs)(value, Type);
+                return (0, _typeOf.typeOfIs)(Type, value);
             })) {
                 return;
             }

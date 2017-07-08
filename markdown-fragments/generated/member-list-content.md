@@ -98,11 +98,19 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curryN__
+### fjl.curryN_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curry__
+### fjl.curryN_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -115,6 +123,18 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.filter
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.flatten
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.flattenMulti
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.instanceOf
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

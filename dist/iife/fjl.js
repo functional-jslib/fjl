@@ -77,12 +77,12 @@ var fjl = function () {
 
     /**
      * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
-     * @function curry__
+     * @function curry_
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {function(...[*]=)}
      */
-    function curry__(fn) {
+    function curry_(fn) {
         for (var _len3 = arguments.length, argsToCurry = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
             argsToCurry[_key3 - 1] = arguments[_key3];
         }
@@ -95,19 +95,19 @@ var fjl = function () {
             var concatedArgs = replacePlaceHolders(argsToCurry, args),
                 placeHolders = concatedArgs.filter(isPlaceHolder),
                 canBeCalled = placeHolders.length === 0 && concatedArgs.length >= fn.length;
-            return canBeCalled ? fn.apply(null, concatedArgs) : curry__.apply(null, [fn].concat(concatedArgs));
+            return canBeCalled ? fn.apply(null, concatedArgs) : curry_.apply(null, [fn].concat(concatedArgs));
         };
     }
 
     /**
      * Curries a function up to given arity also enforces arity via placeholder values (`__`).
-     * @function curryN__
+     * @function curryN_
      * @param fn {Function}
      * @param executeArity {Number}
      * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
      * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
      */
-    function curryN__(fn, executeArity) {
+    function curryN_(fn, executeArity) {
         for (var _len5 = arguments.length, curriedArgs = Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
             curriedArgs[_key5 - 2] = arguments[_key5];
         }
@@ -120,7 +120,7 @@ var fjl = function () {
             var concatedArgs = replacePlaceHolders(curriedArgs, args),
                 placeHolders = concatedArgs.filter(isPlaceHolder),
                 canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
-            return !canBeCalled ? curryN__.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+            return !canBeCalled ? curryN_.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
         };
     }
 
@@ -162,16 +162,16 @@ var fjl = function () {
      */
     var __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
     var curry2_ = function curry2_(fn) {
-        return curryN__(fn, 2);
+        return curryN_(fn, 2);
     };
     var curry3_ = function curry3_(fn) {
-        return curryN__(fn, 3);
+        return curryN_(fn, 3);
     };
     var curry4_ = function curry4_(fn) {
-        return curryN__(fn, 4);
+        return curryN_(fn, 4);
     };
     var curry5_ = function curry5_(fn) {
-        return curryN__(fn, 5);
+        return curryN_(fn, 5);
     };
     var curry2 = function curry2(fn) {
         return curryN(fn, 2);
@@ -204,7 +204,7 @@ var fjl = function () {
      * @param value {*}
      * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
      */
-    function typeOf(value) {
+    var typeOf = function typeOf(value) {
         var retVal = void 0;
         if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined$1) {
             retVal = _Undefined$1;
@@ -215,25 +215,10 @@ var fjl = function () {
             retVal = constructorName === _Number$1 && isNaN(value) ? _NaN : constructorName;
         }
         return retVal;
-    }
-
-    /**
-     * Checks to see if an object is of type 'constructor name'.
-     * Note: If passing in constructors as your `type` to check, ensure they are *'named' constructors
-     * as the `name` property is checked directly on them to use in the class/constructor-name comparison.
-     * *'named' constructors - Not anonymous functions/constructors but ones having a name:  E.g.,
-     * ```
-     * (function Hello () {}) // Named function.
-     * (function () {}) // Anonymous function.
-     * ```
-     * @function module:sjl.typeOfIs
-     * @param obj {*} - Object to be checked.
-     * @param type {String|Function} - Either a constructor name or an constructor itself.
-     * @returns {Boolean} - Whether object matches class string or not.
-     */
-    function typeOfIs(obj, type) {
+    };
+    var typeOfIs = curry2(function (type, obj) {
         return typeOf(obj) === (type instanceof Function ? type.name : type);
-    }
+    });
 
     /**
      * Created by elyde on 12/18/2016.
@@ -261,6 +246,9 @@ var fjl = function () {
      * @instance {*}
      * @returns {Boolean}
      */
+    var instanceOf = curry2(function (instanceConstructor, instance) {
+        return instance instanceof instanceConstructor;
+    });
 
     /**
      * Checks if `value` is an es2015 `class`.
@@ -300,7 +288,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function issetAndOfType(value, type) {
-        return isset(value) && typeOfIs(value, type);
+        return isset(value) && typeOfIs(type, value);
     }
 
     /**
@@ -310,7 +298,7 @@ var fjl = function () {
      * @returns {boolean}
      */
     function isArray(value) {
-        return typeOfIs(value, Array);
+        return typeOfIs(Array, value);
     }
 
     /**
@@ -320,7 +308,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isObject(value) {
-        return typeOfIs(value, _Object);
+        return typeOfIs(_Object, value);
     }
 
     /**
@@ -330,7 +318,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isBoolean(value) {
-        return typeOfIs(value, _Boolean);
+        return typeOfIs(_Boolean, value);
     }
 
     /**
@@ -340,7 +328,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isNumber(value) {
-        return typeOfIs(value, _Number);
+        return typeOfIs(_Number, value);
     }
 
     /**
@@ -350,7 +338,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isString(value) {
-        return typeOfIs(value, _String);
+        return typeOfIs(_String, value);
     }
 
     /**
@@ -360,7 +348,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isMap(value) {
-        return typeOfIs(value, _Map);
+        return typeOfIs(_Map, value);
     }
 
     /**
@@ -370,7 +358,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isSet(value) {
-        return typeOfIs(value, _Set);
+        return typeOfIs(_Set, value);
     }
 
     /**
@@ -380,7 +368,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isWeakMap(value) {
-        return typeOfIs(value, _WeakMap);
+        return typeOfIs(_WeakMap, value);
     }
 
     /**
@@ -390,7 +378,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isWeakSet(value) {
-        return typeOfIs(value, _WeakSet);
+        return typeOfIs(_WeakSet, value);
     }
 
     /**
@@ -400,7 +388,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isUndefined(value) {
-        return typeOfIs(value, _Undefined);
+        return typeOfIs(_Undefined, value);
     }
 
     /**
@@ -410,7 +398,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isNull(value) {
-        return typeOfIs(value, _Null);
+        return typeOfIs(_Null, value);
     }
 
     /**
@@ -420,7 +408,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function isSymbol(value) {
-        return typeOfIs(value, 'Symbol');
+        return typeOfIs('Symbol', value);
     }
 
     /**
@@ -532,7 +520,7 @@ var fjl = function () {
      * @returns {Boolean}
      */
     function notEmptyAndOfType(value, type) {
-        return !isEmpty(value) && typeOfIs(value, type);
+        return !isEmpty(value) && typeOfIs(type, value);
     }
 
     /**
@@ -667,7 +655,7 @@ var fjl = function () {
             }
 
             if (types.some(function (Type) {
-                return typeOfIs(value, Type);
+                return typeOfIs(Type, value);
             })) {
                 return;
             }
@@ -727,6 +715,24 @@ var fjl = function () {
         });
     };
 
+    var flatten = function flatten(arr) {
+        return arr.reduce(function (agg, elm) {
+            if (Array.isArray(elm)) {
+                return concat(agg, flatten(elm));
+            }
+            agg.push(elm);
+            return agg;
+        }, []);
+    };
+    var flattenMulti = curry2(function (arr0) {
+        for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
+            arrays[_key16 - 1] = arguments[_key16];
+        }
+
+        return reduce$1(function (agg, arr) {
+            return concat(agg, flatten(arr));
+        }, flatten(arr0), arrays);
+    });
     var union$2 = curry2(function (arr1, arr2) {
         var whereNotInArray1 = function whereNotInArray1(elm) {
             return arr1.indexOf(elm) === -1;
@@ -756,8 +762,8 @@ var fjl = function () {
         }, [], arr1);
     });
     var complement$2 = curry2(function (arr0) {
-        for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
-            arrays[_key16 - 1] = arguments[_key16];
+        for (var _len17 = arguments.length, arrays = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
+            arrays[_key17 - 1] = arguments[_key17];
         }
 
         return reduce$1(function (agg, arr) {
@@ -781,8 +787,8 @@ var fjl = function () {
         return functor.reduceRight(fn, agg);
     });
     var complement$1 = curry2(function (functor) {
-        for (var _len17 = arguments.length, others = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
-            others[_key17 - 1] = arguments[_key17];
+        for (var _len18 = arguments.length, others = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
+            others[_key18 - 1] = arguments[_key18];
         }
 
         switch (typeOf(functor)) {
@@ -819,16 +825,16 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sat Jul 08 2017 09:51:20 GMT-0400 (Eastern Daylight Time) 
+     * Generated Sat Jul 08 2017 11:08:09 GMT-0400 (Eastern Daylight Time) 
      */
 
-    var version = '0.12.0';
+    var version = '0.13.0';
 
     /**
      * Created by elyde on 12/6/2016.
      * @todo Evaluate library for places where we can make it more functional; E.g.,
      *  - Make methods take the functor/monad values as last (where it makes sense)
-     * @todo Rename curry__ and curry*__ to something easier on the eyes (lol).
+     * @todo Rename curry_ and curry*__ to something easier on the eyes (lol).
      */
 
     var fjl = {
@@ -849,8 +855,8 @@ var fjl = function () {
         curry3: curry3,
         curry4: curry4,
         curry5: curry5,
-        curry__: curry__,
-        curryN__: curryN__,
+        curry_: curry_,
+        curryN_: curryN_,
         curry2_: curry2_,
         curry3_: curry3_,
         curry4_: curry4_,
@@ -858,7 +864,10 @@ var fjl = function () {
         difference: difference$1,
         errorIfNotTypeFactory: errorIfNotTypeFactory,
         filter: filter,
+        flatten: flatten,
+        flattenMulti: flattenMulti,
         intersect: intersect$1,
+        instanceOf: instanceOf,
         isset: isset,
         issetAndOfType: issetAndOfType,
         isNumber: isNumber,

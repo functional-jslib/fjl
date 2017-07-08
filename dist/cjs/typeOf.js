@@ -1,16 +1,17 @@
+/**
+ * Created by elyde on 12/18/2016.
+ */
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.typeOfIs = exports.typeOf = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-exports.typeOf = typeOf;
-exports.typeOfIs = typeOfIs;
-/**
- * Created by elyde on 12/18/2016.
- */
+var _curry = require('./curry');
 
 var _Number = Number.name,
     _NaN = 'NaN',
@@ -26,7 +27,7 @@ var _Number = Number.name,
  * @param value {*}
  * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
  */
-function typeOf(value) {
+var typeOf = exports.typeOf = function typeOf(value) {
     var retVal = void 0;
     if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined) {
         retVal = _Undefined;
@@ -37,7 +38,8 @@ function typeOf(value) {
         retVal = constructorName === _Number && isNaN(value) ? _NaN : constructorName;
     }
     return retVal;
-}
+},
+
 
 /**
  * Checks to see if an object is of type 'constructor name'.
@@ -49,13 +51,13 @@ function typeOf(value) {
  * (function () {}) // Anonymous function.
  * ```
  * @function module:sjl.typeOfIs
- * @param obj {*} - Object to be checked.
  * @param type {String|Function} - Either a constructor name or an constructor itself.
+ * @param obj {*} - Object to be checked.
  * @returns {Boolean} - Whether object matches class string or not.
  */
-function typeOfIs(obj, type) {
+typeOfIs = exports.typeOfIs = (0, _curry.curry2)(function (type, obj) {
     return typeOf(obj) === (type instanceof Function ? type.name : type);
-}
+});
 
 exports.default = {
     typeOf: typeOf,

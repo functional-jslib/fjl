@@ -14,7 +14,7 @@ let typesListToString = types => types.reduce((agg, Type, index) => {
 function errorIfNotTypeFactory (contextName) {
     contextName = contextName || 'unNamedContext';
     return (key, value, ...types) => {
-        if (types.some(Type => typeOfIs(value, Type))) {
+        if (types.some(Type => typeOfIs(Type, value))) {
             return;
         }
         throw new Error(contextName + '.' + key + ' is required to be of one of the types : ' +

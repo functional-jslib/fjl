@@ -1,3 +1,3 @@
-### fjl.curry_
+### fjl.instanceOf
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)

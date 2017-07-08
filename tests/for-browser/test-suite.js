@@ -6,13 +6,13 @@ define('test-suite', ['exports'], function (exports) { 'use strict';
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var expectInstanceOf = exports.expectInstanceOf = curry2(function (value, instance) {
+var expectInstanceOf = exports.expectInstanceOf = curry2_(function (value, instance) {
     return expect(value).to.be.instanceOf(instance);
 });
 var expectFunction = exports.expectFunction = function expectFunction(value) {
     return expectInstanceOf(value, Function);
 };
-var expectEqual = exports.expectEqual = curry2(function (value, value2) {
+var expectEqual = exports.expectEqual = curry2_(function (value, value2) {
     return expect(value).to.be.equal(value2);
 });
 var expectFalse = exports.expectFalse = function expectFalse(value) {
@@ -27,7 +27,7 @@ var hasOwnProperty = exports.hasOwnProperty = function hasOwnProperty(instance, 
 var length = exports.length = function length(something) {
     return something.length;
 };
-var add = exports.add = curry2(function () {
+var add = exports.add = curry2_(function () {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
     }
@@ -36,7 +36,7 @@ var add = exports.add = curry2(function () {
         return num + agg;
     }, 0);
 });
-var multiply = exports.multiply = curry2(function () {
+var multiply = exports.multiply = curry2_(function () {
     for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         args[_key2] = arguments[_key2];
     }
@@ -45,7 +45,7 @@ var multiply = exports.multiply = curry2(function () {
         return num * agg;
     }, 1);
 });
-var divide = exports.divide = curry2(function () {
+var divide = exports.divide = curry2_(function () {
     for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
         args[_key3] = arguments[_key3];
     }
@@ -54,23 +54,23 @@ var divide = exports.divide = curry2(function () {
         return agg / num;
     }, args.shift());
 });
-var shallowCompareOnLeft = exports.shallowCompareOnLeft = curry2(function (incoming, against) {
+var shallowCompareOnLeft = exports.shallowCompareOnLeft = curry2_(function (incoming, against) {
     return Array.isArray(incoming) ? shallowCompareArraysLeft(incoming, against) : shallowCompareObjectsLeft(incoming, against);
 });
-var shallowCompareArraysLeft = exports.shallowCompareArraysLeft = curry2(function (incoming, against) {
+var shallowCompareArraysLeft = exports.shallowCompareArraysLeft = curry2_(function (incoming, against) {
     return !incoming.some(function (_, ind) {
         return against[ind] !== incoming[ind];
     });
 });
-var shallowCompareObjectsLeft = exports.shallowCompareObjectsLeft = curry2(function (incoming, against, keys) {
+var shallowCompareObjectsLeft = exports.shallowCompareObjectsLeft = curry2_(function (incoming, against, keys) {
     return !(keys || Object.keys(incoming)).some(function (key) {
         return against[key] !== incoming[key];
     });
 });
-var expectShallowEquals = exports.expectShallowEquals = curry2(function (a, b) {
+var expectShallowEquals = exports.expectShallowEquals = curry2_(function (a, b) {
     return expectTrue(shallowCompareOnLeft(a, b));
 });
-var range = exports.range = curry2(function (from, to) {
+var range = exports.range = curry2_(function (from, to) {
     var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
 
     var inc = from;
@@ -112,12 +112,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 describe('Array Operators', function () {
 
-    describe('#complement', function () {
+    describe('#arrayComplement', function () {
         it('should return an empty array when no parameters are passed in', function () {
-            compose(expectEqual(__, 0), length, complement)();
+            compose(expectEqual(__, 0), length, arrayComplement)();
         });
         it('should return an empty array if only one array is passed in', function () {
-            compose(expectEqual(__, 0), length, complement)([1, 2, 3]);
+            compose(expectEqual(__, 0), length, arrayComplement)([1, 2, 3]);
         });
         it('should return elements not in first array passed to it', function () {
             var testCases = [
@@ -128,7 +128,7 @@ describe('Array Operators', function () {
                     subjects = _testCase[0],
                     expectedLen = _testCase[1],
                     expectedElms = _testCase[2],
-                    result = complement.apply(null, subjects);
+                    result = arrayComplement.apply(null, subjects);
 
                 expectEqual(result.length, expectedLen);
                 result.forEach(function (elm, ind) {
@@ -138,18 +138,18 @@ describe('Array Operators', function () {
         });
     });
 
-    describe('#difference', function () {
+    describe('#arrayDifference', function () {
         it('should return an empty array when no parameters are passed in', function () {
-            compose(expectEqual(__, 0), length, difference)();
+            compose(expectEqual(__, 0), length, arrayDifference)();
         });
         it('should return a clone of the passed in array if it is only the first array that is passed in', function () {
-            compose(expectEqual(__, 3), length, difference([]))([1, 2, 3]);
+            compose(expectEqual(__, 3), length, arrayDifference([]))([1, 2, 3]);
         });
         it('should return an empty array when there are no differences between the two arrays passed in', function () {
-            compose(expectEqual(__, 0), length, difference([1, 2, 3]))([1, 2, 3]);
+            compose(expectEqual(__, 0), length, arrayDifference([1, 2, 3]))([1, 2, 3]);
         });
         it('should return a clone of the passed in array if it is only the first array that is passed in', function () {
-            compose(expectEqual(__, 3), length, difference([]))([1, 2, 3]);
+            compose(expectEqual(__, 3), length, arrayDifference([]))([1, 2, 3]);
         });
         it('should return the difference between two arrays passed in', function () {
             var testCases = [
@@ -161,7 +161,7 @@ describe('Array Operators', function () {
                     subj2 = _testCase2[1],
                     expectedLen = _testCase2[2],
                     expectedElms = _testCase2[3],
-                    result = difference(subj1, subj2);
+                    result = arrayDifference(subj1, subj2);
 
                 expectEqual(result.length, expectedLen);
                 result.forEach(function (elm, ind) {
@@ -171,19 +171,19 @@ describe('Array Operators', function () {
         });
     });
 
-    describe('#intersect', function () {
+    describe('#arrayIntersect', function () {
         it('should return an empty array when receiving an empty array as parameter 1', function () {
-            compose(expectEqual(__, 0), length, intersect)([]);
-            compose(expectEqual(__, 0), length, intersect([]))([1, 2, 3]);
+            compose(expectEqual(__, 0), length, arrayIntersect)([]);
+            compose(expectEqual(__, 0), length, arrayIntersect([]))([1, 2, 3]);
         });
         it('should return an empty array when receiving an empty array as parameter 2', function () {
-            compose(expectEqual(__, 0), length, intersect([1, 2, 3]))([]);
+            compose(expectEqual(__, 0), length, arrayIntersect([1, 2, 3]))([]);
         });
         it('should return an empty array when both arrays passed are empty', function () {
-            compose(expectEqual(__, 0), length, intersect([]))([]);
+            compose(expectEqual(__, 0), length, arrayIntersect([]))([]);
         });
         it('should return an empty array when no arrays are passed in', function () {
-            compose(expectEqual(__, 0), length, intersect)();
+            compose(expectEqual(__, 0), length, arrayIntersect)();
         });
         it('should return an intersection of the two arrays passed in', function () {
             var testCases = [
@@ -195,7 +195,7 @@ describe('Array Operators', function () {
                     subj2 = _testCase3[1],
                     expectedLen = _testCase3[2],
                     expectedElms = _testCase3[3],
-                    result = intersect(subj1, subj2);
+                    result = arrayIntersect(subj1, subj2);
 
                 expectEqual(result.length, expectedLen);
                 result.forEach(function (elm, ind) {
@@ -205,7 +205,7 @@ describe('Array Operators', function () {
         });
     });
 
-    describe('#union', function () {
+    describe('#arrayUnion', function () {
         it('should return an union of the two arrays', function () {
             var testCases = [
             // subj1, subj2, expectLen, expectedElements
@@ -216,7 +216,7 @@ describe('Array Operators', function () {
                     subj2 = _testCase4[1],
                     expectedLen = _testCase4[2],
                     expectedElms = _testCase4[3],
-                    result = union(subj1, subj2);
+                    result = arrayUnion(subj1, subj2);
 
                 expectEqual(result.length, expectedLen);
                 result.forEach(function (elm, ind) {
@@ -298,59 +298,30 @@ describe('compose', function () {
 
 describe('curry', function () {
 
-    // Set curry here to use below
-    var multiplyRecursive = function multiplyRecursive() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return args.reduce(function (agg, num) {
-            return num * agg;
-        }, 1);
-    },
-        addRecursive = function addRecursive() {
-        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            args[_key2] = arguments[_key2];
-        }
-
-        return args.reduce(function (agg, num) {
-            return num + agg;
-        }, 0);
-    },
-        divideR = function divideR() {
-        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-            args[_key3] = arguments[_key3];
-        }
-
-        return args.reduce(function (agg, num) {
-            return agg / num;
-        }, args.shift());
-    };
-
     it('should be of type function.', function () {
-        expect(curry).to.be.instanceOf(Function);
+        expectFunction(curry);
     });
 
     it('should return a function when called with or without args.', function () {
-        expect(curry()).to.be.instanceOf(Function);
-        expect(curry(99)).to.be.instanceOf(Function);
-        expect(curry(function () {})).to.be.instanceOf(Function);
-        expect(curry(console.log)).to.be.instanceOf(Function);
+        expectFunction(curry());
+        expectFunction(curry(99));
+        expectFunction(curry(function () {}));
+        expectFunction(curry(console.log));
     });
 
-    /*it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
+    it('should return a function that fails when no function is passed in (as it\'s first param).', function () {
         assert.throws(curry(), Error);
         assert.throws(curry(99), Error);
-    });*/
+    });
 
-    it('should return a properly curried function when correct arity for said function is met.', function () {
+    it('should return a curried function.', function () {
         var min8 = curry(Math.min, 8),
             max5 = curry(Math.max, 5),
             pow2 = curry(Math.pow, 2);
 
         // Expect functions
         [min8, max5, pow2].forEach(function (func) {
-            expect(func).to.be.instanceOf(Function);
+            expectFunction(func);
         });
 
         // Expect functions work correctly
@@ -383,11 +354,11 @@ describe('curry', function () {
         };
 
         // Expect functions returned for `curry` calls
-        expect(isValidTangentLen).to.be.instanceOf(Function);
+        expectFunction(isValidTangentLen);
 
         // Expect functions returned for `curry` calls
         [min8, max5, pow2].forEach(function (func) {
-            expect(func).to.be.instanceOf(Function);
+            expectFunction(func);
         });
 
         // Expect `curry`ed functions to work as expected
@@ -399,38 +370,6 @@ describe('curry', function () {
             var composed = compose(min8, max5, pow2);
             expect(composed(num)).to.equal(expectedFor(num));
         });
-    });
-
-    it('should enforce `Placeholder` values when currying', function () {
-        var add = curry3(addRecursive),
-            multiply = curry5(multiplyRecursive),
-            multiplyExpectedResult = Math.pow(5, 5);
-
-        // Curry add to add 3 numbers
-        expect(add(__, __, __)(1, 2, 3)).to.equal(6);
-        expect(add(1, __, __)(2, 3)).to.equal(6);
-        expect(add(1, 2, __)(3)).to.equal(6);
-        expect(add(1, 2, 3)).to.equal(6);
-
-        // Curry multiply and pass args in non-linear order
-        expect(multiply(__, __, __, __, __)(5, 5, 5, 5, 5)).to.equal(multiplyExpectedResult);
-        expect(multiply(__, __, 5, __, __)(5, 5, 5, 5)).to.equal(multiplyExpectedResult);
-        expect(multiply(5, __, 5, __, __)(5, 5, 5)).to.equal(multiplyExpectedResult);
-        expect(multiply(5, __, 5, __, 5)(5, 5)).to.equal(multiplyExpectedResult);
-        expect(multiply(5, __, 5, 5, 5)(5)).to.equal(multiplyExpectedResult);
-        expect(multiply(5, 5, 5, 5, 5)).to.equal(multiplyExpectedResult);
-
-        expect(add(__, __, __)(1, 2, 3, 5, 6)).to.equal(17);
-        expect(add(__, 1, __)(2, 3, 5, 6)).to.equal(17);
-        expect(add(__, 1, 2)(3, 5, 6)).to.equal(17);
-        expect(add(1, 2, 3, 5, 6)).to.equal(17);
-    });
-
-    it('should respect argument order and placeholder order.', function () {
-        // Curry divideR to divde 3 or more numbers
-        expect(curry(divideR, 25, 5)).to.be.instanceOf(Function);
-        expect(curry(divideR, __, 625, __)(3125, 5)).to.equal(1);
-        expect(curry(divideR, Math.pow(3125, 2), 3125, __)(5)).to.equal(625);
     });
 });
 /**
@@ -478,9 +417,83 @@ describe('curryN', function () {
         assert.throws(result, Error);
     });
 
+    it('should pass in any values passed the arity when executing the curried function', function () {
+        var add3Nums = curryN(addRecursive, 3);
+
+        // Curry add to add 3 numbers
+        expect(add3Nums()(1, 2, 3)).to.equal(6);
+        expect(add3Nums(1)(2, 3)).to.equal(6);
+        expect(add3Nums(1, 2)(3)).to.equal(6);
+        expect(add3Nums(1, 2, 3)).to.equal(6);
+
+        // Curry `add` to add any numbers passed required arity
+        expect(add3Nums()(1, 2, 3, 5, 6)).to.equal(17);
+        expect(add3Nums(1)(2, 3, 5, 6)).to.equal(17);
+        expect(add3Nums(1, 2)(3, 5, 6)).to.equal(17);
+        expect(add3Nums(1, 2, 3, 5, 6)).to.equal(17);
+    });
+
+    it('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
+        var multiply5Nums = curryN(multiplyRecursive, 5),
+            multiplyExpectedResult = Math.pow(5, 5),
+            argsToTest = [[5, 5, 5, 5, 5], [5, 5, 5, 5], [5, 5, 5], [5, 5], [5]],
+            partiallyAppliedResults = [multiply5Nums(), multiply5Nums(5), multiply5Nums(5, 5), multiply5Nums(5, 5, 5), multiply5Nums(5, 5, 5, 5)];
+
+        // Curry multiply and pass args in non-linear order
+        argsToTest.forEach(function (args, index) {
+            expect(partiallyAppliedResults[index]).to.be.instanceOf(Function);
+            expect(partiallyAppliedResults[index].apply(null, args)).to.equal(multiplyExpectedResult);
+        });
+    });
+});
+/**
+ * Created by elyde on 11/25/2016.
+ */
+
+describe('curryN_', function () {
+
+    // Set curry here to use below
+    var multiplyRecursive = function multiplyRecursive() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return args.reduce(function (agg, num) {
+            return num * agg;
+        }, 1);
+    },
+        addRecursive = function addRecursive() {
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        return args.reduce(function (agg, num) {
+            return num + agg;
+        }, 0);
+    },
+        divideR = function divideR() {
+        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            args[_key3] = arguments[_key3];
+        }
+
+        return args.reduce(function (agg, num) {
+            return agg / num;
+        }, args.shift());
+    };
+
+    it('should be of type function.', function () {
+        expect(curryN_).to.be.instanceOf(Function);
+    });
+
+    it('should return a function that throws an error when no arguments are passed.', function () {
+        var result = curryN_();
+        expect(result).to.be.instanceOf(Function);
+        assert.throws(result, Error);
+    });
+
     it('should enforce `Placeholder` values when currying', function () {
-        var add3Nums = curryN(addRecursive, 3),
-            multiply5Nums = curryN(multiplyRecursive, 5),
+        var add3Nums = curryN_(addRecursive, 3),
+            multiply5Nums = curryN_(multiplyRecursive, 5),
             multiplyExpectedResult = Math.pow(5, 5);
 
         // Curry add to add 3 numbers
@@ -499,7 +512,7 @@ describe('curryN', function () {
     });
 
     it('should pass in any values passed the arity when executing the curried function', function () {
-        var add3Nums = curryN(addRecursive, 3);
+        var add3Nums = curryN_(addRecursive, 3);
 
         // Curry add to add 3 numbers
         expect(add3Nums(__, __, __)(1, 2, 3)).to.equal(6);
@@ -515,7 +528,7 @@ describe('curryN', function () {
     });
 
     it('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
-        var multiply5Nums = curryN(multiplyRecursive, 5),
+        var multiply5Nums = curryN_(multiplyRecursive, 5),
             multiplyExpectedResult = Math.pow(5, 5),
             argsToTest = [[5, 5, 5, 5, 5], [5, 5, 5, 5], [5, 5, 5], [5, 5], [5]],
             partiallyAppliedResults = [multiply5Nums(__, __, __, __, __), multiply5Nums(__, __, 5, __, __), multiply5Nums(5, __, 5, __, __), multiply5Nums(5, __, 5, __, 5), multiply5Nums(5, __, 5, 5, 5)];
@@ -528,12 +541,153 @@ describe('curryN', function () {
     });
 
     it('should respect argument order and placeholder order.', function () {
-        var divideC = curryN(divideR, 3);
+        var divideC = curryN_(divideR, 3);
 
         // Curry divideR to divde 3 or more numbers
         expect(divideC(25, 5)).to.be.instanceOf(Function);
         expect(divideC(__, 625, __)(3125, 5)).to.equal(1);
         expect(divideC(Math.pow(3125, 2), 3125, __)(5)).to.equal(625);
+    });
+});
+/**
+ * Created by elyde on 11/13/2016.
+ */
+
+describe('curry_', function () {
+
+    // Set curry here to use below
+    var multiplyRecursive = function multiplyRecursive() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return args.reduce(function (agg, num) {
+            return num * agg;
+        }, 1);
+    },
+        addRecursive = function addRecursive() {
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        return args.reduce(function (agg, num) {
+            return num + agg;
+        }, 0);
+    },
+        divideR = function divideR() {
+        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            args[_key3] = arguments[_key3];
+        }
+
+        return args.reduce(function (agg, num) {
+            return agg / num;
+        }, args.shift());
+    };
+
+    it('should be of type function.', function () {
+        expect(curry_).to.be.instanceOf(Function);
+    });
+
+    it('should return a function when called with or without args.', function () {
+        expect(curry_()).to.be.instanceOf(Function);
+        expect(curry_(99)).to.be.instanceOf(Function);
+        expect(curry_(function () {})).to.be.instanceOf(Function);
+        expect(curry_(console.log)).to.be.instanceOf(Function);
+    });
+
+    /*it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
+     assert.throws(curry_(), Error);
+     assert.throws(curry_(99), Error);
+     });*/
+
+    it('should return a properly curried function when correct arity for said function is met.', function () {
+        var min8 = curry_(Math.min, 8),
+            max5 = curry_(Math.max, 5),
+            pow2 = curry_(Math.pow, 2);
+
+        // Expect functions
+        [min8, max5, pow2].forEach(function (func) {
+            expect(func).to.be.instanceOf(Function);
+        });
+
+        // Expect functions work correctly
+        expect(min8(9)).to.equal(8);
+        expect(min8(8)).to.equal(8);
+        expect(min8(7)).to.equal(7);
+        expect(max5(6)).to.equal(6);
+        expect(max5(5)).to.equal(5);
+        expect(max5(4)).to.equal(5);
+        expect(pow2(2)).to.equal(4);
+        expect(pow2(3)).to.equal(8);
+        expect(pow2(4)).to.equal(16);
+    });
+
+    it('should be able to correctly curry functions of different arity as long as their arity is met.', function () {
+        var min = curry2_(Math.min),
+            max = curry2_(Math.max),
+            pow = curry2_(Math.pow),
+            min8 = curry_(Math.min, 8),
+            max5 = curry_(Math.max, 5),
+            pow2 = curry_(Math.pow, 2),
+            isValidTangentLen = curry_(function (a, b, cSqrd) {
+            return pow(a, 2) + pow(b, 2) === cSqrd;
+        }, 2, 2),
+            random = curry_(function (start, end) {
+            return Math.round(Math.random() * end + start);
+        }, 0),
+            expectedFor = function expectedFor(num) {
+            return min(8, max(5, pow(2, num)));
+        };
+
+        // Expect functions returned for `curry` calls
+        expect(isValidTangentLen).to.be.instanceOf(Function);
+
+        // Expect functions returned for `curry` calls
+        [min8, max5, pow2].forEach(function (func) {
+            expect(func).to.be.instanceOf(Function);
+        });
+
+        // Expect `curry`ed functions to work as expected
+        expect(isValidTangentLen(8)).to.equal(true);
+        expect(isValidTangentLen(21)).to.equal(false);
+
+        // Expect `curry`ed functions to work as expected
+        [8, 5, 3, 2, 1, 0, random(89), random(55), random(34)].forEach(function (num) {
+            var composed = compose(min8, max5, pow2);
+            expect(composed(num)).to.equal(expectedFor(num));
+        });
+    });
+
+    it('should enforce `Placeholder` values when currying', function () {
+        var add = curry3_(addRecursive),
+            multiply = curry5_(multiplyRecursive),
+            multiplyExpectedResult = Math.pow(5, 5);
+
+        // Curry add to add 3 numbers
+        expect(add(__, __, __)(1, 2, 3)).to.equal(6);
+        expect(add(1, __, __)(2, 3)).to.equal(6);
+        expect(add(1, 2, __)(3)).to.equal(6);
+        expect(add(1, 2, 3)).to.equal(6);
+
+        // Curry multiply and pass args in non-linear order
+        expect(multiply(__, __, __, __, __)(5, 5, 5, 5, 5)).to.equal(multiplyExpectedResult);
+        expect(multiply(__, __, 5, __, __)(5, 5, 5, 5)).to.equal(multiplyExpectedResult);
+        expect(multiply(5, __, 5, __, __)(5, 5, 5)).to.equal(multiplyExpectedResult);
+        expect(multiply(5, __, 5, __, 5)(5, 5)).to.equal(multiplyExpectedResult);
+        expect(multiply(5, __, 5, 5, 5)(5)).to.equal(multiplyExpectedResult);
+        expect(multiply(5, 5, 5, 5, 5)).to.equal(multiplyExpectedResult);
+
+        expect(add(__, __, __)(1, 2, 3, 5, 6)).to.equal(17);
+        expect(add(__, 1, __)(2, 3, 5, 6)).to.equal(17);
+        expect(add(__, 1, 2)(3, 5, 6)).to.equal(17);
+        expect(add(1, 2, 3, 5, 6)).to.equal(17);
+    });
+
+    it('should respect argument order and placeholder order.', function () {
+        // Curry divideR to divde 3 or more numbers
+        expect(curry_(divideR, 25, 5)).to.be.instanceOf(Function);
+        expect(curry_(divideR, __, 625, __)(3125, 5)).to.equal(1);
+        expect(curry_(divideR, Math.pow(3125, 2), 3125, __)(5)).to.equal(625);
     });
 });
 /**
@@ -919,160 +1073,6 @@ describe('Object Operators', function () {
     });
 });
 /**
- * Created by elyde on 11/13/2016.
- */
-
-describe('curry', function () {
-
-    it('should be of type function.', function () {
-        expectFunction(curry);
-    });
-
-    it('should return a function when called with or without args.', function () {
-        expectFunction(curry());
-        expectFunction(curry(99));
-        expectFunction(curry(function () {}));
-        expectFunction(curry(console.log));
-    });
-
-    it('should return a function that fails when no function is passed in (as it\'s first param).', function () {
-        assert.throws(curry(), Error);
-        assert.throws(curry(99), Error);
-    });
-
-    it('should return a curried function.', function () {
-        var min8 = curry(Math.min, 8),
-            max5 = curry(Math.max, 5),
-            pow2 = curry(Math.pow, 2);
-
-        // Expect functions
-        [min8, max5, pow2].forEach(function (func) {
-            expectFunction(func);
-        });
-
-        // Expect functions work correctly
-        expect(min8(9)).to.equal(8);
-        expect(min8(8)).to.equal(8);
-        expect(min8(7)).to.equal(7);
-        expect(max5(6)).to.equal(6);
-        expect(max5(5)).to.equal(5);
-        expect(max5(4)).to.equal(5);
-        expect(pow2(2)).to.equal(4);
-        expect(pow2(3)).to.equal(8);
-        expect(pow2(4)).to.equal(16);
-    });
-
-    it('should be able to correctly curry functions of different arity as long as their arity is met.', function () {
-        var min = curry2(Math.min),
-            max = curry2(Math.max),
-            pow = curry2(Math.pow),
-            min8 = curry(Math.min, 8),
-            max5 = curry(Math.max, 5),
-            pow2 = curry(Math.pow, 2),
-            isValidTangentLen = curry(function (a, b, cSqrd) {
-            return pow(a, 2) + pow(b, 2) === cSqrd;
-        }, 2, 2),
-            random = curry(function (start, end) {
-            return Math.round(Math.random() * end + start);
-        }, 0),
-            expectedFor = function expectedFor(num) {
-            return min(8, max(5, pow(2, num)));
-        };
-
-        // Expect functions returned for `curry` calls
-        expectFunction(isValidTangentLen);
-
-        // Expect functions returned for `curry` calls
-        [min8, max5, pow2].forEach(function (func) {
-            expectFunction(func);
-        });
-
-        // Expect `curry`ed functions to work as expected
-        expect(isValidTangentLen(8)).to.equal(true);
-        expect(isValidTangentLen(21)).to.equal(false);
-
-        // Expect `curry`ed functions to work as expected
-        [8, 5, 3, 2, 1, 0, random(89), random(55), random(34)].forEach(function (num) {
-            var composed = compose(min8, max5, pow2);
-            expect(composed(num)).to.equal(expectedFor(num));
-        });
-    });
-});
-/**
- * Created by elyde on 11/25/2016.
- */
-
-describe('curryN', function () {
-
-    // Set curry here to use below
-    var multiplyRecursive = function multiplyRecursive() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return args.reduce(function (agg, num) {
-            return num * agg;
-        }, 1);
-    },
-        addRecursive = function addRecursive() {
-        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            args[_key2] = arguments[_key2];
-        }
-
-        return args.reduce(function (agg, num) {
-            return num + agg;
-        }, 0);
-    },
-        divideR = function divideR() {
-        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-            args[_key3] = arguments[_key3];
-        }
-
-        return args.reduce(function (agg, num) {
-            return agg / num;
-        }, args.shift());
-    };
-
-    it('should be of type function.', function () {
-        expect(curryN).to.be.instanceOf(Function);
-    });
-
-    it('should return a function that throws an error when no arguments are passed.', function () {
-        var result = curryN();
-        expect(result).to.be.instanceOf(Function);
-        assert.throws(result, Error);
-    });
-
-    it('should pass in any values passed the arity when executing the curried function', function () {
-        var add3Nums = curryN(addRecursive, 3);
-
-        // Curry add to add 3 numbers
-        expect(add3Nums()(1, 2, 3)).to.equal(6);
-        expect(add3Nums(1)(2, 3)).to.equal(6);
-        expect(add3Nums(1, 2)(3)).to.equal(6);
-        expect(add3Nums(1, 2, 3)).to.equal(6);
-
-        // Curry `add` to add any numbers passed required arity
-        expect(add3Nums()(1, 2, 3, 5, 6)).to.equal(17);
-        expect(add3Nums(1)(2, 3, 5, 6)).to.equal(17);
-        expect(add3Nums(1, 2)(3, 5, 6)).to.equal(17);
-        expect(add3Nums(1, 2, 3, 5, 6)).to.equal(17);
-    });
-
-    it('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
-        var multiply5Nums = curryN(multiplyRecursive, 5),
-            multiplyExpectedResult = Math.pow(5, 5),
-            argsToTest = [[5, 5, 5, 5, 5], [5, 5, 5, 5], [5, 5, 5], [5, 5], [5]],
-            partiallyAppliedResults = [multiply5Nums(), multiply5Nums(5), multiply5Nums(5, 5), multiply5Nums(5, 5, 5), multiply5Nums(5, 5, 5, 5)];
-
-        // Curry multiply and pass args in non-linear order
-        argsToTest.forEach(function (args, index) {
-            expect(partiallyAppliedResults[index]).to.be.instanceOf(Function);
-            expect(partiallyAppliedResults[index].apply(null, args)).to.equal(multiplyExpectedResult);
-        });
-    });
-});
-/**
  * Created by edlc on 1/30/17.
  */
 
@@ -1080,15 +1080,12 @@ describe('#typeOf', function () {
     it('should be a function', function () {
         expectFunction(typeOf);
     });
-    it('should require an arity of `1`', function () {
-        expectEqual(typeOf.length, 1);
-    });
-    it('should return "Undefined" when no value is passed in', function () {
+    it('should return a function when no value is passed in (is curried)', function () {
         expectEqual(typeOf(), 'Undefined');
     });
     it('should return the passed type\'s name', function () {
-        [[[], 'Array'], [{}, 'Object'], ['', 'String'], [function () {}, 'Function'], [99, 'Number'], [true, 'Boolean'], [false, 'Boolean'], [null, 'Null'], [undefined, 'Undefined']].forEach(function (tuple) {
-            return expectEqual(typeOf(tuple[0]), tuple[1]);
+        [['Array', []], ['Object', {}], ['String', ''], ['Function', function () {}], ['Number', 99], ['Boolean', true], ['Boolean', false], ['Null', null], ['Undefined', undefined]].forEach(function (tuple) {
+            return expectEqual(apply(typeOf, tuple));
         });
     });
 });
@@ -1097,30 +1094,24 @@ describe('#typeOfIs', function () {
     it('should be a function', function () {
         expectFunction(typeOfIs);
     });
-    it('should require an arity of `2`', function () {
-        expectEqual(typeOfIs.length, 2);
-    });
-    it('should return `false` when no value is passed in', function () {
-        expectFalse(typeOfIs());
-    });
     it('should return `true` when passed in value is of passed in type name/string', function () {
-        [[[], 'Array'], [{}, 'Object'], ['', 'String'], [function () {}, 'Function'], [99, 'Number'], [true, 'Boolean'], [false, 'Boolean'], [null, 'Null'], [undefined, 'Undefined']].forEach(function (tuple) {
-            return expectTrue(typeOfIs.apply(null, tuple));
+        [['Array', []], ['Object', {}], ['String', ''], ['Function', function () {}], ['Number', 99], ['Boolean', true], ['Boolean', false], ['Null', null], ['Undefined', undefined]].forEach(function (tuple) {
+            return expectTrue(apply(typeOfIs, tuple));
         });
     });
     it('should return `true` when passed in value is of passed in type constructor', function () {
-        [[[], Array], [{}, Object], ['', String], [function () {}, Function], [99, Number], [true, Boolean], [false, Boolean]].forEach(function (tuple) {
-            return expectTrue(typeOfIs.apply(null, tuple));
+        [[Array, []], [Object, {}], [String, ''], [Function, function () {}], [Number, 99], [Boolean, true], [Boolean, false]].forEach(function (tuple) {
+            return expectTrue(apply(typeOfIs, tuple));
         });
     });
     it('should return `false` when passed in value is not of passed in type name/string', function () {
-        [[[], 'Object'], [{}, 'Array'], ['', 'NaN'], [function () {}, 'Number'], [99, 'Function'], [true, 'NaN'], [false, 'Number']].forEach(function (tuple) {
-            return expectFalse(typeOfIs.apply(null, tuple));
+        [['Object', []], ['Array', {}], ['NaN', ''], ['Number', function () {}], ['Function', 99], ['NaN', true], ['Number', false]].forEach(function (tuple) {
+            return expectFalse(apply(typeOfIs, tuple));
         });
     });
     it('should return `false` when passed in value is not of passed in type constructor', function () {
-        [[[], Object], [{}, Array], ['', NaN], [function () {}, Number], [99, Function], [true, NaN], [false, Number]].forEach(function (tuple) {
-            return expectFalse(typeOfIs.apply(null, tuple));
+        [[Object, []], [Array, {}], [NaN, ''], [Number, function () {}], [Function, 99], [NaN, true], [Number, undefined], [Array, false]].forEach(function (tuple) {
+            return expectFalse(apply(typeOfIs, tuple));
         });
     });
 });
