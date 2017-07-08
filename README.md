@@ -56,10 +56,10 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.curry5](#fjlcurry5)
 - [fjl.curry__](#fjlcurry__)
 - [fjl.curryN__](#fjlcurryn__)
-- [fjl.curry2__](#fjlcurry2__)
-- [fjl.curry3__](#fjlcurry3__)
-- [fjl.curry4__](#fjlcurry4__)
-- [fjl.curry5__](#fjlcurry5__)
+- [fjl.curry2_](#fjlcurry2_)
+- [fjl.curry3_](#fjlcurry3_)
+- [fjl.curry4_](#fjlcurry4_)
+- [fjl.curry5_](#fjlcurry5_)
 - [fjl.difference](#fjldifference)
 - [fjl.errorIfNotTypeFactory](#fjlerrorifnottypefactory)
 - [fjl.filter](#fjlfilter)
@@ -148,7 +148,11 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curry2__
+### fjl.curry2_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry2_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -156,7 +160,11 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curry3__
+### fjl.curry3_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry3_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -164,7 +172,11 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curry4__
+### fjl.curry4_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry4_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -172,7 +184,11 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curry5__
+### fjl.curry5_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry5_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

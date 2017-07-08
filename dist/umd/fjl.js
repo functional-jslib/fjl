@@ -13,6 +13,9 @@
 })(this, function (module, exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _fnOperators, _operators, _objOperators, _arrayOperators, _version) {
     /**
      * Created by elyde on 12/6/2016.
+     * @todo Evaluate library for places where we can make it more functional; E.g.,
+     *  - Make methods take the functor/monad values as last (where it makes sense)
+     * @todo Rename curry__ and curry*__ to something easier on the eyes (lol).
      */
 
     'use strict';
@@ -53,10 +56,10 @@
         curry5: _curry.curry5,
         curry__: _curry.curry__,
         curryN__: _curry.curryN__,
-        curry2__: _curry.curry2__,
-        curry3__: _curry.curry3__,
-        curry4__: _curry.curry4__,
-        curry5__: _curry.curry5__,
+        curry2_: _curry.curry2_,
+        curry3_: _curry.curry3_,
+        curry4_: _curry.curry4_,
+        curry5_: _curry.curry5_,
         difference: _operators.difference,
         errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
         filter: _operators.filter,

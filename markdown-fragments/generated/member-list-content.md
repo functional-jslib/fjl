@@ -50,7 +50,11 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curry2__
+### fjl.curry2_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry2_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -58,7 +62,11 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curry3__
+### fjl.curry3_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry3_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -66,7 +74,11 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curry4__
+### fjl.curry4_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry4_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -74,7 +86,11 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.curry5__
+### fjl.curry5_
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.curry5_
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

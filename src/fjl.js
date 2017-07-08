@@ -11,7 +11,7 @@ import {assign, assignDeep} from './assign';
 import compose from './compose';
 
 import {__, curry, curryN, curry2, curry3, curry4, curry5,
-    curry__, curryN__, curry2__, curry3__, curry4__, curry5__} from './curry';
+    curry__, curryN__, curry2_, curry3_, curry4_, curry5_} from './curry';
 
 import {subClass, subClassMulti} from './subClass';
 import {typeOf, typeOfIs} from './typeOf';
@@ -59,10 +59,10 @@ export default {
     curry5,
     curry__,
     curryN__,
-    curry2__,
-    curry3__,
-    curry4__,
-    curry5__,
+    curry2_,
+    curry3_,
+    curry4_,
+    curry5_,
     difference,
     errorIfNotTypeFactory,
     filter,

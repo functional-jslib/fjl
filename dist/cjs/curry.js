@@ -184,44 +184,44 @@ var __ = exports.__ = Object.freeze ? Object.freeze(placeHolderInstance) : place
 
 /**
  * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call function until 2 or more args).
- * @function curry2__
+ * @function curry2_
  * @param fn {Function}
  * @returns {Function}
  */
-curry2__ = exports.curry2__ = function curry2__(fn) {
+curry2_ = exports.curry2_ = function curry2_(fn) {
     return curryN__(fn, 2);
 },
 
 
 /**
  * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call function until 3 or more args).
- * @function curry3__
+ * @function curry3_
  * @param fn {Function}
  * @returns {Function}
  */
-curry3__ = exports.curry3__ = function curry3__(fn) {
+curry3_ = exports.curry3_ = function curry3_(fn) {
     return curryN__(fn, 3);
 },
 
 
 /**
  * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call function until 4 or more args).
- * @function curry4__
+ * @function curry4_
  * @param fn {Function}
  * @returns {Function}
  */
-curry4__ = exports.curry4__ = function curry4__(fn) {
+curry4_ = exports.curry4_ = function curry4_(fn) {
     return curryN__(fn, 4);
 },
 
 
 /**
  * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call function until 5 or more args).
- * @function curry5__
+ * @function curry5_
  * @param fn {Function}
  * @returns {Function}
  */
-curry5__ = exports.curry5__ = function curry5__(fn) {
+curry5_ = exports.curry5_ = function curry5_(fn) {
     return curryN__(fn, 5);
 },
 
@@ -276,8 +276,8 @@ exports.default = {
     curryOnce: curryOnce,
     curry__: curry__,
     curryN__: curryN__,
-    curry2__: curry2__,
-    curry3__: curry3__,
-    curry4__: curry4__,
-    curry5__: curry5__
+    curry2_: curry2_,
+    curry3_: curry3_,
+    curry4_: curry4_,
+    curry5_: curry5_
 };

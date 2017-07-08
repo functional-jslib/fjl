@@ -6,7 +6,7 @@
 // ~~~ STRIP ~~~
 // This part gets stripped out when
 // generating browser version of test(s).
-let {curry2__: curry2} = require('../../dist/cjs/curry'),
+let {curry2_: curry2} = require('../../dist/cjs/curry'),
     {expect} = require('chai');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
