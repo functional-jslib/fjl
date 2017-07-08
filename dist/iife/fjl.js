@@ -226,6 +226,7 @@ var fjl = function () {
     /**
      * Created by elyde on 12/10/2016.
      */
+
     var _String = String.name;
     var _Function = Function.name;
     var _Array = Array.name;
@@ -434,6 +435,17 @@ var fjl = function () {
     }
 
     /**
+     * Returns true if an element is not empty and is of type.
+     * @function module:sjl.notEmptyAndOfType
+     * @param type {String|Function} - Type to check against (string name or actual constructor).
+     * @param value {*} - Value to check.
+     * @returns {Boolean}
+     */
+    function notEmptyAndOfType(type, value) {
+        return !isEmpty(value) && typeOfIs(type, value);
+    }
+
+    /**
      * Checks to see if value can be constructed from a constructor.
      * @param value {*}
      * @returns {Boolean}
@@ -509,134 +521,6 @@ var fjl = function () {
     }
 
     /**
-     * Created by elyde on 12/18/2016.
-     */
-
-    /**
-     * Returns true if an element is not empty and is of type.
-     * @function module:sjl.notEmptyAndOfType
-     * @param value {*} - Value to check.
-     * @param type {String|Function} - Type to check against (string name or actual constructor).
-     * @returns {Boolean}
-     */
-    function notEmptyAndOfType(value, type) {
-        return !isEmpty(value) && typeOfIs(type, value);
-    }
-
-    /**
-     * Created by elyde on 12/10/2016.
-     * Set functions for objects.
-     */
-
-    var hasOwnProperty = function hasOwnProperty(x, propName) {
-        return Object.prototype.hasOwnProperty.call(x, propName);
-    };
-    var union = function union(obj1, obj2) {
-        return assignDeep(obj1, obj2);
-    };
-    var intersect = function intersect(obj1, obj2) {
-        return Object.keys(obj1).reduce(function (agg, key) {
-            if (hasOwnProperty(obj2, key)) {
-                agg[key] = obj2[key];
-            }
-            return agg;
-        }, {});
-    };
-    var difference = function difference(obj1, obj2) {
-        return Object.keys(obj1).reduce(function (agg, key) {
-            if (!hasOwnProperty(obj2, key)) {
-                agg[key] = obj1[key];
-            }
-            return agg;
-        }, {});
-    };
-    var complement = function complement(obj0) {
-        for (var _len12 = arguments.length, objs = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
-            objs[_key12 - 1] = arguments[_key12];
-        }
-
-        return objs.reduce(function (agg, obj) {
-            return assignDeep(agg, difference(obj, obj0));
-        }, {});
-    };
-
-    /**
-     * Created by elyde on 12/10/2016.
-     */
-    /**
-     * Normalized the parameters required for `subClassPure` and `subClass` to operate.
-     * @param superClass {Function} - Superclass to inherit from.
-     * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
-     * @param methods {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
-     * @param statics {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
-     * @returns {{constructor: (Function|*), methods: *, statics: *, superClass: (*|Object)}}
-     */
-    function normalizeArgsForDefineSubClass(superClass, constructor, methods, statics) {
-        var _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
-            agg[key] = superClass[key];
-            return agg;
-        }, {}),
-            isCtorAndMethods = !isFunction(constructor),
-            _constructor = isCtorAndMethods ? constructor.constructor : constructor,
-            _methods = isCtorAndMethods ? difference(constructor, { constructor: null }) : methods,
-            _statics = assign(_extractedStatics, isCtorAndMethods ? methods : statics);
-
-        return {
-            constructor: _constructor,
-            methods: _methods,
-            statics: _statics,
-            superClass: superClass
-        };
-    }
-
-    /**
-     * Same as `subClass` with out side-effect of `extend` method and `toString` method.
-     * @function module:sjl.subClassPure
-     * @param superClass {Function} - Superclass to inherit from.
-     * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
-     * @param [methods] {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
-     * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
-     * @returns {Function} - Constructor with extended prototype and added statics.
-     */
-    function subClass(superClass, constructor, methods, statics) {
-        var normalizedArgs = normalizeArgsForDefineSubClass.call(null, superClass, constructor, methods, statics),
-            _superClass = normalizedArgs.superClass,
-            _statics = normalizedArgs.statics,
-            _constructor = normalizedArgs.constructor,
-            _methods = normalizedArgs.methods;
-
-        // Set prototype
-        _constructor.prototype = Object.create(_superClass.prototype);
-
-        // Define constructor
-        Object.defineProperty(_constructor.prototype, 'constructor', { value: _constructor });
-
-        // Extend constructor
-        assign(_constructor.prototype, _methods);
-        assign(_constructor, _statics);
-
-        // Return constructor
-        return _constructor;
-    }
-
-    /**
-     * Same as subClass multi but takes an array of Constructor or one constructor at position one.
-     * @param ctorOrCtors {Function|Array<Function>} - SuperClass(es)
-     * @param constructorOrMethods {Function|Object}
-     * @param [methods] {Object|undefined}
-     * @param [statics] {Object|undefined}
-     * @returns {Function}
-     */
-    function subClassMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
-        if (notEmptyAndOfType(ctorOrCtors, Array)) {
-            return ctorOrCtors.reduce(function (agg, Constructor) {
-                return subClass(Constructor, agg);
-            }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
-        }
-        return subClass(ctorOrCtors, constructorOrMethods, methods, statics);
-    }
-
-    /**
      * Created by elyde on 1/20/2017.
      */
 
@@ -650,8 +534,8 @@ var fjl = function () {
     function errorIfNotTypeFactory(contextName) {
         contextName = contextName || 'unNamedContext';
         return function (key, value) {
-            for (var _len13 = arguments.length, types = Array(_len13 > 2 ? _len13 - 2 : 0), _key13 = 2; _key13 < _len13; _key13++) {
-                types[_key13 - 2] = arguments[_key13];
+            for (var _len12 = arguments.length, types = Array(_len12 > 2 ? _len12 - 2 : 0), _key12 = 2; _key12 < _len12; _key12++) {
+                types[_key12 - 2] = arguments[_key12];
             }
 
             if (types.some(function (Type) {
@@ -671,14 +555,51 @@ var fjl = function () {
      */
 
     var call = function call(fn) {
-        for (var _len14 = arguments.length, args = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
-            args[_key14 - 1] = arguments[_key14];
+        for (var _len13 = arguments.length, args = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
+            args[_key13 - 1] = arguments[_key13];
         }
 
         return fn.call.apply(fn, [null].concat(args));
     };
     var apply = function apply(fn, args) {
         return fn.apply(null, args);
+    };
+
+    /**
+     * Created by elyde on 12/10/2016.
+     * Set functions for objects.
+     */
+
+    var hasOwnProperty = function hasOwnProperty(x, propName) {
+        return Object.prototype.hasOwnProperty.call(x, propName);
+    };
+    var union$1 = function union$1(obj1, obj2) {
+        return assignDeep(obj1, obj2);
+    };
+    var intersect$1 = function intersect$1(obj1, obj2) {
+        return Object.keys(obj1).reduce(function (agg, key) {
+            if (hasOwnProperty(obj2, key)) {
+                agg[key] = obj2[key];
+            }
+            return agg;
+        }, {});
+    };
+    var difference$1 = function difference$1(obj1, obj2) {
+        return Object.keys(obj1).reduce(function (agg, key) {
+            if (!hasOwnProperty(obj2, key)) {
+                agg[key] = obj1[key];
+            }
+            return agg;
+        }, {});
+    };
+    var complement$1 = function complement$1(obj0) {
+        for (var _len14 = arguments.length, objs = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
+            objs[_key14 - 1] = arguments[_key14];
+        }
+
+        return objs.reduce(function (agg, obj) {
+            return assignDeep(agg, difference$1(obj, obj0));
+        }, {});
     };
 
     /**
@@ -774,6 +695,7 @@ var fjl = function () {
     /**
      * Created by elyde on 12/11/2016.
      */
+
     var map = curry2(function (fn, functor) {
         return functor.map(fn);
     });
@@ -786,7 +708,7 @@ var fjl = function () {
     var reduceRight = curry3(function (fn, agg, functor) {
         return functor.reduceRight(fn, agg);
     });
-    var complement$1 = curry2(function (functor) {
+    var complement$$1 = curry2(function (functor) {
         for (var _len18 = arguments.length, others = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
             others[_key18 - 1] = arguments[_key18];
         }
@@ -795,37 +717,37 @@ var fjl = function () {
             case 'Array':
                 return complement$2.apply(undefined, [functor].concat(others));
             default:
-                return complement.apply(undefined, [functor].concat(others));
+                return complement$1.apply(undefined, [functor].concat(others));
         }
     });
-    var difference$1 = curry2(function (functor1, functor2) {
+    var difference$$1 = curry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
                 return difference$2(functor1, functor2);
             default:
-                return difference(functor1, functor2);
+                return difference$1(functor1, functor2);
         }
     });
-    var union$1 = curry2(function (functor1, functor2) {
+    var union$$1 = curry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
                 return union$2(functor1, functor2);
             default:
-                return union(functor1, functor2);
+                return union$1(functor1, functor2);
         }
     });
-    var intersect$1 = curry2(function (functor1, functor2) {
+    var intersect$$1 = curry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
                 return intersect$2(functor1, functor2);
             default:
-                return intersect(functor1, functor2);
+                return intersect$1(functor1, functor2);
         }
     });
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sat Jul 08 2017 11:08:09 GMT-0400 (Eastern Daylight Time) 
+     * Generated Sat Jul 08 2017 11:26:00 GMT-0400 (Eastern Daylight Time) 
      */
 
     var version = '0.13.0';
@@ -834,9 +756,9 @@ var fjl = function () {
      * Created by elyde on 12/6/2016.
      * @todo Evaluate library for places where we can make it more functional; E.g.,
      *  - Make methods take the functor/monad values as last (where it makes sense)
-     * @todo Rename curry_ and curry*__ to something easier on the eyes (lol).
      */
 
+    // import {subClass, subClassMulti} from './subClass';
     var fjl = {
         __: __,
         apply: apply,
@@ -847,7 +769,7 @@ var fjl = function () {
         assign: assign,
         assignDeep: assignDeep,
         call: call,
-        complement: complement$1,
+        complement: complement$$1,
         compose: compose,
         curry: curry,
         curryN: curryN,
@@ -861,12 +783,12 @@ var fjl = function () {
         curry3_: curry3_,
         curry4_: curry4_,
         curry5_: curry5_,
-        difference: difference$1,
+        difference: difference$$1,
         errorIfNotTypeFactory: errorIfNotTypeFactory,
         filter: filter,
         flatten: flatten,
         flattenMulti: flattenMulti,
-        intersect: intersect$1,
+        intersect: intersect$$1,
         instanceOf: instanceOf,
         isset: isset,
         issetAndOfType: issetAndOfType,
@@ -887,17 +809,17 @@ var fjl = function () {
         isConstructablePrimitive: isConstructablePrimitive,
         map: map,
         notEmptyAndOfType: notEmptyAndOfType,
-        objComplement: complement,
-        objDifference: difference,
-        objIntersect: intersect,
-        objUnion: union,
+        objComplement: complement$1,
+        objDifference: difference$1,
+        objIntersect: intersect$1,
+        objUnion: union$1,
         reduce: reduce,
         reduceRight: reduceRight,
-        subClass: subClass,
-        subClassMulti: subClassMulti,
+        // subClass,
+        // subClassMulti,
         typeOf: typeOf,
         typeOfIs: typeOfIs,
-        union: union$1,
+        union: union$$1,
         version: version
     };
 

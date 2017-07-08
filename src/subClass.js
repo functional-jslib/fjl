@@ -1,8 +1,7 @@
 /**
  * Created by elyde on 12/10/2016.
  */
-import {isFunction} from './is';
-import {notEmptyAndOfType} from './not';
+import {isFunction, notEmptyAndOfType} from './is';
 import {difference} from './objOperators';
 import {assign} from './assign';
 
@@ -72,7 +71,7 @@ export function subClass (superClass, constructor, methods, statics) {
  * @returns {Function}
  */
 export function subClassMulti (ctorOrCtors, constructorOrMethods, methods, statics) {
-    if (notEmptyAndOfType(ctorOrCtors, Array)) {
+    if (notEmptyAndOfType(Array, ctorOrCtors)) {
         return ctorOrCtors.reduce(function (agg, Constructor) {
             return subClass(Constructor, agg);
         }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));

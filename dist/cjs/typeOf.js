@@ -1,7 +1,3 @@
-/**
- * Created by elyde on 12/18/2016.
- */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9,7 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.typeOfIs = exports.typeOf = undefined;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /**
+                                                                                                                                                                                                                                                                               * Created by elyde on 12/18/2016.
+                                                                                                                                                                                                                                                                               */
 
 var _curry = require('./curry');
 

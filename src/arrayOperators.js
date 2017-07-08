@@ -6,8 +6,6 @@
  * Set functions for arrects.
  */
 
-'use strict';
-
 import {curry2} from './curry';
 
 const

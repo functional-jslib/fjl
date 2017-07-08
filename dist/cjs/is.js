@@ -1,9 +1,3 @@
-/**
- * Created by elyde on 12/18/2016.
- */
-/**
- * Created by elyde on 12/10/2016.
- */
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11,7 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.instanceOf = undefined;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /**
+                                                                                                                                                                                                                                                                               * Created by elyde on 12/18/2016.
+                                                                                                                                                                                                                                                                               */
+/**
+ * Created by elyde on 12/10/2016.
+ */
 
 exports.isClass = isClass;
 exports.isFunction = isFunction;
@@ -30,6 +29,7 @@ exports.isUndefined = isUndefined;
 exports.isNull = isNull;
 exports.isSymbol = isSymbol;
 exports.isEmpty = isEmpty;
+exports.notEmptyAndOfType = notEmptyAndOfType;
 exports.isConstructablePrimitive = isConstructablePrimitive;
 
 var _curry = require('./curry');
@@ -244,6 +244,17 @@ function isEmpty(value) {
 }
 
 /**
+ * Returns true if an element is not empty and is of type.
+ * @function module:sjl.notEmptyAndOfType
+ * @param type {String|Function} - Type to check against (string name or actual constructor).
+ * @param value {*} - Value to check.
+ * @returns {Boolean}
+ */
+function notEmptyAndOfType(type, value) {
+    return !isEmpty(value) && (0, _typeOf.typeOfIs)(type, value);
+}
+
+/**
  * Checks to see if value can be constructed from a constructor.
  * @param value {*}
  * @returns {Boolean}
@@ -273,5 +284,6 @@ exports.default = {
     isSymbol: isSymbol,
     isEmpty: isEmpty,
     instanceOf: instanceOf,
-    isConstructablePrimitive: isConstructablePrimitive
+    isConstructablePrimitive: isConstructablePrimitive,
+    notEmptyAndOfType: notEmptyAndOfType
 };

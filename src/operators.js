@@ -1,7 +1,6 @@
 /**
  * Created by elyde on 12/11/2016.
  */
-'use strict';
 
 import {curry2, curry3} from './curry';
 import {typeOf} from './typeOf';

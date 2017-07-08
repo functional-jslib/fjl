@@ -1,4 +1,4 @@
-define(['exports', './is', './not', './objOperators', './assign'], function (exports, _is, _not, _objOperators, _assign) {
+define(['exports', './is', './objOperators', './assign'], function (exports, _is, _objOperators, _assign) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -15,9 +15,6 @@ define(['exports', './is', './not', './objOperators', './assign'], function (exp
      * @param methods {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
      * @param statics {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
      * @returns {{constructor: (Function|*), methods: *, statics: *, superClass: (*|Object)}}
-     */
-    /**
-     * Created by elyde on 12/10/2016.
      */
     function normalizeArgsForDefineSubClass(superClass, constructor, methods, statics) {
         var _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
@@ -45,6 +42,9 @@ define(['exports', './is', './not', './objOperators', './assign'], function (exp
      * @param [methods] {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
      * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
      * @returns {Function} - Constructor with extended prototype and added statics.
+     */
+    /**
+     * Created by elyde on 12/10/2016.
      */
     function subClass(superClass, constructor, methods, statics) {
         var normalizedArgs = normalizeArgsForDefineSubClass.call(null, superClass, constructor, methods, statics),
@@ -76,7 +76,7 @@ define(['exports', './is', './not', './objOperators', './assign'], function (exp
      * @returns {Function}
      */
     function subClassMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
-        if ((0, _not.notEmptyAndOfType)(ctorOrCtors, Array)) {
+        if ((0, _is.notEmptyAndOfType)(Array, ctorOrCtors)) {
             return ctorOrCtors.reduce(function (agg, Constructor) {
                 return subClass(Constructor, agg);
             }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));

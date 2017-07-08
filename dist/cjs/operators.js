@@ -1,6 +1,3 @@
-/**
- * Created by elyde on 12/11/2016.
- */
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15,6 +12,10 @@ var _typeOf = require('./typeOf');
 var _objOperators = require('./objOperators');
 
 var _arrayOperators = require('./arrayOperators');
+
+/**
+ * Created by elyde on 12/11/2016.
+ */
 
 var map = exports.map = (0, _curry.curry2)(function (fn, functor) {
     return functor.map(fn);

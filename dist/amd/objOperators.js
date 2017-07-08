@@ -1,9 +1,4 @@
 define(['exports', './assign'], function (exports, _assign) {
-    /**
-     * Created by elyde on 12/10/2016.
-     * Set functions for objects.
-     */
-
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -40,7 +35,10 @@ define(['exports', './assign'], function (exports, _assign) {
         return objs.reduce(function (agg, obj) {
             return (0, _assign.assignDeep)(agg, difference(obj, obj0));
         }, {});
-    };
+    }; /**
+        * Created by elyde on 12/10/2016.
+        * Set functions for objects.
+        */
 
     exports.default = {
         hasOwnProperty: hasOwnProperty,

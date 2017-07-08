@@ -1,10 +1,3 @@
-/**
- * Created by elyde on 12/6/2016.
- * @todo Evaluate library for places where we can make it more functional; E.g.,
- *  - Make methods take the functor/monad values as last (where it makes sense)
- * @todo Rename curry_ and curry*__ to something easier on the eyes (lol).
- */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19,13 +12,9 @@ var _compose2 = _interopRequireDefault(_compose);
 
 var _curry = require('./curry');
 
-var _subClass = require('./subClass');
-
 var _typeOf = require('./typeOf');
 
 var _is = require('./is');
-
-var _not = require('./not');
 
 var _errorIfNotTypeFactory = require('./errorIfNotTypeFactory');
 
@@ -45,6 +34,7 @@ var _version2 = _interopRequireDefault(_version);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import {subClass, subClassMulti} from './subClass';
 exports.default = {
     __: _curry.__,
     apply: _fnOperators.apply,
@@ -94,18 +84,23 @@ exports.default = {
     isEmpty: _is.isEmpty,
     isConstructablePrimitive: _is.isConstructablePrimitive,
     map: _operators.map,
-    notEmptyAndOfType: _not.notEmptyAndOfType,
+    notEmptyAndOfType: _is.notEmptyAndOfType,
     objComplement: _objOperators.complement,
     objDifference: _objOperators.difference,
     objIntersect: _objOperators.intersect,
     objUnion: _objOperators.union,
     reduce: _operators.reduce,
     reduceRight: _operators.reduceRight,
-    subClass: _subClass.subClass,
-    subClassMulti: _subClass.subClassMulti,
+    // subClass,
+    // subClassMulti,
     typeOf: _typeOf.typeOf,
     typeOfIs: _typeOf.typeOfIs,
     union: _operators.union,
     version: _version2.default
-};
+}; /**
+    * Created by elyde on 12/6/2016.
+    * @todo Evaluate library for places where we can make it more functional; E.g.,
+    *  - Make methods take the functor/monad values as last (where it makes sense)
+    */
+
 module.exports = exports['default'];

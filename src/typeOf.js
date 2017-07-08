@@ -2,8 +2,6 @@
  * Created by elyde on 12/18/2016.
  */
 
-'use strict';
-
 import {curry2} from './curry';
 
 let _Number = Number.name,

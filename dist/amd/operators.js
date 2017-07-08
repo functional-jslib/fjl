@@ -1,13 +1,14 @@
 define(['exports', './curry', './typeOf', './objOperators', './arrayOperators'], function (exports, _curry, _typeOf, _objOperators, _arrayOperators) {
-    /**
-     * Created by elyde on 12/11/2016.
-     */
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
     exports.intersect = exports.union = exports.difference = exports.complement = exports.reduceRight = exports.reduce = exports.filter = exports.map = undefined;
+    /**
+     * Created by elyde on 12/11/2016.
+     */
+
     var map = exports.map = (0, _curry.curry2)(function (fn, functor) {
         return functor.map(fn);
     }),

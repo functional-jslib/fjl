@@ -1,23 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['module', 'exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './fnOperators', './operators', './objOperators', './arrayOperators', './generated/version'], factory);
+        define(['module', 'exports', './assign', './compose', './curry', './typeOf', './is', './errorIfNotTypeFactory', './fnOperators', './operators', './objOperators', './arrayOperators', './generated/version'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(module, exports, require('./assign'), require('./compose'), require('./curry'), require('./subClass'), require('./typeOf'), require('./is'), require('./not'), require('./errorIfNotTypeFactory'), require('./fnOperators'), require('./operators'), require('./objOperators'), require('./arrayOperators'), require('./generated/version'));
+        factory(module, exports, require('./assign'), require('./compose'), require('./curry'), require('./typeOf'), require('./is'), require('./errorIfNotTypeFactory'), require('./fnOperators'), require('./operators'), require('./objOperators'), require('./arrayOperators'), require('./generated/version'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod, mod.exports, global.assign, global.compose, global.curry, global.subClass, global.typeOf, global.is, global.not, global.errorIfNotTypeFactory, global.fnOperators, global.operators, global.objOperators, global.arrayOperators, global.version);
+        factory(mod, mod.exports, global.assign, global.compose, global.curry, global.typeOf, global.is, global.errorIfNotTypeFactory, global.fnOperators, global.operators, global.objOperators, global.arrayOperators, global.version);
         global.fjl = mod.exports;
     }
-})(this, function (module, exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _fnOperators, _operators, _objOperators, _arrayOperators, _version) {
-    /**
-     * Created by elyde on 12/6/2016.
-     * @todo Evaluate library for places where we can make it more functional; E.g.,
-     *  - Make methods take the functor/monad values as last (where it makes sense)
-     * @todo Rename curry_ and curry*__ to something easier on the eyes (lol).
-     */
-
+})(this, function (module, exports, _assign, _compose, _curry, _typeOf, _is, _errorIfNotTypeFactory, _fnOperators, _operators, _objOperators, _arrayOperators, _version) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -85,15 +78,15 @@
         isEmpty: _is.isEmpty,
         isConstructablePrimitive: _is.isConstructablePrimitive,
         map: _operators.map,
-        notEmptyAndOfType: _not.notEmptyAndOfType,
+        notEmptyAndOfType: _is.notEmptyAndOfType,
         objComplement: _objOperators.complement,
         objDifference: _objOperators.difference,
         objIntersect: _objOperators.intersect,
         objUnion: _objOperators.union,
         reduce: _operators.reduce,
         reduceRight: _operators.reduceRight,
-        subClass: _subClass.subClass,
-        subClassMulti: _subClass.subClassMulti,
+        // subClass,
+        // subClassMulti,
         typeOf: _typeOf.typeOf,
         typeOfIs: _typeOf.typeOfIs,
         union: _operators.union,

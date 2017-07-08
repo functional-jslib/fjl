@@ -1,7 +1,3 @@
-/**
- * Created by elyde on 12/25/2016.
- */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32,7 +28,9 @@ function assignDeep(obj0) {
             return agg;
         }, topAgg);
     }, obj0);
-}
+} /**
+   * Created by elyde on 12/25/2016.
+   */
 
 function assign(obj0) {
     for (var _len2 = arguments.length, objs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {

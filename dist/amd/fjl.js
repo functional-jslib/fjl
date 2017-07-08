@@ -1,11 +1,4 @@
-define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './fnOperators', './operators', './objOperators', './arrayOperators', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _fnOperators, _operators, _objOperators, _arrayOperators, _version) {
-    /**
-     * Created by elyde on 12/6/2016.
-     * @todo Evaluate library for places where we can make it more functional; E.g.,
-     *  - Make methods take the functor/monad values as last (where it makes sense)
-     * @todo Rename curry_ and curry*__ to something easier on the eyes (lol).
-     */
-
+define(['exports', './assign', './compose', './curry', './typeOf', './is', './errorIfNotTypeFactory', './fnOperators', './operators', './objOperators', './arrayOperators', './generated/version'], function (exports, _assign, _compose, _curry, _typeOf, _is, _errorIfNotTypeFactory, _fnOperators, _operators, _objOperators, _arrayOperators, _version) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -73,15 +66,15 @@ define(['exports', './assign', './compose', './curry', './subClass', './typeOf',
         isEmpty: _is.isEmpty,
         isConstructablePrimitive: _is.isConstructablePrimitive,
         map: _operators.map,
-        notEmptyAndOfType: _not.notEmptyAndOfType,
+        notEmptyAndOfType: _is.notEmptyAndOfType,
         objComplement: _objOperators.complement,
         objDifference: _objOperators.difference,
         objIntersect: _objOperators.intersect,
         objUnion: _objOperators.union,
         reduce: _operators.reduce,
         reduceRight: _operators.reduceRight,
-        subClass: _subClass.subClass,
-        subClassMulti: _subClass.subClassMulti,
+        // subClass,
+        // subClassMulti,
         typeOf: _typeOf.typeOf,
         typeOfIs: _typeOf.typeOfIs,
         union: _operators.union,

@@ -2,10 +2,7 @@
  * Created by elyde on 12/6/2016.
  * @todo Evaluate library for places where we can make it more functional; E.g.,
  *  - Make methods take the functor/monad values as last (where it makes sense)
- * @todo Rename curry_ and curry*__ to something easier on the eyes (lol).
  */
-
-'use strict';
 
 import {assign, assignDeep} from './assign';
 import compose from './compose';
@@ -13,15 +10,14 @@ import compose from './compose';
 import {__, curry, curryN, curry2, curry3, curry4, curry5,
     curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './curry';
 
-import {subClass, subClassMulti} from './subClass';
+// import {subClass, subClassMulti} from './subClass';
 import {typeOf, typeOfIs} from './typeOf';
 
 import {instanceOf, isset, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet, isConstructablePrimitive} from './is';
+    isWeakMap, isWeakSet, isConstructablePrimitive, notEmptyAndOfType} from './is';
 
-import {notEmptyAndOfType} from './not';
 import errorIfNotTypeFactory from './errorIfNotTypeFactory';
 import {call, apply} from './fnOperators';
 
@@ -96,8 +92,8 @@ export default {
     objUnion,
     reduce,
     reduceRight,
-    subClass,
-    subClassMulti,
+    // subClass,
+    // subClassMulti,
     typeOf,
     typeOfIs,
     union,

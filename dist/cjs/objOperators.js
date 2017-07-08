@@ -1,8 +1,3 @@
-/**
- * Created by elyde on 12/10/2016.
- * Set functions for objects.
- */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42,7 +37,10 @@ var hasOwnProperty = exports.hasOwnProperty = function hasOwnProperty(x, propNam
     return objs.reduce(function (agg, obj) {
         return (0, _assign.assignDeep)(agg, difference(obj, obj0));
     }, {});
-};
+}; /**
+    * Created by elyde on 12/10/2016.
+    * Set functions for objects.
+    */
 
 exports.default = {
     hasOwnProperty: hasOwnProperty,

@@ -1,10 +1,4 @@
 define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
-    /**
-     * Created by elyde on 12/18/2016.
-     */
-    /**
-     * Created by elyde on 12/10/2016.
-     */
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -28,6 +22,7 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
     exports.isNull = isNull;
     exports.isSymbol = isSymbol;
     exports.isEmpty = isEmpty;
+    exports.notEmptyAndOfType = notEmptyAndOfType;
     exports.isConstructablePrimitive = isConstructablePrimitive;
 
     var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
@@ -244,6 +239,17 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
     }
 
     /**
+     * Returns true if an element is not empty and is of type.
+     * @function module:sjl.notEmptyAndOfType
+     * @param type {String|Function} - Type to check against (string name or actual constructor).
+     * @param value {*} - Value to check.
+     * @returns {Boolean}
+     */
+    function notEmptyAndOfType(type, value) {
+        return !isEmpty(value) && (0, _typeOf.typeOfIs)(type, value);
+    }
+
+    /**
      * Checks to see if value can be constructed from a constructor.
      * @param value {*}
      * @returns {Boolean}
@@ -273,6 +279,7 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
         isSymbol: isSymbol,
         isEmpty: isEmpty,
         instanceOf: instanceOf,
-        isConstructablePrimitive: isConstructablePrimitive
+        isConstructablePrimitive: isConstructablePrimitive,
+        notEmptyAndOfType: notEmptyAndOfType
     };
 });

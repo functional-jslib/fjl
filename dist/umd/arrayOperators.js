@@ -11,14 +11,6 @@
         global.arrayOperators = mod.exports;
     }
 })(this, function (exports, _curry) {
-    /**
-     * Created by elyde on 12/29/2016.
-     */
-    /**
-     * Created by elyde on 12/10/2016.
-     * Set functions for arrects.
-     */
-
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

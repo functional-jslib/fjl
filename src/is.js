@@ -4,7 +4,6 @@
 /**
  * Created by elyde on 12/10/2016.
  */
-'use strict';
 
 import {curry2} from './curry';
 import {typeOf, typeOfIs} from './typeOf';
@@ -220,6 +219,17 @@ export function isEmpty(value) {
 }
 
 /**
+ * Returns true if an element is not empty and is of type.
+ * @function module:sjl.notEmptyAndOfType
+ * @param type {String|Function} - Type to check against (string name or actual constructor).
+ * @param value {*} - Value to check.
+ * @returns {Boolean}
+ */
+export function notEmptyAndOfType (type, value) {
+    return !isEmpty(value) && typeOfIs(type, value);
+}
+
+/**
  * Checks to see if value can be constructed from a constructor.
  * @param value {*}
  * @returns {Boolean}
@@ -251,5 +261,6 @@ export default {
     isSymbol,
     isEmpty,
     instanceOf,
-    isConstructablePrimitive
+    isConstructablePrimitive,
+    notEmptyAndOfType
 };

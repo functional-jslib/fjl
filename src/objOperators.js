@@ -3,8 +3,6 @@
  * Set functions for objects.
  */
 
-'use strict';
-
 import {assignDeep} from './assign';
 
 export let

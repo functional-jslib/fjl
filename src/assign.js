@@ -2,8 +2,6 @@
  * Created by elyde on 12/25/2016.
  */
 
-'use strict';
-
 import {isObject} from './is';
 
 export function assignDeep (obj0, ...objs) {

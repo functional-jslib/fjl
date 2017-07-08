@@ -11,10 +11,6 @@
         global.typeOf = mod.exports;
     }
 })(this, function (exports, _curry) {
-    /**
-     * Created by elyde on 12/18/2016.
-     */
-
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

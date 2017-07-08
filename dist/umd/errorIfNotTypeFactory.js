@@ -11,10 +11,6 @@
         global.errorIfNotTypeFactory = mod.exports;
     }
 })(this, function (module, exports, _typeOf) {
-    /**
-     * Created by elyde on 1/20/2017.
-     */
-
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -27,7 +23,9 @@
             var typeName = Type instanceof Function ? Type.name : Type;
             return agg + '"' + typeName + '"' + (index !== types.length - 1 ? ', ' : ']');
         }, '[');
-    };
+    }; /**
+        * Created by elyde on 1/20/2017.
+        */
 
     function errorIfNotTypeFactory(contextName) {
         contextName = contextName || 'unNamedContext';

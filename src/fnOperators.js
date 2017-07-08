@@ -3,8 +3,6 @@
  * Functionally styled `call` and `apply`.
  */
 
-'use strict';
-
 export let
 
     call = (fn, ...args) => fn.call(null, ...args),

@@ -53,8 +53,6 @@
 - [fjl.objUnion](#fjlobjunion)
 - [fjl.reduce](#fjlreduce)
 - [fjl.reduceRight](#fjlreduceright)
-- [fjl.subClass](#fjlsubclass)
-- [fjl.subClassMulti](#fjlsubclassmulti)
 - [fjl.typeOf](#fjltypeof)
 - [fjl.typeOfIs](#fjltypeofis)
 - [fjl.union](#fjlunion)
