@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['module', 'exports', './assign', './compose', './curry', './typeOf', './is', './errorIfNotTypeFactory', './fnOperators', './operators', './objOperators', './arrayOperators', './generated/version'], factory);
+        define(['module', 'exports', './assign', './compose', './curry', './typeOf', './is', './errorIfNotTypeFactory', './fnOperators', './objOperators', './arrayOperators', './operators', './generated/version'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(module, exports, require('./assign'), require('./compose'), require('./curry'), require('./typeOf'), require('./is'), require('./errorIfNotTypeFactory'), require('./fnOperators'), require('./operators'), require('./objOperators'), require('./arrayOperators'), require('./generated/version'));
+        factory(module, exports, require('./assign'), require('./compose'), require('./curry'), require('./typeOf'), require('./is'), require('./errorIfNotTypeFactory'), require('./fnOperators'), require('./objOperators'), require('./arrayOperators'), require('./operators'), require('./generated/version'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod, mod.exports, global.assign, global.compose, global.curry, global.typeOf, global.is, global.errorIfNotTypeFactory, global.fnOperators, global.operators, global.objOperators, global.arrayOperators, global.version);
+        factory(mod, mod.exports, global.assign, global.compose, global.curry, global.typeOf, global.is, global.errorIfNotTypeFactory, global.fnOperators, global.objOperators, global.arrayOperators, global.operators, global.version);
         global.fjl = mod.exports;
     }
-})(this, function (module, exports, _assign, _compose, _curry, _typeOf, _is, _errorIfNotTypeFactory, _fnOperators, _operators, _objOperators, _arrayOperators, _version) {
+})(this, function (module, exports, _assign, _compose, _curry, _typeOf, _is, _errorIfNotTypeFactory, _fnOperators, _objOperators, _arrayOperators, _operators, _version) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -55,9 +55,11 @@
         curry5_: _curry.curry5_,
         difference: _operators.difference,
         errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
-        filter: _operators.filter,
+        filter: _arrayOperators.filter,
         flatten: _arrayOperators.flatten,
         flattenMulti: _arrayOperators.flattenMulti,
+        head: _arrayOperators.head,
+        init: _arrayOperators.init,
         intersect: _operators.intersect,
         instanceOf: _is.instanceOf,
         isset: _is.isset,
@@ -77,16 +79,17 @@
         isSymbol: _is.isSymbol,
         isEmpty: _is.isEmpty,
         isConstructablePrimitive: _is.isConstructablePrimitive,
-        map: _operators.map,
+        last: _arrayOperators.last,
+        map: _arrayOperators.map,
         notEmptyAndOfType: _is.notEmptyAndOfType,
         objComplement: _objOperators.complement,
         objDifference: _objOperators.difference,
         objIntersect: _objOperators.intersect,
         objUnion: _objOperators.union,
-        reduce: _operators.reduce,
-        reduceRight: _operators.reduceRight,
-        // subClass,
-        // subClassMulti,
+        reduce: _arrayOperators.reduce,
+        reduceRight: _arrayOperators.reduceRight,
+        reverse: _arrayOperators.reverse,
+        tail: _arrayOperators.tail,
         typeOf: _typeOf.typeOf,
         typeOfIs: _typeOf.typeOfIs,
         union: _operators.union,

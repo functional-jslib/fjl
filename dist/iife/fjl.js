@@ -125,14 +125,6 @@ var fjl = function () {
     }
 
     /**
-     * Curries a function once with any given args (despite passed in function's actual arity).
-     * @function curryOnce
-     * @param fn {Function}
-     * @param argsToCurry {...*}
-     * @returns {function(...[*]=): *}
-     */
-
-    /**
      * Curries a function up to a given arity.
      * @function curryN
      * @param fn {Function}
@@ -570,37 +562,37 @@ var fjl = function () {
      * Set functions for objects.
      */
 
-    var hasOwnProperty = function hasOwnProperty(x, propName) {
+    var hasOwnProperty = curry2(function (x, propName) {
         return Object.prototype.hasOwnProperty.call(x, propName);
-    };
-    var union$1 = function union$1(obj1, obj2) {
+    });
+    var union = curry2(function (obj1, obj2) {
         return assignDeep(obj1, obj2);
-    };
-    var intersect$1 = function intersect$1(obj1, obj2) {
+    });
+    var intersect = curry2(function (obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
             if (hasOwnProperty(obj2, key)) {
                 agg[key] = obj2[key];
             }
             return agg;
         }, {});
-    };
-    var difference$1 = function difference$1(obj1, obj2) {
+    });
+    var difference = curry2(function (obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
             if (!hasOwnProperty(obj2, key)) {
                 agg[key] = obj1[key];
             }
             return agg;
         }, {});
-    };
-    var complement$1 = function complement$1(obj0) {
+    });
+    var complement = curry2(function (obj0) {
         for (var _len14 = arguments.length, objs = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
             objs[_key14 - 1] = arguments[_key14];
         }
 
         return objs.reduce(function (agg, obj) {
-            return assignDeep(agg, difference$1(obj, obj0));
+            return assignDeep(agg, difference(obj, obj0));
         }, {});
-    };
+    });
 
     /**
      * Created by elyde on 12/29/2016.
@@ -610,18 +602,26 @@ var fjl = function () {
      * Set functions for arrects.
      */
 
+    /**
+     * @returns {Function}
+     */
+    function defineReverse() {
+        return Array.prototype.reverse ? function (x) {
+            return x.reverse();
+        } : function (functor) {
+            return functor.reduceRight(function (agg, item) {
+                agg.push(item);
+                return agg;
+            }, []);
+        };
+    }
+
     var concat = curry2(function (arr0) {
         for (var _len15 = arguments.length, arrays = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
             arrays[_key15 - 1] = arguments[_key15];
         }
 
         return arr0.concat.apply(arr0, arrays);
-    });
-    var filter$1 = curry2(function (fn, arr) {
-        return arr.filter(fn);
-    });
-    var reduce$1 = curry2(function (fn, agg, arr) {
-        return arr.reduce(fn, agg);
     });
     var sortAscByLength = function sortAscByLength(arr1, arr2) {
         return [arr1, arr2].sort(function (a, b) {
@@ -636,6 +636,31 @@ var fjl = function () {
         });
     };
 
+    var head = function head(functor) {
+        return functor[0];
+    };
+    var tail = function tail(functor) {
+        return functor.slice(1);
+    };
+    var init = function init(functor) {
+        return functor.slice(0, functor.length - 1);
+    };
+    var last = function last(functor) {
+        return functor[functor.length - 1];
+    };
+    var reverse = defineReverse();
+    var map = curry2(function (fn, functor) {
+        return functor.map(fn);
+    });
+    var filter = curry2(function (fn, arr) {
+        return arr.filter(fn);
+    });
+    var reduce = curry2(function (fn, agg, arr) {
+        return arr.reduce(fn, agg);
+    });
+    var reduceRight = curry3(function (fn, agg, functor) {
+        return functor.reduceRight(fn, agg);
+    });
     var flatten = function flatten(arr) {
         return arr.reduce(function (agg, elm) {
             if (Array.isArray(elm)) {
@@ -650,22 +675,21 @@ var fjl = function () {
             arrays[_key16 - 1] = arguments[_key16];
         }
 
-        return reduce$1(function (agg, arr) {
+        return reduce(function (agg, arr) {
             return concat(agg, flatten(arr));
         }, flatten(arr0), arrays);
     });
-    var union$2 = curry2(function (arr1, arr2) {
-        var whereNotInArray1 = function whereNotInArray1(elm) {
+    var union$1 = curry2(function (arr1, arr2) {
+        return concat(arr1, filter(function (elm) {
             return arr1.indexOf(elm) === -1;
-        };
-        return concat(arr1, filter$1(whereNotInArray1, arr2));
+        }, arr2));
     });
-    var intersect$2 = curry2(function (arr1, arr2) {
-        return arr2.length === 0 ? [] : filter$1(function (elm) {
+    var intersect$1 = curry2(function (arr1, arr2) {
+        return arr2.length === 0 ? [] : filter(function (elm) {
             return arr2.indexOf(elm) > -1;
         }, arr1);
     });
-    var difference$2 = curry2(function (array1, array2) {
+    var difference$1 = curry2(function (array1, array2) {
         // augment this with max length and min length ordering on op
         var _sortAscByLength = sortAscByLength(array1, array2),
             _sortAscByLength2 = _slicedToArray(_sortAscByLength, 2),
@@ -675,20 +699,20 @@ var fjl = function () {
         if (arr2.length === 0) {
             return arr1.slice();
         }
-        return reduce$1(function (agg, elm) {
+        return reduce(function (agg, elm) {
             if (arr2.indexOf(elm) === -1) {
                 agg.push(elm);
             }
             return agg;
         }, [], arr1);
     });
-    var complement$2 = curry2(function (arr0) {
+    var complement$1 = curry2(function (arr0) {
         for (var _len17 = arguments.length, arrays = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
             arrays[_key17 - 1] = arguments[_key17];
         }
 
-        return reduce$1(function (agg, arr) {
-            return concat(agg, difference$2(arr, arr0));
+        return reduce(function (agg, arr) {
+            return concat(agg, difference$1(arr, arr0));
         }, [], arrays);
     });
 
@@ -696,58 +720,46 @@ var fjl = function () {
      * Created by elyde on 12/11/2016.
      */
 
-    var map = curry2(function (fn, functor) {
-        return functor.map(fn);
-    });
-    var filter = curry2(function (fn, functor) {
-        return functor.filter(fn);
-    });
-    var reduce = curry3(function (fn, agg, functor) {
-        return functor.reduce(fn, agg);
-    });
-    var reduceRight = curry3(function (fn, agg, functor) {
-        return functor.reduceRight(fn, agg);
-    });
-    var complement$$1 = curry2(function (functor) {
+    var complement$2 = curry2(function (functor) {
         for (var _len18 = arguments.length, others = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
             others[_key18 - 1] = arguments[_key18];
         }
 
         switch (typeOf(functor)) {
             case 'Array':
-                return complement$2.apply(undefined, [functor].concat(others));
-            default:
                 return complement$1.apply(undefined, [functor].concat(others));
+            default:
+                return complement.apply(undefined, [functor].concat(others));
         }
     });
-    var difference$$1 = curry2(function (functor1, functor2) {
+    var difference$2 = curry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
-                return difference$2(functor1, functor2);
-            default:
                 return difference$1(functor1, functor2);
+            default:
+                return difference(functor1, functor2);
         }
     });
-    var union$$1 = curry2(function (functor1, functor2) {
+    var union$2 = curry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
-                return union$2(functor1, functor2);
-            default:
                 return union$1(functor1, functor2);
+            default:
+                return union(functor1, functor2);
         }
     });
-    var intersect$$1 = curry2(function (functor1, functor2) {
+    var intersect$2 = curry2(function (functor1, functor2) {
         switch (typeOf(functor1)) {
             case 'Array':
-                return intersect$2(functor1, functor2);
-            default:
                 return intersect$1(functor1, functor2);
+            default:
+                return intersect(functor1, functor2);
         }
     });
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sat Jul 08 2017 11:26:00 GMT-0400 (Eastern Daylight Time) 
+     * Generated Sat Jul 08 2017 15:59:51 GMT-0400 (Eastern Daylight Time) 
      */
 
     var version = '0.13.0';
@@ -758,18 +770,17 @@ var fjl = function () {
      *  - Make methods take the functor/monad values as last (where it makes sense)
      */
 
-    // import {subClass, subClassMulti} from './subClass';
     var fjl = {
         __: __,
         apply: apply,
-        arrayComplement: complement$2,
-        arrayDifference: difference$2,
-        arrayIntersect: intersect$2,
-        arrayUnion: union$2,
+        arrayComplement: complement$1,
+        arrayDifference: difference$1,
+        arrayIntersect: intersect$1,
+        arrayUnion: union$1,
         assign: assign,
         assignDeep: assignDeep,
         call: call,
-        complement: complement$$1,
+        complement: complement$2,
         compose: compose,
         curry: curry,
         curryN: curryN,
@@ -783,12 +794,14 @@ var fjl = function () {
         curry3_: curry3_,
         curry4_: curry4_,
         curry5_: curry5_,
-        difference: difference$$1,
+        difference: difference$2,
         errorIfNotTypeFactory: errorIfNotTypeFactory,
         filter: filter,
         flatten: flatten,
         flattenMulti: flattenMulti,
-        intersect: intersect$$1,
+        head: head,
+        init: init,
+        intersect: intersect$2,
         instanceOf: instanceOf,
         isset: isset,
         issetAndOfType: issetAndOfType,
@@ -807,19 +820,20 @@ var fjl = function () {
         isSymbol: isSymbol,
         isEmpty: isEmpty,
         isConstructablePrimitive: isConstructablePrimitive,
+        last: last,
         map: map,
         notEmptyAndOfType: notEmptyAndOfType,
-        objComplement: complement$1,
-        objDifference: difference$1,
-        objIntersect: intersect$1,
-        objUnion: union$1,
+        objComplement: complement,
+        objDifference: difference,
+        objIntersect: intersect,
+        objUnion: union,
         reduce: reduce,
         reduceRight: reduceRight,
-        // subClass,
-        // subClassMulti,
+        reverse: reverse,
+        tail: tail,
         typeOf: typeOf,
         typeOfIs: typeOfIs,
-        union: union$$1,
+        union: union$2,
         version: version
     };
 

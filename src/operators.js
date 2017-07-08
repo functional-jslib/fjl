@@ -2,7 +2,9 @@
  * Created by elyde on 12/11/2016.
  */
 
-import {curry2, curry3} from './curry';
+'use strict';
+
+import {curry2} from './curry';
 import {typeOf} from './typeOf';
 
 import {complement as objComplement,
@@ -15,13 +17,7 @@ import {complement as arrayComplement,
     union as arrayUnion,
     intersect as arrayIntersect} from './arrayOperators';
 
-export const map = curry2((fn, functor) => functor.map(fn)),
-
-    filter = curry2((fn, functor) => functor.filter(fn)),
-
-    reduce = curry3((fn, agg, functor) => functor.reduce(fn, agg)),
-
-    reduceRight = curry3((fn, agg, functor) => functor.reduceRight(fn, agg)),
+export const
 
     complement = curry2((functor, ...others) => {
         switch (typeOf(functor)) {
@@ -60,10 +56,6 @@ export const map = curry2((fn, functor) => functor.map(fn)),
     });
 
 export default {
-    map,
-    filter,
-    reduce,
-    reduceRight,
     complement,
     difference,
     union,

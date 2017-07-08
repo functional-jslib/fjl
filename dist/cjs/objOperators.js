@@ -7,29 +7,36 @@ exports.complement = exports.difference = exports.intersect = exports.union = ex
 
 var _assign = require('./assign');
 
-var hasOwnProperty = exports.hasOwnProperty = function hasOwnProperty(x, propName) {
+var _curry = require('./curry');
+
+/**
+ * Created by elyde on 12/10/2016.
+ * Set functions for objects.
+ */
+
+var hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry2)(function (x, propName) {
     return Object.prototype.hasOwnProperty.call(x, propName);
-},
-    union = exports.union = function union(obj1, obj2) {
+}),
+    union = exports.union = (0, _curry.curry2)(function (obj1, obj2) {
     return (0, _assign.assignDeep)(obj1, obj2);
-},
-    intersect = exports.intersect = function intersect(obj1, obj2) {
+}),
+    intersect = exports.intersect = (0, _curry.curry2)(function (obj1, obj2) {
     return Object.keys(obj1).reduce(function (agg, key) {
         if (hasOwnProperty(obj2, key)) {
             agg[key] = obj2[key];
         }
         return agg;
     }, {});
-},
-    difference = exports.difference = function difference(obj1, obj2) {
+}),
+    difference = exports.difference = (0, _curry.curry2)(function (obj1, obj2) {
     return Object.keys(obj1).reduce(function (agg, key) {
         if (!hasOwnProperty(obj2, key)) {
             agg[key] = obj1[key];
         }
         return agg;
     }, {});
-},
-    complement = exports.complement = function complement(obj0) {
+}),
+    complement = exports.complement = (0, _curry.curry2)(function (obj0) {
     for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         objs[_key - 1] = arguments[_key];
     }
@@ -37,10 +44,7 @@ var hasOwnProperty = exports.hasOwnProperty = function hasOwnProperty(x, propNam
     return objs.reduce(function (agg, obj) {
         return (0, _assign.assignDeep)(agg, difference(obj, obj0));
     }, {});
-}; /**
-    * Created by elyde on 12/10/2016.
-    * Set functions for objects.
-    */
+});
 
 exports.default = {
     hasOwnProperty: hasOwnProperty,

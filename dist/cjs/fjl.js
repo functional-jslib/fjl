@@ -22,11 +22,11 @@ var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
 
 var _fnOperators = require('./fnOperators');
 
-var _operators = require('./operators');
-
 var _objOperators = require('./objOperators');
 
 var _arrayOperators = require('./arrayOperators');
+
+var _operators = require('./operators');
 
 var _version = require('./generated/version');
 
@@ -34,7 +34,6 @@ var _version2 = _interopRequireDefault(_version);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import {subClass, subClassMulti} from './subClass';
 exports.default = {
     __: _curry.__,
     apply: _fnOperators.apply,
@@ -61,9 +60,11 @@ exports.default = {
     curry5_: _curry.curry5_,
     difference: _operators.difference,
     errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
-    filter: _operators.filter,
+    filter: _arrayOperators.filter,
     flatten: _arrayOperators.flatten,
     flattenMulti: _arrayOperators.flattenMulti,
+    head: _arrayOperators.head,
+    init: _arrayOperators.init,
     intersect: _operators.intersect,
     instanceOf: _is.instanceOf,
     isset: _is.isset,
@@ -83,16 +84,17 @@ exports.default = {
     isSymbol: _is.isSymbol,
     isEmpty: _is.isEmpty,
     isConstructablePrimitive: _is.isConstructablePrimitive,
-    map: _operators.map,
+    last: _arrayOperators.last,
+    map: _arrayOperators.map,
     notEmptyAndOfType: _is.notEmptyAndOfType,
     objComplement: _objOperators.complement,
     objDifference: _objOperators.difference,
     objIntersect: _objOperators.intersect,
     objUnion: _objOperators.union,
-    reduce: _operators.reduce,
-    reduceRight: _operators.reduceRight,
-    // subClass,
-    // subClassMulti,
+    reduce: _arrayOperators.reduce,
+    reduceRight: _arrayOperators.reduceRight,
+    reverse: _arrayOperators.reverse,
+    tail: _arrayOperators.tail,
     typeOf: _typeOf.typeOf,
     typeOfIs: _typeOf.typeOfIs,
     union: _operators.union,

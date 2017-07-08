@@ -6,15 +6,22 @@
  * Set functions for arrects.
  */
 
-import {curry2} from './curry';
+'use strict';
 
-const
+import {curry2, curry3} from './curry';
 
-    concat = curry2((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
+/**
+ * @returns {Function}
+ */
+function defineReverse () {
+    return Array.prototype.reverse ? x => x.reverse() :
+        functor => functor.reduceRight((agg, item) => {
+            agg.push(item);
+            return agg;
+        }, []);
+}
 
-    filter = curry2((fn, arr) => arr.filter(fn)),
-
-    reduce = curry2((fn, agg, arr) => arr.reduce(fn, agg)),
+let concat = curry2((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
 
     sortAscByLength = (arr1, arr2) => [arr1, arr2].sort((a, b) => {
         let aLen = a.length,
@@ -26,34 +33,44 @@ const
             return 1;
         }
         return 0;
-
     });
 
-export let
+export const
 
-    flatten = arr => {
-        return arr.reduce((agg, elm) => {
+    head = functor => functor[0],
+
+    tail = functor => functor.slice(1),
+
+    init = functor => functor.slice(0, functor.length - 1),
+
+    last = functor => functor[functor.length - 1],
+
+    reverse = defineReverse(),
+
+    map = curry2((fn, functor) => functor.map(fn)),
+
+    filter = curry2((fn, arr) => arr.filter(fn)),
+
+    reduce = curry2((fn, agg, arr) => arr.reduce(fn, agg)),
+
+    reduceRight = curry3((fn, agg, functor) => functor.reduceRight(fn, agg)),
+
+    flatten = arr => arr.reduce((agg, elm) => {
             if (Array.isArray(elm)) {
                 return concat(agg, flatten(elm));
             }
             agg.push(elm);
             return agg;
-        }, []);
-    },
+        }, []),
 
-    flattenMulti = curry2((arr0, ...arrays) => {
-        return reduce((agg, arr) => concat(agg, flatten(arr)), flatten(arr0), arrays);
-    }),
+    flattenMulti = curry2((arr0, ...arrays) =>
+        reduce((agg, arr) => concat(agg, flatten(arr)), flatten(arr0), arrays)),
 
-    union = curry2((arr1, arr2) => {
-        let whereNotInArray1 = elm => arr1.indexOf(elm) === -1;
-        return concat(arr1, filter(whereNotInArray1, arr2));
-    }),
+    union = curry2((arr1, arr2) =>
+        concat(arr1, filter(elm => arr1.indexOf(elm) === -1, arr2))),
 
-    intersect = curry2((arr1, arr2) => {
-        return arr2.length === 0 ? [] :
-            filter(elm => arr2.indexOf(elm) > -1, arr1);
-    }),
+    intersect = curry2((arr1, arr2) => arr2.length === 0 ? [] :
+            filter(elm => arr2.indexOf(elm) > -1, arr1)),
 
     difference = curry2((array1, array2) => { // augment this with max length and min length ordering on op
         let [arr1, arr2] = sortAscByLength(array1, array2);
@@ -68,11 +85,8 @@ export let
         }, [], arr1);
     }),
 
-    complement = curry2((arr0, ...arrays) => {
-        return reduce((agg, arr) => {
-            return concat(agg, difference(arr, arr0));
-        }, [], arrays);
-    });
+    complement = curry2((arr0, ...arrays) =>
+        reduce((agg, arr) => concat(agg, difference(arr, arr0)), [], arrays));
 
 export default {
     complement,
@@ -80,5 +94,14 @@ export default {
     intersect,
     union,
     flatten,
-    flattenMulti
+    flattenMulti,
+    filter,
+    map,
+    reduce,
+    reduceRight,
+    head,
+    tail,
+    init,
+    last,
+    reverse
 };

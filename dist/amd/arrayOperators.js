@@ -1,10 +1,18 @@
 define(['exports', './curry'], function (exports, _curry) {
+    /**
+     * Created by elyde on 12/29/2016.
+     */
+    /**
+     * Created by elyde on 12/10/2016.
+     * Set functions for arrects.
+     */
+
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersect = exports.union = exports.flattenMulti = exports.flatten = undefined;
+    exports.complement = exports.difference = exports.intersect = exports.union = exports.flattenMulti = exports.flatten = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = exports.last = exports.init = exports.tail = exports.head = undefined;
 
     var _slicedToArray = function () {
         function sliceIterator(arr, i) {
@@ -44,18 +52,26 @@ define(['exports', './curry'], function (exports, _curry) {
         };
     }();
 
+    /**
+     * @returns {Function}
+     */
+    function defineReverse() {
+        return Array.prototype.reverse ? function (x) {
+            return x.reverse();
+        } : function (functor) {
+            return functor.reduceRight(function (agg, item) {
+                agg.push(item);
+                return agg;
+            }, []);
+        };
+    }
+
     var concat = (0, _curry.curry2)(function (arr0) {
         for (var _len = arguments.length, arrays = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             arrays[_key - 1] = arguments[_key];
         }
 
         return arr0.concat.apply(arr0, arrays);
-    }),
-        filter = (0, _curry.curry2)(function (fn, arr) {
-        return arr.filter(fn);
-    }),
-        reduce = (0, _curry.curry2)(function (fn, agg, arr) {
-        return arr.reduce(fn, agg);
     }),
         sortAscByLength = function sortAscByLength(arr1, arr2) {
         return [arr1, arr2].sort(function (a, b) {
@@ -70,7 +86,32 @@ define(['exports', './curry'], function (exports, _curry) {
         });
     };
 
-    var flatten = exports.flatten = function flatten(arr) {
+    var head = exports.head = function head(functor) {
+        return functor[0];
+    },
+        tail = exports.tail = function tail(functor) {
+        return functor.slice(1);
+    },
+        init = exports.init = function init(functor) {
+        return functor.slice(0, functor.length - 1);
+    },
+        last = exports.last = function last(functor) {
+        return functor[functor.length - 1];
+    },
+        reverse = exports.reverse = defineReverse(),
+        map = exports.map = (0, _curry.curry2)(function (fn, functor) {
+        return functor.map(fn);
+    }),
+        filter = exports.filter = (0, _curry.curry2)(function (fn, arr) {
+        return arr.filter(fn);
+    }),
+        reduce = exports.reduce = (0, _curry.curry2)(function (fn, agg, arr) {
+        return arr.reduce(fn, agg);
+    }),
+        reduceRight = exports.reduceRight = (0, _curry.curry3)(function (fn, agg, functor) {
+        return functor.reduceRight(fn, agg);
+    }),
+        flatten = exports.flatten = function flatten(arr) {
         return arr.reduce(function (agg, elm) {
             if (Array.isArray(elm)) {
                 return concat(agg, flatten(elm));
@@ -89,10 +130,9 @@ define(['exports', './curry'], function (exports, _curry) {
         }, flatten(arr0), arrays);
     }),
         union = exports.union = (0, _curry.curry2)(function (arr1, arr2) {
-        var whereNotInArray1 = function whereNotInArray1(elm) {
+        return concat(arr1, filter(function (elm) {
             return arr1.indexOf(elm) === -1;
-        };
-        return concat(arr1, filter(whereNotInArray1, arr2));
+        }, arr2));
     }),
         intersect = exports.intersect = (0, _curry.curry2)(function (arr1, arr2) {
         return arr2.length === 0 ? [] : filter(function (elm) {
@@ -132,6 +172,15 @@ define(['exports', './curry'], function (exports, _curry) {
         intersect: intersect,
         union: union,
         flatten: flatten,
-        flattenMulti: flattenMulti
+        flattenMulti: flattenMulti,
+        filter: filter,
+        map: map,
+        reduce: reduce,
+        reduceRight: reduceRight,
+        head: head,
+        tail: tail,
+        init: init,
+        last: last,
+        reverse: reverse
     };
 });

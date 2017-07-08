@@ -134,6 +134,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.head
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.init
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.instanceOf
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -206,6 +214,10 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.last
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.map
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -262,11 +274,19 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.reverse
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.subClass
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.subClassMulti
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.tail
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

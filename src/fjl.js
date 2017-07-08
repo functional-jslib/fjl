@@ -10,7 +10,6 @@ import compose from './compose';
 import {__, curry, curryN, curry2, curry3, curry4, curry5,
     curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './curry';
 
-// import {subClass, subClassMulti} from './subClass';
 import {typeOf, typeOfIs} from './typeOf';
 
 import {instanceOf, isset, issetAndOfType, isNumber,
@@ -21,8 +20,6 @@ import {instanceOf, isset, issetAndOfType, isNumber,
 import errorIfNotTypeFactory from './errorIfNotTypeFactory';
 import {call, apply} from './fnOperators';
 
-import {complement, difference, union, intersect,  map, filter, reduce, reduceRight} from './operators';
-
 import {complement as objComplement,
     difference as objDifference,
     union as objUnion,
@@ -32,7 +29,11 @@ import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
     intersect as arrayIntersect,
-    flatten, flattenMulti} from './arrayOperators';
+    flatten, flattenMulti, map, filter,
+    reduce, reduceRight, head, tail,
+    init, last, reverse} from './arrayOperators';
+
+import {complement, difference, union, intersect} from './operators';
 
 import version from './generated/version';
 
@@ -65,6 +66,8 @@ export default {
     filter,
     flatten,
     flattenMulti,
+    head,
+    init,
     intersect,
     instanceOf,
     isset,
@@ -84,6 +87,7 @@ export default {
     isSymbol,
     isEmpty,
     isConstructablePrimitive,
+    last,
     map,
     notEmptyAndOfType,
     objComplement,
@@ -92,8 +96,8 @@ export default {
     objUnion,
     reduce,
     reduceRight,
-    // subClass,
-    // subClassMulti,
+    reverse,
+    tail,
     typeOf,
     typeOfIs,
     union,

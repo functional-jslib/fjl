@@ -102,17 +102,6 @@ export function curryN_ (fn, executeArity, ...curriedArgs) {
 }
 
 /**
- * Curries a function once with any given args (despite passed in function's actual arity).
- * @function curryOnce
- * @param fn {Function}
- * @param argsToCurry {...*}
- * @returns {function(...[*]=): *}
- */
-export function curryOnce (fn, ...argsToCurry) {
-    return (...args) => fn.apply(null, argsToCurry.concat(args));
-}
-
-/**
  * Curries a function up to a given arity.
  * @function curryN
  * @param fn {Function}
@@ -204,7 +193,6 @@ export default {
     curry3,
     curry4,
     curry5,
-    curryOnce,
     curry_,
     curryN_,
     curry2_,

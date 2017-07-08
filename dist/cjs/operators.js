@@ -1,9 +1,13 @@
+/**
+ * Created by elyde on 12/11/2016.
+ */
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.intersect = exports.union = exports.difference = exports.complement = exports.reduceRight = exports.reduce = exports.filter = exports.map = undefined;
+exports.intersect = exports.union = exports.difference = exports.complement = undefined;
 
 var _curry = require('./curry');
 
@@ -13,23 +17,7 @@ var _objOperators = require('./objOperators');
 
 var _arrayOperators = require('./arrayOperators');
 
-/**
- * Created by elyde on 12/11/2016.
- */
-
-var map = exports.map = (0, _curry.curry2)(function (fn, functor) {
-    return functor.map(fn);
-}),
-    filter = exports.filter = (0, _curry.curry2)(function (fn, functor) {
-    return functor.filter(fn);
-}),
-    reduce = exports.reduce = (0, _curry.curry3)(function (fn, agg, functor) {
-    return functor.reduce(fn, agg);
-}),
-    reduceRight = exports.reduceRight = (0, _curry.curry3)(function (fn, agg, functor) {
-    return functor.reduceRight(fn, agg);
-}),
-    complement = exports.complement = (0, _curry.curry2)(function (functor) {
+var complement = exports.complement = (0, _curry.curry2)(function (functor) {
     for (var _len = arguments.length, others = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         others[_key - 1] = arguments[_key];
     }
@@ -67,10 +55,6 @@ var map = exports.map = (0, _curry.curry2)(function (fn, functor) {
 });
 
 exports.default = {
-    map: map,
-    filter: filter,
-    reduce: reduce,
-    reduceRight: reduceRight,
     complement: complement,
     difference: difference,
     union: union,

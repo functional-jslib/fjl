@@ -65,6 +65,8 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.filter](#fjlfilter)
 - [fjl.flatten](#fjlflatten)
 - [fjl.flattenMulti](#fjlflattenmulti)
+- [fjl.head](#fjlhead)
+- [fjl.init](#fjlinit)
 - [fjl.intersect](#fjlintersect)
 - [fjl.instanceOf](#fjlinstanceof)
 - [fjl.isset](#fjlisset)
@@ -84,6 +86,7 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.isSymbol](#fjlissymbol)
 - [fjl.isEmpty](#fjlisempty)
 - [fjl.isConstructablePrimitive](#fjlisconstructableprimitive)
+- [fjl.last](#fjllast)
 - [fjl.map](#fjlmap)
 - [fjl.notEmptyAndOfType](#fjlnotemptyandoftype)
 - [fjl.objComplement](#fjlobjcomplement)
@@ -92,6 +95,8 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.objUnion](#fjlobjunion)
 - [fjl.reduce](#fjlreduce)
 - [fjl.reduceRight](#fjlreduceright)
+- [fjl.reverse](#fjlreverse)
+- [fjl.tail](#fjltail)
 - [fjl.typeOf](#fjltypeof)
 - [fjl.typeOfIs](#fjltypeofis)
 - [fjl.union](#fjlunion)
@@ -233,6 +238,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.head
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.init
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.instanceOf
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -305,6 +318,10 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.last
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.map
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -361,11 +378,19 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.reverse
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.subClass
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.subClassMulti
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.tail
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

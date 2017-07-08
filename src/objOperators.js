@@ -4,38 +4,31 @@
  */
 
 import {assignDeep} from './assign';
+import {curry2} from './curry';
 
 export let
 
-    hasOwnProperty = (x, propName) => Object.prototype.hasOwnProperty.call(x, propName),
+    hasOwnProperty = curry2((x, propName) => Object.prototype.hasOwnProperty.call(x, propName)),
 
-    union = (obj1, obj2) => {
-        return assignDeep(obj1, obj2);
-    },
+    union = curry2((obj1, obj2) => assignDeep(obj1, obj2)),
 
-    intersect = (obj1, obj2) => {
-        return Object.keys(obj1).reduce((agg, key) => {
+    intersect = curry2((obj1, obj2) => Object.keys(obj1).reduce((agg, key) => {
             if (hasOwnProperty(obj2, key)) {
                 agg[key] = obj2[key];
             }
             return agg;
-        }, {});
-    },
+        }, {})),
 
-    difference = (obj1, obj2) => {
-        return Object.keys(obj1).reduce((agg, key) => {
+    difference = curry2((obj1, obj2) => Object.keys(obj1).reduce((agg, key) => {
             if (!hasOwnProperty(obj2, key)) {
                 agg[key] = obj1[key];
             }
             return agg;
-        }, {});
-    },
+        }, {})),
 
-    complement = (obj0, ...objs) => {
-        return objs.reduce((agg, obj) => {
+    complement = curry2((obj0, ...objs) => objs.reduce((agg, obj) => {
             return assignDeep(agg, difference(obj, obj0));
-        }, {});
-    };
+        }, {}));
 
 export default {
     hasOwnProperty,

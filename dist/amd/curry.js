@@ -7,7 +7,6 @@ define(["exports"], function (exports) {
     exports.curry = curry;
     exports.curry_ = curry_;
     exports.curryN_ = curryN_;
-    exports.curryOnce = curryOnce;
     exports.curryN = curryN;
     /**
      * @author elydelacruz
@@ -132,27 +131,6 @@ define(["exports"], function (exports) {
     }
 
     /**
-     * Curries a function once with any given args (despite passed in function's actual arity).
-     * @function curryOnce
-     * @param fn {Function}
-     * @param argsToCurry {...*}
-     * @returns {function(...[*]=): *}
-     */
-    function curryOnce(fn) {
-        for (var _len7 = arguments.length, argsToCurry = Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
-            argsToCurry[_key7 - 1] = arguments[_key7];
-        }
-
-        return function () {
-            for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-                args[_key8] = arguments[_key8];
-            }
-
-            return fn.apply(null, argsToCurry.concat(args));
-        };
-    }
-
-    /**
      * Curries a function up to a given arity.
      * @function curryN
      * @param fn {Function}
@@ -161,13 +139,13 @@ define(["exports"], function (exports) {
      * @returns {function(...[*]=)}
      */
     function curryN(fn, executeArity) {
-        for (var _len9 = arguments.length, curriedArgs = Array(_len9 > 2 ? _len9 - 2 : 0), _key9 = 2; _key9 < _len9; _key9++) {
-            curriedArgs[_key9 - 2] = arguments[_key9];
+        for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
+            curriedArgs[_key7 - 2] = arguments[_key7];
         }
 
         return function () {
-            for (var _len10 = arguments.length, args = Array(_len10), _key10 = 0; _key10 < _len10; _key10++) {
-                args[_key10] = arguments[_key10];
+            for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
+                args[_key8] = arguments[_key8];
             }
 
             var concatedArgs = curriedArgs.concat(args),
@@ -275,7 +253,6 @@ define(["exports"], function (exports) {
         curry3: curry3,
         curry4: curry4,
         curry5: curry5,
-        curryOnce: curryOnce,
         curry_: curry_,
         curryN_: curryN_,
         curry2_: curry2_,
