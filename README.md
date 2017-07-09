@@ -106,6 +106,17 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.words](#fjlwords)
 - [fjl.unlines](#fjlunlines)
 - [fjl.unwords](#fjlunwords)
+- [fjl.orderedLengths](#fjlorderedlengths)
+- [fjl.zip](#fjlzip)
+- [fjl.zipN](#fjlzipn)
+- [fjl.getSortByOrder](#fjlgetsortbyorder)
+- [fjl.sortAsc](#fjlsortasc)
+- [fjl.sortDesc](#fjlsortdesc)
+- [fjl.sortDescByLength](#fjlsortdescbylength)
+- [fjl.concat](#fjlconcat)
+- [fjl.ASC](#fjlasc)
+- [fjl.DESC](#fjldesc)
+- [fjl.lengths](#fjllengths)
 - [fjl.version](#fjlversion)
 
 ### fjl.apply
@@ -128,6 +139,10 @@ import fjl from './node_modules/fjl/src/fjl';
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.ASC
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.assign
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -145,6 +160,10 @@ import fjl from './node_modules/fjl/src/fjl';
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.compose
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.concat
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -224,6 +243,10 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.DESC
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.difference
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -241,6 +264,10 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.flattenMulti
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.getSortByOrder
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -332,6 +359,10 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.lengths
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.lines
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -357,6 +388,10 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.objUnion
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.orderedLengths
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -393,6 +428,18 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.reverse
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.sortAsc
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.sortDesc
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.sortDescByLength
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -437,6 +484,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.words
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.zip
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.zipN
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

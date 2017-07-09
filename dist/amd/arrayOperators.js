@@ -10,7 +10,7 @@ define(['exports', './curry', './fnOperators'], function (exports, _curry, _fnOp
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersect = exports.union = exports.flattenMulti = exports.flatten = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = exports.zipN = exports.zip = exports.trimToLengths = exports.last = exports.init = exports.tail = exports.head = undefined;
+    exports.complement = exports.difference = exports.intersect = exports.union = exports.flattenMulti = exports.flatten = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = exports.zipN = exports.zip = exports.trimToLengths = exports.orderedLengths = exports.lengths = exports.last = exports.init = exports.tail = exports.head = exports.sortDescByLength = exports.sortAsc = exports.sortDesc = exports.getSortByOrder = exports.onlyOneOrNegOne = exports.concat = exports.DESC = exports.ASC = undefined;
 
     var _slicedToArray = function () {
         function sliceIterator(arr, i) {
@@ -50,6 +50,18 @@ define(['exports', './curry', './fnOperators'], function (exports, _curry, _fnOp
         };
     }();
 
+    function _toConsumableArray(arr) {
+        if (Array.isArray(arr)) {
+            for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+                arr2[i] = arr[i];
+            }
+
+            return arr2;
+        } else {
+            return Array.from(arr);
+        }
+    }
+
     /**
      * @returns {Function}
      */
@@ -64,45 +76,49 @@ define(['exports', './curry', './fnOperators'], function (exports, _curry, _fnOp
         };
     }
 
-    var concat = (0, _curry.curry2)(function (arr0) {
+    var ASC = exports.ASC = 1,
+        DESC = exports.DESC = -1,
+        concat = exports.concat = (0, _curry.curry2)(function (arr0) {
         for (var _len = arguments.length, arrays = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             arrays[_key - 1] = arguments[_key];
         }
 
         return arr0.concat.apply(arr0, arrays);
     }),
-        sortDesc = function sortDesc() {
-        for (var _len2 = arguments.length, values = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            values[_key2] = arguments[_key2];
-        }
-
-        return values.sort(function (a, b) {
-            if (a > b) {
-                return -1;
-            } else if (b > a) {
-                return 1;
-            }
-            return 0;
-        });
+        onlyOneOrNegOne = exports.onlyOneOrNegOne = function onlyOneOrNegOne(x) {
+        return x !== 1 && x !== -1 ? 1 : x;
     },
-        sortDescByLength = function sortDescByLength() {
-        for (var _len3 = arguments.length, arrays = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-            arrays[_key3] = arguments[_key3];
-        }
+        getSortByOrder = exports.getSortByOrder = (0, _curry.curry2)(function (multiplier) {
+        var valueFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (v) {
+            return v;
+        };
 
-        return arrays.sort(function (a, b) {
-            var aLen = a.length,
-                bLen = b.length;
-            if (aLen > bLen) {
-                return -1;
-            } else if (bLen > aLen) {
-                return 1;
+        var x = onlyOneOrNegOne(multiplier),
+            ifGreaterThan = 1 * x,
+            ifLessThan = -1 * x;
+        return function () {
+            for (var _len2 = arguments.length, values = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                values[_key2] = arguments[_key2];
             }
-            return 0;
-        });
-    };
 
-    var
+            return values.sort(function (a1, b1) {
+                var a = valueFn(a1),
+                    b = valueFn(b1);
+                if (a > b) {
+                    return ifGreaterThan;
+                } else if (b > a) {
+                    return ifLessThan;
+                }
+                return 0;
+            });
+        };
+    }),
+        sortDesc = exports.sortDesc = getSortByOrder(DESC),
+        sortAsc = exports.sortAsc = getSortByOrder(ASC),
+        sortDescByLength = exports.sortDescByLength = getSortByOrder(DESC, function (x) {
+        return x.length;
+    }),
+
 
     /**
      * Returns head of array (first item of array).
@@ -146,16 +162,41 @@ define(['exports', './curry', './fnOperators'], function (exports, _curry, _fnOp
     last = exports.last = function last(functor) {
         return functor[functor.length - 1];
     },
+
+
+    /**
+     * Returns the lengths of all the items in an array.
+     * @param arrs {...Array}
+     * @type {Function}
+     */
+    lengths = exports.lengths = _curry.curry2.apply(undefined, _toConsumableArray(function (arrs) {
+        return arrs.length ? arrs.map(function (arr) {
+            return arr.length;
+        }) : [];
+    })),
+
+
+    /**
+     * Returns an ordered array (ascending or descending) with the lengths of all items passed in.
+     * @param orderDir {Number} - 1 or -1 for ascending or descending.
+     * @param arrs {...Array}
+     * @returns {Array} - Array of lengths;
+     */
+    orderedLengths = exports.orderedLengths = (0, _curry.curry2)(function (orderDir) {
+        for (var _len3 = arguments.length, arrs = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+            arrs[_key3 - 1] = arguments[_key3];
+        }
+
+        return length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : [];
+    }),
         trimToLengths = exports.trimToLengths = function trimToLengths() {
         for (var _len4 = arguments.length, arrays = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
             arrays[_key4] = arguments[_key4];
         }
 
-        var smallLen = sortDesc(arrays.map(function (arr) {
-            return arr.length;
-        }))[0];
+        var smallLen = orderedLengths(ASC, arrays)[0];
         return arrays.map(function (arr) {
-            return arr.length > smallLen ? arr.slice(0, smallLen) : arr;
+            return arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0);
         });
     },
 
@@ -329,7 +370,7 @@ define(['exports', './curry', './fnOperators'], function (exports, _curry, _fnOp
             arr1 = _sortDescByLength2[0],
             arr2 = _sortDescByLength2[1];
 
-        if (arr2.length === 0) {
+        if (!arr2 || arr2.length === 0) {
             return arr1.slice();
         }
         return reduce(function (agg, elm) {
@@ -373,6 +414,17 @@ define(['exports', './curry', './fnOperators'], function (exports, _curry, _fnOp
         tail: tail,
         init: init,
         last: last,
-        reverse: reverse
+        zip: zip,
+        zipN: zipN,
+        reverse: reverse,
+        lengths: lengths,
+        orderedLengths: orderedLengths,
+        getSortByOrder: getSortByOrder,
+        sortAsc: sortAsc,
+        sortDesc: sortDesc,
+        sortDescByLength: sortDescByLength,
+        concat: concat,
+        ASC: ASC,
+        DESC: DESC
     };
 });

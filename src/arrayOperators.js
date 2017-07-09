@@ -22,15 +22,15 @@ function defineReverse () {
 
 export const
 
-    asc = 1,
+    ASC = 1,
 
-    desc = -1,
+    DESC = -1,
 
     concat = curry2((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
 
-    onlyOneOrNegOne = x => x !== 0 || x !== 1 || x !== -1 ? 0 : x,
+    onlyOneOrNegOne = x => x !== 1 && x !== -1 ? 1 : x,
 
-    getSortByOrder = (multiplier, valueFn = v => v) => {
+    getSortByOrder = curry2((multiplier, valueFn = v => v) => {
         const x = onlyOneOrNegOne(multiplier),
             ifGreaterThan = 1 * x,
             ifLessThan = -1 * x;
@@ -45,13 +45,13 @@ export const
             }
             return 0;
         });
-    },
+    }),
 
-    sortDesc = getSortByOrder(desc),
+    sortDesc = getSortByOrder(DESC),
 
-    sortAsc = getSortByOrder(asc),
+    sortAsc = getSortByOrder(ASC),
 
-    sortDescByLength = getSortByOrder(desc, x => x.length),
+    sortDescByLength = getSortByOrder(DESC, x => x.length),
 
     /**
      * Returns head of array (first item of array).
@@ -85,10 +85,23 @@ export const
      */
     last = functor => functor[functor.length - 1],
 
-    lengths = (orderDir, ...arrs) => arrs.length ? (orderDir ? sortAsc : sortDesc)(arrs.map(arr => arr.length)) : [],
+    /**
+     * Returns the lengths of all the items in an array.
+     * @param arrs {...Array}
+     * @type {Function}
+     */
+    lengths = curry2(...arrs => arrs.length ? arrs.map(arr => arr.length) : []),
+
+    /**
+     * Returns an ordered array (ascending or descending) with the lengths of all items passed in.
+     * @param orderDir {Number} - 1 or -1 for ascending or descending.
+     * @param arrs {...Array}
+     * @returns {Array} - Array of lengths;
+     */
+    orderedLengths = curry2((orderDir, ...arrs) => length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : []),
 
     trimToLengths = (...arrays) => {
-        const smallLen = lengths(asc, arrays)[0];
+        const smallLen = orderedLengths(ASC, arrays)[0];
         return arrays.map(arr => arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0));
     },
 
@@ -217,7 +230,7 @@ export const
      */
     difference = curry2((array1, array2) => { // augment this with max length and min length ordering on op
         let [arr1, arr2] = sortDescByLength(array1, array2);
-        if (arr2.length === 0) {
+        if (!arr2 || arr2.length === 0) {
             return arr1.slice();
         }
         return reduce((agg, elm) => {
@@ -253,5 +266,16 @@ export default {
     tail,
     init,
     last,
-    reverse
+    zip,
+    zipN,
+    reverse,
+    lengths,
+    orderedLengths,
+    getSortByOrder,
+    sortAsc,
+    sortDesc,
+    sortDescByLength,
+    concat,
+    ASC,
+    DESC
 };

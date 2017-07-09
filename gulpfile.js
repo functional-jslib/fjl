@@ -55,7 +55,7 @@ const fs = require('fs'),
         .pipe(babel)
         .pipe(concat, buildPath(iifeBuildPath, iifeFileName));
 
-gulp.task('member-list-md', () => {
+gulp.task('member-list-md', ['cjs'], () => {
     let outputDir = './markdown-fragments/generated',
         filePath = outputDir + '/member-list.md';
     if (!fs.existsSync(outputDir)) {

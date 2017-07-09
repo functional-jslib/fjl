@@ -4,6 +4,8 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var fjl = function () {
     'use strict';
 
@@ -569,7 +571,7 @@ var fjl = function () {
             })) {
                 return;
             }
-            throw new Error('' + (contextName || '') + (typePrefix || '') + ' is required to be of one of the types : ' + (typesListToString(types) + '.  Type received: ' + typeOf(value)));
+            throw new Error((contextName || '') + '.' + (typePrefix || '') + ' is required to be of one of the types : ' + (typesListToString(types) + '.  Type received: ' + typeOf(value)));
         };
     }
 
@@ -649,6 +651,8 @@ var fjl = function () {
         };
     }
 
+    var ASC = 1;
+    var DESC = -1;
     var concat = curry2(function (arr0) {
         for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
             arrays[_key16 - 1] = arguments[_key16];
@@ -656,23 +660,39 @@ var fjl = function () {
 
         return arr0.concat.apply(arr0, arrays);
     });
-    var sortDescByLength = function sortDescByLength() {
-        for (var _len17 = arguments.length, arrays = Array(_len17), _key17 = 0; _key17 < _len17; _key17++) {
-            arrays[_key17] = arguments[_key17];
-        }
-
-        return arrays.sort(function (a, b) {
-            var aLen = a.length,
-                bLen = b.length;
-            if (aLen > bLen) {
-                return -1;
-            } else if (bLen > aLen) {
-                return 1;
-            }
-            return 0;
-        });
+    var onlyOneOrNegOne = function onlyOneOrNegOne(x) {
+        return x !== 1 && x !== -1 ? 1 : x;
     };
+    var getSortByOrder = curry2(function (multiplier) {
+        var valueFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (v) {
+            return v;
+        };
 
+        var x = onlyOneOrNegOne(multiplier),
+            ifGreaterThan = 1 * x,
+            ifLessThan = -1 * x;
+        return function () {
+            for (var _len17 = arguments.length, values = Array(_len17), _key17 = 0; _key17 < _len17; _key17++) {
+                values[_key17] = arguments[_key17];
+            }
+
+            return values.sort(function (a1, b1) {
+                var a = valueFn(a1),
+                    b = valueFn(b1);
+                if (a > b) {
+                    return ifGreaterThan;
+                } else if (b > a) {
+                    return ifLessThan;
+                }
+                return 0;
+            });
+        };
+    });
+    var sortDesc = getSortByOrder(DESC);
+    var sortAsc = getSortByOrder(ASC);
+    var sortDescByLength = getSortByOrder(DESC, function (x) {
+        return x.length;
+    });
     var head = function head(functor) {
         return functor[0];
     };
@@ -685,6 +705,56 @@ var fjl = function () {
     var last = function last(functor) {
         return functor[functor.length - 1];
     };
+    var lengths = curry2.apply(undefined, _toConsumableArray(function (arrs) {
+        return arrs.length ? arrs.map(function (arr) {
+            return arr.length;
+        }) : [];
+    }));
+    var orderedLengths = curry2(function (orderDir) {
+        for (var _len18 = arguments.length, arrs = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
+            arrs[_key18 - 1] = arguments[_key18];
+        }
+
+        return length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : [];
+    });
+    var trimToLengths = function trimToLengths() {
+        for (var _len19 = arguments.length, arrays = Array(_len19), _key19 = 0; _key19 < _len19; _key19++) {
+            arrays[_key19] = arguments[_key19];
+        }
+
+        var smallLen = orderedLengths(ASC, arrays)[0];
+        return arrays.map(function (arr) {
+            return arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0);
+        });
+    };
+    var zip = curry2(function (arr1, arr2) {
+        var _trimToLengths = trimToLengths(arr1, arr2),
+            a1 = _trimToLengths[0],
+            a2 = _trimToLengths[1];
+
+        return a1.reduce(function (agg, item, ind) {
+            agg.push([item, a2[ind]]);
+            return agg;
+        }, []);
+    });
+    var zipN = curry2(function () {
+        for (var _len20 = arguments.length, arrs = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {
+            arrs[_key20] = arguments[_key20];
+        }
+
+        var lists = apply(trimToLengths, arrs);
+        return lists.reduce(function (agg, arr, ind) {
+            if (!ind) {
+                return zip(agg, arr);
+            }
+            return agg.map(function (arr2) {
+                arr.forEach(function (elm) {
+                    arr2.push(elm);
+                });
+                return arr2;
+            });
+        }, lists.shift());
+    });
     var reverse = defineReverse();
     var map = curry2(function (fn, functor) {
         return functor.map(fn);
@@ -708,8 +778,8 @@ var fjl = function () {
         }, []);
     };
     var flattenMulti = curry2(function (arr0) {
-        for (var _len18 = arguments.length, arrays = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
-            arrays[_key18 - 1] = arguments[_key18];
+        for (var _len21 = arguments.length, arrays = Array(_len21 > 1 ? _len21 - 1 : 0), _key21 = 1; _key21 < _len21; _key21++) {
+            arrays[_key21 - 1] = arguments[_key21];
         }
 
         return reduce(function (agg, arr) {
@@ -733,7 +803,7 @@ var fjl = function () {
             arr1 = _sortDescByLength2[0],
             arr2 = _sortDescByLength2[1];
 
-        if (arr2.length === 0) {
+        if (!arr2 || arr2.length === 0) {
             return arr1.slice();
         }
         return reduce(function (agg, elm) {
@@ -744,8 +814,8 @@ var fjl = function () {
         }, [], arr1);
     });
     var complement$1 = curry2(function (arr0) {
-        for (var _len19 = arguments.length, arrays = Array(_len19 > 1 ? _len19 - 1 : 0), _key19 = 1; _key19 < _len19; _key19++) {
-            arrays[_key19 - 1] = arguments[_key19];
+        for (var _len22 = arguments.length, arrays = Array(_len22 > 1 ? _len22 - 1 : 0), _key22 = 1; _key22 < _len22; _key22++) {
+            arrays[_key22 - 1] = arguments[_key22];
         }
 
         return reduce(function (agg, arr) {
@@ -758,8 +828,8 @@ var fjl = function () {
      */
 
     var complement$2 = curry2(function (functor) {
-        for (var _len20 = arguments.length, others = Array(_len20 > 1 ? _len20 - 1 : 0), _key20 = 1; _key20 < _len20; _key20++) {
-            others[_key20 - 1] = arguments[_key20];
+        for (var _len23 = arguments.length, others = Array(_len23 > 1 ? _len23 - 1 : 0), _key23 = 1; _key23 < _len23; _key23++) {
+            others[_key23 - 1] = arguments[_key23];
         }
 
         switch (typeOf(functor)) {
@@ -814,7 +884,7 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sun Jul 09 2017 17:01:55 GMT-0400 (Eastern Daylight Time) 
+     * Generated Sun Jul 09 2017 18:32:22 GMT-0400 (Eastern Daylight Time) 
      */
 
     var version = '0.13.0';
@@ -895,6 +965,10 @@ var fjl = function () {
         typeOfIs: typeOfIs,
         union: union$2,
         join: join, split: split, lines: lines, words: words, unlines: unlines, unwords: unwords,
+        orderedLengths: orderedLengths, zip: zip, zipN: zipN,
+        getSortByOrder: getSortByOrder, sortAsc: sortAsc, sortDesc: sortDesc, sortDescByLength: sortDescByLength, concat: concat,
+        ASC: ASC, DESC: DESC,
+        lengths: lengths,
         version: version
     };
 

@@ -45,7 +45,7 @@ function errorIfNotTypeFactory(contextName) {
         })) {
             return;
         }
-        throw new Error('' + (contextName || '') + (typePrefix || '') + ' is required to be of one of the types : ' + (typesListToString(types) + '.  Type received: ' + (0, _typeOf.typeOf)(value)));
+        throw new Error((contextName || '') + '.' + (typePrefix || '') + ' is required to be of one of the types : ' + (typesListToString(types) + '.  Type received: ' + (0, _typeOf.typeOf)(value)));
     };
 }
 

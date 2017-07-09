@@ -31,7 +31,7 @@ function errorIfNotTypeFactory (contextName) {
         if (types.some(Type => typeOfIs(Type, value))) {
             return;
         }
-        throw new Error(`${contextName || ''}${typePrefix || ''} is required to be of one of the types : ` +
+        throw new Error(`${contextName || ''}.${typePrefix || ''} is required to be of one of the types : ` +
             `${typesListToString(types)}.  Type received: ${typeOf(value)}`);
     };
 }

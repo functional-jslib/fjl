@@ -7,6 +7,14 @@
 export let
 
     /**
+     * Returns the length of an element.
+     * @function module:fnOperators.length
+     * @param x {{length: Number}}
+     * @return {Number}
+     */
+    length = x => x.length,
+
+    /**
      * Functional `call` function (takes no context).
      * @function module:fnOperators.call
      * @param fn {Function}
@@ -41,8 +49,9 @@ export let
     flip = fn => (b, a) => call(fn, a, b);
 
 export default {
-       call,
-        apply,
-        flip,
-        flipN
+    call,
+    apply,
+    flip,
+    flipN,
+    length
 };

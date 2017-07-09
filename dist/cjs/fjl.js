@@ -47,7 +47,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  - Make methods take the functor/monad values as last (where it makes sense)
  */
 
-var fjl = {
+exports.default = {
     __: _curry.__,
     apply: _fnOperators.apply,
     arrayComplement: _arrayOperators.complement,
@@ -112,8 +112,10 @@ var fjl = {
     typeOfIs: _typeOf.typeOfIs,
     union: _operators.union,
     join: _stringOps.join, split: _stringOps.split, lines: _stringOps.lines, words: _stringOps.words, unlines: _stringOps.unlines, unwords: _stringOps.unwords,
+    orderedLengths: _arrayOperators.orderedLengths, zip: _arrayOperators.zip, zipN: _arrayOperators.zipN,
+    getSortByOrder: _arrayOperators.getSortByOrder, sortAsc: _arrayOperators.sortAsc, sortDesc: _arrayOperators.sortDesc, sortDescByLength: _arrayOperators.sortDescByLength, concat: _arrayOperators.concat,
+    ASC: _arrayOperators.ASC, DESC: _arrayOperators.DESC,
+    lengths: _arrayOperators.lengths,
     version: _version2.default
 };
-
-exports.default = fjl;
 module.exports = exports['default'];

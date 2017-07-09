@@ -13,6 +13,17 @@ define(["exports"], function (exports) {
   var
 
   /**
+   * Returns the length of an element.
+   * @function module:fnOperators.length
+   * @param x {{length: Number}}
+   * @return {Number}
+   */
+  length = exports.length = function length(x) {
+    return x.length;
+  },
+
+
+  /**
    * Functional `call` function (takes no context).
    * @function module:fnOperators.call
    * @param fn {Function}
@@ -73,6 +84,7 @@ define(["exports"], function (exports) {
     call: call,
     apply: apply,
     flip: flip,
-    flipN: flipN
+    flipN: flipN,
+    length: length
   };
 });

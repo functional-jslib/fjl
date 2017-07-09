@@ -12,6 +12,17 @@ Object.defineProperty(exports, "__esModule", {
 var
 
 /**
+ * Returns the length of an element.
+ * @function module:fnOperators.length
+ * @param x {{length: Number}}
+ * @return {Number}
+ */
+length = exports.length = function length(x) {
+  return x.length;
+},
+
+
+/**
  * Functional `call` function (takes no context).
  * @function module:fnOperators.call
  * @param fn {Function}
@@ -72,5 +83,6 @@ exports.default = {
   call: call,
   apply: apply,
   flip: flip,
-  flipN: flipN
+  flipN: flipN,
+  length: length
 };
