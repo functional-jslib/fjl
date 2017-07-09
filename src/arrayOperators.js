@@ -1,14 +1,13 @@
 /**
- * Created by elyde on 12/29/2016.
- */
-/**
- * Created by elyde on 12/10/2016.
- * Set functions for arrects.
+ * Array operators module.
+ * @module arrayOperators
+ * @type {{complement: Function, difference: Function, intersect: Function, union: Function, flatten: Function, flattenMulti: Function, filter: Function, map: Function, reduce: Function, reduceRight: Function, head: Function, tail: Function, init: Function, last: Function, reverse: Function}}
  */
 
 'use strict';
 
 import {curry2, curry3} from './curry';
+import {apply} from './fnOperators';
 
 /**
  * @returns {Function}
@@ -21,21 +20,38 @@ function defineReverse () {
         }, []);
 }
 
-let concat = curry2((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
-
-    sortAscByLength = (arr1, arr2) => [arr1, arr2].sort((a, b) => {
-        let aLen = a.length,
-            bLen = b.length;
-        if (aLen > bLen) {
-            return -1;
-        }
-        else if (bLen > aLen) {
-            return 1;
-        }
-        return 0;
-    });
-
 export const
+
+    asc = 1,
+
+    desc = -1,
+
+    concat = curry2((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
+
+    onlyOneOrNegOne = x => x !== 0 || x !== 1 || x !== -1 ? 0 : x,
+
+    getSortByOrder = (multiplier, valueFn = v => v) => {
+        const x = onlyOneOrNegOne(multiplier),
+            ifGreaterThan = 1 * x,
+            ifLessThan = -1 * x;
+        return (...values) => values.sort((a1, b1) => {
+            let a = valueFn(a1),
+                b = valueFn(b1);
+            if (a > b) {
+                return ifGreaterThan;
+            }
+            else if (b > a) {
+                return ifLessThan;
+            }
+            return 0;
+        });
+    },
+
+    sortDesc = getSortByOrder(desc),
+
+    sortAsc = getSortByOrder(asc),
+
+    sortDescByLength = getSortByOrder(desc, x => x.length),
 
     /**
      * Returns head of array (first item of array).
@@ -44,7 +60,6 @@ export const
      * @returns {*} - First item from array
      */
     head = functor => functor[0],
-
 
     /**
      * Returns tail part of array (everything after the first item as new array).
@@ -69,6 +84,42 @@ export const
      * @returns {*}
      */
     last = functor => functor[functor.length - 1],
+
+    lengths = (orderDir, ...arrs) => arrs.length ? (orderDir ? sortAsc : sortDesc)(arrs.map(arr => arr.length)) : [],
+
+    trimToLengths = (...arrays) => {
+        const smallLen = lengths(asc, arrays)[0];
+        return arrays.map(arr => arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0));
+    },
+
+    /**
+     * @function module:arrayOperators.zip
+     * @param arr1 {Array}
+     * @param arr2 {Array}
+     * @returns {Array<Array<*,*>>}
+     */
+    zip = curry2((arr1, arr2) => {
+        const {0: a1, 1: a2} = trimToLengths(arr1, arr2);
+        return a1.reduce((agg, item, ind) => {
+                agg.push([item, a2[ind]]);
+            return agg;
+        }, []);
+    }),
+
+    zipN = curry2((...arrs) => {
+        const lists = apply(trimToLengths, arrs);
+        return lists.reduce((agg, arr, ind) => {
+            if (!ind) {
+                return zip (agg, arr);
+            }
+            return agg.map (arr2 => {
+                arr.forEach (elm => {
+                    arr2.push(elm);
+                });
+                return arr2;
+            });
+        }, lists.shift());
+    }),
 
     /**
      * Reverses an array (shimmed if not exists).
@@ -165,7 +216,7 @@ export const
      * @returns {Array}
      */
     difference = curry2((array1, array2) => { // augment this with max length and min length ordering on op
-        let [arr1, arr2] = sortAscByLength(array1, array2);
+        let [arr1, arr2] = sortDescByLength(array1, array2);
         if (arr2.length === 0) {
             return arr1.slice();
         }
@@ -185,29 +236,22 @@ export const
      * @returns {Array}
      */
     complement = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => concat(agg, difference(arr, arr0)), [], arrays)),
+        reduce((agg, arr) => concat(agg, difference(arr, arr0)), [], arrays));
 
-    /**
-     * Array operators module (all functions here exported to top level `fjl` module).
-     * @module arrayOperators
-     * @type {{complement: Function, difference: Function, intersect: Function, union: Function, flatten: Function, flattenMulti: Function, filter: Function, map: Function, reduce: Function, reduceRight: Function, head: Function, tail: Function, init: Function, last: Function, reverse: Function}}
-     */
-    arrayOperators = {
-        complement,
-        difference,
-        intersect,
-        union,
-        flatten,
-        flattenMulti,
-        filter,
-        map,
-        reduce,
-        reduceRight,
-        head,
-        tail,
-        init,
-        last,
-        reverse
-    };
-
-export default arrayOperators;
+export default {
+    complement,
+    difference,
+    intersect,
+    union,
+    flatten,
+    flattenMulti,
+    filter,
+    map,
+    reduce,
+    reduceRight,
+    head,
+    tail,
+    init,
+    last,
+    reverse
+};

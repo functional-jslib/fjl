@@ -1,7 +1,9 @@
 /**
- * Created by edlc on 5/1/17.
+ * @author edlc
+ * @created 5/1/17.
+ * @module fnOperators
+ * @type {{call: Function, apply: Function, flip: Function, flipN: Function}}
  */
-
 export let
 
     /**
@@ -36,17 +38,11 @@ export let
      * @param fn {Function}
      * @returns {Function}
      */
-    flip = fn => (b, a) => call(fn, a, b),
+    flip = fn => (b, a) => call(fn, a, b);
 
-    /**
-     * @module fnOperators
-     * @type {{call: Function, apply: Function, flip: Function, flipN: Function}}
-     */
-    fnOperators = {
-        call,
+export default {
+       call,
         apply,
         flip,
         flipN
-    };
-
-export default fnOperators;
+};

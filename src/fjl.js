@@ -35,6 +35,8 @@ import {complement as arrayComplement,
 
 import {complement, difference, union, intersect} from './operators';
 
+import {join, split, lines, words, unlines, unwords} from './stringOps';
+
 import version from './generated/version';
 
 /**
@@ -106,6 +108,8 @@ const fjl = {
     typeOf,
     typeOfIs,
     union,
+    join, split, lines, words, unlines, unwords,
+    lengths, zip, zipN,
     version
 };
 

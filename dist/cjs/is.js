@@ -9,7 +9,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                                                                                                                                                                                                                                                                                * Created by elyde on 12/18/2016.
                                                                                                                                                                                                                                                                                */
 /**
- * Created by elyde on 12/10/2016.
+ * @author elyde
+ * @created 12/10/2016.
+ * @module is
+ * @type {{isset: module:is.isset, issetAndOfType: module:is.issetAndOfType, isNumber: module:is.isNumber, isFunction: module:is.isFunction, isClass: module:is.isClass, isArray: module:is.isArray, isBoolean: module:is.isBoolean, isObject: module:is.isObject, isString: module:is.isString, isMap: module:is.isMap, isSet: module:is.isSet, isWeakMap: module:is.isWeakMap, isWeakSet: module:is.isWeakSet, isUndefined: module:is.isUndefined, isNull: module:is.isNull, isSymbol: module:is.isSymbol, isEmpty: module:is.isEmpty, instanceOf: Function, isConstructablePrimitive: isConstructablePrimitive, notEmptyAndOfType: module:is.notEmptyAndOfType}}
  */
 
 exports.isClass = isClass;
@@ -62,7 +65,7 @@ var instanceOf = exports.instanceOf = (0, _curry.curry2)(function (instanceConst
 
 /**
  * Checks if `value` is an es2015 `class`.
- * @function module:fjl.isClass
+ * @function module:is.isClass
  * @param value {*}
  * @returns {boolean}
  */
@@ -72,7 +75,7 @@ function isClass(value) {
 
 /**
  * Returns whether a value is a function or not.
- * @function module:fjl.isFunction
+ * @function module:is.isFunction
  * @param value {*}
  * @returns {Boolean}
  */
@@ -82,7 +85,7 @@ function isFunction(value) {
 
 /**
  * Checks to see if value passed in is set (not undefined and not null).
- * @function module:fjl.isset
+ * @function module:is.isset
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
@@ -92,7 +95,7 @@ function isset(value) {
 
 /**
  * Checks whether a value isset and if it's type is the same as the type name passed in.
- * @function module:fjl.issetAndOfType
+ * @function module:is.issetAndOfType
  * @param value {*} - Value to check on.
  * @param type {String|Function} - Constructor name string or Constructor.  You can pass one or more types.
  * @returns {Boolean}
@@ -103,7 +106,7 @@ function issetAndOfType(value, type) {
 
 /**
  * Checks if value is an array.
- * @function module:fjl.isArray
+ * @function module:is.isArray
  * @param value {*}
  * @returns {boolean}
  */
@@ -113,7 +116,7 @@ function isArray(value) {
 
 /**
  * Checks whether value is an object or not.
- * @function module:fjl.isObject
+ * @function module:is.isObject
  * @param value
  * @returns {Boolean}
  */
@@ -123,7 +126,7 @@ function isObject(value) {
 
 /**
  * Checks if value is a boolean.
- * @function module:fjl.isBoolean
+ * @function module:is.isBoolean
  * @param value {*}
  * @returns {Boolean}
  */
@@ -133,7 +136,7 @@ function isBoolean(value) {
 
 /**
  * Checks if value is a valid number (also checks if isNaN so that you don't have to).
- * @function module:fjl.isNumber
+ * @function module:is.isNumber
  * @param value {*}
  * @returns {Boolean}
  */
@@ -143,7 +146,7 @@ function isNumber(value) {
 
 /**
  * Checks whether value is a string or not.
- * @function module:fjl.isString
+ * @function module:is.isString
  * @param value {*}
  * @returns {Boolean}
  */
@@ -153,7 +156,7 @@ function isString(value) {
 
 /**
  * Checks whether value is of `Map` or not.
- * @function module:fjl.isMap
+ * @function module:is.isMap
  * @param value {*}
  * @returns {Boolean}
  */
@@ -163,7 +166,7 @@ function isMap(value) {
 
 /**
  * Checks whether value is of `Set` or not.
- * @function module:fjl.isSet
+ * @function module:is.isSet
  * @param value {*}
  * @returns {Boolean}
  */
@@ -173,7 +176,7 @@ function isSet(value) {
 
 /**
  * Checks whether value is of `WeakMap` or not.
- * @function module:fjl.isWeakMap
+ * @function module:is.isWeakMap
  * @param value {*}
  * @returns {Boolean}
  */
@@ -183,7 +186,7 @@ function isWeakMap(value) {
 
 /**
  * Checks whether value is of `WeakSet` or not.
- * @function module:fjl.isWeakSet
+ * @function module:is.isWeakSet
  * @param value {*}
  * @returns {Boolean}
  */
@@ -193,7 +196,7 @@ function isWeakSet(value) {
 
 /**
  * Checks if value is undefined.
- * @function module:fjl.isUndefined
+ * @function module:is.isUndefined
  * @param value {*}
  * @returns {Boolean}
  */
@@ -203,7 +206,7 @@ function isUndefined(value) {
 
 /**
  * Checks if value is null.
- * @function module:fjl.isNull
+ * @function module:is.isNull
  * @param value {*}
  * @returns {Boolean}
  */
@@ -213,7 +216,7 @@ function isNull(value) {
 
 /**
  * Checks if value is a `Symbol`.
- * @function module:fjl.isSymbol
+ * @function module:is.isSymbol
  * @param value {*}
  * @returns {Boolean}
  */
@@ -223,7 +226,7 @@ function isSymbol(value) {
 
 /**
  * Checks to see if passed in argument is empty.
- * @function module:fjl.empty
+ * @function module:is.empty
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
@@ -245,7 +248,7 @@ function isEmpty(value) {
 
 /**
  * Returns true if an element is not empty and is of type.
- * @function module:fjl.notEmptyAndOfType
+ * @function module:is.notEmptyAndOfType
  * @param type {String|Function} - Type to check against (string name or actual constructor).
  * @param value {*} - Value to check.
  * @returns {Boolean}

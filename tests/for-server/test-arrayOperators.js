@@ -46,7 +46,7 @@ describe ('Array Operators', function () {
             compose(expectEqual(__, 0), length, arrayDifference)();
         });
         it ('should return a clone of the passed in array if it is only the first array that is passed in', function () {
-            compose(expectEqual(__, 3), length, arrayDifference([]))([1,2,3]);
+            compose(expectEqual(__, 3), length, arrayDifference([1,2,3]))([]);
         });
         it ('should return an empty array when there are no differences between the two arrays passed in', function () {
             compose(expectEqual(__, 0), length, arrayDifference([1, 2, 3]))([1,2,3]);

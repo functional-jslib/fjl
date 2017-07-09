@@ -1,22 +1,20 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './curry'], factory);
+        define(['exports', './curry', './fnOperators'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./curry'));
+        factory(exports, require('./curry'), require('./fnOperators'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry);
+        factory(mod.exports, global.curry, global.fnOperators);
         global.arrayOperators = mod.exports;
     }
-})(this, function (exports, _curry) {
+})(this, function (exports, _curry, _fnOperators) {
     /**
-     * Created by elyde on 12/29/2016.
-     */
-    /**
-     * Created by elyde on 12/10/2016.
-     * Set functions for arrects.
+     * Array operators module.
+     * @module arrayOperators
+     * @type {{complement: Function, difference: Function, intersect: Function, union: Function, flatten: Function, flattenMulti: Function, filter: Function, map: Function, reduce: Function, reduceRight: Function, head: Function, tail: Function, init: Function, last: Function, reverse: Function}}
      */
 
     'use strict';
@@ -24,7 +22,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersect = exports.union = exports.flattenMulti = exports.flatten = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = exports.last = exports.init = exports.tail = exports.head = undefined;
+    exports.complement = exports.difference = exports.intersect = exports.union = exports.flattenMulti = exports.flatten = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = exports.zipN = exports.zip = exports.trimToLengths = exports.last = exports.init = exports.tail = exports.head = undefined;
 
     var _slicedToArray = function () {
         function sliceIterator(arr, i) {
@@ -85,8 +83,26 @@
 
         return arr0.concat.apply(arr0, arrays);
     }),
-        sortAscByLength = function sortAscByLength(arr1, arr2) {
-        return [arr1, arr2].sort(function (a, b) {
+        sortDesc = function sortDesc() {
+        for (var _len2 = arguments.length, values = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            values[_key2] = arguments[_key2];
+        }
+
+        return values.sort(function (a, b) {
+            if (a > b) {
+                return -1;
+            } else if (b > a) {
+                return 1;
+            }
+            return 0;
+        });
+    },
+        sortDescByLength = function sortDescByLength() {
+        for (var _len3 = arguments.length, arrays = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            arrays[_key3] = arguments[_key3];
+        }
+
+        return arrays.sort(function (a, b) {
             var aLen = a.length,
                 bLen = b.length;
             if (aLen > bLen) {
@@ -102,7 +118,7 @@
 
     /**
      * Returns head of array (first item of array).
-     * @function module:fjl.head
+     * @function module:arrayOperators.head
      * @param functor {Array}
      * @returns {*} - First item from array
      */
@@ -113,7 +129,7 @@
 
     /**
      * Returns tail part of array (everything after the first item as new array).
-     * @function module:fjl.tail
+     * @function module:arrayOperators.tail
      * @param functor {Array}
      * @returns {Array}
      */
@@ -124,7 +140,7 @@
 
     /**
      * Returns everything except last item of array as new array.
-     * @function module:fjl.init
+     * @function module:arrayOperators.init
      * @param functor {Array}
      * @returns {Array}
      */
@@ -135,18 +151,66 @@
 
     /**
      * Returns last item of array.
-     * @function module:fjl.last
+     * @function module:arrayOperators.last
      * @param functor {Array}
      * @returns {*}
      */
     last = exports.last = function last(functor) {
         return functor[functor.length - 1];
     },
+        trimToLengths = exports.trimToLengths = function trimToLengths() {
+        for (var _len4 = arguments.length, arrays = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+            arrays[_key4] = arguments[_key4];
+        }
+
+        var smallLen = sortDesc(arrays.map(function (arr) {
+            return arr.length;
+        }))[0];
+        return arrays.map(function (arr) {
+            return arr.length > smallLen ? arr.slice(0, smallLen) : arr;
+        });
+    },
+
+
+    /**
+     * @function module:arrayOperators.zip
+     * @param arr1 {Array}
+     * @param arr2 {Array}
+     * @returns {Array<Array<*,*>>}
+     */
+    zip = exports.zip = (0, _curry.curry2)(function (arr1, arr2) {
+        var _trimToLengths = trimToLengths(arr1, arr2),
+            a1 = _trimToLengths[0],
+            a2 = _trimToLengths[1];
+
+        return a1.reduce(function (agg, item, ind) {
+            agg.push([item, a2[ind]]);
+            return agg;
+        }, []);
+    }),
+        zipN = exports.zipN = (0, _curry.curry2)(function () {
+        for (var _len5 = arguments.length, arrs = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+            arrs[_key5] = arguments[_key5];
+        }
+
+        var lists = (0, _fnOperators.apply)(trimToLengths, arrs);
+        return lists.reduce(function (agg, arr, ind) {
+            if (!ind) {
+                return zip(agg, arr);
+            }
+            return agg.map(function (arr2) {
+                arr.forEach(function (elm) {
+                    arr2.push(elm);
+                });
+                return arr2;
+            });
+        }, lists.shift());
+    }),
 
 
     /**
      * Reverses an array (shimmed if not exists).
-     * @function module:fjl.reverse
+     * @function module:arrayOperators.reverse
      * @return {Array}
      */
     reverse = exports.reverse = defineReverse(),
@@ -154,7 +218,7 @@
 
     /**
      * Maps a function to functor (array etc.).
-     * @function module:fjl.map
+     * @function module:arrayOperators.map
      * @param fn {Function}
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
@@ -166,7 +230,7 @@
 
     /**
      * Filters a functor (array etc.) with passed in function.
-     * @function module:fjl.filter
+     * @function module:arrayOperators.filter
      * @param fn {Function}
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
@@ -178,7 +242,7 @@
 
     /**
      * Reduces a foldable (array etc.) with passed in function.
-     * @function module:fjl.reduce
+     * @function module:arrayOperators.reduce
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
@@ -190,7 +254,7 @@
 
     /**
      * Reduces a foldable (array etc.) from the right with passed in function.
-     * @function module:fjl.reduceRight
+     * @function module:arrayOperators.reduceRight
      * @param fn {Function}
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
@@ -202,7 +266,7 @@
 
     /**
      * Flattens an array.
-     * @function module:fjl.flatten
+     * @function module:arrayOperators.flatten
      * @param arr {Array}
      * @returns {Array}
      */
@@ -219,14 +283,14 @@
 
     /**
      * Flattens all arrays passed in into one array.
-     * @function module:fjl.flattenMulti
+     * @function module:arrayOperators.flattenMulti
      * @param arr {Array}
      * @param [...arrays{Array}] - Other arrays to flatten into new array.
      * @returns {Array}
      */
     flattenMulti = exports.flattenMulti = (0, _curry.curry2)(function (arr0) {
-        for (var _len2 = arguments.length, arrays = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-            arrays[_key2 - 1] = arguments[_key2];
+        for (var _len6 = arguments.length, arrays = Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
+            arrays[_key6 - 1] = arguments[_key6];
         }
 
         return reduce(function (agg, arr) {
@@ -237,7 +301,7 @@
 
     /**
      * Creates a union on matching elements from array1.
-     * @function module:fjl.union
+     * @function module:arrayOperators.union
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
@@ -251,7 +315,7 @@
 
     /**
      * Performs an intersection on array 1 with  elements from array 2.
-     * @function module:fjl.intersect
+     * @function module:arrayOperators.intersect
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
@@ -265,17 +329,17 @@
 
     /**
      * Returns the difference of array 1 from array 2.
-     * @function module:fjl.difference
+     * @function module:arrayOperators.difference
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
      */
     difference = exports.difference = (0, _curry.curry2)(function (array1, array2) {
         // augment this with max length and min length ordering on op
-        var _sortAscByLength = sortAscByLength(array1, array2),
-            _sortAscByLength2 = _slicedToArray(_sortAscByLength, 2),
-            arr1 = _sortAscByLength2[0],
-            arr2 = _sortAscByLength2[1];
+        var _sortDescByLength = sortDescByLength(array1, array2),
+            _sortDescByLength2 = _slicedToArray(_sortDescByLength, 2),
+            arr1 = _sortDescByLength2[0],
+            arr2 = _sortDescByLength2[1];
 
         if (arr2.length === 0) {
             return arr1.slice();
@@ -291,14 +355,14 @@
 
     /**
      * Returns the complement of array 0 and the reset of the passed in arrays.
-     * @function module:fjl.complement
+     * @function module:arrayOperators.complement
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
      */
     complement = exports.complement = (0, _curry.curry2)(function (arr0) {
-        for (var _len3 = arguments.length, arrays = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-            arrays[_key3 - 1] = arguments[_key3];
+        for (var _len7 = arguments.length, arrays = Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
+            arrays[_key7 - 1] = arguments[_key7];
         }
 
         return reduce(function (agg, arr) {

@@ -5,15 +5,13 @@ define(["exports"], function (exports) {
     value: true
   });
   exports.default = compose;
-  /**
-   * Created by elyde on 12/6/2016.
-   */
 
   /**
-   * Compose combinator;  Allows to combine many functions into one;  Functions list gets reduced from right to left
-   * and each function on receives the return value of the function that comes after it.
+   * Composes all functions passed in from right to left passing the return value of the function to the right of a function to left.
+   * @module compose
+   * @type {Function}
    * @param args {...Function}
-   * @returns {function(*=): *}
+   * @returns {Function}
    */
   function compose() {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {

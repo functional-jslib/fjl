@@ -100,6 +100,12 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.typeOf](#fjltypeof)
 - [fjl.typeOfIs](#fjltypeofis)
 - [fjl.union](#fjlunion)
+- [fjl.join](#fjljoin)
+- [fjl.split](#fjlsplit)
+- [fjl.lines](#fjllines)
+- [fjl.words](#fjlwords)
+- [fjl.unlines](#fjlunlines)
+- [fjl.unwords](#fjlunwords)
 - [fjl.version](#fjlversion)
 
 ### fjl.apply
@@ -318,7 +324,15 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.join
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.last
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.lines
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -382,6 +396,10 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.split
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.subClass
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -406,7 +424,19 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.unlines
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.unwords
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.version
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.words
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

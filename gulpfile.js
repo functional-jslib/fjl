@@ -132,7 +132,7 @@ gulp.task('uglify', ['iife'], () => {
 
 gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd']);
 
-gulp.task('jsdoc', cb =>
+gulp.task('jsdoc', () =>
     gulp.src(['README.md', './src/**/*.js'], {read: false})
         .pipe(jsdoc({
             opts: {
@@ -141,7 +141,7 @@ gulp.task('jsdoc', cb =>
                 "destination": "./jsdocs/",          // same as -d ./out/
                 "recurse": true
             }
-        }, cb)));
+        })));
 
 gulp.task('build-browser-tests', ['build-js'], () =>
     gulp.src(['tests/for-server/**/*.js'])

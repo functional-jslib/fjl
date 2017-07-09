@@ -24,6 +24,7 @@
      * @author elydelacruz
      * @created 12/6/2016.
      * @file fjl-curry/src/curry.js
+     * @module curry {{curry: Function, curryN: Function, curry2: Function, curry3: Function, curry4: Function, curry5: Function, curry_: Function, curryN_: Function, curry2_: Function, curry3_: Function, curry4_: Function, curry5_: Function}}
      * @description Different curry implementations for modern javascript currying.
      * @todo Make code here more minimal (reuse small parts here).
      */

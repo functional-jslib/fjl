@@ -23,13 +23,31 @@
             var typeName = Type instanceof Function ? Type.name : Type;
             return agg + '"' + typeName + '"' + (index !== types.length - 1 ? ', ' : ']');
         }, '[');
-    }; /**
-        * Created by elyde on 1/20/2017.
-        */
+    };
+
+    /**
+     * A factory for attaching a context name to a function that checks if recieved value is of given type.
+     * The factory allows you to attach the context name to the returned type checker function.
+     * @module errorIfNotTypeFactory
+     * @param [contextName] {String} - Name of the context you want attached to the error message.
+     * @returns {Function} - Function{key {String, value {*}, ...types {Function|Constructor}>
+     * @type {Function}
+     */
+    /**
+     * Created by elyde on 1/20/2017.
+     */
 
     function errorIfNotTypeFactory(contextName) {
-        contextName = contextName || 'unNamedContext';
-        return function (key, value) {
+        /**
+         * Throws error if `value` is not of one of the 'types' ({...types{Function}}) passed in.  Else returns {void}.
+         * @param [typePrefix] {String} - Prefix of the type to use in the error message if `value` doesn't
+         *  match one of the `...types` passed in.
+         * @param value {*}
+         * @param types {...Function}
+         * @throws {Error}
+         * @returns {void}
+         */
+        return function (typePrefix, value) {
             for (var _len = arguments.length, types = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
                 types[_key - 2] = arguments[_key];
             }
@@ -39,7 +57,7 @@
             })) {
                 return;
             }
-            throw new Error(contextName + '.' + key + ' is required to be of one of the types : ' + typesListToString(types) + '.  Type received: ' + (0, _typeOf.typeOf)(value));
+            throw new Error('' + (contextName || '') + (typePrefix || '') + ' is required to be of one of the types : ' + (typesListToString(types) + '.  Type received: ' + (0, _typeOf.typeOf)(value)));
         };
     }
 
