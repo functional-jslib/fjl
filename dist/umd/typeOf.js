@@ -34,7 +34,7 @@
      * Returns the class name of an object from it's class string.
      * @note Returns 'NaN' if value type is 'Number' and value isNaN evaluates to true as of version 0.4.85.
      * @note If your type (constructor/class) overrides it's `toString` method use a named `toString` method to get the accurate constructor name out of `typeOf`;  E.g., If you do override `toString` on your class(es) and don't set them to named functions then `sjl.typeOf*` will use Object.prototype.toString to pull your classes type out.
-     * @function module:sjl.typeOf
+     * @function module:fjl.typeOf
      * @param value {*}
      * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
      */
@@ -61,7 +61,7 @@
      * (function Hello () {}) // Named function.
      * (function () {}) // Anonymous function.
      * ```
-     * @function module:sjl.typeOfIs
+     * @function module:fjl.typeOfIs
      * @param type {String|Function} - Either a constructor name or an constructor itself.
      * @param obj {*} - Object to be checked.
      * @returns {Boolean} - Whether object matches class string or not.

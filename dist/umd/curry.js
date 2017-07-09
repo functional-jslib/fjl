@@ -47,7 +47,7 @@
      * @function curry
      * @param fn {Function}
      * @param argsToCurry {...*}
-     * @returns {function(...[*]=)}
+     * @returns {Function}
      */
     function curry(fn) {
         for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -98,7 +98,7 @@
      * @function curry_
      * @param fn {Function}
      * @param argsToCurry {...*}
-     * @returns {function(...[*]=)}
+     * @returns {Function}
      */
     function curry_(fn) {
         for (var _len3 = arguments.length, argsToCurry = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
@@ -123,7 +123,7 @@
      * @param fn {Function}
      * @param executeArity {Number}
      * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
-     * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
+     * @returns {Function} - Passed in function wrapped in a function for currying.
      */
     function curryN_(fn, executeArity) {
         for (var _len5 = arguments.length, curriedArgs = Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
@@ -148,7 +148,7 @@
      * @param fn {Function}
      * @param executeArity {Number}
      * @param curriedArgs {...*}
-     * @returns {function(...[*]=)}
+     * @returns {Function}
      */
     function curryN(fn, executeArity) {
         for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {

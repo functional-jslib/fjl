@@ -44,7 +44,7 @@ export function isClass (value) {
 
 /**
  * Returns whether a value is a function or not.
- * @function module:sjl.isFunction
+ * @function module:fjl.isFunction
  * @param value {*}
  * @returns {Boolean}
  */
@@ -54,7 +54,7 @@ export function isFunction (value) {
 
 /**
  * Checks to see if value passed in is set (not undefined and not null).
- * @function module:sjl.isset
+ * @function module:fjl.isset
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
@@ -64,7 +64,7 @@ export function isset (value) {
 
 /**
  * Checks whether a value isset and if it's type is the same as the type name passed in.
- * @function module:sjl.issetAndOfType
+ * @function module:fjl.issetAndOfType
  * @param value {*} - Value to check on.
  * @param type {String|Function} - Constructor name string or Constructor.  You can pass one or more types.
  * @returns {Boolean}
@@ -75,7 +75,7 @@ export function issetAndOfType (value, type) {
 
 /**
  * Checks if value is an array.
- * @function module:sjl.isArray
+ * @function module:fjl.isArray
  * @param value {*}
  * @returns {boolean}
  */
@@ -85,7 +85,7 @@ export function isArray (value) {
 
 /**
  * Checks whether value is an object or not.
- * @function module:sjl.isObject
+ * @function module:fjl.isObject
  * @param value
  * @returns {Boolean}
  */
@@ -95,7 +95,7 @@ export function isObject (value) {
 
 /**
  * Checks if value is a boolean.
- * @function module:sjl.isBoolean
+ * @function module:fjl.isBoolean
  * @param value {*}
  * @returns {Boolean}
  */
@@ -105,7 +105,7 @@ export function isBoolean (value) {
 
 /**
  * Checks if value is a valid number (also checks if isNaN so that you don't have to).
- * @function module:sjl.isNumber
+ * @function module:fjl.isNumber
  * @param value {*}
  * @returns {Boolean}
  */
@@ -115,7 +115,7 @@ export function isNumber (value) {
 
 /**
  * Checks whether value is a string or not.
- * @function module:sjl.isString
+ * @function module:fjl.isString
  * @param value {*}
  * @returns {Boolean}
  */
@@ -125,7 +125,7 @@ export function isString(value) {
 
 /**
  * Checks whether value is of `Map` or not.
- * @function module:sjl.isMap
+ * @function module:fjl.isMap
  * @param value {*}
  * @returns {Boolean}
  */
@@ -135,7 +135,7 @@ export function isMap(value) {
 
 /**
  * Checks whether value is of `Set` or not.
- * @function module:sjl.isSet
+ * @function module:fjl.isSet
  * @param value {*}
  * @returns {Boolean}
  */
@@ -145,7 +145,7 @@ export function isSet(value) {
 
 /**
  * Checks whether value is of `WeakMap` or not.
- * @function module:sjl.isWeakMap
+ * @function module:fjl.isWeakMap
  * @param value {*}
  * @returns {Boolean}
  */
@@ -155,7 +155,7 @@ export function isWeakMap(value) {
 
 /**
  * Checks whether value is of `WeakSet` or not.
- * @function module:sjl.isWeakSet
+ * @function module:fjl.isWeakSet
  * @param value {*}
  * @returns {Boolean}
  */
@@ -165,7 +165,7 @@ export function isWeakSet(value) {
 
 /**
  * Checks if value is undefined.
- * @function module:sjl.isUndefined
+ * @function module:fjl.isUndefined
  * @param value {*}
  * @returns {Boolean}
  */
@@ -175,7 +175,7 @@ export function isUndefined (value) {
 
 /**
  * Checks if value is null.
- * @function module:sjl.isNull
+ * @function module:fjl.isNull
  * @param value {*}
  * @returns {Boolean}
  */
@@ -185,7 +185,7 @@ export function isNull (value) {
 
 /**
  * Checks if value is a `Symbol`.
- * @function module:sjl.isSymbol
+ * @function module:fjl.isSymbol
  * @param value {*}
  * @returns {Boolean}
  */
@@ -195,7 +195,7 @@ export function isSymbol (value) {
 
 /**
  * Checks to see if passed in argument is empty.
- * @function module:sjl.empty
+ * @function module:fjl.empty
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
@@ -220,7 +220,7 @@ export function isEmpty(value) {
 
 /**
  * Returns true if an element is not empty and is of type.
- * @function module:sjl.notEmptyAndOfType
+ * @function module:fjl.notEmptyAndOfType
  * @param type {String|Function} - Type to check against (string name or actual constructor).
  * @param value {*} - Value to check.
  * @returns {Boolean}

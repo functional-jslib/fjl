@@ -3,10 +3,9 @@
  */
 
 /**
- * Compose combinator;  Allows to combine many functions into one;  Functions list gets reduced from right to left
- * and each function on receives the return value of the function that comes after it.
+ * Composes all functions passed in from right to left passing the return value of the function to the right of a function to left.
  * @param args {...Function}
- * @returns {function(*=): *}
+ * @returns {Function}
  */
 export default function compose (...args) {
     return arg0 => args.reduceRight((value, fn) => fn(value), arg0);

@@ -24,7 +24,7 @@ const PlaceHolder = function PlaceHolder() {},
  * @function curry
  * @param fn {Function}
  * @param argsToCurry {...*}
- * @returns {function(...[*]=)}
+ * @returns {Function}
  */
 export function curry (fn, ...argsToCurry) {
     return (...args) => {
@@ -70,7 +70,7 @@ function replacePlaceHolders (array, args) {
  * @function curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
- * @returns {function(...[*]=)}
+ * @returns {Function}
  */
 export function curry_ (fn, ...argsToCurry) {
     return (...args) => {
@@ -89,7 +89,7 @@ export function curry_ (fn, ...argsToCurry) {
  * @param fn {Function}
  * @param executeArity {Number}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
- * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
+ * @returns {Function} - Passed in function wrapped in a function for currying.
  */
 export function curryN_ (fn, executeArity, ...curriedArgs) {
     return (...args) => {
@@ -107,7 +107,7 @@ export function curryN_ (fn, executeArity, ...curriedArgs) {
  * @param fn {Function}
  * @param executeArity {Number}
  * @param curriedArgs {...*}
- * @returns {function(...[*]=)}
+ * @returns {Function}
  */
 export function curryN (fn, executeArity, ...curriedArgs) {
     return (...args) => {

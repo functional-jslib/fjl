@@ -29,6 +29,7 @@
     "gulp-eslint": "^3.0.1",
     "gulp-fncallback": "^2.0.2",
     "gulp-header": "^1.8.8",
+    "gulp-jsdoc3": "^1.0.1",
     "gulp-mocha": "^3.0.1",
     "gulp-replace": "^0.5.4",
     "gulp-uglify": "^2.0.0",

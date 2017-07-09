@@ -36,7 +36,7 @@ define(['exports', './is', './objOperators', './assign'], function (exports, _is
 
     /**
      * Same as `subClass` with out side-effect of `extend` method and `toString` method.
-     * @function module:sjl.subClassPure
+     * @function module:fjl.subClassPure
      * @param superClass {Function} - Superclass to inherit from.
      * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
      * @param [methods] {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.

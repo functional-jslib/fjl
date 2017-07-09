@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: subClass.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: subClass.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Created by elyde on 12/10/2016.
+ */
+import {isFunction, notEmptyAndOfType} from './is';
+import {difference} from './objOperators';
+import {assign} from './assign';
+
+/**
+ * Normalized the parameters required for `subClassPure` and `subClass` to operate.
+ * @param superClass {Function} - Superclass to inherit from.
+ * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
+ * @param methods {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
+ * @param statics {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
+ * @returns {{constructor: (Function|*), methods: *, statics: *, superClass: (*|Object)}}
+ */
+function normalizeArgsForDefineSubClass (superClass, constructor, methods, statics) {
+    let _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
+            agg[key] = superClass[key];
+            return agg;
+        }, {}),
+        isCtorAndMethods = !isFunction(constructor),
+        _constructor = isCtorAndMethods ? constructor.constructor : constructor,
+        _methods = isCtorAndMethods ? difference(constructor, {constructor: null}) : methods,
+        _statics = assign(_extractedStatics, isCtorAndMethods ? methods : statics);
+
+    return {
+        constructor: _constructor,
+        methods: _methods,
+        statics: _statics,
+        superClass: superClass
+    };
+}
+
+/**
+ * Same as `subClass` with out side-effect of `extend` method and `toString` method.
+ * @function module:fjl.subClassPure
+ * @param superClass {Function} - Superclass to inherit from.
+ * @param constructor {Function|Object} - Required.  Note:  If this param is an object, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
+ * @param [methods] {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an object, this param takes the place of the `statics` param.
+ * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
+ * @returns {Function} - Constructor with extended prototype and added statics.
+ */
+export function subClass (superClass, constructor, methods, statics) {
+    const normalizedArgs = normalizeArgsForDefineSubClass
+            .call(null, superClass, constructor, methods, statics),
+        _superClass = normalizedArgs.superClass,
+        _statics = normalizedArgs.statics,
+        _constructor = normalizedArgs.constructor,
+        _methods = normalizedArgs.methods;
+
+    // Set prototype
+    _constructor.prototype = Object.create(_superClass.prototype);
+
+    // Define constructor
+    Object.defineProperty(_constructor.prototype, 'constructor', {value: _constructor});
+
+    // Extend constructor
+    assign(_constructor.prototype, _methods);
+    assign(_constructor, _statics);
+
+    // Return constructor
+    return _constructor;
+}
+
+/**
+ * Same as subClass multi but takes an array of Constructor or one constructor at position one.
+ * @param ctorOrCtors {Function|Array&lt;Function>} - SuperClass(es)
+ * @param constructorOrMethods {Function|Object}
+ * @param [methods] {Object|undefined}
+ * @param [statics] {Object|undefined}
+ * @returns {Function}
+ */
+export function subClassMulti (ctorOrCtors, constructorOrMethods, methods, statics) {
+    if (notEmptyAndOfType(Array, ctorOrCtors)) {
+        return ctorOrCtors.reduce(function (agg, Constructor) {
+            return subClass(Constructor, agg);
+        }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
+    }
+    return subClass(ctorOrCtors, constructorOrMethods, methods, statics);
+}
+
+export default {
+    subClass,
+    subClassMulti
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-arrayOperators.html">arrayOperators</a></li><li><a href="module-assign.html">assign</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fnOperators.html">fnOperators</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__">__</a></li><li><a href="global.html#call">call</a></li><li><a href="global.html#curry">curry</a></li><li><a href="global.html#curry2">curry2</a></li><li><a href="global.html#curry2_">curry2_</a></li><li><a href="global.html#curry3">curry3</a></li><li><a href="global.html#curry3_">curry3_</a></li><li><a href="global.html#curry4">curry4</a></li><li><a href="global.html#curry4_">curry4_</a></li><li><a href="global.html#curry5">curry5</a></li><li><a href="global.html#curry5_">curry5_</a></li><li><a href="global.html#curry_">curry_</a></li><li><a href="global.html#curryN">curryN</a></li><li><a href="global.html#curryN_">curryN_</a></li><li><a href="global.html#defineAssign">defineAssign</a></li><li><a href="global.html#defineReverse">defineReverse</a></li><li><a href="global.html#instanceOf">instanceOf</a></li><li><a href="global.html#isConstructablePrimitive">isConstructablePrimitive</a></li><li><a href="global.html#isPlaceHolder">isPlaceHolder</a></li><li><a href="global.html#normalizeArgsForDefineSubClass">normalizeArgsForDefineSubClass</a></li><li><a href="global.html#placeHolderInstance">placeHolderInstance</a></li><li><a href="global.html#replacePlaceHolder">replacePlaceHolder</a></li><li><a href="global.html#subClassMulti">subClassMulti</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Jul 08 2017 19:37:12 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

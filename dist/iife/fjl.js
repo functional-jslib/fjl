@@ -29,7 +29,7 @@ var fjl = function () {
      * @function curry
      * @param fn {Function}
      * @param argsToCurry {...*}
-     * @returns {function(...[*]=)}
+     * @returns {Function}
      */
     function curry(fn) {
         for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -80,7 +80,7 @@ var fjl = function () {
      * @function curry_
      * @param fn {Function}
      * @param argsToCurry {...*}
-     * @returns {function(...[*]=)}
+     * @returns {Function}
      */
     function curry_(fn) {
         for (var _len3 = arguments.length, argsToCurry = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
@@ -105,7 +105,7 @@ var fjl = function () {
      * @param fn {Function}
      * @param executeArity {Number}
      * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
-     * @returns {function(...[*]=)} - Passed in function wrapped in a function for currying.
+     * @returns {Function} - Passed in function wrapped in a function for currying.
      */
     function curryN_(fn, executeArity) {
         for (var _len5 = arguments.length, curriedArgs = Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
@@ -130,7 +130,7 @@ var fjl = function () {
      * @param fn {Function}
      * @param executeArity {Number}
      * @param curriedArgs {...*}
-     * @returns {function(...[*]=)}
+     * @returns {Function}
      */
     function curryN(fn, executeArity) {
         for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
@@ -192,7 +192,7 @@ var fjl = function () {
      * Returns the class name of an object from it's class string.
      * @note Returns 'NaN' if value type is 'Number' and value isNaN evaluates to true as of version 0.4.85.
      * @note If your type (constructor/class) overrides it's `toString` method use a named `toString` method to get the accurate constructor name out of `typeOf`;  E.g., If you do override `toString` on your class(es) and don't set them to named functions then `sjl.typeOf*` will use Object.prototype.toString to pull your classes type out.
-     * @function module:sjl.typeOf
+     * @function module:fjl.typeOf
      * @param value {*}
      * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
      */
@@ -255,7 +255,7 @@ var fjl = function () {
 
     /**
      * Returns whether a value is a function or not.
-     * @function module:sjl.isFunction
+     * @function module:fjl.isFunction
      * @param value {*}
      * @returns {Boolean}
      */
@@ -265,7 +265,7 @@ var fjl = function () {
 
     /**
      * Checks to see if value passed in is set (not undefined and not null).
-     * @function module:sjl.isset
+     * @function module:fjl.isset
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
@@ -275,7 +275,7 @@ var fjl = function () {
 
     /**
      * Checks whether a value isset and if it's type is the same as the type name passed in.
-     * @function module:sjl.issetAndOfType
+     * @function module:fjl.issetAndOfType
      * @param value {*} - Value to check on.
      * @param type {String|Function} - Constructor name string or Constructor.  You can pass one or more types.
      * @returns {Boolean}
@@ -286,7 +286,7 @@ var fjl = function () {
 
     /**
      * Checks if value is an array.
-     * @function module:sjl.isArray
+     * @function module:fjl.isArray
      * @param value {*}
      * @returns {boolean}
      */
@@ -296,7 +296,7 @@ var fjl = function () {
 
     /**
      * Checks whether value is an object or not.
-     * @function module:sjl.isObject
+     * @function module:fjl.isObject
      * @param value
      * @returns {Boolean}
      */
@@ -306,7 +306,7 @@ var fjl = function () {
 
     /**
      * Checks if value is a boolean.
-     * @function module:sjl.isBoolean
+     * @function module:fjl.isBoolean
      * @param value {*}
      * @returns {Boolean}
      */
@@ -316,7 +316,7 @@ var fjl = function () {
 
     /**
      * Checks if value is a valid number (also checks if isNaN so that you don't have to).
-     * @function module:sjl.isNumber
+     * @function module:fjl.isNumber
      * @param value {*}
      * @returns {Boolean}
      */
@@ -326,7 +326,7 @@ var fjl = function () {
 
     /**
      * Checks whether value is a string or not.
-     * @function module:sjl.isString
+     * @function module:fjl.isString
      * @param value {*}
      * @returns {Boolean}
      */
@@ -336,7 +336,7 @@ var fjl = function () {
 
     /**
      * Checks whether value is of `Map` or not.
-     * @function module:sjl.isMap
+     * @function module:fjl.isMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -346,7 +346,7 @@ var fjl = function () {
 
     /**
      * Checks whether value is of `Set` or not.
-     * @function module:sjl.isSet
+     * @function module:fjl.isSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -356,7 +356,7 @@ var fjl = function () {
 
     /**
      * Checks whether value is of `WeakMap` or not.
-     * @function module:sjl.isWeakMap
+     * @function module:fjl.isWeakMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -366,7 +366,7 @@ var fjl = function () {
 
     /**
      * Checks whether value is of `WeakSet` or not.
-     * @function module:sjl.isWeakSet
+     * @function module:fjl.isWeakSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -376,7 +376,7 @@ var fjl = function () {
 
     /**
      * Checks if value is undefined.
-     * @function module:sjl.isUndefined
+     * @function module:fjl.isUndefined
      * @param value {*}
      * @returns {Boolean}
      */
@@ -386,7 +386,7 @@ var fjl = function () {
 
     /**
      * Checks if value is null.
-     * @function module:sjl.isNull
+     * @function module:fjl.isNull
      * @param value {*}
      * @returns {Boolean}
      */
@@ -396,7 +396,7 @@ var fjl = function () {
 
     /**
      * Checks if value is a `Symbol`.
-     * @function module:sjl.isSymbol
+     * @function module:fjl.isSymbol
      * @param value {*}
      * @returns {Boolean}
      */
@@ -406,7 +406,7 @@ var fjl = function () {
 
     /**
      * Checks to see if passed in argument is empty.
-     * @function module:sjl.empty
+     * @function module:fjl.empty
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
@@ -428,7 +428,7 @@ var fjl = function () {
 
     /**
      * Returns true if an element is not empty and is of type.
-     * @function module:sjl.notEmptyAndOfType
+     * @function module:fjl.notEmptyAndOfType
      * @param type {String|Function} - Type to check against (string name or actual constructor).
      * @param value {*} - Value to check.
      * @returns {Boolean}
@@ -759,7 +759,7 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sat Jul 08 2017 15:59:51 GMT-0400 (Eastern Daylight Time) 
+     * Generated Sat Jul 08 2017 19:06:07 GMT-0400 (Eastern Daylight Time) 
      */
 
     var version = '0.13.0';
@@ -770,6 +770,11 @@ var fjl = function () {
      *  - Make methods take the functor/monad values as last (where it makes sense)
      */
 
+    /**
+     * Fjl
+     * @module fjl
+     * @type {{__: PlaceHolder, apply: apply, arrayComplement, arrayDifference, arrayIntersect, arrayUnion, assign: assign, assignDeep: assignDeep, call: call, complement: Function, compose: compose, curry: curry, curryN: curryN, curry2: curry2, curry3: curry3, curry4: curry4, curry5: curry5, curry_: curry_, curryN_: curryN_, curry2_: curry2_, curry3_: curry3_, curry4_: curry4_, curry5_: curry5_, difference: Function, errorIfNotTypeFactory: errorIfNotTypeFactory, filter, flatten: module:fjl.flatten, flattenMulti, head: module:fjl.head, init: module:fjl.init, intersect: Function, instanceOf: Function, isset: module:fjl.isset, issetAndOfType: module:fjl.issetAndOfType, isNumber: module:fjl.isNumber, isFunction: module:fjl.isFunction, isArray: module:fjl.isArray, isBoolean: module:fjl.isBoolean, isObject: module:fjl.isObject, isString: module:fjl.isString, isMap: module:fjl.isMap, isSet: module:fjl.isSet, isWeakSet: module:fjl.isWeakSet, isWeakMap: module:fjl.isWeakMap, isUndefined: module:fjl.isUndefined, isNull: module:fjl.isNull, isSymbol: module:fjl.isSymbol, isEmpty: module:fjl.isEmpty, isConstructablePrimitive: isConstructablePrimitive, last: module:fjl.last, map, notEmptyAndOfType: module:fjl.notEmptyAndOfType, objComplement: Function, objDifference: Function, objIntersect: Function, objUnion: Function, reduce, reduceRight, reverse, tail: module:fjl.tail, typeOf: module:fjl.typeOf, typeOfIs: Function, union: Function, version: string}}
+     */
     var fjl = {
         __: __,
         apply: apply,

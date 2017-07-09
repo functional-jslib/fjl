@@ -51,32 +51,115 @@ var concat = (0, _curry.curry2)(function (arr0) {
     });
 };
 
-var head = exports.head = function head(functor) {
+var
+
+/**
+ * Returns head of array (first item of array).
+ * @function module:fjl.head
+ * @param functor {Array}
+ * @returns {*} - First item from array
+ */
+head = exports.head = function head(functor) {
     return functor[0];
 },
-    tail = exports.tail = function tail(functor) {
+
+
+/**
+ * Returns tail part of array (everything after the first item as new array).
+ * @function module:fjl.tail
+ * @param functor {Array}
+ * @returns {Array}
+ */
+tail = exports.tail = function tail(functor) {
     return functor.slice(1);
 },
-    init = exports.init = function init(functor) {
+
+
+/**
+ * Returns everything except last item of array as new array.
+ * @function module:fjl.init
+ * @param functor {Array}
+ * @returns {Array}
+ */
+init = exports.init = function init(functor) {
     return functor.slice(0, functor.length - 1);
 },
-    last = exports.last = function last(functor) {
+
+
+/**
+ * Returns last item of array.
+ * @function module:fjl.last
+ * @param functor {Array}
+ * @returns {*}
+ */
+last = exports.last = function last(functor) {
     return functor[functor.length - 1];
 },
-    reverse = exports.reverse = defineReverse(),
-    map = exports.map = (0, _curry.curry2)(function (fn, functor) {
+
+
+/**
+ * Reverses an array (shimmed if not exists).
+ * @function module:fjl.reverse
+ * @return {Array}
+ */
+reverse = exports.reverse = defineReverse(),
+
+
+/**
+ * Maps a function to functor (array etc.).
+ * @function module:fjl.map
+ * @param fn {Function}
+ * @param functor {Array|{map: {Function}}}
+ * @returns {Array|{map: {Function}}}
+ */
+map = exports.map = (0, _curry.curry2)(function (fn, functor) {
     return functor.map(fn);
 }),
-    filter = exports.filter = (0, _curry.curry2)(function (fn, arr) {
+
+
+/**
+ * Filters a functor (array etc.) with passed in function.
+ * @function module:fjl.filter
+ * @param fn {Function}
+ * @param functor {Array|{filter: {Function}}}
+ * @returns {Array|{filter: {Function}}}
+ */
+filter = exports.filter = (0, _curry.curry2)(function (fn, arr) {
     return arr.filter(fn);
 }),
-    reduce = exports.reduce = (0, _curry.curry2)(function (fn, agg, arr) {
+
+
+/**
+ * Reduces a foldable (array etc.) with passed in function.
+ * @function module:fjl.reduce
+ * @param fn {Function}
+ * @param functor {Array|{reduce: {Function}}}
+ * @returns {Array|{reduce: {Function}}}
+ */
+reduce = exports.reduce = (0, _curry.curry2)(function (fn, agg, arr) {
     return arr.reduce(fn, agg);
 }),
-    reduceRight = exports.reduceRight = (0, _curry.curry3)(function (fn, agg, functor) {
+
+
+/**
+ * Reduces a foldable (array etc.) from the right with passed in function.
+ * @function module:fjl.reduceRight
+ * @param fn {Function}
+ * @param functor {Array|{reduceRight: {Function}}}
+ * @returns {Array|{reduceRight: {Function}}}
+ */
+reduceRight = exports.reduceRight = (0, _curry.curry3)(function (fn, agg, functor) {
     return functor.reduceRight(fn, agg);
 }),
-    flatten = exports.flatten = function flatten(arr) {
+
+
+/**
+ * Flattens an array.
+ * @function module:fjl.flatten
+ * @param arr {Array}
+ * @returns {Array}
+ */
+flatten = exports.flatten = function flatten(arr) {
     return arr.reduce(function (agg, elm) {
         if (Array.isArray(elm)) {
             return concat(agg, flatten(elm));
@@ -85,7 +168,16 @@ var head = exports.head = function head(functor) {
         return agg;
     }, []);
 },
-    flattenMulti = exports.flattenMulti = (0, _curry.curry2)(function (arr0) {
+
+
+/**
+ * Flattens all arrays passed in into one array.
+ * @function module:fjl.flattenMulti
+ * @param arr {Array}
+ * @param [...arrays{Array}] - Other arrays to flatten into new array.
+ * @returns {Array}
+ */
+flattenMulti = exports.flattenMulti = (0, _curry.curry2)(function (arr0) {
     for (var _len2 = arguments.length, arrays = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
         arrays[_key2 - 1] = arguments[_key2];
     }
@@ -94,17 +186,44 @@ var head = exports.head = function head(functor) {
         return concat(agg, flatten(arr));
     }, flatten(arr0), arrays);
 }),
-    union = exports.union = (0, _curry.curry2)(function (arr1, arr2) {
+
+
+/**
+ * Creates a union on matching elements from array1.
+ * @function module:fjl.union
+ * @param arr1 {Array}
+ * @param arr2 {Array}
+ * @returns {Array}
+ */
+union = exports.union = (0, _curry.curry2)(function (arr1, arr2) {
     return concat(arr1, filter(function (elm) {
         return arr1.indexOf(elm) === -1;
     }, arr2));
 }),
-    intersect = exports.intersect = (0, _curry.curry2)(function (arr1, arr2) {
+
+
+/**
+ * Performs an intersection on array 1 with  elements from array 2.
+ * @function module:fjl.intersect
+ * @param arr1 {Array}
+ * @param arr2 {Array}
+ * @returns {Array}
+ */
+intersect = exports.intersect = (0, _curry.curry2)(function (arr1, arr2) {
     return arr2.length === 0 ? [] : filter(function (elm) {
         return arr2.indexOf(elm) > -1;
     }, arr1);
 }),
-    difference = exports.difference = (0, _curry.curry2)(function (array1, array2) {
+
+
+/**
+ * Returns the difference of array 1 from array 2.
+ * @function module:fjl.difference
+ * @param array1 {Array}
+ * @param array2 {Array}
+ * @returns {Array}
+ */
+difference = exports.difference = (0, _curry.curry2)(function (array1, array2) {
     // augment this with max length and min length ordering on op
     var _sortAscByLength = sortAscByLength(array1, array2),
         _sortAscByLength2 = _slicedToArray(_sortAscByLength, 2),
@@ -121,7 +240,16 @@ var head = exports.head = function head(functor) {
         return agg;
     }, [], arr1);
 }),
-    complement = exports.complement = (0, _curry.curry2)(function (arr0) {
+
+
+/**
+ * Returns the complement of array 0 and the reset of the passed in arrays.
+ * @function module:fjl.complement
+ * @param array1 {Array}
+ * @param array2 {Array}
+ * @returns {Array}
+ */
+complement = exports.complement = (0, _curry.curry2)(function (arr0) {
     for (var _len3 = arguments.length, arrays = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
         arrays[_key3 - 1] = arguments[_key3];
     }
