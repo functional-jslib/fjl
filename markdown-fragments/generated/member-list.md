@@ -70,6 +70,8 @@
 - [fjl.orderedLengths](#fjlorderedlengths)
 - [fjl.zip](#fjlzip)
 - [fjl.zipN](#fjlzipn)
+- [fjl.unzip](#fjlunzip)
+- [fjl.unzipN](#fjlunzipn)
 - [fjl.getSortByOrder](#fjlgetsortbyorder)
 - [fjl.sortAsc](#fjlsortasc)
 - [fjl.sortDesc](#fjlsortdesc)

@@ -8,6 +8,7 @@
 
 import {curry2, curry3} from './curry';
 import {apply} from './fnOperators';
+import {isString} from './is';
 
 /**
  * @returns {Function}
@@ -26,9 +27,27 @@ export const
 
     DESC = -1,
 
+    not = curry2((p, elm) => !p(elm)),
+
+    /**
+     * Functional version of `Array.prototype.join`.
+     * @function module:arrayOperators.join
+     * @param separator {String|RegExp}
+     * @param arr {Array}
+     * @returns {String}
+     */
+    join = curry2((separator, arr) => arr ? arr.join(separator) : ''),
+
+    /**
+     * Functional concat (requires 2 or more values to run).
+     * @curried Sets minimum arity to 2
+     * @param arr0 {Array}
+     * @param ...arrays {Array}
+     * @type {Function}
+     */
     concat = curry2((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
 
-    onlyOneOrNegOne = x => x !== 1 && x !== -1 ? 1 : x,
+    onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
 
     getSortByOrder = curry2((multiplier, valueFn = v => v) => {
         const x = onlyOneOrNegOne(multiplier),
@@ -85,6 +104,44 @@ export const
      */
     last = functor => functor[functor.length - 1],
 
+    take = curry2((limit, array) => array.slice(0, limit - 1)),
+
+    drop = curry2((count, array) => array.slice(count, array.length - 1)),
+
+    splitStrAt = curry2((ind, str) => [
+        str.substring(0, ind),
+        str.substring(ind, str.length)
+    ]),
+
+    splitArrayAt = curry2((ind, arr) => [
+        arr.slice(0, ind),
+        arr.slice(ind, arr.length)
+    ]),
+
+    splitAt = curry2((ind, x) => isString(x) ? splitStrAt(ind, x) : splitArrayAt(ind, x)),
+
+    rangeOnIterable = curry2((predicate, arr) => {
+        let ind = 0;
+        while (predicate(arr[ind]) && ind < arr.length) ind += 1;
+        return ind;
+    }),
+
+    takeWhile = curry2((predicate, arr) =>
+        arr.slice(0, rangeOnIterable(predicate, arr))),
+
+    dropWhile = curry2((predicate, arr) =>
+        arr.slice(rangeOnIterable(predicate, arr), arr.length - 1)),
+
+    span = curry2((predicate, arr) => [
+        takeWhile(predicate, arr),
+        dropWhile(predicate, arr)
+    ]),
+
+    breakOnList = curry2((predicate, arr) => [
+        takeWhile(not(predicate), arr),
+        dropWhile(not(predicate), arr)
+    ]),
+
     /**
      * Returns the lengths of all the items in an array.
      * @param arrs {...Array}
@@ -104,35 +161,6 @@ export const
         const smallLen = orderedLengths(ASC, arrays)[0];
         return arrays.map(arr => arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0));
     },
-
-    /**
-     * @function module:arrayOperators.zip
-     * @param arr1 {Array}
-     * @param arr2 {Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zip = curry2((arr1, arr2) => {
-        const {0: a1, 1: a2} = trimToLengths(arr1, arr2);
-        return a1.reduce((agg, item, ind) => {
-                agg.push([item, a2[ind]]);
-            return agg;
-        }, []);
-    }),
-
-    zipN = curry2((...arrs) => {
-        const lists = apply(trimToLengths, arrs);
-        return lists.reduce((agg, arr, ind) => {
-            if (!ind) {
-                return zip (agg, arr);
-            }
-            return agg.map (arr2 => {
-                arr.forEach (elm => {
-                    arr2.push(elm);
-                });
-                return arr2;
-            });
-        }, lists.shift());
-    }),
 
     /**
      * Reverses an array (shimmed if not exists).
@@ -184,12 +212,12 @@ export const
      * @returns {Array}
      */
     flatten = arr => arr.reduce((agg, elm) => {
-            if (Array.isArray(elm)) {
-                return concat(agg, flatten(elm));
-            }
-            agg.push(elm);
-            return agg;
-        }, []),
+        if (Array.isArray(elm)) {
+            return concat(agg, flatten(elm));
+        }
+        agg.push(elm);
+        return agg;
+    }, []),
 
     /**
      * Flattens all arrays passed in into one array.
@@ -200,6 +228,48 @@ export const
      */
     flattenMulti = curry2((arr0, ...arrays) =>
         reduce((agg, arr) => concat(agg, flatten(arr)), flatten(arr0), arrays)),
+
+    /**
+     * @function module:arrayOperators.zip
+     * @param arr1 {Array}
+     * @param arr2 {Array}
+     * @returns {Array<Array<*,*>>}
+     */
+    zip = curry2((arr1, arr2) => {
+        const {0: a1, 1: a2} = trimToLengths(arr1, arr2);
+        return a1.reduce((agg, item, ind) => {
+                agg.push([item, a2[ind]]);
+            return agg;
+        }, []);
+    }),
+
+    zipN = curry2((...arrs) => {
+        const lists = apply(trimToLengths, arrs);
+        return lists.reduce((agg, arr, ind) => {
+            if (!ind) {
+                return zip (agg, arr);
+            }
+            return agg.map (arr2 => {
+                arr.forEach (elm => {
+                    arr2.push(elm);
+                });
+                return arr2;
+            });
+        }, lists.shift());
+    }),
+
+    unzip = arr =>
+        reduce((agg, item) => {
+            agg[0].push(item[0]);
+            agg[1].push(item[1]);
+            return agg;
+        }, [[], []], arr),
+
+    unzipN = (...arrs) =>
+        reduce((agg, item) => {
+            agg.push(unzip(item));
+            return agg;
+        }, [], arrs),
 
     /**
      * Creates a union on matching elements from array1.
@@ -268,6 +338,8 @@ export default {
     last,
     zip,
     zipN,
+    unzip,
+    unzipN,
     reverse,
     lengths,
     orderedLengths,
@@ -276,6 +348,7 @@ export default {
     sortDesc,
     sortDescByLength,
     concat,
+    join,
     ASC,
     DESC
 };

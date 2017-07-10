@@ -109,6 +109,8 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.orderedLengths](#fjlorderedlengths)
 - [fjl.zip](#fjlzip)
 - [fjl.zipN](#fjlzipn)
+- [fjl.unzip](#fjlunzip)
+- [fjl.unzipN](#fjlunzipn)
 - [fjl.getSortByOrder](#fjlgetsortbyorder)
 - [fjl.sortAsc](#fjlsortasc)
 - [fjl.sortDesc](#fjlsortdesc)
@@ -476,6 +478,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.unwords
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.unzip
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.unzipN
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

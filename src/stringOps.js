@@ -6,17 +6,12 @@
  */
 
 'use strict';
+
+import {join} from './arrayOperators';
+
 import {curry2} from './curry';
 
 export const
-    /**
-     * Functional version of `Array.prototype.join`.
-     * @function module:stringOps.join
-     * @param separator {String|RegExp}
-     * @param arr {Array}
-     * @returns {String}
-     */
-    join = curry2((separator, arr) => arr ? arr.join(separator) : ''),
 
     /**
      * Functional version of `String.prototype.split`.
@@ -60,7 +55,6 @@ export const
     unlines = join('\n');
 
 export default {
-    join,
     split,
     lines,
     unlines,

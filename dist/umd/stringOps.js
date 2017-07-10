@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './curry'], factory);
+    define(['exports', './arrayOperators', './curry'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./curry'));
+    factory(exports, require('./arrayOperators'), require('./curry'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.curry);
+    factory(mod.exports, global.arrayOperators, global.curry);
     global.stringOps = mod.exports;
   }
-})(this, function (exports, _curry) {
+})(this, function (exports, _arrayOperators, _curry) {
   /**
    * Contains functions for operating strings.
    * @author elyde
@@ -23,19 +23,8 @@
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = exports.join = undefined;
+  exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = undefined;
   var
-  /**
-   * Functional version of `Array.prototype.join`.
-   * @function module:stringOps.join
-   * @param separator {String|RegExp}
-   * @param arr {Array}
-   * @returns {String}
-   */
-  join = exports.join = (0, _curry.curry2)(function (separator, arr) {
-    return arr ? arr.join(separator) : '';
-  }),
-
 
   /**
    * Functional version of `String.prototype.split`.
@@ -73,7 +62,7 @@
    * @param arr {String}
    * @returns {Array}
    */
-  unwords = exports.unwords = join('\s'),
+  unwords = exports.unwords = (0, _arrayOperators.join)('\s'),
 
 
   /**
@@ -82,10 +71,9 @@
    * @param str {String}
    * @returns {Array}
    */
-  unlines = exports.unlines = join('\n');
+  unlines = exports.unlines = (0, _arrayOperators.join)('\n');
 
   exports.default = {
-    join: join,
     split: split,
     lines: lines,
     unlines: unlines,

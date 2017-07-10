@@ -1,4 +1,4 @@
-define(['exports', './curry'], function (exports, _curry) {
+define(['exports', './arrayOperators', './curry'], function (exports, _arrayOperators, _curry) {
   /**
    * Contains functions for operating strings.
    * @author elyde
@@ -11,19 +11,8 @@ define(['exports', './curry'], function (exports, _curry) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = exports.join = undefined;
+  exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = undefined;
   var
-  /**
-   * Functional version of `Array.prototype.join`.
-   * @function module:stringOps.join
-   * @param separator {String|RegExp}
-   * @param arr {Array}
-   * @returns {String}
-   */
-  join = exports.join = (0, _curry.curry2)(function (separator, arr) {
-    return arr ? arr.join(separator) : '';
-  }),
-
 
   /**
    * Functional version of `String.prototype.split`.
@@ -61,7 +50,7 @@ define(['exports', './curry'], function (exports, _curry) {
    * @param arr {String}
    * @returns {Array}
    */
-  unwords = exports.unwords = join('\s'),
+  unwords = exports.unwords = (0, _arrayOperators.join)('\s'),
 
 
   /**
@@ -70,10 +59,9 @@ define(['exports', './curry'], function (exports, _curry) {
    * @param str {String}
    * @returns {Array}
    */
-  unlines = exports.unlines = join('\n');
+  unlines = exports.unlines = (0, _arrayOperators.join)('\n');
 
   exports.default = {
-    join: join,
     split: split,
     lines: lines,
     unlines: unlines,

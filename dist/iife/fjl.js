@@ -653,6 +653,12 @@ var fjl = function () {
 
     var ASC = 1;
     var DESC = -1;
+    var not = curry2(function (p, elm) {
+        return !p(elm);
+    });
+    var join = curry2(function (separator, arr) {
+        return arr ? arr.join(separator) : '';
+    });
     var concat = curry2(function (arr0) {
         for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
             arrays[_key16 - 1] = arguments[_key16];
@@ -661,7 +667,7 @@ var fjl = function () {
         return arr0.concat.apply(arr0, arrays);
     });
     var onlyOneOrNegOne = function onlyOneOrNegOne(x) {
-        return x !== 1 && x !== -1 ? 1 : x;
+        return x === 1 || x === -1 ? x : 1;
     };
     var getSortByOrder = curry2(function (multiplier) {
         var valueFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (v) {
@@ -705,6 +711,39 @@ var fjl = function () {
     var last = function last(functor) {
         return functor[functor.length - 1];
     };
+    var take = curry2(function (limit, array) {
+        return array.slice(0, limit - 1);
+    });
+    var drop = curry2(function (count, array) {
+        return array.slice(count, array.length - 1);
+    });
+    var splitStrAt = curry2(function (ind, str) {
+        return [str.substring(0, ind), str.substring(ind, str.length)];
+    });
+    var splitArrayAt = curry2(function (ind, arr) {
+        return [arr.slice(0, ind), arr.slice(ind, arr.length)];
+    });
+    var splitAt = curry2(function (ind, x) {
+        return isString(x) ? splitStrAt(ind, x) : splitArrayAt(ind, x);
+    });
+    var rangeOnIterable = curry2(function (predicate, arr) {
+        var ind = 0;
+        while (predicate(arr[ind]) && ind < arr.length) {
+            ind += 1;
+        }return ind;
+    });
+    var takeWhile = curry2(function (predicate, arr) {
+        return arr.slice(0, rangeOnIterable(predicate, arr));
+    });
+    var dropWhile = curry2(function (predicate, arr) {
+        return arr.slice(rangeOnIterable(predicate, arr), arr.length - 1);
+    });
+    var span = curry2(function (predicate, arr) {
+        return [takeWhile(predicate, arr), dropWhile(predicate, arr)];
+    });
+    var breakOnList = curry2(function (predicate, arr) {
+        return [takeWhile(not(predicate), arr), dropWhile(not(predicate), arr)];
+    });
     var lengths = curry2.apply(undefined, _toConsumableArray(function (arrs) {
         return arrs.length ? arrs.map(function (arr) {
             return arr.length;
@@ -727,34 +766,6 @@ var fjl = function () {
             return arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0);
         });
     };
-    var zip = curry2(function (arr1, arr2) {
-        var _trimToLengths = trimToLengths(arr1, arr2),
-            a1 = _trimToLengths[0],
-            a2 = _trimToLengths[1];
-
-        return a1.reduce(function (agg, item, ind) {
-            agg.push([item, a2[ind]]);
-            return agg;
-        }, []);
-    });
-    var zipN = curry2(function () {
-        for (var _len20 = arguments.length, arrs = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {
-            arrs[_key20] = arguments[_key20];
-        }
-
-        var lists = apply(trimToLengths, arrs);
-        return lists.reduce(function (agg, arr, ind) {
-            if (!ind) {
-                return zip(agg, arr);
-            }
-            return agg.map(function (arr2) {
-                arr.forEach(function (elm) {
-                    arr2.push(elm);
-                });
-                return arr2;
-            });
-        }, lists.shift());
-    });
     var reverse = defineReverse();
     var map = curry2(function (fn, functor) {
         return functor.map(fn);
@@ -778,14 +789,59 @@ var fjl = function () {
         }, []);
     };
     var flattenMulti = curry2(function (arr0) {
-        for (var _len21 = arguments.length, arrays = Array(_len21 > 1 ? _len21 - 1 : 0), _key21 = 1; _key21 < _len21; _key21++) {
-            arrays[_key21 - 1] = arguments[_key21];
+        for (var _len20 = arguments.length, arrays = Array(_len20 > 1 ? _len20 - 1 : 0), _key20 = 1; _key20 < _len20; _key20++) {
+            arrays[_key20 - 1] = arguments[_key20];
         }
 
         return reduce(function (agg, arr) {
             return concat(agg, flatten(arr));
         }, flatten(arr0), arrays);
     });
+    var zip = curry2(function (arr1, arr2) {
+        var _trimToLengths = trimToLengths(arr1, arr2),
+            a1 = _trimToLengths[0],
+            a2 = _trimToLengths[1];
+
+        return a1.reduce(function (agg, item, ind) {
+            agg.push([item, a2[ind]]);
+            return agg;
+        }, []);
+    });
+    var zipN = curry2(function () {
+        for (var _len21 = arguments.length, arrs = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {
+            arrs[_key21] = arguments[_key21];
+        }
+
+        var lists = apply(trimToLengths, arrs);
+        return lists.reduce(function (agg, arr, ind) {
+            if (!ind) {
+                return zip(agg, arr);
+            }
+            return agg.map(function (arr2) {
+                arr.forEach(function (elm) {
+                    arr2.push(elm);
+                });
+                return arr2;
+            });
+        }, lists.shift());
+    });
+    var unzip = function unzip(arr) {
+        return reduce(function (agg, item) {
+            agg[0].push(item[0]);
+            agg[1].push(item[1]);
+            return agg;
+        }, [[], []], arr);
+    };
+    var unzipN = function unzipN() {
+        for (var _len22 = arguments.length, arrs = Array(_len22), _key22 = 0; _key22 < _len22; _key22++) {
+            arrs[_key22] = arguments[_key22];
+        }
+
+        return reduce(function (agg, item) {
+            agg.push(unzip(item));
+            return agg;
+        }, [], arrs);
+    };
     var union$1 = curry2(function (arr1, arr2) {
         return concat(arr1, filter(function (elm) {
             return arr1.indexOf(elm) === -1;
@@ -814,8 +870,8 @@ var fjl = function () {
         }, [], arr1);
     });
     var complement$1 = curry2(function (arr0) {
-        for (var _len22 = arguments.length, arrays = Array(_len22 > 1 ? _len22 - 1 : 0), _key22 = 1; _key22 < _len22; _key22++) {
-            arrays[_key22 - 1] = arguments[_key22];
+        for (var _len23 = arguments.length, arrays = Array(_len23 > 1 ? _len23 - 1 : 0), _key23 = 1; _key23 < _len23; _key23++) {
+            arrays[_key23 - 1] = arguments[_key23];
         }
 
         return reduce(function (agg, arr) {
@@ -828,8 +884,8 @@ var fjl = function () {
      */
 
     var complement$2 = curry2(function (functor) {
-        for (var _len23 = arguments.length, others = Array(_len23 > 1 ? _len23 - 1 : 0), _key23 = 1; _key23 < _len23; _key23++) {
-            others[_key23 - 1] = arguments[_key23];
+        for (var _len24 = arguments.length, others = Array(_len24 > 1 ? _len24 - 1 : 0), _key24 = 1; _key24 < _len24; _key24++) {
+            others[_key24 - 1] = arguments[_key24];
         }
 
         switch (typeOf(functor)) {
@@ -871,9 +927,6 @@ var fjl = function () {
      * @created 7/9/2017.
      */
 
-    var join = curry2(function (separator, arr) {
-        return arr ? arr.join(separator) : '';
-    });
     var split = curry2(function (separator, str) {
         return str ? str.split(separator) : [];
     });
@@ -884,7 +937,7 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sun Jul 09 2017 18:32:22 GMT-0400 (Eastern Daylight Time) 
+     * Generated Mon Jul 10 2017 00:07:16 GMT-0400 (Eastern Daylight Time) 
      */
 
     var version = '0.13.0';
@@ -965,7 +1018,7 @@ var fjl = function () {
         typeOfIs: typeOfIs,
         union: union$2,
         join: join, split: split, lines: lines, words: words, unlines: unlines, unwords: unwords,
-        orderedLengths: orderedLengths, zip: zip, zipN: zipN,
+        orderedLengths: orderedLengths, zip: zip, zipN: zipN, unzip: unzip, unzipN: unzipN,
         getSortByOrder: getSortByOrder, sortAsc: sortAsc, sortDesc: sortDesc, sortDescByLength: sortDescByLength, concat: concat,
         ASC: ASC, DESC: DESC,
         lengths: lengths,

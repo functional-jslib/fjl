@@ -358,6 +358,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.unzip
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.unzipN
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.version
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)

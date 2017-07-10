@@ -33,11 +33,11 @@ import {complement as arrayComplement,
     reduce, reduceRight, head, tail,
     init, last, reverse, orderedLengths, lengths, zip, zipN,
     getSortByOrder, sortAsc, sortDesc, sortDescByLength, concat,
-    ASC, DESC} from './arrayOperators';
+    ASC, DESC, join, unzip, unzipN} from './arrayOperators';
 
 import {complement, difference, union, intersect} from './operators';
 
-import {join, split, lines, words, unlines, unwords} from './stringOps';
+import {split, lines, words, unlines, unwords} from './stringOps';
 
 import version from './generated/version';
 
@@ -111,7 +111,7 @@ export default {
     typeOfIs,
     union,
     join, split, lines, words, unlines, unwords,
-    orderedLengths, zip, zipN,
+    orderedLengths, zip, zipN, unzip, unzipN,
     getSortByOrder, sortAsc, sortDesc, sortDescByLength, concat,
     ASC, DESC,
     lengths,
