@@ -10,6 +10,8 @@ export let
 
     hasOwnProperty = curry2((x, propName) => Object.prototype.hasOwnProperty.call(x, propName)),
 
+    length = x => x.length,
+
     union = curry2((obj1, obj2) => assignDeep(obj1, obj2)),
 
     intersect = curry2((obj1, obj2) => Object.keys(obj1).reduce((agg, key) => {
@@ -32,6 +34,7 @@ export let
 
 export default {
     hasOwnProperty,
+    length,
     complement,
     difference,
     intersect,
