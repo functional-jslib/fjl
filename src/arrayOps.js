@@ -15,7 +15,7 @@ import {isString} from './is';
  */
 function defineReverse () {
     return Array.prototype.reverse ? x => x.reverse() :
-        functor => functor.reduceRight((agg, item) => {
+        x => x.reduceRight((agg, item) => {
             agg.push(item);
             return agg;
         }, []);
