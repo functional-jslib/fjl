@@ -8,7 +8,7 @@
       exports: {}
     };
     factory(mod.exports);
-    global.fnOperators = mod.exports;
+    global.functionOps = mod.exports;
   }
 })(this, function (exports) {
   "use strict";

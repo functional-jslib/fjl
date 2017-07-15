@@ -7,7 +7,7 @@
 'use strict';
 
 import {curry2, curry3} from './curry';
-import {apply} from './fnOperators';
+import {apply} from './functionOps';
 import {isString} from './is';
 
 /**
@@ -157,7 +157,7 @@ export const
      */
     orderedLengths = curry2((orderDir, ...arrs) => length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : []),
 
-    trimToLengths = (...arrays) => {
+    trimLengths = (...arrays) => {
         const smallLen = orderedLengths(ASC, arrays)[0];
         return arrays.map(arr => arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0));
     },
@@ -236,7 +236,7 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zip = curry2((arr1, arr2) => {
-        const {0: a1, 1: a2} = trimToLengths(arr1, arr2);
+        const {0: a1, 1: a2} = trimLengths(arr1, arr2);
         return a1.reduce((agg, item, ind) => {
                 agg.push([item, a2[ind]]);
             return agg;
@@ -244,7 +244,7 @@ export const
     }),
 
     zipN = curry2((...arrs) => {
-        const lists = apply(trimToLengths, arrs);
+        const lists = apply(trimLengths, arrs);
         return lists.reduce((agg, arr, ind) => {
             if (!ind) {
                 return zip (agg, arr);
@@ -347,7 +347,11 @@ export default {
     sortAsc,
     sortDesc,
     sortDescByLength,
+    breakOnList,
+    splitAt,
     concat,
+    take,
+    drop,
     join,
     ASC,
     DESC

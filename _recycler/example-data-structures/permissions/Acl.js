@@ -5,7 +5,7 @@
 'use strict';
 
 import {typeOf} from '../../../src/typeOf';
-import {difference as arrayDiff} from '../../../src/arrayOperators';
+import {difference as arrayDiff} from '../../../src/arrayOps';
 import {errorIfNotType} from '../utils';
 import Role from './Role';
 import Resource from './Resource';

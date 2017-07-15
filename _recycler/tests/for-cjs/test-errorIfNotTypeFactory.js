@@ -6,9 +6,9 @@
 // generating browser version of test(s).
 'use strict';
 let {expect, assert}  = require('chai');
-let errorIfNotTypeFactory  = require('../../dist/cjs/errorIfNotTypeFactory');
-let {curry, curry2}  = require('../../dist/cjs/curry');
-let {expectFunction}  = require('./helpers');
+let errorIfNotTypeFactory  = require('../../../dist/cjs/errorIfNotTypeFactory');
+let {curry, curry2}  = require('../../../dist/cjs/curry');
+let {expectFunction}  = require('../../../tests/for-cjs/helpers');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 

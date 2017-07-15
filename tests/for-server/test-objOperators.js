@@ -11,7 +11,7 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {hasOwnProperty, complement, difference, union, intersect} from '../../src/objOperators';
+import {hasOwnProperty, complement, difference, union, intersect} from '../../src/objectOps';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

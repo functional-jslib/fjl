@@ -46,7 +46,7 @@
     "tests": "npm run test",
     "test-es6": "mocha tests/for-server/test-*.js tests/for-server/**/test-*.js --compilers js:babel-register --require babel-polyfill",
     "test-cjs": "mocha tests/for-cjs/**/test-*.js",
-    "build": "gulp build",
+    "build": "gulp clean && gulp build",
     "build-and-test": "npm run build && npm run test"
   },
   "repository": {

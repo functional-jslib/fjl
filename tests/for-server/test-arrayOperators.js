@@ -9,7 +9,7 @@
 import {assert, expect} from 'chai';
 import compose from '../../src/compose';
 import {__} from '../../src/curry';
-import {complement as arrayComplement, difference as arrayDifference, union as arrayUnion, intersect as arrayIntersect, flatten, flattenMulti} from '../../src/arrayOperators';
+import {complement as arrayComplement, difference as arrayDifference, union as arrayUnion, intersect as arrayIntersect, flatten, flattenMulti} from '../../src/arrayOps';
 import {length, range, expectEqual, expectShallowEquals, expectInstanceOf} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

@@ -7,7 +7,7 @@
 
 'use strict';
 
-import {join} from './arrayOperators';
+import {join} from './arrayOps';
 
 import {curry2} from './curry';
 

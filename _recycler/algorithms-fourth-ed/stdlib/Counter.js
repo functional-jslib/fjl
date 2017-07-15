@@ -6,7 +6,7 @@
 
 import Extract from '../../../tests/for-server/functor/Extract';
 import Extend from '../../../tests/for-server/functor/Extend';
-import {subClassMulti} from '../../../src/subClass';
+import {subClassMulti} from '../../src/subClass';
 
 export default subClassMulti([Extract, Extend],
     function Counter(start) {

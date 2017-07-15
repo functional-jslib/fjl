@@ -1,4 +1,4 @@
-define(['exports', './curry', './fnOperators', './is'], function (exports, _curry, _fnOperators, _is) {
+define(['exports', './curry', './functionOps', './is'], function (exports, _curry, _functionOps, _is) {
     /**
      * Array operators module.
      * @module arrayOperators
@@ -10,7 +10,7 @@ define(['exports', './curry', './fnOperators', './is'], function (exports, _curr
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersect = exports.union = exports.unzipN = exports.unzip = exports.zipN = exports.zip = exports.flattenMulti = exports.flatten = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = exports.trimToLengths = exports.orderedLengths = exports.lengths = exports.breakOnList = exports.span = exports.dropWhile = exports.takeWhile = exports.rangeOnIterable = exports.splitAt = exports.splitArrayAt = exports.splitStrAt = exports.drop = exports.take = exports.last = exports.init = exports.tail = exports.head = exports.sortDescByLength = exports.sortAsc = exports.sortDesc = exports.getSortByOrder = exports.onlyOneOrNegOne = exports.concat = exports.join = exports.not = exports.DESC = exports.ASC = undefined;
+    exports.complement = exports.difference = exports.intersect = exports.union = exports.unzipN = exports.unzip = exports.zipN = exports.zip = exports.flattenMulti = exports.flatten = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = exports.trimLengths = exports.orderedLengths = exports.lengths = exports.breakOnList = exports.span = exports.dropWhile = exports.takeWhile = exports.rangeOnIterable = exports.splitAt = exports.splitArrayAt = exports.splitStrAt = exports.drop = exports.take = exports.last = exports.init = exports.tail = exports.head = exports.sortDescByLength = exports.sortAsc = exports.sortDesc = exports.getSortByOrder = exports.onlyOneOrNegOne = exports.concat = exports.join = exports.not = exports.DESC = exports.ASC = undefined;
 
     var _slicedToArray = function () {
         function sliceIterator(arr, i) {
@@ -246,7 +246,7 @@ define(['exports', './curry', './fnOperators', './is'], function (exports, _curr
 
         return length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : [];
     }),
-        trimToLengths = exports.trimToLengths = function trimToLengths() {
+        trimLengths = exports.trimLengths = function trimLengths() {
         for (var _len4 = arguments.length, arrays = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
             arrays[_key4] = arguments[_key4];
         }
@@ -356,9 +356,9 @@ define(['exports', './curry', './fnOperators', './is'], function (exports, _curr
      * @returns {Array<Array<*,*>>}
      */
     zip = exports.zip = (0, _curry.curry2)(function (arr1, arr2) {
-        var _trimToLengths = trimToLengths(arr1, arr2),
-            a1 = _trimToLengths[0],
-            a2 = _trimToLengths[1];
+        var _trimLengths = trimLengths(arr1, arr2),
+            a1 = _trimLengths[0],
+            a2 = _trimLengths[1];
 
         return a1.reduce(function (agg, item, ind) {
             agg.push([item, a2[ind]]);
@@ -370,7 +370,7 @@ define(['exports', './curry', './fnOperators', './is'], function (exports, _curr
             arrs[_key6] = arguments[_key6];
         }
 
-        var lists = (0, _fnOperators.apply)(trimToLengths, arrs);
+        var lists = (0, _functionOps.apply)(trimLengths, arrs);
         return lists.reduce(function (agg, arr, ind) {
             if (!ind) {
                 return zip(agg, arr);
@@ -499,7 +499,11 @@ define(['exports', './curry', './fnOperators', './is'], function (exports, _curr
         sortAsc: sortAsc,
         sortDesc: sortDesc,
         sortDescByLength: sortDescByLength,
+        breakOnList: breakOnList,
+        splitAt: splitAt,
         concat: concat,
+        take: take,
+        drop: drop,
         join: join,
         ASC: ASC,
         DESC: DESC

@@ -7,7 +7,7 @@
 // generating browser version of test(s).
 'use strict';
 let {typeOf, typeOfIs}  = require('../../dist/cjs/typeOf');
-let {apply}  = require('../../dist/cjs/fnOperators');
+let {apply}  = require('../../dist/cjs/functionOps');
 let {expectTrue, expectFalse, expectEqual, expectFunction}  = require('./helpers');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

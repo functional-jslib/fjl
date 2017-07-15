@@ -16,15 +16,11 @@ var _typeOf = require('./typeOf');
 
 var _is = require('./is');
 
-var _errorIfNotTypeFactory = require('./errorIfNotTypeFactory');
+var _functionOps = require('./functionOps');
 
-var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
+var _objectOps = require('./objectOps');
 
-var _fnOperators = require('./fnOperators');
-
-var _objOperators = require('./objOperators');
-
-var _arrayOperators = require('./arrayOperators');
+var _arrayOps = require('./arrayOps');
 
 var _operators = require('./operators');
 
@@ -39,24 +35,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Fjl
  * @module fjl
- * @type {{__: PlaceHolder, apply: apply, arrayComplement, arrayDifference, arrayIntersect, arrayUnion, assign: assign, assignDeep: assignDeep, call: call, complement: Function, compose: compose, curry: curry, curryN: curryN, curry2: curry2, curry3: curry3, curry4: curry4, curry5: curry5, curry_: curry_, curryN_: curryN_, curry2_: curry2_, curry3_: curry3_, curry4_: curry4_, curry5_: curry5_, difference: Function, errorIfNotTypeFactory: errorIfNotTypeFactory, filter, flatten: module:fjl.flatten, flattenMulti, head: module:fjl.head, init: module:fjl.init, intersect: Function, instanceOf: Function, isset: module:fjl.isset, issetAndOfType: module:fjl.issetAndOfType, isNumber: module:fjl.isNumber, isFunction: module:fjl.isFunction, isArray: module:fjl.isArray, isBoolean: module:fjl.isBoolean, isObject: module:fjl.isObject, isString: module:fjl.isString, isMap: module:fjl.isMap, isSet: module:fjl.isSet, isWeakSet: module:fjl.isWeakSet, isWeakMap: module:fjl.isWeakMap, isUndefined: module:fjl.isUndefined, isNull: module:fjl.isNull, isSymbol: module:fjl.isSymbol, isEmpty: module:fjl.isEmpty, isConstructablePrimitive: isConstructablePrimitive, last: module:fjl.last, map, notEmptyAndOfType: module:fjl.notEmptyAndOfType, objComplement: Function, objDifference: Function, objIntersect: Function, objUnion: Function, reduce, reduceRight, reverse, tail: module:fjl.tail, typeOf: module:fjl.typeOf, typeOfIs: Function, union: Function, version: string}}
+ * @type {Object}
  */
-/**
- * Created by elyde on 12/6/2016.
- * @todo Evaluate library for places where we can make it more functional; E.g.,
- *  - Make methods take the functor/monad values as last (where it makes sense)
- */
-
 exports.default = {
     __: _curry.__,
-    apply: _fnOperators.apply,
-    arrayComplement: _arrayOperators.complement,
-    arrayDifference: _arrayOperators.difference,
-    arrayIntersect: _arrayOperators.intersect,
-    arrayUnion: _arrayOperators.union,
+    apply: _functionOps.apply,
+    arrayComplement: _arrayOps.complement,
+    arrayDifference: _arrayOps.difference,
+    arrayIntersect: _arrayOps.intersect,
+    arrayUnion: _arrayOps.union,
     assign: _assign.assign,
     assignDeep: _assign.assignDeep,
-    call: _fnOperators.call,
+    call: _functionOps.call,
     complement: _operators.complement,
     compose: _compose2.default,
     curry: _curry.curry,
@@ -72,12 +62,11 @@ exports.default = {
     curry4_: _curry.curry4_,
     curry5_: _curry.curry5_,
     difference: _operators.difference,
-    errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
-    filter: _arrayOperators.filter,
-    flatten: _arrayOperators.flatten,
-    flattenMulti: _arrayOperators.flattenMulti,
-    head: _arrayOperators.head,
-    init: _arrayOperators.init,
+    filter: _arrayOps.filter,
+    flatten: _arrayOps.flatten,
+    flattenMulti: _arrayOps.flattenMulti,
+    head: _arrayOps.head,
+    init: _arrayOps.init,
     intersect: _operators.intersect,
     instanceOf: _is.instanceOf,
     isset: _is.isset,
@@ -97,25 +86,30 @@ exports.default = {
     isSymbol: _is.isSymbol,
     isEmpty: _is.isEmpty,
     isConstructablePrimitive: _is.isConstructablePrimitive,
-    last: _arrayOperators.last,
-    map: _arrayOperators.map,
+    last: _arrayOps.last,
+    map: _arrayOps.map,
     notEmptyAndOfType: _is.notEmptyAndOfType,
-    objComplement: _objOperators.complement,
-    objDifference: _objOperators.difference,
-    objIntersect: _objOperators.intersect,
-    objUnion: _objOperators.union,
-    reduce: _arrayOperators.reduce,
-    reduceRight: _arrayOperators.reduceRight,
-    reverse: _arrayOperators.reverse,
-    tail: _arrayOperators.tail,
+    objComplement: _objectOps.complement,
+    objDifference: _objectOps.difference,
+    objIntersect: _objectOps.intersect,
+    objUnion: _objectOps.union,
+    reduce: _arrayOps.reduce,
+    reduceRight: _arrayOps.reduceRight,
+    reverse: _arrayOps.reverse,
+    tail: _arrayOps.tail,
     typeOf: _typeOf.typeOf,
     typeOfIs: _typeOf.typeOfIs,
     union: _operators.union,
-    join: _arrayOperators.join, split: _stringOps.split, lines: _stringOps.lines, words: _stringOps.words, unlines: _stringOps.unlines, unwords: _stringOps.unwords,
-    orderedLengths: _arrayOperators.orderedLengths, zip: _arrayOperators.zip, zipN: _arrayOperators.zipN, unzip: _arrayOperators.unzip, unzipN: _arrayOperators.unzipN,
-    getSortByOrder: _arrayOperators.getSortByOrder, sortAsc: _arrayOperators.sortAsc, sortDesc: _arrayOperators.sortDesc, sortDescByLength: _arrayOperators.sortDescByLength, concat: _arrayOperators.concat,
-    ASC: _arrayOperators.ASC, DESC: _arrayOperators.DESC,
-    lengths: _arrayOperators.lengths,
+    join: _arrayOps.join, split: _stringOps.split, lines: _stringOps.lines, words: _stringOps.words, unlines: _stringOps.unlines, unwords: _stringOps.unwords,
+    orderedLengths: _arrayOps.orderedLengths, zip: _arrayOps.zip, zipN: _arrayOps.zipN, unzip: _arrayOps.unzip, unzipN: _arrayOps.unzipN,
+    getSortByOrder: _arrayOps.getSortByOrder, sortAsc: _arrayOps.sortAsc, sortDesc: _arrayOps.sortDesc, sortDescByLength: _arrayOps.sortDescByLength, concat: _arrayOps.concat,
+    ASC: _arrayOps.ASC, DESC: _arrayOps.DESC,
+    lengths: _arrayOps.lengths,
     version: _version2.default
-};
+}; /**
+    * Created by elyde on 12/6/2016.
+    * @todo Evaluate library for places where we can make it more functional; E.g.,
+    *  - Make methods take the functor/monad values as last (where it makes sense)
+    */
+
 module.exports = exports['default'];

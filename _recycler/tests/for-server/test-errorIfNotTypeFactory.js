@@ -7,8 +7,8 @@
 'use strict';
 import {expect, assert} from 'chai';
 import errorIfNotTypeFactory from '../../src/errorIfNotTypeFactory';
-import {curry, curry2} from '../../src/curry';
-import {expectFunction} from './helpers';
+import {curry, curry2} from '../../../src/curry';
+import {expectFunction} from '../../../tests/for-server/helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 

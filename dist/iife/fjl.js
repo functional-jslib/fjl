@@ -533,59 +533,14 @@ var fjl = function () {
     }
 
     /**
-     * Created by elyde on 1/20/2017.
-     */
-
-    var typesListToString = function typesListToString(types) {
-        return types.reduce(function (agg, Type, index) {
-            var typeName = Type instanceof Function ? Type.name : Type;
-            return agg + '"' + typeName + '"' + (index !== types.length - 1 ? ', ' : ']');
-        }, '[');
-    };
-
-    /**
-     * A factory for attaching a context name to a function that checks if recieved value is of given type.
-     * The factory allows you to attach the context name to the returned type checker function.
-     * @module errorIfNotTypeFactory
-     * @param [contextName] {String} - Name of the context you want attached to the error message.
-     * @returns {Function} - Function{key {String, value {*}, ...types {Function|Constructor}>
-     * @type {Function}
-     */
-    function errorIfNotTypeFactory(contextName) {
-        /**
-         * Throws error if `value` is not of one of the 'types' ({...types{Function}}) passed in.  Else returns {void}.
-         * @param [typePrefix] {String} - Prefix of the type to use in the error message if `value` doesn't
-         *  match one of the `...types` passed in.
-         * @param value {*}
-         * @param types {...Function}
-         * @throws {Error}
-         * @returns {void}
-         */
-        return function (typePrefix, value) {
-            for (var _len13 = arguments.length, types = Array(_len13 > 2 ? _len13 - 2 : 0), _key13 = 2; _key13 < _len13; _key13++) {
-                types[_key13 - 2] = arguments[_key13];
-            }
-
-            if (types.some(function (Type) {
-                return typeOfIs(Type, value);
-            })) {
-                return;
-            }
-            throw new Error((contextName || '') + '.' + (typePrefix || '') + ' is required to be of one of the types : ' + (typesListToString(types) + '.  Type received: ' + typeOf(value)));
-        };
-    }
-
-    errorIfNotTypeFactory.typeListToString = typesListToString;
-
-    /**
      * @author edlc
      * @created 5/1/17.
      * @module fnOperators
      * @type {{call: Function, apply: Function, flip: Function, flipN: Function}}
      */
     var call = function call(fn) {
-        for (var _len14 = arguments.length, args = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
-            args[_key14 - 1] = arguments[_key14];
+        for (var _len13 = arguments.length, args = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
+            args[_key13 - 1] = arguments[_key13];
         }
 
         return fn.call.apply(fn, [null].concat(args));
@@ -622,8 +577,8 @@ var fjl = function () {
         }, {});
     });
     var complement = curry2(function (obj0) {
-        for (var _len15 = arguments.length, objs = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
-            objs[_key15 - 1] = arguments[_key15];
+        for (var _len14 = arguments.length, objs = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
+            objs[_key14 - 1] = arguments[_key14];
         }
 
         return objs.reduce(function (agg, obj) {
@@ -660,8 +615,8 @@ var fjl = function () {
         return arr ? arr.join(separator) : '';
     });
     var concat = curry2(function (arr0) {
-        for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
-            arrays[_key16 - 1] = arguments[_key16];
+        for (var _len15 = arguments.length, arrays = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
+            arrays[_key15 - 1] = arguments[_key15];
         }
 
         return arr0.concat.apply(arr0, arrays);
@@ -678,8 +633,8 @@ var fjl = function () {
             ifGreaterThan = 1 * x,
             ifLessThan = -1 * x;
         return function () {
-            for (var _len17 = arguments.length, values = Array(_len17), _key17 = 0; _key17 < _len17; _key17++) {
-                values[_key17] = arguments[_key17];
+            for (var _len16 = arguments.length, values = Array(_len16), _key16 = 0; _key16 < _len16; _key16++) {
+                values[_key16] = arguments[_key16];
             }
 
             return values.sort(function (a1, b1) {
@@ -750,15 +705,15 @@ var fjl = function () {
         }) : [];
     }));
     var orderedLengths = curry2(function (orderDir) {
-        for (var _len18 = arguments.length, arrs = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
-            arrs[_key18 - 1] = arguments[_key18];
+        for (var _len17 = arguments.length, arrs = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
+            arrs[_key17 - 1] = arguments[_key17];
         }
 
         return length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : [];
     });
-    var trimToLengths = function trimToLengths() {
-        for (var _len19 = arguments.length, arrays = Array(_len19), _key19 = 0; _key19 < _len19; _key19++) {
-            arrays[_key19] = arguments[_key19];
+    var trimLengths = function trimLengths() {
+        for (var _len18 = arguments.length, arrays = Array(_len18), _key18 = 0; _key18 < _len18; _key18++) {
+            arrays[_key18] = arguments[_key18];
         }
 
         var smallLen = orderedLengths(ASC, arrays)[0];
@@ -789,8 +744,8 @@ var fjl = function () {
         }, []);
     };
     var flattenMulti = curry2(function (arr0) {
-        for (var _len20 = arguments.length, arrays = Array(_len20 > 1 ? _len20 - 1 : 0), _key20 = 1; _key20 < _len20; _key20++) {
-            arrays[_key20 - 1] = arguments[_key20];
+        for (var _len19 = arguments.length, arrays = Array(_len19 > 1 ? _len19 - 1 : 0), _key19 = 1; _key19 < _len19; _key19++) {
+            arrays[_key19 - 1] = arguments[_key19];
         }
 
         return reduce(function (agg, arr) {
@@ -798,9 +753,9 @@ var fjl = function () {
         }, flatten(arr0), arrays);
     });
     var zip = curry2(function (arr1, arr2) {
-        var _trimToLengths = trimToLengths(arr1, arr2),
-            a1 = _trimToLengths[0],
-            a2 = _trimToLengths[1];
+        var _trimLengths = trimLengths(arr1, arr2),
+            a1 = _trimLengths[0],
+            a2 = _trimLengths[1];
 
         return a1.reduce(function (agg, item, ind) {
             agg.push([item, a2[ind]]);
@@ -808,11 +763,11 @@ var fjl = function () {
         }, []);
     });
     var zipN = curry2(function () {
-        for (var _len21 = arguments.length, arrs = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {
-            arrs[_key21] = arguments[_key21];
+        for (var _len20 = arguments.length, arrs = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {
+            arrs[_key20] = arguments[_key20];
         }
 
-        var lists = apply(trimToLengths, arrs);
+        var lists = apply(trimLengths, arrs);
         return lists.reduce(function (agg, arr, ind) {
             if (!ind) {
                 return zip(agg, arr);
@@ -833,8 +788,8 @@ var fjl = function () {
         }, [[], []], arr);
     };
     var unzipN = function unzipN() {
-        for (var _len22 = arguments.length, arrs = Array(_len22), _key22 = 0; _key22 < _len22; _key22++) {
-            arrs[_key22] = arguments[_key22];
+        for (var _len21 = arguments.length, arrs = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {
+            arrs[_key21] = arguments[_key21];
         }
 
         return reduce(function (agg, item) {
@@ -870,8 +825,8 @@ var fjl = function () {
         }, [], arr1);
     });
     var complement$1 = curry2(function (arr0) {
-        for (var _len23 = arguments.length, arrays = Array(_len23 > 1 ? _len23 - 1 : 0), _key23 = 1; _key23 < _len23; _key23++) {
-            arrays[_key23 - 1] = arguments[_key23];
+        for (var _len22 = arguments.length, arrays = Array(_len22 > 1 ? _len22 - 1 : 0), _key22 = 1; _key22 < _len22; _key22++) {
+            arrays[_key22 - 1] = arguments[_key22];
         }
 
         return reduce(function (agg, arr) {
@@ -881,11 +836,12 @@ var fjl = function () {
 
     /**
      * Created by elyde on 12/11/2016.
+     * A place to put the common ops (ops that can split between array, object, and possibly other) here.
      */
 
     var complement$2 = curry2(function (functor) {
-        for (var _len24 = arguments.length, others = Array(_len24 > 1 ? _len24 - 1 : 0), _key24 = 1; _key24 < _len24; _key24++) {
-            others[_key24 - 1] = arguments[_key24];
+        for (var _len23 = arguments.length, others = Array(_len23 > 1 ? _len23 - 1 : 0), _key23 = 1; _key23 < _len23; _key23++) {
+            others[_key23 - 1] = arguments[_key23];
         }
 
         switch (typeOf(functor)) {
@@ -937,7 +893,7 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Mon Jul 10 2017 00:07:16 GMT-0400 (Eastern Daylight Time) 
+     * Generated Sat Jul 15 2017 13:55:11 GMT-0400 (Eastern Daylight Time) 
      */
 
     var version = '0.13.0';
@@ -951,7 +907,7 @@ var fjl = function () {
     /**
      * Fjl
      * @module fjl
-     * @type {{__: PlaceHolder, apply: apply, arrayComplement, arrayDifference, arrayIntersect, arrayUnion, assign: assign, assignDeep: assignDeep, call: call, complement: Function, compose: compose, curry: curry, curryN: curryN, curry2: curry2, curry3: curry3, curry4: curry4, curry5: curry5, curry_: curry_, curryN_: curryN_, curry2_: curry2_, curry3_: curry3_, curry4_: curry4_, curry5_: curry5_, difference: Function, errorIfNotTypeFactory: errorIfNotTypeFactory, filter, flatten: module:fjl.flatten, flattenMulti, head: module:fjl.head, init: module:fjl.init, intersect: Function, instanceOf: Function, isset: module:fjl.isset, issetAndOfType: module:fjl.issetAndOfType, isNumber: module:fjl.isNumber, isFunction: module:fjl.isFunction, isArray: module:fjl.isArray, isBoolean: module:fjl.isBoolean, isObject: module:fjl.isObject, isString: module:fjl.isString, isMap: module:fjl.isMap, isSet: module:fjl.isSet, isWeakSet: module:fjl.isWeakSet, isWeakMap: module:fjl.isWeakMap, isUndefined: module:fjl.isUndefined, isNull: module:fjl.isNull, isSymbol: module:fjl.isSymbol, isEmpty: module:fjl.isEmpty, isConstructablePrimitive: isConstructablePrimitive, last: module:fjl.last, map, notEmptyAndOfType: module:fjl.notEmptyAndOfType, objComplement: Function, objDifference: Function, objIntersect: Function, objUnion: Function, reduce, reduceRight, reverse, tail: module:fjl.tail, typeOf: module:fjl.typeOf, typeOfIs: Function, union: Function, version: string}}
+     * @type {Object}
      */
     var fjl = {
         __: __,
@@ -978,7 +934,6 @@ var fjl = function () {
         curry4_: curry4_,
         curry5_: curry5_,
         difference: difference$2,
-        errorIfNotTypeFactory: errorIfNotTypeFactory,
         filter: filter,
         flatten: flatten,
         flattenMulti: flattenMulti,

@@ -1,4 +1,4 @@
-define(['exports', './arrayOperators', './curry'], function (exports, _arrayOperators, _curry) {
+define(['exports', './arrayOps', './curry'], function (exports, _arrayOps, _curry) {
   /**
    * Contains functions for operating strings.
    * @author elyde
@@ -50,7 +50,7 @@ define(['exports', './arrayOperators', './curry'], function (exports, _arrayOper
    * @param arr {String}
    * @returns {Array}
    */
-  unwords = exports.unwords = (0, _arrayOperators.join)('\s'),
+  unwords = exports.unwords = (0, _arrayOps.join)('\s'),
 
 
   /**
@@ -59,7 +59,7 @@ define(['exports', './arrayOperators', './curry'], function (exports, _arrayOper
    * @param str {String}
    * @returns {Array}
    */
-  unlines = exports.unlines = (0, _arrayOperators.join)('\n');
+  unlines = exports.unlines = (0, _arrayOps.join)('\n');
 
   exports.default = {
     split: split,

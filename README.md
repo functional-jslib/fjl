@@ -61,7 +61,6 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.curry4_](#fjlcurry4_)
 - [fjl.curry5_](#fjlcurry5_)
 - [fjl.difference](#fjldifference)
-- [fjl.errorIfNotTypeFactory](#fjlerrorifnottypefactory)
 - [fjl.filter](#fjlfilter)
 - [fjl.flatten](#fjlflatten)
 - [fjl.flattenMulti](#fjlflattenmulti)

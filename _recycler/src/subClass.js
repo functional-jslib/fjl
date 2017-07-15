@@ -1,16 +1,9 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.subClass = subClass;
-exports.subClassMulti = subClassMulti;
-
-var _is = require('./is');
-
-var _objOperators = require('./objOperators');
-
-var _assign = require('./assign');
+/**
+ * Created by elyde on 12/10/2016.
+ */
+import {isFunction, notEmptyAndOfType} from '../../src/is';
+import {difference} from '../../src/objectOps';
+import {assign} from '../../src/assign';
 
 /**
  * Normalized the parameters required for `subClassPure` and `subClass` to operate.
@@ -20,15 +13,15 @@ var _assign = require('./assign');
  * @param statics {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
  * @returns {{constructor: (Function|*), methods: *, statics: *, superClass: (*|Object)}}
  */
-function normalizeArgsForDefineSubClass(superClass, constructor, methods, statics) {
-    var _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
-        agg[key] = superClass[key];
-        return agg;
-    }, {}),
-        isCtorAndMethods = !(0, _is.isFunction)(constructor),
+function normalizeArgsForDefineSubClass (superClass, constructor, methods, statics) {
+    let _extractedStatics = Object.keys(superClass).reduce(function (agg, key) {
+            agg[key] = superClass[key];
+            return agg;
+        }, {}),
+        isCtorAndMethods = !isFunction(constructor),
         _constructor = isCtorAndMethods ? constructor.constructor : constructor,
-        _methods = isCtorAndMethods ? (0, _objOperators.difference)(constructor, { constructor: null }) : methods,
-        _statics = (0, _assign.assign)(_extractedStatics, isCtorAndMethods ? methods : statics);
+        _methods = isCtorAndMethods ? difference(constructor, {constructor: null}) : methods,
+        _statics = assign(_extractedStatics, isCtorAndMethods ? methods : statics);
 
     return {
         constructor: _constructor,
@@ -47,11 +40,9 @@ function normalizeArgsForDefineSubClass(superClass, constructor, methods, static
  * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an object, this param is not used.
  * @returns {Function} - Constructor with extended prototype and added statics.
  */
-/**
- * Created by elyde on 12/10/2016.
- */
-function subClass(superClass, constructor, methods, statics) {
-    var normalizedArgs = normalizeArgsForDefineSubClass.call(null, superClass, constructor, methods, statics),
+export function subClass (superClass, constructor, methods, statics) {
+    const normalizedArgs = normalizeArgsForDefineSubClass
+            .call(null, superClass, constructor, methods, statics),
         _superClass = normalizedArgs.superClass,
         _statics = normalizedArgs.statics,
         _constructor = normalizedArgs.constructor,
@@ -61,11 +52,11 @@ function subClass(superClass, constructor, methods, statics) {
     _constructor.prototype = Object.create(_superClass.prototype);
 
     // Define constructor
-    Object.defineProperty(_constructor.prototype, 'constructor', { value: _constructor });
+    Object.defineProperty(_constructor.prototype, 'constructor', {value: _constructor});
 
     // Extend constructor
-    (0, _assign.assign)(_constructor.prototype, _methods);
-    (0, _assign.assign)(_constructor, _statics);
+    assign(_constructor.prototype, _methods);
+    assign(_constructor, _statics);
 
     // Return constructor
     return _constructor;
@@ -79,8 +70,8 @@ function subClass(superClass, constructor, methods, statics) {
  * @param [statics] {Object|undefined}
  * @returns {Function}
  */
-function subClassMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
-    if ((0, _is.notEmptyAndOfType)(Array, ctorOrCtors)) {
+export function subClassMulti (ctorOrCtors, constructorOrMethods, methods, statics) {
+    if (notEmptyAndOfType(Array, ctorOrCtors)) {
         return ctorOrCtors.reduce(function (agg, Constructor) {
             return subClass(Constructor, agg);
         }, subClass(ctorOrCtors.shift(), constructorOrMethods, methods, statics));
@@ -88,7 +79,7 @@ function subClassMulti(ctorOrCtors, constructorOrMethods, methods, statics) {
     return subClass(ctorOrCtors, constructorOrMethods, methods, statics);
 }
 
-exports.default = {
-    subClass: subClass,
-    subClassMulti: subClassMulti
+export default {
+    subClass,
+    subClassMulti
 };

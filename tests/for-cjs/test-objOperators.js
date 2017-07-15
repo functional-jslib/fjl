@@ -10,7 +10,7 @@
 // generating browser version of test(s).
 'use strict';
 let {assert, expect}  = require('chai');
-let {complement, difference, union, intersect}  = require('../../dist/cjs/objOperators');
+let {complement, difference, union, intersect}  = require('../../dist/cjs/objectOps');
 let {expectFalse, expectEqual, expectFunction}  = require('./helpers');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

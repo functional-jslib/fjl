@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './arrayOperators', './curry'], factory);
+    define(['exports', './arrayOps', './curry'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./arrayOperators'), require('./curry'));
+    factory(exports, require('./arrayOps'), require('./curry'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.arrayOperators, global.curry);
+    factory(mod.exports, global.arrayOps, global.curry);
     global.stringOps = mod.exports;
   }
-})(this, function (exports, _arrayOperators, _curry) {
+})(this, function (exports, _arrayOps, _curry) {
   /**
    * Contains functions for operating strings.
    * @author elyde
@@ -62,7 +62,7 @@
    * @param arr {String}
    * @returns {Array}
    */
-  unwords = exports.unwords = (0, _arrayOperators.join)('\s'),
+  unwords = exports.unwords = (0, _arrayOps.join)('\s'),
 
 
   /**
@@ -71,7 +71,7 @@
    * @param str {String}
    * @returns {Array}
    */
-  unlines = exports.unlines = (0, _arrayOperators.join)('\n');
+  unlines = exports.unlines = (0, _arrayOps.join)('\n');
 
   exports.default = {
     split: split,

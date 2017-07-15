@@ -9,7 +9,7 @@
 let {assert, expect}  = require('chai');
 let compose  = require('../../dist/cjs/compose');
 let {__}  = require('../../dist/cjs/curry');
-let {complement, difference, union, intersect, flatten, flattenMulti, concat, join, equals}  = require('../../dist/cjs/arrayOperators');
+let {complement, difference, union, intersect, flatten, flattenMulti, concat, join, equals}  = require('../../dist/cjs/arrayOps');
 let {length, range, expectEqual, expectShallowEquals, expectInstanceOf}  = require('./helpers');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

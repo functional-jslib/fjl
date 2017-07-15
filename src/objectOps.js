@@ -10,7 +10,11 @@ export let
 
     hasOwnProperty = curry2((x, propName) => Object.prototype.hasOwnProperty.call(x, propName)),
 
+    toString = obj => obj.toString(),
+
     length = x => x.length,
+
+    keys = x => Object.keys(x),
 
     union = curry2((obj1, obj2) => assignDeep(obj1, obj2)),
 

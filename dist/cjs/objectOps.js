@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.complement = exports.difference = exports.intersect = exports.union = exports.hasOwnProperty = undefined;
+exports.complement = exports.difference = exports.intersect = exports.union = exports.keys = exports.length = exports.toString = exports.hasOwnProperty = undefined;
 
 var _assign = require('./assign');
 
@@ -17,6 +17,15 @@ var _curry = require('./curry');
 var hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry2)(function (x, propName) {
     return Object.prototype.hasOwnProperty.call(x, propName);
 }),
+    toString = exports.toString = function toString(obj) {
+    return obj.toString();
+},
+    length = exports.length = function length(x) {
+    return x.length;
+},
+    keys = exports.keys = function keys(x) {
+    return Object.keys(x);
+},
     union = exports.union = (0, _curry.curry2)(function (obj1, obj2) {
     return (0, _assign.assignDeep)(obj1, obj2);
 }),
@@ -48,6 +57,7 @@ var hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry2)(function (x, pr
 
 exports.default = {
     hasOwnProperty: hasOwnProperty,
+    length: length,
     complement: complement,
     difference: difference,
     intersect: intersect,

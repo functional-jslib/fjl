@@ -7,7 +7,7 @@
 // generating browser version of test(s).
 'use strict';
 import {typeOf, typeOfIs} from '../../src/typeOf';
-import {apply} from '../../src/fnOperators';
+import {apply} from '../../src/functionOps';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

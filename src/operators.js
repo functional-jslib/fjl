@@ -1,5 +1,6 @@
 /**
  * Created by elyde on 12/11/2016.
+ * A place to put the common ops (ops that can split between array, object, and possibly other) here.
  */
 
 'use strict';
@@ -10,12 +11,12 @@ import {typeOf} from './typeOf';
 import {complement as objComplement,
     difference as objDifference,
     union as objUnion,
-    intersect as objIntersect} from './objOperators';
+    intersect as objIntersect} from './objectOps';
 
 import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
-    intersect as arrayIntersect} from './arrayOperators';
+    intersect as arrayIntersect} from './arrayOps';
 
 export const
 

@@ -1,6 +1,7 @@
-define(['exports', './curry', './typeOf', './objOperators', './arrayOperators'], function (exports, _curry, _typeOf, _objOperators, _arrayOperators) {
+define(['exports', './curry', './typeOf', './objectOps', './arrayOps'], function (exports, _curry, _typeOf, _objectOps, _arrayOps) {
     /**
      * Created by elyde on 12/11/2016.
+     * A place to put the common ops (ops that can split between array, object, and possibly other) here.
      */
 
     'use strict';
@@ -16,33 +17,33 @@ define(['exports', './curry', './typeOf', './objOperators', './arrayOperators'],
 
         switch ((0, _typeOf.typeOf)(functor)) {
             case 'Array':
-                return _arrayOperators.complement.apply(undefined, [functor].concat(others));
+                return _arrayOps.complement.apply(undefined, [functor].concat(others));
             default:
-                return _objOperators.complement.apply(undefined, [functor].concat(others));
+                return _objectOps.complement.apply(undefined, [functor].concat(others));
         }
     }),
         difference = exports.difference = (0, _curry.curry2)(function (functor1, functor2) {
         switch ((0, _typeOf.typeOf)(functor1)) {
             case 'Array':
-                return (0, _arrayOperators.difference)(functor1, functor2);
+                return (0, _arrayOps.difference)(functor1, functor2);
             default:
-                return (0, _objOperators.difference)(functor1, functor2);
+                return (0, _objectOps.difference)(functor1, functor2);
         }
     }),
         union = exports.union = (0, _curry.curry2)(function (functor1, functor2) {
         switch ((0, _typeOf.typeOf)(functor1)) {
             case 'Array':
-                return (0, _arrayOperators.union)(functor1, functor2);
+                return (0, _arrayOps.union)(functor1, functor2);
             default:
-                return (0, _objOperators.union)(functor1, functor2);
+                return (0, _objectOps.union)(functor1, functor2);
         }
     }),
         intersect = exports.intersect = (0, _curry.curry2)(function (functor1, functor2) {
         switch ((0, _typeOf.typeOf)(functor1)) {
             case 'Array':
-                return (0, _arrayOperators.intersect)(functor1, functor2);
+                return (0, _arrayOps.intersect)(functor1, functor2);
             default:
-                return (0, _objOperators.intersect)(functor1, functor2);
+                return (0, _objectOps.intersect)(functor1, functor2);
         }
     });
 

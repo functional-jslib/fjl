@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['module', 'exports', './assign', './compose', './curry', './typeOf', './is', './errorIfNotTypeFactory', './fnOperators', './objOperators', './arrayOperators', './operators', './stringOps', './generated/version'], factory);
+        define(['module', 'exports', './assign', './compose', './curry', './typeOf', './is', './functionOps', './objectOps', './arrayOps', './operators', './stringOps', './generated/version'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(module, exports, require('./assign'), require('./compose'), require('./curry'), require('./typeOf'), require('./is'), require('./errorIfNotTypeFactory'), require('./fnOperators'), require('./objOperators'), require('./arrayOperators'), require('./operators'), require('./stringOps'), require('./generated/version'));
+        factory(module, exports, require('./assign'), require('./compose'), require('./curry'), require('./typeOf'), require('./is'), require('./functionOps'), require('./objectOps'), require('./arrayOps'), require('./operators'), require('./stringOps'), require('./generated/version'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod, mod.exports, global.assign, global.compose, global.curry, global.typeOf, global.is, global.errorIfNotTypeFactory, global.fnOperators, global.objOperators, global.arrayOperators, global.operators, global.stringOps, global.version);
+        factory(mod, mod.exports, global.assign, global.compose, global.curry, global.typeOf, global.is, global.functionOps, global.objectOps, global.arrayOps, global.operators, global.stringOps, global.version);
         global.fjl = mod.exports;
     }
-})(this, function (module, exports, _assign, _compose, _curry, _typeOf, _is, _errorIfNotTypeFactory, _fnOperators, _objOperators, _arrayOperators, _operators, _stringOps, _version) {
+})(this, function (module, exports, _assign, _compose, _curry, _typeOf, _is, _functionOps, _objectOps, _arrayOps, _operators, _stringOps, _version) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -18,8 +18,6 @@
     });
 
     var _compose2 = _interopRequireDefault(_compose);
-
-    var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
 
     var _version2 = _interopRequireDefault(_version);
 
@@ -31,14 +29,14 @@
 
     exports.default = {
         __: _curry.__,
-        apply: _fnOperators.apply,
-        arrayComplement: _arrayOperators.complement,
-        arrayDifference: _arrayOperators.difference,
-        arrayIntersect: _arrayOperators.intersect,
-        arrayUnion: _arrayOperators.union,
+        apply: _functionOps.apply,
+        arrayComplement: _arrayOps.complement,
+        arrayDifference: _arrayOps.difference,
+        arrayIntersect: _arrayOps.intersect,
+        arrayUnion: _arrayOps.union,
         assign: _assign.assign,
         assignDeep: _assign.assignDeep,
-        call: _fnOperators.call,
+        call: _functionOps.call,
         complement: _operators.complement,
         compose: _compose2.default,
         curry: _curry.curry,
@@ -54,12 +52,11 @@
         curry4_: _curry.curry4_,
         curry5_: _curry.curry5_,
         difference: _operators.difference,
-        errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
-        filter: _arrayOperators.filter,
-        flatten: _arrayOperators.flatten,
-        flattenMulti: _arrayOperators.flattenMulti,
-        head: _arrayOperators.head,
-        init: _arrayOperators.init,
+        filter: _arrayOps.filter,
+        flatten: _arrayOps.flatten,
+        flattenMulti: _arrayOps.flattenMulti,
+        head: _arrayOps.head,
+        init: _arrayOps.init,
         intersect: _operators.intersect,
         instanceOf: _is.instanceOf,
         isset: _is.isset,
@@ -79,25 +76,25 @@
         isSymbol: _is.isSymbol,
         isEmpty: _is.isEmpty,
         isConstructablePrimitive: _is.isConstructablePrimitive,
-        last: _arrayOperators.last,
-        map: _arrayOperators.map,
+        last: _arrayOps.last,
+        map: _arrayOps.map,
         notEmptyAndOfType: _is.notEmptyAndOfType,
-        objComplement: _objOperators.complement,
-        objDifference: _objOperators.difference,
-        objIntersect: _objOperators.intersect,
-        objUnion: _objOperators.union,
-        reduce: _arrayOperators.reduce,
-        reduceRight: _arrayOperators.reduceRight,
-        reverse: _arrayOperators.reverse,
-        tail: _arrayOperators.tail,
+        objComplement: _objectOps.complement,
+        objDifference: _objectOps.difference,
+        objIntersect: _objectOps.intersect,
+        objUnion: _objectOps.union,
+        reduce: _arrayOps.reduce,
+        reduceRight: _arrayOps.reduceRight,
+        reverse: _arrayOps.reverse,
+        tail: _arrayOps.tail,
         typeOf: _typeOf.typeOf,
         typeOfIs: _typeOf.typeOfIs,
         union: _operators.union,
-        join: _arrayOperators.join, split: _stringOps.split, lines: _stringOps.lines, words: _stringOps.words, unlines: _stringOps.unlines, unwords: _stringOps.unwords,
-        orderedLengths: _arrayOperators.orderedLengths, zip: _arrayOperators.zip, zipN: _arrayOperators.zipN, unzip: _arrayOperators.unzip, unzipN: _arrayOperators.unzipN,
-        getSortByOrder: _arrayOperators.getSortByOrder, sortAsc: _arrayOperators.sortAsc, sortDesc: _arrayOperators.sortDesc, sortDescByLength: _arrayOperators.sortDescByLength, concat: _arrayOperators.concat,
-        ASC: _arrayOperators.ASC, DESC: _arrayOperators.DESC,
-        lengths: _arrayOperators.lengths,
+        join: _arrayOps.join, split: _stringOps.split, lines: _stringOps.lines, words: _stringOps.words, unlines: _stringOps.unlines, unwords: _stringOps.unwords,
+        orderedLengths: _arrayOps.orderedLengths, zip: _arrayOps.zip, zipN: _arrayOps.zipN, unzip: _arrayOps.unzip, unzipN: _arrayOps.unzipN,
+        getSortByOrder: _arrayOps.getSortByOrder, sortAsc: _arrayOps.sortAsc, sortDesc: _arrayOps.sortDesc, sortDescByLength: _arrayOps.sortDescByLength, concat: _arrayOps.concat,
+        ASC: _arrayOps.ASC, DESC: _arrayOps.DESC,
+        lengths: _arrayOps.lengths,
         version: _version2.default
     };
     module.exports = exports['default'];

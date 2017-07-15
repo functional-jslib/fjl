@@ -4,7 +4,7 @@
 
 'use strict';
 
-import {subClassMulti} from '../../../src/subClass';
+import {subClassMulti} from '../../src/subClass';
 import Extract from '../../../tests/for-server/functor/Extract';
 import Bifunctor from '../../../tests/for-server/functor/Bifunctor';
 
