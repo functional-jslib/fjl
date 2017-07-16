@@ -8,10 +8,10 @@ export const
     isset = value => !!value,
     and = (...args) => args.every(isset),
     or = (...args) => args.some(isset),
-    not = (...args) => negate(isset);
+    not = (...args) => negate(isset).apply(null, ...args);
 
 export default {
     and,
     or,
     not
-}
+};

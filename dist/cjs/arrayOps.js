@@ -19,6 +19,12 @@ var _functionOps = require('./functionOps');
 
 var _is = require('./is');
 
+var _negate = require('./negate');
+
+var _negate2 = _interopRequireDefault(_negate);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
@@ -27,8 +33,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 function defineReverse() {
     return Array.prototype.reverse ? function (x) {
         return x.reverse();
-    } : function (functor) {
-        return functor.reduceRight(function (agg, item) {
+    } : function (x) {
+        return x.reduceRight(function (agg, item) {
             agg.push(item);
             return agg;
         }, []);
@@ -176,7 +182,7 @@ last = exports.last = function last(functor) {
     return [takeWhile(predicate, arr), dropWhile(predicate, arr)];
 }),
     breakOnList = exports.breakOnList = (0, _curry.curry2)(function (predicate, arr) {
-    return [takeWhile(not(predicate), arr), dropWhile(not(predicate), arr)];
+    return [takeWhile((0, _negate2.default)(predicate), arr), dropWhile((0, _negate2.default)(predicate), arr)];
 }),
 
 
@@ -205,7 +211,14 @@ orderedLengths = exports.orderedLengths = (0, _curry.curry2)(function (orderDir)
 
     return length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : [];
 }),
-    trimLengths = exports.trimLengths = function trimLengths() {
+
+
+/**
+ * Return a new set of arrays of the ones passed in sliced to the shortest ones length.
+ * @param arrays {...Array}
+ * @returns {Array<Array>}
+ */
+trimLengths = exports.trimLengths = function trimLengths() {
     for (var _len4 = arguments.length, arrays = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
         arrays[_key4] = arguments[_key4];
     }

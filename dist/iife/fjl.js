@@ -554,11 +554,32 @@ var fjl = function () {
      * Set functions for objects.
      */
 
+    var assignDeep$1 = function assignDeep$1(obj0) {
+        for (var _len14 = arguments.length, objs = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
+            objs[_key14 - 1] = arguments[_key14];
+        }
+
+        return objs.reduce(function (topAgg, obj) {
+            return Object.keys(obj).reduce(function (agg, key) {
+                var propDescription = Object.getOwnPropertyDescriptor(agg, key);
+                // If property is not writable move to next item in collection
+                if (agg.hasOwnProperty(key) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+                    return agg;
+                }
+                if (isObject(agg[key]) && isObject(obj[key])) {
+                    assignDeep$1(agg[key], obj[key]);
+                } else {
+                    agg[key] = obj[key];
+                }
+                return agg;
+            }, topAgg);
+        }, obj0);
+    };
     var hasOwnProperty = curry2(function (x, propName) {
-        return Object.prototype.hasOwnProperty.call(x, propName);
+        return x.hasOwnProperty(propName);
     });
     var union = curry2(function (obj1, obj2) {
-        return assignDeep(obj1, obj2);
+        return assignDeep$1(obj1, obj2);
     });
     var intersect = curry2(function (obj1, obj2) {
         return Object.keys(obj1).reduce(function (agg, key) {
@@ -577,14 +598,24 @@ var fjl = function () {
         }, {});
     });
     var complement = curry2(function (obj0) {
-        for (var _len14 = arguments.length, objs = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
-            objs[_key14 - 1] = arguments[_key14];
+        for (var _len15 = arguments.length, objs = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
+            objs[_key15 - 1] = arguments[_key15];
         }
 
         return objs.reduce(function (agg, obj) {
-            return assignDeep(agg, difference(obj, obj0));
+            return assignDeep$1(agg, difference(obj, obj0));
         }, {});
     });
+
+    /**
+     * Created by elyde on 7/15/2017.
+     */
+
+    var negate = function negate(x) {
+        return isFunction(x) ? function (value) {
+            return !x(value);
+        } : x * -1;
+    };
 
     /**
      * Array operators module.
@@ -598,8 +629,8 @@ var fjl = function () {
     function defineReverse() {
         return Array.prototype.reverse ? function (x) {
             return x.reverse();
-        } : function (functor) {
-            return functor.reduceRight(function (agg, item) {
+        } : function (x) {
+            return x.reduceRight(function (agg, item) {
                 agg.push(item);
                 return agg;
             }, []);
@@ -615,8 +646,8 @@ var fjl = function () {
         return arr ? arr.join(separator) : '';
     });
     var concat = curry2(function (arr0) {
-        for (var _len15 = arguments.length, arrays = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
-            arrays[_key15 - 1] = arguments[_key15];
+        for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
+            arrays[_key16 - 1] = arguments[_key16];
         }
 
         return arr0.concat.apply(arr0, arrays);
@@ -633,8 +664,8 @@ var fjl = function () {
             ifGreaterThan = 1 * x,
             ifLessThan = -1 * x;
         return function () {
-            for (var _len16 = arguments.length, values = Array(_len16), _key16 = 0; _key16 < _len16; _key16++) {
-                values[_key16] = arguments[_key16];
+            for (var _len17 = arguments.length, values = Array(_len17), _key17 = 0; _key17 < _len17; _key17++) {
+                values[_key17] = arguments[_key17];
             }
 
             return values.sort(function (a1, b1) {
@@ -697,7 +728,7 @@ var fjl = function () {
         return [takeWhile(predicate, arr), dropWhile(predicate, arr)];
     });
     var breakOnList = curry2(function (predicate, arr) {
-        return [takeWhile(not(predicate), arr), dropWhile(not(predicate), arr)];
+        return [takeWhile(negate(predicate), arr), dropWhile(negate(predicate), arr)];
     });
     var lengths = curry2.apply(undefined, _toConsumableArray(function (arrs) {
         return arrs.length ? arrs.map(function (arr) {
@@ -705,15 +736,15 @@ var fjl = function () {
         }) : [];
     }));
     var orderedLengths = curry2(function (orderDir) {
-        for (var _len17 = arguments.length, arrs = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
-            arrs[_key17 - 1] = arguments[_key17];
+        for (var _len18 = arguments.length, arrs = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
+            arrs[_key18 - 1] = arguments[_key18];
         }
 
         return length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : [];
     });
     var trimLengths = function trimLengths() {
-        for (var _len18 = arguments.length, arrays = Array(_len18), _key18 = 0; _key18 < _len18; _key18++) {
-            arrays[_key18] = arguments[_key18];
+        for (var _len19 = arguments.length, arrays = Array(_len19), _key19 = 0; _key19 < _len19; _key19++) {
+            arrays[_key19] = arguments[_key19];
         }
 
         var smallLen = orderedLengths(ASC, arrays)[0];
@@ -744,8 +775,8 @@ var fjl = function () {
         }, []);
     };
     var flattenMulti = curry2(function (arr0) {
-        for (var _len19 = arguments.length, arrays = Array(_len19 > 1 ? _len19 - 1 : 0), _key19 = 1; _key19 < _len19; _key19++) {
-            arrays[_key19 - 1] = arguments[_key19];
+        for (var _len20 = arguments.length, arrays = Array(_len20 > 1 ? _len20 - 1 : 0), _key20 = 1; _key20 < _len20; _key20++) {
+            arrays[_key20 - 1] = arguments[_key20];
         }
 
         return reduce(function (agg, arr) {
@@ -763,8 +794,8 @@ var fjl = function () {
         }, []);
     });
     var zipN = curry2(function () {
-        for (var _len20 = arguments.length, arrs = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {
-            arrs[_key20] = arguments[_key20];
+        for (var _len21 = arguments.length, arrs = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {
+            arrs[_key21] = arguments[_key21];
         }
 
         var lists = apply(trimLengths, arrs);
@@ -788,8 +819,8 @@ var fjl = function () {
         }, [[], []], arr);
     };
     var unzipN = function unzipN() {
-        for (var _len21 = arguments.length, arrs = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {
-            arrs[_key21] = arguments[_key21];
+        for (var _len22 = arguments.length, arrs = Array(_len22), _key22 = 0; _key22 < _len22; _key22++) {
+            arrs[_key22] = arguments[_key22];
         }
 
         return reduce(function (agg, item) {
@@ -825,8 +856,8 @@ var fjl = function () {
         }, [], arr1);
     });
     var complement$1 = curry2(function (arr0) {
-        for (var _len22 = arguments.length, arrays = Array(_len22 > 1 ? _len22 - 1 : 0), _key22 = 1; _key22 < _len22; _key22++) {
-            arrays[_key22 - 1] = arguments[_key22];
+        for (var _len23 = arguments.length, arrays = Array(_len23 > 1 ? _len23 - 1 : 0), _key23 = 1; _key23 < _len23; _key23++) {
+            arrays[_key23 - 1] = arguments[_key23];
         }
 
         return reduce(function (agg, arr) {
@@ -840,8 +871,8 @@ var fjl = function () {
      */
 
     var complement$2 = curry2(function (functor) {
-        for (var _len23 = arguments.length, others = Array(_len23 > 1 ? _len23 - 1 : 0), _key23 = 1; _key23 < _len23; _key23++) {
-            others[_key23 - 1] = arguments[_key23];
+        for (var _len24 = arguments.length, others = Array(_len24 > 1 ? _len24 - 1 : 0), _key24 = 1; _key24 < _len24; _key24++) {
+            others[_key24 - 1] = arguments[_key24];
         }
 
         switch (typeOf(functor)) {
@@ -893,7 +924,7 @@ var fjl = function () {
 
     /**
      * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
-     * Generated Sat Jul 15 2017 14:02:08 GMT-0400 (Eastern Daylight Time) 
+     * Generated Sat Jul 15 2017 21:24:15 GMT-0400 (Eastern Daylight Time) 
      */
 
     var version = '0.13.0';

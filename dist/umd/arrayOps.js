@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './curry', './functionOps', './is'], factory);
+        define(['exports', './curry', './functionOps', './is', './negate'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./curry'), require('./functionOps'), require('./is'));
+        factory(exports, require('./curry'), require('./functionOps'), require('./is'), require('./negate'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry, global.functionOps, global.is);
+        factory(mod.exports, global.curry, global.functionOps, global.is, global.negate);
         global.arrayOps = mod.exports;
     }
-})(this, function (exports, _curry, _functionOps, _is) {
+})(this, function (exports, _curry, _functionOps, _is, _negate) {
     /**
      * Array operators module.
      * @module arrayOperators
@@ -23,6 +23,14 @@
         value: true
     });
     exports.complement = exports.difference = exports.intersect = exports.union = exports.unzipN = exports.unzip = exports.zipN = exports.zip = exports.flattenMulti = exports.flatten = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = exports.trimLengths = exports.orderedLengths = exports.lengths = exports.breakOnList = exports.span = exports.dropWhile = exports.takeWhile = exports.rangeOnIterable = exports.splitAt = exports.splitArrayAt = exports.splitStrAt = exports.drop = exports.take = exports.last = exports.init = exports.tail = exports.head = exports.sortDescByLength = exports.sortAsc = exports.sortDesc = exports.getSortByOrder = exports.onlyOneOrNegOne = exports.concat = exports.join = exports.not = exports.DESC = exports.ASC = undefined;
+
+    var _negate2 = _interopRequireDefault(_negate);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
 
     var _slicedToArray = function () {
         function sliceIterator(arr, i) {
@@ -80,8 +88,8 @@
     function defineReverse() {
         return Array.prototype.reverse ? function (x) {
             return x.reverse();
-        } : function (functor) {
-            return functor.reduceRight(function (agg, item) {
+        } : function (x) {
+            return x.reduceRight(function (agg, item) {
                 agg.push(item);
                 return agg;
             }, []);
@@ -229,7 +237,7 @@
         return [takeWhile(predicate, arr), dropWhile(predicate, arr)];
     }),
         breakOnList = exports.breakOnList = (0, _curry.curry2)(function (predicate, arr) {
-        return [takeWhile(not(predicate), arr), dropWhile(not(predicate), arr)];
+        return [takeWhile((0, _negate2.default)(predicate), arr), dropWhile((0, _negate2.default)(predicate), arr)];
     }),
 
 
@@ -258,7 +266,14 @@
 
         return length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : [];
     }),
-        trimLengths = exports.trimLengths = function trimLengths() {
+
+
+    /**
+     * Return a new set of arrays of the ones passed in sliced to the shortest ones length.
+     * @param arrays {...Array}
+     * @returns {Array<Array>}
+     */
+    trimLengths = exports.trimLengths = function trimLengths() {
         for (var _len4 = arguments.length, arrays = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
             arrays[_key4] = arguments[_key4];
         }

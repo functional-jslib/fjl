@@ -9,6 +9,7 @@
 import {curry2, curry3} from './curry';
 import {apply} from './functionOps';
 import {isString} from './is';
+import negate from './negate';
 
 /**
  * @returns {Function}
@@ -138,8 +139,8 @@ export const
     ]),
 
     breakOnList = curry2((predicate, arr) => [
-        takeWhile(not(predicate), arr),
-        dropWhile(not(predicate), arr)
+        takeWhile(negate(predicate), arr),
+        dropWhile(negate(predicate), arr)
     ]),
 
     /**
@@ -157,6 +158,11 @@ export const
      */
     orderedLengths = curry2((orderDir, ...arrs) => length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : []),
 
+    /**
+     * Return a new set of arrays of the ones passed in sliced to the shortest ones length.
+     * @param arrays {...Array}
+     * @returns {Array<Array>}
+     */
     trimLengths = (...arrays) => {
         const smallLen = orderedLengths(ASC, arrays)[0];
         return arrays.map(arr => arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0));
