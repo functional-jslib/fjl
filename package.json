@@ -3,6 +3,7 @@
   "version": "0.13.0",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl.js",
+  "module": "src/fjl.js",
   "directories": {
     "test": "tests"
   },
