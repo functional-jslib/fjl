@@ -6,6 +6,9 @@ require.config({
         'test-suite': {
             deps: ['fjl', 'mocha', 'chai', 'prepare']
         },
+        run: {
+            deps: ['mocha', 'fjl', 'prepare', 'test-suite']
+        },
         mocha: {
             init: function () {
                 this.mocha.setup('bdd');

@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = compose;
 
 /**
  * Composes all functions passed in from right to left passing the return value of the function to the right of a function to left.
@@ -12,7 +11,7 @@ exports.default = compose;
  * @param args {...Function}
  * @returns {Function}
  */
-function compose() {
+var compose = exports.compose = function compose() {
   for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
     args[_key] = arguments[_key];
   }
@@ -22,5 +21,6 @@ function compose() {
       return fn(value);
     }, arg0);
   };
-}
-module.exports = exports["default"];
+};
+
+exports.default = compose;

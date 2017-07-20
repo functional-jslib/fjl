@@ -6,8 +6,8 @@
 // This part gets stripped out when
 // generating browser version of test(s).
 'use strict';
-let {assert, expect}  = require('chai');
-let compose  = require('../../dist/cjs/compose');
+let {expect}  = require('chai');
+let {compose}  = require('../../dist/cjs/compose');
 let {curry_, curry2_, curry3_, curry5_, __}  = require('../../dist/cjs/curry');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

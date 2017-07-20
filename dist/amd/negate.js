@@ -5,9 +5,5 @@ define(['exports', './is'], function (exports, _is) {
     value: true
   });
 
-  exports.default = function (x) {
-    return (0, _is.isFunction)(x) ? function (value) {
-      return !x(value);
-    } : x * -1;
-  };
+  exports.default = x => (0, _is.isFunction)(x) ? value => !x(value) : x * -1;
 });

@@ -6,7 +6,7 @@
 // generating browser version of test(s).
 'use strict';
 let {expect}  = require('chai');
-let compose  = require('../../dist/cjs/compose');
+let {compose}  = require('../../dist/cjs/compose');
 let {curry2}  = require('../../dist/cjs/curry');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

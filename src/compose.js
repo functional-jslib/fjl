@@ -6,6 +6,6 @@
  * @param args {...Function}
  * @returns {Function}
  */
-export default function compose (...args) {
-    return arg0 => args.reduceRight((value, fn) => fn(value), arg0);
-}
+export let compose = (...args) => arg0 => args.reduceRight((value, fn) => fn(value), arg0);
+
+export default compose;

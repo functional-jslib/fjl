@@ -6,13 +6,8 @@ define(['exports', './curry'], function (exports, _curry) {
     });
     exports.typeOfIs = exports.typeOf = undefined;
 
-    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-        return typeof obj;
-    } : function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
 
-    var _Number = Number.name,
+    let _Number = Number.name,
         _NaN = 'NaN',
         _Null = 'Null',
         _Undefined = 'Undefined',
@@ -26,14 +21,18 @@ define(['exports', './curry'], function (exports, _curry) {
      * @param value {*}
      * @returns {string} - A string representation of the type of the value; E.g., 'Number' for `0`
      */
-    var typeOf = exports.typeOf = function typeOf(value) {
-        var retVal = void 0;
-        if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined) {
+    /**
+     * Created by elyde on 12/18/2016.
+     */
+
+    const typeOf = exports.typeOf = value => {
+        let retVal;
+        if (typeof value === _undefined) {
             retVal = _Undefined;
         } else if (value === null) {
             retVal = _Null;
         } else {
-            var constructorName = value.constructor.name;
+            let constructorName = value.constructor.name;
             retVal = constructorName === _Number && isNaN(value) ? _NaN : constructorName;
         }
         return retVal;
@@ -54,12 +53,10 @@ define(['exports', './curry'], function (exports, _curry) {
      * @param obj {*} - Object to be checked.
      * @returns {Boolean} - Whether object matches class string or not.
      */
-    typeOfIs = exports.typeOfIs = (0, _curry.curry2)(function (type, obj) {
-        return typeOf(obj) === (type instanceof Function ? type.name : type);
-    });
+    typeOfIs = exports.typeOfIs = (0, _curry.curry2)((type, obj) => typeOf(obj) === (type instanceof Function ? type.name : type));
 
     exports.default = {
-        typeOf: typeOf,
-        typeOfIs: typeOfIs
+        typeOf,
+        typeOfIs
     };
 });

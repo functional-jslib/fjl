@@ -20,75 +20,19 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
         };
     }
 
-    var _slicedToArray = function () {
-        function sliceIterator(arr, i) {
-            var _arr = [];
-            var _n = true;
-            var _d = false;
-            var _e = undefined;
-
-            try {
-                for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-                    _arr.push(_s.value);
-
-                    if (i && _arr.length === i) break;
-                }
-            } catch (err) {
-                _d = true;
-                _e = err;
-            } finally {
-                try {
-                    if (!_n && _i["return"]) _i["return"]();
-                } finally {
-                    if (_d) throw _e;
-                }
-            }
-
-            return _arr;
-        }
-
-        return function (arr, i) {
-            if (Array.isArray(arr)) {
-                return arr;
-            } else if (Symbol.iterator in Object(arr)) {
-                return sliceIterator(arr, i);
-            } else {
-                throw new TypeError("Invalid attempt to destructure non-iterable instance");
-            }
-        };
-    }();
-
-    function _toConsumableArray(arr) {
-        if (Array.isArray(arr)) {
-            for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-                arr2[i] = arr[i];
-            }
-
-            return arr2;
-        } else {
-            return Array.from(arr);
-        }
-    }
-
     /**
      * @returns {Function}
      */
     function defineReverse() {
-        return Array.prototype.reverse ? function (x) {
-            return x.reverse();
-        } : function (x) {
-            return x.reduceRight(function (agg, item) {
-                agg.push(item);
-                return agg;
-            }, []);
-        };
+        return Array.prototype.reverse ? x => x.reverse() : x => x.reduceRight((agg, item) => {
+            agg.push(item);
+            return agg;
+        }, []);
     }
 
-    var ASC = exports.ASC = 1,
-        DESC = exports.DESC = -1,
-        not = exports.not = (0, _curry.curry2)(function (p, elm) {
-        return !p(elm);
-    }),
+    const ASC = exports.ASC = 1,
+          DESC = exports.DESC = -1,
+          not = exports.not = (0, _curry.curry2)((p, elm) => !p(elm)),
 
 
     /**
@@ -98,9 +42,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param arr {Array}
      * @returns {String}
      */
-    join = exports.join = (0, _curry.curry2)(function (separator, arr) {
-        return arr ? arr.join(separator) : '';
-    }),
+    join = exports.join = (0, _curry.curry2)((separator, arr) => arr ? arr.join(separator) : ''),
 
 
     /**
@@ -110,46 +52,26 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param ...arrays {Array}
      * @type {Function}
      */
-    concat = exports.concat = (0, _curry.curry2)(function (arr0) {
-        for (var _len = arguments.length, arrays = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-            arrays[_key - 1] = arguments[_key];
-        }
-
-        return arr0.concat.apply(arr0, arrays);
-    }),
-        onlyOneOrNegOne = exports.onlyOneOrNegOne = function onlyOneOrNegOne(x) {
-        return x === 1 || x === -1 ? x : 1;
-    },
-        getSortByOrder = exports.getSortByOrder = (0, _curry.curry2)(function (multiplier) {
-        var valueFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (v) {
-            return v;
-        };
-
-        var x = onlyOneOrNegOne(multiplier),
-            ifGreaterThan = 1 * x,
-            ifLessThan = -1 * x;
-        return function () {
-            for (var _len2 = arguments.length, values = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-                values[_key2] = arguments[_key2];
+    concat = exports.concat = (0, _curry.curry2)((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
+          onlyOneOrNegOne = exports.onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
+          getSortByOrder = exports.getSortByOrder = (0, _curry.curry2)((multiplier, valueFn = v => v) => {
+        const x = onlyOneOrNegOne(multiplier),
+              ifGreaterThan = 1 * x,
+              ifLessThan = -1 * x;
+        return (...values) => values.sort((a1, b1) => {
+            let a = valueFn(a1),
+                b = valueFn(b1);
+            if (a > b) {
+                return ifGreaterThan;
+            } else if (b > a) {
+                return ifLessThan;
             }
-
-            return values.sort(function (a1, b1) {
-                var a = valueFn(a1),
-                    b = valueFn(b1);
-                if (a > b) {
-                    return ifGreaterThan;
-                } else if (b > a) {
-                    return ifLessThan;
-                }
-                return 0;
-            });
-        };
+            return 0;
+        });
     }),
-        sortDesc = exports.sortDesc = getSortByOrder(DESC),
-        sortAsc = exports.sortAsc = getSortByOrder(ASC),
-        sortDescByLength = exports.sortDescByLength = getSortByOrder(DESC, function (x) {
-        return x.length;
-    }),
+          sortDesc = exports.sortDesc = getSortByOrder(DESC),
+          sortAsc = exports.sortAsc = getSortByOrder(ASC),
+          sortDescByLength = exports.sortDescByLength = getSortByOrder(DESC, x => x.length),
 
 
     /**
@@ -158,9 +80,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param functor {Array}
      * @returns {*} - First item from array
      */
-    head = exports.head = function head(functor) {
-        return functor[0];
-    },
+    head = exports.head = functor => functor[0],
 
 
     /**
@@ -169,9 +89,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param functor {Array}
      * @returns {Array}
      */
-    tail = exports.tail = function tail(functor) {
-        return functor.slice(1);
-    },
+    tail = exports.tail = functor => functor.slice(1),
 
 
     /**
@@ -180,9 +98,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param functor {Array}
      * @returns {Array}
      */
-    init = exports.init = function init(functor) {
-        return functor.slice(0, functor.length - 1);
-    },
+    init = exports.init = functor => functor.slice(0, functor.length - 1),
 
 
     /**
@@ -191,42 +107,21 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param functor {Array}
      * @returns {*}
      */
-    last = exports.last = function last(functor) {
-        return functor[functor.length - 1];
-    },
-        take = exports.take = (0, _curry.curry2)(function (limit, array) {
-        return array.slice(0, limit - 1);
+    last = exports.last = functor => functor[functor.length - 1],
+          take = exports.take = (0, _curry.curry2)((limit, array) => array.slice(0, limit - 1)),
+          drop = exports.drop = (0, _curry.curry2)((count, array) => array.slice(count, array.length - 1)),
+          splitStrAt = exports.splitStrAt = (0, _curry.curry2)((ind, str) => [str.substring(0, ind), str.substring(ind, str.length)]),
+          splitArrayAt = exports.splitArrayAt = (0, _curry.curry2)((ind, arr) => [arr.slice(0, ind), arr.slice(ind, arr.length)]),
+          splitAt = exports.splitAt = (0, _curry.curry2)((ind, x) => (0, _is.isString)(x) ? splitStrAt(ind, x) : splitArrayAt(ind, x)),
+          rangeOnIterable = exports.rangeOnIterable = (0, _curry.curry2)((predicate, arr) => {
+        let ind = 0;
+        while (predicate(arr[ind]) && ind < arr.length) ind += 1;
+        return ind;
     }),
-        drop = exports.drop = (0, _curry.curry2)(function (count, array) {
-        return array.slice(count, array.length - 1);
-    }),
-        splitStrAt = exports.splitStrAt = (0, _curry.curry2)(function (ind, str) {
-        return [str.substring(0, ind), str.substring(ind, str.length)];
-    }),
-        splitArrayAt = exports.splitArrayAt = (0, _curry.curry2)(function (ind, arr) {
-        return [arr.slice(0, ind), arr.slice(ind, arr.length)];
-    }),
-        splitAt = exports.splitAt = (0, _curry.curry2)(function (ind, x) {
-        return (0, _is.isString)(x) ? splitStrAt(ind, x) : splitArrayAt(ind, x);
-    }),
-        rangeOnIterable = exports.rangeOnIterable = (0, _curry.curry2)(function (predicate, arr) {
-        var ind = 0;
-        while (predicate(arr[ind]) && ind < arr.length) {
-            ind += 1;
-        }return ind;
-    }),
-        takeWhile = exports.takeWhile = (0, _curry.curry2)(function (predicate, arr) {
-        return arr.slice(0, rangeOnIterable(predicate, arr));
-    }),
-        dropWhile = exports.dropWhile = (0, _curry.curry2)(function (predicate, arr) {
-        return arr.slice(rangeOnIterable(predicate, arr), arr.length - 1);
-    }),
-        span = exports.span = (0, _curry.curry2)(function (predicate, arr) {
-        return [takeWhile(predicate, arr), dropWhile(predicate, arr)];
-    }),
-        breakOnList = exports.breakOnList = (0, _curry.curry2)(function (predicate, arr) {
-        return [takeWhile((0, _negate2.default)(predicate), arr), dropWhile((0, _negate2.default)(predicate), arr)];
-    }),
+          takeWhile = exports.takeWhile = (0, _curry.curry2)((predicate, arr) => arr.slice(0, rangeOnIterable(predicate, arr))),
+          dropWhile = exports.dropWhile = (0, _curry.curry2)((predicate, arr) => arr.slice(rangeOnIterable(predicate, arr), arr.length - 1)),
+          span = exports.span = (0, _curry.curry2)((predicate, arr) => [takeWhile(predicate, arr), dropWhile(predicate, arr)]),
+          breakOnList = exports.breakOnList = (0, _curry.curry2)((predicate, arr) => [takeWhile((0, _negate2.default)(predicate), arr), dropWhile((0, _negate2.default)(predicate), arr)]),
 
 
     /**
@@ -234,11 +129,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param arrs {...Array}
      * @type {Function}
      */
-    lengths = exports.lengths = _curry.curry2.apply(undefined, _toConsumableArray(function (arrs) {
-        return arrs.length ? arrs.map(function (arr) {
-            return arr.length;
-        }) : [];
-    })),
+    lengths = exports.lengths = (0, _curry.curry2)(...arrs => arrs.length ? arrs.map(arr => arr.length) : []),
 
 
     /**
@@ -247,13 +138,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param arrs {...Array}
      * @returns {Array} - Array of lengths;
      */
-    orderedLengths = exports.orderedLengths = (0, _curry.curry2)(function (orderDir) {
-        for (var _len3 = arguments.length, arrs = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-            arrs[_key3 - 1] = arguments[_key3];
-        }
-
-        return length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : [];
-    }),
+    orderedLengths = exports.orderedLengths = (0, _curry.curry2)((orderDir, ...arrs) => length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : []),
 
 
     /**
@@ -261,15 +146,9 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param arrays {...Array}
      * @returns {Array<Array>}
      */
-    trimLengths = exports.trimLengths = function trimLengths() {
-        for (var _len4 = arguments.length, arrays = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-            arrays[_key4] = arguments[_key4];
-        }
-
-        var smallLen = orderedLengths(ASC, arrays)[0];
-        return arrays.map(function (arr) {
-            return arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0);
-        });
+    trimLengths = exports.trimLengths = (...arrays) => {
+        const smallLen = orderedLengths(ASC, arrays)[0];
+        return arrays.map(arr => arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0));
     },
 
 
@@ -288,9 +167,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
      */
-    map = exports.map = (0, _curry.curry2)(function (fn, functor) {
-        return functor.map(fn);
-    }),
+    map = exports.map = (0, _curry.curry2)((fn, functor) => functor.map(fn)),
 
 
     /**
@@ -300,9 +177,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
      */
-    filter = exports.filter = (0, _curry.curry2)(function (fn, arr) {
-        return arr.filter(fn);
-    }),
+    filter = exports.filter = (0, _curry.curry2)((fn, arr) => arr.filter(fn)),
 
 
     /**
@@ -312,9 +187,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
      */
-    reduce = exports.reduce = (0, _curry.curry2)(function (fn, agg, arr) {
-        return arr.reduce(fn, agg);
-    }),
+    reduce = exports.reduce = (0, _curry.curry2)((fn, agg, arr) => arr.reduce(fn, agg)),
 
 
     /**
@@ -324,9 +197,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
      */
-    reduceRight = exports.reduceRight = (0, _curry.curry3)(function (fn, agg, functor) {
-        return functor.reduceRight(fn, agg);
-    }),
+    reduceRight = exports.reduceRight = (0, _curry.curry3)((fn, agg, functor) => functor.reduceRight(fn, agg)),
 
 
     /**
@@ -335,15 +206,13 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param arr {Array}
      * @returns {Array}
      */
-    flatten = exports.flatten = function flatten(arr) {
-        return arr.reduce(function (agg, elm) {
-            if (Array.isArray(elm)) {
-                return concat(agg, flatten(elm));
-            }
-            agg.push(elm);
-            return agg;
-        }, []);
-    },
+    flatten = exports.flatten = arr => arr.reduce((agg, elm) => {
+        if (Array.isArray(elm)) {
+            return concat(agg, flatten(elm));
+        }
+        agg.push(elm);
+        return agg;
+    }, []),
 
 
     /**
@@ -353,15 +222,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param [...arrays{Array}] - Other arrays to flatten into new array.
      * @returns {Array}
      */
-    flattenMulti = exports.flattenMulti = (0, _curry.curry2)(function (arr0) {
-        for (var _len5 = arguments.length, arrays = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-            arrays[_key5 - 1] = arguments[_key5];
-        }
-
-        return reduce(function (agg, arr) {
-            return concat(agg, flatten(arr));
-        }, flatten(arr0), arrays);
-    }),
+    flattenMulti = exports.flattenMulti = (0, _curry.curry2)((arr0, ...arrays) => reduce((agg, arr) => concat(agg, flatten(arr)), flatten(arr0), arrays)),
 
 
     /**
@@ -370,51 +231,36 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip = exports.zip = (0, _curry.curry2)(function (arr1, arr2) {
-        var _trimLengths = trimLengths(arr1, arr2),
-            a1 = _trimLengths[0],
-            a2 = _trimLengths[1];
-
-        return a1.reduce(function (agg, item, ind) {
+    zip = exports.zip = (0, _curry.curry2)((arr1, arr2) => {
+        const { 0: a1, 1: a2 } = trimLengths(arr1, arr2);
+        return a1.reduce((agg, item, ind) => {
             agg.push([item, a2[ind]]);
             return agg;
         }, []);
     }),
-        zipN = exports.zipN = (0, _curry.curry2)(function () {
-        for (var _len6 = arguments.length, arrs = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-            arrs[_key6] = arguments[_key6];
-        }
-
-        var lists = (0, _functionOps.apply)(trimLengths, arrs);
-        return lists.reduce(function (agg, arr, ind) {
+          zipN = exports.zipN = (0, _curry.curry2)((...arrs) => {
+        const lists = (0, _functionOps.apply)(trimLengths, arrs);
+        return lists.reduce((agg, arr, ind) => {
             if (!ind) {
                 return zip(agg, arr);
             }
-            return agg.map(function (arr2) {
-                arr.forEach(function (elm) {
+            return agg.map(arr2 => {
+                arr.forEach(elm => {
                     arr2.push(elm);
                 });
                 return arr2;
             });
         }, lists.shift());
     }),
-        unzip = exports.unzip = function unzip(arr) {
-        return reduce(function (agg, item) {
-            agg[0].push(item[0]);
-            agg[1].push(item[1]);
-            return agg;
-        }, [[], []], arr);
-    },
-        unzipN = exports.unzipN = function unzipN() {
-        for (var _len7 = arguments.length, arrs = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-            arrs[_key7] = arguments[_key7];
-        }
-
-        return reduce(function (agg, item) {
-            agg.push(unzip(item));
-            return agg;
-        }, [], arrs);
-    },
+          unzip = exports.unzip = arr => reduce((agg, item) => {
+        agg[0].push(item[0]);
+        agg[1].push(item[1]);
+        return agg;
+    }, [[], []], arr),
+          unzipN = exports.unzipN = (...arrs) => reduce((agg, item) => {
+        agg.push(unzip(item));
+        return agg;
+    }, [], arrs),
 
 
     /**
@@ -424,11 +270,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param arr2 {Array}
      * @returns {Array}
      */
-    union = exports.union = (0, _curry.curry2)(function (arr1, arr2) {
-        return concat(arr1, filter(function (elm) {
-            return arr1.indexOf(elm) === -1;
-        }, arr2));
-    }),
+    union = exports.union = (0, _curry.curry2)((arr1, arr2) => concat(arr1, filter(elm => arr1.indexOf(elm) === -1, arr2))),
 
 
     /**
@@ -438,11 +280,7 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param arr2 {Array}
      * @returns {Array}
      */
-    intersect = exports.intersect = (0, _curry.curry2)(function (arr1, arr2) {
-        return arr2.length === 0 ? [] : filter(function (elm) {
-            return arr2.indexOf(elm) > -1;
-        }, arr1);
-    }),
+    intersect = exports.intersect = (0, _curry.curry2)((arr1, arr2) => arr2.length === 0 ? [] : filter(elm => arr2.indexOf(elm) > -1, arr1)),
 
 
     /**
@@ -452,17 +290,13 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param array2 {Array}
      * @returns {Array}
      */
-    difference = exports.difference = (0, _curry.curry2)(function (array1, array2) {
+    difference = exports.difference = (0, _curry.curry2)((array1, array2) => {
         // augment this with max length and min length ordering on op
-        var _sortDescByLength = sortDescByLength(array1, array2),
-            _sortDescByLength2 = _slicedToArray(_sortDescByLength, 2),
-            arr1 = _sortDescByLength2[0],
-            arr2 = _sortDescByLength2[1];
-
+        let [arr1, arr2] = sortDescByLength(array1, array2);
         if (!arr2 || arr2.length === 0) {
             return arr1.slice();
         }
-        return reduce(function (agg, elm) {
+        return reduce((agg, elm) => {
             if (arr2.indexOf(elm) === -1) {
                 agg.push(elm);
             }
@@ -478,49 +312,41 @@ define(['exports', './curry', './functionOps', './is', './negate'], function (ex
      * @param array2 {Array}
      * @returns {Array}
      */
-    complement = exports.complement = (0, _curry.curry2)(function (arr0) {
-        for (var _len8 = arguments.length, arrays = Array(_len8 > 1 ? _len8 - 1 : 0), _key8 = 1; _key8 < _len8; _key8++) {
-            arrays[_key8 - 1] = arguments[_key8];
-        }
-
-        return reduce(function (agg, arr) {
-            return concat(agg, difference(arr, arr0));
-        }, [], arrays);
-    });
+    complement = exports.complement = (0, _curry.curry2)((arr0, ...arrays) => reduce((agg, arr) => concat(agg, difference(arr, arr0)), [], arrays));
 
     exports.default = {
-        complement: complement,
-        difference: difference,
-        intersect: intersect,
-        union: union,
-        flatten: flatten,
-        flattenMulti: flattenMulti,
-        filter: filter,
-        map: map,
-        reduce: reduce,
-        reduceRight: reduceRight,
-        head: head,
-        tail: tail,
-        init: init,
-        last: last,
-        zip: zip,
-        zipN: zipN,
-        unzip: unzip,
-        unzipN: unzipN,
-        reverse: reverse,
-        lengths: lengths,
-        orderedLengths: orderedLengths,
-        getSortByOrder: getSortByOrder,
-        sortAsc: sortAsc,
-        sortDesc: sortDesc,
-        sortDescByLength: sortDescByLength,
-        breakOnList: breakOnList,
-        splitAt: splitAt,
-        concat: concat,
-        take: take,
-        drop: drop,
-        join: join,
-        ASC: ASC,
-        DESC: DESC
+        complement,
+        difference,
+        intersect,
+        union,
+        flatten,
+        flattenMulti,
+        filter,
+        map,
+        reduce,
+        reduceRight,
+        head,
+        tail,
+        init,
+        last,
+        zip,
+        zipN,
+        unzip,
+        unzipN,
+        reverse,
+        lengths,
+        orderedLengths,
+        getSortByOrder,
+        sortAsc,
+        sortDesc,
+        sortDescByLength,
+        breakOnList,
+        splitAt,
+        concat,
+        take,
+        drop,
+        join,
+        ASC,
+        DESC
     };
 });

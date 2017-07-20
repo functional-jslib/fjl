@@ -24,14 +24,17 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
     exports.isEmpty = isEmpty;
     exports.notEmptyAndOfType = notEmptyAndOfType;
     exports.isConstructablePrimitive = isConstructablePrimitive;
+    /**
+     * Created by elyde on 12/18/2016.
+     */
+    /**
+     * @author elyde
+     * @created 12/10/2016.
+     * @module is
+     * @type {{isset: module:is.isset, issetAndOfType: module:is.issetAndOfType, isNumber: module:is.isNumber, isFunction: module:is.isFunction, isClass: module:is.isClass, isArray: module:is.isArray, isBoolean: module:is.isBoolean, isObject: module:is.isObject, isString: module:is.isString, isMap: module:is.isMap, isSet: module:is.isSet, isWeakMap: module:is.isWeakMap, isWeakSet: module:is.isWeakSet, isUndefined: module:is.isUndefined, isNull: module:is.isNull, isSymbol: module:is.isSymbol, isEmpty: module:is.isEmpty, instanceOf: Function, isConstructablePrimitive: isConstructablePrimitive, notEmptyAndOfType: module:is.notEmptyAndOfType}}
+     */
 
-    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-        return typeof obj;
-    } : function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-
-    var _String = String.name,
+    let _String = String.name,
         _Function = Function.name,
         _Array = Array.name,
         _Number = Number.name,
@@ -51,7 +54,7 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
      * @instance {*}
      * @returns {Boolean}
      */
-    var instanceOf = exports.instanceOf = (0, _curry.curry2)(function (instanceConstructor, instance) {
+    const instanceOf = exports.instanceOf = (0, _curry.curry2)((instanceConstructor, instance) => {
         return instance instanceof instanceConstructor;
     });
 
@@ -82,7 +85,7 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
      * @returns {Boolean}
      */
     function isset(value) {
-        return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== _undefined && value !== null;
+        return typeof value !== _undefined && value !== null;
     }
 
     /**
@@ -223,8 +226,8 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
      * @returns {Boolean}
      */
     function isEmpty(value) {
-        var typeOfValue = (0, _typeOf.typeOf)(value),
-            retVal = void 0;
+        let typeOfValue = (0, _typeOf.typeOf)(value),
+            retVal;
 
         if (typeOfValue === _Array || typeOfValue === _String || typeOfValue === _Function) {
             retVal = value.length === 0;
@@ -255,31 +258,29 @@ define(['exports', './curry', './typeOf'], function (exports, _curry, _typeOf) {
      * @returns {Boolean}
      */
     function isConstructablePrimitive(value) {
-        return [isNumber, isBoolean, isString, isObject, isArray, isFunction, isMap, isSet, isWeakMap, isWeakSet].some(function (fn) {
-            return fn(value);
-        });
+        return [isNumber, isBoolean, isString, isObject, isArray, isFunction, isMap, isSet, isWeakMap, isWeakSet].some(fn => fn(value));
     }
 
     exports.default = {
-        isset: isset,
-        issetAndOfType: issetAndOfType,
-        isNumber: isNumber,
-        isFunction: isFunction,
-        isClass: isClass,
-        isArray: isArray,
-        isBoolean: isBoolean,
-        isObject: isObject,
-        isString: isString,
-        isMap: isMap,
-        isSet: isSet,
-        isWeakMap: isWeakMap,
-        isWeakSet: isWeakSet,
-        isUndefined: isUndefined,
-        isNull: isNull,
-        isSymbol: isSymbol,
-        isEmpty: isEmpty,
-        instanceOf: instanceOf,
-        isConstructablePrimitive: isConstructablePrimitive,
-        notEmptyAndOfType: notEmptyAndOfType
+        isset,
+        issetAndOfType,
+        isNumber,
+        isFunction,
+        isClass,
+        isArray,
+        isBoolean,
+        isObject,
+        isString,
+        isMap,
+        isSet,
+        isWeakMap,
+        isWeakSet,
+        isUndefined,
+        isNull,
+        isSymbol,
+        isEmpty,
+        instanceOf,
+        isConstructablePrimitive,
+        notEmptyAndOfType
     };
 });

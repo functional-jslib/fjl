@@ -10,7 +10,7 @@ define(["exports"], function (exports) {
    * @module fnOperators
    * @type {{call: Function, apply: Function, flip: Function, flipN: Function}}
    */
-  var
+  let
 
   /**
    * Functional `call` function (takes no context).
@@ -19,13 +19,7 @@ define(["exports"], function (exports) {
    * @param args {*}
    * @returns {*}
    */
-  call = exports.call = function call(fn) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    return fn.call.apply(fn, [null].concat(args));
-  },
+  call = exports.call = (fn, ...args) => fn.call(null, ...args),
 
 
   /**
@@ -35,9 +29,7 @@ define(["exports"], function (exports) {
    * @param args {*}
    * @returns {*}
    */
-  apply = exports.apply = function apply(fn, args) {
-    return fn.apply(null, args);
-  },
+  apply = exports.apply = (fn, args) => fn.apply(null, args),
 
 
   /**
@@ -46,15 +38,7 @@ define(["exports"], function (exports) {
    * @param fn {Function}
    * @returns {Function}
    */
-  flipN = exports.flipN = function flipN(fn) {
-    return function () {
-      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
-
-      return apply(fn, args.reverse());
-    };
-  },
+  flipN = exports.flipN = fn => (...args) => apply(fn, args.reverse()),
 
 
   /**
@@ -63,16 +47,12 @@ define(["exports"], function (exports) {
    * @param fn {Function}
    * @returns {Function}
    */
-  flip = exports.flip = function flip(fn) {
-    return function (b, a) {
-      return call(fn, a, b);
-    };
-  };
+  flip = exports.flip = fn => (b, a) => call(fn, a, b);
 
   exports.default = {
-    call: call,
-    apply: apply,
-    flip: flip,
-    flipN: flipN
+    call,
+    apply,
+    flip,
+    flipN
   };
 });

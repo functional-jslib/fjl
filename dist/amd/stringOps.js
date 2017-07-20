@@ -12,7 +12,7 @@ define(['exports', './arrayOps', './curry'], function (exports, _arrayOps, _curr
     value: true
   });
   exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = undefined;
-  var
+  const
 
   /**
    * Functional version of `String.prototype.split`.
@@ -21,9 +21,7 @@ define(['exports', './arrayOps', './curry'], function (exports, _arrayOps, _curr
    * @param str {String}
    * @returns {Array}
    */
-  split = exports.split = (0, _curry.curry2)(function (separator, str) {
-    return str ? str.split(separator) : [];
-  }),
+  split = exports.split = (0, _curry.curry2)((separator, str) => str ? str.split(separator) : []),
 
 
   /**
@@ -62,10 +60,10 @@ define(['exports', './arrayOps', './curry'], function (exports, _arrayOps, _curr
   unlines = exports.unlines = (0, _arrayOps.join)('\n');
 
   exports.default = {
-    split: split,
-    lines: lines,
-    unlines: unlines,
-    words: words,
-    unwords: unwords
+    split,
+    lines,
+    unlines,
+    words,
+    unwords
   };
 });

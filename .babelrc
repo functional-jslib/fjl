@@ -1,6 +1,0 @@
-{
-  "presets": ["latest"],
-  "plugins":  [
-    "babel-plugin-add-module-exports"
-  ]
-}
