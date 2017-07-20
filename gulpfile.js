@@ -114,6 +114,12 @@ gulp.task('iife', ['eslint', 'generate-version-js'], () =>
         .pipe(iifePipe())
         .pipe(gulp.dest('./')));
 
+gulp.task('es6-module', ['eslint', 'generate-version-js'], () =>
+    gulp.src('./src/fjl.js')
+        .pipe(rollup(null, {moduleName: iifeModuleName, format: 'es'}))
+        .pipe(concat(buildPath('es6-module', iifeFileName)))
+        .pipe(gulp.dest('./')));
+
 gulp.task('uglify', ['iife'], () => {
     const data = {};
     return gulp.src(buildPath(iifeBuildPath, iifeFileName))
@@ -130,7 +136,7 @@ gulp.task('uglify', ['iife'], () => {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd']);
+gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd', 'es6-module']);
 
 gulp.task('jsdoc', () =>
     gulp.src(['README.md', './src/**/*.js'], {read: false})

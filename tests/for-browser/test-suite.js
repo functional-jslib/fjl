@@ -1,4 +1,4 @@
-define('test-suite', ['exports'], function (exports) { 'use strict';
+define('testSuite', ['exports'], function (exports) { 'use strict';
 
 /**
  * Created by elyde on 12/10/2016.

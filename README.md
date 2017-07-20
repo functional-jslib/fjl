@@ -120,6 +120,18 @@ import fjl from './node_modules/fjl/src/fjl';
 - [fjl.lengths](#fjllengths)
 - [fjl.version](#fjlversion)
 
+### fjl.ASC
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.DESC
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.__
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.apply
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -137,10 +149,6 @@ import fjl from './node_modules/fjl/src/fjl';
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.arrayUnion
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.ASC
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -244,10 +252,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.DESC
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.difference
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -324,14 +328,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.isset
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.issetAndOfType
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.isString
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -349,6 +345,14 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.isWeakSet
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.isset
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.issetAndOfType
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -501,10 +505,6 @@ fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.zipN
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.__
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
