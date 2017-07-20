@@ -103,6 +103,7 @@ gulp.task('iife', ['eslint', 'generate-version-js'], () =>
         plugins: [
             rollupResolve(),
             rollupBabel({
+                babelrc: false,
                 presets: [
                     [
                         'env',

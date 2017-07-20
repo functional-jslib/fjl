@@ -9,6 +9,7 @@
   },
   "buildAmdOptions": {
     "babel": {
+      "babelrc": false,
       "plugins": [
         "transform-es2015-modules-amd"
       ]
@@ -16,6 +17,7 @@
   },
   "buildCjsOptions": {
     "babel": {
+      "babelrc": false,
       "presets": [
         "es2015",
         "es2016",
@@ -28,6 +30,7 @@
   },
   "buildUmdOptions": {
     "babel": {
+      "babelrc": false,
       "presets": [
         "env"
       ],
@@ -39,6 +42,7 @@
   },
   "buildIifeOptions": {
     "babel": {
+      "babelrc": false,
       "presets": [
         ["env",
           {
