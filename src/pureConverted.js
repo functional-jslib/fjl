@@ -1,18 +1,19 @@
 /**
  * Created by elyde on 7/20/2017.
+ * All functions here are functional versions of methods of types;  E.g., map, filter etc.
  */
 
 import {curry, curry2} from './curry';
 
 const
 
-    pure = name => functor => functor[name](),
+    fOpPure = name => functor => functor[name](),
 
-    pureOnOneTypeOneOrMore = name => curry2((functor, ...args) => functor[name](...args)),
+    fOpPureOnOneOrMore = name => curry2((functor, ...args) => functor[name](...args)),
 
-    higherOrderOn2 = name => curry((fn, functor) => functor[name](fn)), // map, some, forEach etc.
+    fOpHigherOrderOn2 = name => curry((fn, functor) => functor[name](fn)), // map, some, forEach etc.
 
-    higherOrderOn3 = name => curry((fn, agg, functor) => functor[name](fn, agg)); // reduce, reduceRight
+    fOpHigherOrderOn3 = name => curry((fn, agg, functor) => functor[name](fn, agg)); // reduce, reduceRight
 
 export const
 
@@ -23,7 +24,7 @@ export const
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
      */
-    map = higherOrderOn2('map'),
+    map = fOpHigherOrderOn2('map'),
 
     /**
      * Filters a functor (array etc.) with passed in function.
@@ -32,7 +33,7 @@ export const
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
      */
-    filter = higherOrderOn2('filter'),
+    filter = fOpHigherOrderOn2('filter'),
 
     /**
      * Reduces a foldable (array etc.) with passed in function.
@@ -41,7 +42,7 @@ export const
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
      */
-    reduce = higherOrderOn2('reduce'),
+    reduce = fOpHigherOrderOn2('reduce'),
 
     /**
      * Reduces a foldable (array etc.) from the right with passed in function.
@@ -50,12 +51,42 @@ export const
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
      */
-    reduceRight = higherOrderOn3('reduceRight'),
+    reduceRight = fOpHigherOrderOn3('reduceRight'),
 
-    forEach = higherOrderOn2('forEach'),
+    /**
+     * For each on functor (Array|Object|etc.).
+     * @param fn {Function}
+     * @param functor {Array|Object|*}
+     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
+     * @throws {Error} - When passed in functor doesn't have a `forEach` method.
+     */
+    forEach = fOpHigherOrderOn2('forEach'),
 
-    some = higherOrderOn2('some'),
+    /**
+     * Returns `true` if `fn` (predicate) returns true for at least one item
+     * in functor else returns `false`.
+     * @param fn {Function} - Predicate.
+     * @param functor {Array|Object|*}
+     * @return {*|Array|Object} - The type passed.
+     * @throws {Error} - When passed in object doesn't have a `some` method.
+     */
+    some = fOpHigherOrderOn2('some'),
 
-    every = higherOrderOn2('every'),
+    /**
+     * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
+     * @param fn {Function} - Predicate.
+     * @param functor {Array|Object|*}
+     * @return {*|Array|Object} - The type passed.
+     * @throws {Error} - When passed in object doesn't have an `every` method.
+     */
+    every = fOpHigherOrderOn2('every'),
 
-    concat = pureOnOneTypeOneOrMore('concat');
+    /**
+     * Concats/appends all functors onto the end of first functor.
+     * Note:  functors passed in after the first one must be of the same type.
+     * @param functor {Array|Object|*}
+     * @param ...functor {Array|Object|*}
+     * @return {*|Array|Object} - The type passed.
+     * @throws {Error} - When passed in object doesn't have an `every` method.
+     */
+    concat = fOpPureOnOneOrMore('concat');
