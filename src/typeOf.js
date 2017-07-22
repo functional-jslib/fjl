@@ -2,13 +2,11 @@
  * Created by elyde on 12/18/2016.
  */
 
-import {curry2} from './curry';
-
 let _Number = Number.name,
     _NaN = 'NaN',
     _Null = 'Null',
     _Undefined = 'Undefined',
-    _undefined = 'undefined';
+     _undefined = 'undefined';
 
 /**
  * Returns the class name of an object from it's class string.
@@ -32,25 +30,4 @@ export const typeOf = value => {
                 _NaN : constructorName;
         }
         return retVal;
-    },
-
-    /**
-     * Checks to see if an object is of type 'constructor name'.
-     * Note: If passing in constructors as your `type` to check, ensure they are *'named' constructors
-     * as the `name` property is checked directly on them to use in the class/constructor-name comparison.
-     * *'named' constructors - Not anonymous functions/constructors but ones having a name:  E.g.,
-     * ```
-     * (function Hello () {}) // Named function.
-     * (function () {}) // Anonymous function.
-     * ```
-     * @function module:fjl.typeOfIs
-     * @param type {String|Function} - Either a constructor name or an constructor itself.
-     * @param obj {*} - Object to be checked.
-     * @returns {Boolean} - Whether object matches class string or not.
-     */
-    typeOfIs = curry2((type, obj) => typeOf(obj) === ((type instanceof Function) ? type.name : type));
-
-export default {
-    typeOf,
-    typeOfIs
-};
+    };

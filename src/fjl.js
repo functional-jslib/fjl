@@ -4,7 +4,7 @@
  *  - Make methods take the functor/monad values as last (where it makes sense)
  */
 
-export {assign, assignDeep} from './assign';
+export {assign, assignDeep} from './object';
 
 export {compose} from './compose';
 
@@ -16,7 +16,7 @@ export {typeOf, typeOfIs} from './typeOf';
 export {instanceOf, isset, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet, isConstructablePrimitive, notEmptyAndOfType} from './is';
+    isWeakMap, isWeakSet} from './is';
 
 export {call, apply} from './functionOps';
 

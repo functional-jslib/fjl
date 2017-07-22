@@ -185,19 +185,3 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
      * @returns {Function}
      */
     curry5 = fn => curryN(fn, 5);
-
-export default {
-    __,
-    curry,
-    curryN,
-    curry2,
-    curry3,
-    curry4,
-    curry5,
-    curry_,
-    curryN_,
-    curry2_,
-    curry3_,
-    curry4_,
-    curry5_
-};

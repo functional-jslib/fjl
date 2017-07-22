@@ -55,10 +55,3 @@ export const
                 return objIntersect(functor1, functor2);
         }
     });
-
-export default {
-    complement,
-    difference,
-    union,
-    intersect
-};

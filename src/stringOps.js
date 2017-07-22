@@ -9,7 +9,7 @@
 
 import {join} from './arrayOps';
 
-import {curry2} from './curry';
+import {curry} from './curry';
 
 export const
 
@@ -20,7 +20,7 @@ export const
      * @param str {String}
      * @returns {Array}
      */
-    split = curry2((separator, str) => str ? str.split(separator) : []),
+    split = curry((separator, str) => str ? str.split(separator) : []),
 
     /**
      * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
@@ -53,11 +53,3 @@ export const
      * @returns {Array}
      */
     unlines = join('\n');
-
-export default {
-    split,
-    lines,
-    unlines,
-    words,
-    unwords
-};

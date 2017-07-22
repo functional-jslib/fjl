@@ -1,15 +1,10 @@
 /**
  * Created by elyde on 12/18/2016.
- */
-/**
- * @author elyde
- * @created 12/10/2016.
  * @module is
- * @type {{isset: module:is.isset, issetAndOfType: module:is.issetAndOfType, isNumber: module:is.isNumber, isFunction: module:is.isFunction, isClass: module:is.isClass, isArray: module:is.isArray, isBoolean: module:is.isBoolean, isObject: module:is.isObject, isString: module:is.isString, isMap: module:is.isMap, isSet: module:is.isSet, isWeakMap: module:is.isWeakMap, isWeakSet: module:is.isWeakSet, isUndefined: module:is.isUndefined, isNull: module:is.isNull, isSymbol: module:is.isSymbol, isEmpty: module:is.isEmpty, instanceOf: Function, isConstructablePrimitive: isConstructablePrimitive, notEmptyAndOfType: module:is.notEmptyAndOfType}}
  */
-
-import {curry2} from './curry';
-import {typeOf, typeOfIs} from './typeOf';
+import {curry} from './curry';
+import {typeOf} from './typeOf';
+import {instanceOf} from './instanceOf';
 
 let _String = String.name,
     _Function = Function.name,
@@ -21,249 +16,185 @@ let _String = String.name,
     _Set = 'Set',
     _WeakMap = 'WeakMap',
     _WeakSet = 'WeakSet',
-    _Null = 'Null',
     _Undefined = 'Undefined',
     _undefined = 'undefined';
 
-/**
- * Returns whether constructor has derived object.
- * @instanceConstructor {Function|Class}
- * @instance {*}
- * @returns {Boolean}
- */
-export const instanceOf = curry2((instanceConstructor, instance) => {
-        return instance instanceof instanceConstructor;
-    });
+export const
 
-/**
- * Checks if `value` is an es2015 `class`.
- * @function module:is.isClass
- * @param value {*}
- * @returns {boolean}
- */
-export function isClass (value) {
-    return value && /^\s{0,3}class\s{1,3}/.test(value.toString().substr(0, 10));
-}
+    /**
+     * Type checker.  Note** The `Type` passed in, if a constructor, should
+     * be a named constructor/function-instance;  E.g.,
+     * ```
+     *  function SomeName () {} // or
+     *  var SomeName = function SomeName () {} // or
+     *  class SomeName {}
+     * ```
+     * @function module:fjl.isType
+     * @param Type {Function|String} - Constructor or constructor name
+     * @param value {*}
+     * @return {Boolean}
+     */
+    isType = curry((type, obj) => typeOf(obj) === (instanceOf(Function, type) ? type.name : type)),
 
-/**
- * Returns whether a value is a function or not.
- * @function module:is.isFunction
- * @param value {*}
- * @returns {Boolean}
- */
-export function isFunction (value) {
-    return !isClass(value) && value instanceof Function;
-}
+    /**
+     * Checks to see if value passed in is set (not undefined and not null).
+     * @function module:is.isset
+     * @param value {*} - Value to check.
+     * @returns {Boolean}
+     */
+    isset = value => typeof value !== _undefined && value !== null,
 
-/**
- * Checks to see if value passed in is set (not undefined and not null).
- * @function module:is.isset
- * @param value {*} - Value to check.
- * @returns {Boolean}
- */
-export function isset (value) {
-    return typeof value !== _undefined && value !== null;
-}
+    /**
+     * Checks whether a value isset and if it's type is the same as the type name passed in.
+     * @function module:is.issetAndOfType
+     * @param value {*} - Value to check on.
+     * @param type {String|Function} - Constructor name string or Constructor.  You can pass one or more types.
+     * @returns {Boolean}
+     */
+    issetAndOfType = curry((value, type) => isset(value) && isType(type, value)),
 
-/**
- * Checks whether a value isset and if it's type is the same as the type name passed in.
- * @function module:is.issetAndOfType
- * @param value {*} - Value to check on.
- * @param type {String|Function} - Constructor name string or Constructor.  You can pass one or more types.
- * @returns {Boolean}
- */
-export function issetAndOfType (value, type) {
-    return isset(value) && typeOfIs(type, value);
-}
+    /**
+     * Checks if `value` is an es2015 `class`.
+     * @function module:is.isClass
+     * @param value {*}
+     * @returns {boolean}
+     */
+    isClass = value => value && /^\s{0,3}class\s{1,3}/.test(value.toString().substr(0, 10)),
 
-/**
- * Checks if value is an array.
- * @function module:is.isArray
- * @param value {*}
- * @returns {boolean}
- */
-export function isArray (value) {
-    return typeOfIs(Array, value);
-}
+    /**
+     * Returns whether a value is a function or not.
+     * @function module:is.isFunction
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isFunction = value => !isClass(value) && instanceOf(Function, value),
 
-/**
- * Checks whether value is an object or not.
- * @function module:is.isObject
- * @param value
- * @returns {Boolean}
- */
-export function isObject (value) {
-    return typeOfIs(_Object, value);
-}
+    /**
+     * Checks if value is an array.
+     * @function module:is.isArray
+     * @param value {*}
+     * @returns {boolean}
+     */
+    isArray = value => isType(Array, value),
 
-/**
- * Checks if value is a boolean.
- * @function module:is.isBoolean
- * @param value {*}
- * @returns {Boolean}
- */
-export function isBoolean (value) {
-    return typeOfIs(_Boolean, value);
-}
+    /**
+     * Checks whether value is an object or not.
+     * @function module:is.isObject
+     * @param value
+     * @returns {Boolean}
+     */
+    isObject = value => isType(_Object, value),
 
-/**
- * Checks if value is a valid number (also checks if isNaN so that you don't have to).
- * @function module:is.isNumber
- * @param value {*}
- * @returns {Boolean}
- */
-export function isNumber (value) {
-    return typeOfIs(_Number, value);
-}
+    /**
+     * Checks if value is a boolean.
+     * @function module:is.isBoolean
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isBoolean = value => isType(_Boolean, value),
 
-/**
- * Checks whether value is a string or not.
- * @function module:is.isString
- * @param value {*}
- * @returns {Boolean}
- */
-export function isString(value) {
-    return typeOfIs(_String, value);
-}
+    /**
+     * Checks if value is a valid number (also checks if isNaN so that you don't have to).
+     * @function module:is.isNumber
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isNumber = value => isType(_Number, value),
 
-/**
- * Checks whether value is of `Map` or not.
- * @function module:is.isMap
- * @param value {*}
- * @returns {Boolean}
- */
-export function isMap(value) {
-    return typeOfIs(_Map, value);
-}
+    /**
+     * Checks whether value is a string or not.
+     * @function module:is.isString
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isString = value => isType(_String, value),
 
-/**
- * Checks whether value is of `Set` or not.
- * @function module:is.isSet
- * @param value {*}
- * @returns {Boolean}
- */
-export function isSet(value) {
-    return typeOfIs(_Set, value);
-}
+    /**
+     * Checks whether value is of `Map` or not.
+     * @function module:is.isMap
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isMap = value => isType(_Map, value),
 
-/**
- * Checks whether value is of `WeakMap` or not.
- * @function module:is.isWeakMap
- * @param value {*}
- * @returns {Boolean}
- */
-export function isWeakMap(value) {
-    return typeOfIs(_WeakMap, value);
-}
+    /**
+     * Checks whether value is of `Set` or not.
+     * @function module:is.isSet
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isSet = value => isType(_Set, value),
 
-/**
- * Checks whether value is of `WeakSet` or not.
- * @function module:is.isWeakSet
- * @param value {*}
- * @returns {Boolean}
- */
-export function isWeakSet(value) {
-    return typeOfIs(_WeakSet, value);
-}
+    /**
+     * Checks whether value is of `WeakMap` or not.
+     * @function module:is.isWeakMap
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isWeakMap = value =>isType(_WeakMap, value),
 
-/**
- * Checks if value is undefined.
- * @function module:is.isUndefined
- * @param value {*}
- * @returns {Boolean}
- */
-export function isUndefined (value) {
-    return typeOfIs(_Undefined, value);
-}
+    /**
+     * Checks whether value is of `WeakSet` or not.
+     * @function module:is.isWeakSet
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isWeakSet = value => isType(_WeakSet, value),
 
-/**
- * Checks if value is null.
- * @function module:is.isNull
- * @param value {*}
- * @returns {Boolean}
- */
-export function isNull (value) {
-    return typeOfIs(_Null, value);
-}
+    /**
+     * Checks if value is undefined.
+     * @function module:is.isUndefined
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isUndefined = value => isType(_Undefined, value),
 
-/**
- * Checks if value is a `Symbol`.
- * @function module:is.isSymbol
- * @param value {*}
- * @returns {Boolean}
- */
-export function isSymbol (value) {
-    return typeOfIs('Symbol', value);
-}
+    /**
+     * Checks if value is null.
+     * @function module:is.isNull
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isNull = value => value === null,
 
-/**
- * Checks to see if passed in argument is empty.
- * @function module:is.empty
- * @param value {*} - Value to check.
- * @returns {Boolean}
- */
-export function isEmpty(value) {
-    let typeOfValue = typeOf(value),
-        retVal;
+    /**
+     * Checks if value is a `Symbol`.
+     * @function module:is.isSymbol
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isSymbol = value => isType('Symbol', value),
 
-    if (typeOfValue === _Array || typeOfValue === _String || typeOfValue === _Function) {
-        retVal = value.length === 0;
-    }
-    else if (typeOfValue === _Number && value !== 0) {
-        retVal = false;
-    }
-    else if (typeOfValue === _Object) {
-        retVal = Object.keys(value).length === 0;
-    }
-    else {
-        retVal = !value;
-    }
-    return retVal;
-}
+    /**
+     * Checks to see if passed in argument is empty.
+     * @function module:is.empty
+     * @param value {*} - Value to check.
+     * @returns {Boolean}
+     */
+    isEmpty = value => {
+        let typeOfValue = typeOf(value),
+            retVal;
 
-/**
- * Returns true if an element is not empty and is of type.
- * @function module:is.notEmptyAndOfType
- * @param type {String|Function} - Type to check against (string name or actual constructor).
- * @param value {*} - Value to check.
- * @returns {Boolean}
- */
-export function notEmptyAndOfType (type, value) {
-    return !isEmpty(value) && typeOfIs(type, value);
-}
+        if (typeOfValue === _Array || typeOfValue === _String || typeOfValue === _Function) {
+            retVal = value.length === 0;
+        }
+        else if (typeOfValue === _Number && value !== 0) {
+            retVal = false;
+        }
+        else if (typeOfValue === _Object) {
+            retVal = Object.keys(value).length === 0;
+        }
+        else {
+            retVal = !value;
+        }
+        return retVal;
+    },
 
-/**
- * Checks to see if value can be constructed from a constructor.
- * @param value {*}
- * @returns {Boolean}
- */
-export function isConstructablePrimitive (value) {
-    return [
-        isNumber, isBoolean, isString, isObject,
-        isArray, isFunction, isMap, isSet,
-        isWeakMap, isWeakSet
-    ].some(fn => fn(value));
-}
-
-export default {
-    isset,
-    issetAndOfType,
-    isNumber,
-    isFunction,
-    isClass,
-    isArray,
-    isBoolean,
-    isObject,
-    isString,
-    isMap,
-    isSet,
-    isWeakMap,
-    isWeakSet,
-    isUndefined,
-    isNull,
-    isSymbol,
-    isEmpty,
-    instanceOf,
-    isConstructablePrimitive,
-    notEmptyAndOfType
-};
+    /**
+     * Returns true if an element is not empty and is of type.
+     * @function module:is.notEmptyAndOfType
+     * @param type {String|Function} - Type to check against (string name or actual constructor).
+     * @param value {*} - Value to check.
+     * @returns {Boolean}
+     */
+    notEmptyAndOfType = curry((type, value) => !isEmpty(value) && isType(type, value));

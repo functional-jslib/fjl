@@ -6,9 +6,10 @@
 
 'use strict';
 
-import {curry2, curry3} from './curry';
-import {apply} from './functionOps';
+import {curry2, curry} from './curry';
+import {apply} from './apply';
 import {isString} from './is';
+import {map, filter, reduce, reduceRight} from './purePrelude';
 import negate from './negate';
 
 /**
@@ -28,7 +29,7 @@ export const
 
     DESC = -1,
 
-    not = curry2((p, elm) => !p(elm)),
+    not = curry((p, elm) => !p(elm)),
 
     /**
      * Functional version of `Array.prototype.join`.
@@ -37,7 +38,7 @@ export const
      * @param arr {Array}
      * @returns {String}
      */
-    join = curry2((separator, arr) => arr ? arr.join(separator) : ''),
+    join = curry((separator, arr) => arr ? arr.join(separator) : ''),
 
     /**
      * Functional concat (requires 2 or more values to run).
@@ -50,7 +51,8 @@ export const
 
     onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
 
-    getSortByOrder = curry2((multiplier, valueFn = v => v) => {
+    getSortByOrder = curry((multiplier, valueFn) => {
+        valueFn = valueFn || (v => v);
         const x = onlyOneOrNegOne(multiplier),
             ifGreaterThan = 1 * x,
             ifLessThan = -1 * x;
@@ -176,42 +178,6 @@ export const
     reverse = defineReverse(),
 
     /**
-     * Maps a function to functor (array etc.).
-     * @function module:arrayOperators.map
-     * @param fn {Function}
-     * @param functor {Array|{map: {Function}}}
-     * @returns {Array|{map: {Function}}}
-     */
-    map = curry2((fn, functor) => functor.map(fn)),
-
-    /**
-     * Filters a functor (array etc.) with passed in function.
-     * @function module:arrayOperators.filter
-     * @param fn {Function}
-     * @param functor {Array|{filter: {Function}}}
-     * @returns {Array|{filter: {Function}}}
-     */
-    filter = curry2((fn, arr) => arr.filter(fn)),
-
-    /**
-     * Reduces a foldable (array etc.) with passed in function.
-     * @function module:arrayOperators.reduce
-     * @param fn {Function}
-     * @param functor {Array|{reduce: {Function}}}
-     * @returns {Array|{reduce: {Function}}}
-     */
-    reduce = curry2((fn, agg, arr) => arr.reduce(fn, agg)),
-
-    /**
-     * Reduces a foldable (array etc.) from the right with passed in function.
-     * @function module:arrayOperators.reduceRight
-     * @param fn {Function}
-     * @param functor {Array|{reduceRight: {Function}}}
-     * @returns {Array|{reduceRight: {Function}}}
-     */
-    reduceRight = curry3((fn, agg, functor) => functor.reduceRight(fn, agg)),
-
-    /**
      * Flattens an array.
      * @function module:arrayOperators.flatten
      * @param arr {Array}
@@ -326,39 +292,3 @@ export const
      */
     complement = curry2((arr0, ...arrays) =>
         reduce((agg, arr) => concat(agg, difference(arr, arr0)), [], arrays));
-
-export default {
-    complement,
-    difference,
-    intersect,
-    union,
-    flatten,
-    flattenMulti,
-    filter,
-    map,
-    reduce,
-    reduceRight,
-    head,
-    tail,
-    init,
-    last,
-    zip,
-    zipN,
-    unzip,
-    unzipN,
-    reverse,
-    lengths,
-    orderedLengths,
-    getSortByOrder,
-    sortAsc,
-    sortDesc,
-    sortDescByLength,
-    breakOnList,
-    splitAt,
-    concat,
-    take,
-    drop,
-    join,
-    ASC,
-    DESC
-};
