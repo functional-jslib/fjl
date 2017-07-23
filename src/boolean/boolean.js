@@ -3,7 +3,7 @@
  */
 
 import {curry2} from '../function/curry';
-import {every, some} from '../list/listPrelude';
+import {every, some} from '../array/arrayPrelude';
 import {apply} from '../function/apply';
 
 export const

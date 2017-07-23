@@ -6,7 +6,7 @@
 
 'use strict';
 
-import {join} from './listPrelude';
+import {join} from '../array/arrayPrelude';
 
 import {curry} from '../function/curry';
 
@@ -38,7 +38,7 @@ export const
     words = split(/[\s\t]/gm),
 
     /**
-     * Joins an list of strings with '\s'.
+     * Joins an array of strings with '\s'.
      * @function module:stringOps.unwords
      * @param arr {String}
      * @returns {Array}

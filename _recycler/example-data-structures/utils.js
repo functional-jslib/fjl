@@ -4,8 +4,8 @@
 
 'use strict';
 
-import {typeOfIs, typeOf} from '../../src/type-checking/typeOf';
-import {isString, isFunction} from '../../src/type-checking/is';
+import {typeOfIs, typeOf} from '../../src/object/typeOf';
+import {isString, isFunction} from '../../src/object/is';
 
 function constructorName (value) {
     let retVal;

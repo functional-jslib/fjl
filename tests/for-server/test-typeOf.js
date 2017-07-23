@@ -6,8 +6,8 @@
 // This part gets stripped out when
 // generating browser version of test(s).
 'use strict';
-import {typeOf} from '../../src/type-checking/typeOf';
-import {isType} from '../../src/type-checking/is'; // @todo move the tests for `isType` to another test suite (function was renamed from `typeOfIs` and moved to a new package so it's tests have to move to).
+import {typeOf} from '../../src/object/typeOf';
+import {isType} from '../../src/object/is'; // @todo move the tests for `isType` to another test suite (function was renamed from `typeOfIs` and moved to a new package so it's tests have to move to).
 import {apply} from '../../src/function/apply';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.

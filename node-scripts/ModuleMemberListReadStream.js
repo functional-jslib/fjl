@@ -40,8 +40,8 @@ function renderNode(moduleName, memberName, padLeft, docsPath) {
         fs.writeFileSync(docFilePath,
             '### ' + label.replace(/[\[\]]/g, '') + '\n' +
             '@todo - Added documentation here.\n' +
-            '[Back to ' + moduleName + ' members list.]' +
-            '(#' + moduleName + '-members-list)\n');
+            '[Back to ' + moduleName + ' members array.]' +
+            '(#' + moduleName + '-members-array)\n');
     }
     // ~~ /REMOVE FROM HERE ~~
 

@@ -72,10 +72,10 @@ describe('is#issetAndOfType', function () {
 });
 
 describe('is#isArray', function () {
-    it ('should return `true` when given value is an list', function () {
+    it ('should return `true` when given value is an array', function () {
         expectTrue(isArray([]));
     });
-    it ('should return `false` when given value is not an list', function () {
+    it ('should return `false` when given value is not an array', function () {
         expectFalse(isArray(function () {}));
     });
 });

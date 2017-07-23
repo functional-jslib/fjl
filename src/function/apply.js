@@ -3,4 +3,13 @@
  */
 import {curry2} from './curry';
 
-export const apply = curry2((fn, args) => fn.apply(null, args));
+export const
+
+    /**
+     * Functional `apply` function (takes no context).
+     * @function module:fnOperators.apply
+     * @param fn {Function}
+     * @param args {*}
+     * @returns {*}
+     */
+    apply = (fn, args) => fn.apply(null, args);

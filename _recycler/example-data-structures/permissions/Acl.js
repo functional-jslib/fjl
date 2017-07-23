@@ -4,8 +4,8 @@
 
 'use strict';
 
-import {typeOf} from '../../../src/type-checking/typeOf';
-import {difference as arrayDiff} from '../../../src/list/list';
+import {typeOf} from '../../../src/object/typeOf';
+import {difference as arrayDiff} from '../../../src/array/array';
 import {errorIfNotType} from '../utils';
 import Role from './Role';
 import Resource from './Resource';

@@ -2,7 +2,7 @@
  * Created by elydelacruz on 7/22/2017.
  */
 
-import {curry, curry2} from './function/curry';
+import {curry, curry2} from '../function/curry';
 
 export const
 

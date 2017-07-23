@@ -61,7 +61,7 @@ export const
     isFunction = value => !isClass(value) && instanceOf(Function, value),
 
     /**
-     * Checks if value is an list.
+     * Checks if value is an array.
      * @function module:is.isArray
      * @param value {*}
      * @returns {boolean}

@@ -6,9 +6,9 @@
  * Set functions for objects.
  */
 
-import {curry, curry2} from '../function/curry';
-import {isObject} from '../type-checking/is';
-import {fPure, fPureTakesOne} from '../libHelpers';
+import {curry2} from '../function/curry';
+import {isObject} from './is';
+import {fPure, fPureTakesOne} from '../utils/utils';
 
 /**
  * @returns {Function}
@@ -25,15 +25,13 @@ function defineAssign () {
     }, obj0);
 }
 
-export {instanceOf} from '../type-checking/instanceOf';
+export {instanceOf} from './instanceOf';
 
 export const
 
     hasOwnProperty = fPureTakesOne('hasOwnProperty'),
 
     length = fPure('length'),
-
-    toString = fPure('toString'),
 
     keys = obj => Object.keys(obj),
 
