@@ -17,10 +17,19 @@ let _String = String.name,
     _Set = 'Set',
     _WeakMap = 'WeakMap',
     _WeakSet = 'WeakSet',
+    _Null = 'Null',
     _Undefined = 'Undefined',
     _undefined = 'undefined';
 
 export const
+
+    /**
+     * Returns whether a value is a function or not.
+     * @function module:is.isFunction
+     * @param value {*}
+     * @returns {Boolean}
+     */
+    isFunction = instanceOf(Function),
 
     /**
      * Type checker.  Note** The `Type` passed in, if a constructor, should
@@ -35,15 +44,7 @@ export const
      * @param value {*}
      * @return {Boolean}
      */
-    isType = curry((type, obj) => typeOf(obj) === (instanceOf(Function, type) ? type.name : type)),
-
-    /**
-     * Checks to see if value passed in is set (not undefined and not null).
-     * @function module:is.isset
-     * @param value {*} - Value to check.
-     * @returns {Boolean}
-     */
-    isset = value => typeof value !== _undefined && value !== null,
+    isType = curry((type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type)),
 
     /**
      * Checks if `value` is an es2015 `class`.
@@ -53,13 +54,7 @@ export const
      */
     isClass = value => value && /^\s{0,3}class\s{1,3}/.test(value.toString().substr(0, 10)),
 
-    /**
-     * Returns whether a value is a function or not.
-     * @function module:is.isFunction
-     * @param value {*}
-     * @returns {Boolean}
-     */
-    isFunction = value => !isClass(value) && instanceOf(Function, value),
+    isCallable = x => !isClass(x) && isFunction(x),
 
     /**
      * Checks if value is an array.
@@ -67,7 +62,7 @@ export const
      * @param value {*}
      * @returns {boolean}
      */
-    isArray = value => isType(Array, value),
+    isArray = isType(Array),
 
     /**
      * Checks whether value is an object or not.
@@ -75,7 +70,7 @@ export const
      * @param value
      * @returns {Boolean}
      */
-    isObject = value => isType(_Object, value),
+    isObject = isType(_Object),
 
     /**
      * Checks if value is a boolean.
@@ -83,7 +78,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isBoolean = value => isType(_Boolean, value),
+    isBoolean = isType(_Boolean),
 
     /**
      * Checks if value is a valid number (also checks if isNaN so that you don't have to).
@@ -91,7 +86,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNumber = value => isType(_Number, value),
+    isNumber = isType(_Number),
 
     /**
      * Checks whether value is a string or not.
@@ -99,7 +94,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isString = value => isType(_String, value),
+    isString = isType(_String),
 
     /**
      * Checks whether value is of `Map` or not.
@@ -107,7 +102,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isMap = value => isType(_Map, value),
+    isMap = isType(_Map),
 
     /**
      * Checks whether value is of `Set` or not.
@@ -115,7 +110,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSet = value => isType(_Set, value),
+    isSet = isType(_Set),
 
     /**
      * Checks whether value is of `WeakMap` or not.
@@ -123,7 +118,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakMap = value =>isType(_WeakMap, value),
+    isWeakMap = isType(_WeakMap),
 
     /**
      * Checks whether value is of `WeakSet` or not.
@@ -131,7 +126,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakSet = value => isType(_WeakSet, value),
+    isWeakSet = isType(_WeakSet),
 
     /**
      * Checks if value is undefined.
@@ -139,7 +134,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isUndefined = value => isType(_Undefined, value),
+    isUndefined = isType(_Undefined),
 
     /**
      * Checks if value is null.
@@ -147,7 +142,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNull = value => value === null,
+    isNull = isType(_Null),
 
     /**
      * Checks if value is a `Symbol`.
@@ -155,7 +150,15 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSymbol = value => isType('Symbol', value),
+    isSymbol = isType('Symbol'),
+
+    /**
+     * Checks to see if value passed in is set (not undefined and not null).
+     * @function module:is.isset
+     * @param value {*} - Value to check.
+     * @returns {Boolean}
+     */
+    isset = value => typeof value !== _undefined && value !== null,
 
     /**
      * Checks to see if passed in argument is empty.
