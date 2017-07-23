@@ -3,19 +3,22 @@
  */
 
 import {curry2} from '../function/curry';
-import {every, some} from '../array/arrayPrelude';
-import {apply} from '../function/apply';
+
+import {isFalsy} from './is';
+
+// Reuse our algebra from the array package so the functionality
+// is furtherly` validated throughout our library.
+import {
+    and as listAnd,
+    or as listOr,
+    all as listAll} from '../array/array';
 
 export const
 
-    isTruthy = value => !!value,
+    and = curry2((...args) => listAnd(args)), // every
 
-    isFalsy = value => !value,
+    or = curry2((...args) => listOr(args)), // some
 
-    and = curry2((...args) => every(isTruthy, args)),
+    not = curry2((...args) => listAll(isFalsy, args)), // every
 
-    or = curry2((...args) => some(isTruthy, args)),
-
-    not = curry2((...args) => apply(isFalsy, args)),
-
-    equal = curry2((arg0, ...args) => every(x => arg0 === x, args));
+    equal = curry2((arg0, ...args) => listAll(x => arg0 === x, args)); // every

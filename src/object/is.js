@@ -1,6 +1,7 @@
 /**
  * Created by elyde on 12/18/2016.
  * @module is
+ * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
  */
 import {curry} from '../function/curry';
 import {typeOf} from './typeOf';
@@ -166,7 +167,10 @@ export const
         let typeOfValue = typeOf(value),
             retVal;
 
-        if (typeOfValue === _Array || typeOfValue === _String || typeOfValue === _Function) {
+        if (!value) { // '', 0, `null`, `undefined` or `false` then is empty
+            retVal = true;
+        }
+        else if (typeOfValue === _Array || typeOfValue === _Function) {
             retVal = value.length === 0;
         }
         else if (typeOfValue === _Number && value !== 0) {
@@ -174,6 +178,9 @@ export const
         }
         else if (typeOfValue === _Object) {
             retVal = Object.keys(value).length === 0;
+        }
+        else if (isInstanceOfMapOrSetByName(typeOfValue, value)) {
+            retVal = value.size > 0;
         }
         else {
             retVal = !value;
@@ -189,3 +196,7 @@ export const
      * @returns {Boolean}
      */
     notEmptyAndOfType = curry((type, value) => !isEmpty(value) && isType(type, value));
+
+function isInstanceOfMapOrSetByName (name) {
+    return name.indexOf(_Map) > -1 || name.indexOf(_Set) > -1;
+}

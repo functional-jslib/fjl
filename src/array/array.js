@@ -3,13 +3,15 @@
  * @module arrayOperators
  */
 
+
 'use strict';
 
 import {curry, curry2} from '../function/curry';
 import {apply} from '../function/apply';
 import {isString} from '../object/is';
-import {filter, reduce, concat} from './arrayPrelude';
+import {filter, reduce, every, some, concat} from './arrayPrelude';
 import {negate as negateP} from '../function/function';
+import {isTruthy, isFalsy} from '../boolean/is';
 
 export const
 
@@ -203,6 +205,18 @@ export const
             agg.push(unzip(item));
             return agg;
         }, [], arrs),
+
+    and = every(isTruthy),
+
+    or = some(isTruthy),
+
+    not = every(isFalsy),
+
+    any = some,
+
+    all = every,
+
+    equal = curry2((arg0, ...args) => every(x => arg0 === x, args)),
 
     /**
      * Creates a union on matching elements from array1.

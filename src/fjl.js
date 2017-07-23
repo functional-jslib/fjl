@@ -11,14 +11,15 @@ export {curry, curryN, curry2, curry3, curry4, curry5,
     __, curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './function/curry';
 export {negate as negateP} from './function/negate';
 
-export {isTruthy, isFalsy, not, or, and, equal} from './boolean/boolean';
-
 export {typeOf} from './object/typeOf';
 
 export {isset, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
     isWeakMap, isWeakSet} from './object/is';
+
+export {isTruthy, isFalsy} from './boolean/is';
+export {not, or, and, equal} from './boolean/boolean';
 
 export {instanceOf} from './object/instanceOf';
 
@@ -38,12 +39,14 @@ export { complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
     intersect as arrayIntersect,
+    // @todo make all list (array and string) ops work on strings as well:
+    all, any, or, and,
     flatten, flattenMulti, head, tail,
     init, last, take, drop, splitStrAt, splitArrayAt, splitAt,
     rangeOnIterable, takeWhile, dropWhile, span, breakOnList,
     lengths, orderedLengths, trimLengths,
     zip, zipN, sortAsc, sortDesc,
-    sortDescByLength, unzip, unzipN } from './array/array';
+    sortDescByLength, unzip, unzipN} from './array/array';
 
 export {split, lines, words, unlines, unwords} from './string/string';
 

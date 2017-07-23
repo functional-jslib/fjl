@@ -99,7 +99,6 @@ describe ('Object Operators', function () {
                 subj2 = {a: 5, b: 6, c: 7, g: 9},
                 sharedKeys = ['a', 'b', 'c'],
                 result = intersect(subj1, subj2);
-                console.log(result);
             sharedKeys.forEach(key => {
                 expectEqual(result[key], subj2[key]);
             });
