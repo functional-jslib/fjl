@@ -1,53 +1,21 @@
 /**
  * Array operators module.
  * @module arrayOperators
- * @type {{complement: Function, difference: Function, intersect: Function, union: Function, flatten: Function, flattenMulti: Function, filter: Function, map: Function, reduce: Function, reduceRight: Function, head: Function, tail: Function, init: Function, last: Function, reverse: Function}}
  */
 
 'use strict';
 
-import {curry2, curry} from './curry';
+import {curry, curry2} from './curry';
 import {apply} from './apply';
 import {isString} from './is';
-import {map, filter, reduce, reduceRight} from './purePrelude';
-import negate from './negate';
-
-/**
- * @returns {Function}
- */
-function defineReverse () {
-    return Array.prototype.reverse ? x => x.reverse() :
-        x => x.reduceRight((agg, item) => {
-            agg.push(item);
-            return agg;
-        }, []);
-}
+import {filter, reduce, concat} from './listPrelude';
+import {negate} from './negate';
 
 export const
 
     ASC = 1,
 
     DESC = -1,
-
-    not = curry((p, elm) => !p(elm)),
-
-    /**
-     * Functional version of `Array.prototype.join`.
-     * @function module:arrayOperators.join
-     * @param separator {String|RegExp}
-     * @param arr {Array}
-     * @returns {String}
-     */
-    join = curry((separator, arr) => arr ? arr.join(separator) : ''),
-
-    /**
-     * Functional concat (requires 2 or more values to run).
-     * @curried Sets minimum arity to 2
-     * @param arr0 {Array}
-     * @param ...arrays {Array}
-     * @type {Function}
-     */
-    concat = curry2((arr0, ...arrays) => arr0.concat.apply(arr0, arrays)),
 
     onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
 
@@ -56,7 +24,7 @@ export const
         const x = onlyOneOrNegOne(multiplier),
             ifGreaterThan = 1 * x,
             ifLessThan = -1 * x;
-        return (...values) => values.sort((a1, b1) => {
+        return values => values.sort((a1, b1) => {
             let a = valueFn(a1),
                 b = valueFn(b1);
             if (a > b) {
@@ -107,40 +75,40 @@ export const
      */
     last = functor => functor[functor.length - 1],
 
-    take = curry2((limit, array) => array.slice(0, limit - 1)),
+    take = curry((limit, array) => array.slice(0, limit - 1)),
 
-    drop = curry2((count, array) => array.slice(count, array.length - 1)),
+    drop = curry((count, array) => array.slice(count, array.length - 1)),
 
-    splitStrAt = curry2((ind, str) => [
+    splitStrAt = curry((ind, str) => [
         str.substring(0, ind),
         str.substring(ind, str.length)
     ]),
 
-    splitArrayAt = curry2((ind, arr) => [
+    splitArrayAt = curry((ind, arr) => [
         arr.slice(0, ind),
         arr.slice(ind, arr.length)
     ]),
 
-    splitAt = curry2((ind, x) => isString(x) ? splitStrAt(ind, x) : splitArrayAt(ind, x)),
+    splitAt = curry((ind, x) => (isString(x) ? splitStrAt : splitArrayAt)(ind, x)),
 
-    rangeOnIterable = curry2((predicate, arr) => {
+    rangeOnIterable = curry((predicate, arr) => {
         let ind = 0;
         while (predicate(arr[ind]) && ind < arr.length) ind += 1;
         return ind;
     }),
 
-    takeWhile = curry2((predicate, arr) =>
+    takeWhile = curry((predicate, arr) =>
         arr.slice(0, rangeOnIterable(predicate, arr))),
 
-    dropWhile = curry2((predicate, arr) =>
+    dropWhile = curry((predicate, arr) =>
         arr.slice(rangeOnIterable(predicate, arr), arr.length - 1)),
 
-    span = curry2((predicate, arr) => [
+    span = curry((predicate, arr) => [
         takeWhile(predicate, arr),
         dropWhile(predicate, arr)
     ]),
 
-    breakOnList = curry2((predicate, arr) => [
+    breakOnList = curry((predicate, arr) => [
         takeWhile(negate(predicate), arr),
         dropWhile(negate(predicate), arr)
     ]),
@@ -169,13 +137,6 @@ export const
         const smallLen = orderedLengths(ASC, arrays)[0];
         return arrays.map(arr => arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0));
     },
-
-    /**
-     * Reverses an array (shimmed if not exists).
-     * @function module:arrayOperators.reverse
-     * @return {Array}
-     */
-    reverse = defineReverse(),
 
     /**
      * Flattens an array.
@@ -207,7 +168,7 @@ export const
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip = curry2((arr1, arr2) => {
+    zip = curry((arr1, arr2) => {
         const {0: a1, 1: a2} = trimLengths(arr1, arr2);
         return a1.reduce((agg, item, ind) => {
                 agg.push([item, a2[ind]]);
@@ -250,7 +211,7 @@ export const
      * @param arr2 {Array}
      * @returns {Array}
      */
-    union = curry2((arr1, arr2) =>
+    union = curry((arr1, arr2) =>
         concat(arr1, filter(elm => arr1.indexOf(elm) === -1, arr2))),
 
     /**
@@ -260,7 +221,7 @@ export const
      * @param arr2 {Array}
      * @returns {Array}
      */
-    intersect = curry2((arr1, arr2) => arr2.length === 0 ? [] :
+    intersect = curry((arr1, arr2) => arr2.length === 0 ? [] :
             filter(elm => arr2.indexOf(elm) > -1, arr1)),
 
     /**
@@ -270,7 +231,7 @@ export const
      * @param array2 {Array}
      * @returns {Array}
      */
-    difference = curry2((array1, array2) => { // augment this with max length and min length ordering on op
+    difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
         let [arr1, arr2] = sortDescByLength(array1, array2);
         if (!arr2 || arr2.length === 0) {
             return arr1.slice();

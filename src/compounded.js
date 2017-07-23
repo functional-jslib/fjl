@@ -11,12 +11,12 @@ import {typeOf} from './typeOf';
 import {complement as objComplement,
     difference as objDifference,
     union as objUnion,
-    intersect as objIntersect} from './objectOps';
+    intersect as objIntersect} from './object';
 
 import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
-    intersect as arrayIntersect} from './arrayOps';
+    intersect as arrayIntersect} from './list';
 
 export const
 

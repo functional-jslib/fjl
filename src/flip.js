@@ -6,4 +6,3 @@ import {curry} from './curry';
 import {call} from './call';
 import {apply} from './apply';
 
-export const

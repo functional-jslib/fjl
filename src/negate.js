@@ -4,4 +4,4 @@
 
 import {isFunction} from './is';
 
-export default x => isFunction(x) ? (value) => !x(value) : x * -1;
+export const negate = x => isFunction(x) ? (value) => !x(value) : x * -1;

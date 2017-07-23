@@ -45,15 +45,6 @@ export const
     isset = value => typeof value !== _undefined && value !== null,
 
     /**
-     * Checks whether a value isset and if it's type is the same as the type name passed in.
-     * @function module:is.issetAndOfType
-     * @param value {*} - Value to check on.
-     * @param type {String|Function} - Constructor name string or Constructor.  You can pass one or more types.
-     * @returns {Boolean}
-     */
-    issetAndOfType = curry((value, type) => isset(value) && isType(type, value)),
-
-    /**
      * Checks if `value` is an es2015 `class`.
      * @function module:is.isClass
      * @param value {*}

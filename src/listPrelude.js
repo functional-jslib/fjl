@@ -1,9 +1,23 @@
 /**
  * Created by elyde on 7/20/2017.
  * All functions here are functional versions of methods of types;  E.g., map, filter etc.
+ * @todo add `reverse` to './compounded'
  */
 
-import {fOpPureOnOneOrMore, fOpHigherOrderOn3, fOpHigherOrderOn2} from './libPrelude';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from './libHelpers';
+
+/**
+ * Array.prototype.reverse generator (generates a function that calls the prototype version or a
+ * shimmed version if it doesn't exist).
+ * @returns {Function}
+ */
+function defineReverse () {
+    return Array.prototype.reverse ? x => x.reverse() :
+        x => x.reduceRight((agg, item) => {
+            agg.push(item);
+            return agg;
+        }, []);
+}
 
 export const
 
@@ -14,7 +28,7 @@ export const
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
      */
-    map = fOpHigherOrderOn2('map'),
+    map = fPureTakesOne('map'),
 
     /**
      * Filters a functor (array etc.) with passed in function.
@@ -23,7 +37,7 @@ export const
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
      */
-    filter = fOpHigherOrderOn2('filter'),
+    filter = fPureTakesOne('filter'),
 
     /**
      * Reduces a foldable (array etc.) with passed in function.
@@ -32,7 +46,7 @@ export const
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
      */
-    reduce = fOpHigherOrderOn2('reduce'),
+    reduce = fPureTakes2('reduce'),
 
     /**
      * Reduces a foldable (array etc.) from the right with passed in function.
@@ -41,7 +55,7 @@ export const
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
      */
-    reduceRight = fOpHigherOrderOn3('reduceRight'),
+    reduceRight = fPureTakes2('reduceRight'),
 
     /**
      * For each on functor (Array|Object|etc.).
@@ -50,7 +64,7 @@ export const
      * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
      * @throws {Error} - When passed in functor doesn't have a `forEach` method.
      */
-    forEach = fOpHigherOrderOn2('forEach'),
+    forEach = fPureTakesOne('forEach'),
 
     /**
      * Returns `true` if `fn` (predicate) returns true for at least one item
@@ -60,7 +74,7 @@ export const
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in object doesn't have a `some` method.
      */
-    some = fOpHigherOrderOn2('some'),
+    some = fPureTakesOne('some'),
 
     /**
      * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
@@ -69,7 +83,7 @@ export const
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in object doesn't have an `every` method.
      */
-    every = fOpHigherOrderOn2('every'),
+    every = fPureTakesOne('every'),
 
     /**
      * Concats/appends all functors onto the end of first functor.
@@ -79,4 +93,20 @@ export const
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in object doesn't have an `every` method.
      */
-    concat = fOpPureOnOneOrMore('concat');
+    concat = fPureTakesOneOrMore('concat'),
+
+    /**
+     * Array.prototype.join
+     * @function module:listPrelude.join
+     * @param separator {String|RegExp}
+     * @param arr {Array}
+     * @returns {String}
+     */
+    join = fPureTakesOne('join'),
+
+    /**
+     * Reverses an array (shimmed if not exists).
+     * @function module:listPrelude.reverse
+     * @return {Array}
+     */
+    reverse = defineReverse();
