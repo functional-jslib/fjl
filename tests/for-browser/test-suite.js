@@ -1052,28 +1052,28 @@ describe('#typeOf', function () {
     });
 });
 
-describe('#typeOfIs', function () {
+describe('#isType', function () {
     it('should be a function', function () {
-        expectFunction(typeOfIs);
+        expectFunction(isType);
     });
     it('should return `true` when passed in value is of passed in type name/string', function () {
         [['Array', []], ['Object', {}], ['String', ''], ['Function', function () {}], ['Number', 99], ['Boolean', true], ['Boolean', false], ['Null', null], ['Undefined', undefined]].forEach(function (tuple) {
-            return expectTrue(apply(typeOfIs, tuple));
+            return expectTrue(apply(isType, tuple));
         });
     });
     it('should return `true` when passed in value is of passed in type constructor', function () {
         [[Array, []], [Object, {}], [String, ''], [Function, function () {}], [Number, 99], [Boolean, true], [Boolean, false]].forEach(function (tuple) {
-            return expectTrue(apply(typeOfIs, tuple));
+            return expectTrue(apply(isType, tuple));
         });
     });
     it('should return `false` when passed in value is not of passed in type name/string', function () {
         [['Object', []], ['Array', {}], ['NaN', ''], ['Number', function () {}], ['Function', 99], ['NaN', true], ['Number', false]].forEach(function (tuple) {
-            return expectFalse(apply(typeOfIs, tuple));
+            return expectFalse(apply(isType, tuple));
         });
     });
     it('should return `false` when passed in value is not of passed in type constructor', function () {
         [[Object, []], [Array, {}], [NaN, ''], [Number, function () {}], [Function, 99], [NaN, true], [Number, undefined], [Array, false]].forEach(function (tuple) {
-            return expectFalse(apply(typeOfIs, tuple));
+            return expectFalse(apply(isType, tuple));
         });
     });
 });

@@ -6,8 +6,9 @@
 // This part gets stripped out when
 // generating browser version of test(s).
 'use strict';
-import {typeOf, typeOfIs} from '../../src/typeOf';
-import {apply} from '../../src/functionOps';
+import {typeOf} from '../../src/typeOf';
+import {isType} from '../../src/is'; // @todo move the tests for `isType` to another test suite (function was renamed from `typeOfIs` and moved to a new package so it's tests have to move to).
+import {apply} from '../../src/apply';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -35,9 +36,9 @@ describe('#typeOf', function () {
     });
 });
 
-describe('#typeOfIs', function () {
+describe('#isType', function () {
     it ('should be a function', function () {
-        expectFunction(typeOfIs);
+        expectFunction(isType);
     });
     it ('should return `true` when passed in value is of passed in type name/string', function () {
         [
@@ -51,7 +52,7 @@ describe('#typeOfIs', function () {
             ['Null', null],
             ['Undefined', undefined]
         ]
-            .forEach(tuple => expectTrue(apply(typeOfIs, tuple)));
+            .forEach(tuple => expectTrue(apply(isType, tuple)));
     });
     it ('should return `true` when passed in value is of passed in type constructor', function () {
         [
@@ -63,7 +64,7 @@ describe('#typeOfIs', function () {
             [Boolean, true],
             [Boolean , false]
         ]
-            .forEach(tuple => expectTrue(apply(typeOfIs, tuple)));
+            .forEach(tuple => expectTrue(apply(isType, tuple)));
     });
     it ('should return `false` when passed in value is not of passed in type name/string', function () {
         [
@@ -75,7 +76,7 @@ describe('#typeOfIs', function () {
             ['NaN', true],
             ['Number', false]
         ]
-            .forEach(tuple => expectFalse(apply(typeOfIs, tuple)));
+            .forEach(tuple => expectFalse(apply(isType, tuple)));
     });
     it ('should return `false` when passed in value is not of passed in type constructor', function () {
         [
@@ -88,6 +89,6 @@ describe('#typeOfIs', function () {
             [Number, undefined],
             [Array, false]
         ]
-            .forEach(tuple => expectFalse(apply(typeOfIs, tuple)));
+            .forEach(tuple => expectFalse(apply(isType, tuple)));
     });
 });

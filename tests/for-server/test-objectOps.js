@@ -11,7 +11,9 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {hasOwnProperty, complement, difference, union, intersect} from '../../src/objectOps';
+import {keys} from '../../src/keys';
+import {hasOwnProperty} from '../../src/objectPrelude';
+import {complement, difference, union, intersect} from '../../src/object';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -24,12 +26,12 @@ describe ('Object Operators', function () {
         });
         it ('should return true when passed in object has the passed in property name', function () {
             const obj = {hello: 'ola', ola: 'mambo'};
-            expectTrue(hasOwnProperty(obj, 'hello'));
-            expectTrue(hasOwnProperty(obj, 'ola'));
+            expectTrue(hasOwnProperty('hello', obj));
+            expectTrue(hasOwnProperty('ola', obj));
         });
         it ('should return false when passed in object doesn\'t have the passed in property name', function () {
-            expectFalse(hasOwnProperty({}, 'hello'));
-            expectFalse(hasOwnProperty({}, 'mambo'));
+            expectFalse(hasOwnProperty('hello', {}));
+            expectFalse(hasOwnProperty('mambo', {}));
         });
     });
 
@@ -43,11 +45,11 @@ describe ('Object Operators', function () {
                 subj3 = {e: 5, f: 6, g: 7},
                 result = complement(subj1, subj2, subj3);
             [subj2, subj3].forEach(function (subj) {
-                Object.keys(subj).forEach(key => {
+                keys(subj).forEach(key => {
                     expectEqual(result[key], subj[key]);
                 });
             });
-            Object.keys(subj1).forEach(key => {
+            keys(subj1).forEach(key => {
                 expectFalse(result.hasOwnProperty(key));
             });
         });
@@ -94,10 +96,12 @@ describe ('Object Operators', function () {
             expectFunction(union);
         });
         it ('should return an object that contains values from both passed in objects', function () {
-            let subj1 = {a: 1, b: 2, c: 3},
-                subj2 = {a: 5, b: 6, c: 7},
+            let subj1 = {a: 1, b: 2, c: 3, e: 4, f: 8},
+                subj2 = {a: 5, b: 6, c: 7, g: 9},
+                sharedKeys = ['a', 'b', 'c'],
                 result = intersect(subj1, subj2);
-            Object.keys(subj2).forEach(key => {
+                console.log(result);
+            sharedKeys.forEach(key => {
                 expectEqual(result[key], subj2[key]);
             });
         });

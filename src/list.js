@@ -24,7 +24,7 @@ export const
         const x = onlyOneOrNegOne(multiplier),
             ifGreaterThan = 1 * x,
             ifLessThan = -1 * x;
-        return values => values.sort((a1, b1) => {
+        return (...values) => values.sort((a1, b1) => {
             let a = valueFn(a1),
                 b = valueFn(b1);
             if (a > b) {

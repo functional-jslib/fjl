@@ -6,7 +6,7 @@
 // This part gets stripped out when
 // generating browser version of test(s).
 'use strict';
-let {typeOf, typeOfIs}  = require('../../dist/cjs/typeOf');
+let {typeOf, isType}  = require('../../dist/cjs/typeOf');
 let {apply}  = require('../../dist/cjs/functionOps');
 let {expectTrue, expectFalse, expectEqual, expectFunction}  = require('./helpers');
 // These variables get set at the top IIFE in the browser.
@@ -35,9 +35,9 @@ describe('#typeOf', function () {
     });
 });
 
-describe('#typeOfIs', function () {
+describe('#isType', function () {
     it ('should be a function', function () {
-        expectFunction(typeOfIs);
+        expectFunction(isType);
     });
     it ('should return `true` when passed in value is of passed in type name/string', function () {
         [
@@ -51,7 +51,7 @@ describe('#typeOfIs', function () {
             ['Null', null],
             ['Undefined', undefined]
         ]
-            .forEach(tuple => expectTrue(apply(typeOfIs, tuple)));
+            .forEach(tuple => expectTrue(apply(isType, tuple)));
     });
     it ('should return `true` when passed in value is of passed in type constructor', function () {
         [
@@ -63,7 +63,7 @@ describe('#typeOfIs', function () {
             [Boolean, true],
             [Boolean , false]
         ]
-            .forEach(tuple => expectTrue(apply(typeOfIs, tuple)));
+            .forEach(tuple => expectTrue(apply(isType, tuple)));
     });
     it ('should return `false` when passed in value is not of passed in type name/string', function () {
         [
@@ -75,7 +75,7 @@ describe('#typeOfIs', function () {
             ['NaN', true],
             ['Number', false]
         ]
-            .forEach(tuple => expectFalse(apply(typeOfIs, tuple)));
+            .forEach(tuple => expectFalse(apply(isType, tuple)));
     });
     it ('should return `false` when passed in value is not of passed in type constructor', function () {
         [
@@ -88,6 +88,6 @@ describe('#typeOfIs', function () {
             [Number, undefined],
             [Array, false]
         ]
-            .forEach(tuple => expectFalse(apply(typeOfIs, tuple)));
+            .forEach(tuple => expectFalse(apply(isType, tuple)));
     });
 });

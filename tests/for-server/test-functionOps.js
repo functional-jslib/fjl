@@ -7,7 +7,8 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {call, apply} from '../../src/functionOps';
+import {apply} from '../../src/apply';
+import {call} from '../../src/call';
 import {add, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

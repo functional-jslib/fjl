@@ -1,5 +1,6 @@
 /**
  * Created by elyde on 11/13/2016.
+ * @todo update tests to be more comprehensive (and unitized).
  */
 
 // ~~~ STRIP ~~~
@@ -41,7 +42,7 @@ describe('curry', function () {
             expectFunction(func);
         });
 
-        // Expect functions work correctly
+        // Expect functions work as expected
         expect(min8(9)).to.equal(8);
         expect(min8(8)).to.equal(8);
         expect(min8(7)).to.equal(7);
@@ -81,6 +82,9 @@ describe('curry', function () {
             let composed = compose(min8, max5, pow2);
             expect(composed(num)).to.equal(expectedFor(num));
         });
+
+        let add3Items = (a, b, c) => a + b + c,
+            curriedAdd3Items = curry(add3Items);
     });
 
 });
