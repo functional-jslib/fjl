@@ -8,8 +8,8 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {compose} from '../../src/compose';
-import {curry, curry2, __} from '../../src/curry';
+import {compose} from '../../src/function/compose';
+import {curry, curry2, __} from '../../src/function/curry';
 import {/*expectFalse, expectEqual,*/ expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

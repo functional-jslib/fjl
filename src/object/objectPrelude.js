@@ -6,10 +6,9 @@
  * Set functions for objects.
  */
 
-import {curry2} from '../src/curry';
-import {keys} from '../src/keys';
-import {isObject} from '../src/is';
-import {fPure, fPureTakesOne} from './libHelpers';
+import {curry, curry2} from '../function/curry';
+import {isObject} from '../type-checking/is';
+import {fPure, fPureTakesOne} from '../libHelpers';
 
 /**
  * @returns {Function}
@@ -26,6 +25,8 @@ function defineAssign () {
     }, obj0);
 }
 
+export {instanceOf} from '../type-checking/instanceOf';
+
 export const
 
     hasOwnProperty = fPureTakesOne('hasOwnProperty'),
@@ -33,6 +34,8 @@ export const
     length = fPure('length'),
 
     toString = fPure('toString'),
+
+    keys = obj => Object.keys(obj),
 
     /**
      * Defined as `Object.assign` else is the same thing but shimmed.

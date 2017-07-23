@@ -1,4 +1,4 @@
-import {reduceRight} from './listPrelude';
+import {reduceRight} from '../list/listPrelude';
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to

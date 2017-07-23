@@ -1,15 +1,14 @@
 /**
  * Contains functions for operating strings.
  * @author elyde
- * @module stringOps {{join: Function, split: Function, lines: Function, words: Function, unlines: Function, unwords: Function}}
  * @created 7/9/2017.
  */
 
 'use strict';
 
-import {join} from './list';
+import {join} from './listPrelude';
 
-import {curry} from './curry';
+import {curry} from '../function/curry';
 
 export const
 
@@ -39,7 +38,7 @@ export const
     words = split(/[\s\t]/gm),
 
     /**
-     * Joins an array of strings with '\s'.
+     * Joins an list of strings with '\s'.
      * @function module:stringOps.unwords
      * @param arr {String}
      * @returns {Array}

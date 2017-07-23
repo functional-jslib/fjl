@@ -7,11 +7,11 @@
 // generating browser version of test(s).
 'use strict';
 import {expect} from 'chai';
-import {instanceOf} from '../../src/instanceOf';
+import {instanceOf} from '../../src/object/objectPrelude';
 import {isset, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet} from '../../src/is';
+    isWeakMap, isWeakSet} from '../../src/type-checking/is';
 import {expectTrue, expectFalse, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -38,10 +38,10 @@ describe('is#isset', function () {
 });
 
 describe('is#isArray', function () {
-    it ('should return `true` when given value is an array', function () {
+    it ('should return `true` when given value is an list', function () {
         expectTrue(isArray([]));
     });
-    it ('should return `false` when given value is not an array', function () {
+    it ('should return `false` when given value is not an list', function () {
         expectFalse(isArray(function () {}));
     });
 });

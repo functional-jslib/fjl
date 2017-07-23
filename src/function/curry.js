@@ -48,11 +48,11 @@ function isPlaceHolder (instance) {
 }
 
 /**
- * Replaces `placeholder` values in `array`.
+ * Replaces `placeholder` values in `list`.
  * @function replacePlaceHolder
  * @param array {Array} - Array to replace placeholders in.
  * @param args {Array} - Args from to choose from to replace placeholders.
- * @returns {Array|*} - Returns passed in `array` with placeholders replaced by values in `args`.
+ * @returns {Array|*} - Returns passed in `list` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders (array, args) {
     let out = array.map(element => {

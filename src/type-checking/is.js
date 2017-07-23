@@ -2,7 +2,7 @@
  * Created by elyde on 12/18/2016.
  * @module is
  */
-import {curry} from './curry';
+import {curry} from '../function/curry';
 import {typeOf} from './typeOf';
 import {instanceOf} from './instanceOf';
 
@@ -61,7 +61,7 @@ export const
     isFunction = value => !isClass(value) && instanceOf(Function, value),
 
     /**
-     * Checks if value is an array.
+     * Checks if value is an list.
      * @function module:is.isArray
      * @param value {*}
      * @returns {boolean}

@@ -6,7 +6,7 @@
 // ~~~ STRIP ~~~
 // This part gets stripped out when
 // generating browser version of test(s).
-import {curry2_} from '../../src/curry';
+import {curry2_} from '../../src/function/curry';
 import {expect} from 'chai';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

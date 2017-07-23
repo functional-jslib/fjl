@@ -6,8 +6,8 @@
 // generating browser version of test(s).
 'use strict';
 import {expect} from 'chai';
-import {compose} from '../../src/compose';
-import {curry2} from '../../src/curry';
+import {compose} from '../../src/function/compose';
+import {curry2} from '../../src/function/curry';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -29,7 +29,7 @@ describe('compose', function () {
     });
 
     it ('should be able to compose an arbitrary number of functions and execute them as expected ' +
-        'from generated function.', function () {
+        'from generated-for-src function.', function () {
         let min = curry2(Math.min),
             max = curry2(Math.max),
             pow = curry2(Math.pow),

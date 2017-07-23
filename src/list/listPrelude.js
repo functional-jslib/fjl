@@ -4,7 +4,7 @@
  * @todo add `reverse` to './compounded'
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from './libHelpers';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../libHelpers';
 
 /**
  * Array.prototype.reverse generator (generates a function that calls the prototype version or a
@@ -22,7 +22,7 @@ function defineReverse () {
 export const
 
     /**
-     * Maps a function to functor (array etc.).
+     * Maps a function to functor (list etc.).
      * @function module:arrayOperators.map
      * @param fn {Function}
      * @param functor {Array|{map: {Function}}}
@@ -31,7 +31,7 @@ export const
     map = fPureTakesOne('map'),
 
     /**
-     * Filters a functor (array etc.) with passed in function.
+     * Filters a functor (list etc.) with passed in function.
      * @function module:arrayOperators.filter
      * @param fn {Function}
      * @param functor {Array|{filter: {Function}}}
@@ -40,7 +40,7 @@ export const
     filter = fPureTakesOne('filter'),
 
     /**
-     * Reduces a foldable (array etc.) with passed in function.
+     * Reduces a foldable (list etc.) with passed in function.
      * @function module:arrayOperators.reduce
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
@@ -49,7 +49,7 @@ export const
     reduce = fPureTakes2('reduce'),
 
     /**
-     * Reduces a foldable (array etc.) from the right with passed in function.
+     * Reduces a foldable (list etc.) from the right with passed in function.
      * @function module:arrayOperators.reduceRight
      * @param fn {Function}
      * @param functor {Array|{reduceRight: {Function}}}
@@ -105,7 +105,7 @@ export const
     join = fPureTakesOne('join'),
 
     /**
-     * Reverses an array (shimmed if not exists).
+     * Reverses an list (shimmed if not exists).
      * @function module:listPrelude.reverse
      * @return {Array}
      */

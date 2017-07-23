@@ -1,7 +1,7 @@
 /**
  * Created by elyde on 12/10/2016.
  */
-import {isFunction, notEmptyAndOfType} from '../../src/is';
+import {isFunction, notEmptyAndOfType} from '../../src/type-checking/is';
 import {difference} from '../../src/objectOps';
 import {assign} from '../../src/assign';
 
@@ -63,7 +63,7 @@ export function subClass (superClass, constructor, methods, statics) {
 }
 
 /**
- * Same as subClass multi but takes an array of Constructor or one constructor at position one.
+ * Same as subClass multi but takes an list of Constructor or one constructor at position one.
  * @param ctorOrCtors {Function|Array<Function>} - SuperClass(es)
  * @param constructorOrMethods {Function|Object}
  * @param [methods] {Object|undefined}

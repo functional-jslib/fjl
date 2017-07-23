@@ -5,11 +5,11 @@
 
 'use strict';
 
-import {curry, curry2} from './curry';
-import {apply} from './apply';
-import {isString} from './is';
+import {curry, curry2} from '../function/curry';
+import {apply} from '../function/apply';
+import {isString} from '../type-checking/is';
 import {filter, reduce, concat} from './listPrelude';
-import {negate} from './negate';
+import {negate as negateP} from '../function/functionPrelude';
 
 export const
 
@@ -44,15 +44,15 @@ export const
     sortDescByLength = getSortByOrder(DESC, x => x.length),
 
     /**
-     * Returns head of array (first item of array).
+     * Returns head of list (first item of list).
      * @function module:arrayOperators.head
      * @param functor {Array}
-     * @returns {*} - First item from array
+     * @returns {*} - First item from list
      */
     head = functor => functor[0],
 
     /**
-     * Returns tail part of array (everything after the first item as new array).
+     * Returns tail part of list (everything after the first item as new list).
      * @function module:arrayOperators.tail
      * @param functor {Array}
      * @returns {Array}
@@ -60,7 +60,7 @@ export const
     tail = functor => functor.slice(1),
 
     /**
-     * Returns everything except last item of array as new array.
+     * Returns everything except last item of list as new list.
      * @function module:arrayOperators.init
      * @param functor {Array}
      * @returns {Array}
@@ -68,7 +68,7 @@ export const
     init = functor => functor.slice(0, functor.length - 1),
 
     /**
-     * Returns last item of array.
+     * Returns last item of list.
      * @function module:arrayOperators.last
      * @param functor {Array}
      * @returns {*}
@@ -109,19 +109,19 @@ export const
     ]),
 
     breakOnList = curry((predicate, arr) => [
-        takeWhile(negate(predicate), arr),
-        dropWhile(negate(predicate), arr)
+        takeWhile(negateP(predicate), arr),
+        dropWhile(negateP(predicate), arr)
     ]),
 
     /**
-     * Returns the lengths of all the items in an array.
+     * Returns the lengths of all the items in an list.
      * @param arrs {...Array}
      * @type {Function}
      */
     lengths = curry2(...arrs => arrs.length ? arrs.map(arr => arr.length) : []),
 
     /**
-     * Returns an ordered array (ascending or descending) with the lengths of all items passed in.
+     * Returns an ordered list (ascending or descending) with the lengths of all items passed in.
      * @param orderDir {Number} - 1 or -1 for ascending or descending.
      * @param arrs {...Array}
      * @returns {Array} - Array of lengths;
@@ -139,7 +139,7 @@ export const
     },
 
     /**
-     * Flattens an array.
+     * Flattens an list.
      * @function module:arrayOperators.flatten
      * @param arr {Array}
      * @returns {Array}
@@ -153,10 +153,10 @@ export const
     }, []),
 
     /**
-     * Flattens all arrays passed in into one array.
+     * Flattens all arrays passed in into one list.
      * @function module:arrayOperators.flattenMulti
      * @param arr {Array}
-     * @param [...arrays{Array}] - Other arrays to flatten into new array.
+     * @param [...arrays{Array}] - Other arrays to flatten into new list.
      * @returns {Array}
      */
     flattenMulti = curry2((arr0, ...arrays) =>
@@ -215,7 +215,7 @@ export const
         concat(arr1, filter(elm => arr1.indexOf(elm) === -1, arr2))),
 
     /**
-     * Performs an intersection on array 1 with  elements from array 2.
+     * Performs an intersection on list 1 with  elements from list 2.
      * @function module:arrayOperators.intersect
      * @param arr1 {Array}
      * @param arr2 {Array}
@@ -225,7 +225,7 @@ export const
             filter(elm => arr2.indexOf(elm) > -1, arr1)),
 
     /**
-     * Returns the difference of array 1 from array 2.
+     * Returns the difference of list 1 from list 2.
      * @function module:arrayOperators.difference
      * @param array1 {Array}
      * @param array2 {Array}
@@ -245,7 +245,7 @@ export const
     }),
 
     /**
-     * Returns the complement of array 0 and the reset of the passed in arrays.
+     * Returns the complement of list 0 and the reset of the passed in arrays.
      * @function module:arrayOperators.complement
      * @param array1 {Array}
      * @param array2 {Array}

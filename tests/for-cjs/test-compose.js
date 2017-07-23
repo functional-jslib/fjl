@@ -29,7 +29,7 @@ describe('compose', function () {
     });
 
     it ('should be able to compose an arbitrary number of functions and execute them as expected ' +
-        'from generated function.', function () {
+        'from generated-for-src function.', function () {
         let min = curry2(Math.min),
             max = curry2(Math.max),
             pow = curry2(Math.pow),

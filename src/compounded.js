@@ -5,18 +5,18 @@
 
 'use strict';
 
-import {curry2} from './curry';
-import {typeOf} from './typeOf';
+import {curry2} from './function/curry';
+import {typeOf} from './type-checking/typeOf';
 
 import {complement as objComplement,
     difference as objDifference,
     union as objUnion,
-    intersect as objIntersect} from './object';
+    intersect as objIntersect} from './object/object';
 
 import {complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
-    intersect as arrayIntersect} from './list';
+    intersect as arrayIntersect} from './list/list';
 
 export const
 

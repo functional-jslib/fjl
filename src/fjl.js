@@ -4,31 +4,34 @@
  *  - Make methods take the functor/monad values as last (where it makes sense)
  */
 
-export {assign, assignDeep} from './objectPrelude';
+export {isTruthy, isFalsy, not, or, and, equal} from './boolean/boolean';
 
-export {compose} from './compose';
+export {assign, assignDeep, keys, hasOwnProperty, length, toString,
+    instanceOf} from './object/objectPrelude';
+
+export {compose} from './function/compose';
 
 export {__, curry, curryN, curry2, curry3, curry4, curry5,
-    curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './curry';
+    curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './function/curry';
 
-export {typeOf} from './typeOf';
+export {typeOf} from './type-checking/typeOf';
 
 export {isset, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet} from './is';
+    isWeakMap, isWeakSet} from './type-checking/is';
 
-export {call} from './call';
-export {apply} from './apply';
+export {call} from './function/call';
+export {apply} from './function/apply';
 
 export {complement as objComplement,
     difference as objDifference,
     union as objUnion,
-    intersect as objIntersect} from './object';
+    intersect as objIntersect} from './object/object';
 
 export {map, filter, reduce, reduceRight,
     some, every, forEach, concat, join,
-    reverse} from './listPrelude';
+    reverse} from './list/listPrelude';
 
 export {complement as arrayComplement,
     difference as arrayDifference,
@@ -36,10 +39,10 @@ export {complement as arrayComplement,
     intersect as arrayIntersect,
     flatten, flattenMulti, head, tail,
     init, last, zip, zipN, sortAsc, sortDesc,
-    sortDescByLength, unzip, unzipN} from './list';
+    sortDescByLength, unzip, unzipN} from './list/list';
 
 export {complement, difference, union, intersect} from './compounded';
 
-export {split, lines, words, unlines, unwords} from './string';
+export {split, lines, words, unlines, unwords} from './list/string';
 
-export {version} from './generated/version';
+export {version} from '../generated-for-src/version';

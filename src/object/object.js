@@ -1,9 +1,8 @@
 
-import {curry, curry2} from './curry';
+import {curry, curry2} from '../function/curry';
 
-import {assignDeep, hasOwnProperty} from './objectPrelude';
-import {reduce} from './listPrelude';
-import {keys} from './keys';
+import {assignDeep, hasOwnProperty, keys} from './objectPrelude';
+import {reduce} from '../list/listPrelude';
 
 export const
 

@@ -113,13 +113,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 describe('Array Operators', function () {
 
     describe('#arrayComplement', function () {
-        it('should return an empty array when no parameters are passed in', function () {
+        it('should return an empty list when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, arrayComplement)();
         });
-        it('should return an empty array if only one array is passed in', function () {
+        it('should return an empty list if only one list is passed in', function () {
             compose(expectEqual(__, 0), length, arrayComplement)([1, 2, 3]);
         });
-        it('should return elements not in first array passed to it', function () {
+        it('should return elements not in first list passed to it', function () {
             var testCases = [
             // subj1, subj2, expectLen, expectedElements
             [[[1, 2, 3], [1, 2, 3, 4, 5]], 2, [4, 5]], [[[1, 2, 3], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7, 8]], 7, [4, 5, 4, 5, 6, 7, 8]], [[[1, 2, 3], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 1, 2, 3]], 4, [4, 5, 4, 5]]];
@@ -139,16 +139,16 @@ describe('Array Operators', function () {
     });
 
     describe('#arrayDifference', function () {
-        it('should return an empty array when no parameters are passed in', function () {
+        it('should return an empty list when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, arrayDifference)();
         });
-        it('should return a clone of the passed in array if it is only the first array that is passed in', function () {
+        it('should return a clone of the passed in list if it is only the first list that is passed in', function () {
             compose(expectEqual(__, 3), length, arrayDifference([]))([1, 2, 3]);
         });
-        it('should return an empty array when there are no differences between the two arrays passed in', function () {
+        it('should return an empty list when there are no differences between the two arrays passed in', function () {
             compose(expectEqual(__, 0), length, arrayDifference([1, 2, 3]))([1, 2, 3]);
         });
-        it('should return a clone of the passed in array if it is only the first array that is passed in', function () {
+        it('should return a clone of the passed in list if it is only the first list that is passed in', function () {
             compose(expectEqual(__, 3), length, arrayDifference([]))([1, 2, 3]);
         });
         it('should return the difference between two arrays passed in', function () {
@@ -172,17 +172,17 @@ describe('Array Operators', function () {
     });
 
     describe('#arrayIntersect', function () {
-        it('should return an empty array when receiving an empty array as parameter 1', function () {
+        it('should return an empty list when receiving an empty list as parameter 1', function () {
             compose(expectEqual(__, 0), length, arrayIntersect)([]);
             compose(expectEqual(__, 0), length, arrayIntersect([]))([1, 2, 3]);
         });
-        it('should return an empty array when receiving an empty array as parameter 2', function () {
+        it('should return an empty list when receiving an empty list as parameter 2', function () {
             compose(expectEqual(__, 0), length, arrayIntersect([1, 2, 3]))([]);
         });
-        it('should return an empty array when both arrays passed are empty', function () {
+        it('should return an empty list when both arrays passed are empty', function () {
             compose(expectEqual(__, 0), length, arrayIntersect([]))([]);
         });
-        it('should return an empty array when no arrays are passed in', function () {
+        it('should return an empty list when no arrays are passed in', function () {
             compose(expectEqual(__, 0), length, arrayIntersect)();
         });
         it('should return an intersection of the two arrays passed in', function () {
@@ -227,11 +227,11 @@ describe('Array Operators', function () {
     });
 
     describe('#flatten', function () {
-        it('should return an array when receiving an array', function () {
+        it('should return an list when receiving an list', function () {
             expectInstanceOf(flatten([]), Array);
         });
 
-        it('should flatten an array', function () {
+        it('should flatten an list', function () {
             var expected = [1, 2, 3],
                 subject = [[1], [[2]], [[[3]]]],
                 testData = [[subject, expected], [[[[[1]]], [[2]], [3]], expected], [[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]]], range(1, 15)]];
@@ -242,13 +242,13 @@ describe('Array Operators', function () {
     });
 
     describe('#flattenMulti', function () {
-        it('should return an array when receiving many arrays', function () {
+        it('should return an list when receiving many arrays', function () {
             var result = flattenMulti([], [[]], [[[]]], [[[[]]]]);
             expectInstanceOf(result, Array);
             expectShallowEquals(result, []);
         });
 
-        it('should flatten all passed in arrays into one array no matter their dimensions', function () {
+        it('should flatten all passed in arrays into one list no matter their dimensions', function () {
             // [[ args ], expected] - args is the args to spread on the call of `flattenMulti`
             [[[[[1], [2, [3], range(4, 9)]], range(10, 21)], range(1, 21)], [[[[[1]]], [[2]], [3]], [1, 2, 3]], [[[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]], range(16, 34)]], range(1, 34)]].map(function (args) {
                 return expectShallowEquals(flattenMulti.apply(undefined, _toConsumableArray(args[0])), args[1]);
@@ -275,7 +275,7 @@ describe('compose', function () {
         expect(result(99)).to.equal(99);
     });
 
-    it('should be able to compose an arbitrary number of functions and execute them as expected ' + 'from generated function.', function () {
+    it('should be able to compose an arbitrary number of functions and execute them as expected ' + 'from generated-for-src function.', function () {
         var min = curry2(Math.min),
             max = curry2(Math.max),
             pow = curry2(Math.pow),
@@ -720,7 +720,7 @@ describe('Function Operators', function () {
         it('should be a function', function () {
             expectFunction(apply);
         });
-        it('should call a function passed into it with args array passed in as third parameter', function () {
+        it('should call a function passed into it with args list passed in as third parameter', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
         it('should take context into account', function () {
@@ -778,10 +778,10 @@ describe('is#issetAndOfType', function () {
 });
 
 describe('is#isArray', function () {
-    it('should return `true` when given value is an array', function () {
+    it('should return `true` when given value is an list', function () {
         expectTrue(isArray([]));
     });
-    it('should return `false` when given value is not an array', function () {
+    it('should return `false` when given value is not an list', function () {
         expectFalse(isArray(function () {}));
     });
 });
