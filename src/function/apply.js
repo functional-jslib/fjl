@@ -1,7 +1,7 @@
 /**
  * Created by elydelacruz on 7/22/2017.
  */
-import {curry2} from './curry';
+import {curry} from './curry';
 
 export const
 
@@ -12,4 +12,4 @@ export const
      * @param args {*}
      * @returns {*}
      */
-    apply = (fn, args) => fn.apply(null, args);
+    apply = curry((fn, args) => fn.apply(null, args));

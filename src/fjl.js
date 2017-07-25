@@ -13,7 +13,7 @@ export {negate as negateP} from './function/negate';
 
 export {typeOf} from './object/typeOf';
 
-export {isset, isNumber,
+export {isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
     isWeakMap, isWeakSet} from './object/is';

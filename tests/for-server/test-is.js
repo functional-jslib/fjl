@@ -27,16 +27,6 @@ describe('is#isFunction', function () {
     });
 });
 
-describe('is#isset', function () {
-    it('should return true for any value that is not `null` or `undefined`', function () {
-        [-1, 0, 1, 'a', true, false, () => {}, [], {}, Symbol('hotdog')]
-            .forEach(value => expectTrue(isset(value)));
-    });
-    it('should return `false` for any value that is `null` or `undefined`', function () {
-        [null, undefined].forEach(value => expectFalse(isset(value)));
-    });
-});
-
 describe('is#isArray', function () {
     it ('should return `true` when given value is an array', function () {
         expectTrue(isArray([]));
@@ -163,17 +153,6 @@ describe('is#isSymbol', function () {
     it ('should return `false` when given value is not a symbol', function () {
         expectFalse(isSymbol(function () {}));
         expectFalse(isSymbol(NaN));
-    });
-});
-
-describe('is#isEmpty', function () {
-    it ('should return `true` when given value is empty', function () {
-        [0, null, undefined, '', [], {}, function () {}, () => {}]
-            .forEach(value => expectTrue(isEmpty(value)));
-    });
-    it ('should return `false` when given value is not empty', function () {
-        [1, 'something', [1, 2, 3], {a: 'b'}, function (a, b, c) {}, id => id]
-        .forEach(value => expectFalse(isEmpty(value)));
     });
 });
 

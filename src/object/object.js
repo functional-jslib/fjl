@@ -5,7 +5,7 @@ import {reduce} from '../array/arrayPrelude';
 
 export {instanceOf} from './instanceOf';
 export {typeOf} from './typeOf';
-export {isset, isNumber,
+export {isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
     isWeakMap, isWeakSet} from './is';

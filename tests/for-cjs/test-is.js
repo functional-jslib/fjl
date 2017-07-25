@@ -6,12 +6,11 @@
 // This part gets stripped out when
 // generating browser version of test(s).
 'use strict';
-let {expect}  = require('chai');
-let {isset, issetAndOfType, isNumber,
+const {isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
     isWeakMap, isWeakSet, isConstructablePrimitive}  = require('../../dist/cjs/is');
-let {expectTrue, expectFalse, expectFunction}  = require('./helpers');
+const {expectTrue, expectFalse, expectFunction}  = require('./helpers');
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -23,51 +22,6 @@ describe('is#isFunction', function () {
     it('should return `false` when value is not a function', function () {
         [-1, 0, 1, [], {}, 'abc']
             .forEach(value => expectFalse(isFunction(value)));
-    });
-});
-
-describe('is#isset', function () {
-    it('should return true for any value that is not `null` or `undefined`', function () {
-        [-1, 0, 1, 'a', true, false, () => {}, [], {}, Symbol('hotdog')]
-            .forEach(value => expectTrue(isset(value)));
-    });
-    it('should return `false` for any value that is `null` or `undefined`', function () {
-        [null, undefined].forEach(value => expectFalse(isset(value)));
-    });
-});
-
-describe('is#issetAndOfType', function () {
-    it('should return true for any value that is "set" and is of given "Type"', function () {
-        [
-            [-1, Number],
-            [0, 'Number'],
-            [1, Number],
-            ['a', String],
-            [true, Boolean],
-            [false, Boolean.name],
-            [() => {
-            }, Function],
-            [[], Array.name],
-            [{}, Object.name],
-            [Symbol('hotdog'), Symbol]
-        ]
-            .forEach(tuple => expectTrue(issetAndOfType.apply(null, tuple)));
-    });
-    it('should return `false` for any value that is not "set" or is not of given "Type"', function () {
-        [
-            [-1, Array],
-            [0, 'Function'],
-            [1, Function],
-            ['a', Boolean],
-            [true, Object],
-            [false, String],
-            [() => {
-            }, String.name],
-            [[], 'String'],
-            [{}, 'HotDog'],
-            [Symbol('hotdog'), 'SomeConstructName']
-        ]
-            .forEach(tuple => expectFalse(issetAndOfType.apply(null, tuple)));
     });
 });
 
@@ -197,26 +151,5 @@ describe('is#isSymbol', function () {
     it ('should return `false` when given value is not a symbol', function () {
         expectFalse(isSymbol(function () {}));
         expectFalse(isSymbol(NaN));
-    });
-});
-
-describe('is#isEmpty', function () {
-    it ('should return `true` when given value is empty', function () {
-        [0, null, undefined, '', [], {}, function () {}, () => {}]
-            .forEach(value => expectTrue(isEmpty(value)));
-    });
-    it ('should return `false` when given value is not empty', function () {
-        [1, 'something', [1, 2, 3], {a: 'b'}, function (a, b, c) {}, id => id]
-        .forEach(value => expectFalse(isEmpty(value)));
-    });
-});
-
-describe('is#isConstructablePrimitive', function () {
-    it ('should return `true` when given value is of an "constructable"', function () {
-        [[], {}, 99, 'hello']
-            .forEach(value => expectTrue(isConstructablePrimitive((value))));
-    });
-    it ('should return `false` when given value is not of an "constructable"', function () {
-        expectFalse(isConstructablePrimitive(NaN));
     });
 });

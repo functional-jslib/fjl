@@ -37,6 +37,10 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
         return args.reduce((agg, num) => agg / num, args.shift());
     }),
 
+    subtract = curry2_((arg0, ...args) => {
+        return args.reduce((agg, num) => agg - num, arg0);
+    }),
+
     shallowCompareOnLeft = curry2_((incoming, against) => Array.isArray(incoming) ?
         shallowCompareArraysLeft(incoming, against) : shallowCompareObjectsLeft(incoming, against) ),
 

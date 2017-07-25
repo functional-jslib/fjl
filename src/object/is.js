@@ -8,8 +8,6 @@ import {typeOf} from './typeOf';
 import {instanceOf} from './instanceOf';
 
 let _String = String.name,
-    _Function = Function.name,
-    _Array = Array.name,
     _Number = Number.name,
     _Object = Object.name,
     _Boolean = Boolean.name,
@@ -18,8 +16,7 @@ let _String = String.name,
     _WeakMap = 'WeakMap',
     _WeakSet = 'WeakSet',
     _Null = 'Null',
-    _Undefined = 'Undefined',
-    _undefined = 'undefined';
+    _Undefined = 'Undefined';
 
 export const
 
@@ -150,56 +147,4 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSymbol = isType('Symbol'),
-
-    /**
-     * Checks to see if value passed in is set (not undefined and not null).
-     * @function module:is.isset
-     * @param value {*} - Value to check.
-     * @returns {Boolean}
-     */
-    isset = value => typeof value !== _undefined && value !== null,
-
-    /**
-     * Checks to see if passed in argument is empty.
-     * @function module:is.empty
-     * @param value {*} - Value to check.
-     * @returns {Boolean}
-     */
-    isEmpty = value => {
-        let typeOfValue = typeOf(value),
-            retVal;
-
-        if (!value) { // '', 0, `null`, `undefined` or `false` then is empty
-            retVal = true;
-        }
-        else if (typeOfValue === _Array || typeOfValue === _Function) {
-            retVal = value.length === 0;
-        }
-        else if (typeOfValue === _Number && value !== 0) {
-            retVal = false;
-        }
-        else if (typeOfValue === _Object) {
-            retVal = Object.keys(value).length === 0;
-        }
-        else if (isInstanceOfMapOrSetByName(typeOfValue, value)) {
-            retVal = value.size > 0;
-        }
-        else {
-            retVal = !value;
-        }
-        return retVal;
-    },
-
-    /**
-     * Returns true if an element is not empty and is of type.
-     * @function module:is.notEmptyAndOfType
-     * @param type {String|Function} - Type to check against (string name or actual constructor).
-     * @param value {*} - Value to check.
-     * @returns {Boolean}
-     */
-    notEmptyAndOfType = curry((type, value) => !isEmpty(value) && isType(type, value));
-
-function isInstanceOfMapOrSetByName (name) {
-    return name.indexOf(_Map) > -1 || name.indexOf(_Set) > -1;
-}
+    isSymbol = isType('Symbol');

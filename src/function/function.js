@@ -1,14 +1,18 @@
 /**
+ * Function operations: `
  * @module function
  */
 import {reverse} from './../array/arrayPrelude';
+import {call} from './call';
+import {apply} from './apply';
 
-export {apply} from './apply';
-export {call} from './call';
 export {compose} from './compose';
 export {curry, curryN, curry2, curry3, curry4, curry5,
-__, curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './curry';
+    __, curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './curry';
 export {negate} from './negate';
+
+export {call};
+export {apply};
 
 export const id = x => x,
 
@@ -29,16 +33,17 @@ export const id = x => x,
     flip = fn => (b, a) => call(fn, a, b),
 
     /**
-     *
-     * @param predicate {Function} :: a -> Boolean
-     * @param operation {Function} :: a -> a
+     * Reduce by operation until predicate returns `false`.
+     * @param predicate {Function} :: (a, index) -> Boolean
+     * @param operation {Function} :: (a, index) -> a
      * @param typeInstance {*} :: *
-     * @returns {*} - What ever type instance type is
+     * @returns {*} - What ever type `typeInstance` is
      */
     until = (predicate, operation, typeInstance) => {
-        let result = typeInstance;
-        while (predicate(result)) {
-            result = operation(result);
+        let result = typeInstance,
+            ind = 0;
+        while (predicate(result, ind)) {
+            result = operation(result, ind++);
         }
         return result;
     };
