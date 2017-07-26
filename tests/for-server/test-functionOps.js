@@ -9,7 +9,7 @@
 import {assert, expect} from 'chai';
 import {apply} from '../../src/function/apply';
 import {call} from '../../src/function/call';
-import {flip, flipN, until} from '../../src/function/function';
+import {flip, flipN, until, id} from '../../src/function/function';
 import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -101,6 +101,16 @@ describe ('Function Operators', function () {
                 () => until(x => x < 100, null, 1),
                 Error
             );
+        });
+    });
+
+    describe ('#id', function () {
+        it ('should be a function', function () {
+            expectFunction(id);
+        });
+        it ('should return whatever you give it', function () {
+            expectEqual(id(1), 1);
+            expectEqual(id(undefined), undefined);
         });
     });
 
