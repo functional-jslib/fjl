@@ -33,7 +33,7 @@ export const id = x => x,
     flip = fn => (b, a) => call(fn, a, b),
 
     /**
-     * Reduce by operation until predicate returns `false`.
+     * Run `operation` until predicate returns `true`.
      * @param predicate {Function} :: (a, index) -> Boolean
      * @param operation {Function} :: (a, index) -> a
      * @param typeInstance {*} :: *
@@ -42,7 +42,7 @@ export const id = x => x,
     until = (predicate, operation, typeInstance) => {
         let result = typeInstance,
             ind = 0;
-        while (predicate(result, ind)) {
+        while (!predicate(result, ind)) {
             result = operation(result, ind++);
         }
         return result;

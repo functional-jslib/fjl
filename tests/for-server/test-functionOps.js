@@ -83,8 +83,8 @@ describe ('Function Operators', function () {
             expectFunction(until);
         });
 
-        it ('should run until a predicate returns `false`', function () {
-            const result = until(x => x < 100, x => { log(x); return x + x; }, 1);
+        it ('should run while predicate returns `false`', function () {
+            const result = until(x => x >= 100, x => { log(x); return x + x; }, 1);
             expectEqual(result, 128);
             log('Result:', result);
         });
@@ -98,7 +98,7 @@ describe ('Function Operators', function () {
 
         it ('should throw an error when no operation is passed in', function () {
             assert.throws(
-                () => until(x => x < 100, null, 1),
+                () => until(x => x >= 100, null, 1),
                 Error
             );
         });
