@@ -105,6 +105,22 @@ export const
     join = fPureTakesOne('join'),
 
     /**
+     * Same as Array.prototype.slice
+     * @param separator {String|RegExp}
+     * @param arr{Array}
+     * @returns {Array}
+     */
+    slice = fPureTakes2('slice'),
+
+    /**
+     * Same as Array.prototype.push
+     * @param item {*}
+     * @param arr {Array}
+     * @returns {Number}
+     */
+    push = fPureTakesOneOrMore('push'),
+
+    /**
      * Reverses an array (shimmed if not exists).
      * @function module:listPrelude.reverse
      * @return {Array}

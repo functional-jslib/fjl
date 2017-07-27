@@ -9,8 +9,8 @@
 import {assert, expect} from 'chai';
 import {apply} from '../../src/function/apply';
 import {call} from '../../src/function/call';
-import {flip, flipN} from '../../src/function/function';
-import {add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
+import {flip, flipN, until, id} from '../../src/function/function';
+import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -75,6 +75,42 @@ describe ('Function Operators', function () {
             expectFunction(subtractor);
             expectEqual(subtract(3, 2, 1), subtractor(1, 2, 3));
             expectEqual(subtract(1, 2, 3), subtractor(3, 2, 1));
+        });
+    });
+
+    describe('#until', function () {
+        it ('should be a function', function () {
+            expectFunction(until);
+        });
+
+        it ('should run while predicate returns `false`', function () {
+            const result = until(x => x >= 100, x => { log(x); return x + x; }, 1);
+            expectEqual(result, 128);
+            log('Result:', result);
+        });
+
+        it ('should throw an error when no predicate is passed in', function () {
+            assert.throws(
+                () => until(null, x => { log(x); return x + x; }, 1),
+                Error
+            );
+        });
+
+        it ('should throw an error when no operation is passed in', function () {
+            assert.throws(
+                () => until(x => x >= 100, null, 1),
+                Error
+            );
+        });
+    });
+
+    describe ('#id', function () {
+        it ('should be a function', function () {
+            expectFunction(id);
+        });
+        it ('should return whatever you give it', function () {
+            expectEqual(id(1), 1);
+            expectEqual(id(undefined), undefined);
         });
     });
 

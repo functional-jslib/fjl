@@ -3,21 +3,31 @@
  * @module arrayOperators
  */
 
-
 'use strict';
 
 import {curry, curry2} from '../function/curry';
 import {apply} from '../function/apply';
 import {isString} from '../object/is';
-import {filter, reduce, every, some, concat} from './arrayPrelude';
-import {negate as negateP} from '../function/function';
+import {length} from '../object/objectPrelude';
+import {filter, reduce, every, some, concat, slice} from './arrayPrelude';
+import {negate as negateP, until} from '../function/function';
 import {isTruthy, isFalsy} from '../boolean/is';
 
-export const
+
+const
 
     ASC = 1,
 
-    DESC = -1,
+    DESC = -1;
+
+
+export const
+
+    lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
+
+    sliceFrom = curry((startInd, arr) => slice(startInd, length(arr), arr)),
+
+    sliceFromZero = sliceFrom(0),
 
     onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
 
@@ -43,7 +53,7 @@ export const
 
     sortAsc = getSortByOrder(ASC),
 
-    sortDescByLength = getSortByOrder(DESC, x => x.length),
+    sortDescByLength = getSortByOrder(DESC, x => length(x)),
 
     /**
      * Returns head of array (first item of array).
@@ -59,7 +69,7 @@ export const
      * @param functor {Array}
      * @returns {Array}
      */
-    tail = functor => functor.slice(1),
+    tail = functor => sliceFrom(1, functor),
 
     /**
      * Returns everything except last item of array as new array.
@@ -67,7 +77,7 @@ export const
      * @param functor {Array}
      * @returns {Array}
      */
-    init = functor => functor.slice(0, functor.length - 1),
+    init = functor => slice(0, lastIndex(functor) - 1, functor),
 
     /**
      * Returns last item of array.
@@ -75,41 +85,49 @@ export const
      * @param functor {Array}
      * @returns {*}
      */
-    last = functor => functor[functor.length - 1],
+    last = functor => functor[lastIndex(functor)],
 
-    take = curry((limit, array) => array.slice(0, limit - 1)),
+    take = curry((limit, array) => slice(0, limit - 1, array)),
 
-    drop = curry((count, array) => array.slice(count, array.length - 1)),
+    drop = curry((count, array) => sliceFrom(count, array)),
 
     splitStrAt = curry((ind, str) => [
         str.substring(0, ind),
-        str.substring(ind, str.length)
+        str.substring(ind, length(str))
     ]),
 
     splitArrayAt = curry((ind, arr) => [
-        arr.slice(0, ind),
-        arr.slice(ind, arr.length)
+        slice(0, ind, arr),
+        sliceFrom(ind, arr)
     ]),
 
     splitAt = curry((ind, x) => (isString(x) ? splitStrAt : splitArrayAt)(ind, x)),
 
-    indexUntil = curry((predicate, arr) =>
-        until((x, ind) => predicate(x) && ind < arr.length, x => x + 1))),
+    splitWhere = curry((pred, arr) =>
+        splitAt(indexWhere(pred, arr), arr)),
 
-    takeWhile = curry((predicate, arr) =>
-        arr.slice(0, indexUntil(predicate, arr))),
+    indexWhere = curry((pred, arr) => {
+        let retInd = 0,
+            ind = 0;
+        const limit = length(arr);
+        while (pred(arr[ind]) && ind < limit) ind += 1;
+        return ind;
+    }),
 
-    dropWhile = curry((predicate, arr) =>
-        arr.slice(indexUntil(predicate, arr), arr.length - 1)),
+    takeWhile = curry((pred, arr) =>
+        slice(0, indexWhere(pred, arr), arr)),
 
-    span = curry((predicate, arr) => [
-        takeWhile(predicate, arr),
-        dropWhile(predicate, arr)
+    dropWhile = curry((pred, arr) =>
+        sliceFrom(indexWhere(pred, arr), arr)),
+
+    span = curry((pred, arr) => [
+        takeWhile(pred, arr),
+        dropWhile(pred, arr)
     ]),
 
-    breakOnList = curry((predicate, arr) => [
-        takeWhile(negateP(predicate), arr),
-        dropWhile(negateP(predicate), arr)
+    breakOnList = curry((pred, arr) => [
+        takeWhile(negateP(pred), arr),
+        dropWhile(negateP(pred), arr)
     ]),
 
     /**
@@ -117,7 +135,7 @@ export const
      * @param arrs {...Array}
      * @type {Function}
      */
-    lengths = curry2(...arrs => arrs.length ? arrs.map(arr => arr.length) : []),
+    lengths = curry2(...arrs => length(arrs) ? arrs.map(arr => length(arr)) : []),
 
     /**
      * Returns an ordered array (ascending or descending) with the lengths of all items passed in.
@@ -134,7 +152,7 @@ export const
      */
     trimLengths = (...arrays) => {
         const smallLen = orderedLengths(ASC, arrays)[0];
-        return arrays.map(arr => arr.length > smallLen ? arr.slice(0, smallLen) : arr.slice(0));
+        return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
     },
 
     /**
@@ -143,13 +161,13 @@ export const
      * @param arr {Array}
      * @returns {Array}
      */
-    flatten = arr => arr.reduce((agg, elm) => {
+    flatten = arr => reduce((agg, elm) => {
         if (Array.isArray(elm)) {
             return concat(agg, flatten(elm));
         }
         agg.push(elm);
         return agg;
-    }, []),
+    }, [], arr),
 
     /**
      * Flattens all arrays passed in into one array.
@@ -169,15 +187,15 @@ export const
      */
     zip = curry((arr1, arr2) => {
         const {0: a1, 1: a2} = trimLengths(arr1, arr2);
-        return a1.reduce((agg, item, ind) => {
+        return reduce((agg, item, ind) => {
                 agg.push([item, a2[ind]]);
             return agg;
-        }, []);
+        }, [], a1);
     }),
 
     zipN = curry2((...arrs) => {
         const lists = apply(trimLengths, arrs);
-        return lists.reduce((agg, arr, ind) => {
+        return reduce((agg, arr, ind) => {
             if (!ind) {
                 return zip (agg, arr);
             }
@@ -187,7 +205,7 @@ export const
                 });
                 return arr2;
             });
-        }, lists.shift());
+        }, lists.shift(), lists);
     }),
 
     unzip = arr =>
@@ -232,7 +250,7 @@ export const
      * @param arr2 {Array}
      * @returns {Array}
      */
-    intersect = curry((arr1, arr2) => arr2.length === 0 ? [] :
+    intersect = curry((arr1, arr2) => length(arr2) === 0 ? [] :
             filter(elm => arr2.indexOf(elm) > -1, arr1)),
 
     /**
@@ -244,8 +262,8 @@ export const
      */
     difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
         let [arr1, arr2] = sortDescByLength(array1, array2);
-        if (!arr2 || arr2.length === 0) {
-            return arr1.slice();
+        if (!arr2 || length(arr2) === 0) {
+            return sliceFromZero(arr1);
         }
         return reduce((agg, elm) => {
             if (arr2.indexOf(elm) === -1) {

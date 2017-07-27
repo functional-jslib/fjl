@@ -62,7 +62,8 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
             inc += step;
         }
         return out;
-    });
+    }),
+    log = console.log.bind(console);
 
 export default {
     expectFunction,

@@ -43,7 +43,7 @@ export { complement as arrayComplement,
     all, any, or, and,
     flatten, flattenMulti, head, tail,
     init, last, take, drop, splitStrAt, splitArrayAt, splitAt,
-    indexUntil, takeWhile, dropWhile, span, breakOnList,
+    indexWhile, takeWhile, dropWhile, span, breakOnList,
     lengths, orderedLengths, trimLengths,
     zip, zipN, sortAsc, sortDesc,
     sortDescByLength, unzip, unzipN} from './array/array';

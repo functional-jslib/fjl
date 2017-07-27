@@ -7,7 +7,7 @@ export {instanceOf} from './instanceOf';
 export {typeOf} from './typeOf';
 export {isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
-    isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
+    isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet} from './is';
 
 export const

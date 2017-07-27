@@ -33,7 +33,7 @@ export const id = x => x,
     flip = fn => (b, a) => call(fn, a, b),
 
     /**
-     * Reduce by operation until predicate returns `true`.
+     * Run `operation` until predicate returns `true`.
      * @param predicate {Function} :: (a, index) -> Boolean
      * @param operation {Function} :: (a, index) -> a
      * @param typeInstance {*} :: *

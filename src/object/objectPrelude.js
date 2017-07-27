@@ -6,9 +6,9 @@
  * Set functions for objects.
  */
 
-import {curry2} from '../function/curry';
+import {curry, curry2} from '../function/curry';
 import {isObject} from './is';
-import {fPure, fPureTakesOne} from '../utils/utils';
+import {fPureTakesOne} from '../utils/utils';
 
 /**
  * @returns {Function}
@@ -29,9 +29,11 @@ export {instanceOf} from './instanceOf';
 
 export const
 
+    prop = curry((name, obj) => obj[name]),
+
     hasOwnProperty = fPureTakesOne('hasOwnProperty'),
 
-    length = fPure('length'),
+    length = prop('length'),
 
     keys = obj => Object.keys(obj),
 
