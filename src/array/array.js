@@ -93,17 +93,14 @@ export const
 
     splitAt = curry((ind, x) => (isString(x) ? splitStrAt : splitArrayAt)(ind, x)),
 
-    rangeOnIterable = curry((predicate, arr) => {
-        let ind = 0;
-        while (predicate(arr[ind]) && ind < arr.length) ind += 1;
-        return ind;
-    }),
+    indexUntil = curry((predicate, arr) =>
+        until((x, ind) => predicate(x) && ind < arr.length, x => x + 1))),
 
     takeWhile = curry((predicate, arr) =>
-        arr.slice(0, rangeOnIterable(predicate, arr))),
+        arr.slice(0, indexUntil(predicate, arr))),
 
     dropWhile = curry((predicate, arr) =>
-        arr.slice(rangeOnIterable(predicate, arr), arr.length - 1)),
+        arr.slice(indexUntil(predicate, arr), arr.length - 1)),
 
     span = curry((predicate, arr) => [
         takeWhile(predicate, arr),

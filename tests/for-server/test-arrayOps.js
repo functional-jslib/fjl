@@ -9,7 +9,7 @@
 import {assert, expect} from 'chai';
 import {compose} from '../../src/function/compose';
 import {__} from '../../src/function/curry';
-import {complement as arrayComplement, difference as arrayDifference, union as arrayUnion, intersect as arrayIntersect, flatten, flattenMulti} from '../../src/array/array';
+import {head, last, init, tail, complement as arrayComplement, difference as arrayDifference, union as arrayUnion, intersect as arrayIntersect, flatten, flattenMulti} from '../../src/array/array';
 import {length, range, expectEqual, expectShallowEquals, expectInstanceOf} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -157,5 +157,29 @@ describe ('Array Operators', function () {
                     .map(args => expectShallowEquals(flattenMulti(...args[0]), args[1]));
         });
     });
+
+    describe ('#head', function () {
+        it ('should return the first item in an array and/or string.', function () {
+            expectEqual(head('Hello'), 'H');
+            expectEqual(head(('Hello').split('')), 'H');
+        });
+    });
+
+    describe ('#last', function () {
+        it ('should return the last item in an array and/or string.', function () {
+            const word = 'Hello',
+                lastInWord = word[word.length - 1];
+            expectEqual(last(word), lastInWord);
+            expectEqual(last(word.split('')), lastInWord);
+        });
+    });
+
+    describe ('#init', function () {
+        it ('should return everything except the last item of an array', function () {
+
+        });
+    });
+
+
 
 });
