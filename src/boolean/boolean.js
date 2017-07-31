@@ -8,17 +8,14 @@ import {isFalsy} from './is';
 
 // Reuse our algebra from the array package so the functionality
 // is furtherly` validated throughout our library.
-import {
-    and as listAnd,
-    or as listOr,
-    all as listAll} from '../array/array';
+import {all as listAll} from '../array/array';
 
 export const
 
-    and = curry2((...args) => listAnd(args)), // every
+    and = curry2((a, b) => a && b),
 
-    or = curry2((...args) => listOr(args)), // some
+    or = curry2((a, b) => a || b),
 
-    not = curry2((...args) => listAll(isFalsy, args)), // every
+    not = curry2((a, b) => !a || !b),
 
     equal = curry2((arg0, ...args) => listAll(x => arg0 === x, args)); // every

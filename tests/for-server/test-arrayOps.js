@@ -180,6 +180,4 @@ describe ('Array Operators', function () {
         });
     });
 
-
-
 });

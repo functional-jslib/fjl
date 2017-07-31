@@ -6,11 +6,14 @@
 import {curry} from '../function/curry';
 import {typeOf} from './typeOf';
 import {instanceOf} from './instanceOf';
+import {length, keys} from './objectPrelude';
 
 let _String = String.name,
     _Number = Number.name,
     _Object = Object.name,
     _Boolean = Boolean.name,
+    _Function = Function.name,
+    _Array = Array.name,
     _Map = 'Map',
     _Set = 'Set',
     _WeakMap = 'WeakMap',
@@ -147,4 +150,79 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSymbol = isType('Symbol');
+    isSymbol = isType('Symbol'),
+
+    /**
+     * Checks if value passed in is a promise.
+     * @param x {*}
+     * @returns {Boolean}
+     */
+    isPromise = isType('Promise'),
+
+    /**
+     * Checks if !length.
+     * @param x {*}
+     * @returns {Boolean}
+     */
+    isEmptyList = x => length(x) === 0,
+
+    /**
+     * Checks if object has own properties/enumerable-props or not.
+     * @param obj {*}
+     * @returns {Boolean}
+     */
+    isEmptyObject = obj => isEmptyList(keys(obj)),
+
+    /**
+     * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
+     * @param x {*}
+     * @returns {Boolean}
+     */
+    isEmptyCollection = x => x.size === 0,
+
+    /**
+     * Checks to see if passed in argument is empty.
+     * @function module:is.empty
+     * @param value {*} - Value to check.
+     * @returns {Boolean}
+     */
+    isEmpty = value => {
+        let typeOfValue = typeOf(value),
+            retVal;
+
+        if (!value) { // '', 0, `null`, `undefined` or `false` then is empty
+            retVal = true;
+        }
+        else if (typeOfValue === _Array || typeOfValue === _Function) {
+            retVal = isEmptyList(value);
+        }
+        else if (typeOfValue === _Number && value !== 0) {
+            retVal = false;
+        }
+        else if (typeOfValue === _Object) {
+            retVal = isEmptyObject(value);
+        }
+        else if (value.hasOwnProperty('size')) {
+            retVal = isEmptyCollection(value);
+        }
+        else {
+            retVal = !value;
+        }
+        return retVal;
+    },
+
+    /**
+     * Returns true if an element is not empty and is of type.
+     * @function module:is.notEmptyAndOfType
+     * @param type {String|Function} - Type to check against (string name or actual constructor).
+     * @param value {*} - Value to check.
+     * @returns {Boolean}
+     */
+    notEmptyAndOfType = curry((type, value) => !isEmpty(value) && isType(type, value)),
+
+    /**
+     * Returns whether passed in values is defined and not null.
+     * @param x {*}
+     * @returns {Boolean}
+     */
+    isset = x => !isNull(x) && !isUndefined(x);

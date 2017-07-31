@@ -13,13 +13,11 @@ import {filter, reduce, every, some, concat, slice} from './arrayPrelude';
 import {negate as negateP, until} from '../function/function';
 import {isTruthy, isFalsy} from '../boolean/is';
 
-
 const
 
     ASC = 1,
 
     DESC = -1;
-
 
 export const
 
@@ -56,9 +54,34 @@ export const
     sortDescByLength = getSortByOrder(DESC, x => length(x)),
 
     /**
+     * Returns the lengths of all the items in an array.
+     * @param arrs {...Array}
+     * @type {Function}
+     */
+    lengths = curry2(...arrs => length(arrs) ? arrs.map(arr => length(arr)) : []),
+
+    /**
+     * Returns an ordered array (ascending or descending) with the lengths of all items passed in.
+     * @param orderDir {Number} - 1 or -1 for ascending or descending.
+     * @param arrs {...Array}
+     * @returns {Array} - Array of lengths;
+     */
+    getOrderedLengths = curry2((orderDir, ...arrs) => length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : []),
+
+    /**
+     * Return a new set of arrays of the ones passed in sliced to the shortest ones length.
+     * @param arrays {...Array}
+     * @returns {Array<Array>}
+     */
+    trimLengths = (...arrays) => {
+        const smallLen = getOrderedLengths(ASC, arrays)[0];
+        return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
+    },
+
+    /**
      * Returns head of array (first item of array).
      * @function module:arrayOperators.head
-     * @param functor {Array}
+     * @param functor {Array|String}
      * @returns {*} - First item from array
      */
     head = functor => functor[0],
@@ -74,15 +97,15 @@ export const
     /**
      * Returns everything except last item of array as new array.
      * @function module:arrayOperators.init
-     * @param functor {Array}
-     * @returns {Array}
+     * @param functor {Array|String}
+     * @returns {Array|String}
      */
     init = functor => slice(0, lastIndex(functor) - 1, functor),
 
     /**
      * Returns last item of array.
      * @function module:arrayOperators.last
-     * @param functor {Array}
+     * @param functor {Array|String}
      * @returns {*}
      */
     last = functor => functor[lastIndex(functor)],
@@ -103,8 +126,66 @@ export const
 
     splitAt = curry((ind, x) => (isString(x) ? splitStrAt : splitArrayAt)(ind, x)),
 
-    splitWhere = curry((pred, arr) =>
-        splitAt(indexWhere(pred, arr), arr)),
+    uncons = arr => {
+        const len = length(arr);
+        if (!len) {
+            return null;
+        }
+        return span((x, ind) => ind === 0, arr);
+    },
+
+    intersperse = curry((tweener, arr) => {
+        const limit = length(arr) - 1;
+        return reduce((agg, item, ind) => {
+            if (ind === limit) {
+                agg.push(item);
+            } else {
+                agg.push(item, tweener);
+            }
+            return agg;
+        }, []);
+    }),
+
+    intercalate = curry((xs, xss) =>
+        apply(concat, intersperse(xs, xss))),
+
+    transpose = xss => {
+        const orderedLengths = getOrderedLengths(DESC, ...xss),
+            out = new Array(orderedLengths[0]);
+        return reduce((agg, item) =>
+            reduce((agg2, element, ind2) => {
+                agg2[ind2].push(element);
+                return agg2;
+            }, agg, item), out.map(_ => []), xss);
+    },
+
+    /**
+     * Generates 2^n sub-sequences for passed in sequence (string/array) (`n` is
+     * the length of the passed in sequence so: 2^length(xs)).
+     * Note: The return value doubles per index/character passed in so use with caution!
+     *  Also note that for 2^16 (or for a sequence of 16 characters) this algorithm
+     *  will generate 65536 sub-sequences!  So caution should be taken to not
+     *  use this with sequences above a certain length on certain platform (the browser thread in specific).
+     * @function subsequences
+     * @param xs {Array|String}
+     * @returns {Array}
+     */
+    subsequences = xs => {
+        const len = Math.pow(2, length(xs)),
+            out = [];
+        for (let i = 0; i < len; i += 1) {
+            const entry = [];
+            for (let j = 0; j < len; j += 1) {
+                if (i & (1 << j)) {
+                    entry.push(xs[j]);
+                }
+            }
+            out.push(entry);
+        }
+        return out;
+    },
+
+    permutations = xs => [xs],
 
     indexWhere = curry((pred, arr) => {
         let retInd = 0,
@@ -129,31 +210,6 @@ export const
         takeWhile(negateP(pred), arr),
         dropWhile(negateP(pred), arr)
     ]),
-
-    /**
-     * Returns the lengths of all the items in an array.
-     * @param arrs {...Array}
-     * @type {Function}
-     */
-    lengths = curry2(...arrs => length(arrs) ? arrs.map(arr => length(arr)) : []),
-
-    /**
-     * Returns an ordered array (ascending or descending) with the lengths of all items passed in.
-     * @param orderDir {Number} - 1 or -1 for ascending or descending.
-     * @param arrs {...Array}
-     * @returns {Array} - Array of lengths;
-     */
-    orderedLengths = curry2((orderDir, ...arrs) => length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : []),
-
-    /**
-     * Return a new set of arrays of the ones passed in sliced to the shortest ones length.
-     * @param arrays {...Array}
-     * @returns {Array<Array>}
-     */
-    trimLengths = (...arrays) => {
-        const smallLen = orderedLengths(ASC, arrays)[0];
-        return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
-    },
 
     /**
      * Flattens an array.

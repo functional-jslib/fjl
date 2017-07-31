@@ -78,7 +78,7 @@ describe ('Function Operators', function () {
         });
     });
 
-    describe('#until', function () {
+    describe ('#until', function () {
         it ('should be a function', function () {
             expectFunction(until);
         });

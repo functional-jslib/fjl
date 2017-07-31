@@ -6,9 +6,10 @@
  * Set functions for objects.
  */
 
-import {curry, curry2} from '../function/curry';
+import {curry2} from '../function/curry';
 import {isObject} from './is';
 import {fPureTakesOne} from '../utils/utils';
+import {prop} from './prop';
 
 /**
  * @returns {Function}
@@ -28,8 +29,6 @@ function defineAssign () {
 export {instanceOf} from './instanceOf';
 
 export const
-
-    prop = curry((name, obj) => obj[name]),
 
     hasOwnProperty = fPureTakesOne('hasOwnProperty'),
 
