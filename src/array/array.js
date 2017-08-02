@@ -117,7 +117,7 @@ export const
      */
     last = functor => functor[lastIndex(functor)],
 
-    take = curry((limit, array) => slice(0, limit - 1, array)),
+    take = curry((limit, array) => slice(0, limit, array)),
 
     drop = curry((count, array) => sliceFrom(count, array)),
 

@@ -13,6 +13,7 @@ import {split} from '../../src/string/string';
 import {join} from '../../src/array/arrayPrelude';
 import {
     head, last, init, tail,
+    take,
     complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
@@ -26,6 +27,106 @@ import {length, range, expectEqual, expectShallowEquals, expectInstanceOf} from 
 describe ('Array Operators', function () {
 
     const strToArray = split('');
+
+    describe ('#head', function () {
+        it ('should return the first item in an array and/or string.', function () {
+            expectEqual(head('Hello'), 'H');
+            expectEqual(head(split('', 'Hello')), 'H');
+        });
+        it ('should return `undefined` when an empty array and/or string is passed in', function () {
+            expectEqual(undefined, head([]));
+            expectEqual(undefined, head(''));
+        });
+        it ('should throw an error when no parameter is passed in', function () {
+            assert.throws(head, Error);
+        });
+    });
+
+    describe ('#last', function () {
+        it ('should return the last item in an array and/or string.', function () {
+            const word = 'Hello';
+            compose(expectEqual('o'), last)(word);
+            compose(expectEqual('o'), last, strToArray)(word);
+        });
+        it ('should return `undefined` when an empty array is passed in', function () {
+            expectEqual(undefined, last([]));
+            expectEqual(undefined, last(''));
+        });
+        it ('should throw an error when no parameters is passed in', function () {
+            assert.throws(last, Error);
+        });
+    });
+
+    describe ('#init', function () {
+        it ('should return everything except the last item of an array and/or string', function () {
+            compose(expectEqual('orange'), join(''), init, strToArray)('oranges');
+            compose(expectEqual('orange'), init)('oranges');
+        });
+        it ('should return an empty array when an empty array and/or string is passed in', function () {
+            compose(expectEqual(0), length, init)([]);
+            compose(expectEqual(0), length, init)('');
+        });
+        it ('should throw an error when no parameter is passed in', function () {
+            assert.throws(init, Error);
+        });
+    });
+
+    describe ('#tail', function () {
+        it ('should return everything except the last item of an array', function () {
+            compose(expectEqual('ello'), join(''), tail, strToArray)('hello');
+            compose(expectEqual('ello'), tail)('hello');
+        });
+        it ('should return an empty array when receiving an empty array', function () {
+            compose(expectEqual(0), length, tail)([]);
+            compose(expectEqual(0), length, tail)('');
+        });
+        it ('should throw an error when no parameter is passed in', function () {
+            assert.throws(tail, Error);
+        });
+    });
+
+    describe ('#take', function () {
+        const hello = 'hello';
+
+        it ('should return taken items from array and/or string until limit', function () {
+            const word = hello;
+
+            // Test `take` on word parts and word (array and string)
+            strToArray(word).forEach((part, ind, wordParts)=> {
+                // Get human index (counting from `1`) and preliminaries
+                const humanInd = ind + 1,
+                    takenFromArray = take(humanInd, wordParts),
+                    takenFromStr = take(humanInd, word),
+                    expectedWordPart = word.substring(0, humanInd);
+
+                // Ensure expected length was taken
+                compose(expectEqual(humanInd), length)(takenFromArray);
+                compose(expectEqual(humanInd), length)(takenFromStr);
+
+                // Ensure correct items at said indices were taken
+                expectEqual(expectedWordPart, takenFromArray.join(''));
+                expectEqual(expectedWordPart, takenFromStr);
+            });
+        });
+
+        it ('should return an empty array and/or string when called with `0` as the first argument', function () {
+            compose(expectEqual(0), length, take(0))(split('', hello));
+            compose(expectEqual(0), length, take(0))(hello);
+        });
+
+        it ('should return an empty array and/or string when called with with an empty array or string', function () {
+            let count = 5;
+            while (count) {
+                compose(expectEqual(0), length, take(count))('');
+                compose(expectEqual(0), length, take(count))([]);
+                --count;
+            }
+        });
+
+        it ('should throw an error when no parameter is passed in', function () {
+            assert.throws(tail, Error);
+        });
+    });
 
     describe ('#arrayComplement', function () {
         it ('should return an empty array when no parameters are passed in', function () {
@@ -159,64 +260,13 @@ describe ('Array Operators', function () {
         });
 
         it ('should flatten all passed in arrays into one array no matter their dimensions', function () {
-                // [[ args ], expected] - args is the args to spread on the call of `flattenMulti`
-                [
-                    [[[[1], [2, [3], range(4, 9)]], range(10, 21)], range(1, 21)],
-                    [[[[[1]]], [[2]], [3]], [1, 2, 3]],
-                    [[[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]], range(16, 34)]], range(1, 34)],
-                ]
-                    .map(args => expectShallowEquals(flattenMulti(...args[0]), args[1]));
-        });
-    });
-
-    describe ('#head', function () {
-        it ('should return the first item in an array and/or string.', function () {
-            expectEqual(head('Hello'), 'H');
-            expectEqual(head(split('', 'Hello')), 'H');
-        });
-        it ('should return `undefined` when an empty array is passed in', function () {
-            expectEqual(undefined, head([]));
-        });
-        it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(head, Error);
-        });
-    });
-
-    describe ('#last', function () {
-        it ('should return the last item in an array and/or string.', function () {
-            const word = 'Hello';
-            compose(expectEqual('o'), last)(word);
-            compose(expectEqual('o'), last, strToArray)(word);
-        });
-        it ('should return `undefined` when an empty array is passed in', function () {
-            expectEqual(undefined, last([]));
-        });
-        it ('should throw an error when no parameters is passed in', function () {
-            assert.throws(last, Error);
-        });
-    });
-
-    describe ('#init', function () {
-        it ('should return everything except the last item of an array', function () {
-            compose(expectEqual('orange'), join(''), init, strToArray)('oranges');
-        });
-        it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(init, Error);
-        });
-        it ('should return an empty array when an empty array is passed in', function () {
-            compose(expectEqual(0), length, init)([]);
-        });
-    });
-
-    describe ('#tail', function () {
-        it ('should return everything except the last item of an array', function () {
-            compose(expectEqual('ello'), join(''), tail, strToArray)('hello');
-        });
-        it ('should return an empty array when receiving an empty array', function () {
-            compose(expectEqual(0), length, tail)([]);
-        });
-        it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(tail, Error);
+            // [[ args ], expected] - args is the args to spread on the call of `flattenMulti`
+            [
+                [[[[1], [2, [3], range(4, 9)]], range(10, 21)], range(1, 21)],
+                [[[[[1]]], [[2]], [3]], [1, 2, 3]],
+                [[[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]], range(16, 34)]], range(1, 34)],
+            ]
+                .map(args => expectShallowEquals(flattenMulti(...args[0]), args[1]));
         });
     });
 
