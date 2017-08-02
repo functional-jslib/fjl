@@ -3,6 +3,7 @@
  * @module arrayOperators
  */
 
+
 'use strict';
 
 import {curry, curry2} from '../function/curry';
@@ -18,6 +19,12 @@ const
     ASC = 1,
 
     DESC = -1;
+
+function permutationSwap (arr, ind1, ind2) {
+    const element = arr[ind1];
+    arr[ind1] = arr[ind2];
+    arr[ind2] = element;
+}
 
 export const
 
@@ -100,7 +107,7 @@ export const
      * @param functor {Array|String}
      * @returns {Array|String}
      */
-    init = functor => slice(0, lastIndex(functor) - 1, functor),
+    init = functor => slice(0, lastIndex(functor), functor),
 
     /**
      * Returns last item of array.
@@ -134,13 +141,13 @@ export const
         return span((x, ind) => ind === 0, arr);
     },
 
-    intersperse = curry((tweener, arr) => {
+    intersperse = curry((between, arr) => {
         const limit = length(arr) - 1;
         return reduce((agg, item, ind) => {
             if (ind === limit) {
                 agg.push(item);
             } else {
-                agg.push(item, tweener);
+                agg.push(item, between);
             }
             return agg;
         }, []);

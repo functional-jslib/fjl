@@ -9,12 +9,23 @@
 import {assert, expect} from 'chai';
 import {compose} from '../../src/function/compose';
 import {__} from '../../src/function/curry';
-import {head, last, init, tail, complement as arrayComplement, difference as arrayDifference, union as arrayUnion, intersect as arrayIntersect, flatten, flattenMulti} from '../../src/array/array';
+import {split} from '../../src/string/string';
+import {join} from '../../src/array/arrayPrelude';
+import {
+    head, last, init, tail,
+    complement as arrayComplement,
+    difference as arrayDifference,
+    union as arrayUnion,
+    intersect as arrayIntersect,
+    flatten,
+    flattenMulti} from '../../src/array/array';
 import {length, range, expectEqual, expectShallowEquals, expectInstanceOf} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
 describe ('Array Operators', function () {
+
+    const strToArray = split('');
 
     describe ('#arrayComplement', function () {
         it ('should return an empty array when no parameters are passed in', function () {
@@ -161,22 +172,51 @@ describe ('Array Operators', function () {
     describe ('#head', function () {
         it ('should return the first item in an array and/or string.', function () {
             expectEqual(head('Hello'), 'H');
-            expectEqual(head(('Hello').split('')), 'H');
+            expectEqual(head(split('', 'Hello')), 'H');
+        });
+        it ('should return `undefined` when an empty array is passed in', function () {
+            expectEqual(undefined, head([]));
+        });
+        it ('should throw an error when no parameter is passed in', function () {
+            assert.throws(head, Error);
         });
     });
 
     describe ('#last', function () {
         it ('should return the last item in an array and/or string.', function () {
-            const word = 'Hello',
-                lastInWord = word[word.length - 1];
-            expectEqual(last(word), lastInWord);
-            expectEqual(last(word.split('')), lastInWord);
+            const word = 'Hello';
+            compose(expectEqual('o'), last)(word);
+            compose(expectEqual('o'), last, strToArray)(word);
+        });
+        it ('should return `undefined` when an empty array is passed in', function () {
+            expectEqual(undefined, last([]));
+        });
+        it ('should throw an error when no parameters is passed in', function () {
+            assert.throws(last, Error);
         });
     });
 
     describe ('#init', function () {
         it ('should return everything except the last item of an array', function () {
+            compose(expectEqual('orange'), join(''), init, strToArray)('oranges');
+        });
+        it ('should throw an error when no parameter is passed in', function () {
+            assert.throws(init, Error);
+        });
+        it ('should return an empty array when an empty array is passed in', function () {
+            compose(expectEqual(0), length, init)([]);
+        });
+    });
 
+    describe ('#tail', function () {
+        it ('should return everything except the last item of an array', function () {
+            compose(expectEqual('ello'), join(''), tail, strToArray)('hello');
+        });
+        it ('should return an empty array when receiving an empty array', function () {
+            compose(expectEqual(0), length, tail)([]);
+        });
+        it ('should throw an error when no parameter is passed in', function () {
+            assert.throws(tail, Error);
         });
     });
 

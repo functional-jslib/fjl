@@ -13,7 +13,7 @@ import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe('#typeOf', function () {
+describe('is#typeOf', function () {
     it ('should be a function', function () {
         expectFunction(typeOf);
     });
@@ -36,7 +36,7 @@ describe('#typeOf', function () {
     });
 });
 
-describe('#isType', function () {
+describe('is#isType', function () {
     it ('should be a function', function () {
         expectFunction(isType);
     });
