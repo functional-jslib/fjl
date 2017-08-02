@@ -117,6 +117,12 @@ export const
      */
     last = functor => functor[lastIndex(functor)],
 
+    /**
+     * @function module:arrayOperators.take
+     * @param array {Array|String}
+     * @param limit {Number}
+     * @returns {String|Array} - Passed in type's type
+     */
     take = curry((limit, array) => slice(0, limit, array)),
 
     drop = curry((count, array) => sliceFrom(count, array)),
