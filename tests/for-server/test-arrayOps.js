@@ -11,20 +11,30 @@ import {compose} from '../../src/function/compose';
 import {__} from '../../src/function/curry';
 import {split} from '../../src/string/string';
 import {join} from '../../src/array/arrayPrelude';
+import {and} from '../../src/boolean/boolean';
 import {
     head, last, init, tail,
-    take,
+    take, drop, splitStrAt, splitArrayAt, splitAt,
     complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
     intersect as arrayIntersect,
     flatten,
     flattenMulti} from '../../src/array/array';
-import {length, range, expectEqual, expectShallowEquals, expectInstanceOf} from './helpers';
+import {
+    length,
+    range,
+    expectEqual,
+    expectShallowEquals,
+    expectLength,
+    expectTrue,
+    expectInstanceOf,
+    log
+} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('Array Operators', function () {
+describe ('arrayOps', function () {
 
     const strToArray = split('');
 
@@ -125,6 +135,118 @@ describe ('Array Operators', function () {
 
         it ('should throw an error when no parameter is passed in', function () {
             assert.throws(tail, Error);
+        });
+    });
+
+    describe ('#drop', function () {
+        const hello = 'hello';
+
+        it ('should return a new array/string with dropped items from original until limit', function () {
+            const word = hello,
+                wordParts = strToArray(word),
+                partsLength = wordParts.length - 1;
+
+            // Test `take` on word parts and word (array and string)
+            wordParts.forEach((part, ind, wordParts)=> {
+                // Get human index (counting from `1`) and preliminaries
+                const humanInd = ind + 1,
+                    takenFromArray = drop(humanInd, wordParts),
+                    takenFromStr = drop(humanInd, word),
+                    expectedWordPart = word.substring(humanInd);
+
+                // Ensure expected length was taken
+                compose(expectEqual(partsLength - ind), length)(takenFromArray);
+                compose(expectEqual(partsLength - ind), length)(takenFromStr);
+
+                // Ensure correct items at said indices were taken
+                expectEqual(expectedWordPart, takenFromArray.join(''));
+                expectEqual(expectedWordPart, takenFromStr);
+            });
+        });
+
+        it ('should return entire array and/or string when called with `0` as the first argument', function () {
+            compose(expectEqual(length(hello)), length, drop(0))(split('', hello));
+            compose(expectEqual(length(hello)), length, drop(0))(hello);
+        });
+
+        it ('should return an empty array and/or string when called with with an empty array or string', function () {
+            let count = 5;
+            while (count) {
+                compose(expectEqual(0), length, drop(count))('');
+                compose(expectEqual(0), length, drop(count))([]);
+                --count;
+            }
+        });
+
+        it ('should throw an error when no parameter is passed in', function () {
+            assert.throws(tail, Error);
+        });
+    });
+
+    describe ('#splitAt', function () {
+        const word = 'hello',
+            phraseAppendage = ' world',
+            phrase = `${word}${phraseAppendage}`,
+            phraseLen = length(phrase),
+            wordLen = length(word),
+            phraseAppendageLen = length(phraseAppendage);
+
+        it ('should split an array and/or string at given index', function () {
+            const result = splitAt(wordLen, phrase),
+                result2 = splitAt(wordLen, phrase.split(''));
+
+            // Ensure returned type for string case is correct
+            expectTrue(typeof result[0] === 'string');
+            expectTrue(typeof result[1] === 'string');
+
+            // Expect returned string parts are equal
+            expectEqual(result[0], word);
+            expectEqual(result[1], phraseAppendage);
+
+            // Ensure returned type for array use case is correct
+            expectTrue(Array.isArray(result2[0]));
+            expectTrue(Array.isArray(result2[1]));
+
+            // Ensure returned array parts are equal
+            expectEqual(length(result2[0]), wordLen);
+            expectEqual(length(result2[1]), phraseAppendageLen);
+
+            // Check each char/element in returned parts for array use case
+            [word, phraseAppendage].forEach((str, ind) =>
+                expectTrue(str.split('')
+                    .every((char, ind2) => result2[ind][ind2] === char)) );
+        });
+
+        it ('should return an array of empty array and/or string when receiving an empty one of either', function () {
+            splitAt(3, []).concat(splitAt(2, '')).forEach(expectLength(0));
+        });
+
+        it ('should return entirely, passed in, array and/or string as second part of ' +
+            'split in return when `0` is passed in as the first param', function () {
+            const splitPhrase = phrase.split('');
+            expectTrue(splitAt(0, phrase)
+                .concat(splitAt(0, splitPhrase))
+                .every((retVal, ind) =>
+                    // Only check even indices (due to concat above empty side of split is an
+                    //  `odd` number index)
+                    (ind + 1) % 2 === 0 ?
+
+                        // Length of left hand side split result
+                        length(retVal) === phraseLen &&
+
+                        // Left hand side split result
+                        splitPhrase.every((char, ind2) => retVal[ind2] === char) &&
+
+                        // Log results and do
+                        // "Else is empty right hand side split result" (empty result)
+                        !log(ind, retVal) : true
+                ));
+        });
+    });
+
+    describe ('#findIndex', function () {
+        it ('should find an index where predicate is satisfied', function () {
+
         });
     });
 

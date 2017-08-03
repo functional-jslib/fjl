@@ -8,6 +8,7 @@
 // generating browser version of test(s).
 import {curry2_} from '../../src/function/curry';
 import {expect} from 'chai';
+import {compose} from '../../src/function/compose';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -20,6 +21,8 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
     expectFalse = value => expectEqual(value, false),
 
     expectTrue = value => expectEqual(value, true),
+
+    expectLength = curry2_((len, element) => compose(expectEqual(len), length)(element)),
 
     hasOwnProperty = (instance, key) => Object.prototype.hasOwnProperty.call(instance, key),
 
@@ -71,6 +74,7 @@ export default {
     expectEqual,
     expectFalse,
     expectTrue,
+    expectLength,
     expectShallowEquals,
     hasOwnProperty,
     length,

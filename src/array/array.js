@@ -1,8 +1,8 @@
 /**
  * Array operators module.
  * @module arrayOperators
+ * @todo review `slice` usage here (slice is exclusive to `limit` passed in).
  */
-
 
 'use strict';
 
@@ -118,6 +118,7 @@ export const
     last = functor => functor[lastIndex(functor)],
 
     /**
+     * Takes `n` items from start of array to `limit` (exclusive).
      * @function module:arrayOperators.take
      * @param array {Array|String}
      * @param limit {Number}
@@ -125,26 +126,84 @@ export const
      */
     take = curry((limit, array) => slice(0, limit, array)),
 
+    /**
+     * Drops `n` items from start of array to `count` (exclusive).
+     * @function module:arrayOperators.take
+     * @param array {Array|String}
+     * @param count {Number}
+     * @returns {String|Array} - Passed in type's type
+     */
     drop = curry((count, array) => sliceFrom(count, array)),
 
+    /**
+     * Splits a string in two at given `index` (`index` is exclusive to second part
+     * of returned array).
+     * @param ind {Number} - Index to split at.
+     * @param str {String} - String to split.
+     * @returns {Array}
+     */
     splitStrAt = curry((ind, str) => [
         str.substring(0, ind),
         str.substring(ind, length(str))
     ]),
 
+    /**
+     * Splits an array in two at given `index` (`index` is exclusive to second part
+     *  of returned array).
+     * @param ind {Number} - Index to split at.
+     * @param arr {Array} - Array to split.
+     * @returns {Array}
+     */
     splitArrayAt = curry((ind, arr) => [
         slice(0, ind, arr),
         sliceFrom(ind, arr)
     ]),
 
+    /**
+     * Splits `x` in two at given `index` (exclusive (includes element/character at
+     * given index in second part of returned array)).
+     * @param ind {Number} - Index to split at.
+     * @param functor {Array|String} - functor (array or string) to split.
+     * @returns {Array} - Array of whatever type `x` was when passed in
+     */
     splitAt = curry((ind, x) => (isString(x) ? splitStrAt : splitArrayAt)(ind, x)),
 
-    uncons = arr => {
-        const len = length(arr);
+    indexWhere = curry((pred, arr) => {
+        let ind = 0;
+        const limit = length(arr);
+        while (pred(arr[ind], ind, arr) && ind < limit) ind += 1;
+        return ind;
+    }),
+
+    findIndex = indexWhere,
+
+    takeWhile = curry((pred, arr) =>
+        slice(0, indexWhere(pred, arr), arr)),
+
+    dropWhile = curry((pred, arr) =>
+        sliceFrom(indexWhere(pred, arr), arr)),
+
+    span = curry((pred, arr) => [
+        takeWhile(pred, arr),
+        dropWhile(pred, arr)
+    ]),
+
+    breakOnList = curry((pred, arr) => [
+        takeWhile(negateP(pred), arr),
+        dropWhile(negateP(pred), arr)
+    ]),
+
+    /**
+     * Returns `head` and `tail` of passed in array/string in a tuple.
+     * @param x {Array|String}
+     * @returns {Array}
+     */
+    uncons = x => {
+        const len = length(x);
         if (!len) {
             return null;
         }
-        return span((x, ind) => ind === 0, arr);
+        return span((_, ind) => ind === 0, x);
     },
 
     intersperse = curry((between, arr) => {
@@ -199,30 +258,6 @@ export const
     },
 
     permutations = xs => [xs],
-
-    indexWhere = curry((pred, arr) => {
-        let retInd = 0,
-            ind = 0;
-        const limit = length(arr);
-        while (pred(arr[ind]) && ind < limit) ind += 1;
-        return ind;
-    }),
-
-    takeWhile = curry((pred, arr) =>
-        slice(0, indexWhere(pred, arr), arr)),
-
-    dropWhile = curry((pred, arr) =>
-        sliceFrom(indexWhere(pred, arr), arr)),
-
-    span = curry((pred, arr) => [
-        takeWhile(pred, arr),
-        dropWhile(pred, arr)
-    ]),
-
-    breakOnList = curry((pred, arr) => [
-        takeWhile(negateP(pred), arr),
-        dropWhile(negateP(pred), arr)
-    ]),
 
     /**
      * Flattens an array.
