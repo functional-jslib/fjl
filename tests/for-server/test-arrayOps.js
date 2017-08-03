@@ -11,10 +11,9 @@ import {compose} from '../../src/function/compose';
 import {__} from '../../src/function/curry';
 import {split} from '../../src/string/string';
 import {join} from '../../src/array/arrayPrelude';
-import {and} from '../../src/boolean/boolean';
 import {
     head, last, init, tail,
-    take, drop, splitStrAt, splitArrayAt, splitAt,
+    take, drop, splitAt, findIndex,
     complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
@@ -245,8 +244,11 @@ describe ('arrayOps', function () {
     });
 
     describe ('#findIndex', function () {
+        const word = 'hello';
         it ('should find an index where predicate is satisfied', function () {
-
+            expectTrue( word.split('')
+                .every((char, ind, arr) =>
+                    findIndex((x => x === word[ind]), arr) === ind))
         });
     });
 
