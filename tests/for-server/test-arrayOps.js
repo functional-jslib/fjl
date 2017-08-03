@@ -244,11 +244,14 @@ describe ('arrayOps', function () {
     });
 
     describe ('#findIndex', function () {
-        const word = 'hello';
+        const word = 'abcdefg';
         it ('should find an index where predicate is satisfied', function () {
-            expectTrue( word.split('')
-                .every((char, ind, arr) =>
-                    findIndex((x => x === word[ind]), arr) === ind))
+            expectTrue(
+                word.split('')
+                    .every((char, ind, arr) =>
+                        findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind
+                    )
+            )
         });
     });
 

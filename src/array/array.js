@@ -65,7 +65,7 @@ export const
      * @param arrs {...Array}
      * @type {Function}
      */
-    lengths = curry2(...arrs => length(arrs) ? arrs.map(arr => length(arr)) : []),
+    lengths = curry2((...arrs) => length(arrs) ? arrs.map(length) : []),
 
     /**
      * Returns an ordered array (ascending or descending) with the lengths of all items passed in.
@@ -73,7 +73,7 @@ export const
      * @param arrs {...Array}
      * @returns {Array} - Array of lengths;
      */
-    getOrderedLengths = curry2((orderDir, ...arrs) => length(arrs) ? (orderDir ? sortAsc : sortDesc)(lengths(arrs)) : []),
+    getOrderedLengths = curry2((orderDir, ...arrs) => (orderDir ? sortAsc : sortDesc)(lengths(arrs))),
 
     /**
      * Return a new set of arrays of the ones passed in sliced to the shortest ones length.
@@ -169,9 +169,12 @@ export const
     splitAt = curry((ind, x) => (isString(x) ? splitStrAt : splitArrayAt)(ind, x)),
 
     indexWhere = curry((pred, arr) => {
-        let ind = 0;
+        let ind = -1,
+            predicateFulfilled = false;
         const limit = length(arr);
-        while (pred(arr[ind], ind, arr) && ind < limit) ind += 1;
+        while (ind < limit && !predicateFulfilled) {
+            predicateFulfilled = pred(arr[++ind], ind, arr);
+        }
         return ind;
     }),
 
