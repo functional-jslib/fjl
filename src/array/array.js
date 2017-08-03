@@ -7,19 +7,29 @@
 
 import {curry, curry2} from '../function/curry';
 import {apply} from '../function/apply';
-import {isString} from '../object/is';
+import {isArray} from '../object/is';
 import {length} from '../object/objectPrelude';
-import {filter, reduce, every, concat, slice} from './arrayPrelude';
-import {negate as negateP, until} from '../function/function';
+import {filter, reduce, every, concat as arrayConcat, slice} from './arrayPrelude';
+import {negate as negateP} from '../function/function';
 import {isTruthy, isFalsy} from '../boolean/is';
 
 const
 
     ASC = 1,
 
-    DESC = -1;
-/*
+    DESC = -1,
 
+    aggregateStr = (agg, item) => {
+        agg += item; return agg;
+    },
+
+    aggregateArr = (agg, item, ind) => {
+        agg[ind] = item; return agg;
+    },
+
+    strConcat = curry((x, ...args) => reduce(aggregateStr, x, args));
+
+/*
 function permutationSwap (arr, ind1, ind2) {
     const element = arr[ind1];
     arr[ind1] = arr[ind2];
@@ -28,6 +38,8 @@ function permutationSwap (arr, ind1, ind2) {
 */
 
 export const
+
+    concat = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
 
     any = curry((p, xs) => {
         const limit = length(xs);
@@ -44,7 +56,6 @@ export const
         while (ind < limit && p(xs[ind], ind, xs)) { ind += 1; }
         return ind === limit;
     }),
-
 
     onListUntil = curry((pred, op, agg, arr) => {
         let ind = -1,
@@ -149,6 +160,19 @@ export const
     last = functor => functor[lastIndex(functor)],
 
     /**
+     * Returns `head` and `tail` of passed in array/string in a tuple.
+     * @param x {Array|String}
+     * @returns {Array|String|Null}
+     */
+    uncons = x => {
+        const len = length(x);
+        if (len === 0) {
+            return null;
+        }
+        return [head(x), tail(x)];
+    },
+
+    /**
      * Takes `n` items from start of array to `limit` (exclusive).
      * @function module:arrayOperators.take
      * @param array {Array|String}
@@ -195,20 +219,6 @@ export const
         return ind;
     }),
 
-    partition = curry((pred, arr) => {
-        const splitPoint = indexWhere(pred, arr);
-        return splitPoint === -1 ?
-            splitAt(0, arr) : splitAt(splitPoint, arr);
-    }),
-
-    aggregateToStr = curry((agg, item, ind) => {
-        agg += item; return agg;
-    }),
-
-    aggregateToArr = curry((agg, item, ind) => {
-        agg[ind] = item; return agg;
-    }),
-
     /**
      * Finds index in string or array (alias for `findIndex`).
      * @function module:arrayOps.findIndex
@@ -217,6 +227,12 @@ export const
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndex = indexWhere,
+
+    partition = curry((pred, arr) => {
+        const splitPoint = indexWhere(pred, arr);
+        return splitPoint === -1 ?
+            splitAt(0, arr) : splitAt(splitPoint, arr);
+    }),
 
     /**
      * Gives an array with passed elements while predicate was true.
@@ -230,7 +246,7 @@ export const
             zero =  isArgArray ? [] : '';
 
         const operation = isArgArray ?
-                aggregateToArr : aggregateToStr;
+                aggregateArr : aggregateStr;
 
         return onListUntil (
             negateP(pred),  // predicate
@@ -257,19 +273,6 @@ export const
         const result = span(pred, arr);
         return [result[1], result[0]];
     }),
-
-    /**
-     * Returns `head` and `tail` of passed in array/string in a tuple.
-     * @param x {Array|String}
-     * @returns {Array|String|Null}
-     */
-    uncons = x => {
-        const len = length(x);
-        if (!len) {
-            return null;
-        }
-        return [head(x), tail(x)];
-    },
 
     intersperse = curry((between, arr) => {
         const limit = length(arr) - 1;
@@ -396,7 +399,15 @@ export const
 
     not = all(isFalsy),
 
-    equal = curry2((arg0, ...args) => every(x => arg0 === x, args)),
+    equal = curry2((arg0, ...args) => all(x => arg0 === x, args)),
+
+    sum = arr => reduce((agg, x) => agg + x, arr.shift(), arr),
+
+    product = arr => reduce((agg, x) => agg * x, arr.shift(), arr),
+
+    maximum = arr => apply(Math.max, arr),
+
+    minimum = arr => apply(Math.min, arr),
 
     /**
      * Creates a union on matching elements from array1.
