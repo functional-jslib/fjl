@@ -18,6 +18,10 @@ export {apply};
 
 export const id = x => x,
 
+    of = (x, ...args) => {
+
+    },
+
     /**
      * Flips a functions arguments order and returns a new function requiring such (arguments in reverse order).
      * @function module:fnOperators.flipN
@@ -36,16 +40,15 @@ export const id = x => x,
 
     /**
      * Run `operation` until predicate returns `true`.
-     * @param predicate {Function} :: (a, index) -> Boolean
-     * @param operation {Function} :: (a, index) -> a
+     * @param predicate {Function} :: a -> Boolean
+     * @param operation {Function} :: a -> a
      * @param typeInstance {*} :: *
      * @returns {*} - What ever type `typeInstance` is
      */
     until = (predicate, operation, typeInstance) => {
-        let result = typeInstance,
-            ind = 0;
-        while (!predicate(result, ind)) {
-            result = operation(result, ind++);
+        let result = typeInstance;
+        while (!predicate(result)) {
+            result = operation(result);
         }
         return result;
     };

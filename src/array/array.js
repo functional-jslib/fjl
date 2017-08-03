@@ -1,7 +1,6 @@
 /**
  * Array operators module.
  * @module arrayOperators
- * @todo review `slice` usage here (slice is exclusive to `limit` passed in).
  */
 
 'use strict';
@@ -10,7 +9,7 @@ import {curry, curry2} from '../function/curry';
 import {apply} from '../function/apply';
 import {isString} from '../object/is';
 import {length} from '../object/objectPrelude';
-import {filter, reduce, every, some, concat, slice} from './arrayPrelude';
+import {filter, reduce, every, concat, slice} from './arrayPrelude';
 import {negate as negateP, until} from '../function/function';
 import {isTruthy, isFalsy} from '../boolean/is';
 
@@ -19,14 +18,46 @@ const
     ASC = 1,
 
     DESC = -1;
+/*
 
 function permutationSwap (arr, ind1, ind2) {
     const element = arr[ind1];
     arr[ind1] = arr[ind2];
     arr[ind2] = element;
 }
+*/
 
 export const
+
+    any = curry((p, xs) => {
+        const limit = length(xs);
+        let ind = -1;
+        while (++ind < limit) {
+            if (p(xs[ind], ind, xs)) { return true; }
+        }
+        return false;
+    }),
+
+    all = curry((p, xs) => {
+        const limit = length(xs);
+        let ind = 0;
+        while (ind < limit && p(xs[ind], ind, xs)) { ind += 1; }
+        return ind === limit;
+    }),
+
+
+    onListUntil = curry((pred, op, agg, arr) => {
+        let ind = -1,
+            result = agg;
+
+        const limit = length(arr);
+
+        while (++ind < limit && !pred(arr[ind], ind, arr)) {
+            result = op(result, arr[ind], ind, arr);
+        }
+
+        return result;
+    }),
 
     lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
 
@@ -136,38 +167,24 @@ export const
     drop = curry((count, array) => sliceFrom(count, array)),
 
     /**
-     * Splits a string in two at given `index` (`index` is exclusive to second part
-     * of returned array).
-     * @param ind {Number} - Index to split at.
-     * @param str {String} - String to split.
-     * @returns {Array}
-     */
-    splitStrAt = curry((ind, str) => [
-        str.substring(0, ind),
-        str.substring(ind, length(str))
-    ]),
-
-    /**
-     * Splits an array in two at given `index` (`index` is exclusive to second part
-     *  of returned array).
-     * @param ind {Number} - Index to split at.
-     * @param arr {Array} - Array to split.
-     * @returns {Array}
-     */
-    splitArrayAt = curry((ind, arr) => [
-        slice(0, ind, arr),
-        sliceFrom(ind, arr)
-    ]),
-
-    /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
      * given index in second part of returned array)).
      * @param ind {Number} - Index to split at.
      * @param functor {Array|String} - functor (array or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
      */
-    splitAt = curry((ind, x) => (isString(x) ? splitStrAt : splitArrayAt)(ind, x)),
+    splitAt = curry((ind, arr) => [
+        slice(0, ind, arr),
+        sliceFrom(ind, arr)
+    ]),
 
+    /**
+     * Finds index in string or array.
+     * @function module:arrayOps.indexWhere
+     * @param pred {Function} - Predicate<element, index, arr>.
+     * @param arr {Array|String}
+     * @returns {Number} - `-1` if predicate not matched else `index` found
+     */
     indexWhere = curry((pred, arr) => {
         let ind = -1,
             predicateFulfilled = false;
@@ -178,35 +195,80 @@ export const
         return ind;
     }),
 
+    partition = curry((pred, arr) => {
+        const splitPoint = indexWhere(pred, arr);
+        return splitPoint === -1 ?
+            splitAt(0, arr) : splitAt(splitPoint, arr);
+    }),
+
+    aggregateToStr = curry((agg, item, ind) => {
+        agg += item; return agg;
+    }),
+
+    aggregateToArr = curry((agg, item, ind) => {
+        agg[ind] = item; return agg;
+    }),
+
+    /**
+     * Finds index in string or array (alias for `findIndex`).
+     * @function module:arrayOps.findIndex
+     * @param pred {Function} - Predicate<element, index, arr>.
+     * @param arr {Array|String}
+     * @returns {Number} - `-1` if predicate not matched else `index` found
+     */
     findIndex = indexWhere,
 
-    takeWhile = curry((pred, arr) =>
-        slice(0, indexWhere(pred, arr), arr)),
+    /**
+     * Gives an array with passed elements while predicate was true.
+     * @function module:arrayOps.takeWhile
+     * @param pred {Function} - Predicate<*, index, array|string>
+     * @param arr {Array|String}
+     * @returns {Array}
+     */
+    takeWhile = curry((pred, arr) => {
+        let isArgArray = Array.isArray(arr),
+            zero =  isArgArray ? [] : '';
 
-    dropWhile = curry((pred, arr) =>
-        sliceFrom(indexWhere(pred, arr), arr)),
+        const operation = isArgArray ?
+                aggregateToArr : aggregateToStr;
 
-    span = curry((pred, arr) => [
-        takeWhile(pred, arr),
-        dropWhile(pred, arr)
-    ]),
+        return onListUntil (
+            negateP(pred),  // predicate
+            operation,      // operation
+            zero,           // aggregator
+            arr
+        );
+    }),
 
-    breakOnList = curry((pred, arr) => [
-        takeWhile(negateP(pred), arr),
-        dropWhile(negateP(pred), arr)
-    ]),
+    dropWhile = curry((pred, arr) => {
+        const limit = length(arr),
+            splitPoint =
+                indexWhere((item, ind, arr2) =>
+                    !pred(arr[ind], ind, arr2), arr);
+
+        return splitPoint === -1 ?
+            slice(0, limit, arr) :
+            slice(splitPoint, limit, arr);
+    }),
+
+    span = curry((pred, arr) => partition(pred, arr)),
+
+    breakOnList = curry((pred, arr) => {
+        const result = span(pred, arr);
+        return [result[1], result[0]];
+    }),
 
     /**
      * Returns `head` and `tail` of passed in array/string in a tuple.
      * @param x {Array|String}
-     * @returns {Array}
+     * @returns {Array|String|Null}
      */
     uncons = x => {
         const len = length(x);
         if (!len) {
             return null;
         }
-        return span((_, ind) => ind === 0, x);
+        return [head(x), tail(x)];
     },
 
     intersperse = curry((between, arr) => {
@@ -328,15 +390,11 @@ export const
             return agg;
         }, [], arrs),
 
-    and = every(isTruthy),
+    and = all(isTruthy),
 
-    or = some(isTruthy),
+    or = any(isTruthy),
 
-    not = every(isFalsy),
-
-    any = some,
-
-    all = every,
+    not = all(isFalsy),
 
     equal = curry2((arg0, ...args) => every(x => arg0 === x, args)),
 

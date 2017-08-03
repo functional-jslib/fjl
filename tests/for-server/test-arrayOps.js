@@ -12,8 +12,9 @@ import {__} from '../../src/function/curry';
 import {split} from '../../src/string/string';
 import {join} from '../../src/array/arrayPrelude';
 import {
-    head, last, init, tail,
+    all, head, last, init, tail,
     take, drop, splitAt, findIndex,
+    takeWhile,
     complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
@@ -249,9 +250,28 @@ describe ('arrayOps', function () {
             expectTrue(
                 word.split('')
                     .every((char, ind, arr) =>
-                        findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind
-                    )
-            )
+                        findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind))
+        });
+    });
+
+    describe ('#takeWhile', function () {
+        it ('should take elements while predicate is fulfilled', function () {
+            const word = 'abcdefg',
+                expectedResult = word.split('e')[0];
+
+                // Expect matched length and matched elements
+                expectTrue(
+                    // Ensure cases for each use case
+                    all(result =>
+                        // Ensure correct length of items in returned element
+                        /*!log(result) && */
+                        length(expectedResult) === length(result) &&
+                            // Ensure elements where matched
+                            all((x, ind) => x === expectedResult[ind], result),
+                            // Use cases (one with string other with array)
+                            [takeWhile(x => x !== 'e', word.split('')),
+                                takeWhile(x => x != 'e', word)]
+                    ));
         });
     });
 
