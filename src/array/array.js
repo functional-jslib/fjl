@@ -7,9 +7,9 @@
 
 import {curry, curry2} from '../function/curry';
 import {apply} from '../function/apply';
-import {isArray} from '../object/is';
+import {isString, isArray} from '../object/is';
 import {length} from '../object/objectPrelude';
-import {filter, reduce, every, concat as arrayConcat, slice} from './arrayPrelude';
+import {filter, concat as arrayConcat, slice} from './arrayPrelude';
 import {negate as negateP} from '../function/function';
 import {isTruthy, isFalsy} from '../boolean/is';
 
@@ -23,11 +23,12 @@ const
         agg += item; return agg;
     },
 
-    aggregateArr = (agg, item, ind) => {
-        agg[ind] = item; return agg;
+    aggregateArr = (agg, item) => {
+        agg.push(item); return agg;
     },
 
-    strConcat = curry((x, ...args) => reduce(aggregateStr, x, args));
+    strConcat = curry((x, ...args) => reduce(
+        aggregateStr, x, args));
 
 /*
 function permutationSwap (arr, ind1, ind2) {
@@ -57,11 +58,22 @@ export const
         return ind === limit;
     }),
 
+    reduce = curry((operation, agg, arr) =>
+        onListUntil(
+            () => false,            // predicate
+            operation,              // operation
+            agg,                    // aggregator
+            arr)),                  // array
+
     onListUntil = curry((pred, op, agg, arr) => {
         let ind = -1,
             result = agg;
 
         const limit = length(arr);
+
+        if (limit === 0) {
+            return agg;
+        }
 
         while (++ind < limit && !pred(arr[ind], ind, arr)) {
             result = op(result, arr[ind], ind, arr);
@@ -275,15 +287,20 @@ export const
     }),
 
     intersperse = curry((between, arr) => {
-        const limit = length(arr) - 1;
+        const limit = length(arr) - 1,
+            _isStrArr = isString(arr),
+            aggregator = _isStrArr ? '' : [],
+            aggregatorOp = _isStrArr ? aggregateStr : aggregateArr;
         return reduce((agg, item, ind) => {
             if (ind === limit) {
-                agg.push(item);
+                return aggregatorOp(agg, item);
             } else {
-                agg.push(item, between);
+                return aggregatorOp(
+                    aggregatorOp(agg, item),
+                    between
+                );
             }
-            return agg;
-        }, []);
+        }, aggregator, arr);
     }),
 
     intercalate = curry((xs, xss) =>
@@ -334,7 +351,7 @@ export const
      * @returns {Array}
      */
     flatten = arr => reduce((agg, elm) => {
-        if (Array.isArray(elm)) {
+        if (isArray(elm)) {
             return concat(agg, flatten(elm));
         }
         agg.push(elm);
@@ -445,7 +462,7 @@ export const
     difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
         let [arr1, arr2] = sortDescByLength(array1, array2);
         if (!arr2 || length(arr2) === 0) {
-            return sliceFromZero(arr1);
+            return slice(0, length(arr1), arr1);
         }
         return reduce((agg, elm) => {
             if (arr2.indexOf(elm) === -1) {
@@ -463,4 +480,4 @@ export const
      * @returns {Array}
      */
     complement = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => concat(agg, difference(arr, arr0)), [], arrays));
+        reduce((agg, arr) => concat(agg, difference(arr0, arr)), [], arrays));
