@@ -14,6 +14,7 @@ export {curry, curryN, curry2, curry3, curry4, curry5,
 export {negate} from './negate';
 
 export {call};
+
 export {apply};
 
 export const id = x => x,
@@ -42,7 +43,7 @@ export const id = x => x,
      * Run `operation` until predicate returns `true`.
      * @param predicate {Function} :: a -> Boolean
      * @param operation {Function} :: a -> a
-     * @param typeInstance {*} :: *
+     * @param typeInstance {*} :: * - Same as a monoidal zero or some starting point
      * @returns {*} - What ever type `typeInstance` is
      */
     until = (predicate, operation, typeInstance) => {

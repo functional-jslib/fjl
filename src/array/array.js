@@ -401,9 +401,15 @@ export const
 
     equal = curry2((arg0, ...args) => all(x => arg0 === x, args)),
 
-    sum = arr => reduce((agg, x) => agg + x, arr.shift(), arr),
+    sum = arr => {
+        const parts = uncons(arr);
+        return reduce((agg, x) => agg + x, parts[0], parts[1]);
+    },
 
-    product = arr => reduce((agg, x) => agg * x, arr.shift(), arr),
+    product = arr => {
+        const parts = uncons(arr);
+        return reduce((agg, x) => agg * x, parts[0], parts[1]);
+    },
 
     maximum = arr => apply(Math.max, arr),
 
