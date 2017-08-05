@@ -1,21 +1,20 @@
 /**
  * Array operators module.
  * @module arrayOperators
- * @todo for loops are faster than for loops? https://jsperf.com/fastest-array-loops-in-javascript/24
  */
-
 
 'use strict';
 
-import {curry, curry2} from '../function/curry';
-import {apply} from '../function/apply';
-import {isString, isArray} from '../object/is';
-import {length, hasOwnProperty} from '../object/objectPrelude';
-import {concat as arrayConcat, slice} from './arrayPrelude';
-import {negate as negateP} from '../function/function';
-import {isTruthy, isFalsy} from '../boolean/is';
-import {log} from '../../tests/for-server/helpers';
-import {fPureTakesOne} from "../utils/utils";
+import {curry, curry2}      from '../function/curry';
+import {apply}              from '../function/apply';
+import {negate as negateP}  from '../function/function';
+import {isTruthy, isFalsy}  from '../boolean/is';
+import {isString, isArray}  from '../object/is';
+import {typeOf}             from '../object/typeOf';
+import {length, keys as objectKeys}     from '../object/objectPrelude';
+import {concat as arrayConcat, slice}   from './arrayPrelude';
+import {log}                            from '../../tests/for-server/helpers';
+import {fPureTakesOne}                  from "../utils/utils";
 
 export const
 
@@ -46,9 +45,10 @@ export const
     map = curry ((fn, xs) => {
         let ind = -1,
             limit = length(xs),
-            out = (xs).constructor();
+            out = (xs).constructor(),
+            aggregate = aggregatorByType(xs);
         while (++ind < limit) {
-            out[ind] = fn(xs[ind], ind, xs);
+            out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
         }
         return out;
     }),
@@ -73,6 +73,17 @@ export const
             operation,              // operation
             agg,                    // aggregator
             arr)),                  // array
+
+    reduceRight = curry((operation, agg, arr) =>
+        reduceRightUntil(
+            () => false,            // predicate
+            operation,              // operation
+            agg,                    // aggregator
+            arr)),                  // array
+
+    some = any,
+
+    every = all,
 
     /**
      * Returns head of array (first item of array).
@@ -487,28 +498,62 @@ const
         return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
     },
 
-    aggregatorByType = x => isString(x) ? aggregateStr : aggregateArr,
+    aggregatorByType = x => {
+        switch (typeOf(x)) {
+            case 'String': return aggregateStr;
+            case 'Array': return aggregateArr;
+            case 'Object':
+            default: return aggregateObj;
+        }
+    },
 
     aggregateStr = (agg, item) => {
-        agg += item; return agg;
+        agg += item;
+        return agg;
     },
 
     aggregateArr = (agg, item) => {
-        agg.push(item); return agg;
+        agg.push(item);
+        return agg;
+    },
+
+    aggregateObj = (agg, item, ind) => {
+        agg[ind] = item;
+        return agg;
     },
 
     strConcat = (x, ...args) => reduce(aggregateStr, x, args),
 
     reduceUntil = (pred, op, agg, arr) => {
-        let result = agg;
         const limit = length(arr);
         if (limit === 0) {
             return agg;
         }
-        for (let ind in arr) {
-            if (!hasOwnProperty(ind, arr)) { continue; }
-            if (pred(arr[ind], ind, arr)) { break; }
-            result = op(result, arr[ind], ind, arr);
+        let ind = 0,
+            result = agg,
+            keys = objectKeys(arr),
+            key;
+        for (; ind < limit; ind++) {
+            key = keys[ind];
+            if (pred(arr[key], key, arr)) { break; }
+            result = op(result, arr[key], key, arr);
+        }
+        return result;
+    },
+
+    reduceRightUntil = (pred, op, agg, arr) => {
+        const limit = length(arr);
+        if (limit === 0) {
+            return agg;
+        }
+        let ind = limit - 1,
+            result = agg,
+            keys = objectKeys(arr),
+            key;
+        for (; ind >= 0; ind--) {
+            key = keys[ind];
+            if (pred(arr[key], key, arr)) { break; }
+            result = op(result, arr[key], key, arr);
         }
         return result;
     };
