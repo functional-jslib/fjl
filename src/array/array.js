@@ -4,56 +4,26 @@
  * @todo for loops are faster than for loops? https://jsperf.com/fastest-array-loops-in-javascript/24
  */
 
+
 'use strict';
 
 import {curry, curry2} from '../function/curry';
 import {apply} from '../function/apply';
 import {isString, isArray} from '../object/is';
-import {length} from '../object/objectPrelude';
+import {length, hasOwnProperty} from '../object/objectPrelude';
 import {concat as arrayConcat, slice} from './arrayPrelude';
 import {negate as negateP} from '../function/function';
 import {isTruthy, isFalsy} from '../boolean/is';
 import {log} from '../../tests/for-server/helpers';
-
-const
-
-    ASC = 1,
-
-    DESC = -1,
-
-    aggregateStr = (agg, item) => {
-        agg += item; return agg;
-    },
-
-    aggregateArr = (agg, item) => {
-        agg.push(item); return agg;
-    },
-
-    strConcat = (x, ...args) => reduce(
-        aggregateStr, x, args),
-
-    reduceUntil = (pred, op, agg, arr) => {
-        let ind = 0,
-            result = agg;
-        const limit = length(arr);
-        if (limit === 0) {
-            return agg;
-        }
-        for (; ind < limit && !pred(arr[ind], ind, arr); ind++) {
-            result = op(result, arr[ind], ind, arr);
-        }
-        return result;
-    };
-
-/*
-function permutationSwap (arr, ind1, ind2) {
-    const element = arr[ind1];
-    arr[ind1] = arr[ind2];
-    arr[ind2] = element;
-}
-*/
+import {fPureTakesOne} from "../utils/utils";
 
 export const
+
+    indexOf = fPureTakesOne('indexOf'),
+
+    lastIndexOf = fPureTakesOne('lastIndexOf'),
+
+    lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
 
     concat = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
 
@@ -76,23 +46,25 @@ export const
     map = curry ((fn, xs) => {
         let ind = -1,
             limit = length(xs),
-            out = [];
+            out = (xs).constructor();
         while (++ind < limit) {
             out[ind] = fn(xs[ind], ind, xs);
         }
-        return isString(xs) ? out.join('') : out;
+        return out;
     }),
 
     filter = curry ((pred, xs) => {
         let ind = 0,
             limit = length(xs),
-            isXsString = isString(xs),
-            out = [];
-        if (!limit) { return isXsString ? '' : out; }
+            aggregator = aggregatorByType(xs),
+            out = (xs).constructor();
+        if (!limit) { return out; }
         for (; ind < limit; ind++) {
-            if (pred(xs[ind], ind, xs)) { out.push(xs[ind]); }
+            if (pred(xs[ind], ind, xs)) {
+                out = aggregator(out, xs[ind]);
+            }
         }
-        return isXsString ? out.join('') : out;
+        return out;
     }),
 
     reduce = curry((operation, agg, arr) =>
@@ -101,63 +73,6 @@ export const
             operation,              // operation
             agg,                    // aggregator
             arr)),                  // array
-
-    lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
-
-    sliceFrom = curry((startInd, arr) => slice(startInd, length(arr), arr)),
-
-    sliceFromZero = sliceFrom(0),
-
-    onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
-
-    getSortByOrder = curry((multiplier, valueFn) => {
-        valueFn = valueFn || (v => v);
-        const x = onlyOneOrNegOne(multiplier),
-            ifGreaterThan = 1 * x,
-            ifLessThan = -1 * x;
-        return (...values) => values.sort((a1, b1) => {
-            let a = valueFn(a1),
-                b = valueFn(b1);
-            if (a > b) {
-                return ifGreaterThan;
-            }
-            else if (b > a) {
-                return ifLessThan;
-            }
-            return 0;
-        });
-    }),
-
-    sortDesc = getSortByOrder(DESC),
-
-    sortAsc = getSortByOrder(ASC),
-
-    sortDescByLength = getSortByOrder(DESC, x => length(x)),
-
-    /**
-     * Returns the lengths of all the items in an array.
-     * @param arrs {...Array}
-     * @type {Function}
-     */
-    lengths = curry2((...arrs) => length(arrs) ? arrs.map(length) : []),
-
-    /**
-     * Returns an ordered array (ascending or descending) with the lengths of all items passed in.
-     * @param orderDir {Number} - 1 or -1 for ascending or descending.
-     * @param arrs {...Array}
-     * @returns {Array} - Array of lengths;
-     */
-    getOrderedLengths = curry2((orderDir, ...arrs) => (orderDir ? sortAsc : sortDesc)(lengths(arrs))),
-
-    /**
-     * Return a new set of arrays of the ones passed in sliced to the shortest ones length.
-     * @param arrays {...Array}
-     * @returns {Array<Array>}
-     */
-    trimLengths = (...arrays) => {
-        const smallLen = getOrderedLengths(ASC, arrays)[0];
-        return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
-    },
 
     /**
      * Returns head of array (first item of array).
@@ -285,12 +200,8 @@ export const
      * @returns {Array}
      */
     takeWhile = curry((pred, arr) => {
-        let isArgArray = Array.isArray(arr),
-            zero =  isArgArray ? [] : '';
-
-        const operation = isArgArray ?
-                aggregateArr : aggregateStr;
-
+        let zero =  (arr).constructor();
+        const operation = aggregatorByType(arr);
         return reduceUntil (
             negateP(pred),  // predicate
             operation,      // operation
@@ -338,9 +249,8 @@ export const
 
     intersperse = curry((between, arr) => {
         const limit = length(arr) - 1,
-            _isStrArr = isString(arr),
-            aggregator = _isStrArr ? '' : [],
-            aggregatorOp = _isStrArr ? aggregateStr : aggregateArr;
+            aggregator = (arr).constructor(),
+            aggregatorOp = aggregatorByType(arr);
         return reduce((agg, item, ind) => {
             if (ind === limit) {
                 return aggregatorOp(agg, item);
@@ -490,7 +400,7 @@ export const
      * @returns {Array}
      */
     union = curry((arr1, arr2) =>
-        concat(arr1, filter(elm => arr1.indexOf(elm) === -1, arr2))),
+        concat(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
 
     /**
      * Performs an intersection on array 1 with  elements from array 2.
@@ -500,7 +410,7 @@ export const
      * @returns {Array}
      */
     intersect = curry((arr1, arr2) => length(arr2) === 0 ? [] :
-            filter(elm => arr2.indexOf(elm) > -1, arr1)),
+            filter(elm => indexOf(elm, arr2) > -1, arr1)),
 
     /**
      * Returns the difference of array 1 from array 2.
@@ -515,7 +425,7 @@ export const
             return slice(0, length(arr1), arr1);
         }
         return reduce((agg, elm) => {
-            if (arr2.indexOf(elm) === -1) {
+            if (indexOf(elm, arr2) === -1) {
                 agg.push(elm);
             }
             return agg;
@@ -531,3 +441,74 @@ export const
      */
     complement = curry2((arr0, ...arrays) =>
         reduce((agg, arr) => concat(agg, difference(arr0, arr)), [], arrays));
+
+const
+
+    ASC = 1,
+
+    DESC = -1,
+
+    sliceFrom = curry((startInd, arr) => slice(startInd, length(arr), arr)),
+
+    sliceFromZero = sliceFrom(0),
+
+    onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
+
+    getSortByOrder = curry((multiplier, valueFn) => {
+        valueFn = valueFn || (v => v);
+        const x = onlyOneOrNegOne(multiplier),
+            ifGreaterThan = 1 * x,
+            ifLessThan = -1 * x;
+        return (...values) => values.sort((a1, b1) => {
+            let a = valueFn(a1),
+                b = valueFn(b1);
+            if (a > b) {
+                return ifGreaterThan;
+            }
+            else if (b > a) {
+                return ifLessThan;
+            }
+            return 0;
+        });
+    }),
+
+    sortDesc = getSortByOrder(DESC),
+
+    sortAsc = getSortByOrder(ASC),
+
+    sortDescByLength = getSortByOrder(DESC, x => length(x)),
+
+    lengths = curry2((...arrs) => length(arrs) ? arrs.map(length) : []),
+
+    getOrderedLengths = curry2((orderDir, ...arrs) => (orderDir ? sortAsc : sortDesc)(lengths(arrs))),
+
+    trimLengths = (...arrays) => {
+        const smallLen = getOrderedLengths(ASC, arrays)[0];
+        return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
+    },
+
+    aggregatorByType = x => isString(x) ? aggregateStr : aggregateArr,
+
+    aggregateStr = (agg, item) => {
+        agg += item; return agg;
+    },
+
+    aggregateArr = (agg, item) => {
+        agg.push(item); return agg;
+    },
+
+    strConcat = (x, ...args) => reduce(aggregateStr, x, args),
+
+    reduceUntil = (pred, op, agg, arr) => {
+        let result = agg;
+        const limit = length(arr);
+        if (limit === 0) {
+            return agg;
+        }
+        for (let ind in arr) {
+            if (!hasOwnProperty(ind, arr)) { continue; }
+            if (pred(arr[ind], ind, arr)) { break; }
+            result = op(result, arr[ind], ind, arr);
+        }
+        return result;
+    };
