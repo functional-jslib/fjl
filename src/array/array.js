@@ -1,6 +1,7 @@
 /**
  * Array operators module.
  * @module arrayOperators
+ * @todo for loops are faster than for loops? https://jsperf.com/fastest-array-loops-in-javascript/24
  */
 
 'use strict';
@@ -9,9 +10,10 @@ import {curry, curry2} from '../function/curry';
 import {apply} from '../function/apply';
 import {isString, isArray} from '../object/is';
 import {length} from '../object/objectPrelude';
-import {filter, concat as arrayConcat, slice} from './arrayPrelude';
+import {concat as arrayConcat, slice} from './arrayPrelude';
 import {negate as negateP} from '../function/function';
 import {isTruthy, isFalsy} from '../boolean/is';
+import {log} from '../../tests/for-server/helpers';
 
 const
 
@@ -27,8 +29,21 @@ const
         agg.push(item); return agg;
     },
 
-    strConcat = curry((x, ...args) => reduce(
-        aggregateStr, x, args));
+    strConcat = (x, ...args) => reduce(
+        aggregateStr, x, args),
+
+    reduceUntil = (pred, op, agg, arr) => {
+        let ind = 0,
+            result = agg;
+        const limit = length(arr);
+        if (limit === 0) {
+            return agg;
+        }
+        for (; ind < limit && !pred(arr[ind], ind, arr); ind++) {
+            result = op(result, arr[ind], ind, arr);
+        }
+        return result;
+    };
 
 /*
 function permutationSwap (arr, ind1, ind2) {
@@ -42,20 +57,20 @@ export const
 
     concat = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
 
-    any = curry((p, xs) => {
-        const limit = length(xs);
-        let ind = -1;
-        while (++ind < limit) {
-            if (p(xs[ind], ind, xs)) { return true; }
-        }
-        return false;
-    }),
+    any = curry((p, xs) => reduceUntil(p, (_ => true), false, xs)),
 
     all = curry((p, xs) => {
         const limit = length(xs);
         let ind = 0;
-        while (ind < limit && p(xs[ind], ind, xs)) { ind += 1; }
-        return ind === limit;
+        if (limit === 0) {
+            return false;
+        }
+        for (; ind < limit; ind++) {
+            if (!p(xs[ind], ind, xs)) {
+                return false;
+            }
+        }
+        return true;
     }),
 
     map = curry ((fn, xs) => {
@@ -68,29 +83,24 @@ export const
         return isString(xs) ? out.join('') : out;
     }),
 
+    filter = curry ((pred, xs) => {
+        let ind = 0,
+            limit = length(xs),
+            isXsString = isString(xs),
+            out = [];
+        if (!limit) { return isXsString ? '' : out; }
+        for (; ind < limit; ind++) {
+            if (pred(xs[ind], ind, xs)) { out.push(xs[ind]); }
+        }
+        return isXsString ? out.join('') : out;
+    }),
+
     reduce = curry((operation, agg, arr) =>
-        onListUntil(
+        reduceUntil(
             () => false,            // predicate
             operation,              // operation
             agg,                    // aggregator
             arr)),                  // array
-
-    onListUntil = curry((pred, op, agg, arr) => {
-        let ind = -1,
-            result = agg;
-
-        const limit = length(arr);
-
-        if (limit === 0) {
-            return agg;
-        }
-
-        while (++ind < limit && !pred(arr[ind], ind, arr)) {
-            result = op(result, arr[ind], ind, arr);
-        }
-
-        return result;
-    }),
 
     lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
 
@@ -215,6 +225,7 @@ export const
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
      * given index in second part of returned array)).
+     * @function module:arrayOps.splitAt
      * @param ind {Number} - Index to split at.
      * @param functor {Array|String} - functor (array or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
@@ -250,10 +261,20 @@ export const
      */
     findIndex = indexWhere,
 
+    /**
+     * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
+     * do not match the tuple are in second list in the returned tuple.
+     *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+     * @function module:arrayOps.partition
+     * @param pred {Function} - Predicate<item, index, originalArrayOrString>
+     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type array or string)).
+     */
     partition = curry((pred, arr) => {
-        const splitPoint = indexWhere(negateP(pred), arr);
-        return splitPoint === -1 ?
-            splitAt(0, arr) : splitAt(splitPoint, arr);
+        const limit = length(arr),
+            receivedString = isString(arr),
+            zero = receivedString ? '' : [];
+        if (!limit) { return [zero, zero]; }
+        return [filter(pred, arr), filter(negateP(pred), arr)];
     }),
 
     /**
@@ -270,7 +291,7 @@ export const
         const operation = isArgArray ?
                 aggregateArr : aggregateStr;
 
-        return onListUntil (
+        return reduceUntil (
             negateP(pred),  // predicate
             operation,      // operation
             zero,           // aggregator
@@ -278,6 +299,13 @@ export const
         );
     }),
 
+    /**
+     * Returns an array without elements that match predicate.
+     * @function module:arrayOps.dropWhile
+     * @param pred {Function} - Predicate<*, index, array|string>
+     * @param arr {Array|String}
+     * @returns {Array|String}
+     */
     dropWhile = curry((pred, arr) => {
         const limit = length(arr),
             splitPoint =
@@ -289,7 +317,19 @@ export const
             slice(splitPoint, limit, arr);
     }),
 
-    span = curry((pred, arr) => partition(pred, arr)),
+    /**
+     * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
+     * the second list in the tuple is a list of the remaining elements in the given list.
+     * **@Note: Not the same as `partition`.  Read descriptions closely!!!
+     * @function module:arrayOps.partition
+     * @param pred {Function} - Predicate<item, index, originalArrayOrString>
+     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type array or string)).
+     */
+    span = curry((pred, arr) => {
+        const splitPoint = indexWhere(negateP(pred), arr);
+        return splitPoint === -1 ?
+            splitAt(0, arr) : splitAt(splitPoint, arr);
+    }),
 
     breakOnList = curry((pred, arr) => {
         const result = span(pred, arr);
