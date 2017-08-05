@@ -58,6 +58,16 @@ export const
         return ind === limit;
     }),
 
+    map = curry ((fn, xs) => {
+        let ind = -1,
+            limit = length(xs),
+            out = [];
+        while (++ind < limit) {
+            out[ind] = fn(xs[ind], ind, xs);
+        }
+        return isString(xs) ? out.join('') : out;
+    }),
+
     reduce = curry((operation, agg, arr) =>
         onListUntil(
             () => false,            // predicate
@@ -241,7 +251,7 @@ export const
     findIndex = indexWhere,
 
     partition = curry((pred, arr) => {
-        const splitPoint = indexWhere(pred, arr);
+        const splitPoint = indexWhere(negateP(pred), arr);
         return splitPoint === -1 ?
             splitAt(0, arr) : splitAt(splitPoint, arr);
     }),

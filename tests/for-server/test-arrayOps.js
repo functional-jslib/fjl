@@ -12,15 +12,15 @@ import {__} from '../../src/function/curry';
 import {split} from '../../src/string/string';
 import {join} from '../../src/array/arrayPrelude';
 import {
-    all, head, last, init, tail,
+    all, map,
+    head, last, init, tail,
     take, drop, splitAt, findIndex,
-    takeWhile, dropWhile,
+    takeWhile, dropWhile, partition,
     complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
     intersect as arrayIntersect,
-    flatten,
-    flattenMulti} from '../../src/array/array';
+    flatten, flattenMulti} from '../../src/array/array';
 import {
     length,
     range,
@@ -252,6 +252,32 @@ describe ('arrayOps', function () {
                     .every((char, ind, arr) =>
                         findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind))
         });
+    });
+
+    describe ('#partition', function () {
+        it ('should take elements while predicate is fulfilled', function () {
+                const word = 'abcdefg',
+                    expectedResults = [word.substring(0, 5), word.substring(5)],
+                    predicate = x => x !== 'e';
+
+                // Expect matched length and matched elements
+                expectTrue(
+                    // Ensure cases for each use case
+                    all(tuple =>
+                        all((tuplePart, ind) =>
+                            map(part =>
+                                // Ensure correct length of items in returned element
+                                // !log(tuple, tuplePart, ind) &&
+                                length(expectedResults) === length(tuple) &&
+                                length(expectedResults[ind]) === length(part) &&
+                                // Ensure elements where matched
+                                all((x, ind2) => x === expectedResults[ind][ind2], part),
+                                tuplePart), tuple),
+                        // Use cases (one with string other with array)
+                        [partition(predicate, word.split('')),
+                            partition(predicate, word)]
+                    ));
+            });
     });
 
     describe ('#takeWhile', function () {
