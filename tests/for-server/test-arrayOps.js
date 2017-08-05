@@ -11,8 +11,9 @@ import {compose} from '../../src/function/compose';
 import {__} from '../../src/function/curry';
 import {split} from '../../src/string/string';
 import {join} from '../../src/array/arrayPrelude';
+import {isArray, isString} from '../../src/object/is';
 import {
-    all, map,
+    all,
     head, last, init, tail,
     take, drop, splitAt, findIndex,
     takeWhile, dropWhile, partition,
@@ -235,11 +236,9 @@ describe ('arrayOps', function () {
                         length(retVal) === phraseLen &&
 
                         // Left hand side split result
-                        splitPhrase.every((char, ind2) => retVal[ind2] === char) &&
-
                         // Log results and do
                         // "Else is empty right hand side split result" (empty result)
-                        !log(ind, retVal) : true
+                        splitPhrase.every((char, ind2) => retVal[ind2] === char)/* && !log(ind, retVal) */: true
                 ));
         });
     });
@@ -255,29 +254,41 @@ describe ('arrayOps', function () {
     });
 
     describe ('#partition', function () {
-        it ('should take elements while predicate is fulfilled', function () {
+        it ('should take elements into first array while predicate is fulfilled and elements ' +
+            'that didn\'t match into second array', function () {
                 const word = 'abcdefg',
-                    expectedResults = [word.substring(0, 5), word.substring(5)],
+                    expectedResults = [word.substring(0, 4), word.substring(4)],
                     predicate = x => x !== 'e';
 
                 // Expect matched length and matched elements
                 expectTrue(
                     // Ensure cases for each use case
                     all(tuple =>
+                        length(expectedResults) === length(tuple) &&
                         all((tuplePart, ind) =>
-                            map(part =>
+                                // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
+                                // Ensure tuple part is of allowed type
+                                (isString(tuplePart) || isArray(tuplePart)) &&
                                 // Ensure correct length of items in returned element
-                                // !log(tuple, tuplePart, ind) &&
-                                length(expectedResults) === length(tuple) &&
-                                length(expectedResults[ind]) === length(part) &&
+                                length(expectedResults[ind]) === length(tuplePart) &&
                                 // Ensure elements where matched
-                                all((x, ind2) => x === expectedResults[ind][ind2], part),
-                                tuplePart), tuple),
+                                all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
+                            tuple),
                         // Use cases (one with string other with array)
                         [partition(predicate, word.split('')),
                             partition(predicate, word)]
                     ));
-            });
+        });
+
+        it ('should return an array of empty arrays and/or strings when an empty list is passed in', function () {
+            expectTrue(
+                all(tuple =>
+                    length(tuple) === 2 &&
+                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
+                        length(tuplePart) === 0, tuple),
+                    [partition(a => a, ""), partition(x => x, [])]
+                ));
+        });
     });
 
     describe ('#takeWhile', function () {
