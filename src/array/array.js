@@ -7,7 +7,7 @@
 
 import {curry, curry2}      from '../function/curry';
 import {apply}              from '../function/apply';
-import {negate as negateP}  from '../function/function';
+import {negate as negateP, until}  from '../function/function';
 import {isTruthy, isFalsy}  from '../boolean/is';
 import {isString, isArray}  from '../object/is';
 import {typeOf}             from '../object/typeOf';
@@ -19,6 +19,25 @@ import {fPureTakesOne}                  from "../utils/utils";
 export const
 
     indexOf = fPureTakesOne('indexOf'),
+
+    /*indicesOf = curry((value, xs) => {
+        const limit = length(xs);
+        if (limit) { return null; }
+        const
+        let ind = 0,
+            out = (xs).constructor(),
+            searchValue = indexOf(value),
+            aggregator = aggregatorByType(xs),
+            list = xs,
+            foundInd;
+        for (; ind < limit; ind++) {
+            foundInd = searchValue(list);
+            if (foundInd === -1) { break; }
+            out = aggregator(out, foundInd, ind);
+            list = tail(xs);
+        }
+
+    }),*/
 
     lastIndexOf = fPureTakesOne('lastIndexOf'),
 
@@ -254,8 +273,13 @@ export const
     }),
 
     breakOnList = curry((pred, arr) => {
-        const result = span(pred, arr);
-        return [result[1], result[0]];
+        const splitPoint = indexWhere(pred, arr);
+        return splitPoint === -1 ?
+            splitAt(0, arr) : splitAt(splitPoint, arr);
+    }),
+
+    stripPrefix = curry((prefix, arr) => {
+
     }),
 
     intersperse = curry((between, arr) => {
