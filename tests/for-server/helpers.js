@@ -57,15 +57,10 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
     range = curry2_((from, to, step = 1) => {
         let inc = from;
         const out = [];
-        while (inc <= to) {
-            out.push(inc);
-            if (inc > to) {
-                break;
-            }
-            inc += step;
-        }
+        for (; inc <= to; inc += step) { out.push(inc); }
         return out;
     }),
+
     log = console.log.bind(console);
 
 export default {

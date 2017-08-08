@@ -20,28 +20,60 @@ export const
 
     indexOf = fPureTakesOne('indexOf'),
 
-    /*indicesOf = curry((value, xs) => {
-        const limit = length(xs);
-        if (limit) { return null; }
-        const
-        let ind = 0,
-            out = (xs).constructor(),
-            searchValue = indexOf(value),
-            aggregator = aggregatorByType(xs),
-            list = xs,
-            foundInd;
-        for (; ind < limit; ind++) {
-            foundInd = searchValue(list);
-            if (foundInd === -1) { break; }
-            out = aggregator(out, foundInd, ind);
-            list = tail(xs);
-        }
-
-    }),*/
-
     lastIndexOf = fPureTakesOne('lastIndexOf'),
 
     lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
+
+    /**
+     * Finds index in string or array.
+     * @function module:arrayOps.indexWhere
+     * @param pred {Function} - Predicate<element, index, arr>.
+     * @param arr {Array|String}
+     * @returns {Number} - `-1` if predicate not matched else `index` found
+     */
+    indexWhere = curry((pred, arr) => {
+        let ind = -1,
+            predicateFulfilled = false;
+        const limit = length(arr);
+        while (ind < limit && !predicateFulfilled) {
+            predicateFulfilled = pred(arr[++ind], ind, arr);
+        }
+        return ind;
+    }),
+
+    /**
+     * Finds index in string or array (alias for `findIndex`).
+     * @function module:arrayOps.findIndex
+     * @param pred {Function} - Predicate<element, index, arr>.
+     * @param arr {Array|String}
+     * @returns {Number} - `-1` if predicate not matched else `index` found
+     */
+    findIndex = indexWhere,
+
+    elemIndex = curry((x, xs) => {
+        const foundInd = indexOf(x, xs);
+        return foundInd !== -1 ? foundInd : undefined;
+    }),
+
+    /*elemIndices = curry((value, xs) => {
+        const initialLimit = length(xs);
+        if (!initialLimit) { return undefined; }
+        let ind = 0,
+            out = [],
+            list = slice(0, limit, xs),
+            limit = initialLimit,
+            diff = 0,
+            foundInd;
+        for (; ind < limit; ind++) {
+            foundInd = indexOf(value, list);
+            // log(, value);
+            if (foundInd === -1) { break; }
+            out.push(ind);
+            list = slice(foundInd, limit, list);
+            limit -= foundInd + 1;
+        }
+        return out;
+    }),*/
 
     concat = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
 
@@ -144,7 +176,7 @@ export const
     uncons = x => {
         const len = length(x);
         if (len === 0) {
-            return null;
+            return undefined;
         }
         return [head(x), tail(x)];
     },
@@ -179,32 +211,6 @@ export const
         slice(0, ind, arr),
         sliceFrom(ind, arr)
     ]),
-
-    /**
-     * Finds index in string or array.
-     * @function module:arrayOps.indexWhere
-     * @param pred {Function} - Predicate<element, index, arr>.
-     * @param arr {Array|String}
-     * @returns {Number} - `-1` if predicate not matched else `index` found
-     */
-    indexWhere = curry((pred, arr) => {
-        let ind = -1,
-            predicateFulfilled = false;
-        const limit = length(arr);
-        while (ind < limit && !predicateFulfilled) {
-            predicateFulfilled = pred(arr[++ind], ind, arr);
-        }
-        return ind;
-    }),
-
-    /**
-     * Finds index in string or array (alias for `findIndex`).
-     * @function module:arrayOps.findIndex
-     * @param pred {Function} - Predicate<element, index, arr>.
-     * @param arr {Array|String}
-     * @returns {Number} - `-1` if predicate not matched else `index` found
-     */
-    findIndex = indexWhere,
 
     /**
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
@@ -276,6 +282,45 @@ export const
         const splitPoint = indexWhere(pred, arr);
         return splitPoint === -1 ?
             splitAt(0, arr) : splitAt(splitPoint, arr);
+    }),
+
+    isPrefixOf = curry((xs1, xs2) => {
+        const limit1 = length(xs1),
+            limit2 = length(xs2);
+        if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
+            return false
+        }
+        let ind = 0;
+        for (; ind < limit1; ind++) {
+            if (xs1[ind] !== xs2[ind]) { return false; }
+        }
+        return true;
+    }),
+
+    isSuffixOf = curry((xs1, xs2) => {
+        const limit1 = length(xs1),
+            limit2 = length(xs2);
+        if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
+            return false
+        }
+        let ind = limit2 - 1;
+        for (; ind >= 0; ind--) {
+            if (xs1[ind] !== xs2[ind]) { return false; }
+        }
+        return true;
+    }),
+
+    isInfixOf = curry((xs1, xs2) => {
+        const limit1 = length(xs1),
+            limit2 = length(xs2);
+        if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
+            return false
+        }
+        let ind = limit2 - 1;
+        for (; ind >= 0; ind--) {
+            if (xs1[ind] !== xs2[ind]) { return false; }
+        }
+        return true;
     }),
 
     stripPrefix = curry((prefix, arr) => {

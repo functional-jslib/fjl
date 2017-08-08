@@ -14,8 +14,9 @@ import {join} from '../../src/array/arrayPrelude';
 import {isArray, isString} from '../../src/object/is';
 import {
     all,
+    findIndex, elemIndex, elemIndices,
     head, last, init, tail,
-    take, drop, splitAt, findIndex,
+    take, drop, splitAt,
     takeWhile, dropWhile, partition,
     span, breakOnList,
     complement as arrayComplement,
@@ -258,6 +259,23 @@ describe ('arrayOps', function () {
                     .every((char, ind, arr) =>
                         findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind))
         });
+    });
+
+    describe ('#elemIndices', function () {
+        /*it ('should return all found element indices in a list', function () {
+            const nums = range(0, 22),
+                word = nums.join(''),
+                predicate = x => x.indexOf('1') > -1,
+                indices = word.split('').reduce((agg, item, ind) => {
+                    if (predicate(item)) { agg.push(ind); }
+                    return agg;
+                }, []);
+            expectTrue(
+                // Ensure cases for each use case
+                all(list => !log(list) && all((item, ind) => !log(item) && list[ind] === item, indices),
+                        [elemIndices('1', word), elemIndices('1', word.split(''))]
+                ));
+        });*/
     });
 
     describe ('#partition', function () {
