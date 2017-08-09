@@ -1,6 +1,6 @@
 /**
  * Array operators module.
- * @module arrayOperators
+ * @module arrayOps
  */
 
 
@@ -14,7 +14,7 @@ import {isString, isArray}  from '../object/is';
 import {typeOf}             from '../object/typeOf';
 import {length, keys as objectKeys, hasOwnProperty} from '../object/objectPrelude';
 import {concat as arrayConcat, slice}   from './arrayPrelude';
-import {log}                            from '../../tests/for-server/helpers';
+// import {log}                            from '../../tests/for-server/helpers';
 import {fPureTakesOne}                  from "../utils/utils";
 
 export const
@@ -162,13 +162,23 @@ export const
             agg,                    // aggregator
             arr)),                  // array
 
-    some = any,
+    foldl = reduce,
 
-    every = all,
+    foldr = reduceRight,
+
+    foldl1 = curry((op, xs) => {
+        const arr = sliceToEndFrom(0, xs);
+        return reduce (op, arr.shift(), arr);
+    }),
+
+    foldr1 = curry((op, xs) => {
+        const arr = sliceToEndFrom(0, xs);
+        return reduceRight (op, arr.pop(), arr);
+    }),
 
     /**
      * Returns head of array (first item of array).
-     * @function module:arrayOperators.head
+     * @function module:arrayOps.head
      * @param functor {Array|String}
      * @returns {*} - First item from array
      */
@@ -176,15 +186,15 @@ export const
 
     /**
      * Returns tail part of array (everything after the first item as new array).
-     * @function module:arrayOperators.tail
+     * @function module:arrayOps.tail
      * @param functor {Array}
      * @returns {Array}
      */
-    tail = functor => sliceFrom(1, functor),
+    tail = functor => sliceToEndFrom(1, functor),
 
     /**
      * Returns everything except last item of array as new array.
-     * @function module:arrayOperators.init
+     * @function module:arrayOps.init
      * @param functor {Array|String}
      * @returns {Array|String}
      */
@@ -192,7 +202,7 @@ export const
 
     /**
      * Returns last item of array.
-     * @function module:arrayOperators.last
+     * @function module:arrayOps.last
      * @param functor {Array|String}
      * @returns {*}
      */
@@ -213,7 +223,7 @@ export const
 
     /**
      * Takes `n` items from start of array to `limit` (exclusive).
-     * @function module:arrayOperators.take
+     * @function module:arrayOps.take
      * @param array {Array|String}
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
@@ -222,12 +232,12 @@ export const
 
     /**
      * Drops `n` items from start of array to `count` (exclusive).
-     * @function module:arrayOperators.take
+     * @function module:arrayOps.take
      * @param array {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    drop = curry((count, array) => sliceFrom(count, array)),
+    drop = curry((count, array) => sliceToEndFrom(count, array)),
 
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
@@ -239,7 +249,7 @@ export const
      */
     splitAt = curry((ind, arr) => [
         slice(0, ind, arr),
-        sliceFrom(ind, arr)
+        sliceToEndFrom(ind, arr)
     ]),
 
     /**
@@ -398,9 +408,13 @@ export const
 
     permutations = xs => [xs],
 
+    fconcat = foldableOfA => concat(...foldableOfA),
+
+    fconcatMap = curry((fn, foldableOfA) => fconcat(map(fn, foldableOfA))),
+
     /**
      * Flattens an array.
-     * @function module:arrayOperators.flatten
+     * @function module:arrayOps.flatten
      * @param arr {Array}
      * @returns {Array}
      */
@@ -414,7 +428,7 @@ export const
 
     /**
      * Flattens all arrays passed in into one array.
-     * @function module:arrayOperators.flattenMulti
+     * @function module:arrayOps.flattenMulti
      * @param arr {Array}
      * @param [...arrays{Array}] - Other arrays to flatten into new array.
      * @returns {Array}
@@ -423,7 +437,7 @@ export const
         reduce((agg, arr) => concat(agg, flatten(arr)), flatten(arr0), arrays)),
 
     /**
-     * @function module:arrayOperators.zip
+     * @function module:arrayOps.zip
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
@@ -488,7 +502,7 @@ export const
 
     /**
      * Creates a union on matching elements from array1.
-     * @function module:arrayOperators.union
+     * @function module:arrayOps.union
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
@@ -498,7 +512,7 @@ export const
 
     /**
      * Performs an intersection on array 1 with  elements from array 2.
-     * @function module:arrayOperators.intersect
+     * @function module:arrayOps.intersect
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
@@ -508,7 +522,7 @@ export const
 
     /**
      * Returns the difference of array 1 from array 2.
-     * @function module:arrayOperators.difference
+     * @function module:arrayOps.difference
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
@@ -528,7 +542,7 @@ export const
 
     /**
      * Returns the complement of array 0 and the reset of the passed in arrays.
-     * @function module:arrayOperators.complement
+     * @function module:arrayOps.complement
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
@@ -542,9 +556,9 @@ const
 
     DESC = -1,
 
-    sliceFrom = curry((startInd, arr) => slice(startInd, length(arr), arr)),
+    sliceToEndFrom = curry((startInd, arr) => slice(startInd, length(arr), arr)),
 
-    sliceFromZero = sliceFrom(0),
+    sliceFromZero = sliceToEndFrom(0),
 
     onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
 
