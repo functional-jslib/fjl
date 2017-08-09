@@ -15,7 +15,8 @@ import {isArray, isString} from '../../src/object/is';
 import {
     all,
     find,
-    findIndex, elemIndex, elemIndices,
+    findIndex, elem, notElem, elemIndex, elemIndices,
+    lookup,
     head, last, init, tail,
     take, drop, splitAt,
     takeWhile, dropWhile, partition,
@@ -268,6 +269,82 @@ describe ('arrayOps', function () {
                 word.split('')
                     .every((char, ind, arr) =>
                         findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind))
+        });
+    });
+
+    describe ('#elem', function () {
+        it ('should return `true` when the element is found in given list', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                    all((elm2, ind2, arr) => !!elem(elm2, arr), word),
+                    [word.split(''), word]));
+        });
+        it ('should return `false` when element is not found in given list', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => !elem('z', arr), elm),
+                    [word.split(''), word]));
+        });
+    });
+
+    describe ('#notElem', function () {
+        it ('should return `false` when the element is found in given list', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                    all((elm2, ind2, arr) => !notElem(elm2, arr), word),
+                    [word.split(''), word]));
+        });
+        it ('should return `true` when element is not found in given list', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => notElem('z', arr), elm),
+                    [word.split(''), word]));
+        });
+    });
+
+    describe ('#lookup', function () {
+        it ('should return found value when key is set on type instance', function () {
+            const word = 'hello world',
+                obj = word.split('').reduce((agg, item) => {
+                    agg[item] = item + ' value';
+                    return agg;
+                }, {});
+            expectTrue(
+                all((elm, ind) =>
+                    all((elm2, ind2) => lookup(elm2, obj) === elm2 + ' value', word),
+                    [word.split(''), word]));
+        });
+        it ('should return `undefined` when element is not found in given list', function () {
+            const word = 'hello world',
+                obj = word.split('').reduce((agg, item) => {
+                    agg[item] = item + ' value';
+                    return agg;
+                }, {});
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => lookup('z', obj) === undefined, elm),
+                    [word.split(''), word]));
+        });
+    });
+
+    describe ('#elemIndex', function () {
+        it ('should return the index where the element is found', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                    all((elm2, ind2, arr) => elemIndex(elm2, arr) === word.indexOf(elm2), elm),
+                    [word.split(''), word]));
+        });
+        it ('should return `undefined` when element is not in list', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => elemIndex('z', arr) === undefined, elm),
+                    [word.split(''), word]));
         });
     });
 
