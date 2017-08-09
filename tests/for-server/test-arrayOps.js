@@ -14,6 +14,7 @@ import {join} from '../../src/array/arrayPrelude';
 import {isArray, isString} from '../../src/object/is';
 import {
     all,
+    find,
     findIndex, elemIndex, elemIndices,
     head, last, init, tail,
     take, drop, splitAt,
@@ -251,6 +252,15 @@ describe ('arrayOps', function () {
         });
     });
 
+    describe ('#find', function () {
+        it ('should should find element that matches predicate when element is in given list', function () {
+            const word = 'word',
+                pred = x => x === 'o';
+            expectEqual(find(pred, word), 'o');
+            expectEqual(find(pred, word.split('')), 'o');
+        });
+    });
+
     describe ('#findIndex', function () {
         const word = 'abcdefg';
         it ('should find an index where predicate is satisfied', function () {
@@ -262,7 +272,7 @@ describe ('arrayOps', function () {
     });
 
     describe ('#elemIndices', function () {
-        /*it ('should return all found element indices in a list', function () {
+        it ('should return all found element indices in a list', function () {
             const nums = range(0, 22),
                 word = nums.join(''),
                 predicate = x => x.indexOf('1') > -1,
@@ -270,12 +280,13 @@ describe ('arrayOps', function () {
                     if (predicate(item)) { agg.push(ind); }
                     return agg;
                 }, []);
+
             expectTrue(
                 // Ensure cases for each use case
-                all(list => !log(list) && all((item, ind) => !log(item) && list[ind] === item, indices),
+                all(list => all((item, ind) => list[ind] === item, indices),
                         [elemIndices('1', word), elemIndices('1', word.split(''))]
                 ));
-        });*/
+        });
     });
 
     describe ('#partition', function () {

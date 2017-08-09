@@ -3,6 +3,7 @@
  * @module arrayOperators
  */
 
+
 'use strict';
 
 import {curry, curry2}      from '../function/curry';
@@ -11,12 +12,14 @@ import {negate as negateP, until}  from '../function/function';
 import {isTruthy, isFalsy}  from '../boolean/is';
 import {isString, isArray}  from '../object/is';
 import {typeOf}             from '../object/typeOf';
-import {length, keys as objectKeys}     from '../object/objectPrelude';
+import {length, keys as objectKeys, hasOwnProperty} from '../object/objectPrelude';
 import {concat as arrayConcat, slice}   from './arrayPrelude';
 import {log}                            from '../../tests/for-server/helpers';
 import {fPureTakesOne}                  from "../utils/utils";
 
 export const
+
+    at = curry((ind, xs) => xs[ind]),
 
     indexOf = fPureTakesOne('indexOf'),
 
@@ -41,6 +44,18 @@ export const
         return ind;
     }),
 
+    findWhere = curry((pred, xs) => {
+        let ind = 0,
+            limit = length(xs);
+        if (!limit) { return; }
+        for (; ind < limit; ind++) {
+            let elm = xs[ind];
+            if (pred(elm, ind, xs)) { return elm; }
+        }
+    }),
+
+    find = findWhere,
+
     /**
      * Finds index in string or array (alias for `findIndex`).
      * @function module:arrayOps.findIndex
@@ -50,30 +65,23 @@ export const
      */
     findIndex = indexWhere,
 
+    findIndices =  curry((pred, xs) => {
+        const limit = length(xs);
+        if (!limit) { return undefined; }
+        let ind = 0,
+            out = [];
+        for (; ind < limit; ind++) {
+            if (pred(xs[ind], ind, xs)) { out.push(ind); }
+        }
+        return out;
+    }),
+
     elemIndex = curry((x, xs) => {
         const foundInd = indexOf(x, xs);
         return foundInd !== -1 ? foundInd : undefined;
     }),
 
-    /*elemIndices = curry((value, xs) => {
-        const initialLimit = length(xs);
-        if (!initialLimit) { return undefined; }
-        let ind = 0,
-            out = [],
-            list = slice(0, limit, xs),
-            limit = initialLimit,
-            diff = 0,
-            foundInd;
-        for (; ind < limit; ind++) {
-            foundInd = indexOf(value, list);
-            // log(, value);
-            if (foundInd === -1) { break; }
-            out.push(ind);
-            list = slice(foundInd, limit, list);
-            limit -= foundInd + 1;
-        }
-        return out;
-    }),*/
+    elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
 
     concat = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
 
@@ -104,6 +112,12 @@ export const
         return out;
     }),
 
+    elem = curry((elm, xs) => indexOf(elm, xs) !== -1),
+
+    notElem = curry((elm, xs) => indexOf(elm, xs) === -1),
+
+    lookup = curry((key, xs) => hasOwnProperty(key, xs) ? xs[key] : undefined),
+
     filter = curry ((pred, xs) => {
         let ind = 0,
             limit = length(xs),
@@ -116,6 +130,22 @@ export const
             }
         }
         return out;
+    }),
+
+    /**
+     * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
+     * do not match the tuple are in second list in the returned tuple.
+     *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+     * @function module:arrayOps.partition
+     * @param pred {Function} - Predicate<item, index, originalArrayOrString>
+     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type array or string)).
+     */
+    partition = curry((pred, arr) => {
+        const limit = length(arr),
+            receivedString = isString(arr),
+            zero = receivedString ? '' : [];
+        if (!limit) { return [zero, zero]; }
+        return [filter(pred, arr), filter(negateP(pred), arr)];
     }),
 
     reduce = curry((operation, agg, arr) =>
@@ -142,7 +172,7 @@ export const
      * @param functor {Array|String}
      * @returns {*} - First item from array
      */
-    head = functor => functor[0],
+    head = x => x[0],
 
     /**
      * Returns tail part of array (everything after the first item as new array).
@@ -211,22 +241,6 @@ export const
         slice(0, ind, arr),
         sliceFrom(ind, arr)
     ]),
-
-    /**
-     * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
-     * do not match the tuple are in second list in the returned tuple.
-     *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-     * @function module:arrayOps.partition
-     * @param pred {Function} - Predicate<item, index, originalArrayOrString>
-     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type array or string)).
-     */
-    partition = curry((pred, arr) => {
-        const limit = length(arr),
-            receivedString = isString(arr),
-            zero = receivedString ? '' : [];
-        if (!limit) { return [zero, zero]; }
-        return [filter(pred, arr), filter(negateP(pred), arr)];
-    }),
 
     /**
      * Gives an array with passed elements while predicate was true.
