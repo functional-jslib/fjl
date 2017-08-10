@@ -14,7 +14,7 @@ import {isString, isArray}  from '../object/is';
 import {typeOf}             from '../object/typeOf';
 import {length, keys as objectKeys, hasOwnProperty} from '../object/objectPrelude';
 import {concat as arrayConcat, slice}   from './arrayPrelude';
-// import {log}                            from '../../tests/for-server/helpers';
+import {log}                            from '../../tests/for-server/helpers';
 import {fPureTakesOne}                  from "../utils/utils";
 
 export const
@@ -183,12 +183,11 @@ export const
         let ind = 0,
             agg = zero,
             mapped = xs.constructor(),
-            aggregator = aggregatorByType(xs),
             tuple;
         for (; ind < limit; ind++) {
             tuple = op(agg, list[ind], ind);
             agg = tuple[0];
-            mapped = aggregator(mapped, tuple[1], ind);
+            mapped = tuple[1];
         }
         return [agg, mapped];
     }),
@@ -200,12 +199,11 @@ export const
         let ind = limit - 1,
             agg = zero,
             mapped = xs.constructor(),
-            aggregator = aggregatorByType(xs),
             tuple;
         for (; ind >= 0; ind--) {
             tuple = op(agg, list[ind], ind);
             agg = tuple[0];
-            mapped = aggregator(mapped, tuple[1], ind);
+            mapped = tuple[1];
         }
         return [agg, mapped];
     }),

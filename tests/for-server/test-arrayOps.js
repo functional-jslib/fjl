@@ -13,12 +13,10 @@ import {split} from '../../src/string/string';
 import {join} from '../../src/array/arrayPrelude';
 import {isArray, isString} from '../../src/object/is';
 import {
-    all,
-    find,
-    findIndex, elem, notElem, elemIndex, elemIndices,
-    lookup,
+    all, find, mapAccumL, mapAccumR,
+    findIndex, elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail,
-    take, drop, splitAt,
+    take, drop, splitAt, reduce,
     takeWhile, dropWhile, partition,
     span, breakOnList,
     complement as arrayComplement,
@@ -29,6 +27,7 @@ import {
 import {
     length,
     range,
+    shallowCompareOnLeft,
     expectEqual,
     expectShallowEquals,
     expectLength,
@@ -582,6 +581,67 @@ describe ('arrayOps', function () {
                     // Use cases
                     [dropWhile(pred, word.split('')), dropWhile(pred, word)]
                 ));
+        });
+    });
+
+    describe ('#mapAccumL', function () {
+        it ('should map a function/operation on every item of a list and it should return a tuple containing the accumulated value and the an instance of passed in container with mapped items', function () {
+            let xs1 = [],
+                xs2 = '',
+                xs3 = [];
+
+            const
+
+                list0 = [1, 2, 3, 4, 5],
+                list1 = 'hello world',
+                list2 = list1.split(''),
+
+                stringOp = (agg, item) => String.fromCharCode(item.charCodeAt(0) + 1),
+                numberOp = (agg, item) => item * 2,
+
+                result0 = mapAccumL((agg, item) => {
+                    let mappedValue = numberOp(agg, item);
+                    agg += mappedValue;
+                    xs1.push(mappedValue);
+                    return [agg, xs1];
+                }, 0, list0),
+
+                result1 = mapAccumL((agg, item) => {
+                    let mappedValue = stringOp(agg, item);
+                    agg += mappedValue;
+                    xs2 += mappedValue;
+                    return [agg, xs2];
+                }, '', list1),
+
+                result2 = mapAccumL((agg, item) => {
+                    let mappedValue = stringOp(agg, item);
+                    agg.push(mappedValue);
+                    xs3.push(mappedValue);
+                    return [agg, xs3];
+                }, [], list1);
+
+            expectTrue(
+                all(tuple => {
+                    const reducedForCompare = reduce((agg, item, ind) => {
+                            // log(agg, item, tuple[0][1][ind], xs2);
+                            if (Array.isArray(agg)) { agg.push(tuple[2](agg, item, ind)); }
+                            else { agg += tuple[2](agg, item, ind); }
+                            return agg;
+                        },
+                        tuple[3], tuple[1]);
+                    // log(tuple[0][0], reducedForCompare);
+                    // Check that mapped have equal length
+                    return length(tuple[0][1]) === length(tuple[1]) &&
+                    // Check aggregated are equal
+                    shallowCompareOnLeft(tuple[0][0], reducedForCompare)
+                },
+                [
+                    // Result, list, expected accumulation
+                    [result0, list0, numberOp, 0],
+                    [result1, list1, stringOp, ''],
+                    [result2, list2, stringOp, []]
+                ])
+            );
         });
     });
 
