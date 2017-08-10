@@ -176,6 +176,16 @@ export const
         return reduceRight (op, arr.pop(), arr);
     }),
 
+    /**
+     * Accumulative map function which effectively does a map and reduce (from the left) all in one;  Returns a tuple
+     * containing the aggregated value and the mapped result of map the passed in `op` on the passed in
+     * list (`xs`).
+     * @function module:arrayOps.mapAccumL
+     * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
+     * @param zero {*} - An instance of the passed in list type used to aggregate on.
+     * @param xs {Array|String|*} - List type.
+     * @return {Array} - [aggregated, List]
+     */
     mapAccumL = curry((op, zero, xs) => {
         const list = sliceToEndFrom(0, xs),
             limit = length(xs);
@@ -192,6 +202,16 @@ export const
         return [agg, mapped];
     }),
 
+    /**
+     * Accumulative map function which effectively does a map and reduce (from the right) all in one;  Returns a tuple
+     * containing the aggregated value and the mapped result of map the passed in `op` on the passed in
+     * list (`xs`).
+     * @function module:arrayOps.mapAccumR
+     * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
+     * @param zero {*} - An instance of the passed in list type used to aggregate on.
+     * @param xs {Array|String|*} - List type.
+     * @return {Array} - [aggregated, List]
+     */
     mapAccumR = curry((op, zero, xs) => {
         const list = sliceToEndFrom(0, xs),
             limit = length(xs);
