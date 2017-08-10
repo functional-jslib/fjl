@@ -8,7 +8,7 @@
 
 import {curry, curry2}      from '../function/curry';
 import {apply}              from '../function/apply';
-import {negate as negateP, until}  from '../function/function';
+import {negate as negateP}  from '../function/function';
 import {isTruthy, isFalsy}  from '../boolean/is';
 import {isString, isArray}  from '../object/is';
 import {typeOf}             from '../object/typeOf';
@@ -176,10 +176,44 @@ export const
         return reduceRight (op, arr.pop(), arr);
     }),
 
+    mapAccumL = curry((op, zero, xs) => {
+        const list = sliceToEndFrom(0, xs),
+            limit = length(xs);
+        if (!limit) { return [zero, list]; }
+        let ind = 0,
+            agg = zero,
+            mapped = xs.constructor(),
+            aggregator = aggregatorByType(xs),
+            tuple;
+        for (; ind < limit; ind++) {
+            tuple = op(agg, list[ind], ind);
+            agg = tuple[0];
+            mapped = aggregator(mapped, tuple[1], ind);
+        }
+        return [agg, mapped];
+    }),
+
+    mapAccumR = curry((op, zero, xs) => {
+        const list = sliceToEndFrom(0, xs),
+            limit = length(xs);
+        if (!limit) { return [zero, list]; }
+        let ind = limit - 1,
+            agg = zero,
+            mapped = xs.constructor(),
+            aggregator = aggregatorByType(xs),
+            tuple;
+        for (; ind >= 0; ind--) {
+            tuple = op(agg, list[ind], ind);
+            agg = tuple[0];
+            mapped = aggregator(mapped, tuple[1], ind);
+        }
+        return [agg, mapped];
+    }),
+
     /**
      * Returns head of array (first item of array).
      * @function module:arrayOps.head
-     * @param functor {Array|String}
+     * @param x {Array|String}
      * @returns {*} - First item from array
      */
     head = x => x[0],
