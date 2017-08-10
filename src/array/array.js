@@ -19,6 +19,12 @@ import {fPureTakesOne}                  from "../utils/utils";
 
 export const
 
+    /**
+     * @function module:arrayOps.at
+     * @param ind {Number}
+     * @param xs {Array|String|*} - List or List like.
+     * @returns {*}
+     */
     at = curry((ind, xs) => xs[ind]),
 
     indexOf = fPureTakesOne('indexOf'),
@@ -54,6 +60,12 @@ export const
         }
     }),
 
+    /**
+     * @function module:arrayOps.find
+     * @param pred {Function}
+     * @param xs {Array|String|*} - List or list like.
+     * @returns {*}
+     */
     find = findWhere,
 
     /**
@@ -65,6 +77,12 @@ export const
      */
     findIndex = indexWhere,
 
+    /**
+     * @function module:arrayOps.findIndices
+     * @param pred {Function}
+     * @param xs {Array|String|*} - List or list like.
+     * @returns {*}
+     */
     findIndices =  curry((pred, xs) => {
         const limit = length(xs);
         if (!limit) { return undefined; }
@@ -76,6 +94,12 @@ export const
         return out;
     }),
 
+    /**
+     * @function module:arrayOps.elemIndex
+     * @param x {*} - Element to search for.
+     * @param xs {Array|String|*} - List or list like.
+     * @returns {*}
+     */
     elemIndex = curry((x, xs) => {
         const foundInd = indexOf(x, xs);
         return foundInd !== -1 ? foundInd : undefined;
