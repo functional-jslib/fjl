@@ -105,6 +105,12 @@ export const
         return foundInd !== -1 ? foundInd : undefined;
     }),
 
+    /**
+     * @function module:arrayOps.elemIndices
+     * @param value {*} - Element to search for.
+     * @param xs {Array|String|*} - List or list like.
+     * @returns {*}
+     */
     elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
 
     concat = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
@@ -198,6 +204,10 @@ export const
     foldr1 = curry((op, xs) => {
         const arr = sliceToEndFrom(0, xs);
         return reduceRight (op, arr.pop(), arr);
+    }),
+
+    unfoldr = curry((op, x) => {
+
     }),
 
     /**
