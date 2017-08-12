@@ -6,7 +6,7 @@
 
 'use strict';
 
-import {join} from '../listOps/listOpsPlatformPrelude';
+import {join} from '../listOps/listOpsPrelude';
 
 import {curry} from '../functionOps/curry';
 

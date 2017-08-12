@@ -11,8 +11,8 @@
 import {assert, expect} from 'chai';
 import {compose} from '../../src/functionOps/compose';
 import {__} from '../../src/functionOps/curry';
-import {split} from '../../src/stringOps/string';
-import {join} from '../../src/listOps/listOpsPlatformPrelude';
+import {split} from '../../src/stringOps/stringOps';
+import {join} from '../../src/listOps/listOpsPrelude';
 import {isArray, isString} from '../../src/objectOps/is';
 
 import {

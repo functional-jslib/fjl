@@ -8,14 +8,14 @@
 
 import {curry, curry2}      from '../functionOps/curry';
 import {apply}              from '../functionOps/apply';
-import {negateP}  from '../functionOps/function';
+import {negateP}  from '../functionOps/functionOps';
 import {isTruthy, isFalsy}  from '../booleanOps/is';
 import {isString, isArray, isset}  from '../objectOps/is';
 import {prop} from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
 import {length, keys as objectKeys, hasOwnProperty} from '../objectOps/objectPrelude';
-import {concat as arrayConcat, slice}   from './listOpsPlatformPrelude';
-import {log}                            from '../../tests/for-server/helpers';
+import {concat as arrayConcat, slice}   from './listOpsPrelude';
+// import {log}                            from '../../tests/for-server/helpers';
 import {fPureTakesOne}                  from "../utils/utils";
 
 export const

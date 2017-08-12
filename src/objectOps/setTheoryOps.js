@@ -1,6 +1,6 @@
 import {curry, curry2} from '../functionOps/curry';
 import {assignDeep, hasOwnProperty, keys} from './objectPrelude';
-import {reduce} from '../listOps/listOpsPlatformPrelude';
+import {reduce} from '../listOps/listOpsPrelude';
 
 export const
 

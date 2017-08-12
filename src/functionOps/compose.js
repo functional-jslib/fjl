@@ -1,4 +1,4 @@
-import {reduceRight} from '../listOps/listOpsPlatformPrelude';
+import {reduceRight} from '../listOps/listOpsPrelude';
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to

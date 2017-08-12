@@ -1,4 +1,4 @@
-import {reverse} from '../listOps/listOpsPlatformPrelude';
+import {reverse} from '../listOps/listOpsPrelude';
 import {curry, curry3} from './curry';
 import {apply} from './apply';
 import {call} from './call';

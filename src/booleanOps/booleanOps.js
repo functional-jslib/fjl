@@ -1,5 +1,6 @@
 /**
  * Created by elyde on 7/15/2017.
+ * @module booleanOps
  */
 
 import {curry2} from '../functionOps/curry';
