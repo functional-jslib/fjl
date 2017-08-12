@@ -13,13 +13,21 @@
 import {assert, expect} from 'chai';
 import {hasOwnProperty, keys} from '../../src/objectOps/objectPrelude';
 import {complement, difference, union, intersect} from '../../src/objectOps/objectOps';
+import {apply} from '../../src/functionOps/apply';
+import {instanceOf} from '../../src/objectOps/objectPrelude';
+import {typeOf} from '../../src/objectOps/typeOf';
+import {
+    isType,
+    isNumber, isFunction, isArray, isBoolean, isObject, isString,
+    isUndefined, isNull, isSymbol, isMap, isSet,
+    isWeakMap, isWeakSet} from '../../src/objectOps/is';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('Object Operators', function () {
+describe ('#objectOps', function () {
 
-    describe ('hasOwnProperty', function () {
+    describe('#hasOwnProperty', function () {
         it ('should be a functionOps', function () {
             expectFunction(hasOwnProperty);
         });
@@ -34,7 +42,7 @@ describe ('Object Operators', function () {
         });
     });
 
-    describe('complement', function () {
+    describe('#complement', function () {
         it('should be a functionOps', function () {
             expectFunction(complement);
         });
@@ -54,7 +62,7 @@ describe ('Object Operators', function () {
         });
     });
 
-    describe('difference', function () {
+    describe('#difference', function () {
 
         it('should be a functionOps', function () {
             expectFunction(difference);
@@ -74,7 +82,7 @@ describe ('Object Operators', function () {
 
     });
 
-    describe('union', function () {
+    describe('#union', function () {
         it('should be a functionOps', function () {
             expectFunction(union);
         });
@@ -90,7 +98,7 @@ describe ('Object Operators', function () {
         });
     });
 
-    describe('intersect', function () {
+    describe('#intersect', function () {
         it('should be a functionOps', function () {
             expectFunction(union);
         });
@@ -103,6 +111,235 @@ describe ('Object Operators', function () {
                 expectEqual(result[key], subj2[key]);
             });
         });
+    });
+
+    describe('#typeOf', function () {
+        it ('should be a functionOps', function () {
+            expectFunction(typeOf);
+        });
+        it ('should return a functionOps when no value is passed in (is curried)', function () {
+            expectEqual(typeOf(), 'Undefined');
+        });
+        it ('should return the passed type\'s name', function () {
+            [
+                ['Array', []],
+                ['Object', {}],
+                ['String', ''],
+                ['Function', function () {}],
+                ['Number', 99],
+                ['Boolean', true],
+                ['Boolean', false],
+                ['Null', null],
+                ['Undefined', undefined]
+            ]
+                .forEach(tuple => expectEqual(apply(typeOf, tuple)));
+        });
+    });
+
+    describe('#isType', function () {
+        it ('should be a functionOps', function () {
+            expectFunction(isType);
+        });
+        it ('should return `true` when passed in value is of passed in type name/stringOps', function () {
+            [
+                ['Array', []],
+                ['Object', {}],
+                ['String', ''],
+                ['Function', function () {}],
+                ['Number', 99],
+                ['Boolean', true],
+                ['Boolean', false],
+                ['Null', null],
+                ['Undefined', undefined]
+            ]
+                .forEach(tuple => expectTrue(apply(isType, tuple)));
+        });
+        it ('should return `true` when passed in value is of passed in type constructor', function () {
+            [
+                [Array, []],
+                [Object, {}],
+                [String, ''],
+                [Function, function () {}],
+                [Number, 99],
+                [Boolean, true],
+                [Boolean , false]
+            ]
+                .forEach(tuple => expectTrue(apply(isType, tuple)));
+        });
+        it ('should return `false` when passed in value is not of passed in type name/stringOps', function () {
+            [
+                ['Object', []],
+                ['Array', {}],
+                ['NaN', ''],
+                ['Number', function () {}],
+                ['Function', 99],
+                ['NaN', true],
+                ['Number', false]
+            ]
+                .forEach(tuple => expectFalse(apply(isType, tuple)));
+        });
+        it ('should return `false` when passed in value is not of passed in type constructor', function () {
+            [
+                [Object, []],
+                [Array, {}],
+                [NaN, ''],
+                [Number, function () {}],
+                [Function, 99],
+                [NaN, true],
+                [Number, undefined],
+                [Array, false]
+            ]
+                .forEach(tuple => expectFalse(apply(isType, tuple)));
+        });
+    });
+
+    describe('#isFunction', function () {
+        it('should return true if value is a functionOps', function () {
+            [() => {}, Math.pow, console.log, function () {}]
+                .forEach(value => expectTrue(isFunction(value)));
+        });
+        it('should return `false` when value is not a functionOps', function () {
+            [-1, 0, 1, [], {}, 'abc']
+                .forEach(value => expectFalse(isFunction(value)));
+        });
+    });
+
+    describe('#isArray', function () {
+        it ('should return `true` when given value is an listOps', function () {
+            expectTrue(isArray([]));
+        });
+        it ('should return `false` when given value is not an listOps', function () {
+            expectFalse(isArray(function () {}));
+        });
+    });
+
+    describe('#isObject', function () {
+        it ('should return `true` when given value is a direct instance of `Object`', function () {
+            expectTrue(isObject({}));
+        });
+        it ('should return `false` when given value is not a direct instance of `Object`', function () {
+            expectFalse(isObject(function () {}));
+        });
+    });
+
+    describe('#isBoolean', function () {
+        it ('should return `true` when given value is a booleanOps', function () {
+            expectTrue(isBoolean(true));
+            expectTrue(isBoolean(false));
+        });
+        it ('should return `false` when given value is not a booleanOps', function () {
+            expectFalse(isBoolean(function () {}));
+        });
+    });
+
+    describe('#isNumber', function () {
+        it ('should return `true` when given value is a numberOps', function () {
+            expectTrue(isNumber(99));
+            expectTrue(isNumber(-1.0));
+            expectTrue(isNumber(Number('1e-3')));
+        });
+        it ('should return `false` when given value is not a numberOps', function () {
+            expectFalse(isNumber(function () {}));
+            expectFalse(isNumber(NaN));
+        });
+    });
+
+    describe('#isString', function () {
+        it ('should return `true` when given value is a stringOps', function () {
+            expectTrue(isString('hello'));
+            expectTrue(isString(String('hello')));
+        });
+        it ('should return `false` when given value is not a stringOps', function () {
+            expectFalse(isString(function () {}));
+            expectFalse(isString(NaN));
+        });
+    });
+
+    if (typeof Map !== 'undefined') {
+        describe('#isMap', function () {
+            it ('should return `true` when given value is a map', function () {
+                expectTrue(isMap(new Map()));
+            });
+            it ('should return `false` when given value is not a map', function () {
+                expectFalse(isMap(function () {}));
+                expectFalse(isMap(NaN));
+            });
+        });
+    }
+
+    if (typeof Set !== 'undefined') {
+        describe('#isSet', function () {
+            it ('should return `true` when given value is a set', function () {
+                expectTrue(isSet(new Set()));
+            });
+            it ('should return `false` when given value is not a set', function () {
+                expectFalse(isSet(function () {}));
+                expectFalse(isSet(NaN));
+            });
+        });
+    }
+
+    if (typeof WeakMap !== 'undefined') {
+        describe('#isWeakMap', function () {
+            it ('should return `true` when given value is a weak map', function () {
+                expectTrue(isWeakMap(new WeakMap()));
+            });
+            it ('should return `false` when given value is not a weak map', function () {
+                expectFalse(isWeakMap(function () {}));
+                expectFalse(isWeakMap(NaN));
+            });
+        });
+    }
+
+    if (typeof WeakSet !== 'undefined') {
+        describe('#isWeakSet', function () {
+            it ('should return `true` when given value is a weak set', function () {
+                expectTrue(isWeakSet(new WeakSet()));
+            });
+            it ('should return `false` when given value is not a weak set', function () {
+                expectFalse(isWeakSet(function () {}));
+                expectFalse(isWeakSet(NaN));
+            });
+        });
+    }
+
+    describe('#isUndefined', function () {
+        it ('should return `true` when given value is a undefined', function () {
+            expectTrue(isUndefined(undefined));
+        });
+        it ('should return `false` when given value is not a undefined', function () {
+            expectFalse(isUndefined(function () {}));
+            expectFalse(isUndefined(NaN));
+        });
+    });
+
+    describe('#isNull', function () {
+        it ('should return `true` when given value is a null', function () {
+            expectTrue(isNull(null));
+        });
+        it ('should return `false` when given value is not a null', function () {
+            expectFalse(isNull(function () {}));
+            expectFalse(isNull(NaN));
+        });
+    });
+
+    describe('#isSymbol', function () {
+        it ('should return `true` when given value is a symbol', function () {
+            expectTrue(isSymbol(Symbol('hello123')));
+        });
+        it ('should return `false` when given value is not a symbol', function () {
+            expectFalse(isSymbol(function () {}));
+            expectFalse(isSymbol(NaN));
+        });
+    });
+
+    describe('#instanceOf', function () {
+        it ('should return true when parameter two is of type parameter one', function () {
+            expectTrue(instanceOf(Function, function () {}));
+        });
+        it ('should return false when parameters two is not of type parameter one', function () {
+            expectFalse(instanceOf(Function, {}));
+        })
     });
 
 });

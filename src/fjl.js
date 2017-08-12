@@ -42,11 +42,9 @@ export { complement as arrayComplement,
     // @todo make all list (listOps and stringOps) ops work on strings as well:
     all, any, or, and,
     flatten, flattenMulti, head, tail,
-    init, last, take, drop, splitStrAt, splitArrayAt, splitAt,
+    init, last, take, drop, splitAt,
     indexWhile, takeWhile, dropWhile, span, breakOnList,
-    lengths, orderedLengths, trimLengths,
-    zip, zipN, sortAsc, sortDesc,
-    sortDescByLength, unzip, unzipN} from './listOps/listOps';
+    zip, zipN, unzip, unzipN} from './listOps/listOps';
 
 export {split, lines, words, unlines, unwords} from './stringOps/string';
 

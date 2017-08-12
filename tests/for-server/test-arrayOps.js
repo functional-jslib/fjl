@@ -28,6 +28,7 @@ import {
     union as arrayUnion,
     intersect as arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
+
 import {
     length,
     range,
@@ -42,7 +43,7 @@ import {
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('List', function () {
+describe ('#arrayOps', function () {
 
     const strToArray = split('');
 
