@@ -1,17 +1,17 @@
 import {curry} from '../functionOps/curry';
 import {typeOf} from '../objectOps/typeOf';
 import {
-    complement as arrayComplement,
-    difference as arrayDifference,
-    union as arrayUnion,
-    intersect as arrayIntersect
+    arrayComplement,
+    arrayDifference,
+    arrayUnion,
+    arrayIntersect
 } from '../listOps/listOps';
 
 import {
-    complement as objComplement,
-    difference as objDifference,
-    union as objUnion,
-    intersect as objIntersect
+    objComplement,
+    objDifference,
+    objUnion,
+    objIntersect
 } from '../objectOps/objectOps';
 
 export const

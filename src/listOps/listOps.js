@@ -16,9 +16,111 @@ import {typeOf}             from '../objectOps/typeOf';
 import {length, keys as objectKeys, hasOwnProperty} from '../objectOps/objectPrelude';
 import {concat as arrayConcat, slice}   from './listOpsPrelude';
 // import {log}                            from '../../tests/for-server/helpers';
-import {fPureTakesOne}                  from "../utils/utils";
+import {fPureTakesOne}                  from '../utils/utils';
 
 export const
+
+    ASC = 1,
+
+    DESC = -1,
+
+    sliceToEndFrom = curry((startInd, arr) => slice(startInd, length(arr), arr)),
+
+    sliceFromZero = sliceToEndFrom(0),
+
+    onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
+
+    getSortByOrder = curry((multiplier, valueFn) => {
+        valueFn = valueFn || (v => v);
+        const x = onlyOneOrNegOne(multiplier),
+            ifGreaterThan = 1 * x,
+            ifLessThan = -1 * x;
+        return (...values) => values.sort((a1, b1) => {
+            let a = valueFn(a1),
+                b = valueFn(b1);
+            if (a > b) {
+                return ifGreaterThan;
+            }
+            else if (b > a) {
+                return ifLessThan;
+            }
+            return 0;
+        });
+    }),
+
+    sortDesc = getSortByOrder(DESC),
+
+    sortAsc = getSortByOrder(ASC),
+
+    sortDescByLength = getSortByOrder(DESC, x => length(x)),
+
+    lengths = curry2((...arrs) => length(arrs) ? arrs.map(length) : []),
+
+    getOrderedLengths = curry2((orderDir, ...arrs) => (orderDir ? sortAsc : sortDesc)(lengths(arrs))),
+
+    trimLengths = (...arrays) => {
+        const smallLen = getOrderedLengths(ASC, arrays)[0];
+        return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
+    },
+
+
+    reduceUntil = (pred, op, agg, arr) => {
+        const limit = length(arr);
+        if (limit === 0) {
+            return agg;
+        }
+        let ind = 0,
+            result = agg,
+            keys = objectKeys(arr),
+            key;
+        for (; ind < limit; ind++) {
+            key = keys[ind];
+            if (pred(arr[key], key, arr)) { break; }
+            result = op(result, arr[key], key, arr);
+        }
+        return result;
+    },
+
+    reduceRightUntil = (pred, op, agg, arr) => {
+        const limit = length(arr);
+        if (limit === 0) {
+            return agg;
+        }
+        let ind = limit - 1,
+            result = agg,
+            keys = objectKeys(arr),
+            key;
+        for (; ind >= 0; ind--) {
+            key = keys[ind];
+            if (pred(arr[key], key, arr)) { break; }
+            result = op(result, arr[key], key, arr);
+        }
+        return result;
+    },
+
+    aggregateStr = (agg, item) => {
+        agg += item;
+        return agg;
+    },
+
+    aggregateArr = (agg, item) => {
+        agg.push(item);
+        return agg;
+    },
+
+    aggregateObj = (agg, item, ind) => {
+        agg[ind] = item;
+        return agg;
+    },
+
+    aggregatorByType = x => {
+        switch (typeOf(x)) {
+            case 'String': return aggregateStr;
+            case 'Array': return aggregateArr;
+            case 'Object':
+            default: return aggregateObj;
+        }
+    },
 
     reduce = curry((operation, agg, arr) =>
         reduceUntil(
@@ -33,6 +135,9 @@ export const
             operation,              // operation
             agg,                    // aggregator
             arr)),                  // listOps
+
+
+    strConcat = (x, ...args) => reduce(aggregateStr, x, args),
 
     /**
      * Searches list/list-like for given element `x`.
@@ -149,12 +254,11 @@ export const
         return reduce((agg, item, ind) => {
             if (ind === limit) {
                 return aggregatorOp(agg, item);
-            } else {
-                return aggregatorOp(
-                    aggregatorOp(agg, item),
-                    between
-                );
             }
+            return aggregatorOp(
+                aggregatorOp(agg, item),
+                between
+            );
         }, aggregator, arr);
     }),
 
@@ -675,33 +779,33 @@ export const
     minimum = arr => apply(Math.min, arr),
 
     /**
-     * Creates a union on matching elements from array1.
-     * @functionOps module:listOps.union
+     * Creates a arrayUnion on matching elements from array1.
+     * @functionOps module:listOps.arrayUnion
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
      */
-    union = curry((arr1, arr2) =>
+    arrayUnion = curry((arr1, arr2) =>
         append(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
 
     /**
      * Performs an intersection on listOps 1 with  elements from listOps 2.
-     * @functionOps module:listOps.intersect
+     * @functionOps module:listOps.arrayIntersect
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
      */
-    intersect = curry((arr1, arr2) => length(arr2) === 0 ? [] :
+    arrayIntersect = curry((arr1, arr2) => length(arr2) === 0 ? [] :
             filter(elm => indexOf(elm, arr2) > -1, arr1)),
 
     /**
      * Returns the difference of listOps 1 from listOps 2.
-     * @functionOps module:listOps.difference
+     * @functionOps module:listOps.arrayDifference
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
      */
-    difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
+    arrayDifference = curry((array1, array2) => { // augment this with max length and min length ordering on op
         let [arr1, arr2] = sortDescByLength(array1, array2);
         if (!arr2 || length(arr2) === 0) {
             return slice(0, length(arr1), arr1);
@@ -716,115 +820,10 @@ export const
 
     /**
      * Returns the complement of listOps 0 and the reset of the passed in arrays.
-     * @functionOps module:listOps.complement
+     * @functionOps module:listOps.arrayComplement
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
      */
-    complement = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => append(agg, difference(arr0, arr)), [], arrays));
-
-const
-
-    ASC = 1,
-
-    DESC = -1,
-
-    sliceToEndFrom = curry((startInd, arr) => slice(startInd, length(arr), arr)),
-
-    sliceFromZero = sliceToEndFrom(0),
-
-    onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
-
-    getSortByOrder = curry((multiplier, valueFn) => {
-        valueFn = valueFn || (v => v);
-        const x = onlyOneOrNegOne(multiplier),
-            ifGreaterThan = 1 * x,
-            ifLessThan = -1 * x;
-        return (...values) => values.sort((a1, b1) => {
-            let a = valueFn(a1),
-                b = valueFn(b1);
-            if (a > b) {
-                return ifGreaterThan;
-            }
-            else if (b > a) {
-                return ifLessThan;
-            }
-            return 0;
-        });
-    }),
-
-    sortDesc = getSortByOrder(DESC),
-
-    sortAsc = getSortByOrder(ASC),
-
-    sortDescByLength = getSortByOrder(DESC, x => length(x)),
-
-    lengths = curry2((...arrs) => length(arrs) ? arrs.map(length) : []),
-
-    getOrderedLengths = curry2((orderDir, ...arrs) => (orderDir ? sortAsc : sortDesc)(lengths(arrs))),
-
-    trimLengths = (...arrays) => {
-        const smallLen = getOrderedLengths(ASC, arrays)[0];
-        return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
-    },
-
-    aggregatorByType = x => {
-        switch (typeOf(x)) {
-            case 'String': return aggregateStr;
-            case 'Array': return aggregateArr;
-            case 'Object':
-            default: return aggregateObj;
-        }
-    },
-
-    aggregateStr = (agg, item) => {
-        agg += item;
-        return agg;
-    },
-
-    aggregateArr = (agg, item) => {
-        agg.push(item);
-        return agg;
-    },
-
-    aggregateObj = (agg, item, ind) => {
-        agg[ind] = item;
-        return agg;
-    },
-
-    strConcat = (x, ...args) => reduce(aggregateStr, x, args),
-
-    reduceUntil = (pred, op, agg, arr) => {
-        const limit = length(arr);
-        if (limit === 0) {
-            return agg;
-        }
-        let ind = 0,
-            result = agg,
-            keys = objectKeys(arr),
-            key;
-        for (; ind < limit; ind++) {
-            key = keys[ind];
-            if (pred(arr[key], key, arr)) { break; }
-            result = op(result, arr[key], key, arr);
-        }
-        return result;
-    },
-
-    reduceRightUntil = (pred, op, agg, arr) => {
-        const limit = length(arr);
-        if (limit === 0) {
-            return agg;
-        }
-        let ind = limit - 1,
-            result = agg,
-            keys = objectKeys(arr),
-            key;
-        for (; ind >= 0; ind--) {
-            key = keys[ind];
-            if (pred(arr[key], key, arr)) { break; }
-            result = op(result, arr[key], key, arr);
-        }
-        return result;
-    };
+    arrayComplement = curry2((arr0, ...arrays) =>
+        reduce((agg, arr) => append(agg, arrayDifference(arr0, arr)), [], arrays));

@@ -11,19 +11,20 @@ const fs = require('fs'),
     gulpConfig = require('./gulpfileConfig'),
 
     /** Gulp Modules (or modules used by gulp) **/
-    gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    eslint = require('gulp-eslint'),
-    header = require('gulp-header'),
-    mocha = require('gulp-mocha'),
-    uglify = require('gulp-uglify'),
-    duration = require('gulp-duration'),
-    fncallback = require('gulp-fncallback'),
-    jsdoc = require('gulp-jsdoc3'),
-    replace = require('gulp-replace'),
-    gulpRollup = require('gulp-better-rollup'),
-    lazyPipe = require('lazypipe'),
-    gulpBabel = require('gulp-babel'),
+    gulp =          require('gulp'),
+    concat =        require('gulp-concat'),
+    eslint =        require('gulp-eslint'),
+    header =        require('gulp-header'),
+    mocha =         require('gulp-mocha'),
+    uglify =        require('gulp-uglify'),
+    // duration = require('gulp-duration'),
+    gulpIf =        require('gulp-if'),
+    fncallback =    require('gulp-fncallback'),
+    jsdoc =         require('gulp-jsdoc3'),
+    replace =       require('gulp-replace'),
+    gulpRollup =    require('gulp-better-rollup'),
+    lazyPipe =      require('lazypipe'),
+    gulpBabel =     require('gulp-babel'),
 
     // Rollup plugins
     rollup = require('rollup'),
@@ -43,13 +44,25 @@ const fs = require('fs'),
         umdBuildPath, iifeBuildPath,
         buildPathRoot
     } = gulpConfig.paths,
+
     buildPath = (...tails) => path.join.call(path, buildPathRoot, ...tails),
+
     iifeMinFileName = 'fjl.min.js',
     iifeFileName = 'fjl.js',
     iifeModuleName = 'fjl',
     srcsGlob = './src/**/*.js',
 
     VersionNumberReadStream = require('./node-scripts/VersionNumberReadStream'),
+
+    yargs = require('yargs'),
+
+    argv = yargs()
+        .default('dev', false)
+        .default('skipLint', false)
+        .alias('skip-lint', 'skipLint')
+        .argv,
+
+    {skipLint} = argv,
 
     /** Lazy Pipes **/
     eslintPipe = lazyPipe()
@@ -62,7 +75,7 @@ const fs = require('fs'),
 
 gulp.task('generate-version-js', () =>
     (new VersionNumberReadStream())
-        .pipe(fs.createWriteStream('./src/generated-for-src/version.js')));
+        .pipe(fs.createWriteStream('./generated-for-src/version.js')));
 
 gulp.task('clean', () => {
     let pathsToDelete = [cjsBuildPath, amdBuildPath, umdBuildPath, iifeBuildPath]
@@ -79,7 +92,7 @@ gulp.task('clean', () => {
         .catch(log);
 });
 
-gulp.task('eslint', () => gulp.src(['./src/**/*.js', '!node_modules/**']).pipe(eslintPipe()));
+gulp.task('eslint', () => gulp.src(['./src/**/*.js', '!node_modules/**']).pipe(gulpIf(skipLint, eslintPipe())));
 
 gulp.task('umd', ['eslint'], () =>
     gulp.src(srcsGlob)

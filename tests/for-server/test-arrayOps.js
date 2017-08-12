@@ -23,10 +23,7 @@ import {
     take, drop, splitAt, reduce, reduceRight,
     takeWhile, dropWhile, partition,
     span, breakOnList, stripPrefix,
-    complement as arrayComplement,
-    difference as arrayDifference,
-    union as arrayUnion,
-    intersect as arrayIntersect,
+    arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
 
 import {

@@ -12,7 +12,7 @@
 'use strict';
 import {assert, expect} from 'chai';
 import {hasOwnProperty, keys} from '../../src/objectOps/objectPrelude';
-import {complement, difference, union, intersect} from '../../src/objectOps/objectOps';
+import {objComplement, objDifference, objUnion, objIntersect} from '../../src/objectOps/objectOps';
 import {apply} from '../../src/functionOps/apply';
 import {instanceOf} from '../../src/objectOps/objectPrelude';
 import {typeOf} from '../../src/objectOps/typeOf';
@@ -39,77 +39,6 @@ describe ('#objectOps', function () {
         it ('should return false when passed in objectOps doesn\'t have the passed in property name', function () {
             expectFalse(hasOwnProperty('hello', {}));
             expectFalse(hasOwnProperty('mambo', {}));
-        });
-    });
-
-    describe('#complement', function () {
-        it('should be a functionOps', function () {
-            expectFunction(complement);
-        });
-        it('should return an objectOps with only properties not found in the first obj', function () {
-            let subj1 = {a: 1, b: 2, c: 3},
-                subj2 = {d: 4},
-                subj3 = {e: 5, f: 6, g: 7},
-                result = complement(subj1, subj2, subj3);
-            [subj2, subj3].forEach(function (subj) {
-                keys(subj).forEach(key => {
-                    expectEqual(result[key], subj[key]);
-                });
-            });
-            keys(subj1).forEach(key => {
-                expectFalse(result.hasOwnProperty(key));
-            });
-        });
-    });
-
-    describe('#difference', function () {
-
-        it('should be a functionOps', function () {
-            expectFunction(difference);
-        });
-
-        it('should return all the props from obj1 that aren\'t in obj2', function () {
-            let subj1 = {a: 1, b: 2, c: 3},
-                subj2 = {d: 4},
-                result = difference(subj1, subj2);
-            Object.keys(subj1).forEach(key => {
-                expectEqual(result[key], subj1[key]);
-            });
-            Object.keys(subj2).forEach(key => {
-                expectFalse(result.hasOwnProperty(key));
-            });
-        });
-
-    });
-
-    describe('#union', function () {
-        it('should be a functionOps', function () {
-            expectFunction(union);
-        });
-        it ('should return an objectOps containing all properties from the two objects passed in', function () {
-            let subj1 = {a: 1, b: 2, c: 3},
-                subj2 = {e: 5, f: 6, g: 7},
-                result = union(subj1, subj2);
-            [subj2, subj1].forEach(function (subj) {
-                Object.keys(subj).forEach(key => {
-                    expectEqual(result[key], subj[key]);
-                });
-            });
-        });
-    });
-
-    describe('#intersect', function () {
-        it('should be a functionOps', function () {
-            expectFunction(union);
-        });
-        it ('should return an objectOps that contains values from both passed in objects', function () {
-            let subj1 = {a: 1, b: 2, c: 3, e: 4, f: 8},
-                subj2 = {a: 5, b: 6, c: 7, g: 9},
-                sharedKeys = ['a', 'b', 'c'],
-                result = intersect(subj1, subj2);
-            sharedKeys.forEach(key => {
-                expectEqual(result[key], subj2[key]);
-            });
         });
     });
 
@@ -340,6 +269,77 @@ describe ('#objectOps', function () {
         it ('should return false when parameters two is not of type parameter one', function () {
             expectFalse(instanceOf(Function, {}));
         })
+    });
+
+    describe('#objComplement', function () {
+        it('should be a functionOps', function () {
+            expectFunction(objComplement);
+        });
+        it('should return an objectOps with only properties not found in the first obj', function () {
+            let subj1 = {a: 1, b: 2, c: 3},
+                subj2 = {d: 4},
+                subj3 = {e: 5, f: 6, g: 7},
+                result = objComplement(subj1, subj2, subj3);
+            [subj2, subj3].forEach(function (subj) {
+                keys(subj).forEach(key => {
+                    expectEqual(result[key], subj[key]);
+                });
+            });
+            keys(subj1).forEach(key => {
+                expectFalse(result.hasOwnProperty(key));
+            });
+        });
+    });
+
+    describe('#objDifference', function () {
+
+        it('should be a functionOps', function () {
+            expectFunction(objDifference);
+        });
+
+        it('should return all the props from obj1 that aren\'t in obj2', function () {
+            let subj1 = {a: 1, b: 2, c: 3},
+                subj2 = {d: 4},
+                result = objDifference(subj1, subj2);
+            Object.keys(subj1).forEach(key => {
+                expectEqual(result[key], subj1[key]);
+            });
+            Object.keys(subj2).forEach(key => {
+                expectFalse(result.hasOwnProperty(key));
+            });
+        });
+
+    });
+
+    describe('#objUnion', function () {
+        it('should be a functionOps', function () {
+            expectFunction(objUnion);
+        });
+        it ('should return an objectOps containing all properties from the two objects passed in', function () {
+            let subj1 = {a: 1, b: 2, c: 3},
+                subj2 = {e: 5, f: 6, g: 7},
+                result = objUnion(subj1, subj2);
+            [subj2, subj1].forEach(function (subj) {
+                Object.keys(subj).forEach(key => {
+                    expectEqual(result[key], subj[key]);
+                });
+            });
+        });
+    });
+
+    describe('#objIntersect', function () {
+        it('should be a functionOps', function () {
+            expectFunction(objUnion);
+        });
+        it ('should return an objectOps that contains values from both passed in objects', function () {
+            let subj1 = {a: 1, b: 2, c: 3, e: 4, f: 8},
+                subj2 = {a: 5, b: 6, c: 7, g: 9},
+                sharedKeys = ['a', 'b', 'c'],
+                result = objIntersect(subj1, subj2);
+            sharedKeys.forEach(key => {
+                expectEqual(result[key], subj2[key]);
+            });
+        });
     });
 
 });
