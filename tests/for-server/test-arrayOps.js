@@ -5,13 +5,16 @@
 // ~~~ STRIP ~~~
 // This part gets stripped out when
 // generating browser version of test(s).
+
 'use strict';
+
 import {assert, expect} from 'chai';
 import {compose} from '../../src/function/compose';
 import {__} from '../../src/function/curry';
 import {split} from '../../src/string/string';
 import {join} from '../../src/array/arrayPrelude';
 import {isArray, isString} from '../../src/object/is';
+
 import {
     all, find, findIndex, findIndices,
     mapAccumL, mapAccumR,

@@ -137,7 +137,9 @@ export const
      */
     elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
 
-    concat = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
+    append = curry((xs1, xs2) => (isArray(xs1) ? arrayConcat : strConcat)(xs1, xs2)),
+
+    appendMany = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
 
     any = curry((p, xs) => reduceUntil(p, (_ => true), false, xs)),
 
@@ -486,7 +488,7 @@ export const
     }),
 
     intercalate = curry((xs, xss) =>
-        apply(concat, intersperse(xs, xss))),
+        concat(intersperse(xs, xss))),
 
     transpose = xss => {
         const orderedLengths = getOrderedLengths(DESC, ...xss),
@@ -526,9 +528,9 @@ export const
 
     permutations = xs => [xs],
 
-    fconcat = foldableOfA => concat(...foldableOfA),
+    concat = foldableOfA => appendMany(...foldableOfA),
 
-    fconcatMap = curry((fn, foldableOfA) => fconcat(map(fn, foldableOfA))),
+    concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
 
     /**
      * Flattens an array.
@@ -538,7 +540,7 @@ export const
      */
     flatten = arr => reduce((agg, elm) => {
         if (isArray(elm)) {
-            return concat(agg, flatten(elm));
+            return append(agg, flatten(elm));
         }
         agg.push(elm);
         return agg;
@@ -552,7 +554,7 @@ export const
      * @returns {Array}
      */
     flattenMulti = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => concat(agg, flatten(arr)), flatten(arr0), arrays)),
+        reduce((agg, arr) => append(agg, flatten(arr)), flatten(arr0), arrays)),
 
     /**
      * @function module:arrayOps.zip
@@ -626,7 +628,7 @@ export const
      * @returns {Array}
      */
     union = curry((arr1, arr2) =>
-        concat(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
+        append(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
 
     /**
      * Performs an intersection on array 1 with  elements from array 2.
@@ -666,7 +668,7 @@ export const
      * @returns {Array}
      */
     complement = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => concat(agg, difference(arr0, arr)), [], arrays));
+        reduce((agg, arr) => append(agg, difference(arr0, arr)), [], arrays));
 
 const
 
