@@ -1,0 +1,23 @@
+import {isFunction} from './is';
+import {hasOwnProperty} from './objectPrelude';
+import {apply} from '../functionOps/apply';
+import {typeOf} from './typeOf';
+
+const isUsableImmutablePrimitive = typeOfX =>
+    ['String', 'Number', 'Boolean', 'Symbol']
+        .some(Type => Type === typeOfX);
+
+export const of = (x, ...args) => {
+    const constructor = x.constructor,
+        typeOfX = typeOf(x);
+    if (hasOwnProperty('of', constructor)) {
+        return apply(constructor.of, args);
+    }
+    else if (isUsableImmutablePrimitive(typeOfX)) {
+        return apply(constructor, args);
+    }
+    else if (isFunction(constructor)) {
+        return new constructor(...args);
+    }
+    return undefined;
+};

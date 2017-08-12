@@ -10,6 +10,8 @@ export {isNumber,
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet} from './is';
 
+export {of} from './of';
+
 export const
 
     union = curry((obj1, obj2) => assignDeep(obj1, obj2)),
