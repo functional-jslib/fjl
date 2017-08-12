@@ -1,7 +1,6 @@
 /**
  * Created by elyde on 12/18/2016.
  */
-
 const _Number = Number.name,
     _NaN = 'NaN',
     _Null = 'Null',
@@ -16,7 +15,7 @@ const _Number = Number.name,
  * @returns {string} - Constructor's name property if not null or undefined (in which case a
  *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
  */
-export function typeOf (value) {
+export const typeOf = value => {
     let retVal;
     if (typeof value === _undefined) {
         retVal = _Undefined;

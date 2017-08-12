@@ -14,6 +14,7 @@ let _String = String.name,
     _Boolean = Boolean.name,
     _Function = Function.name,
     _Array = Array.name,
+    _Symbol = 'Symbol',
     _Map = 'Map',
     _Set = 'Set',
     _WeakMap = 'WeakMap',
@@ -57,10 +58,11 @@ export const
     /**
      * Returns a booleanOps depicting whether a value is callable or not.
      * @functionOps module:is.isCallable
+     * @tentative
      * @param x {*}
      * @returns {Boolean}
      */
-    isCallable = x => !isClass(x) && isFunction(x),
+    isCallable = x => isFunction(x) && !isClass(x),
 
     /**
      * Checks if value is an arrayOps.
@@ -156,14 +158,26 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSymbol = isType('Symbol'),
+    isSymbol = isType(_Symbol),
 
     /**
-     * Checks if value passed in is a promise.
+     * @tentative
+     */
+    isPromise = isType('Promise'),
+
+    /**
+     * Checks if given `x` is one of the four
+     * "usable" immutable JS primitives; I.e.,
+     *  One of [String, Boolean, Number, Symbol]
+     * @function module:is.isUsableImmutablePrimitive
      * @param x {*}
      * @returns {Boolean}
      */
-    isPromise = isType('Promise'),
+    isUsableImmutablePrimitive = x => {
+        const typeOfX = typeOf(x);
+        return [_String, _Number, _Boolean, _Symbol]
+            .some(Type => Type === typeOfX)
+    },
 
     /**
      * Checks if !length.

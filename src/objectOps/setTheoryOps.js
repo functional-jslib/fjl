@@ -1,16 +1,6 @@
-
 import {curry, curry2} from '../functionOps/curry';
 import {assignDeep, hasOwnProperty, keys} from './objectPrelude';
 import {reduce} from '../listOps/listOpsPlatformPrelude';
-
-export {instanceOf} from './instanceOf';
-export {typeOf} from './typeOf';
-export {isNumber,
-    isFunction, isArray, isBoolean, isObject, isString,
-    isUndefined, isNull, isSymbol, isMap, isSet,
-    isWeakMap, isWeakSet} from './is';
-
-export {of} from './of';
 
 export const
 

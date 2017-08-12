@@ -12,7 +12,7 @@
 'use strict';
 import {assert, expect} from 'chai';
 import {hasOwnProperty, keys} from '../../src/objectOps/objectPrelude';
-import {complement, difference, union, intersect} from '../../src/objectOps/object';
+import {complement, difference, union, intersect} from '../../src/objectOps/objectOps';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

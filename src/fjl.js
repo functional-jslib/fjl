@@ -29,7 +29,7 @@ export {assign, assignDeep, keys, hasOwnProperty, length,
 export { complement as objComplement,
     difference as objDifference,
     union as objUnion,
-    intersect as objIntersect } from './objectOps/object';
+    intersect as objIntersect } from './objectOps/objectOps';
 
 export { map, filter, reduce, reduceRight,
     some, every, forEach, concat, join,
