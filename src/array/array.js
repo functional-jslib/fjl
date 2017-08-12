@@ -21,6 +21,184 @@ import {fPureTakesOne}                  from "../utils/utils";
 export const
 
     /**
+     * Append two lists, i.e.,
+     * ```
+     * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
+     * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
+     * ```
+     * If the first list is not finite, the result is the first list.
+     * @haskellType `append :: [a] -> [a] -> [a]`
+     * @function module:arrayOps.append
+     * @param xs1 {Array|String|*} - List or list like.
+     * @param xs2 {Array|String|*} - List or list like.
+     * @returns {Array|String|*} - Same type as list like passed in.
+     */
+    append = curry((xs1, xs2) => (isArray(xs1) ? arrayConcat : strConcat)(xs1, xs2)),
+
+    /**
+     * Append two or more lists, i.e., same as `append` but for two ore more lists.
+     * @function module:arrayOps.appendMany
+     * @param xs1 {Array|String|*} - List or list like.
+     * @param [...args] {Array|String|*} - Lists or lists likes.
+     * @returns {Array|String|*} - Same type as first list or list like passed in.
+     */
+    appendMany = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
+
+    /**
+     * Returns head of array (first item of array).
+     * @haskellType `head :: [a] -> a`
+     * @function module:arrayOps.head
+     * @param x {Array|String}
+     * @returns {*} - First item from array
+     */
+    head = x => x[0],
+
+    /**
+     * Returns last item of array.
+     * @haskellType `last :: [a] -> a`
+     * @function module:arrayOps.last
+     * @param functor {Array|String}
+     * @returns {*}
+     */
+    last = functor => functor[lastIndex(functor)],
+
+    /**
+     * Returns tail part of array (everything after the first item as new array).
+     * @haskelType `tail :: [a] -> [a]`
+     * @function module:arrayOps.tail
+     * @param functor {Array}
+     * @returns {Array}
+     */
+    tail = functor => sliceToEndFrom(1, functor),
+
+    /**
+     * Returns everything except last item of array as new array.
+     * @haskellType `init :: [a] -> [a]`
+     * @function module:arrayOps.init
+     * @param functor {Array|String}
+     * @returns {Array|String}
+     */
+    init = functor => slice(0, lastIndex(functor), functor),
+
+    /**
+     * Returns `head` and `tail` of passed in array/string in a tuple.
+     * @haskellType `uncons :: [a] -> Maybe (a, [a])`
+     * @function module:arrayOps.uncons
+     * @param x {Array|String}
+     * @returns {Array|String|*|undefined}
+     */
+    uncons = x => {
+        const len = length(x);
+        if (len === 0) {
+            return undefined;
+        }
+        return [head(x), tail(x)];
+    },
+
+    any = curry((p, xs) => reduceUntil(p, (_ => true), false, xs)),
+
+    all = curry((p, xs) => {
+        const limit = length(xs);
+        let ind = 0;
+        if (limit === 0) {
+            return false;
+        }
+        for (; ind < limit; ind++) {
+            if (!p(xs[ind], ind, xs)) {
+                return false;
+            }
+        }
+        return true;
+    }),
+
+    map = curry ((fn, xs) => {
+        let ind = -1,
+            limit = length(xs),
+            out = (xs).constructor(),
+            aggregate = aggregatorByType(xs);
+        while (++ind < limit) {
+            out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
+        }
+        return out;
+    }),
+
+    elem = curry((elm, xs) => indexOf(elm, xs) !== -1),
+
+    notElem = curry((elm, xs) => indexOf(elm, xs) === -1),
+
+    lookup = curry((key, xs) => hasOwnProperty(key, xs) ? xs[key] : undefined),
+
+    filter = curry ((pred, xs) => {
+        let ind = 0,
+            limit = length(xs),
+            aggregator = aggregatorByType(xs),
+            out = (xs).constructor();
+        if (!limit) { return out; }
+        for (; ind < limit; ind++) {
+            if (pred(xs[ind], ind, xs)) {
+                out = aggregator(out, xs[ind]);
+            }
+        }
+        return out;
+    }),
+
+    /**
+     * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
+     * do not match the tuple are in second list in the returned tuple.
+     *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+     * @function module:arrayOps.partition
+     * @param pred {Function} - Predicate<item, index, originalArrayOrString>
+     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type array or string)).
+     */
+    partition = curry((pred, arr) => {
+        const limit = length(arr),
+            receivedString = isString(arr),
+            zero = receivedString ? '' : [];
+        if (!limit) { return [zero, zero]; }
+        return [filter(pred, arr), filter(negateP(pred), arr)];
+    }),
+
+    reduce = curry((operation, agg, arr) =>
+        reduceUntil(
+            () => false,            // predicate
+            operation,              // operation
+            agg,                    // aggregator
+            arr)),                  // array
+
+    reduceRight = curry((operation, agg, arr) =>
+        reduceRightUntil(
+            () => false,            // predicate
+            operation,              // operation
+            agg,                    // aggregator
+            arr)),                  // array
+
+    foldl = reduce,
+
+    foldr = reduceRight,
+
+    foldl1 = curry((op, xs) => {
+        const arr = sliceToEndFrom(0, xs);
+        return reduce (op, arr.shift(), arr);
+    }),
+
+    foldr1 = curry((op, xs) => {
+        const arr = sliceToEndFrom(0, xs);
+        return reduceRight (op, arr.pop(), arr);
+    }),
+
+    unfoldr = curry((op, x, zero) => {
+        let ind = 0,
+            out = !isset(zero) ? [] : zero,
+            aggregator = aggregatorByType(out),
+            resultTuple = op(x, ind, out);
+        while (isset(resultTuple[1])) {
+            out = aggregator(out, resultTuple[0], ind);
+            resultTuple = op(resultTuple[1], ++ind, out);
+        }
+        return out;
+    }),
+
+    /**
      * @function module:arrayOps.at
      * @param ind {Number} - Index.
      * @param xs {Array|String|*} - List or List like.
@@ -137,112 +315,6 @@ export const
      */
     elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
 
-    append = curry((xs1, xs2) => (isArray(xs1) ? arrayConcat : strConcat)(xs1, xs2)),
-
-    appendMany = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
-
-    any = curry((p, xs) => reduceUntil(p, (_ => true), false, xs)),
-
-    all = curry((p, xs) => {
-        const limit = length(xs);
-        let ind = 0;
-        if (limit === 0) {
-            return false;
-        }
-        for (; ind < limit; ind++) {
-            if (!p(xs[ind], ind, xs)) {
-                return false;
-            }
-        }
-        return true;
-    }),
-
-    map = curry ((fn, xs) => {
-        let ind = -1,
-            limit = length(xs),
-            out = (xs).constructor(),
-            aggregate = aggregatorByType(xs);
-        while (++ind < limit) {
-            out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
-        }
-        return out;
-    }),
-
-    elem = curry((elm, xs) => indexOf(elm, xs) !== -1),
-
-    notElem = curry((elm, xs) => indexOf(elm, xs) === -1),
-
-    lookup = curry((key, xs) => hasOwnProperty(key, xs) ? xs[key] : undefined),
-
-    filter = curry ((pred, xs) => {
-        let ind = 0,
-            limit = length(xs),
-            aggregator = aggregatorByType(xs),
-            out = (xs).constructor();
-        if (!limit) { return out; }
-        for (; ind < limit; ind++) {
-            if (pred(xs[ind], ind, xs)) {
-                out = aggregator(out, xs[ind]);
-            }
-        }
-        return out;
-    }),
-
-    /**
-     * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
-     * do not match the tuple are in second list in the returned tuple.
-     *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-     * @function module:arrayOps.partition
-     * @param pred {Function} - Predicate<item, index, originalArrayOrString>
-     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type array or string)).
-     */
-    partition = curry((pred, arr) => {
-        const limit = length(arr),
-            receivedString = isString(arr),
-            zero = receivedString ? '' : [];
-        if (!limit) { return [zero, zero]; }
-        return [filter(pred, arr), filter(negateP(pred), arr)];
-    }),
-
-    reduce = curry((operation, agg, arr) =>
-        reduceUntil(
-            () => false,            // predicate
-            operation,              // operation
-            agg,                    // aggregator
-            arr)),                  // array
-
-    reduceRight = curry((operation, agg, arr) =>
-        reduceRightUntil(
-            () => false,            // predicate
-            operation,              // operation
-            agg,                    // aggregator
-            arr)),                  // array
-
-    foldl = reduce,
-
-    foldr = reduceRight,
-
-    foldl1 = curry((op, xs) => {
-        const arr = sliceToEndFrom(0, xs);
-        return reduce (op, arr.shift(), arr);
-    }),
-
-    foldr1 = curry((op, xs) => {
-        const arr = sliceToEndFrom(0, xs);
-        return reduceRight (op, arr.pop(), arr);
-    }),
-
-    unfoldr = curry((op, x, zero) => {
-        let ind = 0,
-            out = !isset(zero) ? [] : zero,
-            aggregator = aggregatorByType(out),
-            resultTuple = op(x, ind, out);
-        while (isset(resultTuple[1])) {
-            out = aggregator(out, resultTuple[0], ind);
-            resultTuple = op(resultTuple[1], ++ind, out);
-        }
-        return out;
-    }),
 
     /**
      * Accumulative map function which effectively does a map and reduce (from the left) all in one;  Returns a tuple
@@ -295,51 +367,6 @@ export const
         }
         return [agg, mapped];
     }),
-
-    /**
-     * Returns head of array (first item of array).
-     * @function module:arrayOps.head
-     * @param x {Array|String}
-     * @returns {*} - First item from array
-     */
-    head = x => x[0],
-
-    /**
-     * Returns tail part of array (everything after the first item as new array).
-     * @function module:arrayOps.tail
-     * @param functor {Array}
-     * @returns {Array}
-     */
-    tail = functor => sliceToEndFrom(1, functor),
-
-    /**
-     * Returns everything except last item of array as new array.
-     * @function module:arrayOps.init
-     * @param functor {Array|String}
-     * @returns {Array|String}
-     */
-    init = functor => slice(0, lastIndex(functor), functor),
-
-    /**
-     * Returns last item of array.
-     * @function module:arrayOps.last
-     * @param functor {Array|String}
-     * @returns {*}
-     */
-    last = functor => functor[lastIndex(functor)],
-
-    /**
-     * Returns `head` and `tail` of passed in array/string in a tuple.
-     * @param x {Array|String}
-     * @returns {Array|String|Null}
-     */
-    uncons = x => {
-        const len = length(x);
-        if (len === 0) {
-            return undefined;
-        }
-        return [head(x), tail(x)];
-    },
 
     /**
      * Takes `n` items from start of array to `limit` (exclusive).
@@ -470,6 +497,12 @@ export const
     stripPrefix = curry((prefix, arr) =>
         isPrefixOf(prefix, arr) ? splitAt(prefix.length, arr)[1] : sliceToEndFrom(0, arr)),
 
+    group = xs => [xs],
+
+    inits = xs => [xs],
+
+    tails = xs => [xs],
+
     intersperse = curry((between, arr) => {
         const limit = length(arr) - 1,
             aggregator = (arr).constructor(),
@@ -555,6 +588,9 @@ export const
         reduce((agg, arr) => append(agg, flatten(arr)), flatten(arr0), arrays)),
 
     /**
+     * zip :: [a] -> [b] -> [(a, b)]
+     * zip takes two lists and returns a list of corresponding pairs.
+     * If one input list is short, excess elements of the longer list are discarded.
      * @function module:arrayOps.zip
      * @param arr1 {Array}
      * @param arr2 {Array}
@@ -583,6 +619,20 @@ export const
         }, lists.shift(), lists);
     }),
 
+    /**
+     * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+     * zipWith generalises zip by zipping with the function given as the
+     * first argument, instead of a tupling function. For example,
+     * zipWith (+) is applied to two lists to produce the list of corresponding sums.
+     * @type {Function}
+     */
+    zipWith = curry((combinator, xs1, xs2) => []),
+
+    /**
+     * unzip :: [(a, b)] -> ([a], [b])
+     * unzip transforms a list of pairs into a list of first components and a list of second components.
+     * @param arr
+     */
     unzip = arr =>
         reduce((agg, item) => {
             agg[0].push(item[0]);

@@ -109,6 +109,228 @@ describe ('arrayOps', function () {
         });
     });
 
+    describe ('#uncons', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#null', function () {
+        it ('is defined by `module:is.isEmpty` and is defined in another package.');
+    });
+
+    describe ('#length', function () {
+        it ('is defined in another package');
+    });
+
+    describe ('#map', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#reverse', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#intersperse', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#intercalate', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#transpose', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#subsequences', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#permutations', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#foldl', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#foldl1', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#foldr', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#foldr1', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#concat', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#concatMap', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#and', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#or', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#any', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#all', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#sum', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#product', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#maximum', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#minimum', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#mapAccumL', function () {
+        it ('should map a function/operation on every item of a list and it should return a tuple containing the accumulated value and the an instance of passed in container with mapped items', function () {
+            let xs1 = [],
+                xs2 = '',
+                xs3 = [];
+
+            const
+
+                list0 = [1, 2, 3, 4, 5],
+                list1 = 'hello world',
+                list2 = list1.split(''),
+
+                stringOp = (agg, item) => String.fromCharCode(item.charCodeAt(0) + 1),
+                numberOp = (agg, item) => item * 2,
+
+                result0 = mapAccumL((agg, item) => {
+                    let mappedValue = numberOp(agg, item);
+                    agg += mappedValue;
+                    xs1.push(mappedValue);
+                    return [agg, xs1];
+                }, 0, list0),
+
+                result1 = mapAccumL((agg, item) => {
+                    let mappedValue = stringOp(agg, item);
+                    agg += mappedValue;
+                    xs2 += mappedValue;
+                    return [agg, xs2];
+                }, '', list1),
+
+                result2 = mapAccumL((agg, item) => {
+                    let mappedValue = stringOp(agg, item);
+                    agg.push(mappedValue);
+                    xs3.push(mappedValue);
+                    return [agg, xs3];
+                }, [], list1);
+
+            expectTrue(
+                all(tuple => {
+                        const reducedForCompare = reduce((agg, item, ind) => {
+                                // log(agg, item, tuple[0][1][ind], xs2);
+                                if (Array.isArray(agg)) { agg.push(tuple[2](agg, item, ind)); }
+                                else { agg += tuple[2](agg, item, ind); }
+                                return agg;
+                            },
+                            tuple[3], tuple[1]);
+                        // log(tuple[0][0], reducedForCompare);
+                        // Check that mapped have equal length
+                        return length(tuple[0][1]) === length(tuple[1]) &&
+                            // Check aggregated are equal
+                            shallowCompareOnLeft(tuple[0][0], reducedForCompare)
+                    },
+                    [
+                        // Result, list, expected accumulation
+                        [result0, list0, numberOp, 0],
+                        [result1, list1, stringOp, ''],
+                        [result2, list2, stringOp, []]
+                    ])
+            );
+        });
+    });
+
+    describe ('#mapAccumR', function () {
+        it ('should map a function/operation on every item of a list and it should return a tuple containing the accumulated value and the an instance of passed in container with mapped items', function () {
+            let xs1 = [],
+                xs2 = '',
+                xs3 = [];
+
+            const
+
+                list0 = [1, 2, 3, 4, 5],
+                list1 = 'hello world',
+                list2 = list1.split(''),
+
+                stringOp = (agg, item) => String.fromCharCode(item.charCodeAt(0) + 1),
+                numberOp = (agg, item) => item * 2,
+
+                result0 = mapAccumR((agg, item) => {
+                    let mappedValue = numberOp(agg, item);
+                    agg += mappedValue;
+                    xs1.push(mappedValue);
+                    return [agg, xs1];
+                }, 0, list0),
+
+                result1 = mapAccumR((agg, item) => {
+                    let mappedValue = stringOp(agg, item);
+                    agg += mappedValue;
+                    xs2 += mappedValue;
+                    return [agg, xs2];
+                }, '', list1),
+
+                result2 = mapAccumR((agg, item) => {
+                    let mappedValue = stringOp(agg, item);
+                    agg.push(mappedValue);
+                    xs3.push(mappedValue);
+                    return [agg, xs3];
+                }, [], list1);
+
+            expectTrue(
+                all(tuple => {
+                        const reducedForCompare = reduceRight((agg, item, ind) => {
+                                // log(agg, item, tuple[0][1][ind], xs2);
+                                if (Array.isArray(agg)) { agg.push(tuple[2](agg, item, ind)); }
+                                else { agg += tuple[2](agg, item, ind); }
+                                return agg;
+                            },
+                            tuple[3], tuple[1]);
+                        // log(tuple[0][0], reducedForCompare);
+                        // Check that mapped have equal length
+                        return length(tuple[0][1]) === length(tuple[1]) &&
+                            // Check aggregated are equal
+                            shallowCompareOnLeft(tuple[0][0], reducedForCompare)
+                    },
+                    [
+                        // Result, list, expected accumulation
+                        [result0, list0, numberOp, 0],
+                        [result1, list1, stringOp, ''],
+                        [result2, list2, stringOp, []]
+                    ])
+            );
+        });
+    });
+
+    describe ('#unfoldr', function () {
+        it ('should have more tests.');
+    });
+
     describe ('#take', function () {
         const hello = 'hello';
 
@@ -256,252 +478,6 @@ describe ('arrayOps', function () {
         });
     });
 
-    describe ('#find', function () {
-        it ('should should find element that matches predicate when element is in given list', function () {
-            const word = 'word',
-                pred = x => x === 'o';
-            expectEqual(find(pred, word), 'o');
-            expectEqual(find(pred, word.split('')), 'o');
-        });
-    });
-
-    describe ('#findIndex', function () {
-        const word = 'abcdefg';
-        it ('should find an index where predicate is satisfied', function () {
-            expectTrue(
-                word.split('')
-                    .every((char, ind, arr) =>
-                        findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind))
-        });
-    });
-
-    describe ('#findIndices', function () {
-        it ('should', function () {
-            const token = 'aecedegefehea',
-                tokenParts = token.split(''),
-                eIndices = [1, 3, 5, 7, 9, 11],
-                notEIndices = [0, 2, 4, 6, 8, 10, 12],
-                aIndices = [0, 12],
-                noIndices = [],
-                indiceTests = [
-                    [findIndices(x => x === 'e'), eIndices],
-                    [findIndices(x => x !== 'e'), notEIndices],
-                    [findIndices(x => x === 'a'), aIndices],
-                    [findIndices(x => false), noIndices]
-                ];
-            // expectTrue(
-            //     all(xs =>
-            //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
-            //         [token, tokenParts])
-            // );
-        });
-    });
-
-    describe ('#elem', function () {
-        it ('should return `true` when the element is found in given list', function () {
-            const word = 'hello world';
-            expectTrue(
-                all((elm, ind) =>
-                    all((elm2, ind2, arr) => !!elem(elm2, arr), word),
-                    [word.split(''), word]));
-        });
-        it ('should return `false` when element is not found in given list', function () {
-            const word = 'hello world';
-            expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2, arr) => !elem('z', arr), elm),
-                    [word.split(''), word]));
-        });
-    });
-
-    describe ('#notElem', function () {
-        it ('should return `false` when the element is found in given list', function () {
-            const word = 'hello world';
-            expectTrue(
-                all((elm, ind) =>
-                    all((elm2, ind2, arr) => !notElem(elm2, arr), word),
-                    [word.split(''), word]));
-        });
-        it ('should return `true` when element is not found in given list', function () {
-            const word = 'hello world';
-            expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2, arr) => notElem('z', arr), elm),
-                    [word.split(''), word]));
-        });
-    });
-
-    describe ('#lookup', function () {
-        it ('should return found value when key is set on type instance', function () {
-            const word = 'hello world',
-                obj = word.split('').reduce((agg, item) => {
-                    agg[item] = item + ' value';
-                    return agg;
-                }, {});
-            expectTrue(
-                all((elm, ind) =>
-                    all((elm2, ind2) => lookup(elm2, obj) === elm2 + ' value', word),
-                    [word.split(''), word]));
-        });
-        it ('should return `undefined` when element is not found in given list', function () {
-            const word = 'hello world',
-                obj = word.split('').reduce((agg, item) => {
-                    agg[item] = item + ' value';
-                    return agg;
-                }, {});
-            expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2, arr) => lookup('z', obj) === undefined, elm),
-                    [word.split(''), word]));
-        });
-    });
-
-    describe ('#elemIndex', function () {
-        it ('should return the index where the element is found', function () {
-            const word = 'hello world';
-            expectTrue(
-                all((elm, ind) =>
-                    all((elm2, ind2, arr) => elemIndex(elm2, arr) === word.indexOf(elm2), elm),
-                    [word.split(''), word]));
-        });
-        it ('should return `undefined` when element is not in list', function () {
-            const word = 'hello world';
-            expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2, arr) => elemIndex('z', arr) === undefined, elm),
-                    [word.split(''), word]));
-        });
-    });
-
-    describe ('#elemIndices', function () {
-        it ('should return all found element indices in a list', function () {
-            const nums = range(0, 22),
-                word = nums.join(''),
-                predicate = x => x.indexOf('1') > -1,
-                indices = word.split('').reduce((agg, item, ind) => {
-                    if (predicate(item)) { agg.push(ind); }
-                    return agg;
-                }, []);
-
-            expectTrue(
-                // Ensure cases for each use case
-                all(list => all((item, ind) => list[ind] === item, indices),
-                        [elemIndices('1', word), elemIndices('1', word.split(''))]
-                ));
-        });
-    });
-
-    describe ('#partition', function () {
-        it ('should take elements into first array while predicate is fulfilled and elements ' +
-            'that didn\'t match into second array', function () {
-                const word = 'abcdefg',
-                    expectedResults = ['abcdfg', 'e'],
-                    predicate = x => x !== 'e';
-
-                // Expect matched length and matched elements
-                expectTrue(
-                    // Ensure cases for each use case
-                    all(tuple =>
-                        length(expectedResults) === length(tuple) &&
-                        all((tuplePart, ind) =>
-                                // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
-                                // Ensure tuple part is of allowed type
-                                (isString(tuplePart) || isArray(tuplePart)) &&
-                                // Ensure correct length of items in returned element
-                                length(expectedResults[ind]) === length(tuplePart) &&
-                                // Ensure elements where matched
-                                all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
-                            tuple),
-                        // Use cases (one with string other with array)
-                        [partition(predicate, word.split('')), partition(predicate, word)]
-                    ));
-        });
-
-        it ('should return an array of empty arrays and/or strings when an empty list is passed in', function () {
-            expectTrue(
-                all(tuple =>
-                    length(tuple) === 2 &&
-                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
-                        length(tuplePart) === 0, tuple),
-                    [partition(a => a, ""), partition(x => x, [])]
-                ));
-        });
-    });
-
-    describe ('#span', function () {
-        it ('should take elements into first array while predicate is fulfilled and elements ' +
-            'that didn\'t match into second array', function () {
-            const word = 'abcdefg',
-                expectedResults = [word.substring(0, 4), word.substring(4)],
-                predicate = x => x !== 'e';
-
-            // Expect matched length and matched elements
-            expectTrue(
-                // Ensure cases for each use case
-                all(tuple =>
-                    length(expectedResults) === length(tuple) &&
-                    all((tuplePart, ind) =>
-                            // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
-                            // Ensure tuple part is of allowed type
-                        (isString(tuplePart) || isArray(tuplePart)) &&
-                        // Ensure correct length of items in returned element
-                        length(expectedResults[ind]) === length(tuplePart) &&
-                        // Ensure elements where matched
-                        all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
-                        tuple),
-                    // Use cases (one with string other with array)
-                    [span(predicate, word.split('')), span(predicate, word)]
-                ));
-        });
-
-        it ('should return an array of empty arrays and/or strings when an empty list is passed in', function () {
-            expectTrue(
-                all(tuple =>
-                    length(tuple) === 2 &&
-                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
-                        length(tuplePart) === 0, tuple),
-                    [span(a => a, ""), span(x => x, [])]
-                ));
-        });
-    });
-
-    describe ('#breakOnList', function () {
-        it ('should take elements into first array while !predicate is fulfilled and elements ' +
-            'that didn\'t match into second array', function () {
-            const word = 'abcdefg',
-                expectedResults = [word.substring(0, 4), word.substring(4)],
-                predicate = x => x === 'e';
-
-            // Expect matched length and matched elements
-            expectTrue(
-                // Ensure cases for each use case
-                all(tuple =>
-                    length(expectedResults) === length(tuple) &&
-                    all((tuplePart, ind) =>
-                            // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
-                            // Ensure tuple part is of allowed type
-                        (isString(tuplePart) || isArray(tuplePart)) &&
-                        // Ensure correct length of items in returned element
-                        length(expectedResults[ind]) === length(tuplePart) &&
-                        // Ensure elements where matched
-                        all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
-                        tuple),
-                    // Use cases (one with string other with array)
-                    [breakOnList(predicate, word.split('')), breakOnList(predicate, word)]
-                ));
-        });
-
-        it ('should return an array of empty arrays and/or strings when an empty list is passed in', function () {
-            expectTrue(
-                all(tuple =>
-                    length(tuple) === 2 &&
-                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
-                    length(tuplePart) === 0, tuple),
-                    [breakOnList(a => a, ""), breakOnList(x => x, [])]
-                ));
-        });
-    });
-
     describe ('#takeWhile', function () {
         it ('should take elements while predicate is fulfilled', function () {
             const word = 'abcdefg',
@@ -610,134 +586,342 @@ describe ('arrayOps', function () {
         });
     });
 
+    describe ('#dropWhileEnd', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#span', function () {
+        it ('should take elements into first array while predicate is fulfilled and elements ' +
+            'that didn\'t match into second array', function () {
+            const word = 'abcdefg',
+                expectedResults = [word.substring(0, 4), word.substring(4)],
+                predicate = x => x !== 'e';
+
+            // Expect matched length and matched elements
+            expectTrue(
+                // Ensure cases for each use case
+                all(tuple =>
+                    length(expectedResults) === length(tuple) &&
+                    all((tuplePart, ind) =>
+                            // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
+                            // Ensure tuple part is of allowed type
+                        (isString(tuplePart) || isArray(tuplePart)) &&
+                        // Ensure correct length of items in returned element
+                        length(expectedResults[ind]) === length(tuplePart) &&
+                        // Ensure elements where matched
+                        all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
+                        tuple),
+                    // Use cases (one with string other with array)
+                    [span(predicate, word.split('')), span(predicate, word)]
+                ));
+        });
+
+        it ('should return an array of empty arrays and/or strings when an empty list is passed in', function () {
+            expectTrue(
+                all(tuple =>
+                    length(tuple) === 2 &&
+                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
+                        length(tuplePart) === 0, tuple),
+                    [span(a => a, ""), span(x => x, [])]
+                ));
+        });
+    });
+
+    describe ('#breakOnList', function () {
+        it ('should take elements into first array while !predicate is fulfilled and elements ' +
+            'that didn\'t match into second array', function () {
+            const word = 'abcdefg',
+                expectedResults = [word.substring(0, 4), word.substring(4)],
+                predicate = x => x === 'e';
+
+            // Expect matched length and matched elements
+            expectTrue(
+                // Ensure cases for each use case
+                all(tuple =>
+                    length(expectedResults) === length(tuple) &&
+                    all((tuplePart, ind) =>
+                            // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
+                            // Ensure tuple part is of allowed type
+                        (isString(tuplePart) || isArray(tuplePart)) &&
+                        // Ensure correct length of items in returned element
+                        length(expectedResults[ind]) === length(tuplePart) &&
+                        // Ensure elements where matched
+                        all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
+                        tuple),
+                    // Use cases (one with string other with array)
+                    [breakOnList(predicate, word.split('')), breakOnList(predicate, word)]
+                ));
+        });
+
+        it ('should return an array of empty arrays and/or strings when an empty list is passed in', function () {
+            expectTrue(
+                all(tuple =>
+                    length(tuple) === 2 &&
+                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
+                        length(tuplePart) === 0, tuple),
+                    [breakOnList(a => a, ""), breakOnList(x => x, [])]
+                ));
+        });
+    });
+
     describe ('#stripPrefix', function () {
         it ('should...');
         log(stripPrefix('hello', 'hello world'));
     });
 
-    describe ('#mapAccumL', function () {
-        it ('should map a function/operation on every item of a list and it should return a tuple containing the accumulated value and the an instance of passed in container with mapped items', function () {
-            let xs1 = [],
-                xs2 = '',
-                xs3 = [];
+    describe ('#group', function () {
+        it ('should have more tests');
+    });
 
-            const
+    describe ('#inits', function () {
+        it ('should have more tests');
+    });
 
-                list0 = [1, 2, 3, 4, 5],
-                list1 = 'hello world',
-                list2 = list1.split(''),
+    describe ('#tails', function () {
+        it ('should have more tests');
+    });
 
-                stringOp = (agg, item) => String.fromCharCode(item.charCodeAt(0) + 1),
-                numberOp = (agg, item) => item * 2,
+    describe ('#isPrefixOf', function () {
+        it ('should have more tests');
+    });
 
-                result0 = mapAccumL((agg, item) => {
-                    let mappedValue = numberOp(agg, item);
-                    agg += mappedValue;
-                    xs1.push(mappedValue);
-                    return [agg, xs1];
-                }, 0, list0),
+    describe ('#isSuffixOf', function () {
+        it ('should have more tests');
+    });
 
-                result1 = mapAccumL((agg, item) => {
-                    let mappedValue = stringOp(agg, item);
-                    agg += mappedValue;
-                    xs2 += mappedValue;
-                    return [agg, xs2];
-                }, '', list1),
+    describe ('#isInfixOf', function () {
+        it ('should have more tests');
+    });
 
-                result2 = mapAccumL((agg, item) => {
-                    let mappedValue = stringOp(agg, item);
-                    agg.push(mappedValue);
-                    xs3.push(mappedValue);
-                    return [agg, xs3];
-                }, [], list1);
+    describe ('#isSubsequenceOf', function () {
+        it ('should have more tests');
+    });
 
+    describe ('#elem', function () {
+        it ('should return `true` when the element is found in given list', function () {
+            const word = 'hello world';
             expectTrue(
-                all(tuple => {
-                    const reducedForCompare = reduce((agg, item, ind) => {
-                            // log(agg, item, tuple[0][1][ind], xs2);
-                            if (Array.isArray(agg)) { agg.push(tuple[2](agg, item, ind)); }
-                            else { agg += tuple[2](agg, item, ind); }
-                            return agg;
-                        },
-                        tuple[3], tuple[1]);
-                    // log(tuple[0][0], reducedForCompare);
-                    // Check that mapped have equal length
-                    return length(tuple[0][1]) === length(tuple[1]) &&
-                    // Check aggregated are equal
-                    shallowCompareOnLeft(tuple[0][0], reducedForCompare)
-                },
-                [
-                    // Result, list, expected accumulation
-                    [result0, list0, numberOp, 0],
-                    [result1, list1, stringOp, ''],
-                    [result2, list2, stringOp, []]
-                ])
-            );
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => !!elem(elm2, arr), word),
+                    [word.split(''), word]));
+        });
+        it ('should return `false` when element is not found in given list', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => !elem('z', arr), elm),
+                    [word.split(''), word]));
         });
     });
 
-    describe ('#mapAccumR', function () {
-        it ('should map a function/operation on every item of a list and it should return a tuple containing the accumulated value and the an instance of passed in container with mapped items', function () {
-            let xs1 = [],
-                xs2 = '',
-                xs3 = [];
-
-            const
-
-                list0 = [1, 2, 3, 4, 5],
-                list1 = 'hello world',
-                list2 = list1.split(''),
-
-                stringOp = (agg, item) => String.fromCharCode(item.charCodeAt(0) + 1),
-                numberOp = (agg, item) => item * 2,
-
-                result0 = mapAccumR((agg, item) => {
-                    let mappedValue = numberOp(agg, item);
-                    agg += mappedValue;
-                    xs1.push(mappedValue);
-                    return [agg, xs1];
-                }, 0, list0),
-
-                result1 = mapAccumR((agg, item) => {
-                    let mappedValue = stringOp(agg, item);
-                    agg += mappedValue;
-                    xs2 += mappedValue;
-                    return [agg, xs2];
-                }, '', list1),
-
-                result2 = mapAccumR((agg, item) => {
-                    let mappedValue = stringOp(agg, item);
-                    agg.push(mappedValue);
-                    xs3.push(mappedValue);
-                    return [agg, xs3];
-                }, [], list1);
-
+    describe ('#notElem', function () {
+        it ('should return `false` when the element is found in given list', function () {
+            const word = 'hello world';
             expectTrue(
-                all(tuple => {
-                    const reducedForCompare = reduceRight((agg, item, ind) => {
-                            // log(agg, item, tuple[0][1][ind], xs2);
-                            if (Array.isArray(agg)) { agg.push(tuple[2](agg, item, ind)); }
-                            else { agg += tuple[2](agg, item, ind); }
-                            return agg;
-                        },
-                        tuple[3], tuple[1]);
-                    // log(tuple[0][0], reducedForCompare);
-                    // Check that mapped have equal length
-                    return length(tuple[0][1]) === length(tuple[1]) &&
-                    // Check aggregated are equal
-                    shallowCompareOnLeft(tuple[0][0], reducedForCompare)
-                },
-                [
-                    // Result, list, expected accumulation
-                    [result0, list0, numberOp, 0],
-                    [result1, list1, stringOp, ''],
-                    [result2, list2, stringOp, []]
-                ])
-            );
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => !notElem(elm2, arr), word),
+                    [word.split(''), word]));
+        });
+        it ('should return `true` when element is not found in given list', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => notElem('z', arr), elm),
+                    [word.split(''), word]));
         });
     });
 
-    describe ('#arrayComplement', function () {
+    describe ('#lookup', function () {
+        it ('should return found value when key is set on type instance', function () {
+            const word = 'hello world',
+                obj = word.split('').reduce((agg, item) => {
+                    agg[item] = item + ' value';
+                    return agg;
+                }, {});
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2) => lookup(elm2, obj) === elm2 + ' value', word),
+                    [word.split(''), word]));
+        });
+        it ('should return `undefined` when element is not found in given list', function () {
+            const word = 'hello world',
+                obj = word.split('').reduce((agg, item) => {
+                    agg[item] = item + ' value';
+                    return agg;
+                }, {});
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => lookup('z', obj) === undefined, elm),
+                    [word.split(''), word]));
+        });
+    });
+
+    describe ('#find', function () {
+        it ('should should find element that matches predicate when element is in given list', function () {
+            const word = 'word',
+                pred = x => x === 'o';
+            expectEqual(find(pred, word), 'o');
+            expectEqual(find(pred, word.split('')), 'o');
+        });
+    });
+
+    describe ('#filter', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#partition', function () {
+        it ('should take elements into first array while predicate is fulfilled and elements ' +
+            'that didn\'t match into second array', function () {
+            const word = 'abcdefg',
+                expectedResults = ['abcdfg', 'e'],
+                predicate = x => x !== 'e';
+
+            // Expect matched length and matched elements
+            expectTrue(
+                // Ensure cases for each use case
+                all(tuple =>
+                    length(expectedResults) === length(tuple) &&
+                    all((tuplePart, ind) =>
+                            // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
+                            // Ensure tuple part is of allowed type
+                        (isString(tuplePart) || isArray(tuplePart)) &&
+                        // Ensure correct length of items in returned element
+                        length(expectedResults[ind]) === length(tuplePart) &&
+                        // Ensure elements where matched
+                        all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
+                        tuple),
+                    // Use cases (one with string other with array)
+                    [partition(predicate, word.split('')), partition(predicate, word)]
+                ));
+        });
+
+        it ('should return an array of empty arrays and/or strings when an empty list is passed in', function () {
+            expectTrue(
+                all(tuple =>
+                    length(tuple) === 2 &&
+                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
+                        length(tuplePart) === 0, tuple),
+                    [partition(a => a, ""), partition(x => x, [])]
+                ));
+        });
+    });
+
+    describe ('#at', function () {
+        it ('should have more tests');
+    });
+
+    describe ('#elemIndex', function () {
+        it ('should return the index where the element is found', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => elemIndex(elm2, arr) === word.indexOf(elm2), elm),
+                    [word.split(''), word]));
+        });
+        it ('should return `undefined` when element is not in list', function () {
+            const word = 'hello world';
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => elemIndex('z', arr) === undefined, elm),
+                    [word.split(''), word]));
+        });
+    });
+
+    describe ('#elemIndices', function () {
+        it ('should return all found element indices in a list', function () {
+            const nums = range(0, 22),
+                word = nums.join(''),
+                predicate = x => x.indexOf('1') > -1,
+                indices = word.split('').reduce((agg, item, ind) => {
+                    if (predicate(item)) { agg.push(ind); }
+                    return agg;
+                }, []);
+
+            expectTrue(
+                // Ensure cases for each use case
+                all(list => all((item, ind) => list[ind] === item, indices),
+                    [elemIndices('1', word), elemIndices('1', word.split(''))]
+                ));
+        });
+    });
+
+    describe ('#findIndex', function () {
+        const word = 'abcdefg';
+        it ('should find an index where predicate is satisfied', function () {
+            expectTrue(
+                word.split('')
+                    .every((char, ind, arr) =>
+                        findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind))
+        });
+    });
+
+    describe ('#findIndices', function () {
+        it ('should', function () {
+            const token = 'aecedegefehea',
+                tokenParts = token.split(''),
+                eIndices = [1, 3, 5, 7, 9, 11],
+                notEIndices = [0, 2, 4, 6, 8, 10, 12],
+                aIndices = [0, 12],
+                noIndices = [],
+                indiceTests = [
+                    [findIndices(x => x === 'e'), eIndices],
+                    [findIndices(x => x !== 'e'), notEIndices],
+                    [findIndices(x => x === 'a'), aIndices],
+                    [findIndices(x => false), noIndices]
+                ];
+            // expectTrue(
+            //     all(xs =>
+            //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
+            //         [token, tokenParts])
+            // );
+        });
+    });
+
+    describe ('#zip', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#zipN', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#zipWith', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#unzip', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#unzipN', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#lines', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#words', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#unlines', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#unwords', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#nub', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#remove', function () { // same as `delete`
+        it ('should have more tests.');
+    });
+
+    describe ('#complement', function () {
         it ('should return an empty array when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, arrayComplement)();
         });
@@ -762,7 +946,7 @@ describe ('arrayOps', function () {
         });
     });
 
-    describe ('#arrayDifference', function () {
+    describe ('#difference', function () {
         it ('should return an empty array when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, arrayDifference)();
         });
@@ -793,7 +977,7 @@ describe ('arrayOps', function () {
         });
     });
 
-    describe ('#arrayIntersect', function () {
+    describe ('#intersect', function () {
         it ('should return an empty array when receiving an empty array as parameter 1', function () {
             compose(expectEqual(__, 0), length, arrayIntersect)([]);
             compose(expectEqual(__, 0), length, arrayIntersect([]))([1, 2, 3]);
@@ -825,7 +1009,7 @@ describe ('arrayOps', function () {
         });
     });
 
-    describe ('#arrayUnion', function () {
+    describe ('#union', function () {
         it ('should return an union of the two arrays', function () {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
@@ -842,6 +1026,58 @@ describe ('arrayOps', function () {
                 });
             });
         });
+    });
+
+    describe ('#sort', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#sortOn', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#insert', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#nubBy', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#removeBy', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#removeFirstBy', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#unionBy', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#intersectBy', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#groupBy', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#sortBy', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#insertBy', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#maximumBy', function () {
+        it ('should have more tests written');
+    });
+
+    describe ('#minimumBy', function () {
+        it ('should have more tests written');
     });
 
     describe ('#flatten', function () {
