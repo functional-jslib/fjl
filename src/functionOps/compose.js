@@ -1,9 +1,9 @@
-import {reduceRight} from '../array/arrayPrelude';
+import {reduceRight} from '../listOps/listOpsPlatformPrelude';
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
- * the function on the left of itself.
- * @function module:fjl.compose
+ * the functionOps on the left of itself.
+ * @functionOps module:fjl.compose
  * @type {Function}
  * @param args {...Function}
  * @returns {Function}

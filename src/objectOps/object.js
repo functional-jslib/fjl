@@ -1,7 +1,7 @@
 
-import {curry, curry2} from '../function/curry';
+import {curry, curry2} from '../functionOps/curry';
 import {assignDeep, hasOwnProperty, keys} from './objectPrelude';
-import {reduce} from '../array/arrayPrelude';
+import {reduce} from '../listOps/listOpsPlatformPrelude';
 
 export {instanceOf} from './instanceOf';
 export {typeOf} from './typeOf';

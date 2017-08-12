@@ -6,7 +6,7 @@
  * Set functions for objects.
  */
 
-import {curry2} from '../function/curry';
+import {curry2} from '../functionOps/curry';
 import {isObject} from './is';
 import {fPureTakesOne} from '../utils/utils';
 import {prop} from './prop';
@@ -38,7 +38,7 @@ export const
 
     /**
      * Defined as `Object.assign` else is the same thing but shimmed.
-     * @function module:assign.assign
+     * @functionOps module:assign.assign
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}
@@ -47,7 +47,7 @@ export const
 
     /**
      * Merges all objects down into one.
-     * @function module:assign.assignDeep
+     * @functionOps module:assign.assignDeep
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}

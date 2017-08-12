@@ -13,7 +13,7 @@ import {expect} from 'chai';
 import {isset, issetAndOfType, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet, isConstructablePrimitive} from '../../src/object/is';
+    isWeakMap, isWeakSet, isConstructablePrimitive} from '../../src/objectOps/is';
 import {expectTrue, expectFalse, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

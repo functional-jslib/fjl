@@ -13,10 +13,10 @@ let {expectTrue, expectFalse, expectEqual, expectFunction}  = require('./helpers
 // ~~~ /STRIP ~~~
 
 describe('#typeOf', function () {
-    it ('should be a function', function () {
+    it ('should be a functionOps', function () {
         expectFunction(typeOf);
     });
-    it ('should return a function when no value is passed in (is curried)', function () {
+    it ('should return a functionOps when no value is passed in (is curried)', function () {
         expectEqual(typeOf(), 'Undefined');
     });
     it ('should return the passed type\'s name', function () {
@@ -36,10 +36,10 @@ describe('#typeOf', function () {
 });
 
 describe('#isType', function () {
-    it ('should be a function', function () {
+    it ('should be a functionOps', function () {
         expectFunction(isType);
     });
-    it ('should return `true` when passed in value is of passed in type name/string', function () {
+    it ('should return `true` when passed in value is of passed in type name/stringOps', function () {
         [
             ['Array', []],
             ['Object', {}],
@@ -65,7 +65,7 @@ describe('#isType', function () {
         ]
             .forEach(tuple => expectTrue(apply(isType, tuple)));
     });
-    it ('should return `false` when passed in value is not of passed in type name/string', function () {
+    it ('should return `false` when passed in value is not of passed in type name/stringOps', function () {
         [
             ['Object', []],
             ['Array', {}],

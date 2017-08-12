@@ -2,12 +2,12 @@
  * Created by elydelacruz on 7/22/2017.
  */
 
-import {curry} from '../function/curry';
+import {curry} from '../functionOps/curry';
 
 export const
 
     /**
-     * Returns whether constructor has derived object.
+     * Returns whether constructor has derived objectOps.
      * @instanceConstructor {Function|Class}
      * @instance {*}
      * @returns {Boolean}

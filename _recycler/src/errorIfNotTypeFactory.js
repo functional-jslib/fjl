@@ -2,7 +2,7 @@
  * Created by elyde on 1/20/2017.
  */
 
-import {typeOf, typeOfIs} from '../../src/object/typeOf';
+import {typeOf, typeOfIs} from '../../src/objectOps/typeOf';
 
 const typesListToString = types => types.reduce((agg, Type, index) => {
     let typeName = Type instanceof Function ? Type.name : Type;
@@ -10,8 +10,8 @@ const typesListToString = types => types.reduce((agg, Type, index) => {
 }, '[');
 
 /**
- * A factory for attaching a context name to a function that checks if recieved value is of given type.
- * The factory allows you to attach the context name to the returned type checker function.
+ * A factory for attaching a context name to a functionOps that checks if recieved value is of given type.
+ * The factory allows you to attach the context name to the returned type checker functionOps.
  * @module errorIfNotTypeFactory
  * @param [contextName] {String} - Name of the context you want attached to the error message.
  * @returns {Function} - Function{key {String, value {*}, ...types {Function|Constructor}>

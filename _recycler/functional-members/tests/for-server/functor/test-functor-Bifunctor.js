@@ -22,7 +22,7 @@ describe('functor.Bifunctor', function () {
         expectFunctor = value => expectInstanceOf(value, Functor),
         expectBifunctor = value => expectInstanceOf(value, Bifunctor);
 
-    it('should return an new instance when called as a function', function () {
+    it('should return an new instance when called as a functionOps', function () {
         let result = Bifunctor();
         expectBifunctor(result);
         expectFunctor(result);
@@ -60,7 +60,7 @@ describe('functor.Bifunctor', function () {
             expect(result.value).to.equal(99 * 2);
         });
         it('should return a new instance of Functor that contains the return value ' +
-            'of passed in function\'s call', function () {
+            'of passed in functionOps\'s call', function () {
             let result = Bifunctor(99).map(num => num * 2);
             expectBifunctor(result);
             expectFunctor(result);
@@ -78,7 +78,7 @@ describe('functor.Bifunctor', function () {
             expect(result === functor).to.equal(false);
         });
         it('should return a new instance of Functor that contains the return value ' +
-            'of passed in function\'s call', function () {
+            'of passed in functionOps\'s call', function () {
             expectBifunctor(result);
             expectFunctor(result);
             expect(result.value).to.equal(21 * 2);

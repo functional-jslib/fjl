@@ -7,8 +7,8 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {compose} from '../../src/function/compose';
-import {curry_, curry2_, curry3_, curry5_, __} from '../../src/function/curry';
+import {compose} from '../../src/functionOps/compose';
+import {curry_, curry2_, curry3_, curry5_, __} from '../../src/functionOps/curry';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -19,23 +19,23 @@ describe('curry_', function () {
         addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
         divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
-    it ('should be of type function.', function () {
+    it ('should be of type functionOps.', function () {
         expect(curry_).to.be.instanceOf(Function);
     });
 
-    it ('should return a function when called with or without args.', function () {
+    it ('should return a functionOps when called with or without args.', function () {
         expect(curry_()).to.be.instanceOf(Function);
         expect(curry_(99)).to.be.instanceOf(Function);
         expect(curry_(() => {})).to.be.instanceOf(Function);
         expect(curry_(console.log)).to.be.instanceOf(Function);
     });
 
-    /*it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
+    /*it ('should return a functionOps that fails when no functionOps is passed (as it\'s first param).', functionOps () {
      assert.throws(curry_(), Error);
      assert.throws(curry_(99), Error);
      });*/
 
-    it ('should return a properly curried function when correct arity for said function is met.', function () {
+    it ('should return a properly curried functionOps when correct arity for said functionOps is met.', function () {
         let min8 = curry_(Math.min, 8),
             max5 = curry_(Math.max, 5),
             pow2 = curry_(Math.pow, 2);

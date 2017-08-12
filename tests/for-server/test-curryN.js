@@ -7,8 +7,8 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import compose from '../../src/function/compose';
-import {curryN, __} from '../../src/function/curry';
+import compose from '../../src/functionOps/compose';
+import {curryN, __} from '../../src/functionOps/curry';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -19,17 +19,17 @@ describe('curryN', function () {
         addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
         divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
-    it ('should be of type function.', function () {
+    it ('should be of type functionOps.', function () {
         expect(curryN).to.be.instanceOf(Function);
     });
 
-    it ('should return a function that throws an error when no arguments are passed.', function () {
+    it ('should return a functionOps that throws an error when no arguments are passed.', function () {
         let result = curryN();
         expect(result).to.be.instanceOf(Function);
         assert.throws(result, Error);
     });
 
-    it ('should pass in any values passed the arity when executing the curried function', function () {
+    it ('should pass in any values passed the arity when executing the curried functionOps', function () {
         let add3Nums = curryN(addRecursive, 3);
 
         // Curry add to add 3 numbers

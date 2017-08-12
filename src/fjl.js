@@ -4,53 +4,53 @@
  *  - Make methods take the functor/monad values as last (where it makes sense)
  */
 
-export {apply} from './function/apply';
-export {call} from './function/call';
-export {compose} from './function/compose';
+export {apply} from './functionOps/apply';
+export {call} from './functionOps/call';
+export {compose} from './functionOps/compose';
 export {curry, curryN, curry2, curry3, curry4, curry5,
-    __, curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './function/curry';
-export {negate as negateP} from './function/negate';
+    __, curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './functionOps/curry';
+export {negate as negateP} from './functionOps/negate';
 
-export {typeOf} from './object/typeOf';
+export {typeOf} from './objectOps/typeOf';
 
 export {isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet} from './object/is';
+    isWeakMap, isWeakSet} from './objectOps/is';
 
-export {isTruthy, isFalsy} from './boolean/is';
-export {not, or, and, equal} from './boolean/boolean';
+export {isTruthy, isFalsy} from './booleanOps/is';
+export {not, or, and, equal} from './booleanOps/boolean';
 
-export {instanceOf} from './object/instanceOf';
+export {instanceOf} from './objectOps/instanceOf';
 
 export {assign, assignDeep, keys, hasOwnProperty, length,
-    instanceOf} from './object/objectPrelude';
+    instanceOf} from './objectOps/objectPrelude';
 
 export { complement as objComplement,
     difference as objDifference,
     union as objUnion,
-    intersect as objIntersect } from './object/object';
+    intersect as objIntersect } from './objectOps/object';
 
 export { map, filter, reduce, reduceRight,
     some, every, forEach, concat, join,
-    reverse } from './array/arrayPrelude';
+    reverse } from './listOps/listOpsPlatformPrelude';
 
 export { complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
     intersect as arrayIntersect,
-    // @todo make all list (array and string) ops work on strings as well:
+    // @todo make all list (listOps and stringOps) ops work on strings as well:
     all, any, or, and,
     flatten, flattenMulti, head, tail,
     init, last, take, drop, splitStrAt, splitArrayAt, splitAt,
     indexWhile, takeWhile, dropWhile, span, breakOnList,
     lengths, orderedLengths, trimLengths,
     zip, zipN, sortAsc, sortDesc,
-    sortDescByLength, unzip, unzipN} from './array/array';
+    sortDescByLength, unzip, unzipN} from './listOps/listOps';
 
-export {split, lines, words, unlines, unwords} from './string/string';
+export {split, lines, words, unlines, unwords} from './stringOps/string';
 
-export {negate} from './number/number';
+export {negate} from './numberOps/number';
 
 export {version} from '../generated-for-src/version';
 

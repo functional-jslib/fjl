@@ -113,13 +113,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 describe('Array Operators', function () {
 
     describe('#arrayComplement', function () {
-        it('should return an empty array when no parameters are passed in', function () {
+        it('should return an empty listOps when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, arrayComplement)();
         });
-        it('should return an empty array if only one array is passed in', function () {
+        it('should return an empty listOps if only one listOps is passed in', function () {
             compose(expectEqual(__, 0), length, arrayComplement)([1, 2, 3]);
         });
-        it('should return elements not in first array passed to it', function () {
+        it('should return elements not in first listOps passed to it', function () {
             var testCases = [
             // subj1, subj2, expectLen, expectedElements
             [[[1, 2, 3], [1, 2, 3, 4, 5]], 2, [4, 5]], [[[1, 2, 3], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7, 8]], 7, [4, 5, 4, 5, 6, 7, 8]], [[[1, 2, 3], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 1, 2, 3]], 4, [4, 5, 4, 5]]];
@@ -139,16 +139,16 @@ describe('Array Operators', function () {
     });
 
     describe('#arrayDifference', function () {
-        it('should return an empty array when no parameters are passed in', function () {
+        it('should return an empty listOps when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, arrayDifference)();
         });
-        it('should return a clone of the passed in array if it is only the first array that is passed in', function () {
+        it('should return a clone of the passed in listOps if it is only the first listOps that is passed in', function () {
             compose(expectEqual(__, 3), length, arrayDifference([]))([1, 2, 3]);
         });
-        it('should return an empty array when there are no differences between the two arrays passed in', function () {
+        it('should return an empty listOps when there are no differences between the two arrays passed in', function () {
             compose(expectEqual(__, 0), length, arrayDifference([1, 2, 3]))([1, 2, 3]);
         });
-        it('should return a clone of the passed in array if it is only the first array that is passed in', function () {
+        it('should return a clone of the passed in listOps if it is only the first listOps that is passed in', function () {
             compose(expectEqual(__, 3), length, arrayDifference([]))([1, 2, 3]);
         });
         it('should return the difference between two arrays passed in', function () {
@@ -172,17 +172,17 @@ describe('Array Operators', function () {
     });
 
     describe('#arrayIntersect', function () {
-        it('should return an empty array when receiving an empty array as parameter 1', function () {
+        it('should return an empty listOps when receiving an empty listOps as parameter 1', function () {
             compose(expectEqual(__, 0), length, arrayIntersect)([]);
             compose(expectEqual(__, 0), length, arrayIntersect([]))([1, 2, 3]);
         });
-        it('should return an empty array when receiving an empty array as parameter 2', function () {
+        it('should return an empty listOps when receiving an empty listOps as parameter 2', function () {
             compose(expectEqual(__, 0), length, arrayIntersect([1, 2, 3]))([]);
         });
-        it('should return an empty array when both arrays passed are empty', function () {
+        it('should return an empty listOps when both arrays passed are empty', function () {
             compose(expectEqual(__, 0), length, arrayIntersect([]))([]);
         });
-        it('should return an empty array when no arrays are passed in', function () {
+        it('should return an empty listOps when no arrays are passed in', function () {
             compose(expectEqual(__, 0), length, arrayIntersect)();
         });
         it('should return an intersection of the two arrays passed in', function () {
@@ -227,11 +227,11 @@ describe('Array Operators', function () {
     });
 
     describe('#flatten', function () {
-        it('should return an array when receiving an array', function () {
+        it('should return an listOps when receiving an listOps', function () {
             expectInstanceOf(flatten([]), Array);
         });
 
-        it('should flatten an array', function () {
+        it('should flatten an listOps', function () {
             var expected = [1, 2, 3],
                 subject = [[1], [[2]], [[[3]]]],
                 testData = [[subject, expected], [[[[[1]]], [[2]], [3]], expected], [[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]]], range(1, 15)]];
@@ -242,13 +242,13 @@ describe('Array Operators', function () {
     });
 
     describe('#flattenMulti', function () {
-        it('should return an array when receiving many arrays', function () {
+        it('should return an listOps when receiving many arrays', function () {
             var result = flattenMulti([], [[]], [[[]]], [[[[]]]]);
             expectInstanceOf(result, Array);
             expectShallowEquals(result, []);
         });
 
-        it('should flatten all passed in arrays into one array no matter their dimensions', function () {
+        it('should flatten all passed in arrays into one listOps no matter their dimensions', function () {
             // [[ args ], expected] - args is the args to spread on the call of `flattenMulti`
             [[[[[1], [2, [3], range(4, 9)]], range(10, 21)], range(1, 21)], [[[[[1]]], [[2]], [3]], [1, 2, 3]], [[[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]], range(16, 34)]], range(1, 34)]].map(function (args) {
                 return expectShallowEquals(flattenMulti.apply(undefined, _toConsumableArray(args[0])), args[1]);
@@ -261,21 +261,21 @@ describe('Array Operators', function () {
  */
 describe('compose', function () {
 
-    it('should be of type function.', function () {
+    it('should be of type functionOps.', function () {
         expect(compose).to.be.instanceOf(Function);
     });
 
-    it('should return a function whether or not any parameters were passed in to it.', function () {
+    it('should return a functionOps whether or not any parameters were passed in to it.', function () {
         expect(compose()).to.be.instanceOf(Function);
         expect(compose(console.log)).to.be.instanceOf(Function);
     });
 
-    it('should return a function that when used returns the passed in value if `compose` ' + 'itself didn\'t receive any parameters.', function () {
+    it('should return a functionOps that when used returns the passed in value if `compose` ' + 'itself didn\'t receive any parameters.', function () {
         var result = compose();
         expect(result(99)).to.equal(99);
     });
 
-    it('should be able to compose an arbitrary number of functions and execute them as expected ' + 'from generated-for-src function.', function () {
+    it('should be able to compose an arbitrary numberOps of functions and execute them as expected ' + 'from generated-for-src functionOps.', function () {
         var min = curry2(Math.min),
             max = curry2(Math.max),
             pow = curry2(Math.pow),
@@ -298,23 +298,23 @@ describe('compose', function () {
 
 describe('curry', function () {
 
-    it('should be of type function.', function () {
+    it('should be of type functionOps.', function () {
         expectFunction(curry);
     });
 
-    it('should return a function when called with or without args.', function () {
+    it('should return a functionOps when called with or without args.', function () {
         expectFunction(curry());
         expectFunction(curry(99));
         expectFunction(curry(function () {}));
         expectFunction(curry(console.log));
     });
 
-    it('should return a function that fails when no function is passed in (as it\'s first param).', function () {
+    it('should return a functionOps that fails when no functionOps is passed in (as it\'s first param).', function () {
         assert.throws(curry(), Error);
         assert.throws(curry(99), Error);
     });
 
-    it('should return a curried function.', function () {
+    it('should return a curried functionOps.', function () {
         var min8 = curry(Math.min, 8),
             max5 = curry(Math.max, 5),
             pow2 = curry(Math.pow, 2);
@@ -407,17 +407,17 @@ describe('curryN', function () {
         }, args.shift());
     };
 
-    it('should be of type function.', function () {
+    it('should be of type functionOps.', function () {
         expect(curryN).to.be.instanceOf(Function);
     });
 
-    it('should return a function that throws an error when no arguments are passed.', function () {
+    it('should return a functionOps that throws an error when no arguments are passed.', function () {
         var result = curryN();
         expect(result).to.be.instanceOf(Function);
         assert.throws(result, Error);
     });
 
-    it('should pass in any values passed the arity when executing the curried function', function () {
+    it('should pass in any values passed the arity when executing the curried functionOps', function () {
         var add3Nums = curryN(addRecursive, 3);
 
         // Curry add to add 3 numbers
@@ -481,11 +481,11 @@ describe('curryN_', function () {
         }, args.shift());
     };
 
-    it('should be of type function.', function () {
+    it('should be of type functionOps.', function () {
         expect(curryN_).to.be.instanceOf(Function);
     });
 
-    it('should return a function that throws an error when no arguments are passed.', function () {
+    it('should return a functionOps that throws an error when no arguments are passed.', function () {
         var result = curryN_();
         expect(result).to.be.instanceOf(Function);
         assert.throws(result, Error);
@@ -511,7 +511,7 @@ describe('curryN_', function () {
         expect(multiply5Nums(5, 5, 5, 5, 5)).to.equal(multiplyExpectedResult);
     });
 
-    it('should pass in any values passed the arity when executing the curried function', function () {
+    it('should pass in any values passed the arity when executing the curried functionOps', function () {
         var add3Nums = curryN_(addRecursive, 3);
 
         // Curry add to add 3 numbers
@@ -584,23 +584,23 @@ describe('curry_', function () {
         }, args.shift());
     };
 
-    it('should be of type function.', function () {
+    it('should be of type functionOps.', function () {
         expect(curry_).to.be.instanceOf(Function);
     });
 
-    it('should return a function when called with or without args.', function () {
+    it('should return a functionOps when called with or without args.', function () {
         expect(curry_()).to.be.instanceOf(Function);
         expect(curry_(99)).to.be.instanceOf(Function);
         expect(curry_(function () {})).to.be.instanceOf(Function);
         expect(curry_(console.log)).to.be.instanceOf(Function);
     });
 
-    /*it ('should return a function that fails when no function is passed (as it\'s first param).', function () {
+    /*it ('should return a functionOps that fails when no functionOps is passed (as it\'s first param).', functionOps () {
      assert.throws(curry_(), Error);
      assert.throws(curry_(99), Error);
      });*/
 
-    it('should return a properly curried function when correct arity for said function is met.', function () {
+    it('should return a properly curried functionOps when correct arity for said functionOps is met.', function () {
         var min8 = curry_(Math.min, 8),
             max5 = curry_(Math.max, 5),
             pow2 = curry_(Math.pow, 2);
@@ -698,10 +698,10 @@ describe('Function Operators', function () {
 
     // @todo implement more extensive tests later
     describe('#call', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(call);
         });
-        it('should call a function passed into it', function () {
+        it('should call a functionOps passed into it', function () {
             expectEqual(call(add, 1, 2, 3, 4, 5), 15);
         });
         it('should take context into account', function () {
@@ -717,10 +717,10 @@ describe('Function Operators', function () {
 
     // @todo implement more extensive tests later
     describe('#apply', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(apply);
         });
-        it('should call a function passed into it with args array passed in as third parameter', function () {
+        it('should call a functionOps passed into it with args listOps passed in as third parameter', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
         it('should take context into account', function () {
@@ -739,12 +739,12 @@ describe('Function Operators', function () {
  */
 
 describe('is#isFunction', function () {
-    it('should return true if value is a function', function () {
+    it('should return true if value is a functionOps', function () {
         [function () {}, Math.pow, console.log, function () {}].forEach(function (value) {
             return expectTrue(isFunction(value));
         });
     });
-    it('should return `false` when value is not a function', function () {
+    it('should return `false` when value is not a functionOps', function () {
         [-1, 0, 1, [], {}, 'abc'].forEach(function (value) {
             return expectFalse(isFunction(value));
         });
@@ -778,10 +778,10 @@ describe('is#issetAndOfType', function () {
 });
 
 describe('is#isArray', function () {
-    it('should return `true` when given value is an array', function () {
+    it('should return `true` when given value is an listOps', function () {
         expectTrue(isArray([]));
     });
-    it('should return `false` when given value is not an array', function () {
+    it('should return `false` when given value is not an listOps', function () {
         expectFalse(isArray(function () {}));
     });
 });
@@ -796,33 +796,33 @@ describe('is#isObject', function () {
 });
 
 describe('is#isBoolean', function () {
-    it('should return `true` when given value is a boolean', function () {
+    it('should return `true` when given value is a booleanOps', function () {
         expectTrue(isBoolean(true));
         expectTrue(isBoolean(false));
     });
-    it('should return `false` when given value is not a boolean', function () {
+    it('should return `false` when given value is not a booleanOps', function () {
         expectFalse(isBoolean(function () {}));
     });
 });
 
 describe('is#isNumber', function () {
-    it('should return `true` when given value is a number', function () {
+    it('should return `true` when given value is a numberOps', function () {
         expectTrue(isNumber(99));
         expectTrue(isNumber(-1.0));
         expectTrue(isNumber(Number('1e-3')));
     });
-    it('should return `false` when given value is not a number', function () {
+    it('should return `false` when given value is not a numberOps', function () {
         expectFalse(isNumber(function () {}));
         expectFalse(isNumber(NaN));
     });
 });
 
 describe('is#isString', function () {
-    it('should return `true` when given value is a string', function () {
+    it('should return `true` when given value is a stringOps', function () {
         expectTrue(isString('hello'));
         expectTrue(isString(String('hello')));
     });
-    it('should return `false` when given value is not a string', function () {
+    it('should return `false` when given value is not a stringOps', function () {
         expectFalse(isString(function () {}));
         expectFalse(isString(NaN));
     });
@@ -951,25 +951,25 @@ describe('is#instanceOf', function () {
 describe('Object Operators', function () {
 
     describe('hasOwnProperty', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(hasOwnProperty);
         });
-        it('should return true when passed in object has the passed in property name', function () {
+        it('should return true when passed in objectOps has the passed in property name', function () {
             var obj = { hello: 'ola', ola: 'mambo' };
             expectTrue(hasOwnProperty(obj, 'hello'));
             expectTrue(hasOwnProperty(obj, 'ola'));
         });
-        it('should return false when passed in object doesn\'t have the passed in property name', function () {
+        it('should return false when passed in objectOps doesn\'t have the passed in property name', function () {
             expectFalse(hasOwnProperty({}, 'hello'));
             expectFalse(hasOwnProperty({}, 'mambo'));
         });
     });
 
     describe('complement', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(complement);
         });
-        it('should return an object with only properties not found in the first obj', function () {
+        it('should return an objectOps with only properties not found in the first obj', function () {
             var subj1 = { a: 1, b: 2, c: 3 },
                 subj2 = { d: 4 },
                 subj3 = { e: 5, f: 6, g: 7 },
@@ -987,7 +987,7 @@ describe('Object Operators', function () {
 
     describe('difference', function () {
 
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(difference);
         });
 
@@ -1005,10 +1005,10 @@ describe('Object Operators', function () {
     });
 
     describe('union', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(union);
         });
-        it('should return an object containing all properties from the two objects passed in', function () {
+        it('should return an objectOps containing all properties from the two objects passed in', function () {
             var subj1 = { a: 1, b: 2, c: 3 },
                 subj2 = { e: 5, f: 6, g: 7 },
                 result = union(subj1, subj2);
@@ -1021,10 +1021,10 @@ describe('Object Operators', function () {
     });
 
     describe('intersect', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(union);
         });
-        it('should return an object that contains values from both passed in objects', function () {
+        it('should return an objectOps that contains values from both passed in objects', function () {
             var subj1 = { a: 1, b: 2, c: 3 },
                 subj2 = { a: 5, b: 6, c: 7 },
                 result = intersect(subj1, subj2);
@@ -1039,10 +1039,10 @@ describe('Object Operators', function () {
  */
 
 describe('#typeOf', function () {
-    it('should be a function', function () {
+    it('should be a functionOps', function () {
         expectFunction(typeOf);
     });
-    it('should return a function when no value is passed in (is curried)', function () {
+    it('should return a functionOps when no value is passed in (is curried)', function () {
         expectEqual(typeOf(), 'Undefined');
     });
     it('should return the passed type\'s name', function () {
@@ -1053,10 +1053,10 @@ describe('#typeOf', function () {
 });
 
 describe('#isType', function () {
-    it('should be a function', function () {
+    it('should be a functionOps', function () {
         expectFunction(isType);
     });
-    it('should return `true` when passed in value is of passed in type name/string', function () {
+    it('should return `true` when passed in value is of passed in type name/stringOps', function () {
         [['Array', []], ['Object', {}], ['String', ''], ['Function', function () {}], ['Number', 99], ['Boolean', true], ['Boolean', false], ['Null', null], ['Undefined', undefined]].forEach(function (tuple) {
             return expectTrue(apply(isType, tuple));
         });
@@ -1066,7 +1066,7 @@ describe('#isType', function () {
             return expectTrue(apply(isType, tuple));
         });
     });
-    it('should return `false` when passed in value is not of passed in type name/string', function () {
+    it('should return `false` when passed in value is not of passed in type name/stringOps', function () {
         [['Object', []], ['Array', {}], ['NaN', ''], ['Number', function () {}], ['Function', 99], ['NaN', true], ['Number', false]].forEach(function (tuple) {
             return expectFalse(apply(isType, tuple));
         });

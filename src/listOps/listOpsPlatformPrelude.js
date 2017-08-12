@@ -7,7 +7,7 @@
 import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils/utils';
 
 /**
- * Array.prototype.reverse generator (generates a function that calls the prototype version or a
+ * Array.prototype.reverse generator (generates a functionOps that calls the prototype version or a
  * shimmed version if it doesn't exist).
  * @returns {Function}
  */
@@ -22,8 +22,8 @@ function defineReverse () {
 export const
 
     /**
-     * Maps a function to functor (array etc.).
-     * @function module:arrayOperators.map
+     * Maps a functionOps to functor (listOps etc.).
+     * @functionOps module:arrayOperators.map
      * @param fn {Function}
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
@@ -31,8 +31,8 @@ export const
     map = fPureTakesOne('map'),
 
     /**
-     * Filters a functor (array etc.) with passed in function.
-     * @function module:arrayOperators.filter
+     * Filters a functor (listOps etc.) with passed in functionOps.
+     * @functionOps module:arrayOperators.filter
      * @param fn {Function}
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
@@ -40,8 +40,8 @@ export const
     filter = fPureTakesOne('filter'),
 
     /**
-     * Reduces a foldable (array etc.) with passed in function.
-     * @function module:arrayOperators.reduce
+     * Reduces a foldable (listOps etc.) with passed in functionOps.
+     * @functionOps module:arrayOperators.reduce
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
@@ -49,8 +49,8 @@ export const
     reduce = fPureTakes2('reduce'),
 
     /**
-     * Reduces a foldable (array etc.) from the right with passed in function.
-     * @function module:arrayOperators.reduceRight
+     * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
+     * @functionOps module:arrayOperators.reduceRight
      * @param fn {Function}
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
@@ -61,7 +61,7 @@ export const
      * For each on functor (Array|Object|etc.).
      * @param fn {Function}
      * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
+     * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
      * @throws {Error} - When passed in functor doesn't have a `forEach` method.
      */
     forEach = fPureTakesOne('forEach'),
@@ -72,7 +72,7 @@ export const
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have a `some` method.
+     * @throws {Error} - When passed in objectOps doesn't have a `some` method.
      */
     some = fPureTakesOne('some'),
 
@@ -81,7 +81,7 @@ export const
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
+     * @throws {Error} - When passed in objectOps doesn't have an `every` method.
      */
     every = fPureTakesOne('every'),
 
@@ -91,13 +91,13 @@ export const
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
+     * @throws {Error} - When passed in objectOps doesn't have an `every` method.
      */
     concat = fPureTakesOneOrMore('concat'),
 
     /**
      * Array.prototype.join
-     * @function module:listPrelude.join
+     * @functionOps module:listPrelude.join
      * @param separator {String|RegExp}
      * @param arr {Array}
      * @returns {String}
@@ -121,8 +121,8 @@ export const
     push = fPureTakesOneOrMore('push'),
 
     /**
-     * Reverses an array (shimmed if not exists).
-     * @function module:listPrelude.reverse
+     * Reverses an listOps (shimmed if not exists).
+     * @functionOps module:listPrelude.reverse
      * @return {Array}
      */
     reverse = defineReverse();

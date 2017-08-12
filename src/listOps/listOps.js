@@ -6,15 +6,15 @@
 
 'use strict';
 
-import {curry, curry2}      from '../function/curry';
-import {apply}              from '../function/apply';
-import {negate as negateP}  from '../function/function';
-import {isTruthy, isFalsy}  from '../boolean/is';
-import {isString, isArray, isset}  from '../object/is';
-import {prop} from '../object/prop';
-import {typeOf}             from '../object/typeOf';
-import {length, keys as objectKeys, hasOwnProperty} from '../object/objectPrelude';
-import {concat as arrayConcat, slice}   from './arrayPrelude';
+import {curry, curry2}      from '../functionOps/curry';
+import {apply}              from '../functionOps/apply';
+import {negate as negateP}  from '../functionOps/function';
+import {isTruthy, isFalsy}  from '../booleanOps/is';
+import {isString, isArray, isset}  from '../objectOps/is';
+import {prop} from '../objectOps/prop';
+import {typeOf}             from '../objectOps/typeOf';
+import {length, keys as objectKeys, hasOwnProperty} from '../objectOps/objectPrelude';
+import {concat as arrayConcat, slice}   from './listOpsPlatformPrelude';
 import {log}                            from '../../tests/for-server/helpers';
 import {fPureTakesOne}                  from "../utils/utils";
 
@@ -28,62 +28,62 @@ export const
      * ```
      * If the first list is not finite, the result is the first list.
      * @haskellType `append :: [a] -> [a] -> [a]`
-     * @function module:arrayOps.append
-     * @param xs1 {Array|String|*} - List or list like.
-     * @param xs2 {Array|String|*} - List or list like.
+     * @functionOps module:listOps.append
+     * @param xs1 {Array|String|*} - listOps or list like.
+     * @param xs2 {Array|String|*} - listOps or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
      */
     append = curry((xs1, xs2) => (isArray(xs1) ? arrayConcat : strConcat)(xs1, xs2)),
 
     /**
      * Append two or more lists, i.e., same as `append` but for two ore more lists.
-     * @function module:arrayOps.appendMany
-     * @param xs1 {Array|String|*} - List or list like.
+     * @functionOps module:listOps.appendMany
+     * @param xs1 {Array|String|*} - listOps or list like.
      * @param [...args] {Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
     appendMany = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
 
     /**
-     * Returns head of array (first item of array).
+     * Returns head of listOps (first item of listOps).
      * @haskellType `head :: [a] -> a`
-     * @function module:arrayOps.head
+     * @functionOps module:listOps.head
      * @param x {Array|String}
-     * @returns {*} - First item from array
+     * @returns {*} - First item from listOps
      */
     head = x => x[0],
 
     /**
-     * Returns last item of array.
+     * Returns last item of listOps.
      * @haskellType `last :: [a] -> a`
-     * @function module:arrayOps.last
+     * @functionOps module:listOps.last
      * @param functor {Array|String}
      * @returns {*}
      */
     last = functor => functor[lastIndex(functor)],
 
     /**
-     * Returns tail part of array (everything after the first item as new array).
+     * Returns tail part of listOps (everything after the first item as new listOps).
      * @haskelType `tail :: [a] -> [a]`
-     * @function module:arrayOps.tail
+     * @functionOps module:listOps.tail
      * @param functor {Array}
      * @returns {Array}
      */
     tail = functor => sliceToEndFrom(1, functor),
 
     /**
-     * Returns everything except last item of array as new array.
+     * Returns everything except last item of listOps as new listOps.
      * @haskellType `init :: [a] -> [a]`
-     * @function module:arrayOps.init
+     * @functionOps module:listOps.init
      * @param functor {Array|String}
      * @returns {Array|String}
      */
     init = functor => slice(0, lastIndex(functor), functor),
 
     /**
-     * Returns `head` and `tail` of passed in array/string in a tuple.
+     * Returns `head` and `tail` of passed in listOps/stringOps in a tuple.
      * @haskellType `uncons :: [a] -> Maybe (a, [a])`
-     * @function module:arrayOps.uncons
+     * @functionOps module:listOps.uncons
      * @param x {Array|String}
      * @returns {Array|String|*|undefined}
      */
@@ -146,9 +146,9 @@ export const
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
      * do not match the tuple are in second list in the returned tuple.
      *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-     * @function module:arrayOps.partition
+     * @functionOps module:listOps.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
-     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type array or string)).
+     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type listOps or stringOps)).
      */
     partition = curry((pred, arr) => {
         const limit = length(arr),
@@ -163,14 +163,14 @@ export const
             () => false,            // predicate
             operation,              // operation
             agg,                    // aggregator
-            arr)),                  // array
+            arr)),                  // listOps
 
     reduceRight = curry((operation, agg, arr) =>
         reduceRightUntil(
             () => false,            // predicate
             operation,              // operation
             agg,                    // aggregator
-            arr)),                  // array
+            arr)),                  // listOps
 
     foldl = reduce,
 
@@ -199,39 +199,39 @@ export const
     }),
 
     /**
-     * @function module:arrayOps.at
+     * @functionOps module:listOps.at
      * @param ind {Number} - Index.
-     * @param xs {Array|String|*} - List or List like.
+     * @param xs {Array|String|*} - listOps or listOps like.
      * @returns {*}
      */
     at = prop,
 
     /**
-     * @function module:arrayOps.indexOf
+     * @functionOps module:listOps.indexOf
      * @param x {*} - Element to search for.
-     * @param xs {Array|String|*} - List or List like to look in.
+     * @param xs {Array|String|*} - listOps or listOps like to look in.
      * @returns {Number} - `-1` if element not found else index at which it is found.
      */
     indexOf = fPureTakesOne('indexOf'),
 
     /**
-     * @function module:arrayOps.lastIndexOf
+     * @functionOps module:listOps.lastIndexOf
      * @param x {*} - Element to search for.
-     * @param xs {Array|String|*} - List or List like to look in.
+     * @param xs {Array|String|*} - listOps or listOps like to look in.
      * @returns {Number} - `-1` if element not found else last index at which it is found.
      */
     lastIndexOf = fPureTakesOne('lastIndexOf'),
 
     /**
-     * @function module:arrayOps.lastIndex
-     * @param x {Array|String|*} - List like or list.
+     * @functionOps module:listOps.lastIndex
+     * @param x {Array|String|*} - listOps like or list.
      * @returns {Number} - `-1` if no element found.
      */
     lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
 
     /**
-     * Finds index in string or array.
-     * @function module:arrayOps.indexWhere
+     * Finds index in stringOps or listOps.
+     * @functionOps module:listOps.indexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -247,9 +247,9 @@ export const
     }),
 
     /**
-     * @function module:arrayOps.find
+     * @functionOps module:listOps.find
      * @param pred {Function}
-     * @param xs {Array|String|*} - List or list like.
+     * @param xs {Array|String|*} - listOps or list like.
      * @returns {*}
      */
     findWhere = curry((pred, xs) => {
@@ -263,16 +263,16 @@ export const
     }),
 
     /**
-     * @function module:arrayOps.find
+     * @functionOps module:listOps.find
      * @param pred {Function}
-     * @param xs {Array|String|*} - List or list like.
+     * @param xs {Array|String|*} - listOps or list like.
      * @returns {*}
      */
     find = findWhere,
 
     /**
-     * Finds index in string or array (alias for `findIndex`).
-     * @function module:arrayOps.findIndex
+     * Finds index in stringOps or listOps (alias for `findIndex`).
+     * @functionOps module:listOps.findIndex
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -280,9 +280,9 @@ export const
     findIndex = indexWhere,
 
     /**
-     * @function module:arrayOps.findIndices
+     * @functionOps module:listOps.findIndices
      * @param pred {Function}
-     * @param xs {Array|String|*} - List or list like.
+     * @param xs {Array|String|*} - listOps or list like.
      * @returns {Array|undefined}
      */
     findIndices =  curry((pred, xs) => {
@@ -297,9 +297,9 @@ export const
     }),
 
     /**
-     * @function module:arrayOps.elemIndex
+     * @functionOps module:listOps.elemIndex
      * @param x {*} - Element to search for.
-     * @param xs {Array|String|*} - List or list like.
+     * @param xs {Array|String|*} - listOps or list like.
      * @returns {*}
      */
     elemIndex = curry((x, xs) => {
@@ -308,23 +308,23 @@ export const
     }),
 
     /**
-     * @function module:arrayOps.elemIndices
+     * @functionOps module:listOps.elemIndices
      * @param value {*} - Element to search for.
-     * @param xs {Array|String|*} - List or list like.
+     * @param xs {Array|String|*} - listOps or list like.
      * @returns {*}
      */
     elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
 
 
     /**
-     * Accumulative map function which effectively does a map and reduce (from the left) all in one;  Returns a tuple
+     * Accumulative map functionOps which effectively does a map and reduce (from the left) all in one;  Returns a tuple
      * containing the aggregated value and the mapped result of map the passed in `op` on the passed in
      * list (`xs`).
-     * @function module:arrayOps.mapAccumL
+     * @functionOps module:listOps.mapAccumL
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
-     * @param xs {Array|String|*} - List type.
-     * @return {Array} - [aggregated, List]
+     * @param xs {Array|String|*} - listOps type.
+     * @return {Array} - [aggregated, listOps]
      */
     mapAccumL = curry((op, zero, xs) => {
         const list = sliceToEndFrom(0, xs),
@@ -343,14 +343,14 @@ export const
     }),
 
     /**
-     * Accumulative map function which effectively does a map and reduce (from the right) all in one;  Returns a tuple
+     * Accumulative map functionOps which effectively does a map and reduce (from the right) all in one;  Returns a tuple
      * containing the aggregated value and the mapped result of map the passed in `op` on the passed in
      * list (`xs`).
-     * @function module:arrayOps.mapAccumR
+     * @functionOps module:listOps.mapAccumR
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
-     * @param xs {Array|String|*} - List type.
-     * @return {Array} - [aggregated, List]
+     * @param xs {Array|String|*} - listOps type.
+     * @return {Array} - [aggregated, listOps]
      */
     mapAccumR = curry((op, zero, xs) => {
         const list = sliceToEndFrom(0, xs),
@@ -369,18 +369,18 @@ export const
     }),
 
     /**
-     * Takes `n` items from start of array to `limit` (exclusive).
-     * @function module:arrayOps.take
-     * @param array {Array|String}
+     * Takes `n` items from start of listOps to `limit` (exclusive).
+     * @functionOps module:listOps.take
+     * @param listOps {Array|String}
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
      */
     take = curry((limit, array) => slice(0, limit, array)),
 
     /**
-     * Drops `n` items from start of array to `count` (exclusive).
-     * @function module:arrayOps.take
-     * @param array {Array|String}
+     * Drops `n` items from start of listOps to `count` (exclusive).
+     * @functionOps module:listOps.take
+     * @param listOps {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
      */
@@ -388,10 +388,10 @@ export const
 
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
-     * given index in second part of returned array)).
-     * @function module:arrayOps.splitAt
+     * given index in second part of returned listOps)).
+     * @functionOps module:listOps.splitAt
      * @param ind {Number} - Index to split at.
-     * @param functor {Array|String} - functor (array or string) to split.
+     * @param functor {Array|String} - functor (listOps or stringOps) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
      */
     splitAt = curry((ind, arr) => [
@@ -400,9 +400,9 @@ export const
     ]),
 
     /**
-     * Gives an array with passed elements while predicate was true.
-     * @function module:arrayOps.takeWhile
-     * @param pred {Function} - Predicate<*, index, array|string>
+     * Gives an listOps with passed elements while predicate was true.
+     * @functionOps module:listOps.takeWhile
+     * @param pred {Function} - Predicate<*, index, listOps|stringOps>
      * @param arr {Array|String}
      * @returns {Array}
      */
@@ -418,9 +418,9 @@ export const
     }),
 
     /**
-     * Returns an array without elements that match predicate.
-     * @function module:arrayOps.dropWhile
-     * @param pred {Function} - Predicate<*, index, array|string>
+     * Returns an listOps without elements that match predicate.
+     * @functionOps module:listOps.dropWhile
+     * @param pred {Function} - Predicate<*, index, listOps|stringOps>
      * @param arr {Array|String}
      * @returns {Array|String}
      */
@@ -439,9 +439,9 @@ export const
      * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
      * the second list in the tuple is a list of the remaining elements in the given list.
      * **@Note: Not the same as `partition`.  Read descriptions closely!!!
-     * @function module:arrayOps.partition
+     * @functionOps module:listOps.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
-     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type array or string)).
+     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type listOps or stringOps)).
      */
     span = curry((pred, arr) => {
         const splitPoint = indexWhere(negateP(pred), arr);
@@ -532,13 +532,13 @@ export const
     },
 
     /**
-     * Generates 2^n sub-sequences for passed in sequence (string/array) (`n` is
+     * Generates 2^n sub-sequences for passed in sequence (stringOps/listOps) (`n` is
      * the length of the passed in sequence so: 2^length(xs)).
      * Note: The return value doubles per index/character passed in so use with caution!
      *  Also note that for 2^16 (or for a sequence of 16 characters) this algorithm
      *  will generate 65536 sub-sequences!  So caution should be taken to not
      *  use this with sequences above a certain length on certain platform (the browser thread in specific).
-     * @function module:arrayOps.subsequences
+     * @functionOps module:listOps.subsequences
      * @param xs {Array|String}
      * @returns {Array}
      */
@@ -564,8 +564,8 @@ export const
     concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
 
     /**
-     * Flattens an array.
-     * @function module:arrayOps.flatten
+     * Flattens an listOps.
+     * @functionOps module:listOps.flatten
      * @param arr {Array}
      * @returns {Array}
      */
@@ -578,10 +578,10 @@ export const
     }, [], arr),
 
     /**
-     * Flattens all arrays passed in into one array.
-     * @function module:arrayOps.flattenMulti
+     * Flattens all arrays passed in into one listOps.
+     * @functionOps module:listOps.flattenMulti
      * @param arr {Array}
-     * @param [...arrays{Array}] - Other arrays to flatten into new array.
+     * @param [...arrays{Array}] - Other arrays to flatten into new listOps.
      * @returns {Array}
      */
     flattenMulti = curry2((arr0, ...arrays) =>
@@ -591,7 +591,7 @@ export const
      * zip :: [a] -> [b] -> [(a, b)]
      * zip takes two lists and returns a list of corresponding pairs.
      * If one input list is short, excess elements of the longer list are discarded.
-     * @function module:arrayOps.zip
+     * @functionOps module:listOps.zip
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
@@ -621,8 +621,8 @@ export const
 
     /**
      * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
-     * zipWith generalises zip by zipping with the function given as the
-     * first argument, instead of a tupling function. For example,
+     * zipWith generalises zip by zipping with the functionOps given as the
+     * first argument, instead of a tupling functionOps. For example,
      * zipWith (+) is applied to two lists to produce the list of corresponding sums.
      * @type {Function}
      */
@@ -670,7 +670,7 @@ export const
 
     /**
      * Creates a union on matching elements from array1.
-     * @function module:arrayOps.union
+     * @functionOps module:listOps.union
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
@@ -679,8 +679,8 @@ export const
         append(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
 
     /**
-     * Performs an intersection on array 1 with  elements from array 2.
-     * @function module:arrayOps.intersect
+     * Performs an intersection on listOps 1 with  elements from listOps 2.
+     * @functionOps module:listOps.intersect
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
@@ -689,8 +689,8 @@ export const
             filter(elm => indexOf(elm, arr2) > -1, arr1)),
 
     /**
-     * Returns the difference of array 1 from array 2.
-     * @function module:arrayOps.difference
+     * Returns the difference of listOps 1 from listOps 2.
+     * @functionOps module:listOps.difference
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
@@ -709,8 +709,8 @@ export const
     }),
 
     /**
-     * Returns the complement of array 0 and the reset of the passed in arrays.
-     * @function module:arrayOps.complement
+     * Returns the complement of listOps 0 and the reset of the passed in arrays.
+     * @functionOps module:listOps.complement
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}

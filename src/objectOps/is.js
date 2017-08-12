@@ -3,7 +3,7 @@
  * @module is
  * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
  */
-import {curry} from '../function/curry';
+import {curry} from '../functionOps/curry';
 import {typeOf} from './typeOf';
 import {instanceOf} from './instanceOf';
 import {length, keys, hasOwnProperty} from './objectPrelude';
@@ -24,8 +24,8 @@ let _String = String.name,
 export const
 
     /**
-     * Returns whether a value is a function or not.
-     * @function module:is.isFunction
+     * Returns whether a value is a functionOps or not.
+     * @functionOps module:is.isFunction
      * @param value {*}
      * @returns {Boolean}
      */
@@ -33,13 +33,13 @@ export const
 
     /**
      * Type checker.  Note** The `Type` passed in, if a constructor, should
-     * be a named constructor/function-instance;  E.g.,
+     * be a named constructor/functionOps-instance;  E.g.,
      * ```
-     *  function SomeName () {} // or
-     *  var SomeName = function SomeName () {} // or
+     *  functionOps SomeName () {} // or
+     *  var SomeName = functionOps SomeName () {} // or
      *  class SomeName {}
      * ```
-     * @function module:fjl.isType
+     * @functionOps module:fjl.isType
      * @param Type {Function|String} - Constructor or constructor name
      * @param value {*}
      * @return {Boolean}
@@ -48,55 +48,55 @@ export const
 
     /**
      * Checks if `value` is an es2015 `class`.
-     * @function module:is.isClass
+     * @functionOps module:is.isClass
      * @param x {*}
      * @returns {boolean}
      */
     isClass = x => x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10)),
 
     /**
-     * Returns a boolean depicting whether a value is callable or not.
-     * @function module:is.isCallable
+     * Returns a booleanOps depicting whether a value is callable or not.
+     * @functionOps module:is.isCallable
      * @param x {*}
      * @returns {Boolean}
      */
     isCallable = x => !isClass(x) && isFunction(x),
 
     /**
-     * Checks if value is an array.
-     * @function module:is.isArray
+     * Checks if value is an arrayOps.
+     * @functionOps module:is.isArray
      * @param value {*}
      * @returns {boolean}
      */
     isArray = isType(Array),
 
     /**
-     * Checks whether value is an object or not.
-     * @function module:is.isObject
+     * Checks whether value is an objectOps or not.
+     * @functionOps module:is.isObject
      * @param value
      * @returns {Boolean}
      */
     isObject = isType(_Object),
 
     /**
-     * Checks if value is a boolean.
-     * @function module:is.isBoolean
+     * Checks if value is a booleanOps.
+     * @functionOps module:is.isBoolean
      * @param value {*}
      * @returns {Boolean}
      */
     isBoolean = isType(_Boolean),
 
     /**
-     * Checks if value is a valid number (also checks if isNaN so that you don't have to).
-     * @function module:is.isNumber
+     * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
+     * @functionOps module:is.isNumber
      * @param value {*}
      * @returns {Boolean}
      */
     isNumber = isType(_Number),
 
     /**
-     * Checks whether value is a string or not.
-     * @function module:is.isString
+     * Checks whether value is a stringOps or not.
+     * @functionOps module:is.isString
      * @param value {*}
      * @returns {Boolean}
      */
@@ -104,7 +104,7 @@ export const
 
     /**
      * Checks whether value is of `Map` or not.
-     * @function module:is.isMap
+     * @functionOps module:is.isMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -112,7 +112,7 @@ export const
 
     /**
      * Checks whether value is of `Set` or not.
-     * @function module:is.isSet
+     * @functionOps module:is.isSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -120,7 +120,7 @@ export const
 
     /**
      * Checks whether value is of `WeakMap` or not.
-     * @function module:is.isWeakMap
+     * @functionOps module:is.isWeakMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -128,7 +128,7 @@ export const
 
     /**
      * Checks whether value is of `WeakSet` or not.
-     * @function module:is.isWeakSet
+     * @functionOps module:is.isWeakSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -136,7 +136,7 @@ export const
 
     /**
      * Checks if value is undefined.
-     * @function module:is.isUndefined
+     * @functionOps module:is.isUndefined
      * @param value {*}
      * @returns {Boolean}
      */
@@ -144,7 +144,7 @@ export const
 
     /**
      * Checks if value is null.
-     * @function module:is.isNull
+     * @functionOps module:is.isNull
      * @param value {*}
      * @returns {Boolean}
      */
@@ -152,7 +152,7 @@ export const
 
     /**
      * Checks if value is a `Symbol`.
-     * @function module:is.isSymbol
+     * @functionOps module:is.isSymbol
      * @param value {*}
      * @returns {Boolean}
      */
@@ -173,7 +173,7 @@ export const
     isEmptyList = x => length(x) === 0,
 
     /**
-     * Checks if object has own properties/enumerable-props or not.
+     * Checks if objectOps has own properties/enumerable-props or not.
      * @param obj {*}
      * @returns {Boolean}
      */
@@ -188,7 +188,7 @@ export const
 
     /**
      * Checks to see if passed in argument is empty.
-     * @function module:is.empty
+     * @functionOps module:is.empty
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
@@ -219,8 +219,8 @@ export const
 
     /**
      * Returns true if an element is not empty and is of type.
-     * @function module:is.notEmptyAndOfType
-     * @param type {String|Function} - Type to check against (string name or actual constructor).
+     * @functionOps module:is.notEmptyAndOfType
+     * @param type {String|Function} - Type to check against (stringOps name or actual constructor).
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */

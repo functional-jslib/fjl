@@ -7,9 +7,9 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {apply} from '../../src/function/apply';
-import {call} from '../../src/function/call';
-import {flip, flipN, until, id} from '../../src/function/function';
+import {apply} from '../../src/functionOps/apply';
+import {call} from '../../src/functionOps/call';
+import {flip, flipN, until, id} from '../../src/functionOps/function';
 import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -18,7 +18,7 @@ describe ('Function Operators', function () {
 
     // @todo implement more extensive tests later
     describe ('#call', function () {
-        it ('should be a function', function () {
+        it ('should be a functionOps', function () {
             expectFunction(call);
         });
         it ('should be curried', function () {
@@ -26,14 +26,14 @@ describe ('Function Operators', function () {
             expectFunction(adder());
             expectEqual(adder(1, 2, 3, 4, 5), 15);
         });
-        it ('should call a function passed into it along with passed in arguments', function () {
+        it ('should call a functionOps passed into it along with passed in arguments', function () {
             expectEqual(call(add, 1, 2, 3, 4, 5), 15);
         });
     });
 
     // @todo implement more extensive tests later
     describe ('#apply', function () {
-        it ('should be a function', function () {
+        it ('should be a functionOps', function () {
             expectFunction(apply);
         });
         it ('should be curried', function () {
@@ -41,20 +41,20 @@ describe ('Function Operators', function () {
             expectFunction (addAllInArray);
             expectEqual(addAllInArray([1, 2, 3, 4, 5]), 15);
         });
-        it ('should call a function passed into it with args array passed in as second parameter', function () {
+        it ('should call a functionOps passed into it with args listOps passed in as second parameter', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
     });
 
     describe ('#flip', function () {
-        it ('should be a function', function () {
+        it ('should be a functionOps', function () {
             expectFunction(flip);
         });
-        it ('should return a function', function () {
+        it ('should return a functionOps', function () {
             expectFunction(flip());
             expectFunction(flip(subtract));
         });
-        it ('should return a function which executes its params in reverse.', function () {
+        it ('should return a functionOps which executes its params in reverse.', function () {
             const subtractor = flip(subtract);
             expectFunction(subtractor);
             expectEqual(subtract(2, 1), subtractor(1, 2));
@@ -63,14 +63,14 @@ describe ('Function Operators', function () {
     });
 
     describe ('#flipN', function () {
-        it ('should be a function', function () {
+        it ('should be a functionOps', function () {
             expectFunction(flipN);
         });
-        it ('should return a function', function () {
+        it ('should return a functionOps', function () {
             expectFunction(flipN());
             expectFunction(flipN(subtract));
         });
-        it ('should return a function which executes its params in reverse.', function () {
+        it ('should return a functionOps which executes its params in reverse.', function () {
             const subtractor = flipN(subtract);
             expectFunction(subtractor);
             expectEqual(subtract(3, 2, 1), subtractor(1, 2, 3));
@@ -79,7 +79,7 @@ describe ('Function Operators', function () {
     });
 
     describe ('#until', function () {
-        it ('should be a function', function () {
+        it ('should be a functionOps', function () {
             expectFunction(until);
         });
 
@@ -104,8 +104,8 @@ describe ('Function Operators', function () {
         });
     });
 
-    describe ('#id', function () {
-        it ('should be a function', function () {
+    describe ('#id.js', function () {
+        it ('should be a functionOps', function () {
             expectFunction(id);
         });
         it ('should return whatever you give it', function () {

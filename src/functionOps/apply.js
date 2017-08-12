@@ -6,8 +6,8 @@ import {curry} from './curry';
 export const
 
     /**
-     * Functional `apply` function (takes no context).
-     * @function module:fnOperators.apply
+     * Functional `apply` functionOps (takes no context).
+     * @functionOps module:fnOperators.apply
      * @param fn {Function}
      * @param args {*}
      * @returns {*}

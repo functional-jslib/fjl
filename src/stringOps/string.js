@@ -6,15 +6,15 @@
 
 'use strict';
 
-import {join} from '../array/arrayPrelude';
+import {join} from '../listOps/listOpsPlatformPrelude';
 
-import {curry} from '../function/curry';
+import {curry} from '../functionOps/curry';
 
 export const
 
     /**
      * Functional version of `String.prototype.split`.
-     * @function module:stringOps.split
+     * @functionOps module:stringOps.split
      * @param separator {String|RegExp}
      * @param str {String}
      * @returns {Array}
@@ -24,32 +24,32 @@ export const
     }),
 
     /**
-     * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
-     * @function module:stringOps.lines
+     * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
+     * @functionOps module:stringOps.lines
      * @param str {String}
      * @returns {Array}
      */
     lines = split(/[\n\r]/gm),
 
     /**
-     * Splits a string on all '\s' and/or all '\t' characters.
-     * @function module:stringOps.words
+     * Splits a stringOps on all '\s' and/or all '\t' characters.
+     * @functionOps module:stringOps.words
      * @param str{String}
      * @returns {Array}
      */
     words = split(/[\s\t]/gm),
 
     /**
-     * Joins an array of strings with '\s'.
-     * @function module:stringOps.unwords
+     * Joins an arrayOps of strings with '\s'.
+     * @functionOps module:stringOps.unwords
      * @param arr {String}
      * @returns {Array}
      */
     unwords = join('\s'),
 
     /**
-     * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
-     * @function module:stringOps.unlines
+     * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
+     * @functionOps module:stringOps.unlines
      * @param str {String}
      * @returns {Array}
      */

@@ -1,8 +1,8 @@
 /**
  * Created by edlc on 8/3/17.
  */
-import {curry} from '../function/curry';
-import {isFunction} from '../object/is';
+import {curry} from '../functionOps/curry';
+import {isFunction} from '../objectOps/is';
 
 export default Object.getOwnPropertyNames(Math).reduce((agg, key) => {
     if (!isFunction(Math[key])) { return agg; }

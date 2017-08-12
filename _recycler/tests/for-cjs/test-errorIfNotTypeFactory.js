@@ -14,16 +14,16 @@ let {expectFunction}  = require('../../../tests/for-cjs/helpers');
 
 describe('errorIfNotTypeFactory', function () {
 
-    it ('should be of type function.', function () {
+    it ('should be of type functionOps.', function () {
         expectFunction(errorIfNotTypeFactory);
     });
 
-    it ('should return a function whether or not any parameters were passed in to it.', function () {
+    it ('should return a functionOps whether or not any parameters were passed in to it.', function () {
         expectFunction(errorIfNotTypeFactory());
         expectFunction(errorIfNotTypeFactory('someContextNameHere'));
     });
 
-    it ('should return a function that when fired with error condition should include the shared contextName.', function () {
+    it ('should return a functionOps that when fired with error condition should include the shared contextName.', function () {
         let fn1 = errorIfNotTypeFactory(),
             fn2 = errorIfNotTypeFactory('someContextNameHere');
         expectFunction(fn1);
@@ -39,7 +39,7 @@ describe('errorIfNotTypeFactory', function () {
             'the types : ["Array", "String", "Function"].  Type received: Number');
     });
 
-    it ('should return a function that throws an error when the passed in value doesn\'t match one of ' +
+    it ('should return a functionOps that throws an error when the passed in value doesn\'t match one of ' +
         'the "one-or-more" passed in types.', function () {
         let errorIfNotType = errorIfNotTypeFactory('someContextName');
         assert.throws(curry(errorIfNotType, 'someValueName', 99, Array), Error);
@@ -47,7 +47,7 @@ describe('errorIfNotTypeFactory', function () {
         assert.throws(curry(errorIfNotType, 'someValueName', 99, String, Function, Array), Error);
     });
 
-    it ('should return a function that does not throw an error when the passed in value matches one of ' +
+    it ('should return a functionOps that does not throw an error when the passed in value matches one of ' +
         'the "one-or-more" passed in types.', function () {
         let errorIfNotType = errorIfNotTypeFactory('someContextName');
         assert.doesNotThrow(curry(errorIfNotType, 'someValueName', 99, Array, Number, String), Error);

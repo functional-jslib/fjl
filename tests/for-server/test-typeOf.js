@@ -6,18 +6,18 @@
 // This part gets stripped out when
 // generating browser version of test(s).
 'use strict';
-import {typeOf} from '../../src/object/typeOf';
-import {isType} from '../../src/object/is'; // @todo move the tests for `isType` to another test suite (function was renamed from `typeOfIs` and moved to a new package so it's tests have to move to).
-import {apply} from '../../src/function/apply';
+import {typeOf} from '../../src/objectOps/typeOf';
+import {isType} from '../../src/objectOps/is'; // @todo move the tests for `isType` to another test suite (functionOps was renamed from `typeOfIs` and moved to a new package so it's tests have to move to).
+import {apply} from '../../src/functionOps/apply';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
 describe('is#typeOf', function () {
-    it ('should be a function', function () {
+    it ('should be a functionOps', function () {
         expectFunction(typeOf);
     });
-    it ('should return a function when no value is passed in (is curried)', function () {
+    it ('should return a functionOps when no value is passed in (is curried)', function () {
         expectEqual(typeOf(), 'Undefined');
     });
     it ('should return the passed type\'s name', function () {
@@ -37,10 +37,10 @@ describe('is#typeOf', function () {
 });
 
 describe('is#isType', function () {
-    it ('should be a function', function () {
+    it ('should be a functionOps', function () {
         expectFunction(isType);
     });
-    it ('should return `true` when passed in value is of passed in type name/string', function () {
+    it ('should return `true` when passed in value is of passed in type name/stringOps', function () {
         [
             ['Array', []],
             ['Object', {}],
@@ -66,7 +66,7 @@ describe('is#isType', function () {
         ]
             .forEach(tuple => expectTrue(apply(isType, tuple)));
     });
-    it ('should return `false` when passed in value is not of passed in type name/string', function () {
+    it ('should return `false` when passed in value is not of passed in type name/stringOps', function () {
         [
             ['Object', []],
             ['Array', {}],

@@ -7,31 +7,31 @@
 // generating browser version of test(s).
 'use strict';
 import {expect} from 'chai';
-import {instanceOf} from '../../src/object/objectPrelude';
+import {instanceOf} from '../../src/objectOps/objectPrelude';
 import {isset, isNumber,
     isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet} from '../../src/object/is';
+    isWeakMap, isWeakSet} from '../../src/objectOps/is';
 import {expectTrue, expectFalse, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
 describe('is#isFunction', function () {
-    it('should return true if value is a function', function () {
+    it('should return true if value is a functionOps', function () {
         [() => {}, Math.pow, console.log, function () {}]
             .forEach(value => expectTrue(isFunction(value)));
     });
-    it('should return `false` when value is not a function', function () {
+    it('should return `false` when value is not a functionOps', function () {
         [-1, 0, 1, [], {}, 'abc']
             .forEach(value => expectFalse(isFunction(value)));
     });
 });
 
 describe('is#isArray', function () {
-    it ('should return `true` when given value is an array', function () {
+    it ('should return `true` when given value is an listOps', function () {
         expectTrue(isArray([]));
     });
-    it ('should return `false` when given value is not an array', function () {
+    it ('should return `false` when given value is not an listOps', function () {
         expectFalse(isArray(function () {}));
     });
 });
@@ -46,33 +46,33 @@ describe('is#isObject', function () {
 });
 
 describe('is#isBoolean', function () {
-    it ('should return `true` when given value is a boolean', function () {
+    it ('should return `true` when given value is a booleanOps', function () {
         expectTrue(isBoolean(true));
         expectTrue(isBoolean(false));
     });
-    it ('should return `false` when given value is not a boolean', function () {
+    it ('should return `false` when given value is not a booleanOps', function () {
         expectFalse(isBoolean(function () {}));
     });
 });
 
 describe('is#isNumber', function () {
-    it ('should return `true` when given value is a number', function () {
+    it ('should return `true` when given value is a numberOps', function () {
         expectTrue(isNumber(99));
         expectTrue(isNumber(-1.0));
         expectTrue(isNumber(Number('1e-3')));
     });
-    it ('should return `false` when given value is not a number', function () {
+    it ('should return `false` when given value is not a numberOps', function () {
         expectFalse(isNumber(function () {}));
         expectFalse(isNumber(NaN));
     });
 });
 
 describe('is#isString', function () {
-    it ('should return `true` when given value is a string', function () {
+    it ('should return `true` when given value is a stringOps', function () {
         expectTrue(isString('hello'));
         expectTrue(isString(String('hello')));
     });
-    it ('should return `false` when given value is not a string', function () {
+    it ('should return `false` when given value is not a stringOps', function () {
         expectFalse(isString(function () {}));
         expectFalse(isString(NaN));
     });

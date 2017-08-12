@@ -8,31 +8,31 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {compose} from '../../src/function/compose';
-import {curry, curry2, __} from '../../src/function/curry';
+import {compose} from '../../src/functionOps/compose';
+import {curry, curry2, __} from '../../src/functionOps/curry';
 import {/*expectFalse, expectEqual,*/ expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
 describe('curry', function () {
 
-    it ('should be of type function.', function () {
+    it ('should be of type functionOps.', function () {
         expectFunction(curry);
     });
 
-    it ('should return a function when called with or without args.', function () {
+    it ('should return a functionOps when called with or without args.', function () {
         expectFunction(curry());
         expectFunction(curry(99));
         expectFunction(curry(() => {}));
         expectFunction(curry(console.log));
     });
 
-    it ('should return a function that fails when no function is passed in (as it\'s first param).', function () {
+    it ('should return a functionOps that fails when no functionOps is passed in (as it\'s first param).', function () {
         assert.throws(curry(), Error);
         assert.throws(curry(99), Error);
     });
 
-    it ('should return a curried function.', function () {
+    it ('should return a curried functionOps.', function () {
         let min8 = curry(Math.min, 8),
             max5 = curry(Math.max, 5),
             pow2 = curry(Math.pow, 2);

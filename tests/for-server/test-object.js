@@ -11,8 +11,8 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {hasOwnProperty, keys} from '../../src/object/objectPrelude';
-import {complement, difference, union, intersect} from '../../src/object/object';
+import {hasOwnProperty, keys} from '../../src/objectOps/objectPrelude';
+import {complement, difference, union, intersect} from '../../src/objectOps/object';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -20,25 +20,25 @@ import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 describe ('Object Operators', function () {
 
     describe ('hasOwnProperty', function () {
-        it ('should be a function', function () {
+        it ('should be a functionOps', function () {
             expectFunction(hasOwnProperty);
         });
-        it ('should return true when passed in object has the passed in property name', function () {
+        it ('should return true when passed in objectOps has the passed in property name', function () {
             const obj = {hello: 'ola', ola: 'mambo'};
             expectTrue(hasOwnProperty('hello', obj));
             expectTrue(hasOwnProperty('ola', obj));
         });
-        it ('should return false when passed in object doesn\'t have the passed in property name', function () {
+        it ('should return false when passed in objectOps doesn\'t have the passed in property name', function () {
             expectFalse(hasOwnProperty('hello', {}));
             expectFalse(hasOwnProperty('mambo', {}));
         });
     });
 
     describe('complement', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(complement);
         });
-        it('should return an object with only properties not found in the first obj', function () {
+        it('should return an objectOps with only properties not found in the first obj', function () {
             let subj1 = {a: 1, b: 2, c: 3},
                 subj2 = {d: 4},
                 subj3 = {e: 5, f: 6, g: 7},
@@ -56,7 +56,7 @@ describe ('Object Operators', function () {
 
     describe('difference', function () {
 
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(difference);
         });
 
@@ -75,10 +75,10 @@ describe ('Object Operators', function () {
     });
 
     describe('union', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(union);
         });
-        it ('should return an object containing all properties from the two objects passed in', function () {
+        it ('should return an objectOps containing all properties from the two objects passed in', function () {
             let subj1 = {a: 1, b: 2, c: 3},
                 subj2 = {e: 5, f: 6, g: 7},
                 result = union(subj1, subj2);
@@ -91,10 +91,10 @@ describe ('Object Operators', function () {
     });
 
     describe('intersect', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(union);
         });
-        it ('should return an object that contains values from both passed in objects', function () {
+        it ('should return an objectOps that contains values from both passed in objects', function () {
             let subj1 = {a: 1, b: 2, c: 3, e: 4, f: 8},
                 subj2 = {a: 5, b: 6, c: 7, g: 9},
                 sharedKeys = ['a', 'b', 'c'],

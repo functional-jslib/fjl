@@ -18,10 +18,10 @@ let {expectFalse, expectEqual, expectFunction}  = require('./helpers');
 describe ('Object Combinators', function () {
 
     describe('complement', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(complement);
         });
-        it('should return an object with only properties not found in the first obj', function () {
+        it('should return an objectOps with only properties not found in the first obj', function () {
             let subj1 = {a: 1, b: 2, c: 3},
                 subj2 = {d: 4},
                 subj3 = {e: 5, f: 6, g: 7},
@@ -39,7 +39,7 @@ describe ('Object Combinators', function () {
 
     describe('difference', function () {
 
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(difference);
         });
 
@@ -58,10 +58,10 @@ describe ('Object Combinators', function () {
     });
 
     describe('union', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(union);
         });
-        it ('should return an object containing all properties from the two objects passed in', function () {
+        it ('should return an objectOps containing all properties from the two objects passed in', function () {
             let subj1 = {a: 1, b: 2, c: 3},
                 subj2 = {e: 5, f: 6, g: 7},
                 result = union(subj1, subj2);
@@ -74,10 +74,10 @@ describe ('Object Combinators', function () {
     });
 
     describe('intersect', function () {
-        it('should be a function', function () {
+        it('should be a functionOps', function () {
             expectFunction(union);
         });
-        it ('should return an object that contains values from both passed in objects', function () {
+        it ('should return an objectOps that contains values from both passed in objects', function () {
             let subj1 = {a: 1, b: 2, c: 3},
                 subj2 = {a: 5, b: 6, c: 7},
                 result = intersect(subj1, subj2);
