@@ -22,7 +22,7 @@ import {
     head, last, init, tail,
     take, drop, splitAt, reduce, reduceRight,
     takeWhile, dropWhile, partition,
-    span, breakOnList,
+    span, breakOnList, stripPrefix,
     complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
@@ -608,6 +608,11 @@ describe ('arrayOps', function () {
                     [dropWhile(pred, word.split('')), dropWhile(pred, word)]
                 ));
         });
+    });
+
+    describe ('#stripPrefix', function () {
+        it ('should...');
+        log(stripPrefix('hello', 'hello world'));
     });
 
     describe ('#mapAccumL', function () {

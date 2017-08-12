@@ -467,9 +467,8 @@ export const
         return true;
     }),
 
-    stripPrefix = curry((prefix, arr) => {
-
-    }),
+    stripPrefix = curry((prefix, arr) =>
+        isPrefixOf(prefix, arr) ? splitAt(prefix.length, arr)[1] : sliceToEndFrom(0, arr)),
 
     intersperse = curry((between, arr) => {
         const limit = length(arr) - 1,
@@ -487,8 +486,7 @@ export const
         }, aggregator, arr);
     }),
 
-    intercalate = curry((xs, xss) =>
-        concat(intersperse(xs, xss))),
+    intercalate = curry((xs, xss) => concat(intersperse(xs, xss))),
 
     transpose = xss => {
         const orderedLengths = getOrderedLengths(DESC, ...xss),
