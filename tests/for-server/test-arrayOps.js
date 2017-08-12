@@ -13,8 +13,9 @@ import {split} from '../../src/string/string';
 import {join} from '../../src/array/arrayPrelude';
 import {isArray, isString} from '../../src/object/is';
 import {
-    all, find, mapAccumL, mapAccumR,
-    findIndex, elem, notElem, elemIndex, elemIndices, lookup,
+    all, find, findIndex, findIndices,
+    mapAccumL, mapAccumR,
+    elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail,
     take, drop, splitAt, reduce, reduceRight,
     takeWhile, dropWhile, partition,
@@ -268,6 +269,28 @@ describe ('arrayOps', function () {
                 word.split('')
                     .every((char, ind, arr) =>
                         findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind))
+        });
+    });
+
+    describe ('#findIndices', function () {
+        it ('should', function () {
+            const token = 'aecedegefehea',
+                tokenParts = token.split(''),
+                eIndices = [1, 3, 5, 7, 9, 11],
+                notEIndices = [0, 2, 4, 6, 8, 10, 12],
+                aIndices = [0, 12],
+                noIndices = [],
+                indiceTests = [
+                    [findIndices(x => x === 'e'), eIndices],
+                    [findIndices(x => x !== 'e'), notEIndices],
+                    [findIndices(x => x === 'a'), aIndices],
+                    [findIndices(x => false), noIndices]
+                ];
+            // expectTrue(
+            //     all(xs =>
+            //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
+            //         [token, tokenParts])
+            // );
         });
     });
 

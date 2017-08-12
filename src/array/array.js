@@ -10,7 +10,8 @@ import {curry, curry2}      from '../function/curry';
 import {apply}              from '../function/apply';
 import {negate as negateP}  from '../function/function';
 import {isTruthy, isFalsy}  from '../boolean/is';
-import {isString, isArray}  from '../object/is';
+import {isString, isArray, isset}  from '../object/is';
+import {prop} from '../object/prop';
 import {typeOf}             from '../object/typeOf';
 import {length, keys as objectKeys, hasOwnProperty} from '../object/objectPrelude';
 import {concat as arrayConcat, slice}   from './arrayPrelude';
@@ -21,16 +22,33 @@ export const
 
     /**
      * @function module:arrayOps.at
-     * @param ind {Number}
+     * @param ind {Number} - Index.
      * @param xs {Array|String|*} - List or List like.
      * @returns {*}
      */
-    at = curry((ind, xs) => xs[ind]),
+    at = prop,
 
+    /**
+     * @function module:arrayOps.indexOf
+     * @param x {*} - Element to search for.
+     * @param xs {Array|String|*} - List or List like to look in.
+     * @returns {Number} - `-1` if element not found else index at which it is found.
+     */
     indexOf = fPureTakesOne('indexOf'),
 
+    /**
+     * @function module:arrayOps.lastIndexOf
+     * @param x {*} - Element to search for.
+     * @param xs {Array|String|*} - List or List like to look in.
+     * @returns {Number} - `-1` if element not found else last index at which it is found.
+     */
     lastIndexOf = fPureTakesOne('lastIndexOf'),
 
+    /**
+     * @function module:arrayOps.lastIndex
+     * @param x {Array|String|*} - List like or list.
+     * @returns {Number} - `-1` if no element found.
+     */
     lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
 
     /**
@@ -50,6 +68,12 @@ export const
         return ind;
     }),
 
+    /**
+     * @function module:arrayOps.find
+     * @param pred {Function}
+     * @param xs {Array|String|*} - List or list like.
+     * @returns {*}
+     */
     findWhere = curry((pred, xs) => {
         let ind = 0,
             limit = length(xs);
@@ -81,7 +105,7 @@ export const
      * @function module:arrayOps.findIndices
      * @param pred {Function}
      * @param xs {Array|String|*} - List or list like.
-     * @returns {*}
+     * @returns {Array|undefined}
      */
     findIndices =  curry((pred, xs) => {
         const limit = length(xs);
@@ -206,8 +230,16 @@ export const
         return reduceRight (op, arr.pop(), arr);
     }),
 
-    unfoldr = curry((op, x) => {
-
+    unfoldr = curry((op, x, zero) => {
+        let ind = 0,
+            out = !isset(zero) ? [] : zero,
+            aggregator = aggregatorByType(out),
+            resultTuple = op(x, ind, out);
+        while (isset(resultTuple[1])) {
+            out = aggregator(out, resultTuple[0], ind);
+            resultTuple = op(resultTuple[1], ++ind, out);
+        }
+        return out;
     }),
 
     /**
