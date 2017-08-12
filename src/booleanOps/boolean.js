@@ -8,6 +8,8 @@ import {curry2} from '../functionOps/curry';
 // is validated/supported further.
 import {all} from '../listOps/listOps';
 
+export {isTruthy, isFalsy} from './is';
+
 export const
 
     and = curry2((a, b) => a && b),

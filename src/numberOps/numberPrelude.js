@@ -1,5 +1,6 @@
 /**
  * Created by edlc on 8/3/17.
+ * @tentative
  */
 import {curry} from '../functionOps/curry';
 import {isFunction} from '../objectOps/is';

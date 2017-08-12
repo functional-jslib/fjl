@@ -8,7 +8,7 @@
 
 import {curry, curry2}      from '../functionOps/curry';
 import {apply}              from '../functionOps/apply';
-import {negate as negateP}  from '../functionOps/function';
+import {negateP}  from '../functionOps/function';
 import {isTruthy, isFalsy}  from '../booleanOps/is';
 import {isString, isArray, isset}  from '../objectOps/is';
 import {prop} from '../objectOps/prop';
