@@ -11,31 +11,6 @@ define(['exports', './instanceOf', '../functionOps/curry', './is', '../utils/uti
             return _instanceOf.instanceOf;
         }
     });
-
-
-    /**
-     * @returns {Function}
-     */
-    /**
-     * Created by elydelacruz on 7/22/2017.
-     */
-    /**
-     * Created by elyde on 12/10/2016.
-     * Set functions for objects.
-     */
-
-    function defineAssign() {
-        if (Object.assign) {
-            return (obj0, ...objs) => Object.assign(obj0, ...objs);
-        }
-        return (obj0, ...objs) => objs.reduce((topAgg, obj) => {
-            return keys(obj).reduce((agg, key) => {
-                agg[key] = obj[key];
-                return agg;
-            }, topAgg);
-        }, obj0);
-    }
-
     const hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
           length = exports.length = (0, _prop.prop)('length'),
           keys = exports.keys = obj => Object.keys(obj),
@@ -48,7 +23,17 @@ define(['exports', './instanceOf', '../functionOps/curry', './is', '../utils/uti
      * @param objs {...{Object}}
      * @returns {Object}
      */
-    assign = exports.assign = (0, _curry.curry2)(defineAssign()),
+    assign = exports.assign = (0, _curry.curry2)(function defineAssign() {
+        if (Object.assign) {
+            return (obj0, ...objs) => Object.assign(obj0, ...objs);
+        }
+        return (obj0, ...objs) => objs.reduce((topAgg, obj) => {
+            return keys(obj).reduce((agg, key) => {
+                agg[key] = obj[key];
+                return agg;
+            }, topAgg);
+        }, obj0);
+    }()),
 
 
     /**

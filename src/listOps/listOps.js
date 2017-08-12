@@ -2,23 +2,19 @@
  * Array operators module.
  * @module arrayOps
  */
-
-
-'use strict';
-
 import {curry, curry2}      from '../functionOps/curry';
 import {apply}              from '../functionOps/apply';
-import {negateP}  from '../functionOps/functionOps';
+import {negateP}            from '../functionOps/functionOps';
 import {isTruthy, isFalsy}  from '../booleanOps/is';
 import {isString, isArray, isset}  from '../objectOps/is';
-import {prop} from '../objectOps/prop';
+import {prop}               from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
 import {length, keys as objectKeys, hasOwnProperty} from '../objectOps/objectPrelude';
 import {concat as arrayConcat, slice}   from './listOpsPrelude';
 // import {log}                            from '../../tests/for-server/helpers';
 import {fPureTakesOne}                  from '../utils/utils';
 
-export const
+const
 
     ASC = 1,
 
@@ -63,6 +59,29 @@ export const
         return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
     },
 
+    aggregateStr = (agg, item) => {
+        agg += item;
+        return agg;
+    },
+
+    aggregateArr = (agg, item) => {
+        agg.push(item);
+        return agg;
+    },
+
+    aggregateObj = (agg, item, ind) => {
+        agg[ind] = item;
+        return agg;
+    },
+
+    aggregatorByType = x => {
+        switch (typeOf(x)) {
+            case 'String': return aggregateStr;
+            case 'Array': return aggregateArr;
+            case 'Object':
+            default: return aggregateObj;
+        }
+    },
 
     reduceUntil = (pred, op, agg, arr) => {
         const limit = length(arr);
@@ -98,30 +117,6 @@ export const
         return result;
     },
 
-    aggregateStr = (agg, item) => {
-        agg += item;
-        return agg;
-    },
-
-    aggregateArr = (agg, item) => {
-        agg.push(item);
-        return agg;
-    },
-
-    aggregateObj = (agg, item, ind) => {
-        agg[ind] = item;
-        return agg;
-    },
-
-    aggregatorByType = x => {
-        switch (typeOf(x)) {
-            case 'String': return aggregateStr;
-            case 'Array': return aggregateArr;
-            case 'Object':
-            default: return aggregateObj;
-        }
-    },
-
     reduce = curry((operation, agg, arr) =>
         reduceUntil(
             () => false,            // predicate
@@ -135,7 +130,6 @@ export const
             operation,              // operation
             agg,                    // aggregator
             arr)),                  // listOps
-
 
     strConcat = (x, ...args) => reduce(aggregateStr, x, args),
 
@@ -155,6 +149,41 @@ export const
      * @returns {Number} - `-1` if no element found.
      */
     lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
+
+    /**
+     * Finds index in stringOps or listOps.
+     * @functionOps module:listOps.findIndexWhere
+     * @param pred {Function} - Predicate<element, index, arr>.
+     * @param arr {Array|String}
+     * @returns {Number} - `-1` if predicate not matched else `index` found
+     */
+    findIndexWhere = curry((pred, arr) => {
+        let ind = -1,
+            predicateFulfilled = false;
+        const limit = length(arr);
+        while (ind < limit && !predicateFulfilled) {
+            predicateFulfilled = pred(arr[++ind], ind, arr);
+        }
+        return ind;
+    }),
+
+    /**
+     * @functionOps module:listOps.find
+     * @param pred {Function}
+     * @param xs {Array|String|*} - listOps or list like.
+     * @returns {*}
+     */
+    findWhere = curry((pred, xs) => {
+        let ind = 0,
+            limit = length(xs);
+        if (!limit) { return; }
+        for (; ind < limit; ind++) {
+            let elm = xs[ind];
+            if (pred(elm, ind, xs)) { return elm; }
+        }
+    });
+
+export const
 
     /**
      * Append two lists, i.e.,
@@ -242,6 +271,10 @@ export const
         return out;
     }),
 
+    concat = foldableOfA => appendMany(...foldableOfA),
+
+    concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
+
     reverse = x => reduceRight((agg, item) => {
         agg.push(item);
         return agg;
@@ -271,7 +304,7 @@ export const
             reduce((agg2, element, ind2) => {
                 agg2[ind2].push(element);
                 return agg2;
-            }, agg, item), out.map(_ => []), xss);
+            }, agg, item), out.map(() => []), xss);
     },
 
     /**
@@ -381,6 +414,59 @@ export const
     }),
 
     /**
+     * Finds index in stringOps or listOps (alias for `findIndex`).
+     * @functionOps module:listOps.findIndex
+     * @param pred {Function} - Predicate<element, index, arr>.
+     * @param arr {Array|String}
+     * @returns {Number} - `-1` if predicate not matched else `index` found
+     */
+    findIndex = findIndexWhere,
+
+    /**
+     * @functionOps module:listOps.findIndicesWhere
+     * @param pred {Function}
+     * @param xs {Array|String|*} - listOps or list like.
+     * @returns {Array|undefined}
+     */
+    findIndicesWhere = curry((pred, xs) => {
+        const limit = length(xs);
+        if (!limit) { return undefined; }
+        let ind = 0,
+            out = [];
+        for (; ind < limit; ind++) {
+            if (pred(xs[ind], ind, xs)) { out.push(ind); }
+        }
+        return out;
+    }),
+
+    /**
+     * @functionOps module:listOps.findIndices
+     * @param pred {Function}
+     * @param xs {Array|String|*} - listOps or list like.
+     * @returns {Array|undefined}
+     */
+    findIndices =  findIndicesWhere,
+
+    /**
+     * @functionOps module:listOps.elemIndex
+     * @param x {*} - Element to search for.
+     * @param xs {Array|String|*} - listOps or list like.
+     * @returns {*}
+     */
+    elemIndex = curry((x, xs) => {
+        const foundInd = indexOf(x, xs);
+        return foundInd !== -1 ? foundInd : undefined;
+    }),
+
+    /**
+     * @functionOps module:listOps.elemIndices
+     * @param value {*} - Element to search for.
+     * @param xs {Array|String|*} - listOps or list like.
+     * @returns {*}
+     */
+    elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
+
+    /**
      * Takes `n` items from start of listOps to `limit` (exclusive).
      * @functionOps module:listOps.take
      * @param listOps {Array|String}
@@ -467,9 +553,6 @@ export const
             splitAt(0, arr) : splitAt(splitPoint, arr);
     }),
 
-    stripPrefix = curry((prefix, arr) =>
-        isPrefixOf(prefix, arr) ? splitAt(prefix.length, arr)[1] : sliceToEndFrom(0, arr)),
-
     /**
      * @functionOps module:listOps.at
      * @param ind {Number} - Index.
@@ -477,22 +560,6 @@ export const
      * @returns {*}
      */
     at = prop,
-
-    /**
-     * @functionOps module:listOps.find
-     * @param pred {Function}
-     * @param xs {Array|String|*} - listOps or list like.
-     * @returns {*}
-     */
-    findWhere = curry((pred, xs) => {
-        let ind = 0,
-            limit = length(xs);
-        if (!limit) { return; }
-        for (; ind < limit; ind++) {
-            let elm = xs[ind];
-            if (pred(elm, ind, xs)) { return elm; }
-        }
-    }),
 
     /**
      * @functionOps module:listOps.find
@@ -538,81 +605,11 @@ export const
 
     lookup = curry((key, xs) => hasOwnProperty(key, xs) ? xs[key] : undefined),
 
-    /**
-     * Finds index in stringOps or listOps.
-     * @functionOps module:listOps.findIndexWhere
-     * @param pred {Function} - Predicate<element, index, arr>.
-     * @param arr {Array|String}
-     * @returns {Number} - `-1` if predicate not matched else `index` found
-     */
-    findIndexWhere = curry((pred, arr) => {
-        let ind = -1,
-            predicateFulfilled = false;
-        const limit = length(arr);
-        while (ind < limit && !predicateFulfilled) {
-            predicateFulfilled = pred(arr[++ind], ind, arr);
-        }
-        return ind;
-    }),
-
-    /**
-     * Finds index in stringOps or listOps (alias for `findIndex`).
-     * @functionOps module:listOps.findIndex
-     * @param pred {Function} - Predicate<element, index, arr>.
-     * @param arr {Array|String}
-     * @returns {Number} - `-1` if predicate not matched else `index` found
-     */
-    findIndex = findIndexWhere,
-
-    /**
-     * @functionOps module:listOps.findIndicesWhere
-     * @param pred {Function}
-     * @param xs {Array|String|*} - listOps or list like.
-     * @returns {Array|undefined}
-     */
-    findIndicesWhere = curry((pred, xs) => {
-        const limit = length(xs);
-        if (!limit) { return undefined; }
-        let ind = 0,
-            out = [];
-        for (; ind < limit; ind++) {
-            if (pred(xs[ind], ind, xs)) { out.push(ind); }
-        }
-        return out;
-    }),
-
-    /**
-     * @functionOps module:listOps.findIndices
-     * @param pred {Function}
-     * @param xs {Array|String|*} - listOps or list like.
-     * @returns {Array|undefined}
-     */
-    findIndices =  findIndicesWhere,
-
-    /**
-     * @functionOps module:listOps.elemIndex
-     * @param x {*} - Element to search for.
-     * @param xs {Array|String|*} - listOps or list like.
-     * @returns {*}
-     */
-    elemIndex = curry((x, xs) => {
-        const foundInd = indexOf(x, xs);
-        return foundInd !== -1 ? foundInd : undefined;
-    }),
-
-    /**
-     * @functionOps module:listOps.elemIndices
-     * @param value {*} - Element to search for.
-     * @param xs {Array|String|*} - listOps or list like.
-     * @returns {*}
-     */
-    elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
-
     isPrefixOf = curry((xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
-            return false
+            return false;
         }
         let ind = 0;
         for (; ind < limit1; ind++) {
@@ -625,7 +622,7 @@ export const
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
-            return false
+            return false;
         }
         let ind = limit2 - 1;
         for (; ind >= 0; ind--) {
@@ -638,7 +635,7 @@ export const
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
-            return false
+            return false;
         }
         let ind = limit2 - 1;
         for (; ind >= 0; ind--) {
@@ -652,6 +649,9 @@ export const
     inits = xs => [xs],
 
     tails = xs => [xs],
+
+    stripPrefix = curry((prefix, arr) =>
+        isPrefixOf(prefix, arr) ? splitAt(prefix.length, arr)[1] : sliceToEndFrom(0, arr)),
 
     /**
      * Flattens an listOps.
@@ -736,11 +736,7 @@ export const
             return agg;
         }, [], arrs),
 
-    concat = foldableOfA => appendMany(...foldableOfA),
-
-    concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
-
-    any = curry((p, xs) => reduceUntil(p, (_ => true), false, xs)),
+    any = curry((p, xs) => reduceUntil(p, (() => true), false, xs)),
 
     all = curry((p, xs) => {
         const limit = length(xs);

@@ -296,7 +296,7 @@ var _undefined = 'undefined';
  * @returns {string} - Constructor's name property if not null or undefined (in which case a
  *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
  */
-var typeOf = function typeOf(value) {
+function typeOf(value) {
     var retVal = void 0;
     if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined) {
         retVal = _Undefined$1;
@@ -307,7 +307,7 @@ var typeOf = function typeOf(value) {
         retVal = constructorName === _Number$1 && isNaN(value) ? _NaN : constructorName;
     }
     return retVal;
-};
+}
 
 /**
  * Created by elydelacruz on 7/22/2017.
@@ -441,10 +441,12 @@ var prop = curry(function (name, obj) {
  * Set functions for objects.
  */
 
-/**
- * @returns {Function}
- */
-function defineAssign() {
+var hasOwnProperty = fPureTakesOne('hasOwnProperty');
+var length = prop('length');
+var keys = function keys(obj) {
+    return Object.keys(obj);
+};
+var assign = curry2(function defineAssign() {
     if (Object.assign) {
         return function (obj0) {
             for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -466,14 +468,7 @@ function defineAssign() {
             }, topAgg);
         }, obj0);
     };
-}
-
-var hasOwnProperty = fPureTakesOne('hasOwnProperty');
-var length = prop('length');
-var keys = function keys(obj) {
-    return Object.keys(obj);
-};
-var assign = curry2(defineAssign());
+}());
 var assignDeep = curry2(function (obj0) {
     for (var _len3 = arguments.length, objs = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
         objs[_key3 - 1] = arguments[_key3];
@@ -786,6 +781,29 @@ var trimLengths = function trimLengths() {
         return length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr);
     });
 };
+var aggregateStr = function aggregateStr(agg, item) {
+    agg += item;
+    return agg;
+};
+var aggregateArr = function aggregateArr(agg, item) {
+    agg.push(item);
+    return agg;
+};
+var aggregateObj = function aggregateObj(agg, item, ind) {
+    agg[ind] = item;
+    return agg;
+};
+var aggregatorByType = function aggregatorByType(x) {
+    switch (typeOf(x)) {
+        case 'String':
+            return aggregateStr;
+        case 'Array':
+            return aggregateArr;
+        case 'Object':
+        default:
+            return aggregateObj;
+    }
+};
 var reduceUntil = function reduceUntil(pred, op, agg, arr) {
     var limit = length(arr);
     if (limit === 0) {
@@ -822,29 +840,6 @@ var reduceRightUntil = function reduceRightUntil(pred, op, agg, arr) {
     }
     return result;
 };
-var aggregateStr = function aggregateStr(agg, item) {
-    agg += item;
-    return agg;
-};
-var aggregateArr = function aggregateArr(agg, item) {
-    agg.push(item);
-    return agg;
-};
-var aggregateObj = function aggregateObj(agg, item, ind) {
-    agg[ind] = item;
-    return agg;
-};
-var aggregatorByType = function aggregatorByType(x) {
-    switch (typeOf(x)) {
-        case 'String':
-            return aggregateStr;
-        case 'Array':
-            return aggregateArr;
-        case 'Object':
-        default:
-            return aggregateObj;
-    }
-};
 var reduce$1 = curry(function (operation, agg, arr) {
     return reduceUntil(function () {
         return false;
@@ -872,6 +867,29 @@ var indexOf = fPureTakesOne('indexOf');
 var lastIndex = function lastIndex(x) {
     var len = length(x);return len ? len - 1 : 0;
 };
+var findIndexWhere = curry(function (pred, arr) {
+    var ind = -1,
+        predicateFulfilled = false;
+    var limit = length(arr);
+    while (ind < limit && !predicateFulfilled) {
+        predicateFulfilled = pred(arr[++ind], ind, arr);
+    }
+    return ind;
+});
+var findWhere = curry(function (pred, xs) {
+    var ind = 0,
+        limit = length(xs);
+    if (!limit) {
+        return;
+    }
+    for (; ind < limit; ind++) {
+        var elm = xs[ind];
+        if (pred(elm, ind, xs)) {
+            return elm;
+        }
+    }
+});
+
 var append = curry(function (xs1, xs2) {
     return (isArray(xs1) ? concat : strConcat)(xs1, xs2);
 });
@@ -910,6 +928,12 @@ var map$1 = curry(function (fn, xs) {
         out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
     }
     return out;
+});
+var concat$1 = function concat$1(foldableOfA) {
+    return appendMany.apply(undefined, toConsumableArray(foldableOfA));
+};
+var concatMap = curry(function (fn, foldableOfA) {
+    return concat$1(map$1(fn, foldableOfA));
 });
 var reverse$1 = function reverse$1(x) {
     return reduceRight$1(function (agg, item) {
@@ -1015,6 +1039,31 @@ var unfoldr = curry(function (op, x, zero) {
     }
     return out;
 });
+var findIndex = findIndexWhere;
+var findIndicesWhere = curry(function (pred, xs) {
+    var limit = length(xs);
+    if (!limit) {
+        return undefined;
+    }
+    var ind = 0,
+        out = [];
+    for (; ind < limit; ind++) {
+        if (pred(xs[ind], ind, xs)) {
+            out.push(ind);
+        }
+    }
+    return out;
+});
+var findIndices = findIndicesWhere;
+var elemIndex = curry(function (x, xs) {
+    var foundInd = indexOf(x, xs);
+    return foundInd !== -1 ? foundInd : undefined;
+});
+var elemIndices = curry(function (value, xs) {
+    return findIndices(function (x) {
+        return x === value;
+    }, xs);
+});
 var take = curry(function (limit, array) {
     return slice(0, limit, array);
 });
@@ -1048,23 +1097,7 @@ var breakOnList = curry(function (pred, arr) {
     var splitPoint = findIndexWhere(pred, arr);
     return splitPoint === -1 ? splitAt(0, arr) : splitAt(splitPoint, arr);
 });
-var stripPrefix = curry(function (prefix, arr) {
-    return isPrefixOf(prefix, arr) ? splitAt(prefix.length, arr)[1] : sliceToEndFrom(0, arr);
-});
 var at = prop;
-var findWhere = curry(function (pred, xs) {
-    var ind = 0,
-        limit = length(xs);
-    if (!limit) {
-        return;
-    }
-    for (; ind < limit; ind++) {
-        var elm = xs[ind];
-        if (pred(elm, ind, xs)) {
-            return elm;
-        }
-    }
-});
 var find = findWhere;
 var filter$1 = curry(function (pred, xs) {
     var ind = 0,
@@ -1098,40 +1131,6 @@ var notElem = curry(function (elm, xs) {
 });
 var lookup = curry(function (key, xs) {
     return hasOwnProperty(key, xs) ? xs[key] : undefined;
-});
-var findIndexWhere = curry(function (pred, arr) {
-    var ind = -1,
-        predicateFulfilled = false;
-    var limit = length(arr);
-    while (ind < limit && !predicateFulfilled) {
-        predicateFulfilled = pred(arr[++ind], ind, arr);
-    }
-    return ind;
-});
-var findIndex = findIndexWhere;
-var findIndicesWhere = curry(function (pred, xs) {
-    var limit = length(xs);
-    if (!limit) {
-        return undefined;
-    }
-    var ind = 0,
-        out = [];
-    for (; ind < limit; ind++) {
-        if (pred(xs[ind], ind, xs)) {
-            out.push(ind);
-        }
-    }
-    return out;
-});
-var findIndices = findIndicesWhere;
-var elemIndex = curry(function (x, xs) {
-    var foundInd = indexOf(x, xs);
-    return foundInd !== -1 ? foundInd : undefined;
-});
-var elemIndices = curry(function (value, xs) {
-    return findIndices(function (x) {
-        return x === value;
-    }, xs);
 });
 var isPrefixOf = curry(function (xs1, xs2) {
     var limit1 = length(xs1),
@@ -1184,6 +1183,9 @@ var inits = function inits(xs) {
 var tails = function tails(xs) {
     return [xs];
 };
+var stripPrefix = curry(function (prefix, arr) {
+    return isPrefixOf(prefix, arr) ? splitAt(prefix.length, arr)[1] : sliceToEndFrom(0, arr);
+});
 var flatten = function flatten(arr) {
     return reduce$1(function (agg, elm) {
         if (isArray(elm)) {
@@ -1250,12 +1252,6 @@ var unzipN = function unzipN() {
         return agg;
     }, [], arrs);
 };
-var concat$1 = function concat$1(foldableOfA) {
-    return appendMany.apply(undefined, toConsumableArray(foldableOfA));
-};
-var concatMap = curry(function (fn, foldableOfA) {
-    return concat$1(map$1(fn, foldableOfA));
-});
 var any = curry(function (p, xs) {
     return reduceUntil(p, function (_) {
         return true;
@@ -1380,10 +1376,10 @@ var intersect = curry(function (functor1, functor2) {
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Sat Aug 12 2017 19:30:43 GMT-0400 (Eastern Daylight Time) 
+ * Generated Sat Aug 12 2017 19:55:29 GMT-0400 (Eastern Daylight Time) 
  */
 
-var version = '0.13.3';
+var version = '0.14.0';
 
 /**
  * Created by elyde on 12/6/2016.

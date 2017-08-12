@@ -23,20 +23,21 @@
             return _instanceOf.instanceOf;
         }
     });
+    var hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
+        length = exports.length = (0, _prop.prop)('length'),
+        keys = exports.keys = function keys(obj) {
+        return Object.keys(obj);
+    },
 
 
     /**
-     * @returns {Function}
+     * Defined as `Object.assign` else is the same thing but shimmed.
+     * @functionOps module:assign.assign
+     * @param obj0 {Object}
+     * @param objs {...{Object}}
+     * @returns {Object}
      */
-    /**
-     * Created by elydelacruz on 7/22/2017.
-     */
-    /**
-     * Created by elyde on 12/10/2016.
-     * Set functions for objects.
-     */
-
-    function defineAssign() {
+    assign = exports.assign = (0, _curry.curry2)(function defineAssign() {
         if (Object.assign) {
             return function (obj0) {
                 for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -58,23 +59,7 @@
                 }, topAgg);
             }, obj0);
         };
-    }
-
-    var hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
-        length = exports.length = (0, _prop.prop)('length'),
-        keys = exports.keys = function keys(obj) {
-        return Object.keys(obj);
-    },
-
-
-    /**
-     * Defined as `Object.assign` else is the same thing but shimmed.
-     * @functionOps module:assign.assign
-     * @param obj0 {Object}
-     * @param objs {...{Object}}
-     * @returns {Object}
-     */
-    assign = exports.assign = (0, _curry.curry2)(defineAssign()),
+    }()),
 
 
     /**

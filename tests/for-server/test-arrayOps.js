@@ -20,7 +20,7 @@ import {
     mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail,
-    take, drop, splitAt, reduce, reduceRight,
+    take, drop, splitAt, foldl, foldr,
     takeWhile, dropWhile, partition,
     span, breakOnList, stripPrefix,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
@@ -241,7 +241,7 @@ describe ('#arrayOps', function () {
 
             expectTrue(
                 all(tuple => {
-                        const reducedForCompare = reduce((agg, item, ind) => {
+                        const reducedForCompare = foldl((agg, item, ind) => {
                                 // log(agg, item, tuple[0][1][ind], xs2);
                                 if (Array.isArray(agg)) { agg.push(tuple[2](agg, item, ind)); }
                                 else { agg += tuple[2](agg, item, ind); }
@@ -302,7 +302,7 @@ describe ('#arrayOps', function () {
 
             expectTrue(
                 all(tuple => {
-                        const reducedForCompare = reduceRight((agg, item, ind) => {
+                        const reducedForCompare = foldr((agg, item, ind) => {
                                 // log(agg, item, tuple[0][1][ind], xs2);
                                 if (Array.isArray(agg)) { agg.push(tuple[2](agg, item, ind)); }
                                 else { agg += tuple[2](agg, item, ind); }

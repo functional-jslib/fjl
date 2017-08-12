@@ -4,6 +4,7 @@ define(['exports'], function (exports) {
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
+    exports.typeOf = typeOf;
     /**
      * Created by elyde on 12/18/2016.
      */
@@ -21,7 +22,7 @@ define(['exports'], function (exports) {
      * @returns {string} - Constructor's name property if not null or undefined (in which case a
      *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
      */
-    const typeOf = exports.typeOf = value => {
+    function typeOf(value) {
         let retVal;
         if (typeof value === _undefined) {
             retVal = _Undefined;
@@ -32,5 +33,5 @@ define(['exports'], function (exports) {
             retVal = constructorName === _Number && isNaN(value) ? _NaN : constructorName;
         }
         return retVal;
-    };
+    }
 });

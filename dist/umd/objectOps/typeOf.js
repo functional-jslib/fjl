@@ -16,6 +16,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
+    exports.typeOf = typeOf;
 
     var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
@@ -40,7 +41,7 @@
      * @returns {string} - Constructor's name property if not null or undefined (in which case a
      *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
      */
-    var typeOf = exports.typeOf = function typeOf(value) {
+    function typeOf(value) {
         var retVal = void 0;
         if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined) {
             retVal = _Undefined;
@@ -51,5 +52,5 @@
             retVal = constructorName === _Number && isNaN(value) ? _NaN : constructorName;
         }
         return retVal;
-    };
+    }
 });

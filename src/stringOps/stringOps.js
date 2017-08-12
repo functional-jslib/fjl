@@ -3,9 +3,6 @@
  * @author elyde
  * @created 7/9/2017.
  */
-
-'use strict';
-
 import {join} from '../listOps/listOpsPrelude';
 
 import {curry} from '../functionOps/curry';

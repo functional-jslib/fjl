@@ -14,17 +14,7 @@ import {prop} from './prop';
 /**
  * @returns {Function}
  */
-function defineAssign () {
-    if (Object.assign) {
-        return (obj0, ...objs) => Object.assign(obj0, ...objs);
-    }
-    return (obj0, ...objs) => objs.reduce((topAgg, obj) => {
-        return keys(obj).reduce((agg, key) => {
-            agg[key] = obj[key];
-            return agg;
-        }, topAgg);
-    }, obj0);
-}
+
 
 export {instanceOf} from './instanceOf';
 
@@ -43,7 +33,17 @@ export const
      * @param objs {...{Object}}
      * @returns {Object}
      */
-    assign = curry2(defineAssign()),
+    assign = curry2((function defineAssign () {
+        if (Object.assign) {
+            return (obj0, ...objs) => Object.assign(obj0, ...objs);
+        }
+        return (obj0, ...objs) => objs.reduce((topAgg, obj) => {
+            return keys(obj).reduce((agg, key) => {
+                agg[key] = obj[key];
+                return agg;
+            }, topAgg);
+        }, obj0);
+    }())),
 
     /**
      * Merges all objects down into one.

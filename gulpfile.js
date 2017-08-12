@@ -92,7 +92,7 @@ gulp.task('clean', () => {
         .catch(log);
 });
 
-gulp.task('eslint', () => gulp.src(['./src/**/*.js', '!node_modules/**']).pipe(gulpIf(skipLint, eslintPipe())));
+gulp.task('eslint', () => gulp.src(['./src/**/*.js', '!node_modules/**']).pipe(eslintPipe()));
 
 gulp.task('umd', ['eslint'], () =>
     gulp.src(srcsGlob)

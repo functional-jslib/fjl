@@ -320,7 +320,7 @@ describe('#arrayOps', function () {
             }, [], list1);
 
             expectTrue(all(function (tuple) {
-                var reducedForCompare = reduce(function (agg, item, ind) {
+                var reducedForCompare = foldl(function (agg, item, ind) {
                     // log(agg, item, tuple[0][1][ind], xs2);
                     if (Array.isArray(agg)) {
                         agg.push(tuple[2](agg, item, ind));
@@ -375,7 +375,7 @@ describe('#arrayOps', function () {
             }, [], list1);
 
             expectTrue(all(function (tuple) {
-                var reducedForCompare = reduceRight(function (agg, item, ind) {
+                var reducedForCompare = foldr(function (agg, item, ind) {
                     // log(agg, item, tuple[0][1][ind], xs2);
                     if (Array.isArray(agg)) {
                         agg.push(tuple[2](agg, item, ind));

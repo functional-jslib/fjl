@@ -15,7 +15,7 @@ const _Number = Number.name,
  * @returns {string} - Constructor's name property if not null or undefined (in which case a
  *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
  */
-export const typeOf = value => {
+export function typeOf (value) {
     let retVal;
     if (typeof value === _undefined) {
         retVal = _Undefined;
@@ -29,4 +29,4 @@ export const typeOf = value => {
             _NaN : constructorName;
     }
     return retVal;
-};
+}

@@ -176,7 +176,7 @@ export const
     isUsableImmutablePrimitive = x => {
         const typeOfX = typeOf(x);
         return [_String, _Number, _Boolean, _Symbol]
-            .some(Type => Type === typeOfX)
+            .some(Type => Type === typeOfX);
     },
 
     /**
