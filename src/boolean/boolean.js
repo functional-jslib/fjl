@@ -4,11 +4,9 @@
 
 import {curry2} from '../function/curry';
 
-import {isFalsy} from './is';
-
 // Reuse our algebra from the array package so the functionality
-// is furtherly` validated throughout our library.
-import {all as listAll} from '../array/array';
+// is validated/supported further.
+import {all} from '../array/array';
 
 export const
 
@@ -18,4 +16,4 @@ export const
 
     not = curry2((a, b) => !a || !b),
 
-    equal = curry2((arg0, ...args) => listAll(x => arg0 === x, args)); // every
+    equal = curry2((arg0, ...args) => all(x => arg0 === x, args)); // every

@@ -6,7 +6,7 @@
 import {curry} from '../function/curry';
 import {typeOf} from './typeOf';
 import {instanceOf} from './instanceOf';
-import {length, keys} from './objectPrelude';
+import {length, keys, hasOwnProperty} from './objectPrelude';
 
 let _String = String.name,
     _Number = Number.name,
@@ -49,11 +49,17 @@ export const
     /**
      * Checks if `value` is an es2015 `class`.
      * @function module:is.isClass
-     * @param value {*}
+     * @param x {*}
      * @returns {boolean}
      */
-    isClass = value => value && /^\s{0,3}class\s{1,3}/.test(value.toString().substr(0, 10)),
+    isClass = x => x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10)),
 
+    /**
+     * Returns a boolean depicting whether a value is callable or not.
+     * @function module:is.isCallable
+     * @param x {*}
+     * @returns {Boolean}
+     */
     isCallable = x => !isClass(x) && isFunction(x),
 
     /**
@@ -202,7 +208,7 @@ export const
         else if (typeOfValue === _Object) {
             retVal = isEmptyObject(value);
         }
-        else if (value.hasOwnProperty('size')) {
+        else if (hasOwnProperty('size', value)) {
             retVal = isEmptyCollection(value);
         }
         else {

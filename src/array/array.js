@@ -505,7 +505,7 @@ export const
      *  Also note that for 2^16 (or for a sequence of 16 characters) this algorithm
      *  will generate 65536 sub-sequences!  So caution should be taken to not
      *  use this with sequences above a certain length on certain platform (the browser thread in specific).
-     * @function subsequences
+     * @function module:arrayOps.subsequences
      * @param xs {Array|String}
      * @returns {Array}
      */
