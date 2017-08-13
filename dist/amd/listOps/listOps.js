@@ -1,17 +1,14 @@
 define(['exports', '../functionOps/curry', '../functionOps/apply', '../functionOps/functionOps', '../booleanOps/is', '../objectOps/is', '../objectOps/prop', '../objectOps/typeOf', '../objectOps/objectPrelude', './listOpsPrelude', '../utils/utils'], function (exports, _curry, _apply, _functionOps, _is, _is2, _prop, _typeOf, _objectPrelude, _listOpsPrelude, _utils) {
-    /**
-     * Array operators module.
-     * @module arrayOps
-     */
-
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
     exports.arrayComplement = exports.arrayDifference = exports.arrayIntersect = exports.arrayUnion = exports.minimum = exports.maximum = exports.product = exports.sum = exports.equal = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith = exports.zipN = exports.zip = exports.flattenMulti = exports.flatten = exports.stripPrefix = exports.tails = exports.inits = exports.group = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndicesWhere = exports.findIndex = exports.unfoldr = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.map = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = undefined;
-
-
+    /**
+     * Array operators module.
+     * @module arrayOps
+     */
     const ASC = 1,
           DESC = -1,
           sliceToEndFrom = (0, _curry.curry)((startInd, arr) => (0, _listOpsPrelude.slice)(startInd, (0, _objectPrelude.length)(arr), arr)),
@@ -291,7 +288,7 @@ define(['exports', '../functionOps/curry', '../functionOps/apply', '../functionO
         return reduce((agg, item) => reduce((agg2, element, ind2) => {
             agg2[ind2].push(element);
             return agg2;
-        }, agg, item), out.map(_ => []), xss);
+        }, agg, item), out.map(() => []), xss);
     },
 
 
@@ -727,7 +724,7 @@ define(['exports', '../functionOps/curry', '../functionOps/apply', '../functionO
         agg.push(unzip(item));
         return agg;
     }, [], arrs),
-          any = exports.any = (0, _curry.curry)((p, xs) => reduceUntil(p, _ => true, false, xs)),
+          any = exports.any = (0, _curry.curry)((p, xs) => reduceUntil(p, () => true, false, xs)),
           all = exports.all = (0, _curry.curry)((p, xs) => {
         const limit = (0, _objectPrelude.length)(xs);
         let ind = 0;

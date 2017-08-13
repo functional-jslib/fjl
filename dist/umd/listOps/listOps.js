@@ -11,11 +11,6 @@
         global.listOps = mod.exports;
     }
 })(this, function (exports, _curry, _apply, _functionOps, _is, _is2, _prop, _typeOf, _objectPrelude, _listOpsPrelude, _utils) {
-    /**
-     * Array operators module.
-     * @module arrayOps
-     */
-
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -424,7 +419,7 @@
                 agg2[ind2].push(element);
                 return agg2;
             }, agg, item);
-        }, out.map(function (_) {
+        }, out.map(function () {
             return [];
         }), xss);
     },
@@ -918,7 +913,7 @@
         }, [], arrs);
     },
         any = exports.any = (0, _curry.curry)(function (p, xs) {
-        return reduceUntil(p, function (_) {
+        return reduceUntil(p, function () {
             return true;
         }, false, xs);
     }),

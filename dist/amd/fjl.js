@@ -1,4 +1,4 @@
-define(['exports', './objectOps/objectPrelude', './objectOps/objectOps', './booleanOps/booleanOps', './functionOps/functionOps', './stringOps/stringOps', './numberOps/numberOps', './compoundedOps/compoundedOps', '../generated-for-src/version'], function (exports, _objectPrelude, _objectOps, _booleanOps, _functionOps, _stringOps, _numberOps, _compoundedOps, _version) {
+define(['exports', './objectOps/objectPrelude', './objectOps/objectOps', './booleanOps/booleanOps', './functionOps/functionOps', './listOps/listOps', './stringOps/stringOps', './numberOps/numberOps', './compoundedOps/compoundedOps', '../generated-for-src/version'], function (exports, _objectPrelude, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps, _numberOps, _compoundedOps, _version) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -37,6 +37,15 @@ define(['exports', './objectOps/objectPrelude', './objectOps/objectOps', './bool
       enumerable: true,
       get: function () {
         return _functionOps[key];
+      }
+    });
+  });
+  Object.keys(_listOps).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _listOps[key];
       }
     });
   });

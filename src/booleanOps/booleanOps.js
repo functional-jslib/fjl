@@ -16,7 +16,7 @@ export const
      * @param b {*}
      * @returns {Boolean}
      */
-    and = curry2((a, b) => a && b),
+    bAnd = curry2((a, b) => a && b),
 
     /**
      * Returns whether one of the two passed in values
@@ -26,7 +26,7 @@ export const
      * @param b {*}
      * @returns {Boolean}
      */
-    or = curry2((a, b) => a || b),
+    bOr = curry2((a, b) => a || b),
 
     /**
      * Returns whether passed in value is truthy or not.
@@ -34,7 +34,7 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    not = x => !x,
+    bNot = x => !x,
 
     /**
      * Returns `true` - Makes code more readable in places.
@@ -42,7 +42,7 @@ export const
      * @function module:booleanOps.otherwise
      * @returns {Boolean} - Always true
      */
-    otherwise = () => true,
+    bOtherwise = () => true,
 
     /**
      * Returns whether both values passed in are equal or not.
@@ -51,4 +51,4 @@ export const
      * @param b {*}
      * @returns {Boolean}
      */
-    equal = curry2((a, b) => a === b);
+    bEqual = curry2((a, b) => a === b);

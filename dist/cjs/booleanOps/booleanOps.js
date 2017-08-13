@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.equal = exports.otherwise = exports.not = exports.or = exports.and = exports.isFalsy = exports.isTruthy = undefined;
+exports.bEqual = exports.bOtherwise = exports.bNot = exports.bOr = exports.bAnd = exports.isFalsy = exports.isTruthy = undefined;
 
 var _is = require('./is');
 
@@ -31,7 +31,7 @@ var
  * @param b {*}
  * @returns {Boolean}
  */
-and = exports.and = (0, _curry.curry2)(function (a, b) {
+bAnd = exports.bAnd = (0, _curry.curry2)(function (a, b) {
   return a && b;
 }),
 
@@ -44,7 +44,7 @@ and = exports.and = (0, _curry.curry2)(function (a, b) {
  * @param b {*}
  * @returns {Boolean}
  */
-or = exports.or = (0, _curry.curry2)(function (a, b) {
+bOr = exports.bOr = (0, _curry.curry2)(function (a, b) {
   return a || b;
 }),
 
@@ -55,7 +55,7 @@ or = exports.or = (0, _curry.curry2)(function (a, b) {
  * @param x {*}
  * @returns {Boolean}
  */
-not = exports.not = function not(x) {
+bNot = exports.bNot = function bNot(x) {
   return !x;
 },
 
@@ -66,7 +66,7 @@ not = exports.not = function not(x) {
  * @function module:booleanOps.otherwise
  * @returns {Boolean} - Always true
  */
-otherwise = exports.otherwise = function otherwise() {
+bOtherwise = exports.bOtherwise = function bOtherwise() {
   return true;
 },
 
@@ -78,6 +78,6 @@ otherwise = exports.otherwise = function otherwise() {
  * @param b {*}
  * @returns {Boolean}
  */
-equal = exports.equal = (0, _curry.curry2)(function (a, b) {
+bEqual = exports.bEqual = (0, _curry.curry2)(function (a, b) {
   return a === b;
 });

@@ -16,6 +16,7 @@ export * from './objectOps/objectPrelude';
 export * from './objectOps/objectOps';
 export * from './booleanOps/booleanOps';
 export * from './functionOps/functionOps';
+export * from './listOps/listOps';
 export * from './stringOps/stringOps';
 export * from './numberOps/numberOps';
 export * from './compoundedOps/compoundedOps';

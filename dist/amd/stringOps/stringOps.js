@@ -1,16 +1,15 @@
 define(['exports', '../listOps/listOpsPrelude', '../functionOps/curry'], function (exports, _listOpsPrelude, _curry) {
-  /**
-   * Contains functions for operating strings.
-   * @author elyde
-   * @created 7/9/2017.
-   */
-
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = undefined;
+  /**
+   * Contains functions for operating strings.
+   * @author elyde
+   * @created 7/9/2017.
+   */
   const
 
   /**

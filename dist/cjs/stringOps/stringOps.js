@@ -1,9 +1,3 @@
-/**
- * Contains functions for operating strings.
- * @author elyde
- * @created 7/9/2017.
- */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15,6 +9,11 @@ var _listOpsPrelude = require('../listOps/listOpsPrelude');
 
 var _curry = require('../functionOps/curry');
 
+/**
+ * Contains functions for operating strings.
+ * @author elyde
+ * @created 7/9/2017.
+ */
 var
 
 /**

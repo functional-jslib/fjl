@@ -1,8 +1,3 @@
-/**
- * Array operators module.
- * @module arrayOps
- */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32,7 +27,11 @@ var _listOpsPrelude = require('./listOpsPrelude');
 
 var _utils = require('../utils/utils');
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /**
+                                                                                                                                                                                                     * Array operators module.
+                                                                                                                                                                                                     * @module arrayOps
+                                                                                                                                                                                                     */
+
 // import {log}                            from '../../tests/for-server/helpers';
 
 
@@ -387,7 +386,7 @@ uncons = exports.uncons = function uncons(x) {
             agg2[ind2].push(element);
             return agg2;
         }, agg, item);
-    }, out.map(function (_) {
+    }, out.map(function () {
         return [];
     }), xss);
 },
@@ -881,7 +880,7 @@ unzip = exports.unzip = function unzip(arr) {
     }, [], arrs);
 },
     any = exports.any = (0, _curry.curry)(function (p, xs) {
-    return reduceUntil(p, function (_) {
+    return reduceUntil(p, function () {
         return true;
     }, false, xs);
 }),

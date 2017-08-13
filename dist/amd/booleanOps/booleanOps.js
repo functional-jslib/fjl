@@ -4,7 +4,7 @@ define(['exports', './is', '../functionOps/curry'], function (exports, _is, _cur
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.equal = exports.otherwise = exports.not = exports.or = exports.and = exports.isFalsy = exports.isTruthy = undefined;
+  exports.bEqual = exports.bOtherwise = exports.bNot = exports.bOr = exports.bAnd = exports.isFalsy = exports.isTruthy = undefined;
   Object.defineProperty(exports, 'isTruthy', {
     enumerable: true,
     get: function () {
@@ -26,7 +26,7 @@ define(['exports', './is', '../functionOps/curry'], function (exports, _is, _cur
    * @param b {*}
    * @returns {Boolean}
    */
-  and = exports.and = (0, _curry.curry2)((a, b) => a && b),
+  bAnd = exports.bAnd = (0, _curry.curry2)((a, b) => a && b),
 
 
   /**
@@ -37,7 +37,7 @@ define(['exports', './is', '../functionOps/curry'], function (exports, _is, _cur
    * @param b {*}
    * @returns {Boolean}
    */
-  or = exports.or = (0, _curry.curry2)((a, b) => a || b),
+  bOr = exports.bOr = (0, _curry.curry2)((a, b) => a || b),
 
 
   /**
@@ -46,7 +46,7 @@ define(['exports', './is', '../functionOps/curry'], function (exports, _is, _cur
    * @param x {*}
    * @returns {Boolean}
    */
-  not = exports.not = x => !x,
+  bNot = exports.bNot = x => !x,
 
 
   /**
@@ -55,7 +55,7 @@ define(['exports', './is', '../functionOps/curry'], function (exports, _is, _cur
    * @function module:booleanOps.otherwise
    * @returns {Boolean} - Always true
    */
-  otherwise = exports.otherwise = () => true,
+  bOtherwise = exports.bOtherwise = () => true,
 
 
   /**
@@ -65,5 +65,5 @@ define(['exports', './is', '../functionOps/curry'], function (exports, _is, _cur
    * @param b {*}
    * @returns {Boolean}
    */
-  equal = exports.equal = (0, _curry.curry2)((a, b) => a === b);
+  bEqual = exports.bEqual = (0, _curry.curry2)((a, b) => a === b);
 });
