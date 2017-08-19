@@ -14,6 +14,8 @@ import {concat as arrayConcat, slice}   from './listOpsPrelude';
 // import {log}                            from '../../tests/for-server/helpers';
 import {fPureTakesOne}                  from '../utils/utils';
 
+export {length};
+
 const
 
     ASC = 1,
@@ -253,7 +255,7 @@ export const
      * @returns {Array|String|*|undefined}
      */
     uncons = x => {
-        if (!x) { return undefined; }
+        if (!x) { return; } //
         const len = length(x);
         if (len === 0) {
             return undefined;

@@ -13,13 +13,13 @@ import {compose} from '../../src/functionOps/compose';
 import {__} from '../../src/functionOps/curry';
 import {split} from '../../src/stringOps/stringOps';
 import {join} from '../../src/listOps/listOpsPrelude';
-import {isArray, isString} from '../../src/objectOps/is';
+import {isArray, isString, isEmpty} from '../../src/objectOps/is';
 
 import {
     all, find, findIndex, findIndices,
     mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
-    head, last, init, tail, uncons,
+    head, last, init, tail, uncons, length,
     take, drop, splitAt, foldl, foldr,
     takeWhile, dropWhile, partition,
     span, breakOnList, stripPrefix,
@@ -27,7 +27,6 @@ import {
     flatten, flattenMulti} from '../../src/listOps/listOps';
 
 import {
-    length,
     range,
     shallowCompareOnLeft,
     expectEqual,
@@ -150,7 +149,22 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#length', function () {
-        it ('is defined in another package');
+        it ('is should return the length of any item that has a `length` property', function () {
+            expectTrue(
+                all(item => length(item[0]) === item[1],
+                    [[[], 0], ['abc', 3], [(a, b, c) => {}, 3]])
+            );
+        });
+        it ('should return `undefined` for items that don\'t have a `length` property', function () {
+            expectEqual(length({}), undefined);
+            expectEqual(length(0), undefined);
+            expectEqual(length(false), undefined);
+            expectEqual(length(true), undefined);
+        });
+        it ('should throw an error when `undefined` or `null` is passed in', function () {
+            assert.throws(length, Error);
+            assert.throws(() => length(null), Error);
+        });
     });
 
     describe ('#map', function () {

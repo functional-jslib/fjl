@@ -22,7 +22,7 @@ export const
 
     hasOwnProperty = fPureTakesOne('hasOwnProperty'),
 
-    length = prop('length'),
+    length = x => x.length,
 
     keys = obj => Object.keys(obj),
 
