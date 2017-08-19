@@ -19,7 +19,7 @@ import {
     all, find, findIndex, findIndices,
     mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
-    head, last, init, tail,
+    head, last, init, tail, uncons,
     take, drop, splitAt, foldl, foldr,
     takeWhile, dropWhile, partition,
     span, breakOnList, stripPrefix,
@@ -32,6 +32,7 @@ import {
     shallowCompareOnLeft,
     expectEqual,
     expectShallowEquals,
+    expectDeepEquals,
     expectLength,
     expectTrue,
     expectFalse,
@@ -122,7 +123,26 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#uncons', function () {
-        it ('should have more tests.');
+        it ('should return the "head" and "tail" of a list in a two item array.', function () {
+            expectShallowEquals(uncons('hello'), ['h', 'ello']);
+            expectDeepEquals(uncons(split('', 'hello')), ['h', split('', 'ello')]);
+        });
+        it ('should return an empty tail when there\'s only one item in list.', function () {
+            expectShallowEquals(uncons('a'), ['a', '']);
+            expectDeepEquals(uncons([0]), [0, []]);
+        });
+        it ('should return `undefined` for empty lists.', function () {
+            expectEqual(uncons(''), undefined);
+            expectEqual(uncons([]), undefined);
+        });
+        it ('should return `undefined` when no value is passed in or a falsy value is passed in', function () {
+            expectEqual(uncons(null), undefined);
+            expectEqual(uncons(undefined), undefined);
+            expectEqual(uncons(), undefined);
+            expectEqual(uncons(0), undefined);
+            expectEqual(uncons(false), undefined);
+            expectEqual(uncons(''), undefined);
+        });
     });
 
     describe ('#null', function () {

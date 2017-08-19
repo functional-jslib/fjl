@@ -253,6 +253,7 @@ export const
      * @returns {Array|String|*|undefined}
      */
     uncons = x => {
+        if (!x) { return undefined; }
         const len = length(x);
         if (len === 0) {
             return undefined;

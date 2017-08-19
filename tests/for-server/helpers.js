@@ -45,14 +45,30 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
     }),
 
     shallowCompareOnLeft = curry2_((incoming, against) => Array.isArray(incoming) ?
-        shallowCompareArraysLeft(incoming, against) : shallowCompareObjectsLeft(incoming, against) ),
+        shallowCompareArraysLeft(incoming, against) :
+            shallowCompareObjectsLeft(incoming, against) ),
 
     shallowCompareArraysLeft = curry2_((incoming, against) => !incoming.some((_, ind) => against[ind] !== incoming[ind])),
 
     shallowCompareObjectsLeft = curry2_((incoming, against, keys) => !(keys || Object.keys(incoming))
         .some(key => against[key] !== incoming[key]) ),
 
+    deepCompareLeft = (incoming, against) => {
+        return Object.keys(incoming).some(key => {
+            const typeOfValue = typeof incoming[key];
+            return !(
+                typeOfValue !== 'string' ||
+                typeOfValue !== 'object' ||
+                typeOfValue !== 'Array' ?
+                    against[key] === incoming[key] :
+                        deepCompareLeft(incoming[key], against[key])
+            );
+        });
+    },
+
     expectShallowEquals = curry2_((a, b) => expectTrue(shallowCompareOnLeft(a, b))),
+
+    expectDeepEquals = curry2_((a, b) => expectTrue(deepCompareLeft(a, b))),
 
     range = curry2_((from, to, step = 1) => {
         let inc = from;
@@ -71,6 +87,7 @@ export default {
     expectTrue,
     expectLength,
     expectShallowEquals,
+    expectDeepEquals,
     hasOwnProperty,
     length,
     add,
