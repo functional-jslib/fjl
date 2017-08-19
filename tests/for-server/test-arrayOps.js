@@ -34,6 +34,7 @@ import {
     expectShallowEquals,
     expectLength,
     expectTrue,
+    expectFalse,
     expectInstanceOf,
     log
 } from './helpers';
@@ -47,6 +48,19 @@ describe ('#arrayOps', function () {
     describe ('#all', function () {
         it ('should return true when predicate returns true for all items in list', function () {
             expectTrue(all(item => item, [true, true, true]));
+            expectTrue(all(char => char !== 'a', 'bcdefg'));
+        });
+        it ('should return `false` when predicate returns `false` for an item', function () {
+            expectFalse(all(item => item, [true, false, true]));
+            expectFalse(all(item => item !== 'a', 'bcdaefg'));
+        });
+        it ('should return `false` when an empty list is passed in', function () {
+            expectFalse(all(item => item, []));
+            expectFalse(all(item => item, ''));
+        });
+        it ('should throw an error when nothing is passed in', function () {
+            assert.throws(() => all(item => item, null), Error);
+            assert.throws(() => all(item => item, undefined), Error);
         });
     });
 
