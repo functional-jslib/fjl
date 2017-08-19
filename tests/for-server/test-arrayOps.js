@@ -145,7 +145,7 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#null', function () {
-        it ('is defined by `module:is.isEmpty` and is defined in another package.');
+        it ('is defined by `module:is.isEmpty`.');
     });
 
     describe ('#length', function () {

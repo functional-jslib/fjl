@@ -263,12 +263,37 @@ export const
         return [head(x), tail(x)];
     },
 
+    /**
+     * Returns whether a list is empty or not.
+     * @note not to be mistaken with module:objectOps.isEmpty;
+     *  `objectOps.isEmpty` Checks any passed in type for empty;
+     *  `listOps.isEmpty` only checks if length on passed in
+     *  value is not truthy.
+     *  In typed languages this would be all we
+     *  need do due to assuming that only lists make it into our
+     *  funciton but in javascript this is loose and in order
+     *  to the function to perform well under load and
+     *  for it to follow the specification we are not allowed
+     *  to type check in it.
+     * @note Will keep it like this for now.
+     * @function module:listOps.isEmpty
+     * @param x {*}
+     * @returns {Boolean}
+     */
+    isEmpty = x => !length(x),
+
+    /**
+     * @function module:listOps.map
+     * @param fn {Function} - Function to map on functor item(s).
+     * @param xs {Array|String|*} - Functor.
+     * @returns {Array|String|*} - Functor type that is passed in.
+     */
     map = curry ((fn, xs) => {
-        let ind = -1,
+        let ind = 0,
             limit = length(xs),
             out = (xs).constructor(),
             aggregate = aggregatorByType(xs);
-        while (++ind < limit) {
+        for (; ind < limit; ind += 1) {
             out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
         }
         return out;
