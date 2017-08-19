@@ -9,12 +9,10 @@
 import {curry2} from '../functionOps/curry';
 import {isObject} from './is';
 import {fPureTakesOne} from '../utils/utils';
-import {prop} from './prop';
 
 /**
  * @returns {Function}
  */
-
 
 export {instanceOf} from './instanceOf';
 
