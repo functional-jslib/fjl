@@ -5,9 +5,7 @@
 // ~~~ STRIP ~~~
 // This part gets stripped out when
 // generating browser version of test(s).
-
 'use strict';
-
 import {assert, expect} from 'chai';
 import {compose} from '../../src/functionOps/compose';
 import {__} from '../../src/functionOps/curry';
@@ -44,25 +42,6 @@ import {
 describe ('#arrayOps', function () {
 
     const strToArray = split('');
-
-    describe ('#all', function () {
-        it ('should return true when predicate returns true for all items in list', function () {
-            expectTrue(all(item => item, [true, true, true]));
-            expectTrue(all(char => char !== 'a', 'bcdefg'));
-        });
-        it ('should return `false` when predicate returns `false` for an item', function () {
-            expectFalse(all(item => item, [true, false, true]));
-            expectFalse(all(item => item !== 'a', 'bcdaefg'));
-        });
-        it ('should return `false` when an empty list is passed in', function () {
-            expectFalse(all(item => item, []));
-            expectFalse(all(item => item, ''));
-        });
-        it ('should throw an error when nothing is passed in', function () {
-            assert.throws(() => all(item => item, null), Error);
-            assert.throws(() => all(item => item, undefined), Error);
-        });
-    });
 
     describe ('#head', function () {
         it ('should return the first item in an listOps and/or stringOps.', function () {
@@ -171,7 +150,6 @@ describe ('#arrayOps', function () {
         it ('should be able to map a function over a list.', function () {
             const word = 'hello',
                 op = char => char + 'a';
-            // log(map(op, split('', word)));
             expectEqual(map(op, word), 'haealalaoa');
             expectShallowEquals(
                 map(op, split('', word)),
@@ -248,7 +226,22 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#all', function () {
-        it ('should have more tests.');
+        it ('should return true when predicate returns true for all items in list', function () {
+            expectTrue(all(item => item, [true, true, true]));
+            expectTrue(all(char => char !== 'a', 'bcdefg'));
+        });
+        it ('should return `false` when predicate returns `false` for an item', function () {
+            expectFalse(all(item => item, [true, false, true]));
+            expectFalse(all(item => item !== 'a', 'bcdaefg'));
+        });
+        it ('should return `false` when an empty list is passed in', function () {
+            expectFalse(all(item => item, []));
+            expectFalse(all(item => item, ''));
+        });
+        it ('should throw an error when nothing is passed in', function () {
+            assert.throws(() => all(item => item, null), Error);
+            assert.throws(() => all(item => item, undefined), Error);
+        });
     });
 
     describe ('#sum', function () {
