@@ -17,7 +17,7 @@ import {isArray, isString, isEmpty} from '../../src/objectOps/is';
 
 import {
     all, find, findIndex, findIndices,
-    mapAccumL, mapAccumR,
+    map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length,
     take, drop, splitAt, foldl, foldr,
@@ -168,7 +168,23 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#map', function () {
-        it ('should have more tests.');
+        it ('should be able to map a function over a list.', function () {
+            const word = 'hello',
+                op = char => char + 'a';
+            // log(map(op, split('', word)));
+            expectEqual(map(op, word), 'haealalaoa');
+            expectShallowEquals(
+                map(op, split('', word)),
+                ['ha', 'ea', 'la', 'la', 'oa'] );
+        });
+        it ('should return an empty list when receiving an empty list', function () {
+            expectShallowEquals(map(x => x, []), []);
+            expectShallowEquals(map(x => x, ''), '');
+        });
+        it ('should throw an error when incoming value is not a type instance', function () {
+            assert.throws(() => map(x => x, null), Error);
+            assert.throws(() => map(x => x, undefined), Error);
+        });
     });
 
     describe ('#reverse', function () {
