@@ -11,14 +11,14 @@ import {compose} from '../../src/functionOps/compose';
 import {__} from '../../src/functionOps/curry';
 import {split} from '../../src/stringOps/stringOps';
 import {join} from '../../src/listOps/listOpsPrelude';
-import {isArray, isString, isEmpty} from '../../src/objectOps/is';
+import {isArray, isString} from '../../src/objectOps/is';
 
 import {
     all, find, findIndex, findIndices,
     map, mapAccumL, mapAccumR, reverse,
     elem, notElem, elemIndex, elemIndices, lookup,
-    head, last, init, tail, uncons, length,
-    take, drop, splitAt, foldl, foldr,
+    head, last, init, tail, uncons, length, isEmpty as isEmptyList,
+    take, drop, splitAt, foldl, foldl1, foldr, foldr1,
     takeWhile, dropWhile, partition,
     span, breakOnList, stripPrefix,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
@@ -123,8 +123,20 @@ describe ('#arrayOps', function () {
         });
     });
 
-    describe ('#null', function () {
-        it ('is defined by `module:is.isEmpty`.');
+    describe ('#isEmpty (a.k.a. #`null`)', function () {
+        it ('should return `true` when a list is empty.', function () {
+            expectTrue(isEmptyList([]));
+            expectTrue(isEmptyList(''));
+        });
+        it ('should return `false` when a list is not empty.', function () {
+            expectFalse(isEmptyList(['a', 'b', 'c']));
+            expectFalse(isEmptyList('abc'));
+        });
+        it ('should throw an error when receiving something that is list like (doesn\'t have a `length` prop', function () {
+            assert.throws(() => isEmptyList(null), Error);
+            assert.throws(() => isEmptyList(undefined), Error);
+            assert.throws(() => isEmptyList(), Error);
+        });
     });
 
     describe ('#length', function () {
@@ -246,16 +258,124 @@ describe ('#arrayOps', function () {
 
     describe ('#foldl1', function () {
         it ('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', function () {
-
+            const phrase = 'hello world',
+                phraseLen = length(phrase),
+                phraseIndCount = phraseLen - 1,
+                getAppendage = ind => parseInt(ind, 10) < phraseIndCount ? '|' : '',
+                expectedTransform = map((x, ind) => x + getAppendage(ind), split('', phrase));
+            expectEqual(
+                foldl1((agg, item, ind) => {
+                    agg += getAppendage(ind) + item;
+                    return agg;
+                }, phrase),
+                expectedTransform.join('')
+            );
+            expectEqual(
+                foldl1((agg, item) => agg + item, [1, 2, 3, 4, 5]),
+                15
+            );
+            expectEqual(
+                foldl1((agg, item) => agg * item, [1, 2, 3, 4, 5]),
+                120
+            );
+            expectShallowEquals(
+                foldl1((agg, item, ind) => {
+                    agg += getAppendage(ind) + item;
+                    return agg;
+                }, split('', phrase)),
+                expectedTransform.join('')
+            );
+        });
+        it ('should return the zero value when an empty list is passed in', function () {
+            expectEqual(foldl1((agg, item) => agg + item, ''), '');
+            expectShallowEquals(foldl1((agg, item) => agg + item, []), []);
+        });
+        it ('should return `undefined` when receiving nothing (`null` or `undefined`)', function () {
+            expectEqual(foldl1((agg, item) => agg + item, null), undefined);
+            expectEqual(foldl1((agg, item) => agg + item, undefined), undefined);
         });
     });
 
     describe ('#foldr', function () {
-        it ('should have more tests.');
+        it ('should fold a `Foldable` (list, etc.) into some value', function () {
+            const phrase = 'hello world',
+                phraseLen = length(phrase),
+                phraseIndCount = phraseLen - 1,
+                getAppendage = ind => parseInt(ind, 10) !== phraseIndCount ? '|' : '',
+                expectedTransform = reverse(map((x, ind) => x + getAppendage(ind), split('', phrase)));
+            expectEqual(
+                foldr((agg, item, ind) => {
+                    agg += item + getAppendage(ind);
+                    return agg;
+                }, '', phrase),
+                expectedTransform.join('')
+            );
+            expectEqual(
+                foldr((agg, item) => agg + item, 0, [1, 2, 3, 4, 5]),
+                15
+            );
+            expectEqual(
+                foldr((agg, item) => agg * item, 1, [1, 2, 3, 4, 5]),
+                120
+            );
+            expectShallowEquals(
+                foldr((agg, item, ind) => {
+                    agg.push(item + getAppendage(ind));
+                    return agg;
+                }, [], split('', phrase)),
+                expectedTransform
+            );
+        });
+
+        it ('should return the zero value when an empty list is passed in', function () {
+            expectEqual(foldr((agg, item) => agg + item, 'a', ''), 'a');
+            expectShallowEquals(foldr((agg, item) => agg + item, [], []), []);
+        });
+
+        it ('should throw an error when `null` or `undefined` are passed in as the list', function () {
+            assert.throws(() => foldr((agg, item) => agg + item, 'a', null), Error);
+            assert.throws(() => foldr((agg, item) => agg + item, 'a', undefined), Error);
+        });
     });
 
     describe ('#foldr1', function () {
-        it ('should have more tests.');
+        it ('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', function () {
+            const phrase = 'hello world',
+                phraseLen = length(phrase),
+                phraseIndCount = phraseLen - 1,
+                getAppendage = ind => ind <= phraseIndCount ? '|' : '',
+                expectedTransform = reverse(map((x, ind, arr) => x + (ind !== 0 ? getAppendage(ind) : ''), split('', phrase)));
+            expectEqual(
+                foldr1((agg, item, ind) => {
+                    agg += getAppendage(ind) + item;
+                    return agg;
+                }, phrase),
+                expectedTransform.join('')
+            );
+            expectEqual(
+                foldr1((agg, item) => agg + item, [1, 2, 3, 4, 5]),
+                15
+            );
+            expectEqual(
+                foldr1((agg, item) => agg * item, [1, 2, 3, 4, 5]),
+                120
+            );
+            expectShallowEquals(
+                foldr1((agg, item, ind) => {
+                    agg += getAppendage(ind) + item;
+                    return agg;
+                }, split('', phrase)),
+                expectedTransform.join('')
+            );
+        });
+        it ('should return the zero value when an empty list is passed in', function () {
+            expectEqual(foldr1((agg, item) => agg + item, ''), '');
+            expectShallowEquals(foldr1((agg, item) => agg + item, []), []);
+        });
+        it ('should return `undefined` when receiving nothing (`null` or `undefined`)', function () {
+            expectEqual(foldr1((agg, item) => agg + item, null), undefined);
+            expectEqual(foldr1((agg, item) => agg + item, undefined), undefined);
+        });
     });
 
     describe ('#concat', function () {

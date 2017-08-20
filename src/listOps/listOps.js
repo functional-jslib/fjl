@@ -1,6 +1,7 @@
 /**
  * Array operators module.
  * @module arrayOps
+ * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
  */
 import {curry, curry2}      from '../functionOps/curry';
 import {apply}              from '../functionOps/apply';
@@ -9,6 +10,7 @@ import {isTruthy, isFalsy}  from '../booleanOps/is';
 import {isString, isArray, isset}  from '../objectOps/is';
 import {prop}               from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
+import {of}                 from '../objectOps/of';
 import {length, keys as objectKeys, hasOwnProperty} from '../objectOps/objectPrelude';
 import {concat as arrayConcat, slice}   from './listOpsPrelude';
 // import {log}                            from '../../tests/for-server/helpers';
@@ -91,13 +93,10 @@ const
             return agg;
         }
         let ind = 0,
-            result = agg,
-            keys = objectKeys(arr),
-            key;
+            result = agg;
         for (; ind < limit; ind++) {
-            key = keys[ind];
-            if (pred(arr[key], key, arr)) { break; }
-            result = op(result, arr[key], key, arr);
+            if (pred(arr[ind], ind, arr)) { break; }
+            result = op(result, arr[ind], ind, arr);
         }
         return result;
     },
@@ -108,13 +107,10 @@ const
             return agg;
         }
         let ind = limit - 1,
-            result = agg,
-            keys = objectKeys(arr),
-            key;
+            result = agg;
         for (; ind >= 0; ind--) {
-            key = keys[ind];
-            if (pred(arr[key], key, arr)) { break; }
-            result = op(result, arr[key], key, arr);
+            if (pred(arr[ind], ind, arr)) { break; }
+            result = op(result, arr[ind], ind, arr);
         }
         return result;
     },
@@ -251,16 +247,21 @@ export const
      * Returns `head` and `tail` of passed in listOps/stringOps in a tuple.
      * @haskellType `uncons :: [a] -> Maybe (a, [a])`
      * @functionOps module:listOps.uncons
-     * @param x {Array|String}
+     * @param xs {Array|String}
      * @returns {Array|String|*|undefined}
      */
-    uncons = x => {
-        if (!x) { return; } //
-        const len = length(x);
-        if (len === 0) {
-            return undefined;
-        }
-        return [head(x), tail(x)];
+    uncons = xs => {
+        if (!xs) { return; } //
+        const len = length(xs);
+        if (len === 0) { return undefined; }
+        return [head(xs), tail(xs)];
+    },
+
+    unconsr = xs => {
+        if (!xs) { return; } //
+        const len = length(xs);
+        if (len === 0) { return undefined; }
+        return [init(xs), last(xs)];
     },
 
     /**
@@ -371,13 +372,15 @@ export const
     foldr = reduceRight,
 
     foldl1 = curry((op, xs) => {
-        const arr = sliceToEndFrom(0, xs);
-        return reduce (op, arr.shift(), arr);
+        const parts = uncons(xs);
+        if (!parts) { return of (xs); }
+        return reduce (op, parts[0], parts[1]);
     }),
 
     foldr1 = curry((op, xs) => {
-        const arr = sliceToEndFrom(0, xs);
-        return reduceRight (op, arr.pop(), arr);
+        const parts = unconsr(xs);
+        if (!parts) { return of (xs); }
+        return reduceRight (op, parts[1], parts[0]);
     }),
 
     /**
