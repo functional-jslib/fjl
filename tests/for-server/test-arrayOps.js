@@ -12,6 +12,7 @@ import {__} from '../../src/functionOps/curry';
 import {split} from '../../src/stringOps/stringOps';
 import {join} from '../../src/listOps/listOpsPrelude';
 import {isArray, isString} from '../../src/objectOps/is';
+import {isTruthy} from '../../src/booleanOps/is';
 
 import {
     all, and, or, any, find, findIndex, findIndices,
@@ -19,9 +20,9 @@ import {
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length, isEmpty as isEmptyList,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1,
-    concat, concatMap,
-    takeWhile, dropWhile, partition,
+    concat, concatMap, takeWhile, dropWhile, partition,
     span, breakOnList, stripPrefix,
+    sum, product, maximum, minimum,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
 
@@ -441,11 +442,41 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#or', function () {
-        it ('should have more tests.');
+        it ('should return `true` when, at least, one of the items is "truthy".', function () {
+            expectTrue(or([0, false, null, 1, undefined]));
+        });
+        it ('should return `false` when all of the items are "falsy".', function () {
+            expectFalse(or([0, false, null, undefined, '']));
+        });
+        it ('should return `false` when an empty list is received.', function () {
+            expectFalse(or([]));
+        });
+        it ('should throw an error when receiving nothing (`null` or `undefined`).', function () {
+            assert.throws(() => or(null), Error);
+            assert.throws(() => or(undefined), Error);
+        });
     });
 
     describe ('#any', function () {
-        it ('should have more tests.');
+        const id = x => x;
+        it ('should return `true` when any item matches predicate.', function () {
+            expectTrue(any(isTruthy, [0, false, null, 1, undefined]));
+            expectTrue(any(isTruthy, ['hello']));
+            expectTrue(any(x => x === 'e', 'hello'));
+        });
+
+        it ('should return `false` when no item in received items matches predicate.', function () {
+            expectFalse(any(isTruthy, [0, false, null, undefined, '']));
+            expectFalse(any(isTruthy, [0]));
+            expectFalse(any(x => x === 'e', 'avalon'));
+        });
+        it ('should return `false` when an empty list is received.', function () {
+            expectFalse(any(id, []));
+        });
+        it ('should throw an error when receiving nothing (`null` or `undefined`).', function () {
+            assert.throws(() => any(id, null), Error);
+            assert.throws(() => any(id, undefined), Error);
+        });
     });
 
     describe ('#all', function () {
@@ -468,19 +499,59 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#sum', function () {
-        it ('should have more tests.');
+        it ('should be able sum up any given list of numbers list of numbers', function () {
+            expectEqual(sum(range(1, 5)), 15);
+            expectEqual(sum(range(-5, -1)), -15);
+        });
+        it ('should return `0` when receiving an empty list', function () {
+            expectEqual(sum(range()), 0);
+        });
+        it ('should throw an error when receiving nothing (`null` or `undefined`)', function () {
+            assert.throws(() => sum(null), Error);
+            assert.throws(() => sum(undefined), Error);
+            assert.throws(() => sum(), Error);
+        });
     });
 
     describe ('#product', function () {
-        it ('should have more tests.');
+        it ('should be able return the product of a given list', function () {
+            expectEqual(product(range(1, 5)), 120);
+            expectEqual(product(range(-5, -1)), -120);
+        });
+        it ('should return `0` when receiving an empty list', function () {
+            expectEqual(product(range()), 1);
+        });
+        it ('should throw an error when receiving nothing (`null` or `undefined`)', function () {
+            assert.throws(() => product(null), Error);
+            assert.throws(() => product(undefined), Error);
+            assert.throws(() => product(), Error);
+        });
     });
 
     describe ('#maximum', function () {
-        it ('should have more tests.');
+        it ('should be able return the maximum of a given list', function () {
+            expectEqual(maximum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 5);
+            expectEqual(maximum(range(-5, -1).concat([-3, -5, -7])), -1);
+        });
+        it ('should return `-Infinity` when no value is received (empty list, `null`, or `undefined`)', function () {
+            expectEqual(maximum(null), -Infinity);
+            expectEqual(maximum(undefined), -Infinity);
+            expectEqual(maximum([]), -Infinity);
+            expectEqual(maximum(), -Infinity);
+        });
     });
 
     describe ('#minimum', function () {
-        it ('should have more tests.');
+        it ('should be able return the minimum of a given list', function () {
+            expectEqual(minimum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 1);
+            expectEqual(minimum(range(-5, -1).concat([-3, -5, -7])), -7);
+        });
+        it ('should return `Infinity` when no value is received (empty list, `null`, or `undefined`)', function () {
+            expectEqual(minimum(null), Infinity);
+            expectEqual(minimum(undefined), Infinity);
+            expectEqual(minimum([]), Infinity);
+            expectEqual(minimum(), Infinity);
+        });
     });
 
     describe ('#mapAccumL', function () {

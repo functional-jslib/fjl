@@ -86,9 +86,7 @@ const
 
     reduceUntil = (pred, op, agg, arr) => {
         const limit = length(arr);
-        if (limit === 0) {
-            return agg;
-        }
+        if (limit === 0) { return agg; }
         let ind = 0,
             result = agg;
         for (; ind < limit; ind++) {
@@ -100,9 +98,7 @@ const
 
     reduceRightUntil = (pred, op, agg, arr) => {
         const limit = length(arr);
-        if (limit === 0) {
-            return agg;
-        }
+        if (limit === 0) { return agg; }
         let ind = limit - 1,
             result = agg;
         for (; ind >= 0; ind--) {
@@ -781,7 +777,15 @@ export const
             return agg;
         }, [], arrs),
 
-    any = curry((p, xs) => reduceUntil(p, (() => true), false, xs)),
+    any = curry((p, xs) => {
+        let ind = 0,
+            limit = length(xs);
+        if (!limit) { return false; }
+        for (; ind < limit; ind += 1) {
+            if (p(xs[ind])) { return true; }
+        }
+        return false;
+    }),
 
     all = curry((p, xs) => {
         const limit = length(xs);
@@ -805,15 +809,9 @@ export const
 
     equal = curry2((arg0, ...args) => all(x => arg0 === x, args)),
 
-    sum = arr => {
-        const parts = uncons(arr);
-        return reduce((agg, x) => agg + x, parts[0], parts[1]);
-    },
+    sum = list => reduce((agg, x) => agg + x, 0, list),
 
-    product = arr => {
-        const parts = uncons(arr);
-        return reduce((agg, x) => agg * x, parts[0], parts[1]);
-    },
+    product = arr => reduce((agg, x) => agg * x, 1, arr),
 
     maximum = arr => apply(Math.max, arr),
 
