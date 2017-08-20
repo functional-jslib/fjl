@@ -12,7 +12,7 @@ import {prop}               from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
 import {of}                 from '../objectOps/of';
 import {length, keys as objectKeys, hasOwnProperty} from '../objectOps/objectPrelude';
-import {concat as arrayConcat, slice}   from './listOpsPrelude';
+import {concat as arrayAppend, slice}   from './listOpsPrelude';
 // import {log}                            from '../../tests/for-server/helpers';
 import {fPureTakesOne}                  from '../utils/utils';
 
@@ -126,7 +126,12 @@ const
             agg,                    // aggregator
             arr)),                  // listOps
 
-    strConcat = (x, ...args) => reduce(aggregateStr, x, args),
+    /**
+     * @note Same as a Monoidal `mappend`;  In this case for strings.
+     * @param x {String}
+     * @param args {String}
+     */
+    strAppend = (x, ...args) => reduce(aggregateStr, x, args),
 
     /**
      * Searches list/list-like for given element `x`.
@@ -187,22 +192,31 @@ export const
      * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
      * ```
      * If the first list is not finite, the result is the first list.
-     * @haskellType `append :: [a] -> [a] -> [a]`
+     * @haskellType `append :: List a => a -> a -> a`
      * @functionOps module:listOps.append
      * @param xs1 {Array|String|*} - listOps or list like.
      * @param xs2 {Array|String|*} - listOps or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
      */
-    append = curry((xs1, xs2) => (isArray(xs1) ? arrayConcat : strConcat)(xs1, xs2)),
+    append = curry((xs1, xs2) => (isArray(xs1) ? arrayAppend : strAppend)(xs1, xs2)),
 
     /**
      * Append two or more lists, i.e., same as `append` but for two ore more lists.
+     * @haskellType `appendMany :: List a => a -> [a] -> a
+     * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
+     *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
      * @functionOps module:listOps.appendMany
      * @param xs1 {Array|String|*} - listOps or list like.
      * @param [...args] {Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
-    appendMany = curry2((x, ...args) => (isArray(x) ? arrayConcat : strConcat)(x, ...args)),
+    appendMany = curry2((x, ...args) => (isArray(x) ? arrayAppend : strAppend)(x, ...args)),
+
+    mempty = x => !isset(x) ? [] : of(x),
+
+    mappend = append,
+
+    mappendMany = appendMany,
 
     /**
      * Returns head of listOps (first item of listOps).
@@ -289,7 +303,7 @@ export const
     map = curry ((fn, xs) => {
         let ind = 0,
             limit = length(xs),
-            out = (xs).constructor(),
+            out = mempty(xs),
             aggregate = aggregatorByType(xs);
         for (; ind < limit; ind += 1) {
             out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
@@ -297,7 +311,7 @@ export const
         return out;
     }),
 
-    concat = foldableOfA => appendMany(...foldableOfA),
+    concat = foldableOfA => mappendMany(...foldableOfA),
 
     concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
 
@@ -305,13 +319,13 @@ export const
         const aggregator = aggregatorByType(x);
         return reduceRight(
                 (agg, item, ind) => aggregator(agg, item, ind),
-                x.constructor(), x
+                mempty(x), x
             );
     },
 
     intersperse = curry((between, arr) => {
         const limit = length(arr) - 1,
-            aggregator = (arr).constructor(),
+            aggregator = mempty(arr),
             aggregatorOp = aggregatorByType(arr);
         return reduce((agg, item, ind) => {
             if (ind === limit) {
@@ -396,7 +410,7 @@ export const
         if (!limit) { return [zero, list]; }
         let ind = 0,
             agg = zero,
-            mapped = xs.constructor(),
+            mapped = mempty(xs),
             tuple;
         for (; ind < limit; ind++) {
             tuple = op(agg, list[ind], ind);
@@ -422,7 +436,7 @@ export const
         if (!limit) { return [zero, list]; }
         let ind = limit - 1,
             agg = zero,
-            mapped = xs.constructor(),
+            mapped = mempty(xs),
             tuple;
         for (; ind >= 0; ind--) {
             tuple = op(agg, list[ind], ind);
@@ -536,7 +550,7 @@ export const
      * @returns {Array}
      */
     takeWhile = curry((pred, arr) => {
-        let zero =  (arr).constructor();
+        let zero =  mempty(arr);
         const operation = aggregatorByType(arr);
         return reduceUntil (
             negateP(pred),  // predicate
@@ -604,7 +618,7 @@ export const
         let ind = 0,
             limit = length(xs),
             aggregator = aggregatorByType(xs),
-            out = (xs).constructor();
+            out = mempty(xs);
         if (!limit) { return out; }
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) {
@@ -692,7 +706,7 @@ export const
      */
     flatten = arr => reduce((agg, elm) => {
         if (isArray(elm)) {
-            return append(agg, flatten(elm));
+            return mappend(agg, flatten(elm));
         }
         agg.push(elm);
         return agg;
@@ -706,7 +720,7 @@ export const
      * @returns {Array}
      */
     flattenMulti = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => append(agg, flatten(arr)), flatten(arr0), arrays)),
+        reduce((agg, arr) => mappend(agg, flatten(arr)), flatten(arr0), arrays)),
 
     /**
      * zip :: [a] -> [b] -> [(a, b)]
@@ -813,7 +827,7 @@ export const
      * @returns {Array}
      */
     arrayUnion = curry((arr1, arr2) =>
-        append(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
+        mappend(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
 
     /**
      * Performs an intersection on listOps 1 with  elements from listOps 2.
@@ -853,4 +867,4 @@ export const
      * @returns {Array}
      */
     arrayComplement = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => append(agg, arrayDifference(arr0, arr)), [], arrays));
+        reduce((agg, arr) => mappend(agg, arrayDifference(arr0, arr)), [], arrays));

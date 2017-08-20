@@ -1,16 +1,14 @@
 import {isFunction, isUsableImmutablePrimitive, isset} from './is';
 import {hasOwnProperty} from './objectPrelude';
 import {apply} from '../functionOps/apply';
-import {typeOf} from './typeOf';
 
 export const of = (x, ...args) => {
-    if (!isset(x)) { return; }
-    const constructor = x.constructor,
-        typeOfX = typeOf(x);
+    if (!isset(x)) { return undefined; }
+    const constructor = x.constructor;
     if (hasOwnProperty('of', constructor)) {
         return apply(constructor.of, args);
     }
-    else if (isUsableImmutablePrimitive(typeOfX)) {
+    else if (isUsableImmutablePrimitive(x)) {
         return apply(constructor, args);
     }
     else if (isFunction(constructor)) {

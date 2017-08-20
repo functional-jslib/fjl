@@ -14,7 +14,7 @@ import {join} from '../../src/listOps/listOpsPrelude';
 import {isArray, isString} from '../../src/objectOps/is';
 
 import {
-    all, find, findIndex, findIndices,
+    all, and, or, any, find, findIndex, findIndices,
     map, mapAccumL, mapAccumR, reverse,
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length, isEmpty as isEmptyList,
@@ -421,7 +421,23 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#and', function () {
-        it ('should have more tests.');
+        it ('should return `true` when all items of a container are "truthy".', function () {
+            expectTrue(and(['a', 1, 99, true, (() => null), {}, []]));
+        });
+        it ('should return `false` when not all items of a container are "truthy".', function () {
+            expectFalse(and(['a', 1, 0, true, (() => null), {}, []]));
+        });
+        it ('should return `false` when receiving an empty list or nothing.', function () {
+            expectFalse(and(''));
+            expectFalse(and(['']));
+            expectFalse(and([null]));
+            expectFalse(and([undefined]));
+            expectFalse(and([false]));
+        });
+        it ('should an error when receiving nothing', function () {
+            assert.throws(() => and(undefined), Error);
+            assert.throws(() => and(null), Error);
+        })
     });
 
     describe ('#or', function () {
