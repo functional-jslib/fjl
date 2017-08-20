@@ -303,10 +303,13 @@ export const
 
     concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
 
-    reverse = x => reduceRight((agg, item) => {
-        agg.push(item);
-        return agg;
-    }, x.constructor(), x),
+    reverse = x => {
+        const aggregator = aggregatorByType(x);
+        return reduceRight(
+                (agg, item, ind) => aggregator(agg, item, ind),
+                x.constructor(), x
+            );
+    },
 
     intersperse = curry((between, arr) => {
         const limit = length(arr) - 1,
