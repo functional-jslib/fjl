@@ -63,10 +63,7 @@ const
         return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
     },
 
-    aggregateStr = (agg, item) => {
-        agg += item;
-        return agg;
-    },
+    aggregateStr = (agg, item) => agg + item,
 
     aggregateArr = (agg, item) => {
         agg.push(item);

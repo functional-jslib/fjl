@@ -19,6 +19,7 @@ import {
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length, isEmpty as isEmptyList,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1,
+    concat, concatMap,
     takeWhile, dropWhile, partition,
     span, breakOnList, stripPrefix,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
@@ -379,11 +380,44 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#concat', function () {
-        it ('should have more tests.');
+        it ('should concatenate a list of lists into a list.', function () {
+            const  listOfLists = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']],
+                altListOfLists = ['abc', 'def', 'ghi'];
+            expectShallowEquals(concat(listOfLists), listOfLists.reduce((agg, item) => agg.concat(item)));
+            expectShallowEquals(concat(altListOfLists), altListOfLists.reduce((agg, item) => agg + item));
+        });
+        it ('should return an empty list when receiving an empty list or a list of empty lists', function () {
+            expectShallowEquals(concat([]), []);
+            expectShallowEquals(concat([[], [], []]), []);
+        });
+        it ('should throw an error when receiving nothing', function () {
+            assert.throws(concat, Error);
+            assert.throws(() => concat(null), Error);
+            assert.throws(() => concat(undefined), Error);
+        });
     });
 
     describe ('#concatMap', function () {
-        it ('should have more tests.');
+        const id = x => x;
+        it ('should map a function on a list and concatenate lists in resulting list into a list.', function () {
+            const charCodeToCharOp = charCode => String.fromCharCode(charCode),
+                charCodeRange = range.apply(null, ['a', 'z'].map(char => char.charCodeAt(0))),
+                alphabetArray = charCodeRange.map(charCodeToCharOp);
+            // @investigate is babel shimming String.fromCharCode;
+            //  When passing this function direct to `[].map` it returns a weird result (seems like it's returning
+            //  an instance of `String` using `new` and it's constructor)?
+            // log (alphabetArray);
+            expectShallowEquals(concatMap(charCodeToCharOp, charCodeRange), alphabetArray.join(''));
+            expectShallowEquals(concatMap(charCode => [String.fromCharCode(charCode)], charCodeRange), alphabetArray);
+        });
+        it ('should return an empty list when receiving an empty list or a list of empty lists', function () {
+            expectShallowEquals(concatMap(id, []), []);
+            expectShallowEquals(concatMap(id, [[], [], []]), []);
+        });
+        it ('should throw an error when receiving `undefined` or `null` in it\'s list position', function () {
+            assert.throws(() => concatMap(id, null), Error);
+            assert.throws(() => concatMap(id, undefined), Error);
+        });
     });
 
     describe ('#and', function () {
