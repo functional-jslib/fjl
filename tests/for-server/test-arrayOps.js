@@ -203,7 +203,7 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#foldl', function () {
-        it ('should be able to fold a `Foldable` (list, etc.) into some value', function () {
+        it ('should fold a `Foldable` (list, etc.) into some value', function () {
             const phrase = 'hello world',
                 phraseLen = length(phrase),
                 phraseIndCount = phraseLen - 1,
@@ -245,7 +245,9 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#foldl1', function () {
-        it ('should have more tests.');
+        it ('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', function () {
+
+        });
     });
 
     describe ('#foldr', function () {
