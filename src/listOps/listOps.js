@@ -442,13 +442,12 @@ export const
         return [agg, mapped];
     }),
 
-    unfoldr = curry((op, x, zero) => {
+    unfoldr = curry2((op, x) => {
         let ind = 0,
-            out = !isset(zero) ? [] : zero,
-            aggregator = aggregatorByType(out),
+            out = [],
             resultTuple = op(x, ind, out);
-        while (isset(resultTuple[1])) {
-            out = aggregator(out, resultTuple[0], ind);
+        while (resultTuple) {
+            out.push(resultTuple[0]);
             resultTuple = op(resultTuple[1], ++ind, out);
         }
         return out;

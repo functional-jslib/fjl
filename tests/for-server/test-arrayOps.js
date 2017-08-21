@@ -19,7 +19,7 @@ import {
     map, mapAccumL, mapAccumR, reverse,
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length, isEmpty as isEmptyList,
-    take, drop, splitAt, foldl, foldl1, foldr, foldr1,
+    take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, partition,
     span, breakOnList, stripPrefix,
     sum, product, maximum, minimum,
@@ -677,7 +677,15 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#unfoldr', function () {
-        it ('should have more tests.');
+        it ('should be able to unfold any value from right to left.', function () {
+            expectShallowEquals(
+                unfoldr(minuend => {
+                    let diff = minuend - 1;
+                    return diff >= 0 ? [minuend, diff] : undefined;
+                }, 10),
+                reverse(range(1, 10))
+            );
+        });
     });
 
     describe ('#take', function () {
