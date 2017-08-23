@@ -606,7 +606,7 @@ export const
 
         return splitPoint === -1 ?
             slice(0, limit, arr) :
-            slice(0, splitPoint, arr);
+            slice(0, splitPoint + 1, arr);
     }),
 
     /**
