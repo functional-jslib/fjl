@@ -164,6 +164,23 @@ const
     }),
 
     /**
+     * Finds index in list from right to left.
+     * @functionOps module:listOps.findIndexWhereRight
+     * @param pred {Function} - Predicate<element, index, arr>.
+     * @param arr {Array|String}
+     * @returns {Number} - `-1` if predicate not matched else `index` found
+     */
+    findIndexWhereRight = curry((pred, arr) => {
+        const limit = length(arr);
+        let ind = limit,
+            predicateFulfilled = false;
+        for (; ind >= 0 && !predicateFulfilled; --ind) {
+            predicateFulfilled = pred(arr[ind], ind, arr);
+        }
+        return ind;
+    }),
+
+    /**
      * @functionOps module:listOps.find
      * @param pred {Function}
      * @param xs {Array|String|*} - listOps or list like.
@@ -560,6 +577,7 @@ export const
      * @functionOps module:listOps.dropWhile
      * @param pred {Function} - Predicate<*, index, listOps|stringOps>
      * @param arr {Array|String}
+     * @refactor
      * @returns {Array|String}
      */
     dropWhile = curry((pred, arr) => {
@@ -571,6 +589,24 @@ export const
         return splitPoint === -1 ?
             slice(0, limit, arr) :
             slice(splitPoint, limit, arr);
+    }),
+
+    /**
+     * @functionOps module:listOps.dropWhile
+     * @param pred {Function} - Predicate<*, index, listOps|stringOps>
+     * @param arr {Array|String}
+     * @refactor
+     * @returns {Array|String}
+     */
+    dropWhileEnd =curry((pred, arr) => {
+        const limit = length(arr),
+            splitPoint =
+                findIndexWhereRight((item, ind, arr2) =>
+                    !pred(arr[ind], ind, arr2), arr);
+
+        return splitPoint === -1 ?
+            slice(0, limit, arr) :
+            slice(0, splitPoint, arr);
     }),
 
     /**

@@ -20,7 +20,7 @@ import {
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length, isEmpty as isEmptyList,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
-    concat, concatMap, takeWhile, dropWhile, partition,
+    concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     span, breakOnList, stripPrefix,
     sum, product, maximum, minimum,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
@@ -943,9 +943,58 @@ describe ('#arrayOps', function () {
         });
     });
 
-    describe ('#dropWhileEnd', function () {
-        it ('should have more tests.');
-    });
+    /*describe ('#dropWhileEnd', function () {
+        it ('should drop elements while predicate is fulfilled', function () {
+            const word = 'abcdefg',
+                expectedResult = word.substring(word.indexOf('e'), length(word)),
+                predicate = x => x !== 'e';
+
+            // Expect matched length and matched elements
+            expectTrue(
+                // Ensure cases for each use case
+                all(result =>
+                        // Ensure correct length of items in returned element
+                        /!*!log(result, expectedResult) &&*!/
+                    length(expectedResult) === length(result) &&
+                    // Ensure elements where matched
+                    all((x, ind) => x === expectedResult[ind], result),
+                    // Use cases (one with stringOps other with listOps)
+                    [dropWhileEnd(predicate, word.split('')),
+                        dropWhileEnd(predicate, word)]
+                ));
+        });
+        it ('should return an empty type instance if predicate is matched all the way through', function () {
+            const word = 'abcdefg',
+                pred = x => word.indexOf(x) > -1;
+
+            // Expect empty type instance
+            expectTrue(
+                // Ensure cases for each use case
+                all(result =>
+                        // Ensure no items returned
+                        /!*!log(result) && *!/
+                    length(result) === 0,
+                    [dropWhileEnd(pred, word.split('')), dropWhileEnd(pred, word)]
+                ));
+        });
+        it ('should return an a copy of the passed in type instance if predicate doesn\'t match any elements', function () {
+            const word = 'abcdefg',
+                pred = x => x === 'z' > -1;
+
+            // Expect empty type instance
+            expectTrue(
+                // Ensure cases for each use case
+                all(result =>
+                        // Ensure correct lengths returned
+                        /!*!log(result) && *!/
+                    length(result) === length(word) &&
+                    // Ensure elements where matched
+                    all((x, ind) => x === word[ind], result),
+                    // Use cases
+                    [dropWhileEnd(pred, word.split('')), dropWhileEnd(pred, word)]
+                ));
+        });
+    });*/
 
     describe ('#span', function () {
         it ('should take elements into first listOps while predicate is fulfilled and elements ' +
