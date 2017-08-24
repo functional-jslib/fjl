@@ -22,7 +22,7 @@ import {
     head, last, init, tail, uncons, length, isEmpty as isEmptyList,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
-    span, breakOnList, stripPrefix, group,
+    span, breakOnList, stripPrefix, group, inits, tails,
     sum, product, maximum, minimum,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
@@ -1116,11 +1116,42 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#inits', function () {
-        it ('should have more tests');
+        it ('should unfold a list into list of all possible ' +
+            'non-omitting sequential sets that start with initial item', function () {
+            expectTrue(all(
+                    (item, ind, original) => length(item) === ind,
+                    inits(alphabetString)
+            ));
+            expectTrue(all(
+                    (item, ind, original) => length(item) === ind,
+                    inits(alphabetArray)
+                ));
+        });
     });
 
     describe ('#tails', function () {
-        it ('should have more tests');
+        it ('should unfold a list into list of all possible ' +
+            'non-omitting sequential sets that start with the last item', function () {
+            const limit = length(alphabetString);
+            expectTrue(all(
+                (item, ind, resultList) => {
+                    const headOfLast = head(item);
+                    // log (headOfLast, alphabetString[ind]);//, resultList);
+                    return length(item) ? length(item) === limit - ind &&
+                       headOfLast === alphabetString[ind] : true
+                },
+                tails(alphabetString)
+            ));
+            expectTrue(all(
+                (item, ind, resultList) => {
+                    const headOfLast = head(item);
+                    log (headOfLast, alphabetString[ind]);
+                    return length(item) ? length(item) === limit - ind &&
+                       headOfLast === alphabetArray[ind] : true
+                },
+                tails(alphabetArray)
+            ));
+        });
     });
 
     describe ('#isPrefixOf', function () {

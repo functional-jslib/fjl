@@ -742,9 +742,28 @@ export const
         return agg;
     },
 
-    inits = xs => [xs],
+    inits = xs => {
+        let limit = length(xs),
+            ind = 0,
+            agg = [];
+        if (!limit) { return []; }
+        for (; ind <= limit; ind += 1) {
+            agg = aggregateArr(agg, slice(0, ind, xs));
+        }
+        return agg;
+    }, //map(list => init(list), xs),
 
-    tails = xs => [xs],
+    tails = xs => {
+        let limit = length(xs),
+            ind = 0,
+            agg = [];
+        if (!limit) { return []; }
+        for (; ind <= limit; ind += 1) {
+            agg = aggregateArr(agg, slice(ind, limit, xs));
+        }
+        // console.log(agg);
+        return agg;
+    }, //map(list => tail(list), xs),
 
     stripPrefix = curry((prefix, list) =>
         isPrefixOf(prefix, list) ?
