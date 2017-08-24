@@ -700,9 +700,11 @@ export const
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
             return false;
         }
-        let ind = limit2 - 1;
-        for (; ind >= 0; ind--) {
-            if (xs1[ind] !== xs2[ind]) { return false; }
+        let ind1 = limit1 - 1,
+            ind2 = limit2 - 1;
+        for (; ind1 >= 0; ind1--) {
+            if (xs1[ind1] !== xs2[ind2]) { return false; }
+            ind2 -= 1;
         }
         return true;
     }),

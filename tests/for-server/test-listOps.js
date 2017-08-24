@@ -1180,7 +1180,28 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#isSuffixOf', function () {
-        it ('should have more tests');
+        it ('should return `true` when a list is a suffix of another', function () {
+            const candidateString = splitAt(length(alphabetString) - 2, tails(alphabetString))[0];
+            // log (candidateString);
+            expectTrue(all(
+                isSuffixOf('xyz'),
+                candidateString
+            ));
+            expectTrue(all(
+                isSuffixOf('xyz'.split('')),
+                splitAt(length(alphabetArray) - 2, tails(alphabetArray))[0]
+            ));
+        });
+        it ('should return `false` when a list is not suffix of second list', function () {
+            expectTrue(all(
+                negateP(isSuffixOf('!@#')),
+                splitAt(length(alphabetString) - 2, tails(alphabetString))[0]
+            ));
+            expectTrue(all(
+                negateP(isSuffixOf('!@#'.split(''))),
+                splitAt(length(alphabetString) - 2, tails(alphabetArray))[0]
+            ));
+        });
     });
 
     describe ('#isInfixOf', function () {
