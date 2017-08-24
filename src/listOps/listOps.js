@@ -726,8 +726,10 @@ export const
 
     tails = xs => [xs],
 
-    stripPrefix = curry((prefix, arr) =>
-        isPrefixOf(prefix, arr) ? splitAt(prefix.length, arr)[1] : sliceToEndFrom(0, arr)),
+    stripPrefix = curry((prefix, list) =>
+        isPrefixOf(prefix, list) ?
+            splitAt(prefix.length, list)[1] :
+                sliceToEndFrom(0, list)),
 
     /**
      * Flattens an listOps.

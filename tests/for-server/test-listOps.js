@@ -2,6 +2,7 @@
  * Created by elyde on 12/29/2016.
  */
 
+
 // ~~~ STRIP ~~~
 // This part gets stripped out when
 // generating browser version of test(s).
@@ -36,7 +37,9 @@ import {
     expectTrue,
     expectFalse,
     expectInstanceOf,
-    log
+    alphabetArray,
+    alphabetCharCodeRange,
+    log, alphabetString
 } from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -402,8 +405,7 @@ describe ('#arrayOps', function () {
         const id = x => x;
         it ('should map a function on a list and concatenate lists in resulting list into a list.', function () {
             const charCodeToCharOp = charCode => String.fromCharCode(charCode),
-                charCodeRange = range.apply(null, ['a', 'z'].map(char => char.charCodeAt(0))),
-                alphabetArray = charCodeRange.map(charCodeToCharOp);
+                charCodeRange = alphabetCharCodeRange;
             // @investigate is babel shimming String.fromCharCode;
             //  When passing this function direct to `[].map` it returns a weird result (seems like it's returning
             //  an instance of `String` using `new` and it's constructor)?
@@ -1072,8 +1074,26 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#stripPrefix', function () {
-        it ('should...');
-        log(stripPrefix('hello', 'hello world'));
+        it ('should be able to strip a prefix from a list', function () {
+            expectShallowEquals(
+                stripPrefix('abc', alphabetArray.slice(0, 10)),
+                alphabetArray.slice(3, 10));
+
+            expectShallowEquals(
+                stripPrefix('abc', alphabetString.substring(0, 10)),
+                alphabetString.substring(3, 10));
+        });
+        it ('should return a copy of the passed in list when prefix is not found', function () {
+            expectShallowEquals(stripPrefix('!*&', alphabetArray), alphabetArray);
+            expectEqual(stripPrefix('!*&', alphabetString), alphabetString);
+            expectEqual(stripPrefix('!*&', ''), '');
+            expectShallowEquals(stripPrefix('!*&', []), []);
+        });
+        it ('should throw an error when receiving nothing in either position', function () {
+            assert.throws(() => stripPrefix(null, 'abc'), Error);
+            assert.throws(() => stripPrefix(null, null), Error);
+            assert.throws(() => stripPrefix('abc', null), Error);
+        });
     });
 
     describe ('#group', function () {
