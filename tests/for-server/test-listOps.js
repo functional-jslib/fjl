@@ -22,7 +22,7 @@ import {
     head, last, init, tail, uncons, length, isEmpty as isEmptyList,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
-    span, breakOnList, stripPrefix,
+    span, breakOnList, stripPrefix, group,
     sum, product, maximum, minimum,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
@@ -1097,7 +1097,22 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#group', function () {
-        it ('should have more tests');
+        it ('should return a list of lists which contain the (sequential) matches', function () {
+            const expectedResultFlattened = ['M', 'i', 'ss', 'i', 'ss', 'i', 'pp', 'i'];
+            expectShallowEquals(group('Mississippi'), expectedResultFlattened);
+            expectShallowEquals(
+                // Flatten results first
+                group('Mississippi'.split('')).map(item => item.join('')),
+                expectedResultFlattened
+            );
+        });
+        it ('should return a list of lists containing individual ungrouped items', function () {
+            expectShallowEquals(group(alphabetString), alphabetArray);
+            expectShallowEquals(
+                // Flatten result first
+                group(alphabetArray).map(item => item.join('')),
+                alphabetArray);
+        });
     });
 
     describe ('#inits', function () {

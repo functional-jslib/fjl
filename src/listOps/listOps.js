@@ -720,7 +720,27 @@ export const
         return true;
     }),
 
-    group = xs => [xs],
+    group = xs => {
+        const limit = length(xs);
+        if (!limit) { return sliceToEndFrom(0, xs); }
+        let ind = 0,
+            prevItem,
+            item,
+            agg = [];
+        for (; ind < limit; ind += 1) {
+            item = xs[ind];
+            agg.push(
+                takeWhile (x => {
+                        if (x === prevItem) { ind++; }
+                        if (x === item) { prevItem = x; return true; }
+                        else { return false; }
+                    },
+                    slice(ind, limit, xs)
+                )
+            );
+        }
+        return agg;
+    },
 
     inits = xs => [xs],
 
