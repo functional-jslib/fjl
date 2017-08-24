@@ -9,6 +9,7 @@
 'use strict';
 import {assert, expect} from 'chai';
 import {compose} from '../../src/functionOps/compose';
+import {negateP} from '../../src/functionOps/negateP';
 import {__} from '../../src/functionOps/curry';
 import {split} from '../../src/stringOps/stringOps';
 import {join} from '../../src/listOps/listOpsPrelude';
@@ -23,6 +24,7 @@ import {
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     span, breakOnList, stripPrefix, group, inits, tails,
+    isPrefixOf, isSuffixOf, isInfixOf,
     sum, product, maximum, minimum,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
@@ -1155,7 +1157,26 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#isPrefixOf', function () {
-        it ('should have more tests');
+        it ('should return `true` when a list is a prefix of another', function () {
+            expectTrue(all(
+                isPrefixOf('abc'),
+                splitAt(3, inits(alphabetString))[1]
+            ));
+            expectTrue(all(
+                isPrefixOf('abc'.split('')),
+                splitAt(3, inits(alphabetArray))[1]
+            ));
+        });
+        it ('should return `false` when a list is not prefix of second list', function () {
+            expectTrue(all(
+                negateP(isPrefixOf('!@#')),
+                splitAt(3, inits(alphabetString))[1]
+            ));
+            expectTrue(all(
+                negateP(isPrefixOf('!@#'.split(''))),
+                splitAt(3, inits(alphabetArray))[1]
+            ));
+        });
     });
 
     describe ('#isSuffixOf', function () {
