@@ -1,7 +1,7 @@
 /**
  * Created by elyde on 12/29/2016.
+ * @todo ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
  */
-
 
 // ~~~ STRIP ~~~
 // This part gets stripped out when
@@ -25,7 +25,7 @@ import {
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
-    sum, product, maximum, minimum,
+    filter, sum, product, maximum, minimum,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
 
@@ -1307,7 +1307,22 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#filter', function () {
-        it ('should have more tests.');
+        it ('should be able to filter a list by a predicate.', function () {
+            const pred = (_, ind) => ind % 2 === 0;
+            expectShallowEquals(
+                filter(pred, alphabetString),
+                alphabetString.split('').filter(pred)
+            );
+            expectShallowEquals(
+                filter(pred, alphabetArray),
+                alphabetString.split('').filter(pred)
+            );
+        });
+        it ('should return an empty list when no items match predicate', function () {
+            const pred = char => char === '#';
+            expectShallowEquals(filter(pred, alphabetString), '');
+            expectShallowEquals(filter(pred, alphabetArray), []);
+        });
     });
 
     describe ('#partition', function () {
