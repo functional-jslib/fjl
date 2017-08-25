@@ -1205,7 +1205,20 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#isInfixOf', function () {
-        it ('should have more tests');
+        it ('should return `true` when a list is infixed with another', function () {
+            const results = concatMap(candidate => [
+                isInfixOf(candidate, alphabetString),
+                isInfixOf(candidate, alphabetArray)
+            ], ['abc', 'efg', 'xyz']);
+            log(results);
+            expectTrue(and(results));
+        });
+        it ('should return `false` when a list is not infix of second list', function () {
+            expectTrue(and([
+                negateP(isInfixOf('!@#'))(alphabetString),
+                negateP(isInfixOf('!@#'.split(''))(alphabetArray))
+            ]));
+        });
     });
 
     describe ('#isSubsequenceOf', function () {
