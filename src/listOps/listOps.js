@@ -2,6 +2,7 @@
  * Array operators module.
  * @module arrayOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
+ * @todo code unperformant shorthand in `listOps`
  */
 import {curry, curry2}      from '../functionOps/curry';
 import {apply}              from '../functionOps/apply';
@@ -715,9 +716,11 @@ export const
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
             return false;
         }
-        let ind = limit2 - 1;
-        for (; ind >= 0; ind--) {
-            if (xs1[ind] !== xs2[ind]) { return false; }
+        let ind1 = limit1 - 1,
+            ind2 = limit2 - 1;
+        for (; ind1 >= 0; ind1--) {
+            if (xs1[ind1] !== xs2[ind2]) { return false; }
+            ind2 -= 1;
         }
         return true;
     }),
@@ -725,24 +728,86 @@ export const
     isInfixOf = curry((xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
+        if (limit2 < limit1 || !limit1 || !limit2) {
             return false;
         }
-        let ind = limit2 - 1;
-        for (; ind >= 0; ind--) {
-            if (xs1[ind] !== xs2[ind]) { return false; }
+        let ind1,
+            foundLen,
+            ind = 0;
+        for (; ind < limit2; ind += 1) {
+            foundLen = 0;
+            for (ind1 = 0; ind1 < limit1; ind1 += 1) {
+                if (xs2[ind1 + ind] === xs1[ind1]) { foundLen += 1; }
+                if (foundLen === limit1) { return true; }
+            }
         }
-        return true;
+        return false;
     }),
 
-    group = xs => [xs],
+    isSubsequenceOf = curry((xs1, xs2) => {
+        const len = Math.pow(2, length(xs2)),
+            lenXs1 = length(xs1);
+        let foundLen,
+            i;
+        for (i = 0; i < len; i += 1) {
+            foundLen = 0;
+            for (let j = 0; j < len; j += 1) {
+                if (i & (1 << j) && indexOf(xs2[j], xs1) > -1) { foundLen += 1; }
+                if (foundLen === lenXs1) { return true; }
+            }
+        }
+        return false;
+    }),
 
-    inits = xs => [xs],
+    group = xs => {
+        const limit = length(xs);
+        if (!limit) { return sliceToEndFrom(0, xs); }
+        let ind = 0,
+            prevItem,
+            item,
+            agg = [];
+        for (; ind < limit; ind += 1) {
+            item = xs[ind];
+            agg.push(
+                takeWhile (x => {
+                        if (x === prevItem) { ind++; }
+                        if (x === item) { prevItem = x; return true; }
+                        else { return false; }
+                    },
+                    slice(ind, limit, xs)
+                )
+            );
+        }
+        return agg;
+    },
 
-    tails = xs => [xs],
+    inits = xs => {
+        let limit = length(xs),
+            ind = 0,
+            agg = [];
+        if (!limit) { return []; }
+        for (; ind <= limit; ind += 1) {
+            agg = aggregateArr(agg, slice(0, ind, xs));
+        }
+        return agg;
+    }, //map(list => init(list), xs),
 
-    stripPrefix = curry((prefix, arr) =>
-        isPrefixOf(prefix, arr) ? splitAt(prefix.length, arr)[1] : sliceToEndFrom(0, arr)),
+    tails = xs => {
+        let limit = length(xs),
+            ind = 0,
+            agg = [];
+        if (!limit) { return []; }
+        for (; ind <= limit; ind += 1) {
+            agg = aggregateArr(agg, slice(ind, limit, xs));
+        }
+        // console.log(agg);
+        return agg;
+    }, //map(list => tail(list), xs),
+
+    stripPrefix = curry((prefix, list) =>
+        isPrefixOf(prefix, list) ?
+            splitAt(prefix.length, list)[1] :
+                sliceToEndFrom(0, list)),
 
     /**
      * Flattens an listOps.

@@ -77,7 +77,16 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
         return out;
     }),
 
-    log = console.log.bind(console);
+    log = console.log.bind(console),
+
+    alphabetCharCodeRange = range('a'.charCodeAt(0), 'z'.charCodeAt(0)),
+
+    alphabetArray = alphabetCharCodeRange
+        .map(charCode => String.fromCharCode(charCode)),
+
+    alphabetString = alphabetArray.join('')
+
+    ;
 
 export default {
     expectFunction,
@@ -96,5 +105,8 @@ export default {
     shallowCompareArraysLeft,
     shallowCompareObjectsLeft,
     shallowCompareOnLeft,
-    range
+    range,
+    alphabetCharCodeRange,
+    alphabetArray,
+    alphabetString
 };

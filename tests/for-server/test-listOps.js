@@ -2,12 +2,14 @@
  * Created by elyde on 12/29/2016.
  */
 
+
 // ~~~ STRIP ~~~
 // This part gets stripped out when
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
 import {compose} from '../../src/functionOps/compose';
+import {negateP} from '../../src/functionOps/negateP';
 import {__} from '../../src/functionOps/curry';
 import {split} from '../../src/stringOps/stringOps';
 import {join} from '../../src/listOps/listOpsPrelude';
@@ -21,7 +23,8 @@ import {
     head, last, init, tail, uncons, length, isEmpty as isEmptyList,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
-    span, breakOnList, stripPrefix,
+    span, breakOnList, stripPrefix, group, inits, tails,
+    isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     sum, product, maximum, minimum,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
@@ -36,7 +39,9 @@ import {
     expectTrue,
     expectFalse,
     expectInstanceOf,
-    log
+    alphabetArray,
+    alphabetCharCodeRange,
+    log, alphabetString
 } from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
@@ -402,8 +407,7 @@ describe ('#arrayOps', function () {
         const id = x => x;
         it ('should map a function on a list and concatenate lists in resulting list into a list.', function () {
             const charCodeToCharOp = charCode => String.fromCharCode(charCode),
-                charCodeRange = range.apply(null, ['a', 'z'].map(char => char.charCodeAt(0))),
-                alphabetArray = charCodeRange.map(charCodeToCharOp);
+                charCodeRange = alphabetCharCodeRange;
             // @investigate is babel shimming String.fromCharCode;
             //  When passing this function direct to `[].map` it returns a weird result (seems like it's returning
             //  an instance of `String` using `new` and it's constructor)?
@@ -1072,36 +1076,166 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#stripPrefix', function () {
-        it ('should...');
-        log(stripPrefix('hello', 'hello world'));
+        it ('should be able to strip a prefix from a list', function () {
+            expectShallowEquals(
+                stripPrefix('abc', alphabetArray.slice(0, 10)),
+                alphabetArray.slice(3, 10));
+
+            expectShallowEquals(
+                stripPrefix('abc', alphabetString.substring(0, 10)),
+                alphabetString.substring(3, 10));
+        });
+        it ('should return a copy of the passed in list when prefix is not found', function () {
+            expectShallowEquals(stripPrefix('!*&', alphabetArray), alphabetArray);
+            expectEqual(stripPrefix('!*&', alphabetString), alphabetString);
+            expectEqual(stripPrefix('!*&', ''), '');
+            expectShallowEquals(stripPrefix('!*&', []), []);
+        });
+        it ('should throw an error when receiving nothing in either position', function () {
+            assert.throws(() => stripPrefix(null, 'abc'), Error);
+            assert.throws(() => stripPrefix(null, null), Error);
+            assert.throws(() => stripPrefix('abc', null), Error);
+        });
     });
 
     describe ('#group', function () {
-        it ('should have more tests');
+        it ('should return a list of lists which contain the (sequential) matches', function () {
+            const expectedResultFlattened = ['M', 'i', 'ss', 'i', 'ss', 'i', 'pp', 'i'];
+            expectShallowEquals(group('Mississippi'), expectedResultFlattened);
+            expectShallowEquals(
+                // Flatten results first
+                group('Mississippi'.split('')).map(item => item.join('')),
+                expectedResultFlattened
+            );
+        });
+        it ('should return a list of lists containing individual ungrouped items', function () {
+            expectShallowEquals(group(alphabetString), alphabetArray);
+            expectShallowEquals(
+                // Flatten result first
+                group(alphabetArray).map(item => item.join('')),
+                alphabetArray);
+        });
     });
 
     describe ('#inits', function () {
-        it ('should have more tests');
+        it ('should unfold a list into list of all possible ' +
+            'non-omitting sequential sets that start with initial item', function () {
+            expectTrue(all(
+                    (item, ind, original) => length(item) === ind,
+                    inits(alphabetString)
+            ));
+            expectTrue(all(
+                    (item, ind, original) => length(item) === ind,
+                    inits(alphabetArray)
+                ));
+        });
     });
 
     describe ('#tails', function () {
-        it ('should have more tests');
+        it ('should unfold a list into list of all possible ' +
+            'non-omitting sequential sets that start with the last item', function () {
+            const limit = length(alphabetString);
+            expectTrue(all(
+                (item, ind, resultList) => {
+                    const headOfLast = head(item);
+                    // log (headOfLast, alphabetString[ind]);//, resultList);
+                    return length(item) ? length(item) === limit - ind &&
+                       headOfLast === alphabetString[ind] : true
+                },
+                tails(alphabetString)
+            ));
+            expectTrue(all(
+                (item, ind, resultList) => {
+                    const headOfLast = head(item);
+                    log (headOfLast, alphabetString[ind]);
+                    return length(item) ? length(item) === limit - ind &&
+                       headOfLast === alphabetArray[ind] : true
+                },
+                tails(alphabetArray)
+            ));
+        });
     });
 
     describe ('#isPrefixOf', function () {
-        it ('should have more tests');
+        it ('should return `true` when a list is a prefix of another', function () {
+            expectTrue(all(
+                isPrefixOf('abc'),
+                splitAt(3, inits(alphabetString))[1]
+            ));
+            expectTrue(all(
+                isPrefixOf('abc'.split('')),
+                splitAt(3, inits(alphabetArray))[1]
+            ));
+        });
+        it ('should return `false` when a list is not prefix of second list', function () {
+            expectTrue(all(
+                negateP(isPrefixOf('!@#')),
+                splitAt(3, inits(alphabetString))[1]
+            ));
+            expectTrue(all(
+                negateP(isPrefixOf('!@#'.split(''))),
+                splitAt(3, inits(alphabetArray))[1]
+            ));
+        });
     });
 
     describe ('#isSuffixOf', function () {
-        it ('should have more tests');
+        it ('should return `true` when a list is a suffix of another', function () {
+            const candidateString = splitAt(length(alphabetString) - 2, tails(alphabetString))[0];
+            // log (candidateString);
+            expectTrue(all(
+                isSuffixOf('xyz'),
+                candidateString
+            ));
+            expectTrue(all(
+                isSuffixOf('xyz'.split('')),
+                splitAt(length(alphabetArray) - 2, tails(alphabetArray))[0]
+            ));
+        });
+        it ('should return `false` when a list is not suffix of second list', function () {
+            expectTrue(all(
+                negateP(isSuffixOf('!@#')),
+                splitAt(length(alphabetString) - 2, tails(alphabetString))[0]
+            ));
+            expectTrue(all(
+                negateP(isSuffixOf('!@#'.split(''))),
+                splitAt(length(alphabetString) - 2, tails(alphabetArray))[0]
+            ));
+        });
     });
 
     describe ('#isInfixOf', function () {
-        it ('should have more tests');
+        it ('should return `true` when a list is infixed with another', function () {
+            const results = concatMap(candidate => [
+                isInfixOf(candidate, alphabetString),
+                isInfixOf(candidate, alphabetArray)
+            ], ['abc', 'efg', 'xyz']);
+            log(results);
+            expectTrue(and(results));
+        });
+        it ('should return `false` when a list is not infix of second list', function () {
+            expectTrue(and([
+                negateP(isInfixOf('!@#'))(alphabetString),
+                negateP(isInfixOf('!@#'.split(''))(alphabetArray))
+            ]));
+        });
     });
 
     describe ('#isSubsequenceOf', function () {
-        it ('should have more tests');
+        it ('should return true a list is sub-sequence of another.', function () {
+            const listToSearchIn = take(6, alphabetString);
+            expectTrue(all(
+                listToSearchFor => isSubsequenceOf(listToSearchFor, listToSearchIn),
+                ['bdf', 'ace', 'abc', 'def']
+            ));
+        });
+        it ('should return false a list is not sub-sequence of another.', function () {
+            const listToSearchIn = take(6, drop(6, alphabetString));
+            expectTrue(all(
+                listToSearchFor => !isSubsequenceOf(listToSearchFor, listToSearchIn),
+                ['bdf', 'ace', 'abc', 'def']
+            ));
+        });
     });
 
     describe ('#elem', function () {
