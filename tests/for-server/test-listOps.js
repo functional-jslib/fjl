@@ -24,7 +24,7 @@ import {
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     span, breakOnList, stripPrefix, group, inits, tails,
-    isPrefixOf, isSuffixOf, isInfixOf,
+    isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     sum, product, maximum, minimum,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
@@ -1222,7 +1222,20 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#isSubsequenceOf', function () {
-        it ('should have more tests');
+        it ('should return true a list is sub-sequence of another.', function () {
+            const listToSearchIn = take(6, alphabetString);
+            expectTrue(all(
+                listToSearchFor => isSubsequenceOf(listToSearchFor, listToSearchIn),
+                ['bdf', 'ace', 'abc', 'def']
+            ));
+        });
+        it ('should return false a list is not sub-sequence of another.', function () {
+            const listToSearchIn = take(6, drop(6, alphabetString));
+            expectTrue(all(
+                listToSearchFor => !isSubsequenceOf(listToSearchFor, listToSearchIn),
+                ['bdf', 'ace', 'abc', 'def']
+            ));
+        });
     });
 
     describe ('#elem', function () {
