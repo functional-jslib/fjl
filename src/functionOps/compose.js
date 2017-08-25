@@ -1,4 +1,4 @@
-import {reduceRight} from '../listOps/listOpsPrelude';
+import {foldr} from '../listOps/listOps';
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
@@ -8,4 +8,4 @@ import {reduceRight} from '../listOps/listOpsPrelude';
  * @param args {...Function}
  * @returns {Function}
  */
-export const compose = (...args) => arg0 => reduceRight((value, fn) => fn(value), arg0, args);
+export const compose = (...args) => arg0 => foldr((value, fn) => fn(value), arg0, args);

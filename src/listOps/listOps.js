@@ -11,10 +11,8 @@ import {isString, isArray, isset}  from '../objectOps/is';
 import {prop}               from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
 import {of}                 from '../objectOps/of';
-import {length, keys as objectKeys, hasOwnProperty} from '../objectOps/objectPrelude';
-import {concat as arrayAppend, slice}   from './listOpsPrelude';
-// import {log}                            from '../../tests/for-server/helpers';
-import {fPureTakesOne}                  from '../utils/utils';
+import {length, hasOwnProperty} from '../objectOps/objectPrelude';
+import {fPureTakes2, fPureTakesOne, fPureTakesOneOrMore} from '../utils/utils';
 
 export {length};
 
@@ -23,6 +21,14 @@ const
     ASC = 1,
 
     DESC = -1,
+
+    /**
+     * Array and String `slice`.
+     * @param separator {String|RegExp}
+     * @param arr{Array}
+     * @returns {Array}
+     */
+    slice = fPureTakes2('slice'),
 
     sliceToEndFrom = curry((startInd, arr) => slice(startInd, length(arr), arr)),
 
@@ -121,6 +127,16 @@ const
             operation,              // operation
             agg,                    // aggregator
             arr)),                  // listOps
+
+    /**
+     * Concats/appends all functors onto the end of first functor.
+     * Note:  functors passed in after the first one must be of the same type.
+     * @param functor {Array|Object|*}
+     * @param ...functor {Array|Object|*}
+     * @return {*|Array|Object} - The type passed.
+     * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+     */
+    arrayAppend = fPureTakesOneOrMore('concat'),
 
     /**
      * @note Same as a Monoidal `mappend`;  In this case for strings.
@@ -296,7 +312,7 @@ export const
      *  value is not truthy.
      *  In typed languages this would be all we
      *  need do due to assuming that only lists make it into our
-     *  funciton but in javascript this is loose and in order
+     *  function but in javascript this is loose and in order
      *  to the function to perform well under load and
      *  for it to follow the specification we are not allowed
      *  to type check in it.
@@ -341,13 +357,12 @@ export const
             aggregator = mempty(arr),
             aggregatorOp = aggregatorByType(arr);
         return reduce((agg, item, ind) => {
-            if (ind === limit) {
-                return aggregatorOp(agg, item);
-            }
-            return aggregatorOp(
-                aggregatorOp(agg, item),
-                between
-            );
+            return ind === limit ?
+                aggregatorOp(agg, item) :
+                aggregatorOp(
+                    aggregatorOp(agg, item),
+                    between
+                );
         }, aggregator, arr);
     }),
 

@@ -12,7 +12,6 @@
  */
 
 export * from './objectOps/objectPrelude';
-// export * from './listOps/listOpsPrelude';
 export * from './objectOps/objectOps';
 export * from './booleanOps/booleanOps';
 export * from './functionOps/functionOps';
