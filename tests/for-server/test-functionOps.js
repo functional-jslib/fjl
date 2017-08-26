@@ -242,7 +242,7 @@ describe ('#functionOps', function () {
         });
 
         it ('should pass in any values passed the arity when executing the curried functionOps', function () {
-            let add3Nums = curryN(addRecursive, 3);
+            let add3Nums = curryN(3, addRecursive);
 
             // Curry add to add 3 numbers
             expect(add3Nums()(1, 2, 3)) .to.equal(6);
@@ -258,7 +258,7 @@ describe ('#functionOps', function () {
         });
 
         it ('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
-            let multiply5Nums = curryN(multiplyRecursive, 5),
+            let multiply5Nums = curryN(5, multiplyRecursive),
                 multiplyExpectedResult = Math.pow(5, 5),
                 argsToTest = [
                     [5, 5, 5, 5, 5],
@@ -413,8 +413,8 @@ describe ('#functionOps', function () {
         });
 
         it ('should enforce `Placeholder` values when currying', function () {
-            let add3Nums = curryN_(addRecursive, 3),
-                multiply5Nums = curryN_(multiplyRecursive, 5),
+            let add3Nums = curryN_(3, addRecursive),
+                multiply5Nums = curryN_(5, multiplyRecursive),
                 multiplyExpectedResult = Math.pow(5, 5);
 
             // Curry add to add 3 numbers
@@ -434,7 +434,7 @@ describe ('#functionOps', function () {
         });
 
         it ('should pass in any values passed the arity when executing the curried functionOps', function () {
-            let add3Nums = curryN_(addRecursive, 3);
+            let add3Nums = curryN_(3, addRecursive);
 
             // Curry add to add 3 numbers
             expect(add3Nums(__, __, __)(1, 2, 3)).to.equal(6);
@@ -450,7 +450,7 @@ describe ('#functionOps', function () {
         });
 
         it ('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
-            let multiply5Nums = curryN_(multiplyRecursive, 5),
+            let multiply5Nums = curryN_(5, multiplyRecursive),
                 multiplyExpectedResult = Math.pow(5, 5),
                 argsToTest = [
                     [5, 5, 5, 5, 5],
@@ -476,7 +476,7 @@ describe ('#functionOps', function () {
         });
 
         it ('should respect argument order and placeholder order.', function () {
-            let divideC = curryN_(divideR, 3);
+            let divideC = curryN_(3, divideR);
 
             // Curry divideR to divde 3 or more numbers
             expect(divideC(25, 5)).to.be.instanceOf(Function);

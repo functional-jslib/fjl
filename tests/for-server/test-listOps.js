@@ -49,7 +49,7 @@ import {
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#arrayOps', function () {
+describe ('#listOps', function () {
 
     const strToArray = split('');
 

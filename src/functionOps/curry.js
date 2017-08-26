@@ -88,17 +88,17 @@ export function curry_ (fn, ...argsToCurry) {
 /**
  * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
  * @functionOps curryN_
- * @param fn {Function}
  * @param executeArity {Number}
+ * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
  * @returns {Function} - Passed in functionOps wrapped in a functionOps for currying.
  */
-export function curryN_ (fn, executeArity, ...curriedArgs) {
+export function curryN_ (executeArity, fn, ...curriedArgs) {
     return (...args) => {
         let concatedArgs = replacePlaceHolders(curriedArgs, args),
             placeHolders = concatedArgs.filter(isPlaceHolder),
             canBeCalled = (concatedArgs.length - placeHolders.length >= executeArity) || !executeArity;
-        return !canBeCalled ? curryN_.apply(null, [fn, executeArity].concat(concatedArgs)) :
+        return !canBeCalled ? curryN_.apply(null, [executeArity, fn].concat(concatedArgs)) :
             fn.apply(null, concatedArgs);
     };
 }
@@ -106,16 +106,16 @@ export function curryN_ (fn, executeArity, ...curriedArgs) {
 /**
  * Curries a functionOps up to a given arity.
  * @functionOps curryN
- * @param fn {Function}
  * @param executeArity {Number}
+ * @param fn {Function}
  * @param curriedArgs {...*}
  * @returns {Function}
  */
-export function curryN (fn, executeArity, ...curriedArgs) {
+export function curryN (executeArity, fn, ...curriedArgs) {
     return (...args) => {
         let concatedArgs = curriedArgs.concat(args),
             canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
-        return !canBeCalled ? curryN.apply(null, [fn, executeArity].concat(concatedArgs)) :
+        return !canBeCalled ? curryN.apply(null, [executeArity, fn].concat(concatedArgs)) :
             fn.apply(null, concatedArgs);
     };
 }
@@ -132,7 +132,7 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
      * @param fn {Function}
      * @returns {Function}
      */
-    curry2_ = fn => curryN_(fn, 2),
+    curry2_ = fn => curryN_(2, fn),
 
     /**
      * Curries a functionOps up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call functionOps until 3 or more args).
@@ -140,7 +140,7 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
      * @param fn {Function}
      * @returns {Function}
      */
-    curry3_ = fn => curryN_(fn, 3),
+    curry3_ = fn => curryN_(3, fn),
 
     /**
      * Curries a functionOps up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 4 or more args).
@@ -148,7 +148,7 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
      * @param fn {Function}
      * @returns {Function}
      */
-    curry4_ = fn => curryN_(fn, 4),
+    curry4_ = fn => curryN_(4, fn),
 
     /**
      * Curries a functionOps up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 5 or more args).
@@ -156,7 +156,7 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
      * @param fn {Function}
      * @returns {Function}
      */
-    curry5_ = fn => curryN_(fn, 5),
+    curry5_ = fn => curryN_(5, fn),
 
     /**
      * Curries a functionOps up to an arity of 2 (won't call functionOps until 2 or more args).
@@ -164,25 +164,25 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
      * @param fn {Function}
      * @returns {Function}
      */
-    curry2 = fn => curryN(fn, 2),
+    curry2 = fn => curryN(2, fn),
 
     /**
      * Curries a functionOps up to an arity of 3 (won't call functionOps until 3 or more args).
      * @param fn {Function}
      * @returns {Function}
      */
-    curry3 = fn => curryN(fn, 3),
+    curry3 = fn => curryN(3, fn),
 
     /**
      * Curries a functionOps up to an arity of 4 (won't call functionOps until 4 or more args).
      * @param fn {Function}
      * @returns {Function}
      */
-    curry4 = fn => curryN(fn, 4),
+    curry4 = fn => curryN(4, fn),
 
     /**
      * Curries a functionOps up to an arity of 5 (won't call functionOps until 5 or more args).
      * @param fn {Function}
      * @returns {Function}
      */
-    curry5 = fn => curryN(fn, 5);
+    curry5 = fn => curryN(5, fn);

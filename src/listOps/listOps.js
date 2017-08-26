@@ -4,7 +4,7 @@
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
  * @todo code unperformant shorthand in `listOps`
  */
-import {curry, curry2, curry3, curry4, curry5}      from '../functionOps/curry';
+import {curry, curry2, curry3, curry4, curry5, curryN}      from '../functionOps/curry';
 import {apply}              from '../functionOps/apply';
 import {negateP}            from '../functionOps/functionOps';
 import {isTruthy, isFalsy}  from '../booleanOps/is';
@@ -891,6 +891,7 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zip = curry((arr1, arr2) => {
+        if (!length(arr1) || !length(arr2)) { return mempty(arr1); }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
         return reduce((agg, item, ind) =>
                 aggregateArr(agg, [item, a2[ind]]),
@@ -927,12 +928,18 @@ export const
             [], a1);
     }),
 
-    zipWithN = curry((op, ...lists) => {
+    zipWithN = (op, ...lists) => {
         const trimmedLengthsList = apply(lengthsToSmallest, lists);
         return reduce((agg, item, ind, list) =>
                 aggregateArr(agg, apply(op, map(xs => xs[ind], list))),
             [], trimmedLengthsList);
-    }),
+    },
+
+    zipWith3 = curry4(zipWithN),
+
+    zipWith4 = curry5(zipWithN),
+
+    zipWith5 = curryN(5, zipWithN),
 
     /**
      * unzip :: [(a, b)] -> ([a], [b])
