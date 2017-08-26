@@ -261,8 +261,7 @@ describe ('#arrayOps', function () {
         });
         it ('should return an empty list when receiving one or when items contained are empty', function () {
             expectShallowEquals(transpose([[], [], []]), []);
-            expectShallowEquals(transpose(['', '', '']), []);
-            expectEqual(transpose(''), '');
+            expectEqual(transpose([]), []);
         });
     });
 
