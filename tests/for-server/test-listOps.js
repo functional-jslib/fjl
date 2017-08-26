@@ -1512,6 +1512,13 @@ describe ('#listOps', function () {
                 tuple[1] === expectedResult[ind][1]
                 , result));
         });
+        it ('should return an empty list when empty lists are passed', function () {
+            expectShallowEquals(zip([], []), []);
+        });
+        it ('should return a copy of the passed in populated list when one of them is not populated.', function () {
+            expectShallowEquals(zip([], alphabetArray), alphabetArray);
+            expectShallowEquals(zip(alphabetArray, []), alphabetArray);
+        });
     });
 
     describe ('#zipN', function () {
