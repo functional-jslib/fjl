@@ -140,11 +140,13 @@ const
     arrayAppend = fPureTakesOneOrMore('concat'),
 
     /**
+     * Appends any subsequent lists (strings) onto the first one (string).
      * @note Same as a Monoidal `mappend`;  In this case for strings.
-     * @param x {String}
-     * @param args {String}
+     * @param arg0 {String}
+     * @param args {...String}
+     * @returns {String}
      */
-    strAppend = (x, ...args) => reduce(aggregateStr, x, args),
+    strAppend = (arg0, ...args) => reduce(aggregateStr, arg0, args),
 
     /**
      * Searches list/list-like for given element `x`.
@@ -236,8 +238,7 @@ export const
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
      * @functionOps module:listOps.appendMany
-     * @param xs1 {Array|String|*} - listOps or list like.
-     * @param [...args] {Array|String|*} - Lists or lists likes.
+     * @param args ...{Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
     appendMany = curry2((x, ...args) => (isArray(x) ? arrayAppend : strAppend)(x, ...args)),
@@ -341,7 +342,7 @@ export const
         return out;
     }),
 
-    concat = foldableOfA => mappendMany(...foldableOfA),
+    concat = xs => mappendMany(...xs),
 
     concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
 
@@ -354,11 +355,13 @@ export const
     },
 
     intersperse = curry((between, arr) => {
-        const limit = length(arr) - 1,
+        const limit = length(arr),
+            lastInd = limit - 1,
             aggregator = mempty(arr),
             aggregatorOp = aggregatorByType(arr);
+        if (!limit) { return aggregator; }
         return reduce((agg, item, ind) => {
-            return ind === limit ?
+            return ind === lastInd ?
                 aggregatorOp(agg, item) :
                 aggregatorOp(
                     aggregatorOp(agg, item),
@@ -367,7 +370,10 @@ export const
         }, aggregator, arr);
     }),
 
-    intercalate = curry((xs, xss) => concat(intersperse(xs, xss))),
+    intercalate = curry((xs, xss) => {
+        const result = intersperse(xs, xss);
+        return isString(result) ? result : concat(result);
+    }),
 
     transpose = xss => {
         const orderedLengths = getOrderedLengths(DESC, ...xss),
@@ -800,7 +806,6 @@ export const
         for (; ind <= limit; ind += 1) {
             agg = aggregateArr(agg, slice(ind, limit, xs));
         }
-        // console.log(agg);
         return agg;
     }, //map(list => tail(list), xs),
 

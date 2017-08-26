@@ -3,7 +3,7 @@
  * @author elyde
  * @created 7/9/2017.
  */
-import {intersperse} from '../listOps/listOps';
+import {intercalate} from '../listOps/listOps';
 
 import {curry} from '../functionOps/curry';
 
@@ -37,17 +37,17 @@ export const
     words = split(/[\s\t]/gm),
 
     /**
-     * Intersperse an array of strings with '\s'.
+     * Intersperse an array of strings with '\s' and then concats them.
      * @functionOps module:stringOps.unwords
      * @param arr {String}
      * @returns {Array}
      */
-    unwords = intersperse('\s'),
+    unwords = intercalate('\s'),
 
     /**
-     * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
+     * Intersperses a '\n' character into a list of strings and then concats it.
      * @functionOps module:stringOps.unlines
      * @param list {Array|String|*}
      * @returns {Array}
      */
-    unlines = intersperse('\n');
+    unlines = intercalate('\n');
