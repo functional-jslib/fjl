@@ -241,7 +241,29 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#transpose', function () {
-        it ('should have more tests.');
+        const result1 = transpose([[1,2,3],[4,5,6]]),
+            result2 = transpose([[10,11],[20],[],[30,31,32]]);
+        it ('should transpose a list of lists into a rotated list of lists (from columns and rows to rows and' +
+            ' columns and vice versa).', function () {
+            expectTrue(all(
+                tuple =>
+                    all((list, ind) => all((x, ind2) => x === tuple[1][ind][ind2], list),
+                        tuple[0]),
+                [
+                    [ result1, ([[1, 4], [2, 5], [3, 6]]) ],
+                    [ result2, ([[10, 20, 30], [11, 31], [32]]) ]
+                ]
+            ));
+        });
+        it ('should ignore empty lists in the transposition process and not add them to the resulting list.', function () {
+            expectTrue(all(length, result1));
+            expectTrue(all(length, result2));
+        });
+        it ('should return an empty list when receiving one or when items contained are empty', function () {
+            expectShallowEquals(transpose([[], [], []]), []);
+            expectShallowEquals(transpose(['', '', '']), []);
+            expectEqual(transpose(''), '');
+        });
     });
 
     describe ('#subsequences', function () {

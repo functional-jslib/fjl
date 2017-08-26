@@ -13,6 +13,7 @@ import {prop}               from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
 import {of}                 from '../objectOps/of';
 import {length, hasOwnProperty} from '../objectOps/objectPrelude';
+import {compose}            from '../functionOps/compose';
 import {fPureTakes2, fPureTakesOne, fPureTakesOneOrMore} from '../utils/utils';
 
 export {length};
@@ -61,13 +62,13 @@ const
 
     sortDescByLength = getSortByOrder(DESC, x => length(x)),
 
-    lengths = curry2((...arrs) => length(arrs) ? arrs.map(length) : []),
-
-    getOrderedLengths = curry2((orderDir, ...arrs) => (orderDir ? sortAsc : sortDesc)(lengths(arrs))),
+    lengths = (...arrs) => length(arrs) ? arrs.map(length) : [],
 
     trimLengths = (...arrays) => {
-        const smallLen = getOrderedLengths(ASC, arrays)[0];
-        return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
+        const arrayLengths = lengths(arrays),
+            smallLen = minimum();
+        return arrays.map((arr, ind) => arrayLengths[ind] > smallLen ?
+            slice(0, smallLen, arr) : sliceFromZero(arr));
     },
 
     aggregateStr = (agg, item) => agg + item,
@@ -370,19 +371,47 @@ export const
         }, aggregator, arr);
     }),
 
+    /**
+     * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
+     * @type {Function}
+     */
     intercalate = curry((xs, xss) => {
         const result = intersperse(xs, xss);
         return isString(result) ? result : concat(result);
     }),
 
+    /**
+     * Transposes rows and columns into lists by index;  E.g.,
+     * Haskell example:
+     * ```
+     *  transpose [[1,2,3],[4,5,6]] == [[1,4],[2,5],[3,6]]
+     *
+     *  -- Notice the shorter arrays are ignored after their last index is copied over:
+     *  transpose [[10,11],[20],[],[30,31,32]] == [[10,20,30],[11,31],[32]]
+     * ```
+     * @note from columns to rows.
+     * @note Empty lists are ignored.
+     * @todo upgrade this function to support lists of strings.
+     * @haskellType `transpose :: [[a]] -> [[a]]`
+     * @param xss {Array}
+     * @returns {Array}
+     */
     transpose = xss => {
-        const orderedLengths = getOrderedLengths(DESC, ...xss),
-            out = new Array(orderedLengths[0]);
-        return reduce((agg, item) =>
-            reduce((agg2, element, ind2) => {
-                agg2[ind2].push(element);
-                return agg2;
-            }, agg, item), out.map(() => []), xss);
+        const numLists = length(xss);
+        if (!numLists) { return mempty(xss); }
+        const listLengths = apply(lengths, xss),
+            longestListLen = maximum(listLengths),
+            outLists = [];
+        let ind = 0, ind2;
+        for (; ind < longestListLen; ind += 1) {
+            const outList = [];
+            for (ind2 = 0; ind2 < numLists; ind2 += 1) {
+                if (listLengths[ind2] < ind + 1) { continue; }
+                outList.push(xss[ind2][ind]);
+            }
+            outLists.push(outList);
+        }
+        return filter(x => length(x), outLists);
     },
 
     /**
@@ -481,6 +510,12 @@ export const
         return [agg, mapped];
     }),
 
+    /**
+     * Unfolds a value into a list of somethings.
+     * @param op {Function} - Operation to perform
+     * @param x {*} - Starting parameter to unfold from.
+     * @returns {Array} - An array of whatever you return from `op` yielded.
+     */
     unfoldr = curry2((op, x) => {
         let ind = 0,
             out = [],
