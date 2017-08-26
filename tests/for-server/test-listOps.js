@@ -18,6 +18,7 @@ import {isTruthy} from '../../src/booleanOps/is';
 
 import {
     all, and, or, any, find, findIndex, findIndices,
+    zip, unzip,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length,
@@ -261,7 +262,7 @@ describe ('#arrayOps', function () {
         });
         it ('should return an empty list when receiving one or when items contained are empty', function () {
             expectShallowEquals(transpose([[], [], []]), []);
-            expectEqual(transpose([]), []);
+            expectShallowEquals(transpose([]), []);
         });
     });
 
@@ -1188,7 +1189,7 @@ describe ('#arrayOps', function () {
             'non-omitting sequential sets that start with the last item', function () {
             const limit = length(alphabetString);
             expectTrue(all(
-                (item, ind, resultList) => {
+                (item, ind) => {
                     const headOfLast = head(item);
                     // log (headOfLast, alphabetString[ind]);//, resultList);
                     return length(item) ? length(item) === limit - ind &&
@@ -1197,9 +1198,9 @@ describe ('#arrayOps', function () {
                 tails(alphabetString)
             ));
             expectTrue(all(
-                (item, ind, resultList) => {
+                (item, ind) => {
                     const headOfLast = head(item);
-                    log (headOfLast, alphabetString[ind]);
+                    //log (headOfLast, alphabetString[ind]);
                     return length(item) ? length(item) === limit - ind &&
                        headOfLast === alphabetArray[ind] : true
                 },
@@ -1262,7 +1263,7 @@ describe ('#arrayOps', function () {
                 isInfixOf(candidate, alphabetString),
                 isInfixOf(candidate, alphabetArray)
             ], ['abc', 'efg', 'xyz']);
-            log(results);
+            //log(results);
             expectTrue(and(results));
         });
         it ('should return `false` when a list is not infix of second list', function () {
@@ -1497,7 +1498,20 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#zip', function () {
-        it ('should have more tests.');
+        it ('should be able to zip two lists into a list of tuples (list of two items).', function () {
+            const [list1, list2] = splitAt(length(alphabetArray) / 2, alphabetArray),
+                result = zip(list1, list2),
+                expectedResult = foldl((agg, item, ind) => {
+                        agg.push([item, list2[ind]]);
+                        return agg;
+                    }, [], list1);
+            // log (list1, list2); // two halves of alphabet array
+            expectTrue(all(x => 13, [length(list1), length(list2)]));
+            expectEqual(length(result), length(expectedResult));
+            expectTrue(all((tuple, ind) => tuple[0] === expectedResult[ind][0] &&
+                tuple[1] === expectedResult[ind][1]
+                , result));
+        });
     });
 
     describe ('#zipN', function () {
