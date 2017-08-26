@@ -23,7 +23,7 @@ import {
     head, last, init, tail, uncons, length, isEmpty as isEmptyList,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
-    span, breakOnList, stripPrefix, group, inits, tails,
+    at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
@@ -1363,7 +1363,18 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#at', function () {
-        it ('should have more tests');
+        it ('should return an item at a given key/index.', function () {
+            [alphabetString, alphabetArray].forEach(subject => {
+                const subjectLastInd = length(subject) - 1;
+                expectEqual(at(0, subject), subject[0]);
+                expectEqual(at(5, subject), subject[5]);
+                expectEqual(at(subjectLastInd, subject), subject[subjectLastInd]);
+            });
+        });
+        it ('should return `undefined` when list has no length.', function () {
+            expectEqual(at(0, ''), undefined);
+            expectEqual(at(0, []), undefined);
+        });
     });
 
     describe ('#elemIndex', function () {
