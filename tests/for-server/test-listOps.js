@@ -18,9 +18,10 @@ import {isTruthy} from '../../src/booleanOps/is';
 
 import {
     all, and, or, any, find, findIndex, findIndices,
-    map, mapAccumL, mapAccumR, reverse,
+    map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
-    head, last, init, tail, uncons, length, isEmpty as isEmptyList,
+    head, last, init, tail, uncons, length,
+    reverse, intersperse, isEmpty as isEmptyList,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
@@ -202,7 +203,21 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#intersperse', function () {
-        it ('should have more tests.');
+        it ('should be able to inject a list (string or array) in-between the items of a list of the same type.', function () {
+            const result1 = intersperse(', ', alphabetArray).join(''),
+                result2 = intersperse(', ', alphabetString);
+            expectEqual(result1, alphabetArray.join(', '));
+            expectEqual(result2, alphabetArray.join(', '));
+            log(result1);
+        });
+        it ('should return a list with the same item when the list has a length of `1`', function () {
+            expectEqual(intersperse(', ', 'a'), 'a');
+            expectShallowEquals(intersperse(', ', ['a']), ['a']);
+        });
+        it ('should return an empty list when receiving an empty list', function () {
+            expectEqual(intersperse('', ''), '');
+            expectShallowEquals(intersperse('', []), []);
+        });
     });
 
     describe ('#intercalate', function () {
