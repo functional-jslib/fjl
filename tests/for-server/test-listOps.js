@@ -18,7 +18,7 @@ import {isTruthy} from '../../src/booleanOps/is';
 
 import {
     all, and, or, any, find, findIndex, findIndices,
-    zip, unzip,
+    zip, zipN, unzip,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length,
@@ -1515,7 +1515,14 @@ describe ('#arrayOps', function () {
     });
 
     describe ('#zipN', function () {
-        it ('should have more tests.');
+        it ('should have more tests.', function () {
+            // Unfold alphabet array into an array with arrays of 5 items (as our initial subject).
+            const subj = unfoldr(remainder =>
+                    !length(remainder) ? undefined : splitAt(5, remainder),
+                take(25, alphabetArray));
+            log (subj);
+            log(zipN.apply(null, subj));
+        });
     });
 
     describe ('#zipWith', function () {

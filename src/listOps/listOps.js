@@ -4,7 +4,7 @@
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
  * @todo code unperformant shorthand in `listOps`
  */
-import {curry, curry2}      from '../functionOps/curry';
+import {curry, curry2, curry3, curry4, curry5}      from '../functionOps/curry';
 import {apply}              from '../functionOps/apply';
 import {negateP}            from '../functionOps/functionOps';
 import {isTruthy, isFalsy}  from '../booleanOps/is';
@@ -69,11 +69,11 @@ const
 
     lengths = (...arrs) => length(arrs) ? map(length, arrs) : [],
 
-    trimLengths = (...arrays) => {
-        const arrayLengths = lengths(arrays),
-            smallLen = minimum(arrayLengths);
-        return arrays.map((arr, ind) => arrayLengths[ind] > smallLen ?
-            slice(0, smallLen, arr) : sliceFromZero(arr));
+    lengthsToSmallest = (...lists) => {
+        const listLengths = lengths(lists),
+            smallLen = minimum(listLengths);
+        return map((list, ind) => listLengths[ind] > smallLen ?
+            slice(0, smallLen, list) : sliceFromZero(list), lists);
     },
 
     aggregateStr = (agg, item) => agg + item,
@@ -99,7 +99,7 @@ const
 
     reduceUntil = (pred, op, agg, arr) => {
         const limit = length(arr);
-        if (limit === 0) { return agg; }
+        if (!limit) { return agg; }
         let ind = 0,
             result = agg;
         for (; ind < limit; ind++) {
@@ -111,7 +111,7 @@ const
 
     reduceRightUntil = (pred, op, agg, arr) => {
         const limit = length(arr);
-        if (limit === 0) { return agg; }
+        if (!limit) { return agg; }
         let ind = limit - 1,
             result = agg;
         for (; ind >= 0; ind--) {
@@ -535,7 +535,9 @@ export const
 
     /**
      * Unfolds a value into a list of somethings.
-     * @param op {Function} - Operation to perform
+     * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
+     * @function module:listOps.unfoldr
+     * @param op {Function} - Operation to perform (should return
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
      */
@@ -880,45 +882,57 @@ export const
         reduce((agg, arr) => mappend(agg, flatten(arr)), flatten(arr0), arrays)),
 
     /**
-     * zip :: [a] -> [b] -> [(a, b)]
      * zip takes two lists and returns a list of corresponding pairs.
      * If one input list is short, excess elements of the longer list are discarded.
+     * @haskellType `zip :: [a] -> [b] -> [(a, b)]`
      * @functionOps module:listOps.zip
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
      */
     zip = curry((arr1, arr2) => {
-        const {0: a1, 1: a2} = trimLengths(arr1, arr2);
-        return reduce((agg, item, ind) => {
-                agg.push([item, a2[ind]]);
-            return agg;
-        }, [], a1);
+        const [a1, a2] = lengthsToSmallest(arr1, arr2);
+        return reduce((agg, item, ind) =>
+                aggregateArr(agg, [item, a2[ind]]),
+            [], a1);
     }),
 
-    zipN = curry2((...arrs) => {
-        const lists = apply(trimLengths, arrs);
-        return reduce((agg, arr, ind) => {
-            if (!ind) {
-                return zip (agg, arr);
-            }
-            return agg.map (arr2 => {
-                arr.forEach (elm => {
-                    arr2.push(elm);
-                });
-                return arr2;
-            });
-        }, lists.shift(), lists);
-    }),
+    zipN = (...arrs) => transpose(apply(lengthsToSmallest, arrs)),
+
+    zip3 = curry3(zipN),
+
+    zip4 = curry4(zipN),
+
+    zip5 = curry5(zipN),
 
     /**
      * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
-     * zipWith generalises zip by zipping with the functionOps given as the
-     * first argument, instead of a tupling functionOps. For example,
+     * zipWith generalises zip by zipping with the function given as the
+     * first argument, instead of a function tupling function (function that returns a tuple). For example,
      * zipWith (+) is applied to two lists to produce the list of corresponding sums.
+     * @note `_|_` means bottom or perpetual (@see
+     *  - https://wiki.haskell.org/Bottom
+     *  - https://stackoverflow.com/questions/19794681/what-does-this-syntax-mean-in-haskell-or
+     *  )
+     * @example
+     * ```
+     * zipWith f [] _|_ = []
+     * ```
      * @type {Function}
      */
-    zipWith = curry((combinator, xs1, xs2) => []),
+    zipWith = curry((op, xs1, xs2) => {
+        const [a1, a2] = lengthsToSmallest(xs1, xs2);
+        return reduce((agg, item, ind) =>
+                aggregateArr(agg, op(item, a2[ind])),
+            [], a1);
+    }),
+
+    zipWithN = curry((op, ...lists) => {
+        const trimmedLengthsList = apply(lengthsToSmallest, lists);
+        return reduce((agg, item, ind, list) =>
+                aggregateArr(agg, apply(op, map(xs => xs[ind], list))),
+            [], trimmedLengthsList);
+    }),
 
     /**
      * unzip :: [(a, b)] -> ([a], [b])
