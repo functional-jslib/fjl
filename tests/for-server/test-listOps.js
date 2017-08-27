@@ -1522,13 +1522,46 @@ describe ('#listOps', function () {
     });
 
     describe ('#zipN', function () {
-        it ('should have more tests.', function () {
+        it ('should be able to zip the given number of lists.', function () {
             // Unfold alphabet array into an array with arrays of 5 items (as our initial subject).
-            const subj = unfoldr(remainder =>
-                    !length(remainder) ? undefined : splitAt(5, remainder),
-                take(25, alphabetArray));
-            log (subj);
-            log(zipN.apply(null, subj));
+            const subj = unfoldr (remainder => {
+                        return !length(remainder) ?
+                            undefined : splitAt(5, remainder);
+                    }, take(25, alphabetArray)),
+
+                subj2 = [
+                    range(1, 5),
+                    range(8, 13),
+                    [],
+                    range(13, 21),
+                    []
+                ],
+
+                subj3 = [
+                    [],
+                    range(21, 34),
+                    range(34, 55)
+                ],
+
+                zipNResult = zipN.apply(null, subj),
+
+                zipNResult2 = zipN.apply(null, subj2);
+
+                // log(zipNResult, zipNResult2);
+
+                expectTrue(
+                    all( tuple =>
+                        all( (list, ind) =>
+                            all( (item, ind2) =>
+                                // !log(item, tuple[1][ind2][ind]) &&
+                                item === tuple[1][ind2][ind], list
+                            ),
+                            tuple[0]
+                        ),
+                        [[zipNResult, filter(length, subj)],
+                            [zipNResult2, filter(length, subj2)]]
+                    )
+                );
         });
     });
 

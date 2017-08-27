@@ -15,7 +15,7 @@ import {of}                 from '../objectOps/of';
 import {length, hasOwnProperty} from '../objectOps/objectPrelude';
 import {compose}            from '../functionOps/compose';
 import {fPureTakes2, fPureTakesOne, fPureTakesOneOrMore} from '../utils/utils';
-
+import {log} from '../../tests/for-server/helpers';
 export {length};
 
 const
@@ -70,7 +70,7 @@ const
     lengths = (...arrs) => length(arrs) ? map(length, arrs) : [],
 
     lengthsToSmallest = (...lists) => {
-        const listLengths = lengths(lists),
+        const listLengths = apply(lengths, lists),
             smallLen = minimum(listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
             slice(0, smallLen, list) : sliceFromZero(list), lists);
@@ -898,7 +898,12 @@ export const
             [], a1);
     }),
 
-    zipN = (...arrs) => transpose(apply(lengthsToSmallest, arrs)),
+    zipN = (...lists) => {
+        const trimmedLengthsList = apply(lengthsToSmallest, filter(length, lists));
+        return reduce((agg, item, ind, list) =>
+                aggregateArr(agg, map(xs => xs[ind], trimmedLengthsList)),
+            [], trimmedLengthsList[0]);
+    },
 
     zip3 = curry3(zipN),
 
