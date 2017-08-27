@@ -67,7 +67,7 @@ const
 
     sortDescByLength = getSortByOrder(DESC, length),
 
-    lengths = (...arrs) => length(arrs) ? map(length, arrs) : [],
+    lengths = (...lists) => length(lists) ? map(length, lists) : [],
 
     lengthsToSmallest = (...lists) => {
         const listLengths = apply(lengths, lists),
@@ -932,6 +932,7 @@ export const
      * @type {Function}
      */
     zipWith = curry((op, xs1, xs2) => {
+        if (!length(xs1) || !length(xs2)) { return mempty(xs1); }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
         return reduce((agg, item, ind) =>
                 aggregateArr(agg, op(item, a2[ind])),
@@ -939,10 +940,15 @@ export const
     }),
 
     zipWithN = (op, ...lists) => {
-        const trimmedLengthsList = apply(lengthsToSmallest, lists);
+        const trimmedLists = apply(lengthsToSmallest, lists),
+            lenOfTrimmed = length(trimmedLists);
+        if (!lenOfTrimmed) { return []; }
+        else if (lenOfTrimmed === 1) {
+            return slice(0, length(trimmedLists[0]), trimmedLists[0]);
+        }
         return reduce((agg, item, ind, list) =>
-                aggregateArr(agg, apply(op, map(xs => xs[ind], list))),
-            [], trimmedLengthsList);
+                aggregateArr(agg, apply(op, map(xs => xs[ind], trimmedLists))),
+            [], trimmedLists[0]);
     },
 
     zipWith3 = curry4(zipWithN),
@@ -963,11 +969,11 @@ export const
             return agg;
         }, [[], []], arr),
 
-    unzipN = (...arrs) =>
+    unzipN = (...lists) =>
         reduce((agg, item) => {
             agg.push(unzip(item));
             return agg;
-        }, [], arrs),
+        }, [], lists),
 
     any = curry((p, xs) => {
         let ind = 0,

@@ -18,7 +18,7 @@ import {isTruthy} from '../../src/booleanOps/is';
 
 import {
     all, and, or, any, find, findIndex, findIndices,
-    zip, zipN, unzip,
+    zip, zipN, zipWith, unzip,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length,
@@ -1573,7 +1573,56 @@ describe ('#listOps', function () {
     });
 
     describe ('#zipWith', function () {
-        it ('should have more tests.');
+        const tuplize = (a, b) => [a, b];
+
+        it ('should be able to zip the given number of lists.', function () {
+            // Unfold alphabet array into an array with arrays of 5 items (as our initial subject).
+            const subj = unfoldr (remainder => {
+                    return !length(remainder) ?
+                        undefined : splitAt(5, remainder);
+                }, take(25, alphabetArray)),
+
+                subj2 = [
+                    range(1, 5),
+                    range(8, 13),
+                    [],
+                    range(13, 21),
+                    []
+                ],
+
+                subj3 = [
+                    [],
+                    range(21, 34),
+                    range(34, 55)
+                ],
+
+                zipWithResult = zipWith(tuplize, ...subj),
+
+                zipWithResult2 = zipWith(tuplize, ...subj2);
+
+                // log(zipWithResult, zipWithResult2);
+
+            expectTrue(
+                all( tuple =>
+                        all( (list, ind) =>
+                                all( (item, ind2) =>
+                                    // !log(item, tuple[1][ind2][ind]) &&
+                                    item === tuple[1][ind2][ind], list
+                                ),
+                            tuple[0]
+                        ),
+                    [[zipWithResult, filter(length, subj)],
+                        [zipWithResult2, filter(length, subj2)]]
+                )
+            );
+        });
+        it ('should return an empty list when empty lists are passed', function () {
+            expectShallowEquals(zipWith(tuplize, [], []), []);
+        });
+        it ('should return a copy of the passed in populated list when one of them is not populated.', function () {
+            expectShallowEquals(zipWith(tuplize, [], alphabetArray), alphabetArray);
+            expectShallowEquals(zipWith(tuplize, alphabetArray, []), alphabetArray);
+        });
     });
 
     describe ('#unzip', function () {
