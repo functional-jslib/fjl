@@ -267,6 +267,13 @@ const
 
 export const
 
+    /**
+     * Returns a new instance of passed in list.
+     * @function module:listOps.mempty
+     * @note is named after haskell's `Monoid mempty`
+     * @param x {Array|String|*}
+     * @returns {Array|String|*}
+     */
     mempty = x => !isset(x) ? [] : (x.mempty ? x.mempty() : of(x)),
 
     mappend = curry(append),
