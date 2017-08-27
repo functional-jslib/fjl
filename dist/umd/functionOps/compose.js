@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../listOps/listOpsPrelude'], factory);
+    define(['exports', '../listOps/listOps'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../listOps/listOpsPrelude'));
+    factory(exports, require('../listOps/listOps'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.listOpsPrelude);
+    factory(mod.exports, global.listOps);
     global.compose = mod.exports;
   }
-})(this, function (exports, _listOpsPrelude) {
+})(this, function (exports, _listOps) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -33,7 +33,7 @@
     }
 
     return function (arg0) {
-      return (0, _listOpsPrelude.reduceRight)(function (value, fn) {
+      return (0, _listOps.foldr)(function (value, fn) {
         return fn(value);
       }, arg0, args);
     };

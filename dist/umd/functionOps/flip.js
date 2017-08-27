@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../listOps/listOpsPrelude', './curry', './apply', './call'], factory);
+    define(['exports', '../listOps/listOps', './curry', './apply', './call'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../listOps/listOpsPrelude'), require('./curry'), require('./apply'), require('./call'));
+    factory(exports, require('../listOps/listOps'), require('./curry'), require('./apply'), require('./call'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.listOpsPrelude, global.curry, global.apply, global.call);
+    factory(mod.exports, global.listOps, global.curry, global.apply, global.call);
     global.flip = mod.exports;
   }
-})(this, function (exports, _listOpsPrelude, _curry, _apply, _call) {
+})(this, function (exports, _listOps, _curry, _apply, _call) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -31,7 +31,7 @@
         args[_key] = arguments[_key];
       }
 
-      return (0, _apply.apply)(fn, (0, _listOpsPrelude.reverse)(args));
+      return (0, _apply.apply)(fn, (0, _listOps.reverse)(args));
     });
   },
 

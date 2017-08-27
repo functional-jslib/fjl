@@ -122,12 +122,12 @@
     /**
      * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
      * @functionOps curryN_
-     * @param fn {Function}
      * @param executeArity {Number}
+     * @param fn {Function}
      * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
      * @returns {Function} - Passed in functionOps wrapped in a functionOps for currying.
      */
-    function curryN_(fn, executeArity) {
+    function curryN_(executeArity, fn) {
         for (var _len5 = arguments.length, curriedArgs = Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
             curriedArgs[_key5 - 2] = arguments[_key5];
         }
@@ -140,19 +140,19 @@
             var concatedArgs = replacePlaceHolders(curriedArgs, args),
                 placeHolders = concatedArgs.filter(isPlaceHolder),
                 canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
-            return !canBeCalled ? curryN_.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+            return !canBeCalled ? curryN_.apply(null, [executeArity, fn].concat(concatedArgs)) : fn.apply(null, concatedArgs);
         };
     }
 
     /**
      * Curries a functionOps up to a given arity.
      * @functionOps curryN
-     * @param fn {Function}
      * @param executeArity {Number}
+     * @param fn {Function}
      * @param curriedArgs {...*}
      * @returns {Function}
      */
-    function curryN(fn, executeArity) {
+    function curryN(executeArity, fn) {
         for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
             curriedArgs[_key7 - 2] = arguments[_key7];
         }
@@ -164,7 +164,7 @@
 
             var concatedArgs = curriedArgs.concat(args),
                 canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-            return !canBeCalled ? curryN.apply(null, [fn, executeArity].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+            return !canBeCalled ? curryN.apply(null, [executeArity, fn].concat(concatedArgs)) : fn.apply(null, concatedArgs);
         };
     }
 
@@ -182,7 +182,7 @@
      * @returns {Function}
      */
     curry2_ = exports.curry2_ = function curry2_(fn) {
-        return curryN_(fn, 2);
+        return curryN_(2, fn);
     },
 
 
@@ -193,7 +193,7 @@
      * @returns {Function}
      */
     curry3_ = exports.curry3_ = function curry3_(fn) {
-        return curryN_(fn, 3);
+        return curryN_(3, fn);
     },
 
 
@@ -204,7 +204,7 @@
      * @returns {Function}
      */
     curry4_ = exports.curry4_ = function curry4_(fn) {
-        return curryN_(fn, 4);
+        return curryN_(4, fn);
     },
 
 
@@ -215,7 +215,7 @@
      * @returns {Function}
      */
     curry5_ = exports.curry5_ = function curry5_(fn) {
-        return curryN_(fn, 5);
+        return curryN_(5, fn);
     },
 
 
@@ -226,7 +226,7 @@
      * @returns {Function}
      */
     curry2 = exports.curry2 = function curry2(fn) {
-        return curryN(fn, 2);
+        return curryN(2, fn);
     },
 
 
@@ -236,7 +236,7 @@
      * @returns {Function}
      */
     curry3 = exports.curry3 = function curry3(fn) {
-        return curryN(fn, 3);
+        return curryN(3, fn);
     },
 
 
@@ -246,7 +246,7 @@
      * @returns {Function}
      */
     curry4 = exports.curry4 = function curry4(fn) {
-        return curryN(fn, 4);
+        return curryN(4, fn);
     },
 
 
@@ -256,6 +256,6 @@
      * @returns {Function}
      */
     curry5 = exports.curry5 = function curry5(fn) {
-        return curryN(fn, 5);
+        return curryN(5, fn);
     };
 });

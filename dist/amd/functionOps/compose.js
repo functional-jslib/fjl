@@ -1,4 +1,4 @@
-define(['exports', '../listOps/listOpsPrelude'], function (exports, _listOpsPrelude) {
+define(['exports', '../listOps/listOps'], function (exports, _listOps) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -15,5 +15,5 @@ define(['exports', '../listOps/listOpsPrelude'], function (exports, _listOpsPrel
    * @param args {...Function}
    * @returns {Function}
    */
-  const compose = exports.compose = (...args) => arg0 => (0, _listOpsPrelude.reduceRight)((value, fn) => fn(value), arg0, args);
+  const compose = exports.compose = (...args) => arg0 => (0, _listOps.foldr)((value, fn) => fn(value), arg0, args);
 });

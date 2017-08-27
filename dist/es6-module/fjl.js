@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+
 /**
  * @author elydelacruz
  * @created 12/6/2016.
@@ -83,17 +85,17 @@ function curry_ (fn, ...argsToCurry) {
 /**
  * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
  * @functionOps curryN_
- * @param fn {Function}
  * @param executeArity {Number}
+ * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
  * @returns {Function} - Passed in functionOps wrapped in a functionOps for currying.
  */
-function curryN_ (fn, executeArity, ...curriedArgs) {
+function curryN_ (executeArity, fn, ...curriedArgs) {
     return (...args) => {
         let concatedArgs = replacePlaceHolders(curriedArgs, args),
             placeHolders = concatedArgs.filter(isPlaceHolder),
             canBeCalled = (concatedArgs.length - placeHolders.length >= executeArity) || !executeArity;
-        return !canBeCalled ? curryN_.apply(null, [fn, executeArity].concat(concatedArgs)) :
+        return !canBeCalled ? curryN_.apply(null, [executeArity, fn].concat(concatedArgs)) :
             fn.apply(null, concatedArgs);
     };
 }
@@ -101,16 +103,16 @@ function curryN_ (fn, executeArity, ...curriedArgs) {
 /**
  * Curries a functionOps up to a given arity.
  * @functionOps curryN
- * @param fn {Function}
  * @param executeArity {Number}
+ * @param fn {Function}
  * @param curriedArgs {...*}
  * @returns {Function}
  */
-function curryN (fn, executeArity, ...curriedArgs) {
+function curryN (executeArity, fn, ...curriedArgs) {
     return (...args) => {
         let concatedArgs = curriedArgs.concat(args),
             canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
-        return !canBeCalled ? curryN.apply(null, [fn, executeArity].concat(concatedArgs)) :
+        return !canBeCalled ? curryN.apply(null, [executeArity, fn].concat(concatedArgs)) :
             fn.apply(null, concatedArgs);
     };
 }
@@ -120,14 +122,14 @@ function curryN (fn, executeArity, ...curriedArgs) {
  * @type {PlaceHolder}
  */
 let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
-let curry2_ = fn => curryN_(fn, 2);
-let curry3_ = fn => curryN_(fn, 3);
-let curry4_ = fn => curryN_(fn, 4);
-let curry5_ = fn => curryN_(fn, 5);
-let curry2 = fn => curryN(fn, 2);
-let curry3 = fn => curryN(fn, 3);
-let curry4 = fn => curryN(fn, 4);
-let curry5 = fn => curryN(fn, 5);
+let curry2_ = fn => curryN_(2, fn);
+let curry3_ = fn => curryN_(3, fn);
+let curry4_ = fn => curryN_(4, fn);
+let curry5_ = fn => curryN_(5, fn);
+let curry2 = fn => curryN(2, fn);
+let curry3 = fn => curryN(3, fn);
+let curry4 = fn => curryN(4, fn);
+let curry5 = fn => curryN(5, fn);
 
 /**
  * Created by elyde on 12/18/2016.
@@ -249,12 +251,6 @@ const fPureTakes2 = name => curry((arg1, arg2, f) => f[name](arg1, arg2));
 const fPureTakesOneOrMore = name => curry2((f, ...args) => f[name](...args));
 
 /**
- *
- */
-
-const prop = curry((name, obj) => obj[name]);
-
-/**
  * Created by elydelacruz on 7/22/2017.
  */
 /**
@@ -263,7 +259,7 @@ const prop = curry((name, obj) => obj[name]);
  */
 
 const hasOwnProperty = fPureTakesOne('hasOwnProperty');
-const length = prop('length');
+const length = x => x.length;
 const keys = obj => Object.keys(obj);
 const assign = curry2((function defineAssign () {
         if (Object.assign) {
@@ -302,12 +298,12 @@ const assignDeep = curry2((obj0, ...objs) =>
 const apply = curry((fn, args) => fn.apply(null, args));
 
 const of = (x, ...args) => {
-    const constructor = x.constructor,
-        typeOfX = typeOf(x);
+    if (!isset(x)) { return undefined; }
+    const constructor = x.constructor;
     if (hasOwnProperty('of', constructor)) {
         return apply(constructor.of, args);
     }
-    else if (isUsableImmutablePrimitive(typeOfX)) {
+    else if (isUsableImmutablePrimitive(x)) {
         return apply(constructor, args);
     }
     else if (isFunction(constructor)) {
@@ -315,62 +311,6 @@ const of = (x, ...args) => {
     }
     return undefined;
 };
-
-/**
- * Created by elyde on 7/20/2017.
- * All functions here are functional versions of methods of types;  E.g., map, filter etc.
- * @todo add `reverse` to './compounded'
- */
-
-/**
- * Array.prototype.reverse generator (generates a functionOps that calls the prototype version or a
- * shimmed version if it doesn't exist).
- * @returns {Function}
- */
-function defineReverse () {
-    return Array.prototype.reverse ? x => x.reverse() :
-        x => x.reduceRight((agg, item) => {
-            agg.push(item);
-            return agg;
-        }, []);
-}
-
-const reduce = fPureTakes2('reduce');
-const reduceRight = fPureTakes2('reduceRight');
-const concat = fPureTakesOneOrMore('concat');
-const join = fPureTakesOne('join');
-const slice = fPureTakes2('slice');
-const reverse = defineReverse();
-
-const objUnion = curry((obj1, obj2) => assignDeep(obj1, obj2));
-const objIntersect = curry((obj1, obj2) => reduce((agg, key) => {
-        if (hasOwnProperty(key, obj2)) {
-            agg[key] = obj2[key];
-        }
-        return agg;
-    }, {}, keys(obj1)));
-const objDifference = curry((obj1, obj2) => reduce((agg, key) => {
-        if (!hasOwnProperty(key, obj2)) {
-            agg[key] = obj1[key];
-        }
-        return agg;
-    }, {}, keys(obj1)));
-const objComplement = curry2((obj0, ...objs) => reduce((agg, obj) =>
-        assignDeep(agg, objDifference(obj, obj0)), {}, objs));
-
-const isTruthy = value => !!value;
-const isFalsy = value => !value;
-
-/**
- * Created by elyde on 7/15/2017.
- * @module booleanOps
- */
-
-const bAnd = curry2((a, b) => a && b);
-const bOr = curry2((a, b) => a || b);
-const bNot = x => !x;
-const bOtherwise = () => true;
-const bEqual = curry2((a, b) => a === b);
 
 /**
  * Created by elydelacruz on 7/22/2017.
@@ -385,7 +325,7 @@ const call = curry2((fn, ...args) => fn.call(null, ...args));
  * @param args {...Function}
  * @returns {Function}
  */
-const compose = (...args) => arg0 => reduceRight((value, fn) => fn(value), arg0, args);
+const compose = (...args) => arg0 => foldr((value, fn) => fn(value), arg0, args);
 
 /**
  * @module negate
@@ -426,17 +366,90 @@ const until = curry((predicate, operation, typeInstance) => {
  * @module function
  */
 
+const isTruthy = value => !!value;
+const isFalsy = value => !value;
+
+/**
+ *
+ */
+
+const prop = curry((name, obj) => obj[name]);
+
+/**
+ * Created by elyde on 12/10/2016.
+ */
+// ~~~ STRIP ~~~
+// This part gets stripped out when
+// generating browser version of test(s).
+// These variables get set at the top IIFE in the browser.
+// ~~~ /STRIP ~~~
+
+let expectInstanceOf = curry2_((value, instance) => expect(value).to.be.instanceOf(instance));
+let expectFunction = value => expectInstanceOf(value, Function);
+let expectEqual = curry2_((value, value2) => expect(value).to.be.equal(value2));
+let expectFalse = value => expectEqual(value, false);
+let expectTrue = value => expectEqual(value, true);
+let expectLength = curry2_((len, element) => compose(expectEqual(len), length$1)(element));
+let hasOwnProperty$1 = (instance, key) => Object.prototype.hasOwnProperty.call(instance, key);
+let length$1 = something => something.length;
+let add = curry2_((...args) => {
+        return args.reduce((agg, num) => num + agg, 0);
+    });
+let multiply = curry2_((...args) => {
+        return args.reduce((agg, num) => num * agg, 1);
+    });
+let divide = curry2_((...args) => {
+        return args.reduce((agg, num) => agg / num, args.shift());
+    });
+let subtract = curry2_((arg0, ...args) => {
+        return args.reduce((agg, num) => agg - num, arg0);
+    });
+let shallowCompareOnLeft = curry2_((incoming, against) => Array.isArray(incoming) ?
+        shallowCompareArraysLeft(incoming, against) :
+            shallowCompareObjectsLeft(incoming, against) );
+let shallowCompareArraysLeft = curry2_((incoming, against) => !incoming.some((_, ind) => against[ind] !== incoming[ind]));
+let shallowCompareObjectsLeft = curry2_((incoming, against, keys) => !(keys || Object.keys(incoming))
+        .some(key => against[key] !== incoming[key]) );
+let deepCompareLeft = (incoming, against) => {
+        return Object.keys(incoming).some(key => {
+            const typeOfValue = typeof incoming[key];
+            return !(
+                typeOfValue !== 'string' ||
+                typeOfValue !== 'object' ||
+                typeOfValue !== 'Array' ?
+                    against[key] === incoming[key] :
+                        deepCompareLeft(incoming[key], against[key])
+            );
+        });
+    };
+let expectShallowEquals = curry2_((a, b) => expectTrue(shallowCompareOnLeft(a, b)));
+let expectDeepEquals = curry2_((a, b) => expectTrue(deepCompareLeft(a, b)));
+let range = curry2_((from, to, step = 1) => {
+        let inc = from;
+        const out = [];
+        for (; inc <= to; inc += step) { out.push(inc); }
+        return out;
+    });
+let log = console.log.bind(console);
+let alphabetCharCodeRange = range('a'.charCodeAt(0), 'z'.charCodeAt(0));
+let alphabetArray = alphabetCharCodeRange
+        .map(charCode => String.fromCharCode(charCode));
+let alphabetString = alphabetArray.join('');
+
 /**
  * Array operators module.
  * @module arrayOps
+ * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
+ * @todo code unperformant shorthand in `listOps`
  */
-// import {log}                            from '../../tests/for-server/helpers';
 const ASC = 1;
 const DESC = -1;
-const sliceToEndFrom = curry((startInd, arr) => slice(startInd, length(arr), arr));
-const sliceFromZero = sliceToEndFrom(0);
+const alwaysFalse = () => false;
+const slice = fPureTakes2('slice');
+const sliceToEndFrom = (startInd, arr) => slice(startInd, length(arr), arr);
+const sliceFromZero = x => sliceToEndFrom(0, x);
 const onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1;
-const getSortByOrder = curry((multiplier, valueFn) => {
+const getSortByOrder = (multiplier, valueFn) => {
         valueFn = valueFn || (v => v);
         const x = onlyOneOrNegOne(multiplier),
             ifGreaterThan = 1 * x,
@@ -452,20 +465,16 @@ const getSortByOrder = curry((multiplier, valueFn) => {
             }
             return 0;
         });
-    });
-const sortDesc = getSortByOrder(DESC);
-const sortAsc = getSortByOrder(ASC);
-const sortDescByLength = getSortByOrder(DESC, x => length(x));
-const lengths = curry2((...arrs) => length(arrs) ? arrs.map(length) : []);
-const getOrderedLengths = curry2((orderDir, ...arrs) => (orderDir ? sortAsc : sortDesc)(lengths(arrs)));
-const trimLengths = (...arrays) => {
-        const smallLen = getOrderedLengths(ASC, arrays)[0];
-        return arrays.map(arr => length(arr) > smallLen ? slice(0, smallLen, arr) : sliceFromZero(arr));
     };
-const aggregateStr = (agg, item) => {
-        agg += item;
-        return agg;
+const sortDescByLength = getSortByOrder(DESC, length);
+const lengths = (...lists) => length(lists) ? map(length, lists) : [];
+const lengthsToSmallest = (...lists) => {
+        const listLengths = apply(lengths, lists),
+            smallLen = minimum(listLengths);
+        return map((list, ind) => listLengths[ind] > smallLen ?
+            slice(0, smallLen, list) : sliceFromZero(list), lists);
     };
+const aggregateStr = (agg, item) => agg + item;
 const aggregateArr = (agg, item) => {
         agg.push(item);
         return agg;
@@ -484,52 +493,43 @@ const aggregatorByType = x => {
     };
 const reduceUntil = (pred, op, agg, arr) => {
         const limit = length(arr);
-        if (limit === 0) {
-            return agg;
-        }
+        if (!limit) { return agg; }
         let ind = 0,
-            result = agg,
-            keys$$1 = keys(arr),
-            key;
+            result = agg;
         for (; ind < limit; ind++) {
-            key = keys$$1[ind];
-            if (pred(arr[key], key, arr)) { break; }
-            result = op(result, arr[key], key, arr);
+            if (pred(arr[ind], ind, arr)) { break; }
+            result = op(result, arr[ind], ind, arr);
         }
         return result;
     };
 const reduceRightUntil = (pred, op, agg, arr) => {
         const limit = length(arr);
-        if (limit === 0) {
-            return agg;
-        }
+        if (!limit) { return agg; }
         let ind = limit - 1,
-            result = agg,
-            keys$$1 = keys(arr),
-            key;
+            result = agg;
         for (; ind >= 0; ind--) {
-            key = keys$$1[ind];
-            if (pred(arr[key], key, arr)) { break; }
-            result = op(result, arr[key], key, arr);
+            if (pred(arr[ind], ind, arr)) { break; }
+            result = op(result, arr[ind], ind, arr);
         }
         return result;
     };
-const reduce$1 = curry((operation, agg, arr) =>
+const reduce = (operation, agg, arr) =>
         reduceUntil(
-            () => false,            // predicate
+            alwaysFalse,            // predicate
             operation,              // operation
             agg,                    // aggregator
-            arr));
-const reduceRight$1 = curry((operation, agg, arr) =>
+            arr);
+const reduceRight = (operation, agg, arr) =>
         reduceRightUntil(
-            () => false,            // predicate
+            alwaysFalse,            // predicate
             operation,              // operation
             agg,                    // aggregator
-            arr));
-const strConcat = (x, ...args) => reduce$1(aggregateStr, x, args);
+            arr);
+const arrayAppend = fPureTakesOneOrMore('concat');
+const strAppend = (arg0, ...args) => reduce(aggregateStr, arg0, args);
 const indexOf = fPureTakesOne('indexOf');
 const lastIndex = x => { const len = length(x); return len ? len - 1 : 0; };
-const findIndexWhere = curry((pred, arr) => {
+const findIndexWhere = (pred, arr) => {
         let ind = -1,
             predicateFulfilled = false;
         const limit = length(arr);
@@ -537,8 +537,27 @@ const findIndexWhere = curry((pred, arr) => {
             predicateFulfilled = pred(arr[++ind], ind, arr);
         }
         return ind;
-    });
-const findWhere = curry((pred, xs) => {
+    };
+const findIndexWhereRight = (pred, arr) => {
+        const limit = length(arr);
+        let ind = limit,
+            predicateFulfilled = false;
+        for (; ind >= 0 && !predicateFulfilled; --ind) {
+            predicateFulfilled = pred(arr[ind], ind, arr);
+        }
+        return ind;
+    };
+const findIndicesWhere = (pred, xs) => {
+        const limit = length(xs);
+        if (!limit) { return undefined; }
+        let ind = 0,
+            out = [];
+        for (; ind < limit; ind++) {
+            if (pred(xs[ind], ind, xs)) { out.push(ind); }
+        }
+        return out;
+    };
+const findWhere = (pred, xs) => {
         let ind = 0,
             limit = length(xs);
         if (!limit) { return; }
@@ -546,60 +565,88 @@ const findWhere = curry((pred, xs) => {
             let elm = xs[ind];
             if (pred(elm, ind, xs)) { return elm; }
         }
-    });
-
-const append = curry((xs1, xs2) => (isArray(xs1) ? concat : strConcat)(xs1, xs2));
-const appendMany = curry2((x, ...args) => (isArray(x) ? concat : strConcat)(x, ...args));
-const head = x => x[0];
-const last = functor => functor[lastIndex(functor)];
-const tail = functor => sliceToEndFrom(1, functor);
-const init = functor => slice(0, lastIndex(functor), functor);
-const uncons = x => {
-        const len = length(x);
-        if (len === 0) {
-            return undefined;
-        }
-        return [head(x), tail(x)];
     };
-const map$1 = curry ((fn, xs) => {
-        let ind = -1,
+const append = (xs1, xs2) => (isArray(xs1) ? arrayAppend : strAppend)(xs1, xs2);
+const appendMany = (x, ...args) => (isArray(x) ? arrayAppend : strAppend)(x, ...args);
+
+const mempty = x => {
+        if (!isset(x)) { return []; }
+        else if (x.mempty) { return x.mempty(); }
+        return  of(x);
+    };
+const mappend = curry(append);
+const mappendMany = curry(appendMany);
+const head = x => x[0];
+const last = xs => xs[lastIndex(xs)];
+const tail = xs => sliceToEndFrom(1, xs);
+const init = xs => slice(0, lastIndex(xs), xs);
+const uncons = xs => {
+        if (!xs) { return; } //
+        const len = length(xs);
+        if (len === 0) { return undefined; }
+        return [head(xs), tail(xs)];
+    };
+const unconsr = xs => {
+        if (!xs) { return; } //
+        const len = length(xs);
+        if (len === 0) { return undefined; }
+        return [init(xs), last(xs)];
+    };
+const isEmpty$1 = x => !length(x);
+const map = curry ((fn, xs) => {
+        let ind = 0,
             limit = length(xs),
-            out = (xs).constructor(),
+            out = mempty(xs),
             aggregate = aggregatorByType(xs);
-        while (++ind < limit) {
+        for (; ind < limit; ind += 1) {
             out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
         }
         return out;
     });
-const concat$1 = foldableOfA => appendMany(...foldableOfA);
-const concatMap = curry((fn, foldableOfA) => concat$1(map$1(fn, foldableOfA)));
-const reverse$1 = x => reduceRight$1((agg, item) => {
-        agg.push(item);
-        return agg;
-    }, x.constructor(), x);
-const intersperse = curry((between, arr) => {
-        const limit = length(arr) - 1,
-            aggregator = (arr).constructor(),
-            aggregatorOp = aggregatorByType(arr);
-        return reduce$1((agg, item, ind) => {
-            if (ind === limit) {
-                return aggregatorOp(agg, item);
-            }
-            return aggregatorOp(
-                aggregatorOp(agg, item),
-                between
+const concat = xs => mappendMany(...xs);
+const concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA)));
+const reverse = x => {
+        const aggregator = aggregatorByType(x);
+        return reduceRight(
+                (agg, item, ind) => aggregator(agg, item, ind),
+                mempty(x), x
             );
+    };
+const intersperse = curry((between, arr) => {
+        const limit = length(arr),
+            lastInd = limit - 1,
+            aggregator = mempty(arr),
+            aggregatorOp = aggregatorByType(arr);
+        if (!limit) { return aggregator; }
+        return reduce((agg, item, ind) => {
+            return ind === lastInd ?
+                aggregatorOp(agg, item) :
+                aggregatorOp(
+                    aggregatorOp(agg, item),
+                    between
+                );
         }, aggregator, arr);
     });
-const intercalate = curry((xs, xss) => concat$1(intersperse(xs, xss)));
+const intercalate = curry((xs, xss) => {
+        const result = intersperse(xs, xss);
+        return isString(result) ? result : concat(result);
+    });
 const transpose = xss => {
-        const orderedLengths = getOrderedLengths(DESC, ...xss),
-            out = new Array(orderedLengths[0]);
-        return reduce$1((agg, item) =>
-            reduce$1((agg2, element, ind2) => {
-                agg2[ind2].push(element);
-                return agg2;
-            }, agg, item), out.map(() => []), xss);
+        const numLists = length(xss);
+        if (!numLists) { return mempty(xss); }
+        const listLengths = apply(lengths, xss),
+            longestListLen = maximum(listLengths),
+            outLists = [];
+        let ind = 0, ind2;
+        for (; ind < longestListLen; ind += 1) {
+            const outList = [];
+            for (ind2 = 0; ind2 < numLists; ind2 += 1) {
+                if (listLengths[ind2] < ind + 1) { continue; }
+                outList.push(xss[ind2][ind]);
+            }
+            outLists.push(outList);
+        }
+        return filter(x => length(x), outLists);
     };
 const subsequences = xs => {
         const len = Math.pow(2, length(xs)),
@@ -616,15 +663,17 @@ const subsequences = xs => {
         return out;
     };
 const permutations = xs => [xs];
-const foldl = reduce$1;
-const foldr = reduceRight$1;
+const foldl = curry(reduce);
+const foldr = curry(reduceRight);
 const foldl1 = curry((op, xs) => {
-        const arr = sliceToEndFrom(0, xs);
-        return reduce$1 (op, arr.shift(), arr);
+        const parts = uncons(xs);
+        if (!parts) { return of (xs); }
+        return reduce (op, parts[0], parts[1]);
     });
 const foldr1 = curry((op, xs) => {
-        const arr = sliceToEndFrom(0, xs);
-        return reduceRight$1 (op, arr.pop(), arr);
+        const parts = unconsr(xs);
+        if (!parts) { return of (xs); }
+        return reduceRight (op, parts[1], parts[0]);
     });
 const mapAccumL = curry((op, zero, xs) => {
         const list = sliceToEndFrom(0, xs),
@@ -632,7 +681,7 @@ const mapAccumL = curry((op, zero, xs) => {
         if (!limit) { return [zero, list]; }
         let ind = 0,
             agg = zero,
-            mapped = xs.constructor(),
+            mapped = mempty(xs),
             tuple;
         for (; ind < limit; ind++) {
             tuple = op(agg, list[ind], ind);
@@ -647,7 +696,7 @@ const mapAccumR = curry((op, zero, xs) => {
         if (!limit) { return [zero, list]; }
         let ind = limit - 1,
             agg = zero,
-            mapped = xs.constructor(),
+            mapped = mempty(xs),
             tuple;
         for (; ind >= 0; ind--) {
             tuple = op(agg, list[ind], ind);
@@ -656,29 +705,18 @@ const mapAccumR = curry((op, zero, xs) => {
         }
         return [agg, mapped];
     });
-const unfoldr = curry((op, x, zero) => {
+const unfoldr = curry2((op, x) => {
         let ind = 0,
-            out = !isset(zero) ? [] : zero,
-            aggregator = aggregatorByType(out),
+            out = [],
             resultTuple = op(x, ind, out);
-        while (isset(resultTuple[1])) {
-            out = aggregator(out, resultTuple[0], ind);
+        while (resultTuple) {
+            out.push(resultTuple[0]);
             resultTuple = op(resultTuple[1], ++ind, out);
         }
         return out;
     });
-const findIndex = findIndexWhere;
-const findIndicesWhere = curry((pred, xs) => {
-        const limit = length(xs);
-        if (!limit) { return undefined; }
-        let ind = 0,
-            out = [];
-        for (; ind < limit; ind++) {
-            if (pred(xs[ind], ind, xs)) { out.push(ind); }
-        }
-        return out;
-    });
-const findIndices =  findIndicesWhere;
+const findIndex = curry(findIndexWhere);
+const findIndices =  curry(findIndicesWhere);
 const elemIndex = curry((x, xs) => {
         const foundInd = indexOf(x, xs);
         return foundInd !== -1 ? foundInd : undefined;
@@ -691,7 +729,7 @@ const splitAt = curry((ind, arr) => [
         sliceToEndFrom(ind, arr)
     ]);
 const takeWhile = curry((pred, arr) => {
-        let zero =  (arr).constructor();
+        let zero =  mempty(arr);
         const operation = aggregatorByType(arr);
         return reduceUntil (
             negateP(pred),  // predicate
@@ -710,6 +748,16 @@ const dropWhile = curry((pred, arr) => {
             slice(0, limit, arr) :
             slice(splitPoint, limit, arr);
     });
+const dropWhileEnd = curry((pred, arr) => {
+        const limit = length(arr),
+            splitPoint =
+                findIndexWhereRight((item, ind, arr2) =>
+                    !pred(arr[ind], ind, arr2), arr);
+
+        return splitPoint === -1 ?
+            slice(0, limit, arr) :
+            slice(0, splitPoint + 1, arr);
+    });
 const span = curry((pred, arr) => {
         const splitPoint = findIndexWhere(negateP(pred), arr);
         return splitPoint === -1 ?
@@ -721,12 +769,12 @@ const breakOnList = curry((pred, arr) => {
             splitAt(0, arr) : splitAt(splitPoint, arr);
     });
 const at = prop;
-const find = findWhere;
-const filter$1 = curry ((pred, xs) => {
+const find = curry(findWhere);
+const filter = curry((pred, xs) => {
         let ind = 0,
             limit = length(xs),
             aggregator = aggregatorByType(xs),
-            out = (xs).constructor();
+            out = mempty(xs);
         if (!limit) { return out; }
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) {
@@ -740,7 +788,7 @@ const partition = curry((pred, arr) => {
             receivedString = isString(arr),
             zero = receivedString ? '' : [];
         if (!limit) { return [zero, zero]; }
-        return [filter$1(pred, arr), filter$1(negateP(pred), arr)];
+        return [filter(pred, arr), filter(negateP(pred), arr)];
     });
 const elem = curry((elm, xs) => indexOf(elm, xs) !== -1);
 const notElem = curry((elm, xs) => indexOf(elm, xs) === -1);
@@ -763,72 +811,162 @@ const isSuffixOf = curry((xs1, xs2) => {
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
             return false;
         }
-        let ind = limit2 - 1;
-        for (; ind >= 0; ind--) {
-            if (xs1[ind] !== xs2[ind]) { return false; }
+        let ind1 = limit1 - 1,
+            ind2 = limit2 - 1;
+        for (; ind1 >= 0; ind1--) {
+            if (xs1[ind1] !== xs2[ind2]) { return false; }
+            ind2 -= 1;
         }
         return true;
     });
 const isInfixOf = curry((xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
+        if (limit2 < limit1 || !limit1 || !limit2) {
             return false;
         }
-        let ind = limit2 - 1;
-        for (; ind >= 0; ind--) {
-            if (xs1[ind] !== xs2[ind]) { return false; }
+        let ind1,
+            foundLen,
+            ind = 0;
+        for (; ind < limit2; ind += 1) {
+            foundLen = 0;
+            for (ind1 = 0; ind1 < limit1; ind1 += 1) {
+                if (xs2[ind1 + ind] === xs1[ind1]) { foundLen += 1; }
+                if (foundLen === limit1) { return true; }
+            }
         }
-        return true;
+        return false;
     });
-const group = xs => [xs];
-const inits = xs => [xs];
-const tails = xs => [xs];
-const stripPrefix = curry((prefix, arr) =>
-        isPrefixOf(prefix, arr) ? splitAt(prefix.length, arr)[1] : sliceToEndFrom(0, arr));
-const flatten = arr => reduce$1((agg, elm) => {
+const isSubsequenceOf = curry((xs1, xs2) => {
+        const len = Math.pow(2, length(xs2)),
+            lenXs1 = length(xs1);
+        let foundLen,
+            i;
+        for (i = 0; i < len; i += 1) {
+            foundLen = 0;
+            for (let j = 0; j < len; j += 1) {
+                if (i & (1 << j) && indexOf(xs2[j], xs1) > -1) { foundLen += 1; }
+                if (foundLen === lenXs1) { return true; }
+            }
+        }
+        return false;
+    });
+const group = xs => {
+        const limit = length(xs);
+        if (!limit) { return sliceToEndFrom(0, xs); }
+        let ind = 0,
+            prevItem,
+            item,
+            agg = [];
+        for (; ind < limit; ind += 1) {
+            item = xs[ind];
+            agg.push(
+                takeWhile (x => {
+                        if (x === prevItem) { ind++; }
+                        if (x === item) { prevItem = x; return true; }
+                        return false;
+                    },
+                    slice(ind, limit, xs)
+                )
+            );
+        }
+        return agg;
+    };
+const inits = xs => {
+        let limit = length(xs),
+            ind = 0,
+            agg = [];
+        if (!limit) { return []; }
+        for (; ind <= limit; ind += 1) {
+            agg = aggregateArr(agg, slice(0, ind, xs));
+        }
+        return agg;
+    };
+const tails = xs => {
+        let limit = length(xs),
+            ind = 0,
+            agg = [];
+        if (!limit) { return []; }
+        for (; ind <= limit; ind += 1) {
+            agg = aggregateArr(agg, slice(ind, limit, xs));
+        }
+        return agg;
+    };
+const stripPrefix = curry((prefix, list) =>
+        isPrefixOf(prefix, list) ?
+            splitAt(prefix.length, list)[1] :
+                sliceToEndFrom(0, list));
+const flatten = arr => reduce((agg, elm) => {
         if (isArray(elm)) {
-            return append(agg, flatten(elm));
+            return mappend(agg, flatten(elm));
         }
         agg.push(elm);
         return agg;
     }, [], arr);
 const flattenMulti = curry2((arr0, ...arrays) =>
-        reduce$1((agg, arr) => append(agg, flatten(arr)), flatten(arr0), arrays));
+        reduce((agg, arr) => mappend(agg, flatten(arr)), flatten(arr0), arrays));
 const zip = curry((arr1, arr2) => {
-        const {0: a1, 1: a2} = trimLengths(arr1, arr2);
-        return reduce$1((agg, item, ind) => {
-                agg.push([item, a2[ind]]);
-            return agg;
-        }, [], a1);
+        if (!length(arr1) || !length(arr2)) { return mempty(arr1); }
+        const [a1, a2] = lengthsToSmallest(arr1, arr2);
+        return reduce((agg, item, ind) =>
+                aggregateArr(agg, [item, a2[ind]]),
+            [], a1);
     });
-const zipN = curry2((...arrs) => {
-        const lists = apply(trimLengths, arrs);
-        return reduce$1((agg, arr, ind) => {
-            if (!ind) {
-                return zip (agg, arr);
-            }
-            return agg.map (arr2 => {
-                arr.forEach (elm => {
-                    arr2.push(elm);
-                });
-                return arr2;
-            });
-        }, lists.shift(), lists);
+const zipN = (...lists) => {
+        const trimmedLists = apply(lengthsToSmallest, filter(length, lists)),
+        lenOfTrimmed = length(trimmedLists);
+        if (!lenOfTrimmed) { return []; }
+        else if (lenOfTrimmed === 1) {
+            return slice(0, length(trimmedLists[0]), trimmedLists[0]);
+        }
+        return reduce((agg, item, ind, list) =>
+                aggregateArr(agg, map(xs => xs[ind], trimmedLists)),
+            [], trimmedLists[0]);
+    };
+const zip3 = curry3(zipN);
+const zip4 = curry4(zipN);
+const zip5 = curry5(zipN);
+const zipWith = curry((op, xs1, xs2) => {
+        if (!length(xs1) || !length(xs2)) { return mempty(xs1); }
+        const [a1, a2] = lengthsToSmallest(xs1, xs2);
+        return reduce((agg, item, ind) =>
+                aggregateArr(agg, op(item, a2[ind])),
+            [], a1);
     });
-const zipWith = curry((combinator, xs1, xs2) => []);
+const zipWithN = (op, ...lists) => {
+        const trimmedLists = apply(lengthsToSmallest, lists),
+            lenOfTrimmed = length(trimmedLists);
+        if (!lenOfTrimmed) { return []; }
+        else if (lenOfTrimmed === 1) {
+            return slice(0, length(trimmedLists[0]), trimmedLists[0]);
+        }
+        return reduce((agg, item, ind, list) =>
+                aggregateArr(agg, apply(op, map(xs => xs[ind], trimmedLists))),
+            [], trimmedLists[0]);
+    };
+const zipWith3 = curry4(zipWithN);
+const zipWith4 = curry5(zipWithN);
+const zipWith5 = curryN(5, zipWithN);
 const unzip = arr =>
-        reduce$1((agg, item) => {
+        reduce((agg, item) => {
             agg[0].push(item[0]);
             agg[1].push(item[1]);
             return agg;
         }, [[], []], arr);
-const unzipN = (...arrs) =>
-        reduce$1((agg, item) => {
+const unzipN = (...lists) =>
+        reduce((agg, item) => {
             agg.push(unzip(item));
             return agg;
-        }, [], arrs);
-const any = curry((p, xs) => reduceUntil(p, (() => true), false, xs));
+        }, [], lists);
+const any = curry((p, xs) => {
+        let ind = 0,
+            limit = length(xs);
+        if (!limit) { return false; }
+        for (; ind < limit; ind += 1) {
+            if (p(xs[ind])) { return true; }
+        }
+        return false;
+    });
 const all = curry((p, xs) => {
         const limit = length(xs);
         let ind = 0;
@@ -845,27 +983,20 @@ const all = curry((p, xs) => {
 const and = all(isTruthy);
 const or = any(isTruthy);
 const not = all(isFalsy);
-const equal = curry2((arg0, ...args) => all(x => arg0 === x, args));
-const sum = arr => {
-        const parts = uncons(arr);
-        return reduce$1((agg, x) => agg + x, parts[0], parts[1]);
-    };
-const product = arr => {
-        const parts = uncons(arr);
-        return reduce$1((agg, x) => agg * x, parts[0], parts[1]);
-    };
+const sum = list => reduce((agg, x) => agg + x, 0, list);
+const product = arr => reduce((agg, x) => agg * x, 1, arr);
 const maximum = arr => apply(Math.max, arr);
 const minimum = arr => apply(Math.min, arr);
 const arrayUnion = curry((arr1, arr2) =>
-        append(arr1, filter$1(elm => indexOf(elm, arr1) === -1, arr2)));
+        mappend(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2)));
 const arrayIntersect = curry((arr1, arr2) => length(arr2) === 0 ? [] :
-            filter$1(elm => indexOf(elm, arr2) > -1, arr1));
+            filter(elm => indexOf(elm, arr2) > -1, arr1));
 const arrayDifference = curry((array1, array2) => { // augment this with max length and min length ordering on op
         let [arr1, arr2] = sortDescByLength(array1, array2);
         if (!arr2 || length(arr2) === 0) {
             return slice(0, length(arr1), arr1);
         }
-        return reduce$1((agg, elm) => {
+        return reduce((agg, elm) => {
             if (indexOf(elm, arr2) === -1) {
                 agg.push(elm);
             }
@@ -873,7 +1004,34 @@ const arrayDifference = curry((array1, array2) => { // augment this with max len
         }, [], arr1);
     });
 const arrayComplement = curry2((arr0, ...arrays) =>
-        reduce$1((agg, arr) => append(agg, arrayDifference(arr0, arr)), [], arrays));
+        reduce((agg, arr) => mappend(agg, arrayDifference(arr0, arr)), [], arrays));
+
+const objUnion = curry((obj1, obj2) => assignDeep(obj1, obj2));
+const objIntersect = curry((obj1, obj2) => foldl((agg, key) => {
+        if (hasOwnProperty(key, obj2)) {
+            agg[key] = obj2[key];
+        }
+        return agg;
+    }, {}, keys(obj1)));
+const objDifference = curry((obj1, obj2) => foldl((agg, key) => {
+        if (!hasOwnProperty(key, obj2)) {
+            agg[key] = obj1[key];
+        }
+        return agg;
+    }, {}, keys(obj1)));
+const objComplement = curry2((obj0, ...objs) => foldl((agg, obj) =>
+        assignDeep(agg, objDifference(obj, obj0)), {}, objs));
+
+/**
+ * Created by elyde on 7/15/2017.
+ * @module booleanOps
+ */
+
+const bAnd = curry2((a, b) => a && b);
+const bOr = curry2((a, b) => a || b);
+const bNot = x => !x;
+const bOtherwise = () => true;
+const bEqual = curry2((a, b) => a === b);
 
 /**
  * Contains functions for operating strings.
@@ -885,8 +1043,8 @@ const split = curry((separator, str) => {
     });
 const lines = split(/[\n\r]/gm);
 const words = split(/[\s\t]/gm);
-const unwords = join('\s');
-const unlines = join('\n');
+const unwords = intercalate('\s');
+const unlines = intercalate('\n');
 
 const negate = x => x * -1;
 
@@ -925,10 +1083,10 @@ const intersect = curry((functor1, functor2) => {
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Sat Aug 12 2017 20:03:50 GMT-0400 (Eastern Daylight Time) 
+ * Generated Sun Aug 27 2017 19:08:34 GMT-0400 (Eastern Daylight Time) 
  */
 
-let version = '0.14.0';
+let version = '0.14.34';
 
 /**
  * Created by elyde on 12/6/2016.
@@ -943,4 +1101,4 @@ let version = '0.14.0';
  * @module fjl
  */
 
-export { version, hasOwnProperty, length, keys, assign, assignDeep, instanceOf, typeOf, isFunction, isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isPromise, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, notEmptyAndOfType, isset, of, objUnion, objIntersect, objDifference, objComplement, bAnd, bOr, bNot, bOtherwise, bEqual, isTruthy, isFalsy, call, apply, compose, curry, curryN, curry2, curry3, curry4, curry5, __, curry_, curryN_, curry2_, curry3_, curry4_, curry5_, negateP, id, flip, flipN, until, append, appendMany, head, last, tail, init, uncons, map$1 as map, concat$1 as concat, concatMap, reverse$1 as reverse, intersperse, intercalate, transpose, subsequences, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, unfoldr, findIndex, findIndicesWhere, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, group, inits, tails, stripPrefix, flatten, flattenMulti, zip, zipN, zipWith, unzip, unzipN, any, all, and, or, not, equal, sum, product, maximum, minimum, arrayUnion, arrayIntersect, arrayDifference, arrayComplement, split, lines, words, unwords, unlines, negate, complement, difference, union, intersect };
+export { version, hasOwnProperty, length, keys, assign, assignDeep, instanceOf, typeOf, isFunction, isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isPromise, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, notEmptyAndOfType, isset, of, objUnion, objIntersect, objDifference, objComplement, bAnd, bOr, bNot, bOtherwise, bEqual, isTruthy, isFalsy, call, apply, compose, curry, curryN, curry2, curry3, curry4, curry5, __, curry_, curryN_, curry2_, curry3_, curry4_, curry5_, negateP, id, flip, flipN, until, mempty, mappend, mappendMany, head, last, tail, init, uncons, unconsr, map, concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, inits, tails, stripPrefix, flatten, flattenMulti, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, arrayUnion, arrayIntersect, arrayDifference, arrayComplement, split, lines, words, unwords, unlines, negate, complement, difference, union, intersect };

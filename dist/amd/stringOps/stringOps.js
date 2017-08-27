@@ -1,4 +1,4 @@
-define(['exports', '../listOps/listOpsPrelude', '../functionOps/curry'], function (exports, _listOpsPrelude, _curry) {
+define(['exports', '../listOps/listOps', '../functionOps/curry'], function (exports, _listOps, _curry) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -43,19 +43,19 @@ define(['exports', '../listOps/listOpsPrelude', '../functionOps/curry'], functio
 
 
   /**
-   * Joins an arrayOps of strings with '\s'.
+   * Intersperse an array of strings with '\s' and then concats them.
    * @functionOps module:stringOps.unwords
    * @param arr {String}
    * @returns {Array}
    */
-  unwords = exports.unwords = (0, _listOpsPrelude.join)('\s'),
+  unwords = exports.unwords = (0, _listOps.intercalate)('\s'),
 
 
   /**
-   * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
+   * Intersperses a '\n' character into a list of strings and then concats it.
    * @functionOps module:stringOps.unlines
-   * @param str {String}
+   * @param list {Array|String|*}
    * @returns {Array}
    */
-  unlines = exports.unlines = (0, _listOpsPrelude.join)('\n');
+  unlines = exports.unlines = (0, _listOps.intercalate)('\n');
 });

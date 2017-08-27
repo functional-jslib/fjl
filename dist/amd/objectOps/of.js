@@ -1,4 +1,4 @@
-define(['exports', './is', './objectPrelude', '../functionOps/apply', './typeOf'], function (exports, _is, _objectPrelude, _apply, _typeOf) {
+define(['exports', './is', './objectPrelude', '../functionOps/apply'], function (exports, _is, _objectPrelude, _apply) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -6,11 +6,13 @@ define(['exports', './is', './objectPrelude', '../functionOps/apply', './typeOf'
     });
     exports.of = undefined;
     const of = exports.of = (x, ...args) => {
-        const constructor = x.constructor,
-              typeOfX = (0, _typeOf.typeOf)(x);
+        if (!(0, _is.isset)(x)) {
+            return undefined;
+        }
+        const constructor = x.constructor;
         if ((0, _objectPrelude.hasOwnProperty)('of', constructor)) {
             return (0, _apply.apply)(constructor.of, args);
-        } else if ((0, _is.isUsableImmutablePrimitive)(typeOfX)) {
+        } else if ((0, _is.isUsableImmutablePrimitive)(x)) {
             return (0, _apply.apply)(constructor, args);
         } else if ((0, _is.isFunction)(constructor)) {
             return new constructor(...args);

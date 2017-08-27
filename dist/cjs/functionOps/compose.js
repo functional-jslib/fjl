@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.compose = undefined;
 
-var _listOpsPrelude = require('../listOps/listOpsPrelude');
+var _listOps = require('../listOps/listOps');
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
@@ -21,7 +21,7 @@ var compose = exports.compose = function compose() {
   }
 
   return function (arg0) {
-    return (0, _listOpsPrelude.reduceRight)(function (value, fn) {
+    return (0, _listOps.foldr)(function (value, fn) {
       return fn(value);
     }, arg0, args);
   };

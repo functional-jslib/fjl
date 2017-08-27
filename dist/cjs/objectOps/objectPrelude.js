@@ -20,10 +20,10 @@ var _is = require('./is');
 
 var _utils = require('../utils/utils');
 
-var _prop = require('./prop');
-
 var hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
-    length = exports.length = (0, _prop.prop)('length'),
+    length = exports.length = function length(x) {
+    return x.length;
+},
     keys = exports.keys = function keys(obj) {
     return Object.keys(obj);
 },

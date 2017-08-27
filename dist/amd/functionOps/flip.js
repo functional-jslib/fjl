@@ -1,4 +1,4 @@
-define(['exports', '../listOps/listOpsPrelude', './curry', './apply', './call'], function (exports, _listOpsPrelude, _curry, _apply, _call) {
+define(['exports', '../listOps/listOps', './curry', './apply', './call'], function (exports, _listOps, _curry, _apply, _call) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -13,7 +13,7 @@ define(['exports', '../listOps/listOpsPrelude', './curry', './apply', './call'],
    * @param fn {Function}
    * @returns {Function}
    */
-  flipN = exports.flipN = fn => (0, _curry.curry3)((...args) => (0, _apply.apply)(fn, (0, _listOpsPrelude.reverse)(args))),
+  flipN = exports.flipN = fn => (0, _curry.curry3)((...args) => (0, _apply.apply)(fn, (0, _listOps.reverse)(args))),
 
 
   /**

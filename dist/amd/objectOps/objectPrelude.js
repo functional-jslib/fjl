@@ -1,4 +1,4 @@
-define(['exports', './instanceOf', '../functionOps/curry', './is', '../utils/utils', './prop'], function (exports, _instanceOf, _curry, _is, _utils, _prop) {
+define(['exports', './instanceOf', '../functionOps/curry', './is', '../utils/utils'], function (exports, _instanceOf, _curry, _is, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -12,7 +12,7 @@ define(['exports', './instanceOf', '../functionOps/curry', './is', '../utils/uti
         }
     });
     const hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
-          length = exports.length = (0, _prop.prop)('length'),
+          length = exports.length = x => x.length,
           keys = exports.keys = obj => Object.keys(obj),
 
 

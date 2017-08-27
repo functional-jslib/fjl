@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = undefined;
 
-var _listOpsPrelude = require('../listOps/listOpsPrelude');
+var _listOps = require('../listOps/listOps');
 
 var _curry = require('../functionOps/curry');
 
@@ -47,18 +47,18 @@ words = exports.words = split(/[\s\t]/gm),
 
 
 /**
- * Joins an arrayOps of strings with '\s'.
+ * Intersperse an array of strings with '\s' and then concats them.
  * @functionOps module:stringOps.unwords
  * @param arr {String}
  * @returns {Array}
  */
-unwords = exports.unwords = (0, _listOpsPrelude.join)('\s'),
+unwords = exports.unwords = (0, _listOps.intercalate)('\s'),
 
 
 /**
- * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
+ * Intersperses a '\n' character into a list of strings and then concats it.
  * @functionOps module:stringOps.unlines
- * @param str {String}
+ * @param list {Array|String|*}
  * @returns {Array}
  */
-unlines = exports.unlines = (0, _listOpsPrelude.join)('\n');
+unlines = exports.unlines = (0, _listOps.intercalate)('\n');

@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.flip = exports.flipN = undefined;
 
-var _listOpsPrelude = require('../listOps/listOpsPrelude');
+var _listOps = require('../listOps/listOps');
 
 var _curry = require('./curry');
 
@@ -27,7 +27,7 @@ flipN = exports.flipN = function flipN(fn) {
       args[_key] = arguments[_key];
     }
 
-    return (0, _apply.apply)(fn, (0, _listOpsPrelude.reverse)(args));
+    return (0, _apply.apply)(fn, (0, _listOps.reverse)(args));
   });
 },
 

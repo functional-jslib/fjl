@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './is', './objectPrelude', '../functionOps/apply', './typeOf'], factory);
+        define(['exports', './is', './objectPrelude', '../functionOps/apply'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./is'), require('./objectPrelude'), require('../functionOps/apply'), require('./typeOf'));
+        factory(exports, require('./is'), require('./objectPrelude'), require('../functionOps/apply'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.objectPrelude, global.apply, global.typeOf);
+        factory(mod.exports, global.is, global.objectPrelude, global.apply);
         global.of = mod.exports;
     }
-})(this, function (exports, _is, _objectPrelude, _apply, _typeOf) {
+})(this, function (exports, _is, _objectPrelude, _apply) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -22,11 +22,13 @@
             args[_key - 1] = arguments[_key];
         }
 
-        var constructor = x.constructor,
-            typeOfX = (0, _typeOf.typeOf)(x);
+        if (!(0, _is.isset)(x)) {
+            return undefined;
+        }
+        var constructor = x.constructor;
         if ((0, _objectPrelude.hasOwnProperty)('of', constructor)) {
             return (0, _apply.apply)(constructor.of, args);
-        } else if ((0, _is.isUsableImmutablePrimitive)(typeOfX)) {
+        } else if ((0, _is.isUsableImmutablePrimitive)(x)) {
             return (0, _apply.apply)(constructor, args);
         } else if ((0, _is.isFunction)(constructor)) {
             return new (Function.prototype.bind.apply(constructor, [null].concat(args)))();

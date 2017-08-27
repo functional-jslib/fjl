@@ -2,7 +2,7 @@
  * Array operators module.
  * @module arrayOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
- * @todo code unperformant shorthand in `list`
+ * @todo code unperformant shorthand in `listOps`
  */
 import {curry, curry2, curry3, curry4, curry5, curryN}      from '../functionOps/curry';
 import {apply}              from '../functionOps/apply';
@@ -303,7 +303,11 @@ export const
      * @param x {Array|String|*}
      * @returns {Array|String|*}
      */
-    mempty = x => !isset(x) ? [] : (x.mempty ? x.mempty() : of(x)),
+    mempty = x => {
+        if (!isset(x)) { return []; }
+        else if (x.mempty) { return x.mempty(); }
+        return  of(x);
+    },
 
     /**
      * Append two lists, i.e.,
@@ -920,7 +924,7 @@ export const
                 takeWhile (x => {
                         if (x === prevItem) { ind++; }
                         if (x === item) { prevItem = x; return true; }
-                        else { return false; }
+                        return false;
                     },
                     slice(ind, limit, xs)
                 )

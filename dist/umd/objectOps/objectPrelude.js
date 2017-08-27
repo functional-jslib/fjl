@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './instanceOf', '../functionOps/curry', './is', '../utils/utils', './prop'], factory);
+        define(['exports', './instanceOf', '../functionOps/curry', './is', '../utils/utils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./instanceOf'), require('../functionOps/curry'), require('./is'), require('../utils/utils'), require('./prop'));
+        factory(exports, require('./instanceOf'), require('../functionOps/curry'), require('./is'), require('../utils/utils'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.instanceOf, global.curry, global.is, global.utils, global.prop);
+        factory(mod.exports, global.instanceOf, global.curry, global.is, global.utils);
         global.objectPrelude = mod.exports;
     }
-})(this, function (exports, _instanceOf, _curry, _is, _utils, _prop) {
+})(this, function (exports, _instanceOf, _curry, _is, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -24,7 +24,9 @@
         }
     });
     var hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
-        length = exports.length = (0, _prop.prop)('length'),
+        length = exports.length = function length(x) {
+        return x.length;
+    },
         keys = exports.keys = function keys(obj) {
         return Object.keys(obj);
     },
