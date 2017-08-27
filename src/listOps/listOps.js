@@ -899,10 +899,15 @@ export const
     }),
 
     zipN = (...lists) => {
-        const trimmedLengthsList = apply(lengthsToSmallest, filter(length, lists));
+        const trimmedLists = apply(lengthsToSmallest, filter(length, lists)),
+        lenOfTrimmed = length(trimmedLists);
+        if (!lenOfTrimmed) { return []; }
+        else if (lenOfTrimmed === 1) {
+            return slice(0, length(trimmedLists[0]), trimmedLists[0]);
+        }
         return reduce((agg, item, ind, list) =>
-                aggregateArr(agg, map(xs => xs[ind], trimmedLengthsList)),
-            [], trimmedLengthsList[0]);
+                aggregateArr(agg, map(xs => xs[ind], trimmedLists)),
+            [], trimmedLists[0]);
     },
 
     zip3 = curry3(zipN),

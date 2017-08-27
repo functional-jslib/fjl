@@ -1563,6 +1563,13 @@ describe ('#listOps', function () {
                     )
                 );
         });
+        it ('should return an empty list when empty lists are passed', function () {
+            expectShallowEquals(zipN([], []), []);
+        });
+        it ('should return a copy of the passed in populated list when one of them is not populated.', function () {
+            expectShallowEquals(zipN([], alphabetArray), alphabetArray);
+            expectShallowEquals(zipN(alphabetArray, []), alphabetArray);
+        });
     });
 
     describe ('#zipWith', function () {
