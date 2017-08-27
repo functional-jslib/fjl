@@ -20,13 +20,22 @@ export {length};
 
 const
 
+    /**
+     * Ascension multiplier.
+     * @type {number}
+     */
     ASC = 1,
 
+    /**
+     * Descension multiplier.
+     * @type {number}
+     */
     DESC = -1,
 
+    /**
+     * @returns {Boolean} - Always `false`.
+     */
     alwaysFalse = () => false,
-
-    alwaysTrue = () => true,
 
     /**
      * Array and String `slice`.
@@ -36,10 +45,26 @@ const
      */
     slice = fPureTakes2('slice'),
 
+    /**
+     * Returns a slice of the given list from `startInd` to the end of the list.
+     * @param startInd {Number}
+     * @param arr {Array|String|*}
+     * @returns {Array|String|*}
+     */
     sliceToEndFrom = (startInd, arr) => slice(startInd, length(arr), arr),
 
+    /**
+     * Slices list from zero to `x` value.
+     * @param x {Array|String|*}
+     * @returns {Array|String|*}
+     */
     sliceFromZero = x => sliceToEndFrom(0, x),
 
+    /**
+     * Always `1` or `-1`.
+     * @param x {Number}
+     * @returns {Number} - Always `1` or `-1`.
+     */
     onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
 
     /**
@@ -67,6 +92,11 @@ const
 
     sortDescByLength = getSortByOrder(DESC, length),
 
+    /**
+     * Returns length of all passed lists in list.
+     * @param lists ...{Array|String|*}
+     * @returns {Array|String|*}
+     */
     lengths = (...lists) => length(lists) ? map(length, lists) : [],
 
     lengthsToSmallest = (...lists) => {
@@ -156,7 +186,6 @@ const
 
     /**
      * Searches list/list-like for given element `x`.
-     * @function module:listOps.indexOf
      * @param x {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like to look in.
      * @returns {Number} - `-1` if element not found else index at which it is found.
