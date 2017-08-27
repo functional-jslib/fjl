@@ -305,8 +305,28 @@ export const
      */
     mempty = x => !isset(x) ? [] : (x.mempty ? x.mempty() : of(x)),
 
+    /**
+     * Append two lists, i.e.,
+     * ```
+     * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
+     * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
+     * ```
+     * If the first list is not finite, the result is the first list.
+     * @haskellType `append :: List a => a -> a -> a`
+     * @function module:listOps.append
+     * @param xs1 {Array|String|*} - list or list like.
+     * @param xs2 {Array|String|*} - list or list like.
+     * @returns {Array|String|*} - Same type as list like passed in.
+     */
     mappend = curry(append),
 
+    /**
+     * Same as `module:listOps.mappend` but for `n` lists (two or more lists).
+     * @haskellType `mappend :: List a => a -> a -> a`
+     * @function module:listOps.mappendMany
+     * @param xs ...{Array|String|*} - lists or lists likes.
+     * @returns {Array|String|*} - Same type as list likes passed in.
+     */
     mappendMany = curry(appendMany),
 
     /**
@@ -409,10 +429,32 @@ export const
         return out;
     }),
 
+    /**
+     * Concatenates all the elements of a container of lists.
+     * @haskellType `concat :: Foldable t => t [a] -> [a]`
+     * @function module:listOps.concat
+     * @param xs {Array|String|*}
+     * @returns {Array|String|*}
+     */
     concat = xs => mappendMany(...xs),
 
+    /**
+     * Map a function over all the elements of a container and concatenate the resulting lists.
+     * @haskellType `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
+     * @function module:listOps.concatMap
+     * @param fn {Function}
+     * @param foldableOfA {Array|String|*}
+     * @returns {Array|String|*}
+     */
     concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
 
+    /**
+     * Returns a copy of the passed in list reverses.
+     * @haskellType `reverse :: [a] -> [a]`
+     * @function module:listOps.reverse
+     * @param x {Array|String|*}
+     * @returns {Array|String|*}
+     */
     reverse = x => {
         const aggregator = aggregatorByType(x);
         return reduceRight(
@@ -421,6 +463,15 @@ export const
             );
     },
 
+    /**
+     * Takes an element and a list and `intersperses' that element between the elements of the list. For example
+     * @function module:listOps.intersperse
+     * @note In our version of the function javascript is loosely typed so, so is our function (to much overhead to make
+     *  it typed) so `between` can be any value.
+     * @param between {*} - Should be of the same type of elements contained in list.
+     * @param arr {Array|String|*} - List.
+     * @returns {Array|String|*}
+     */
     intersperse = curry((between, arr) => {
         const limit = length(arr),
             lastInd = limit - 1,
@@ -438,8 +489,12 @@ export const
     }),
 
     /**
+     * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
      * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
-     * @type {Function}
+     * @function module:listOps.intercalate
+     * @param xs {Array|String|*}
+     * @param xss {Array|String|*}
+     * @returns {Array|String|*}
      */
     intercalate = curry((xs, xss) => {
         const result = intersperse(xs, xss);
@@ -459,6 +514,7 @@ export const
      * @note Empty lists are ignored.
      * @todo upgrade this function to support lists of strings.
      * @haskellType `transpose :: [[a]] -> [[a]]`
+     * @function module:listOps.transpose
      * @param xss {Array}
      * @returns {Array}
      */
