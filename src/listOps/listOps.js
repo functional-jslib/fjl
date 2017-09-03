@@ -72,10 +72,9 @@ const
      * @param valueFn {Function}
      * @returns {function(...[*]): Array.<*>}
      */
-    getSortByOrder = (multiplier, valueFn) => {
-        valueFn = valueFn || (v => v);
+    getSortByOrder = (multiplier, valueFn = (v => v)) => {
         const x = onlyOneOrNegOne(multiplier),
-            ifGreaterThan = 1 * x,
+            ifGreaterThan = x,
             ifLessThan = -1 * x;
         return (...values) => values.sort((a1, b1) => {
             let a = valueFn(a1),
@@ -90,7 +89,43 @@ const
         });
     },
 
+    /**
+     * Returns a copy of passed in list sorted on some property which
+     * is decided by the `valueFn` function.
+     * @note Pattern is known as 'decorate-sort-un-decorate' or the "Schwartzian transform"
+     *  and used when the value-to-compare extracting function (`valueFn` here) is an expensive.
+     *  This pattern calls the value extractor function only once per element whereas
+     *  the default sort function calls it per comparison function call.
+     * @param multiplier {Number} - `1` or `-1`.
+     * @param valueFn {Function} - Returns some comparable value from item passed in.
+     * @param xs {Array|String|*} - List to sort.
+     * @returns {Array|String|*} - Whatever type of received list is.
+     */
+    sortOnByDirection = curry((multiplier, valueFn, xs) => {
+        valueFn = valueFn || (v => v);
+        const x = onlyOneOrNegOne(multiplier),
+            ifGreaterThan = x,
+            ifLessThan = -1 * x;
+
+        // Un-decorate
+        return map(decorated => decorated[1],
+                // Decorate
+                map(item => [valueFn(item), item], xs)
+                    // Sort
+                    .sort((a1, b1) => {
+                        let a = a1[0],
+                            b = b1[0];
+                        if (a > b) { return ifGreaterThan; }
+                        else if (b > a) { return ifLessThan; }
+                        return 0;
+                    }));
+    }),
+
+    sortOnAsc = sortOnByDirection(ASC),
+
     sortDescByLength = getSortByOrder(DESC, length),
+
+    sortAsc = getSortByOrder(ASC),
 
     /**
      * Returns length of all passed lists in list.
@@ -1250,6 +1285,19 @@ export const
         const foundIndex = indexOf(x, list),
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list);
         return mappend(parts[0], tail(parts[1]));
+    }),
+
+    sort = sortAsc,
+
+    sortOn = sortOnAsc,
+
+    insert = curry((x, xs) => {
+        const limit = length(xs);
+        if (!limit) { return [x]; }
+        let out = mempty(xs),
+            foundIndex = findIndex((x, ind) => x <= xs[ind]);
+        return foundIndex === -1 ? mappend(out, x) :
+            concat(intersperse([x], splitAt(foundIndex, xs)));
     }),
 
     /**
