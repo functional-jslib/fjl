@@ -1765,7 +1765,18 @@ describe ('#listOps', function () {
     });
 
     describe ('#unlines', function () {
-        it ('should have more tests.');
+        it ('should join a list with new lines.', function () {
+            // For each subject perform tests
+            ['hello world', alphabetString, alphabetArray].forEach(subj => {
+                const result = unlines(subj);
+
+                // check expected length
+                expectLength(subj.length * 2 - 1, result);
+
+                // Check items in resulted list
+                expectShallowEquals(intersperse('\n', subj), result);
+            });
+        });
     });
 
     describe ('#unwords', function () {
