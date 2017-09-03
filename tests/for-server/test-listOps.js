@@ -28,7 +28,7 @@ import {
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
-    filter, sum, product, maximum, minimum, nub, remove,
+    filter, sum, product, maximum, minimum, nub, remove, insert,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
 
@@ -1980,7 +1980,11 @@ describe ('#listOps', function () {
     });
 
     describe ('#insert', function () {
-        it ('should have more tests written');
+        it ('should have more tests written', function () {
+            log(insert(99, range(0, 80, 5)));
+            log(insert(99, range(0, 144, 5)));
+            log(insert(99, reverse(range(0, 80, 5))));
+        });
     });
 
     describe ('#nubBy', function () {

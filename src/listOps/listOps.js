@@ -1292,11 +1292,10 @@ export const
     sortOn = sortOnAsc,
 
     insert = curry((x, xs) => {
-        const limit = length(xs);
-        if (!limit) { return [x]; }
+        if (isEmpty(xs)) { return [x]; }
         let out = mempty(xs),
-            foundIndex = findIndex((x, ind) => x <= xs[ind]);
-        return foundIndex === -1 ? mappend(out, x) :
+            foundIndex = findIndex((item, ind) => x <= item, xs);
+        return foundIndex === -1 ? mappend(sliceToEndFrom(0, out), x) :
             concat(intersperse([x], splitAt(foundIndex, xs)));
     }),
 
