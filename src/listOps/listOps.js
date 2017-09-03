@@ -291,7 +291,12 @@ const
      * @param args ...{Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
-    appendMany = (x, ...args) => (isArray(x) ? arrayAppend : strAppend)(x, ...args)
+    appendMany = (x, ...args) => {
+        const lenArgs = length(args);
+        if (!isset(x)) { return []; }
+        if (!lenArgs) { return sliceToEndFrom(0, x); }
+        return (isArray(x) ? arrayAppend : strAppend)(x, ...args);
+    }
 ;
 
 export const
@@ -326,12 +331,13 @@ export const
 
     /**
      * Same as `module:listOps.mappend` but for `n` lists (two or more lists).
+     * @todo review currying here.
      * @haskellType `mappend :: List a => a -> a -> a`
      * @function module:listOps.mappendMany
-     * @param xs ...{Array|String|*} - lists or lists likes.
+     * @param args ...{Array|String|*} - lists or lists likes.
      * @returns {Array|String|*} - Same type as list likes passed in.
      */
-    mappendMany = curry(appendMany),
+    mappendMany = appendMany,
 
     /**
      * Returns head of list (first item of list).
@@ -427,6 +433,7 @@ export const
             limit = length(xs),
             out = mempty(xs),
             aggregate = aggregatorByType(xs);
+        if (!limit) { return out; }
         for (; ind < limit; ind += 1) {
             out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
         }

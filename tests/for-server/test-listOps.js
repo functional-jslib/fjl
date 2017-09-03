@@ -1766,7 +1766,6 @@ describe ('#listOps', function () {
 
     describe ('#unlines', function () {
         it ('should join a list with new lines.', function () {
-            // For each subject perform tests
             ['hello world', alphabetString, alphabetArray].forEach(subj => {
                 const result = unlines(subj);
 
@@ -1776,6 +1775,10 @@ describe ('#listOps', function () {
                 // Check items in resulted list
                 expectShallowEquals(intersperse('\n', subj), result);
             });
+        });
+        it ('should return ', function () {
+            log('string', unlines(''));
+            log('array', unlines([]));
         });
     });
 
