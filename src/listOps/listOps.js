@@ -1232,6 +1232,20 @@ export const
 
     minimum = arr => apply(Math.min, arr),
 
+    nub = list => {
+        if (isEmpty(list)) { return mempty(list); }
+        const limit = length(list);
+        let ind = 0,
+            currItem,
+            out = mempty(list);
+        for (; ind < limit; ind += 1) {
+            currItem = list[ind];
+            if (indexOf(currItem, out) > -1) { continue; }
+            out = mappend(out, currItem);
+        }
+        return out;
+    },
+
     /**
      * Creates a arrayUnion on matching elements from array1.
      * @function module:listOps.arrayUnion

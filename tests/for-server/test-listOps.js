@@ -28,7 +28,7 @@ import {
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
-    filter, sum, product, maximum, minimum,
+    filter, sum, product, maximum, minimum, nub,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
 
@@ -1819,7 +1819,27 @@ describe ('#listOps', function () {
     });
 
     describe ('#nub', function () {
-        it ('should have more tests.');
+        it ('should remove all but first occurrences of repeat items in a list.', function () {
+            expectEqual(nub('conundrum'), 'conudrm');
+            expectEqual(nub(map(char => char + char, alphabetString)), alphabetString);
+            expectShallowEquals(
+                nub(concatMap(char => char + char, alphabetString).split('')),
+                alphabetArray
+            );
+        });
+        it ('should return a copy of the passed in list with items intact if there ' +
+            'aren\'t any repeat items', function () {
+            expectEqual(nub(alphabetString), alphabetString);
+            expectShallowEquals(nub(alphabetArray), alphabetArray);
+        });
+        it ('should return empty lists when receiving empty lists', function () {
+            expectEqual(nub(''), '');
+            expectShallowEquals(nub([]), []);
+        });
+        it ('should throw Errors when receiving nothing', function () {
+            assert.throws(() => nub(null), Error);
+            assert.throws(() => nub(undefined), Error);
+        });
     });
 
     describe ('#remove', function () { // same as `delete`
