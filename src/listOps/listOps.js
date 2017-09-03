@@ -1246,6 +1246,12 @@ export const
         return out;
     },
 
+    remove = curry((x, list) => {
+        const foundIndex = indexOf(x, list),
+            parts = splitAt(foundIndex > -1 ? foundIndex : 0, list);
+        return mappend(parts[0], tail(parts[1]));
+    }),
+
     /**
      * Creates a arrayUnion on matching elements from array1.
      * @function module:listOps.arrayUnion

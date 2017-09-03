@@ -28,7 +28,7 @@ import {
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
-    filter, sum, product, maximum, minimum, nub,
+    filter, sum, product, maximum, minimum, nub, remove,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
 
@@ -1842,8 +1842,26 @@ describe ('#listOps', function () {
         });
     });
 
-    describe ('#remove', function () { // same as `delete`
-        it ('should have more tests.');
+    describe ('#remove', function () { // same as `delete` (in haskell)
+        it ('should remove the first occurrence of an item in a list.', function () {
+            expectEqual(remove('l', 'hello world'), 'helo world');
+            expectEqual(remove('l', 'hello world'.split('')).join(''), 'helo world');
+            expectEqual(remove('a', alphabetString), tail(alphabetString));
+            expectEqual(remove('z', alphabetString), init(alphabetString));
+            expectShallowEquals(remove('a', alphabetArray), tail(alphabetArray));
+            expectShallowEquals(remove('z', alphabetArray), init(alphabetArray));
+            // log(remove('d', alphabetString));
+        });
+        it ('should return an empty list when receiving an empty list', function () {
+            expectEqual(remove('a', ''), '');
+            expectShallowEquals(remove('a', []), []);
+        });
+        it ('should throw Errors when receiving nothing in the list position', function () {
+            assert.throws(() => remove(null, null), Error);
+            assert.throws(() => remove(undefined, undefined), Error);
+            assert.throws(() => remove(null, null), Error);
+            assert.throws(() => remove(undefined, undefined), Error);
+        });
     });
 
     describe ('#complement', function () {
