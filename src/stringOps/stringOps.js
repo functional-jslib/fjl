@@ -16,9 +16,7 @@ export const
      * @param str {String}
      * @returns {Array}
      */
-    split = curry((separator, str) => {
-        return str ? str.split(separator) : [];
-    }),
+    split = curry((separator, str) => str.split(separator)),
 
     /**
      * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.

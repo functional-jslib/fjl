@@ -1719,6 +1719,10 @@ describe ('#listOps', function () {
             expectShallowEquals(lines('hello world'), ['hello world']);
             expectShallowEquals(lines(''), ['']);
         });
+        it ('should throw Errors when receiving nothing', function () {
+            assert.throws(() => lines(null), Error);
+            assert.throws(() => lines(undefined), Error);
+        });
     });
 
     describe ('#words', function () {
@@ -1762,6 +1766,10 @@ describe ('#listOps', function () {
                 expectShallowEquals(shallowEqualsTo, result);
             });
         });
+        it ('should throw Errors when receiving nothing', function () {
+            assert.throws(() => words(null), Error);
+            assert.throws(() => words(undefined), Error);
+        });
     });
 
     describe ('#unlines', function () {
@@ -1776,9 +1784,13 @@ describe ('#listOps', function () {
                 expectShallowEquals(intersperse('\n', subj), result);
             });
         });
-        it ('should return ', function () {
-            log('string', unlines(''));
-            log('array', unlines([]));
+        it ('should return empty lists when receiving empty lists', function () {
+            expectEqual(unlines(''), '');
+            expectShallowEquals(unlines([]), []);
+        });
+        it ('should throw Errors when receiving nothing', function () {
+            assert.throws(() => unlines(null), Error);
+            assert.throws(() => unlines(undefined), Error);
         });
     });
 
