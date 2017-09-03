@@ -15,7 +15,7 @@ import {split} from '../../src/stringOps/stringOps';
 import {join} from '../../src/listOps/listOpsPrelude';
 import {isArray, isString} from '../../src/objectOps/is';
 import {isTruthy} from '../../src/booleanOps/is';
-
+import {lines, unlines, words, unwords} from '../../src/stringOps/stringOps';
 import {
     all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
@@ -1669,9 +1669,7 @@ describe ('#listOps', function () {
                     return !length(remainder) ?
                         undefined : splitAt(2, remainder);
                 }, alphabetArray),
-
                 lenAlphaArray = length(alphabetArray),
-
                 result = unzipN(subj);
 
             log (subj, result);
@@ -1703,11 +1701,67 @@ describe ('#listOps', function () {
     });
 
     describe ('#lines', function () {
-        it ('should have more tests.');
+        it ('should split a string on all new line characters.', function () {
+            const subj = intercalate('\n', alphabetArray),
+                result = lines(subj);
+
+            // log(length(subj), subj, result);
+
+            // Ensure subject is valid first:
+            // ------------------------------------
+            // Expect new line char before every char except the first
+            expectLength(length(alphabetArray) * 2 - 1, subj);
+
+            // Check split string
+            expectShallowEquals(alphabetArray, result);
+        });
+        it ('should return original string when no new lines are found in string', function () {
+            expectShallowEquals(lines('hello world'), ['hello world']);
+            expectShallowEquals(lines(''), ['']);
+        });
     });
 
     describe ('#words', function () {
-        it ('should have more tests.');
+        it ('should split a string on all whitespace characters.', function () {
+            // subject | expectedLength | shallowEqualsTo
+            const subjectsAndExpLens = [
+                [intercalate(' ', alphabetArray), length(alphabetArray), alphabetArray],
+                ['hello world', 2, ['hello', 'world']]
+            ];
+
+            subjectsAndExpLens.forEach(tuple => {
+                const [subj, expectedLen, shallowEqualsTo] = tuple,
+                    result = words(subj);
+
+                // log(expectedLen, subj, result);
+
+                // Check length of result
+                expectLength(expectedLen, result);
+
+                // Check split string
+                expectShallowEquals(shallowEqualsTo, result);
+            });
+        });
+        it ('should return a copy of original list when no whitespace characters are found.', function () {
+            // subject | expectedLength | shallowEqualsTo
+            const subjectsAndExpLens = [
+                [alphabetString, 1, [alphabetString]],
+                ['helloworld', 1, ['helloworld']]
+            ];
+
+            subjectsAndExpLens.forEach(tuple => {
+                const [subj, expectedLen, shallowEqualsTo] = tuple,
+                    result = words(subj);
+
+                // log(expectedLen, subj, result);
+
+                // Check length of result
+                expectLength(expectedLen, result);
+
+                // Check split string
+                expectShallowEquals(shallowEqualsTo, result);
+            });
+        });
     });
 
     describe ('#unlines', function () {
