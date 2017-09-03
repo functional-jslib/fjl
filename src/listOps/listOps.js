@@ -640,7 +640,7 @@ export const
      * Unfolds a value into a list of somethings.
      * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
      * @function module:listOps.unfoldr
-     * @param op {Function} - Operation to perform (should return
+     * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregate and item to unfold in next iteration).
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
      */
@@ -1001,6 +1001,14 @@ export const
             [], a1);
     }),
 
+    /**
+     * zipN takes one or more lists and returns a list containing lists of all indices
+     * at a given index, index by index.
+     * If one input list is short, excess elements of the longer list are discarded.
+     * @function module:listOps.zipN
+     * @param lists {...<Array|String>}
+     * @returns {Array}
+     */
     zipN = (...lists) => {
         const trimmedLists = apply(lengthsToSmallest, filter(length, lists)),
         lenOfTrimmed = length(trimmedLists);
@@ -1013,10 +1021,36 @@ export const
             [], trimmedLists[0]);
     },
 
+    /**
+     * @haskellType `zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]`
+     * @function module:listOps.zip3
+     * @param arr1 {Array}
+     * @param arr2 {Array}
+     * @param arr3 {Array}
+     * @returns {Array<Array<*,*>>}
+     */
     zip3 = curry3(zipN),
 
+    /**
+     * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
+     * @function module:listOps.zip4
+     * @param arr1 {Array}
+     * @param arr2 {Array}
+     * @param arr3 {Array}
+     * @param arr4 {Array}
+     * @returns {Array<Array<*,*>>}
+     */
     zip4 = curry4(zipN),
 
+    /**
+     * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
+     * @function module:listOps.zip5
+     * @param arr1 {Array}
+     * @param arr2 {Array}
+     * @param arr3 {Array}
+     * @param arr4 {Array}
+     * @returns {Array<Array<*,*>>}
+     */
     zip5 = curry5(zipN),
 
     /**
@@ -1032,7 +1066,13 @@ export const
      * ```
      * zipWith f [] _|_ = []
      * ```
-     * @type {Function}
+     * @haskellType `zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]`
+     * @function module:listOps.zipWith
+     * @param op {Function} - Takes two parts of a tuple and returns a tuple.
+     *  E.g., ` op :: a -> b -> (a, b)`
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {Array<Array<*,*>>}
      */
     zipWith = curry((op, xs1, xs2) => {
         if (!length(xs1) || !length(xs2)) { return mempty(xs1); }
@@ -1042,6 +1082,19 @@ export const
             [], a1);
     }),
 
+    /**
+     * Zips all given lists with tupling function. Note: Haskell types do not have
+     *  a way (that I know of) to show one or more for params in a function so `@haskellType` below
+     *  is left there for general purpose not for exactness as is told by aforementioned.
+     * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
+     *  of lists to zip.
+     * @function module:listOps.zipWithN
+     * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
+     *  of said parts:
+     *  E.g., ` op :: a -> b -> c -> (a, b, c)`
+     * @param lists ...{Array|String|*}
+     * @returns {Array<Array<*,*>>}
+     */
     zipWithN = (op, ...lists) => {
         const trimmedLists = apply(lengthsToSmallest, lists),
             lenOfTrimmed = length(trimmedLists);
@@ -1054,29 +1107,85 @@ export const
             [], trimmedLists[0]);
     },
 
+    /**
+     * Zips 3 lists with tupling function.
+     * @haskellType `zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]`
+     * @function module:listOps.zipWith3
+     * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
+     *  of said parts:
+     *  E.g., ` op :: a -> b -> c -> (a, b, c)`
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @param xs3 {Array|String|*}
+     * @returns {Array<Array<*,*>>}
+     */
     zipWith3 = curry4(zipWithN),
 
+    /**
+     * Zips 4 lists with tupling function.
+     * @haskellType `zipWith4 :: (a -> b -> c -> d -> e) -> [a] -> [b] -> [c]  -> [d] -> [e]`
+     * @function module:listOps.zipWith4
+     * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
+     *  of said parts:
+     *  E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @param xs3 {Array|String|*}
+     * @param xs4 {Array|String|*}
+     * @returns {Array<Array<*,*>>}
+     */
     zipWith4 = curry5(zipWithN),
 
-    zipWith5 = curryN(5, zipWithN),
+    /**
+     * Zips 5 lists.
+     * @haskellType `zipWith5 :: (a -> b -> c -> d -> e -> f) -> [a] -> [b] -> [c]  -> [d] -> [e] -> [f]`
+     * @function module:listOps.zipWith5
+     * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
+     *  of said parts:
+     *  E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @param xs3 {Array|String|*}
+     * @param xs4 {Array|String|*}
+     * @param xs5 {Array|String|*}
+     * @returns {Array<Array<*,*>>}
+     */
+    zipWith5 = curryN(6, zipWithN),
 
     /**
-     * unzip :: [(a, b)] -> ([a], [b])
      * unzip transforms a list of pairs into a list of first components and a list of second components.
-     * @param arr
+     * @haskellType `unzip :: [(a, b)] -> ([a], [b])`
+     * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
+     * @function module:listOps.unzip
+     * @param arr {Array|*}
+     * @returns {Array|*}
      */
     unzip = arr =>
-        reduce((agg, item) => {
+        foldl((agg, item) => {
             agg[0].push(item[0]);
             agg[1].push(item[1]);
             return agg;
         }, [[], []], arr),
 
-    unzipN = (...lists) =>
-        reduce((agg, item) => {
-            agg.push(unzip(item));
+    /**
+     * unzip transforms a list of pairs into a list of first components and a list of second components.
+     * @sudoHaskellType `unzipN :: [(a, b, ...x)] -> ([a], [b], ...[x])`
+     * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
+     * @function module:listOps.unzip
+     * @param list {Array|*} - List of tuples (lists).
+     * @returns {Array|*}
+     */
+    unzipN = list => {
+        if (!length(list)) { return []; }
+        const lenItem0 = length(list[0]);
+        let zero = lenItem0 ?
+            unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
+            [];
+        return foldl((agg, item) => {
+            agg.forEach((outList, ind) => outList.push(item[ind]));
             return agg;
-        }, [], lists),
+        }, zero, list);
+    },
 
     any = curry((p, xs) => {
         let ind = 0,

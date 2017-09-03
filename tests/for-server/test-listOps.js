@@ -18,7 +18,7 @@ import {isTruthy} from '../../src/booleanOps/is';
 
 import {
     all, and, or, any, find, findIndex, findIndices,
-    zip, zipN, zipWith, unzip,
+    zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length,
@@ -1563,10 +1563,10 @@ describe ('#listOps', function () {
                     )
                 );
         });
-        it ('should return an empty list when empty lists are passed', function () {
+        it ('should return an empty list when empty lists are passed in', function () {
             expectShallowEquals(zipN([], []), []);
         });
-        it ('should return a copy of the passed in populated list when one of them is not populated.', function () {
+        it ('should return a copy of the left or right populated list when the other(s) is/are empty.', function () {
             expectShallowEquals(zipN([], alphabetArray), alphabetArray);
             expectShallowEquals(zipN(alphabetArray, []), alphabetArray);
         });
@@ -1574,7 +1574,6 @@ describe ('#listOps', function () {
 
     describe ('#zipWith', function () {
         const tuplize = (a, b) => [a, b];
-
         it ('should be able to zip the given number of lists.', function () {
             // Unfold alphabet array into an array with arrays of 5 items (as our initial subject).
             const subj = unfoldr (remainder => {
@@ -1626,11 +1625,81 @@ describe ('#listOps', function () {
     });
 
     describe ('#unzip', function () {
-        it ('should have more tests.');
+        it ('should be able to unzip a list of tuples of two.', function () {
+            const subj = unfoldr (remainder => {
+                return !length(remainder) ?
+                    undefined : splitAt(2, remainder);
+            }, alphabetArray),
+
+            lenAlphaArray = length(alphabetArray),
+
+            result = unzip(subj);
+
+            // First ensure our subject is valid
+            // --------------------------------------
+            // Check that we have tuples of two (list of two in javascript's/our case)
+            expectTrue(all(tuple => length(tuple) === 2, subj));
+
+            // Ensure subject has expected length of items (tuples)
+            expectEqual(length(subj), lenAlphaArray / 2);
+
+            // Test result
+            // ----------------
+            // Ensure we have two lists (one for each part of tuple in `subj`).
+            expectEqual(length(result), 2);
+
+            // Ensure both lists in result have the expected length
+            expectTrue(all(list => length(list) === lenAlphaArray / 2, result));
+
+            // log (subj, result);
+
+            // Ensure resulting lists contain expected items
+            expectTrue(all(
+                (list, i) =>
+                    all((item, j) => item === subj[j][i], list),
+                result
+            ));
+
+        });
     });
 
     describe ('#unzipN', function () {
-        it ('should have more tests.');
+        it ('should be able to unzip a list of tuples of any number.', function () {
+            const subj = unfoldr (remainder => {
+                    return !length(remainder) ?
+                        undefined : splitAt(2, remainder);
+                }, alphabetArray),
+
+                lenAlphaArray = length(alphabetArray),
+
+                result = unzipN(subj);
+
+            log (subj, result);
+
+            // First ensure our subject is valid
+            // --------------------------------------
+            // Check that we have tuples of two (list of two in javascript's/our case)
+            expectTrue(all(tuple => length(tuple) === 2, subj));
+
+            // Ensure subject has expected length of items (tuples)
+            expectEqual(length(subj), lenAlphaArray / 2);
+
+            // Test result
+            // ----------------
+            // Ensure we have two lists (one for each part of tuple in `subj`).
+            expectEqual(length(result), 2);
+
+            // Ensure both lists in result have the expected length
+            expectTrue(all(list => length(list) === lenAlphaArray / 2, result));
+
+            // Ensure resulting lists contain expected items
+            expectTrue(all(
+                (list, i) =>
+                    all((item, j) => item === subj[j][i], list),
+                result
+            ));
+
+        });
     });
 
     describe ('#lines', function () {
