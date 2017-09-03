@@ -40,7 +40,7 @@ export const
      * @param arr {String}
      * @returns {Array}
      */
-    unwords = intercalate('\s'),
+    unwords = intercalate(' '),
 
     /**
      * Intersperses a '\n' character into a list of strings and then concats it.

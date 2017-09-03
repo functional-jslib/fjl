@@ -1795,7 +1795,27 @@ describe ('#listOps', function () {
     });
 
     describe ('#unwords', function () {
-        it ('should have more tests.');
+        it ('should join a list of words with spaces.', function () {
+            ['hello world', alphabetString, alphabetArray].forEach(subj => {
+                const result = unwords(subj);
+
+                // console.log('unwords', result);
+
+                // check expected length
+                expectLength(subj.length * 2 - 1, result);
+
+                // Check items in resulted list
+                expectShallowEquals(intersperse(' ', subj), result);
+            });
+        });
+        it ('should return empty lists when receiving empty lists', function () {
+            expectEqual(unwords(''), '');
+            expectShallowEquals(unwords([]), []);
+        });
+        it ('should throw Errors when receiving nothing', function () {
+            assert.throws(() => unwords(null), Error);
+            assert.throws(() => unwords(undefined), Error);
+        });
     });
 
     describe ('#nub', function () {
