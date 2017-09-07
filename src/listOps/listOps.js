@@ -1267,25 +1267,9 @@ export const
 
     minimum = arr => apply(Math.min, arr),
 
-    nub = list => {
-        if (isEmpty(list)) { return mempty(list); }
-        const limit = length(list);
-        let ind = 0,
-            currItem,
-            out = mempty(list);
-        for (; ind < limit; ind += 1) {
-            currItem = list[ind];
-            if (indexOf(currItem, out) > -1) { continue; }
-            out = mappend(out, currItem);
-        }
-        return out;
-    },
+    nub = list => nubBy((a, b) => a === b, list),
 
-    remove = curry((x, list) => {
-        const foundIndex = indexOf(x, list),
-            parts = splitAt(foundIndex > -1 ? foundIndex : 0, list);
-        return mappend(parts[0], tail(parts[1]));
-    }),
+    remove = curry((x, list) => removeBy(item => item === x, list)),
 
     sort = sortAsc,
 
@@ -1298,6 +1282,33 @@ export const
         return foundIndex === -1 ? mappend(sliceToEndFrom(0, out), x) :
             concat(intersperse([x], splitAt(foundIndex, xs)));
     }),
+
+    nubBy = (pred, list) => {
+        if (isEmpty(list)) { return mempty(list); }
+        const limit = length(list);
+        let ind = 0,
+            currItem,
+            prevItem,
+            out = mempty(list);
+        for (; ind < limit; ind += 1) {
+            currItem = list[ind];
+            if (any(storedItem => pred(currItem, storedItem), out)) { continue; }
+            out = mappend(out, currItem);
+            prevItem = currItem;
+        }
+        return out;
+    },
+
+    removeBy = curry((pred, x, list) => {
+        const foundIndex = findIndex(item => pred(x, item), list),
+            parts = splitAt(foundIndex > -1 ? foundIndex : 0, list);
+        return mappend(parts[0], tail(parts[1]));
+    }),
+
+    removeFirstBy = curry((pred, xs1, xs2) =>
+        reduce((agg, item, ind) =>
+            removeBy(pred, item, agg)
+            , xs1, xs2)),
 
     /**
      * Creates a arrayUnion on matching elements from array1.
