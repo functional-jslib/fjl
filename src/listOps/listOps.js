@@ -678,6 +678,22 @@ export const
         return [agg, mapped];
     }),
 
+    iterate = curry((limit, op, x) => {
+        let ind = 0,
+            out = x;
+        for(; ind < limit; ind += 1) {
+            out = op(out, ind);
+        }
+        return out;
+    }),
+
+    repeat = curry((limit, x) =>
+        iterate(limit, agg => { agg.push(x); return agg; }, [])),
+
+    replicate = repeat,
+
+    cycle = curry((limit, xs) => concat(replicate(limit, xs))),
+
     /**
      * Unfolds a value into a list of somethings.
      * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
@@ -1269,7 +1285,7 @@ export const
 
     nub = list => nubBy((a, b) => a === b, list),
 
-    remove = curry((x, list) => removeBy(item => item === x, list)),
+    remove = curry((x, list) => removeBy((a, b) => a === b, x, list)),
 
     sort = sortAsc,
 
@@ -1305,7 +1321,7 @@ export const
         return mappend(parts[0], tail(parts[1]));
     }),
 
-    removeFirstBy = curry((pred, xs1, xs2) =>
+    removeFirstsBy = curry((pred, xs1, xs2) =>
         reduce((agg, item, ind) =>
             removeBy(pred, item, agg)
             , xs1, xs2)),

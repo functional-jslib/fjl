@@ -15,6 +15,7 @@ import {split} from '../../src/stringOps/stringOps';
 import {join} from '../../src/listOps/listOpsPrelude';
 import {isArray, isString} from '../../src/objectOps/is';
 import {isTruthy} from '../../src/booleanOps/is';
+import {bEqual as equal} from '../../src/booleanOps/booleanOps';
 import {lines, unlines, words, unwords} from '../../src/stringOps/stringOps';
 import {
     all, and, or, any, find, findIndex, findIndices,
@@ -23,12 +24,13 @@ import {
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons, length,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
-    isEmpty as isEmptyList,
+    isEmpty as isEmptyList, iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert,
+    nubBy, removeBy, removeFirstsBy,
     arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
     flatten, flattenMulti} from '../../src/listOps/listOps';
 
@@ -1988,15 +1990,90 @@ describe ('#listOps', function () {
     });
 
     describe ('#nubBy', function () {
-        it ('should have more tests written');
+        it ('should remove all but first occurrences of repeat items in a list.', function () {
+            expectEqual(nubBy(equal, 'conundrum'), 'conudrm');
+            expectEqual(nubBy(equal, map(char => char + char, alphabetString)), alphabetString);
+            expectShallowEquals(
+                nubBy(equal, concatMap(char => char + char, alphabetString).split('')),
+                alphabetArray
+            );
+        });
+        it ('should return a copy of the passed in list with items intact if there ' +
+            'aren\'t any repeat items', function () {
+            expectEqual(nubBy(equal, alphabetString), alphabetString);
+            expectShallowEquals(nubBy(equal, alphabetArray), alphabetArray);
+        });
+        it ('should return empty lists when receiving empty lists', function () {
+            expectEqual(nubBy(equal, ''), '');
+            expectShallowEquals(nubBy(equal, []), []);
+        });
+        it ('should throw Errors when receiving nothing', function () {
+            assert.throws(() => nubBy(equal, null), Error);
+            assert.throws(() => nubBy(equal, undefined), Error);
+        });
     });
 
     describe ('#removeBy', function () {
-        it ('should have more tests written');
+        it ('should remove the first occurrence of an item in a list.', function () {
+            expectEqual(removeBy(equal, 'l', 'hello world'), 'helo world');
+            expectEqual(removeBy(equal, 'l', 'hello world'.split('')).join(''), 'helo world');
+            expectEqual(removeBy(equal, 'a', alphabetString), tail(alphabetString));
+            expectEqual(removeBy(equal, 'z', alphabetString), init(alphabetString));
+            expectShallowEquals(removeBy(equal, 'a', alphabetArray), tail(alphabetArray));
+            expectShallowEquals(removeBy(equal, 'z', alphabetArray), init(alphabetArray));
+            // log(removeBy('d', alphabetString));
+        });
+        it ('should return an empty list when receiving an empty list', function () {
+            expectEqual(removeBy(equal, 'a', ''), '');
+            expectShallowEquals(removeBy(equal, 'a', []), []);
+        });
+        it ('should throw Errors when receiving nothing in the list position', function () {
+            assert.throws(() => removeBy(equal, null, null), Error);
+            assert.throws(() => removeBy(equal, undefined, undefined), Error);
+            assert.throws(() => removeBy(equal, null, null), Error);
+            assert.throws(() => removeBy(equal, undefined, undefined), Error);
+        });
     });
 
-    describe ('#removeFirstBy', function () {
-        it ('should have more tests written');
+    describe ('#removeFirstsBy', function () {
+        const vowels = 'aeiou',
+            vowelsArray = vowels.split(''),
+            consonants = removeFirstsBy(equal, alphabetString, vowels),
+            consonantsArray = consonants.split('');
+        it ('should remove all first occurrences of all items in second list by passed in ' +
+            'equality operation.', function () {
+            // Remove first occurrences of `vowels` in `alphabet * 3`
+            const subj1 = iterate(length(vowels), (value, ind) => {
+                    const foundInd = value.indexOf(vowels[ind]);
+                    if (foundInd > -1) {
+                        const parts = splitAt(foundInd, value);
+                        return concat([parts[0], tail(parts[1])]);
+                    }
+                    return value;
+                }, concat([alphabetArray, alphabetArray, alphabetArray]));
+
+            // Expect vowels removed from the same places in both lists
+            expectTrue(all(tuple => !log(tuple) && tuple[0] === tuple[1], [[
+                removeFirstsBy(equal, cycle(3, alphabetString), vowels),
+                concat(subj1)
+            ]]));
+
+            // Expect vowels removed from the same places in both lists
+            expectShallowEquals(
+                removeFirstsBy(equal, cycle(3, alphabetArray), vowelsArray),
+                subj1
+            );
+
+            // log(removeFirstsBy(equal, cycle(3, alphabetArray), 'aeiou'.split('')));
+            // log(removeFirstsBy(equal, cycle(3, alphabetString), 'aeiou'));
+        });
+        it ('should return copy of original list when no items from second list are found in it.', function () {
+            expectEqual(removeFirstsBy(equal, consonants, vowels), consonants);
+            expectShallowEquals(
+                removeFirstsBy(equal, consonantsArray, vowelsArray),
+                consonantsArray
+            );
+        });
     });
 
     describe ('#unionBy', function () {
