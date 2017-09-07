@@ -5,7 +5,7 @@
  * @todo code unperformant shorthand in `listOps`
  */
 import {curry, curry2, curry3, curry4, curry5, curryN}      from '../functionOps/curry';
-import {apply}              from '../functionOps/apply';
+import {apply}              from '../jsPlatform/functionOpsUnCurried'; // un-curried version
 import {negateP}            from '../functionOps/functionOps';
 import {isTruthy, isFalsy}  from '../booleanOps/is';
 import {isString, isArray, isset}  from '../objectOps/is';
@@ -13,7 +13,7 @@ import {prop}               from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
 import {of}                 from '../objectOps/of';
 import {length, hasOwnProperty} from '../objectOps/objectPrelude';
-import {fPureTakes2, fPureTakesOne, fPureTakesOneOrMore} from '../utils/utils';
+import {fPureTakes2_, fPureTakesOne_, fPureTakesOneOrMore_} from '../utils/utils';
 import {log} from '../../tests/for-server/helpers';
 
 export {length};
@@ -43,7 +43,7 @@ const
      * @param arr{Array}
      * @returns {Array}
      */
-    slice = fPureTakes2('slice'),
+    slice = fPureTakes2_('slice'),
 
     /**
      * Returns a slice of the given list from `startInd` to the end of the list.
@@ -208,7 +208,7 @@ const
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in objectOps doesn't have an `every` method.
      */
-    arrayAppend = fPureTakesOneOrMore('concat'),
+    arrayAppend = fPureTakesOneOrMore_('concat'),
 
     /**
      * Appends any subsequent lists (strings) onto the first one (string).
@@ -225,7 +225,7 @@ const
      * @param xs {Array|String|*} - list or list like to look in.
      * @returns {Number} - `-1` if element not found else index at which it is found.
      */
-    indexOf = fPureTakesOne('indexOf'),
+    indexOf = fPureTakesOne_('indexOf'),
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
@@ -1015,32 +1015,8 @@ export const
 
     stripPrefix = curry((prefix, list) =>
         isPrefixOf(prefix, list) ?
-            splitAt(prefix.length, list)[1] :
+            splitAt(length(prefix), list)[1] :
                 sliceToEndFrom(0, list)),
-
-    /**
-     * Flattens an list.
-     * @function module:listOps.flatten
-     * @param arr {Array}
-     * @returns {Array}
-     */
-    flatten = arr => reduce((agg, elm) => {
-        if (isArray(elm)) {
-            return mappend(agg, flatten(elm));
-        }
-        agg.push(elm);
-        return agg;
-    }, [], arr),
-
-    /**
-     * Flattens all arrays passed in into one list.
-     * @function module:listOps.flattenMulti
-     * @param arr {Array}
-     * @param [...arrays{Array}] - Other arrays to flatten into new list.
-     * @returns {Array}
-     */
-    flattenMulti = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => mappend(agg, flatten(arr)), flatten(arr0), arrays)),
 
     /**
      * zip takes two lists and returns a list of corresponding pairs.
@@ -1327,33 +1303,33 @@ export const
             , xs1, xs2)),
 
     /**
-     * Creates a arrayUnion on matching elements from array1.
-     * @function module:listOps.arrayUnion
+     * Creates a union on matching elements from array1.
+     * @function module:listOps.union
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
      */
-    arrayUnion = curry((arr1, arr2) =>
+    union = curry((arr1, arr2) =>
         mappend(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
 
     /**
      * Performs an intersection on list 1 with  elements from list 2.
-     * @function module:listOps.arrayIntersect
+     * @function module:listOps.intersect
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
      */
-    arrayIntersect = curry((arr1, arr2) => length(arr2) === 0 ? [] :
+    intersect = curry((arr1, arr2) => length(arr2) === 0 ? [] :
             filter(elm => indexOf(elm, arr2) > -1, arr1)),
 
     /**
      * Returns the difference of list 1 from list 2.
-     * @function module:listOps.arrayDifference
+     * @function module:listOps.difference
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
      */
-    arrayDifference = curry((array1, array2) => { // augment this with max length and min length ordering on op
+    difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
         let [arr1, arr2] = sortDescByLength(array1, array2);
         if (!arr2 || length(arr2) === 0) {
             return slice(0, length(arr1), arr1);
@@ -1368,10 +1344,10 @@ export const
 
     /**
      * Returns the complement of list 0 and the reset of the passed in arrays.
-     * @function module:listOps.arrayComplement
+     * @function module:listOps.complement
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
      */
-    arrayComplement = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => mappend(agg, arrayDifference(arr0, arr)), [], arrays));
+    complement = curry2((arr0, ...arrays) =>
+        reduce((agg, arr) => mappend(agg, difference(arr0, arr)), [], arrays));

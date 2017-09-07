@@ -1,23 +1,12 @@
 /**
  * Created by elyde on 7/20/2017.
- * All functions here are functional versions of methods of types;  E.g., map, filter etc.
- * @todo add `reverse` to './compounded'
+ * Curried functional versions of common array methods (`filter`, `map`, etc.).
+ * @todo updated doc blocks to list correct/updated module name.
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils/utils';
+import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from '../utils/utils';
 
-/**
- * Array.prototype.reverse generator (generates a functionOps that calls the prototype version or a
- * shimmed version if it doesn't exist).
- * @returns {Function}
- */
-function defineReverse () {
-    return Array.prototype.reverse ? x => x.reverse() :
-        x => x.reduceRight((agg, item) => {
-            agg.push(item);
-            return agg;
-        }, []);
-}
+import {defineReverse} from './arrayOpsUnCurried';
 
 export const
 
@@ -28,7 +17,7 @@ export const
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
      */
-    map = fPureTakesOne('map'),
+    map = fPureTakesOne_('map'),
 
     /**
      * Filters a functor (listOps etc.) with passed in functionOps.
@@ -37,7 +26,7 @@ export const
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
      */
-    filter = fPureTakesOne('filter'),
+    filter = fPureTakesOne_('filter'),
 
     /**
      * Reduces a foldable (listOps etc.) with passed in functionOps.
@@ -46,7 +35,7 @@ export const
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
      */
-    reduce = fPureTakes2('reduce'),
+    reduce = fPureTakes2_('reduce'),
 
     /**
      * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
@@ -55,7 +44,7 @@ export const
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
      */
-    reduceRight = fPureTakes2('reduceRight'),
+    reduceRight = fPureTakes2_('reduceRight'),
 
     /**
      * For each on functor (Array|Object|etc.).
@@ -64,7 +53,7 @@ export const
      * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
      * @throws {Error} - When passed in functor doesn't have a `forEach` method.
      */
-    forEach = fPureTakesOne('forEach'),
+    forEach = fPureTakesOne_('forEach'),
 
     /**
      * Returns `true` if `fn` (predicate) returns true for at least one item
@@ -74,7 +63,7 @@ export const
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in objectOps doesn't have a `some` method.
      */
-    some = fPureTakesOne('some'),
+    some = fPureTakesOne_('some'),
 
     /**
      * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
@@ -83,7 +72,7 @@ export const
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in objectOps doesn't have an `every` method.
      */
-    every = fPureTakesOne('every'),
+    every = fPureTakesOne_('every'),
 
     /**
      * Concats/appends all functors onto the end of first functor.
@@ -93,7 +82,7 @@ export const
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in objectOps doesn't have an `every` method.
      */
-    concat = fPureTakesOneOrMore('concat'),
+    concat = fPureTakesOneOrMore_('concat'),
 
     /**
      * Array.prototype.join
@@ -102,7 +91,7 @@ export const
      * @param arr {Array}
      * @returns {String}
      */
-    join = fPureTakesOne('join'),
+    join = fPureTakesOne_('join'),
 
     /**
      * Same as Array.prototype.slice
@@ -110,7 +99,7 @@ export const
      * @param arr{Array}
      * @returns {Array}
      */
-    slice = fPureTakes2('slice'),
+    slice = fPureTakes2_('slice'),
 
     /**
      * Same as Array.prototype.push
@@ -118,7 +107,7 @@ export const
      * @param arr {Array}
      * @returns {Number}
      */
-    push = fPureTakesOneOrMore('push'),
+    push = fPureTakesOneOrMore_('push'),
 
     /**
      * Reverses an listOps (shimmed if not exists).

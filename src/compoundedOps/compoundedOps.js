@@ -1,10 +1,10 @@
 import {curry} from '../functionOps/curry';
 import {typeOf} from '../objectOps/typeOf';
 import {
-    arrayComplement,
-    arrayDifference,
-    arrayUnion,
-    arrayIntersect
+    complement as arrayComplement,
+    difference as arrayDifference,
+    union as arrayUnion,
+    intersect as arrayIntersect
 } from '../listOps/listOps';
 
 import {

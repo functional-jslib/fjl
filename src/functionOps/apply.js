@@ -3,6 +3,8 @@
  */
 import {curry} from './curry';
 
+import {apply as pureApply} from '../jsPlatform/functionOpsUnCurried';
+
 export const
 
     /**
@@ -12,4 +14,4 @@ export const
      * @param args {*}
      * @returns {*}
      */
-    apply = curry((fn, args) => fn.apply(null, args));
+    apply = curry(pureApply);

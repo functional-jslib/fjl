@@ -12,7 +12,6 @@ import {compose} from '../../src/functionOps/compose';
 import {negateP} from '../../src/functionOps/negateP';
 import {__} from '../../src/functionOps/curry';
 import {split} from '../../src/stringOps/stringOps';
-import {join} from '../../src/listOps/listOpsPrelude';
 import {isArray, isString} from '../../src/objectOps/is';
 import {isTruthy} from '../../src/booleanOps/is';
 import {bEqual as equal} from '../../src/booleanOps/booleanOps';
@@ -31,8 +30,8 @@ import {
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert,
     nubBy, removeBy, removeFirstsBy,
-    arrayComplement, arrayDifference, arrayUnion, arrayIntersect,
-    flatten, flattenMulti} from '../../src/listOps/listOps';
+    complement, difference, union, intersect
+} from '../../src/listOps/listOps';
 
 import {
     range,
@@ -86,7 +85,7 @@ describe ('#listOps', function () {
 
     describe ('#init', function () {
         it ('should return everything except the last item of an listOps and/or stringOps', function () {
-            compose(expectEqual('orange'), join(''), init, strToArray)('oranges');
+            compose(expectEqual('orange'), intercalate(''), init, strToArray)('oranges');
             compose(expectEqual('orange'), init)('oranges');
         });
         it ('should return an empty listOps when an empty listOps and/or stringOps is passed in', function () {
@@ -100,7 +99,7 @@ describe ('#listOps', function () {
 
     describe ('#tail', function () {
         it ('should return everything except the last item of an listOps', function () {
-            compose(expectEqual('ello'), join(''), tail, strToArray)('hello');
+            compose(expectEqual('ello'), intercalate(''), tail, strToArray)('hello');
             compose(expectEqual('ello'), tail)('hello');
         });
         it ('should return an empty listOps when receiving an empty listOps', function () {
@@ -1868,10 +1867,10 @@ describe ('#listOps', function () {
 
     describe ('#complement', function () {
         it ('should return an empty listOps when no parameters are passed in', function () {
-            compose(expectEqual(__, 0), length, arrayComplement)();
+            compose(expectEqual(__, 0), length, complement)();
         });
         it ('should return an empty listOps if only one listOps is passed in', function () {
-            compose(expectEqual(__, 0), length, arrayComplement)([1,2,3]);
+            compose(expectEqual(__, 0), length, complement)([1,2,3]);
         });
         it ('should return elements not in first listOps passed to it', function () {
             let testCases = [
@@ -1882,7 +1881,7 @@ describe ('#listOps', function () {
             ];
             testCases.forEach(testCase => {
                 let [subjects, expectedLen, expectedElms] = testCase,
-                    result = arrayComplement.apply(null, subjects);
+                    result = complement.apply(null, subjects);
                 expectEqual(result.length, expectedLen);
                 result.forEach((elm, ind) => {
                     expectEqual(elm, expectedElms[ind]);
@@ -1893,16 +1892,16 @@ describe ('#listOps', function () {
 
     describe ('#difference', function () {
         it ('should return an empty listOps when no parameters are passed in', function () {
-            compose(expectEqual(__, 0), length, arrayDifference)();
+            compose(expectEqual(__, 0), length, difference)();
         });
         it ('should return a clone of the passed in listOps if it is only the first listOps that is passed in', function () {
-            compose(expectEqual(__, 3), length, arrayDifference([]))([1,2,3]);
+            compose(expectEqual(__, 3), length, difference([]))([1,2,3]);
         });
         it ('should return an empty listOps when there are no differences between the two arrays passed in', function () {
-            compose(expectEqual(__, 0), length, arrayDifference([1, 2, 3]))([1,2,3]);
+            compose(expectEqual(__, 0), length, difference([1, 2, 3]))([1,2,3]);
         });
         it ('should return a clone of the passed in listOps if it is only the first listOps that is passed in', function () {
-            compose(expectEqual(__, 3), length, arrayDifference([]))([1,2,3]);
+            compose(expectEqual(__, 3), length, difference([]))([1,2,3]);
         });
         it ('should return the difference between two arrays passed in', function () {
             let testCases = [
@@ -1913,7 +1912,7 @@ describe ('#listOps', function () {
             ];
             testCases.forEach(testCase => {
                 let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = arrayDifference(subj1, subj2);
+                    result = difference(subj1, subj2);
                 expectEqual(result.length, expectedLen);
                 result.forEach((elm, ind) => {
                     expectEqual(elm, expectedElms[ind]);
@@ -1924,17 +1923,17 @@ describe ('#listOps', function () {
 
     describe ('#intersect', function () {
         it ('should return an empty listOps when receiving an empty listOps as parameter 1', function () {
-            compose(expectEqual(__, 0), length, arrayIntersect)([]);
-            compose(expectEqual(__, 0), length, arrayIntersect([]))([1, 2, 3]);
+            compose(expectEqual(__, 0), length, intersect)([]);
+            compose(expectEqual(__, 0), length, intersect([]))([1, 2, 3]);
         });
         it ('should return an empty listOps when receiving an empty listOps as parameter 2', function () {
-            compose(expectEqual(__, 0), length, arrayIntersect([1, 2, 3]))([]);
+            compose(expectEqual(__, 0), length, intersect([1, 2, 3]))([]);
         });
         it ('should return an empty listOps when both arrays passed are empty', function () {
-            compose(expectEqual(__, 0), length, arrayIntersect([]))([]);
+            compose(expectEqual(__, 0), length, intersect([]))([]);
         });
         it ('should return an empty listOps when no arrays are passed in', function () {
-            compose(expectEqual(__, 0), length, arrayIntersect)();
+            compose(expectEqual(__, 0), length, intersect)();
         });
         it ('should return an intersection of the two arrays passed in', function () {
             let testCases = [
@@ -1945,7 +1944,7 @@ describe ('#listOps', function () {
             ];
             testCases.forEach(testCase => {
                 let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = arrayIntersect(subj1, subj2);
+                    result = intersect(subj1, subj2);
                 expectEqual(result.length, expectedLen);
                 result.forEach((elm, ind) => {
                     expectEqual(elm, expectedElms[ind]);
@@ -1964,7 +1963,7 @@ describe ('#listOps', function () {
             ];
             testCases.forEach(testCase => {
                 let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = arrayUnion(subj1, subj2);
+                    result = union(subj1, subj2);
                 expectEqual(result.length, expectedLen);
                 result.forEach((elm, ind) => {
                     expectEqual(elm, expectedElms[ind]);
@@ -2102,41 +2101,6 @@ describe ('#listOps', function () {
 
     describe ('#minimumBy', function () {
         it ('should have more tests written');
-    });
-
-    describe ('#flatten', function () {
-        it ('should return an listOps when receiving an listOps', function () {
-            expectInstanceOf(flatten([]), Array);
-        });
-
-        it ('should flatten an listOps', function () {
-            const expected = [1, 2, 3],
-                subject = [[1], [[2]], [[[3]]]],
-                testData = [
-                    [subject, expected],
-                    [[[[[1]]], [[2]], [3]], expected],
-                    [[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]]], range(1, 15)],
-                ];
-            testData.forEach(args => expectShallowEquals(flatten(...args)));
-        });
-    });
-
-    describe ('#flattenMulti', function () {
-        it ('should return an listOps when receiving many arrays', function () {
-            const result = flattenMulti([], [[]], [[[]]], [[[[]]]]);
-            expectInstanceOf(result, Array);
-            expectShallowEquals(result, []);
-        });
-
-        it ('should flatten all passed in arrays into one listOps no matter their dimensions', function () {
-            // [[ args ], expected] - args is the args to spread on the call of `flattenMulti`
-            [
-                [[[[1], [2, [3], range(4, 9)]], range(10, 21)], range(1, 21)],
-                [[[[[1]]], [[2]], [3]], [1, 2, 3]],
-                [[[1, [2, 3, [4, 5, 6, [7, 8, 9, 10, [11, 12, 13, 14, 15]]]], range(16, 34)]], range(1, 34)],
-            ]
-                .map(args => expectShallowEquals(flattenMulti(...args[0]), args[1]));
-        });
     });
 
 });

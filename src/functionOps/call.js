@@ -3,6 +3,8 @@
  */
 import {curry2} from './curry';
 
+import {call as pureCall} from '../jsPlatform/functionOpsUnCurried';
+
 export const
 
     /**
@@ -12,4 +14,4 @@ export const
      * @param args {*}
      * @returns {*}
      */
-    call = curry2((fn, ...args) => fn.call(null, ...args));
+    call = curry2(pureCall);
