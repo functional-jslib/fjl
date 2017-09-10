@@ -19,6 +19,11 @@ import {of}                 from '../objectOps/of';
 import {length, hasOwnProperty} from '../../src-uncurried/jsPlatform/objectOpsUncurried';
 import {log} from '../../tests/for-server/helpers';
 
+import {
+    removeFirstsBy as pureRemoveFirstsBy,
+    removeBy as pureRemoveBy
+} from "../../src-uncurried/listOps/listOpsUncurried";
+
 export {length};
 
 const
@@ -1226,16 +1231,9 @@ export const
         return out;
     },
 
-    removeBy = curry((pred, x, list) => {
-        const foundIndex = findIndex(item => pred(x, item), list),
-            parts = splitAt(foundIndex > -1 ? foundIndex : 0, list);
-        return append(parts[0], tail(parts[1]));
-    }),
+    removeBy = curry(pureRemoveBy),
 
-    removeFirstsBy = curry((pred, xs1, xs2) =>
-        reduce((agg, item, ind) =>
-            removeBy(pred, item, agg)
-            , xs1, xs2)),
+    removeFirstsBy = curry(pureRemoveFirstsBy),
 
     /**
      * Creates a union on matching elements from array1.
