@@ -29,7 +29,7 @@ import {
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert,
-    nubBy, removeBy, removeFirstsBy,
+    nubBy, removeBy, removeFirstsBy, sort,
     complement, difference, union, intersect
 } from '../../src/listOps/listOps';
 
@@ -1973,7 +1973,10 @@ describe ('#listOps', function () {
     });
 
     describe ('#sort', function () {
-        it ('should have more tests written');
+        it ('should sort a list in ascending order', function () {
+            log(range(99, 0, -1));
+
+        });
     });
 
     describe ('#sortOn', function () {

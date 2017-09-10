@@ -71,9 +71,11 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
     expectDeepEquals = curry2_((a, b) => expectTrue(deepCompareLeft(a, b))),
 
     range = curry2_((from, to, step = 1) => {
-        let inc = from;
+        let i = from;
         const out = [];
-        for (; inc <= to; inc += step) { out.push(inc); }
+        if (step < 0 && i > 0) { for (; i >= to; i += step) { out.push(i); } }
+        else if (step > 0 && i < to) { for (; i <= to; i += step) { out.push(i); } }
+        else { throw new Error ('Invalid range requested'); }
         return out;
     }),
 
