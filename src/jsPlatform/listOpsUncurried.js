@@ -17,6 +17,13 @@ export const
             fPureTakesOne('includes') :
             (value, x) => x.indexOf(value) > -1)(),
 
+    /**
+     * Searches list/list-like for given element `x`.
+     * @function module:jsPlatform.listOpsUncurried.indexOf
+     * @param x {*} - Element to search for.
+     * @param xs {Array|String|*} - list or list like to look in.
+     * @returns {Number} - `-1` if element not found else index at which it is found.
+     */
     indexOf = fPureTakesOne('indexOf'),
 
     lastIndexOf = fPureTakesOne('lastIndexOf')

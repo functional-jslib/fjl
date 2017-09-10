@@ -5,16 +5,18 @@
  * @todo code unperformant shorthand in `listOps`
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
-import {curry, curry2, curry3, curry4, curry5, curryN}      from '../functionOps/curry';
-import {apply}              from '../jsPlatform/functionOpsUnCurried'; // un-curried version
+import {curry, curry2, curry3, curry4, curry5, curryN}
+                            from '../functionOps/curry';
+import {concat as listAppend, indexOf} from '../jsPlatform/listOpsUncurried';
+import {slice}              from '../jsPlatform/listOps';
+import {apply}              from '../jsPlatform/functionOpsUncurried'; // un-curried version
 import {negateP}            from '../functionOps/functionOps';
 import {isTruthy, isFalsy}  from '../booleanOps/is';
-import {isString, isArray, isset}  from '../objectOps/is';
+import {isString, isset}  from '../objectOps/is';
 import {prop}               from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
 import {of}                 from '../objectOps/of';
-import {length, hasOwnProperty} from '../objectOps/objectPrelude';
-import {fPureTakes2_, fPureTakesOne_, fPureTakesOneOrMore_} from '../utils/utils';
+import {length, hasOwnProperty} from '../jsPlatform/objectOpsUncurried';
 import {log} from '../../tests/for-server/helpers';
 
 export {length};
@@ -37,14 +39,6 @@ const
      * @returns {Boolean} - Always `false`.
      */
     alwaysFalse = () => false,
-
-    /**
-     * Array and String `slice`.
-     * @param separator {String|RegExp}
-     * @param arr{Array}
-     * @returns {Array}
-     */
-    slice = fPureTakes2_('slice'),
 
     /**
      * Returns a slice of the given list from `startInd` to the end of the list.
@@ -202,33 +196,6 @@ const
             arr),                   // list
 
     /**
-     * Concats/appends all functors onto the end of first functor.
-     * Note:  functors passed in after the first one must be of the same type.
-     * @param functor {Array|Object|*}
-     * @param ...functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in objectOps doesn't have an `every` method.
-     */
-    arrayAppend = fPureTakesOneOrMore_('concat'),
-
-    /**
-     * Appends any subsequent lists (strings) onto the first one (string).
-     * @note Same as a Monoidal `mappend`;  In this case for strings.
-     * @param arg0 {String}
-     * @param args {...String}
-     * @returns {String}
-     */
-    strAppend = (arg0, ...args) => reduce(aggregateStr, arg0, args),
-
-    /**
-     * Searches list/list-like for given element `x`.
-     * @param x {*} - Element to search for.
-     * @param xs {Array|String|*} - list or list like to look in.
-     * @returns {Number} - `-1` if element not found else index at which it is found.
-     */
-    indexOf = fPureTakesOne_('indexOf'),
-
-    /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
      * @function module:listOps.lastIndex
      * @param x {Array|String|*} - list like or list.
@@ -318,7 +285,7 @@ export const
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
      */
-    append = curry((xs1, xs2) => (isArray(xs1) ? arrayAppend : strAppend)(xs1, xs2)),
+    append = curry(listAppend),
 
     /**
      * Append two or more lists, i.e., same as `append` but for two ore more lists.
@@ -334,7 +301,7 @@ export const
         const lenArgs = length(args);
         if (!isset(x)) { return []; }
         if (!lenArgs) { return sliceToEndFrom(0, x); }
-        return (isArray(x) ? arrayAppend : strAppend)(x, ...args);
+        return listAppend(x, ...args);
     },
 
     /**
@@ -852,14 +819,13 @@ export const
      *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
      * @function module:listOps.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
+     * @param list {Array|String|*}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
-    partition = curry((pred, arr) => {
-        const limit = length(arr),
-            receivedString = isString(arr),
-            zero = receivedString ? '' : [];
-        if (!limit) { return [zero, zero]; }
-        return [filter(pred, arr), filter(negateP(pred), arr)];
+    partition = curry((pred, list) => {
+        const limit = length(list);
+        if (!limit) { return [of(list), of(list)]; }
+        return [filter(pred, list), filter(negateP(pred), list)];
     }),
 
     elem = curry((elm, xs) => indexOf(elm, xs) !== -1),

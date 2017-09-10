@@ -6,12 +6,12 @@
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
 import {curry}              from '../functionOps/curry';
-import {apply}              from '../jsPlatform/functionOpsUnCurried';  // un-curried version
-import {slice}              from '../jsPlatform/arrayOpsUnCurried';     // un-curried version good for both
+import {apply}              from '../jsPlatform/functionOpsUncurried';  // un-curried version
+import {slice}              from '../jsPlatform/arrayOpsUncurried';     // un-curried version good for both
 
 import {alwaysFalse}        from '../booleanOps/booleanOps';
 import {typeOf}             from '../objectOps/typeOf';
-import {length}             from '../objectOps/objectPrelude';
+import {length}             from '../jsPlatform/objectOpsUncurried';
 import {fPureTakesOne_, fPureTakesOneOrMore_} from '../utils/utils';
 
 const

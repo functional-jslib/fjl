@@ -6,7 +6,7 @@
 import {curry} from '../functionOps/curry';
 import {typeOf} from './typeOf';
 import {instanceOf} from './instanceOf';
-import {length, keys, hasOwnProperty} from './objectPrelude';
+import {length, keys, hasOwnProperty} from '../jsPlatform/objectOpsUncurried';
 
 let _String = String.name,
     _Number = Number.name,

@@ -6,7 +6,7 @@
 
 import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from '../utils/utils';
 
-import {defineReverse} from './arrayOpsUnCurried';
+import {defineReverse} from './arrayOpsUncurried';
 
 export const
 

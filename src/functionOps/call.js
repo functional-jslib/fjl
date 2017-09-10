@@ -3,7 +3,7 @@
  */
 import {curry2} from './curry';
 
-import {call as pureCall} from '../jsPlatform/functionOpsUnCurried';
+import {call as pureCall} from '../jsPlatform/functionOpsUncurried';
 
 export const
 
