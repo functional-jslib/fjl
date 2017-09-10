@@ -2012,11 +2012,29 @@ describe ('#listOps', function () {
     });
 
     describe ('#insert', function () {
-        it ('should have more tests written');
-        it ('should have more tests written', function () {
-            log(insert(99, range(0, 80, 5)));
-            log(insert(99, range(0, 144, 5)));
-            log(insert(99, reverse(range(0, 80, 5))));
+        const injectValueAtIndex = (x, ind, list) => {
+            if (ind <= 0) { return [x].concat(list); }
+            else if (ind > list.length - 1) { return list.concat([x]); }
+            return list.slice(0, ind).concat([x], list.slice(ind));
+        };
+        it ('Should insert a value directly before the first value that is less than or equal to it', function () {
+            // expectShallowEquals(insert(99, range(0, 144, 5))
+            const range0To145 = range(0, 145, 5),
+                expectedResult = injectValueAtIndex(99, 20, range0To145),
+                result = insert(99, range0To145),
+                result1 = insert(99, reverse(range0To145)),
+                result2 = insert('x', alphabetArray),
+                result3 = insert('x', reverse(alphabetArray));
+            // log (result1, result, expectedResult);
+            expectShallowEquals(result, expectedResult);
+            expectShallowEquals(result1, [99].concat(reverse(range0To145)));
+            expectShallowEquals(result2, injectValueAtIndex('x', 24, alphabetArray));
+            expectShallowEquals(result3, ['x'].concat(reverse(alphabetArray)));
+        });
+        it ('should insert value even if passed in list is empty', function () {
+            expectShallowEquals(insert(99, []), [99]);
+            expectShallowEquals(insert('a', []), ['a']);
+            expectShallowEquals(insert('a', ''), 'a');
         });
     });
 
