@@ -6,7 +6,7 @@
 
 import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from '../utils/utils';
 
-import {defineReverse} from './arrayOpsUncurried';
+import {defineReverse} from '../../src-uncurried/jsPlatform/arrayOpsUncurried';
 
 export const
 

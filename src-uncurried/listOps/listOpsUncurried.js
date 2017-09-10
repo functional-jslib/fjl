@@ -1,275 +1,37 @@
 /**
- * Array operators module.
- * @module arrayOps
+ * 'Uncurried' list operators.
+ * @module listOpsUncurried
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
  * @todo code unperformant shorthand in `listOps`
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
-import {curry, curry2, curry3, curry4, curry5, curryN}
-                            from '../functionOps/curry';
-import {concat as listAppend, indexOf} from '../../src-uncurried/jsPlatform/listOpsUncurried';
-import {slice}              from '../jsPlatform/listOps';
-import {apply}              from '../../src-uncurried/jsPlatform/functionOpsUncurried'; // un-curried version
-import {negateP}            from '../functionOps/functionOps';
-import {isTruthy, isFalsy}  from '../booleanOps/is';
-import {isString, isset}  from '../objectOps/is';
-import {prop}               from '../objectOps/prop';
-import {typeOf}             from '../objectOps/typeOf';
-import {of}                 from '../objectOps/of';
-import {length, hasOwnProperty} from '../../src-uncurried/jsPlatform/objectOpsUncurried';
-import {log} from '../../tests/for-server/helpers';
+import {concat as listAppend, indexOf} from '../jsPlatform/listOpsUncurried';
+import {includes}           from '../jsPlatform/listOpsUncurried';
+import {apply, negateF}     from '../jsPlatform/functionOpsUncurried';
+import {length}             from '../jsPlatform/objectOpsUncurried';
+import {slice}              from '../../src/jsPlatform/arrayOps';
+import {negateP}            from '../../src/functionOps/functionOps';
+import {isTruthy, isFalsy}  from '../../src/booleanOps/booleanOps';
+import {isString, isset}    from '../../src/objectOps/is';
+import {prop}               from '../../src/objectOps/prop';
+import {of}                 from '../../src/objectOps/of';
+import {map}                from './map';
+import {minimum}            from './minimum';
 
-export {length};
+import {
+    sliceToEndFrom, sortAsc, sortOnAsc, sortAscByLength, lengths,
+    lengthsToSmallest, aggregateArr, aggregatorByType,
+    reduceUntil, reduce, reduceRight, lastIndex,
+    findIndexWhere, findIndexWhereRight, findIndicesWhere,
+    findWhere, sliceFromZero
+} from './listOpsUncurriedUtils';
 
-const
+// import {log} from '../../tests/for-server/helpers';
 
-    /**
-     * Ascension multiplier.
-     * @type {number}
-     */
-    ASC = 1,
+// Exported imports
+export {length, map, minimum};
 
-    /**
-     * Descension multiplier.
-     * @type {number}
-     */
-    DESC = -1,
-
-    /**
-     * @returns {Boolean} - Always `false`.
-     */
-    alwaysFalse = () => false,
-
-    /**
-     * Returns a slice of the given list from `startInd` to the end of the list.
-     * @param startInd {Number}
-     * @param arr {Array|String|*}
-     * @returns {Array|String|*}
-     */
-    sliceToEndFrom = (startInd, arr) => slice(startInd, length(arr), arr),
-
-    /**
-     * Slices list from zero to `x` value.
-     * @param x {Array|String|*}
-     * @returns {Array|String|*}
-     */
-    sliceFromZero = x => sliceToEndFrom(0, x),
-
-    /**
-     * Always `1` or `-1`.
-     * @param x {Number}
-     * @returns {Number} - Always `1` or `-1`.
-     */
-    onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
-
-    /**
-     * @param multiplier
-     * @param valueFn
-     * @returns {function(*): (Array.<T>|*)}
-     */
-    getSortByOrder = (multiplier, valueFn = (v => v)) => {
-        const x = onlyOneOrNegOne(multiplier),
-            ifGreaterThan = x,
-            ifLessThan = -1 * x;
-        return list => list.sort((a1, b1) => {
-            let a = valueFn(a1),
-                b = valueFn(b1);
-            if (a > b) {
-                return ifGreaterThan;
-            }
-            else if (b > a) {
-                return ifLessThan;
-            }
-            return 0;
-        });
-    },
-
-    /**
-     * Returns a copy of passed in list sorted on some property which
-     * is decided by the `valueFn` function.
-     * @note Pattern is known as 'decorate-sort-un-decorate' or the "Schwartzian transform"
-     *  and used when the value-to-compare extracting function (`valueFn` here) is an expensive.
-     *  This pattern calls the value extractor function only once per element whereas
-     *  the default sort function calls it per comparison function call.
-     * @param multiplier {Number} - `1` or `-1`.
-     * @param valueFn {Function} - Returns some comparable value from item passed in.
-     * @param xs {Array|String|*} - List to sort.
-     * @returns {Array|String|*} - Whatever type of received list is.
-     */
-    sortOnByDirection = curry((multiplier, valueFn, xs) => {
-        valueFn = valueFn || (v => v);
-        const x = onlyOneOrNegOne(multiplier),
-            ifGreaterThan = x,
-            ifLessThan = -1 * x;
-
-        // Un-decorate
-        return map(decorated => decorated[1],
-                // Decorate
-                map(item => [valueFn(item), item], xs)
-                    // Sort
-                    .sort((a1, b1) => {
-                        let a = a1[0],
-                            b = b1[0];
-                        if (a > b) { return ifGreaterThan; }
-                        else if (b > a) { return ifLessThan; }
-                        return 0;
-                    }));
-    }),
-
-    sortOnAsc = sortOnByDirection(ASC),
-
-    sortAscByLength = getSortByOrder(ASC, length),
-
-    sortAsc = getSortByOrder(ASC),
-
-    /**
-     * Returns length of all passed lists in list.
-     * @param lists ...{Array|String|*}
-     * @returns {Array|String|*}
-     */
-    lengths = (...lists) => length(lists) ? map(length, lists) : [],
-
-    lengthsToSmallest = (...lists) => {
-        const listLengths = apply(lengths, lists),
-            smallLen = minimum(listLengths);
-        return map((list, ind) => listLengths[ind] > smallLen ?
-            slice(0, smallLen, list) : sliceFromZero(list), lists);
-    },
-
-    aggregateStr = (agg, item) => agg + item,
-
-    aggregateArr = (agg, item) => {
-        agg.push(item);
-        return agg;
-    },
-
-    aggregateObj = (agg, item, ind) => {
-        agg[ind] = item;
-        return agg;
-    },
-
-    aggregatorByType = x => {
-        switch (typeOf(x)) {
-            case 'String': return aggregateStr;
-            case 'Array': return aggregateArr;
-            case 'Object':
-            default: return aggregateObj;
-        }
-    },
-
-    reduceUntil = (pred, op, agg, arr) => {
-        const limit = length(arr);
-        if (!limit) { return agg; }
-        let ind = 0,
-            result = agg;
-        for (; ind < limit; ind++) {
-            if (pred(arr[ind], ind, arr)) { break; }
-            result = op(result, arr[ind], ind, arr);
-        }
-        return result;
-    },
-
-    reduceRightUntil = (pred, op, agg, arr) => {
-        const limit = length(arr);
-        if (!limit) { return agg; }
-        let ind = limit - 1,
-            result = agg;
-        for (; ind >= 0; ind--) {
-            if (pred(arr[ind], ind, arr)) { break; }
-            result = op(result, arr[ind], ind, arr);
-        }
-        return result;
-    },
-
-    reduce = (operation, agg, arr) =>
-        reduceUntil(
-            alwaysFalse,            // predicate
-            operation,              // operation
-            agg,                    // aggregator
-            arr),                   // list
-
-    reduceRight = (operation, agg, arr) =>
-        reduceRightUntil(
-            alwaysFalse,            // predicate
-            operation,              // operation
-            agg,                    // aggregator
-            arr),                   // list
-
-    /**
-     * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOps.lastIndex
-     * @param x {Array|String|*} - list like or list.
-     * @returns {Number} - `-1` if no element found.
-     */
-    lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
-
-    /**
-     * Finds index in string or list.
-     * @function module:listOps.findIndexWhere
-     * @param pred {Function} - Predicate<element, index, arr>.
-     * @param arr {Array|String}
-     * @returns {Number} - `-1` if predicate not matched else `index` found
-     */
-    findIndexWhere = (pred, arr) => {
-        let ind = -1,
-            predicateFulfilled = false;
-        const limit = length(arr);
-        while (ind < limit && !predicateFulfilled) {
-            predicateFulfilled = pred(arr[++ind], ind, arr);
-        }
-        return ind;
-    },
-
-    /**
-     * Finds index in list from right to left.
-     * @function module:listOps.findIndexWhereRight
-     * @param pred {Function} - Predicate<element, index, arr>.
-     * @param arr {Array|String}
-     * @returns {Number} - `-1` if predicate not matched else `index` found
-     */
-    findIndexWhereRight = (pred, arr) => {
-        const limit = length(arr);
-        let ind = limit,
-            predicateFulfilled = false;
-        for (; ind >= 0 && !predicateFulfilled; --ind) {
-            predicateFulfilled = pred(arr[ind], ind, arr);
-        }
-        return ind;
-    },
-
-    /**
-     * @param pred {Function}
-     * @param xs {Array|String|*} - list or list like.
-     * @returns {Array|undefined}
-     */
-    findIndicesWhere = (pred, xs) => {
-        const limit = length(xs);
-        if (!limit) { return undefined; }
-        let ind = 0,
-            out = [];
-        for (; ind < limit; ind++) {
-            if (pred(xs[ind], ind, xs)) { out.push(ind); }
-        }
-        return out;
-    },
-
-    /**
-     * @function module:listOps.find
-     * @param pred {Function}
-     * @param xs {Array|String|*} - list or list like.
-     * @returns {*}
-     */
-    findWhere = (pred, xs) => {
-        let ind = 0,
-            limit = length(xs);
-        if (!limit) { return; }
-        for (; ind < limit; ind++) {
-            let elm = xs[ind];
-            if (pred(elm, ind, xs)) { return elm; }
-        }
-    }
-;
-
+// Exported internals
 export const
 
     /**
@@ -285,7 +47,7 @@ export const
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
      */
-    append = curry(listAppend),
+    append = listAppend,
 
     /**
      * Append two or more lists, i.e., same as `append` but for two ore more lists.
@@ -348,9 +110,8 @@ export const
      * @returns {Array|String|*|undefined}
      */
     uncons = xs => {
-        if (!xs) { return; } //
-        const len = length(xs);
-        if (len === 0) { return undefined; }
+        if (!xs) { return; }
+        if (length(xs) === 0) { return undefined; }
         return [head(xs), tail(xs)];
     },
 
@@ -362,9 +123,8 @@ export const
      * @returns {Array|String|*|undefined}
      */
     unconsr = xs => {
-        if (!xs) { return; } //
-        const len = length(xs);
-        if (len === 0) { return undefined; }
+        if (!xs) { return; }
+        if (length(xs) === 0) { return undefined; }
         return [init(xs), last(xs)];
     },
 
@@ -388,24 +148,6 @@ export const
     isEmpty = x => !length(x),
 
     /**
-     * @function module:listOps.map
-     * @param fn {Function} - Function to map on functor item(s).
-     * @param xs {Array|String|*} - Functor.
-     * @returns {Array|String|*} - Functor type that is passed in.
-     */
-    map = curry ((fn, xs) => {
-        let ind = 0,
-            limit = length(xs),
-            out = of(xs),
-            aggregate = aggregatorByType(xs);
-        if (!limit) { return out; }
-        for (; ind < limit; ind += 1) {
-            out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
-        }
-        return out;
-    }),
-
-    /**
      * Concatenates all the elements of a container of lists.
      * @haskellType `concat :: Foldable t => t [a] -> [a]`
      * @function module:listOps.concat
@@ -422,7 +164,7 @@ export const
      * @param foldableOfA {Array|String|*}
      * @returns {Array|String|*}
      */
-    concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
+    concatMap = (fn, foldableOfA) => concat(map(fn, foldableOfA)),
 
     /**
      * Returns a copy of the passed in list reverses.
@@ -434,9 +176,9 @@ export const
     reverse = x => {
         const aggregator = aggregatorByType(x);
         return reduceRight(
-                (agg, item, ind) => aggregator(agg, item, ind),
-                of(x), x
-            );
+            (agg, item, ind) => aggregator(agg, item, ind),
+            of(x), x
+        );
     },
 
     /**
@@ -448,7 +190,7 @@ export const
      * @param arr {Array|String|*} - List.
      * @returns {Array|String|*}
      */
-    intersperse = curry((between, arr) => {
+    intersperse = (between, arr) => {
         const limit = length(arr),
             lastInd = limit - 1,
             aggregator = of(arr),
@@ -462,7 +204,7 @@ export const
                     between
                 );
         }, aggregator, arr);
-    }),
+    },
 
     /**
      * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
@@ -472,10 +214,10 @@ export const
      * @param xss {Array|String|*}
      * @returns {Array|String|*}
      */
-    intercalate = curry((xs, xss) => {
+    intercalate = (xs, xss) => {
         const result = intersperse(xs, xss);
         return isString(result) ? result : concat(result);
-    }),
+    },
 
     /**
      * Transposes rows and columns into lists by index;  E.g.,
@@ -540,21 +282,21 @@ export const
 
     permutations = xs => [xs],
 
-    foldl = curry(reduce),
+    foldl = reduce,
 
-    foldr = curry(reduceRight),
+    foldr = reduceRight,
 
-    foldl1 = curry((op, xs) => {
+    foldl1 = (op, xs) => {
         const parts = uncons(xs);
         if (!parts) { return of (xs); }
         return reduce (op, parts[0], parts[1]);
-    }),
+    },
 
-    foldr1 = curry((op, xs) => {
+    foldr1 = (op, xs) => {
         const parts = unconsr(xs);
         if (!parts) { return of (xs); }
         return reduceRight (op, parts[1], parts[0]);
-    }),
+    },
 
     /**
      * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
@@ -565,7 +307,7 @@ export const
      * @param xs {Array|String|*} - list type.
      * @return {Array} - [aggregated, list]
      */
-    mapAccumL = curry((op, zero, xs) => {
+    mapAccumL = (op, zero, xs) => {
         const list = sliceToEndFrom(0, xs),
             limit = length(xs);
         if (!limit) { return [zero, list]; }
@@ -579,7 +321,7 @@ export const
             mapped = tuple[1];
         }
         return [agg, mapped];
-    }),
+    },
 
     /**
      * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
@@ -590,7 +332,7 @@ export const
      * @param xs {Array|String|*} - list type.
      * @return {Array} - [aggregated, list]
      */
-    mapAccumR = curry((op, zero, xs) => {
+    mapAccumR = (op, zero, xs) => {
         const list = sliceToEndFrom(0, xs),
             limit = length(xs);
         if (!limit) { return [zero, list]; }
@@ -604,23 +346,23 @@ export const
             mapped = tuple[1];
         }
         return [agg, mapped];
-    }),
+    },
 
-    iterate = curry((limit, op, x) => {
+    iterate = (limit, op, x) => {
         let ind = 0,
             out = x;
         for(; ind < limit; ind += 1) {
             out = op(out, ind);
         }
         return out;
-    }),
+    },
 
-    repeat = curry((limit, x) =>
-        iterate(limit, agg => { agg.push(x); return agg; }, [])),
+    repeat = (limit, x) =>
+        iterate(limit, agg => { agg.push(x); return agg; }, []),
 
     replicate = repeat,
 
-    cycle = curry((limit, xs) => concat(replicate(limit, xs))),
+    cycle = (limit, xs) => concat(replicate(limit, xs)),
 
     /**
      * Unfolds a value into a list of somethings.
@@ -630,7 +372,7 @@ export const
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
      */
-    unfoldr = curry2((op, x) => {
+    unfoldr = (op, x) => {
         let ind = 0,
             out = [],
             resultTuple = op(x, ind, out);
@@ -639,7 +381,7 @@ export const
             resultTuple = op(resultTuple[1], ++ind, out);
         }
         return out;
-    }),
+    },
 
     /**
      * Finds index in string or list (alias for `findIndex`).
@@ -648,7 +390,7 @@ export const
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndex = curry(findIndexWhere),
+    findIndex = findIndexWhere,
 
     /**
      * @function module:listOps.findIndices
@@ -656,7 +398,7 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
      */
-    findIndices =  curry(findIndicesWhere),
+    findIndices =  findIndicesWhere,
 
     /**
      * @function module:listOps.elemIndex
@@ -664,10 +406,10 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    elemIndex = curry((x, xs) => {
+    elemIndex = (x, xs) => {
         const foundInd = indexOf(x, xs);
         return foundInd !== -1 ? foundInd : undefined;
-    }),
+    },
 
     /**
      * @function module:listOps.elemIndices
@@ -675,7 +417,7 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
+    elemIndices = (value, xs) => findIndices(x => x === value, xs),
 
     /**
      * Takes `n` items from start of list to `limit` (exclusive).
@@ -684,7 +426,7 @@ export const
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    take = curry((limit, array) => slice(0, limit, array)),
+    take = (limit, list) => slice(0, limit, list),
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
@@ -693,75 +435,75 @@ export const
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    drop = curry((count, array) => sliceToEndFrom(count, array)),
+    drop = (count, list) => sliceToEndFrom(count, list),
 
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
      * given index in second part of returned list)).
      * @function module:listOps.splitAt
      * @param ind {Number} - Index to split at.
-     * @param functor {Array|String} - functor (list or string) to split.
+     * @param list {Array|String|*} - functor (list or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
      */
-    splitAt = curry((ind, arr) => [
-        slice(0, ind, arr),
-        sliceToEndFrom(ind, arr)
-    ]),
+    splitAt = (ind, list) => [
+        slice(0, ind, list),
+        sliceToEndFrom(ind, list)
+    ],
 
     /**
      * Gives an list with passed elements while predicate was true.
      * @function module:listOps.takeWhile
      * @param pred {Function} - Predicate<*, index, list|string>
-     * @param arr {Array|String}
+     * @param list {Array|String}
      * @returns {Array}
      */
-    takeWhile = curry((pred, arr) => {
-        let zero =  of(arr);
-        const operation = aggregatorByType(arr);
+    takeWhile = (pred, list) => {
+        let zero =  of(list);
+        const operation = aggregatorByType(list);
         return reduceUntil (
             negateP(pred),  // predicate
             operation,      // operation
             zero,           // aggregator
-            arr
+            list
         );
-    }),
+    },
 
     /**
      * Returns an list without elements that match predicate.
      * @function module:listOps.dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
-     * @param arr {Array|String}
+     * @param list {Array|String}
      * @refactor
      * @returns {Array|String}
      */
-    dropWhile = curry((pred, arr) => {
-        const limit = length(arr),
+    dropWhile = (pred, list) => {
+        const limit = length(list),
             splitPoint =
-                findIndexWhere((item, ind, arr2) =>
-                    !pred(arr[ind], ind, arr2), arr);
+                findIndexWhere((item, ind, list2) =>
+                    !pred(list[ind], ind, list2), list);
 
         return splitPoint === -1 ?
-            slice(0, limit, arr) :
-            slice(splitPoint, limit, arr);
-    }),
+            slice(0, limit, list) :
+            slice(splitPoint, limit, list);
+    },
 
     /**
      * @function module:listOps.dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
-     * @param arr {Array|String}
+     * @param list {Array|String}
      * @refactor
      * @returns {Array|String}
      */
-    dropWhileEnd = curry((pred, arr) => {
-        const limit = length(arr),
+    dropWhileEnd = (pred, list) => {
+        const limit = length(list),
             splitPoint =
-                findIndexWhereRight((item, ind, arr2) =>
-                    !pred(arr[ind], ind, arr2), arr);
+                findIndexWhereRight((item, ind, list2) =>
+                    !pred(list[ind], ind, list2), list);
 
         return splitPoint === -1 ?
-            slice(0, limit, arr) :
-            slice(0, splitPoint + 1, arr);
-    }),
+            slice(0, limit, list) :
+            slice(0, splitPoint + 1, list);
+    },
 
     /**
      * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
@@ -769,19 +511,20 @@ export const
      * **@Note: Not the same as `partition`.  Read descriptions closely!!!
      * @function module:listOps.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
-     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
+     * @param list {Array|String|*} - Predicate<item, index, originalArrayOrString>
+     * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
-    span = curry((pred, arr) => {
-        const splitPoint = findIndexWhere(negateP(pred), arr);
+    span = (pred, list) => {
+        const splitPoint = findIndexWhere(negateP(pred), list);
         return splitPoint === -1 ?
-            splitAt(0, arr) : splitAt(splitPoint, arr);
-    }),
+            splitAt(0, list) : splitAt(splitPoint, list);
+    },
 
-    breakOnList = curry((pred, arr) => {
-        const splitPoint = findIndexWhere(pred, arr);
+    breakOnList = (pred, list) => {
+        const splitPoint = findIndexWhere(pred, list);
         return splitPoint === -1 ?
-            splitAt(0, arr) : splitAt(splitPoint, arr);
-    }),
+            splitAt(0, list) : splitAt(splitPoint, list);
+    },
 
     /**
      * @function module:listOps.at
@@ -797,9 +540,9 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    find = curry(findWhere),
+    find = findWhere,
 
-    filter = curry((pred, xs) => {
+    filter = (pred, xs) => {
         let ind = 0,
             limit = length(xs),
             aggregator = aggregatorByType(xs),
@@ -811,7 +554,7 @@ export const
             }
         }
         return out;
-    }),
+    },
 
     /**
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
@@ -822,19 +565,18 @@ export const
      * @param list {Array|String|*}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
-    partition = curry((pred, list) => {
-        const limit = length(list);
-        if (!limit) { return [of(list), of(list)]; }
+    partition = (pred, list) => {
+        if (!length(list)) { return [of(list), of(list)]; }
         return [filter(pred, list), filter(negateP(pred), list)];
-    }),
+    },
 
-    elem = curry((elm, xs) => indexOf(elm, xs) !== -1),
+    elem = includes,
 
-    notElem = curry((elm, xs) => indexOf(elm, xs) === -1),
+    notElem = negateF(includes),
 
-    lookup = curry((key, xs) => hasOwnProperty(key, xs) ? xs[key] : undefined),
+    lookup = at,
 
-    isPrefixOf = curry((xs1, xs2) => {
+    isPrefixOf = (xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
@@ -845,9 +587,9 @@ export const
             if (xs1[ind] !== xs2[ind]) { return false; }
         }
         return true;
-    }),
+    },
 
-    isSuffixOf = curry((xs1, xs2) => {
+    isSuffixOf = (xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
@@ -860,9 +602,9 @@ export const
             ind2 -= 1;
         }
         return true;
-    }),
+    },
 
-    isInfixOf = curry((xs1, xs2) => {
+    isInfixOf = (xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2) {
@@ -879,9 +621,9 @@ export const
             }
         }
         return false;
-    }),
+    },
 
-    isSubsequenceOf = curry((xs1, xs2) => {
+    isSubsequenceOf = (xs1, xs2) => {
         const len = Math.pow(2, length(xs2)),
             lenXs1 = length(xs1);
         let foundLen,
@@ -894,7 +636,7 @@ export const
             }
         }
         return false;
-    }),
+    },
 
     group = xs => {
         const limit = length(xs);
@@ -940,10 +682,10 @@ export const
         return agg;
     }, //map(list => tail(list), xs),
 
-    stripPrefix = curry((prefix, list) =>
+    stripPrefix = (prefix, list) =>
         isPrefixOf(prefix, list) ?
             splitAt(length(prefix), list)[1] :
-                sliceToEndFrom(0, list)),
+            sliceToEndFrom(0, list),
 
     /**
      * zip takes two lists and returns a list of corresponding pairs.
@@ -954,13 +696,13 @@ export const
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip = curry((arr1, arr2) => {
+    zip = (arr1, arr2) => {
         if (!length(arr1) || !length(arr2)) { return of(arr1); }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
         return reduce((agg, item, ind) =>
                 aggregateArr(agg, [item, a2[ind]]),
             [], a1);
-    }),
+    },
 
     /**
      * zipN takes one or more lists and returns a list containing lists of all indices
@@ -972,7 +714,7 @@ export const
      */
     zipN = (...lists) => {
         const trimmedLists = apply(lengthsToSmallest, filter(length, lists)),
-        lenOfTrimmed = length(trimmedLists);
+            lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) { return []; }
         else if (lenOfTrimmed === 1) {
             return slice(0, length(trimmedLists[0]), trimmedLists[0]);
@@ -990,7 +732,7 @@ export const
      * @param arr3 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip3 = curry3(zipN),
+    zip3 = zipN,
 
     /**
      * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
@@ -1001,7 +743,7 @@ export const
      * @param arr4 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip4 = curry4(zipN),
+    zip4 = zipN,
 
     /**
      * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
@@ -1012,7 +754,7 @@ export const
      * @param arr4 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip5 = curry5(zipN),
+    zip5 = zipN,
 
     /**
      * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
@@ -1035,13 +777,13 @@ export const
      * @param xs2 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith = curry((op, xs1, xs2) => {
+    zipWith = (op, xs1, xs2) => {
         if (!length(xs1) || !length(xs2)) { return of(xs1); }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
         return reduce((agg, item, ind) =>
                 aggregateArr(agg, op(item, a2[ind])),
             [], a1);
-    }),
+    },
 
     /**
      * Zips all given lists with tupling function. Note: Haskell types do not have
@@ -1080,7 +822,7 @@ export const
      * @param xs3 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith3 = curry4(zipWithN),
+    zipWith3 = zipWithN,
 
     /**
      * Zips 4 lists with tupling function.
@@ -1095,7 +837,7 @@ export const
      * @param xs4 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith4 = curry5(zipWithN),
+    zipWith4 = zipWithN,
 
     /**
      * Zips 5 lists.
@@ -1111,7 +853,7 @@ export const
      * @param xs5 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith5 = curryN(6, zipWithN),
+    zipWith5 = zipWithN,
 
     /**
      * unzip transforms a list of pairs into a list of first components and a list of second components.
@@ -1148,7 +890,7 @@ export const
         }, zero, list);
     },
 
-    any = curry((p, xs) => {
+    any = (p, xs) => {
         let ind = 0,
             limit = length(xs);
         if (!limit) { return false; }
@@ -1156,9 +898,9 @@ export const
             if (p(xs[ind])) { return true; }
         }
         return false;
-    }),
+    },
 
-    all = curry((p, xs) => {
+    all = (p, xs) => {
         const limit = length(xs);
         let ind = 0;
         if (limit === 0) {
@@ -1170,21 +912,19 @@ export const
             }
         }
         return true;
-    }),
+    },
 
-    and = all(isTruthy),
+    and = xs => all(isTruthy, xs),
 
-    or = any(isTruthy),
+    or = xs => any(isTruthy, xs),
 
-    not = all(isFalsy),
+    not = xs => all(isFalsy, xs),
 
     sum = list => reduce((agg, x) => agg + x, 0, list),
 
     product = arr => reduce((agg, x) => agg * x, 1, arr),
 
     maximum = arr => apply(Math.max, arr),
-
-    minimum = arr => apply(Math.min, arr),
 
     scanl = () => null,
 
@@ -1196,19 +936,19 @@ export const
 
     nub = list => nubBy((a, b) => a === b, list),
 
-    remove = curry((x, list) => removeBy((a, b) => a === b, x, list)),
+    remove = (x, list) => removeBy((a, b) => a === b, x, list),
 
     sort = sortAsc,
 
     sortOn = sortOnAsc,
 
-    insert = curry((x, xs) => {
+    insert = (x, xs) => {
         if (isEmpty(xs)) { return [x]; }
         let out = of(xs),
             foundIndex = findIndex((item, ind) => x <= item, xs);
         return foundIndex === -1 ? append(sliceToEndFrom(0, out), x) :
             concat(intersperse([x], splitAt(foundIndex, xs)));
-    }),
+    },
 
     nubBy = (pred, list) => {
         if (isEmpty(list)) { return of(list); }
@@ -1226,16 +966,14 @@ export const
         return out;
     },
 
-    removeBy = curry((pred, x, list) => {
+    removeBy = (pred, x, list) => {
         const foundIndex = findIndex(item => pred(x, item), list),
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list);
         return append(parts[0], tail(parts[1]));
-    }),
+    },
 
-    removeFirstsBy = curry((pred, xs1, xs2) =>
-        reduce((agg, item, ind) =>
-            removeBy(pred, item, agg)
-            , xs1, xs2)),
+    removeFirstsBy = (pred, xs1, xs2) =>
+        reduce((agg, item, ind) => removeBy(pred, item, agg), xs1, xs2),
 
     /**
      * Creates a union on matching elements from array1.
@@ -1244,45 +982,43 @@ export const
      * @param arr2 {Array}
      * @returns {Array}
      */
-    union = curry((arr1, arr2) =>
-        append(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
+    union = (arr1, arr2) =>
+        append(arr1, filter(elm => !includes(elm, arr1), arr2)),
 
     /**
      * Performs an intersection on list 1 with  elements from list 2.
      * @function module:listOps.intersect
-     * @param arr1 {Array}
-     * @param arr2 {Array}
-     * @returns {Array}
+     * @param arr1 {Array|String|*}
+     * @param arr2 {Array|String|*}
+     * @returns {Array|String|*}
      */
-    intersect = curry((arr1, arr2) => length(arr2) === 0 ? [] :
-            filter(elm => indexOf(elm, arr2) > -1, arr1)),
+    intersect = (arr1, arr2) =>
+        !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
+            filter(elm => includes(elm, arr2), arr1),
 
     /**
      * Returns the difference of list 1 from list 2.
+     * @note The `difference` operation here is non-associative;  E.g., `a - b` is not equal to `b - a`;
      * @function module:listOps.difference
-     * @param array1 {Array}
-     * @param array2 {Array}
-     * @returns {Array}
+     * @param array1 {Array|String|*}
+     * @param array2 {Array|String|*}
+     * @returns {Array|String|*}
      */
-    difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
-        let [arr2, arr1] = sortAscByLength([array1, array2]);
-        if (!arr2 || length(arr2) === 0) {
-            return slice(0, length(arr1), arr1);
-        }
-        return reduce((agg, elm) => {
-            if (indexOf(elm, arr2) === -1) {
-                agg.push(elm);
-            }
-            return agg;
-        }, [], arr1);
-    }),
+    difference = (array1, array2) => { // augment this with max length and min length ordering on op
+        if (array1 && !array2) { return sliceToEndFrom(0, array1); }
+        else if (!array1 && array2 || (!array1 && !array2)) { return []; }
+        const aggregator = aggregatorByType(array1);
+        return reduce((agg, elm) =>
+            !includes(elm, array2) ? aggregator(agg, elm) : agg
+            , [], array1);
+    },
 
     /**
      * Returns the complement of list 0 and the reset of the passed in arrays.
      * @function module:listOps.complement
-     * @param array1 {Array}
-     * @param array2 {Array}
+     * @param arr0 {Array}
+     * @param arrays {...Array}
      * @returns {Array}
      */
-    complement = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => append(agg, difference(arr0, arr)), [], arrays));
+    complement = (arr0, ...arrays) =>
+        reduce((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);

@@ -4,6 +4,6 @@
 
 import {curry} from '../functionOps/curry';
 
-import {split as pureSplit} from './stringOpsUnCurried';
+import {split as pureSplit} from '../../src-uncurried/jsPlatform/stringOpsUnCurried';
 
 export const split = curry(pureSplit);

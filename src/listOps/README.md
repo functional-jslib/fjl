@@ -132,3 +132,6 @@ be kept here for possible future considerations).
 - `genericSplitAt :: Integral i => i -> [a] -> ([a], [a])`
 - `genericIndex :: Integral i => [a] -> i -> a`
 - `genericReplicate :: Integral i => i -> a -> [a]`
+
+
+## Notes

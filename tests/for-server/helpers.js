@@ -12,6 +12,8 @@ import {compose} from '../../src/functionOps/compose';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
+const apply = (fn, ...args) => fn.apply(null, args);
+
 export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.instanceOf(instance)),
 
     expectFunction = value => expectInstanceOf(value, Function),
@@ -86,7 +88,9 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
     alphabetArray = alphabetCharCodeRange
         .map(charCode => String.fromCharCode(charCode)),
 
-    alphabetString = alphabetArray.join('')
+    alphabetString = alphabetArray.join(''),
+
+    peak = (...args) => apply(log, args)
 
     ;
 

@@ -1,20 +1,17 @@
 /**
  * Array operators module.
- * @module arrayOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
- * @todo code unperformant shorthand in `listOps`
- * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
+ * @module listOpsUtils
  */
-import {curry}              from '../functionOps/curry';
 import {apply}              from '../jsPlatform/functionOpsUncurried';  // un-curried version
-import {slice}              from '../jsPlatform/arrayOpsUncurried';     // un-curried version good for both
-
-import {alwaysFalse}        from '../booleanOps/booleanOps';
-import {typeOf}             from '../objectOps/typeOf';
+import {slice}              from '../jsPlatform/listOpsUncurried';      // un-curried version good for both strings and arrays
 import {length}             from '../jsPlatform/objectOpsUncurried';
-import {fPureTakesOne_, fPureTakesOneOrMore_} from '../utils/utils';
+import {alwaysFalse}        from '../../src/booleanOps/booleanOps';
+import {map}                from './map';
+import {minimum}            from "./minimum";
 
-const
+export * from './listOpsUncurriedAggregation';
+
+export const
 
     /**
      * Ascension multiplier.
@@ -67,36 +64,35 @@ const
     },
 
     /**
-     * Returns a copy of passed in list sorted on some property which
-     * is decided by the `valueFn` function.
-     * @note Pattern is known as 'decorate-sort-un-decorate' or the "Schwartzian transform"
-     *  and used when the value-to-compare extracting function (`valueFn` here) is an expensive.
+     * Returns a function with a predefined ordering for sorting 'on' some specific criteria
+     * Returned function returns a copy of passed in list sorted on value returned by `valueFn` passed
+     *  to (returned) function.
+     * @note Pattern used here is known as 'decorate-sort-un-decorate' or the "Schwartzian transform"
+     *  it compares on returned by `valueFn` passed to returned function.
      *  This pattern calls the value extractor function only once per element whereas
      *  the default sort function calls it per comparison function call.
      * @param multiplier {Number} - `1` or `-1`.
-     * @param valueFn {Function} - Returns some comparable value from item passed in.
-     * @param xs {Array|String|*} - List to sort.
-     * @returns {Array|String|*} - Whatever type of received list is.
+     * @returns {Function} - Sorting 'on' function with it's ordering already defined ('descending' or 'ascending');
      */
-    sortOnByDirection = curry((multiplier, valueFn, xs) => {
-        valueFn = valueFn || (v => v);
+    sortOnByDirection = multiplier => {
         const x = onlyOneOrNegOne(multiplier),
             ifGreaterThan = x,
             ifLessThan = -1 * x;
 
         // Un-decorate
-        return map(decorated => decorated[1],
-            // Decorate
-            map(item => [valueFn(item), item], xs)
-            // Sort
-                .sort((a1, b1) => {
-                    let a = a1[0],
-                        b = b1[0];
-                    if (a > b) { return ifGreaterThan; }
-                    else if (b > a) { return ifLessThan; }
-                    return 0;
-                }));
-    }),
+        return (valueFn = (v => v), xs) =>
+            map(decorated => decorated[1],
+                // Decorate
+                map(item => [valueFn(item), item], xs)
+                    // Sort
+                    .sort((a1, b1) => {
+                        let a = a1[0],
+                            b = b1[0];
+                        if (a > b) { return ifGreaterThan; }
+                        else if (b > a) { return ifLessThan; }
+                        return 0;
+                    }));
+    },
 
     sortOnAsc = sortOnByDirection(ASC),
 
@@ -116,27 +112,6 @@ const
             smallLen = minimum(listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
             slice(0, smallLen, list) : sliceFromZero(list), lists);
-    },
-
-    aggregateStr = (agg, item) => agg + item,
-
-    aggregateArr = (agg, item) => {
-        agg.push(item);
-        return agg;
-    },
-
-    aggregateObj = (agg, item, ind) => {
-        agg[ind] = item;
-        return agg;
-    },
-
-    aggregatorByType = x => {
-        switch (typeOf(x)) {
-            case 'String': return aggregateStr;
-            case 'Array': return aggregateArr;
-            case 'Object':
-            default: return aggregateObj;
-        }
     },
 
     reduceUntil = (pred, op, agg, arr) => {
@@ -176,33 +151,6 @@ const
             operation,              // operation
             agg,                    // aggregator
             arr),                   // list
-
-    /**
-     * Concats/appends all functors onto the end of first functor.
-     * Note:  functors passed in after the first one must be of the same type.
-     * @param functor {Array|Object|*}
-     * @param ...functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in objectOps doesn't have an `every` method.
-     */
-    arrayAppend = fPureTakesOneOrMore_('concat'),
-
-    /**
-     * Appends any subsequent lists (strings) onto the first one (string).
-     * @note Same as a Monoidal `mappend`;  In this case for strings.
-     * @param arg0 {String}
-     * @param args {...String}
-     * @returns {String}
-     */
-    strAppend = (arg0, ...args) => reduce(aggregateStr, arg0, args),
-
-    /**
-     * Searches list/list-like for given element `x`.
-     * @param x {*} - Element to search for.
-     * @param xs {Array|String|*} - list or list like to look in.
-     * @returns {Number} - `-1` if element not found else index at which it is found.
-     */
-    indexOf = fPureTakesOne_('indexOf'),
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).

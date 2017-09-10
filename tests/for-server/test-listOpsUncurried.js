@@ -2,6 +2,7 @@
  * Created by elyde on 12/29/2016.
  * @todo ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
  * @todo ensure expected types (either explicitly or implicitly) are being returned where necessary.
+ * @todo Clean up 'test-listOpsUncurried' to look more like code that was written expecting uncurried functions not curried ones (code was copied from the tests for the curried version of 'listOps' package).
  */
 
 // ~~~ STRIP ~~~
@@ -18,6 +19,7 @@ import {isTruthy} from '../../src/booleanOps/is';
 import {bEqual as equal} from '../../src/booleanOps/booleanOps';
 import {lines, unlines, words, unwords} from '../../src/stringOps/stringOps';
 import {
+    append, appendMany,
     all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
@@ -32,7 +34,7 @@ import {
     filter, sum, product, maximum, minimum, nub, remove, insert,
     nubBy, removeBy, removeFirstsBy, sort, sortOn,
     complement, difference, union, intersect
-} from '../../src/listOps/listOps';
+} from '../../src-uncurried/listOps/listOpsUncurried';
 
 import {
     range,
@@ -43,6 +45,7 @@ import {
     expectLength,
     expectTrue,
     expectFalse,
+    expectInstanceOf,
     alphabetArray,
     alphabetCharCodeRange,
     log, alphabetString
@@ -53,6 +56,14 @@ import {
 describe ('#listOps', function () {
 
     const strToArray = split('');
+
+    describe ('#append', function () {
+        it ('should have more tests.');
+    });
+
+    describe ('#appendMany', function () {
+        it ('should have more tests.');
+    });
 
     describe ('#head', function () {
         it ('should return the first item in an listOps and/or stringOps.', function () {
@@ -85,7 +96,7 @@ describe ('#listOps', function () {
 
     describe ('#init', function () {
         it ('should return everything except the last item of an listOps and/or stringOps', function () {
-            compose(expectEqual('orange'), intercalate(''), init, strToArray)('oranges');
+            compose(expectEqual('orange'), xs => intercalate('', xs), init, strToArray)('oranges');
             compose(expectEqual('orange'), init)('oranges');
         });
         it ('should return an empty listOps when an empty listOps and/or stringOps is passed in', function () {
@@ -99,7 +110,7 @@ describe ('#listOps', function () {
 
     describe ('#tail', function () {
         it ('should return everything except the last item of an listOps', function () {
-            compose(expectEqual('ello'), intercalate(''), tail, strToArray)('hello');
+            compose(expectEqual('ello'), xs => intercalate('', xs), tail, strToArray)('hello');
             compose(expectEqual('ello'), tail)('hello');
         });
         it ('should return an empty listOps when receiving an empty listOps', function () {
@@ -768,14 +779,14 @@ describe ('#listOps', function () {
             });
         });
         it ('should return an empty listOps and/or stringOps when called with `0` as the first argument', function () {
-            compose(expectEqual(0), length, take(0))(split('', hello));
-            compose(expectEqual(0), length, take(0))(hello);
+            compose(expectEqual(0), length, xs => take(0, xs))(split('', hello));
+            compose(expectEqual(0), length, xs => take(0, xs))(hello);
         });
         it ('should return an empty listOps and/or stringOps when called with with an empty listOps or stringOps', function () {
             let count = 5;
             while (count) {
-                compose(expectEqual(0), length, take(count))('');
-                compose(expectEqual(0), length, take(count))([]);
+                compose(expectEqual(0), length, xs => take(count, xs))('');
+                compose(expectEqual(0), length, xs => take(count, xs))([]);
                 --count;
             }
         });
@@ -809,14 +820,14 @@ describe ('#listOps', function () {
             });
         });
         it ('should return entire listOps and/or stringOps when called with `0` as the first argument', function () {
-            compose(expectEqual(length(hello)), length, drop(0))(split('', hello));
-            compose(expectEqual(length(hello)), length, drop(0))(hello);
+            compose(expectEqual(length(hello)), length)(drop(0, split('', hello)));
+            compose(expectEqual(length(hello)), length)(drop(0, hello));
         });
         it ('should return an empty listOps and/or stringOps when called with with an empty listOps or stringOps', function () {
             let count = 5;
             while (count) {
-                compose(expectEqual(0), length, drop(count))('');
-                compose(expectEqual(0), length, drop(count))([]);
+                compose(expectEqual(0), length)(drop(count, ''));
+                compose(expectEqual(0), length)(drop(count, []));
                 --count;
             }
         });
@@ -1196,21 +1207,21 @@ describe ('#listOps', function () {
     describe ('#isPrefixOf', function () {
         it ('should return `true` when a list is a prefix of another', function () {
             expectTrue(all(
-                isPrefixOf('abc'),
+                xs => isPrefixOf('abc', xs),
                 splitAt(3, inits(alphabetString))[1]
             ));
             expectTrue(all(
-                isPrefixOf('abc'.split('')),
+                xs => isPrefixOf('abc'.split(''), xs),
                 splitAt(3, inits(alphabetArray))[1]
             ));
         });
         it ('should return `false` when a list is not prefix of second list', function () {
             expectTrue(all(
-                negateP(isPrefixOf('!@#')),
+                xs => !isPrefixOf('!@#', xs),
                 splitAt(3, inits(alphabetString))[1]
             ));
             expectTrue(all(
-                negateP(isPrefixOf('!@#'.split(''))),
+                xs => !isPrefixOf('!@#'.split(''), xs),
                 splitAt(3, inits(alphabetArray))[1]
             ));
         });
@@ -1221,21 +1232,21 @@ describe ('#listOps', function () {
             const candidateString = splitAt(length(alphabetString) - 2, tails(alphabetString))[0];
             // log (candidateString);
             expectTrue(all(
-                isSuffixOf('xyz'),
+                xs => isSuffixOf('xyz', xs),
                 candidateString
             ));
             expectTrue(all(
-                isSuffixOf('xyz'.split('')),
+                xs => isSuffixOf('xyz'.split(''), xs),
                 splitAt(length(alphabetArray) - 2, tails(alphabetArray))[0]
             ));
         });
         it ('should return `false` when a list is not suffix of second list', function () {
             expectTrue(all(
-                negateP(isSuffixOf('!@#')),
+                xs => !isSuffixOf('!@#', xs),
                 splitAt(length(alphabetString) - 2, tails(alphabetString))[0]
             ));
             expectTrue(all(
-                negateP(isSuffixOf('!@#'.split(''))),
+                xs => !isSuffixOf('!@#'.split(''), xs),
                 splitAt(length(alphabetString) - 2, tails(alphabetArray))[0]
             ));
         });
@@ -1252,8 +1263,8 @@ describe ('#listOps', function () {
         });
         it ('should return `false` when a list is not infix of second list', function () {
             expectTrue(and([
-                negateP(isInfixOf('!@#'))(alphabetString),
-                negateP(isInfixOf('!@#'.split(''))(alphabetArray))
+                (xs => !isInfixOf('!@#', xs))(alphabetString),
+                (xs => !isInfixOf('!@#'.split(''), xs)(alphabetArray))
             ]));
         });
     });
@@ -1461,26 +1472,27 @@ describe ('#listOps', function () {
     });
 
     describe ('#findIndices', function () {
-        it ('should', function () {
-            const token = 'aecedegefehea',
-                tokenParts = token.split(''),
-                eIndices = [1, 3, 5, 7, 9, 11],
-                notEIndices = [0, 2, 4, 6, 8, 10, 12],
-                aIndices = [0, 12],
-                noIndices = [],
-                indiceTests = [
-                    [findIndices(x => x === 'e'), eIndices],
-                    [findIndices(x => x !== 'e'), notEIndices],
-                    [findIndices(x => x === 'a'), aIndices],
-                    [findIndices(x => false), noIndices]
-                ];
-            // expectTrue(
-            //     all(xs =>
-            //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
-            //         [token, tokenParts])
-            // );
-            // @todo add tests
-        });
+        it ('should have more tests');
+        // it ('should', function () {
+        //     const token = 'aecedegefehea',
+        //         tokenParts = token.split(''),
+        //         eIndices = [1, 3, 5, 7, 9, 11],
+        //         notEIndices = [0, 2, 4, 6, 8, 10, 12],
+        //         aIndices = [0, 12],
+        //         noIndices = [],
+        //         indiceTests = [
+        //             [findIndices(x => x === 'e'), eIndices],
+        //             [findIndices(x => x !== 'e'), notEIndices],
+        //             [findIndices(x => x === 'a'), aIndices],
+        //             [findIndices(x => false), noIndices]
+        //         ];
+        //     // expectTrue(
+        //     //     all(xs =>
+        //     //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
+        //     //         [token, tokenParts])
+        //     // );
+        //     // @todo add tests
+        // });
     });
 
     describe ('#zip', function () {
@@ -1853,13 +1865,13 @@ describe ('#listOps', function () {
     });
 
     describe ('#complement', function () {
-        it ('should return an empty listOps when no parameters are passed in', function () {
+        it ('should return an empty list when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, complement)();
         });
-        it ('should return an empty listOps if only one listOps is passed in', function () {
+        it ('should return an empty list if only one list is passed in', function () {
             compose(expectEqual(__, 0), length, complement)([1,2,3]);
         });
-        it ('should return elements not in first listOps passed to it', function () {
+        it ('should return elements not in first list passed to it', function () {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
                 [[[1, 2, 3], [1, 2, 3, 4, 5]], 2, [4, 5]],
@@ -1869,6 +1881,7 @@ describe ('#listOps', function () {
             testCases.forEach(testCase => {
                 let [subjects, expectedLen, expectedElms] = testCase,
                     result = complement.apply(null, subjects);
+                log(result);
                 expectEqual(result.length, expectedLen);
                 result.forEach((elm, ind) => {
                     expectEqual(elm, expectedElms[ind]);
@@ -1878,22 +1891,21 @@ describe ('#listOps', function () {
     });
 
     describe ('#difference', function () {
-        it ('should return an empty listOps when no parameters are passed in', function () {
+        it ('should return an empty list when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, difference)();
         });
-        it ('should return a clone of the passed in listOps if it is only the first listOps that is passed in', function () {
-            compose(expectEqual(__, 3), length, difference([]))([1,2,3]);
+        it ('should return an empty list when first list passed in is empty', function () {
+            compose(expectEqual(__, 0), length)(difference([], alphabetArray));
+            compose(expectEqual(__, 0), length)(difference('', alphabetString));
         });
-        it ('should return an empty listOps when there are no differences between the two arrays passed in', function () {
-            compose(expectEqual(__, 0), length, difference([1, 2, 3]))([1,2,3]);
-        });
-        it ('should return a clone of the passed in listOps if it is only the first listOps that is passed in', function () {
-            compose(expectEqual(__, 3), length, difference([]))([1,2,3]);
+        it ('should return an empty list when there are no differences between the lists passed in', function () {
+            compose(expectEqual(__, 0), length)(difference(alphabetArray, alphabetArray));
+            compose(expectEqual(__, 0), length)(difference(alphabetString, alphabetString));
         });
         it ('should return the difference between two arrays passed in', function () {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
-                [[1, 2, 3], [1, 2, 3, 4, 5], 2, [4, 5]],
+                [[1, 2, 3], [1, 2, 3, 4, 5], 0, []],
                 [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 5, [4, 5, 6, 7, 8]],
                 [[1, 2, 3, 4, 5], [1, 2, 3], 2, [4, 5]]
             ];
@@ -1909,17 +1921,17 @@ describe ('#listOps', function () {
     });
 
     describe ('#intersect', function () {
-        it ('should return an empty listOps when receiving an empty listOps as parameter 1', function () {
-            compose(expectEqual(__, 0), length, intersect)([]);
-            compose(expectEqual(__, 0), length, intersect([]))([1, 2, 3]);
+        it ('should return an empty list when receiving an empty list', function () {
+            expectEqual(length(intersect([])), 0);
+            expectEqual(length(intersect([], [1, 2, 3])), 0);
         });
-        it ('should return an empty listOps when receiving an empty listOps as parameter 2', function () {
-            compose(expectEqual(__, 0), length, intersect([1, 2, 3]))([]);
+        it ('should return an empty list when receiving an empty list as parameter 2', function () {
+            expectEqual(length(intersect([1, 2, 3], [])), 0);
         });
-        it ('should return an empty listOps when both arrays passed are empty', function () {
-            compose(expectEqual(__, 0), length, intersect([]))([]);
+        it ('should return an empty list when both arrays passed are empty', function () {
+            expectEqual(length(intersect([], [])), 0);
         });
-        it ('should return an empty listOps when no arrays are passed in', function () {
+        it ('should return an empty list when no arrays are passed in', function () {
             compose(expectEqual(__, 0), length, intersect)();
         });
         it ('should return an intersection of the two arrays passed in', function () {
@@ -1941,6 +1953,7 @@ describe ('#listOps', function () {
     });
 
     describe ('#union', function () {
+        it ('should have more tests');
         it ('should return an union of the two arrays', function () {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
@@ -1957,7 +1970,6 @@ describe ('#listOps', function () {
                 });
             });
         });
-        // @todo Add more tests
     });
 
     describe ('#sort', function () {
@@ -1968,8 +1980,8 @@ describe ('#listOps', function () {
             compose(log, sort, reverse)(alphabetArray);
         });
         it ('should return a copy of original list when said list is already sorted', function () {
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort)(take(3, alphabetArray));
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort)(take(3, alphabetArray));
             compose(expectShallowEquals(__, alphabetArray), sort)(alphabetArray);
             compose(expectShallowEquals(__, range(0, 10)), sort)(range(0, 10));
         });
@@ -1980,7 +1992,7 @@ describe ('#listOps', function () {
 
     describe ('#sortOn', function () {
         const identity = x => x,
-            sortOnIdentity = sortOn(identity),
+            sortOnIdentity = xs => sortOn(identity, xs),
             range0To10 = range(0, 10),
             range10To0 = range(10, 0, -1);
         it ('should sort a list in ascending order', function () {
@@ -1990,7 +2002,7 @@ describe ('#listOps', function () {
             compose(log, sortOnIdentity, reverse)(alphabetArray);
         });
         it ('should return a copy of original list when said list is already sorted', function () {
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), sortOnIdentity, take(3))(alphabetArray);
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), sortOnIdentity)(take(3, alphabetArray));
             compose(expectShallowEquals(__, alphabetArray), sortOnIdentity)(alphabetArray);
             compose(expectShallowEquals(__, range0To10), sortOnIdentity)(range0To10);
         });
@@ -2082,12 +2094,16 @@ describe ('#listOps', function () {
             // Remove first occurrences of `vowels` in `alphabet * 3`
             const subj1 = iterate(length(vowels), (value, ind) => {
                     const foundInd = value.indexOf(vowels[ind]);
+                    log(value, foundInd);
                     if (foundInd > -1) {
                         const parts = splitAt(foundInd, value);
+                        // log(parts);
                         return concat([parts[0], tail(parts[1])]);
                     }
                     return value;
                 }, concat([alphabetArray, alphabetArray, alphabetArray]));
+
+            log(subj1);
 
             // Expect vowels removed from the same places in both lists
             expectTrue(all(tuple => !log(tuple) && tuple[0] === tuple[1], [[

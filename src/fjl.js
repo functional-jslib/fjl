@@ -11,7 +11,6 @@
  * @module fjl
  */
 
-export * from './objectOps/objectPrelude';
 export * from './objectOps/objectOps';
 export * from './booleanOps/booleanOps';
 export * from './functionOps/functionOps';
