@@ -1,6 +1,7 @@
 /**
  * Created by elyde on 12/29/2016.
  * @todo ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
+ * @todo ensure expected types (either explicitly or implicitly) are being returned where necessary.
  */
 
 // ~~~ STRIP ~~~
@@ -387,12 +388,10 @@ describe ('#listOps', function () {
                 expectedTransform
             );
         });
-
         it ('should return the zero value when an empty list is passed in', function () {
             expectEqual(foldr((agg, item) => agg + item, 'a', ''), 'a');
             expectShallowEquals(foldr((agg, item) => agg + item, [], []), []);
         });
-
         it ('should throw an error when `null` or `undefined` are passed in as the list', function () {
             assert.throws(() => foldr((agg, item) => agg + item, 'a', null), Error);
             assert.throws(() => foldr((agg, item) => agg + item, 'a', undefined), Error);
@@ -522,7 +521,6 @@ describe ('#listOps', function () {
             expectTrue(any(isTruthy, ['hello']));
             expectTrue(any(x => x === 'e', 'hello'));
         });
-
         it ('should return `false` when no item in received items matches predicate.', function () {
             expectFalse(any(isTruthy, [0, false, null, undefined, '']));
             expectFalse(any(isTruthy, [0]));
@@ -613,7 +611,8 @@ describe ('#listOps', function () {
     });
 
     describe ('#mapAccumL', function () {
-        it ('should map a functionOps/operation on every item of a list and it should return a tuple containing the accumulated value and the an instance of passed in container with mapped items', function () {
+        it ('should map a functionOps/operation on every item of a list and it should return a tuple containing the ' +
+            'accumulated value and the an instance of passed in container with mapped items', function () {
             let xs1 = [],
                 xs2 = '',
                 xs3 = [];
@@ -674,7 +673,8 @@ describe ('#listOps', function () {
     });
 
     describe ('#mapAccumR', function () {
-        it ('should map a functionOps/operation on every item of a list and it should return a tuple containing the accumulated value and the an instance of passed in container with mapped items', function () {
+        it ('should map a functionOps/operation on every item of a list and it should return a tuple containing the ' +
+            'accumulated value and the an instance of passed in container with mapped items', function () {
             let xs1 = [],
                 xs2 = '',
                 xs3 = [];
@@ -748,7 +748,6 @@ describe ('#listOps', function () {
 
     describe ('#take', function () {
         const hello = 'hello';
-
         it ('should return taken items from listOps and/or stringOps until limit', function () {
             const word = hello;
 
@@ -769,12 +768,10 @@ describe ('#listOps', function () {
                 expectEqual(expectedWordPart, takenFromStr);
             });
         });
-
         it ('should return an empty listOps and/or stringOps when called with `0` as the first argument', function () {
             compose(expectEqual(0), length, take(0))(split('', hello));
             compose(expectEqual(0), length, take(0))(hello);
         });
-
         it ('should return an empty listOps and/or stringOps when called with with an empty listOps or stringOps', function () {
             let count = 5;
             while (count) {
@@ -783,7 +780,6 @@ describe ('#listOps', function () {
                 --count;
             }
         });
-
         it ('should throw an error when no parameter is passed in', function () {
             assert.throws(tail, Error);
         });
@@ -791,7 +787,6 @@ describe ('#listOps', function () {
 
     describe ('#drop', function () {
         const hello = 'hello';
-
         it ('should return a new listOps/stringOps with dropped items from original until limit', function () {
             const word = hello,
                 wordParts = strToArray(word),
@@ -814,12 +809,10 @@ describe ('#listOps', function () {
                 expectEqual(expectedWordPart, takenFromStr);
             });
         });
-
         it ('should return entire listOps and/or stringOps when called with `0` as the first argument', function () {
             compose(expectEqual(length(hello)), length, drop(0))(split('', hello));
             compose(expectEqual(length(hello)), length, drop(0))(hello);
         });
-
         it ('should return an empty listOps and/or stringOps when called with with an empty listOps or stringOps', function () {
             let count = 5;
             while (count) {
@@ -828,7 +821,6 @@ describe ('#listOps', function () {
                 --count;
             }
         });
-
         it ('should throw an error when no parameter is passed in', function () {
             assert.throws(tail, Error);
         });
@@ -867,11 +859,9 @@ describe ('#listOps', function () {
                 expectTrue(str.split('')
                     .every((char, ind2) => result2[ind][ind2] === char)) );
         });
-
         it ('should return an listOps of empty listOps and/or stringOps when receiving an empty one of either', function () {
             splitAt(3, []).concat(splitAt(2, '')).forEach(expectLength(0));
         });
-
         it ('should return entirely, passed in, listOps and/or stringOps as second part of ' +
             'split in return when `0` is passed in as the first param', function () {
             const splitPhrase = phrase.split('');
@@ -913,7 +903,6 @@ describe ('#listOps', function () {
                                 takeWhile(predicate, word)]
                     ));
         });
-
         it ('should return an empty type instance if predicate is not matched at all', function () {
             const word = 'abcdefg',
                 pred = x => x === 'z';
@@ -928,7 +917,6 @@ describe ('#listOps', function () {
                     [takeWhile(pred, word.split('')), takeWhile(pred, word)]
                 ));
         });
-
         it ('should return a copy of type instance if predicate is matched all the way through', function () {
             const word = 'abcdefg',
                 pred = x => x !== 'z';
@@ -966,7 +954,6 @@ describe ('#listOps', function () {
                                 dropWhile(predicate, word)]
                     ));
         });
-
         it ('should return an empty type instance if predicate is matched all the way through', function () {
             const word = 'abcdefg',
                 pred = x => word.indexOf(x) > -1;
@@ -981,7 +968,6 @@ describe ('#listOps', function () {
                     [dropWhile(pred, word.split('')), dropWhile(pred, word)]
                 ));
         });
-
         it ('should return an a copy of the passed in type instance if predicate doesn\'t match any elements', function () {
             const word = 'abcdefg',
                 pred = x => x === 'z' > -1;
@@ -1080,7 +1066,6 @@ describe ('#listOps', function () {
                     [span(predicate, word.split('')), span(predicate, word)]
                 ));
         });
-
         it ('should return an listOps of empty arrays and/or strings when an empty list is passed in', function () {
             expectTrue(
                 all(tuple =>
@@ -1117,7 +1102,6 @@ describe ('#listOps', function () {
                     [breakOnList(predicate, word.split('')), breakOnList(predicate, word)]
                 ));
         });
-
         it ('should return an listOps of empty arrays and/or strings when an empty list is passed in', function () {
             expectTrue(
                 all(tuple =>
@@ -1358,6 +1342,7 @@ describe ('#listOps', function () {
             expectEqual(find(pred, word), 'o');
             expectEqual(find(pred, word.split('')), 'o');
         });
+        // @todo add more tests
     });
 
     describe ('#filter', function () {
@@ -1404,7 +1389,6 @@ describe ('#listOps', function () {
                     [partition(predicate, word.split('')), partition(predicate, word)]
                 ));
         });
-
         it ('should return an listOps of empty arrays and/or strings when an empty list is passed in', function () {
             expectTrue(
                 all(tuple =>
@@ -1464,6 +1448,7 @@ describe ('#listOps', function () {
                     [elemIndices('1', word), elemIndices('1', word.split(''))]
                 ));
         });
+        // @todo add more tests
     });
 
     describe ('#findIndex', function () {
@@ -1495,6 +1480,7 @@ describe ('#listOps', function () {
             //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
             //         [token, tokenParts])
             // );
+            // @todo add tests
         });
     });
 
@@ -1662,6 +1648,7 @@ describe ('#listOps', function () {
             ));
 
         });
+        // @todo Add more tests
     });
 
     describe ('#unzipN', function () {
@@ -1699,6 +1686,7 @@ describe ('#listOps', function () {
             ));
 
         });
+        // @todo Add more tests
     });
 
     describe ('#lines', function () {
@@ -1970,6 +1958,7 @@ describe ('#listOps', function () {
                 });
             });
         });
+        // @todo Add more tests
     });
 
     describe ('#sort', function () {
@@ -2127,30 +2116,37 @@ describe ('#listOps', function () {
 
     describe ('#unionBy', function () {
         it ('should have more tests written');
+        // @todo Add more tests
     });
 
     describe ('#intersectBy', function () {
         it ('should have more tests written');
+        // @todo Add more tests
     });
 
     describe ('#groupBy', function () {
         it ('should have more tests written');
+        // @todo Add more tests
     });
 
     describe ('#sortBy', function () {
         it ('should have more tests written');
+        // @todo Add more tests
     });
 
     describe ('#insertBy', function () {
         it ('should have more tests written');
+        // @todo Add more tests
     });
 
     describe ('#maximumBy', function () {
         it ('should have more tests written');
+        // @todo Add more tests
     });
 
     describe ('#minimumBy', function () {
         it ('should have more tests written');
+        // @todo Add more tests
     });
 
 });
