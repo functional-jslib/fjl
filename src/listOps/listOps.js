@@ -124,7 +124,7 @@ const
 
     sortOnAsc = sortOnByDirection(ASC),
 
-    sortDescByLength = getSortByOrder(DESC, length),
+    sortAscByLength = getSortByOrder(ASC, length),
 
     sortAsc = getSortByOrder(ASC),
 
@@ -1331,7 +1331,7 @@ export const
      * @returns {Array}
      */
     difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
-        let [arr1, arr2] = sortDescByLength([array1, array2]);
+        let [arr2, arr1] = sortAscByLength([array1, array2]);
         if (!arr2 || length(arr2) === 0) {
             return slice(0, length(arr1), arr1);
         }

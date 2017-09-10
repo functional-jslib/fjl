@@ -29,7 +29,7 @@ import {
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert,
-    nubBy, removeBy, removeFirstsBy, sort,
+    nubBy, removeBy, removeFirstsBy, sort, sortOn,
     complement, difference, union, intersect
 } from '../../src/listOps/listOps';
 
@@ -1979,16 +1979,40 @@ describe ('#listOps', function () {
             compose(expectShallowEquals(__, alphabetArray), sort, reverse)(alphabetArray);
             compose(log, sort, reverse)(alphabetArray);
         });
+        it ('should return a copy of original list when said list is already sorted', function () {
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
+            compose(expectShallowEquals(__, alphabetArray), sort)(alphabetArray);
+            compose(expectShallowEquals(__, range(0, 10)), sort)(range(0, 10));
+        });
         it ('should return an empty list when receiving an empty list', function () {
             expectShallowEquals(sort([]), []);
         });
     });
 
     describe ('#sortOn', function () {
-        it ('should have more tests written');
+        const identity = x => x,
+            sortOnIdentity = sortOn(identity),
+            range0To10 = range(0, 10),
+            range10To0 = range(10, 0, -1);
+        it ('should sort a list in ascending order', function () {
+            expectShallowEquals(sortOnIdentity(range10To0), range0To10);
+            expectShallowEquals(sortOnIdentity(range0To10), range0To10);
+            compose(expectShallowEquals(__, alphabetArray), sortOnIdentity, reverse)(alphabetArray);
+            compose(log, sortOnIdentity, reverse)(alphabetArray);
+        });
+        it ('should return a copy of original list when said list is already sorted', function () {
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), sortOnIdentity, take(3))(alphabetArray);
+            compose(expectShallowEquals(__, alphabetArray), sortOnIdentity)(alphabetArray);
+            compose(expectShallowEquals(__, range0To10), sortOnIdentity)(range0To10);
+        });
+        it ('should return an empty list when receiving an empty list', function () {
+            expectShallowEquals(sortOnIdentity([]), []);
+        });
     });
 
     describe ('#insert', function () {
+        it ('should have more tests written');
         it ('should have more tests written', function () {
             log(insert(99, range(0, 80, 5)));
             log(insert(99, range(0, 144, 5)));
