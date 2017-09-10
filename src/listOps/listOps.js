@@ -300,7 +300,10 @@ const
             let elm = xs[ind];
             if (pred(elm, ind, xs)) { return elm; }
         }
-    },
+    }
+;
+
+export const
 
     /**
      * Append two lists, i.e.,
@@ -315,7 +318,7 @@ const
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
      */
-    append = (xs1, xs2) => (isArray(xs1) ? arrayAppend : strAppend)(xs1, xs2),
+    append = curry((xs1, xs2) => (isArray(xs1) ? arrayAppend : strAppend)(xs1, xs2)),
 
     /**
      * Append two or more lists, i.e., same as `append` but for two ore more lists.
@@ -332,48 +335,7 @@ const
         if (!isset(x)) { return []; }
         if (!lenArgs) { return sliceToEndFrom(0, x); }
         return (isArray(x) ? arrayAppend : strAppend)(x, ...args);
-    }
-;
-
-export const
-
-    /**
-     * Returns a new instance of passed in list.
-     * @function module:listOps.mempty
-     * @note is named after haskell's `Monoid mempty`
-     * @param x {Array|String|*}
-     * @returns {Array|String|*}
-     */
-    mempty = x => {
-        if (!isset(x)) { return []; }
-        else if (x.mempty) { return x.mempty(); }
-        return  of(x);
     },
-
-    /**
-     * Append two lists, i.e.,
-     * ```
-     * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
-     * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
-     * ```
-     * If the first list is not finite, the result is the first list.
-     * @haskellType `append :: List a => a -> a -> a`
-     * @function module:listOps.append
-     * @param xs1 {Array|String|*} - list or list like.
-     * @param xs2 {Array|String|*} - list or list like.
-     * @returns {Array|String|*} - Same type as list like passed in.
-     */
-    mappend = curry(append),
-
-    /**
-     * Same as `module:listOps.mappend` but for `n` lists (two or more lists).
-     * @todo review currying here.
-     * @haskellType `mappend :: List a => a -> a -> a`
-     * @function module:listOps.mappendMany
-     * @param args ...{Array|String|*} - lists or lists likes.
-     * @returns {Array|String|*} - Same type as list likes passed in.
-     */
-    mappendMany = appendMany,
 
     /**
      * Returns head of list (first item of list).
@@ -467,7 +429,7 @@ export const
     map = curry ((fn, xs) => {
         let ind = 0,
             limit = length(xs),
-            out = mempty(xs),
+            out = of(xs),
             aggregate = aggregatorByType(xs);
         if (!limit) { return out; }
         for (; ind < limit; ind += 1) {
@@ -483,7 +445,7 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    concat = xs => mappendMany(...xs),
+    concat = xs => appendMany(...xs),
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -506,7 +468,7 @@ export const
         const aggregator = aggregatorByType(x);
         return reduceRight(
                 (agg, item, ind) => aggregator(agg, item, ind),
-                mempty(x), x
+                of(x), x
             );
     },
 
@@ -522,7 +484,7 @@ export const
     intersperse = curry((between, arr) => {
         const limit = length(arr),
             lastInd = limit - 1,
-            aggregator = mempty(arr),
+            aggregator = of(arr),
             aggregatorOp = aggregatorByType(arr);
         if (!limit) { return aggregator; }
         return reduce((agg, item, ind) => {
@@ -567,7 +529,7 @@ export const
      */
     transpose = xss => {
         const numLists = length(xss);
-        if (!numLists) { return mempty(xss); }
+        if (!numLists) { return of(xss); }
         const listLengths = apply(lengths, xss),
             longestListLen = maximum(listLengths),
             outLists = [];
@@ -628,9 +590,8 @@ export const
     }),
 
     /**
-     * Accumulative map functionOps which effectively does a map and reduce (from the left) all in one;  Returns a tuple
-     * containing the aggregated value and the mapped result of map the passed in `op` on the passed in
-     * list (`xs`).
+     * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
+     * containing the aggregated value and the result of mapping the passed in function on passed in list.
      * @function module:listOps.mapAccumL
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
@@ -643,7 +604,7 @@ export const
         if (!limit) { return [zero, list]; }
         let ind = 0,
             agg = zero,
-            mapped = mempty(xs),
+            mapped = of(xs),
             tuple;
         for (; ind < limit; ind++) {
             tuple = op(agg, list[ind], ind);
@@ -654,9 +615,8 @@ export const
     }),
 
     /**
-     * Accumulative map functionOps which effectively does a map and reduce (from the right) all in one;  Returns a tuple
-     * containing the aggregated value and the mapped result of map the passed in `op` on the passed in
-     * list (`xs`).
+     * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
+     * containing the aggregated value and the result of mapping the passed in function on passed in list.
      * @function module:listOps.mapAccumR
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
@@ -669,7 +629,7 @@ export const
         if (!limit) { return [zero, list]; }
         let ind = limit - 1,
             agg = zero,
-            mapped = mempty(xs),
+            mapped = of(xs),
             tuple;
         for (; ind >= 0; ind--) {
             tuple = op(agg, list[ind], ind);
@@ -789,7 +749,7 @@ export const
      * @returns {Array}
      */
     takeWhile = curry((pred, arr) => {
-        let zero =  mempty(arr);
+        let zero =  of(arr);
         const operation = aggregatorByType(arr);
         return reduceUntil (
             negateP(pred),  // predicate
@@ -876,7 +836,7 @@ export const
         let ind = 0,
             limit = length(xs),
             aggregator = aggregatorByType(xs),
-            out = mempty(xs);
+            out = of(xs);
         if (!limit) { return out; }
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) {
@@ -1029,7 +989,7 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zip = curry((arr1, arr2) => {
-        if (!length(arr1) || !length(arr2)) { return mempty(arr1); }
+        if (!length(arr1) || !length(arr2)) { return of(arr1); }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
         return reduce((agg, item, ind) =>
                 aggregateArr(agg, [item, a2[ind]]),
@@ -1110,7 +1070,7 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zipWith = curry((op, xs1, xs2) => {
-        if (!length(xs1) || !length(xs2)) { return mempty(xs1); }
+        if (!length(xs1) || !length(xs2)) { return of(xs1); }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
         return reduce((agg, item, ind) =>
                 aggregateArr(agg, op(item, a2[ind])),
@@ -1260,6 +1220,14 @@ export const
 
     minimum = arr => apply(Math.min, arr),
 
+    scanl = () => null,
+
+    scanl1 = () => null,
+
+    scanr = () => null,
+
+    scanr1 = () => null,
+
     nub = list => nubBy((a, b) => a === b, list),
 
     remove = curry((x, list) => removeBy((a, b) => a === b, x, list)),
@@ -1270,23 +1238,23 @@ export const
 
     insert = curry((x, xs) => {
         if (isEmpty(xs)) { return [x]; }
-        let out = mempty(xs),
+        let out = of(xs),
             foundIndex = findIndex((item, ind) => x <= item, xs);
-        return foundIndex === -1 ? mappend(sliceToEndFrom(0, out), x) :
+        return foundIndex === -1 ? append(sliceToEndFrom(0, out), x) :
             concat(intersperse([x], splitAt(foundIndex, xs)));
     }),
 
     nubBy = (pred, list) => {
-        if (isEmpty(list)) { return mempty(list); }
+        if (isEmpty(list)) { return of(list); }
         const limit = length(list);
         let ind = 0,
             currItem,
             prevItem,
-            out = mempty(list);
+            out = of(list);
         for (; ind < limit; ind += 1) {
             currItem = list[ind];
             if (any(storedItem => pred(currItem, storedItem), out)) { continue; }
-            out = mappend(out, currItem);
+            out = append(out, currItem);
             prevItem = currItem;
         }
         return out;
@@ -1295,7 +1263,7 @@ export const
     removeBy = curry((pred, x, list) => {
         const foundIndex = findIndex(item => pred(x, item), list),
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list);
-        return mappend(parts[0], tail(parts[1]));
+        return append(parts[0], tail(parts[1]));
     }),
 
     removeFirstsBy = curry((pred, xs1, xs2) =>
@@ -1311,7 +1279,7 @@ export const
      * @returns {Array}
      */
     union = curry((arr1, arr2) =>
-        mappend(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
+        append(arr1, filter(elm => indexOf(elm, arr1) === -1, arr2))),
 
     /**
      * Performs an intersection on list 1 with  elements from list 2.
@@ -1351,4 +1319,4 @@ export const
      * @returns {Array}
      */
     complement = curry2((arr0, ...arrays) =>
-        reduce((agg, arr) => mappend(agg, difference(arr0, arr)), [], arrays));
+        reduce((agg, arr) => append(agg, difference(arr0, arr)), [], arrays));
