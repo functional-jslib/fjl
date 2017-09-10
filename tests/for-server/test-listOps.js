@@ -1974,8 +1974,13 @@ describe ('#listOps', function () {
 
     describe ('#sort', function () {
         it ('should sort a list in ascending order', function () {
-            log(range(99, 0, -1));
-
+            expectShallowEquals(sort(range(10, 0, -1)), range(0, 10, 1));
+            expectShallowEquals(sort(range(0, 10)), range(0, 10));
+            compose(expectShallowEquals(__, alphabetArray), sort, reverse)(alphabetArray);
+            compose(log, sort, reverse)(alphabetArray);
+        });
+        it ('should return an empty list when receiving an empty list', function () {
+            expectShallowEquals(sort([]), []);
         });
     });
 

@@ -3,6 +3,7 @@
  * @module arrayOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
  * @todo code unperformant shorthand in `listOps`
+ * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
 import {curry, curry2, curry3, curry4, curry5, curryN}      from '../functionOps/curry';
 import {apply}              from '../jsPlatform/functionOpsUnCurried'; // un-curried version
@@ -68,15 +69,15 @@ const
     onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
 
     /**
-     * @param multiplier {Number}
-     * @param valueFn {Function}
-     * @returns {function(...[*]): Array.<*>}
+     * @param multiplier
+     * @param valueFn
+     * @returns {function(*): (Array.<T>|*)}
      */
     getSortByOrder = (multiplier, valueFn = (v => v)) => {
         const x = onlyOneOrNegOne(multiplier),
             ifGreaterThan = x,
             ifLessThan = -1 * x;
-        return (...values) => values.sort((a1, b1) => {
+        return list => list.sort((a1, b1) => {
             let a = valueFn(a1),
                 b = valueFn(b1);
             if (a > b) {
@@ -1330,7 +1331,7 @@ export const
      * @returns {Array}
      */
     difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
-        let [arr1, arr2] = sortDescByLength(array1, array2);
+        let [arr1, arr2] = sortDescByLength([array1, array2]);
         if (!arr2 || length(arr2) === 0) {
             return slice(0, length(arr1), arr1);
         }
