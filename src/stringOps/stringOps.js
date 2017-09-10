@@ -7,16 +7,17 @@ import {intercalate} from '../listOps/listOps';
 
 import {curry} from '../functionOps/curry';
 
-export const
+import {split as pureSplit} from '../jsPlatform/stringOpsUnCurried';
 
-    /**
-     * Functional version of `String.prototype.split`.
-     * @functionOps module:stringOps.split
-     * @param separator {String|RegExp}
-     * @param str {String}
-     * @returns {Array}
-     */
-    split = curry((separator, str) => str.split(separator)),
+/**
+ * Functional version of `String.prototype.split`.
+ * @param separator {String|RegExp}
+ * @param str {String}
+ * @returns {Array}
+ */
+const split = curry(pureSplit);
+
+export const
 
     /**
      * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.

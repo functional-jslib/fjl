@@ -22,6 +22,8 @@ export const
 
     length = x => x.length,
 
+    toString = x => x.toString(),
+
     keys = obj => Object.keys(obj),
 
     /**

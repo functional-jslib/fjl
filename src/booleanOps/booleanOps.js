@@ -9,6 +9,10 @@ export {isTruthy, isFalsy} from './is';
 
 export const
 
+    alwaysTrue = () => true,
+
+    alwaysFalse = () => false,
+
     /**
      * Returns whether both values are truthy or not.
      * @function module:booleanOps.and
@@ -42,7 +46,7 @@ export const
      * @function module:booleanOps.otherwise
      * @returns {Boolean} - Always true
      */
-    bOtherwise = () => true,
+    bOtherwise = alwaysTrue,
 
     /**
      * Returns whether both values passed in are equal or not.
