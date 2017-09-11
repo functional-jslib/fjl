@@ -1,3 +1,4 @@
+/* eslint global: describe:true,it:true */
 /**
  * Created by elyde on 12/29/2016.
  * @todo ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
@@ -226,7 +227,6 @@ describe ('#listOps', function () {
         it ('should return a list with the same item when the list has a length of `1`', function () {
             expectEqual(intersperse(', ', 'a'), 'a');
             expectShallowEquals(intersperse(', ', ['a']), ['a']);
-            log()
         });
         it ('should return an empty list when receiving an empty list', function () {
             expectEqual(intersperse('', ''), '');
@@ -1671,7 +1671,7 @@ describe ('#listOps', function () {
                 lenAlphaArray = length(alphabetArray),
                 result = unzipN(subj);
 
-            log (subj, result);
+            // log (subj, result);
 
             // First ensure our subject is valid
             // --------------------------------------
@@ -1881,7 +1881,7 @@ describe ('#listOps', function () {
             testCases.forEach(testCase => {
                 let [subjects, expectedLen, expectedElms] = testCase,
                     result = complement.apply(null, subjects);
-                log(result);
+                // log(result);
                 expectEqual(result.length, expectedLen);
                 result.forEach((elm, ind) => {
                     expectEqual(elm, expectedElms[ind]);
@@ -1973,7 +1973,7 @@ describe ('#listOps', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = union(subj1, subj2);
-                    log('union', result);
+                    // log('union', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -1988,7 +1988,7 @@ describe ('#listOps', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = union(subj1, subj2);
-                    log('union', result);
+                    // log('union', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2003,7 +2003,7 @@ describe ('#listOps', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = union(subj1, subj2);
-                    log('union', result);
+                    // log('union', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2019,7 +2019,7 @@ describe ('#listOps', function () {
             expectShallowEquals(sort(range(10, 0, -1)), range(0, 10, 1));
             expectShallowEquals(sort(range(0, 10)), range(0, 10));
             compose(expectShallowEquals(__, alphabetArray), sort, reverse)(alphabetArray);
-            compose(log, sort, reverse)(alphabetArray);
+            compose(/*log,*/ sort, reverse)(alphabetArray);
         });
         it ('should return a copy of original list when said list is already sorted', function () {
             compose(expectShallowEquals(__, ['a', 'b', 'c']), sort)(take(3, alphabetArray));
@@ -2041,7 +2041,7 @@ describe ('#listOps', function () {
             expectShallowEquals(sortOnIdentity(range10To0), range0To10);
             expectShallowEquals(sortOnIdentity(range0To10), range0To10);
             compose(expectShallowEquals(__, alphabetArray), sortOnIdentity, reverse)(alphabetArray);
-            compose(log, sortOnIdentity, reverse)(alphabetArray);
+            compose(/*log,*/ sortOnIdentity, reverse)(alphabetArray);
         });
         it ('should return a copy of original list when said list is already sorted', function () {
             compose(expectShallowEquals(__, ['a', 'b', 'c']), sortOnIdentity)(take(3, alphabetArray));
@@ -2136,7 +2136,7 @@ describe ('#listOps', function () {
             // Remove first occurrences of `vowels` in `alphabet * 3`
             const subj1 = iterate(length(vowels), (value, ind) => {
                     const foundInd = value.indexOf(vowels[ind]);
-                    log(value, foundInd);
+                    // log(value, foundInd);
                     if (foundInd > -1) {
                         const parts = splitAt(foundInd, value);
                         // log(parts);
@@ -2145,10 +2145,10 @@ describe ('#listOps', function () {
                     return value;
                 }, concat([alphabetArray, alphabetArray, alphabetArray]));
 
-            log(subj1);
+            // log(subj1);
 
             // Expect vowels removed from the same places in both lists
-            expectTrue(all(tuple => !log(tuple) && tuple[0] === tuple[1], [[
+            expectTrue(all(tuple => /*!log(tuple) &&*/ tuple[0] === tuple[1], [[
                 removeFirstsBy(equal, cycle(3, alphabetString), vowels),
                 concat(subj1)
             ]]));
@@ -2193,7 +2193,7 @@ describe ('#listOps', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = unionBy(equalityCheck, subj1, subj2);
-                    log('unionBy', result);
+                    // log('unionBy', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2208,7 +2208,7 @@ describe ('#listOps', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = unionBy(equalityCheck, subj1, subj2);
-                    log('unionBy', result);
+                    // log('unionBy', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2223,7 +2223,7 @@ describe ('#listOps', function () {
                 .forEach(testCase => {
                 let [subj1, subj2, expectedLen, expectedElms] = testCase,
                     result = unionBy(equalityCheck, subj1, subj2);
-                log('unionBy', result);
+                // log('unionBy', result);
                 expectEqual(result.length, expectedLen);
                 expectShallowEquals(result, expectedElms);
             });
