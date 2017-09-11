@@ -34,6 +34,8 @@ export const
      */
     sliceFromZero = x => sliceToEndFrom(0, x),
 
+    copy = sliceFromZero,
+
     /**
      * Always `1` or `-1`.
      * @param x {Number}

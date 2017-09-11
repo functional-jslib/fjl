@@ -23,8 +23,7 @@ import {
     lengthsToSmallest, aggregateArr, aggregatorByType,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
-    findWhere, sliceFromZero
-} from './listOpsUncurriedUtils';
+    findWhere, sliceFromZero, copy } from './listOpsUncurriedUtils';
 
 // import {log} from '../../tests/for-server/helpers';
 
@@ -976,14 +975,31 @@ export const
         reduce((agg, item, ind) => removeBy(pred, item, agg), xs1, xs2),
 
     /**
+     * Returns the union on elements matching boolean check passed in.
+     * @function module:listOps.unionBy
+     * @param pred {Function} - `pred :: a -> a -> Bool`
+     * @param arr1 {Array|String|*}
+     * @param arr2 {Array|String|*}
+     * @returns {Array|String|*}
+     */
+    unionBy = (pred, arr1, arr2) => {
+        const aggregator = aggregatorByType(arr1);
+        return foldl((agg, b) => {
+            const alreadyAdded = any(a => pred(a, b), agg);
+            return !alreadyAdded ? aggregator(agg, b) : agg;
+        }, copy(arr1), arr2);
+    },
+
+    /**
      * Creates a union on matching elements from array1.
      * @function module:listOps.union
-     * @param arr1 {Array}
-     * @param arr2 {Array}
-     * @returns {Array}
+     * @param arr1 {Array|String|*}
+     * @param arr2 {Array|String|*}
+     * @returns {Array|String|*}
      */
     union = (arr1, arr2) =>
-        append(arr1, filter(elm => !includes(elm, arr1), arr2)),
+        append(arr1,
+            filter(elm => !includes(elm, arr1), arr2)),
 
     /**
      * Performs an intersection on list 1 with  elements from list 2.

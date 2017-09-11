@@ -32,7 +32,7 @@ import {
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert,
-    nubBy, removeBy, removeFirstsBy, sort, sortOn,
+    nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn,
     complement, difference, union, intersect
 } from '../../src-uncurried/listOps/listOpsUncurried';
 
@@ -1953,22 +1953,64 @@ describe ('#listOps', function () {
     });
 
     describe ('#union', function () {
-        it ('should have more tests');
-        it ('should return an union of the two arrays', function () {
-            let testCases = [
-                // subj1, subj2, expectLen, expectedElements
+        const mixedMatchRange = append(range(13, 8, -1), range(1, 3));
+            // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
+            // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
+        // [ascRanges, descRanges] =
+        //     map(argsSet =>
+        //         map(rangeArgs => apply(range, rangeArgs), argsSet),
+        //         [ascRangeArgs, descRangeArgs]
+        //     ),
+        // [rl1, rl2, rl3, rl4] = ascRanges,
+        // [lr1, lr2, lr3, lr4] = descRanges;
+        it ('should return a union on list 1 with list two', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],
                 [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 8, [1, 2, 3, 4, 5, 6, 7, 8]],
-                [[1, 2, 3, 4, 5], [1, 2, 3], 5, [1, 2, 3, 4 ,5]]
-            ];
-            testCases.forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = union(subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                result.forEach((elm, ind) => {
-                    expectEqual(elm, expectedElms[ind]);
+                [[1, 2, 3, 4, 5], [1, 2, 3], 5, [1, 2, 3, 4 ,5]],
+                [mixedMatchRange, range(18, 21), 13, mixedMatchRange.concat(range(18, 21))]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = union(subj1, subj2);
+                    log('union', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
                 });
-            });
+        });
+        it ('should return a copy of left-most array when right-most list is empty', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [range(1, 5), [], 5, range(1, 5)],
+                [range(1, 8), [], 8, range(1, 8)],
+                [range(1, 13), [], 13, range(1, 13)],
+                [mixedMatchRange, [], 9, mixedMatchRange]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = union(subj1, subj2);
+                    log('union', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
+        });
+        it ('should return a copy of right-most list when left-most list is empty', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [range(1, 5), [], 5, range(1, 5)],
+                [range(1, 8), [], 8, range(1, 8)],
+                [range(1, 13), [], 13, range(1, 13)],
+                [mixedMatchRange, [], 9, mixedMatchRange]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = union(subj1, subj2);
+                    log('union', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
+        });
+        it ('should return an empty list when receiving empty lists', function () {
+            expectEqual(union('', ''), '');
+            expectShallowEquals(union([], []), []);
         });
     });
 
@@ -2130,8 +2172,66 @@ describe ('#listOps', function () {
     });
 
     describe ('#unionBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const mixedMatchRange = append(range(13, 8, -1), range(1, 3)),
+            // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
+            // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
+            equalityCheck = (a, b) => a === b;
+            // [ascRanges, descRanges] =
+            //     map(argsSet =>
+            //         map(rangeArgs => apply(range, rangeArgs), argsSet),
+            //         [ascRangeArgs, descRangeArgs]
+            //     ),
+            // [rl1, rl2, rl3, rl4] = ascRanges,
+            // [lr1, lr2, lr3, lr4] = descRanges;
+        it ('should return a union on list 1 with list two', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],
+                [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 8, [1, 2, 3, 4, 5, 6, 7, 8]],
+                [[1, 2, 3, 4, 5], [1, 2, 3], 5, [1, 2, 3, 4 ,5]],
+                [mixedMatchRange, range(18, 21), 13, mixedMatchRange.concat(range(18, 21))]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    log('unionBy', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
+        });
+        it ('should return a copy of left-most array when right-most list is empty', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [range(1, 5), [], 5, range(1, 5)],
+                [range(1, 8), [], 8, range(1, 8)],
+                [range(1, 13), [], 13, range(1, 13)],
+                [mixedMatchRange, [], 9, mixedMatchRange]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    log('unionBy', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
+        });
+        it ('should return a copy of right-most list when left-most list is empty', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [range(1, 5), [], 5, range(1, 5)],
+                [range(1, 8), [], 8, range(1, 8)],
+                [range(1, 13), [], 13, range(1, 13)],
+                [mixedMatchRange, [], 9, mixedMatchRange]
+            ]
+                .forEach(testCase => {
+                let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                    result = unionBy(equalityCheck, subj1, subj2);
+                log('unionBy', result);
+                expectEqual(result.length, expectedLen);
+                expectShallowEquals(result, expectedElms);
+            });
+        });
+        it ('should return an empty list when receiving empty lists', function () {
+            expectEqual(unionBy(equalityCheck, '', ''), '');
+            expectShallowEquals(unionBy(equalityCheck, [], []), []);
+        });
     });
 
     describe ('#intersectBy', function () {
