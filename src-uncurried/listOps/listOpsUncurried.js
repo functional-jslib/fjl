@@ -17,7 +17,7 @@ import {of}                 from '../../src/objectOps/of';
 import {map}                from './map';
 
 import {
-    sliceFrom, sliceTo, sortAsc, lengths,
+    sliceFrom, sliceTo, lengths,
     lengthsToSmallest, aggregateArr, aggregatorByType,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
@@ -964,7 +964,7 @@ export const
 
     remove = (x, list) => removeBy((a, b) => a === b, x, list),
 
-    sort = sortAsc,
+    sort = xs => sortBy(genericAscOrdering, xs),
 
     sortOn = (valueFn, xs) =>
 

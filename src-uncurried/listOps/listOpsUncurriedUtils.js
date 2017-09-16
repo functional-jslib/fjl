@@ -13,12 +13,6 @@ export * from './listOpsUncurriedAggregation';
 export const
 
     /**
-     * Ascension multiplier.
-     * @type {number}
-     */
-    ASC = 1,
-
-    /**
      * Returns a slice of the given list from `startInd` to the end of the list.
      * @param startInd {Number}
      * @param arr {Array|String|*}
@@ -36,85 +30,17 @@ export const
     sliceTo = (toInd, xs) => slice(0, toInd, xs),
 
     /**
-     * Slices list from zero to `x` value.
-     * @param x {Array|String|*}
+     * Slices a copy of list.
+     * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFromZero = x => sliceFrom(0, x),
-
-    copy = sliceFromZero,
-
-    /**
-     * Always `1` or `-1`.
-     * @param x {Number}
-     * @returns {Number} - Always `1` or `-1`.
-     */
-    onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
+    copy = xs => sliceFrom(0, xs),
 
     genericAscOrdering = (a, b) => {
         if (a > b) { return 1; }
         else if (a < b) { return -1; }
         return 0;
     },
-
-    /**
-     * @param multiplier
-     * @param valueFn
-     * @returns {function(*): (Array<*>|*)}
-     */
-    getSortByOrder = (multiplier, valueFn = (v => v)) => {
-        const x = onlyOneOrNegOne(multiplier),
-            ifGreaterThan = x,
-            ifLessThan = -1 * x;
-        return list => list.sort((a1, b1) => {
-            let a = valueFn(a1),
-                b = valueFn(b1);
-            if (a > b) {
-                return ifGreaterThan;
-            }
-            else if (b > a) {
-                return ifLessThan;
-            }
-            return 0;
-        });
-    },
-
-    /**
-     * Returns a function with a predefined ordering for sorting 'on' some specific criteria
-     * Returned function returns a copy of passed in list sorted on value returned by `valueFn` passed
-     *  to (returned) function.
-     * @note Pattern used here is known as 'decorate-sort-un-decorate' or the "Schwartzian transform"
-     *  it compares on returned by `valueFn` passed to returned function.
-     *  This pattern calls the value extractor function only once per element whereas
-     *  the default sort function calls it per comparison function call.
-     * @param multiplier {Number} - `1` or `-1`.
-     * @returns {Function} - Sorting 'on' function with it's ordering already defined ('descending' or 'ascending');
-     */
-    sortOnByDirection = multiplier => {
-        const x = onlyOneOrNegOne(multiplier),
-            ifGreaterThan = x,
-            ifLessThan = -1 * x;
-
-        // Un-decorate
-        return (valueFn = (v => v), xs) =>
-            map(decorated => decorated[1],
-                // Decorate
-                map(item => [valueFn(item), item], xs)
-                    // Sort
-                    .sort((a1, b1) => {
-                        let a = a1[0],
-                            b = b1[0];
-                        if (a > b) { return ifGreaterThan; }
-                        else if (b > a) { return ifLessThan; }
-                        return 0;
-                    }));
-    },
-
-    sortOnAsc = sortOnByDirection(ASC),
-
-    sortAscByLength = getSortByOrder(ASC, length),
-
-    sortAsc = getSortByOrder(ASC),
 
     /**
      * Returns length of all passed lists in list.
