@@ -637,7 +637,30 @@ export const
         return false;
     },
 
-    group = xs => {
+    /**
+     * The group function takes a list and returns a list of lists such that
+     *  the concatenation of the result is equal to the argument. Moreover, each
+     *  sublist in the result contains only equal elements. For example,
+     * `group "Mississippi" = ["M","i","ss","i","ss","i","pp","i"]`
+     * It is a special case of groupBy, which allows the programmer to supply
+     *  their own equality test.
+     * @haskellType `group :: Eq a => [a] -> [[a]]`
+     * @function module:listOpsUncurried.group
+     * @param xs {Array|String|*}
+     * @returns {(Array|*)<Array|String|*>}
+     */
+    group = xs => groupBy((a, b) => a === b, xs),
+
+    /**
+     * Allows you to group items in a list based on your supplied equality check.
+     * @note Sames `group` but allows you to specify equality operation.
+     * @haskellType `groupBy :: (a -> a -> Bool) -> [a] -> [[a]]`
+     * @function module:listOpsUncurried.groupBy
+     * @param equalityOp {Function}
+     * @param xs {Array|String|*}
+     * @returns {*}
+     */
+    groupBy = (equalityOp, xs) => {
         const limit = length(xs);
         if (!limit) { return sliceToEndFrom(0, xs); }
         let ind = 0,
@@ -648,8 +671,8 @@ export const
             item = xs[ind];
             agg.push(
                 takeWhile (x => {
-                        if (x === prevItem) { ind++; }
-                        if (x === item) { prevItem = x; return true; }
+                        if (equalityOp(x, prevItem)) { ind++; }
+                        if (equalityOp(x, item)) { prevItem = x; return true; }
                         return false;
                     },
                     slice(ind, limit, xs)
