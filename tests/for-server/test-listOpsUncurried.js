@@ -34,7 +34,7 @@ import {
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert,
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn,
-    complement, difference, union, intersect, intersectBy
+    complement, difference, union, intersect, intersectBy, groupBy,
 } from '../../src-uncurried/listOps/listOpsUncurried';
 
 import {
@@ -56,7 +56,8 @@ import {
 
 describe ('#listOpsUncurried', function () {
 
-    const strToArray = split('');
+    const strToArray = split(''),
+        generalEqualityCheck = (a, b) => a === b;
 
     describe ('#append', function () {
         it ('should have more tests.');
@@ -2265,8 +2266,22 @@ describe ('#listOpsUncurried', function () {
     });
 
     describe ('#groupBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        it ('should return a list of lists which contain the (sequential) matches', function () {
+            const expectedResultFlattened = ['M', 'i', 'ss', 'i', 'ss', 'i', 'pp', 'i'];
+            expectShallowEquals(groupBy(generalEqualityCheck, 'Mississippi'), expectedResultFlattened);
+            expectShallowEquals(
+                // Flatten results first
+                groupBy(generalEqualityCheck, 'Mississippi'.split('')).map(item => item.join('')),
+                expectedResultFlattened
+            );
+        });
+        it ('should return a list of lists containing individual un-grouped items', function () {
+            expectShallowEquals(groupBy(generalEqualityCheck, alphabetString), alphabetArray);
+            expectShallowEquals(
+                // Flatten result first
+                groupBy(generalEqualityCheck, alphabetArray).map(item => item.join('')),
+                alphabetArray);
+        });
     });
 
     describe ('#sortBy', function () {
