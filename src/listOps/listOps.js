@@ -17,12 +17,12 @@ import {prop}               from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
 import {of}                 from '../objectOps/of';
 import {length, hasOwnProperty} from '../uncurried/jsPlatform/objectOpsUncurried';
-import {log} from '../../tests/for-server/helpers';
+// import {log} from '../../tests/for-server/helpers';
 
 import {
     removeFirstsBy as pureRemoveFirstsBy,
     removeBy as pureRemoveBy
-} from "../uncurried/listOps/listOpsUncurried";
+} from '../uncurried/listOps/listOpsUncurried';
 
 export {length};
 
@@ -33,12 +33,6 @@ const
      * @type {number}
      */
     ASC = 1,
-
-    /**
-     * Descension multiplier.
-     * @type {number}
-     */
-    DESC = -1,
 
     /**
      * @returns {Boolean} - Always `false`.
@@ -614,7 +608,7 @@ export const
     iterate = curry((limit, op, x) => {
         let ind = 0,
             out = x;
-        for(; ind < limit; ind += 1) {
+        for (; ind < limit; ind += 1) {
             out = op(out, ind);
         }
         return out;
@@ -982,7 +976,7 @@ export const
         else if (lenOfTrimmed === 1) {
             return slice(0, length(trimmedLists[0]), trimmedLists[0]);
         }
-        return reduce((agg, item, ind, list) =>
+        return reduce((agg, item, ind) =>
                 aggregateArr(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     },

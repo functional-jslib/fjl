@@ -3,7 +3,9 @@
  * @module is
  * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
  */
+
 import {typeOf} from './typeOf';
+
 import {instanceOf, length, keys, hasOwnProperty} from '../jsPlatform/objectOpsUncurried';
 
 let _String = String.name,

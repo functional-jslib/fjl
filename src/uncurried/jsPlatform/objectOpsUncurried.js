@@ -6,19 +6,9 @@
  * @todo change all files named '*UnCurried' to '*Uncurried'.
  */
 
-import {typeOf} from '../objectOps/typeOf';
-
 import {fPureTakesOne} from '../../utils/utils';
 
 export const
-
-    /**
-     * Returns a boolean indicating whether a "value" is a pure object or not.
-     * @function module:jsPlatform.objectOpsUncurried.isObject
-     * @param x {*}
-     * @returns {Boolean}
-     */
-    isObject = x => typeOf(x) === 'Object',
 
     /**
      * Returns whether constructor has derived objectOps.

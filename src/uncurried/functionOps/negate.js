@@ -4,6 +4,8 @@
 
 import {apply} from './apply';
 
+import {reverse} from '../jsPlatform/arrayOpsUncurried';
+
 export const
 
     negateF = fn => (a, b) => !fn(a, b),

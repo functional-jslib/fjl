@@ -11,20 +11,18 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {instanceOf, hasOwnProperty, keys} from '../../src/uncurried/jsPlatform/objectOpsUncurried';
-import {objComplement, objDifference, objUnion, objIntersect} from '../../src/objectOps/objectOps';
-import {apply} from '../../src/functionOps/apply';
-import {typeOf} from '../../src/objectOps/typeOf';
-import {
-    isType,
-    isNumber, isFunction, isArray, isBoolean, isObject, isString,
+import {apply} from '../../../src/uncurried/jsPlatform/functionOpsUncurried';
+import {objComplement, objDifference, objUnion, objIntersect,
+    typeOf, instanceOf, hasOwnProperty, keys,
+    isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
-    isWeakMap, isWeakSet} from '../../src/objectOps/is';
-import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
+    isWeakMap, isWeakSet
+} from '../../../src/uncurried/objectOps/objectOps';
+import {expectTrue, expectFalse, expectEqual, expectFunction} from '../helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#objectOps', function () {
+describe ('#objectOpsUncurried', function () {
 
     describe('#hasOwnProperty', function () {
         it ('should be a functionOps', function () {

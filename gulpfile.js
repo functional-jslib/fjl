@@ -198,12 +198,13 @@ gulp.task('tests', ['eslint'], () =>
         .pipe(gulpBabel(gulpConfig.tests.babel))
         .pipe(mocha(gulpConfig.tests.mocha)));
 
-gulp.task('watch', ['build'], () =>
+gulp.task('watch',  ['eslint'], () =>
     gulp.watch([
         srcsGlob,
-        './node_modules/**'
+        '!./src/listOps/**',
+        '!./node_modules/**'
     ], [
-        'build-js'
+        'eslint'
     ]));
 
 gulp.task('default', ['build', 'watch']);

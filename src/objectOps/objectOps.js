@@ -1,11 +1,12 @@
-import {curry} from '../functionOps/curry';
+import {curry, curry2} from '../functionOps/curry';
 
 import {
     instanceOf as pureInstanceOf,
     hasOwnProperty as pureHasOwnProperty,
-    assign as pureAssign,
-    assignDeep as pureAssignDeep
+    assign as pureAssign
 } from '../uncurried/jsPlatform/objectOpsUncurried';
+
+import {assignDeep as pureAssignDeep} from '../uncurried/objectOps/assignDeep';
 
 export {length, toString, keys} from '../uncurried/jsPlatform/objectOpsUncurried';
 
@@ -15,14 +16,14 @@ export const
 
     hasOwnProperty = curry(pureHasOwnProperty),
 
-    assign = curry(pureAssign),
+    assign = curry2(pureAssign),
 
-    assignDeep = curry(pureAssignDeep);
+    assignDeep = curry2(pureAssignDeep);
 
-export * from './typeOf';
+export * from './../uncurried/objectOps/typeOf';
 
-export * from './is';
+export * from './../uncurried/objectOps/is';
 
-export * from './of';
+export * from './../uncurried/objectOps/of';
 
-export * from './setTheoryOps';
+export * from './../uncurried/objectOps/setTheoryOps';

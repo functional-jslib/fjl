@@ -24,7 +24,7 @@ export const
             return length(concatedArgs) < length(fn) ?
                 apply(curry, append([fn], concatedArgs)) :
                 apply(fn, concatedArgs);
-        }
+        };
     },
 
     /**

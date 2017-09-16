@@ -235,12 +235,12 @@ export const
      * @returns {Array}
      */
     transpose = xss => {
-        const numLists = length(xss);
+        let numLists = length(xss),
+            ind = 0, ind2;
         if (!numLists) { return of(xss); }
         const listLengths = apply(lengths, xss),
             longestListLen = maximum(listLengths),
             outLists = [];
-        let ind = 0, ind2;
         for (; ind < longestListLen; ind += 1) {
             const outList = [];
             for (ind2 = 0; ind2 < numLists; ind2 += 1) {
@@ -349,7 +349,7 @@ export const
     iterate = (limit, op, x) => {
         let ind = 0,
             out = x;
-        for(; ind < limit; ind += 1) {
+        for (; ind < limit; ind += 1) {
             out = op(out, ind);
         }
         return out;
@@ -665,18 +665,15 @@ export const
         let ind = 0,
             prevItem,
             item,
+            predOp = x => {
+                if (equalityOp(x, prevItem)) { ind++; }
+                if (equalityOp(x, item)) { prevItem = x; return true; }
+                return false;
+            },
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(
-                takeWhile (x => {
-                        if (equalityOp(x, prevItem)) { ind++; }
-                        if (equalityOp(x, item)) { prevItem = x; return true; }
-                        return false;
-                    },
-                    slice(ind, limit, xs)
-                )
-            );
+            agg.push( takeWhile (predOp, slice(ind, limit, xs)) );
         }
         return agg;
     },
@@ -740,7 +737,7 @@ export const
         else if (lenOfTrimmed === 1) {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
-        return reduce((agg, item, ind, list) =>
+        return reduce((agg, item, ind) =>
                 aggregateArr(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     },
@@ -826,7 +823,7 @@ export const
         else if (lenOfTrimmed === 1) {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
-        return reduce((agg, item, ind, list) =>
+        return reduce((agg, item, ind) =>
                 aggregateArr(agg, apply(op, map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     },
@@ -987,15 +984,14 @@ export const
                 // Decorate
                 map(item => [valueFn(item), item], xs)
             )
-        )
-    ,
+        ),
 
     sortBy = (orderingFn, xs) => copy(xs).sort(orderingFn),
 
     insert = (x, xs) => {
         if (isEmpty(xs)) { return aggregatorByType(xs)(copy(xs), x, 0); }
         let out = of(xs),
-            foundIndex = findIndex((item, ind) => x <= item, xs);
+            foundIndex = findIndex(item => x <= item, xs);
         return foundIndex === -1 ? append(sliceFrom(0, out), x) :
             concat(intersperse([x], splitAt(foundIndex, xs)));
     },
@@ -1034,13 +1030,12 @@ export const
         const limit = length(list);
         let ind = 0,
             currItem,
-            prevItem,
-            out = of(list);
+            out = of(list),
+            anyOp = storedItem => pred(currItem, storedItem);
         for (; ind < limit; ind += 1) {
             currItem = list[ind];
-            if (any(storedItem => pred(currItem, storedItem), out)) { continue; }
+            if (any(anyOp, out)) { continue; }
             out = append(out, currItem);
-            prevItem = currItem;
         }
         return out;
     },
@@ -1052,7 +1047,7 @@ export const
     },
 
     removeFirstsBy = (pred, xs1, xs2) =>
-        foldl((agg, item, ind) => removeBy(pred, item, agg), xs1, xs2),
+        foldl((agg, item) => removeBy(pred, item, agg), xs1, xs2),
 
     /**
      * Returns the union on elements matching boolean check passed in.

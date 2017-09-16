@@ -1,5 +1,7 @@
 
-import {isObject, keys, hasOwnProperty} from '../jsPlatform/objectOpsUncurried';
+import {isObject} from './is';
+
+import {keys, hasOwnProperty} from '../jsPlatform/objectOpsUncurried';
 
 export const
     /**

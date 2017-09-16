@@ -2,6 +2,4 @@
  *
  */
 
-import {curry} from '../functionOps/curry';
-
-export const prop = curry((name, obj) => obj[name]);
+export const prop = (name, obj) => obj[name];
