@@ -1,22 +1,25 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './curry'], factory);
+    define(['exports', './curry', '../uncurried/jsPlatform/functionOpsUncurried'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./curry'));
+    factory(exports, require('./curry'), require('../uncurried/jsPlatform/functionOpsUncurried'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.curry);
+    factory(mod.exports, global.curry, global.functionOpsUncurried);
     global.apply = mod.exports;
   }
-})(this, function (exports, _curry) {
+})(this, function (exports, _curry, _functionOpsUncurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.apply = undefined;
+  /**
+   * Created by elydelacruz on 7/22/2017.
+   */
   var
 
   /**
@@ -26,9 +29,5 @@
    * @param args {*}
    * @returns {*}
    */
-  apply = exports.apply = (0, _curry.curry)(function (fn, args) {
-    return fn.apply(null, args);
-  }); /**
-       * Created by elydelacruz on 7/22/2017.
-       */
+  apply = exports.apply = (0, _curry.curry)(_functionOpsUncurried.apply);
 });

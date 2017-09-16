@@ -11,9 +11,9 @@ import {assert, expect} from 'chai';
 
 import {
     curry2, compose, call, apply, flip, flipN, until, id
-} from '../../../src/uncurried/functionOps/functionOpsUncurried';
+} from '../../src/uncurried/functionOps/functionOpsUncurried';
 
-import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from '../helpers';
+import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

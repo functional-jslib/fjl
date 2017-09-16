@@ -15,7 +15,7 @@ import {split as pureSplit} from '../uncurried/jsPlatform/stringOpsUnCurried';
  * @param str {String}
  * @returns {Array}
  */
-let split = curry(pureSplit);
+const split = curry(pureSplit);
 
 export const
 

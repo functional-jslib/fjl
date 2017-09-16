@@ -1,28 +1,34 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.bEqual = exports.bOtherwise = exports.bNot = exports.bOr = exports.bAnd = exports.isFalsy = exports.isTruthy = undefined;
+exports.bEqual = exports.bOtherwise = exports.bNot = exports.bOr = exports.bAnd = exports.alwaysFalse = exports.alwaysTrue = exports.isFalsy = exports.isTruthy = undefined;
 
 var _is = require('./is');
 
 Object.defineProperty(exports, 'isTruthy', {
-  enumerable: true,
-  get: function get() {
-    return _is.isTruthy;
-  }
+    enumerable: true,
+    get: function get() {
+        return _is.isTruthy;
+    }
 });
 Object.defineProperty(exports, 'isFalsy', {
-  enumerable: true,
-  get: function get() {
-    return _is.isFalsy;
-  }
+    enumerable: true,
+    get: function get() {
+        return _is.isFalsy;
+    }
 });
 
 var _curry = require('../functionOps/curry');
 
-var
+var alwaysTrue = exports.alwaysTrue = function alwaysTrue() {
+    return true;
+},
+    alwaysFalse = exports.alwaysFalse = function alwaysFalse() {
+    return false;
+},
+
 
 /**
  * Returns whether both values are truthy or not.
@@ -32,7 +38,7 @@ var
  * @returns {Boolean}
  */
 bAnd = exports.bAnd = (0, _curry.curry2)(function (a, b) {
-  return a && b;
+    return a && b;
 }),
 
 
@@ -45,7 +51,7 @@ bAnd = exports.bAnd = (0, _curry.curry2)(function (a, b) {
  * @returns {Boolean}
  */
 bOr = exports.bOr = (0, _curry.curry2)(function (a, b) {
-  return a || b;
+    return a || b;
 }),
 
 
@@ -56,7 +62,7 @@ bOr = exports.bOr = (0, _curry.curry2)(function (a, b) {
  * @returns {Boolean}
  */
 bNot = exports.bNot = function bNot(x) {
-  return !x;
+    return !x;
 },
 
 
@@ -66,9 +72,7 @@ bNot = exports.bNot = function bNot(x) {
  * @function module:booleanOps.otherwise
  * @returns {Boolean} - Always true
  */
-bOtherwise = exports.bOtherwise = function bOtherwise() {
-  return true;
-},
+bOtherwise = exports.bOtherwise = alwaysTrue,
 
 
 /**
@@ -79,5 +83,5 @@ bOtherwise = exports.bOtherwise = function bOtherwise() {
  * @returns {Boolean}
  */
 bEqual = exports.bEqual = (0, _curry.curry2)(function (a, b) {
-  return a === b;
+    return a === b;
 });

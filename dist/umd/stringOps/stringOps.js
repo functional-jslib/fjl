@@ -1,40 +1,36 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../listOps/listOps', '../functionOps/curry'], factory);
+    define(['exports', '../listOps/listOps', '../functionOps/curry', '../uncurried/jsPlatform/stringOpsUnCurried'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../listOps/listOps'), require('../functionOps/curry'));
+    factory(exports, require('../listOps/listOps'), require('../functionOps/curry'), require('../uncurried/jsPlatform/stringOpsUnCurried'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.listOps, global.curry);
+    factory(mod.exports, global.listOps, global.curry, global.stringOpsUnCurried);
     global.stringOps = mod.exports;
   }
-})(this, function (exports, _listOps, _curry) {
+})(this, function (exports, _listOps, _curry, _stringOpsUnCurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = undefined;
-  /**
-   * Contains functions for operating strings.
-   * @author elyde
-   * @created 7/9/2017.
-   */
-  var
+  exports.unlines = exports.unwords = exports.words = exports.lines = undefined;
+
 
   /**
    * Functional version of `String.prototype.split`.
-   * @functionOps module:stringOps.split
    * @param separator {String|RegExp}
    * @param str {String}
    * @returns {Array}
    */
-  split = exports.split = (0, _curry.curry)(function (separator, str) {
-    return str ? str.split(separator) : [];
-  }),
-
+  var split = (0, _curry.curry)(_stringOpsUnCurried.split); /**
+                                                             * Contains functions for operating strings.
+                                                             * @author elyde
+                                                             * @created 7/9/2017.
+                                                             */
+  var
 
   /**
    * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
@@ -60,7 +56,7 @@
    * @param arr {String}
    * @returns {Array}
    */
-  unwords = exports.unwords = (0, _listOps.intercalate)('\s'),
+  unwords = exports.unwords = (0, _listOps.intercalate)(' '),
 
 
   /**

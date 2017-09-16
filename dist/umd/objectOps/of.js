@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './is', './objectPrelude', '../functionOps/apply'], factory);
+        define(['exports', './is', '../uncurried/jsPlatform/objectOpsUncurried', '../functionOps/apply'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./is'), require('./objectPrelude'), require('../functionOps/apply'));
+        factory(exports, require('./is'), require('../uncurried/jsPlatform/objectOpsUncurried'), require('../functionOps/apply'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.objectPrelude, global.apply);
+        factory(mod.exports, global.is, global.objectOpsUncurried, global.apply);
         global.of = mod.exports;
     }
-})(this, function (exports, _is, _objectPrelude, _apply) {
+})(this, function (exports, _is, _objectOpsUncurried, _apply) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -26,7 +26,7 @@
             return undefined;
         }
         var constructor = x.constructor;
-        if ((0, _objectPrelude.hasOwnProperty)('of', constructor)) {
+        if ((0, _objectOpsUncurried.hasOwnProperty)('of', constructor)) {
             return (0, _apply.apply)(constructor.of, args);
         } else if ((0, _is.isUsableImmutablePrimitive)(x)) {
             return (0, _apply.apply)(constructor, args);

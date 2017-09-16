@@ -1,28 +1,24 @@
-define(['exports', '../listOps/listOps', '../functionOps/curry'], function (exports, _listOps, _curry) {
+define(['exports', '../listOps/listOps', '../functionOps/curry', '../uncurried/jsPlatform/stringOpsUnCurried'], function (exports, _listOps, _curry, _stringOpsUnCurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = undefined;
-  /**
-   * Contains functions for operating strings.
-   * @author elyde
-   * @created 7/9/2017.
-   */
-  const
+  exports.unlines = exports.unwords = exports.words = exports.lines = undefined;
+
 
   /**
    * Functional version of `String.prototype.split`.
-   * @functionOps module:stringOps.split
    * @param separator {String|RegExp}
    * @param str {String}
    * @returns {Array}
    */
-  split = exports.split = (0, _curry.curry)((separator, str) => {
-    return str ? str.split(separator) : [];
-  }),
-
+  const split = (0, _curry.curry)(_stringOpsUnCurried.split); /**
+                                                               * Contains functions for operating strings.
+                                                               * @author elyde
+                                                               * @created 7/9/2017.
+                                                               */
+  const
 
   /**
    * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
@@ -48,7 +44,7 @@ define(['exports', '../listOps/listOps', '../functionOps/curry'], function (expo
    * @param arr {String}
    * @returns {Array}
    */
-  unwords = exports.unwords = (0, _listOps.intercalate)('\s'),
+  unwords = exports.unwords = (0, _listOps.intercalate)(' '),
 
 
   /**

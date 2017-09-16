@@ -4,9 +4,9 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {compose} from '../../../src/uncurried/functionOps/compose';
-import {curry, curry2, curryN} from '../../../src/uncurried/functionOps/curry';
-import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from '../helpers';
+import {compose} from '../../src/uncurried/functionOps/compose';
+import {curry, curry2, curryN} from '../../src/uncurried/functionOps/curry';
+import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 

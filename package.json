@@ -37,7 +37,7 @@
     "mocha": "^3.5.0",
     "random-js": "^1.0.8",
     "requirejs": "^2.3.5",
-    "rollup": "^0.37.2",
+    "rollup": "^0.50.0",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-node-resolve": "^3.0.0",
     "yargs": "^6.6.0"

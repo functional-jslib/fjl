@@ -1,10 +1,13 @@
-define(['exports', './curry'], function (exports, _curry) {
+define(['exports', './curry', '../uncurried/jsPlatform/functionOpsUncurried'], function (exports, _curry, _functionOpsUncurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.apply = undefined;
+  /**
+   * Created by elydelacruz on 7/22/2017.
+   */
   const
 
   /**
@@ -14,7 +17,5 @@ define(['exports', './curry'], function (exports, _curry) {
    * @param args {*}
    * @returns {*}
    */
-  apply = exports.apply = (0, _curry.curry)((fn, args) => fn.apply(null, args)); /**
-                                                                                  * Created by elydelacruz on 7/22/2017.
-                                                                                  */
+  apply = exports.apply = (0, _curry.curry)(_functionOpsUncurried.apply);
 });

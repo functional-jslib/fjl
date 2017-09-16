@@ -11,14 +11,14 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {apply} from '../../../src/uncurried/jsPlatform/functionOpsUncurried';
+import {apply} from '../../src/uncurried/jsPlatform/functionOpsUncurried';
 import {objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet
-} from '../../../src/uncurried/objectOps/objectOps';
-import {expectTrue, expectFalse, expectEqual, expectFunction} from '../helpers';
+} from '../../src/uncurried/objectOps/objectOpsUncurried';
+import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -266,6 +266,10 @@ describe ('#objectOpsUncurried', function () {
         it ('should return false when parameters two is not of type parameter one', function () {
             expectFalse(instanceOf(Function, {}));
         })
+    });
+
+    describe('#assignDeep', function () {
+        it ('should have tests written');
     });
 
     describe('#objComplement', function () {

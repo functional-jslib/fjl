@@ -34,7 +34,7 @@ import {
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, maximumBy, minimum, minimumBy, nub, remove, insert, insertBy,
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
-    complement, difference, union, intersect, intersectBy, groupBy,
+    complement, difference, union, intersect, intersectBy, groupBy
 } from '../../src/uncurried/listOps/listOpsUncurried';
 
 import {

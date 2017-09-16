@@ -7,28 +7,30 @@ exports.objComplement = exports.objDifference = exports.objIntersect = exports.o
 
 var _curry = require('../functionOps/curry');
 
-var _objectPrelude = require('./objectPrelude');
+var _objectOpsUncurried = require('../uncurried/jsPlatform/objectOpsUncurried');
+
+var _assignDeep = require('../uncurried/objectOps/assignDeep');
 
 var _listOps = require('../listOps/listOps');
 
 var objUnion = exports.objUnion = (0, _curry.curry)(function (obj1, obj2) {
-    return (0, _objectPrelude.assignDeep)(obj1, obj2);
+    return (0, _assignDeep.assignDeep)(obj1, obj2);
 }),
     objIntersect = exports.objIntersect = (0, _curry.curry)(function (obj1, obj2) {
     return (0, _listOps.foldl)(function (agg, key) {
-        if ((0, _objectPrelude.hasOwnProperty)(key, obj2)) {
+        if ((0, _objectOpsUncurried.hasOwnProperty)(key, obj2)) {
             agg[key] = obj2[key];
         }
         return agg;
-    }, {}, (0, _objectPrelude.keys)(obj1));
+    }, {}, (0, _objectOpsUncurried.keys)(obj1));
 }),
     objDifference = exports.objDifference = (0, _curry.curry)(function (obj1, obj2) {
     return (0, _listOps.foldl)(function (agg, key) {
-        if (!(0, _objectPrelude.hasOwnProperty)(key, obj2)) {
+        if (!(0, _objectOpsUncurried.hasOwnProperty)(key, obj2)) {
             agg[key] = obj1[key];
         }
         return agg;
-    }, {}, (0, _objectPrelude.keys)(obj1));
+    }, {}, (0, _objectOpsUncurried.keys)(obj1));
 }),
     objComplement = exports.objComplement = (0, _curry.curry2)(function (obj0) {
     for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -36,6 +38,6 @@ var objUnion = exports.objUnion = (0, _curry.curry)(function (obj1, obj2) {
     }
 
     return (0, _listOps.foldl)(function (agg, obj) {
-        return (0, _objectPrelude.assignDeep)(agg, objDifference(obj, obj0));
+        return (0, _assignDeep.assignDeep)(agg, objDifference(obj, obj0));
     }, {}, objs);
 });

@@ -4,18 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectPrelude = require('./objectOps/objectPrelude');
-
-Object.keys(_objectPrelude).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _objectPrelude[key];
-    }
-  });
-});
-
 var _objectOps = require('./objectOps/objectOps');
 
 Object.keys(_objectOps).forEach(function (key) {
@@ -76,31 +64,7 @@ Object.keys(_stringOps).forEach(function (key) {
   });
 });
 
-var _numberOps = require('./numberOps/numberOps');
-
-Object.keys(_numberOps).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _numberOps[key];
-    }
-  });
-});
-
-var _compoundedOps = require('./compoundedOps/compoundedOps');
-
-Object.keys(_compoundedOps).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _compoundedOps[key];
-    }
-  });
-});
-
-var _version = require('../generated-for-src/version');
+var _version = require('../../generated-for-src/version');
 
 Object.defineProperty(exports, 'version', {
   enumerable: true,

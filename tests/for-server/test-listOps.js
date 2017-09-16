@@ -588,11 +588,11 @@ describe ('#listOps', function () {
             expectEqual(maximum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 5);
             expectEqual(maximum(range(-5, -1).concat([-3, -5, -7])), -1);
         });
-        it ('should return `-Infinity` when no value is received (empty list, `null`, or `undefined`)', function () {
-            expectEqual(maximum(null), -Infinity);
-            expectEqual(maximum(undefined), -Infinity);
-            expectEqual(maximum([]), -Infinity);
-            expectEqual(maximum(), -Infinity);
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
+            assert.throws(() => maximum(null), Error);
+            assert.throws(() => maximum(undefined), Error);
+            // expectEqual(minimum([]), Infinity);
+            assert.throws(() => maximum(), Error);
         });
     });
 
@@ -601,11 +601,11 @@ describe ('#listOps', function () {
             expectEqual(minimum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 1);
             expectEqual(minimum(range(-5, -1).concat([-3, -5, -7])), -7);
         });
-        it ('should return `Infinity` when no value is received (empty list, `null`, or `undefined`)', function () {
-            expectEqual(minimum(null), Infinity);
-            expectEqual(minimum(undefined), Infinity);
-            expectEqual(minimum([]), Infinity);
-            expectEqual(minimum(), Infinity);
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
+            assert.throws(() => minimum(null), Error);
+            assert.throws(() => minimum(undefined), Error);
+            // expectEqual(minimum([]), Infinity);
+            assert.throws(() => minimum(), Error);
         });
     });
 
@@ -1878,22 +1878,21 @@ describe ('#listOps', function () {
     });
 
     describe ('#difference', function () {
-        it ('should return an empty listOps when no parameters are passed in', function () {
+        it ('should return an empty list when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, difference)();
         });
-        it ('should return a clone of the passed in listOps if it is only the first listOps that is passed in', function () {
-            compose(expectEqual(__, 3), length, difference([]))([1,2,3]);
+        it ('should return an empty list when first list passed in is empty', function () {
+            compose(expectEqual(__, 0), length)(difference([], alphabetArray));
+            compose(expectEqual(__, 0), length)(difference('', alphabetString));
         });
-        it ('should return an empty listOps when there are no differences between the two arrays passed in', function () {
-            compose(expectEqual(__, 0), length, difference([1, 2, 3]))([1,2,3]);
-        });
-        it ('should return a clone of the passed in listOps if it is only the first listOps that is passed in', function () {
-            compose(expectEqual(__, 3), length, difference([]))([1,2,3]);
+        it ('should return an empty list when there are no differences between the lists passed in', function () {
+            compose(expectEqual(__, 0), length)(difference(alphabetArray, alphabetArray));
+            compose(expectEqual(__, 0), length)(difference(alphabetString, alphabetString));
         });
         it ('should return the difference between two arrays passed in', function () {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
-                [[1, 2, 3], [1, 2, 3, 4, 5], 2, [4, 5]],
+                [[1, 2, 3], [1, 2, 3, 4, 5], 0, []],
                 [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 5, [4, 5, 6, 7, 8]],
                 [[1, 2, 3, 4, 5], [1, 2, 3], 2, [4, 5]]
             ];

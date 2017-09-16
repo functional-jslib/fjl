@@ -111,8 +111,7 @@ gulp.task('cjs', ['eslint'], () =>
 
 gulp.task('iife', ['eslint', 'generate-version-js'], () =>
     rollup.rollup({
-        entry: './src/fjl.js',
-        format: 'iife',
+        input: 'src/fjl.js',
         plugins: [
             rollupResolve(),
             rollupBabel({
@@ -131,13 +130,13 @@ gulp.task('iife', ['eslint', 'generate-version-js'], () =>
                 exclude: 'node_modules/**' // only transpile our source code
             })
         ],
-        dest: buildPath(iifeBuildPath, iifeFileName)
     })
     .then(bundle => bundle.write({
+        file: buildPath(iifeBuildPath, iifeFileName),
         format: 'iife',
-        moduleName: iifeModuleName,
-        dest: buildPath(iifeBuildPath, iifeFileName),
-        sourceMap: true
+        name: iifeModuleName,
+        // dest: buildPath(iifeBuildPath, iifeFileName),
+        sourcemap: true
     })));
 
 gulp.task('es6-module', ['eslint', 'generate-version-js'], () =>
@@ -198,13 +197,12 @@ gulp.task('tests', ['eslint'], () =>
         .pipe(gulpBabel(gulpConfig.tests.babel))
         .pipe(mocha(gulpConfig.tests.mocha)));
 
-gulp.task('watch',  ['eslint'], () =>
+gulp.task('watch', ['build'], () =>
     gulp.watch([
         srcsGlob,
-        '!./src/listOps/**',
-        '!./node_modules/**'
+        './node_modules/**'
     ], [
-        'eslint'
+        'build-js'
     ]));
 
 gulp.task('default', ['build', 'watch']);

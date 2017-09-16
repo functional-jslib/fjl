@@ -1,22 +1,25 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './curry'], factory);
+    define(['exports', './curry', '../uncurried/jsPlatform/functionOpsUncurried'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./curry'));
+    factory(exports, require('./curry'), require('../uncurried/jsPlatform/functionOpsUncurried'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.curry);
+    factory(mod.exports, global.curry, global.functionOpsUncurried);
     global.call = mod.exports;
   }
-})(this, function (exports, _curry) {
+})(this, function (exports, _curry, _functionOpsUncurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.call = undefined;
+  /**
+   * Created by elydelacruz on 7/22/2017.
+   */
   var
 
   /**
@@ -26,13 +29,5 @@
    * @param args {*}
    * @returns {*}
    */
-  call = exports.call = (0, _curry.curry2)(function (fn) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    return fn.call.apply(fn, [null].concat(args));
-  }); /**
-       * Created by elydelacruz on 7/22/2017.
-       */
+  call = exports.call = (0, _curry.curry2)(_functionOpsUncurried.call);
 });
