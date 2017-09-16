@@ -6,6 +6,8 @@
  * @todo change all files named '*UnCurried' to '*Uncurried'.
  */
 
+import {typeOf} from '../../src/objectOps/typeOf';
+
 import {fPureTakesOne} from '../../src/utils/utils';
 
 export const
