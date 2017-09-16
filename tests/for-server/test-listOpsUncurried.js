@@ -32,7 +32,7 @@ import {
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
-    filter, sum, product, maximum, minimum, nub, remove, insert,
+    filter, sum, product, maximum, maximumBy, minimum, minimumBy, nub, remove, insert, insertBy,
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
     complement, difference, union, intersect, intersectBy, groupBy,
 } from '../../src-uncurried/listOps/listOpsUncurried';
@@ -57,7 +57,12 @@ import {
 describe ('#listOpsUncurried', function () {
 
     const strToArray = split(''),
-        generalEqualityCheck = (a, b) => a === b;
+        generalEqualityCheck = (a, b) => a === b,
+    genericOrdering = (a, b) => {
+        if (a > b) { return 1; }
+        else if (a < b) { return -1; }
+        return 0;
+    };
 
     describe ('#append', function () {
         it ('should have more tests.');
@@ -600,11 +605,11 @@ describe ('#listOpsUncurried', function () {
             expectEqual(maximum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 5);
             expectEqual(maximum(range(-5, -1).concat([-3, -5, -7])), -1);
         });
-        it ('should return `-Infinity` when no value is received (empty list, `null`, or `undefined`)', function () {
-            expectEqual(maximum(null), -Infinity);
-            expectEqual(maximum(undefined), -Infinity);
-            expectEqual(maximum([]), -Infinity);
-            expectEqual(maximum(), -Infinity);
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
+            assert.throws(() => maximum(null), Error);
+            assert.throws(() => maximum(undefined), Error);
+            // expectEqual(minimum([]), Infinity);
+            assert.throws(() => maximum(), Error);
         });
     });
 
@@ -613,11 +618,11 @@ describe ('#listOpsUncurried', function () {
             expectEqual(minimum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 1);
             expectEqual(minimum(range(-5, -1).concat([-3, -5, -7])), -7);
         });
-        it ('should return `Infinity` when no value is received (empty list, `null`, or `undefined`)', function () {
-            expectEqual(minimum(null), Infinity);
-            expectEqual(minimum(undefined), Infinity);
-            expectEqual(minimum([]), Infinity);
-            expectEqual(minimum(), Infinity);
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
+            assert.throws(() => minimum(null), Error);
+            assert.throws(() => minimum(undefined), Error);
+            // expectEqual(minimum([]), Infinity);
+            assert.throws(() => minimum(), Error);
         });
     });
 
@@ -2247,7 +2252,7 @@ describe ('#listOpsUncurried', function () {
         it ('should return an empty list when both arrays passed are empty', function () {
             expectEqual(length(intersectBy(equality, [], [])), 0);
         });
-        it ('should return an intersection of the two arrays passed in', function () {
+        it ('should return an intersection of the two arrays on equality function', function () {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 3, [1, 2, 3]],
@@ -2266,7 +2271,7 @@ describe ('#listOpsUncurried', function () {
     });
 
     describe ('#groupBy', function () {
-        it ('should return a list of lists which contain the (sequential) matches', function () {
+        it ('should return a list of lists which contain the (sequential) matches on equality function', function () {
             const expectedResultFlattened = ['M', 'i', 'ss', 'i', 'ss', 'i', 'pp', 'i'];
             expectShallowEquals(groupBy(generalEqualityCheck, 'Mississippi'), expectedResultFlattened);
             expectShallowEquals(
@@ -2275,7 +2280,7 @@ describe ('#listOpsUncurried', function () {
                 expectedResultFlattened
             );
         });
-        it ('should return a list of lists containing individual un-grouped items', function () {
+        it ('should return a list of lists containing individual un-grouped items or items that do not match equality function', function () {
             expectShallowEquals(groupBy(generalEqualityCheck, alphabetString), alphabetArray);
             expectShallowEquals(
                 // Flatten result first
@@ -2285,42 +2290,78 @@ describe ('#listOpsUncurried', function () {
     });
 
     describe ('#sortBy', function () {
-        const ascOrderingGetter = (a, b) => {
-            if (a > b) { return 1; }
-            else if (a < b) { return -1; }
-            return 0;
-        };
-        it ('should sort a list in ascending order', function () {
-            expectShallowEquals(sortBy(ascOrderingGetter, range(10, 0, -1)), range(0, 10, 1));
-            expectShallowEquals(sortBy(ascOrderingGetter, range(0, 10)), range(0, 10));
+        it ('should sort a list by ordering function', function () {
+            expectShallowEquals(sortBy(genericOrdering, range(10, 0, -1)), range(0, 10, 1));
+            expectShallowEquals(sortBy(genericOrdering, range(0, 10)), range(0, 10));
             compose(expectShallowEquals(__, alphabetArray),
-                value => sortBy(ascOrderingGetter, value), reverse)(alphabetArray);
-            compose(/*log,*/ value => sortBy(ascOrderingGetter, value), reverse)(alphabetArray);
+                value => sortBy(genericOrdering, value), reverse)(alphabetArray);
+            compose(/*log,*/ value => sortBy(genericOrdering, value), reverse)(alphabetArray);
         });
         it ('should return a copy of original list when said list is already sorted', function () {
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(ascOrderingGetter, xs))(take(3, alphabetArray));
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(ascOrderingGetter, xs))(take(3, alphabetArray));
-            compose(expectShallowEquals(__, alphabetArray), xs => sortBy(ascOrderingGetter, xs))(alphabetArray);
-            compose(expectShallowEquals(__, range(0, 10)), xs => sortBy(ascOrderingGetter, xs))(range(0, 10));
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
+            compose(expectShallowEquals(__, alphabetArray), xs => sortBy(genericOrdering, xs))(alphabetArray);
+            compose(expectShallowEquals(__, range(0, 10)), xs => sortBy(genericOrdering, xs))(range(0, 10));
         });
         it ('should return an empty list when receiving an empty list', function () {
-            expectShallowEquals(sortBy(ascOrderingGetter, []), []);
+            expectShallowEquals(sortBy(genericOrdering, []), []);
         });
     });
 
     describe ('#insertBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const injectValueAtIndex = (x, ind, list) => {
+            if (ind <= 0) { return [x].concat(list); }
+            else if (ind > list.length - 1) { return list.concat([x]); }
+            return list.slice(0, ind).concat([x], list.slice(ind));
+        },
+        genericInsert = (x, xs) => insertBy(genericOrdering, x, xs);
+        it ('Should insert a value before value that matches equality check', function () {
+            // expectShallowEquals(genericInsert(99, range(0, 144, 5))
+            const range0To145 = range(0, 145, 5),
+                expectedResult = injectValueAtIndex(99, 20, range0To145),
+                result = genericInsert(99, range0To145),
+                result1 = genericInsert(99, reverse(range0To145)),
+                result2 = genericInsert('x', alphabetArray),
+                result3 = genericInsert('x', reverse(alphabetArray));
+            // log (result1, result, expectedResult);
+            expectShallowEquals(result, expectedResult);
+            expectShallowEquals(result1, [99].concat(reverse(range0To145)));
+            expectShallowEquals(result2, injectValueAtIndex('x', 24, alphabetArray));
+            expectShallowEquals(result3, ['x'].concat(reverse(alphabetArray)));
+        });
+        it ('should insert value even if passed in list is empty', function () {
+            expectShallowEquals(genericInsert(99, []), [99]);
+            expectShallowEquals(genericInsert('a', []), ['a']);
+            expectShallowEquals(genericInsert('a', ''), 'a');
+        });
     });
 
     describe ('#maximumBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const genericMaximum = xs => maximumBy(genericOrdering, xs);
+        it ('should be able return the maximum of a given list', function () {
+            expectEqual(genericMaximum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 5);
+            expectEqual(genericMaximum(range(-5, -1).concat([-3, -5, -7])), -1);
+        });
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
+            assert.throws(() => genericMaximum(null), Error);
+            assert.throws(() => genericMaximum(undefined), Error);
+            // assert.throws(() => genericMaximum([]), Error);
+            assert.throws(() => genericMaximum(), Error);
+        });
     });
 
     describe ('#minimumBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const genericMinimum = xs => minimumBy(genericOrdering, xs);
+        it ('should be able return the minimum of a given list', function () {
+            expectEqual(genericMinimum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 1);
+            expectEqual(genericMinimum(range(-5, -1).concat([-3, -7, -5])), -7);
+        });
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
+            assert.throws(() => genericMinimum(null), Error);
+            assert.throws(() => genericMinimum(undefined), Error);
+            // expectEqual(genericMinimum([]), Infinity);
+            assert.throws(() => genericMinimum(), Error);
+        });
     });
 
 });

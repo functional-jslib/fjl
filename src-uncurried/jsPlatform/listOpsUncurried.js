@@ -15,7 +15,7 @@ export const
 
     includes = (() => 'includes' in Array.prototype ?
             fPureTakesOne('includes') :
-            (value, x) => x.indexOf(value) > -1)(),
+            (value, xs) => xs.indexOf(value) > -1)(),
 
     /**
      * Searches list/list-like for given element `x`.

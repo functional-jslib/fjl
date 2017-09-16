@@ -5,30 +5,28 @@
  * @todo code unperformant shorthand in `listOps`
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
-import {concat as listAppend, indexOf} from '../jsPlatform/listOpsUncurried';
-import {includes}           from '../jsPlatform/listOpsUncurried';
+import { concat as listAppend,
+    indexOf, slice, includes } from '../jsPlatform/listOpsUncurried';
 import {apply, negateF}     from '../jsPlatform/functionOpsUncurried';
 import {length}             from '../jsPlatform/objectOpsUncurried';
-import {slice}              from '../../src/jsPlatform/arrayOps';
 import {negateP}            from '../../src/functionOps/functionOps';
 import {isTruthy, isFalsy}  from '../../src/booleanOps/booleanOps';
 import {isString, isset}    from '../../src/objectOps/is';
 import {prop}               from '../../src/objectOps/prop';
 import {of}                 from '../../src/objectOps/of';
 import {map}                from './map';
-import {minimum}            from './minimum';
 
 import {
-    sliceToEndFrom, sortAsc, sortOnAsc, sortAscByLength, lengths,
+    sliceFrom, sliceTo, sortAsc, lengths,
     lengthsToSmallest, aggregateArr, aggregatorByType,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
-    findWhere, sliceFromZero, copy } from './listOpsUncurriedUtils';
+    findWhere, copy, genericAscOrdering } from './listOpsUncurriedUtils';
 
 // import {log} from '../../tests/for-server/helpers';
 
 // Exported imports
-export {length, map, minimum};
+export {length, map};
 
 // Exported internals
 export const
@@ -61,7 +59,7 @@ export const
     appendMany = (x, ...args) => {
         const lenArgs = length(args);
         if (!isset(x)) { return []; }
-        if (!lenArgs) { return sliceToEndFrom(0, x); }
+        if (!lenArgs) { return sliceFrom(0, x); }
         return listAppend(x, ...args);
     },
 
@@ -90,7 +88,7 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    tail = xs => sliceToEndFrom(1, xs),
+    tail = xs => sliceFrom(1, xs),
 
     /**
      * Returns everything except last item of list as new list.
@@ -99,7 +97,7 @@ export const
      * @param xs {Array|String}
      * @returns {Array|String}
      */
-    init = xs => slice(0, lastIndex(xs), xs),
+    init = xs => sliceTo(lastIndex(xs), xs),
 
     /**
      * Returns `head` and `tail` of passed in list/string in a tuple.
@@ -307,7 +305,7 @@ export const
      * @return {Array} - [aggregated, list]
      */
     mapAccumL = (op, zero, xs) => {
-        const list = sliceToEndFrom(0, xs),
+        const list = sliceFrom(0, xs),
             limit = length(xs);
         if (!limit) { return [zero, list]; }
         let ind = 0,
@@ -332,7 +330,7 @@ export const
      * @return {Array} - [aggregated, list]
      */
     mapAccumR = (op, zero, xs) => {
-        const list = sliceToEndFrom(0, xs),
+        const list = sliceFrom(0, xs),
             limit = length(xs);
         if (!limit) { return [zero, list]; }
         let ind = limit - 1,
@@ -425,7 +423,7 @@ export const
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    take = (limit, list) => slice(0, limit, list),
+    take = (limit, list) => sliceTo(limit, list),
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
@@ -434,7 +432,7 @@ export const
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    drop = (count, list) => sliceToEndFrom(count, list),
+    drop = (count, list) => sliceFrom(count, list),
 
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
@@ -445,8 +443,8 @@ export const
      * @returns {Array} - Array of whatever type `x` was when passed in
      */
     splitAt = (ind, list) => [
-        slice(0, ind, list),
-        sliceToEndFrom(ind, list)
+        sliceTo(ind, list),
+        sliceFrom(ind, list)
     ],
 
     /**
@@ -482,7 +480,7 @@ export const
                     !pred(list[ind], ind, list2), list);
 
         return splitPoint === -1 ?
-            slice(0, limit, list) :
+            sliceTo(limit, list) :
             slice(splitPoint, limit, list);
     },
 
@@ -500,8 +498,8 @@ export const
                     !pred(list[ind], ind, list2), list);
 
         return splitPoint === -1 ?
-            slice(0, limit, list) :
-            slice(0, splitPoint + 1, list);
+            sliceTo(limit, list) :
+            sliceTo(splitPoint + 1, list);
     },
 
     /**
@@ -662,7 +660,7 @@ export const
      */
     groupBy = (equalityOp, xs) => {
         const limit = length(xs);
-        if (!limit) { return sliceToEndFrom(0, xs); }
+        if (!limit) { return sliceFrom(0, xs); }
         let ind = 0,
             prevItem,
             item,
@@ -688,7 +686,7 @@ export const
             agg = [];
         if (!limit) { return []; }
         for (; ind <= limit; ind += 1) {
-            agg = aggregateArr(agg, slice(0, ind, xs));
+            agg = aggregateArr(agg, sliceTo(ind, xs));
         }
         return agg;
     }, //map(list => init(list), xs),
@@ -707,7 +705,7 @@ export const
     stripPrefix = (prefix, list) =>
         isPrefixOf(prefix, list) ?
             splitAt(length(prefix), list)[1] :
-            sliceToEndFrom(0, list),
+            sliceFrom(0, list),
 
     /**
      * zip takes two lists and returns a list of corresponding pairs.
@@ -739,7 +737,7 @@ export const
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) { return []; }
         else if (lenOfTrimmed === 1) {
-            return slice(0, length(trimmedLists[0]), trimmedLists[0]);
+            return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind, list) =>
                 aggregateArr(agg, map(xs => xs[ind], trimmedLists)),
@@ -825,7 +823,7 @@ export const
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) { return []; }
         else if (lenOfTrimmed === 1) {
-            return slice(0, length(trimmedLists[0]), trimmedLists[0]);
+            return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind, list) =>
                 aggregateArr(agg, apply(op, map(xs => xs[ind], trimmedLists))),
@@ -942,11 +940,17 @@ export const
 
     not = xs => all(isFalsy, xs),
 
-    sum = list => reduce((agg, x) => agg + x, 0, list),
+    sum = list => foldl((agg, x) => agg + x, 0, list),
 
-    product = arr => reduce((agg, x) => agg * x, 1, arr),
+    product = arr => foldl((agg, x) => agg * x, 1, arr),
 
-    maximum = arr => apply(Math.max, arr),
+    maximum = list => maximumBy(genericAscOrdering, list),
+
+    minimum = list => minimumBy(genericAscOrdering, list),
+
+    maximumBy = (ordering, xs) => last(sortBy(ordering, xs)),
+
+    minimumBy = (ordering, xs) => head(sortBy(ordering, xs)),
 
     scanl = () => null,
 
@@ -970,6 +974,7 @@ export const
             // Decorate and sort
             sortBy(
 
+                // Ordering
                 (a1, b1) => {
                     let a = a1[0],
                         b = b1[0];
@@ -984,18 +989,28 @@ export const
         )
     ,
 
-    sortBy = (orderingGetter, xs) => copy(xs).sort(orderingGetter),
+    sortBy = (orderingFn, xs) => copy(xs).sort(orderingFn),
 
     insert = (x, xs) => {
         if (isEmpty(xs)) { return aggregatorByType(xs)(copy(xs), x, 0); }
         let out = of(xs),
             foundIndex = findIndex((item, ind) => x <= item, xs);
-        return foundIndex === -1 ? append(sliceToEndFrom(0, out), x) :
+        return foundIndex === -1 ? append(sliceFrom(0, out), x) :
             concat(intersperse([x], splitAt(foundIndex, xs)));
     },
 
     /**
-     * `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
+     * A version of `insert` that allows you to specify the ordering of the inserted
+     * item;  Before/at, or after
+     * @function module:listOpsUncurried.insertBy
+     * @haskellType `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
+     * @note `Ordering` === // something that is order-able
+     * @todo Optimize and work the logic of this function;  Think about the types that will be
+     *  operated on by this functions logic.
+     * @param orderingFn {Function} - A function that returns `-1`, `0`, or 1`.
+     * @param x {*} - Value to insert.
+     * @param xs {Array|String|*} - List to insert into (note new list is returned)
+     * @returns {Array|String|*} - New list.
      */
     insertBy = (orderingFn, x, xs) => {
         const limit = length(xs),
@@ -1100,7 +1115,7 @@ export const
      * @returns {Array|String|*}
      */
     difference = (array1, array2) => { // augment this with max length and min length ordering on op
-        if (array1 && !array2) { return sliceToEndFrom(0, array1); }
+        if (array1 && !array2) { return sliceFrom(0, array1); }
         else if (!array1 && array2 || (!array1 && !array2)) { return []; }
         const aggregator = aggregatorByType(array1);
         return reduce((agg, elm) =>

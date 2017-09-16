@@ -7,7 +7,6 @@ import {slice}              from '../jsPlatform/listOpsUncurried';      // un-cu
 import {length}             from '../jsPlatform/objectOpsUncurried';
 import {alwaysFalse}        from '../../src/booleanOps/booleanOps';
 import {map}                from './map';
-import {minimum}            from "./minimum";
 
 export * from './listOpsUncurriedAggregation';
 
@@ -25,14 +24,23 @@ export const
      * @param arr {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceToEndFrom = (startInd, arr) => slice(startInd, length(arr), arr),
+    sliceFrom = (startInd, arr) => slice(startInd, length(arr), arr),
+
+    /**
+     * Slices from index `0` to given index.
+     * @module module:listOpsUncurried.sliceTo
+     * @param toInd {Number}
+     * @param xs {Array|String|*}
+     * @returns {Array|String|*}
+     */
+    sliceTo = (toInd, xs) => slice(0, toInd, xs),
 
     /**
      * Slices list from zero to `x` value.
      * @param x {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFromZero = x => sliceToEndFrom(0, x),
+    sliceFromZero = x => sliceFrom(0, x),
 
     copy = sliceFromZero,
 
@@ -42,6 +50,12 @@ export const
      * @returns {Number} - Always `1` or `-1`.
      */
     onlyOneOrNegOne = x => x === 1 || x === -1 ? x : 1,
+
+    genericAscOrdering = (a, b) => {
+        if (a > b) { return 1; }
+        else if (a < b) { return -1; }
+        return 0;
+    },
 
     /**
      * @param multiplier
@@ -111,9 +125,9 @@ export const
 
     lengthsToSmallest = (...lists) => {
         const listLengths = apply(lengths, lists),
-            smallLen = minimum(listLengths);
+            smallLen = Math.min.apply(Math, listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
-            slice(0, smallLen, list) : sliceFromZero(list), lists);
+            sliceTo(smallLen, list) : copy(list), lists);
     },
 
     reduceUntil = (pred, op, agg, arr) => {

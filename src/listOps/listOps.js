@@ -51,14 +51,14 @@ const
      * @param arr {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceToEndFrom = (startInd, arr) => slice(startInd, length(arr), arr),
+    sliceFrom = (startInd, arr) => slice(startInd, length(arr), arr),
 
     /**
      * Slices list from zero to `x` value.
      * @param x {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFromZero = x => sliceToEndFrom(0, x),
+    sliceFromZero = x => sliceFrom(0, x),
 
     /**
      * Always `1` or `-1`.
@@ -305,7 +305,7 @@ export const
     appendMany = (x, ...args) => {
         const lenArgs = length(args);
         if (!isset(x)) { return []; }
-        if (!lenArgs) { return sliceToEndFrom(0, x); }
+        if (!lenArgs) { return sliceFrom(0, x); }
         return listAppend(x, ...args);
     },
 
@@ -334,7 +334,7 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    tail = xs => sliceToEndFrom(1, xs),
+    tail = xs => sliceFrom(1, xs),
 
     /**
      * Returns everything except last item of list as new list.
@@ -571,7 +571,7 @@ export const
      * @return {Array} - [aggregated, list]
      */
     mapAccumL = curry((op, zero, xs) => {
-        const list = sliceToEndFrom(0, xs),
+        const list = sliceFrom(0, xs),
             limit = length(xs);
         if (!limit) { return [zero, list]; }
         let ind = 0,
@@ -596,7 +596,7 @@ export const
      * @return {Array} - [aggregated, list]
      */
     mapAccumR = curry((op, zero, xs) => {
-        const list = sliceToEndFrom(0, xs),
+        const list = sliceFrom(0, xs),
             limit = length(xs);
         if (!limit) { return [zero, list]; }
         let ind = limit - 1,
@@ -698,7 +698,7 @@ export const
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    drop = curry((count, array) => sliceToEndFrom(count, array)),
+    drop = curry((count, array) => sliceFrom(count, array)),
 
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
@@ -710,7 +710,7 @@ export const
      */
     splitAt = curry((ind, arr) => [
         slice(0, ind, arr),
-        sliceToEndFrom(ind, arr)
+        sliceFrom(ind, arr)
     ]),
 
     /**
@@ -903,7 +903,7 @@ export const
 
     group = xs => {
         const limit = length(xs);
-        if (!limit) { return sliceToEndFrom(0, xs); }
+        if (!limit) { return sliceFrom(0, xs); }
         let ind = 0,
             prevItem,
             item,
@@ -948,7 +948,7 @@ export const
     stripPrefix = curry((prefix, list) =>
         isPrefixOf(prefix, list) ?
             splitAt(length(prefix), list)[1] :
-                sliceToEndFrom(0, list)),
+                sliceFrom(0, list)),
 
     /**
      * zip takes two lists and returns a list of corresponding pairs.
@@ -1211,7 +1211,7 @@ export const
         if (isEmpty(xs)) { return [x]; }
         let out = of(xs),
             foundIndex = findIndex((item, ind) => x <= item, xs);
-        return foundIndex === -1 ? append(sliceToEndFrom(0, out), x) :
+        return foundIndex === -1 ? append(sliceFrom(0, out), x) :
             concat(intersperse([x], splitAt(foundIndex, xs)));
     }),
 
