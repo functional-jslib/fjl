@@ -34,7 +34,7 @@ import {
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert,
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn,
-    complement, difference, union, intersect
+    complement, difference, union, intersect, intersectBy
 } from '../../src-uncurried/listOps/listOpsUncurried';
 
 import {
@@ -54,7 +54,7 @@ import {
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#listOps', function () {
+describe ('#listOpsUncurried', function () {
 
     const strToArray = split('');
 
@@ -2235,8 +2235,33 @@ describe ('#listOps', function () {
     });
 
     describe ('#intersectBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const equality = (a, b) => a === b;
+        // it ('should have more tests written');
+        it ('should return an empty list when receiving an empty list', function () {
+            expectEqual(length(intersectBy(equality, [], [1, 2, 3])), 0);
+        });
+        it ('should return an empty list when receiving an empty list as parameter 2', function () {
+            expectEqual(length(intersectBy(equality, [1, 2, 3], [])), 0);
+        });
+        it ('should return an empty list when both arrays passed are empty', function () {
+            expectEqual(length(intersectBy(equality, [], [])), 0);
+        });
+        it ('should return an intersection of the two arrays passed in', function () {
+            let testCases = [
+                // subj1, subj2, expectLen, expectedElements
+                [[1, 2, 3], [1, 2, 3, 4, 5], 3, [1, 2, 3]],
+                [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 3, [1, 2, 3]],
+                [[1, 2, 3, 4, 5], [1, 2, 3], 3, [1, 2, 3]]
+            ];
+            testCases.forEach(testCase => {
+                let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                    result = intersectBy(equality, subj1, subj2);
+                expectEqual(result.length, expectedLen);
+                result.forEach((elm, ind) => {
+                    expectEqual(elm, expectedElms[ind]);
+                });
+            });
+        });
     });
 
     describe ('#groupBy', function () {

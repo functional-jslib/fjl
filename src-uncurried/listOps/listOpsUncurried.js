@@ -965,14 +965,14 @@ export const
         return out;
     },
 
-    removeBy = (pred, x, list) => {
+    removeBy = (pred, x, list) => { // @todo optimize this implementation
         const foundIndex = findIndex(item => pred(x, item), list),
-            parts = splitAt(foundIndex > -1 ? foundIndex : 0, list);
+            parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
         return append(parts[0], tail(parts[1]));
     },
 
     removeFirstsBy = (pred, xs1, xs2) =>
-        reduce((agg, item, ind) => removeBy(pred, item, agg), xs1, xs2),
+        foldl((agg, item, ind) => removeBy(pred, item, agg), xs1, xs2),
 
     /**
      * Returns the union on elements matching boolean check passed in.
@@ -1011,6 +1011,21 @@ export const
     intersect = (arr1, arr2) =>
         !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
             filter(elm => includes(elm, arr2), arr1),
+
+    /**
+     * Returns an intersection by predicate.
+     * @function module:listOps.intersectBy
+     * @param pred {Function} - `pred :: a -> b -> Bool`
+     * @param list1 {Array|String|*}
+     * @param list2 {Array|String|*}
+     * @return {Array|String|*}
+     */
+    intersectBy = (pred, list1, list2) => {
+        const aggregator = aggregatorByType(list1);
+        return foldl((agg, a) =>
+                any(b => pred(a, b), list2) ? aggregator(agg, a) : agg
+            , [], list1);
+    },
 
     /**
      * Returns the difference of list 1 from list 2.
