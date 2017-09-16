@@ -1,4 +1,4 @@
-import {reverse} from '../listOps/listOps';
+import {reverse} from   '../listOps/listOps';
 import {curry, curry3} from './curry';
 import {apply} from './apply';
 import {call} from './call';

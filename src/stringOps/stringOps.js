@@ -3,11 +3,11 @@
  * @author elyde
  * @created 7/9/2017.
  */
-import {intercalate} from '../listOps/listOps';
+import {intercalate} from   '../listOps/listOps';
 
-import {curry} from '../functionOps/curry';
+import {curry} from   '../functionOps/curry';
 
-import {split as pureSplit} from '../uncurried/jsPlatform/stringOpsUnCurried';
+import {split as pureSplit} from   '../uncurried/jsPlatform/stringOpsUnCurried';
 
 /**
  * Functional version of `String.prototype.split`.

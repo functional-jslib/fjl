@@ -3,7 +3,7 @@
  * @module booleanOps
  */
 
-import {curry2} from '../functionOps/curry';
+import {curry2} from  '../functionOps/curry';
 
 export {isTruthy, isFalsy} from './is';
 

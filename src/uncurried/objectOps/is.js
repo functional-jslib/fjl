@@ -6,7 +6,7 @@
 
 import {typeOf} from './typeOf';
 
-import {instanceOf, length, keys, hasOwnProperty} from '../jsPlatform/objectOpsUncurried';
+import {instanceOf, length, keys, hasOwnProperty} from   '../jsPlatform/objectOpsUncurried';
 
 let _String = String.name,
     _Number = Number.name,

@@ -1,4 +1,4 @@
-define(['exports', '../../objectOps/typeOf'], function (exports, _typeOf) {
+define(['exports', '../objectOps/objectOpsUncurried'], function (exports, _objectOpsUncurried) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -15,7 +15,7 @@ define(['exports', '../../objectOps/typeOf'], function (exports, _typeOf) {
         return agg;
     },
           aggregatorByType = exports.aggregatorByType = x => {
-        switch ((0, _typeOf.typeOf)(x)) {
+        switch ((0, _objectOpsUncurried.typeOf)(x)) {
             case 'String':
                 return aggregateStr;
             case 'Array':

@@ -26,7 +26,7 @@ Object.defineProperty(exports, 'keys', {
     }
 });
 
-var _typeOf = require('./../uncurried/objectOps/typeOf');
+var _typeOf = require('../uncurried/objectOps/typeOf');
 
 Object.keys(_typeOf).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -38,7 +38,7 @@ Object.keys(_typeOf).forEach(function (key) {
     });
 });
 
-var _is = require('./../uncurried/objectOps/is');
+var _is = require('../uncurried/objectOps/is');
 
 Object.keys(_is).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -50,7 +50,7 @@ Object.keys(_is).forEach(function (key) {
     });
 });
 
-var _of = require('./../uncurried/objectOps/of');
+var _of = require('../uncurried/objectOps/of');
 
 Object.keys(_of).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -62,7 +62,7 @@ Object.keys(_of).forEach(function (key) {
     });
 });
 
-var _setTheoryOps = require('./../uncurried/objectOps/setTheoryOps');
+var _setTheoryOps = require('../uncurried/objectOps/setTheoryOps');
 
 Object.keys(_setTheoryOps).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;

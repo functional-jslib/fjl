@@ -1,6 +1,6 @@
 import {isFunction, isUsableImmutablePrimitive, isset} from './is';
-import {hasOwnProperty} from '../jsPlatform/objectOpsUncurried';
-import {apply} from '../functionOps/apply';
+import {hasOwnProperty} from   '../jsPlatform/objectOpsUncurried';
+import {apply} from   '../functionOps/apply';
 
 export const of = (x, ...args) => {
     if (!isset(x)) { return undefined; }

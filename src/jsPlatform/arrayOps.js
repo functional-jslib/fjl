@@ -4,9 +4,9 @@
  * @todo updated doc blocks to list correct/updated module name.
  */
 
-import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from '../utils/utils';
+import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from   '../utils/utils';
 
-import {defineReverse} from '../uncurried/jsPlatform/arrayOpsUncurried';
+import {defineReverse} from   '../uncurried/jsPlatform/arrayOpsUncurried';
 
 export const
 

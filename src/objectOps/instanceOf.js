@@ -2,7 +2,9 @@
  * Created by elydelacruz on 7/22/2017.
  */
 
-import {curry} from '../functionOps/curry';
+import {curry} from   '../functionOps/curry';
+
+import {instanceOf as pureInstanceOf} from '../uncurried/objectOps/instanceOf';
 
 export const
 
@@ -12,5 +14,4 @@ export const
      * @instance {*}
      * @returns {Boolean}
      */
-    instanceOf = curry((instanceConstructor, instance) =>
-        instance instanceof instanceConstructor);
+    instanceOf = curry(pureInstanceOf);

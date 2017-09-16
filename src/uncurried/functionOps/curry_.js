@@ -9,7 +9,7 @@
 
 import {apply} from './apply';
 
-import {append, map, filter, length} from '../listOps/listOpsUncurried';
+import {append, map, filter, length} from   '../listOps/listOpsUncurried';
 
 /**
  * PlaceHolder (__) constructor.

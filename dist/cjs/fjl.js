@@ -52,6 +52,18 @@ Object.keys(_listOps).forEach(function (key) {
   });
 });
 
+var _numberOps = require('./numberOps/numberOps');
+
+Object.keys(_numberOps).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _numberOps[key];
+    }
+  });
+});
+
 var _stringOps = require('./stringOps/stringOps');
 
 Object.keys(_stringOps).forEach(function (key) {
@@ -64,7 +76,19 @@ Object.keys(_stringOps).forEach(function (key) {
   });
 });
 
-var _version = require('../../generated-for-src/version');
+var _compoundedOps = require('./compoundedOps/compoundedOps');
+
+Object.keys(_compoundedOps).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _compoundedOps[key];
+    }
+  });
+});
+
+var _version = require('../generated-for-src/version');
 
 Object.defineProperty(exports, 'version', {
   enumerable: true,

@@ -710,16 +710,12 @@ var negateF = function negateF(fn) {
         return !fn(a, b);
     };
 };
-
-/**
- * Created by elydelacruz on 7/22/2017.
- */
-var call$1 = curry2(call);
-
-/**
- * Created by elydelacruz on 7/22/2017.
- */
-var apply$1 = curry(apply);
+var negateF3 = function negateF3(fn) {
+    return function (a, b, c) {
+        return !fn(a, b, c);
+    };
+};
+var negateP = negateF3;
 
 /**
  * Created by elydelacruz on 7/22/2017.
@@ -838,179 +834,6 @@ var __$1 = Object.freeze ? Object.freeze(placeHolderInstance$1) : placeHolderIns
  * @module functionOpsUncurried
  */
 
-/**
- * Array operators module.
- * @module listOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
- * @todo code un-performant shorthand in `listOps`
- */
-
-/**
- * List operators.
- * @module listOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to
- *  return undefined (and also determine which cases are ok for just returning undefined).
- * @todo code unperformant shorthand in `listOps`
- * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
- */
-// Uncurried methods import
-// Exported internals
-var append$1 = curry$1(append);
-var appendMany$1 = curry2$1(appendMany);
-var concatMap$1 = curry2$1(concatMap);
-var map$1 = curry$1(map$2);
-var intersperse$1 = curry$1(intersperse);
-var intercalate$1 = curry$1(intercalate);
-var foldl$1 = curry$1(foldl);
-var foldr$1 = curry$1(foldr);
-var foldl1$1 = curry$1(foldl1);
-var foldr1$1 = curry$1(foldr1);
-var mapAccumL$1 = curry$1(mapAccumL);
-var mapAccumR$1 = curry$1(mapAccumR);
-var iterate$1 = curry$1(iterate);
-var repeat$1 = curry$1(repeat);
-var replicate$1 = repeat$1;
-var cycle$1 = curry$1(cycle);
-var unfoldr$1 = curry$1(unfoldr);
-var findIndex$1 = curry$1(findIndex);
-var findIndices$1 = curry$1(findIndices);
-var elemIndex$1 = curry$1(elemIndex);
-var elemIndices$1 = curry$1(elemIndices);
-var take$1 = curry$1(take);
-var drop$1 = curry$1(drop);
-var splitAt$1 = curry$1(splitAt);
-var takeWhile$1 = curry$1(takeWhile);
-var dropWhile$1 = curry$1(dropWhile);
-var dropWhileEnd$1 = curry$1(dropWhileEnd);
-var span$1 = curry$1(span);
-var breakOnList$1 = curry$1(breakOnList);
-var at$1 = curry$1(at);
-var find$1 = curry$1(find);
-var filter$2 = curry$1(filter);
-var partition$1 = curry$1(partition);
-var elem$1 = curry$1(elem);
-var notElem$1 = curry2$1(notElem);
-var lookup$1 = at$1;
-var isPrefixOf$1 = curry$1(isPrefixOf);
-var isSuffixOf$1 = curry$1(isSuffixOf);
-var isInfixOf$1 = curry$1(isInfixOf);
-var isSubsequenceOf$1 = curry$1(isSubsequenceOf);
-var groupBy$1 = curry$1(groupBy);
-var stripPrefix$1 = curry$1(stripPrefix);
-var zip$1 = curry$1(zip);
-var zipWith$1 = curry$1(zipWith);
-var zipWithN$1 = curry2$1(zipWithN);
-var zipWith3$1 = zipWithN$1;
-var zipWith4$1 = zipWithN$1;
-var zipWith5$1 = zipWithN$1;
-var any$1 = curry$1(any);
-var all$1 = curry$1(all);
-var maximumBy$1 = curry$1(maximumBy);
-var minimumBy$1 = curry$1(minimumBy);
-var scanl$1 = function scanl$$1() {
-    return null;
-};
-var scanl1$1 = function scanl1$$1() {
-    return null;
-};
-var scanr$1 = function scanr$$1() {
-    return null;
-};
-var scanr1$1 = function scanr1$$1() {
-    return null;
-};
-var remove$1 = curry$1(remove);
-var sortOn$1 = curry$1(sortOn);
-var sortBy$1 = curry$1(sortBy);
-var insert$1 = curry$1(insert);
-var insertBy$1 = curry$1(insertBy);
-var nubBy$1 = curry$1(nubBy);
-var removeBy$1 = curry$1(removeBy);
-var removeFirstsBy$1 = curry$1(removeFirstsBy);
-var unionBy$1 = curry$1(unionBy);
-var union$1 = curry$1(union);
-var intersect$1 = curry$1(intersect);
-var intersectBy$1 = curry$1(intersectBy);
-var difference$1 = curry$1(difference);
-var complement$1 = curry2$1(complement);
-
-/**
- * Composes all functions passed in from right to left passing each functions return value to
- * the functionOps on the left of itself.
- * @functionOps module:fjl.compose
- * @type {Function}
- * @param args {...Function}
- * @returns {Function}
- */
-var compose = function compose() {
-  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
-
-  return function (arg0) {
-    return foldr$1(function (value, fn) {
-      return fn(value);
-    }, arg0, args);
-  };
-};
-
-/**
- * @module negate
- */
-
-/**
- * Negates a predicate function.
- * @function module:functionOps.negateP
- * @param fn {Function}
- * @returns {Function} - Negated predicate
- */
-var negateP$1 = function negateP(fn) {
-  return function (x, ind, xs) {
-    return !fn(x, ind, xs);
-  };
-};
-
-/**
- * @module id
- */
-
-/**
- * Returns passed in parameter.
- * @param x {*}
- * @returns {*}
- */
-var id$1 = function id(x) {
-  return x;
-};
-
-var flipN$1 = function flipN(fn) {
-  return curry3(function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return apply$1(fn, reverse(args));
-  });
-};
-var flip$1 = function flip(fn) {
-  return curry(function (b, a) {
-    return call$1(fn, a, b);
-  });
-};
-
-var until$1 = curry(function (predicate, operation, typeInstance) {
-    var result = typeInstance;
-    while (!predicate(result)) {
-        result = operation(result);
-    }
-    return result;
-});
-
-/**
- * Function operations: `
- * @module function
- */
-
 var isTruthy = function isTruthy(value) {
     return !!value;
 };
@@ -1042,6 +865,14 @@ var bOtherwise = alwaysTrue;
 var bEqual = curry2(function (a, b) {
     return a === b;
 });
+
+/**
+ *
+ */
+
+var prop = function prop(name, obj) {
+  return obj[name];
+};
 
 /**
  * Created by elyde on 12/18/2016.
@@ -1077,9 +908,16 @@ function typeOf$1(value) {
  * Created by elydelacruz on 7/22/2017.
  */
 
-var instanceOf$2 = curry(function (instanceConstructor, instance) {
-  return instance instanceof instanceConstructor;
-});
+/**
+ * Functional, uncurried 'instanceof'.
+ * @returns {Boolean}
+ */
+
+/**
+ * Created by elydelacruz on 7/22/2017.
+ */
+
+var instanceOf$2 = curry(instanceOf$1);
 
 /**
  * Created by elyde on 12/18/2016.
@@ -1160,12 +998,9 @@ var isset$1 = function isset(x) {
 };
 
 /**
- *
+ * Created by elydelacruz on 7/22/2017.
  */
-
-var prop = curry(function (name, obj) {
-  return obj[name];
-});
+var apply$1 = curry(apply);
 
 var of$1 = function of(x) {
     for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -1198,7 +1033,7 @@ var aggregateObj = function aggregateObj(agg, item, ind) {
     return agg;
 };
 var aggregatorByType = function aggregatorByType(x) {
-    switch (typeOf$1(x)) {
+    switch (typeOf(x)) {
         case 'String':
             return aggregateStr;
         case 'Array':
@@ -1215,7 +1050,7 @@ var aggregatorByType = function aggregatorByType(x) {
  * @param xs {Array|String|*} - Functor.
  * @returns {Array|String|*} - Functor type that is passed in.
  */
-var map$2 = function map(fn, xs) {
+var map$1 = function map(fn, xs) {
     var ind = 0,
         limit = length(xs),
         out = of$1(xs),
@@ -1255,7 +1090,7 @@ var lengths = function lengths() {
         lists[_key] = arguments[_key];
     }
 
-    return length(lists) ? map$2(length, lists) : [];
+    return length(lists) ? map$1(length, lists) : [];
 };
 var lengthsToSmallest = function lengthsToSmallest() {
     for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
@@ -1264,7 +1099,7 @@ var lengthsToSmallest = function lengthsToSmallest() {
 
     var listLengths = apply(lengths, lists),
         smallLen = Math.min.apply(Math, listLengths);
-    return map$2(function (list, ind) {
+    return map$1(function (list, ind) {
         return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list);
     }, lists);
 };
@@ -1374,7 +1209,7 @@ var appendMany = function appendMany(x) {
     }
 
     var lenArgs = length(args);
-    if (!isset$1(x)) {
+    if (!isset(x)) {
         return [];
     }
     if (!lenArgs) {
@@ -1419,18 +1254,18 @@ var concat$$1 = function concat$$1(xs) {
     return appendMany.apply(undefined, toConsumableArray(xs));
 };
 var concatMap = function concatMap(fn, foldableOfA) {
-    return concat$$1(map$2(fn, foldableOfA));
+    return concat$$1(map$1(fn, foldableOfA));
 };
 var reverse = function reverse(x) {
     var aggregator = aggregatorByType(x);
     return reduceRight$1(function (agg, item, ind) {
         return aggregator(agg, item, ind);
-    }, of$1(x), x);
+    }, of(x), x);
 };
 var intersperse = function intersperse(between, arr) {
     var limit = length(arr),
         lastInd = limit - 1,
-        aggregator = of$1(arr),
+        aggregator = of(arr),
         aggregatorOp = aggregatorByType(arr);
     if (!limit) {
         return aggregator;
@@ -1441,14 +1276,14 @@ var intersperse = function intersperse(between, arr) {
 };
 var intercalate = function intercalate(xs, xss) {
     var result = intersperse(xs, xss);
-    return isString$1(result) ? result : concat$$1(result);
+    return isString(result) ? result : concat$$1(result);
 };
 var transpose = function transpose(xss) {
     var numLists = length(xss),
         ind = 0,
         ind2 = void 0;
     if (!numLists) {
-        return of$1(xss);
+        return of(xss);
     }
     var listLengths = apply(lengths, xss),
         longestListLen = maximum(listLengths),
@@ -1489,14 +1324,14 @@ var foldr = reduceRight$1;
 var foldl1 = function foldl1(op, xs) {
     var parts = uncons(xs);
     if (!parts) {
-        return of$1(xs);
+        return of(xs);
     }
     return reduce$1(op, parts[0], parts[1]);
 };
 var foldr1 = function foldr1(op, xs) {
     var parts = unconsr(xs);
     if (!parts) {
-        return of$1(xs);
+        return of(xs);
     }
     return reduceRight$1(op, parts[1], parts[0]);
 };
@@ -1508,7 +1343,7 @@ var mapAccumL = function mapAccumL(op, zero, xs) {
     }
     var ind = 0,
         agg = zero,
-        mapped = of$1(xs),
+        mapped = of(xs),
         tuple = void 0;
     for (; ind < limit; ind++) {
         tuple = op(agg, list[ind], ind);
@@ -1525,7 +1360,7 @@ var mapAccumR = function mapAccumR(op, zero, xs) {
     }
     var ind = limit - 1,
         agg = zero,
-        mapped = of$1(xs),
+        mapped = of(xs),
         tuple = void 0;
     for (; ind >= 0; ind--) {
         tuple = op(agg, list[ind], ind);
@@ -1582,9 +1417,9 @@ var splitAt = function splitAt(ind, list) {
     return [sliceTo(ind, list), sliceFrom(ind, list)];
 };
 var takeWhile = function takeWhile(pred, list) {
-    var zero = of$1(list);
+    var zero = of(list);
     var operation = aggregatorByType(list);
-    return reduceUntil(negateP$1(pred), // predicate
+    return reduceUntil(negateP(pred), // predicate
     operation, // operation
     zero, // aggregator
     list);
@@ -1606,7 +1441,7 @@ var dropWhileEnd = function dropWhileEnd(pred, list) {
     return splitPoint === -1 ? sliceTo(limit, list) : sliceTo(splitPoint + 1, list);
 };
 var span = function span(pred, list) {
-    var splitPoint = findIndexWhere(negateP$1(pred), list);
+    var splitPoint = findIndexWhere(negateP(pred), list);
     return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
 };
 var breakOnList = function breakOnList(pred, list) {
@@ -1619,7 +1454,7 @@ var filter = function filter(pred, xs) {
     var ind = 0,
         limit = length(xs),
         aggregator = aggregatorByType(xs),
-        out = of$1(xs);
+        out = of(xs);
     if (!limit) {
         return out;
     }
@@ -1632,9 +1467,9 @@ var filter = function filter(pred, xs) {
 };
 var partition = function partition(pred, list) {
     if (!length(list)) {
-        return [of$1(list), of$1(list)];
+        return [of(list), of(list)];
     }
-    return [filter(pred, list), filter(negateP$1(pred), list)];
+    return [filter(pred, list), filter(negateP(pred), list)];
 };
 var elem = includes;
 var notElem = negateF(includes);
@@ -1767,7 +1602,7 @@ var stripPrefix = function stripPrefix(prefix, list) {
 };
 var zip = function zip(arr1, arr2) {
     if (!length(arr1) || !length(arr2)) {
-        return of$1(arr1);
+        return of(arr1);
     }
 
     var _lengthsToSmallest = lengthsToSmallest(arr1, arr2),
@@ -1792,14 +1627,14 @@ var zipN = function zipN() {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, map$2(function (xs) {
+        return aggregateArr(agg, map$1(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
 };
 var zipWith = function zipWith(op, xs1, xs2) {
     if (!length(xs1) || !length(xs2)) {
-        return of$1(xs1);
+        return of(xs1);
     }
 
     var _lengthsToSmallest3 = lengthsToSmallest(xs1, xs2),
@@ -1824,7 +1659,7 @@ var zipWithN = function zipWithN(op) {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, apply(op, map$2(function (xs) {
+        return aggregateArr(agg, apply(op, map$1(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1922,7 +1757,7 @@ var sortOn = function sortOn(valueFn, xs) {
     return (
 
         // Un-decorate
-        map$2(function (decorated) {
+        map$1(function (decorated) {
             return decorated[1];
         },
 
@@ -1942,7 +1777,7 @@ var sortOn = function sortOn(valueFn, xs) {
         },
 
         // Decorate
-        map$2(function (item) {
+        map$1(function (item) {
             return [valueFn(item), item];
         }, xs)))
     );
@@ -1954,7 +1789,7 @@ var insert = function insert(x, xs) {
     if (isEmpty$1(xs)) {
         return aggregatorByType(xs)(copy(xs), x, 0);
     }
-    var out = of$1(xs),
+    var out = of(xs),
         foundIndex = findIndex(function (item) {
         return x <= item;
     }, xs);
@@ -1963,7 +1798,7 @@ var insert = function insert(x, xs) {
 var insertBy = function insertBy(orderingFn, x, xs) {
     var limit = length(xs),
         aggregator = aggregatorByType(xs),
-        out = of$1(xs);
+        out = of(xs);
     if (isEmpty$1(xs)) {
         return aggregator(out, x, 0);
     }
@@ -1979,12 +1814,12 @@ var insertBy = function insertBy(orderingFn, x, xs) {
 };
 var nubBy = function nubBy(pred, list) {
     if (isEmpty$1(list)) {
-        return of$1(list);
+        return of(list);
     }
     var limit = length(list);
     var ind = 0,
         currItem = void 0,
-        out = of$1(list),
+        out = of(list),
         anyOp = function anyOp(storedItem) {
         return pred(currItem, storedItem);
     };
@@ -2094,6 +1929,188 @@ var assign$$1 = curry2(assign$1);
 var assignDeep$$1 = curry2(assignDeep$1);
 
 /**
+ * Created by elydelacruz on 7/22/2017.
+ */
+var call$1 = curry2(call);
+
+/**
+ * Array operators module.
+ * @module listOps
+ * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
+ * @todo code un-performant shorthand in `listOps`
+ */
+
+/**
+ * List operators.
+ * @module listOps
+ * @todo decide whether to throw errors where functions cannot function without a specific type or to
+ *  return undefined (and also determine which cases are ok for just returning undefined).
+ * @todo code unperformant shorthand in `listOps`
+ * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
+ */
+// Uncurried methods import
+// Exported internals
+var append$1 = curry$1(append);
+var appendMany$1 = curry2$1(appendMany);
+var concatMap$1 = curry2$1(concatMap);
+var map$2 = curry$1(map$1);
+var intersperse$1 = curry$1(intersperse);
+var intercalate$1 = curry$1(intercalate);
+var foldl$1 = curry$1(foldl);
+var foldr$1 = curry$1(foldr);
+var foldl1$1 = curry$1(foldl1);
+var foldr1$1 = curry$1(foldr1);
+var mapAccumL$1 = curry$1(mapAccumL);
+var mapAccumR$1 = curry$1(mapAccumR);
+var iterate$1 = curry$1(iterate);
+var repeat$1 = curry$1(repeat);
+var replicate$1 = repeat$1;
+var cycle$1 = curry$1(cycle);
+var unfoldr$1 = curry$1(unfoldr);
+var findIndex$1 = curry$1(findIndex);
+var findIndices$1 = curry$1(findIndices);
+var elemIndex$1 = curry$1(elemIndex);
+var elemIndices$1 = curry$1(elemIndices);
+var take$1 = curry$1(take);
+var drop$1 = curry$1(drop);
+var splitAt$1 = curry$1(splitAt);
+var takeWhile$1 = curry$1(takeWhile);
+var dropWhile$1 = curry$1(dropWhile);
+var dropWhileEnd$1 = curry$1(dropWhileEnd);
+var span$1 = curry$1(span);
+var breakOnList$1 = curry$1(breakOnList);
+var at$1 = curry$1(at);
+var find$1 = curry$1(find);
+var filter$2 = curry$1(filter);
+var partition$1 = curry$1(partition);
+var elem$1 = curry$1(elem);
+var notElem$1 = curry2$1(notElem);
+var lookup$1 = at$1;
+var isPrefixOf$1 = curry$1(isPrefixOf);
+var isSuffixOf$1 = curry$1(isSuffixOf);
+var isInfixOf$1 = curry$1(isInfixOf);
+var isSubsequenceOf$1 = curry$1(isSubsequenceOf);
+var groupBy$1 = curry$1(groupBy);
+var stripPrefix$1 = curry$1(stripPrefix);
+var zip$1 = curry$1(zip);
+var zipWith$1 = curry$1(zipWith);
+var zipWithN$1 = curry2$1(zipWithN);
+var zipWith3$1 = zipWithN$1;
+var zipWith4$1 = zipWithN$1;
+var zipWith5$1 = zipWithN$1;
+var any$1 = curry$1(any);
+var all$1 = curry$1(all);
+var maximumBy$1 = curry$1(maximumBy);
+var minimumBy$1 = curry$1(minimumBy);
+var scanl$1 = function scanl$$1() {
+    return null;
+};
+var scanl1$1 = function scanl1$$1() {
+    return null;
+};
+var scanr$1 = function scanr$$1() {
+    return null;
+};
+var scanr1$1 = function scanr1$$1() {
+    return null;
+};
+var remove$1 = curry$1(remove);
+var sortOn$1 = curry$1(sortOn);
+var sortBy$1 = curry$1(sortBy);
+var insert$1 = curry$1(insert);
+var insertBy$1 = curry$1(insertBy);
+var nubBy$1 = curry$1(nubBy);
+var removeBy$1 = curry$1(removeBy);
+var removeFirstsBy$1 = curry$1(removeFirstsBy);
+var unionBy$1 = curry$1(unionBy);
+var union$1 = curry$1(union);
+var intersect$1 = curry$1(intersect);
+var intersectBy$1 = curry$1(intersectBy);
+var difference$1 = curry$1(difference);
+var complement$1 = curry2$1(complement);
+
+/**
+ * Composes all functions passed in from right to left passing each functions return value to
+ * the functionOps on the left of itself.
+ * @functionOps module:fjl.compose
+ * @type {Function}
+ * @param args {...Function}
+ * @returns {Function}
+ */
+var compose$1 = function compose() {
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return function (arg0) {
+    return foldr$1(function (value, fn) {
+      return fn(value);
+    }, arg0, args);
+  };
+};
+
+/**
+ * @module negate
+ */
+
+/**
+ * Negates a predicate function.
+ * @function module:functionOps.negateP
+ * @param fn {Function}
+ * @returns {Function} - Negated predicate
+ */
+var negateP$1 = function negateP(fn) {
+  return function (x, ind, xs) {
+    return !fn(x, ind, xs);
+  };
+};
+
+/**
+ * @module id
+ */
+
+/**
+ * Returns passed in parameter.
+ * @param x {*}
+ * @returns {*}
+ */
+var id$1 = function id(x) {
+  return x;
+};
+
+var flipN$1 = function flipN(fn) {
+  return curry3(function () {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return apply$1(fn, reverse(args));
+  });
+};
+var flip$1 = function flip(fn) {
+  return curry(function (b, a) {
+    return call$1(fn, a, b);
+  });
+};
+
+var until$1 = curry(function (predicate, operation, typeInstance) {
+    var result = typeInstance;
+    while (!predicate(result)) {
+        result = operation(result);
+    }
+    return result;
+});
+
+/**
+ * Function operations: `
+ * @module function
+ */
+
+var negate = function negate(x) {
+  return x * -1;
+};
+
+/**
  * Created by elydelacruz on 9/6/2017.
  */
 
@@ -2124,9 +2141,46 @@ var words = split$$1(/[\s\t]/gm);
 var unwords = intercalate$1(' ');
 var unlines = intercalate$1('\n');
 
+var complement$2 = curry(function (functor) {
+    for (var _len = arguments.length, others = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        others[_key - 1] = arguments[_key];
+    }
+
+    switch (typeOf(functor)) {
+        case 'Array':
+            return complement$1.apply(undefined, [functor].concat(others));
+        default:
+            return objComplement.apply(undefined, [functor].concat(others));
+    }
+});
+var difference$2 = curry(function (functor1, functor2) {
+    switch (typeOf(functor1)) {
+        case 'Array':
+            return difference$1(functor1, functor2);
+        default:
+            return objDifference(functor1, functor2);
+    }
+});
+var union$2 = curry(function (functor1, functor2) {
+    switch (typeOf(functor1)) {
+        case 'Array':
+            return union$1(functor1, functor2);
+        default:
+            return objUnion(functor1, functor2);
+    }
+});
+var intersect$2 = curry(function (functor1, functor2) {
+    switch (typeOf(functor1)) {
+        case 'Array':
+            return intersect$1(functor1, functor2);
+        default:
+            return objIntersect(functor1, functor2);
+    }
+});
+
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Sat Sep 16 2017 17:47:07 GMT-0400 (Eastern Daylight Time) 
+ * Generated Sat Sep 16 2017 18:52:55 GMT-0400 (Eastern Daylight Time) 
  */
 
 var version = '0.14.34';
@@ -2195,7 +2249,7 @@ exports.isTruthy = isTruthy;
 exports.isFalsy = isFalsy;
 exports.call = call$1;
 exports.apply = apply$1;
-exports.compose = compose;
+exports.compose = compose$1;
 exports.curry = curry;
 exports.curryN = curryN;
 exports.curry2 = curry2;
@@ -2228,7 +2282,7 @@ exports._zipN = zipN;
 exports._zipWith = zipWith;
 exports._unzip = unzip;
 exports._unzipN = unzipN;
-exports._map = map$2;
+exports._map = map$1;
 exports._mapAccumL = mapAccumL;
 exports._mapAccumR = mapAccumR;
 exports._elem = elem;
@@ -2305,7 +2359,7 @@ exports._groupBy = groupBy;
 exports.append = append$1;
 exports.appendMany = appendMany$1;
 exports.concatMap = concatMap$1;
-exports.map = map$1;
+exports.map = map$2;
 exports.intersperse = intersperse$1;
 exports.intercalate = intercalate$1;
 exports.foldl = foldl$1;
@@ -2396,6 +2450,7 @@ exports.maximum = maximum;
 exports.minimum = minimum;
 exports.sort = sort;
 exports.nub = nub;
+exports.negate = negate;
 exports.lines = lines;
 exports.words = words;
 exports.unwords = unwords;

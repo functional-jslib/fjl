@@ -1,4 +1,4 @@
-import {typeOf} from '../../objectOps/typeOf';
+import {typeOf} from  '../objectOps/objectOpsUncurried';
 
 export const
 

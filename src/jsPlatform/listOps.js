@@ -3,14 +3,14 @@
  *      on both strings and arrays.
  */
 
-import {curry} from '../functionOps/curry';
+import {curry} from   '../functionOps/curry';
 
 import {
     concat as concat_,
     slice as slice_,
     includes as includes_,
     indexOf as indexOf_,
-    lastIndexOf as lastIndexOf_ } from '../uncurried/jsPlatform/listOpsUncurried';
+    lastIndexOf as lastIndexOf_ } from   '../uncurried/jsPlatform/listOpsUncurried';
 
 export const
 

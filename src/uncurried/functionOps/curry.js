@@ -7,7 +7,7 @@
 
 import {apply} from './apply';
 
-import {append, length} from '../listOps/listOpsUncurried';
+import {append, length} from   '../listOps/listOpsUncurried';
 
 export const
 

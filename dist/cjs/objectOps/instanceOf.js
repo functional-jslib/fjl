@@ -7,6 +7,12 @@ exports.instanceOf = undefined;
 
 var _curry = require('../functionOps/curry');
 
+var _instanceOf = require('../uncurried/objectOps/instanceOf');
+
+/**
+ * Created by elydelacruz on 7/22/2017.
+ */
+
 var
 
 /**
@@ -15,8 +21,4 @@ var
  * @instance {*}
  * @returns {Boolean}
  */
-instanceOf = exports.instanceOf = (0, _curry.curry)(function (instanceConstructor, instance) {
-  return instance instanceof instanceConstructor;
-}); /**
-     * Created by elydelacruz on 7/22/2017.
-     */
+instanceOf = exports.instanceOf = (0, _curry.curry)(_instanceOf.instanceOf);

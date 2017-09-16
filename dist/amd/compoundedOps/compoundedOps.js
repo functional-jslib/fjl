@@ -1,4 +1,4 @@
-define(['exports', '../functionOps/curry', '../objectOps/typeOf', '../listOps/listOps', '../objectOps/objectOps'], function (exports, _curry, _typeOf, _listOps, _objectOps) {
+define(['exports', '../functionOps/curry', '../listOps/listOps', '../objectOps/objectOps'], function (exports, _curry, _listOps, _objectOps) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -6,7 +6,7 @@ define(['exports', '../functionOps/curry', '../objectOps/typeOf', '../listOps/li
     });
     exports.intersect = exports.union = exports.difference = exports.complement = undefined;
     const complement = exports.complement = (0, _curry.curry)((functor, ...others) => {
-        switch ((0, _typeOf.typeOf)(functor)) {
+        switch ((0, _objectOps.typeOf)(functor)) {
             case 'Array':
                 return (0, _listOps.complement)(functor, ...others);
             default:
@@ -14,7 +14,7 @@ define(['exports', '../functionOps/curry', '../objectOps/typeOf', '../listOps/li
         }
     }),
           difference = exports.difference = (0, _curry.curry)((functor1, functor2) => {
-        switch ((0, _typeOf.typeOf)(functor1)) {
+        switch ((0, _objectOps.typeOf)(functor1)) {
             case 'Array':
                 return (0, _listOps.difference)(functor1, functor2);
             default:
@@ -22,7 +22,7 @@ define(['exports', '../functionOps/curry', '../objectOps/typeOf', '../listOps/li
         }
     }),
           union = exports.union = (0, _curry.curry)((functor1, functor2) => {
-        switch ((0, _typeOf.typeOf)(functor1)) {
+        switch ((0, _objectOps.typeOf)(functor1)) {
             case 'Array':
                 return (0, _listOps.union)(functor1, functor2);
             default:
@@ -30,7 +30,7 @@ define(['exports', '../functionOps/curry', '../objectOps/typeOf', '../listOps/li
         }
     }),
           intersect = exports.intersect = (0, _curry.curry)((functor1, functor2) => {
-        switch ((0, _typeOf.typeOf)(functor1)) {
+        switch ((0, _objectOps.typeOf)(functor1)) {
             case 'Array':
                 return (0, _listOps.intersect)(functor1, functor2);
             default:

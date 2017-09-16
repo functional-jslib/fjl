@@ -6,15 +6,12 @@
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
 import { concat as listAppend,
-    indexOf, slice, includes } from '../jsPlatform/listOpsUncurried';
-import {apply}              from '../jsPlatform/functionOpsUncurried';
-import {negateF}  from '../functionOps/negate';
-import {length}             from '../jsPlatform/objectOpsUncurried';
-import {negateP}            from '../../functionOps/functionOps';
-import {isTruthy, isFalsy}  from '../../booleanOps/booleanOps';
-import {isString, isset}    from '../../objectOps/is';
-import {prop}               from '../../objectOps/prop';
-import {of}                 from '../../objectOps/of';
+    indexOf, slice, includes } from   '../jsPlatform/listOpsUncurried';
+import {apply}              from   '../jsPlatform/functionOpsUncurried';
+import {negateF}  from   '../functionOps/negate';
+import {negateP}            from   '../functionOps/functionOpsUncurried';
+import {isTruthy, isFalsy}  from   '../../booleanOps/booleanOps';
+import {isString, isset, prop, of, length}    from   '../objectOps/objectOpsUncurried';
 import {map}                from './map';
 
 import {
@@ -24,7 +21,7 @@ import {
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, copy, genericAscOrdering } from './listOpsUncurriedUtils';
 
-// import {log} from '../../tests/for-server/helpers';
+// import {log} from   '../../tests/for-server/helpers';
 
 // Exported imports
 export {length, map};

@@ -9,4 +9,4 @@
  * @param args {*}
  * @returns {*}
  */
-export {apply} from '../jsPlatform/functionOpsUncurried';
+export {apply} from   '../jsPlatform/functionOpsUncurried';

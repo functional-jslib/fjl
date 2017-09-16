@@ -13,10 +13,7 @@
  * @todo code unperformant shorthand in `listOps`
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
-import {
-    curry, curry2
-}
-    from '../uncurried/functionOps/functionOpsUncurried';
+import {curry, curry2} from   '../uncurried/functionOps/functionOpsUncurried';
 
 // Uncurried methods import
 import {
@@ -39,14 +36,14 @@ import {
     complement as _complement, difference as _difference, union as _union, intersect as _intersect,
     intersectBy as _intersectBy, groupBy as _groupBy
 }
-    from '../uncurried/listOps/listOpsUncurried';
+    from   '../uncurried/listOps/listOpsUncurried';
 
 // Single arity methods (and single or more arg functions)
 export {
     and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, isEmpty, concat, length, reverse, transpose, subsequences,
     permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub
 }
-    from '../uncurried/listOps/listOpsUncurried';
+    from   '../uncurried/listOps/listOpsUncurried';
 
 // Uncurried methods export
 export {

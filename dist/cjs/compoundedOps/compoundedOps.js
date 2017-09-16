@@ -7,8 +7,6 @@ exports.intersect = exports.union = exports.difference = exports.complement = un
 
 var _curry = require('../functionOps/curry');
 
-var _typeOf = require('../objectOps/typeOf');
-
 var _listOps = require('../listOps/listOps');
 
 var _objectOps = require('../objectOps/objectOps');
@@ -18,7 +16,7 @@ var complement = exports.complement = (0, _curry.curry)(function (functor) {
         others[_key - 1] = arguments[_key];
     }
 
-    switch ((0, _typeOf.typeOf)(functor)) {
+    switch ((0, _objectOps.typeOf)(functor)) {
         case 'Array':
             return _listOps.complement.apply(undefined, [functor].concat(others));
         default:
@@ -26,7 +24,7 @@ var complement = exports.complement = (0, _curry.curry)(function (functor) {
     }
 }),
     difference = exports.difference = (0, _curry.curry)(function (functor1, functor2) {
-    switch ((0, _typeOf.typeOf)(functor1)) {
+    switch ((0, _objectOps.typeOf)(functor1)) {
         case 'Array':
             return (0, _listOps.difference)(functor1, functor2);
         default:
@@ -34,7 +32,7 @@ var complement = exports.complement = (0, _curry.curry)(function (functor) {
     }
 }),
     union = exports.union = (0, _curry.curry)(function (functor1, functor2) {
-    switch ((0, _typeOf.typeOf)(functor1)) {
+    switch ((0, _objectOps.typeOf)(functor1)) {
         case 'Array':
             return (0, _listOps.union)(functor1, functor2);
         default:
@@ -42,7 +40,7 @@ var complement = exports.complement = (0, _curry.curry)(function (functor) {
     }
 }),
     intersect = exports.intersect = (0, _curry.curry)(function (functor1, functor2) {
-    switch ((0, _typeOf.typeOf)(functor1)) {
+    switch ((0, _objectOps.typeOf)(functor1)) {
         case 'Array':
             return (0, _listOps.intersect)(functor1, functor2);
         default:

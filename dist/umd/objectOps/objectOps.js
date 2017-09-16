@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../uncurried/jsPlatform/objectOpsUncurried', './../uncurried/objectOps/typeOf', './../uncurried/objectOps/is', './../uncurried/objectOps/of', './../uncurried/objectOps/setTheoryOps', '../functionOps/curry', '../uncurried/objectOps/assignDeep'], factory);
+        define(['exports', '../uncurried/jsPlatform/objectOpsUncurried', '../uncurried/objectOps/typeOf', '../uncurried/objectOps/is', '../uncurried/objectOps/of', '../uncurried/objectOps/setTheoryOps', '../functionOps/curry', '../uncurried/objectOps/assignDeep'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../uncurried/jsPlatform/objectOpsUncurried'), require('./../uncurried/objectOps/typeOf'), require('./../uncurried/objectOps/is'), require('./../uncurried/objectOps/of'), require('./../uncurried/objectOps/setTheoryOps'), require('../functionOps/curry'), require('../uncurried/objectOps/assignDeep'));
+        factory(exports, require('../uncurried/jsPlatform/objectOpsUncurried'), require('../uncurried/objectOps/typeOf'), require('../uncurried/objectOps/is'), require('../uncurried/objectOps/of'), require('../uncurried/objectOps/setTheoryOps'), require('../functionOps/curry'), require('../uncurried/objectOps/assignDeep'));
     } else {
         var mod = {
             exports: {}

@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.aggregatorByType = exports.aggregateObj = exports.aggregateArr = exports.aggregateStr = undefined;
 
-var _typeOf = require('../../objectOps/typeOf');
+var _objectOpsUncurried = require('../objectOps/objectOpsUncurried');
 
 var aggregateStr = exports.aggregateStr = function aggregateStr(agg, item) {
     return agg + item;
@@ -19,7 +19,7 @@ var aggregateStr = exports.aggregateStr = function aggregateStr(agg, item) {
     return agg;
 },
     aggregatorByType = exports.aggregatorByType = function aggregatorByType(x) {
-    switch ((0, _typeOf.typeOf)(x)) {
+    switch ((0, _objectOpsUncurried.typeOf)(x)) {
         case 'String':
             return aggregateStr;
         case 'Array':

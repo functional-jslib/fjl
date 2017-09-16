@@ -14,17 +14,11 @@ var _functionOpsUncurried = require('../jsPlatform/functionOpsUncurried');
 
 var _negate = require('../functionOps/negate');
 
-var _objectOpsUncurried = require('../jsPlatform/objectOpsUncurried');
-
-var _functionOps = require('../../functionOps/functionOps');
+var _functionOpsUncurried2 = require('../functionOps/functionOpsUncurried');
 
 var _booleanOps = require('../../booleanOps/booleanOps');
 
-var _is = require('../../objectOps/is');
-
-var _prop = require('../../objectOps/prop');
-
-var _of = require('../../objectOps/of');
+var _objectOpsUncurried = require('../objectOps/objectOpsUncurried');
 
 var _map = require('./map');
 
@@ -39,7 +33,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                                                                                                                                                                                      */
 
 
-// import {log} from '../../tests/for-server/helpers';
+// import {log} from   '../../tests/for-server/helpers';
 
 // Exported imports
 exports.length = _objectOpsUncurried.length;
@@ -81,7 +75,7 @@ appendMany = exports.appendMany = function appendMany(x) {
     }
 
     var lenArgs = (0, _objectOpsUncurried.length)(args);
-    if (!(0, _is.isset)(x)) {
+    if (!(0, _objectOpsUncurried.isset)(x)) {
         return [];
     }
     if (!lenArgs) {
@@ -233,7 +227,7 @@ reverse = exports.reverse = function reverse(x) {
     var aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(x);
     return (0, _listOpsUncurriedUtils.reduceRight)(function (agg, item, ind) {
         return aggregator(agg, item, ind);
-    }, (0, _of.of)(x), x);
+    }, (0, _objectOpsUncurried.of)(x), x);
 },
 
 
@@ -249,7 +243,7 @@ reverse = exports.reverse = function reverse(x) {
 intersperse = exports.intersperse = function intersperse(between, arr) {
     var limit = (0, _objectOpsUncurried.length)(arr),
         lastInd = limit - 1,
-        aggregator = (0, _of.of)(arr),
+        aggregator = (0, _objectOpsUncurried.of)(arr),
         aggregatorOp = (0, _listOpsUncurriedUtils.aggregatorByType)(arr);
     if (!limit) {
         return aggregator;
@@ -270,7 +264,7 @@ intersperse = exports.intersperse = function intersperse(between, arr) {
  */
 intercalate = exports.intercalate = function intercalate(xs, xss) {
     var result = intersperse(xs, xss);
-    return (0, _is.isString)(result) ? result : concat(result);
+    return (0, _objectOpsUncurried.isString)(result) ? result : concat(result);
 },
 
 
@@ -296,7 +290,7 @@ transpose = exports.transpose = function transpose(xss) {
         ind = 0,
         ind2 = void 0;
     if (!numLists) {
-        return (0, _of.of)(xss);
+        return (0, _objectOpsUncurried.of)(xss);
     }
     var listLengths = (0, _functionOpsUncurried.apply)(_listOpsUncurriedUtils.lengths, xss),
         longestListLen = maximum(listLengths),
@@ -350,14 +344,14 @@ subsequences = exports.subsequences = function subsequences(xs) {
     foldl1 = exports.foldl1 = function foldl1(op, xs) {
     var parts = uncons(xs);
     if (!parts) {
-        return (0, _of.of)(xs);
+        return (0, _objectOpsUncurried.of)(xs);
     }
     return (0, _listOpsUncurriedUtils.reduce)(op, parts[0], parts[1]);
 },
     foldr1 = exports.foldr1 = function foldr1(op, xs) {
     var parts = unconsr(xs);
     if (!parts) {
-        return (0, _of.of)(xs);
+        return (0, _objectOpsUncurried.of)(xs);
     }
     return (0, _listOpsUncurriedUtils.reduceRight)(op, parts[1], parts[0]);
 },
@@ -380,7 +374,7 @@ mapAccumL = exports.mapAccumL = function mapAccumL(op, zero, xs) {
     }
     var ind = 0,
         agg = zero,
-        mapped = (0, _of.of)(xs),
+        mapped = (0, _objectOpsUncurried.of)(xs),
         tuple = void 0;
     for (; ind < limit; ind++) {
         tuple = op(agg, list[ind], ind);
@@ -408,7 +402,7 @@ mapAccumR = exports.mapAccumR = function mapAccumR(op, zero, xs) {
     }
     var ind = limit - 1,
         agg = zero,
-        mapped = (0, _of.of)(xs),
+        mapped = (0, _objectOpsUncurried.of)(xs),
         tuple = void 0;
     for (; ind >= 0; ind--) {
         tuple = op(agg, list[ind], ind);
@@ -545,9 +539,9 @@ splitAt = exports.splitAt = function splitAt(ind, list) {
  * @returns {Array}
  */
 takeWhile = exports.takeWhile = function takeWhile(pred, list) {
-    var zero = (0, _of.of)(list);
+    var zero = (0, _objectOpsUncurried.of)(list);
     var operation = (0, _listOpsUncurriedUtils.aggregatorByType)(list);
-    return (0, _listOpsUncurriedUtils.reduceUntil)((0, _functionOps.negateP)(pred), // predicate
+    return (0, _listOpsUncurriedUtils.reduceUntil)((0, _functionOpsUncurried2.negateP)(pred), // predicate
     operation, // operation
     zero, // aggregator
     list);
@@ -599,7 +593,7 @@ dropWhileEnd = exports.dropWhileEnd = function dropWhileEnd(pred, list) {
  * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
  */
 span = exports.span = function span(pred, list) {
-    var splitPoint = (0, _listOpsUncurriedUtils.findIndexWhere)((0, _functionOps.negateP)(pred), list);
+    var splitPoint = (0, _listOpsUncurriedUtils.findIndexWhere)((0, _functionOpsUncurried2.negateP)(pred), list);
     return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
 },
     breakOnList = exports.breakOnList = function breakOnList(pred, list) {
@@ -614,7 +608,7 @@ span = exports.span = function span(pred, list) {
  * @param xs {Array|String|*} - list or list like.
  * @returns {*}
  */
-at = exports.at = _prop.prop,
+at = exports.at = _objectOpsUncurried.prop,
 
 
 /**
@@ -628,7 +622,7 @@ find = exports.find = _listOpsUncurriedUtils.findWhere,
     var ind = 0,
         limit = (0, _objectOpsUncurried.length)(xs),
         aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(xs),
-        out = (0, _of.of)(xs);
+        out = (0, _objectOpsUncurried.of)(xs);
     if (!limit) {
         return out;
     }
@@ -652,9 +646,9 @@ find = exports.find = _listOpsUncurriedUtils.findWhere,
  */
 partition = exports.partition = function partition(pred, list) {
     if (!(0, _objectOpsUncurried.length)(list)) {
-        return [(0, _of.of)(list), (0, _of.of)(list)];
+        return [(0, _objectOpsUncurried.of)(list), (0, _objectOpsUncurried.of)(list)];
     }
-    return [filter(pred, list), filter((0, _functionOps.negateP)(pred), list)];
+    return [filter(pred, list), filter((0, _functionOpsUncurried2.negateP)(pred), list)];
 },
     elem = exports.elem = _listOpsUncurried.includes,
     notElem = exports.notElem = (0, _negate.negateF)(_listOpsUncurried.includes),
@@ -827,7 +821,7 @@ stripPrefix = exports.stripPrefix = function stripPrefix(prefix, list) {
  */
 zip = exports.zip = function zip(arr1, arr2) {
     if (!(0, _objectOpsUncurried.length)(arr1) || !(0, _objectOpsUncurried.length)(arr2)) {
-        return (0, _of.of)(arr1);
+        return (0, _objectOpsUncurried.of)(arr1);
     }
 
     var _lengthsToSmallest = (0, _listOpsUncurriedUtils.lengthsToSmallest)(arr1, arr2),
@@ -927,7 +921,7 @@ zip5 = exports.zip5 = zipN,
  */
 zipWith = exports.zipWith = function zipWith(op, xs1, xs2) {
     if (!(0, _objectOpsUncurried.length)(xs1) || !(0, _objectOpsUncurried.length)(xs2)) {
-        return (0, _of.of)(xs1);
+        return (0, _objectOpsUncurried.of)(xs1);
     }
 
     var _lengthsToSmallest3 = (0, _listOpsUncurriedUtils.lengthsToSmallest)(xs1, xs2),
@@ -1180,7 +1174,7 @@ unzipN = exports.unzipN = function unzipN(list) {
     if (isEmpty(xs)) {
         return (0, _listOpsUncurriedUtils.aggregatorByType)(xs)((0, _listOpsUncurriedUtils.copy)(xs), x, 0);
     }
-    var out = (0, _of.of)(xs),
+    var out = (0, _objectOpsUncurried.of)(xs),
         foundIndex = findIndex(function (item) {
         return x <= item;
     }, xs);
@@ -1204,7 +1198,7 @@ unzipN = exports.unzipN = function unzipN(list) {
 insertBy = exports.insertBy = function insertBy(orderingFn, x, xs) {
     var limit = (0, _objectOpsUncurried.length)(xs),
         aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(xs),
-        out = (0, _of.of)(xs);
+        out = (0, _objectOpsUncurried.of)(xs);
     if (isEmpty(xs)) {
         return aggregator(out, x, 0);
     }
@@ -1220,12 +1214,12 @@ insertBy = exports.insertBy = function insertBy(orderingFn, x, xs) {
 },
     nubBy = exports.nubBy = function nubBy(pred, list) {
     if (isEmpty(list)) {
-        return (0, _of.of)(list);
+        return (0, _objectOpsUncurried.of)(list);
     }
     var limit = (0, _objectOpsUncurried.length)(list);
     var ind = 0,
         currItem = void 0,
-        out = (0, _of.of)(list),
+        out = (0, _objectOpsUncurried.of)(list),
         anyOp = function anyOp(storedItem) {
         return pred(currItem, storedItem);
     };

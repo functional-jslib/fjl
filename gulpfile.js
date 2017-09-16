@@ -118,9 +118,11 @@ gulp.task('iife', ['eslint', 'generate-version-js'], () =>
                 babelrc: false,
                 presets: [
                     [
-                        'env',
+                        'latest',
                         {
-                            modules: false
+                            es2015: {
+                                modules: false
+                            }
                         }
                     ]
                 ],

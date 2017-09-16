@@ -1,18 +1,18 @@
-import {curry} from '../functionOps/curry';
-import {typeOf} from '../objectOps/typeOf';
+import {curry} from  '../functionOps/curry';
 import {
     complement as arrayComplement,
     difference as arrayDifference,
     union as arrayUnion,
     intersect as arrayIntersect
-} from '../listOps/listOps';
+} from  '../listOps/listOps';
 
 import {
     objComplement,
     objDifference,
     objUnion,
-    objIntersect
-} from '../objectOps/objectOps';
+    objIntersect,
+    typeOf
+} from  '../objectOps/objectOps';
 
 export const
 
