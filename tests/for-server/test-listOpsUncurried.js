@@ -33,7 +33,7 @@ import {
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert,
-    nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn,
+    nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
     complement, difference, union, intersect, intersectBy, groupBy,
 } from '../../src-uncurried/listOps/listOpsUncurried';
 
@@ -2285,8 +2285,27 @@ describe ('#listOpsUncurried', function () {
     });
 
     describe ('#sortBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const ascOrderingGetter = (a, b) => {
+            if (a > b) { return 1; }
+            else if (a < b) { return -1; }
+            return 0;
+        };
+        it ('should sort a list in ascending order', function () {
+            expectShallowEquals(sortBy(ascOrderingGetter, range(10, 0, -1)), range(0, 10, 1));
+            expectShallowEquals(sortBy(ascOrderingGetter, range(0, 10)), range(0, 10));
+            compose(expectShallowEquals(__, alphabetArray),
+                value => sortBy(ascOrderingGetter, value), reverse)(alphabetArray);
+            compose(/*log,*/ value => sortBy(ascOrderingGetter, value), reverse)(alphabetArray);
+        });
+        it ('should return a copy of original list when said list is already sorted', function () {
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(ascOrderingGetter, xs))(take(3, alphabetArray));
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(ascOrderingGetter, xs))(take(3, alphabetArray));
+            compose(expectShallowEquals(__, alphabetArray), xs => sortBy(ascOrderingGetter, xs))(alphabetArray);
+            compose(expectShallowEquals(__, range(0, 10)), xs => sortBy(ascOrderingGetter, xs))(range(0, 10));
+        });
+        it ('should return an empty list when receiving an empty list', function () {
+            expectShallowEquals(sortBy(ascOrderingGetter, []), []);
+        });
     });
 
     describe ('#insertBy', function () {

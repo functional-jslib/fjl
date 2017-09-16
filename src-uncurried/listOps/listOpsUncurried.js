@@ -962,14 +962,55 @@ export const
 
     sort = sortAsc,
 
-    sortOn = sortOnAsc,
+    sortOn = (valueFn, xs) =>
+
+        // Un-decorate
+        map(decorated => decorated[1],
+
+            // Decorate and sort
+            sortBy(
+
+                (a1, b1) => {
+                    let a = a1[0],
+                        b = b1[0];
+                    if (a > b) { return 1; }
+                    else if (a < b) { return -1; }
+                    return 0;
+                },
+
+                // Decorate
+                map(item => [valueFn(item), item], xs)
+            )
+        )
+    ,
+
+    sortBy = (orderingGetter, xs) => copy(xs).sort(orderingGetter),
 
     insert = (x, xs) => {
-        if (isEmpty(xs)) { return [x]; }
+        if (isEmpty(xs)) { return aggregatorByType(xs)(copy(xs), x, 0); }
         let out = of(xs),
             foundIndex = findIndex((item, ind) => x <= item, xs);
         return foundIndex === -1 ? append(sliceToEndFrom(0, out), x) :
             concat(intersperse([x], splitAt(foundIndex, xs)));
+    },
+
+    /**
+     * `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
+     */
+    insertBy = (orderingFn, x, xs) => {
+        const limit = length(xs),
+            aggregator =  aggregatorByType(xs),
+            out = of(xs);
+        if (isEmpty(xs)) { return aggregator(out, x, 0); }
+        let ind = 0;
+        for (; ind < limit; ind += 1) {
+            if (orderingFn(x, xs[ind]) <= 0) {
+                const parts = splitAt(ind, xs);
+                // Fold parts[0], [x], parts[1] into `out` and `concat`
+                return concat(foldl(aggregator, out, [parts[0], [x], parts[1]]));
+            }
+        }
+        return aggregator(copy(xs), x);
     },
 
     nubBy = (pred, list) => {
