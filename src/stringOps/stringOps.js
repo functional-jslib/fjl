@@ -5,17 +5,7 @@
  */
 import {intercalate} from   '../listOps/listOps';
 
-import {curry} from   '../functionOps/curry';
-
-import {split as pureSplit} from   '../uncurried/jsPlatform/stringOpsUnCurried';
-
-/**
- * Functional version of `String.prototype.split`.
- * @param separator {String|RegExp}
- * @param str {String}
- * @returns {Array}
- */
-const split = curry(pureSplit);
+import {split} from   '../jsPlatform/stringOps';
 
 export const
 

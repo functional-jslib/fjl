@@ -3,7 +3,7 @@
  */
 
 define(['mocha', 'fjl', 'prepare', 'test-suite'], function (mocha) {
-    "use strict";
+    'use strict';
     mocha.checkLeaks();
     mocha.globals(['fjl']);
     mocha.run();

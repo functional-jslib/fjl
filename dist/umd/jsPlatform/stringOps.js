@@ -17,6 +17,14 @@
     value: true
   });
   exports.split = undefined;
+
+
+  /**
+   * Functional version of `String.prototype.split`.
+   * @param separator {String|RegExp}
+   * @param str {String}
+   * @returns {Array}
+   */
   /**
    * Created by elydelacruz on 9/6/2017.
    */
