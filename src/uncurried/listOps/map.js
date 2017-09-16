@@ -1,4 +1,4 @@
-import {of} from '../../src/objectOps/of';
+import {of} from '../../objectOps/of';
 
 import {aggregatorByType}   from './listOpsUncurriedAggregation';
 

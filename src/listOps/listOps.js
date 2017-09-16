@@ -7,22 +7,22 @@
  */
 import {curry, curry2, curry3, curry4, curry5, curryN}
                             from '../functionOps/curry';
-import {concat as listAppend, indexOf} from '../../src-uncurried/jsPlatform/listOpsUncurried';
+import {concat as listAppend, indexOf} from '../uncurried/jsPlatform/listOpsUncurried';
 import {slice}              from '../jsPlatform/listOps';
-import {apply}              from '../../src-uncurried/jsPlatform/functionOpsUncurried'; // un-curried version
+import {apply}              from '../uncurried/jsPlatform/functionOpsUncurried'; // un-curried version
 import {negateP}            from '../functionOps/functionOps';
 import {isTruthy, isFalsy}  from '../booleanOps/is';
 import {isString, isset}  from '../objectOps/is';
 import {prop}               from '../objectOps/prop';
 import {typeOf}             from '../objectOps/typeOf';
 import {of}                 from '../objectOps/of';
-import {length, hasOwnProperty} from '../../src-uncurried/jsPlatform/objectOpsUncurried';
+import {length, hasOwnProperty} from '../uncurried/jsPlatform/objectOpsUncurried';
 import {log} from '../../tests/for-server/helpers';
 
 import {
     removeFirstsBy as pureRemoveFirstsBy,
     removeBy as pureRemoveBy
-} from "../../src-uncurried/listOps/listOpsUncurried";
+} from "../uncurried/listOps/listOpsUncurried";
 
 export {length};
 

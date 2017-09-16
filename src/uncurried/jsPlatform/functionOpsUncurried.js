@@ -19,12 +19,4 @@ export const
      * @param args ...{*}
      * @returns {*}
      */
-    call = (fn, ...args) => apply(fn, args),
-
-    /**
-     * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-     * @function module:functionOpsUncurried.negateF
-     * @param fn {Function}
-     * @returns {Function<...args>}
-     */
-    negateF = fn => (...args) => !apply(fn, args);
+    call = (fn, ...args) => apply(fn, args);

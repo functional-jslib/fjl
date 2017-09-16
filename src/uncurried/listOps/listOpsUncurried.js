@@ -7,13 +7,14 @@
  */
 import { concat as listAppend,
     indexOf, slice, includes } from '../jsPlatform/listOpsUncurried';
-import {apply, negateF}     from '../jsPlatform/functionOpsUncurried';
+import {apply}              from '../jsPlatform/functionOpsUncurried';
+import {negateF}  from '../functionOps/negate';
 import {length}             from '../jsPlatform/objectOpsUncurried';
-import {negateP}            from '../../src/functionOps/functionOps';
-import {isTruthy, isFalsy}  from '../../src/booleanOps/booleanOps';
-import {isString, isset}    from '../../src/objectOps/is';
-import {prop}               from '../../src/objectOps/prop';
-import {of}                 from '../../src/objectOps/of';
+import {negateP}            from '../../functionOps/functionOps';
+import {isTruthy, isFalsy}  from '../../booleanOps/booleanOps';
+import {isString, isset}    from '../../objectOps/is';
+import {prop}               from '../../objectOps/prop';
+import {of}                 from '../../objectOps/of';
 import {map}                from './map';
 
 import {

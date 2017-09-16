@@ -5,7 +5,7 @@
 import {apply}              from '../jsPlatform/functionOpsUncurried';  // un-curried version
 import {slice}              from '../jsPlatform/listOpsUncurried';      // un-curried version good for both strings and arrays
 import {length}             from '../jsPlatform/objectOpsUncurried';
-import {alwaysFalse}        from '../../src/booleanOps/booleanOps';
+import {alwaysFalse}        from '../../booleanOps/booleanOps';
 import {map}                from './map';
 
 export * from './listOpsUncurriedAggregation';

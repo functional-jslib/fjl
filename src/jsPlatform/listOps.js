@@ -10,7 +10,7 @@ import {
     slice as slice_,
     includes as includes_,
     indexOf as indexOf_,
-    lastIndexOf as lastIndexOf_ } from '../../src-uncurried/jsPlatform/listOpsUncurried';
+    lastIndexOf as lastIndexOf_ } from '../uncurried/jsPlatform/listOpsUncurried';
 
 export const
 

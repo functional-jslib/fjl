@@ -1,4 +1,4 @@
-import {typeOf} from '../../src/objectOps/typeOf';
+import {typeOf} from '../../objectOps/typeOf';
 
 export const
 

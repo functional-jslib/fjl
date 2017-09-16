@@ -3,10 +3,8 @@
  * @module is
  * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
  */
-import {curry} from '../functionOps/curry';
 import {typeOf} from './typeOf';
-import {instanceOf} from './instanceOf';
-import {length, keys, hasOwnProperty} from '../uncurried/jsPlatform/objectOpsUncurried';
+import {instanceOf, length, keys, hasOwnProperty} from '../jsPlatform/objectOpsUncurried';
 
 let _String = String.name,
     _Number = Number.name,
@@ -30,7 +28,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isFunction = instanceOf(Function),
+    isFunction = value => instanceOf(Function, value),
 
     /**
      * Type checker.  Note** The `Type` passed in, if a constructor, should
@@ -41,11 +39,11 @@ export const
      *  class SomeName {}
      * ```
      * @functionOps module:fjl.isType
-     * @param Type {Function|String} - Constructor or constructor name
-     * @param value {*}
+     * @param type {Function|String} - Constructor or constructor name
+     * @param obj {*}
      * @return {Boolean}
      */
-    isType = curry((type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type)),
+    isType = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type),
 
     /**
      * Checks if `value` is an es2015 `class`.
@@ -70,7 +68,7 @@ export const
      * @param value {*}
      * @returns {boolean}
      */
-    isArray = isType(Array),
+    isArray = value => isType(Array, value),
 
     /**
      * Checks whether value is an objectOps or not.
@@ -78,7 +76,7 @@ export const
      * @param value
      * @returns {Boolean}
      */
-    isObject = isType(_Object),
+    isObject = value => isType(_Object, value),
 
     /**
      * Checks if value is a booleanOps.
@@ -86,7 +84,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isBoolean = isType(_Boolean),
+    isBoolean = value => isType(_Boolean, value),
 
     /**
      * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
@@ -94,7 +92,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNumber = isType(_Number),
+    isNumber = value => isType(_Number, value),
 
     /**
      * Checks whether value is a stringOps or not.
@@ -102,7 +100,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isString = isType(_String),
+    isString = value => isType(_String, value),
 
     /**
      * Checks whether value is of `Map` or not.
@@ -110,7 +108,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isMap = isType(_Map),
+    isMap = value => isType(_Map, value),
 
     /**
      * Checks whether value is of `Set` or not.
@@ -118,7 +116,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSet = isType(_Set),
+    isSet = value => isType(_Set, value),
 
     /**
      * Checks whether value is of `WeakMap` or not.
@@ -126,7 +124,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakMap = isType(_WeakMap),
+    isWeakMap = value => isType(_WeakMap, value),
 
     /**
      * Checks whether value is of `WeakSet` or not.
@@ -134,7 +132,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakSet = isType(_WeakSet),
+    isWeakSet = value => isType(_WeakSet, value),
 
     /**
      * Checks if value is undefined.
@@ -142,7 +140,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isUndefined = isType(_Undefined),
+    isUndefined = value => isType(_Undefined, value),
 
     /**
      * Checks if value is null.
@@ -150,7 +148,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNull = isType(_Null),
+    isNull = value => isType(_Null, value),
 
     /**
      * Checks if value is a `Symbol`.
@@ -158,12 +156,12 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSymbol = isType(_Symbol),
+    isSymbol = value => isType(_Symbol, value),
 
     /**
      * @tentative
      */
-    isPromise = isType('Promise'),
+    isPromise = value => isType('Promise', value),
 
     /**
      * Checks if given `x` is one of the four
@@ -238,7 +236,7 @@ export const
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
-    notEmptyAndOfType = curry((type, value) => !isEmpty(value) && isType(type, value)),
+    notEmptyAndOfType = (type, value) => !isEmpty(value) && isType(type, value),
 
     /**
      * Returns whether passed in values is defined and not null.

@@ -22,4 +22,10 @@ export const
      */
     negateP = negateF3,
 
+    /**
+     * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
+     * @function module:functionOpsUncurried.negateFMany
+     * @param fn {Function}
+     * @returns {Function<...args>}
+     */
     negateFMany = fn => (...args) => !apply(fn, reverse(args));

@@ -1,6 +1,5 @@
 import {curry, curry2} from '../functionOps/curry';
-import {hasOwnProperty, keys} from '../uncurried/jsPlatform/objectOpsUncurried';
-import {assignDeep} from '../uncurried/objectOps/assignDeep';
+import {assignDeep, hasOwnProperty, keys} from '../jsPlatform/objectOpsUncurried';
 import {foldl} from '../listOps/listOps';
 
 export const
