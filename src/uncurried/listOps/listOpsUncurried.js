@@ -191,7 +191,7 @@ export const
             aggregator = of(arr),
             aggregatorOp = aggregatorByType(arr);
         if (!limit) { return aggregator; }
-        return reduce((agg, item, ind) => {
+        return foldl((agg, item, ind) => {
             return ind === lastInd ?
                 aggregatorOp(agg, item) :
                 aggregatorOp(
