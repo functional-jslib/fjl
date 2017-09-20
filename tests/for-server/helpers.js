@@ -55,6 +55,14 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
     shallowCompareObjectsLeft = curry2_((incoming, against, keys) => !(keys || Object.keys(incoming))
         .some(key => against[key] !== incoming[key]) ),
 
+    deepCompareObjectsLeft = curry2_((incoming, against, keys) =>
+        !(keys || Object.keys(incoming)).map(key =>
+            typeof against[key] === 'object' && typeof incoming[key] === 'object' ?
+                deepCompareObjectsLeft(incoming[key], against[key]) : incoming[key] === against[key]
+        )
+            .some(bln => !bln)
+    ),
+
     deepCompareLeft = (incoming, against) => {
         return Object.keys(incoming).some(key => {
             const typeOfValue = typeof incoming[key];

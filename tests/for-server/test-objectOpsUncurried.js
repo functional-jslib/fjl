@@ -19,7 +19,7 @@ import {objComplement, objDifference, objUnion, objIntersect,
     isWeakMap, isWeakSet, assignDeep
 } from '../../src/uncurried/objectOps/objectOpsUncurried';
 import {foldl, map, and, head, tail} from "../../src/uncurried/listOps/listOpsUncurried";
-import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone} from './helpers';
+import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, deepCompareObjectsLeft} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -287,12 +287,12 @@ describe ('#objectOpsUncurried', function () {
                 return agg;
             }, {}),
 
-            clonedObj = jsonClone(obj);
+            clonedObj = jsonClone(obj),
+
+            // expectTrue(words.map())
+            result1 = assignDeep(randomObj, obj2, clonedObj);
 
         it ('should assign all props from one object to another recursively', function () {
-            // expectTrue(words.map())
-            const result1 = assignDeep(randomObj, obj2, clonedObj);
-
             // Check all top level properties
             expectTrue(words
                 .map(word => result1.hasOwnProperty(word) && result1[word])
@@ -325,9 +325,9 @@ describe ('#objectOpsUncurried', function () {
             expectTrue(and(map(x => !Object.keys(x).length, tail(check1))));
         });
 
-        it ('should not modify objects other than the first object passed in');
-
-        it ('should have tests written');
+        it ('should not modify objects other than the first object passed in', function () {
+            expectTrue(deepCompareObjectsLeft(clonedObj, obj));
+        });
     });
 
     describe('#objComplement', function () {
