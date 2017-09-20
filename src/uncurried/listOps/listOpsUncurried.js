@@ -5,23 +5,24 @@
  * @todo code unperformant shorthand in `listOps`
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
-import { concat as listAppend,
-    indexOf, slice, includes } from   '../jsPlatform/listOpsUncurried';
-import {apply}              from   '../jsPlatform/functionOpsUncurried';
-import {negateF}  from   '../functionOps/negate';
-import {negateP}            from   '../functionOps/functionOpsUncurried';
-import {isTruthy, isFalsy}  from   '../../booleanOps/booleanOps';
-import {isString, isset, prop, of, length}    from   '../objectOps/objectOpsUncurried';
-import {map}                from './map';
+import {
+    concat as listAppend,
+    indexOf, slice, includes
+} from '../jsPlatform/listOpsUncurried';
+import {apply} from '../jsPlatform/functionOpsUncurried';
+import {negateF} from '../functionOps/negate';
+import {negateP} from '../functionOps/functionOpsUncurried';
+import {isTruthy, isFalsy} from '../../booleanOps/booleanOps';
+import {isString, prop, of, length} from '../objectOps/objectOpsUncurried';
+import {map} from './map';
 
 import {
     sliceFrom, sliceTo, lengths,
     lengthsToSmallest, aggregateArr, aggregatorByType,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
-    findWhere, copy, genericAscOrdering } from './listOpsUncurriedUtils';
-
-// import {log} from   '../../tests/for-server/helpers';
+    findWhere, copy, genericAscOrdering
+} from './listOpsUncurriedUtils';
 
 // Exported imports
 export {length, map};
@@ -50,15 +51,12 @@ export const
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
      * @function module:listOps.appendMany
-     * @param x {Array|String|*}
      * @param args ...{Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
-    appendMany = (x, ...args) => {
-        const lenArgs = length(args);
-        if (!isset(x)) { return []; }
-        if (!lenArgs) { return sliceFrom(0, x); }
-        return listAppend(x, ...args);
+    appendMany = (...args) => {
+        if (length(args)) { return apply(listAppend, args); }
+        throw new Error('`appendMany` requires at least one arg.');
     },
 
     /**
@@ -105,8 +103,12 @@ export const
      * @returns {Array|String|*|undefined}
      */
     uncons = xs => {
-        if (!xs) { return; }
-        if (length(xs) === 0) { return undefined; }
+        if (!xs) {
+            return;
+        }
+        if (length(xs) === 0) {
+            return undefined;
+        }
         return [head(xs), tail(xs)];
     },
 
@@ -118,8 +120,12 @@ export const
      * @returns {Array|String|*|undefined}
      */
     unconsr = xs => {
-        if (!xs) { return; }
-        if (length(xs) === 0) { return undefined; }
+        if (!xs) {
+            return;
+        }
+        if (length(xs) === 0) {
+            return undefined;
+        }
         return [init(xs), last(xs)];
     },
 
@@ -149,7 +155,10 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    concat = xs => appendMany(...xs),
+    concat = xs => {
+        if (!length(xs)) { return copy(xs); }
+        return isString(xs) ? xs : apply(appendMany, xs);
+    },
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -190,7 +199,9 @@ export const
             lastInd = limit - 1,
             aggregator = of(arr),
             aggregatorOp = aggregatorByType(arr);
-        if (!limit) { return aggregator; }
+        if (!limit) {
+            return aggregator;
+        }
         return foldl((agg, item, ind) => {
             return ind === lastInd ?
                 aggregatorOp(agg, item) :
@@ -209,10 +220,7 @@ export const
      * @param xss {Array|String|*}
      * @returns {Array|String|*}
      */
-    intercalate = (xs, xss) => {
-        const result = intersperse(xs, xss);
-        return isString(result) ? result : concat(result);
-    },
+    intercalate = (xs, xss) => concat(intersperse(xs, xss)),
 
     /**
      * Transposes rows and columns into lists by index;  E.g.,
@@ -234,14 +242,18 @@ export const
     transpose = xss => {
         let numLists = length(xss),
             ind = 0, ind2;
-        if (!numLists) { return of(xss); }
+        if (!numLists) {
+            return of(xss);
+        }
         const listLengths = apply(lengths, xss),
             longestListLen = maximum(listLengths),
             outLists = [];
         for (; ind < longestListLen; ind += 1) {
             const outList = [];
             for (ind2 = 0; ind2 < numLists; ind2 += 1) {
-                if (listLengths[ind2] < ind + 1) { continue; }
+                if (listLengths[ind2] < ind + 1) {
+                    continue;
+                }
                 outList.push(xss[ind2][ind]);
             }
             outLists.push(outList);
@@ -283,14 +295,18 @@ export const
 
     foldl1 = (op, xs) => {
         const parts = uncons(xs);
-        if (!parts) { return of (xs); }
-        return reduce (op, parts[0], parts[1]);
+        if (!parts) {
+            return of(xs);
+        }
+        return reduce(op, parts[0], parts[1]);
     },
 
     foldr1 = (op, xs) => {
         const parts = unconsr(xs);
-        if (!parts) { return of (xs); }
-        return reduceRight (op, parts[1], parts[0]);
+        if (!parts) {
+            return of(xs);
+        }
+        return reduceRight(op, parts[1], parts[0]);
     },
 
     /**
@@ -305,7 +321,9 @@ export const
     mapAccumL = (op, zero, xs) => {
         const list = sliceFrom(0, xs),
             limit = length(xs);
-        if (!limit) { return [zero, list]; }
+        if (!limit) {
+            return [zero, list];
+        }
         let ind = 0,
             agg = zero,
             mapped = of(xs),
@@ -330,7 +348,9 @@ export const
     mapAccumR = (op, zero, xs) => {
         const list = sliceFrom(0, xs),
             limit = length(xs);
-        if (!limit) { return [zero, list]; }
+        if (!limit) {
+            return [zero, list];
+        }
         let ind = limit - 1,
             agg = zero,
             mapped = of(xs),
@@ -353,7 +373,10 @@ export const
     },
 
     repeat = (limit, x) =>
-        iterate(limit, agg => { agg.push(x); return agg; }, []),
+        iterate(limit, agg => {
+            agg.push(x);
+            return agg;
+        }, []),
 
     replicate = repeat,
 
@@ -393,7 +416,7 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
      */
-    findIndices =  findIndicesWhere,
+    findIndices = findIndicesWhere,
 
     /**
      * @function module:listOps.elemIndex
@@ -453,9 +476,9 @@ export const
      * @returns {Array}
      */
     takeWhile = (pred, list) => {
-        let zero =  of(list);
+        let zero = of(list);
         const operation = aggregatorByType(list);
-        return reduceUntil (
+        return reduceUntil(
             negateP(pred),  // predicate
             operation,      // operation
             zero,           // aggregator
@@ -542,7 +565,9 @@ export const
             limit = length(xs),
             aggregator = aggregatorByType(xs),
             out = of(xs);
-        if (!limit) { return out; }
+        if (!limit) {
+            return out;
+        }
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) {
                 out = aggregator(out, xs[ind]);
@@ -561,7 +586,9 @@ export const
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     partition = (pred, list) => {
-        if (!length(list)) { return [of(list), of(list)]; }
+        if (!length(list)) {
+            return [of(list), of(list)];
+        }
         return [filter(pred, list), filter(negateP(pred), list)];
     },
 
@@ -579,7 +606,9 @@ export const
         }
         let ind = 0;
         for (; ind < limit1; ind++) {
-            if (xs1[ind] !== xs2[ind]) { return false; }
+            if (xs1[ind] !== xs2[ind]) {
+                return false;
+            }
         }
         return true;
     },
@@ -593,7 +622,9 @@ export const
         let ind1 = limit1 - 1,
             ind2 = limit2 - 1;
         for (; ind1 >= 0; ind1--) {
-            if (xs1[ind1] !== xs2[ind2]) { return false; }
+            if (xs1[ind1] !== xs2[ind2]) {
+                return false;
+            }
             ind2 -= 1;
         }
         return true;
@@ -611,8 +642,12 @@ export const
         for (; ind < limit2; ind += 1) {
             foundLen = 0;
             for (ind1 = 0; ind1 < limit1; ind1 += 1) {
-                if (xs2[ind1 + ind] === xs1[ind1]) { foundLen += 1; }
-                if (foundLen === limit1) { return true; }
+                if (xs2[ind1 + ind] === xs1[ind1]) {
+                    foundLen += 1;
+                }
+                if (foundLen === limit1) {
+                    return true;
+                }
             }
         }
         return false;
@@ -626,8 +661,12 @@ export const
         for (i = 0; i < len; i += 1) {
             foundLen = 0;
             for (let j = 0; j < len; j += 1) {
-                if (i & (1 << j) && indexOf(xs2[j], xs1) > -1) { foundLen += 1; }
-                if (foundLen === lenXs1) { return true; }
+                if (i & (1 << j) && indexOf(xs2[j], xs1) > -1) {
+                    foundLen += 1;
+                }
+                if (foundLen === lenXs1) {
+                    return true;
+                }
             }
         }
         return false;
@@ -658,19 +697,26 @@ export const
      */
     groupBy = (equalityOp, xs) => {
         const limit = length(xs);
-        if (!limit) { return sliceFrom(0, xs); }
+        if (!limit) {
+            return sliceFrom(0, xs);
+        }
         let ind = 0,
             prevItem,
             item,
             predOp = x => {
-                if (equalityOp(x, prevItem)) { ind++; }
-                if (equalityOp(x, item)) { prevItem = x; return true; }
+                if (equalityOp(x, prevItem)) {
+                    ind++;
+                }
+                if (equalityOp(x, item)) {
+                    prevItem = x;
+                    return true;
+                }
                 return false;
             },
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push( takeWhile (predOp, slice(ind, limit, xs)) );
+            agg.push(takeWhile(predOp, slice(ind, limit, xs)));
         }
         return agg;
     },
@@ -679,7 +725,9 @@ export const
         let limit = length(xs),
             ind = 0,
             agg = [];
-        if (!limit) { return []; }
+        if (!limit) {
+            return [];
+        }
         for (; ind <= limit; ind += 1) {
             agg = aggregateArr(agg, sliceTo(ind, xs));
         }
@@ -690,7 +738,9 @@ export const
         let limit = length(xs),
             ind = 0,
             agg = [];
-        if (!limit) { return []; }
+        if (!limit) {
+            return [];
+        }
         for (; ind <= limit; ind += 1) {
             agg = aggregateArr(agg, slice(ind, limit, xs));
         }
@@ -712,7 +762,9 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zip = (arr1, arr2) => {
-        if (!length(arr1) || !length(arr2)) { return of(arr1); }
+        if (!length(arr1) || !length(arr2)) {
+            return of(arr1);
+        }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
         return reduce((agg, item, ind) =>
                 aggregateArr(agg, [item, a2[ind]]),
@@ -730,7 +782,9 @@ export const
     zipN = (...lists) => {
         const trimmedLists = apply(lengthsToSmallest, filter(length, lists)),
             lenOfTrimmed = length(trimmedLists);
-        if (!lenOfTrimmed) { return []; }
+        if (!lenOfTrimmed) {
+            return [];
+        }
         else if (lenOfTrimmed === 1) {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
@@ -793,7 +847,9 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zipWith = (op, xs1, xs2) => {
-        if (!length(xs1) || !length(xs2)) { return of(xs1); }
+        if (!length(xs1) || !length(xs2)) {
+            return of(xs1);
+        }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
         return reduce((agg, item, ind) =>
                 aggregateArr(agg, op(item, a2[ind])),
@@ -816,7 +872,9 @@ export const
     zipWithN = (op, ...lists) => {
         const trimmedLists = apply(lengthsToSmallest, lists),
             lenOfTrimmed = length(trimmedLists);
-        if (!lenOfTrimmed) { return []; }
+        if (!lenOfTrimmed) {
+            return [];
+        }
         else if (lenOfTrimmed === 1) {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
@@ -894,7 +952,9 @@ export const
      * @returns {Array|*}
      */
     unzipN = list => {
-        if (!length(list)) { return []; }
+        if (!length(list)) {
+            return [];
+        }
         const lenItem0 = length(list[0]);
         let zero = lenItem0 ?
             unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
@@ -908,9 +968,13 @@ export const
     any = (p, xs) => {
         let ind = 0,
             limit = length(xs);
-        if (!limit) { return false; }
+        if (!limit) {
+            return false;
+        }
         for (; ind < limit; ind += 1) {
-            if (p(xs[ind])) { return true; }
+            if (p(xs[ind])) {
+                return true;
+            }
         }
         return false;
     },
@@ -968,13 +1032,16 @@ export const
 
             // Decorate and sort
             sortBy(
-
                 // Ordering
                 (a1, b1) => {
                     let a = a1[0],
                         b = b1[0];
-                    if (a > b) { return 1; }
-                    else if (a < b) { return -1; }
+                    if (a > b) {
+                        return 1;
+                    }
+                    else if (a < b) {
+                        return -1;
+                    }
                     return 0;
                 },
 
@@ -986,7 +1053,9 @@ export const
     sortBy = (orderingFn, xs) => copy(xs).sort(orderingFn),
 
     insert = (x, xs) => {
-        if (isEmpty(xs)) { return aggregatorByType(xs)(copy(xs), x, 0); }
+        if (isEmpty(xs)) {
+            return aggregatorByType(xs)(copy(xs), x, 0);
+        }
         let out = of(xs),
             foundIndex = findIndex(item => x <= item, xs);
         return foundIndex === -1 ? append(sliceFrom(0, out), x) :
@@ -1008,9 +1077,11 @@ export const
      */
     insertBy = (orderingFn, x, xs) => {
         const limit = length(xs),
-            aggregator =  aggregatorByType(xs),
+            aggregator = aggregatorByType(xs),
             out = of(xs);
-        if (isEmpty(xs)) { return aggregator(out, x, 0); }
+        if (isEmpty(xs)) {
+            return aggregator(out, x, 0);
+        }
         let ind = 0;
         for (; ind < limit; ind += 1) {
             if (orderingFn(x, xs[ind]) <= 0) {
@@ -1023,7 +1094,9 @@ export const
     },
 
     nubBy = (pred, list) => {
-        if (isEmpty(list)) { return of(list); }
+        if (isEmpty(list)) {
+            return of(list);
+        }
         const limit = length(list);
         let ind = 0,
             currItem,
@@ -1031,7 +1104,9 @@ export const
             anyOp = storedItem => pred(currItem, storedItem);
         for (; ind < limit; ind += 1) {
             currItem = list[ind];
-            if (any(anyOp, out)) { continue; }
+            if (any(anyOp, out)) {
+                continue;
+            }
             out = append(out, currItem);
         }
         return out;
@@ -1108,11 +1183,15 @@ export const
      * @returns {Array|String|*}
      */
     difference = (array1, array2) => { // augment this with max length and min length ordering on op
-        if (array1 && !array2) { return sliceFrom(0, array1); }
-        else if (!array1 && array2 || (!array1 && !array2)) { return []; }
+        if (array1 && !array2) {
+            return sliceFrom(0, array1);
+        }
+        else if (!array1 && array2 || (!array1 && !array2)) {
+            return [];
+        }
         const aggregator = aggregatorByType(array1);
         return reduce((agg, elm) =>
-            !includes(elm, array2) ? aggregator(agg, elm) : agg
+                !includes(elm, array2) ? aggregator(agg, elm) : agg
             , [], array1);
     },
 
