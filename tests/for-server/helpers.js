@@ -90,7 +90,9 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
 
     alphabetString = alphabetArray.join(''),
 
-    peak = (...args) => apply(log, args)
+    peak = (...args) => apply(log, args),
+
+    jsonClone = x => JSON.parse(JSON.stringify(x))
 
     ;
 
@@ -114,5 +116,6 @@ export default {
     range,
     alphabetCharCodeRange,
     alphabetArray,
-    alphabetString
+    alphabetString,
+    jsonClone
 };

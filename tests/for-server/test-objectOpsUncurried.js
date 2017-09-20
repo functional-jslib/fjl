@@ -18,7 +18,8 @@ import {objComplement, objDifference, objUnion, objIntersect,
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet, assignDeep
 } from '../../src/uncurried/objectOps/objectOpsUncurried';
-import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
+import {foldl, map, and, head, tail} from "../../src/uncurried/listOps/listOpsUncurried";
+import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
@@ -270,6 +271,7 @@ describe ('#objectOpsUncurried', function () {
 
     describe('#assignDeep', function () {
         const sentence = 'all your base are belong to us',
+            sentence2 = 'hair cut and shampoo',
             words = sentence.split(' '),
             wordsLen = words.length,
             obj = {all: {your: {base: {are: {belong: {to: {us: {}}}}}}}},
@@ -283,12 +285,47 @@ describe ('#objectOpsUncurried', function () {
                     right: ind < wordsLen ? words[ind + 1] : undefined
                 };
                 return agg;
-            }, {});
+            }, {}),
+
+            clonedObj = jsonClone(obj);
 
         it ('should assign all props from one object to another recursively', function () {
             // expectTrue(words.map())
-            console.log(assignDeep(randomObj, obj2, obj));
+            const result1 = assignDeep(randomObj, obj2, clonedObj);
+
+            // Check all top level properties
+            expectTrue(words
+                .map(word => result1.hasOwnProperty(word) && result1[word])
+                .every(result => result));
+
+            // Expect true that all results (head of return) of accumalated value are `true`
+            // and checks container of booleans
+            // `head` pulls item at index `0` of list
+            const check1 = foldl(
+                ([_results, _obj, _lastObj], word) => [
+                    (   _results.push(
+                            _obj.hasOwnProperty(word) &&
+                            _lastObj.hasOwnProperty(word) ),
+                            _results
+                    ),
+                    _obj[word],
+                    _lastObj[word]
+                ],
+                // [checks, result-of-op, test-against-obj]
+                [[], result1, clonedObj], // clone object so we don't destroy/alter it
+                words
+            );
+
+            // log(check1);
+
+            // Expect original object and resulting objects to both have the same nested properties
+            expectTrue(and(head(check1)));
+
+            // Ensure both objects checked don't have any remaining keys
+            expectTrue(and(map(x => !Object.keys(x).length, tail(check1))));
         });
+
+        it ('should not modify objects other than the first object passed in');
 
         it ('should have tests written');
     });
