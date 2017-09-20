@@ -16,7 +16,7 @@ import {objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
-    isWeakMap, isWeakSet
+    isWeakMap, isWeakSet, assignDeep
 } from '../../src/uncurried/objectOps/objectOpsUncurried';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
@@ -269,6 +269,27 @@ describe ('#objectOpsUncurried', function () {
     });
 
     describe('#assignDeep', function () {
+        const sentence = 'all your base are belong to us',
+            words = sentence.split(' '),
+            wordsLen = words.length,
+            obj = {all: {your: {base: {are: {belong: {to: {us: {}}}}}}}},
+            obj2 = {hair: {cut: {and: {shampoo: 1}}}},
+
+            // Create an object with some random props
+            randomObj = words.reduce((agg, word, ind) => {
+                // quasi tree-like obj
+                agg[word] = {
+                    left: ind ? words[ind - 1] : undefined,
+                    right: ind < wordsLen ? words[ind + 1] : undefined
+                };
+                return agg;
+            }, {});
+
+        it ('should assign all props from one object to another recursively', function () {
+            // expectTrue(words.map())
+            console.log(assignDeep(randomObj, obj2, obj));
+        });
+
         it ('should have tests written');
     });
 
