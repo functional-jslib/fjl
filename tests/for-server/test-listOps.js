@@ -18,7 +18,7 @@ import {isTruthy} from '../../src/booleanOps/is';
 import {bEqual as equal} from '../../src/booleanOps/booleanOps';
 import {lines, unlines, words, unwords} from '../../src/stringOps/stringOps';
 import {
-    all, and, or, any, find, findIndex, findIndices,
+    append, appendMany, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
@@ -30,7 +30,8 @@ import {
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert,
-    nubBy, removeBy, removeFirstsBy, sort, sortOn,
+    nubBy, removeBy, removeFirstsBy, unionBy, intersectBy,
+    groupBy, sortBy, insertBy, maximumBy, minimumBy, sort, sortOn,
     complement, difference, union, intersect
 } from '../../src/listOps/listOps';
 
@@ -52,7 +53,13 @@ import {
 
 describe ('#listOps', function () {
 
-    const strToArray = split('');
+    const strToArray = split(''),
+        generalEqualityCheck = (a, b) => a === b,
+        genericOrdering = (a, b) => {
+            if (a > b) { return 1; }
+            else if (a < b) { return -1; }
+            return 0;
+        };
 
     describe ('#head', function () {
         it ('should return the first item in an listOps and/or stringOps.', function () {
@@ -2113,38 +2120,190 @@ describe ('#listOps', function () {
     });
 
     describe ('#unionBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const mixedMatchRange = append(range(13, 8, -1), range(1, 3)),
+            // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
+            // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
+            equalityCheck = (a, b) => a === b;
+        // [ascRanges, descRanges] =
+        //     map(argsSet =>
+        //         map(rangeArgs => apply(range, rangeArgs), argsSet),
+        //         [ascRangeArgs, descRangeArgs]
+        //     ),
+        // [rl1, rl2, rl3, rl4] = ascRanges,
+        // [lr1, lr2, lr3, lr4] = descRanges;
+        it ('should return a union on list 1 with list two', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],
+                [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 8, [1, 2, 3, 4, 5, 6, 7, 8]],
+                [[1, 2, 3, 4, 5], [1, 2, 3], 5, [1, 2, 3, 4 ,5]],
+                [mixedMatchRange, range(18, 21), 13, mixedMatchRange.concat(range(18, 21))]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    // log('unionBy', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
+        });
+        it ('should return a copy of left-most array when right-most list is empty', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [range(1, 5), [], 5, range(1, 5)],
+                [range(1, 8), [], 8, range(1, 8)],
+                [range(1, 13), [], 13, range(1, 13)],
+                [mixedMatchRange, [], 9, mixedMatchRange]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    // log('unionBy', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
+        });
+        it ('should return a copy of right-most list when left-most list is empty', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [range(1, 5), [], 5, range(1, 5)],
+                [range(1, 8), [], 8, range(1, 8)],
+                [range(1, 13), [], 13, range(1, 13)],
+                [mixedMatchRange, [], 9, mixedMatchRange]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    // log('unionBy', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
+        });
+        it ('should return an empty list when receiving empty lists', function () {
+            expectEqual(unionBy(equalityCheck, '', ''), '');
+            expectShallowEquals(unionBy(equalityCheck, [], []), []);
+        });
     });
 
     describe ('#intersectBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const equality = (a, b) => a === b;
+        // it ('should have more tests written');
+        it ('should return an empty list when receiving an empty list', function () {
+            expectEqual(length(intersectBy(equality, [], [1, 2, 3])), 0);
+        });
+        it ('should return an empty list when receiving an empty list as parameter 2', function () {
+            expectEqual(length(intersectBy(equality, [1, 2, 3], [])), 0);
+        });
+        it ('should return an empty list when both arrays passed are empty', function () {
+            expectEqual(length(intersectBy(equality, [], [])), 0);
+        });
+        it ('should return an intersection of the two arrays on equality function', function () {
+            let testCases = [
+                // subj1, subj2, expectLen, expectedElements
+                [[1, 2, 3], [1, 2, 3, 4, 5], 3, [1, 2, 3]],
+                [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 3, [1, 2, 3]],
+                [[1, 2, 3, 4, 5], [1, 2, 3], 3, [1, 2, 3]]
+            ];
+            testCases.forEach(testCase => {
+                let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                    result = intersectBy(equality, subj1, subj2);
+                expectEqual(result.length, expectedLen);
+                result.forEach((elm, ind) => {
+                    expectEqual(elm, expectedElms[ind]);
+                });
+            });
+        });
     });
 
     describe ('#groupBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        it ('should return a list of lists which contain the (sequential) matches on equality function', function () {
+            const expectedResultFlattened = ['M', 'i', 'ss', 'i', 'ss', 'i', 'pp', 'i'];
+            expectShallowEquals(groupBy(generalEqualityCheck, 'Mississippi'), expectedResultFlattened);
+            expectShallowEquals(
+                // Flatten results first
+                groupBy(generalEqualityCheck, 'Mississippi'.split('')).map(item => item.join('')),
+                expectedResultFlattened
+            );
+        });
+        it ('should return a list of lists containing individual un-grouped items or items that do not match equality function', function () {
+            expectShallowEquals(groupBy(generalEqualityCheck, alphabetString), alphabetArray);
+            expectShallowEquals(
+                // Flatten result first
+                groupBy(generalEqualityCheck, alphabetArray).map(item => item.join('')),
+                alphabetArray);
+        });
     });
 
     describe ('#sortBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        it ('should sort a list by ordering function', function () {
+            expectShallowEquals(sortBy(genericOrdering, range(10, 0, -1)), range(0, 10, 1));
+            expectShallowEquals(sortBy(genericOrdering, range(0, 10)), range(0, 10));
+            compose(expectShallowEquals(__, alphabetArray),
+                value => sortBy(genericOrdering, value), reverse)(alphabetArray);
+            compose(/*log,*/ value => sortBy(genericOrdering, value), reverse)(alphabetArray);
+        });
+        it ('should return a copy of original list when said list is already sorted', function () {
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
+            compose(expectShallowEquals(__, alphabetArray), xs => sortBy(genericOrdering, xs))(alphabetArray);
+            compose(expectShallowEquals(__, range(0, 10)), xs => sortBy(genericOrdering, xs))(range(0, 10));
+        });
+        it ('should return an empty list when receiving an empty list', function () {
+            expectShallowEquals(sortBy(genericOrdering, []), []);
+        });
     });
 
     describe ('#insertBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const injectValueAtIndex = (x, ind, list) => {
+                if (ind <= 0) { return [x].concat(list); }
+                else if (ind > list.length - 1) { return list.concat([x]); }
+                return list.slice(0, ind).concat([x], list.slice(ind));
+            },
+            genericInsert = (x, xs) => insertBy(genericOrdering, x, xs);
+        it ('Should insert a value before value that matches equality check', function () {
+            // expectShallowEquals(genericInsert(99, range(0, 144, 5))
+            const range0To145 = range(0, 145, 5),
+                expectedResult = injectValueAtIndex(99, 20, range0To145),
+                result = genericInsert(99, range0To145),
+                result1 = genericInsert(99, reverse(range0To145)),
+                result2 = genericInsert('x', alphabetArray),
+                result3 = genericInsert('x', reverse(alphabetArray));
+            // log (result1, result, expectedResult);
+            expectShallowEquals(result, expectedResult);
+            expectShallowEquals(result1, [99].concat(reverse(range0To145)));
+            expectShallowEquals(result2, injectValueAtIndex('x', 24, alphabetArray));
+            expectShallowEquals(result3, ['x'].concat(reverse(alphabetArray)));
+        });
+        it ('should insert value even if passed in list is empty', function () {
+            expectShallowEquals(genericInsert(99, []), [99]);
+            expectShallowEquals(genericInsert('a', []), ['a']);
+            expectShallowEquals(genericInsert('a', ''), 'a');
+        });
     });
 
     describe ('#maximumBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const genericMaximum = xs => maximumBy(genericOrdering, xs);
+        it ('should be able return the maximum of a given list', function () {
+            expectEqual(genericMaximum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 5);
+            expectEqual(genericMaximum(range(-5, -1).concat([-3, -5, -7])), -1);
+        });
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
+            assert.throws(() => genericMaximum(null), Error);
+            assert.throws(() => genericMaximum(undefined), Error);
+            // assert.throws(() => genericMaximum([]), Error);
+            assert.throws(() => genericMaximum(), Error);
+        });
     });
 
     describe ('#minimumBy', function () {
-        it ('should have more tests written');
-        // @todo Add more tests
+        const genericMinimum = xs => minimumBy(genericOrdering, xs);
+        it ('should be able return the minimum of a given list', function () {
+            expectEqual(genericMinimum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 1);
+            expectEqual(genericMinimum(range(-5, -1).concat([-3, -7, -5])), -7);
+        });
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
+            assert.throws(() => genericMinimum(null), Error);
+            assert.throws(() => genericMinimum(undefined), Error);
+            // expectEqual(genericMinimum([]), Infinity);
+            assert.throws(() => genericMinimum(), Error);
+        });
     });
 
 });

@@ -327,6 +327,7 @@ describe ('#objectOpsUncurried', function () {
 
         it ('should not modify objects other than the first object passed in', function () {
             expectTrue(deepCompareObjectsLeft(clonedObj, obj));
+            // @todo do a more full proof check here
         });
     });
 
