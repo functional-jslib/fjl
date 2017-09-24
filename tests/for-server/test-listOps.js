@@ -61,6 +61,68 @@ describe ('#listOps', function () {
             return 0;
         };
 
+    describe ('#append', function () {
+        it ('should be able to append two lists.', function () {
+            expectShallowEquals(append(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
+            expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
+        });
+        it ('should return the a copy of the original list when appending to an empty list', function () {
+            expectShallowEquals(append(alphabetArray, []), alphabetArray);
+            expectEqual(append(alphabetString, ''), alphabetString);
+        });
+        it ('should return a copy of the original list only receiving it', function () {
+            expectShallowEquals(append(alphabetArray), alphabetArray);
+            expectEqual(append(alphabetString), alphabetString);
+        });
+        it ('should return an empty list when appending empty lists', function () {
+            expectEqual(append('', ''), '');
+            expectShallowEquals(append([], []), []);
+        });
+        it ('should throw an error when receiving Nothing', function () {
+            assert.throws(append, Error);
+            assert.throws(() => append(null), Error);
+            assert.throws(() => append(undefined), Error);
+            assert.throws(() => append(null, []), Error);
+            assert.throws(() => append(undefined, []), Error);
+        });
+    });
+
+    describe ('#appendMany', function () {
+        const unfoldRBy4 = list => unfoldr(remainder =>
+                remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
+            , list),
+            arrayParts= unfoldRBy4(alphabetArray),
+            stringParts = unfoldRBy4(alphabetString);
+
+        it ('should be able to append two lists.', function () {
+            expectShallowEquals(appendMany.apply(null, arrayParts), alphabetArray);
+            expectShallowEquals(appendMany.apply(null, stringParts), alphabetString);
+            expectShallowEquals(appendMany(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
+            expectEqual(appendMany(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
+        });
+        it ('should return the copy of the original list when appending to an empty list', function () {
+            expectShallowEquals(appendMany(alphabetArray, []), alphabetArray);
+            expectEqual(appendMany(alphabetString, ''), alphabetString);
+        });
+        it ('should return a copy of the original list only receiving it', function () {
+            expectShallowEquals(appendMany(alphabetArray), alphabetArray);
+            expectEqual(appendMany(alphabetString), alphabetString);
+        });
+        it ('should return an empty list when appending empty lists', function () {
+            expectEqual(appendMany('', '', ''), '');
+            expectEqual(appendMany('', ''), '');
+            expectShallowEquals(appendMany([], [], []), []);
+            expectShallowEquals(appendMany([], []), []);
+        });
+        it ('should throw an error when receiving Nothing', function () {
+            assert.throws(appendMany, Error);
+            assert.throws(() => appendMany(null), Error);
+            assert.throws(() => appendMany(undefined), Error);
+            assert.throws(() => appendMany(null, []), Error);
+            assert.throws(() => appendMany(undefined, []), Error);
+        });
+    });
+
     describe ('#head', function () {
         it ('should return the first item in an listOps and/or stringOps.', function () {
             expectEqual(head('Hello'), 'H');
