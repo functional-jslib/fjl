@@ -1,4 +1,4 @@
-define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUncurried', '../jsPlatform/listOpsUncurried', '../jsPlatform/objectOpsUncurried', '../../booleanOps/booleanOps', './map'], function (exports, _listOpsUncurriedAggregation, _functionOpsUncurried, _listOpsUncurried, _objectOpsUncurried, _booleanOps, _map) {
+define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionUncurried', '../jsPlatform/listUncurried', '../jsPlatform/objectUncurried', '../../booleanOps/booleanOps', './map'], function (exports, _listOpsUncurriedAggregation, _functionUncurried, _listUncurried, _objectUncurried, _booleanOps, _map) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -27,7 +27,7 @@ define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUn
      * @param arr {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFrom = exports.sliceFrom = (startInd, arr) => (0, _listOpsUncurried.slice)(startInd, (0, _objectOpsUncurried.length)(arr), arr),
+    sliceFrom = exports.sliceFrom = (startInd, arr) => (0, _listUncurried.slice)(startInd, (0, _objectUncurried.length)(arr), arr),
 
 
     /**
@@ -37,7 +37,7 @@ define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUn
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceTo = exports.sliceTo = (toInd, xs) => (0, _listOpsUncurried.slice)(0, toInd, xs),
+    sliceTo = exports.sliceTo = (toInd, xs) => (0, _listUncurried.slice)(0, toInd, xs),
 
 
     /**
@@ -61,14 +61,14 @@ define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUn
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
-    lengths = exports.lengths = (...lists) => (0, _objectOpsUncurried.length)(lists) ? (0, _map.map)(_objectOpsUncurried.length, lists) : [],
+    lengths = exports.lengths = (...lists) => (0, _objectUncurried.length)(lists) ? (0, _map.map)(_objectUncurried.length, lists) : [],
           lengthsToSmallest = exports.lengthsToSmallest = (...lists) => {
-        const listLengths = (0, _functionOpsUncurried.apply)(lengths, lists),
+        const listLengths = (0, _functionUncurried.apply)(lengths, lists),
               smallLen = Math.min.apply(Math, listLengths);
         return (0, _map.map)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list), lists);
     },
           reduceUntil = exports.reduceUntil = (pred, op, agg, arr) => {
-        const limit = (0, _objectOpsUncurried.length)(arr);
+        const limit = (0, _objectUncurried.length)(arr);
         if (!limit) {
             return agg;
         }
@@ -83,7 +83,7 @@ define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUn
         return result;
     },
           reduceRightUntil = exports.reduceRightUntil = (pred, op, agg, arr) => {
-        const limit = (0, _objectOpsUncurried.length)(arr);
+        const limit = (0, _objectUncurried.length)(arr);
         if (!limit) {
             return agg;
         }
@@ -116,7 +116,7 @@ define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUn
      * @returns {Number} - `-1` if no element found.
      */
     lastIndex = exports.lastIndex = x => {
-        const len = (0, _objectOpsUncurried.length)(x);return len ? len - 1 : 0;
+        const len = (0, _objectUncurried.length)(x);return len ? len - 1 : 0;
     },
 
 
@@ -130,7 +130,7 @@ define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUn
     findIndexWhere = exports.findIndexWhere = (pred, arr) => {
         let ind = -1,
             predicateFulfilled = false;
-        const limit = (0, _objectOpsUncurried.length)(arr);
+        const limit = (0, _objectUncurried.length)(arr);
         while (ind < limit && !predicateFulfilled) {
             predicateFulfilled = pred(arr[++ind], ind, arr);
         }
@@ -146,7 +146,7 @@ define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUn
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhereRight = exports.findIndexWhereRight = (pred, arr) => {
-        const limit = (0, _objectOpsUncurried.length)(arr);
+        const limit = (0, _objectUncurried.length)(arr);
         let ind = limit,
             predicateFulfilled = false;
         for (; ind >= 0 && !predicateFulfilled; --ind) {
@@ -162,7 +162,7 @@ define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUn
      * @returns {Array|undefined}
      */
     findIndicesWhere = exports.findIndicesWhere = (pred, xs) => {
-        const limit = (0, _objectOpsUncurried.length)(xs);
+        const limit = (0, _objectUncurried.length)(xs);
         if (!limit) {
             return undefined;
         }
@@ -185,7 +185,7 @@ define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionOpsUn
      */
     findWhere = exports.findWhere = (pred, xs) => {
         let ind = 0,
-            limit = (0, _objectOpsUncurried.length)(xs);
+            limit = (0, _objectUncurried.length)(xs);
         if (!limit) {
             return;
         }

@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectOpsUncurried = require('../jsPlatform/objectOpsUncurried');
+var _objectUncurried = require('../jsPlatform/objectUncurried');
 
 Object.defineProperty(exports, 'instanceOf', {
   enumerable: true,
   get: function get() {
-    return _objectOpsUncurried.instanceOf;
+    return _objectUncurried.instanceOf;
   }
 });

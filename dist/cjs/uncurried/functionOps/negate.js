@@ -7,7 +7,7 @@ exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = ex
 
 var _apply = require('./apply');
 
-var _arrayOpsUncurried = require('../jsPlatform/arrayOpsUncurried');
+var _arrayUncurried = require('../jsPlatform/arrayUncurried');
 
 /**
  * @module negate
@@ -56,6 +56,6 @@ negateFMany = exports.negateFMany = function negateFMany(fn) {
             args[_key] = arguments[_key];
         }
 
-        return !(0, _apply.apply)(fn, (0, _arrayOpsUncurried.reverse)(args));
+        return !(0, _apply.apply)(fn, (0, _arrayUncurried.reverse)(args));
     };
 };

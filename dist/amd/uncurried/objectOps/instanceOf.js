@@ -1,4 +1,4 @@
-define(['exports', '../jsPlatform/objectOpsUncurried'], function (exports, _objectOpsUncurried) {
+define(['exports', '../jsPlatform/objectUncurried'], function (exports, _objectUncurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -7,7 +7,7 @@ define(['exports', '../jsPlatform/objectOpsUncurried'], function (exports, _obje
   Object.defineProperty(exports, 'instanceOf', {
     enumerable: true,
     get: function () {
-      return _objectOpsUncurried.instanceOf;
+      return _objectUncurried.instanceOf;
     }
   });
 });

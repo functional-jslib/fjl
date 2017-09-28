@@ -6,4 +6,4 @@
  * Functional, uncurried 'instanceof'.
  * @returns {Boolean}
  */
-export {instanceOf} from '../jsPlatform/objectOpsUncurried';
+export {instanceOf} from '../jsPlatform/objectUncurried';

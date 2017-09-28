@@ -1,4 +1,4 @@
-define(['exports', '../uncurried/jsPlatform/objectOpsUncurried', '../uncurried/objectOps/typeOf', '../uncurried/objectOps/is', '../uncurried/objectOps/of', '../uncurried/objectOps/setTheoryOps', '../functionOps/curry', '../uncurried/objectOps/assignDeep'], function (exports, _objectOpsUncurried, _typeOf, _is, _of, _setTheoryOps, _curry, _assignDeep) {
+define(['exports', '../uncurried/jsPlatform/objectUncurried', '../uncurried/objectOps/typeOf', '../uncurried/objectOps/is', '../uncurried/objectOps/of', '../uncurried/objectOps/setTheoryOps', '../functionOps/curry', '../uncurried/objectOps/assignDeep'], function (exports, _objectUncurried, _typeOf, _is, _of, _setTheoryOps, _curry, _assignDeep) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -8,19 +8,19 @@ define(['exports', '../uncurried/jsPlatform/objectOpsUncurried', '../uncurried/o
     Object.defineProperty(exports, 'length', {
         enumerable: true,
         get: function () {
-            return _objectOpsUncurried.length;
+            return _objectUncurried.length;
         }
     });
     Object.defineProperty(exports, 'toString', {
         enumerable: true,
         get: function () {
-            return _objectOpsUncurried.toString;
+            return _objectUncurried.toString;
         }
     });
     Object.defineProperty(exports, 'keys', {
         enumerable: true,
         get: function () {
-            return _objectOpsUncurried.keys;
+            return _objectUncurried.keys;
         }
     });
     Object.keys(_typeOf).forEach(function (key) {
@@ -59,8 +59,8 @@ define(['exports', '../uncurried/jsPlatform/objectOpsUncurried', '../uncurried/o
             }
         });
     });
-    const instanceOf = exports.instanceOf = (0, _curry.curry)(_objectOpsUncurried.instanceOf),
-          hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_objectOpsUncurried.hasOwnProperty),
-          assign = exports.assign = (0, _curry.curry2)(_objectOpsUncurried.assign),
+    const instanceOf = exports.instanceOf = (0, _curry.curry)(_objectUncurried.instanceOf),
+          hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_objectUncurried.hasOwnProperty),
+          assign = exports.assign = (0, _curry.curry2)(_objectUncurried.assign),
           assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep.assignDeep);
 });

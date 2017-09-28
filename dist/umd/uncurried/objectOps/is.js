@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], factory);
+        define(['exports', './typeOf', '../jsPlatform/objectUncurried'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./typeOf'), require('../jsPlatform/objectOpsUncurried'));
+        factory(exports, require('./typeOf'), require('../jsPlatform/objectUncurried'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.typeOf, global.objectOpsUncurried);
+        factory(mod.exports, global.typeOf, global.objectUncurried);
         global.is = mod.exports;
     }
-})(this, function (exports, _typeOf, _objectOpsUncurried) {
+})(this, function (exports, _typeOf, _objectUncurried) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -46,7 +46,7 @@
      * @returns {Boolean}
      */
     isFunction = exports.isFunction = function isFunction(value) {
-        return (0, _objectOpsUncurried.instanceOf)(Function, value);
+        return (0, _objectUncurried.instanceOf)(Function, value);
     },
 
 
@@ -253,7 +253,7 @@
      * @returns {Boolean}
      */
     isEmptyList = exports.isEmptyList = function isEmptyList(x) {
-        return (0, _objectOpsUncurried.length)(x) === 0;
+        return (0, _objectUncurried.length)(x) === 0;
     },
 
 
@@ -263,7 +263,7 @@
      * @returns {Boolean}
      */
     isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
-        return isEmptyList((0, _objectOpsUncurried.keys)(obj));
+        return isEmptyList((0, _objectUncurried.keys)(obj));
     },
 
 
@@ -296,7 +296,7 @@
             retVal = false;
         } else if (typeOfValue === _Object) {
             retVal = isEmptyObject(value);
-        } else if ((0, _objectOpsUncurried.hasOwnProperty)('size', value)) {
+        } else if ((0, _objectUncurried.hasOwnProperty)('size', value)) {
             retVal = isEmptyCollection(value);
         } else {
             retVal = !value;

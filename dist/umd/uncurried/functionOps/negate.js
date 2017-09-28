@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './apply', '../jsPlatform/arrayOpsUncurried'], factory);
+        define(['exports', './apply', '../jsPlatform/arrayUncurried'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./apply'), require('../jsPlatform/arrayOpsUncurried'));
+        factory(exports, require('./apply'), require('../jsPlatform/arrayUncurried'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.apply, global.arrayOpsUncurried);
+        factory(mod.exports, global.apply, global.arrayUncurried);
         global.negate = mod.exports;
     }
-})(this, function (exports, _apply, _arrayOpsUncurried) {
+})(this, function (exports, _apply, _arrayUncurried) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -64,7 +64,7 @@
                 args[_key] = arguments[_key];
             }
 
-            return !(0, _apply.apply)(fn, (0, _arrayOpsUncurried.reverse)(args));
+            return !(0, _apply.apply)(fn, (0, _arrayUncurried.reverse)(args));
         };
     };
 });

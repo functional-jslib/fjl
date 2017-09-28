@@ -4,7 +4,7 @@
  */
 import {curry2} from './curry';
 
-import {call as pureCall} from   '../uncurried/jsPlatform/functionOpsUncurried';
+import {call as pureCall} from '../uncurried/jsPlatform/functionUncurried';
 
 export const
 

@@ -11,7 +11,7 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {instanceOf, hasOwnProperty, keys} from '../src/uncurried/jsPlatform/objectOpsUncurried';
+import {instanceOf, hasOwnProperty, keys} from '../src/uncurried/jsPlatform/objectUncurried';
 import {objComplement, objDifference, objUnion, objIntersect} from '../src/objectOps/objectOps';
 import {apply} from '../src/functionOps/apply';
 import {typeOf} from '../src/objectOps/typeOf';

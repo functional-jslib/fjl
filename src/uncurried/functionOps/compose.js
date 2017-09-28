@@ -1,4 +1,4 @@
-import {reduceRight} from   '../jsPlatform/arrayOpsUncurried';
+import {reduceRight} from '../jsPlatform/arrayUncurried';
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to

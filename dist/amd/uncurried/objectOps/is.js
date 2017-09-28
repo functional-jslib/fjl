@@ -1,4 +1,4 @@
-define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (exports, _typeOf, _objectOpsUncurried) {
+define(['exports', './typeOf', '../jsPlatform/objectUncurried'], function (exports, _typeOf, _objectUncurried) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -33,7 +33,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
      * @param value {*}
      * @returns {Boolean}
      */
-    isFunction = exports.isFunction = value => (0, _objectOpsUncurried.instanceOf)(Function, value),
+    isFunction = exports.isFunction = value => (0, _objectUncurried.instanceOf)(Function, value),
 
 
     /**
@@ -204,7 +204,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
      * @param x {*}
      * @returns {Boolean}
      */
-    isEmptyList = exports.isEmptyList = x => (0, _objectOpsUncurried.length)(x) === 0,
+    isEmptyList = exports.isEmptyList = x => (0, _objectUncurried.length)(x) === 0,
 
 
     /**
@@ -212,7 +212,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
      * @param obj {*}
      * @returns {Boolean}
      */
-    isEmptyObject = exports.isEmptyObject = obj => isEmptyList((0, _objectOpsUncurried.keys)(obj)),
+    isEmptyObject = exports.isEmptyObject = obj => isEmptyList((0, _objectUncurried.keys)(obj)),
 
 
     /**
@@ -242,7 +242,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
             retVal = false;
         } else if (typeOfValue === _Object) {
             retVal = isEmptyObject(value);
-        } else if ((0, _objectOpsUncurried.hasOwnProperty)('size', value)) {
+        } else if ((0, _objectUncurried.hasOwnProperty)('size', value)) {
             retVal = isEmptyCollection(value);
         } else {
             retVal = !value;

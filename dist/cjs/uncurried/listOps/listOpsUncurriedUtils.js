@@ -17,11 +17,11 @@ Object.keys(_listOpsUncurriedAggregation).forEach(function (key) {
     });
 });
 
-var _functionOpsUncurried = require('../jsPlatform/functionOpsUncurried');
+var _functionUncurried = require('../jsPlatform/functionUncurried');
 
-var _listOpsUncurried = require('../jsPlatform/listOpsUncurried');
+var _listUncurried = require('../jsPlatform/listUncurried');
 
-var _objectOpsUncurried = require('../jsPlatform/objectOpsUncurried');
+var _objectUncurried = require('../jsPlatform/objectUncurried');
 
 var _booleanOps = require('../../booleanOps/booleanOps');
 
@@ -41,7 +41,7 @@ var
  * @returns {Array|String|*}
  */
 sliceFrom = exports.sliceFrom = function sliceFrom(startInd, arr) {
-    return (0, _listOpsUncurried.slice)(startInd, (0, _objectOpsUncurried.length)(arr), arr);
+    return (0, _listUncurried.slice)(startInd, (0, _objectUncurried.length)(arr), arr);
 },
 
 
@@ -53,7 +53,7 @@ sliceFrom = exports.sliceFrom = function sliceFrom(startInd, arr) {
  * @returns {Array|String|*}
  */
 sliceTo = exports.sliceTo = function sliceTo(toInd, xs) {
-    return (0, _listOpsUncurried.slice)(0, toInd, xs);
+    return (0, _listUncurried.slice)(0, toInd, xs);
 },
 
 
@@ -85,21 +85,21 @@ lengths = exports.lengths = function lengths() {
         lists[_key] = arguments[_key];
     }
 
-    return (0, _objectOpsUncurried.length)(lists) ? (0, _map.map)(_objectOpsUncurried.length, lists) : [];
+    return (0, _objectUncurried.length)(lists) ? (0, _map.map)(_objectUncurried.length, lists) : [];
 },
     lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
     for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         lists[_key2] = arguments[_key2];
     }
 
-    var listLengths = (0, _functionOpsUncurried.apply)(lengths, lists),
+    var listLengths = (0, _functionUncurried.apply)(lengths, lists),
         smallLen = Math.min.apply(Math, listLengths);
     return (0, _map.map)(function (list, ind) {
         return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list);
     }, lists);
 },
     reduceUntil = exports.reduceUntil = function reduceUntil(pred, op, agg, arr) {
-    var limit = (0, _objectOpsUncurried.length)(arr);
+    var limit = (0, _objectUncurried.length)(arr);
     if (!limit) {
         return agg;
     }
@@ -114,7 +114,7 @@ lengths = exports.lengths = function lengths() {
     return result;
 },
     reduceRightUntil = exports.reduceRightUntil = function reduceRightUntil(pred, op, agg, arr) {
-    var limit = (0, _objectOpsUncurried.length)(arr);
+    var limit = (0, _objectUncurried.length)(arr);
     if (!limit) {
         return agg;
     }
@@ -151,7 +151,7 @@ reduceRight = exports.reduceRight = function reduceRight(operation, agg, arr) {
  * @returns {Number} - `-1` if no element found.
  */
 lastIndex = exports.lastIndex = function lastIndex(x) {
-    var len = (0, _objectOpsUncurried.length)(x);return len ? len - 1 : 0;
+    var len = (0, _objectUncurried.length)(x);return len ? len - 1 : 0;
 },
 
 
@@ -165,7 +165,7 @@ lastIndex = exports.lastIndex = function lastIndex(x) {
 findIndexWhere = exports.findIndexWhere = function findIndexWhere(pred, arr) {
     var ind = -1,
         predicateFulfilled = false;
-    var limit = (0, _objectOpsUncurried.length)(arr);
+    var limit = (0, _objectUncurried.length)(arr);
     while (ind < limit && !predicateFulfilled) {
         predicateFulfilled = pred(arr[++ind], ind, arr);
     }
@@ -181,7 +181,7 @@ findIndexWhere = exports.findIndexWhere = function findIndexWhere(pred, arr) {
  * @returns {Number} - `-1` if predicate not matched else `index` found
  */
 findIndexWhereRight = exports.findIndexWhereRight = function findIndexWhereRight(pred, arr) {
-    var limit = (0, _objectOpsUncurried.length)(arr);
+    var limit = (0, _objectUncurried.length)(arr);
     var ind = limit,
         predicateFulfilled = false;
     for (; ind >= 0 && !predicateFulfilled; --ind) {
@@ -197,7 +197,7 @@ findIndexWhereRight = exports.findIndexWhereRight = function findIndexWhereRight
  * @returns {Array|undefined}
  */
 findIndicesWhere = exports.findIndicesWhere = function findIndicesWhere(pred, xs) {
-    var limit = (0, _objectOpsUncurried.length)(xs);
+    var limit = (0, _objectUncurried.length)(xs);
     if (!limit) {
         return undefined;
     }
@@ -220,7 +220,7 @@ findIndicesWhere = exports.findIndicesWhere = function findIndicesWhere(pred, xs
  */
 findWhere = exports.findWhere = function findWhere(pred, xs) {
     var ind = 0,
-        limit = (0, _objectOpsUncurried.length)(xs);
+        limit = (0, _objectUncurried.length)(xs);
     if (!limit) {
         return;
     }

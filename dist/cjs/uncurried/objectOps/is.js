@@ -7,7 +7,7 @@ exports.isset = exports.notEmptyAndOfType = exports.isEmpty = exports.isEmptyCol
 
 var _typeOf = require('./typeOf');
 
-var _objectOpsUncurried = require('../jsPlatform/objectOpsUncurried');
+var _objectUncurried = require('../jsPlatform/objectUncurried');
 
 /**
  * Created by elyde on 12/18/2016.
@@ -38,7 +38,7 @@ var
  * @returns {Boolean}
  */
 isFunction = exports.isFunction = function isFunction(value) {
-    return (0, _objectOpsUncurried.instanceOf)(Function, value);
+    return (0, _objectUncurried.instanceOf)(Function, value);
 },
 
 
@@ -245,7 +245,7 @@ isUsableImmutablePrimitive = exports.isUsableImmutablePrimitive = function isUsa
  * @returns {Boolean}
  */
 isEmptyList = exports.isEmptyList = function isEmptyList(x) {
-    return (0, _objectOpsUncurried.length)(x) === 0;
+    return (0, _objectUncurried.length)(x) === 0;
 },
 
 
@@ -255,7 +255,7 @@ isEmptyList = exports.isEmptyList = function isEmptyList(x) {
  * @returns {Boolean}
  */
 isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
-    return isEmptyList((0, _objectOpsUncurried.keys)(obj));
+    return isEmptyList((0, _objectUncurried.keys)(obj));
 },
 
 
@@ -288,7 +288,7 @@ isEmpty = exports.isEmpty = function isEmpty(value) {
         retVal = false;
     } else if (typeOfValue === _Object) {
         retVal = isEmptyObject(value);
-    } else if ((0, _objectOpsUncurried.hasOwnProperty)('size', value)) {
+    } else if ((0, _objectUncurried.hasOwnProperty)('size', value)) {
         retVal = isEmptyCollection(value);
     } else {
         retVal = !value;

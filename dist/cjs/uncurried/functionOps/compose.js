@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.compose = undefined;
 
-var _arrayOpsUncurried = require('../jsPlatform/arrayOpsUncurried');
+var _arrayUncurried = require('../jsPlatform/arrayUncurried');
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
@@ -21,7 +21,7 @@ var compose = exports.compose = function compose() {
   }
 
   return function (arg0) {
-    return (0, _arrayOpsUncurried.reduceRight)(function (value, fn) {
+    return (0, _arrayUncurried.reduceRight)(function (value, fn) {
       return fn(value);
     }, arg0, args);
   };

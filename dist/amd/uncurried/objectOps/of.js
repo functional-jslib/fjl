@@ -1,4 +1,4 @@
-define(['exports', './is', '../jsPlatform/objectOpsUncurried', '../functionOps/apply'], function (exports, _is, _objectOpsUncurried, _apply) {
+define(['exports', './is', '../jsPlatform/objectUncurried', '../functionOps/apply'], function (exports, _is, _objectUncurried, _apply) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -10,7 +10,7 @@ define(['exports', './is', '../jsPlatform/objectOpsUncurried', '../functionOps/a
             return undefined;
         }
         const constructor = x.constructor;
-        if ((0, _objectOpsUncurried.hasOwnProperty)('of', constructor)) {
+        if ((0, _objectUncurried.hasOwnProperty)('of', constructor)) {
             return (0, _apply.apply)(constructor.of, args);
         } else if ((0, _is.isUsableImmutablePrimitive)(x)) {
             return (0, _apply.apply)(constructor, args);

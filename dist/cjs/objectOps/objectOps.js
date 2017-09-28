@@ -5,24 +5,24 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.keys = exports.toString = exports.length = undefined;
 
-var _objectOpsUncurried = require('../uncurried/jsPlatform/objectOpsUncurried');
+var _objectUncurried = require('../uncurried/jsPlatform/objectUncurried');
 
 Object.defineProperty(exports, 'length', {
     enumerable: true,
     get: function get() {
-        return _objectOpsUncurried.length;
+        return _objectUncurried.length;
     }
 });
 Object.defineProperty(exports, 'toString', {
     enumerable: true,
     get: function get() {
-        return _objectOpsUncurried.toString;
+        return _objectUncurried.toString;
     }
 });
 Object.defineProperty(exports, 'keys', {
     enumerable: true,
     get: function get() {
-        return _objectOpsUncurried.keys;
+        return _objectUncurried.keys;
     }
 });
 
@@ -78,7 +78,7 @@ var _curry = require('../functionOps/curry');
 
 var _assignDeep = require('../uncurried/objectOps/assignDeep');
 
-var instanceOf = exports.instanceOf = (0, _curry.curry)(_objectOpsUncurried.instanceOf),
-    hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_objectOpsUncurried.hasOwnProperty),
-    assign = exports.assign = (0, _curry.curry2)(_objectOpsUncurried.assign),
+var instanceOf = exports.instanceOf = (0, _curry.curry)(_objectUncurried.instanceOf),
+    hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_objectUncurried.hasOwnProperty),
+    assign = exports.assign = (0, _curry.curry2)(_objectUncurried.assign),
     assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep.assignDeep);

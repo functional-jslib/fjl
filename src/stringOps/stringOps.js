@@ -5,7 +5,7 @@
  */
 import {intercalate} from   '../listOps/listOps';
 
-import {split} from   '../jsPlatform/stringOps';
+import {split} from '../jsPlatform/string';
 
 export const
 

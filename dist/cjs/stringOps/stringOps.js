@@ -7,7 +7,7 @@ exports.unlines = exports.unwords = exports.words = exports.lines = undefined;
 
 var _listOps = require('../listOps/listOps');
 
-var _stringOps = require('../jsPlatform/stringOps');
+var _string = require('../jsPlatform/string');
 
 /**
  * Contains functions for operating strings.
@@ -22,7 +22,7 @@ var
  * @param str {String}
  * @returns {Array}
  */
-lines = exports.lines = (0, _stringOps.split)(/[\n\r]/gm),
+lines = exports.lines = (0, _string.split)(/[\n\r]/gm),
 
 
 /**
@@ -31,7 +31,7 @@ lines = exports.lines = (0, _stringOps.split)(/[\n\r]/gm),
  * @param str{String}
  * @returns {Array}
  */
-words = exports.words = (0, _stringOps.split)(/[\s\t]/gm),
+words = exports.words = (0, _string.split)(/[\s\t]/gm),
 
 
 /**

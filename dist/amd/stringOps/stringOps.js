@@ -1,4 +1,4 @@
-define(['exports', '../listOps/listOps', '../jsPlatform/stringOps'], function (exports, _listOps, _stringOps) {
+define(['exports', '../listOps/listOps', '../jsPlatform/string'], function (exports, _listOps, _string) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -18,7 +18,7 @@ define(['exports', '../listOps/listOps', '../jsPlatform/stringOps'], function (e
    * @param str {String}
    * @returns {Array}
    */
-  lines = exports.lines = (0, _stringOps.split)(/[\n\r]/gm),
+  lines = exports.lines = (0, _string.split)(/[\n\r]/gm),
 
 
   /**
@@ -27,7 +27,7 @@ define(['exports', '../listOps/listOps', '../jsPlatform/stringOps'], function (e
    * @param str{String}
    * @returns {Array}
    */
-  words = exports.words = (0, _stringOps.split)(/[\s\t]/gm),
+  words = exports.words = (0, _string.split)(/[\s\t]/gm),
 
 
   /**

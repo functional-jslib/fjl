@@ -11,7 +11,7 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {apply} from '../src/uncurried/jsPlatform/functionOpsUncurried';
+import {apply} from '../src/uncurried/jsPlatform/functionUncurried';
 import {objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,

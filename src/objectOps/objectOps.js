@@ -4,11 +4,11 @@ import {
     instanceOf as pureInstanceOf,
     hasOwnProperty as pureHasOwnProperty,
     assign as pureAssign
-} from   '../uncurried/jsPlatform/objectOpsUncurried';
+} from '../uncurried/jsPlatform/objectUncurried';
 
 import {assignDeep as pureAssignDeep} from   '../uncurried/objectOps/assignDeep';
 
-export {length, toString, keys} from   '../uncurried/jsPlatform/objectOpsUncurried';
+export {length, toString, keys} from '../uncurried/jsPlatform/objectUncurried';
 
 export const
 

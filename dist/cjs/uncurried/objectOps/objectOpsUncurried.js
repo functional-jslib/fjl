@@ -16,14 +16,14 @@ Object.keys(_assignDeep).forEach(function (key) {
   });
 });
 
-var _objectOpsUncurried = require('../jsPlatform/objectOpsUncurried');
+var _objectUncurried = require('../jsPlatform/objectUncurried');
 
-Object.keys(_objectOpsUncurried).forEach(function (key) {
+Object.keys(_objectUncurried).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _objectOpsUncurried[key];
+      return _objectUncurried[key];
     }
   });
 });

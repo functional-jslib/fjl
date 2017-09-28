@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.flip = exports.flipN = undefined;
 
-var _arrayOpsUncurried = require('../jsPlatform/arrayOpsUncurried');
+var _arrayUncurried = require('../jsPlatform/arrayUncurried');
 
 var _apply = require('./apply');
 
@@ -25,7 +25,7 @@ flipN = exports.flipN = function flipN(fn) {
       args[_key] = arguments[_key];
     }
 
-    return (0, _apply.apply)(fn, (0, _arrayOpsUncurried.reverse)(args));
+    return (0, _apply.apply)(fn, (0, _arrayUncurried.reverse)(args));
   };
 },
 

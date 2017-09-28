@@ -1,6 +1,6 @@
 export * from './assignDeep';
 
-export * from   '../jsPlatform/objectOpsUncurried';
+export * from '../jsPlatform/objectUncurried';
 
 export * from './typeOf';
 

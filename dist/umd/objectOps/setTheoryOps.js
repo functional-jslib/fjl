@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/objectOpsUncurried', '../uncurried/objectOps/assignDeep', '../listOps/listOps'], factory);
+        define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/objectUncurried', '../uncurried/objectOps/assignDeep', '../listOps/listOps'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../functionOps/curry'), require('../uncurried/jsPlatform/objectOpsUncurried'), require('../uncurried/objectOps/assignDeep'), require('../listOps/listOps'));
+        factory(exports, require('../functionOps/curry'), require('../uncurried/jsPlatform/objectUncurried'), require('../uncurried/objectOps/assignDeep'), require('../listOps/listOps'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry, global.objectOpsUncurried, global.assignDeep, global.listOps);
+        factory(mod.exports, global.curry, global.objectUncurried, global.assignDeep, global.listOps);
         global.setTheoryOps = mod.exports;
     }
-})(this, function (exports, _curry, _objectOpsUncurried, _assignDeep, _listOps) {
+})(this, function (exports, _curry, _objectUncurried, _assignDeep, _listOps) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -22,19 +22,19 @@
     }),
         objIntersect = exports.objIntersect = (0, _curry.curry)(function (obj1, obj2) {
         return (0, _listOps.foldl)(function (agg, key) {
-            if ((0, _objectOpsUncurried.hasOwnProperty)(key, obj2)) {
+            if ((0, _objectUncurried.hasOwnProperty)(key, obj2)) {
                 agg[key] = obj2[key];
             }
             return agg;
-        }, {}, (0, _objectOpsUncurried.keys)(obj1));
+        }, {}, (0, _objectUncurried.keys)(obj1));
     }),
         objDifference = exports.objDifference = (0, _curry.curry)(function (obj1, obj2) {
         return (0, _listOps.foldl)(function (agg, key) {
-            if (!(0, _objectOpsUncurried.hasOwnProperty)(key, obj2)) {
+            if (!(0, _objectUncurried.hasOwnProperty)(key, obj2)) {
                 agg[key] = obj1[key];
             }
             return agg;
-        }, {}, (0, _objectOpsUncurried.keys)(obj1));
+        }, {}, (0, _objectUncurried.keys)(obj1));
     }),
         objComplement = exports.objComplement = (0, _curry.curry2)(function (obj0) {
         for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {

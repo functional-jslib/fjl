@@ -3179,7 +3179,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="uncurried_listOps_listOpsUncurried.js.html">uncurried/listOps/listOpsUncurried.js</a>, <a href="uncurried_listOps_listOpsUncurried.js.html#line718">line 718</a>
+        <a href="listOps_listOps.js.html">listOps/listOps.js</a>, <a href="listOps_listOps.js.html#line354">line 354</a>
     </li></ul></dd>
     
 
@@ -3361,7 +3361,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="listOps_listOps.js.html">listOps/listOps.js</a>, <a href="listOps_listOps.js.html#line354">line 354</a>
+        <a href="uncurried_listOps_listOpsUncurried.js.html">uncurried/listOps/listOpsUncurried.js</a>, <a href="uncurried_listOps_listOpsUncurried.js.html#line718">line 718</a>
     </li></ul></dd>
     
 
@@ -5895,6 +5895,195 @@
     
 
     
+    <h4 class="name" id=".partition"><span class="type-signature">(static) </span>partition<span class="signature">(pred, list)</span><span class="type-signature"> &rarr; {Array|String}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items thatdo not match the tuple are in second list in the returned tuple. Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pred</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Predicate<item, index, originalArrayOrString></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>list</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="uncurried_listOps_listOpsUncurried.js.html">uncurried/listOps/listOpsUncurried.js</a>, <a href="uncurried_listOps_listOpsUncurried.js.html#line608">line 608</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Tuple of arrays or strings (depends on incoming list (of type list or string)).
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id=".partition"><span class="type-signature">(static) </span>partition<span class="signature">(pred, list)</span><span class="type-signature"> &rarr; {Array|String|*}</span></h4>
     
 
@@ -6070,195 +6259,6 @@
 |
 
 <span class="param-type">*</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".partition"><span class="type-signature">(static) </span>partition<span class="signature">(pred, list)</span><span class="type-signature"> &rarr; {Array|String}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items thatdo not match the tuple are in second list in the returned tuple. Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>pred</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Predicate<item, index, originalArrayOrString></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>list</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">String</span>
-|
-
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="uncurried_listOps_listOpsUncurried.js.html">uncurried/listOps/listOpsUncurried.js</a>, <a href="uncurried_listOps_listOpsUncurried.js.html#line608">line 608</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Tuple of arrays or strings (depends on incoming list (of type list or string)).
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">String</span>
 
 
     </dd>
@@ -8920,172 +8920,6 @@
     
 
     
-    <h4 class="name" id=".unzip"><span class="type-signature">(static) </span>unzip<span class="signature">(list)</span><span class="type-signature"> &rarr; {Array|*}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    unzip transforms a list of pairs into a list of first components and a list of second components.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>list</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">List of tuples (lists).</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="uncurried_listOps_listOpsUncurried.js.html">uncurried/listOps/listOpsUncurried.js</a>, <a href="uncurried_listOps_listOpsUncurried.js.html#line975">line 975</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).</li>
-        </ul>
-    </dd>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">*</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id=".unzip"><span class="type-signature">(static) </span>unzip<span class="signature">(arr)</span><span class="type-signature"> &rarr; {Array|*}</span></h4>
     
 
@@ -9191,6 +9025,172 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="uncurried_listOps_listOpsUncurried.js.html">uncurried/listOps/listOpsUncurried.js</a>, <a href="uncurried_listOps_listOpsUncurried.js.html#line960">line 960</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".unzip"><span class="type-signature">(static) </span>unzip<span class="signature">(list)</span><span class="type-signature"> &rarr; {Array|*}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    unzip transforms a list of pairs into a list of first components and a list of second components.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>list</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of tuples (lists).</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="uncurried_listOps_listOpsUncurried.js.html">uncurried/listOps/listOpsUncurried.js</a>, <a href="uncurried_listOps_listOpsUncurried.js.html#line975">line 975</a>
     </li></ul></dd>
     
 
@@ -11430,13 +11430,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="jsPlatform.module_listOps.html">listOps</a></li><li><a href="jsPlatform.module_stringOps.html">stringOps</a></li><li><a href="jsPlatform_arrayOpsUncurried.html">jsPlatform:arrayOpsUncurried</a></li><li><a href="listOpsUncurried.module_sliceTo.html">sliceTo</a></li><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-curry.html">curry</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-functionOpsUncurried.html">functionOpsUncurried</a></li><li><a href="module-id.html">id</a></li><li><a href="module-is.html">is</a></li><li><a href="module-jsPlatform_arrayOps.html">jsPlatform_arrayOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-listOpsUncurried.html">listOpsUncurried</a></li><li><a href="module-listOpsUtils.html">listOpsUtils</a></li><li><a href="module-negate.html">negate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_Number">_Number</a></li><li><a href="global.html#apply">apply</a></li><li><a href="global.html#instanceOf">instanceOf</a></li><li><a href="global.html#prop">prop</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="jsPlatform_arrayOpsUncurried.html">jsPlatform:arrayOpsUncurried</a></li><li><a href="listOpsUncurried.module_sliceTo.html">sliceTo</a></li><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-curry.html">curry</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-functionOpsUncurried.html">functionOpsUncurried</a></li><li><a href="module-id.html">id</a></li><li><a href="module-is.html">is</a></li><li><a href="module-jsPlatform_array.html">jsPlatform_array</a></li><li><a href="module-jsPlatform_list.html">jsPlatform_list</a></li><li><a href="module-jsPlatform_string.html">jsPlatform_string</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-listOpsUncurried.html">listOpsUncurried</a></li><li><a href="module-listOpsUtils.html">listOpsUtils</a></li><li><a href="module-negate.html">negate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_Number">_Number</a></li><li><a href="global.html#apply">apply</a></li><li><a href="global.html#instanceOf">instanceOf</a></li><li><a href="global.html#prop">prop</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Sep 28 2017 00:44:44 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Sep 28 2017 01:20:26 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

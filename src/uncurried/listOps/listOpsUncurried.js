@@ -8,8 +8,8 @@
 import {
     concat as listAppend,
     indexOf, slice, includes
-} from '../jsPlatform/listOpsUncurried';
-import {apply} from '../jsPlatform/functionOpsUncurried';
+} from '../jsPlatform/listUncurried';
+import {apply} from '../jsPlatform/functionUncurried';
 import {negateF} from '../functionOps/negate';
 import {negateP} from '../functionOps/functionOpsUncurried';
 import {isTruthy, isFalsy} from '../../booleanOps/booleanOps';

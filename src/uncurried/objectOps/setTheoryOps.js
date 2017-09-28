@@ -1,5 +1,5 @@
 import {assignDeep} from './assignDeep';
-import {hasOwnProperty, keys} from   '../jsPlatform/objectOpsUncurried';
+import {hasOwnProperty, keys} from '../jsPlatform/objectUncurried';
 import {foldl} from   '../listOps/listOpsUncurried';
 
 export const

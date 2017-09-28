@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _functionOpsUncurried = require('../jsPlatform/functionOpsUncurried');
+var _functionUncurried = require('../jsPlatform/functionUncurried');
 
 Object.defineProperty(exports, 'call', {
   enumerable: true,
   get: function get() {
-    return _functionOpsUncurried.call;
+    return _functionUncurried.call;
   }
 });

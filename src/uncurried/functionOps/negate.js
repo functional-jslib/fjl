@@ -4,7 +4,7 @@
 
 import {apply} from './apply';
 
-import {reverse} from   '../jsPlatform/arrayOpsUncurried';
+import {reverse} from '../jsPlatform/arrayUncurried';
 
 export const
 

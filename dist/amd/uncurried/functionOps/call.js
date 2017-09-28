@@ -1,4 +1,4 @@
-define(['exports', '../jsPlatform/functionOpsUncurried'], function (exports, _functionOpsUncurried) {
+define(['exports', '../jsPlatform/functionUncurried'], function (exports, _functionUncurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -7,7 +7,7 @@ define(['exports', '../jsPlatform/functionOpsUncurried'], function (exports, _fu
   Object.defineProperty(exports, 'call', {
     enumerable: true,
     get: function () {
-      return _functionOpsUncurried.call;
+      return _functionUncurried.call;
     }
   });
 });

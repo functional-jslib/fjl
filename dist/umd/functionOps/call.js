@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './curry', '../uncurried/jsPlatform/functionOpsUncurried'], factory);
+    define(['exports', './curry', '../uncurried/jsPlatform/functionUncurried'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./curry'), require('../uncurried/jsPlatform/functionOpsUncurried'));
+    factory(exports, require('./curry'), require('../uncurried/jsPlatform/functionUncurried'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.curry, global.functionOpsUncurried);
+    factory(mod.exports, global.curry, global.functionUncurried);
     global.call = mod.exports;
   }
-})(this, function (exports, _curry, _functionOpsUncurried) {
+})(this, function (exports, _curry, _functionUncurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -30,5 +30,5 @@
    * @param args {*}
    * @returns {*}
    */
-  call = exports.call = (0, _curry.curry2)(_functionOpsUncurried.call);
+  call = exports.call = (0, _curry.curry2)(_functionUncurried.call);
 });

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: jsPlatform/arrayOps.js</title>
+    <title>JSDoc: Source: uncurried/jsPlatform/arrayUncurried.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: jsPlatform/arrayOps.js</h1>
+    <h1 class="page-title">Source: uncurried/jsPlatform/arrayUncurried.js</h1>
 
     
 
@@ -28,124 +28,129 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * Created by elyde on 7/20/2017.
- * Curried functional versions of common array methods (`filter`, `map`, etc.).
- * @module jsPlatform_arrayOps
+ * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
+ * @module jsPlatform:arrayOpsUncurried
+ * @todo updated doc blocks to list correct/updated module name.
  */
 
-import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from   '../utils/utils';
-
-import {defineReverse} from   '../uncurried/jsPlatform/arrayOpsUncurried';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from   '../../utils/utils';
 
 export const
 
     /**
+     * Array.prototype.reverse generator (generates a functionOps that calls the prototype version or a
+     * shimmed version if it doesn't exist).
+     * @returns {Function}
+     */
+    defineReverse = () =>
+        Array.prototype.reverse ? x => x.reverse() :
+            x => x.reduceRight((agg, item) => {
+                agg.push(item);
+                return agg;
+            }, []),
+
+    /**
      * Maps a functionOps to functor (listOps etc.).
-     * @function module:jsPlatform_arrayOps.map
+     * @function module:arrayOpsUncurried.map
      * @param fn {Function}
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
      */
-    map = fPureTakesOne_('map'),
+    map = fPureTakesOne('map'),
 
     /**
      * Filters a functor (listOps etc.) with passed in functionOps.
-     * @function module:jsPlatform_arrayOps.filter
+     * @function module:arrayOpsUncurried.filter
      * @param fn {Function}
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
      */
-    filter = fPureTakesOne_('filter'),
+    filter = fPureTakesOne('filter'),
 
     /**
      * Reduces a foldable (listOps etc.) with passed in functionOps.
-     * @function module:jsPlatform_arrayOps.reduce
+     * @function module:arrayOpsUncurried.reduce
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
      */
-    reduce = fPureTakes2_('reduce'),
+    reduce = fPureTakes2('reduce'),
 
     /**
      * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
-     * @function module:jsPlatform_arrayOps.reduceRight
+     * @function module:arrayOpsUncurried.reduceRight
      * @param fn {Function}
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
      */
-    reduceRight = fPureTakes2_('reduceRight'),
+    reduceRight = fPureTakes2('reduceRight'),
 
     /**
      * For each on functor (Array|Object|etc.).
-     * @function module:jsPlatform_arrayOps.forEach
      * @param fn {Function}
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
      * @throws {Error} - When passed in functor doesn't have a `forEach` method.
      */
-    forEach = fPureTakesOne_('forEach'),
+    forEach = fPureTakesOne('forEach'),
 
     /**
      * Returns `true` if `fn` (predicate) returns true for at least one item
      * in functor else returns `false`.
-     * @function module:jsPlatform_arrayOps.some
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in objectOps doesn't have a `some` method.
      */
-    some = fPureTakesOne_('some'),
+    some = fPureTakesOne('some'),
 
     /**
      * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @function module:jsPlatform_arrayOps.every
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in objectOps doesn't have an `every` method.
      */
-    every = fPureTakesOne_('every'),
+    every = fPureTakesOne('every'),
 
     /**
      * Concats/appends all functors onto the end of first functor.
      * Note:  functors passed in after the first one must be of the same type.
-     * @function module:jsPlatform_arrayOps.concat
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in objectOps doesn't have an `every` method.
      */
-    concat = fPureTakesOneOrMore_('concat'),
+    concat = fPureTakesOneOrMore('concat'),
 
     /**
      * Array.prototype.join
-     * @function module:jsPlatform_arrayOps.join
+     * @function module:listPrelude.join
      * @param separator {String|RegExp}
      * @param arr {Array}
      * @returns {String}
      */
-    join = fPureTakesOne_('join'),
+    join = fPureTakesOne('join'),
 
     /**
      * Same as Array.prototype.slice
-     * @function module:jsPlatform_arrayOps.slice
      * @param separator {String|RegExp}
      * @param arr{Array}
      * @returns {Array}
      */
-    slice = fPureTakes2_('slice'),
+    slice = fPureTakes2('slice'),
 
     /**
      * Same as Array.prototype.push
-     * @function module:jsPlatform_arrayOps.push
      * @param item {*}
      * @param arr {Array}
      * @returns {Number}
      */
-    push = fPureTakesOneOrMore_('push'),
+    push = fPureTakesOneOrMore('push'),
 
     /**
      * Reverses an listOps (shimmed if not exists).
-     * @function module:jsPlatform_arrayOps.reverse
+     * @function module:listPrelude.reverse
      * @return {Array}
      */
     reverse = defineReverse();
@@ -159,13 +164,13 @@ export const
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="jsPlatform.module_listOps.html">listOps</a></li><li><a href="jsPlatform.module_stringOps.html">stringOps</a></li><li><a href="jsPlatform_arrayOpsUncurried.html">jsPlatform:arrayOpsUncurried</a></li><li><a href="listOpsUncurried.module_sliceTo.html">sliceTo</a></li><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-curry.html">curry</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-functionOpsUncurried.html">functionOpsUncurried</a></li><li><a href="module-id.html">id</a></li><li><a href="module-is.html">is</a></li><li><a href="module-jsPlatform_arrayOps.html">jsPlatform_arrayOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-listOpsUncurried.html">listOpsUncurried</a></li><li><a href="module-listOpsUtils.html">listOpsUtils</a></li><li><a href="module-negate.html">negate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_Number">_Number</a></li><li><a href="global.html#apply">apply</a></li><li><a href="global.html#instanceOf">instanceOf</a></li><li><a href="global.html#prop">prop</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="jsPlatform_arrayOpsUncurried.html">jsPlatform:arrayOpsUncurried</a></li><li><a href="listOpsUncurried.module_sliceTo.html">sliceTo</a></li><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-curry.html">curry</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-functionOpsUncurried.html">functionOpsUncurried</a></li><li><a href="module-id.html">id</a></li><li><a href="module-is.html">is</a></li><li><a href="module-jsPlatform_array.html">jsPlatform_array</a></li><li><a href="module-jsPlatform_list.html">jsPlatform_list</a></li><li><a href="module-jsPlatform_string.html">jsPlatform_string</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-listOpsUncurried.html">listOpsUncurried</a></li><li><a href="module-listOpsUtils.html">listOpsUtils</a></li><li><a href="module-negate.html">negate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_Number">_Number</a></li><li><a href="global.html#apply">apply</a></li><li><a href="global.html#instanceOf">instanceOf</a></li><li><a href="global.html#prop">prop</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Sep 28 2017 00:44:44 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Sep 28 2017 01:20:26 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

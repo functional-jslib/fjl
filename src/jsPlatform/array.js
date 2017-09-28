@@ -1,18 +1,18 @@
 /**
  * Created by elyde on 7/20/2017.
  * Curried functional versions of common array methods (`filter`, `map`, etc.).
- * @module jsPlatform_arrayOps
+ * @module jsPlatform_array
  */
 
 import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from   '../utils/utils';
 
-import {defineReverse} from   '../uncurried/jsPlatform/arrayOpsUncurried';
+import {defineReverse} from '../uncurried/jsPlatform/arrayUncurried';
 
 export const
 
     /**
      * Maps a functionOps to functor (listOps etc.).
-     * @function module:jsPlatform_arrayOps.map
+     * @function module:jsPlatform_array.map
      * @param fn {Function}
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
@@ -21,7 +21,7 @@ export const
 
     /**
      * Filters a functor (listOps etc.) with passed in functionOps.
-     * @function module:jsPlatform_arrayOps.filter
+     * @function module:jsPlatform_array.filter
      * @param fn {Function}
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
@@ -30,7 +30,7 @@ export const
 
     /**
      * Reduces a foldable (listOps etc.) with passed in functionOps.
-     * @function module:jsPlatform_arrayOps.reduce
+     * @function module:jsPlatform_array.reduce
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
@@ -39,7 +39,7 @@ export const
 
     /**
      * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
-     * @function module:jsPlatform_arrayOps.reduceRight
+     * @function module:jsPlatform_array.reduceRight
      * @param fn {Function}
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
@@ -48,7 +48,7 @@ export const
 
     /**
      * For each on functor (Array|Object|etc.).
-     * @function module:jsPlatform_arrayOps.forEach
+     * @function module:jsPlatform_array.forEach
      * @param fn {Function}
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
@@ -59,7 +59,7 @@ export const
     /**
      * Returns `true` if `fn` (predicate) returns true for at least one item
      * in functor else returns `false`.
-     * @function module:jsPlatform_arrayOps.some
+     * @function module:jsPlatform_array.some
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -69,7 +69,7 @@ export const
 
     /**
      * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @function module:jsPlatform_arrayOps.every
+     * @function module:jsPlatform_array.every
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -80,7 +80,7 @@ export const
     /**
      * Concats/appends all functors onto the end of first functor.
      * Note:  functors passed in after the first one must be of the same type.
-     * @function module:jsPlatform_arrayOps.concat
+     * @function module:jsPlatform_array.concat
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -90,7 +90,7 @@ export const
 
     /**
      * Array.prototype.join
-     * @function module:jsPlatform_arrayOps.join
+     * @function module:jsPlatform_array.join
      * @param separator {String|RegExp}
      * @param arr {Array}
      * @returns {String}
@@ -99,7 +99,7 @@ export const
 
     /**
      * Same as Array.prototype.slice
-     * @function module:jsPlatform_arrayOps.slice
+     * @function module:jsPlatform_array.slice
      * @param separator {String|RegExp}
      * @param arr{Array}
      * @returns {Array}
@@ -108,7 +108,7 @@ export const
 
     /**
      * Same as Array.prototype.push
-     * @function module:jsPlatform_arrayOps.push
+     * @function module:jsPlatform_array.push
      * @param item {*}
      * @param arr {Array}
      * @returns {Number}
@@ -117,7 +117,7 @@ export const
 
     /**
      * Reverses an listOps (shimmed if not exists).
-     * @function module:jsPlatform_arrayOps.reverse
+     * @function module:jsPlatform_array.reverse
      * @return {Array}
      */
     reverse = defineReverse();

@@ -1,4 +1,4 @@
-import {reverse} from   '../jsPlatform/arrayOpsUncurried';
+import {reverse} from '../jsPlatform/arrayUncurried';
 import {apply} from './apply';
 import {call} from './call';
 

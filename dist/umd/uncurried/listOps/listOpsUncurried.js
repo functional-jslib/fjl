@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../jsPlatform/listOpsUncurried', '../jsPlatform/functionOpsUncurried', '../functionOps/negate', '../functionOps/functionOpsUncurried', '../../booleanOps/booleanOps', '../objectOps/objectOpsUncurried', './map', './listOpsUncurriedUtils'], factory);
+        define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurried', '../functionOps/negate', '../functionOps/functionOpsUncurried', '../../booleanOps/booleanOps', '../objectOps/objectOpsUncurried', './map', './listOpsUncurriedUtils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../jsPlatform/listOpsUncurried'), require('../jsPlatform/functionOpsUncurried'), require('../functionOps/negate'), require('../functionOps/functionOpsUncurried'), require('../../booleanOps/booleanOps'), require('../objectOps/objectOpsUncurried'), require('./map'), require('./listOpsUncurriedUtils'));
+        factory(exports, require('../jsPlatform/listUncurried'), require('../jsPlatform/functionUncurried'), require('../functionOps/negate'), require('../functionOps/functionOpsUncurried'), require('../../booleanOps/booleanOps'), require('../objectOps/objectOpsUncurried'), require('./map'), require('./listOpsUncurriedUtils'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.listOpsUncurried, global.functionOpsUncurried, global.negate, global.functionOpsUncurried, global.booleanOps, global.objectOpsUncurried, global.map, global.listOpsUncurriedUtils);
+        factory(mod.exports, global.listUncurried, global.functionUncurried, global.negate, global.functionOpsUncurried, global.booleanOps, global.objectOpsUncurried, global.map, global.listOpsUncurriedUtils);
         global.listOpsUncurried = mod.exports;
     }
-})(this, function (exports, _listOpsUncurried, _functionOpsUncurried, _negate, _functionOpsUncurried2, _booleanOps, _objectOpsUncurried, _map, _listOpsUncurriedUtils) {
+})(this, function (exports, _listUncurried, _functionUncurried, _negate, _functionOpsUncurried, _booleanOps, _objectOpsUncurried, _map, _listOpsUncurriedUtils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -77,7 +77,7 @@
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
      */
-    append = exports.append = _listOpsUncurried.concat,
+    append = exports.append = _listUncurried.concat,
 
 
     /**
@@ -95,7 +95,7 @@
         }
 
         if ((0, _objectOpsUncurried.length)(args)) {
-            return (0, _functionOpsUncurried.apply)(_listOpsUncurried.concat, args);
+            return (0, _functionUncurried.apply)(_listUncurried.concat, args);
         }
         throw new Error('`appendMany` requires at least one arg.');
     },
@@ -218,7 +218,7 @@
         if (!(0, _objectOpsUncurried.length)(xs)) {
             return (0, _listOpsUncurriedUtils.copy)(xs);
         }
-        return (0, _objectOpsUncurried.isString)(xs) ? xs : (0, _functionOpsUncurried.apply)(appendMany, xs);
+        return (0, _objectOpsUncurried.isString)(xs) ? xs : (0, _functionUncurried.apply)(appendMany, xs);
     },
 
 
@@ -310,7 +310,7 @@
         if (!numLists) {
             return (0, _objectOpsUncurried.of)(xss);
         }
-        var listLengths = (0, _functionOpsUncurried.apply)(_listOpsUncurriedUtils.lengths, xss),
+        var listLengths = (0, _functionUncurried.apply)(_listOpsUncurriedUtils.lengths, xss),
             longestListLen = maximum(listLengths),
             outLists = [];
         for (; ind < longestListLen; ind += 1) {
@@ -532,7 +532,7 @@
      * @returns {*}
      */
     elemIndex = exports.elemIndex = function elemIndex(x, xs) {
-        var foundInd = (0, _listOpsUncurried.indexOf)(x, xs);
+        var foundInd = (0, _listUncurried.indexOf)(x, xs);
         return foundInd !== -1 ? foundInd : undefined;
     },
 
@@ -597,7 +597,7 @@
     takeWhile = exports.takeWhile = function takeWhile(pred, list) {
         var zero = (0, _objectOpsUncurried.of)(list);
         var operation = (0, _listOpsUncurriedUtils.aggregatorByType)(list);
-        return (0, _listOpsUncurriedUtils.reduceUntil)((0, _functionOpsUncurried2.negateP)(pred), // predicate
+        return (0, _listOpsUncurriedUtils.reduceUntil)((0, _functionOpsUncurried.negateP)(pred), // predicate
         operation, // operation
         zero, // aggregator
         list);
@@ -618,7 +618,7 @@
             return !pred(list[ind], ind, list2);
         }, list);
 
-        return splitPoint === -1 ? (0, _listOpsUncurriedUtils.sliceTo)(limit, list) : (0, _listOpsUncurried.slice)(splitPoint, limit, list);
+        return splitPoint === -1 ? (0, _listOpsUncurriedUtils.sliceTo)(limit, list) : (0, _listUncurried.slice)(splitPoint, limit, list);
     },
 
 
@@ -649,7 +649,7 @@
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     span = exports.span = function span(pred, list) {
-        var splitPoint = (0, _listOpsUncurriedUtils.findIndexWhere)((0, _functionOpsUncurried2.negateP)(pred), list);
+        var splitPoint = (0, _listOpsUncurriedUtils.findIndexWhere)((0, _functionOpsUncurried.negateP)(pred), list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     },
         breakOnList = exports.breakOnList = function breakOnList(pred, list) {
@@ -704,15 +704,15 @@
         if (!(0, _objectOpsUncurried.length)(list)) {
             return [(0, _objectOpsUncurried.of)(list), (0, _objectOpsUncurried.of)(list)];
         }
-        return [filter(pred, list), filter((0, _functionOpsUncurried2.negateP)(pred), list)];
+        return [filter(pred, list), filter((0, _functionOpsUncurried.negateP)(pred), list)];
     },
-        elem = exports.elem = _listOpsUncurried.includes,
-        notElem = exports.notElem = (0, _negate.negateF)(_listOpsUncurried.includes),
+        elem = exports.elem = _listUncurried.includes,
+        notElem = exports.notElem = (0, _negate.negateF)(_listUncurried.includes),
         lookup = exports.lookup = at,
         isPrefixOf = exports.isPrefixOf = function isPrefixOf(xs1, xs2) {
         var limit1 = (0, _objectOpsUncurried.length)(xs1),
             limit2 = (0, _objectOpsUncurried.length)(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || (0, _listOpsUncurried.indexOf)(xs1[0], xs2) === -1) {
+        if (limit2 < limit1 || !limit1 || !limit2 || (0, _listUncurried.indexOf)(xs1[0], xs2) === -1) {
             return false;
         }
         var ind = 0;
@@ -726,7 +726,7 @@
         isSuffixOf = exports.isSuffixOf = function isSuffixOf(xs1, xs2) {
         var limit1 = (0, _objectOpsUncurried.length)(xs1),
             limit2 = (0, _objectOpsUncurried.length)(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || (0, _listOpsUncurried.indexOf)(xs1[0], xs2) === -1) {
+        if (limit2 < limit1 || !limit1 || !limit2 || (0, _listUncurried.indexOf)(xs1[0], xs2) === -1) {
             return false;
         }
         var ind1 = limit1 - 1,
@@ -769,7 +769,7 @@
         for (i = 0; i < len; i += 1) {
             foundLen = 0;
             for (var j = 0; j < len; j += 1) {
-                if (i & 1 << j && (0, _listOpsUncurried.indexOf)(xs2[j], xs1) > -1) {
+                if (i & 1 << j && (0, _listUncurried.indexOf)(xs2[j], xs1) > -1) {
                     foundLen += 1;
                 }
                 if (foundLen === lenXs1) {
@@ -830,7 +830,7 @@
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(takeWhile(predOp, (0, _listOpsUncurried.slice)(ind, limit, xs)));
+            agg.push(takeWhile(predOp, (0, _listUncurried.slice)(ind, limit, xs)));
         }
         return agg;
     },
@@ -856,7 +856,7 @@
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = (0, _listOpsUncurriedUtils.aggregateArr)(agg, (0, _listOpsUncurried.slice)(ind, limit, xs));
+            agg = (0, _listOpsUncurriedUtils.aggregateArr)(agg, (0, _listUncurried.slice)(ind, limit, xs));
         }
         return agg;
     },
@@ -905,7 +905,7 @@
             lists[_key2] = arguments[_key2];
         }
 
-        var trimmedLists = (0, _functionOpsUncurried.apply)(_listOpsUncurriedUtils.lengthsToSmallest, filter(_objectOpsUncurried.length, lists)),
+        var trimmedLists = (0, _functionUncurried.apply)(_listOpsUncurriedUtils.lengthsToSmallest, filter(_objectOpsUncurried.length, lists)),
             lenOfTrimmed = (0, _objectOpsUncurried.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
@@ -1010,7 +1010,7 @@
             lists[_key3 - 1] = arguments[_key3];
         }
 
-        var trimmedLists = (0, _functionOpsUncurried.apply)(_listOpsUncurriedUtils.lengthsToSmallest, lists),
+        var trimmedLists = (0, _functionUncurried.apply)(_listOpsUncurriedUtils.lengthsToSmallest, lists),
             lenOfTrimmed = (0, _objectOpsUncurried.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
@@ -1018,7 +1018,7 @@
             return (0, _listOpsUncurriedUtils.sliceTo)((0, _objectOpsUncurried.length)(trimmedLists[0]), trimmedLists[0]);
         }
         return (0, _listOpsUncurriedUtils.reduce)(function (agg, item, ind) {
-            return (0, _listOpsUncurriedUtils.aggregateArr)(agg, (0, _functionOpsUncurried.apply)(op, (0, _map.map)(function (xs) {
+            return (0, _listOpsUncurriedUtils.aggregateArr)(agg, (0, _functionUncurried.apply)(op, (0, _map.map)(function (xs) {
                 return xs[ind];
             }, trimmedLists)));
         }, [], trimmedLists[0]);
@@ -1331,7 +1331,7 @@
      */
     union = exports.union = function union(arr1, arr2) {
         return append(arr1, filter(function (elm) {
-            return !(0, _listOpsUncurried.includes)(elm, arr1);
+            return !(0, _listUncurried.includes)(elm, arr1);
         }, arr2));
     },
 
@@ -1345,7 +1345,7 @@
      */
     intersect = exports.intersect = function intersect(arr1, arr2) {
         return !arr1 || !arr2 || !arr1 && !arr2 ? [] : filter(function (elm) {
-            return (0, _listOpsUncurried.includes)(elm, arr2);
+            return (0, _listUncurried.includes)(elm, arr2);
         }, arr1);
     },
 
@@ -1385,7 +1385,7 @@
         }
         var aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(array1);
         return (0, _listOpsUncurriedUtils.reduce)(function (agg, elm) {
-            return !(0, _listOpsUncurried.includes)(elm, array2) ? aggregator(agg, elm) : agg;
+            return !(0, _listUncurried.includes)(elm, array2) ? aggregator(agg, elm) : agg;
         }, [], array1);
     },
 

@@ -2,9 +2,9 @@
  * Array operators module.
  * @module listOpsUtils
  */
-import {apply}              from   '../jsPlatform/functionOpsUncurried';  // un-curried version
-import {slice}              from   '../jsPlatform/listOpsUncurried';      // un-curried version good for both strings and arrays
-import {length}             from   '../jsPlatform/objectOpsUncurried';
+import {apply}              from '../jsPlatform/functionUncurried';  // un-curried version
+import {slice}              from '../jsPlatform/listUncurried';      // un-curried version good for both strings and arrays
+import {length}             from '../jsPlatform/objectUncurried';
 import {alwaysFalse}        from   '../../booleanOps/booleanOps';
 import {map}                from './map';
 

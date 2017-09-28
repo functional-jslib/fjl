@@ -2,7 +2,7 @@ import {of} from   '../../objectOps/of';
 
 import {aggregatorByType}   from './listOpsUncurriedAggregation';
 
-import {length}              from   '../jsPlatform/objectOpsUncurried';
+import {length}              from '../jsPlatform/objectUncurried';
 
 /**
  * @function module:listOps.map

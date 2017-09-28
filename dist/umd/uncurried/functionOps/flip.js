@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../jsPlatform/arrayOpsUncurried', './apply', './call'], factory);
+    define(['exports', '../jsPlatform/arrayUncurried', './apply', './call'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../jsPlatform/arrayOpsUncurried'), require('./apply'), require('./call'));
+    factory(exports, require('../jsPlatform/arrayUncurried'), require('./apply'), require('./call'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.arrayOpsUncurried, global.apply, global.call);
+    factory(mod.exports, global.arrayUncurried, global.apply, global.call);
     global.flip = mod.exports;
   }
-})(this, function (exports, _arrayOpsUncurried, _apply, _call) {
+})(this, function (exports, _arrayUncurried, _apply, _call) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -31,7 +31,7 @@
         args[_key] = arguments[_key];
       }
 
-      return (0, _apply.apply)(fn, (0, _arrayOpsUncurried.reverse)(args));
+      return (0, _apply.apply)(fn, (0, _arrayUncurried.reverse)(args));
     };
   },
 

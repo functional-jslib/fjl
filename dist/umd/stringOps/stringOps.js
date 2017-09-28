@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../listOps/listOps', '../jsPlatform/stringOps'], factory);
+    define(['exports', '../listOps/listOps', '../jsPlatform/string'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../listOps/listOps'), require('../jsPlatform/stringOps'));
+    factory(exports, require('../listOps/listOps'), require('../jsPlatform/string'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.listOps, global.stringOps);
+    factory(mod.exports, global.listOps, global.string);
     global.stringOps = mod.exports;
   }
-})(this, function (exports, _listOps, _stringOps) {
+})(this, function (exports, _listOps, _string) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -30,7 +30,7 @@
    * @param str {String}
    * @returns {Array}
    */
-  lines = exports.lines = (0, _stringOps.split)(/[\n\r]/gm),
+  lines = exports.lines = (0, _string.split)(/[\n\r]/gm),
 
 
   /**
@@ -39,7 +39,7 @@
    * @param str{String}
    * @returns {Array}
    */
-  words = exports.words = (0, _stringOps.split)(/[\s\t]/gm),
+  words = exports.words = (0, _string.split)(/[\s\t]/gm),
 
 
   /**

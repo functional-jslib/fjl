@@ -1,16 +1,16 @@
 /**
  * Created by elydelacruz on 9/6/2017.
- * @module jsPlatform.stringOps
+ * @module jsPlatform_string
  */
 
 import {curry} from   '../functionOps/curry';
 
-import {split as pureSplit} from   '../uncurried/jsPlatform/stringOpsUnCurried';
+import {split as pureSplit} from '../uncurried/jsPlatform/stringUnCurried';
 
 /**
  * Functional version of `String.prototype.split`.
  * @curried
- * @function module:jsPlatform.stringOps.split
+ * @function module:jsPlatform_string.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}

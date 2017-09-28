@@ -1,4 +1,4 @@
-define(['exports', '../jsPlatform/arrayOpsUncurried'], function (exports, _arrayOpsUncurried) {
+define(['exports', '../jsPlatform/arrayUncurried'], function (exports, _arrayUncurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -15,5 +15,5 @@ define(['exports', '../jsPlatform/arrayOpsUncurried'], function (exports, _array
    * @param args {...Function}
    * @returns {Function}
    */
-  const compose = exports.compose = (...args) => arg0 => (0, _arrayOpsUncurried.reduceRight)((value, fn) => fn(value), arg0, args);
+  const compose = exports.compose = (...args) => arg0 => (0, _arrayUncurried.reduceRight)((value, fn) => fn(value), arg0, args);
 });

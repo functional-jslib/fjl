@@ -1,4 +1,4 @@
-define(['exports', './is', '../jsPlatform/objectOpsUncurried'], function (exports, _is, _objectOpsUncurried) {
+define(['exports', './is', '../jsPlatform/objectUncurried'], function (exports, _is, _objectUncurried) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -13,10 +13,10 @@ define(['exports', './is', '../jsPlatform/objectOpsUncurried'], function (export
      * @param objs {...{Object}}
      * @returns {Object}
      */
-    assignDeep = exports.assignDeep = (obj0, ...objs) => objs.reduce((topAgg, obj) => (0, _objectOpsUncurried.keys)(obj).reduce((agg, key) => {
+    assignDeep = exports.assignDeep = (obj0, ...objs) => objs.reduce((topAgg, obj) => (0, _objectUncurried.keys)(obj).reduce((agg, key) => {
         let propDescription = Object.getOwnPropertyDescriptor(agg, key);
         // If property is not writable move to next item in collection
-        if ((0, _objectOpsUncurried.hasOwnProperty)(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+        if ((0, _objectUncurried.hasOwnProperty)(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
             return agg;
         }
         if ((0, _is.isObject)(agg[key]) && (0, _is.isObject)(obj[key])) {

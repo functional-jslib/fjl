@@ -9,7 +9,7 @@ var _of = require('../../objectOps/of');
 
 var _listOpsUncurriedAggregation = require('./listOpsUncurriedAggregation');
 
-var _objectOpsUncurried = require('../jsPlatform/objectOpsUncurried');
+var _objectUncurried = require('../jsPlatform/objectUncurried');
 
 /**
  * @function module:listOps.map
@@ -19,7 +19,7 @@ var _objectOpsUncurried = require('../jsPlatform/objectOpsUncurried');
  */
 var map = exports.map = function map(fn, xs) {
     var ind = 0,
-        limit = (0, _objectOpsUncurried.length)(xs),
+        limit = (0, _objectUncurried.length)(xs),
         out = (0, _of.of)(xs),
         aggregate = (0, _listOpsUncurriedAggregation.aggregatorByType)(xs);
     if (!limit) {

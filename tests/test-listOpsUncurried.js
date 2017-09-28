@@ -14,7 +14,7 @@ import {assert, expect} from 'chai';
 import {compose} from '../src/functionOps/compose';
 import {negateP} from '../src/functionOps/negateP';
 import {__} from '../src/functionOps/curry';
-import {split} from '../src/jsPlatform/stringOps';
+import {split} from '../src/jsPlatform/string';
 import {isArray, isString} from '../src/objectOps/is';
 import {isTruthy} from '../src/booleanOps/is';
 import {bEqual as equal} from '../src/booleanOps/booleanOps';
