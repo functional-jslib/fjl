@@ -1,8 +1,7 @@
 /**
  * @author elydelacruz
  * @created 12/6/2016.
- * @file fjl-curry/src/curry.js
- * @module curry {{curry: Function, curryN: Function, curry2: Function, curry3: Function, curry4: Function, curry5: Function, curry_: Function, curryN_: Function, curry2_: Function, curry3_: Function, curry4_: Function, curry5_: Function}}
+ * @memberOf functionOps
  * @description Different curry implementations for modern javascript currying.
  * @todo Make code here more minimal (reuse small parts here).
  * @todo separate curry_ (and it's variants) into a separate file/module.
@@ -17,8 +16,8 @@ const PlaceHolder = function PlaceHolder() {};
 const placeHolderInstance = new PlaceHolder();
 
 /**
- * Curries a functionOps based on it's defined arity (argument's arrayOps expected length).
- * @functionOps curry
+ * Curries a function based on it's defined arity (argument's arrayOps expected length).
+ * @function module:functionOps.curry
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -34,9 +33,10 @@ function curry (fn, ...argsToCurry) {
 
 /**
  * Checks to see if value is a `PlaceHolder`.
- * @functionOps isPlaceHolder
+ * @function isPlaceHolder
  * @param instance {*}
  * @returns {boolean}
+ * @private
  */
 function isPlaceHolder (instance) {
     return instance instanceof PlaceHolder;
@@ -44,10 +44,11 @@ function isPlaceHolder (instance) {
 
 /**
  * Replaces `placeholder` values in `listOps`.
- * @functionOps replacePlaceHolder
+ * @function replacePlaceHolder
  * @param array {Array} - Array to replace placeholders in.
  * @param args {Array} - Args from to choose from to replace placeholders.
  * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
+ * @private
  */
 function replacePlaceHolders (array, args) {
     let out = array.map(element => {
@@ -64,7 +65,7 @@ function replacePlaceHolders (array, args) {
 
 /**
  * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @functionOps curry_
+ * @function module:functionOps.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -82,7 +83,7 @@ function curry_ (fn, ...argsToCurry) {
 
 /**
  * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
- * @functionOps curryN_
+ * @function module:functionOps.curryN_
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -100,7 +101,7 @@ function curryN_ (executeArity, fn, ...curriedArgs) {
 
 /**
  * Curries a functionOps up to a given arity.
- * @functionOps curryN
+ * @function module:functionOps.curryN
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*}
@@ -115,10 +116,6 @@ function curryN (executeArity, fn, ...curriedArgs) {
     };
 }
 
-/**
- * Place holder object (frozen) used by curry.
- * @type {PlaceHolder}
- */
 let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
 let curry2_ = fn => curryN_(2, fn);
 let curry3_ = fn => curryN_(3, fn);
@@ -173,7 +170,7 @@ const _undefined = 'undefined';
 /**
  * Returns the class name of an object from it's class stringOps.
  * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
- * @functionOps module:fjl.typeOf
+ * @function module:fjl.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name property if not null or undefined (in which case a
  *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
@@ -296,7 +293,7 @@ const call = (fn, ...args) => apply(fn, args);
 
 /**
  * Functional `apply` functionOps (takes no context).
- * @functionOps module:functionOps.apply
+ * @function module:functionOps.apply
  * @param fn {Function}
  * @param args {*}
  * @returns {*}
@@ -334,6 +331,7 @@ const indexOf = fPureTakesOne('indexOf');
 /**
  * Created by elyde on 7/20/2017.
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
+ * @module jsPlatform:arrayOpsUncurried
  * @todo updated doc blocks to list correct/updated module name.
  */
 
@@ -351,7 +349,7 @@ const negateP = negateF3;
 
 /**
  * Functional `call` functionOps (takes no context).
- * @functionOps module:functionOps.call
+ * @function module:functionOps.call
  * @param fn {Function}
  * @param args {*}
  * @returns {*}
@@ -410,7 +408,7 @@ const placeHolderInstance$1 = new PlaceHolder$1();
 
 /**
  * Checks to see if value is a `PlaceHolder`.
- * @functionOps isPlaceHolder
+ * @function isPlaceHolder
  * @param instance {*}
  * @returns {boolean}
  */
@@ -420,7 +418,7 @@ function isPlaceHolder$1 (instance) {
 
 /**
  * Replaces `placeholder` values in `listOps`.
- * @functionOps replacePlaceHolder
+ * @function replacePlaceHolder
  * @param array {Array} - Array to replace placeholders in.
  * @param args {Array} - Args from to choose from to replace placeholders.
  * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
@@ -436,7 +434,7 @@ function replacePlaceHolders$1 (array, args) {
 
 /**
  * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @functionOps curry_
+ * @function curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -445,7 +443,7 @@ function replacePlaceHolders$1 (array, args) {
 
 /**
  * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
- * @functionOps curryN_
+ * @function curryN_
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -520,7 +518,7 @@ const _undefined$1 = 'undefined';
 /**
  * Returns the class name of an object from it's class stringOps.
  * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
- * @functionOps module:fjl.typeOf
+ * @function module:fjl.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name property if not null or undefined (in which case a
  *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
@@ -629,6 +627,7 @@ const isset$1 = x => !isNull$1(x) && !isUndefined$1(x);
 
 /**
  * Created by elydelacruz on 7/22/2017.
+ * @memberOf functionOps
  */
 const apply$1 = curry(apply);
 
@@ -1388,15 +1387,9 @@ const assignDeep$$1 = curry2(assignDeep$1);
 
 /**
  * Created by elydelacruz on 7/22/2017.
+ * @memberOf functionOps
  */
 const call$1 = curry2(call);
-
-/**
- * Array operators module.
- * @module listOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
- * @todo code un-performant shorthand in `listOps`
- */
 
 /**
  * List operators.
@@ -1480,9 +1473,12 @@ const difference$1 = curry$1(difference);
 const complement$1 = curry2$1(complement);
 
 /**
+ * @memberOf functionOps
+ */
+/**
  * Composes all functions passed in from right to left passing each functions return value to
  * the functionOps on the left of itself.
- * @functionOps module:fjl.compose
+ * @function module:functionOps.compose
  * @type {Function}
  * @param args {...Function}
  * @returns {Function}
@@ -1490,7 +1486,7 @@ const complement$1 = curry2$1(complement);
 const compose$1 = (...args) => arg0 => foldr$1((value, fn) => fn(value), arg0, args);
 
 /**
- * @module negate
+ * @memberOf functionOps
  */
 
 /**
@@ -1502,19 +1498,26 @@ const compose$1 = (...args) => arg0 => foldr$1((value, fn) => fn(value), arg0, a
 const negateP$1 = fn => (x, ind, xs) => !fn(x, ind, xs);
 
 /**
- * @module id
+ * @memberOf functionOps
  */
 
 /**
  * Returns passed in parameter.
+ * @function module:functionOps.id
  * @param x {*}
  * @returns {*}
  */
 const id$1 = x => x;
 
+/**
+ * @memberOf functionOps
+ */
 const flipN$1 = fn => curry3((...args) => apply$1(fn, reverse(args)));
 const flip$1 = fn => curry((b, a) => call$1(fn, a, b));
 
+/**
+ * @memberOf functionOps
+ */
 const until$1 = curry((predicate, operation, typeInstance) => {
         let result = typeInstance;
         while (!predicate(result)) {
@@ -1525,10 +1528,10 @@ const until$1 = curry((predicate, operation, typeInstance) => {
 
 /**
  * Function operations: `
- * @module function
+ * @module functionOps
  */
 
-const negate = x => x * -1;
+const negate = x => Math.abs(x) * -1;
 
 /**
  * Created by elydelacruz on 9/6/2017.
@@ -1536,7 +1539,7 @@ const negate = x => x * -1;
 
 /**
  * Functional version of `String.prototype.split`.
- * @functionOps module:stringOpsUnCurried.split
+ * @function module:stringOpsUnCurried.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}
@@ -1545,10 +1548,13 @@ const split$1 = fPureTakesOne('split');
 
 /**
  * Created by elydelacruz on 9/6/2017.
+ * @module jsPlatform.stringOps
  */
 
 /**
  * Functional version of `String.prototype.split`.
+ * @curried
+ * @function module:jsPlatform.stringOps.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}
@@ -1567,10 +1573,10 @@ const unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Wed Sep 27 2017 22:21:02 GMT-0400 (Eastern Daylight Time) 
+ * Generated Thu Sep 28 2017 00:44:31 GMT-0400 (Eastern Daylight Time) 
  */
 
-let version = '0.14.34';
+let version = '0.14.89';
 
 /**
  * Created by elyde on 12/6/2016.

@@ -26,7 +26,7 @@ const PlaceHolder = function PlaceHolder() {},
 
 /**
  * Checks to see if value is a `PlaceHolder`.
- * @functionOps isPlaceHolder
+ * @function isPlaceHolder
  * @param instance {*}
  * @returns {boolean}
  */
@@ -36,7 +36,7 @@ function isPlaceHolder (instance) {
 
 /**
  * Replaces `placeholder` values in `listOps`.
- * @functionOps replacePlaceHolder
+ * @function replacePlaceHolder
  * @param array {Array} - Array to replace placeholders in.
  * @param args {Array} - Args from to choose from to replace placeholders.
  * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
@@ -52,7 +52,7 @@ function replacePlaceHolders (array, args) {
 
 /**
  * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @functionOps curry_
+ * @function curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -70,7 +70,7 @@ export function curry_ (fn, ...argsToCurry) {
 
 /**
  * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
- * @functionOps curryN_
+ * @function curryN_
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -95,7 +95,7 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
 
     /**
      * Curries a functionOps up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call functionOps until 2 or more args).
-     * @functionOps curry2_
+     * @function curry2_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -103,7 +103,7 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
 
     /**
      * Curries a functionOps up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call functionOps until 3 or more args).
-     * @functionOps curry3_
+     * @function curry3_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -111,7 +111,7 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
 
     /**
      * Curries a functionOps up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 4 or more args).
-     * @functionOps curry4_
+     * @function curry4_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -119,7 +119,7 @@ export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolder
 
     /**
      * Curries a functionOps up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 5 or more args).
-     * @functionOps curry5_
+     * @function curry5_
      * @param fn {Function}
      * @returns {Function}
      */

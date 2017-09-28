@@ -17,7 +17,7 @@
     value: true
   });
   /**
-   * @module negate
+   * @memberOf functionOps
    */
 
   /**

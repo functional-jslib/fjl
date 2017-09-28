@@ -6,7 +6,7 @@ export const
 
     /**
      * Flips a functions arguments order and returns a new functionOps requiring such (arguments in reverse order).
-     * @functionOps module:functionOps.flipN
+     * @function module:functionOps.flipN
      * @param fn {Function}
      * @returns {Function}
      */
@@ -14,7 +14,7 @@ export const
 
     /**
      * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
-     * @functionOps module:functionOps.flip
+     * @function module:functionOps.flip
      * @param fn {Function}
      * @returns {Function}
      */

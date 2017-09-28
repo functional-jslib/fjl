@@ -1,6 +1,6 @@
 /**
  * Function operations: `
- * @module function
+ * @module functionOps
  */
 export {call} from './call';
 

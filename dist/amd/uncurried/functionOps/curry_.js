@@ -34,7 +34,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Checks to see if value is a `PlaceHolder`.
-     * @functionOps isPlaceHolder
+     * @function isPlaceHolder
      * @param instance {*}
      * @returns {boolean}
      */
@@ -44,7 +44,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Replaces `placeholder` values in `listOps`.
-     * @functionOps replacePlaceHolder
+     * @function replacePlaceHolder
      * @param array {Array} - Array to replace placeholders in.
      * @param args {Array} - Args from to choose from to replace placeholders.
      * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
@@ -63,7 +63,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
-     * @functionOps curry_
+     * @function curry_
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -79,7 +79,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
-     * @functionOps curryN_
+     * @function curryN_
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -103,7 +103,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Curries a functionOps up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call functionOps until 2 or more args).
-     * @functionOps curry2_
+     * @function curry2_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -112,7 +112,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Curries a functionOps up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call functionOps until 3 or more args).
-     * @functionOps curry3_
+     * @function curry3_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -121,7 +121,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Curries a functionOps up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 4 or more args).
-     * @functionOps curry4_
+     * @function curry4_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -130,7 +130,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Curries a functionOps up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 5 or more args).
-     * @functionOps curry5_
+     * @function curry5_
      * @param fn {Function}
      * @returns {Function}
      */

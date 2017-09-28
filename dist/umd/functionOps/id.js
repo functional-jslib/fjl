@@ -17,11 +17,12 @@
     value: true
   });
   /**
-   * @module id
+   * @memberOf functionOps
    */
 
   /**
    * Returns passed in parameter.
+   * @function module:functionOps.id
    * @param x {*}
    * @returns {*}
    */

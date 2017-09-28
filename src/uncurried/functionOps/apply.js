@@ -4,7 +4,7 @@
 
 /**
  * Functional `apply` functionOps (takes no context).
- * @functionOps module:functionOps.apply
+ * @function module:functionOps.apply
  * @param fn {Function}
  * @param args {*}
  * @returns {*}

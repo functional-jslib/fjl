@@ -71,7 +71,19 @@ const fs = require('fs'),
         .pipe(eslint.failOnError),
 
     // Log func
-    log = console.log.bind(console);
+    log = console.log.bind(console),
+
+    deleteFilePaths = pathsToDelete =>
+        del(pathsToDelete)
+            .then(deletedPaths => {
+                if (deletedPaths.length) {
+                    log(chalk.dim('\nThe following paths have been deleted: \n - ' + deletedPaths.join('\n - ') + '\n'));
+                    return;
+                }
+                log(chalk.dim(' - No paths to clean.') + '\n', '--mandatory');
+            })
+            .catch(log)
+    ;
 
 gulp.task('generate-version-js', () =>
     (new VersionNumberReadStream())
@@ -80,16 +92,7 @@ gulp.task('generate-version-js', () =>
 gulp.task('clean', () => {
     let pathsToDelete = [cjsBuildPath, amdBuildPath, umdBuildPath, iifeBuildPath]
         .map(partialPath => buildPath(partialPath, '**', '*.js'));
-    return del(pathsToDelete)
-        .then(deletedPaths => {
-            if (deletedPaths.length > 0) {
-                log(chalk.dim('\nThe following paths have been deleted: \n - ' + deletedPaths.join('\n - ') + '\n'));
-            }
-            else {
-                log(chalk.dim(' - No paths to clean.') + '\n', '--mandatory');
-            }
-        })
-        .catch(log);
+    return deleteFilePaths(pathsToDelete);
 });
 
 gulp.task('eslint', () => gulp.src(['./src/**/*.js', '!node_modules/**']).pipe(eslintPipe()));
@@ -166,15 +169,19 @@ gulp.task('uglify', ['iife'], () => {
 gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd', 'es6-module']);
 
 gulp.task('jsdoc', () =>
-    gulp.src(['README.md', './src/**/*.js'], {read: false})
-        .pipe(jsdoc({
-            opts: {
-                'template': 'templates/default',  // same as -t templates/default
-                'encoding': 'utf8',               // same as -e utf8
-                'destination': './jsdocs/',          // same as -d ./out/
-                'recurse': true
-            }
-        })));
+    deleteFilePaths(['./jsdocs/**/*'])
+        .then(_ =>
+            gulp.src(['README.md', './src/**/*.js'], {read: false})
+                .pipe(jsdoc({
+                    opts: {
+                        'template': 'templates/default',  // same as -t templates/default
+                        'encoding': 'utf8',               // same as -e utf8
+                        'destination': './jsdocs/',          // same as -d ./out/
+                        'recurse': true
+                    }
+                }))
+        )
+);
 
 gulp.task('build-readme', [
     'generate-version-js'

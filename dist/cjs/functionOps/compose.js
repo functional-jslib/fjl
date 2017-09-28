@@ -10,7 +10,7 @@ var _listOps = require('../listOps/listOps');
 /**
  * Composes all functions passed in from right to left passing each functions return value to
  * the functionOps on the left of itself.
- * @functionOps module:fjl.compose
+ * @function module:functionOps.compose
  * @type {Function}
  * @param args {...Function}
  * @returns {Function}
@@ -25,4 +25,6 @@ var compose = exports.compose = function compose() {
       return fn(value);
     }, arg0, args);
   };
-};
+}; /**
+    * @memberOf functionOps
+    */

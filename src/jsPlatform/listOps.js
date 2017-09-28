@@ -19,7 +19,7 @@ export const
 
     /**
      * Calls `slice` method on passed in instance.
-     * @function module:listOps.slice
+     * @function module:jsPlatform.listOps.slice
      * @param separator {String|RegExp}
      * @param list {Array|String|*}
      * @returns {Array|String|*}

@@ -11,12 +11,13 @@ var _functionOpsUncurried = require('../uncurried/jsPlatform/functionOpsUncurrie
 
 /**
  * Created by elydelacruz on 7/22/2017.
+ * @memberOf functionOps
  */
 var
 
 /**
  * Functional `apply` functionOps (takes no context).
- * @functionOps module:fnOperators.apply
+ * @function module:functionOps.apply
  * @param fn {Function}
  * @param args {*}
  * @returns {*}

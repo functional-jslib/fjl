@@ -11,8 +11,7 @@ define(["exports"], function (exports) {
     /**
      * @author elydelacruz
      * @created 12/6/2016.
-     * @file fjl-curry/src/curry.js
-     * @module curry {{curry: Function, curryN: Function, curry2: Function, curry3: Function, curry4: Function, curry5: Function, curry_: Function, curryN_: Function, curry2_: Function, curry3_: Function, curry4_: Function, curry5_: Function}}
+     * @memberOf functionOps
      * @description Different curry implementations for modern javascript currying.
      * @todo Make code here more minimal (reuse small parts here).
      * @todo separate curry_ (and it's variants) into a separate file/module.
@@ -29,12 +28,13 @@ define(["exports"], function (exports) {
     /**
      * Placeholder instance.
      * @type {PlaceHolder}
+     * @private
      */
     placeHolderInstance = new PlaceHolder();
 
     /**
-     * Curries a functionOps based on it's defined arity (argument's arrayOps expected length).
-     * @functionOps curry
+     * Curries a function based on it's defined arity (argument's arrayOps expected length).
+     * @function module:functionOps.curry
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -48,9 +48,10 @@ define(["exports"], function (exports) {
 
     /**
      * Checks to see if value is a `PlaceHolder`.
-     * @functionOps isPlaceHolder
+     * @function isPlaceHolder
      * @param instance {*}
      * @returns {boolean}
+     * @private
      */
     function isPlaceHolder(instance) {
         return instance instanceof PlaceHolder;
@@ -58,10 +59,11 @@ define(["exports"], function (exports) {
 
     /**
      * Replaces `placeholder` values in `listOps`.
-     * @functionOps replacePlaceHolder
+     * @function replacePlaceHolder
      * @param array {Array} - Array to replace placeholders in.
      * @param args {Array} - Args from to choose from to replace placeholders.
      * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
+     * @private
      */
     function replacePlaceHolders(array, args) {
         let out = array.map(element => {
@@ -77,7 +79,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
-     * @functionOps curry_
+     * @function module:functionOps.curry_
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -93,7 +95,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
-     * @functionOps curryN_
+     * @function module:functionOps.curryN_
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -110,7 +112,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries a functionOps up to a given arity.
-     * @functionOps curryN
+     * @function module:functionOps.curryN
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*}
@@ -124,16 +126,19 @@ define(["exports"], function (exports) {
         };
     }
 
+    let
+
     /**
      * Place holder object (frozen) used by curry.
+     * @memberOf functionOps
      * @type {PlaceHolder}
      */
-    let __ = exports.__ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance,
+    __ = exports.__ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance,
 
 
     /**
      * Curries a functionOps up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call functionOps until 2 or more args).
-     * @functionOps curry2_
+     * @function module:functionOps.curry2_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -142,7 +147,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries a functionOps up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call functionOps until 3 or more args).
-     * @functionOps curry3_
+     * @function module:functionOps.curry3_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -151,7 +156,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries a functionOps up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 4 or more args).
-     * @functionOps curry4_
+     * @function module:functionOps.curry4_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -160,7 +165,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries a functionOps up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 5 or more args).
-     * @functionOps curry5_
+     * @function module:functionOps.curry5_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -169,7 +174,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries a functionOps up to an arity of 2 (won't call functionOps until 2 or more args).
-     * @functionOps curry2
+     * @function module:functionOps.curry2
      * @param fn {Function}
      * @returns {Function}
      */
@@ -178,6 +183,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries a functionOps up to an arity of 3 (won't call functionOps until 3 or more args).
+     * @function module:functionOps.curry3
      * @param fn {Function}
      * @returns {Function}
      */
@@ -186,6 +192,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries a functionOps up to an arity of 4 (won't call functionOps until 4 or more args).
+     * @function module:functionOps.curry4
      * @param fn {Function}
      * @returns {Function}
      */
@@ -194,6 +201,7 @@ define(["exports"], function (exports) {
 
     /**
      * Curries a functionOps up to an arity of 5 (won't call functionOps until 5 or more args).
+     * @function module:functionOps.curry5
      * @param fn {Function}
      * @returns {Function}
      */

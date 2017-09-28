@@ -7,12 +7,13 @@ define(['exports', './curry', '../uncurried/jsPlatform/functionOpsUncurried'], f
   exports.apply = undefined;
   /**
    * Created by elydelacruz on 7/22/2017.
+   * @memberOf functionOps
    */
   const
 
   /**
    * Functional `apply` functionOps (takes no context).
-   * @functionOps module:fnOperators.apply
+   * @function module:functionOps.apply
    * @param fn {Function}
    * @param args {*}
    * @returns {*}

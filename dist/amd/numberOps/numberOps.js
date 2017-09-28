@@ -4,5 +4,5 @@ define(["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  const negate = exports.negate = x => x * -1;
+  const negate = exports.negate = x => Math.abs(x) * -1;
 });

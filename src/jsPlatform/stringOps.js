@@ -10,7 +10,7 @@ import {split as pureSplit} from   '../uncurried/jsPlatform/stringOpsUnCurried';
 /**
  * Functional version of `String.prototype.split`.
  * @curried
- * @function module:stringOps.split
+ * @function module:jsPlatform.stringOps.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}

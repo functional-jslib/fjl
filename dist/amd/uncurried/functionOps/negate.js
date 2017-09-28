@@ -19,16 +19,16 @@ define(['exports', './apply', '../jsPlatform/arrayOpsUncurried'], function (expo
      * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
      * @function module:functionOps.negateP
      * @param fn {Function}
-     * @returns {Function} - Negated predicate
+     * @returns {Function}
      */
     negateP = exports.negateP = negateF3,
 
 
     /**
      * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-     * @function module:functionOpsUncurried.negateFMany
+     * @function module:functionOps.negateFMany
      * @param fn {Function}
-     * @returns {Function<...args>}
+     * @returns {Function}
      */
     negateFMany = exports.negateFMany = fn => (...args) => !(0, _apply.apply)(fn, (0, _arrayOpsUncurried.reverse)(args));
 });

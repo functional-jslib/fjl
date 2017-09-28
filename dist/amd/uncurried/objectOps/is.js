@@ -29,7 +29,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Returns whether a value is a functionOps or not.
-     * @functionOps module:is.isFunction
+     * @function module:is.isFunction
      * @param value {*}
      * @returns {Boolean}
      */
@@ -44,7 +44,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
      *  var SomeName = functionOps SomeName () {} // or
      *  class SomeName {}
      * ```
-     * @functionOps module:fjl.isType
+     * @function module:fjl.isType
      * @param type {Function|String} - Constructor or constructor name
      * @param obj {*}
      * @return {Boolean}
@@ -54,7 +54,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks if `value` is an es2015 `class`.
-     * @functionOps module:is.isClass
+     * @function module:is.isClass
      * @param x {*}
      * @returns {boolean}
      */
@@ -63,7 +63,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Returns a booleanOps depicting whether a value is callable or not.
-     * @functionOps module:is.isCallable
+     * @function module:is.isCallable
      * @tentative
      * @param x {*}
      * @returns {Boolean}
@@ -73,7 +73,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks if value is an arrayOps.
-     * @functionOps module:is.isArray
+     * @function module:is.isArray
      * @param value {*}
      * @returns {boolean}
      */
@@ -82,7 +82,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks whether value is an objectOps or not.
-     * @functionOps module:is.isObject
+     * @function module:is.isObject
      * @param value
      * @returns {Boolean}
      */
@@ -91,7 +91,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks if value is a booleanOps.
-     * @functionOps module:is.isBoolean
+     * @function module:is.isBoolean
      * @param value {*}
      * @returns {Boolean}
      */
@@ -100,7 +100,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
-     * @functionOps module:is.isNumber
+     * @function module:is.isNumber
      * @param value {*}
      * @returns {Boolean}
      */
@@ -109,7 +109,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks whether value is a stringOps or not.
-     * @functionOps module:is.isString
+     * @function module:is.isString
      * @param value {*}
      * @returns {Boolean}
      */
@@ -118,7 +118,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks whether value is of `Map` or not.
-     * @functionOps module:is.isMap
+     * @function module:is.isMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -127,7 +127,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks whether value is of `Set` or not.
-     * @functionOps module:is.isSet
+     * @function module:is.isSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -136,7 +136,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks whether value is of `WeakMap` or not.
-     * @functionOps module:is.isWeakMap
+     * @function module:is.isWeakMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -145,7 +145,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks whether value is of `WeakSet` or not.
-     * @functionOps module:is.isWeakSet
+     * @function module:is.isWeakSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -154,7 +154,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks if value is undefined.
-     * @functionOps module:is.isUndefined
+     * @function module:is.isUndefined
      * @param value {*}
      * @returns {Boolean}
      */
@@ -163,7 +163,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks if value is null.
-     * @functionOps module:is.isNull
+     * @function module:is.isNull
      * @param value {*}
      * @returns {Boolean}
      */
@@ -172,7 +172,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks if value is a `Symbol`.
-     * @functionOps module:is.isSymbol
+     * @function module:is.isSymbol
      * @param value {*}
      * @returns {Boolean}
      */
@@ -225,7 +225,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Checks to see if passed in argument is empty.
-     * @functionOps module:is.empty
+     * @function module:is.empty
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
@@ -253,7 +253,7 @@ define(['exports', './typeOf', '../jsPlatform/objectOpsUncurried'], function (ex
 
     /**
      * Returns true if an element is not empty and is of type.
-     * @functionOps module:is.notEmptyAndOfType
+     * @function module:is.notEmptyAndOfType
      * @param type {String|Function} - Type to check against (stringOps name or actual constructor).
      * @param value {*} - Value to check.
      * @returns {Boolean}

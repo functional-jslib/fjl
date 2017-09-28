@@ -28,7 +28,7 @@ defineReverse = exports.defineReverse = function defineReverse() {
 
 /**
  * Maps a functionOps to functor (listOps etc.).
- * @functionOps module:arrayOperators.map
+ * @function module:arrayOpsUncurried.map
  * @param fn {Function}
  * @param functor {Array|{map: {Function}}}
  * @returns {Array|{map: {Function}}}
@@ -38,7 +38,7 @@ map = exports.map = (0, _utils.fPureTakesOne)('map'),
 
 /**
  * Filters a functor (listOps etc.) with passed in functionOps.
- * @functionOps module:arrayOperators.filter
+ * @function module:arrayOpsUncurried.filter
  * @param fn {Function}
  * @param functor {Array|{filter: {Function}}}
  * @returns {Array|{filter: {Function}}}
@@ -48,7 +48,7 @@ filter = exports.filter = (0, _utils.fPureTakesOne)('filter'),
 
 /**
  * Reduces a foldable (listOps etc.) with passed in functionOps.
- * @functionOps module:arrayOperators.reduce
+ * @function module:arrayOpsUncurried.reduce
  * @param fn {Function}
  * @param functor {Array|{reduce: {Function}}}
  * @returns {Array|{reduce: {Function}}}
@@ -58,7 +58,7 @@ reduce = exports.reduce = (0, _utils.fPureTakes2)('reduce'),
 
 /**
  * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
- * @functionOps module:arrayOperators.reduceRight
+ * @function module:arrayOpsUncurried.reduceRight
  * @param fn {Function}
  * @param functor {Array|{reduceRight: {Function}}}
  * @returns {Array|{reduceRight: {Function}}}
@@ -110,7 +110,7 @@ concat = exports.concat = (0, _utils.fPureTakesOneOrMore)('concat'),
 
 /**
  * Array.prototype.join
- * @functionOps module:listPrelude.join
+ * @function module:listPrelude.join
  * @param separator {String|RegExp}
  * @param arr {Array}
  * @returns {String}
@@ -138,11 +138,12 @@ push = exports.push = (0, _utils.fPureTakesOneOrMore)('push'),
 
 /**
  * Reverses an listOps (shimmed if not exists).
- * @functionOps module:listPrelude.reverse
+ * @function module:listPrelude.reverse
  * @return {Array}
  */
 reverse = exports.reverse = defineReverse(); /**
                                               * Created by elyde on 7/20/2017.
                                               * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
+                                              * @module jsPlatform:arrayOpsUncurried
                                               * @todo updated doc blocks to list correct/updated module name.
                                               */

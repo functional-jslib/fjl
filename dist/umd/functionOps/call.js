@@ -19,12 +19,13 @@
   exports.call = undefined;
   /**
    * Created by elydelacruz on 7/22/2017.
+   * @memberOf functionOps
    */
   var
 
   /**
-   * Functional `call` functionOps (takes no context).
-   * @functionOps module:fnOperators.call
+   * Functional `call` function (takes no context).
+   * @function module:functionOps.call
    * @param fn {Function}
    * @param args {*}
    * @returns {*}

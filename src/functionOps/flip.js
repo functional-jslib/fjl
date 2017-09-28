@@ -1,3 +1,6 @@
+/**
+ * @memberOf functionOps
+ */
 import {reverse} from   '../listOps/listOps';
 import {curry, curry3} from './curry';
 import {apply} from './apply';
@@ -7,7 +10,7 @@ export const
 
     /**
      * Flips a functions arguments order and returns a new functionOps requiring such (arguments in reverse order).
-     * @functionOps module:fnOperators.flipN
+     * @function module:fnOperators.flipN
      * @param fn {Function}
      * @returns {Function}
      */
@@ -15,7 +18,7 @@ export const
 
     /**
      * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
-     * @functionOps module:fnOperators.flip
+     * @function module:fnOperators.flip
      * @param fn {Function}
      * @returns {Function}
      */

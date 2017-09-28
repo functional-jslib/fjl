@@ -16,7 +16,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Curries a functionOps based on it's defined arity (argument's arrayOps expected length).
-     * @functionOps curry
+     * @function curry
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -31,7 +31,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Curries a functionOps up to a given arity.
-     * @functionOps curryN
+     * @function curryN
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*}
@@ -48,7 +48,7 @@ define(['exports', './apply', '../listOps/listOpsUncurried'], function (exports,
 
     /**
      * Curries a functionOps up to an arity of 2 (won't call functionOps until 2 or more args).
-     * @functionOps curry2
+     * @function curry2
      * @param fn {Function}
      * @returns {Function}
      */

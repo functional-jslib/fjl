@@ -8,6 +8,7 @@ define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/listOpsUncur
     /**
      *  List operations that overlap (apart from globally overlapping props and functions like `length` and `toString`)
      *      on both strings and arrays.
+     *  @module jsPlatform.listOps
      */
 
     const concat = exports.concat = _listOpsUncurried.concat,
@@ -15,13 +16,18 @@ define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/listOpsUncur
 
     /**
      * Calls `slice` method on passed in instance.
-     * @function module:jsPlatform.listOps
+     * @function module:jsPlatform.listOps.slice
      * @param separator {String|RegExp}
      * @param list {Array|String|*}
      * @returns {Array|String|*}
      */
     slice = exports.slice = (0, _curry.curry)(_listOpsUncurried.slice),
-          includes = exports.includes = _listOpsUncurried.includes,
+
+
+    /**
+     *
+     */
+    includes = exports.includes = _listOpsUncurried.includes,
           indexOf = exports.indexOf = _listOpsUncurried.indexOf,
           lastIndexOf = exports.lastIndexOf = _listOpsUncurried.lastIndexOf;
 });

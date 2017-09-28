@@ -29,7 +29,7 @@
             <pre class="prettyprint source linenums"><code>/**
  * Created by elyde on 7/20/2017.
  * Curried functional versions of common array methods (`filter`, `map`, etc.).
- * @module jsPlatform.arrayOps
+ * @module jsPlatform_arrayOps
  */
 
 import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from   '../utils/utils';
@@ -40,7 +40,7 @@ export const
 
     /**
      * Maps a functionOps to functor (listOps etc.).
-     * @function module:arrayOps.map
+     * @function module:jsPlatform_arrayOps.map
      * @param fn {Function}
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
@@ -49,7 +49,7 @@ export const
 
     /**
      * Filters a functor (listOps etc.) with passed in functionOps.
-     * @function module:arrayOps.filter
+     * @function module:jsPlatform_arrayOps.filter
      * @param fn {Function}
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
@@ -58,7 +58,7 @@ export const
 
     /**
      * Reduces a foldable (listOps etc.) with passed in functionOps.
-     * @function module:arrayOps.reduce
+     * @function module:jsPlatform_arrayOps.reduce
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
@@ -67,7 +67,7 @@ export const
 
     /**
      * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
-     * @function module:arrayOps.reduceRight
+     * @function module:jsPlatform_arrayOps.reduceRight
      * @param fn {Function}
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
@@ -76,7 +76,7 @@ export const
 
     /**
      * For each on functor (Array|Object|etc.).
-     * @function module:arrayOps.forEach
+     * @function module:jsPlatform_arrayOps.forEach
      * @param fn {Function}
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
@@ -87,7 +87,7 @@ export const
     /**
      * Returns `true` if `fn` (predicate) returns true for at least one item
      * in functor else returns `false`.
-     * @function module:arrayOps.some
+     * @function module:jsPlatform_arrayOps.some
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -97,7 +97,7 @@ export const
 
     /**
      * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @function module:arrayOps.every
+     * @function module:jsPlatform_arrayOps.every
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -108,7 +108,7 @@ export const
     /**
      * Concats/appends all functors onto the end of first functor.
      * Note:  functors passed in after the first one must be of the same type.
-     * @function module:arrayOps.concat
+     * @function module:jsPlatform_arrayOps.concat
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -118,7 +118,7 @@ export const
 
     /**
      * Array.prototype.join
-     * @function module:arrayOps.join
+     * @function module:jsPlatform_arrayOps.join
      * @param separator {String|RegExp}
      * @param arr {Array}
      * @returns {String}
@@ -127,7 +127,7 @@ export const
 
     /**
      * Same as Array.prototype.slice
-     * @function module:arrayOps.slice
+     * @function module:jsPlatform_arrayOps.slice
      * @param separator {String|RegExp}
      * @param arr{Array}
      * @returns {Array}
@@ -136,7 +136,7 @@ export const
 
     /**
      * Same as Array.prototype.push
-     * @function module:arrayOps.push
+     * @function module:jsPlatform_arrayOps.push
      * @param item {*}
      * @param arr {Array}
      * @returns {Number}
@@ -145,7 +145,7 @@ export const
 
     /**
      * Reverses an listOps (shimmed if not exists).
-     * @function module:arrayOps.reverse
+     * @function module:jsPlatform_arrayOps.reverse
      * @return {Array}
      */
     reverse = defineReverse();
@@ -159,13 +159,13 @@ export const
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="jsPlatform.module_arrayOps.html">arrayOps</a></li><li><a href="jsPlatform.module_listOps.html">listOps</a></li><li><a href="jsPlatform.module_stringOps.html">stringOps</a></li><li><a href="listOpsUncurried.module_sliceTo.html">sliceTo</a></li><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-curry.html">curry</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-function.html">function</a></li><li><a href="module-functionOpsUncurried.html">functionOpsUncurried</a></li><li><a href="module-id.html">id</a></li><li><a href="module-is.html">is</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-listOpsUncurried.html">listOpsUncurried</a></li><li><a href="module-listOpsUtils.html">listOpsUtils</a></li><li><a href="module-negate.html">negate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_Number">_Number</a></li><li><a href="global.html#apply">apply</a></li><li><a href="global.html#call">call</a></li><li><a href="global.html#compose">compose</a></li><li><a href="global.html#concat">concat</a></li><li><a href="global.html#defineReverse">defineReverse</a></li><li><a href="global.html#every">every</a></li><li><a href="global.html#filter">filter</a></li><li><a href="global.html#flip">flip</a></li><li><a href="global.html#flipN">flipN</a></li><li><a href="global.html#forEach">forEach</a></li><li><a href="global.html#instanceOf">instanceOf</a></li><li><a href="global.html#join">join</a></li><li><a href="global.html#lines">lines</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#prop">prop</a></li><li><a href="global.html#push">push</a></li><li><a href="global.html#reduce">reduce</a></li><li><a href="global.html#reduceRight">reduceRight</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#slice">slice</a></li><li><a href="global.html#some">some</a></li><li><a href="global.html#split">split</a></li><li><a href="global.html#typeOf">typeOf</a></li><li><a href="global.html#unlines">unlines</a></li><li><a href="global.html#unwords">unwords</a></li><li><a href="global.html#words">words</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="jsPlatform.module_listOps.html">listOps</a></li><li><a href="jsPlatform.module_stringOps.html">stringOps</a></li><li><a href="jsPlatform_arrayOpsUncurried.html">jsPlatform:arrayOpsUncurried</a></li><li><a href="listOpsUncurried.module_sliceTo.html">sliceTo</a></li><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-curry.html">curry</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-functionOpsUncurried.html">functionOpsUncurried</a></li><li><a href="module-id.html">id</a></li><li><a href="module-is.html">is</a></li><li><a href="module-jsPlatform_arrayOps.html">jsPlatform_arrayOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-listOpsUncurried.html">listOpsUncurried</a></li><li><a href="module-listOpsUtils.html">listOpsUtils</a></li><li><a href="module-negate.html">negate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_Number">_Number</a></li><li><a href="global.html#apply">apply</a></li><li><a href="global.html#instanceOf">instanceOf</a></li><li><a href="global.html#prop">prop</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Sep 27 2017 23:21:39 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Sep 28 2017 00:44:44 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

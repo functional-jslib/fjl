@@ -325,10 +325,48 @@ define(['exports', '../uncurried/listOps/listOpsUncurried', '../uncurried/functi
      * @returns {Array|String|*}
      */
     intercalate = exports.intercalate = (0, _functionOpsUncurried.curry)(_listOpsUncurried.intercalate),
-          foldl = exports.foldl = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldl),
-          foldr = exports.foldr = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldr),
-          foldl1 = exports.foldl1 = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldl1),
-          foldr1 = exports.foldr1 = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldr1),
+
+
+    /**
+     * Reduces a foldable (list etc.) with passed in function.
+     * @function module:listOps.foldl
+     * @param fn {Function}
+     * @param zero {*} - Aggregator.
+     * @param functor {Array|String|*}
+     * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
+     */
+    foldl = exports.foldl = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldl),
+
+
+    /**
+     * Reduces a foldable (list etc.) from right to left with passed in function.
+     * @function module:listOps.foldr
+     * @param fn {Function}
+     * @param zero {*} - Aggregator.
+     * @param functor {Array|{reduce: {Function}}}
+     * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
+     */
+    foldr = exports.foldr = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldr),
+
+
+    /**
+     * Reduces a foldable (list etc.) with passed in function.
+     * @function module:listOps.foldl1
+     * @param fn {Function}
+     * @param functor {Array|{reduce: {Function}}}
+     * @returns {*}
+     */
+    foldl1 = exports.foldl1 = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldl1),
+
+
+    /**
+     * Reduces a foldable (list etc.) from right to left with passed in function.
+     * @function module:listOps.foldr1
+     * @param fn {Function}
+     * @param functor {Array|{reduce: {Function}}}
+     * @returns {*}
+     */
+    foldr1 = exports.foldr1 = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldr1),
 
 
     /**
@@ -353,7 +391,17 @@ define(['exports', '../uncurried/listOps/listOpsUncurried', '../uncurried/functi
      * @return {Array} - [aggregated, list]
      */
     mapAccumR = exports.mapAccumR = (0, _functionOpsUncurried.curry)(_listOpsUncurried.mapAccumR),
-          iterate = exports.iterate = (0, _functionOpsUncurried.curry)(_listOpsUncurried.iterate),
+
+
+    /**
+     * Iterate on value (`x`) with `op` up to `limit`.
+     * @function module:listOps.iterate
+     * @param limit {Number}
+     * @param op {Function} - Operation
+     * @param x {*} - Starting point.
+     * @returns {*}
+     */
+    iterate = exports.iterate = (0, _functionOpsUncurried.curry)(_listOpsUncurried.iterate),
           repeat = exports.repeat = (0, _functionOpsUncurried.curry)(_listOpsUncurried.repeat),
           replicate = exports.replicate = repeat,
           cycle = exports.cycle = (0, _functionOpsUncurried.curry)(_listOpsUncurried.cycle),

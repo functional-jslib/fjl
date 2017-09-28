@@ -9,12 +9,15 @@ define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/stringOpsUnC
 
   /**
    * Functional version of `String.prototype.split`.
+   * @curried
+   * @function module:jsPlatform.stringOps.split
    * @param separator {String|RegExp}
    * @param str {String}
    * @returns {Array}
    */
   /**
    * Created by elydelacruz on 9/6/2017.
+   * @module jsPlatform.stringOps
    */
 
   const split = exports.split = (0, _curry.curry)(_stringOpsUnCurried.split);

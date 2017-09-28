@@ -1,9 +1,12 @@
+/**
+ * @memberOf functionOps
+ */
 import {foldr} from   '../listOps/listOps';
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
  * the functionOps on the left of itself.
- * @functionOps module:fjl.compose
+ * @function module:functionOps.compose
  * @type {Function}
  * @param args {...Function}
  * @returns {Function}

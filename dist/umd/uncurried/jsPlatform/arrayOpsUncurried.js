@@ -38,7 +38,7 @@
 
   /**
    * Maps a functionOps to functor (listOps etc.).
-   * @functionOps module:arrayOperators.map
+   * @function module:arrayOpsUncurried.map
    * @param fn {Function}
    * @param functor {Array|{map: {Function}}}
    * @returns {Array|{map: {Function}}}
@@ -48,7 +48,7 @@
 
   /**
    * Filters a functor (listOps etc.) with passed in functionOps.
-   * @functionOps module:arrayOperators.filter
+   * @function module:arrayOpsUncurried.filter
    * @param fn {Function}
    * @param functor {Array|{filter: {Function}}}
    * @returns {Array|{filter: {Function}}}
@@ -58,7 +58,7 @@
 
   /**
    * Reduces a foldable (listOps etc.) with passed in functionOps.
-   * @functionOps module:arrayOperators.reduce
+   * @function module:arrayOpsUncurried.reduce
    * @param fn {Function}
    * @param functor {Array|{reduce: {Function}}}
    * @returns {Array|{reduce: {Function}}}
@@ -68,7 +68,7 @@
 
   /**
    * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
-   * @functionOps module:arrayOperators.reduceRight
+   * @function module:arrayOpsUncurried.reduceRight
    * @param fn {Function}
    * @param functor {Array|{reduceRight: {Function}}}
    * @returns {Array|{reduceRight: {Function}}}
@@ -120,7 +120,7 @@
 
   /**
    * Array.prototype.join
-   * @functionOps module:listPrelude.join
+   * @function module:listPrelude.join
    * @param separator {String|RegExp}
    * @param arr {Array}
    * @returns {String}
@@ -148,12 +148,13 @@
 
   /**
    * Reverses an listOps (shimmed if not exists).
-   * @functionOps module:listPrelude.reverse
+   * @function module:listPrelude.reverse
    * @return {Array}
    */
   reverse = exports.reverse = defineReverse(); /**
                                                 * Created by elyde on 7/20/2017.
                                                 * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
+                                                * @module jsPlatform:arrayOpsUncurried
                                                 * @todo updated doc blocks to list correct/updated module name.
                                                 */
 });

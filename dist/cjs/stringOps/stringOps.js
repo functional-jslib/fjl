@@ -18,7 +18,7 @@ var
 
 /**
  * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
- * @functionOps module:stringOps.lines
+ * @function module:stringOps.lines
  * @param str {String}
  * @returns {Array}
  */
@@ -27,7 +27,7 @@ lines = exports.lines = (0, _stringOps.split)(/[\n\r]/gm),
 
 /**
  * Splits a stringOps on all '\s' and/or all '\t' characters.
- * @functionOps module:stringOps.words
+ * @function module:stringOps.words
  * @param str{String}
  * @returns {Array}
  */
@@ -36,7 +36,7 @@ words = exports.words = (0, _stringOps.split)(/[\s\t]/gm),
 
 /**
  * Intersperse an array of strings with '\s' and then concats them.
- * @functionOps module:stringOps.unwords
+ * @function module:stringOps.unwords
  * @param arr {String}
  * @returns {Array}
  */
@@ -45,7 +45,7 @@ unwords = exports.unwords = (0, _listOps.intercalate)(' '),
 
 /**
  * Intersperses a '\n' character into a list of strings and then concats it.
- * @functionOps module:stringOps.unlines
+ * @function module:stringOps.unlines
  * @param list {Array|String|*}
  * @returns {Array}
  */

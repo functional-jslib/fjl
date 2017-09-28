@@ -1,11 +1,4 @@
 /**
- * Array operators module.
- * @module listOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
- * @todo code un-performant shorthand in `listOps`
- */
-
-/**
  * List operators.
  * @module listOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to
@@ -127,12 +120,42 @@ export const
      */
     intercalate = curry(_intercalate),
 
+    /**
+     * Reduces a foldable (list etc.) with passed in function.
+     * @function module:listOps.foldl
+     * @param fn {Function}
+     * @param zero {*} - Aggregator.
+     * @param functor {Array|String|*}
+     * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
+     */
     foldl = curry(_foldl),
 
+    /**
+     * Reduces a foldable (list etc.) from right to left with passed in function.
+     * @function module:listOps.foldr
+     * @param fn {Function}
+     * @param zero {*} - Aggregator.
+     * @param functor {Array|{reduce: {Function}}}
+     * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
+     */
     foldr = curry(_foldr),
 
+    /**
+     * Reduces a foldable (list etc.) with passed in function.
+     * @function module:listOps.foldl1
+     * @param fn {Function}
+     * @param functor {Array|{reduce: {Function}}}
+     * @returns {*}
+     */
     foldl1 = curry(_foldl1),
 
+    /**
+     * Reduces a foldable (list etc.) from right to left with passed in function.
+     * @function module:listOps.foldr1
+     * @param fn {Function}
+     * @param functor {Array|{reduce: {Function}}}
+     * @returns {*}
+     */
     foldr1 = curry(_foldr1),
 
     /**
@@ -157,6 +180,14 @@ export const
      */
     mapAccumR = curry(_mapAccumR),
 
+    /**
+     * Iterate on value (`x`) with `op` up to `limit`.
+     * @function module:listOps.iterate
+     * @param limit {Number}
+     * @param op {Function} - Operation
+     * @param x {*} - Starting point.
+     * @returns {*}
+     */
     iterate = curry(_iterate),
 
     repeat = curry(_repeat),

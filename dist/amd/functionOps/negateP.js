@@ -5,7 +5,7 @@ define(["exports"], function (exports) {
     value: true
   });
   /**
-   * @module negate
+   * @memberOf functionOps
    */
 
   /**

@@ -9,7 +9,7 @@ define(['exports', './curry'], function (exports, _curry) {
 
     /**
      * Run `operation` until predicate returns `true`.
-     * @function module:function.until
+     * @function module:functionOps.until
      * @param predicate {Function} :: a -> Boolean
      * @param operation {Function} :: a -> a
      * @param typeInstance {*} :: * - A monoidal zero or some starting point.
@@ -21,5 +21,7 @@ define(['exports', './curry'], function (exports, _curry) {
             result = operation(result);
         }
         return result;
-    });
+    }); /**
+         * @memberOf functionOps
+         */
 });

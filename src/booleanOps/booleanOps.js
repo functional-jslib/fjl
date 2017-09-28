@@ -9,13 +9,23 @@ export {isTruthy, isFalsy} from './is';
 
 export const
 
+    /**
+     * Returns `true`.
+     * @function module:booleanOps.alwaysTrue
+     * @returns {Boolean}
+     */
     alwaysTrue = () => true,
 
+    /**
+     * Returns `false`.
+     * @function module:booleanOps.alwaysFalse
+     * @returns {Boolean}
+     */
     alwaysFalse = () => false,
 
     /**
      * Returns whether both values are truthy or not.
-     * @function module:booleanOps.and
+     * @function module:booleanOps.bAnd
      * @param a {*}
      * @param b {*}
      * @returns {Boolean}
@@ -25,7 +35,7 @@ export const
     /**
      * Returns whether one of the two passed in values
      *  are truthy or not.
-     * @function module:booleanOps.or
+     * @function module:booleanOps.bOr
      * @param a {*}
      * @param b {*}
      * @returns {Boolean}
@@ -34,7 +44,7 @@ export const
 
     /**
      * Returns whether passed in value is truthy or not.
-     * @function module:booleanOps.not
+     * @function module:booleanOps.bNot
      * @param x {*}
      * @returns {Boolean}
      */
@@ -50,7 +60,7 @@ export const
 
     /**
      * Returns whether both values passed in are equal or not.
-     * @function module:booleanOps.equal
+     * @function module:booleanOps.bEqual
      * @param a {*}
      * @param b {*}
      * @returns {Boolean}
