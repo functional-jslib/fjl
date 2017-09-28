@@ -35,19 +35,14 @@ define(['exports', '../jsPlatform/listOpsUncurried', '../jsPlatform/functionOpsU
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
      * @function module:listOps.appendMany
-     * @param x {Array|String|*}
      * @param args ...{Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
-    appendMany = exports.appendMany = (x, ...args) => {
-        const lenArgs = (0, _objectOpsUncurried.length)(args);
-        if (!(0, _objectOpsUncurried.isset)(x)) {
-            return [];
+    appendMany = exports.appendMany = (...args) => {
+        if ((0, _objectOpsUncurried.length)(args)) {
+            return (0, _functionOpsUncurried.apply)(_listOpsUncurried.concat, args);
         }
-        if (!lenArgs) {
-            return (0, _listOpsUncurriedUtils.sliceFrom)(0, x);
-        }
-        return (0, _listOpsUncurried.concat)(x, ...args);
+        throw new Error('`appendMany` requires at least one arg.');
     },
 
 
@@ -154,7 +149,12 @@ define(['exports', '../jsPlatform/listOpsUncurried', '../jsPlatform/functionOpsU
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    concat = exports.concat = xs => appendMany(...xs),
+    concat = exports.concat = xs => {
+        if (!(0, _objectOpsUncurried.length)(xs)) {
+            return (0, _listOpsUncurriedUtils.copy)(xs);
+        }
+        return (0, _objectOpsUncurried.isString)(xs) ? xs : (0, _functionOpsUncurried.apply)(appendMany, xs);
+    },
 
 
     /**
@@ -198,7 +198,7 @@ define(['exports', '../jsPlatform/listOpsUncurried', '../jsPlatform/functionOpsU
         if (!limit) {
             return aggregator;
         }
-        return (0, _listOpsUncurriedUtils.reduce)((agg, item, ind) => {
+        return foldl((agg, item, ind) => {
             return ind === lastInd ? aggregatorOp(agg, item) : aggregatorOp(aggregatorOp(agg, item), between);
         }, aggregator, arr);
     },
@@ -212,10 +212,7 @@ define(['exports', '../jsPlatform/listOpsUncurried', '../jsPlatform/functionOpsU
      * @param xss {Array|String|*}
      * @returns {Array|String|*}
      */
-    intercalate = exports.intercalate = (xs, xss) => {
-        const result = intersperse(xs, xss);
-        return (0, _objectOpsUncurried.isString)(result) ? result : concat(result);
-    },
+    intercalate = exports.intercalate = (xs, xss) => concat(intersperse(xs, xss)),
 
 
     /**
@@ -366,7 +363,8 @@ define(['exports', '../jsPlatform/listOpsUncurried', '../jsPlatform/functionOpsU
         return out;
     },
           repeat = exports.repeat = (limit, x) => iterate(limit, agg => {
-        agg.push(x);return agg;
+        agg.push(x);
+        return agg;
     }, []),
           replicate = exports.replicate = repeat,
           cycle = exports.cycle = (limit, xs) => concat(replicate(limit, xs)),
@@ -689,7 +687,8 @@ define(['exports', '../jsPlatform/listOpsUncurried', '../jsPlatform/functionOpsU
                 ind++;
             }
             if (equalityOp(x, item)) {
-                prevItem = x;return true;
+                prevItem = x;
+                return true;
             }
             return false;
         },
@@ -990,7 +989,6 @@ define(['exports', '../jsPlatform/listOpsUncurried', '../jsPlatform/functionOpsU
 
     // Decorate and sort
     sortBy(
-
     // Ordering
     (a1, b1) => {
         let a = a1[0],

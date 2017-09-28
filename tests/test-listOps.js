@@ -1,9 +1,7 @@
-/* eslint global: describe:true,it:true */
 /**
  * Created by elyde on 12/29/2016.
  * @todo ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
  * @todo ensure expected types (either explicitly or implicitly) are being returned where necessary.
- * @todo Clean up 'test-listOpsUncurried' to look more like code that was written expecting uncurried functions not curried ones (code was copied from the tests for the curried version of 'listOps' package).
  */
 
 // ~~~ STRIP ~~~
@@ -11,17 +9,16 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {compose} from '../../src/functionOps/compose';
-import {negateP} from '../../src/functionOps/negateP';
-import {__} from '../../src/functionOps/curry';
-import {split} from '../../src/jsPlatform/stringOps';
-import {isArray, isString} from '../../src/objectOps/is';
-import {isTruthy} from '../../src/booleanOps/is';
-import {bEqual as equal} from '../../src/booleanOps/booleanOps';
-import {lines, unlines, words, unwords} from '../../src/stringOps/stringOps';
+import {compose} from '../src/functionOps/compose';
+import {negateP} from '../src/functionOps/negateP';
+import {__} from '../src/functionOps/curry';
+import {split} from '../src/jsPlatform/stringOps';
+import {isArray, isString} from '../src/objectOps/is';
+import {isTruthy} from '../src/booleanOps/is';
+import {bEqual as equal} from '../src/booleanOps/booleanOps';
+import {lines, unlines, words, unwords} from '../src/stringOps/stringOps';
 import {
-    append, appendMany,
-    all, and, or, any, find, findIndex, findIndices,
+    append, appendMany, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
@@ -32,10 +29,11 @@ import {
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
-    filter, sum, product, maximum, maximumBy, minimum, minimumBy, nub, remove, insert, insertBy,
-    nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
-    complement, difference, union, intersect, intersectBy, groupBy
-} from '../../src/uncurried/listOps/listOpsUncurried';
+    filter, sum, product, maximum, minimum, nub, remove, insert,
+    nubBy, removeBy, removeFirstsBy, unionBy, intersectBy,
+    groupBy, sortBy, insertBy, maximumBy, minimumBy, sort, sortOn,
+    complement, difference, union, intersect
+} from '../src/listOps/listOps';
 
 import {
     range,
@@ -46,7 +44,6 @@ import {
     expectLength,
     expectTrue,
     expectFalse,
-    expectInstanceOf,
     alphabetArray,
     alphabetCharCodeRange,
     log, alphabetString
@@ -54,15 +51,15 @@ import {
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#listOpsUncurried', function () {
+describe ('#listOps', function () {
 
     const strToArray = split(''),
         generalEqualityCheck = (a, b) => a === b,
-    genericOrdering = (a, b) => {
-        if (a > b) { return 1; }
-        else if (a < b) { return -1; }
-        return 0;
-    };
+        genericOrdering = (a, b) => {
+            if (a > b) { return 1; }
+            else if (a < b) { return -1; }
+            return 0;
+        };
 
     describe ('#append', function () {
         it ('should be able to append two lists.', function () {
@@ -82,7 +79,7 @@ describe ('#listOpsUncurried', function () {
             expectShallowEquals(append([], []), []);
         });
         it ('should throw an error when receiving Nothing', function () {
-            assert.throws(append, Error);
+            // assert.throws(append, Error);
             assert.throws(() => append(null), Error);
             assert.throws(() => append(undefined), Error);
             assert.throws(() => append(null, []), Error);
@@ -92,8 +89,8 @@ describe ('#listOpsUncurried', function () {
 
     describe ('#appendMany', function () {
         const unfoldRBy4 = list => unfoldr(remainder =>
-                    remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
-                , list),
+                remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
+            , list),
             arrayParts= unfoldRBy4(alphabetArray),
             stringParts = unfoldRBy4(alphabetString);
 
@@ -107,10 +104,6 @@ describe ('#listOpsUncurried', function () {
             expectShallowEquals(appendMany(alphabetArray, []), alphabetArray);
             expectEqual(appendMany(alphabetString, ''), alphabetString);
         });
-        it ('should return a copy of the original list only receiving it', function () {
-            expectShallowEquals(appendMany(alphabetArray), alphabetArray);
-            expectEqual(appendMany(alphabetString), alphabetString);
-        });
         it ('should return an empty list when appending empty lists', function () {
             expectEqual(appendMany('', '', ''), '');
             expectEqual(appendMany('', ''), '');
@@ -118,9 +111,9 @@ describe ('#listOpsUncurried', function () {
             expectShallowEquals(appendMany([], []), []);
         });
         it ('should throw an error when receiving Nothing', function () {
-            assert.throws(appendMany, Error);
-            assert.throws(() => appendMany(null), Error);
-            assert.throws(() => appendMany(undefined), Error);
+            // assert.throws(appendMany, Error);
+            assert.throws(() => appendMany(null, null), Error);
+            assert.throws(() => appendMany(undefined, undefined), Error);
             assert.throws(() => appendMany(null, []), Error);
             assert.throws(() => appendMany(undefined, []), Error);
         });
@@ -157,7 +150,7 @@ describe ('#listOpsUncurried', function () {
 
     describe ('#init', function () {
         it ('should return everything except the last item of an listOps and/or stringOps', function () {
-            compose(expectEqual('orange'), xs => intercalate('', xs), init, strToArray)('oranges');
+            compose(expectEqual('orange'), intercalate(''), init, strToArray)('oranges');
             compose(expectEqual('orange'), init)('oranges');
         });
         it ('should return an empty listOps when an empty listOps and/or stringOps is passed in', function () {
@@ -171,7 +164,7 @@ describe ('#listOpsUncurried', function () {
 
     describe ('#tail', function () {
         it ('should return everything except the last item of an listOps', function () {
-            compose(expectEqual('ello'), xs => intercalate('', xs), tail, strToArray)('hello');
+            compose(expectEqual('ello'), intercalate(''), tail, strToArray)('hello');
             compose(expectEqual('ello'), tail)('hello');
         });
         it ('should return an empty listOps when receiving an empty listOps', function () {
@@ -287,6 +280,7 @@ describe ('#listOpsUncurried', function () {
         it ('should return a list with the same item when the list has a length of `1`', function () {
             expectEqual(intersperse(', ', 'a'), 'a');
             expectShallowEquals(intersperse(', ', ['a']), ['a']);
+            log()
         });
         it ('should return an empty list when receiving an empty list', function () {
             expectEqual(intersperse('', ''), '');
@@ -839,14 +833,14 @@ describe ('#listOpsUncurried', function () {
             });
         });
         it ('should return an empty listOps and/or stringOps when called with `0` as the first argument', function () {
-            compose(expectEqual(0), length, xs => take(0, xs))(split('', hello));
-            compose(expectEqual(0), length, xs => take(0, xs))(hello);
+            compose(expectEqual(0), length, take(0))(split('', hello));
+            compose(expectEqual(0), length, take(0))(hello);
         });
         it ('should return an empty listOps and/or stringOps when called with with an empty listOps or stringOps', function () {
             let count = 5;
             while (count) {
-                compose(expectEqual(0), length, xs => take(count, xs))('');
-                compose(expectEqual(0), length, xs => take(count, xs))([]);
+                compose(expectEqual(0), length, take(count))('');
+                compose(expectEqual(0), length, take(count))([]);
                 --count;
             }
         });
@@ -880,14 +874,14 @@ describe ('#listOpsUncurried', function () {
             });
         });
         it ('should return entire listOps and/or stringOps when called with `0` as the first argument', function () {
-            compose(expectEqual(length(hello)), length)(drop(0, split('', hello)));
-            compose(expectEqual(length(hello)), length)(drop(0, hello));
+            compose(expectEqual(length(hello)), length, drop(0))(split('', hello));
+            compose(expectEqual(length(hello)), length, drop(0))(hello);
         });
         it ('should return an empty listOps and/or stringOps when called with with an empty listOps or stringOps', function () {
             let count = 5;
             while (count) {
-                compose(expectEqual(0), length)(drop(count, ''));
-                compose(expectEqual(0), length)(drop(count, []));
+                compose(expectEqual(0), length, drop(count))('');
+                compose(expectEqual(0), length, drop(count))([]);
                 --count;
             }
         });
@@ -1267,21 +1261,21 @@ describe ('#listOpsUncurried', function () {
     describe ('#isPrefixOf', function () {
         it ('should return `true` when a list is a prefix of another', function () {
             expectTrue(all(
-                xs => isPrefixOf('abc', xs),
+                isPrefixOf('abc'),
                 splitAt(3, inits(alphabetString))[1]
             ));
             expectTrue(all(
-                xs => isPrefixOf('abc'.split(''), xs),
+                isPrefixOf('abc'.split('')),
                 splitAt(3, inits(alphabetArray))[1]
             ));
         });
         it ('should return `false` when a list is not prefix of second list', function () {
             expectTrue(all(
-                xs => !isPrefixOf('!@#', xs),
+                negateP(isPrefixOf('!@#')),
                 splitAt(3, inits(alphabetString))[1]
             ));
             expectTrue(all(
-                xs => !isPrefixOf('!@#'.split(''), xs),
+                negateP(isPrefixOf('!@#'.split(''))),
                 splitAt(3, inits(alphabetArray))[1]
             ));
         });
@@ -1292,21 +1286,21 @@ describe ('#listOpsUncurried', function () {
             const candidateString = splitAt(length(alphabetString) - 2, tails(alphabetString))[0];
             // log (candidateString);
             expectTrue(all(
-                xs => isSuffixOf('xyz', xs),
+                isSuffixOf('xyz'),
                 candidateString
             ));
             expectTrue(all(
-                xs => isSuffixOf('xyz'.split(''), xs),
+                isSuffixOf('xyz'.split('')),
                 splitAt(length(alphabetArray) - 2, tails(alphabetArray))[0]
             ));
         });
         it ('should return `false` when a list is not suffix of second list', function () {
             expectTrue(all(
-                xs => !isSuffixOf('!@#', xs),
+                negateP(isSuffixOf('!@#')),
                 splitAt(length(alphabetString) - 2, tails(alphabetString))[0]
             ));
             expectTrue(all(
-                xs => !isSuffixOf('!@#'.split(''), xs),
+                negateP(isSuffixOf('!@#'.split(''))),
                 splitAt(length(alphabetString) - 2, tails(alphabetArray))[0]
             ));
         });
@@ -1323,8 +1317,8 @@ describe ('#listOpsUncurried', function () {
         });
         it ('should return `false` when a list is not infix of second list', function () {
             expectTrue(and([
-                (xs => !isInfixOf('!@#', xs))(alphabetString),
-                (xs => !isInfixOf('!@#'.split(''), xs)(alphabetArray))
+                negateP(isInfixOf('!@#'))(alphabetString),
+                negateP(isInfixOf('!@#'.split(''))(alphabetArray))
             ]));
         });
     });
@@ -1532,27 +1526,26 @@ describe ('#listOpsUncurried', function () {
     });
 
     describe ('#findIndices', function () {
-        it ('should have more tests');
-        // it ('should', function () {
-        //     const token = 'aecedegefehea',
-        //         tokenParts = token.split(''),
-        //         eIndices = [1, 3, 5, 7, 9, 11],
-        //         notEIndices = [0, 2, 4, 6, 8, 10, 12],
-        //         aIndices = [0, 12],
-        //         noIndices = [],
-        //         indiceTests = [
-        //             [findIndices(x => x === 'e'), eIndices],
-        //             [findIndices(x => x !== 'e'), notEIndices],
-        //             [findIndices(x => x === 'a'), aIndices],
-        //             [findIndices(x => false), noIndices]
-        //         ];
-        //     // expectTrue(
-        //     //     all(xs =>
-        //     //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
-        //     //         [token, tokenParts])
-        //     // );
-        //     // @todo add tests
-        // });
+        it ('should', function () {
+            const token = 'aecedegefehea',
+                tokenParts = token.split(''),
+                eIndices = [1, 3, 5, 7, 9, 11],
+                notEIndices = [0, 2, 4, 6, 8, 10, 12],
+                aIndices = [0, 12],
+                noIndices = [],
+                indiceTests = [
+                    [findIndices(x => x === 'e'), eIndices],
+                    [findIndices(x => x !== 'e'), notEIndices],
+                    [findIndices(x => x === 'a'), aIndices],
+                    [findIndices(x => false), noIndices]
+                ];
+            // expectTrue(
+            //     all(xs =>
+            //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
+            //         [token, tokenParts])
+            // );
+            // @todo add tests
+        });
     });
 
     describe ('#zip', function () {
@@ -1731,7 +1724,7 @@ describe ('#listOpsUncurried', function () {
                 lenAlphaArray = length(alphabetArray),
                 result = unzipN(subj);
 
-            // log (subj, result);
+            log (subj, result);
 
             // First ensure our subject is valid
             // --------------------------------------
@@ -1925,13 +1918,13 @@ describe ('#listOpsUncurried', function () {
     });
 
     describe ('#complement', function () {
-        it ('should return an empty list when no parameters are passed in', function () {
+        it ('should return an empty listOps when no parameters are passed in', function () {
             compose(expectEqual(__, 0), length, complement)();
         });
-        it ('should return an empty list if only one list is passed in', function () {
+        it ('should return an empty listOps if only one listOps is passed in', function () {
             compose(expectEqual(__, 0), length, complement)([1,2,3]);
         });
-        it ('should return elements not in first list passed to it', function () {
+        it ('should return elements not in first listOps passed to it', function () {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
                 [[[1, 2, 3], [1, 2, 3, 4, 5]], 2, [4, 5]],
@@ -1941,7 +1934,6 @@ describe ('#listOpsUncurried', function () {
             testCases.forEach(testCase => {
                 let [subjects, expectedLen, expectedElms] = testCase,
                     result = complement.apply(null, subjects);
-                // log(result);
                 expectEqual(result.length, expectedLen);
                 result.forEach((elm, ind) => {
                     expectEqual(elm, expectedElms[ind]);
@@ -1981,17 +1973,17 @@ describe ('#listOpsUncurried', function () {
     });
 
     describe ('#intersect', function () {
-        it ('should return an empty list when receiving an empty list', function () {
-            expectEqual(length(intersect([])), 0);
-            expectEqual(length(intersect([], [1, 2, 3])), 0);
+        it ('should return an empty listOps when receiving an empty listOps as parameter 1', function () {
+            compose(expectEqual(__, 0), length, intersect)([]);
+            compose(expectEqual(__, 0), length, intersect([]))([1, 2, 3]);
         });
-        it ('should return an empty list when receiving an empty list as parameter 2', function () {
-            expectEqual(length(intersect([1, 2, 3], [])), 0);
+        it ('should return an empty listOps when receiving an empty listOps as parameter 2', function () {
+            compose(expectEqual(__, 0), length, intersect([1, 2, 3]))([]);
         });
-        it ('should return an empty list when both arrays passed are empty', function () {
-            expectEqual(length(intersect([], [])), 0);
+        it ('should return an empty listOps when both arrays passed are empty', function () {
+            compose(expectEqual(__, 0), length, intersect([]))([]);
         });
-        it ('should return an empty list when no arrays are passed in', function () {
+        it ('should return an empty listOps when no arrays are passed in', function () {
             compose(expectEqual(__, 0), length, intersect)();
         });
         it ('should return an intersection of the two arrays passed in', function () {
@@ -2013,65 +2005,23 @@ describe ('#listOpsUncurried', function () {
     });
 
     describe ('#union', function () {
-        const mixedMatchRange = append(range(13, 8, -1), range(1, 3));
-            // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
-            // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
-        // [ascRanges, descRanges] =
-        //     map(argsSet =>
-        //         map(rangeArgs => apply(range, rangeArgs), argsSet),
-        //         [ascRangeArgs, descRangeArgs]
-        //     ),
-        // [rl1, rl2, rl3, rl4] = ascRanges,
-        // [lr1, lr2, lr3, lr4] = descRanges;
-        it ('should return a union on list 1 with list two', function () {
-            [// subj1, subj2, expectResultLen, expectedResultElements
+        it ('should return an union of the two arrays', function () {
+            let testCases = [
+                // subj1, subj2, expectLen, expectedElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],
                 [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 8, [1, 2, 3, 4, 5, 6, 7, 8]],
-                [[1, 2, 3, 4, 5], [1, 2, 3], 5, [1, 2, 3, 4 ,5]],
-                [mixedMatchRange, range(18, 21), 13, mixedMatchRange.concat(range(18, 21))]
-            ]
-                .forEach(testCase => {
-                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                        result = union(subj1, subj2);
-                    // log('union', result);
-                    expectEqual(result.length, expectedLen);
-                    expectShallowEquals(result, expectedElms);
+                [[1, 2, 3, 4, 5], [1, 2, 3], 5, [1, 2, 3, 4 ,5]]
+            ];
+            testCases.forEach(testCase => {
+                let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                    result = union(subj1, subj2);
+                expectEqual(result.length, expectedLen);
+                result.forEach((elm, ind) => {
+                    expectEqual(elm, expectedElms[ind]);
                 });
+            });
         });
-        it ('should return a copy of left-most array when right-most list is empty', function () {
-            [// subj1, subj2, expectResultLen, expectedResultElements
-                [range(1, 5), [], 5, range(1, 5)],
-                [range(1, 8), [], 8, range(1, 8)],
-                [range(1, 13), [], 13, range(1, 13)],
-                [mixedMatchRange, [], 9, mixedMatchRange]
-            ]
-                .forEach(testCase => {
-                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                        result = union(subj1, subj2);
-                    // log('union', result);
-                    expectEqual(result.length, expectedLen);
-                    expectShallowEquals(result, expectedElms);
-                });
-        });
-        it ('should return a copy of right-most list when left-most list is empty', function () {
-            [// subj1, subj2, expectResultLen, expectedResultElements
-                [range(1, 5), [], 5, range(1, 5)],
-                [range(1, 8), [], 8, range(1, 8)],
-                [range(1, 13), [], 13, range(1, 13)],
-                [mixedMatchRange, [], 9, mixedMatchRange]
-            ]
-                .forEach(testCase => {
-                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                        result = union(subj1, subj2);
-                    // log('union', result);
-                    expectEqual(result.length, expectedLen);
-                    expectShallowEquals(result, expectedElms);
-                });
-        });
-        it ('should return an empty list when receiving empty lists', function () {
-            expectEqual(union('', ''), '');
-            expectShallowEquals(union([], []), []);
-        });
+        // @todo Add more tests
     });
 
     describe ('#sort', function () {
@@ -2079,11 +2029,11 @@ describe ('#listOpsUncurried', function () {
             expectShallowEquals(sort(range(10, 0, -1)), range(0, 10, 1));
             expectShallowEquals(sort(range(0, 10)), range(0, 10));
             compose(expectShallowEquals(__, alphabetArray), sort, reverse)(alphabetArray);
-            compose(/*log,*/ sort, reverse)(alphabetArray);
+            compose(log, sort, reverse)(alphabetArray);
         });
         it ('should return a copy of original list when said list is already sorted', function () {
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort)(take(3, alphabetArray));
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort)(take(3, alphabetArray));
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
             compose(expectShallowEquals(__, alphabetArray), sort)(alphabetArray);
             compose(expectShallowEquals(__, range(0, 10)), sort)(range(0, 10));
         });
@@ -2094,17 +2044,17 @@ describe ('#listOpsUncurried', function () {
 
     describe ('#sortOn', function () {
         const identity = x => x,
-            sortOnIdentity = xs => sortOn(identity, xs),
+            sortOnIdentity = sortOn(identity),
             range0To10 = range(0, 10),
             range10To0 = range(10, 0, -1);
         it ('should sort a list in ascending order', function () {
             expectShallowEquals(sortOnIdentity(range10To0), range0To10);
             expectShallowEquals(sortOnIdentity(range0To10), range0To10);
             compose(expectShallowEquals(__, alphabetArray), sortOnIdentity, reverse)(alphabetArray);
-            compose(/*log,*/ sortOnIdentity, reverse)(alphabetArray);
+            compose(log, sortOnIdentity, reverse)(alphabetArray);
         });
         it ('should return a copy of original list when said list is already sorted', function () {
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), sortOnIdentity)(take(3, alphabetArray));
+            compose(expectShallowEquals(__, ['a', 'b', 'c']), sortOnIdentity, take(3))(alphabetArray);
             compose(expectShallowEquals(__, alphabetArray), sortOnIdentity)(alphabetArray);
             compose(expectShallowEquals(__, range0To10), sortOnIdentity)(range0To10);
         });
@@ -2196,19 +2146,15 @@ describe ('#listOpsUncurried', function () {
             // Remove first occurrences of `vowels` in `alphabet * 3`
             const subj1 = iterate(length(vowels), (value, ind) => {
                     const foundInd = value.indexOf(vowels[ind]);
-                    // log(value, foundInd);
                     if (foundInd > -1) {
                         const parts = splitAt(foundInd, value);
-                        // log(parts);
                         return concat([parts[0], tail(parts[1])]);
                     }
                     return value;
                 }, concat([alphabetArray, alphabetArray, alphabetArray]));
 
-            // log(subj1);
-
             // Expect vowels removed from the same places in both lists
-            expectTrue(all(tuple => /*!log(tuple) &&*/ tuple[0] === tuple[1], [[
+            expectTrue(all(tuple => !log(tuple) && tuple[0] === tuple[1], [[
                 removeFirstsBy(equal, cycle(3, alphabetString), vowels),
                 concat(subj1)
             ]]));
@@ -2236,13 +2182,13 @@ describe ('#listOpsUncurried', function () {
             // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
             // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
             equalityCheck = (a, b) => a === b;
-            // [ascRanges, descRanges] =
-            //     map(argsSet =>
-            //         map(rangeArgs => apply(range, rangeArgs), argsSet),
-            //         [ascRangeArgs, descRangeArgs]
-            //     ),
-            // [rl1, rl2, rl3, rl4] = ascRanges,
-            // [lr1, lr2, lr3, lr4] = descRanges;
+        // [ascRanges, descRanges] =
+        //     map(argsSet =>
+        //         map(rangeArgs => apply(range, rangeArgs), argsSet),
+        //         [ascRangeArgs, descRangeArgs]
+        //     ),
+        // [rl1, rl2, rl3, rl4] = ascRanges,
+        // [lr1, lr2, lr3, lr4] = descRanges;
         it ('should return a union on list 1 with list two', function () {
             [// subj1, subj2, expectResultLen, expectedResultElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],
@@ -2281,12 +2227,12 @@ describe ('#listOpsUncurried', function () {
                 [mixedMatchRange, [], 9, mixedMatchRange]
             ]
                 .forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = unionBy(equalityCheck, subj1, subj2);
-                // log('unionBy', result);
-                expectEqual(result.length, expectedLen);
-                expectShallowEquals(result, expectedElms);
-            });
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    // log('unionBy', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
         });
         it ('should return an empty list when receiving empty lists', function () {
             expectEqual(unionBy(equalityCheck, '', ''), '');
@@ -2364,11 +2310,11 @@ describe ('#listOpsUncurried', function () {
 
     describe ('#insertBy', function () {
         const injectValueAtIndex = (x, ind, list) => {
-            if (ind <= 0) { return [x].concat(list); }
-            else if (ind > list.length - 1) { return list.concat([x]); }
-            return list.slice(0, ind).concat([x], list.slice(ind));
-        },
-        genericInsert = (x, xs) => insertBy(genericOrdering, x, xs);
+                if (ind <= 0) { return [x].concat(list); }
+                else if (ind > list.length - 1) { return list.concat([x]); }
+                return list.slice(0, ind).concat([x], list.slice(ind));
+            },
+            genericInsert = (x, xs) => insertBy(genericOrdering, x, xs);
         it ('Should insert a value before value that matches equality check', function () {
             // expectShallowEquals(genericInsert(99, range(0, 144, 5))
             const range0To145 = range(0, 145, 5),

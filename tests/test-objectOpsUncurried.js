@@ -11,14 +11,14 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {apply} from '../../src/uncurried/jsPlatform/functionOpsUncurried';
+import {apply} from '../src/uncurried/jsPlatform/functionOpsUncurried';
 import {objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet, assignDeep
-} from '../../src/uncurried/objectOps/objectOpsUncurried';
-import {foldl, map, and, head, tail} from "../../src/uncurried/listOps/listOpsUncurried";
+} from '../src/uncurried/objectOps/objectOpsUncurried';
+import {foldl, map, and, head, tail} from "../src/uncurried/listOps/listOpsUncurried";
 import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, deepCompareObjectsLeft} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

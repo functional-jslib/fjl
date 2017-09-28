@@ -57,18 +57,6 @@
         };
     }();
 
-    function _toConsumableArray(arr) {
-        if (Array.isArray(arr)) {
-            for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-                arr2[i] = arr[i];
-            }
-
-            return arr2;
-        } else {
-            return Array.from(arr);
-        }
-    }
-
     exports.length = _objectOpsUncurried.length;
     exports.map = _map.map;
 
@@ -98,23 +86,18 @@
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
      * @function module:listOps.appendMany
-     * @param x {Array|String|*}
      * @param args ...{Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
-    appendMany = exports.appendMany = function appendMany(x) {
-        for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-            args[_key - 1] = arguments[_key];
+    appendMany = exports.appendMany = function appendMany() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
         }
 
-        var lenArgs = (0, _objectOpsUncurried.length)(args);
-        if (!(0, _objectOpsUncurried.isset)(x)) {
-            return [];
+        if ((0, _objectOpsUncurried.length)(args)) {
+            return (0, _functionOpsUncurried.apply)(_listOpsUncurried.concat, args);
         }
-        if (!lenArgs) {
-            return (0, _listOpsUncurriedUtils.sliceFrom)(0, x);
-        }
-        return _listOpsUncurried.concat.apply(undefined, [x].concat(args));
+        throw new Error('`appendMany` requires at least one arg.');
     },
 
 
@@ -232,7 +215,10 @@
      * @returns {Array|String|*}
      */
     concat = exports.concat = function concat(xs) {
-        return appendMany.apply(undefined, _toConsumableArray(xs));
+        if (!(0, _objectOpsUncurried.length)(xs)) {
+            return (0, _listOpsUncurriedUtils.copy)(xs);
+        }
+        return (0, _objectOpsUncurried.isString)(xs) ? xs : (0, _functionOpsUncurried.apply)(appendMany, xs);
     },
 
 
@@ -281,7 +267,7 @@
         if (!limit) {
             return aggregator;
         }
-        return (0, _listOpsUncurriedUtils.reduce)(function (agg, item, ind) {
+        return foldl(function (agg, item, ind) {
             return ind === lastInd ? aggregatorOp(agg, item) : aggregatorOp(aggregatorOp(agg, item), between);
         }, aggregator, arr);
     },
@@ -296,8 +282,7 @@
      * @returns {Array|String|*}
      */
     intercalate = exports.intercalate = function intercalate(xs, xss) {
-        var result = intersperse(xs, xss);
-        return (0, _objectOpsUncurried.isString)(result) ? result : concat(result);
+        return concat(intersperse(xs, xss));
     },
 
 
@@ -454,7 +439,8 @@
     },
         repeat = exports.repeat = function repeat(limit, x) {
         return iterate(limit, function (agg) {
-            agg.push(x);return agg;
+            agg.push(x);
+            return agg;
         }, []);
     },
         replicate = exports.replicate = repeat,
@@ -799,7 +785,8 @@
                 ind++;
             }
             if (equalityOp(x, item)) {
-                prevItem = x;return true;
+                prevItem = x;
+                return true;
             }
             return false;
         },
@@ -1181,7 +1168,6 @@
 
             // Decorate and sort
             sortBy(
-
             // Ordering
             function (a1, b1) {
                 var a = a1[0],

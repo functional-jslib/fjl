@@ -6,7 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.complement = undefined;
 exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.isEmpty = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = exports.length = undefined;
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * 'Uncurried' list operators.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @module listOpsUncurried
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @todo code unperformant shorthand in `listOps`
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+
 
 var _listOpsUncurried = require('../jsPlatform/listOpsUncurried');
 
@@ -23,17 +30,6 @@ var _objectOpsUncurried = require('../objectOps/objectOpsUncurried');
 var _map = require('./map');
 
 var _listOpsUncurriedUtils = require('./listOpsUncurriedUtils');
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /**
-                                                                                                                                                                                                     * 'Uncurried' list operators.
-                                                                                                                                                                                                     * @module listOpsUncurried
-                                                                                                                                                                                                     * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
-                                                                                                                                                                                                     * @todo code unperformant shorthand in `listOps`
-                                                                                                                                                                                                     * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
-                                                                                                                                                                                                     */
-
-
-// import {log} from   '../../tests/for-server/helpers';
 
 // Exported imports
 exports.length = _objectOpsUncurried.length;
@@ -65,23 +61,18 @@ append = exports.append = _listOpsUncurried.concat,
  * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
  *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
  * @function module:listOps.appendMany
- * @param x {Array|String|*}
  * @param args ...{Array|String|*} - Lists or lists likes.
  * @returns {Array|String|*} - Same type as first list or list like passed in.
  */
-appendMany = exports.appendMany = function appendMany(x) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
+appendMany = exports.appendMany = function appendMany() {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
     }
 
-    var lenArgs = (0, _objectOpsUncurried.length)(args);
-    if (!(0, _objectOpsUncurried.isset)(x)) {
-        return [];
+    if ((0, _objectOpsUncurried.length)(args)) {
+        return (0, _functionOpsUncurried.apply)(_listOpsUncurried.concat, args);
     }
-    if (!lenArgs) {
-        return (0, _listOpsUncurriedUtils.sliceFrom)(0, x);
-    }
-    return _listOpsUncurried.concat.apply(undefined, [x].concat(args));
+    throw new Error('`appendMany` requires at least one arg.');
 },
 
 
@@ -199,7 +190,10 @@ isEmpty = exports.isEmpty = function isEmpty(x) {
  * @returns {Array|String|*}
  */
 concat = exports.concat = function concat(xs) {
-    return appendMany.apply(undefined, _toConsumableArray(xs));
+    if (!(0, _objectOpsUncurried.length)(xs)) {
+        return (0, _listOpsUncurriedUtils.copy)(xs);
+    }
+    return (0, _objectOpsUncurried.isString)(xs) ? xs : (0, _functionOpsUncurried.apply)(appendMany, xs);
 },
 
 
@@ -248,7 +242,7 @@ intersperse = exports.intersperse = function intersperse(between, arr) {
     if (!limit) {
         return aggregator;
     }
-    return (0, _listOpsUncurriedUtils.reduce)(function (agg, item, ind) {
+    return foldl(function (agg, item, ind) {
         return ind === lastInd ? aggregatorOp(agg, item) : aggregatorOp(aggregatorOp(agg, item), between);
     }, aggregator, arr);
 },
@@ -263,8 +257,7 @@ intersperse = exports.intersperse = function intersperse(between, arr) {
  * @returns {Array|String|*}
  */
 intercalate = exports.intercalate = function intercalate(xs, xss) {
-    var result = intersperse(xs, xss);
-    return (0, _objectOpsUncurried.isString)(result) ? result : concat(result);
+    return concat(intersperse(xs, xss));
 },
 
 
@@ -421,7 +414,8 @@ mapAccumR = exports.mapAccumR = function mapAccumR(op, zero, xs) {
 },
     repeat = exports.repeat = function repeat(limit, x) {
     return iterate(limit, function (agg) {
-        agg.push(x);return agg;
+        agg.push(x);
+        return agg;
     }, []);
 },
     replicate = exports.replicate = repeat,
@@ -766,7 +760,8 @@ groupBy = exports.groupBy = function groupBy(equalityOp, xs) {
             ind++;
         }
         if (equalityOp(x, item)) {
-            prevItem = x;return true;
+            prevItem = x;
+            return true;
         }
         return false;
     },
@@ -1148,7 +1143,6 @@ unzipN = exports.unzipN = function unzipN(list) {
 
         // Decorate and sort
         sortBy(
-
         // Ordering
         function (a1, b1) {
             var a = a1[0],

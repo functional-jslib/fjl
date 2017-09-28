@@ -11,15 +11,15 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {instanceOf, hasOwnProperty, keys} from '../../src/uncurried/jsPlatform/objectOpsUncurried';
-import {objComplement, objDifference, objUnion, objIntersect} from '../../src/objectOps/objectOps';
-import {apply} from '../../src/functionOps/apply';
-import {typeOf} from '../../src/objectOps/typeOf';
+import {instanceOf, hasOwnProperty, keys} from '../src/uncurried/jsPlatform/objectOpsUncurried';
+import {objComplement, objDifference, objUnion, objIntersect} from '../src/objectOps/objectOps';
+import {apply} from '../src/functionOps/apply';
+import {typeOf} from '../src/objectOps/typeOf';
 import {
     isType,
     isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
-    isWeakMap, isWeakSet} from '../../src/objectOps/is';
+    isWeakMap, isWeakSet} from '../src/objectOps/is';
 import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

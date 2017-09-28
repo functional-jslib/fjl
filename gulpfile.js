@@ -176,23 +176,13 @@ gulp.task('jsdoc', () =>
             }
         })));
 
-gulp.task('build-browser-tests', ['build-js'], () =>
-    gulp.src(['tests/for-server/**/*.js'])
-        .pipe(replace(/\/\/ ~~~ STRIP ~~~[^~]+\/\/ ~~~ \/STRIP ~~~[\n\r\f]+/gim, ''))
-        .pipe(gulpBabel())
-        .pipe(concat('tests/for-browser/test-suite.js'))
-        .pipe(gulp.dest('./'))
-        .pipe(gulpRollup({exports: 'named', format: 'amd'}))
-        .pipe(concat('tests/for-browser/test-suite.js'))
-        .pipe(gulp.dest('./')));
-
 gulp.task('build-readme', [
     'generate-version-js'
 ], () => gulp.src(gulpConfig.readme)
         .pipe(concat('README.md'))
         .pipe(gulp.dest('./')));
 
-gulp.task('build', ['build-js', 'build-browser-tests', 'build-readme']);
+gulp.task('build', ['build-js', 'build-readme']);
 
 gulp.task('tests', ['eslint'], () =>
     gulp.src(gulpConfig.tests.srcs)
