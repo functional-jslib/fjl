@@ -1,6 +1,7 @@
 /**
  *  List operations that overlap (apart from globally overlapping props and functions like `length` and `toString`)
  *      on both strings and arrays.
+ *  @module jsPlatform.listOps
  */
 
 import {curry} from   '../functionOps/curry';
@@ -18,13 +19,16 @@ export const
 
     /**
      * Calls `slice` method on passed in instance.
-     * @function module:jsPlatform.listOps
+     * @function module:listOps.slice
      * @param separator {String|RegExp}
      * @param list {Array|String|*}
      * @returns {Array|String|*}
      */
     slice = curry(slice_),
 
+    /**
+     *
+     */
     includes = includes_,
 
     indexOf = indexOf_,

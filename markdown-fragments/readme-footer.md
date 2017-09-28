@@ -25,6 +25,5 @@ configurations used for building the project.
 these functions are overloaded and aren't pure curry functions due to their placeholder manipulation feature).
 - [X] - ~~Remove functional operators (`zero`, `alt` etc.)  out into their own package (?) (tentative).~~
 - [X] - ~~Make all functional members compatible with es6 classes.~~ No constructors included in library.
-- [ ] - Remove use of 'gulp-better-rollup' in favor of using rollup directly.
+- [X] - Remove use of 'gulp-better-rollup' in favor of using rollup directly.
 - [ ] - Re-instate the use of .travisci file when project is passed 'alpha' stage.'
-

@@ -1,7 +1,7 @@
 /**
  * Created by elyde on 7/20/2017.
  * Curried functional versions of common array methods (`filter`, `map`, etc.).
- * @todo updated doc blocks to list correct/updated module name.
+ * @module jsPlatform.arrayOps
  */
 
 import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from   '../utils/utils';
@@ -12,7 +12,7 @@ export const
 
     /**
      * Maps a functionOps to functor (listOps etc.).
-     * @functionOps module:arrayOperators.map
+     * @function module:arrayOps.map
      * @param fn {Function}
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
@@ -21,7 +21,7 @@ export const
 
     /**
      * Filters a functor (listOps etc.) with passed in functionOps.
-     * @functionOps module:arrayOperators.filter
+     * @function module:arrayOps.filter
      * @param fn {Function}
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
@@ -30,7 +30,7 @@ export const
 
     /**
      * Reduces a foldable (listOps etc.) with passed in functionOps.
-     * @functionOps module:arrayOperators.reduce
+     * @function module:arrayOps.reduce
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
@@ -39,7 +39,7 @@ export const
 
     /**
      * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
-     * @functionOps module:arrayOperators.reduceRight
+     * @function module:arrayOps.reduceRight
      * @param fn {Function}
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
@@ -48,6 +48,7 @@ export const
 
     /**
      * For each on functor (Array|Object|etc.).
+     * @function module:arrayOps.forEach
      * @param fn {Function}
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
@@ -58,6 +59,7 @@ export const
     /**
      * Returns `true` if `fn` (predicate) returns true for at least one item
      * in functor else returns `false`.
+     * @function module:arrayOps.some
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -67,6 +69,7 @@ export const
 
     /**
      * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
+     * @function module:arrayOps.every
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -77,6 +80,7 @@ export const
     /**
      * Concats/appends all functors onto the end of first functor.
      * Note:  functors passed in after the first one must be of the same type.
+     * @function module:arrayOps.concat
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -86,7 +90,7 @@ export const
 
     /**
      * Array.prototype.join
-     * @functionOps module:listPrelude.join
+     * @function module:arrayOps.join
      * @param separator {String|RegExp}
      * @param arr {Array}
      * @returns {String}
@@ -95,6 +99,7 @@ export const
 
     /**
      * Same as Array.prototype.slice
+     * @function module:arrayOps.slice
      * @param separator {String|RegExp}
      * @param arr{Array}
      * @returns {Array}
@@ -103,6 +108,7 @@ export const
 
     /**
      * Same as Array.prototype.push
+     * @function module:arrayOps.push
      * @param item {*}
      * @param arr {Array}
      * @returns {Number}
@@ -111,7 +117,7 @@ export const
 
     /**
      * Reverses an listOps (shimmed if not exists).
-     * @functionOps module:listPrelude.reverse
+     * @function module:arrayOps.reverse
      * @return {Array}
      */
     reverse = defineReverse();

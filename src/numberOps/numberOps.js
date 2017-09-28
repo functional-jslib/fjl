@@ -1,1 +1,1 @@
-export const negate = x => x * -1;
+export const negate = x => Math.abs(x) * -1;

@@ -19,6 +19,5 @@ export * from './functionOps/functionOps';
 export * from './listOps/listOps';
 export * from './numberOps/numberOps';
 export * from './stringOps/stringOps';
-// export * from './compoundedOps/compoundedOps';
 
 export {version} from   '../generated-for-src/version';
