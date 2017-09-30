@@ -14,8 +14,7 @@ import {negateP} from '../src/functionOps/negateP';
 import {__} from '../src/functionOps/curry';
 import {split} from '../src/jsPlatform/string';
 import {isArray, isString} from '../src/objectOps/is';
-import {isTruthy} from '../src/booleanOps/is';
-import {bEqual as equal} from '../src/booleanOps/booleanOps';
+import {bEqual as equal, isTruthy} from '../src/booleanOps/booleanOps';
 import {lines, unlines, words, unwords} from '../src/stringOps/stringOps';
 import {
     append, appendMany, all, and, or, any, find, findIndex, findIndices,
