@@ -1,6 +1,6 @@
 /**
- * Array operators module.
- * @module listOpsUtils
+ * List operator utils module.
+ * @module listOpsUtils_
  */
 import {apply}              from '../jsPlatform/function_';  // un-curried version
 import {slice}              from '../jsPlatform/list_';      // un-curried version good for both strings and arrays
@@ -14,6 +14,7 @@ export const
 
     /**
      * Returns a slice of the given list from `startInd` to the end of the list.
+     * @function module:listOpsUtils_.sliceFrom
      * @param startInd {Number}
      * @param arr {Array|String|*}
      * @returns {Array|String|*}
@@ -22,7 +23,7 @@ export const
 
     /**
      * Slices from index `0` to given index.
-     * @module module:listOpsUncurried.sliceTo
+     * @function module:listOpsUtils_.sliceTo
      * @param toInd {Number}
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
@@ -31,11 +32,19 @@ export const
 
     /**
      * Slices a copy of list.
+     * @function listOpsUtils_.sliceFrom
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
     copy = xs => sliceFrom(0, xs),
 
+    /**
+     * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
+     * @function module:listOpsUtils_.genericAscOrdering
+     * @param a {*}
+     * @param b {*}
+     * @returns {number}
+     */
     genericAscOrdering = (a, b) => {
         if (a > b) { return 1; }
         else if (a < b) { return -1; }
@@ -44,11 +53,17 @@ export const
 
     /**
      * Returns length of all passed lists in list.
+     * @function module:listOpsUtils_.lengths
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
     lengths = (...lists) => length(lists) ? map(length, lists) : [],
 
+    /**
+     * @function module:listOpsUtils_.lengthsToSmallest
+     * @param lists {...(Array|String|*)}
+     * @returns {Array|String|*}
+     */
     lengthsToSmallest = (...lists) => {
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
@@ -96,7 +111,7 @@ export const
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOps.lastIndex
+     * @function module:listOpsUtils_lastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -104,7 +119,7 @@ export const
 
     /**
      * Finds index in string or list.
-     * @function module:listOps.findIndexWhere
+     * @function module:listOpsUtils_findIndexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -121,7 +136,7 @@ export const
 
     /**
      * Finds index in list from right to left.
-     * @function module:listOps.findIndexWhereRight
+     * @function module:listOpsUtils_findIndexWhereRight
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -153,7 +168,7 @@ export const
     },
 
     /**
-     * @function module:listOps.find
+     * @function module:listOpsUtils_find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}

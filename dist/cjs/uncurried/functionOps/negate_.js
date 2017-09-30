@@ -37,7 +37,7 @@ var negateF = exports.negateF = function negateF(fn) {
 
 /**
  * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
- * @function module:functionOps.negateP
+ * @function module:functionOps_.negateP
  * @param fn {Function}
  * @returns {Function}
  */
@@ -46,7 +46,7 @@ negateP = exports.negateP = negateF3,
 
 /**
  * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
- * @function module:functionOps.negateFMany
+ * @function module:functionOps_.negateFMany
  * @param fn {Function}
  * @returns {Function}
  */

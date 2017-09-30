@@ -8,7 +8,7 @@ define(['exports', './is_', '../jsPlatform/object_'], function (exports, _is_, _
     const
     /**
      * Merges all objects down into one.
-     * @function module:jsPlatform.objectOpsUncurried.assignDeep
+     * @function module:jsPlatform.objectOps_.assignDeep
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}

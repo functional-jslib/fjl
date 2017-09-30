@@ -433,6 +433,7 @@ var slicedToArray = function () {
 
 /**
  * Created by elyde on 12/18/2016.
+ * @memberOf objectOps_
  */
 var _Number$1 = Number.name;
 var _NaN = 'NaN';
@@ -463,8 +464,7 @@ function typeOf(value) {
 
 /**
  * Created by elyde on 12/18/2016.
- * @module is
- * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
+ * @module is_
  */
 
 var _String = String.name;
@@ -616,7 +616,7 @@ var call = function call(fn) {
 
 /**
  * Functional `apply` functionOps (takes no context).
- * @function module:functionOps.apply
+ * @function module:_functionOps.apply
  * @param fn {Function}
  * @param args {*}
  * @returns {*}
@@ -646,7 +646,7 @@ var of = function of(x) {
  *      on both strings and arrays.
  */
 
-// export {length, toString} from './objectOpsUnCurried';
+// export {length, toString} from './objectOps_';
 
 var concat$1 = fPureTakesOneOrMore('concat');
 var slice = fPureTakes2('slice');
@@ -659,9 +659,21 @@ var indexOf = fPureTakesOne('indexOf');
 var lastIndexOf = fPureTakesOne('lastIndexOf');
 
 /**
+ * Created by elydelacruz on 7/22/2017.
+ */
+
+/**
+ * Functional `call` functionOps (takes no context).
+ * @function module:functionOps_.call
+ * @param fn {Function}
+ * @param args {*}
+ * @returns {*}
+ */
+
+/**
  * Created by elyde on 7/20/2017.
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module jsPlatform:arrayOpsUncurried
+ * @module jsPlatform:arrayOps_
  * @todo updated doc blocks to list correct/updated module name.
  */
 
@@ -685,53 +697,6 @@ var every = fPureTakesOne('every');
 var join = fPureTakesOne('join');
 var push = fPureTakesOneOrMore('push');
 var reverse$1 = defineReverse();
-
-/**
- * @module negate
- */
-
-var negateF = function negateF(fn) {
-  return function (a, b) {
-    return !fn(a, b);
-  };
-};
-var negateF3 = function negateF3(fn) {
-  return function (a, b, c) {
-    return !fn(a, b, c);
-  };
-};
-var negateF4 = function negateF4(fn) {
-  return function (a, b, c, d) {
-    return !fn(a, b, c, d);
-  };
-};
-var negateF5 = function negateF5(fn) {
-  return function (a, b, c, d, e) {
-    return !fn(a, b, c, d, e);
-  };
-};
-var negateP = negateF3;
-var negateFMany = function negateFMany(fn) {
-  return function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return !apply(fn, reverse$1(args));
-  };
-};
-
-/**
- * Created by elydelacruz on 7/22/2017.
- */
-
-/**
- * Functional `call` functionOps (takes no context).
- * @function module:functionOps.call
- * @param fn {Function}
- * @param args {*}
- * @returns {*}
- */
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
@@ -825,17 +790,55 @@ var placeHolderInstance$1 = new PlaceHolder$1();
 var __$1 = Object.freeze ? Object.freeze(placeHolderInstance$1) : placeHolderInstance$1;
 
 /**
- * @module id
+ * @memberOf functionOps_
  */
 
 /**
  * Returns passed in parameter.
+ * @haskellType `id :: a -> a`
+ * @function module:functionOps_.id
  * @param x {*}
  * @returns {*}
  */
 
 /**
- * @module functionOpsUncurried
+ * @module negate
+ */
+
+var negateF = function negateF(fn) {
+  return function (a, b) {
+    return !fn(a, b);
+  };
+};
+var negateF3 = function negateF3(fn) {
+  return function (a, b, c) {
+    return !fn(a, b, c);
+  };
+};
+var negateF4 = function negateF4(fn) {
+  return function (a, b, c, d) {
+    return !fn(a, b, c, d);
+  };
+};
+var negateF5 = function negateF5(fn) {
+  return function (a, b, c, d, e) {
+    return !fn(a, b, c, d, e);
+  };
+};
+var negateP = negateF3;
+var negateFMany = function negateFMany(fn) {
+  return function () {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return !apply(fn, reverse$1(args));
+  };
+};
+
+/**
+ * @module functionOps_
+ * @private
  */
 
 /**
@@ -855,19 +858,6 @@ var alwaysTrue = function alwaysTrue() {
 var alwaysFalse = function alwaysFalse() {
   return false;
 };
-var bAnd = curry2(function (a, b) {
-  return a && b;
-});
-var bOr = curry2(function (a, b) {
-  return a || b;
-});
-var bNot = function bNot(x) {
-  return !x;
-};
-var bOtherwise = alwaysTrue;
-var bEqual = curry2(function (a, b) {
-  return a === b;
-});
 
 /**
  *
@@ -878,7 +868,13 @@ var prop = function prop(name, obj) {
 };
 
 /**
+ * @module objectOps_
+ * @private
+ */
+
+/**
  * Created by elyde on 12/18/2016.
+ * @memberOf objectOps
  */
 var _Number$3 = Number.name;
 var _NaN$1 = 'NaN';
@@ -889,7 +885,7 @@ var _undefined$1 = 'undefined';
 /**
  * Returns the class name of an object from it's class stringOps.
  * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
- * @function module:fjl.typeOf
+ * @function module:objectOps.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name property if not null or undefined (in which case a
  *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
@@ -926,6 +922,7 @@ var instanceOf$2 = curry(instanceOf$1);
  * Created by elyde on 12/18/2016.
  * @module is
  * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
+ * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
  */
 var _String$1 = String.name;
 var _Number$2 = Number.name;
@@ -1069,8 +1066,8 @@ var map$1 = function map(fn, xs) {
 };
 
 /**
- * Array operators module.
- * @module listOpsUtils
+ * List operator utils module.
+ * @module listOpsUtils_
  */
 var sliceFrom = function sliceFrom(startInd, arr) {
     return slice(startInd, length(arr), arr);
@@ -1200,7 +1197,8 @@ var findWhere = function findWhere(pred, xs) {
 
 /**
  * '_' list operators.
- * @module listOpsUncurried
+ * @module listOps_
+ * @private
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
  * @todo code unperformant shorthand in `listOps`
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
@@ -1940,6 +1938,7 @@ var call$1 = curry2(call);
 /**
  * List operators.
  * @module listOps
+ * @private
  * @todo decide whether to throw errors where functions cannot function without a specific type or to
  *  return undefined (and also determine which cases are ok for just returning undefined).
  * @todo code unperformant shorthand in `listOps`
@@ -2055,6 +2054,7 @@ var compose$1 = function compose() {
 
 /**
  * Returns passed in parameter.
+ * @haskellType `id :: a -> a`
  * @function module:functionOps.id
  * @param x {*}
  * @returns {*}
@@ -2107,7 +2107,7 @@ var negate = function negate(x) {
 
 /**
  * Functional version of `String.prototype.split`.
- * @function module:stringOpsUnCurried.split
+ * @function module:stringOps_.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}
@@ -2141,7 +2141,7 @@ var unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Sat Sep 30 2017 01:56:18 GMT-0400 (EDT) 
+ * Generated Sat Sep 30 2017 04:28:50 GMT-0400 (EDT) 
  */
 
 var version = '0.15.0';
@@ -2203,11 +2203,6 @@ exports.isTruthy = isTruthy;
 exports.isFalsy = isFalsy;
 exports.alwaysTrue = alwaysTrue;
 exports.alwaysFalse = alwaysFalse;
-exports.bAnd = bAnd;
-exports.bOr = bOr;
-exports.bNot = bNot;
-exports.bOtherwise = bOtherwise;
-exports.bEqual = bEqual;
 exports.call = call$1;
 exports.apply = apply$1;
 exports.compose = compose$1;

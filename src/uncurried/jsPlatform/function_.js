@@ -5,7 +5,7 @@ export const
 
     /**
      * Functional `apply` functionOps (takes no context).
-     * @function module:jsPlatform.functionOps.apply
+     * @function module:jsPlatform_functionOps_.apply
      * @param fn {Function}
      * @param args {Array|*}
      * @returns {*}
@@ -14,7 +14,7 @@ export const
 
     /**
      * Functional `call` functionOps (takes no context).
-     * @function module:fnOperators.call
+     * @function module:jsPlatform_functionOps_.call
      * @param fn {Function}
      * @param args ...{*}
      * @returns {*}

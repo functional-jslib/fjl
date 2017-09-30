@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOps/negate_', './functionOps_', '../booleanOps', './objectOps_', './listOps/map_', './listOps/utils_'], factory);
+        define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOps_', '../booleanOps', './objectOps_', './listOps/map_', './listOps/utils_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./jsPlatform/list_'), require('./jsPlatform/function_'), require('./functionOps/negate_'), require('./functionOps_'), require('../booleanOps'), require('./objectOps_'), require('./listOps/map_'), require('./listOps/utils_'));
+        factory(exports, require('./jsPlatform/list_'), require('./jsPlatform/function_'), require('./functionOps_'), require('../booleanOps'), require('./objectOps_'), require('./listOps/map_'), require('./listOps/utils_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.list_, global.function_, global.negate_, global.functionOps_, global.booleanOps, global.objectOps_, global.map_, global.utils_);
+        factory(mod.exports, global.list_, global.function_, global.functionOps_, global.booleanOps, global.objectOps_, global.map_, global.utils_);
         global.listOps_ = mod.exports;
     }
-})(this, function (exports, _list_, _function_, _negate_, _functionOps_, _booleanOps, _objectOps_, _map_, _utils_) {
+})(this, function (exports, _list_, _function_, _functionOps_, _booleanOps, _objectOps_, _map_, _utils_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -72,7 +72,7 @@
      * ```
      * If the first list is not finite, the result is the first list.
      * @haskellType `append :: List a => a -> a -> a`
-     * @function module:listOpsUncurried.append
+     * @function module:listOps_.append
      * @param xs1 {Array|String|*} - list or list like.
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
@@ -85,7 +85,7 @@
      * @haskellType `appendMany :: List a => a -> [a] -> a
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:listOpsUncurried.appendMany
+     * @function module:listOps_.appendMany
      * @param args ...{Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
@@ -104,7 +104,7 @@
     /**
      * Returns head of list (first item of list).
      * @haskellType `head :: [a] -> a`
-     * @function module:listOpsUncurried.head
+     * @function module:listOps_.head
      * @param x {Array|String}
      * @returns {*} - First item from list
      */
@@ -116,7 +116,7 @@
     /**
      * Returns last item of list.
      * @haskellType `last :: [a] -> a`
-     * @function module:listOpsUncurried.last
+     * @function module:listOps_.last
      * @param xs {Array|String}
      * @returns {*}
      */
@@ -128,7 +128,7 @@
     /**
      * Returns tail part of list (everything after the first item as new list).
      * @haskelType `tail :: [a] -> [a]`
-     * @function module:listOpsUncurried.tail
+     * @function module:listOps_.tail
      * @param xs {Array}
      * @returns {Array}
      */
@@ -140,7 +140,7 @@
     /**
      * Returns everything except last item of list as new list.
      * @haskellType `init :: [a] -> [a]`
-     * @function module:listOpsUncurried.init
+     * @function module:listOps_.init
      * @param xs {Array|String}
      * @returns {Array|String}
      */
@@ -152,7 +152,7 @@
     /**
      * Returns `head` and `tail` of passed in list/string in a tuple.
      * @haskellType `uncons :: [a] -> Maybe (a, [a])`
-     * @function module:listOpsUncurried.uncons
+     * @function module:listOps_.uncons
      * @param xs {Array|String}
      * @returns {Array|String|*|undefined}
      */
@@ -170,7 +170,7 @@
     /**
      * Returns `tail` and `head` of passed in list/string in a tuple.
      * @haskellType `unconsr :: [a] -> Maybe ([a], a)`
-     * @function module:listOpsUncurried.unconsr
+     * @function module:listOps_.unconsr
      * @param xs {Array|String}
      * @returns {Array|String|*|undefined}
      */
@@ -198,7 +198,7 @@
      *  for it to follow the specification we are not allowed
      *  to type check in it.
      * @note Will keep it like this for now.
-     * @function module:listOpsUncurried.isEmpty
+     * @function module:listOps_.isEmpty
      * @param x {*}
      * @returns {Boolean}
      */
@@ -210,7 +210,7 @@
     /**
      * Concatenates all the elements of a container of lists.
      * @haskellType `concat :: Foldable t => t [a] -> [a]`
-     * @function module:listOpsUncurried.concat
+     * @function module:listOps_.concat
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
@@ -225,7 +225,7 @@
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
      * @haskellType `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
-     * @function module:listOpsUncurried.concatMap
+     * @function module:listOps_.concatMap
      * @param fn {Function}
      * @param foldableOfA {Array|String|*}
      * @returns {Array|String|*}
@@ -238,7 +238,7 @@
     /**
      * Returns a copy of the passed in list reverses.
      * @haskellType `reverse :: [a] -> [a]`
-     * @function module:listOpsUncurried.reverse
+     * @function module:listOps_.reverse
      * @param x {Array|String|*}
      * @returns {Array|String|*}
      */
@@ -252,7 +252,7 @@
 
     /**
      * Takes an element and a list and `intersperses' that element between the elements of the list. For example
-     * @function module:listOpsUncurried.intersperse
+     * @function module:listOps_.intersperse
      * @note In our version of the function javascript is loosely typed so, so is our function (to much overhead to make
      *  it typed) so `between` can be any value.
      * @param between {*} - Should be of the same type of elements contained in list.
@@ -276,7 +276,7 @@
     /**
      * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
      * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
-     * @function module:listOpsUncurried.intercalate
+     * @function module:listOps_.intercalate
      * @param xs {Array|String|*}
      * @param xss {Array|String|*}
      * @returns {Array|String|*}
@@ -299,7 +299,7 @@
      * @note Empty lists are ignored.
      * @todo upgrade this function to support lists of strings.
      * @haskellType `transpose :: [[a]] -> [[a]]`
-     * @function module:listOpsUncurried.transpose
+     * @function module:listOps_.transpose
      * @param xss {Array}
      * @returns {Array}
      */
@@ -336,7 +336,7 @@
      *  Also note that for 2^16 (or for a sequence of 16 characters) this algorithm
      *  will generate 65536 sub-sequences!  So caution should be taken to not
      *  use this with sequences above a certain length on certain platform (the browser thread in specific).
-     * @function module:listOpsUncurried.subsequences
+     * @function module:listOps_.subsequences
      * @param xs {Array|String}
      * @returns {Array}
      */
@@ -378,7 +378,7 @@
     /**
      * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:listOpsUncurried.mapAccumL
+     * @function module:listOps_.mapAccumL
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array|String|*} - list type.
@@ -406,7 +406,7 @@
     /**
      * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:listOpsUncurried.mapAccumR
+     * @function module:listOps_.mapAccumR
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array|String|*} - list type.
@@ -433,7 +433,7 @@
 
     /**
      * Iterate on value (`x`) with `op` up to `limit`.
-     * @function module:listOpsUncurried.iterate
+     * @function module:listOps_.iterate
      * @param limit {Number}
      * @param op {Function} - Operation
      * @param x {*} - Starting point.
@@ -451,7 +451,7 @@
 
     /**
      * Repeats `x` `limit` number of times
-     * @function module:listOpsUncurried.repeat
+     * @function module:listOps_.repeat
      * @param limit {Number}
      * @param x {*}
      * @return {Array}
@@ -466,7 +466,7 @@
 
     /**
      * Same as `repeat` due to the nature of javascript (see haskell version for usage).
-     * @function module:listOpsUncurried.replicate
+     * @function module:listOps_.replicate
      * @param limit {Number}
      * @param x {*}
      * @return {Array}
@@ -476,7 +476,7 @@
 
     /**
      * Replicates a list `limit` number of times and appends the results (concat)
-     * @function module:listOpsUncurried.cycle
+     * @function module:listOps_.cycle
      * @param limit {Number}
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
@@ -489,7 +489,7 @@
     /**
      * Unfolds a value into a list of somethings.
      * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
-     * @function module:listOpsUncurried.unfoldr
+     * @function module:listOps_.unfoldr
      * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregate and item to unfold in next iteration).
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
@@ -508,7 +508,7 @@
 
     /**
      * Finds index in string or list (alias for `findIndex`).
-     * @function module:listOpsUncurried.findIndex
+     * @function module:listOps_.findIndex
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -517,7 +517,7 @@
 
 
     /**
-     * @function module:listOpsUncurried.findIndices
+     * @function module:listOps_.findIndices
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
@@ -526,7 +526,7 @@
 
 
     /**
-     * @function module:listOpsUncurried.elemIndex
+     * @function module:listOps_.elemIndex
      * @param x {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -538,7 +538,7 @@
 
 
     /**
-     * @function module:listOpsUncurried.elemIndices
+     * @function module:listOps_.elemIndices
      * @param value {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -552,7 +552,7 @@
 
     /**
      * Takes `n` items from start of list to `limit` (exclusive).
-     * @function module:listOpsUncurried.take
+     * @function module:listOps_.take
      * @param list {Array|String}
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
@@ -564,7 +564,7 @@
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
-     * @function module:listOpsUncurried.take
+     * @function module:listOps_.take
      * @param list {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
@@ -577,7 +577,7 @@
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
      * given index in second part of returned list)).
-     * @function module:listOpsUncurried.splitAt
+     * @function module:listOps_.splitAt
      * @param ind {Number} - Index to split at.
      * @param list {Array|String|*} - functor (list or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
@@ -589,7 +589,7 @@
 
     /**
      * Gives an list with passed elements while predicate was true.
-     * @function module:listOpsUncurried.takeWhile
+     * @function module:listOps_.takeWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @returns {Array}
@@ -606,7 +606,7 @@
 
     /**
      * Returns an list without elements that match predicate.
-     * @function module:listOpsUncurried.dropWhile
+     * @function module:listOps_.dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -623,7 +623,7 @@
 
 
     /**
-     * @function module:listOpsUncurried.dropWhile
+     * @function module:listOps_.dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -643,7 +643,7 @@
      * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
      * the second list in the tuple is a list of the remaining elements in the given list.
      * **@Note: Not the same as `partition`.  Read descriptions closely!!!
-     * @function module:listOpsUncurried.partition
+     * @function module:listOps_.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array|String|*} - Predicate<item, index, originalArrayOrString>
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
@@ -659,7 +659,7 @@
 
 
     /**
-     * @function module:listOpsUncurried.at
+     * @function module:listOps_.at
      * @param ind {Number} - Index.
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -668,7 +668,7 @@
 
 
     /**
-     * @function module:listOpsUncurried.find
+     * @function module:listOps_.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -695,7 +695,7 @@
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
      * do not match the tuple are in second list in the returned tuple.
      *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-     * @function module:listOpsUncurried.partition
+     * @function module:listOps_.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array|String|*}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
@@ -707,7 +707,7 @@
         return [filter(pred, list), filter((0, _functionOps_.negateP)(pred), list)];
     },
         elem = exports.elem = _list_.includes,
-        notElem = exports.notElem = (0, _negate_.negateF)(_list_.includes),
+        notElem = exports.notElem = (0, _functionOps_.negateF)(_list_.includes),
         lookup = exports.lookup = at,
         isPrefixOf = exports.isPrefixOf = function isPrefixOf(xs1, xs2) {
         var limit1 = (0, _objectOps_.length)(xs1),
@@ -789,7 +789,7 @@
      * It is a special case of groupBy, which allows the programmer to supply
      *  their own equality test.
      * @haskellType `group :: Eq a => [a] -> [[a]]`
-     * @function module:listOpsUncurried.group
+     * @function module:listOps_.group
      * @param xs {Array|String|*}
      * @returns {Array<Array|String|*>|*}
      */
@@ -804,7 +804,7 @@
      * Allows you to group items in a list based on your supplied equality check.
      * @note Sames `group` but allows you to specify equality operation.
      * @haskellType `groupBy :: (a -> a -> Bool) -> [a] -> [[a]]`
-     * @function module:listOpsUncurried.groupBy
+     * @function module:listOps_.groupBy
      * @param equalityOp {Function}
      * @param xs {Array|String|*}
      * @returns {*}
@@ -871,7 +871,7 @@
      * zip takes two lists and returns a list of corresponding pairs.
      * If one input list is short, excess elements of the longer list are discarded.
      * @haskellType `zip :: [a] -> [b] -> [(a, b)]`
-     * @function module:listOpsUncurried.zip
+     * @function module:listOps_.zip
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
@@ -896,7 +896,7 @@
      * zipN takes one or more lists and returns a list containing lists of all indices
      * at a given index, index by index.
      * If one input list is short, excess elements of the longer list are discarded.
-     * @function module:listOpsUncurried.zipN
+     * @function module:listOps_.zipN
      * @param lists {Array|String} - One ore more lists of the same type.
      * @returns {Array}
      */
@@ -922,7 +922,7 @@
 
     /**
      * @haskellType `zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]`
-     * @function module:listOpsUncurried.zip3
+     * @function module:listOps_.zip3
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @param arr3 {Array}
@@ -933,7 +933,7 @@
 
     /**
      * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
-     * @function module:listOpsUncurried.zip4
+     * @function module:listOps_.zip4
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @param arr3 {Array}
@@ -945,7 +945,7 @@
 
     /**
      * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
-     * @function module:listOpsUncurried.zip5
+     * @function module:listOps_.zip5
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @param arr3 {Array}
@@ -969,7 +969,7 @@
      * zipWith f [] _|_ = []
      * ```
      * @haskellType `zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]`
-     * @function module:listOpsUncurried.zipWith
+     * @function module:listOps_.zipWith
      * @param op {Function} - Takes two parts of a tuple and returns a tuple.
      *  E.g., ` op :: a -> b -> (a, b)`
      * @param xs1 {Array|String|*}
@@ -998,7 +998,7 @@
      *  is left there for general purpose not for exactness as is told by aforementioned.
      * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
      *  of lists to zip.
-     * @function module:listOpsUncurried.zipWithN
+     * @function module:listOps_.zipWithN
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> (a, b, c)`
@@ -1028,7 +1028,7 @@
     /**
      * Zips 3 lists with tupling function.
      * @haskellType `zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]`
-     * @function module:listOpsUncurried.zipWith3
+     * @function module:listOps_.zipWith3
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> (a, b, c)`
@@ -1043,7 +1043,7 @@
     /**
      * Zips 4 lists with tupling function.
      * @haskellType `zipWith4 :: (a -> b -> c -> d -> e) -> [a] -> [b] -> [c]  -> [d] -> [e]`
-     * @function module:listOpsUncurried.zipWith4
+     * @function module:listOps_.zipWith4
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`
@@ -1059,7 +1059,7 @@
     /**
      * Zips 5 lists.
      * @haskellType `zipWith5 :: (a -> b -> c -> d -> e -> f) -> [a] -> [b] -> [c]  -> [d] -> [e] -> [f]`
-     * @function module:listOpsUncurried.zipWith5
+     * @function module:listOps_.zipWith5
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`
@@ -1077,7 +1077,7 @@
      * unzip transforms a list of pairs into a list of first components and a list of second components.
      * @haskellType `unzip :: [(a, b)] -> ([a], [b])`
      * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
-     * @function module:listOpsUncurried.unzip
+     * @function module:listOps_.unzip
      * @param arr {Array|*}
      * @returns {Array|*}
      */
@@ -1094,7 +1094,7 @@
      * unzip transforms a list of pairs into a list of first components and a list of second components.
      * @sudoHaskellType `unzipN :: [(a, b, ...x)] -> ([a], [b], ...[x])`
      * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
-     * @function module:listOpsUncurried.unzip
+     * @function module:listOps_.unzip
      * @param list {Array|*} - List of tuples (lists).
      * @returns {Array|*}
      */
@@ -1241,7 +1241,7 @@
     /**
      * A version of `insert` that allows you to specify the ordering of the inserted
      * item;  Before/at, or after
-     * @function module:listOpsUncurried.insertBy
+     * @function module:listOps_.insertBy
      * @haskellType `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
      * @note `Ordering` === // something that is order-able
      * @todo Optimize and work the logic of this function;  Think about the types that will be
@@ -1305,7 +1305,7 @@
 
     /**
      * Returns the union on elements matching boolean check passed in.
-     * @function module:listOpsUncurried.unionBy
+     * @function module:listOps_.unionBy
      * @param pred {Function} - `pred :: a -> a -> Bool`
      * @param arr1 {Array|String|*}
      * @param arr2 {Array|String|*}
@@ -1324,7 +1324,7 @@
 
     /**
      * Creates a union on matching elements from array1.
-     * @function module:listOpsUncurried.union
+     * @function module:listOps_.union
      * @param arr1 {Array|String|*}
      * @param arr2 {Array|String|*}
      * @returns {Array|String|*}
@@ -1338,7 +1338,7 @@
 
     /**
      * Performs an intersection on list 1 with  elements from list 2.
-     * @function module:listOpsUncurried.intersect
+     * @function module:listOps_.intersect
      * @param arr1 {Array|String|*}
      * @param arr2 {Array|String|*}
      * @returns {Array|String|*}
@@ -1352,7 +1352,7 @@
 
     /**
      * Returns an intersection by predicate.
-     * @function module:listOpsUncurried.intersectBy
+     * @function module:listOps_.intersectBy
      * @param pred {Function} - `pred :: a -> b -> Bool`
      * @param list1 {Array|String|*}
      * @param list2 {Array|String|*}
@@ -1371,7 +1371,7 @@
     /**
      * Returns the difference of list 1 from list 2.
      * @note The `difference` operation here is non-associative;  E.g., `a - b` is not equal to `b - a`;
-     * @function module:listOpsUncurried.difference
+     * @function module:listOps_.difference
      * @param array1 {Array|String|*}
      * @param array2 {Array|String|*}
      * @returns {Array|String|*}
@@ -1392,7 +1392,7 @@
 
     /**
      * Returns the complement of list 0 and the reset of the passed in arrays.
-     * @function module:listOpsUncurried.complement
+     * @function module:listOps_.complement
      * @param arr0 {Array}
      * @param arrays {...Array}
      * @returns {Array}

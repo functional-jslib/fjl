@@ -12,7 +12,7 @@ export const
 
     /**
      * Returns whether constructor has derived objectOps.
-     * @function module:jsPlatform.objectOpsUncurried.instanceOf
+     * @function module:jsPlatform_objectOps_.instanceOf
      * @param instanceConstructor {Function} - Constructor.
      * @param instance {*}
      * @instance {*}
@@ -22,7 +22,7 @@ export const
         instance instanceof instanceConstructor,
 
     /**
-     * @function module:jsPlatform.objectOpsUncurried.hasOwnProperty
+     * @function module:jsPlatform_objectOps_.hasOwnProperty
      * @param propName {*}
      * @param typeInstance {*}
      * @returns {Boolean}
@@ -30,7 +30,7 @@ export const
     hasOwnProperty = fPureTakesOne('hasOwnProperty'),
 
     /**
-     * @function module:jsPlatform.objectOpsUncurried.length
+     * @function module:jsPlatform_objectOps_.length
      * @param x {*}
      * @returns {Number}
      * @throws {Error} - Throws an error if value doesn't have a `length` property (
@@ -39,7 +39,7 @@ export const
     length = x => x.length,
 
     /**
-     * @function module:jsPlatform.objectOpsUncurried.hasOwnProperty
+     * @function module:jsPlatform_objectOps_.hasOwnProperty
      * @param x {*}
      * @returns {Number}
      * @throws {Error} - Throws an error if value doesn't have a `toString`.
@@ -48,7 +48,7 @@ export const
 
     /**
      * Gets own enumerable keys of passed in object (`Object.keys`).
-     * @function module:jsPlatform.objectOpsUncurried.keys
+     * @function module:jsPlatform_objectOps_.keys
      * @param obj {*}
      * @returns {Array<String>}
      */
@@ -56,7 +56,7 @@ export const
 
     /**
      * Defined as `Object.assign` else is the same thing but shimmed.
-     * @function module:jsPlatform.objectOpsUncurried.assign
+     * @function module:jsPlatform_objectOps_.assign
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}

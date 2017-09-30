@@ -17,6 +17,7 @@ var _object_ = require('../uncurried/jsPlatform/object_');
  * Created by elyde on 12/18/2016.
  * @module is
  * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
+ * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
  */
 var _String = String.name,
     _Number = Number.name,
@@ -76,6 +77,7 @@ isClass = exports.isClass = function isClass(x) {
  * Returns a booleanOps depicting whether a value is callable or not.
  * @function module:is.isCallable
  * @tentative
+ * @private
  * @param x {*}
  * @returns {Boolean}
  */
@@ -194,6 +196,7 @@ isSymbol = exports.isSymbol = isType(_Symbol),
 
 /**
  * @tentative
+ * @private
  */
 isPromise = exports.isPromise = isType('Promise'),
 
@@ -246,7 +249,7 @@ isEmptyCollection = exports.isEmptyCollection = function isEmptyCollection(x) {
 
 /**
  * Checks to see if passed in argument is empty.
- * @function module:is.empty
+ * @function module:is.isEmpty
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */

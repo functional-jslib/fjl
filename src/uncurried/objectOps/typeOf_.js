@@ -1,5 +1,6 @@
 /**
  * Created by elyde on 12/18/2016.
+ * @memberOf objectOps_
  */
 const _Number = Number.name,
     _NaN = 'NaN',

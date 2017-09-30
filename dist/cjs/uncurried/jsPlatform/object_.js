@@ -11,7 +11,7 @@ var
 
 /**
  * Returns whether constructor has derived objectOps.
- * @function module:jsPlatform.objectOpsUncurried.instanceOf
+ * @function module:jsPlatform_objectOps_.instanceOf
  * @param instanceConstructor {Function} - Constructor.
  * @param instance {*}
  * @instance {*}
@@ -23,7 +23,7 @@ instanceOf = exports.instanceOf = function instanceOf(instanceConstructor, insta
 
 
 /**
- * @function module:jsPlatform.objectOpsUncurried.hasOwnProperty
+ * @function module:jsPlatform_objectOps_.hasOwnProperty
  * @param propName {*}
  * @param typeInstance {*}
  * @returns {Boolean}
@@ -32,7 +32,7 @@ hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnPrope
 
 
 /**
- * @function module:jsPlatform.objectOpsUncurried.length
+ * @function module:jsPlatform_objectOps_.length
  * @param x {*}
  * @returns {Number}
  * @throws {Error} - Throws an error if value doesn't have a `length` property (
@@ -44,7 +44,7 @@ length = exports.length = function length(x) {
 
 
 /**
- * @function module:jsPlatform.objectOpsUncurried.hasOwnProperty
+ * @function module:jsPlatform_objectOps_.hasOwnProperty
  * @param x {*}
  * @returns {Number}
  * @throws {Error} - Throws an error if value doesn't have a `toString`.
@@ -56,7 +56,7 @@ toString = exports.toString = function toString(x) {
 
 /**
  * Gets own enumerable keys of passed in object (`Object.keys`).
- * @function module:jsPlatform.objectOpsUncurried.keys
+ * @function module:jsPlatform_objectOps_.keys
  * @param obj {*}
  * @returns {Array<String>}
  */
@@ -67,7 +67,7 @@ keys = exports.keys = function keys(obj) {
 
 /**
  * Defined as `Object.assign` else is the same thing but shimmed.
- * @function module:jsPlatform.objectOpsUncurried.assign
+ * @function module:jsPlatform_objectOps_.assign
  * @param obj0 {Object}
  * @param objs {...{Object}}
  * @returns {Object}

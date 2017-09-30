@@ -6,7 +6,7 @@ import {keys, hasOwnProperty} from '../jsPlatform/object_';
 export const
     /**
      * Merges all objects down into one.
-     * @function module:jsPlatform.objectOpsUncurried.assignDeep
+     * @function module:jsPlatform.objectOps_.assignDeep
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}

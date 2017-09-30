@@ -111,3 +111,5 @@ these functions are overloaded and aren't pure curry functions due to their plac
 - [X] - ~~Make all functional members compatible with es6 classes.~~ No constructors included in library.
 - [X] - Remove use of 'gulp-better-rollup' in favor of using rollup directly.
 - [ ] - Re-instate the use of .travisci file when project is passed 'alpha' stage.'
+- [ ] - Consider renaming methods/members in the './src/uncurried' package with a prefixed '_'.
+- [ ] - Consider renaming './src/uncurried' file names with prefixed '_'.

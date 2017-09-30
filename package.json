@@ -42,11 +42,9 @@
     "yargs": "^6.6.0"
   },
   "scripts": {
-    "pre-test": "npm run build",
     "test": "mocha tests/test-*.js --plugins babel-plugin-add-module-exports --require babel-register",
     "tests": "npm run test",
-    "build": "gulp clean && gulp build",
-    "build-and-test": "npm run build && npm run test"
+    "build": "gulp clean && gulp build"
   },
   "repository": {
     "type": "git",

@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", {
 
 /**
  * Returns passed in parameter.
+ * @haskellType `id :: a -> a`
  * @function module:functionOps.id
  * @param x {*}
  * @returns {*}

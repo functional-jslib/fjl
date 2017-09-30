@@ -21,7 +21,7 @@
 
   /**
    * Functional version of `String.prototype.split`.
-   * @function module:stringOpsUnCurried.split
+   * @function module:stringOps_.split
    * @param separator {String|RegExp}
    * @param str {String}
    * @returns {Array}

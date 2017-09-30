@@ -14,7 +14,7 @@ import {assert, expect} from 'chai';
 import {__, compose, negateP} from '../src/functionOps';
 import {split} from '../src/jsPlatform/string';
 import {isArray, isString} from '../src/objectOps/is';
-import {bEqual as equal, isTruthy} from '../src/booleanOps';
+import {isTruthy} from '../src/booleanOps';
 import {lines, unlines, words, unwords} from '../src/stringOps';
 import {
     append, appendMany,
@@ -59,7 +59,8 @@ describe ('#listOps_', function () {
         if (a > b) { return 1; }
         else if (a < b) { return -1; }
         return 0;
-    };
+    },
+    equal = (a, b) => a === b;
 
     describe ('#append', function () {
         it ('should be able to append two lists.', function () {

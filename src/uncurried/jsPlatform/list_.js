@@ -5,14 +5,14 @@
 
 import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../../utils';
 
-// export {length, toString} from './objectOpsUnCurried';
+// export {length, toString} from './objectOps_';
 
 export const
 
     /**
      * Concats/appends all functors onto the end of first functor.
      * Note:  functors passed in after the first one must be of the same type.
-     * @function module:jsPlatform.listOpsUncurried.concat
+     * @function module:jsPlatform_list_.concat
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -22,7 +22,7 @@ export const
 
     /**
      * Same as Array.prototype.slice
-     * @function module:jsPlatform.listOpsUncurried.slice
+     * @function module:jsPlatform_list_.slice
      * @param separator {String|RegExp}
      * @param arr{Array}
      * @returns {Array}
@@ -31,7 +31,7 @@ export const
 
     /**
      * `Array.prototype.includes` or shim.
-     * @function module:jsPlatform.listOpsUncurried.includes
+     * @function module:jsPlatform_list_.includes
      * @param value {*}
      * @param xs {Array|String}
      * @returns {Boolean}
@@ -42,7 +42,7 @@ export const
 
     /**
      * Searches list/list-like for given element `x`.
-     * @function module:jsPlatform.listOpsUncurried.indexOf
+     * @function module:jsPlatform_list_.indexOf
      * @param x {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like to look in.
      * @returns {Number} - `-1` if element not found else index at which it is found.
@@ -51,7 +51,7 @@ export const
 
     /**
      * Last index of (`Array.prototype.lastIndexOf`).
-     * @function module:jsPlatform.listOpsUncurried.lastIndexOf
+     * @function module:jsPlatform_list_.lastIndexOf
      * @param x {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like to look in.
      * @returns {Number} - `-1` if element not found else index at which it is found.

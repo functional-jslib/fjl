@@ -11,8 +11,7 @@ var _object_ = require('../jsPlatform/object_');
 
 /**
  * Created by elyde on 12/18/2016.
- * @module is
- * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
+ * @module is_
  */
 
 var _String = String.name,
@@ -33,7 +32,7 @@ var
 
 /**
  * Returns whether a value is a functionOps or not.
- * @function module:is.isFunction
+ * @function module:is_.isFunction
  * @param value {*}
  * @returns {Boolean}
  */
@@ -50,7 +49,7 @@ isFunction = exports.isFunction = function isFunction(value) {
  *  var SomeName = functionOps SomeName () {} // or
  *  class SomeName {}
  * ```
- * @function module:fjl.isType
+ * @function module:is_.isType
  * @param type {Function|String} - Constructor or constructor name
  * @param obj {*}
  * @return {Boolean}
@@ -62,7 +61,7 @@ isType = exports.isType = function isType(type, obj) {
 
 /**
  * Checks if `value` is an es2015 `class`.
- * @function module:is.isClass
+ * @function module:is_.isClass
  * @param x {*}
  * @returns {boolean}
  */
@@ -73,8 +72,9 @@ isClass = exports.isClass = function isClass(x) {
 
 /**
  * Returns a booleanOps depicting whether a value is callable or not.
- * @function module:is.isCallable
+ * @function module:is_.isCallable
  * @tentative
+ * @private
  * @param x {*}
  * @returns {Boolean}
  */
@@ -85,7 +85,7 @@ isCallable = exports.isCallable = function isCallable(x) {
 
 /**
  * Checks if value is an arrayOps.
- * @function module:is.isArray
+ * @function module:is_.isArray
  * @param value {*}
  * @returns {boolean}
  */
@@ -96,7 +96,7 @@ isArray = exports.isArray = function isArray(value) {
 
 /**
  * Checks whether value is an object or not.
- * @function module:is.isObject
+ * @function module:is_.isObject
  * @param value
  * @returns {Boolean}
  */
@@ -107,7 +107,7 @@ isObject = exports.isObject = function isObject(value) {
 
 /**
  * Checks if value is a booleanOps.
- * @function module:is.isBoolean
+ * @function module:is_.isBoolean
  * @param value {*}
  * @returns {Boolean}
  */
@@ -118,7 +118,7 @@ isBoolean = exports.isBoolean = function isBoolean(value) {
 
 /**
  * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
- * @function module:is.isNumber
+ * @function module:is_.isNumber
  * @param value {*}
  * @returns {Boolean}
  */
@@ -129,7 +129,7 @@ isNumber = exports.isNumber = function isNumber(value) {
 
 /**
  * Checks whether value is a stringOps or not.
- * @function module:is.isString
+ * @function module:is_.isString
  * @param value {*}
  * @returns {Boolean}
  */
@@ -140,7 +140,7 @@ isString = exports.isString = function isString(value) {
 
 /**
  * Checks whether value is of `Map` or not.
- * @function module:is.isMap
+ * @function module:is_.isMap
  * @param value {*}
  * @returns {Boolean}
  */
@@ -151,7 +151,7 @@ isMap = exports.isMap = function isMap(value) {
 
 /**
  * Checks whether value is of `Set` or not.
- * @function module:is.isSet
+ * @function module:is_.isSet
  * @param value {*}
  * @returns {Boolean}
  */
@@ -162,7 +162,7 @@ isSet = exports.isSet = function isSet(value) {
 
 /**
  * Checks whether value is of `WeakMap` or not.
- * @function module:is.isWeakMap
+ * @function module:is_.isWeakMap
  * @param value {*}
  * @returns {Boolean}
  */
@@ -173,7 +173,7 @@ isWeakMap = exports.isWeakMap = function isWeakMap(value) {
 
 /**
  * Checks whether value is of `WeakSet` or not.
- * @function module:is.isWeakSet
+ * @function module:is_.isWeakSet
  * @param value {*}
  * @returns {Boolean}
  */
@@ -184,7 +184,7 @@ isWeakSet = exports.isWeakSet = function isWeakSet(value) {
 
 /**
  * Checks if value is undefined.
- * @function module:is.isUndefined
+ * @function module:is_.isUndefined
  * @param value {*}
  * @returns {Boolean}
  */
@@ -195,7 +195,7 @@ isUndefined = exports.isUndefined = function isUndefined(value) {
 
 /**
  * Checks if value is null.
- * @function module:is.isNull
+ * @function module:is_.isNull
  * @param value {*}
  * @returns {Boolean}
  */
@@ -206,7 +206,7 @@ isNull = exports.isNull = function isNull(value) {
 
 /**
  * Checks if value is a `Symbol`.
- * @function module:is.isSymbol
+ * @function module:is_.isSymbol
  * @param value {*}
  * @returns {Boolean}
  */
@@ -217,6 +217,7 @@ isSymbol = exports.isSymbol = function isSymbol(value) {
 
 /**
  * @tentative
+ * @private
  */
 isPromise = exports.isPromise = function isPromise(value) {
   return isType('Promise', value);
@@ -227,7 +228,7 @@ isPromise = exports.isPromise = function isPromise(value) {
  * Checks if given `x` is one of the four
  * "usable" immutable JS primitives; I.e.,
  *  One of [String, Boolean, Number, Symbol]
- * @function module:is.isUsableImmutablePrimitive
+ * @function module:is_.isUsableImmutablePrimitive
  * @param x {*}
  * @returns {Boolean}
  */
@@ -271,7 +272,7 @@ isEmptyCollection = exports.isEmptyCollection = function isEmptyCollection(x) {
 
 /**
  * Checks to see if passed in argument is empty.
- * @function module:is.empty
+ * @function module:is_.isEmpty
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
@@ -299,7 +300,9 @@ isEmpty = exports.isEmpty = function isEmpty(value) {
 
 /**
  * Returns true if an element is not empty and is of type.
- * @function module:is.notEmptyAndOfType
+ * @function module:is_.notEmptyAndOfType
+ * @tentative
+ * @private
  * @param type {String|Function} - Type to check against (stringOps name or actual constructor).
  * @param value {*} - Value to check.
  * @returns {Boolean}
@@ -311,6 +314,7 @@ notEmptyAndOfType = exports.notEmptyAndOfType = function notEmptyAndOfType(type,
 
 /**
  * Returns whether passed in values is defined and not null.
+ * @function module:is_.isset
  * @param x {*}
  * @returns {Boolean}
  */

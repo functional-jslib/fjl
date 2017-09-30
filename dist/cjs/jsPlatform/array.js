@@ -3,17 +3,18 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.reverse = exports.push = exports.slice = exports.join = exports.concat = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = undefined;
-
-var _utils = require('../utils');
+exports.push = exports.slice = exports.join = exports.concat = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = undefined;
 
 var _array_ = require('../uncurried/jsPlatform/array_');
 
-/**
- * Created by elyde on 7/20/2017.
- * Curried functional versions of common array methods (`filter`, `map`, etc.).
- * @module jsPlatform_array
- */
+Object.defineProperty(exports, 'reverse', {
+  enumerable: true,
+  get: function get() {
+    return _array_.reverse;
+  }
+});
+
+var _utils = require('../utils');
 
 var
 
@@ -130,12 +131,4 @@ slice = exports.slice = (0, _utils.fPureTakes2_)('slice'),
  * @param arr {Array}
  * @returns {Number}
  */
-push = exports.push = (0, _utils.fPureTakesOneOrMore_)('push'),
-
-
-/**
- * Reverses an listOps (shimmed if not exists).
- * @function module:jsPlatform_array.reverse
- * @return {Array}
- */
-reverse = exports.reverse = (0, _array_.defineReverse)();
+push = exports.push = (0, _utils.fPureTakesOneOrMore_)('push');

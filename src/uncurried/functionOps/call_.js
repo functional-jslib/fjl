@@ -4,7 +4,7 @@
 
 /**
  * Functional `call` functionOps (takes no context).
- * @function module:functionOps.call
+ * @function module:functionOps_.call
  * @param fn {Function}
  * @param args {*}
  * @returns {*}

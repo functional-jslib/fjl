@@ -7,8 +7,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
   exports.isset = exports.notEmptyAndOfType = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
   /**
    * Created by elyde on 12/18/2016.
-   * @module is
-   * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
+   * @module is_
    */
 
   let _String = String.name,
@@ -29,7 +28,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Returns whether a value is a functionOps or not.
-   * @function module:is.isFunction
+   * @function module:is_.isFunction
    * @param value {*}
    * @returns {Boolean}
    */
@@ -44,7 +43,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
    *  var SomeName = functionOps SomeName () {} // or
    *  class SomeName {}
    * ```
-   * @function module:fjl.isType
+   * @function module:is_.isType
    * @param type {Function|String} - Constructor or constructor name
    * @param obj {*}
    * @return {Boolean}
@@ -54,7 +53,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks if `value` is an es2015 `class`.
-   * @function module:is.isClass
+   * @function module:is_.isClass
    * @param x {*}
    * @returns {boolean}
    */
@@ -63,8 +62,9 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Returns a booleanOps depicting whether a value is callable or not.
-   * @function module:is.isCallable
+   * @function module:is_.isCallable
    * @tentative
+   * @private
    * @param x {*}
    * @returns {Boolean}
    */
@@ -73,7 +73,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks if value is an arrayOps.
-   * @function module:is.isArray
+   * @function module:is_.isArray
    * @param value {*}
    * @returns {boolean}
    */
@@ -82,7 +82,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks whether value is an object or not.
-   * @function module:is.isObject
+   * @function module:is_.isObject
    * @param value
    * @returns {Boolean}
    */
@@ -91,7 +91,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks if value is a booleanOps.
-   * @function module:is.isBoolean
+   * @function module:is_.isBoolean
    * @param value {*}
    * @returns {Boolean}
    */
@@ -100,7 +100,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
-   * @function module:is.isNumber
+   * @function module:is_.isNumber
    * @param value {*}
    * @returns {Boolean}
    */
@@ -109,7 +109,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks whether value is a stringOps or not.
-   * @function module:is.isString
+   * @function module:is_.isString
    * @param value {*}
    * @returns {Boolean}
    */
@@ -118,7 +118,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks whether value is of `Map` or not.
-   * @function module:is.isMap
+   * @function module:is_.isMap
    * @param value {*}
    * @returns {Boolean}
    */
@@ -127,7 +127,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks whether value is of `Set` or not.
-   * @function module:is.isSet
+   * @function module:is_.isSet
    * @param value {*}
    * @returns {Boolean}
    */
@@ -136,7 +136,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks whether value is of `WeakMap` or not.
-   * @function module:is.isWeakMap
+   * @function module:is_.isWeakMap
    * @param value {*}
    * @returns {Boolean}
    */
@@ -145,7 +145,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks whether value is of `WeakSet` or not.
-   * @function module:is.isWeakSet
+   * @function module:is_.isWeakSet
    * @param value {*}
    * @returns {Boolean}
    */
@@ -154,7 +154,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks if value is undefined.
-   * @function module:is.isUndefined
+   * @function module:is_.isUndefined
    * @param value {*}
    * @returns {Boolean}
    */
@@ -163,7 +163,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks if value is null.
-   * @function module:is.isNull
+   * @function module:is_.isNull
    * @param value {*}
    * @returns {Boolean}
    */
@@ -172,7 +172,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks if value is a `Symbol`.
-   * @function module:is.isSymbol
+   * @function module:is_.isSymbol
    * @param value {*}
    * @returns {Boolean}
    */
@@ -181,6 +181,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * @tentative
+   * @private
    */
   isPromise = exports.isPromise = value => isType('Promise', value),
 
@@ -189,7 +190,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
    * Checks if given `x` is one of the four
    * "usable" immutable JS primitives; I.e.,
    *  One of [String, Boolean, Number, Symbol]
-   * @function module:is.isUsableImmutablePrimitive
+   * @function module:is_.isUsableImmutablePrimitive
    * @param x {*}
    * @returns {Boolean}
    */
@@ -225,7 +226,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Checks to see if passed in argument is empty.
-   * @function module:is.empty
+   * @function module:is_.isEmpty
    * @param value {*} - Value to check.
    * @returns {Boolean}
    */
@@ -253,7 +254,9 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Returns true if an element is not empty and is of type.
-   * @function module:is.notEmptyAndOfType
+   * @function module:is_.notEmptyAndOfType
+   * @tentative
+   * @private
    * @param type {String|Function} - Type to check against (stringOps name or actual constructor).
    * @param value {*} - Value to check.
    * @returns {Boolean}
@@ -263,6 +266,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
   /**
    * Returns whether passed in values is defined and not null.
+   * @function module:is_.isset
    * @param x {*}
    * @returns {Boolean}
    */

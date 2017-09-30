@@ -1,3 +1,7 @@
+/**
+ * @module objectOps_
+ * @private
+ */
 export * from './objectOps/assignDeep_';
 
 export * from './jsPlatform/object_';

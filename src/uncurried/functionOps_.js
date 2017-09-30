@@ -1,5 +1,6 @@
 /**
- * @module functionOpsUncurried
+ * @module functionOps_
+ * @private
  */
 export * from './functionOps/apply_';
 export * from './functionOps/call_';

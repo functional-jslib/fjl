@@ -1,28 +1,28 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../utils', '../uncurried/jsPlatform/array_'], factory);
+    define(['exports', '../uncurried/jsPlatform/array_', '../utils'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../utils'), require('../uncurried/jsPlatform/array_'));
+    factory(exports, require('../uncurried/jsPlatform/array_'), require('../utils'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.utils, global.array_);
+    factory(mod.exports, global.array_, global.utils);
     global.array = mod.exports;
   }
-})(this, function (exports, _utils, _array_) {
+})(this, function (exports, _array_, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.reverse = exports.push = exports.slice = exports.join = exports.concat = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = undefined;
-  /**
-   * Created by elyde on 7/20/2017.
-   * Curried functional versions of common array methods (`filter`, `map`, etc.).
-   * @module jsPlatform_array
-   */
-
+  exports.push = exports.slice = exports.join = exports.concat = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = undefined;
+  Object.defineProperty(exports, 'reverse', {
+    enumerable: true,
+    get: function () {
+      return _array_.reverse;
+    }
+  });
   var
 
   /**
@@ -138,13 +138,5 @@
    * @param arr {Array}
    * @returns {Number}
    */
-  push = exports.push = (0, _utils.fPureTakesOneOrMore_)('push'),
-
-
-  /**
-   * Reverses an listOps (shimmed if not exists).
-   * @function module:jsPlatform_array.reverse
-   * @return {Array}
-   */
-  reverse = exports.reverse = (0, _array_.defineReverse)();
+  push = exports.push = (0, _utils.fPureTakesOneOrMore_)('push');
 });

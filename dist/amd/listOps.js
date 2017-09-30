@@ -572,7 +572,7 @@ define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], function
    * Allows you to group items in a list based on your supplied equality check.
    * @note Sames `group` but allows you to specify equality operation.
    * @haskellType `groupBy :: (a -> a -> Bool) -> [a] -> [[a]]`
-   * @function module:listOpsUncurried.groupBy
+   * @function module:listOps_.groupBy
    * @param equalityOp {Function}
    * @param xs {Array|String|*}
    * @returns {*}
@@ -696,7 +696,7 @@ define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], function
   /**
    * A version of `insert` that allows you to specify the ordering of the inserted
    * item;  Before/at, or after
-   * @function module:listOpsUncurried.insertBy
+   * @function module:listOps_.insertBy
    * @haskellType `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
    * @note `Ordering` === // something that is order-able
    * @todo Optimize and work the logic of this function;  Think about the types that will be

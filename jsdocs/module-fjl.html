@@ -168,7 +168,8 @@
 
 
 <div class="description">
-    Composes all functions passed in from right to left passing each functions return value tothe functionOps on the left of itself.
+    Composes all functions passed in from right to left passing each functions return value to
+the functionOps on the left of itself.
 </div>
 
 
@@ -273,7 +274,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="uncurried_functionOps_compose.js.html">uncurried/functionOps/compose.js</a>, <a href="uncurried_functionOps_compose.js.html#line3">line 3</a>
+        <a href="uncurried_functionOps_compose_.js.html">uncurried/functionOps/compose_.js</a>, <a href="uncurried_functionOps_compose_.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -341,185 +342,6 @@
     
 
     
-    <h4 class="name" id=".isType"><span class="type-signature">(static) </span>isType<span class="signature">(type, obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Type checker.  Note** The `Type` passed in, if a constructor, shouldbe a named constructor/functionOps-instance;  E.g.,``` functionOps SomeName () {} // or var SomeName = functionOps SomeName () {} // or class SomeName {}```
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>type</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-|
-
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Constructor or constructor name</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="uncurried_objectOps_is.js.html">uncurried/objectOps/is.js</a>, <a href="uncurried_objectOps_is.js.html#line35">line 35</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id=".isType"><span class="type-signature">(static) </span>isType<span class="signature">(Type, value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
@@ -528,7 +350,13 @@
 
 
 <div class="description">
-    Type checker.  Note** The `Type` passed in, if a constructor, shouldbe a named constructor/functionOps-instance;  E.g.,``` functionOps SomeName () {} // or var SomeName = functionOps SomeName () {} // or class SomeName {}```
+    Type checker.  Note** The `Type` passed in, if a constructor, should
+be a named constructor/functionOps-instance;  E.g.,
+```
+ functionOps SomeName () {} // or
+ var SomeName = functionOps SomeName () {} // or
+ class SomeName {}
+```
 </div>
 
 
@@ -647,7 +475,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps_is.js.html">objectOps/is.js</a>, <a href="objectOps_is.js.html#line35">line 35</a>
+        <a href="objectOps_is.js.html">objectOps/is.js</a>, <a href="objectOps_is.js.html#line36">line 36</a>
     </li></ul></dd>
     
 
@@ -800,7 +628,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps_typeOf.js.html">objectOps/typeOf.js</a>, <a href="objectOps_typeOf.js.html#line10">line 10</a>
+        <a href="uncurried_objectOps_typeOf_.js.html">uncurried/objectOps/typeOf_.js</a>, <a href="uncurried_objectOps_typeOf_.js.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -827,164 +655,8 @@
 
         
 <div class="param-desc">
-    - Constructor's name property if not null or undefined (in which case a name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".typeOf"><span class="type-signature">(static) </span>typeOf<span class="signature">(value)</span><span class="type-signature"> &rarr; {string}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Returns the class name of an object from it's class stringOps.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="uncurried_objectOps_typeOf.js.html">uncurried/objectOps/typeOf.js</a>, <a href="uncurried_objectOps_typeOf.js.html#line10">line 10</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Constructor's name property if not null or undefined (in which case a name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
+    - Constructor's name property if not null or undefined (in which case a
+ name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
 </div>
 
 
@@ -1023,13 +695,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="jsPlatform_arrayOpsUncurried.html">jsPlatform:arrayOpsUncurried</a></li><li><a href="listOpsUncurried.module_sliceTo.html">sliceTo</a></li><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-curry.html">curry</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-functionOpsUncurried.html">functionOpsUncurried</a></li><li><a href="module-id.html">id</a></li><li><a href="module-is.html">is</a></li><li><a href="module-jsPlatform_array.html">jsPlatform_array</a></li><li><a href="module-jsPlatform_list.html">jsPlatform_list</a></li><li><a href="module-jsPlatform_string.html">jsPlatform_string</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-listOpsUncurried.html">listOpsUncurried</a></li><li><a href="module-listOpsUtils.html">listOpsUtils</a></li><li><a href="module-negate.html">negate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_Number">_Number</a></li><li><a href="global.html#apply">apply</a></li><li><a href="global.html#instanceOf">instanceOf</a></li><li><a href="global.html#prop">prop</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="jsPlatform_arrayOps_.html">jsPlatform:arrayOps_</a></li><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-curry.html">curry</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-is.html">is</a></li><li><a href="module-is_.html">is_</a></li><li><a href="module-jsPlatform_array.html">jsPlatform_array</a></li><li><a href="module-jsPlatform_list.html">jsPlatform_list</a></li><li><a href="module-jsPlatform_string.html">jsPlatform_string</a></li><li><a href="module-listOpsUtils_.html">listOpsUtils_</a></li><li><a href="module-negate.html">negate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#apply">apply</a></li><li><a href="global.html#instanceOf">instanceOf</a></li><li><a href="global.html#prop">prop</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Sep 28 2017 01:20:26 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Sep 30 2017 04:29:11 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

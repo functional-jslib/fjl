@@ -2,6 +2,7 @@
  * Created by elyde on 12/18/2016.
  * @module is
  * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
+ * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
  */
 import {curry} from   '../functionOps/curry';
 import {typeOf} from './typeOf';
@@ -59,6 +60,7 @@ export const
      * Returns a booleanOps depicting whether a value is callable or not.
      * @function module:is.isCallable
      * @tentative
+     * @private
      * @param x {*}
      * @returns {Boolean}
      */
@@ -162,6 +164,7 @@ export const
 
     /**
      * @tentative
+     * @private
      */
     isPromise = isType('Promise'),
 
@@ -202,7 +205,7 @@ export const
 
     /**
      * Checks to see if passed in argument is empty.
-     * @function module:is.empty
+     * @function module:is.isEmpty
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */

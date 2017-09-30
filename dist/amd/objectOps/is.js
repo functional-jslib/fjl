@@ -9,6 +9,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
    * Created by elyde on 12/18/2016.
    * @module is
    * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
+   * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
    */
   let _String = String.name,
       _Number = Number.name,
@@ -64,6 +65,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
    * Returns a booleanOps depicting whether a value is callable or not.
    * @function module:is.isCallable
    * @tentative
+   * @private
    * @param x {*}
    * @returns {Boolean}
    */
@@ -180,6 +182,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * @tentative
+   * @private
    */
   isPromise = exports.isPromise = isType('Promise'),
 
@@ -224,7 +227,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks to see if passed in argument is empty.
-   * @function module:is.empty
+   * @function module:is.isEmpty
    * @param value {*} - Value to check.
    * @returns {Boolean}
    */

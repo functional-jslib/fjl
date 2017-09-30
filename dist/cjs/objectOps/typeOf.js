@@ -9,6 +9,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 exports.typeOf = typeOf;
 /**
  * Created by elyde on 12/18/2016.
+ * @memberOf objectOps
  */
 var _Number = Number.name,
     _NaN = 'NaN',
@@ -19,7 +20,7 @@ var _Number = Number.name,
 /**
  * Returns the class name of an object from it's class stringOps.
  * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
- * @function module:fjl.typeOf
+ * @function module:objectOps.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name property if not null or undefined (in which case a
  *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).

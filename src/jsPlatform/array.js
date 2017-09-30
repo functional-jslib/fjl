@@ -6,7 +6,12 @@
 
 import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from '../utils';
 
-import {defineReverse} from '../uncurried/jsPlatform/array_';
+/**
+ * Reverses an listOps (shimmed if not exists).
+ * @function module:jsPlatform_array.reverse
+ * @return {Array}
+ */
+export {reverse} from '../uncurried/jsPlatform/array_';
 
 export const
 
@@ -113,11 +118,4 @@ export const
      * @param arr {Array}
      * @returns {Number}
      */
-    push = fPureTakesOneOrMore_('push'),
-
-    /**
-     * Reverses an listOps (shimmed if not exists).
-     * @function module:jsPlatform_array.reverse
-     * @return {Array}
-     */
-    reverse = defineReverse();
+    push = fPureTakesOneOrMore_('push');

@@ -17,7 +17,7 @@ define(['exports', './apply_', '../jsPlatform/array_'], function (exports, _appl
 
   /**
    * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
-   * @function module:functionOps.negateP
+   * @function module:functionOps_.negateP
    * @param fn {Function}
    * @returns {Function}
    */
@@ -26,7 +26,7 @@ define(['exports', './apply_', '../jsPlatform/array_'], function (exports, _appl
 
   /**
    * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-   * @function module:functionOps.negateFMany
+   * @function module:functionOps_.negateFMany
    * @param fn {Function}
    * @returns {Function}
    */
