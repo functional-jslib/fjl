@@ -7,7 +7,7 @@ exports.objComplement = exports.objDifference = exports.objIntersect = exports.o
 
 var _curry = require('../functionOps/curry');
 
-var _objectUncurried = require('../uncurried/jsPlatform/objectUncurried');
+var _objectUncurried = require('../uncurried/jsPlatform/object_');
 
 var _assignDeep = require('../uncurried/objectOps/assignDeep');
 

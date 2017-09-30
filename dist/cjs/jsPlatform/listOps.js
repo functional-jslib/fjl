@@ -7,7 +7,7 @@ exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = expor
 
 var _curry = require('../functionOps/curry');
 
-var _listOpsUncurried = require('../uncurried/jsPlatform/listOpsUncurried');
+var _listOpsUncurried = require('../uncurried/jsPlatform/listOps_');
 
 /**
  *  List operations that overlap (apart from globally overlapping props and functions like `length` and `toString`)

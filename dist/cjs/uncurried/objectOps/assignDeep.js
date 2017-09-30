@@ -7,7 +7,7 @@ exports.assignDeep = undefined;
 
 var _is = require('./is');
 
-var _objectUncurried = require('../jsPlatform/objectUncurried');
+var _object_ = require('../jsPlatform/object_');
 
 var
 /**
@@ -23,10 +23,10 @@ assignDeep = exports.assignDeep = function assignDeep(obj0) {
     }
 
     return objs.reduce(function (topAgg, obj) {
-        return (0, _objectUncurried.keys)(obj).reduce(function (agg, key) {
+        return (0, _object_.keys)(obj).reduce(function (agg, key) {
             var propDescription = Object.getOwnPropertyDescriptor(agg, key);
             // If property is not writable move to next item in collection
-            if ((0, _objectUncurried.hasOwnProperty)(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+            if ((0, _object_.hasOwnProperty)(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
                 return agg;
             }
             if ((0, _is.isObject)(agg[key]) && (0, _is.isObject)(obj[key])) {

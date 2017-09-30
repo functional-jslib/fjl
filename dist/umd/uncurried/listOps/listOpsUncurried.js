@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurried', '../functionOps/negate', '../functionOps/functionOpsUncurried', '../../booleanOps/booleanOps', '../objectOps/objectOpsUncurried', './map', './utils'], factory);
+        define(['exports', '../jsPlatform/list_', '../jsPlatform/function_', '../functionOps/negate', '../functionOps/functionOps_', '../../booleanOps/booleanOps', '../objectOps/objectOps_', './map', './utils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../jsPlatform/listUncurried'), require('../jsPlatform/functionUncurried'), require('../functionOps/negate'), require('../functionOps/functionOpsUncurried'), require('../../booleanOps/booleanOps'), require('../objectOps/objectOpsUncurried'), require('./map'), require('./utils'));
+        factory(exports, require('../jsPlatform/list_'), require('../jsPlatform/function_'), require('../functionOps/negate'), require('../functionOps/functionOps_'), require('../../booleanOps/booleanOps'), require('../objectOps/objectOps_'), require('./map'), require('./utils'));
     } else {
         var mod = {
             exports: {}

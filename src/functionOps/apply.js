@@ -4,7 +4,7 @@
  */
 import {curry} from './curry';
 
-import {apply as pureApply} from '../uncurried/jsPlatform/functionUncurried';
+import {apply as pureApply} from '../uncurried/jsPlatform/function_';
 
 export const
 

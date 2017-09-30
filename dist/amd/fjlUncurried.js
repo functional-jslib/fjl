@@ -1,33 +1,33 @@
-define(['exports', './uncurried/objectOpsUncurried', './uncurried/functionOpsUncurried', './uncurried/listOpsUncurried', '../generated-for-src/version'], function (exports, _objectOpsUncurried, _functionOpsUncurried, _listOpsUncurried, _version) {
+define(['exports', './uncurried/objectOps_', './uncurried/functionOps_', './uncurried/listOps_', '../generated-for-src/version'], function (exports, _objectOps_, _functionOps_, _listOps_, _version) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.keys(_objectOpsUncurried).forEach(function (key) {
+  Object.keys(_objectOps_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _objectOpsUncurried[key];
+        return _objectOps_[key];
       }
     });
   });
-  Object.keys(_functionOpsUncurried).forEach(function (key) {
+  Object.keys(_functionOps_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _functionOpsUncurried[key];
+        return _functionOps_[key];
       }
     });
   });
-  Object.keys(_listOpsUncurried).forEach(function (key) {
+  Object.keys(_listOps_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _listOpsUncurried[key];
+        return _listOps_[key];
       }
     });
   });

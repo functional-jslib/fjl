@@ -6,7 +6,7 @@
 import {curry} from   '../functionOps/curry';
 import {typeOf} from './typeOf';
 import {instanceOf} from './instanceOf';
-import {length, keys, hasOwnProperty} from '../uncurried/jsPlatform/objectUncurried';
+import {length, keys, hasOwnProperty} from '../uncurried/jsPlatform/object_';
 
 let _String = String.name,
     _Number = Number.name,
@@ -73,7 +73,7 @@ export const
     isArray = isType(Array),
 
     /**
-     * Checks whether value is an objectOps or not.
+     * Checks whether value is an object or not.
      * @function module:is.isObject
      * @param value
      * @returns {Boolean}
@@ -187,7 +187,7 @@ export const
     isEmptyList = x => length(x) === 0,
 
     /**
-     * Checks if objectOps has own properties/enumerable-props or not.
+     * Checks if object has own properties/enumerable-props or not.
      * @param obj {*}
      * @returns {Boolean}
      */

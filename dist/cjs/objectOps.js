@@ -5,80 +5,80 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.keys = exports.toString = exports.length = undefined;
 
-var _objectUncurried = require('./uncurried/jsPlatform/objectUncurried');
+var _object_ = require('./uncurried/jsPlatform/object_');
 
 Object.defineProperty(exports, 'length', {
     enumerable: true,
     get: function get() {
-        return _objectUncurried.length;
+        return _object_.length;
     }
 });
 Object.defineProperty(exports, 'toString', {
     enumerable: true,
     get: function get() {
-        return _objectUncurried.toString;
+        return _object_.toString;
     }
 });
 Object.defineProperty(exports, 'keys', {
     enumerable: true,
     get: function get() {
-        return _objectUncurried.keys;
+        return _object_.keys;
     }
 });
 
-var _typeOf = require('./uncurried/objectOps/typeOf');
+var _typeOf_ = require('./uncurried/objectOps/typeOf_');
 
-Object.keys(_typeOf).forEach(function (key) {
+Object.keys(_typeOf_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
         enumerable: true,
         get: function get() {
-            return _typeOf[key];
+            return _typeOf_[key];
         }
     });
 });
 
-var _is = require('./uncurried/objectOps/is');
+var _is_ = require('./uncurried/objectOps/is_');
 
-Object.keys(_is).forEach(function (key) {
+Object.keys(_is_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
         enumerable: true,
         get: function get() {
-            return _is[key];
+            return _is_[key];
         }
     });
 });
 
-var _of = require('./uncurried/objectOps/of');
+var _of_ = require('./uncurried/objectOps/of_');
 
-Object.keys(_of).forEach(function (key) {
+Object.keys(_of_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
         enumerable: true,
         get: function get() {
-            return _of[key];
+            return _of_[key];
         }
     });
 });
 
-var _setTheory = require('./uncurried/objectOps/setTheory');
+var _setTheory_ = require('./uncurried/objectOps/setTheory_');
 
-Object.keys(_setTheory).forEach(function (key) {
+Object.keys(_setTheory_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
         enumerable: true,
         get: function get() {
-            return _setTheory[key];
+            return _setTheory_[key];
         }
     });
 });
 
 var _curry = require('./functionOps/curry');
 
-var _assignDeep = require('./uncurried/objectOps/assignDeep');
+var _assignDeep_ = require('./uncurried/objectOps/assignDeep_');
 
-var instanceOf = exports.instanceOf = (0, _curry.curry)(_objectUncurried.instanceOf),
-    hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_objectUncurried.hasOwnProperty),
-    assign = exports.assign = (0, _curry.curry2)(_objectUncurried.assign),
-    assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep.assignDeep);
+var instanceOf = exports.instanceOf = (0, _curry.curry)(_object_.instanceOf),
+    hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_object_.hasOwnProperty),
+    assign = exports.assign = (0, _curry.curry2)(_object_.assign),
+    assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep_.assignDeep);

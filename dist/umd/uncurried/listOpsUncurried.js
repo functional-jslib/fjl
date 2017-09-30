@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './jsPlatform/listUncurried', './jsPlatform/functionUncurried', './functionOps/negate', './functionOpsUncurried', '../booleanOps', './objectOpsUncurried', './listOps/map', './listOps/utils'], factory);
+        define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOps/negate', './functionOps_', '../booleanOps', './objectOps_', './listOps/map', './listOps/utils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./jsPlatform/listUncurried'), require('./jsPlatform/functionUncurried'), require('./functionOps/negate'), require('./functionOpsUncurried'), require('../booleanOps'), require('./objectOpsUncurried'), require('./listOps/map'), require('./listOps/utils'));
+        factory(exports, require('./jsPlatform/list_'), require('./jsPlatform/function_'), require('./functionOps/negate'), require('./functionOps_'), require('../booleanOps'), require('./objectOps_'), require('./listOps/map'), require('./listOps/utils'));
     } else {
         var mod = {
             exports: {}
@@ -244,7 +244,7 @@
      */
     reverse = exports.reverse = function reverse(x) {
         var aggregator = (0, _utils.aggregatorByType)(x);
-        return (0, _utils.reduceRight)(function (agg, item, ind) {
+        return foldr(function (agg, item, ind) {
             return aggregator(agg, item, ind);
         }, (0, _objectOpsUncurried.of)(x), x);
     },

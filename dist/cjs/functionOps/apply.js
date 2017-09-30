@@ -7,7 +7,7 @@ exports.apply = undefined;
 
 var _curry = require('./curry');
 
-var _functionUncurried = require('../uncurried/jsPlatform/functionUncurried');
+var _function_ = require('../uncurried/jsPlatform/function_');
 
 /**
  * Created by elydelacruz on 7/22/2017.
@@ -22,4 +22,4 @@ var
  * @param args {*}
  * @returns {*}
  */
-apply = exports.apply = (0, _curry.curry)(_functionUncurried.apply);
+apply = exports.apply = (0, _curry.curry)(_function_.apply);

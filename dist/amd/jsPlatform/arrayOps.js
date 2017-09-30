@@ -1,4 +1,4 @@
-define(['exports', '../utils/utils', '../uncurried/jsPlatform/arrayOpsUncurried'], function (exports, _utils, _arrayOpsUncurried) {
+define(['exports', '../utils/utils', '../uncurried/jsPlatform/arrayOps_'], function (exports, _utils, _arrayOpsUncurried) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -58,7 +58,7 @@ define(['exports', '../utils/utils', '../uncurried/jsPlatform/arrayOpsUncurried'
    * @function module:jsPlatform_arrayOps.forEach
    * @param fn {Function}
    * @param functor {Array|Object|*}
-   * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
+   * @return {*|Array|Object} - The type of objectyou pass in unless it doesn't have a `forEach` method.
    * @throws {Error} - When passed in functor doesn't have a `forEach` method.
    */
   forEach = exports.forEach = (0, _utils.fPureTakesOne_)('forEach'),
@@ -71,7 +71,7 @@ define(['exports', '../utils/utils', '../uncurried/jsPlatform/arrayOpsUncurried'
    * @param fn {Function} - Predicate.
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have a `some` method.
+   * @throws {Error} - When passed in objectdoesn't have a `some` method.
    */
   some = exports.some = (0, _utils.fPureTakesOne_)('some'),
 
@@ -82,7 +82,7 @@ define(['exports', '../utils/utils', '../uncurried/jsPlatform/arrayOpsUncurried'
    * @param fn {Function} - Predicate.
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+   * @throws {Error} - When passed in objectdoesn't have an `every` method.
    */
   every = exports.every = (0, _utils.fPureTakesOne_)('every'),
 
@@ -94,7 +94,7 @@ define(['exports', '../utils/utils', '../uncurried/jsPlatform/arrayOpsUncurried'
    * @param functor {Array|Object|*}
    * @param ...functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+   * @throws {Error} - When passed in objectdoesn't have an `every` method.
    */
   concat = exports.concat = (0, _utils.fPureTakesOneOrMore_)('concat'),
 

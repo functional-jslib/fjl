@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionUncurried', '../jsPlatform/listUncurried', '../jsPlatform/objectUncurried', '../../booleanOps/booleanOps', './map'], factory);
+        define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/function_', '../jsPlatform/list_', '../jsPlatform/object_', '../../booleanOps/booleanOps', './map'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./listOpsUncurriedAggregation'), require('../jsPlatform/functionUncurried'), require('../jsPlatform/listUncurried'), require('../jsPlatform/objectUncurried'), require('../../booleanOps/booleanOps'), require('./map'));
+        factory(exports, require('./listOpsUncurriedAggregation'), require('../jsPlatform/function_'), require('../jsPlatform/list_'), require('../jsPlatform/object_'), require('../../booleanOps/booleanOps'), require('./map'));
     } else {
         var mod = {
             exports: {}

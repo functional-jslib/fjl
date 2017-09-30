@@ -7,7 +7,7 @@ exports.reverse = exports.push = exports.slice = exports.join = exports.concat =
 
 var _utils = require('../utils/utils');
 
-var _arrayOpsUncurried = require('../uncurried/jsPlatform/arrayOpsUncurried');
+var _arrayOpsUncurried = require('../uncurried/jsPlatform/arrayOps_');
 
 /**
  * Created by elyde on 7/20/2017.
@@ -62,7 +62,7 @@ reduceRight = exports.reduceRight = (0, _utils.fPureTakes2_)('reduceRight'),
  * @function module:jsPlatform_arrayOps.forEach
  * @param fn {Function}
  * @param functor {Array|Object|*}
- * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
+ * @return {*|Array|Object} - The type of objectyou pass in unless it doesn't have a `forEach` method.
  * @throws {Error} - When passed in functor doesn't have a `forEach` method.
  */
 forEach = exports.forEach = (0, _utils.fPureTakesOne_)('forEach'),
@@ -75,7 +75,7 @@ forEach = exports.forEach = (0, _utils.fPureTakesOne_)('forEach'),
  * @param fn {Function} - Predicate.
  * @param functor {Array|Object|*}
  * @return {*|Array|Object} - The type passed.
- * @throws {Error} - When passed in objectOps doesn't have a `some` method.
+ * @throws {Error} - When passed in objectdoesn't have a `some` method.
  */
 some = exports.some = (0, _utils.fPureTakesOne_)('some'),
 
@@ -86,7 +86,7 @@ some = exports.some = (0, _utils.fPureTakesOne_)('some'),
  * @param fn {Function} - Predicate.
  * @param functor {Array|Object|*}
  * @return {*|Array|Object} - The type passed.
- * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+ * @throws {Error} - When passed in objectdoesn't have an `every` method.
  */
 every = exports.every = (0, _utils.fPureTakesOne_)('every'),
 
@@ -98,7 +98,7 @@ every = exports.every = (0, _utils.fPureTakesOne_)('every'),
  * @param functor {Array|Object|*}
  * @param ...functor {Array|Object|*}
  * @return {*|Array|Object} - The type passed.
- * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+ * @throws {Error} - When passed in objectdoesn't have an `every` method.
  */
 concat = exports.concat = (0, _utils.fPureTakesOneOrMore_)('concat'),
 

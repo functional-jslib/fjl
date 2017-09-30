@@ -1,4 +1,4 @@
-define(['exports', '../functionOps/curry', '../uncurried/objectOps/instanceOf'], function (exports, _curry, _instanceOf) {
+define(['exports', '../functionOps/curry', '../uncurried/objectOps/instanceOf_'], function (exports, _curry, _instanceOf_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -17,5 +17,5 @@ define(['exports', '../functionOps/curry', '../uncurried/objectOps/instanceOf'],
    * @instance {*}
    * @returns {Boolean}
    */
-  instanceOf = exports.instanceOf = (0, _curry.curry)(_instanceOf.instanceOf);
+  instanceOf = exports.instanceOf = (0, _curry.curry)(_instanceOf_.instanceOf);
 });

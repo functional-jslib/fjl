@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">'Uncurried' list operators.</div>
+            <div class="description">'_' list operators.</div>
         
 
         
@@ -161,7 +161,12 @@
 
 
 <div class="description">
-    Append two lists, i.e.,```append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]```If the first list is not finite, the result is the first list.
+    Append two lists, i.e.,
+```
+append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
+append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
+```
+If the first list is not finite, the result is the first list.
 </div>
 
 
@@ -2895,7 +2900,12 @@
 
 
 <div class="description">
-    The group function takes a list and returns a list of lists such that the concatenation of the result is equal to the argument. Moreover, each sublist in the result contains only equal elements. For example,`group "Mississippi" = ["M","i","ss","i","ss","i","pp","i"]`It is a special case of groupBy, which allows the programmer to supply their own equality test.
+    The group function takes a list and returns a list of lists such that
+ the concatenation of the result is equal to the argument. Moreover, each
+ sublist in the result contains only equal elements. For example,
+`group "Mississippi" = ["M","i","ss","i","ss","i","pp","i"]`
+It is a special case of groupBy, which allows the programmer to supply
+ their own equality test.
 </div>
 
 
@@ -3740,7 +3750,8 @@
 
 
 <div class="description">
-    A version of `insert` that allows you to specify the ordering of the inserteditem;  Before/at, or after
+    A version of `insert` that allows you to specify the ordering of the inserted
+item;  Before/at, or after
 </div>
 
 
@@ -3897,7 +3908,8 @@
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
         <ul>
-            <li>Optimize and work the logic of this function;  Think about the types that will be operated on by this functions logic.</li>
+            <li>Optimize and work the logic of this function;  Think about the types that will be
+ operated on by this functions logic.</li>
         </ul>
     </dd>
     
@@ -3962,7 +3974,8 @@
 
 
 <div class="description">
-    A version of `insert` that allows you to specify the ordering of the inserteditem;  Before/at, or after
+    A version of `insert` that allows you to specify the ordering of the inserted
+item;  Before/at, or after
 </div>
 
 
@@ -4119,7 +4132,8 @@
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
         <ul>
-            <li>Optimize and work the logic of this function;  Think about the types that will be operated on by this functions logic.</li>
+            <li>Optimize and work the logic of this function;  Think about the types that will be
+ operated on by this functions logic.</li>
         </ul>
     </dd>
     
@@ -5485,7 +5499,8 @@
 
 
 <div class="description">
-    Performs a map then a reduce all in one (from left-to-right). Returns a tuplecontaining the aggregated value and the result of mapping the passed in function on passed in list.
+    Performs a map then a reduce all in one (from left-to-right). Returns a tuple
+containing the aggregated value and the result of mapping the passed in function on passed in list.
 </div>
 
 
@@ -5694,7 +5709,8 @@
 
 
 <div class="description">
-    Performs a map and a reduce all in one (from right-to-left). Returns a tuplecontaining the aggregated value and the result of mapping the passed in function on passed in list.
+    Performs a map and a reduce all in one (from right-to-left). Returns a tuple
+containing the aggregated value and the result of mapping the passed in function on passed in list.
 </div>
 
 
@@ -5903,7 +5919,9 @@
 
 
 <div class="description">
-    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items thatdo not match the tuple are in second list in the returned tuple. Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
+do not match the tuple are in second list in the returned tuple.
+ Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
 </div>
 
 
@@ -6092,7 +6110,9 @@
 
 
 <div class="description">
-    Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` andthe second list in the tuple is a list of the remaining elements in the given list.**@Note: Not the same as `partition`.  Read descriptions closely!!!
+    Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
+the second list in the tuple is a list of the remaining elements in the given list.
+**@Note: Not the same as `partition`.  Read descriptions closely!!!
 </div>
 
 
@@ -6801,7 +6821,8 @@
 
 
 <div class="description">
-    Splits `x` in two at given `index` (exclusive (includes element/character atgiven index in second part of returned list)).
+    Splits `x` in two at given `index` (exclusive (includes element/character at
+given index in second part of returned list)).
 </div>
 
 
@@ -6987,7 +7008,12 @@
 
 
 <div class="description">
-    Generates 2^n sub-sequences for passed in sequence (string/list) (`n` isthe length of the passed in sequence so: 2^length(xs)).Note: The return value doubles per index/character passed in so use with caution! Also note that for 2^16 (or for a sequence of 16 characters) this algorithm will generate 65536 sub-sequences!  So caution should be taken to not use this with sequences above a certain length on certain platform (the browser thread in specific).
+    Generates 2^n sub-sequences for passed in sequence (string/list) (`n` is
+the length of the passed in sequence so: 2^length(xs)).
+Note: The return value doubles per index/character passed in so use with caution!
+ Also note that for 2^16 (or for a sequence of 16 characters) this algorithm
+ will generate 65536 sub-sequences!  So caution should be taken to not
+ use this with sequences above a certain length on certain platform (the browser thread in specific).
 </div>
 
 
@@ -7847,7 +7873,14 @@
 
 
 <div class="description">
-    Transposes rows and columns into lists by index;  E.g.,Haskell example:``` transpose [[1,2,3],[4,5,6]] == [[1,4],[2,5],[3,6]] -- Notice the shorter arrays are ignored after their last index is copied over: transpose [[10,11],[20],[],[30,31,32]] == [[10,20,30],[11,31],[32]]```
+    Transposes rows and columns into lists by index;  E.g.,
+Haskell example:
+```
+ transpose [[1,2,3],[4,5,6]] == [[1,4],[2,5],[3,6]]
+
+ -- Notice the shorter arrays are ignored after their last index is copied over:
+ transpose [[10,11],[20],[],[30,31,32]] == [[10,20,30],[11,31],[32]]
+```
 </div>
 
 
@@ -9260,7 +9293,8 @@
 
 
 <div class="description">
-    zip takes two lists and returns a list of corresponding pairs.If one input list is short, excess elements of the longer list are discarded.
+    zip takes two lists and returns a list of corresponding pairs.
+If one input list is short, excess elements of the longer list are discarded.
 </div>
 
 
@@ -10067,7 +10101,9 @@
 
 
 <div class="description">
-    zipN takes one or more lists and returns a list containing lists of all indicesat a given index, index by index.If one input list is short, excess elements of the longer list are discarded.
+    zipN takes one or more lists and returns a list containing lists of all indices
+at a given index, index by index.
+If one input list is short, excess elements of the longer list are discarded.
 </div>
 
 
@@ -10223,7 +10259,10 @@
 
 
 <div class="description">
-    zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]zipWith generalises zip by zipping with the function given as thefirst argument, instead of a function tupling function (function that returns a tuple). For example,zipWith (+) is applied to two lists to produce the list of corresponding sums.
+    zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith generalises zip by zipping with the function given as the
+first argument, instead of a function tupling function (function that returns a tuple). For example,
+zipWith (+) is applied to two lists to produce the list of corresponding sums.
 </div>
 
 
@@ -10275,7 +10314,8 @@
 
             
 
-            <td class="description last">Takes two parts of a tuple and returns a tuple. E.g., ` op :: a -> b -> (a, b)`</td>
+            <td class="description last">Takes two parts of a tuple and returns a tuple.
+ E.g., ` op :: a -> b -> (a, b)`</td>
         </tr>
 
     
@@ -10421,7 +10461,9 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```zipWith f [] _|_ = []```</code></pre>
+    <pre class="prettyprint"><code>```
+zipWith f [] _|_ = []
+```</code></pre>
 
 
 
@@ -10491,7 +10533,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
         </tr>
 
     
@@ -10731,7 +10775,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`</td>
         </tr>
 
     
@@ -11000,7 +11046,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`</td>
         </tr>
 
     
@@ -11246,7 +11294,9 @@
 
 
 <div class="description">
-    Zips all given lists with tupling function. Note: Haskell types do not have a way (that I know of) to show one or more for params in a function so `@haskellType` below is left there for general purpose not for exactness as is told by aforementioned.
+    Zips all given lists with tupling function. Note: Haskell types do not have
+ a way (that I know of) to show one or more for params in a function so `@haskellType` below
+ is left there for general purpose not for exactness as is told by aforementioned.
 </div>
 
 
@@ -11298,7 +11348,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
         </tr>
 
     

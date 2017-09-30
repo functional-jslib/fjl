@@ -1,4 +1,4 @@
-define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncurried/jsPlatform/objectUncurried'], function (exports, _curry, _typeOf, _instanceOf, _objectUncurried) {
+define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncurried/jsPlatform/object_'], function (exports, _curry, _typeOf, _instanceOf, _object_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -80,7 +80,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
 
   /**
-   * Checks whether value is an objectOps or not.
+   * Checks whether value is an object or not.
    * @function module:is.isObject
    * @param value
    * @returns {Boolean}
@@ -203,15 +203,15 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
    * @param x {*}
    * @returns {Boolean}
    */
-  isEmptyList = exports.isEmptyList = x => (0, _objectUncurried.length)(x) === 0,
+  isEmptyList = exports.isEmptyList = x => (0, _object_.length)(x) === 0,
 
 
   /**
-   * Checks if objectOps has own properties/enumerable-props or not.
+   * Checks if object has own properties/enumerable-props or not.
    * @param obj {*}
    * @returns {Boolean}
    */
-  isEmptyObject = exports.isEmptyObject = obj => isEmptyList((0, _objectUncurried.keys)(obj)),
+  isEmptyObject = exports.isEmptyObject = obj => isEmptyList((0, _object_.keys)(obj)),
 
 
   /**
@@ -241,7 +241,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
       retVal = false;
     } else if (typeOfValue === _Object) {
       retVal = isEmptyObject(value);
-    } else if ((0, _objectUncurried.hasOwnProperty)('size', value)) {
+    } else if ((0, _object_.hasOwnProperty)('size', value)) {
       retVal = isEmptyCollection(value);
     } else {
       retVal = !value;

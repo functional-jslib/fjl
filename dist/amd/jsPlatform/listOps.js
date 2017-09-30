@@ -1,4 +1,4 @@
-define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/listOpsUncurried'], function (exports, _curry, _listOpsUncurried) {
+define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/listOps_'], function (exports, _curry, _listOpsUncurried) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

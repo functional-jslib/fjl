@@ -1,4 +1,4 @@
-define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPlatform/listUncurried', '../jsPlatform/objectUncurried', '../../booleanOps', './map'], function (exports, _aggregation, _functionUncurried, _listUncurried, _objectUncurried, _booleanOps, _map) {
+define(['exports', './aggregation', '../jsPlatform/function_', '../jsPlatform/list_', '../jsPlatform/object_', '../../booleanOps', './map'], function (exports, _aggregation, _function_, _list_, _object_, _booleanOps, _map) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -27,7 +27,7 @@ define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPla
      * @param arr {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFrom = exports.sliceFrom = (startInd, arr) => (0, _listUncurried.slice)(startInd, (0, _objectUncurried.length)(arr), arr),
+    sliceFrom = exports.sliceFrom = (startInd, arr) => (0, _list_.slice)(startInd, (0, _object_.length)(arr), arr),
 
 
     /**
@@ -37,7 +37,7 @@ define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPla
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceTo = exports.sliceTo = (toInd, xs) => (0, _listUncurried.slice)(0, toInd, xs),
+    sliceTo = exports.sliceTo = (toInd, xs) => (0, _list_.slice)(0, toInd, xs),
 
 
     /**
@@ -61,14 +61,14 @@ define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPla
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
-    lengths = exports.lengths = (...lists) => (0, _objectUncurried.length)(lists) ? (0, _map.map)(_objectUncurried.length, lists) : [],
+    lengths = exports.lengths = (...lists) => (0, _object_.length)(lists) ? (0, _map.map)(_object_.length, lists) : [],
           lengthsToSmallest = exports.lengthsToSmallest = (...lists) => {
-        const listLengths = (0, _functionUncurried.apply)(lengths, lists),
+        const listLengths = (0, _function_.apply)(lengths, lists),
               smallLen = Math.min.apply(Math, listLengths);
         return (0, _map.map)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list), lists);
     },
           reduceUntil = exports.reduceUntil = (pred, op, agg, arr) => {
-        const limit = (0, _objectUncurried.length)(arr);
+        const limit = (0, _object_.length)(arr);
         if (!limit) {
             return agg;
         }
@@ -83,7 +83,7 @@ define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPla
         return result;
     },
           reduceRightUntil = exports.reduceRightUntil = (pred, op, agg, arr) => {
-        const limit = (0, _objectUncurried.length)(arr);
+        const limit = (0, _object_.length)(arr);
         if (!limit) {
             return agg;
         }
@@ -116,7 +116,7 @@ define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPla
      * @returns {Number} - `-1` if no element found.
      */
     lastIndex = exports.lastIndex = x => {
-        const len = (0, _objectUncurried.length)(x);return len ? len - 1 : 0;
+        const len = (0, _object_.length)(x);return len ? len - 1 : 0;
     },
 
 
@@ -130,7 +130,7 @@ define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPla
     findIndexWhere = exports.findIndexWhere = (pred, arr) => {
         let ind = -1,
             predicateFulfilled = false;
-        const limit = (0, _objectUncurried.length)(arr);
+        const limit = (0, _object_.length)(arr);
         while (ind < limit && !predicateFulfilled) {
             predicateFulfilled = pred(arr[++ind], ind, arr);
         }
@@ -146,7 +146,7 @@ define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPla
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhereRight = exports.findIndexWhereRight = (pred, arr) => {
-        const limit = (0, _objectUncurried.length)(arr);
+        const limit = (0, _object_.length)(arr);
         let ind = limit,
             predicateFulfilled = false;
         for (; ind >= 0 && !predicateFulfilled; --ind) {
@@ -162,7 +162,7 @@ define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPla
      * @returns {Array|undefined}
      */
     findIndicesWhere = exports.findIndicesWhere = (pred, xs) => {
-        const limit = (0, _objectUncurried.length)(xs);
+        const limit = (0, _object_.length)(xs);
         if (!limit) {
             return undefined;
         }
@@ -185,7 +185,7 @@ define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPla
      */
     findWhere = exports.findWhere = (pred, xs) => {
         let ind = 0,
-            limit = (0, _objectUncurried.length)(xs);
+            limit = (0, _object_.length)(xs);
         if (!limit) {
             return;
         }

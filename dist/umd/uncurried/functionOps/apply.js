@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../jsPlatform/functionUncurried'], factory);
+    define(['exports', '../jsPlatform/function_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../jsPlatform/functionUncurried'));
+    factory(exports, require('../jsPlatform/function_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.functionUncurried);
+    factory(mod.exports, global.function_);
     global.apply = mod.exports;
   }
-})(this, function (exports, _functionUncurried) {
+})(this, function (exports, _function_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -19,7 +19,7 @@
   Object.defineProperty(exports, 'apply', {
     enumerable: true,
     get: function () {
-      return _functionUncurried.apply;
+      return _function_.apply;
     }
   });
 });

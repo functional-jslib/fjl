@@ -1,4 +1,4 @@
-define(['exports', './functionOps/call', './functionOps/apply', './functionOps/compose', './functionOps/curry', './uncurried/functionOps/negate', './functionOps/id', './functionOps/flip', './functionOps/until'], function (exports, _call, _apply, _compose, _curry, _negate, _id, _flip, _until) {
+define(['exports', './functionOps/call', './functionOps/apply', './functionOps/compose', './functionOps/curry', './uncurried/functionOps/negate_', './functionOps/id', './functionOps/flip', './functionOps/until'], function (exports, _call, _apply, _compose, _curry, _negate_, _id, _flip, _until) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -100,12 +100,12 @@ define(['exports', './functionOps/call', './functionOps/apply', './functionOps/c
       return _curry.curry5_;
     }
   });
-  Object.keys(_negate).forEach(function (key) {
+  Object.keys(_negate_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _negate[key];
+        return _negate_[key];
       }
     });
   });

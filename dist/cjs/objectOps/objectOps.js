@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.keys = exports.toString = exports.length = undefined;
 
-var _objectUncurried = require('../uncurried/jsPlatform/objectUncurried');
+var _objectUncurried = require('../uncurried/jsPlatform/object_');
 
 Object.defineProperty(exports, 'length', {
     enumerable: true,

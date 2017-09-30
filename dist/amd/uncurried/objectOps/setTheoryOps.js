@@ -1,4 +1,4 @@
-define(['exports', './assignDeep', '../jsPlatform/objectUncurried', '../listOpsUncurried'], function (exports, _assignDeep, _objectUncurried, _listOpsUncurried) {
+define(['exports', './assignDeep', '../jsPlatform/object_', '../listOps_'], function (exports, _assignDeep, _objectUncurried, _listOpsUncurried) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

@@ -11,30 +11,30 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {apply} from '../src/uncurried/jsPlatform/functionUncurried';
+import {apply} from '../src/uncurried/jsPlatform/function_';
 import {objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet, assignDeep
-} from '../src/uncurried/objectOpsUncurried';
+} from '../src/uncurried/objectOps_';
 import {foldl, map, and, head, tail} from "../src/uncurried/listOpsUncurried";
 import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, deepCompareObjectsLeft} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#objectOpsUncurried', function () {
+describe ('#objectOps_', function () {
 
     describe('#hasOwnProperty', function () {
         it ('should be a functionOps', function () {
             expectFunction(hasOwnProperty);
         });
-        it ('should return true when passed in objectOps has the passed in property name', function () {
+        it ('should return true when passed in object has the passed in property name', function () {
             const obj = {hello: 'ola', ola: 'mambo'};
             expectTrue(hasOwnProperty('hello', obj));
             expectTrue(hasOwnProperty('ola', obj));
         });
-        it ('should return false when passed in objectOps doesn\'t have the passed in property name', function () {
+        it ('should return false when passed in object doesn\'t have the passed in property name', function () {
             expectFalse(hasOwnProperty('hello', {}));
             expectFalse(hasOwnProperty('mambo', {}));
         });
@@ -335,7 +335,7 @@ describe ('#objectOpsUncurried', function () {
         it('should be a functionOps', function () {
             expectFunction(objComplement);
         });
-        it('should return an objectOps with only properties not found in the first obj', function () {
+        it('should return an object with only properties not found in the first obj', function () {
             let subj1 = {a: 1, b: 2, c: 3},
                 subj2 = {d: 4},
                 subj3 = {e: 5, f: 6, g: 7},
@@ -375,7 +375,7 @@ describe ('#objectOpsUncurried', function () {
         it('should be a functionOps', function () {
             expectFunction(objUnion);
         });
-        it ('should return an objectOps containing all properties from the two objects passed in', function () {
+        it ('should return an object containing all properties from the two objects passed in', function () {
             let subj1 = {a: 1, b: 2, c: 3},
                 subj2 = {e: 5, f: 6, g: 7},
                 result = objUnion(subj1, subj2);
@@ -391,7 +391,7 @@ describe ('#objectOpsUncurried', function () {
         it('should be a functionOps', function () {
             expectFunction(objUnion);
         });
-        it ('should return an objectOps that contains values from both passed in objects', function () {
+        it ('should return an object that contains values from both passed in objects', function () {
             let subj1 = {a: 1, b: 2, c: 3, e: 4, f: 8},
                 subj2 = {a: 5, b: 6, c: 7, g: 9},
                 sharedKeys = ['a', 'b', 'c'],

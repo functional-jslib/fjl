@@ -7,7 +7,7 @@ exports.of = undefined;
 
 var _is = require('./is');
 
-var _objectUncurried = require('../uncurried/jsPlatform/objectUncurried');
+var _object_ = require('../uncurried/jsPlatform/object_');
 
 var _apply = require('../functionOps/apply');
 
@@ -20,7 +20,7 @@ var of = exports.of = function of(x) {
         return undefined;
     }
     var constructor = x.constructor;
-    if ((0, _objectUncurried.hasOwnProperty)('of', constructor)) {
+    if ((0, _object_.hasOwnProperty)('of', constructor)) {
         return (0, _apply.apply)(constructor.of, args);
     } else if ((0, _is.isUsableImmutablePrimitive)(x)) {
         return (0, _apply.apply)(constructor, args);

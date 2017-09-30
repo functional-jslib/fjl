@@ -6,256 +6,256 @@ Object.defineProperty(exports, "__esModule", {
 exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports._groupBy = exports._intersectBy = exports._intersect = exports._union = exports._difference = exports._complement = exports._sortBy = exports._sortOn = exports._sort = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = undefined;
 exports._insert = exports._remove = exports._nub = exports._minimumBy = exports._minimum = exports._maximumBy = exports._maximum = exports._product = exports._sum = exports._filter = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._tails = exports._inits = exports._group = exports._stripPrefix = exports._breakOnList = exports._span = exports._at = exports._partition = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._concatMap = exports._concat = exports._unfoldr = exports._foldr1 = exports._foldr = exports._foldl1 = exports._foldl = exports._splitAt = exports._drop = exports._take = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._isEmpty = exports._permutations = exports._subsequences = exports._transpose = exports._intercalate = exports._intersperse = exports._reverse = exports._length = exports._uncons = exports._tail = exports._init = exports._last = exports._head = exports._lookup = exports._elemIndices = exports._elemIndex = exports._notElem = exports._elem = exports._mapAccumR = exports._mapAccumL = exports._map = exports._unzipN = exports._unzip = exports._zipWith = exports._zipN = exports._zip = exports._findIndices = exports._findIndex = exports._find = exports._any = exports._or = exports._and = exports._all = exports._appendMany = exports._append = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.inits = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.length = exports.concat = exports.isEmpty = exports.uncons = exports.tail = exports.init = exports.last = exports.head = exports.unzipN = exports.unzip = exports.zipN = exports.or = exports.and = undefined;
 
-var _listOpsUncurried = require('./uncurried/listOpsUncurried');
+var _listOps_ = require('./uncurried/listOps_');
 
 Object.defineProperty(exports, 'and', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.and;
+    return _listOps_.and;
   }
 });
 Object.defineProperty(exports, 'or', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.or;
+    return _listOps_.or;
   }
 });
 Object.defineProperty(exports, 'zipN', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.zipN;
+    return _listOps_.zipN;
   }
 });
 Object.defineProperty(exports, 'unzip', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.unzip;
+    return _listOps_.unzip;
   }
 });
 Object.defineProperty(exports, 'unzipN', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.unzipN;
+    return _listOps_.unzipN;
   }
 });
 Object.defineProperty(exports, 'head', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.head;
+    return _listOps_.head;
   }
 });
 Object.defineProperty(exports, 'last', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.last;
+    return _listOps_.last;
   }
 });
 Object.defineProperty(exports, 'init', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.init;
+    return _listOps_.init;
   }
 });
 Object.defineProperty(exports, 'tail', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.tail;
+    return _listOps_.tail;
   }
 });
 Object.defineProperty(exports, 'uncons', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.uncons;
+    return _listOps_.uncons;
   }
 });
 Object.defineProperty(exports, 'isEmpty', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.isEmpty;
+    return _listOps_.isEmpty;
   }
 });
 Object.defineProperty(exports, 'concat', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.concat;
+    return _listOps_.concat;
   }
 });
 Object.defineProperty(exports, 'length', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.length;
+    return _listOps_.length;
   }
 });
 Object.defineProperty(exports, 'reverse', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.reverse;
+    return _listOps_.reverse;
   }
 });
 Object.defineProperty(exports, 'transpose', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.transpose;
+    return _listOps_.transpose;
   }
 });
 Object.defineProperty(exports, 'subsequences', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.subsequences;
+    return _listOps_.subsequences;
   }
 });
 Object.defineProperty(exports, 'permutations', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.permutations;
+    return _listOps_.permutations;
   }
 });
 Object.defineProperty(exports, 'group', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.group;
+    return _listOps_.group;
   }
 });
 Object.defineProperty(exports, 'inits', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.inits;
+    return _listOps_.inits;
   }
 });
 Object.defineProperty(exports, 'tails', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.tails;
+    return _listOps_.tails;
   }
 });
 Object.defineProperty(exports, 'sum', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.sum;
+    return _listOps_.sum;
   }
 });
 Object.defineProperty(exports, 'product', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.product;
+    return _listOps_.product;
   }
 });
 Object.defineProperty(exports, 'maximum', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.maximum;
+    return _listOps_.maximum;
   }
 });
 Object.defineProperty(exports, 'minimum', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.minimum;
+    return _listOps_.minimum;
   }
 });
 Object.defineProperty(exports, 'sort', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.sort;
+    return _listOps_.sort;
   }
 });
 Object.defineProperty(exports, 'nub', {
   enumerable: true,
   get: function get() {
-    return _listOpsUncurried.nub;
+    return _listOps_.nub;
   }
 });
 
-var _functionOpsUncurried = require('./uncurried/functionOpsUncurried');
+var _functionOps_ = require('./uncurried/functionOps_');
 
 // Uncurried methods export
-exports._append = _listOpsUncurried.append;
-exports._appendMany = _listOpsUncurried.appendMany;
-exports._all = _listOpsUncurried.all;
-exports._and = _listOpsUncurried.and;
-exports._or = _listOpsUncurried.or;
-exports._any = _listOpsUncurried.any;
-exports._find = _listOpsUncurried.find;
-exports._findIndex = _listOpsUncurried.findIndex;
-exports._findIndices = _listOpsUncurried.findIndices;
-exports._zip = _listOpsUncurried.zip;
-exports._zipN = _listOpsUncurried.zipN;
-exports._zipWith = _listOpsUncurried.zipWith;
-exports._unzip = _listOpsUncurried.unzip;
-exports._unzipN = _listOpsUncurried.unzipN;
-exports._map = _listOpsUncurried.map;
-exports._mapAccumL = _listOpsUncurried.mapAccumL;
-exports._mapAccumR = _listOpsUncurried.mapAccumR;
-exports._elem = _listOpsUncurried.elem;
-exports._notElem = _listOpsUncurried.notElem;
-exports._elemIndex = _listOpsUncurried.elemIndex;
-exports._elemIndices = _listOpsUncurried.elemIndices;
-exports._lookup = _listOpsUncurried.lookup;
-exports._head = _listOpsUncurried.head;
-exports._last = _listOpsUncurried.last;
-exports._init = _listOpsUncurried.init;
-exports._tail = _listOpsUncurried.tail;
-exports._uncons = _listOpsUncurried.uncons;
-exports._length = _listOpsUncurried.length;
-exports._reverse = _listOpsUncurried.reverse;
-exports._intersperse = _listOpsUncurried.intersperse;
-exports._intercalate = _listOpsUncurried.intercalate;
-exports._transpose = _listOpsUncurried.transpose;
-exports._subsequences = _listOpsUncurried.subsequences;
-exports._permutations = _listOpsUncurried.permutations;
-exports._isEmpty = _listOpsUncurried.isEmpty;
-exports._iterate = _listOpsUncurried.iterate;
-exports._repeat = _listOpsUncurried.repeat;
-exports._replicate = _listOpsUncurried.replicate;
-exports._cycle = _listOpsUncurried.cycle;
-exports._take = _listOpsUncurried.take;
-exports._drop = _listOpsUncurried.drop;
-exports._splitAt = _listOpsUncurried.splitAt;
-exports._foldl = _listOpsUncurried.foldl;
-exports._foldl1 = _listOpsUncurried.foldl1;
-exports._foldr = _listOpsUncurried.foldr;
-exports._foldr1 = _listOpsUncurried.foldr1;
-exports._unfoldr = _listOpsUncurried.unfoldr;
-exports._concat = _listOpsUncurried.concat;
-exports._concatMap = _listOpsUncurried.concatMap;
-exports._takeWhile = _listOpsUncurried.takeWhile;
-exports._dropWhile = _listOpsUncurried.dropWhile;
-exports._dropWhileEnd = _listOpsUncurried.dropWhileEnd;
-exports._partition = _listOpsUncurried.partition;
-exports._at = _listOpsUncurried.at;
-exports._span = _listOpsUncurried.span;
-exports._breakOnList = _listOpsUncurried.breakOnList;
-exports._stripPrefix = _listOpsUncurried.stripPrefix;
-exports._group = _listOpsUncurried.group;
-exports._inits = _listOpsUncurried.inits;
-exports._tails = _listOpsUncurried.tails;
-exports._isPrefixOf = _listOpsUncurried.isPrefixOf;
-exports._isSuffixOf = _listOpsUncurried.isSuffixOf;
-exports._isInfixOf = _listOpsUncurried.isInfixOf;
-exports._isSubsequenceOf = _listOpsUncurried.isSubsequenceOf;
-exports._filter = _listOpsUncurried.filter;
-exports._sum = _listOpsUncurried.sum;
-exports._product = _listOpsUncurried.product;
-exports._maximum = _listOpsUncurried.maximum;
-exports._maximumBy = _listOpsUncurried.maximumBy;
-exports._minimum = _listOpsUncurried.minimum;
-exports._minimumBy = _listOpsUncurried.minimumBy;
-exports._nub = _listOpsUncurried.nub;
-exports._remove = _listOpsUncurried.remove;
-exports._insert = _listOpsUncurried.insert;
-exports._insertBy = _listOpsUncurried.insertBy;
-exports._nubBy = _listOpsUncurried.nubBy;
-exports._removeBy = _listOpsUncurried.removeBy;
-exports._removeFirstsBy = _listOpsUncurried.removeFirstsBy;
-exports._unionBy = _listOpsUncurried.unionBy;
-exports._sort = _listOpsUncurried.sort;
-exports._sortOn = _listOpsUncurried.sortOn;
-exports._sortBy = _listOpsUncurried.sortBy;
-exports._complement = _listOpsUncurried.complement;
-exports._difference = _listOpsUncurried.difference;
-exports._union = _listOpsUncurried.union;
-exports._intersect = _listOpsUncurried.intersect;
-exports._intersectBy = _listOpsUncurried.intersectBy;
-exports._groupBy = _listOpsUncurried.groupBy;
+exports._append = _listOps_.append;
+exports._appendMany = _listOps_.appendMany;
+exports._all = _listOps_.all;
+exports._and = _listOps_.and;
+exports._or = _listOps_.or;
+exports._any = _listOps_.any;
+exports._find = _listOps_.find;
+exports._findIndex = _listOps_.findIndex;
+exports._findIndices = _listOps_.findIndices;
+exports._zip = _listOps_.zip;
+exports._zipN = _listOps_.zipN;
+exports._zipWith = _listOps_.zipWith;
+exports._unzip = _listOps_.unzip;
+exports._unzipN = _listOps_.unzipN;
+exports._map = _listOps_.map;
+exports._mapAccumL = _listOps_.mapAccumL;
+exports._mapAccumR = _listOps_.mapAccumR;
+exports._elem = _listOps_.elem;
+exports._notElem = _listOps_.notElem;
+exports._elemIndex = _listOps_.elemIndex;
+exports._elemIndices = _listOps_.elemIndices;
+exports._lookup = _listOps_.lookup;
+exports._head = _listOps_.head;
+exports._last = _listOps_.last;
+exports._init = _listOps_.init;
+exports._tail = _listOps_.tail;
+exports._uncons = _listOps_.uncons;
+exports._length = _listOps_.length;
+exports._reverse = _listOps_.reverse;
+exports._intersperse = _listOps_.intersperse;
+exports._intercalate = _listOps_.intercalate;
+exports._transpose = _listOps_.transpose;
+exports._subsequences = _listOps_.subsequences;
+exports._permutations = _listOps_.permutations;
+exports._isEmpty = _listOps_.isEmpty;
+exports._iterate = _listOps_.iterate;
+exports._repeat = _listOps_.repeat;
+exports._replicate = _listOps_.replicate;
+exports._cycle = _listOps_.cycle;
+exports._take = _listOps_.take;
+exports._drop = _listOps_.drop;
+exports._splitAt = _listOps_.splitAt;
+exports._foldl = _listOps_.foldl;
+exports._foldl1 = _listOps_.foldl1;
+exports._foldr = _listOps_.foldr;
+exports._foldr1 = _listOps_.foldr1;
+exports._unfoldr = _listOps_.unfoldr;
+exports._concat = _listOps_.concat;
+exports._concatMap = _listOps_.concatMap;
+exports._takeWhile = _listOps_.takeWhile;
+exports._dropWhile = _listOps_.dropWhile;
+exports._dropWhileEnd = _listOps_.dropWhileEnd;
+exports._partition = _listOps_.partition;
+exports._at = _listOps_.at;
+exports._span = _listOps_.span;
+exports._breakOnList = _listOps_.breakOnList;
+exports._stripPrefix = _listOps_.stripPrefix;
+exports._group = _listOps_.group;
+exports._inits = _listOps_.inits;
+exports._tails = _listOps_.tails;
+exports._isPrefixOf = _listOps_.isPrefixOf;
+exports._isSuffixOf = _listOps_.isSuffixOf;
+exports._isInfixOf = _listOps_.isInfixOf;
+exports._isSubsequenceOf = _listOps_.isSubsequenceOf;
+exports._filter = _listOps_.filter;
+exports._sum = _listOps_.sum;
+exports._product = _listOps_.product;
+exports._maximum = _listOps_.maximum;
+exports._maximumBy = _listOps_.maximumBy;
+exports._minimum = _listOps_.minimum;
+exports._minimumBy = _listOps_.minimumBy;
+exports._nub = _listOps_.nub;
+exports._remove = _listOps_.remove;
+exports._insert = _listOps_.insert;
+exports._insertBy = _listOps_.insertBy;
+exports._nubBy = _listOps_.nubBy;
+exports._removeBy = _listOps_.removeBy;
+exports._removeFirstsBy = _listOps_.removeFirstsBy;
+exports._unionBy = _listOps_.unionBy;
+exports._sort = _listOps_.sort;
+exports._sortOn = _listOps_.sortOn;
+exports._sortBy = _listOps_.sortBy;
+exports._complement = _listOps_.complement;
+exports._difference = _listOps_.difference;
+exports._union = _listOps_.union;
+exports._intersect = _listOps_.intersect;
+exports._intersectBy = _listOps_.intersectBy;
+exports._groupBy = _listOps_.groupBy;
 
 // Exported internals
 
@@ -274,7 +274,7 @@ var
  * @param xs2 {Array|String|*} - list or list like.
  * @returns {Array|String|*} - Same type as list like passed in.
  */
-append = exports.append = (0, _functionOpsUncurried.curry)(_listOpsUncurried.append),
+append = exports.append = (0, _functionOps_.curry)(_listOps_.append),
 
 
 /**
@@ -287,7 +287,7 @@ append = exports.append = (0, _functionOpsUncurried.curry)(_listOpsUncurried.app
  * @param args ...{Array|String|*} - Lists or lists likes.
  * @returns {Array|String|*} - Same type as first list or list like passed in.
  */
-appendMany = exports.appendMany = (0, _functionOpsUncurried.curry2)(_listOpsUncurried.appendMany),
+appendMany = exports.appendMany = (0, _functionOps_.curry2)(_listOps_.appendMany),
 
 
 /**
@@ -298,7 +298,7 @@ appendMany = exports.appendMany = (0, _functionOpsUncurried.curry2)(_listOpsUncu
  * @param foldableOfA {Array|String|*}
  * @returns {Array|String|*}
  */
-concatMap = exports.concatMap = (0, _functionOpsUncurried.curry2)(_listOpsUncurried.concatMap),
+concatMap = exports.concatMap = (0, _functionOps_.curry2)(_listOps_.concatMap),
 
 
 /**
@@ -307,7 +307,7 @@ concatMap = exports.concatMap = (0, _functionOpsUncurried.curry2)(_listOpsUncurr
  * @param xs {Array|String|*} - Functor.
  * @returns {Array|String|*} - Functor type that is passed in.
  */
-map = exports.map = (0, _functionOpsUncurried.curry)(_listOpsUncurried.map),
+map = exports.map = (0, _functionOps_.curry)(_listOps_.map),
 
 
 /**
@@ -319,7 +319,7 @@ map = exports.map = (0, _functionOpsUncurried.curry)(_listOpsUncurried.map),
  * @param arr {Array|String|*} - List.
  * @returns {Array|String|*}
  */
-intersperse = exports.intersperse = (0, _functionOpsUncurried.curry)(_listOpsUncurried.intersperse),
+intersperse = exports.intersperse = (0, _functionOps_.curry)(_listOps_.intersperse),
 
 
 /**
@@ -330,7 +330,7 @@ intersperse = exports.intersperse = (0, _functionOpsUncurried.curry)(_listOpsUnc
  * @param xss {Array|String|*}
  * @returns {Array|String|*}
  */
-intercalate = exports.intercalate = (0, _functionOpsUncurried.curry)(_listOpsUncurried.intercalate),
+intercalate = exports.intercalate = (0, _functionOps_.curry)(_listOps_.intercalate),
 
 
 /**
@@ -341,7 +341,7 @@ intercalate = exports.intercalate = (0, _functionOpsUncurried.curry)(_listOpsUnc
  * @param functor {Array|String|*}
  * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
  */
-foldl = exports.foldl = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldl),
+foldl = exports.foldl = (0, _functionOps_.curry)(_listOps_.foldl),
 
 
 /**
@@ -352,7 +352,7 @@ foldl = exports.foldl = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldl
  * @param functor {Array|{reduce: {Function}}}
  * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
  */
-foldr = exports.foldr = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldr),
+foldr = exports.foldr = (0, _functionOps_.curry)(_listOps_.foldr),
 
 
 /**
@@ -362,7 +362,7 @@ foldr = exports.foldr = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldr
  * @param functor {Array|{reduce: {Function}}}
  * @returns {*}
  */
-foldl1 = exports.foldl1 = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldl1),
+foldl1 = exports.foldl1 = (0, _functionOps_.curry)(_listOps_.foldl1),
 
 
 /**
@@ -372,7 +372,7 @@ foldl1 = exports.foldl1 = (0, _functionOpsUncurried.curry)(_listOpsUncurried.fol
  * @param functor {Array|{reduce: {Function}}}
  * @returns {*}
  */
-foldr1 = exports.foldr1 = (0, _functionOpsUncurried.curry)(_listOpsUncurried.foldr1),
+foldr1 = exports.foldr1 = (0, _functionOps_.curry)(_listOps_.foldr1),
 
 
 /**
@@ -384,7 +384,7 @@ foldr1 = exports.foldr1 = (0, _functionOpsUncurried.curry)(_listOpsUncurried.fol
  * @param xs {Array|String|*} - list type.
  * @return {Array} - [aggregated, list]
  */
-mapAccumL = exports.mapAccumL = (0, _functionOpsUncurried.curry)(_listOpsUncurried.mapAccumL),
+mapAccumL = exports.mapAccumL = (0, _functionOps_.curry)(_listOps_.mapAccumL),
 
 
 /**
@@ -396,7 +396,7 @@ mapAccumL = exports.mapAccumL = (0, _functionOpsUncurried.curry)(_listOpsUncurri
  * @param xs {Array|String|*} - list type.
  * @return {Array} - [aggregated, list]
  */
-mapAccumR = exports.mapAccumR = (0, _functionOpsUncurried.curry)(_listOpsUncurried.mapAccumR),
+mapAccumR = exports.mapAccumR = (0, _functionOps_.curry)(_listOps_.mapAccumR),
 
 
 /**
@@ -407,10 +407,10 @@ mapAccumR = exports.mapAccumR = (0, _functionOpsUncurried.curry)(_listOpsUncurri
  * @param x {*} - Starting point.
  * @returns {*}
  */
-iterate = exports.iterate = (0, _functionOpsUncurried.curry)(_listOpsUncurried.iterate),
-    repeat = exports.repeat = (0, _functionOpsUncurried.curry)(_listOpsUncurried.repeat),
+iterate = exports.iterate = (0, _functionOps_.curry)(_listOps_.iterate),
+    repeat = exports.repeat = (0, _functionOps_.curry)(_listOps_.repeat),
     replicate = exports.replicate = repeat,
-    cycle = exports.cycle = (0, _functionOpsUncurried.curry)(_listOpsUncurried.cycle),
+    cycle = exports.cycle = (0, _functionOps_.curry)(_listOps_.cycle),
 
 
 /**
@@ -421,7 +421,7 @@ iterate = exports.iterate = (0, _functionOpsUncurried.curry)(_listOpsUncurried.i
  * @param x {*} - Starting parameter to unfold from.
  * @returns {Array} - An array of whatever you return from `op` yielded.
  */
-unfoldr = exports.unfoldr = (0, _functionOpsUncurried.curry)(_listOpsUncurried.unfoldr),
+unfoldr = exports.unfoldr = (0, _functionOps_.curry)(_listOps_.unfoldr),
 
 
 /**
@@ -431,7 +431,7 @@ unfoldr = exports.unfoldr = (0, _functionOpsUncurried.curry)(_listOpsUncurried.u
  * @param arr {Array|String}
  * @returns {Number} - `-1` if predicate not matched else `index` found
  */
-findIndex = exports.findIndex = (0, _functionOpsUncurried.curry)(_listOpsUncurried.findIndex),
+findIndex = exports.findIndex = (0, _functionOps_.curry)(_listOps_.findIndex),
 
 
 /**
@@ -440,7 +440,7 @@ findIndex = exports.findIndex = (0, _functionOpsUncurried.curry)(_listOpsUncurri
  * @param xs {Array|String|*} - list or list like.
  * @returns {Array|undefined}
  */
-findIndices = exports.findIndices = (0, _functionOpsUncurried.curry)(_listOpsUncurried.findIndices),
+findIndices = exports.findIndices = (0, _functionOps_.curry)(_listOps_.findIndices),
 
 
 /**
@@ -449,7 +449,7 @@ findIndices = exports.findIndices = (0, _functionOpsUncurried.curry)(_listOpsUnc
  * @param xs {Array|String|*} - list or list like.
  * @returns {*}
  */
-elemIndex = exports.elemIndex = (0, _functionOpsUncurried.curry)(_listOpsUncurried.elemIndex),
+elemIndex = exports.elemIndex = (0, _functionOps_.curry)(_listOps_.elemIndex),
 
 
 /**
@@ -458,7 +458,7 @@ elemIndex = exports.elemIndex = (0, _functionOpsUncurried.curry)(_listOpsUncurri
  * @param xs {Array|String|*} - list or list like.
  * @returns {*}
  */
-elemIndices = exports.elemIndices = (0, _functionOpsUncurried.curry)(_listOpsUncurried.elemIndices),
+elemIndices = exports.elemIndices = (0, _functionOps_.curry)(_listOps_.elemIndices),
 
 
 /**
@@ -468,7 +468,7 @@ elemIndices = exports.elemIndices = (0, _functionOpsUncurried.curry)(_listOpsUnc
  * @param limit {Number}
  * @returns {String|Array} - Passed in type's type
  */
-take = exports.take = (0, _functionOpsUncurried.curry)(_listOpsUncurried.take),
+take = exports.take = (0, _functionOps_.curry)(_listOps_.take),
 
 
 /**
@@ -478,7 +478,7 @@ take = exports.take = (0, _functionOpsUncurried.curry)(_listOpsUncurried.take),
  * @param count {Number}
  * @returns {String|Array} - Passed in type's type
  */
-drop = exports.drop = (0, _functionOpsUncurried.curry)(_listOpsUncurried.drop),
+drop = exports.drop = (0, _functionOps_.curry)(_listOps_.drop),
 
 
 /**
@@ -489,7 +489,7 @@ drop = exports.drop = (0, _functionOpsUncurried.curry)(_listOpsUncurried.drop),
  * @param list {Array|String|*} - functor (list or string) to split.
  * @returns {Array} - Array of whatever type `x` was when passed in
  */
-splitAt = exports.splitAt = (0, _functionOpsUncurried.curry)(_listOpsUncurried.splitAt),
+splitAt = exports.splitAt = (0, _functionOps_.curry)(_listOps_.splitAt),
 
 
 /**
@@ -499,7 +499,7 @@ splitAt = exports.splitAt = (0, _functionOpsUncurried.curry)(_listOpsUncurried.s
  * @param list {Array|String}
  * @returns {Array}
  */
-takeWhile = exports.takeWhile = (0, _functionOpsUncurried.curry)(_listOpsUncurried.takeWhile),
+takeWhile = exports.takeWhile = (0, _functionOps_.curry)(_listOps_.takeWhile),
 
 
 /**
@@ -510,7 +510,7 @@ takeWhile = exports.takeWhile = (0, _functionOpsUncurried.curry)(_listOpsUncurri
  * @refactor
  * @returns {Array|String}
  */
-dropWhile = exports.dropWhile = (0, _functionOpsUncurried.curry)(_listOpsUncurried.dropWhile),
+dropWhile = exports.dropWhile = (0, _functionOps_.curry)(_listOps_.dropWhile),
 
 
 /**
@@ -520,7 +520,7 @@ dropWhile = exports.dropWhile = (0, _functionOpsUncurried.curry)(_listOpsUncurri
  * @refactor
  * @returns {Array|String}
  */
-dropWhileEnd = exports.dropWhileEnd = (0, _functionOpsUncurried.curry)(_listOpsUncurried.dropWhileEnd),
+dropWhileEnd = exports.dropWhileEnd = (0, _functionOps_.curry)(_listOps_.dropWhileEnd),
 
 
 /**
@@ -532,8 +532,8 @@ dropWhileEnd = exports.dropWhileEnd = (0, _functionOpsUncurried.curry)(_listOpsU
  * @param list {Array|String|*} - Predicate<item, index, originalArrayOrString>
  * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
  */
-span = exports.span = (0, _functionOpsUncurried.curry)(_listOpsUncurried.span),
-    breakOnList = exports.breakOnList = (0, _functionOpsUncurried.curry)(_listOpsUncurried.breakOnList),
+span = exports.span = (0, _functionOps_.curry)(_listOps_.span),
+    breakOnList = exports.breakOnList = (0, _functionOps_.curry)(_listOps_.breakOnList),
 
 
 /**
@@ -542,7 +542,7 @@ span = exports.span = (0, _functionOpsUncurried.curry)(_listOpsUncurried.span),
  * @param xs {Array|String|*} - list or list like.
  * @returns {*}
  */
-at = exports.at = (0, _functionOpsUncurried.curry)(_listOpsUncurried.at),
+at = exports.at = (0, _functionOps_.curry)(_listOps_.at),
 
 
 /**
@@ -551,8 +551,8 @@ at = exports.at = (0, _functionOpsUncurried.curry)(_listOpsUncurried.at),
  * @param xs {Array|String|*} - list or list like.
  * @returns {*}
  */
-find = exports.find = (0, _functionOpsUncurried.curry)(_listOpsUncurried.find),
-    filter = exports.filter = (0, _functionOpsUncurried.curry)(_listOpsUncurried.filter),
+find = exports.find = (0, _functionOps_.curry)(_listOps_.find),
+    filter = exports.filter = (0, _functionOps_.curry)(_listOps_.filter),
 
 
 /**
@@ -564,14 +564,14 @@ find = exports.find = (0, _functionOpsUncurried.curry)(_listOpsUncurried.find),
  * @param list {Array|String|*}
  * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
  */
-partition = exports.partition = (0, _functionOpsUncurried.curry)(_listOpsUncurried.partition),
-    elem = exports.elem = (0, _functionOpsUncurried.curry)(_listOpsUncurried.elem),
-    notElem = exports.notElem = (0, _functionOpsUncurried.curry2)(_listOpsUncurried.notElem),
+partition = exports.partition = (0, _functionOps_.curry)(_listOps_.partition),
+    elem = exports.elem = (0, _functionOps_.curry)(_listOps_.elem),
+    notElem = exports.notElem = (0, _functionOps_.curry2)(_listOps_.notElem),
     lookup = exports.lookup = at,
-    isPrefixOf = exports.isPrefixOf = (0, _functionOpsUncurried.curry)(_listOpsUncurried.isPrefixOf),
-    isSuffixOf = exports.isSuffixOf = (0, _functionOpsUncurried.curry)(_listOpsUncurried.isSuffixOf),
-    isInfixOf = exports.isInfixOf = (0, _functionOpsUncurried.curry)(_listOpsUncurried.isInfixOf),
-    isSubsequenceOf = exports.isSubsequenceOf = (0, _functionOpsUncurried.curry)(_listOpsUncurried.isSubsequenceOf),
+    isPrefixOf = exports.isPrefixOf = (0, _functionOps_.curry)(_listOps_.isPrefixOf),
+    isSuffixOf = exports.isSuffixOf = (0, _functionOps_.curry)(_listOps_.isSuffixOf),
+    isInfixOf = exports.isInfixOf = (0, _functionOps_.curry)(_listOps_.isInfixOf),
+    isSubsequenceOf = exports.isSubsequenceOf = (0, _functionOps_.curry)(_listOps_.isSubsequenceOf),
 
 
 /**
@@ -583,8 +583,8 @@ partition = exports.partition = (0, _functionOpsUncurried.curry)(_listOpsUncurri
  * @param xs {Array|String|*}
  * @returns {*}
  */
-groupBy = exports.groupBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.groupBy),
-    stripPrefix = exports.stripPrefix = (0, _functionOpsUncurried.curry)(_listOpsUncurried.stripPrefix),
+groupBy = exports.groupBy = (0, _functionOps_.curry)(_listOps_.groupBy),
+    stripPrefix = exports.stripPrefix = (0, _functionOps_.curry)(_listOps_.stripPrefix),
 
 
 /**
@@ -596,7 +596,7 @@ groupBy = exports.groupBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.g
  * @param arr2 {Array}
  * @returns {Array<Array<*,*>>}
  */
-zip = exports.zip = (0, _functionOpsUncurried.curry)(_listOpsUncurried.zip),
+zip = exports.zip = (0, _functionOps_.curry)(_listOps_.zip),
 
 
 /**
@@ -620,7 +620,7 @@ zip = exports.zip = (0, _functionOpsUncurried.curry)(_listOpsUncurried.zip),
  * @param xs2 {Array|String|*}
  * @returns {Array<Array<*,*>>}
  */
-zipWith = exports.zipWith = (0, _functionOpsUncurried.curry)(_listOpsUncurried.zipWith),
+zipWith = exports.zipWith = (0, _functionOps_.curry)(_listOps_.zipWith),
 
 
 /**
@@ -636,7 +636,7 @@ zipWith = exports.zipWith = (0, _functionOpsUncurried.curry)(_listOpsUncurried.z
  * @param lists ...{Array|String|*}
  * @returns {Array<Array<*,*>>}
  */
-zipWithN = exports.zipWithN = (0, _functionOpsUncurried.curry2)(_listOpsUncurried.zipWithN),
+zipWithN = exports.zipWithN = (0, _functionOps_.curry2)(_listOps_.zipWithN),
 
 
 /**
@@ -685,10 +685,10 @@ zipWith4 = exports.zipWith4 = zipWithN,
  * @returns {Array<Array<*,*>>}
  */
 zipWith5 = exports.zipWith5 = zipWithN,
-    any = exports.any = (0, _functionOpsUncurried.curry)(_listOpsUncurried.any),
-    all = exports.all = (0, _functionOpsUncurried.curry)(_listOpsUncurried.all),
-    maximumBy = exports.maximumBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.maximumBy),
-    minimumBy = exports.minimumBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.minimumBy),
+    any = exports.any = (0, _functionOps_.curry)(_listOps_.any),
+    all = exports.all = (0, _functionOps_.curry)(_listOps_.all),
+    maximumBy = exports.maximumBy = (0, _functionOps_.curry)(_listOps_.maximumBy),
+    minimumBy = exports.minimumBy = (0, _functionOps_.curry)(_listOps_.minimumBy),
     scanl = exports.scanl = function scanl() {
   return null;
 },
@@ -701,10 +701,10 @@ zipWith5 = exports.zipWith5 = zipWithN,
     scanr1 = exports.scanr1 = function scanr1() {
   return null;
 },
-    remove = exports.remove = (0, _functionOpsUncurried.curry)(_listOpsUncurried.remove),
-    sortOn = exports.sortOn = (0, _functionOpsUncurried.curry)(_listOpsUncurried.sortOn),
-    sortBy = exports.sortBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.sortBy),
-    insert = exports.insert = (0, _functionOpsUncurried.curry)(_listOpsUncurried.insert),
+    remove = exports.remove = (0, _functionOps_.curry)(_listOps_.remove),
+    sortOn = exports.sortOn = (0, _functionOps_.curry)(_listOps_.sortOn),
+    sortBy = exports.sortBy = (0, _functionOps_.curry)(_listOps_.sortBy),
+    insert = exports.insert = (0, _functionOps_.curry)(_listOps_.insert),
 
 
 /**
@@ -720,10 +720,10 @@ zipWith5 = exports.zipWith5 = zipWithN,
  * @param xs {Array|String|*} - List to insert into (note new list is returned)
  * @returns {Array|String|*} - New list.
  */
-insertBy = exports.insertBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.insertBy),
-    nubBy = exports.nubBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.nubBy),
-    removeBy = exports.removeBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.removeBy),
-    removeFirstsBy = exports.removeFirstsBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.removeFirstsBy),
+insertBy = exports.insertBy = (0, _functionOps_.curry)(_listOps_.insertBy),
+    nubBy = exports.nubBy = (0, _functionOps_.curry)(_listOps_.nubBy),
+    removeBy = exports.removeBy = (0, _functionOps_.curry)(_listOps_.removeBy),
+    removeFirstsBy = exports.removeFirstsBy = (0, _functionOps_.curry)(_listOps_.removeFirstsBy),
 
 
 /**
@@ -734,7 +734,7 @@ insertBy = exports.insertBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried
  * @param arr2 {Array|String|*}
  * @returns {Array|String|*}
  */
-unionBy = exports.unionBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.unionBy),
+unionBy = exports.unionBy = (0, _functionOps_.curry)(_listOps_.unionBy),
 
 
 /**
@@ -744,7 +744,7 @@ unionBy = exports.unionBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.u
  * @param arr2 {Array|String|*}
  * @returns {Array|String|*}
  */
-union = exports.union = (0, _functionOpsUncurried.curry)(_listOpsUncurried.union),
+union = exports.union = (0, _functionOps_.curry)(_listOps_.union),
 
 
 /**
@@ -754,7 +754,7 @@ union = exports.union = (0, _functionOpsUncurried.curry)(_listOpsUncurried.union
  * @param arr2 {Array|String|*}
  * @returns {Array|String|*}
  */
-intersect = exports.intersect = (0, _functionOpsUncurried.curry)(_listOpsUncurried.intersect),
+intersect = exports.intersect = (0, _functionOps_.curry)(_listOps_.intersect),
 
 
 /**
@@ -765,7 +765,7 @@ intersect = exports.intersect = (0, _functionOpsUncurried.curry)(_listOpsUncurri
  * @param list2 {Array|String|*}
  * @return {Array|String|*}
  */
-intersectBy = exports.intersectBy = (0, _functionOpsUncurried.curry)(_listOpsUncurried.intersectBy),
+intersectBy = exports.intersectBy = (0, _functionOps_.curry)(_listOps_.intersectBy),
 
 
 /**
@@ -776,7 +776,7 @@ intersectBy = exports.intersectBy = (0, _functionOpsUncurried.curry)(_listOpsUnc
  * @param array2 {Array|String|*}
  * @returns {Array|String|*}
  */
-difference = exports.difference = (0, _functionOpsUncurried.curry)(_listOpsUncurried.difference),
+difference = exports.difference = (0, _functionOps_.curry)(_listOps_.difference),
 
 
 /**
@@ -786,4 +786,4 @@ difference = exports.difference = (0, _functionOpsUncurried.curry)(_listOpsUncur
  * @param arrays {...Array}
  * @returns {Array}
  */
-complement = exports.complement = (0, _functionOpsUncurried.curry2)(_listOpsUncurried.complement);
+complement = exports.complement = (0, _functionOps_.curry2)(_listOps_.complement);

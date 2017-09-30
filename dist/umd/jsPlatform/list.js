@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/listUncurried'], factory);
+        define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/list_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../functionOps/curry'), require('../uncurried/jsPlatform/listUncurried'));
+        factory(exports, require('../functionOps/curry'), require('../uncurried/jsPlatform/list_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry, global.listUncurried);
+        factory(mod.exports, global.curry, global.list_);
         global.list = mod.exports;
     }
-})(this, function (exports, _curry, _listUncurried) {
+})(this, function (exports, _curry, _list_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -23,9 +23,9 @@
      * @module jsPlatform_list
      */
 
-    var concat = exports.concat = (0, _curry.curry)(_listUncurried.concat),
-        slice = exports.slice = (0, _curry.curry)(_listUncurried.slice),
-        includes = exports.includes = (0, _curry.curry)(_listUncurried.includes),
-        indexOf = exports.indexOf = (0, _curry.curry)(_listUncurried.indexOf),
-        lastIndexOf = exports.lastIndexOf = (0, _curry.curry)(_listUncurried.lastIndexOf);
+    var concat = exports.concat = (0, _curry.curry)(_list_.concat),
+        slice = exports.slice = (0, _curry.curry)(_list_.slice),
+        includes = exports.includes = (0, _curry.curry)(_list_.includes),
+        indexOf = exports.indexOf = (0, _curry.curry)(_list_.indexOf),
+        lastIndexOf = exports.lastIndexOf = (0, _curry.curry)(_list_.lastIndexOf);
 });

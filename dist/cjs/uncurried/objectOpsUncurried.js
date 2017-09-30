@@ -16,7 +16,7 @@ Object.keys(_assignDeep).forEach(function (key) {
   });
 });
 
-var _objectUncurried = require('./jsPlatform/objectUncurried');
+var _objectUncurried = require('./jsPlatform/object_');
 
 Object.keys(_objectUncurried).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

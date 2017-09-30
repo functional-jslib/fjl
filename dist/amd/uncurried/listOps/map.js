@@ -1,4 +1,4 @@
-define(['exports', '../../objectOps/of', './aggregation', '../jsPlatform/objectUncurried'], function (exports, _of, _aggregation, _objectUncurried) {
+define(['exports', '../../objectOps/of', './aggregation', '../jsPlatform/object_'], function (exports, _of, _aggregation, _object_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -15,7 +15,7 @@ define(['exports', '../../objectOps/of', './aggregation', '../jsPlatform/objectU
      */
     const map = exports.map = (fn, xs) => {
         let ind = 0,
-            limit = (0, _objectUncurried.length)(xs),
+            limit = (0, _object_.length)(xs),
             out = (0, _of.of)(xs),
             aggregate = (0, _aggregation.aggregatorByType)(xs);
         if (!limit) {

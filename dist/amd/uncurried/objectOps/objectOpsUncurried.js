@@ -1,4 +1,4 @@
-define(['exports', './assignDeep', '../jsPlatform/objectUncurried', './typeOf', './is', './of', './setTheory', './prop'], function (exports, _assignDeep, _objectUncurried, _typeOf, _is, _of, _setTheory, _prop) {
+define(['exports', './assignDeep', '../jsPlatform/object_', './typeOf', './is', './of', './setTheory', './prop'], function (exports, _assignDeep, _objectUncurried, _typeOf, _is, _of, _setTheory, _prop) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

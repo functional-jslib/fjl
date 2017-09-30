@@ -18,7 +18,7 @@ var
  * @param functor {Array|Object|*}
  * @param ...functor {Array|Object|*}
  * @return {*|Array|Object} - The type passed.
- * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+ * @throws {Error} - When passed in objectdoesn't have an `every` method.
  */
 concat = exports.concat = (0, _utils.fPureTakesOneOrMore)('concat'),
 

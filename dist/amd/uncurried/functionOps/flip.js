@@ -1,4 +1,4 @@
-define(['exports', '../jsPlatform/arrayUncurried', './apply', './call'], function (exports, _arrayUncurried, _apply, _call) {
+define(['exports', '../jsPlatform/array_', './apply', './call'], function (exports, _array_, _apply, _call) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -13,7 +13,7 @@ define(['exports', '../jsPlatform/arrayUncurried', './apply', './call'], functio
    * @param fn {Function}
    * @returns {Function}
    */
-  flipN = exports.flipN = fn => (...args) => (0, _apply.apply)(fn, (0, _arrayUncurried.reverse)(args)),
+  flipN = exports.flipN = fn => (...args) => (0, _apply.apply)(fn, (0, _array_.reverse)(args)),
 
 
   /**

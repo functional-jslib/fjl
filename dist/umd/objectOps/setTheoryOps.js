@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/objectUncurried', '../uncurried/objectOps/assignDeep', '../listOps'], factory);
+        define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/object_', '../uncurried/objectOps/assignDeep', '../listOps'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../functionOps/curry'), require('../uncurried/jsPlatform/objectUncurried'), require('../uncurried/objectOps/assignDeep'), require('../listOps'));
+        factory(exports, require('../functionOps/curry'), require('../uncurried/jsPlatform/object_'), require('../uncurried/objectOps/assignDeep'), require('../listOps'));
     } else {
         var mod = {
             exports: {}

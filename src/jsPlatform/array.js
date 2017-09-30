@@ -6,7 +6,7 @@
 
 import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from '../utils';
 
-import {defineReverse} from '../uncurried/jsPlatform/arrayUncurried';
+import {defineReverse} from '../uncurried/jsPlatform/array_';
 
 export const
 
@@ -51,7 +51,7 @@ export const
      * @function module:jsPlatform_array.forEach
      * @param fn {Function}
      * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
+     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
      * @throws {Error} - When passed in functor doesn't have a `forEach` method.
      */
     forEach = fPureTakesOne_('forEach'),
@@ -63,7 +63,7 @@ export const
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in objectOps doesn't have a `some` method.
+     * @throws {Error} - When passed in object doesn't have a `some` method.
      */
     some = fPureTakesOne_('some'),
 
@@ -73,7 +73,7 @@ export const
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+     * @throws {Error} - When passed in object doesn't have an `every` method.
      */
     every = fPureTakesOne_('every'),
 
@@ -84,7 +84,7 @@ export const
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+     * @throws {Error} - When passed in object doesn't have an `every` method.
      */
     concat = fPureTakesOneOrMore_('concat'),
 

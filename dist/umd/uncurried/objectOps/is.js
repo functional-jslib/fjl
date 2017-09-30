@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './typeOf', '../jsPlatform/objectUncurried'], factory);
+    define(['exports', './typeOf', '../jsPlatform/object_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./typeOf'), require('../jsPlatform/objectUncurried'));
+    factory(exports, require('./typeOf'), require('../jsPlatform/object_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.typeOf, global.objectUncurried);
+    factory(mod.exports, global.typeOf, global.object_);
     global.is = mod.exports;
   }
-})(this, function (exports, _typeOf, _objectUncurried) {
+})(this, function (exports, _typeOf, _object_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -46,7 +46,7 @@
    * @returns {Boolean}
    */
   isFunction = exports.isFunction = function isFunction(value) {
-    return (0, _objectUncurried.instanceOf)(Function, value);
+    return (0, _object_.instanceOf)(Function, value);
   },
 
 
@@ -103,7 +103,7 @@
 
 
   /**
-   * Checks whether value is an objectOps or not.
+   * Checks whether value is an object or not.
    * @function module:is.isObject
    * @param value
    * @returns {Boolean}
@@ -253,17 +253,17 @@
    * @returns {Boolean}
    */
   isEmptyList = exports.isEmptyList = function isEmptyList(x) {
-    return (0, _objectUncurried.length)(x) === 0;
+    return (0, _object_.length)(x) === 0;
   },
 
 
   /**
-   * Checks if objectOps has own properties/enumerable-props or not.
+   * Checks if object has own properties/enumerable-props or not.
    * @param obj {*}
    * @returns {Boolean}
    */
   isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
-    return isEmptyList((0, _objectUncurried.keys)(obj));
+    return isEmptyList((0, _object_.keys)(obj));
   },
 
 
@@ -296,7 +296,7 @@
       retVal = false;
     } else if (typeOfValue === _Object) {
       retVal = isEmptyObject(value);
-    } else if ((0, _objectUncurried.hasOwnProperty)('size', value)) {
+    } else if ((0, _object_.hasOwnProperty)('size', value)) {
       retVal = isEmptyCollection(value);
     } else {
       retVal = !value;

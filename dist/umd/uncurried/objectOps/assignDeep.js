@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './is', '../jsPlatform/objectUncurried'], factory);
+        define(['exports', './is', '../jsPlatform/object_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./is'), require('../jsPlatform/objectUncurried'));
+        factory(exports, require('./is'), require('../jsPlatform/object_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.objectUncurried);
+        factory(mod.exports, global.is, global.object_);
         global.assignDeep = mod.exports;
     }
-})(this, function (exports, _is, _objectUncurried) {
+})(this, function (exports, _is, _object_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -31,10 +31,10 @@
         }
 
         return objs.reduce(function (topAgg, obj) {
-            return (0, _objectUncurried.keys)(obj).reduce(function (agg, key) {
+            return (0, _object_.keys)(obj).reduce(function (agg, key) {
                 var propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection
-                if ((0, _objectUncurried.hasOwnProperty)(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+                if ((0, _object_.hasOwnProperty)(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
                     return agg;
                 }
                 if ((0, _is.isObject)(agg[key]) && (0, _is.isObject)(obj[key])) {

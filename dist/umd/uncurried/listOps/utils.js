@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './aggregation', '../jsPlatform/functionUncurried', '../jsPlatform/listUncurried', '../jsPlatform/objectUncurried', '../../booleanOps', './map'], factory);
+        define(['exports', './aggregation', '../jsPlatform/function_', '../jsPlatform/list_', '../jsPlatform/object_', '../../booleanOps', './map'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./aggregation'), require('../jsPlatform/functionUncurried'), require('../jsPlatform/listUncurried'), require('../jsPlatform/objectUncurried'), require('../../booleanOps'), require('./map'));
+        factory(exports, require('./aggregation'), require('../jsPlatform/function_'), require('../jsPlatform/list_'), require('../jsPlatform/object_'), require('../../booleanOps'), require('./map'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.aggregation, global.functionUncurried, global.listUncurried, global.objectUncurried, global.booleanOps, global.map);
+        factory(mod.exports, global.aggregation, global.function_, global.list_, global.object_, global.booleanOps, global.map);
         global.utils = mod.exports;
     }
-})(this, function (exports, _aggregation, _functionUncurried, _listUncurried, _objectUncurried, _booleanOps, _map) {
+})(this, function (exports, _aggregation, _function_, _list_, _object_, _booleanOps, _map) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -40,7 +40,7 @@
      * @returns {Array|String|*}
      */
     sliceFrom = exports.sliceFrom = function sliceFrom(startInd, arr) {
-        return (0, _listUncurried.slice)(startInd, (0, _objectUncurried.length)(arr), arr);
+        return (0, _list_.slice)(startInd, (0, _object_.length)(arr), arr);
     },
 
 
@@ -52,7 +52,7 @@
      * @returns {Array|String|*}
      */
     sliceTo = exports.sliceTo = function sliceTo(toInd, xs) {
-        return (0, _listUncurried.slice)(0, toInd, xs);
+        return (0, _list_.slice)(0, toInd, xs);
     },
 
 
@@ -84,21 +84,21 @@
             lists[_key] = arguments[_key];
         }
 
-        return (0, _objectUncurried.length)(lists) ? (0, _map.map)(_objectUncurried.length, lists) : [];
+        return (0, _object_.length)(lists) ? (0, _map.map)(_object_.length, lists) : [];
     },
         lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
         for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             lists[_key2] = arguments[_key2];
         }
 
-        var listLengths = (0, _functionUncurried.apply)(lengths, lists),
+        var listLengths = (0, _function_.apply)(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
         return (0, _map.map)(function (list, ind) {
             return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list);
         }, lists);
     },
         reduceUntil = exports.reduceUntil = function reduceUntil(pred, op, agg, arr) {
-        var limit = (0, _objectUncurried.length)(arr);
+        var limit = (0, _object_.length)(arr);
         if (!limit) {
             return agg;
         }
@@ -113,7 +113,7 @@
         return result;
     },
         reduceRightUntil = exports.reduceRightUntil = function reduceRightUntil(pred, op, agg, arr) {
-        var limit = (0, _objectUncurried.length)(arr);
+        var limit = (0, _object_.length)(arr);
         if (!limit) {
             return agg;
         }
@@ -150,7 +150,7 @@
      * @returns {Number} - `-1` if no element found.
      */
     lastIndex = exports.lastIndex = function lastIndex(x) {
-        var len = (0, _objectUncurried.length)(x);return len ? len - 1 : 0;
+        var len = (0, _object_.length)(x);return len ? len - 1 : 0;
     },
 
 
@@ -164,7 +164,7 @@
     findIndexWhere = exports.findIndexWhere = function findIndexWhere(pred, arr) {
         var ind = -1,
             predicateFulfilled = false;
-        var limit = (0, _objectUncurried.length)(arr);
+        var limit = (0, _object_.length)(arr);
         while (ind < limit && !predicateFulfilled) {
             predicateFulfilled = pred(arr[++ind], ind, arr);
         }
@@ -180,7 +180,7 @@
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhereRight = exports.findIndexWhereRight = function findIndexWhereRight(pred, arr) {
-        var limit = (0, _objectUncurried.length)(arr);
+        var limit = (0, _object_.length)(arr);
         var ind = limit,
             predicateFulfilled = false;
         for (; ind >= 0 && !predicateFulfilled; --ind) {
@@ -196,7 +196,7 @@
      * @returns {Array|undefined}
      */
     findIndicesWhere = exports.findIndicesWhere = function findIndicesWhere(pred, xs) {
-        var limit = (0, _objectUncurried.length)(xs);
+        var limit = (0, _object_.length)(xs);
         if (!limit) {
             return undefined;
         }
@@ -219,7 +219,7 @@
      */
     findWhere = exports.findWhere = function findWhere(pred, xs) {
         var ind = 0,
-            limit = (0, _objectUncurried.length)(xs);
+            limit = (0, _object_.length)(xs);
         if (!limit) {
             return;
         }

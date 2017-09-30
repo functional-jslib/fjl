@@ -4,7 +4,7 @@
 
 import {curry} from   '../functionOps/curry';
 
-import {instanceOf as pureInstanceOf} from '../uncurried/objectOps/instanceOf';
+import {instanceOf as pureInstanceOf} from '../uncurried/objectOps/instanceOf_';
 
 export const
 

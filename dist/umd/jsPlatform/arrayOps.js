@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../utils/utils', '../uncurried/jsPlatform/arrayOpsUncurried'], factory);
+    define(['exports', '../utils/utils', '../uncurried/jsPlatform/arrayOps_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../utils/utils'), require('../uncurried/jsPlatform/arrayOpsUncurried'));
+    factory(exports, require('../utils/utils'), require('../uncurried/jsPlatform/arrayOps_'));
   } else {
     var mod = {
       exports: {}
@@ -70,7 +70,7 @@
    * @function module:jsPlatform_arrayOps.forEach
    * @param fn {Function}
    * @param functor {Array|Object|*}
-   * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
+   * @return {*|Array|Object} - The type of objectyou pass in unless it doesn't have a `forEach` method.
    * @throws {Error} - When passed in functor doesn't have a `forEach` method.
    */
   forEach = exports.forEach = (0, _utils.fPureTakesOne_)('forEach'),
@@ -83,7 +83,7 @@
    * @param fn {Function} - Predicate.
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have a `some` method.
+   * @throws {Error} - When passed in objectdoesn't have a `some` method.
    */
   some = exports.some = (0, _utils.fPureTakesOne_)('some'),
 
@@ -94,7 +94,7 @@
    * @param fn {Function} - Predicate.
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+   * @throws {Error} - When passed in objectdoesn't have an `every` method.
    */
   every = exports.every = (0, _utils.fPureTakesOne_)('every'),
 
@@ -106,7 +106,7 @@
    * @param functor {Array|Object|*}
    * @param ...functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+   * @throws {Error} - When passed in objectdoesn't have an `every` method.
    */
   concat = exports.concat = (0, _utils.fPureTakesOneOrMore_)('concat'),
 

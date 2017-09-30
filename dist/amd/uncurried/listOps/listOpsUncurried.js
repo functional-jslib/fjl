@@ -1,4 +1,4 @@
-define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurried', '../functionOps/negate', '../functionOps/functionOpsUncurried', '../../booleanOps/booleanOps', '../objectOps/objectOpsUncurried', './map', './utils'], function (exports, _listUncurried, _functionUncurried, _negate, _functionOpsUncurried, _booleanOps, _objectOpsUncurried, _map, _utils) {
+define(['exports', '../jsPlatform/list_', '../jsPlatform/function_', '../functionOps/negate', '../functionOps/functionOps_', '../../booleanOps/booleanOps', '../objectOps/objectOps_', './map', './utils'], function (exports, _listUncurried, _functionUncurried, _negate, _functionOpsUncurried, _booleanOps, _objectOpsUncurried, _map, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

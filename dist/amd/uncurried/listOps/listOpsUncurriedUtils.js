@@ -1,4 +1,4 @@
-define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/functionUncurried', '../jsPlatform/listUncurried', '../jsPlatform/objectUncurried', '../../booleanOps/booleanOps', './map'], function (exports, _listOpsUncurriedAggregation, _functionUncurried, _listUncurried, _objectUncurried, _booleanOps, _map) {
+define(['exports', './listOpsUncurriedAggregation', '../jsPlatform/function_', '../jsPlatform/list_', '../jsPlatform/object_', '../../booleanOps/booleanOps', './map'], function (exports, _listOpsUncurriedAggregation, _functionUncurried, _listUncurried, _objectUncurried, _booleanOps, _map) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

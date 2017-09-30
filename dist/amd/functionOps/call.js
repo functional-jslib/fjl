@@ -1,4 +1,4 @@
-define(['exports', './curry', '../uncurried/jsPlatform/functionUncurried'], function (exports, _curry, _functionUncurried) {
+define(['exports', './curry', '../uncurried/jsPlatform/function_'], function (exports, _curry, _function_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -18,5 +18,5 @@ define(['exports', './curry', '../uncurried/jsPlatform/functionUncurried'], func
    * @param args {*}
    * @returns {*}
    */
-  call = exports.call = (0, _curry.curry2)(_functionUncurried.call);
+  call = exports.call = (0, _curry.curry2)(_function_.call);
 });

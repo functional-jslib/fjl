@@ -11,7 +11,7 @@ import {assert, expect} from 'chai';
 
 import {
     curry2, compose, call, apply, flip, flipN, until, id
-} from '../src/uncurried/functionOpsUncurried';
+} from '../src/uncurried/functionOps_';
 
 import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 

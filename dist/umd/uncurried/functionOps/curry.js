@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './apply', '../listOpsUncurried'], factory);
+    define(['exports', './apply', '../listOps_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./apply'), require('../listOpsUncurried'));
+    factory(exports, require('./apply'), require('../listOps_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.apply, global.listOpsUncurried);
+    factory(mod.exports, global.apply, global.listOps_);
     global.curry = mod.exports;
   }
-})(this, function (exports, _apply, _listOpsUncurried) {
+})(this, function (exports, _apply, _listOps_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -43,8 +43,8 @@
         args[_key2] = arguments[_key2];
       }
 
-      var concatedArgs = (0, _listOpsUncurried.append)(argsToCurry, args);
-      return (0, _listOpsUncurried.length)(concatedArgs) < (0, _listOpsUncurried.length)(fn) ? (0, _apply.apply)(curry, (0, _listOpsUncurried.append)([fn], concatedArgs)) : (0, _apply.apply)(fn, concatedArgs);
+      var concatedArgs = (0, _listOps_.append)(argsToCurry, args);
+      return (0, _listOps_.length)(concatedArgs) < (0, _listOps_.length)(fn) ? (0, _apply.apply)(curry, (0, _listOps_.append)([fn], concatedArgs)) : (0, _apply.apply)(fn, concatedArgs);
     };
   },
 
@@ -67,9 +67,9 @@
         args[_key4] = arguments[_key4];
       }
 
-      var concatedArgs = (0, _listOpsUncurried.append)(curriedArgs, args),
-          canBeCalled = (0, _listOpsUncurried.length)(concatedArgs) >= executeArity || !executeArity;
-      return !canBeCalled ? (0, _apply.apply)(curryN, (0, _listOpsUncurried.append)([executeArity, fn], concatedArgs)) : (0, _apply.apply)(fn, concatedArgs);
+      var concatedArgs = (0, _listOps_.append)(curriedArgs, args),
+          canBeCalled = (0, _listOps_.length)(concatedArgs) >= executeArity || !executeArity;
+      return !canBeCalled ? (0, _apply.apply)(curryN, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply.apply)(fn, concatedArgs);
     };
   },
 

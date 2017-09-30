@@ -27,7 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * 'Uncurried' list operators.
+ * '_' list operators.
  * @module listOpsUncurried
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
  * @todo code unperformant shorthand in `listOps`
@@ -36,12 +36,12 @@
 import {
     concat as listAppend,
     indexOf, slice, includes
-} from '../jsPlatform/listUncurried';
-import {apply} from '../jsPlatform/functionUncurried';
+} from '../jsPlatform/list_';
+import {apply} from '../jsPlatform/function_';
 import {negateF} from '../functionOps/negate';
-import {negateP} from '../functionOps/functionOpsUncurried';
+import {negateP} from '../functionOps/functionOps_';
 import {isTruthy, isFalsy} from '../../booleanOps/booleanOps';
-import {isString, prop, of, length} from '../objectOps/objectOpsUncurried';
+import {isString, prop, of, length} from '../objectOps/objectOps_';
 import {map} from './map';
 
 import {

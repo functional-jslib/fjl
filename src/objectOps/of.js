@@ -1,5 +1,5 @@
 import {isFunction, isUsableImmutablePrimitive, isset} from './is';
-import {hasOwnProperty} from '../uncurried/jsPlatform/objectUncurried';
+import {hasOwnProperty} from '../uncurried/jsPlatform/object_';
 import {apply} from   '../functionOps/apply';
 
 export const of = (x, ...args) => {

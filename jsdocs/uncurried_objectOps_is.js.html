@@ -34,7 +34,7 @@
 
 import {typeOf} from './typeOf';
 
-import {instanceOf, length, keys, hasOwnProperty} from '../jsPlatform/objectUncurried';
+import {instanceOf, length, keys, hasOwnProperty} from '../jsPlatform/object_';
 
 let _String = String.name,
     _Number = Number.name,
@@ -101,7 +101,7 @@ export const
     isArray = value => isType(Array, value),
 
     /**
-     * Checks whether value is an objectOps or not.
+     * Checks whether value is an objector not.
      * @function module:is.isObject
      * @param value
      * @returns {Boolean}
@@ -215,7 +215,7 @@ export const
     isEmptyList = x => length(x) === 0,
 
     /**
-     * Checks if objectOps has own properties/enumerable-props or not.
+     * Checks if object has own properties/enumerable-props or not.
      * @param obj {*}
      * @returns {Boolean}
      */

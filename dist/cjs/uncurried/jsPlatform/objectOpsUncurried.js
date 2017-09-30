@@ -96,5 +96,5 @@ assign = exports.assign = function () {
       * Defines some of the platform methods for objects (the ones used within `fjl`) uncurried for use
       * throughout the library.  @note Doesn't include all methods for objects just the ones used in
       *  the library.
-      * @todo change all files named '*UnCurried' to '*Uncurried'.
+      * @todo change all files named '*UnCurried' to '*_'.
       */

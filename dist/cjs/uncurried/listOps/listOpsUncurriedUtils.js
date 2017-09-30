@@ -17,11 +17,11 @@ Object.keys(_listOpsUncurriedAggregation).forEach(function (key) {
     });
 });
 
-var _functionUncurried = require('../jsPlatform/functionUncurried');
+var _functionUncurried = require('../jsPlatform/function_');
 
-var _listUncurried = require('../jsPlatform/listUncurried');
+var _listUncurried = require('../jsPlatform/list_');
 
-var _objectUncurried = require('../jsPlatform/objectUncurried');
+var _objectUncurried = require('../jsPlatform/object_');
 
 var _booleanOps = require('../../booleanOps/booleanOps');
 

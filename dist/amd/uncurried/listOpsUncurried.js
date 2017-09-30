@@ -1,4 +1,4 @@
-define(['exports', './jsPlatform/listUncurried', './jsPlatform/functionUncurried', './functionOps/negate', './functionOpsUncurried', '../booleanOps', './objectOpsUncurried', './listOps/map', './listOps/utils'], function (exports, _listUncurried, _functionUncurried, _negate, _functionOpsUncurried, _booleanOps, _objectOpsUncurried, _map, _utils) {
+define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOps/negate', './functionOps_', '../booleanOps', './objectOps_', './listOps/map', './listOps/utils'], function (exports, _listUncurried, _functionUncurried, _negate, _functionOpsUncurried, _booleanOps, _objectOpsUncurried, _map, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -177,7 +177,7 @@ define(['exports', './jsPlatform/listUncurried', './jsPlatform/functionUncurried
      */
     reverse = exports.reverse = x => {
         const aggregator = (0, _utils.aggregatorByType)(x);
-        return (0, _utils.reduceRight)((agg, item, ind) => aggregator(agg, item, ind), (0, _objectOpsUncurried.of)(x), x);
+        return foldr((agg, item, ind) => aggregator(agg, item, ind), (0, _objectOpsUncurried.of)(x), x);
     },
 
 

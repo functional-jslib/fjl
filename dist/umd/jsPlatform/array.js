@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../utils', '../uncurried/jsPlatform/arrayUncurried'], factory);
+    define(['exports', '../utils', '../uncurried/jsPlatform/array_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../utils'), require('../uncurried/jsPlatform/arrayUncurried'));
+    factory(exports, require('../utils'), require('../uncurried/jsPlatform/array_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.utils, global.arrayUncurried);
+    factory(mod.exports, global.utils, global.array_);
     global.array = mod.exports;
   }
-})(this, function (exports, _utils, _arrayUncurried) {
+})(this, function (exports, _utils, _array_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -70,7 +70,7 @@
    * @function module:jsPlatform_array.forEach
    * @param fn {Function}
    * @param functor {Array|Object|*}
-   * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
+   * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
    * @throws {Error} - When passed in functor doesn't have a `forEach` method.
    */
   forEach = exports.forEach = (0, _utils.fPureTakesOne_)('forEach'),
@@ -83,7 +83,7 @@
    * @param fn {Function} - Predicate.
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have a `some` method.
+   * @throws {Error} - When passed in object doesn't have a `some` method.
    */
   some = exports.some = (0, _utils.fPureTakesOne_)('some'),
 
@@ -94,7 +94,7 @@
    * @param fn {Function} - Predicate.
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+   * @throws {Error} - When passed in object doesn't have an `every` method.
    */
   every = exports.every = (0, _utils.fPureTakesOne_)('every'),
 
@@ -106,7 +106,7 @@
    * @param functor {Array|Object|*}
    * @param ...functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+   * @throws {Error} - When passed in object doesn't have an `every` method.
    */
   concat = exports.concat = (0, _utils.fPureTakesOneOrMore_)('concat'),
 
@@ -146,5 +146,5 @@
    * @function module:jsPlatform_array.reverse
    * @return {Array}
    */
-  reverse = exports.reverse = (0, _arrayUncurried.defineReverse)();
+  reverse = exports.reverse = (0, _array_.defineReverse)();
 });

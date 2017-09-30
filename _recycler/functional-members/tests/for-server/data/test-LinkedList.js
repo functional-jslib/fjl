@@ -28,7 +28,7 @@ describe ('data.LinkedList', function () {
                 let llNode = new LLNode();
                 expectInstanceOf(llNode, LLNode);
             });
-            it ('should construct `LLNode` when called as a functionOps with an `id.js` and a `value` value', function () {
+            it ('should construct `LLNode` when called as a functionOps with an `id_.js` and a `value` value', function () {
                 let id = 0,
                     value = 'some-value',
                     llNode = LLNode(id, value);
@@ -36,7 +36,7 @@ describe ('data.LinkedList', function () {
                 expectEqual(llNode.id, id);
                 expectEqual(llNode.value, value);
             });
-            it ('should construct `LLNode` when called with `new` with an `id.js` and a `value` value', function () {
+            it ('should construct `LLNode` when called with `new` with an `id_.js` and a `value` value', function () {
                 let id = 0,
                     value = 'some-value',
                     llNode = new LLNode(id, value);

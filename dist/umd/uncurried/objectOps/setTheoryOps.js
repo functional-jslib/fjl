@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './assignDeep', '../jsPlatform/objectUncurried', '../listOpsUncurried'], factory);
+        define(['exports', './assignDeep', '../jsPlatform/object_', '../listOps_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./assignDeep'), require('../jsPlatform/objectUncurried'), require('../listOpsUncurried'));
+        factory(exports, require('./assignDeep'), require('../jsPlatform/object_'), require('../listOps_'));
     } else {
         var mod = {
             exports: {}

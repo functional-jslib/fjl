@@ -85,7 +85,7 @@
    * For each on functor (Array|Object|etc.).
    * @param fn {Function}
    * @param functor {Array|Object|*}
-   * @return {*|Array|Object} - The type of objectOps you pass in unless it doesn't have a `forEach` method.
+   * @return {*|Array|Object} - The type of objectyou pass in unless it doesn't have a `forEach` method.
    * @throws {Error} - When passed in functor doesn't have a `forEach` method.
    */
   forEach = exports.forEach = (0, _utils.fPureTakesOne)('forEach'),
@@ -97,7 +97,7 @@
    * @param fn {Function} - Predicate.
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have a `some` method.
+   * @throws {Error} - When passed in objectdoesn't have a `some` method.
    */
   some = exports.some = (0, _utils.fPureTakesOne)('some'),
 
@@ -107,7 +107,7 @@
    * @param fn {Function} - Predicate.
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+   * @throws {Error} - When passed in objectdoesn't have an `every` method.
    */
   every = exports.every = (0, _utils.fPureTakesOne)('every'),
 
@@ -118,7 +118,7 @@
    * @param functor {Array|Object|*}
    * @param ...functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
+   * @throws {Error} - When passed in objectdoesn't have an `every` method.
    */
   concat = exports.concat = (0, _utils.fPureTakesOneOrMore)('concat'),
 

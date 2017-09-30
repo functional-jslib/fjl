@@ -7,9 +7,9 @@ exports.objComplement = exports.objDifference = exports.objIntersect = exports.o
 
 var _assignDeep = require('./assignDeep');
 
-var _objectUncurried = require('../jsPlatform/objectUncurried');
+var _objectUncurried = require('../jsPlatform/object_');
 
-var _listOpsUncurried = require('../listOpsUncurried');
+var _listOpsUncurried = require('../listOps_');
 
 var objUnion = exports.objUnion = function objUnion(obj1, obj2) {
     return (0, _assignDeep.assignDeep)(obj1, obj2);

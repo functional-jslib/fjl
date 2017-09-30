@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './functionOps/call', './functionOps/apply', './functionOps/compose', './functionOps/curry', './uncurried/functionOps/negate', './functionOps/id', './functionOps/flip', './functionOps/until'], factory);
+    define(['exports', './functionOps/call', './functionOps/apply', './functionOps/compose', './functionOps/curry', './uncurried/functionOps/negate_', './functionOps/id', './functionOps/flip', './functionOps/until'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./functionOps/call'), require('./functionOps/apply'), require('./functionOps/compose'), require('./functionOps/curry'), require('./uncurried/functionOps/negate'), require('./functionOps/id'), require('./functionOps/flip'), require('./functionOps/until'));
+    factory(exports, require('./functionOps/call'), require('./functionOps/apply'), require('./functionOps/compose'), require('./functionOps/curry'), require('./uncurried/functionOps/negate_'), require('./functionOps/id'), require('./functionOps/flip'), require('./functionOps/until'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.call, global.apply, global.compose, global.curry, global.negate, global.id, global.flip, global.until);
+    factory(mod.exports, global.call, global.apply, global.compose, global.curry, global.negate_, global.id, global.flip, global.until);
     global.functionOps = mod.exports;
   }
-})(this, function (exports, _call, _apply, _compose, _curry, _negate, _id, _flip, _until) {
+})(this, function (exports, _call, _apply, _compose, _curry, _negate_, _id, _flip, _until) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -112,12 +112,12 @@
       return _curry.curry5_;
     }
   });
-  Object.keys(_negate).forEach(function (key) {
+  Object.keys(_negate_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _negate[key];
+        return _negate_[key];
       }
     });
   });

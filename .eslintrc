@@ -61,7 +61,7 @@
     "no-invalid-regexp":        1,  // - disallow invalid regular expression strings in the RegExp constructor
     "no-irregular-whitespace":  2,  // - disallow irregular whitespace outside of strings and comments
     "no-negated-in-lhs":        2,  // - disallow negation of the left operand of an in expression
-    "no-obj-calls":             1,  // - disallow the use of objectOps properties of the global objectOps (Math and JSON) as functions
+    "no-obj-calls":             1,  // - disallow the use of object properties of the global object (Math and JSON) as functions
     "no-regex-spaces":          2,  // - disallow multiple spaces in a regular expression literal
     "no-reserved-keys":         0,  // - disallow reserved words being used as object literal keys (off by default)
     "no-sparse-arrays":         1,  // - disallow sparse arrays

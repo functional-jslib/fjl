@@ -28,7 +28,7 @@ describe ('data.DoublyLinkedList', function () {
                 let dllNode = new DLLNode();
                 expectInstanceOf(dllNode, DLLNode);
             });
-            it ('should construct `DLLNode` when called as a functionOps with an `id.js` and a `value` value', function () {
+            it ('should construct `DLLNode` when called as a functionOps with an `id_.js` and a `value` value', function () {
                 let id = 0,
                     value = 'some-value',
                     dllNode = DLLNode(id, value);
@@ -36,7 +36,7 @@ describe ('data.DoublyLinkedList', function () {
                 expectEqual(dllNode.id, id);
                 expectEqual(dllNode.value, value);
             });
-            it ('should construct `DLLNode` when called with `new` with an `id.js` and a `value` value', function () {
+            it ('should construct `DLLNode` when called with `new` with an `id_.js` and a `value` value', function () {
                 let id = 0,
                     value = 'some-value',
                     dllNode = new DLLNode(id, value);

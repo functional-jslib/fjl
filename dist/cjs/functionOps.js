@@ -112,14 +112,14 @@ Object.defineProperty(exports, 'curry5_', {
   }
 });
 
-var _negate = require('./uncurried/functionOps/negate');
+var _negate_ = require('./uncurried/functionOps/negate_');
 
-Object.keys(_negate).forEach(function (key) {
+Object.keys(_negate_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _negate[key];
+      return _negate_[key];
     }
   });
 });

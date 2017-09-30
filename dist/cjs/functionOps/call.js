@@ -7,7 +7,7 @@ exports.call = undefined;
 
 var _curry = require('./curry');
 
-var _functionUncurried = require('../uncurried/jsPlatform/functionUncurried');
+var _function_ = require('../uncurried/jsPlatform/function_');
 
 /**
  * Created by elydelacruz on 7/22/2017.
@@ -22,4 +22,4 @@ var
  * @param args {*}
  * @returns {*}
  */
-call = exports.call = (0, _curry.curry2)(_functionUncurried.call);
+call = exports.call = (0, _curry.curry2)(_function_.call);

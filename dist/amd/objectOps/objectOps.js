@@ -1,4 +1,4 @@
-define(['exports', '../uncurried/jsPlatform/objectUncurried', '../uncurried/objectOps/typeOf', '../uncurried/objectOps/is', '../uncurried/objectOps/of', '../uncurried/objectOps/setTheory', '../functionOps/curry', '../uncurried/objectOps/assignDeep'], function (exports, _objectUncurried, _typeOf, _is, _of, _setTheory, _curry, _assignDeep) {
+define(['exports', '../uncurried/jsPlatform/object_', '../uncurried/objectOps/typeOf', '../uncurried/objectOps/is', '../uncurried/objectOps/of', '../uncurried/objectOps/setTheory', '../functionOps/curry', '../uncurried/objectOps/assignDeep'], function (exports, _objectUncurried, _typeOf, _is, _of, _setTheory, _curry, _assignDeep) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

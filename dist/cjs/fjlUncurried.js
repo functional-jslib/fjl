@@ -4,38 +4,38 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectOpsUncurried = require('./uncurried/objectOpsUncurried');
+var _objectOps_ = require('./uncurried/objectOps_');
 
-Object.keys(_objectOpsUncurried).forEach(function (key) {
+Object.keys(_objectOps_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _objectOpsUncurried[key];
+      return _objectOps_[key];
     }
   });
 });
 
-var _functionOpsUncurried = require('./uncurried/functionOpsUncurried');
+var _functionOps_ = require('./uncurried/functionOps_');
 
-Object.keys(_functionOpsUncurried).forEach(function (key) {
+Object.keys(_functionOps_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _functionOpsUncurried[key];
+      return _functionOps_[key];
     }
   });
 });
 
-var _listOpsUncurried = require('./uncurried/listOpsUncurried');
+var _listOps_ = require('./uncurried/listOps_');
 
-Object.keys(_listOpsUncurried).forEach(function (key) {
+Object.keys(_listOps_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _listOpsUncurried[key];
+      return _listOps_[key];
     }
   });
 });
