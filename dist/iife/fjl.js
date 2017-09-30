@@ -172,6 +172,8 @@ var curry5 = function curry5(fn) {
 
 /**
  * Created by elydelacruz on 7/22/2017.
+ * @module utils
+ * @private
  */
 
 var fPureTakesOne = function fPureTakesOne(name) {
@@ -444,7 +446,7 @@ var _undefined = 'undefined';
 /**
  * Returns the class name of an object from it's class stringOps.
  * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
- * @function module:fjl.typeOf
+ * @function module:objectOps_.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name property if not null or undefined (in which case a
  *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
@@ -464,7 +466,7 @@ function typeOf(value) {
 
 /**
  * Created by elyde on 12/18/2016.
- * @module is_
+ * @memberOf objectOps_
  */
 
 var _String = String.name;
@@ -598,6 +600,8 @@ var assignDeep$1 = function assignDeep(obj0) {
 
 /**
  * Created by elydelacruz on 9/7/2017.
+ * @module jsPlatform_function_
+ * @private
  */
 var apply = function apply(fn, args) {
   return fn.apply(null, args);
@@ -612,11 +616,12 @@ var call = function call(fn) {
 
 /**
  * Created by elydelacruz on 7/22/2017.
+ * @memberOf functionOps_
  */
 
 /**
- * Functional `apply` functionOps (takes no context).
- * @function module:_functionOps.apply
+ * Functional `apply` function (takes no context).
+ * @function module:functionOps_.apply
  * @param fn {Function}
  * @param args {*}
  * @returns {*}
@@ -673,7 +678,8 @@ var lastIndexOf = fPureTakesOne('lastIndexOf');
 /**
  * Created by elyde on 7/20/2017.
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module jsPlatform:arrayOps_
+ * @module jsPlatform_arrayOps_
+ * @private
  * @todo updated doc blocks to list correct/updated module name.
  */
 
@@ -710,8 +716,8 @@ var reverse$1 = defineReverse();
 /**
  * @author elydelacruz
  * @created 12/6/2016.
- * @module curry
- * @description Curry strict and curry arbitrarily functions `curry` and `curryN`.
+ * @memberOf functionOps_
+ * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 
 var curry$1 = function curry(fn) {
@@ -748,11 +754,10 @@ var curry2$1 = function curry2(fn) {
 };
 
 /**
+ * @memberOf functionOps
  * @author elydelacruz
  * @created 12/6/2016.
- * @file fjl-curry/src/curry.js
- * @module curry {{curry: Function, curryN: Function, curry2: Function, curry3: Function, curry4: Function, curry5: Function, curry_: Function, curryN_: Function, curry2_: Function, curry3_: Function, curry4_: Function, curry5_: Function}}
- * @description Different curry implementations for modern javascript currying.
+ * @description Curry implementation with place holder concept (`__`).
  * @todo Make code here more minimal (reuse small parts here).
  */
 
@@ -766,7 +771,7 @@ var placeHolderInstance$1 = new PlaceHolder$1();
 
 /**
  * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @function curry_
+ * @function module:functionOps_.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -775,7 +780,7 @@ var placeHolderInstance$1 = new PlaceHolder$1();
 
 /**
  * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
- * @function curryN_
+ * @function module:functionOps_.curryN_
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -785,6 +790,7 @@ var placeHolderInstance$1 = new PlaceHolder$1();
 
 /**
  * Place holder object (frozen) used by curry.
+ * @memberOf functionOps_
  * @type {PlaceHolder}
  */
 var __$1 = Object.freeze ? Object.freeze(placeHolderInstance$1) : placeHolderInstance$1;
@@ -802,7 +808,7 @@ var __$1 = Object.freeze ? Object.freeze(placeHolderInstance$1) : placeHolderIns
  */
 
 /**
- * @module negate
+ * @memberOf functionOps_
  */
 
 var negateF = function negateF(fn) {
@@ -860,9 +866,16 @@ var alwaysFalse = function alwaysFalse() {
 };
 
 /**
- *
+ * @memberOf objectOps_
  */
 
+/**
+ * Returns property value if found; Else `undefined`.
+ * @function module:objectOps_.prop
+ * @param name {String} - Key to search on `obj`
+ * @param obj {Object} - Object to search `name` on.
+ * @returns {*}
+ */
 var prop = function prop(name, obj) {
   return obj[name];
 };
@@ -909,18 +922,20 @@ function typeOf$1(value) {
 
 /**
  * Functional, uncurried 'instanceof'.
+ * @function module:objectOps_.instanceOf
  * @returns {Boolean}
  */
 
 /**
  * Created by elydelacruz on 7/22/2017.
+ * @memberOf objectOps
  */
 
 var instanceOf$2 = curry(instanceOf$1);
 
 /**
  * Created by elyde on 12/18/2016.
- * @module is
+ * @memberOf objectOps
  * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
  * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
  */
@@ -1068,6 +1083,7 @@ var map$1 = function map(fn, xs) {
 /**
  * List operator utils module.
  * @module listOpsUtils_
+ * @private
  */
 var sliceFrom = function sliceFrom(startInd, arr) {
     return slice(startInd, length(arr), arr);
@@ -1924,6 +1940,9 @@ var objComplement = function objComplement(obj0) {
     }, {}, objs);
 };
 
+/**
+ * @module objectOps
+ */
 var instanceOf$$1 = curry(instanceOf$1);
 var hasOwnProperty$$1 = curry(hasOwnProperty$1);
 var assign$$1 = curry2(assign$1);
@@ -1938,7 +1957,6 @@ var call$1 = curry2(call);
 /**
  * List operators.
  * @module listOps
- * @private
  * @todo decide whether to throw errors where functions cannot function without a specific type or to
  *  return undefined (and also determine which cases are ok for just returning undefined).
  * @todo code unperformant shorthand in `listOps`
@@ -2097,6 +2115,16 @@ var until$1 = curry(function (predicate, operation, typeInstance) {
  * @module functionOps
  */
 
+/**
+ * @module numberOps
+ */
+
+/**
+ * Negates a number.
+ * @function module:numberOps.negate
+ * @param x {Number}
+ * @returns {Number}
+ */
 var negate = function negate(x) {
   return Math.abs(x) * -1;
 };
@@ -2117,6 +2145,7 @@ var split$1 = fPureTakesOne('split');
 /**
  * Created by elydelacruz on 9/6/2017.
  * @module jsPlatform_string
+ * @private
  */
 
 /**
@@ -2133,6 +2162,7 @@ var split$$1 = curry(split$1);
  * Contains functions for operating strings.
  * @author elyde
  * @created 7/9/2017.
+ * @module stringOps
  */
 var lines = split$$1(/[\n\r]/gm);
 var words = split$$1(/[\s\t]/gm);
@@ -2141,7 +2171,7 @@ var unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Sat Sep 30 2017 04:28:50 GMT-0400 (EDT) 
+ * Generated Sat Sep 30 2017 05:18:05 GMT-0400 (EDT) 
  */
 
 var version = '0.15.0';

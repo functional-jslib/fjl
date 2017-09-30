@@ -6,7 +6,7 @@ define(['exports', './apply_', '../jsPlatform/array_'], function (exports, _appl
   });
   exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
   /**
-   * @module negate
+   * @memberOf functionOps_
    */
 
   const negateF = exports.negateF = fn => (a, b) => !fn(a, b),

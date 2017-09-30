@@ -134,7 +134,8 @@
   reverse = exports.reverse = defineReverse(); /**
                                                 * Created by elyde on 7/20/2017.
                                                 * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
-                                                * @module jsPlatform:arrayOps_
+                                                * @module jsPlatform_arrayOps_
+                                                * @private
                                                 * @todo updated doc blocks to list correct/updated module name.
                                                 */
 });

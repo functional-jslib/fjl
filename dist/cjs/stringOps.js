@@ -13,6 +13,7 @@ var _string = require('./jsPlatform/string');
  * Contains functions for operating strings.
  * @author elyde
  * @created 7/9/2017.
+ * @module stringOps
  */
 var
 

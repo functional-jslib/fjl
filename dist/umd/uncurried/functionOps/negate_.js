@@ -18,7 +18,7 @@
   });
   exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
   /**
-   * @module negate
+   * @memberOf functionOps_
    */
 
   var negateF = exports.negateF = function negateF(fn) {

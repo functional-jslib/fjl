@@ -18,6 +18,7 @@ define(['exports', './aggregation_', '../jsPlatform/function_', '../jsPlatform/l
     /**
      * List operator utils module.
      * @module listOpsUtils_
+     * @private
      */
     const
 

@@ -7,14 +7,16 @@ define(['exports', '../functionOps/curry', '../uncurried/objectOps/instanceOf_']
   exports.instanceOf = undefined;
   /**
    * Created by elydelacruz on 7/22/2017.
+   * @memberOf objectOps
    */
 
   const
 
   /**
-   * Returns whether constructor has derived objectOps.
-   * @instanceConstructor {Function|Class}
-   * @instance {*}
+   * `instanceof` in function form.
+   * @function module:objectOps.instanceOf
+   * @param instance {*}
+   * @param Type {Function|Class}
    * @returns {Boolean}
    */
   instanceOf = exports.instanceOf = (0, _curry.curry)(_instanceOf_.instanceOf);

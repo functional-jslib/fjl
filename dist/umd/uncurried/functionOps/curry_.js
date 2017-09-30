@@ -20,15 +20,15 @@
   /**
    * @author elydelacruz
    * @created 12/6/2016.
-   * @module curry
-   * @description Curry strict and curry arbitrarily functions `curry` and `curryN`.
+   * @memberOf functionOps_
+   * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
    */
 
   var
 
   /**
    * Curries a functionOps based on it's defined arity (argument's arrayOps expected length).
-   * @function curry
+   * @function module:functionOps_.curry
    * @param fn {Function}
    * @param argsToCurry {...*}
    * @returns {Function}
@@ -51,7 +51,7 @@
 
   /**
    * Curries a functionOps up to a given arity.
-   * @function curryN
+   * @function module:functionOps_.curryN
    * @param executeArity {Number}
    * @param fn {Function}
    * @param curriedArgs {...*}
@@ -76,7 +76,7 @@
 
   /**
    * Curries a functionOps up to an arity of 2 (won't call functionOps until 2 or more args).
-   * @function curry2
+   * @function module:functionOps_.curry2
    * @param fn {Function}
    * @returns {Function}
    */
@@ -87,6 +87,7 @@
 
   /**
    * Curries a functionOps up to an arity of 3 (won't call functionOps until 3 or more args).
+   * @function module:functionOps_.curry3
    * @param fn {Function}
    * @returns {Function}
    */
@@ -97,6 +98,7 @@
 
   /**
    * Curries a functionOps up to an arity of 4 (won't call functionOps until 4 or more args).
+   * @function module:functionOps_.curry4
    * @param fn {Function}
    * @returns {Function}
    */
@@ -107,6 +109,7 @@
 
   /**
    * Curries a functionOps up to an arity of 5 (won't call functionOps until 5 or more args).
+   * @function module:functionOps_.curry5
    * @param fn {Function}
    * @returns {Function}
    */

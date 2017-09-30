@@ -2,6 +2,7 @@
  * Created by elyde on 7/20/2017.
  * Curried functional versions of common array methods (`filter`, `map`, etc.).
  * @module jsPlatform_array
+ * @private
  */
 
 import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from '../utils';

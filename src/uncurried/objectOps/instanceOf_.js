@@ -4,6 +4,7 @@
 
 /**
  * Functional, uncurried 'instanceof'.
+ * @function module:objectOps_.instanceOf
  * @returns {Boolean}
  */
 export {instanceOf} from '../jsPlatform/object_';

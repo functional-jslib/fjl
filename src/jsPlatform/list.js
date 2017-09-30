@@ -2,6 +2,7 @@
  * List operations that overlap (apart from globally overlapping props and functions like `length` and `toString`)
  * on both strings and arrays.
  * @module jsPlatform_list
+ * @private
  */
 
 import {curry} from   '../functionOps/curry';

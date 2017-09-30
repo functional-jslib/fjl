@@ -30,6 +30,7 @@
   /**
    * Created by elydelacruz on 9/6/2017.
    * @module jsPlatform_string
+   * @private
    */
 
   var split = exports.split = (0, _curry.curry)(_string_.split);

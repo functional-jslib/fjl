@@ -1,4 +1,7 @@
-
+/**
+ * @module jsPlatform
+ * @private
+ */
 export {
     map, filter, reduce, reduceRight,
     forEach, some, every, join, push,

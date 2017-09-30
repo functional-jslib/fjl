@@ -1,5 +1,5 @@
 /**
- * @module negate
+ * @memberOf functionOps_
  */
 
 import {apply} from './apply_';

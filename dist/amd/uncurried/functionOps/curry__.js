@@ -15,11 +15,10 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
    * @private
    */
   /**
+   * @memberOf functionOps
    * @author elydelacruz
    * @created 12/6/2016.
-   * @file fjl-curry/src/curry.js
-   * @module curry {{curry: Function, curryN: Function, curry2: Function, curry3: Function, curry4: Function, curry5: Function, curry_: Function, curryN_: Function, curry2_: Function, curry3_: Function, curry4_: Function, curry5_: Function}}
-   * @description Different curry implementations for modern javascript currying.
+   * @description Curry implementation with place holder concept (`__`).
    * @todo Make code here more minimal (reuse small parts here).
    */
 
@@ -29,14 +28,15 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
   /**
    * Placeholder instance.
    * @type {PlaceHolder}
+   * @private
    */
   placeHolderInstance = new PlaceHolder();
 
   /**
    * Checks to see if value is a `PlaceHolder`.
-   * @function isPlaceHolder
    * @param instance {*}
    * @returns {boolean}
+   * @private
    */
   function isPlaceHolder(instance) {
     return instance instanceof PlaceHolder;
@@ -45,6 +45,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
   /**
    * Replaces `placeholder` values in `listOps`.
    * @function replacePlaceHolder
+   * @private
    * @param array {Array} - Array to replace placeholders in.
    * @param args {Array} - Args from to choose from to replace placeholders.
    * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
@@ -63,7 +64,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
 
   /**
    * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
-   * @function curry_
+   * @function module:functionOps_.curry_
    * @param fn {Function}
    * @param argsToCurry {...*}
    * @returns {Function}
@@ -79,7 +80,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
 
   /**
    * Curries a functionOps up to given arity also enforces arity via placeholder values (`__`).
-   * @function curryN_
+   * @function module:functionOps_.curryN_
    * @param executeArity {Number}
    * @param fn {Function}
    * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -96,6 +97,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
 
   /**
    * Place holder object (frozen) used by curry.
+   * @memberOf functionOps_
    * @type {PlaceHolder}
    */
   let __ = exports.__ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance,
@@ -103,7 +105,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
 
   /**
    * Curries a functionOps up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call functionOps until 2 or more args).
-   * @function curry2_
+   * @function module:functionOps_.curry2_
    * @param fn {Function}
    * @returns {Function}
    */
@@ -112,7 +114,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
 
   /**
    * Curries a functionOps up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call functionOps until 3 or more args).
-   * @function curry3_
+   * @function module:functionOps_.curry3_
    * @param fn {Function}
    * @returns {Function}
    */
@@ -121,7 +123,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
 
   /**
    * Curries a functionOps up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 4 or more args).
-   * @function curry4_
+   * @function module:functionOps_.curry4_
    * @param fn {Function}
    * @returns {Function}
    */
@@ -130,7 +132,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
 
   /**
    * Curries a functionOps up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call functionOps until 5 or more args).
-   * @function curry5_
+   * @function module:functionOps_.curry5_
    * @param fn {Function}
    * @returns {Function}
    */

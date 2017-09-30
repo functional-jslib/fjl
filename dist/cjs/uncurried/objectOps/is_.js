@@ -11,7 +11,7 @@ var _object_ = require('../jsPlatform/object_');
 
 /**
  * Created by elyde on 12/18/2016.
- * @module is_
+ * @memberOf objectOps_
  */
 
 var _String = String.name,
@@ -32,7 +32,7 @@ var
 
 /**
  * Returns whether a value is a functionOps or not.
- * @function module:is_.isFunction
+ * @function module:objectOps_.isFunction
  * @param value {*}
  * @returns {Boolean}
  */
@@ -49,7 +49,7 @@ isFunction = exports.isFunction = function isFunction(value) {
  *  var SomeName = functionOps SomeName () {} // or
  *  class SomeName {}
  * ```
- * @function module:is_.isType
+ * @function module:objectOps_.isType
  * @param type {Function|String} - Constructor or constructor name
  * @param obj {*}
  * @return {Boolean}
@@ -61,7 +61,7 @@ isType = exports.isType = function isType(type, obj) {
 
 /**
  * Checks if `value` is an es2015 `class`.
- * @function module:is_.isClass
+ * @function module:objectOps_.isClass
  * @param x {*}
  * @returns {boolean}
  */
@@ -72,7 +72,7 @@ isClass = exports.isClass = function isClass(x) {
 
 /**
  * Returns a booleanOps depicting whether a value is callable or not.
- * @function module:is_.isCallable
+ * @function module:objectOps_.isCallable
  * @tentative
  * @private
  * @param x {*}
@@ -85,7 +85,7 @@ isCallable = exports.isCallable = function isCallable(x) {
 
 /**
  * Checks if value is an arrayOps.
- * @function module:is_.isArray
+ * @function module:objectOps_.isArray
  * @param value {*}
  * @returns {boolean}
  */
@@ -96,7 +96,7 @@ isArray = exports.isArray = function isArray(value) {
 
 /**
  * Checks whether value is an object or not.
- * @function module:is_.isObject
+ * @function module:objectOps_.isObject
  * @param value
  * @returns {Boolean}
  */
@@ -107,7 +107,7 @@ isObject = exports.isObject = function isObject(value) {
 
 /**
  * Checks if value is a booleanOps.
- * @function module:is_.isBoolean
+ * @function module:objectOps_.isBoolean
  * @param value {*}
  * @returns {Boolean}
  */
@@ -118,7 +118,7 @@ isBoolean = exports.isBoolean = function isBoolean(value) {
 
 /**
  * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
- * @function module:is_.isNumber
+ * @function module:objectOps_.isNumber
  * @param value {*}
  * @returns {Boolean}
  */
@@ -129,7 +129,7 @@ isNumber = exports.isNumber = function isNumber(value) {
 
 /**
  * Checks whether value is a stringOps or not.
- * @function module:is_.isString
+ * @function module:objectOps_.isString
  * @param value {*}
  * @returns {Boolean}
  */
@@ -140,7 +140,7 @@ isString = exports.isString = function isString(value) {
 
 /**
  * Checks whether value is of `Map` or not.
- * @function module:is_.isMap
+ * @function module:objectOps_.isMap
  * @param value {*}
  * @returns {Boolean}
  */
@@ -151,7 +151,7 @@ isMap = exports.isMap = function isMap(value) {
 
 /**
  * Checks whether value is of `Set` or not.
- * @function module:is_.isSet
+ * @function module:objectOps_.isSet
  * @param value {*}
  * @returns {Boolean}
  */
@@ -162,7 +162,7 @@ isSet = exports.isSet = function isSet(value) {
 
 /**
  * Checks whether value is of `WeakMap` or not.
- * @function module:is_.isWeakMap
+ * @function module:objectOps_.isWeakMap
  * @param value {*}
  * @returns {Boolean}
  */
@@ -173,7 +173,7 @@ isWeakMap = exports.isWeakMap = function isWeakMap(value) {
 
 /**
  * Checks whether value is of `WeakSet` or not.
- * @function module:is_.isWeakSet
+ * @function module:objectOps_.isWeakSet
  * @param value {*}
  * @returns {Boolean}
  */
@@ -184,7 +184,7 @@ isWeakSet = exports.isWeakSet = function isWeakSet(value) {
 
 /**
  * Checks if value is undefined.
- * @function module:is_.isUndefined
+ * @function module:objectOps_.isUndefined
  * @param value {*}
  * @returns {Boolean}
  */
@@ -195,7 +195,7 @@ isUndefined = exports.isUndefined = function isUndefined(value) {
 
 /**
  * Checks if value is null.
- * @function module:is_.isNull
+ * @function module:objectOps_.isNull
  * @param value {*}
  * @returns {Boolean}
  */
@@ -206,7 +206,7 @@ isNull = exports.isNull = function isNull(value) {
 
 /**
  * Checks if value is a `Symbol`.
- * @function module:is_.isSymbol
+ * @function module:objectOps_.isSymbol
  * @param value {*}
  * @returns {Boolean}
  */
@@ -228,7 +228,7 @@ isPromise = exports.isPromise = function isPromise(value) {
  * Checks if given `x` is one of the four
  * "usable" immutable JS primitives; I.e.,
  *  One of [String, Boolean, Number, Symbol]
- * @function module:is_.isUsableImmutablePrimitive
+ * @function module:objectOps_.isUsableImmutablePrimitive
  * @param x {*}
  * @returns {Boolean}
  */
@@ -242,6 +242,7 @@ isUsableImmutablePrimitive = exports.isUsableImmutablePrimitive = function isUsa
 
 /**
  * Checks if !length.
+ * @function module:objectOps.isEmptyList
  * @param x {*}
  * @returns {Boolean}
  */
@@ -252,6 +253,7 @@ isEmptyList = exports.isEmptyList = function isEmptyList(x) {
 
 /**
  * Checks if object has own properties/enumerable-props or not.
+ * @function module:objectOps.isEmptyObject
  * @param obj {*}
  * @returns {Boolean}
  */
@@ -262,6 +264,7 @@ isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
 
 /**
  * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
+ * @function module:objectOps_.isEmptyCollection
  * @param x {*}
  * @returns {Boolean}
  */
@@ -272,7 +275,7 @@ isEmptyCollection = exports.isEmptyCollection = function isEmptyCollection(x) {
 
 /**
  * Checks to see if passed in argument is empty.
- * @function module:is_.isEmpty
+ * @function module:objectOps_.isEmpty
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
@@ -300,7 +303,7 @@ isEmpty = exports.isEmpty = function isEmpty(value) {
 
 /**
  * Returns true if an element is not empty and is of type.
- * @function module:is_.notEmptyAndOfType
+ * @function module:objectOps_.notEmptyAndOfType
  * @tentative
  * @private
  * @param type {String|Function} - Type to check against (stringOps name or actual constructor).
@@ -313,8 +316,8 @@ notEmptyAndOfType = exports.notEmptyAndOfType = function notEmptyAndOfType(type,
 
 
 /**
- * Returns whether passed in values is defined and not null.
- * @function module:is_.isset
+ * Returns whether passed in values is defined and not null or not.
+ * @function module:objectOps_.isset
  * @param x {*}
  * @returns {Boolean}
  */

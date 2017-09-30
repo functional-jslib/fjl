@@ -1,3 +1,6 @@
+/**
+ * @module objectOps
+ */
 import {curry, curry2} from './functionOps/curry';
 
 import {

@@ -46,4 +46,6 @@ var fPureTakesOne = exports.fPureTakesOne = function fPureTakesOne(name) {
     });
 }; /**
     * Created by elydelacruz on 7/22/2017.
+    * @module utils
+    * @private
     */

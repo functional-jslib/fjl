@@ -1,6 +1,7 @@
 /**
  * Created by elydelacruz on 9/6/2017.
  * @module jsPlatform_string
+ * @private
  */
 
 import {curry} from   '../functionOps/curry';

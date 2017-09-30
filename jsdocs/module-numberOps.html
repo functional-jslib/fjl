@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: fjl</title>
+    <title>JSDoc: Module: numberOps</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: fjl</h1>
+    <h1 class="page-title">Module: numberOps</h1>
 
     
 
@@ -29,8 +29,6 @@
 <header>
     
         
-            
-        
     
 </header>
 
@@ -38,100 +36,6 @@
     <div class="container-overview">
     
         
-            <div class="description">Includes operations from haskell's Prelude.</div>
-        
-
-        
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fjl.js.html">fjl.js</a>, <a href="fjl.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html">http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html</a></li>
-        
-            <li><a href="http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html">http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html</a></li>
-        </ul>
-    </dd>
-    
-
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>any cross importing between packages should be done from the package object (package file: E.g., './src/functionOps/functionOps.js').</li>
-        
-            <li>decide how to include 'uncurried' members in the main export of the library.</li>
-        </ul>
-    </dd>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         
     
@@ -160,7 +64,7 @@
     
 
     
-    <h4 class="name" id=".compose"><span class="type-signature">(static) </span>compose<span class="signature">(&hellip;args)</span><span class="type-signature"> &rarr; {function|function}</span></h4>
+    <h4 class="name" id=".negate"><span class="type-signature">(static) </span>negate<span class="signature">(x)</span><span class="type-signature"> &rarr; {Number}</span></h4>
     
 
     
@@ -168,8 +72,7 @@
 
 
 <div class="description">
-    Composes all functions passed in from right to left passing each functions return value to
-the functionOps on the left of itself.
+    Negates a number.
 </div>
 
 
@@ -193,8 +96,6 @@ the functionOps on the left of itself.
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -207,28 +108,18 @@ the functionOps on the left of itself.
 
         <tr>
             
-                <td class="name"><code>args</code></td>
+                <td class="name"><code>x</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">Number</span>
 
 
             
             </td>
 
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                    &lt;repeatable><br>
-                
-                </td>
             
 
             
@@ -274,7 +165,7 @@ the functionOps on the left of itself.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="uncurried_functionOps_compose_.js.html">uncurried/functionOps/compose_.js</a>, <a href="uncurried_functionOps_compose_.js.html#line3">line 3</a>
+        <a href="numberOps.js.html">numberOps.js</a>, <a href="numberOps.js.html#line5">line 5</a>
     </li></ul></dd>
     
 
@@ -298,8 +189,8 @@ the functionOps on the left of itself.
 
 
 <h5>Returns:</h5>
-<ul>
-        <li>
+
+        
 
 
 <dl>
@@ -308,29 +199,13 @@ the functionOps on the left of itself.
     </dt>
     <dd>
         
-<span class="param-type">function</span>
+<span class="param-type">Number</span>
 
 
     </dd>
 </dl>
-</li>
+
     
-        <li>
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">function</span>
-
-
-    </dd>
-</dl>
-</li>
-    </ul>
 
 
 

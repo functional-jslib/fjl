@@ -7,7 +7,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
   exports.isset = exports.notEmptyAndOfType = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
   /**
    * Created by elyde on 12/18/2016.
-   * @module is
+   * @memberOf objectOps
    * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
    * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
    */
@@ -29,7 +29,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Returns whether a value is a functionOps or not.
-   * @function module:is.isFunction
+   * @function module:objectOps.isFunction
    * @param value {*}
    * @returns {Boolean}
    */
@@ -44,7 +44,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
    *  var SomeName = functionOps SomeName () {} // or
    *  class SomeName {}
    * ```
-   * @function module:fjl.isType
+   * @function module:objectOps.isType
    * @param Type {Function|String} - Constructor or constructor name
    * @param value {*}
    * @return {Boolean}
@@ -54,7 +54,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if `value` is an es2015 `class`.
-   * @function module:is.isClass
+   * @function module:objectOps.isClass
    * @param x {*}
    * @returns {boolean}
    */
@@ -63,7 +63,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Returns a booleanOps depicting whether a value is callable or not.
-   * @function module:is.isCallable
+   * @function module:objectOps.isCallable
    * @tentative
    * @private
    * @param x {*}
@@ -74,7 +74,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if value is an arrayOps.
-   * @function module:is.isArray
+   * @function module:objectOps.isArray
    * @param value {*}
    * @returns {boolean}
    */
@@ -83,7 +83,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks whether value is an object or not.
-   * @function module:is.isObject
+   * @function module:objectOps.isObject
    * @param value
    * @returns {Boolean}
    */
@@ -92,7 +92,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if value is a booleanOps.
-   * @function module:is.isBoolean
+   * @function module:objectOps.isBoolean
    * @param value {*}
    * @returns {Boolean}
    */
@@ -101,7 +101,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
-   * @function module:is.isNumber
+   * @function module:objectOps.isNumber
    * @param value {*}
    * @returns {Boolean}
    */
@@ -110,7 +110,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks whether value is a stringOps or not.
-   * @function module:is.isString
+   * @function module:objectOps.isString
    * @param value {*}
    * @returns {Boolean}
    */
@@ -119,7 +119,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks whether value is of `Map` or not.
-   * @function module:is.isMap
+   * @function module:objectOps.isMap
    * @param value {*}
    * @returns {Boolean}
    */
@@ -128,7 +128,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks whether value is of `Set` or not.
-   * @function module:is.isSet
+   * @function module:objectOps.isSet
    * @param value {*}
    * @returns {Boolean}
    */
@@ -137,7 +137,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks whether value is of `WeakMap` or not.
-   * @function module:is.isWeakMap
+   * @function module:objectOps.isWeakMap
    * @param value {*}
    * @returns {Boolean}
    */
@@ -146,7 +146,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks whether value is of `WeakSet` or not.
-   * @function module:is.isWeakSet
+   * @function module:objectOps.isWeakSet
    * @param value {*}
    * @returns {Boolean}
    */
@@ -155,7 +155,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if value is undefined.
-   * @function module:is.isUndefined
+   * @function module:objectOps.isUndefined
    * @param value {*}
    * @returns {Boolean}
    */
@@ -164,7 +164,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if value is null.
-   * @function module:is.isNull
+   * @function module:objectOps.isNull
    * @param value {*}
    * @returns {Boolean}
    */
@@ -173,7 +173,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if value is a `Symbol`.
-   * @function module:is.isSymbol
+   * @function module:objectOps.isSymbol
    * @param value {*}
    * @returns {Boolean}
    */
@@ -191,7 +191,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
    * Checks if given `x` is one of the four
    * "usable" immutable JS primitives; I.e.,
    *  One of [String, Boolean, Number, Symbol]
-   * @function module:is.isUsableImmutablePrimitive
+   * @function module:objectOps.isUsableImmutablePrimitive
    * @param x {*}
    * @returns {Boolean}
    */
@@ -203,6 +203,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if !length.
+   * @function module:objectOps.isEmptyList
    * @param x {*}
    * @returns {Boolean}
    */
@@ -211,6 +212,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if object has own properties/enumerable-props or not.
+   * @function module:objectOps.isEmptyObject
    * @param obj {*}
    * @returns {Boolean}
    */
@@ -219,6 +221,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
+   * @function module:objectOps_.isEmptyCollection
    * @param x {*}
    * @returns {Boolean}
    */
@@ -227,7 +230,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Checks to see if passed in argument is empty.
-   * @function module:is.isEmpty
+   * @function module:objectOps.isEmpty
    * @param value {*} - Value to check.
    * @returns {Boolean}
    */
@@ -255,8 +258,9 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Returns true if an element is not empty and is of type.
-   * @function module:is.notEmptyAndOfType
-   * @param type {String|Function} - Type to check against (stringOps name or actual constructor).
+   * @function module:objectOps.notEmptyAndOfType
+   * @tentative
+   * @private* @param type {String|Function} - Type to check against (stringOps name or actual constructor).
    * @param value {*} - Value to check.
    * @returns {Boolean}
    */
@@ -265,6 +269,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
   /**
    * Returns whether passed in values is defined and not null.
+   * @function module:objectOps.isset
    * @param x {*}
    * @returns {Boolean}
    */

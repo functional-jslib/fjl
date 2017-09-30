@@ -18,12 +18,14 @@
   });
   /**
    * Created by elydelacruz on 9/7/2017.
+   * @module jsPlatform_function_
+   * @private
    */
   var
 
   /**
-   * Functional `apply` functionOps (takes no context).
-   * @function module:jsPlatform_functionOps_.apply
+   * Functional `apply` function (takes no context).
+   * @function module:jsPlatform_function_.apply
    * @param fn {Function}
    * @param args {Array|*}
    * @returns {*}
@@ -34,10 +36,10 @@
 
 
   /**
-   * Functional `call` functionOps (takes no context).
-   * @function module:jsPlatform_functionOps_.call
+   * Functional `call` function (takes no context).
+   * @function module:jsPlatform_function_.call
    * @param fn {Function}
-   * @param args ...{*}
+   * @param args {...*}
    * @returns {*}
    */
   call = exports.call = function call(fn) {

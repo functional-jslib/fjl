@@ -2,6 +2,7 @@
  * Contains functions for operating strings.
  * @author elyde
  * @created 7/9/2017.
+ * @module stringOps
  */
 import {intercalate} from './listOps';
 

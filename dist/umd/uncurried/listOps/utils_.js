@@ -30,6 +30,7 @@
     /**
      * List operator utils module.
      * @module listOpsUtils_
+     * @private
      */
     var
 

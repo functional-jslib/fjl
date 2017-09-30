@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: stringOps.js</title>
+    <title>JSDoc: Source: objectOps.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: stringOps.js</h1>
+    <h1 class="page-title">Source: objectOps.js</h1>
 
     
 
@@ -27,48 +27,37 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Contains functions for operating strings.
- * @author elyde
- * @created 7/9/2017.
- * @module stringOps
+ * @module objectOps
  */
-import {intercalate} from './listOps';
+import {curry, curry2} from './functionOps/curry';
 
-import {split} from './jsPlatform/string';
+import {
+    instanceOf as pureInstanceOf,
+    hasOwnProperty as pureHasOwnProperty,
+    assign as pureAssign
+} from './uncurried/jsPlatform/object_';
+
+import {assignDeep as pureAssignDeep} from './uncurried/objectOps/assignDeep_';
+
+export {length, toString, keys} from './uncurried/jsPlatform/object_';
 
 export const
 
-    /**
-     * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
-     * @function module:stringOps.lines
-     * @param str {String}
-     * @returns {Array}
-     */
-    lines = split(/[\n\r]/gm),
+    instanceOf = curry(pureInstanceOf),
 
-    /**
-     * Splits a stringOps on all '\s' and/or all '\t' characters.
-     * @function module:stringOps.words
-     * @param str{String}
-     * @returns {Array}
-     */
-    words = split(/[\s\t]/gm),
+    hasOwnProperty = curry(pureHasOwnProperty),
 
-    /**
-     * Intersperse an array of strings with '\s' and then concats them.
-     * @function module:stringOps.unwords
-     * @param arr {String}
-     * @returns {Array}
-     */
-    unwords = intercalate(' '),
+    assign = curry2(pureAssign),
 
-    /**
-     * Intersperses a '\n' character into a list of strings and then concats it.
-     * @function module:stringOps.unlines
-     * @param list {Array|String|*}
-     * @returns {Array}
-     */
-    unlines = intercalate('\n');
+    assignDeep = curry2(pureAssignDeep);
+
+export * from './uncurried/objectOps/typeOf_';
+
+export * from './uncurried/objectOps/is_';
+
+export * from './uncurried/objectOps/of_';
+
+export * from './uncurried/objectOps/setTheory_';
 </code></pre>
         </article>
     </section>

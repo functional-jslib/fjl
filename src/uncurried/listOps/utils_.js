@@ -1,6 +1,7 @@
 /**
  * List operator utils module.
  * @module listOpsUtils_
+ * @private
  */
 import {apply}              from '../jsPlatform/function_';  // un-curried version
 import {slice}              from '../jsPlatform/list_';      // un-curried version good for both strings and arrays

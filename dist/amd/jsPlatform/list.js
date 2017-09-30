@@ -9,6 +9,7 @@ define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/list_'], fun
      * List operations that overlap (apart from globally overlapping props and functions like `length` and `toString`)
      * on both strings and arrays.
      * @module jsPlatform_list
+     * @private
      */
 
     const concat = exports.concat = (0, _curry.curry)(_list_.concat),

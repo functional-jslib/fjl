@@ -31,6 +31,7 @@ var _map_ = require('./map_');
 /**
  * List operator utils module.
  * @module listOpsUtils_
+ * @private
  */
 var
 

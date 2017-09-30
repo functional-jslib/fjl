@@ -9,6 +9,7 @@ define(['exports', './listOps', './jsPlatform/string'], function (exports, _list
    * Contains functions for operating strings.
    * @author elyde
    * @created 7/9/2017.
+   * @module stringOps
    */
   const
 

@@ -12,5 +12,7 @@ define(['exports', './functionOps/curry'], function (exports, _curry) {
           fPureTakes2_ = exports.fPureTakes2_ = name => (0, _curry.curry)((arg1, arg2, f) => f[name](arg1, arg2)),
           fPureTakesOneOrMore_ = exports.fPureTakesOneOrMore_ = name => (0, _curry.curry2)((f, ...args) => f[name](...args)); /**
                                                                                                                                * Created by elydelacruz on 7/22/2017.
+                                                                                                                               * @module utils
+                                                                                                                               * @private
                                                                                                                                */
 });

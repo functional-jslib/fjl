@@ -10,7 +10,7 @@ var _apply_ = require('./apply_');
 var _array_ = require('../jsPlatform/array_');
 
 /**
- * @module negate
+ * @memberOf functionOps_
  */
 
 var negateF = exports.negateF = function negateF(fn) {

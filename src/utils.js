@@ -1,5 +1,7 @@
 /**
  * Created by elydelacruz on 7/22/2017.
+ * @module utils
+ * @private
  */
 
 import {curry, curry2} from './functionOps/curry';

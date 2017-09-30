@@ -1,7 +1,6 @@
 /**
  * List operators.
  * @module listOps
- * @private
  * @todo decide whether to throw errors where functions cannot function without a specific type or to
  *  return undefined (and also determine which cases are ok for just returning undefined).
  * @todo code unperformant shorthand in `listOps`
