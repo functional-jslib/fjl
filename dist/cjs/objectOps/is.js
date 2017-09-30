@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.isset = exports.notEmptyAndOfType = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
 
@@ -57,7 +57,7 @@ isFunction = exports.isFunction = (0, _instanceOf.instanceOf)(Function),
  * @return {Boolean}
  */
 isType = exports.isType = (0, _curry.curry)(function (type, obj) {
-    return (0, _typeOf.typeOf)(obj) === (isFunction(type) ? type.name : type);
+  return (0, _typeOf.typeOf)(obj) === (isFunction(type) ? type.name : type);
 }),
 
 
@@ -68,7 +68,7 @@ isType = exports.isType = (0, _curry.curry)(function (type, obj) {
  * @returns {boolean}
  */
 isClass = exports.isClass = function isClass(x) {
-    return x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10));
+  return x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10));
 },
 
 
@@ -80,7 +80,7 @@ isClass = exports.isClass = function isClass(x) {
  * @returns {Boolean}
  */
 isCallable = exports.isCallable = function isCallable(x) {
-    return isFunction(x) && !isClass(x);
+  return isFunction(x) && !isClass(x);
 },
 
 
@@ -207,10 +207,10 @@ isPromise = exports.isPromise = isType('Promise'),
  * @returns {Boolean}
  */
 isUsableImmutablePrimitive = exports.isUsableImmutablePrimitive = function isUsableImmutablePrimitive(x) {
-    var typeOfX = (0, _typeOf.typeOf)(x);
-    return [_String, _Number, _Boolean, _Symbol].some(function (Type) {
-        return Type === typeOfX;
-    });
+  var typeOfX = (0, _typeOf.typeOf)(x);
+  return [_String, _Number, _Boolean, _Symbol].some(function (Type) {
+    return Type === typeOfX;
+  });
 },
 
 
@@ -220,7 +220,7 @@ isUsableImmutablePrimitive = exports.isUsableImmutablePrimitive = function isUsa
  * @returns {Boolean}
  */
 isEmptyList = exports.isEmptyList = function isEmptyList(x) {
-    return (0, _objectUncurried.length)(x) === 0;
+  return (0, _objectUncurried.length)(x) === 0;
 },
 
 
@@ -230,7 +230,7 @@ isEmptyList = exports.isEmptyList = function isEmptyList(x) {
  * @returns {Boolean}
  */
 isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
-    return isEmptyList((0, _objectUncurried.keys)(obj));
+  return isEmptyList((0, _objectUncurried.keys)(obj));
 },
 
 
@@ -240,7 +240,7 @@ isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
  * @returns {Boolean}
  */
 isEmptyCollection = exports.isEmptyCollection = function isEmptyCollection(x) {
-    return x.size === 0;
+  return x.size === 0;
 },
 
 
@@ -251,24 +251,24 @@ isEmptyCollection = exports.isEmptyCollection = function isEmptyCollection(x) {
  * @returns {Boolean}
  */
 isEmpty = exports.isEmpty = function isEmpty(value) {
-    var typeOfValue = (0, _typeOf.typeOf)(value),
-        retVal = void 0;
+  var typeOfValue = (0, _typeOf.typeOf)(value),
+      retVal = void 0;
 
-    if (!value) {
-        // '', 0, `null`, `undefined` or `false` then is empty
-        retVal = true;
-    } else if (typeOfValue === _Array || typeOfValue === _Function) {
-        retVal = isEmptyList(value);
-    } else if (typeOfValue === _Number && value !== 0) {
-        retVal = false;
-    } else if (typeOfValue === _Object) {
-        retVal = isEmptyObject(value);
-    } else if ((0, _objectUncurried.hasOwnProperty)('size', value)) {
-        retVal = isEmptyCollection(value);
-    } else {
-        retVal = !value;
-    }
-    return retVal;
+  if (!value) {
+    // '', 0, `null`, `undefined` or `false` then is empty
+    retVal = true;
+  } else if (typeOfValue === _Array || typeOfValue === _Function) {
+    retVal = isEmptyList(value);
+  } else if (typeOfValue === _Number && value !== 0) {
+    retVal = false;
+  } else if (typeOfValue === _Object) {
+    retVal = isEmptyObject(value);
+  } else if ((0, _objectUncurried.hasOwnProperty)('size', value)) {
+    retVal = isEmptyCollection(value);
+  } else {
+    retVal = !value;
+  }
+  return retVal;
 },
 
 
@@ -280,7 +280,7 @@ isEmpty = exports.isEmpty = function isEmpty(value) {
  * @returns {Boolean}
  */
 notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry.curry)(function (type, value) {
-    return !isEmpty(value) && isType(type, value);
+  return !isEmpty(value) && isType(type, value);
 }),
 
 
@@ -290,5 +290,5 @@ notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry.curry)(function (type
  * @returns {Boolean}
  */
 isset = exports.isset = function isset(x) {
-    return !isNull(x) && !isUndefined(x);
+  return !isNull(x) && !isUndefined(x);
 };
