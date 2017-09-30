@@ -7,7 +7,7 @@ exports.map = undefined;
 
 var _of = require('../../objectOps/of');
 
-var _listOpsUncurriedAggregation = require('./listOpsUncurriedAggregation');
+var _aggregation = require('./aggregation');
 
 var _objectUncurried = require('../jsPlatform/objectUncurried');
 
@@ -21,7 +21,7 @@ var map = exports.map = function map(fn, xs) {
     var ind = 0,
         limit = (0, _objectUncurried.length)(xs),
         out = (0, _of.of)(xs),
-        aggregate = (0, _listOpsUncurriedAggregation.aggregatorByType)(xs);
+        aggregate = (0, _aggregation.aggregatorByType)(xs);
     if (!limit) {
         return out;
     }

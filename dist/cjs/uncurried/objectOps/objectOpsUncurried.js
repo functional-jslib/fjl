@@ -64,14 +64,14 @@ Object.keys(_of).forEach(function (key) {
   });
 });
 
-var _setTheoryOps = require('./setTheoryOps');
+var _setTheory = require('./setTheory');
 
-Object.keys(_setTheoryOps).forEach(function (key) {
+Object.keys(_setTheory).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _setTheoryOps[key];
+      return _setTheory[key];
     }
   });
 });

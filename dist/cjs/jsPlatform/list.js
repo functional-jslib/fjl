@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.concat = undefined;
 
@@ -15,17 +15,8 @@ var _listUncurried = require('../uncurried/jsPlatform/listUncurried');
  * @module jsPlatform_list
  */
 
-var concat = exports.concat = _listUncurried.concat,
-
-
-/**
- * Calls `slice` method on passed in instance.
- * @function module:jsPlatform_list.slice
- * @param separator {String|RegExp}
- * @param list {Array|String|*}
- * @returns {Array|String|*}
- */
-slice = exports.slice = (0, _curry.curry)(_listUncurried.slice),
-    includes = exports.includes = _listUncurried.includes,
-    indexOf = exports.indexOf = _listUncurried.indexOf,
-    lastIndexOf = exports.lastIndexOf = _listUncurried.lastIndexOf;
+var concat = exports.concat = (0, _curry.curry)(_listUncurried.concat),
+    slice = exports.slice = (0, _curry.curry)(_listUncurried.slice),
+    includes = exports.includes = (0, _curry.curry)(_listUncurried.includes),
+    indexOf = exports.indexOf = (0, _curry.curry)(_listUncurried.indexOf),
+    lastIndexOf = exports.lastIndexOf = (0, _curry.curry)(_listUncurried.lastIndexOf);

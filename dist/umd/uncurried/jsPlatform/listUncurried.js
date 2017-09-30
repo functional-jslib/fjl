@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../../utils/utils'], factory);
+    define(['exports', '../../utils'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../../utils/utils'));
+    factory(exports, require('../../utils'));
   } else {
     var mod = {
       exports: {}
@@ -24,13 +24,23 @@
   var
 
   /**
+   * Concats/appends all functors onto the end of first functor.
+   * Note:  functors passed in after the first one must be of the same type.
    * @function module:jsPlatform.listOpsUncurried.concat
+   * @param functor {Array|Object|*}
+   * @param ...functor {Array|Object|*}
+   * @return {*|Array|Object} - The type passed.
+   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
    */
   concat = exports.concat = (0, _utils.fPureTakesOneOrMore)('concat'),
 
 
   /**
+   * Same as Array.prototype.slice
    * @function module:jsPlatform.listOpsUncurried.slice
+   * @param separator {String|RegExp}
+   * @param arr{Array}
+   * @returns {Array}
    */
   slice = exports.slice = (0, _utils.fPureTakes2)('slice'),
 

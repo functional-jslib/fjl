@@ -1,35 +1,45 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './is', '../functionOps/curry'], factory);
+    define(['exports', '../functionOps/curry'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./is'), require('../functionOps/curry'));
+    factory(exports, require('../functionOps/curry'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.is, global.curry);
+    factory(mod.exports, global.curry);
     global.booleanOps = mod.exports;
   }
-})(this, function (exports, _is, _curry) {
+})(this, function (exports, _curry) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.bEqual = exports.bOtherwise = exports.bNot = exports.bOr = exports.bAnd = exports.alwaysFalse = exports.alwaysTrue = exports.isFalsy = exports.isTruthy = undefined;
-  Object.defineProperty(exports, 'isTruthy', {
-    enumerable: true,
-    get: function () {
-      return _is.isTruthy;
-    }
-  });
-  Object.defineProperty(exports, 'isFalsy', {
-    enumerable: true,
-    get: function () {
-      return _is.isFalsy;
-    }
-  });
   var
+
+  /**
+   * Returns whether `value` is 'truthy' or not
+   * @function module:booleanOps.isTruthy
+   * @param value
+   * @returns {Boolean}
+   */
+  isTruthy = exports.isTruthy = function isTruthy(value) {
+    return !!value;
+  },
+
+
+  /**
+   * Returns whether `value` is 'falsy' or not
+   * @function module:booleanOps.isFalsy
+   * @param value
+   * @returns {Boolean}
+   */
+  isFalsy = exports.isFalsy = function isFalsy(value) {
+    return !value;
+  },
+
 
   /**
    * Returns `true`.
@@ -105,5 +115,8 @@
    */
   bEqual = exports.bEqual = (0, _curry.curry2)(function (a, b) {
     return a === b;
-  });
+  }); /**
+       * Created by elyde on 7/15/2017.
+       * @module booleanOps
+       */
 });

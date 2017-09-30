@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../utils/utils', '../uncurried/jsPlatform/arrayUncurried'], factory);
+    define(['exports', '../utils', '../uncurried/jsPlatform/arrayUncurried'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../utils/utils'), require('../uncurried/jsPlatform/arrayUncurried'));
+    factory(exports, require('../utils'), require('../uncurried/jsPlatform/arrayUncurried'));
   } else {
     var mod = {
       exports: {}

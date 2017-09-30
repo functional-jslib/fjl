@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.reverse = exports.push = exports.slice = exports.join = exports.concat = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = undefined;
 
-var _utils = require('../utils/utils');
+var _utils = require('../utils');
 
 var _arrayUncurried = require('../uncurried/jsPlatform/arrayUncurried');
 

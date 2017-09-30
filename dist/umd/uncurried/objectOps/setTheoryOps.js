@@ -1,14 +1,14 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './assignDeep', '../jsPlatform/objectUncurried', '../listOps/listOpsUncurried'], factory);
+        define(['exports', './assignDeep', '../jsPlatform/objectUncurried', '../listOpsUncurried'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./assignDeep'), require('../jsPlatform/objectUncurried'), require('../listOps/listOpsUncurried'));
+        factory(exports, require('./assignDeep'), require('../jsPlatform/objectUncurried'), require('../listOpsUncurried'));
     } else {
         var mod = {
             exports: {}
         };
         factory(mod.exports, global.assignDeep, global.objectUncurried, global.listOpsUncurried);
-        global.setTheoryOps = mod.exports;
+        global.setTheory = mod.exports;
     }
 })(this, function (exports, _assignDeep, _objectUncurried, _listOpsUncurried) {
     'use strict';

@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../../utils/utils'], factory);
+    define(['exports', '../../utils'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../../utils/utils'));
+    factory(exports, require('../../utils'));
   } else {
     var mod = {
       exports: {}
@@ -16,7 +16,7 @@
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.reverse = exports.push = exports.slice = exports.join = exports.concat = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.defineReverse = undefined;
+  exports.reverse = exports.push = exports.join = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.defineReverse = undefined;
   var
 
   /**
@@ -108,17 +108,6 @@
 
 
   /**
-   * Concats/appends all functors onto the end of first functor.
-   * Note:  functors passed in after the first one must be of the same type.
-   * @param functor {Array|Object|*}
-   * @param ...functor {Array|Object|*}
-   * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
-   */
-  concat = exports.concat = (0, _utils.fPureTakesOneOrMore)('concat'),
-
-
-  /**
    * Array.prototype.join
    * @function module:listPrelude.join
    * @param separator {String|RegExp}
@@ -126,15 +115,6 @@
    * @returns {String}
    */
   join = exports.join = (0, _utils.fPureTakesOne)('join'),
-
-
-  /**
-   * Same as Array.prototype.slice
-   * @param separator {String|RegExp}
-   * @param arr{Array}
-   * @returns {Array}
-   */
-  slice = exports.slice = (0, _utils.fPureTakes2)('slice'),
 
 
   /**

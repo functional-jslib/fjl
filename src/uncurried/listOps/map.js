@@ -1,6 +1,6 @@
 import {of} from   '../../objectOps/of';
 
-import {aggregatorByType}   from './listOpsUncurriedAggregation';
+import {aggregatorByType}   from './aggregation';
 
 import {length}              from '../jsPlatform/objectUncurried';
 

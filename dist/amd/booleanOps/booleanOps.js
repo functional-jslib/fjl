@@ -1,23 +1,29 @@
-define(['exports', './is', '../functionOps/curry'], function (exports, _is, _curry) {
+define(['exports', '../functionOps/curry'], function (exports, _curry) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.bEqual = exports.bOtherwise = exports.bNot = exports.bOr = exports.bAnd = exports.alwaysFalse = exports.alwaysTrue = exports.isFalsy = exports.isTruthy = undefined;
-  Object.defineProperty(exports, 'isTruthy', {
-    enumerable: true,
-    get: function () {
-      return _is.isTruthy;
-    }
-  });
-  Object.defineProperty(exports, 'isFalsy', {
-    enumerable: true,
-    get: function () {
-      return _is.isFalsy;
-    }
-  });
   const
+
+  /**
+   * Returns whether `value` is 'truthy' or not
+   * @function module:booleanOps.isTruthy
+   * @param value
+   * @returns {Boolean}
+   */
+  isTruthy = exports.isTruthy = value => !!value,
+
+
+  /**
+   * Returns whether `value` is 'falsy' or not
+   * @function module:booleanOps.isFalsy
+   * @param value
+   * @returns {Boolean}
+   */
+  isFalsy = exports.isFalsy = value => !value,
+
 
   /**
    * Returns `true`.
@@ -81,5 +87,8 @@ define(['exports', './is', '../functionOps/curry'], function (exports, _is, _cur
    * @param b {*}
    * @returns {Boolean}
    */
-  bEqual = exports.bEqual = (0, _curry.curry2)((a, b) => a === b);
+  bEqual = exports.bEqual = (0, _curry.curry2)((a, b) => a === b); /**
+                                                                    * Created by elyde on 7/15/2017.
+                                                                    * @module booleanOps
+                                                                    */
 });

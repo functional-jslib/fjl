@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './call', './apply', './compose', './curry', './negateP', './id', './flip', './until'], factory);
+    define(['exports', './call', './apply', './compose', './curry', '../uncurried/functionOps/negate', './id', './flip', './until'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./call'), require('./apply'), require('./compose'), require('./curry'), require('./negateP'), require('./id'), require('./flip'), require('./until'));
+    factory(exports, require('./call'), require('./apply'), require('./compose'), require('./curry'), require('../uncurried/functionOps/negate'), require('./id'), require('./flip'), require('./until'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.call, global.apply, global.compose, global.curry, global.negateP, global.id, global.flip, global.until);
+    factory(mod.exports, global.call, global.apply, global.compose, global.curry, global.negate, global.id, global.flip, global.until);
     global.functionOps = mod.exports;
   }
-})(this, function (exports, _call, _apply, _compose, _curry, _negateP, _id, _flip, _until) {
+})(this, function (exports, _call, _apply, _compose, _curry, _negate, _id, _flip, _until) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -112,11 +112,14 @@
       return _curry.curry5_;
     }
   });
-  Object.defineProperty(exports, 'negateP', {
-    enumerable: true,
-    get: function () {
-      return _negateP.negateP;
-    }
+  Object.keys(_negate).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _negate[key];
+      }
+    });
   });
   Object.defineProperty(exports, 'id', {
     enumerable: true,

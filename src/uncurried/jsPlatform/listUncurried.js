@@ -3,19 +3,29 @@
  *      on both strings and arrays.
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from   '../../utils/utils';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../../utils';
 
 // export {length, toString} from './objectOpsUnCurried';
 
 export const
 
     /**
+     * Concats/appends all functors onto the end of first functor.
+     * Note:  functors passed in after the first one must be of the same type.
      * @function module:jsPlatform.listOpsUncurried.concat
+     * @param functor {Array|Object|*}
+     * @param ...functor {Array|Object|*}
+     * @return {*|Array|Object} - The type passed.
+     * @throws {Error} - When passed in objectOps doesn't have an `every` method.
      */
     concat = fPureTakesOneOrMore('concat'),
 
     /**
+     * Same as Array.prototype.slice
      * @function module:jsPlatform.listOpsUncurried.slice
+     * @param separator {String|RegExp}
+     * @param arr{Array}
+     * @returns {Array}
      */
     slice = fPureTakes2('slice'),
 

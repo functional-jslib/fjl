@@ -13,11 +13,11 @@
  * @module fjl
  */
 
-export * from './objectOps/objectOps';
-export * from './booleanOps/booleanOps';
-export * from './functionOps/functionOps';
-export * from './listOps/listOps';
-export * from './numberOps/numberOps';
-export * from './stringOps/stringOps';
+export * from './objectOps';
+export * from './booleanOps';
+export * from './functionOps';
+export * from './listOps';
+export * from './numberOps';
+export * from './stringOps';
 
 export {version} from   '../generated-for-src/version';

@@ -15,21 +15,14 @@ import {
 
 export const
 
-    concat = concat_,
+    concat = curry(concat_),
 
-    /**
-     * Calls `slice` method on passed in instance.
-     * @function module:jsPlatform_list.slice
-     * @param separator {String|RegExp}
-     * @param list {Array|String|*}
-     * @returns {Array|String|*}
-     */
     slice = curry(slice_),
 
-    includes = includes_,
+    includes = curry(includes_),
 
-    indexOf = indexOf_,
+    indexOf = curry(indexOf_),
 
-    lastIndexOf = lastIndexOf_
+    lastIndexOf = curry(lastIndexOf_)
 
 ;

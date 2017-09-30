@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.flip = exports.flipN = undefined;
 
-var _listOps = require('../listOps/listOps');
+var _listOps = require('../listOps');
 
 var _curry = require('./curry');
 

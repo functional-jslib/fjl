@@ -1,4 +1,4 @@
-define(['exports', '../uncurried/jsPlatform/objectUncurried', '../uncurried/objectOps/typeOf', '../uncurried/objectOps/is', '../uncurried/objectOps/of', '../uncurried/objectOps/setTheoryOps', '../functionOps/curry', '../uncurried/objectOps/assignDeep'], function (exports, _objectUncurried, _typeOf, _is, _of, _setTheoryOps, _curry, _assignDeep) {
+define(['exports', '../uncurried/jsPlatform/objectUncurried', '../uncurried/objectOps/typeOf', '../uncurried/objectOps/is', '../uncurried/objectOps/of', '../uncurried/objectOps/setTheory', '../functionOps/curry', '../uncurried/objectOps/assignDeep'], function (exports, _objectUncurried, _typeOf, _is, _of, _setTheory, _curry, _assignDeep) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -50,12 +50,12 @@ define(['exports', '../uncurried/jsPlatform/objectUncurried', '../uncurried/obje
             }
         });
     });
-    Object.keys(_setTheoryOps).forEach(function (key) {
+    Object.keys(_setTheory).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
             enumerable: true,
             get: function () {
-                return _setTheoryOps[key];
+                return _setTheory[key];
             }
         });
     });

@@ -5,7 +5,7 @@
  * @todo updated doc blocks to list correct/updated module name.
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from   '../../utils/utils';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../../utils';
 
 export const
 
@@ -86,16 +86,6 @@ export const
     every = fPureTakesOne('every'),
 
     /**
-     * Concats/appends all functors onto the end of first functor.
-     * Note:  functors passed in after the first one must be of the same type.
-     * @param functor {Array|Object|*}
-     * @param ...functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in objectOps doesn't have an `every` method.
-     */
-    concat = fPureTakesOneOrMore('concat'),
-
-    /**
      * Array.prototype.join
      * @function module:listPrelude.join
      * @param separator {String|RegExp}
@@ -103,14 +93,6 @@ export const
      * @returns {String}
      */
     join = fPureTakesOne('join'),
-
-    /**
-     * Same as Array.prototype.slice
-     * @param separator {String|RegExp}
-     * @param arr{Array}
-     * @returns {Array}
-     */
-    slice = fPureTakes2('slice'),
 
     /**
      * Same as Array.prototype.push

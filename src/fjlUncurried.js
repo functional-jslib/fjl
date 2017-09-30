@@ -12,8 +12,8 @@
  * @module fjlUncurried
  */
 
-export * from './uncurried/objectOps/objectOpsUncurried';
-export * from './uncurried/functionOps/functionOpsUncurried';
-export * from './uncurried/listOps/listOpsUncurried';
+export * from './uncurried/objectOpsUncurried';
+export * from './uncurried/functionOpsUncurried';
+export * from './uncurried/listOpsUncurried';
 
 export {version} from   '../generated-for-src/version';

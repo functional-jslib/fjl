@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './assignDeep', '../jsPlatform/objectUncurried', './typeOf', './is', './of', './setTheoryOps', './prop'], factory);
+    define(['exports', './assignDeep', '../jsPlatform/objectUncurried', './typeOf', './is', './of', './setTheory', './prop'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./assignDeep'), require('../jsPlatform/objectUncurried'), require('./typeOf'), require('./is'), require('./of'), require('./setTheoryOps'), require('./prop'));
+    factory(exports, require('./assignDeep'), require('../jsPlatform/objectUncurried'), require('./typeOf'), require('./is'), require('./of'), require('./setTheory'), require('./prop'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.assignDeep, global.objectUncurried, global.typeOf, global.is, global.of, global.setTheoryOps, global.prop);
+    factory(mod.exports, global.assignDeep, global.objectUncurried, global.typeOf, global.is, global.of, global.setTheory, global.prop);
     global.objectOpsUncurried = mod.exports;
   }
-})(this, function (exports, _assignDeep, _objectUncurried, _typeOf, _is, _of, _setTheoryOps, _prop) {
+})(this, function (exports, _assignDeep, _objectUncurried, _typeOf, _is, _of, _setTheory, _prop) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -61,12 +61,12 @@
       }
     });
   });
-  Object.keys(_setTheoryOps).forEach(function (key) {
+  Object.keys(_setTheory).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _setTheoryOps[key];
+        return _setTheory[key];
       }
     });
   });

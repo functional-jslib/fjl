@@ -11,7 +11,7 @@ var _objectUncurried = require('../uncurried/jsPlatform/objectUncurried');
 
 var _assignDeep = require('../uncurried/objectOps/assignDeep');
 
-var _listOps = require('../listOps/listOps');
+var _listOps = require('../listOps');
 
 var objUnion = exports.objUnion = (0, _curry.curry)(function (obj1, obj2) {
     return (0, _assignDeep.assignDeep)(obj1, obj2);

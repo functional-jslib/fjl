@@ -4,7 +4,7 @@
  * @module jsPlatform_array
  */
 
-import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from   '../utils/utils';
+import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from '../utils';
 
 import {defineReverse} from '../uncurried/jsPlatform/arrayUncurried';
 

@@ -1,4 +1,4 @@
-define(['exports', '../../objectOps/of', './listOpsUncurriedAggregation', '../jsPlatform/objectUncurried'], function (exports, _of, _listOpsUncurriedAggregation, _objectUncurried) {
+define(['exports', '../../objectOps/of', './aggregation', '../jsPlatform/objectUncurried'], function (exports, _of, _aggregation, _objectUncurried) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -17,7 +17,7 @@ define(['exports', '../../objectOps/of', './listOpsUncurriedAggregation', '../js
         let ind = 0,
             limit = (0, _objectUncurried.length)(xs),
             out = (0, _of.of)(xs),
-            aggregate = (0, _listOpsUncurriedAggregation.aggregatorByType)(xs);
+            aggregate = (0, _aggregation.aggregatorByType)(xs);
         if (!limit) {
             return out;
         }

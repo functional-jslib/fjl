@@ -11,13 +11,11 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {compose} from '../src/functionOps/compose';
-import {negateP} from '../src/functionOps/negateP';
-import {__} from '../src/functionOps/curry';
+import {__, compose, negateP} from '../src/functionOps';
 import {split} from '../src/jsPlatform/string';
 import {isArray, isString} from '../src/objectOps/is';
-import {bEqual as equal, isTruthy} from '../src/booleanOps/booleanOps';
-import {lines, unlines, words, unwords} from '../src/stringOps/stringOps';
+import {bEqual as equal, isTruthy} from '../src/booleanOps';
+import {lines, unlines, words, unwords} from '../src/stringOps';
 import {
     append, appendMany,
     all, and, or, any, find, findIndex, findIndices,
@@ -34,7 +32,7 @@ import {
     filter, sum, product, maximum, maximumBy, minimum, minimumBy, nub, remove, insert, insertBy,
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
     complement, difference, union, intersect, intersectBy, groupBy
-} from '../src/uncurried/listOps/listOpsUncurried';
+} from '../src/uncurried/listOpsUncurried';
 
 import {
     range,

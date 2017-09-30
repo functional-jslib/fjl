@@ -7,7 +7,7 @@ exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curr
 
 var _apply = require('./apply');
 
-var _listOpsUncurried = require('../listOps/listOpsUncurried');
+var _listOpsUncurried = require('../listOpsUncurried');
 
 /**
  * @author elydelacruz

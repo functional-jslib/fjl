@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.compose = undefined;
 
-var _listOps = require('../listOps/listOps');
+var _listOps = require('../listOps');
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to

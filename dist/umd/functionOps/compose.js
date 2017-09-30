@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../listOps/listOps'], factory);
+    define(['exports', '../listOps'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../listOps/listOps'));
+    factory(exports, require('../listOps'));
   } else {
     var mod = {
       exports: {}

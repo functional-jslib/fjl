@@ -5,24 +5,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.bEqual = exports.bOtherwise = exports.bNot = exports.bOr = exports.bAnd = exports.alwaysFalse = exports.alwaysTrue = exports.isFalsy = exports.isTruthy = undefined;
 
-var _is = require('./is');
-
-Object.defineProperty(exports, 'isTruthy', {
-  enumerable: true,
-  get: function get() {
-    return _is.isTruthy;
-  }
-});
-Object.defineProperty(exports, 'isFalsy', {
-  enumerable: true,
-  get: function get() {
-    return _is.isFalsy;
-  }
-});
-
 var _curry = require('../functionOps/curry');
 
 var
+
+/**
+ * Returns whether `value` is 'truthy' or not
+ * @function module:booleanOps.isTruthy
+ * @param value
+ * @returns {Boolean}
+ */
+isTruthy = exports.isTruthy = function isTruthy(value) {
+  return !!value;
+},
+
+
+/**
+ * Returns whether `value` is 'falsy' or not
+ * @function module:booleanOps.isFalsy
+ * @param value
+ * @returns {Boolean}
+ */
+isFalsy = exports.isFalsy = function isFalsy(value) {
+  return !value;
+},
+
 
 /**
  * Returns `true`.
@@ -98,4 +105,7 @@ bOtherwise = exports.bOtherwise = alwaysTrue,
  */
 bEqual = exports.bEqual = (0, _curry.curry2)(function (a, b) {
   return a === b;
-});
+}); /**
+     * Created by elyde on 7/15/2017.
+     * @module booleanOps
+     */

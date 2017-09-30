@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.assign = exports.keys = exports.toString = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
 
-var _utils = require('../../utils/utils');
+var _utils = require('../../utils');
 
 var
 

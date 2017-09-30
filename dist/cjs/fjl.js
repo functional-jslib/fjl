@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectOps = require('./objectOps/objectOps');
+var _objectOps = require('./objectOps');
 
 Object.keys(_objectOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -16,7 +16,7 @@ Object.keys(_objectOps).forEach(function (key) {
   });
 });
 
-var _booleanOps = require('./booleanOps/booleanOps');
+var _booleanOps = require('./booleanOps');
 
 Object.keys(_booleanOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -28,7 +28,7 @@ Object.keys(_booleanOps).forEach(function (key) {
   });
 });
 
-var _functionOps = require('./functionOps/functionOps');
+var _functionOps = require('./functionOps');
 
 Object.keys(_functionOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -40,7 +40,7 @@ Object.keys(_functionOps).forEach(function (key) {
   });
 });
 
-var _listOps = require('./listOps/listOps');
+var _listOps = require('./listOps');
 
 Object.keys(_listOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -52,7 +52,7 @@ Object.keys(_listOps).forEach(function (key) {
   });
 });
 
-var _numberOps = require('./numberOps/numberOps');
+var _numberOps = require('./numberOps');
 
 Object.keys(_numberOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -64,7 +64,7 @@ Object.keys(_numberOps).forEach(function (key) {
   });
 });
 
-var _stringOps = require('./stringOps/stringOps');
+var _stringOps = require('./stringOps');
 
 Object.keys(_stringOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

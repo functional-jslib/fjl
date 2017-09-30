@@ -1,4 +1,4 @@
-define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurried', '../functionOps/negate', '../functionOps/functionOpsUncurried', '../../booleanOps/booleanOps', '../objectOps/objectOpsUncurried', './map', './listOpsUncurriedUtils'], function (exports, _listUncurried, _functionUncurried, _negate, _functionOpsUncurried, _booleanOps, _objectOpsUncurried, _map, _listOpsUncurriedUtils) {
+define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurried', '../functionOps/negate', '../functionOps/functionOpsUncurried', '../../booleanOps/booleanOps', '../objectOps/objectOpsUncurried', './map', './utils'], function (exports, _listUncurried, _functionUncurried, _negate, _functionOpsUncurried, _booleanOps, _objectOpsUncurried, _map, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -63,7 +63,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param xs {Array|String}
      * @returns {*}
      */
-    last = exports.last = xs => xs[(0, _listOpsUncurriedUtils.lastIndex)(xs)],
+    last = exports.last = xs => xs[(0, _utils.lastIndex)(xs)],
 
 
     /**
@@ -73,7 +73,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param xs {Array}
      * @returns {Array}
      */
-    tail = exports.tail = xs => (0, _listOpsUncurriedUtils.sliceFrom)(1, xs),
+    tail = exports.tail = xs => (0, _utils.sliceFrom)(1, xs),
 
 
     /**
@@ -83,7 +83,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param xs {Array|String}
      * @returns {Array|String}
      */
-    init = exports.init = xs => (0, _listOpsUncurriedUtils.sliceTo)((0, _listOpsUncurriedUtils.lastIndex)(xs), xs),
+    init = exports.init = xs => (0, _utils.sliceTo)((0, _utils.lastIndex)(xs), xs),
 
 
     /**
@@ -151,7 +151,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      */
     concat = exports.concat = xs => {
         if (!(0, _objectOpsUncurried.length)(xs)) {
-            return (0, _listOpsUncurriedUtils.copy)(xs);
+            return (0, _utils.copy)(xs);
         }
         return (0, _objectOpsUncurried.isString)(xs) ? xs : (0, _functionUncurried.apply)(appendMany, xs);
     },
@@ -176,8 +176,8 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @returns {Array|String|*}
      */
     reverse = exports.reverse = x => {
-        const aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(x);
-        return (0, _listOpsUncurriedUtils.reduceRight)((agg, item, ind) => aggregator(agg, item, ind), (0, _objectOpsUncurried.of)(x), x);
+        const aggregator = (0, _utils.aggregatorByType)(x);
+        return (0, _utils.reduceRight)((agg, item, ind) => aggregator(agg, item, ind), (0, _objectOpsUncurried.of)(x), x);
     },
 
 
@@ -194,7 +194,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
         const limit = (0, _objectOpsUncurried.length)(arr),
               lastInd = limit - 1,
               aggregator = (0, _objectOpsUncurried.of)(arr),
-              aggregatorOp = (0, _listOpsUncurriedUtils.aggregatorByType)(arr);
+              aggregatorOp = (0, _utils.aggregatorByType)(arr);
         if (!limit) {
             return aggregator;
         }
@@ -239,7 +239,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
         if (!numLists) {
             return (0, _objectOpsUncurried.of)(xss);
         }
-        const listLengths = (0, _functionUncurried.apply)(_listOpsUncurriedUtils.lengths, xss),
+        const listLengths = (0, _functionUncurried.apply)(_utils.lengths, xss),
               longestListLen = maximum(listLengths),
               outLists = [];
         for (; ind < longestListLen; ind += 1) {
@@ -282,21 +282,21 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
         return out;
     },
           permutations = exports.permutations = xs => [xs],
-          foldl = exports.foldl = _listOpsUncurriedUtils.reduce,
-          foldr = exports.foldr = _listOpsUncurriedUtils.reduceRight,
+          foldl = exports.foldl = _utils.reduce,
+          foldr = exports.foldr = _utils.reduceRight,
           foldl1 = exports.foldl1 = (op, xs) => {
         const parts = uncons(xs);
         if (!parts) {
             return (0, _objectOpsUncurried.of)(xs);
         }
-        return (0, _listOpsUncurriedUtils.reduce)(op, parts[0], parts[1]);
+        return (0, _utils.reduce)(op, parts[0], parts[1]);
     },
           foldr1 = exports.foldr1 = (op, xs) => {
         const parts = unconsr(xs);
         if (!parts) {
             return (0, _objectOpsUncurried.of)(xs);
         }
-        return (0, _listOpsUncurriedUtils.reduceRight)(op, parts[1], parts[0]);
+        return (0, _utils.reduceRight)(op, parts[1], parts[0]);
     },
 
 
@@ -310,7 +310,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @return {Array} - [aggregated, list]
      */
     mapAccumL = exports.mapAccumL = (op, zero, xs) => {
-        const list = (0, _listOpsUncurriedUtils.sliceFrom)(0, xs),
+        const list = (0, _utils.sliceFrom)(0, xs),
               limit = (0, _objectOpsUncurried.length)(xs);
         if (!limit) {
             return [zero, list];
@@ -338,7 +338,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @return {Array} - [aggregated, list]
      */
     mapAccumR = exports.mapAccumR = (op, zero, xs) => {
-        const list = (0, _listOpsUncurriedUtils.sliceFrom)(0, xs),
+        const list = (0, _utils.sliceFrom)(0, xs),
               limit = (0, _objectOpsUncurried.length)(xs);
         if (!limit) {
             return [zero, list];
@@ -434,7 +434,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndex = exports.findIndex = _listOpsUncurriedUtils.findIndexWhere,
+    findIndex = exports.findIndex = _utils.findIndexWhere,
 
 
     /**
@@ -443,7 +443,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
      */
-    findIndices = exports.findIndices = _listOpsUncurriedUtils.findIndicesWhere,
+    findIndices = exports.findIndices = _utils.findIndicesWhere,
 
 
     /**
@@ -474,7 +474,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    take = exports.take = (limit, list) => (0, _listOpsUncurriedUtils.sliceTo)(limit, list),
+    take = exports.take = (limit, list) => (0, _utils.sliceTo)(limit, list),
 
 
     /**
@@ -484,7 +484,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    drop = exports.drop = (count, list) => (0, _listOpsUncurriedUtils.sliceFrom)(count, list),
+    drop = exports.drop = (count, list) => (0, _utils.sliceFrom)(count, list),
 
 
     /**
@@ -495,7 +495,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param list {Array|String|*} - functor (list or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
      */
-    splitAt = exports.splitAt = (ind, list) => [(0, _listOpsUncurriedUtils.sliceTo)(ind, list), (0, _listOpsUncurriedUtils.sliceFrom)(ind, list)],
+    splitAt = exports.splitAt = (ind, list) => [(0, _utils.sliceTo)(ind, list), (0, _utils.sliceFrom)(ind, list)],
 
 
     /**
@@ -507,8 +507,8 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      */
     takeWhile = exports.takeWhile = (pred, list) => {
         let zero = (0, _objectOpsUncurried.of)(list);
-        const operation = (0, _listOpsUncurriedUtils.aggregatorByType)(list);
-        return (0, _listOpsUncurriedUtils.reduceUntil)((0, _functionOpsUncurried.negateP)(pred), // predicate
+        const operation = (0, _utils.aggregatorByType)(list);
+        return (0, _utils.reduceUntil)((0, _functionOpsUncurried.negateP)(pred), // predicate
         operation, // operation
         zero, // aggregator
         list);
@@ -525,9 +525,9 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      */
     dropWhile = exports.dropWhile = (pred, list) => {
         const limit = (0, _objectOpsUncurried.length)(list),
-              splitPoint = (0, _listOpsUncurriedUtils.findIndexWhere)((item, ind, list2) => !pred(list[ind], ind, list2), list);
+              splitPoint = (0, _utils.findIndexWhere)((item, ind, list2) => !pred(list[ind], ind, list2), list);
 
-        return splitPoint === -1 ? (0, _listOpsUncurriedUtils.sliceTo)(limit, list) : (0, _listUncurried.slice)(splitPoint, limit, list);
+        return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _listUncurried.slice)(splitPoint, limit, list);
     },
 
 
@@ -540,9 +540,9 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      */
     dropWhileEnd = exports.dropWhileEnd = (pred, list) => {
         const limit = (0, _objectOpsUncurried.length)(list),
-              splitPoint = (0, _listOpsUncurriedUtils.findIndexWhereRight)((item, ind, list2) => !pred(list[ind], ind, list2), list);
+              splitPoint = (0, _utils.findIndexWhereRight)((item, ind, list2) => !pred(list[ind], ind, list2), list);
 
-        return splitPoint === -1 ? (0, _listOpsUncurriedUtils.sliceTo)(limit, list) : (0, _listOpsUncurriedUtils.sliceTo)(splitPoint + 1, list);
+        return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _utils.sliceTo)(splitPoint + 1, list);
     },
 
 
@@ -556,11 +556,11 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     span = exports.span = (pred, list) => {
-        const splitPoint = (0, _listOpsUncurriedUtils.findIndexWhere)((0, _functionOpsUncurried.negateP)(pred), list);
+        const splitPoint = (0, _utils.findIndexWhere)((0, _functionOpsUncurried.negateP)(pred), list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     },
           breakOnList = exports.breakOnList = (pred, list) => {
-        const splitPoint = (0, _listOpsUncurriedUtils.findIndexWhere)(pred, list);
+        const splitPoint = (0, _utils.findIndexWhere)(pred, list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     },
 
@@ -580,11 +580,11 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    find = exports.find = _listOpsUncurriedUtils.findWhere,
+    find = exports.find = _utils.findWhere,
           filter = exports.filter = (pred, xs) => {
         let ind = 0,
             limit = (0, _objectOpsUncurried.length)(xs),
-            aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(xs),
+            aggregator = (0, _utils.aggregatorByType)(xs),
             out = (0, _objectOpsUncurried.of)(xs);
         if (!limit) {
             return out;
@@ -714,7 +714,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
     groupBy = exports.groupBy = (equalityOp, xs) => {
         const limit = (0, _objectOpsUncurried.length)(xs);
         if (!limit) {
-            return (0, _listOpsUncurriedUtils.sliceFrom)(0, xs);
+            return (0, _utils.sliceFrom)(0, xs);
         }
         let ind = 0,
             prevItem,
@@ -744,7 +744,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = (0, _listOpsUncurriedUtils.aggregateArr)(agg, (0, _listOpsUncurriedUtils.sliceTo)(ind, xs));
+            agg = (0, _utils.aggregateArr)(agg, (0, _utils.sliceTo)(ind, xs));
         }
         return agg;
     },
@@ -758,13 +758,13 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = (0, _listOpsUncurriedUtils.aggregateArr)(agg, (0, _listUncurried.slice)(ind, limit, xs));
+            agg = (0, _utils.aggregateArr)(agg, (0, _listUncurried.slice)(ind, limit, xs));
         }
         return agg;
     },
           //map(list => tail(list), xs),
 
-    stripPrefix = exports.stripPrefix = (prefix, list) => isPrefixOf(prefix, list) ? splitAt((0, _objectOpsUncurried.length)(prefix), list)[1] : (0, _listOpsUncurriedUtils.sliceFrom)(0, list),
+    stripPrefix = exports.stripPrefix = (prefix, list) => isPrefixOf(prefix, list) ? splitAt((0, _objectOpsUncurried.length)(prefix), list)[1] : (0, _utils.sliceFrom)(0, list),
 
 
     /**
@@ -780,8 +780,8 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
         if (!(0, _objectOpsUncurried.length)(arr1) || !(0, _objectOpsUncurried.length)(arr2)) {
             return (0, _objectOpsUncurried.of)(arr1);
         }
-        const [a1, a2] = (0, _listOpsUncurriedUtils.lengthsToSmallest)(arr1, arr2);
-        return (0, _listOpsUncurriedUtils.reduce)((agg, item, ind) => (0, _listOpsUncurriedUtils.aggregateArr)(agg, [item, a2[ind]]), [], a1);
+        const [a1, a2] = (0, _utils.lengthsToSmallest)(arr1, arr2);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, [item, a2[ind]]), [], a1);
     },
 
 
@@ -794,14 +794,14 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @returns {Array}
      */
     zipN = exports.zipN = (...lists) => {
-        const trimmedLists = (0, _functionUncurried.apply)(_listOpsUncurriedUtils.lengthsToSmallest, filter(_objectOpsUncurried.length, lists)),
+        const trimmedLists = (0, _functionUncurried.apply)(_utils.lengthsToSmallest, filter(_objectOpsUncurried.length, lists)),
               lenOfTrimmed = (0, _objectOpsUncurried.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
         } else if (lenOfTrimmed === 1) {
-            return (0, _listOpsUncurriedUtils.sliceTo)((0, _objectOpsUncurried.length)(trimmedLists[0]), trimmedLists[0]);
+            return (0, _utils.sliceTo)((0, _objectOpsUncurried.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _listOpsUncurriedUtils.reduce)((agg, item, ind) => (0, _listOpsUncurriedUtils.aggregateArr)(agg, (0, _map.map)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, (0, _map.map)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
     },
 
 
@@ -865,8 +865,8 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
         if (!(0, _objectOpsUncurried.length)(xs1) || !(0, _objectOpsUncurried.length)(xs2)) {
             return (0, _objectOpsUncurried.of)(xs1);
         }
-        const [a1, a2] = (0, _listOpsUncurriedUtils.lengthsToSmallest)(xs1, xs2);
-        return (0, _listOpsUncurriedUtils.reduce)((agg, item, ind) => (0, _listOpsUncurriedUtils.aggregateArr)(agg, op(item, a2[ind])), [], a1);
+        const [a1, a2] = (0, _utils.lengthsToSmallest)(xs1, xs2);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, op(item, a2[ind])), [], a1);
     },
 
 
@@ -884,14 +884,14 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @returns {Array<Array<*,*>>}
      */
     zipWithN = exports.zipWithN = (op, ...lists) => {
-        const trimmedLists = (0, _functionUncurried.apply)(_listOpsUncurriedUtils.lengthsToSmallest, lists),
+        const trimmedLists = (0, _functionUncurried.apply)(_utils.lengthsToSmallest, lists),
               lenOfTrimmed = (0, _objectOpsUncurried.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
         } else if (lenOfTrimmed === 1) {
-            return (0, _listOpsUncurriedUtils.sliceTo)((0, _objectOpsUncurried.length)(trimmedLists[0]), trimmedLists[0]);
+            return (0, _utils.sliceTo)((0, _objectOpsUncurried.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _listOpsUncurriedUtils.reduce)((agg, item, ind) => (0, _listOpsUncurriedUtils.aggregateArr)(agg, (0, _functionUncurried.apply)(op, (0, _map.map)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, (0, _functionUncurried.apply)(op, (0, _map.map)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
     },
 
 
@@ -1008,8 +1008,8 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
           not = exports.not = xs => all(_booleanOps.isFalsy, xs),
           sum = exports.sum = list => foldl((agg, x) => agg + x, 0, list),
           product = exports.product = arr => foldl((agg, x) => agg * x, 1, arr),
-          maximum = exports.maximum = list => maximumBy(_listOpsUncurriedUtils.genericAscOrdering, list),
-          minimum = exports.minimum = list => minimumBy(_listOpsUncurriedUtils.genericAscOrdering, list),
+          maximum = exports.maximum = list => maximumBy(_utils.genericAscOrdering, list),
+          minimum = exports.minimum = list => minimumBy(_utils.genericAscOrdering, list),
           maximumBy = exports.maximumBy = (ordering, xs) => last(sortBy(ordering, xs)),
           minimumBy = exports.minimumBy = (ordering, xs) => head(sortBy(ordering, xs)),
           scanl = exports.scanl = () => null,
@@ -1018,7 +1018,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
           scanr1 = exports.scanr1 = () => null,
           nub = exports.nub = list => nubBy((a, b) => a === b, list),
           remove = exports.remove = (x, list) => removeBy((a, b) => a === b, x, list),
-          sort = exports.sort = xs => sortBy(_listOpsUncurriedUtils.genericAscOrdering, xs),
+          sort = exports.sort = xs => sortBy(_utils.genericAscOrdering, xs),
           sortOn = exports.sortOn = (valueFn, xs) =>
 
     // Un-decorate
@@ -1040,14 +1040,14 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
 
     // Decorate
     (0, _map.map)(item => [valueFn(item), item], xs))),
-          sortBy = exports.sortBy = (orderingFn, xs) => (0, _listOpsUncurriedUtils.copy)(xs).sort(orderingFn),
+          sortBy = exports.sortBy = (orderingFn, xs) => (0, _utils.copy)(xs).sort(orderingFn),
           insert = exports.insert = (x, xs) => {
         if (isEmpty(xs)) {
-            return (0, _listOpsUncurriedUtils.aggregatorByType)(xs)((0, _listOpsUncurriedUtils.copy)(xs), x, 0);
+            return (0, _utils.aggregatorByType)(xs)((0, _utils.copy)(xs), x, 0);
         }
         let out = (0, _objectOpsUncurried.of)(xs),
             foundIndex = findIndex(item => x <= item, xs);
-        return foundIndex === -1 ? append((0, _listOpsUncurriedUtils.sliceFrom)(0, out), x) : concat(intersperse([x], splitAt(foundIndex, xs)));
+        return foundIndex === -1 ? append((0, _utils.sliceFrom)(0, out), x) : concat(intersperse([x], splitAt(foundIndex, xs)));
     },
 
 
@@ -1066,7 +1066,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      */
     insertBy = exports.insertBy = (orderingFn, x, xs) => {
         const limit = (0, _objectOpsUncurried.length)(xs),
-              aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(xs),
+              aggregator = (0, _utils.aggregatorByType)(xs),
               out = (0, _objectOpsUncurried.of)(xs);
         if (isEmpty(xs)) {
             return aggregator(out, x, 0);
@@ -1079,7 +1079,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
                 return concat(foldl(aggregator, out, [parts[0], [x], parts[1]]));
             }
         }
-        return aggregator((0, _listOpsUncurriedUtils.copy)(xs), x);
+        return aggregator((0, _utils.copy)(xs), x);
     },
           nubBy = exports.nubBy = (pred, list) => {
         if (isEmpty(list)) {
@@ -1117,11 +1117,11 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @returns {Array|String|*}
      */
     unionBy = exports.unionBy = (pred, arr1, arr2) => {
-        const aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(arr1);
+        const aggregator = (0, _utils.aggregatorByType)(arr1);
         return foldl((agg, b) => {
             const alreadyAdded = any(a => pred(a, b), agg);
             return !alreadyAdded ? aggregator(agg, b) : agg;
-        }, (0, _listOpsUncurriedUtils.copy)(arr1), arr2);
+        }, (0, _utils.copy)(arr1), arr2);
     },
 
 
@@ -1154,7 +1154,7 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @return {Array|String|*}
      */
     intersectBy = exports.intersectBy = (pred, list1, list2) => {
-        const aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(list1);
+        const aggregator = (0, _utils.aggregatorByType)(list1);
         return foldl((agg, a) => any(b => pred(a, b), list2) ? aggregator(agg, a) : agg, [], list1);
     },
 
@@ -1170,12 +1170,12 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
     difference = exports.difference = (array1, array2) => {
         // augment this with max length and min length ordering on op
         if (array1 && !array2) {
-            return (0, _listOpsUncurriedUtils.sliceFrom)(0, array1);
+            return (0, _utils.sliceFrom)(0, array1);
         } else if (!array1 && array2 || !array1 && !array2) {
             return [];
         }
-        const aggregator = (0, _listOpsUncurriedUtils.aggregatorByType)(array1);
-        return (0, _listOpsUncurriedUtils.reduce)((agg, elm) => !(0, _listUncurried.includes)(elm, array2) ? aggregator(agg, elm) : agg, [], array1);
+        const aggregator = (0, _utils.aggregatorByType)(array1);
+        return (0, _utils.reduce)((agg, elm) => !(0, _listUncurried.includes)(elm, array2) ? aggregator(agg, elm) : agg, [], array1);
     },
 
 
@@ -1186,5 +1186,5 @@ define(['exports', '../jsPlatform/listUncurried', '../jsPlatform/functionUncurri
      * @param arrays {...Array}
      * @returns {Array}
      */
-    complement = exports.complement = (arr0, ...arrays) => (0, _listOpsUncurriedUtils.reduce)((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
+    complement = exports.complement = (arr0, ...arrays) => (0, _utils.reduce)((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
 });

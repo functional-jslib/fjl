@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../../objectOps/of', './listOpsUncurriedAggregation', '../jsPlatform/objectUncurried'], factory);
+        define(['exports', '../../objectOps/of', './aggregation', '../jsPlatform/objectUncurried'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../../objectOps/of'), require('./listOpsUncurriedAggregation'), require('../jsPlatform/objectUncurried'));
+        factory(exports, require('../../objectOps/of'), require('./aggregation'), require('../jsPlatform/objectUncurried'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.of, global.listOpsUncurriedAggregation, global.objectUncurried);
+        factory(mod.exports, global.of, global.aggregation, global.objectUncurried);
         global.map = mod.exports;
     }
-})(this, function (exports, _of, _listOpsUncurriedAggregation, _objectUncurried) {
+})(this, function (exports, _of, _aggregation, _objectUncurried) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -29,7 +29,7 @@
         var ind = 0,
             limit = (0, _objectUncurried.length)(xs),
             out = (0, _of.of)(xs),
-            aggregate = (0, _listOpsUncurriedAggregation.aggregatorByType)(xs);
+            aggregate = (0, _aggregation.aggregatorByType)(xs);
         if (!limit) {
             return out;
         }

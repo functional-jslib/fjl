@@ -17,8 +17,8 @@ import {objComplement, objDifference, objUnion, objIntersect,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet, assignDeep
-} from '../src/uncurried/objectOps/objectOpsUncurried';
-import {foldl, map, and, head, tail} from "../src/uncurried/listOps/listOpsUncurried";
+} from '../src/uncurried/objectOpsUncurried';
+import {foldl, map, and, head, tail} from "../src/uncurried/listOpsUncurried";
 import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, deepCompareObjectsLeft} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

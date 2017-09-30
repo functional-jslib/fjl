@@ -1,10 +1,10 @@
-define(['exports', '../../utils/utils'], function (exports, _utils) {
+define(['exports', '../../utils'], function (exports, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.reverse = exports.push = exports.slice = exports.join = exports.concat = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.defineReverse = undefined;
+  exports.reverse = exports.push = exports.join = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.defineReverse = undefined;
   const
 
   /**
@@ -90,17 +90,6 @@ define(['exports', '../../utils/utils'], function (exports, _utils) {
 
 
   /**
-   * Concats/appends all functors onto the end of first functor.
-   * Note:  functors passed in after the first one must be of the same type.
-   * @param functor {Array|Object|*}
-   * @param ...functor {Array|Object|*}
-   * @return {*|Array|Object} - The type passed.
-   * @throws {Error} - When passed in objectOps doesn't have an `every` method.
-   */
-  concat = exports.concat = (0, _utils.fPureTakesOneOrMore)('concat'),
-
-
-  /**
    * Array.prototype.join
    * @function module:listPrelude.join
    * @param separator {String|RegExp}
@@ -108,15 +97,6 @@ define(['exports', '../../utils/utils'], function (exports, _utils) {
    * @returns {String}
    */
   join = exports.join = (0, _utils.fPureTakesOne)('join'),
-
-
-  /**
-   * Same as Array.prototype.slice
-   * @param separator {String|RegExp}
-   * @param arr{Array}
-   * @returns {Array}
-   */
-  slice = exports.slice = (0, _utils.fPureTakes2)('slice'),
 
 
   /**

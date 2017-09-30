@@ -11,7 +11,7 @@ import {apply} from '../src/functionOps/apply';
 import {call} from '../src/functionOps/call';
 import {compose} from '../src/functionOps/compose';
 import {curry, curry2, curryN, __, curry_, curry2_, curry3_, curry5_, curryN_} from '../src/functionOps/curry';
-import {flip, flipN, until, id} from '../src/functionOps/functionOps';
+import {flip, flipN, until, id} from '../src/functionOps';
 import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~

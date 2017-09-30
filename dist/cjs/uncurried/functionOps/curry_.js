@@ -9,7 +9,7 @@ exports.curryN_ = curryN_;
 
 var _apply = require('./apply');
 
-var _listOpsUncurried = require('../listOps/listOpsUncurried');
+var _listOpsUncurried = require('../listOpsUncurried');
 
 /**
  * PlaceHolder (__) constructor.

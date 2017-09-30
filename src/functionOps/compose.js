@@ -1,7 +1,7 @@
 /**
  * @memberOf functionOps
  */
-import {foldr} from   '../listOps/listOps';
+import {foldr} from '../listOps';
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
