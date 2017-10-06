@@ -17,7 +17,6 @@ export * from './objectOps';
 export * from './booleanOps';
 export * from './functionOps';
 export * from './listOps';
-export * from './numberOps';
 export * from './stringOps';
 
 export {version} from   '../generated-for-src/version';
