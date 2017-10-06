@@ -5130,197 +5130,6 @@ containing the aggregated value and the result of mapping the passed in function
     
 
     
-    <h4 class="name" id=".partition"><span class="type-signature">(static) </span>partition<span class="signature">(pred, list)</span><span class="type-signature"> &rarr; {Array|String}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
-do not match the tuple are in second list in the returned tuple.
- Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>pred</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Predicate<item, index, originalArrayOrString></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>list</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">String</span>
-|
-
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="listOps.js.html">listOps.js</a>, <a href="listOps.js.html#line329">line 329</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Tuple of arrays or strings (depends on incoming list (of type list or string)).
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">String</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id=".partition"><span class="type-signature">(static) </span>partition<span class="signature">(pred, list)</span><span class="type-signature"> &rarr; {Array|String|*}</span></h4>
     
 
@@ -5498,6 +5307,197 @@ the second list in the tuple is a list of the remaining elements in the given li
 |
 
 <span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".partition"><span class="type-signature">(static) </span>partition<span class="signature">(pred, list)</span><span class="type-signature"> &rarr; {Array|String}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
+do not match the tuple are in second list in the returned tuple.
+ Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pred</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Predicate<item, index, originalArrayOrString></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>list</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="listOps.js.html">listOps.js</a>, <a href="listOps.js.html#line329">line 329</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Tuple of arrays or strings (depends on incoming list (of type list or string)).
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
 
 
     </dd>
@@ -5702,192 +5702,6 @@ given index in second part of returned list)).
     
 
     
-    <h4 class="name" id=".take"><span class="type-signature">(static) </span>take<span class="signature">(list, count)</span><span class="type-signature"> &rarr; {String|Array}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Drops `n` items from start of list to `count` (exclusive).
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>list</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>count</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="listOps.js.html">listOps.js</a>, <a href="listOps.js.html#line251">line 251</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Passed in type's type
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">String</span>
-|
-
-<span class="param-type">Array</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id=".take"><span class="type-signature">(static) </span>take<span class="signature">(list, limit)</span><span class="type-signature"> &rarr; {String|Array}</span></h4>
     
 
@@ -6016,6 +5830,192 @@ given index in second part of returned list)).
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="listOps.js.html">listOps.js</a>, <a href="listOps.js.html#line242">line 242</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Passed in type's type
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".take"><span class="type-signature">(static) </span>take<span class="signature">(list, count)</span><span class="type-signature"> &rarr; {String|Array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Drops `n` items from start of list to `count` (exclusive).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>list</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>count</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="listOps.js.html">listOps.js</a>, <a href="listOps.js.html#line251">line 251</a>
     </li></ul></dd>
     
 
@@ -8252,13 +8252,13 @@ zipWith f [] _|_ = []
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-numberOps.html">numberOps</a></li><li><a href="module-objectOps.html">objectOps</a></li><li><a href="module-stringOps.html">stringOps</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-objectOps.html">objectOps</a></li><li><a href="module-stringOps.html">stringOps</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Sep 30 2017 05:17:06 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Oct 06 2017 14:12:17 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
