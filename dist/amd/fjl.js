@@ -1,84 +1,58 @@
-define(['exports', './assign', './compose', './curry', './subClass', './typeOf', './is', './not', './errorIfNotTypeFactory', './fnOperators', './operators', './objOperators', './arrayOperators', './generated/version'], function (exports, _assign, _compose, _curry, _subClass, _typeOf, _is, _not, _errorIfNotTypeFactory, _fnOperators, _operators, _objOperators, _arrayOperators, _version) {
-    /**
-     * Created by elyde on 12/6/2016.
-     */
+define(['exports', './objectOps', './booleanOps', './functionOps', './listOps', './stringOps', '../generated-for-src/version'], function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps, _version) {
+  'use strict';
 
-    'use strict';
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  Object.keys(_objectOps).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _objectOps[key];
+      }
     });
-
-    var _compose2 = _interopRequireDefault(_compose);
-
-    var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
-
-    var _version2 = _interopRequireDefault(_version);
-
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+  });
+  Object.keys(_booleanOps).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _booleanOps[key];
+      }
+    });
+  });
+  Object.keys(_functionOps).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _functionOps[key];
+      }
+    });
+  });
+  Object.keys(_listOps).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _listOps[key];
+      }
+    });
+  });
+  Object.keys(_stringOps).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _stringOps[key];
+      }
+    });
+  });
+  Object.defineProperty(exports, 'version', {
+    enumerable: true,
+    get: function () {
+      return _version.version;
     }
-
-    exports.default = {
-        __: _curry.__,
-        apply: _fnOperators.apply,
-        arrayComplement: _arrayOperators.complement,
-        arrayDifference: _arrayOperators.difference,
-        arrayIntersect: _arrayOperators.intersect,
-        arrayUnion: _arrayOperators.union,
-        assign: _assign.assign,
-        assignDeep: _assign.assignDeep,
-        call: _fnOperators.call,
-        complement: _operators.complement,
-        compose: _compose2.default,
-        curry: _curry.curry,
-        curryN: _curry.curryN,
-        curry2: _curry.curry2,
-        curry3: _curry.curry3,
-        curry4: _curry.curry4,
-        curry5: _curry.curry5,
-        difference: _operators.difference,
-        errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
-        filter: _operators.filter,
-        intersect: _operators.intersect,
-        isset: _is.isset,
-        issetAndOfType: _is.issetAndOfType,
-        isNumber: _is.isNumber,
-        isFunction: _is.isFunction,
-        isArray: _is.isArray,
-        isBoolean: _is.isBoolean,
-        isObject: _is.isObject,
-        isString: _is.isString,
-        isMap: _is.isMap,
-        isSet: _is.isSet,
-        isWeakSet: _is.isWeakSet,
-        isWeakMap: _is.isWeakMap,
-        isUndefined: _is.isUndefined,
-        isNull: _is.isNull,
-        isSymbol: _is.isSymbol,
-        isEmpty: _is.isEmpty,
-        isConstructablePrimitive: _is.isConstructablePrimitive,
-        map: _operators.map,
-        notEmptyAndOfType: _not.notEmptyAndOfType,
-        pureCurry: _curry.pureCurry,
-        pureCurryN: _curry.pureCurryN,
-        pureCurry2: _curry.pureCurry2,
-        pureCurry3: _curry.pureCurry3,
-        pureCurry4: _curry.pureCurry4,
-        pureCurry5: _curry.pureCurry5,
-        objComplement: _objOperators.complement,
-        objDifference: _objOperators.difference,
-        objIntersect: _objOperators.intersect,
-        objUnion: _objOperators.union,
-        reduce: _operators.reduce,
-        reduceRight: _operators.reduceRight,
-        subClass: _subClass.subClass,
-        subClassMulti: _subClass.subClassMulti,
-        typeOf: _typeOf.typeOf,
-        typeOfIs: _typeOf.typeOfIs,
-        union: _operators.union,
-        version: _version2.default
-    };
+  });
 });

@@ -15,7 +15,7 @@ describe ('Acl', function () {
         it ('should require a `config` to pass construction', function () {
             assert.throws(Acl, TypeError);
         });
-        it ('should pass construction successfully when called as a function and supplying a `config`', function () {
+        it ('should pass construction successfully when called as a functionOps and supplying a `config`', function () {
             expectInstanceOf(Acl({}));
         });
         it ('should pass construction successfully when called with `new` and supplying a `config`', function () {

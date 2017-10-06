@@ -5,6 +5,40 @@
 # fjl
 Functional Javascript Library
 
+## This branch is in Alpha
+
+## Motivations:
+- Haskell and it's `Prelude`.
+- Lambda Calculus.
+- The need for a way to do strong, and loose, type checking in combination,
+however necessary, in actual javascript code (not in typescript).
+- The need to be able to write functional code very quickly and
+easily in combination with the aforementioned.
+- A functional library that takes advantage of the es6 features of the language
+and is built from the ground up using functional concepts.
+- A functional library that is exported to multiple formats
+(umd, amd, commonjs, es6-modules, and iife).
+- "" that has both curried and un-curried versions of included operations.
+- Etc. etc..
+
+### Needed
+- [ ] - A friendly function names module has to be built
+for some of these functions as most javascript developers
+will not be familiar with the function names and paradigms
+used in haskell.
+- [ ] - Also some of the utility functions used to create
+the libraries functions should be exported with clear and meaningful
+names (they haven't been reviewed for export yet).
+
+## Reasoning for paradigms
+### Use of for loops instead of built-ins:
+- They are faster than iterating with functional array additions (`map`, `forEach` etc.)
+as you can see from many performance tests online @todo add references here
+(or writing your own @todo add references here).
+- They perform faster than `while` and `do {} while {}` loops.
+- They allow us to make our curried functional additions (`map`, `some` etc.)
+more performant than just currying the built in ones.
+
 ## Sections in Readme:
 - [Getting Started](#getting-started)
 - [Unit Tests](#unit-tests)
@@ -31,306 +65,13 @@ const fjl = require('fjl');
 
 #### Using es2015 modules:
 ```
-import fjl from './node_modules/fjl/src/fjl';
+import {...} from 'fjl';
 ```
 
 ## Fjl Members List:
 #### Members, Properties and Methods:
 
-- [fjl.__](#fjl__)
-- [fjl.apply](#fjlapply)
-- [fjl.arrayComplement](#fjlarraycomplement)
-- [fjl.arrayDifference](#fjlarraydifference)
-- [fjl.arrayIntersect](#fjlarrayintersect)
-- [fjl.arrayUnion](#fjlarrayunion)
-- [fjl.assign](#fjlassign)
-- [fjl.assignDeep](#fjlassigndeep)
-- [fjl.call](#fjlcall)
-- [fjl.complement](#fjlcomplement)
-- [fjl.compose](#fjlcompose)
-- [fjl.curry](#fjlcurry)
-- [fjl.curryN](#fjlcurryn)
-- [fjl.curry2](#fjlcurry2)
-- [fjl.curry3](#fjlcurry3)
-- [fjl.curry4](#fjlcurry4)
-- [fjl.curry5](#fjlcurry5)
-- [fjl.difference](#fjldifference)
-- [fjl.errorIfNotTypeFactory](#fjlerrorifnottypefactory)
-- [fjl.filter](#fjlfilter)
-- [fjl.intersect](#fjlintersect)
-- [fjl.isset](#fjlisset)
-- [fjl.issetAndOfType](#fjlissetandoftype)
-- [fjl.isNumber](#fjlisnumber)
-- [fjl.isFunction](#fjlisfunction)
-- [fjl.isArray](#fjlisarray)
-- [fjl.isBoolean](#fjlisboolean)
-- [fjl.isObject](#fjlisobject)
-- [fjl.isString](#fjlisstring)
-- [fjl.isMap](#fjlismap)
-- [fjl.isSet](#fjlisset)
-- [fjl.isWeakSet](#fjlisweakset)
-- [fjl.isWeakMap](#fjlisweakmap)
-- [fjl.isUndefined](#fjlisundefined)
-- [fjl.isNull](#fjlisnull)
-- [fjl.isSymbol](#fjlissymbol)
-- [fjl.isEmpty](#fjlisempty)
-- [fjl.isConstructablePrimitive](#fjlisconstructableprimitive)
-- [fjl.map](#fjlmap)
-- [fjl.notEmptyAndOfType](#fjlnotemptyandoftype)
-- [fjl.pureCurry](#fjlpurecurry)
-- [fjl.pureCurryN](#fjlpurecurryn)
-- [fjl.pureCurry2](#fjlpurecurry2)
-- [fjl.pureCurry3](#fjlpurecurry3)
-- [fjl.pureCurry4](#fjlpurecurry4)
-- [fjl.pureCurry5](#fjlpurecurry5)
-- [fjl.objComplement](#fjlobjcomplement)
-- [fjl.objDifference](#fjlobjdifference)
-- [fjl.objIntersect](#fjlobjintersect)
-- [fjl.objUnion](#fjlobjunion)
-- [fjl.reduce](#fjlreduce)
-- [fjl.reduceRight](#fjlreduceright)
-- [fjl.subClass](#fjlsubclass)
-- [fjl.subClassMulti](#fjlsubclassmulti)
-- [fjl.typeOf](#fjltypeof)
-- [fjl.typeOfIs](#fjltypeofis)
-- [fjl.union](#fjlunion)
-- [fjl.version](#fjlversion)
 
-### fjl.__
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.apply
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.arrayComplement
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.arrayDifference
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.arrayIntersect
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.arrayUnion
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.assign
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.assignDeep
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.call
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.complement
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.compose
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.curry
-```
-fjl.curry (fn {Function}, ...initialArgs {*}): {Function}
-
-``` 
-
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.curry2
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.curry3
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.curry4
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.curry5
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.curryN
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.difference
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.errorIfNotTypeFactory
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.filter
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.intersect
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isArray
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isBoolean
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isConstructablePrimitive
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isEmpty
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isFunction
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isMap
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isNull
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isNumber
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isObject
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isSet
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isString
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isSymbol
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isUndefined
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isWeakMap
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isWeakSet
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isset
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.issetAndOfType
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.map
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.notEmptyAndOfType
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.objComplement
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.objDifference
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.objIntersect
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.objUnion
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.pureCurry
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.pureCurry2
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.pureCurry3
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.pureCurry4
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.pureCurry5
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.pureCurryN
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.reduce
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.reduceRight
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.subClass
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.subClassMulti
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.typeOf
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.typeOfIs
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.union
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.version
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
 
 ## Unit Tests:
 To run unit tests:
@@ -338,13 +79,8 @@ To run unit tests:
 1.)  First do an `npm install` in project root.
 
 2.)  For running tests on './src' with node:
-Run one of the following from your terminal:
- - `$ gulp tests`, 
- - `$ npm tests` 
- - `mocha tests/ --harmony --compilers js:babel-core/register`
-
-3.)  For running tests on './dist/cjs' with node:
- - `mocha tests/for-cjs --harmony`
+Run one of the following from your terminal (from repo root):
+ - `$ npm test` 
 
 ## Requirements:
 - Javascript versions Ecmascript 5+
@@ -355,16 +91,25 @@ Run one of the following from your terminal:
 - IE9+, and all other modern day browsers.
 
 ### NodeJs
-- 4.0.0+
+- ~~4.0.0+~~
+- 6.11.x+
 
 ## License:
 [GPL v2+](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html") AND
 [MIT](http://opensource.org/licenses/MIT "http://opensource.org/licenses/MIT")
 
+## Notes:
+- './.babelrc' is used only for tests.  Babel configurations found in './gulpfileConfig.json' are the 
+configurations used for building the project.
+
 ## Todos:
 ### MVP 1.0.0
-- [ ] - Rename `pureCurry` and `pureCurryN` to `curry` and `curryN` respectively.
-- [ ] - Rename old `curry{suffix}` functions to `curry{suffix}_` in lieu of previous change (also since 
+- [X] - Rename `pureCurry` and `pureCurryN` to `curry` and `curryN` respectively.
+- [X] - Rename old `curry{suffix}` functions to `curry{suffix}_` in lieu of previous change (also since 
 these functions are overloaded and aren't pure curry functions due to their placeholder manipulation feature).
 - [X] - ~~Remove functional operators (`zero`, `alt` etc.)  out into their own package (?) (tentative).~~
-- [ ] - Make all functional members compatible with es6 classes.
+- [X] - ~~Make all functional members compatible with es6 classes.~~ No constructors included in library.
+- [X] - Remove use of 'gulp-better-rollup' in favor of using rollup directly.
+- [ ] - Re-instate the use of .travisci file when project is passed 'alpha' stage.'
+- [ ] - Consider renaming methods/members in the './src/uncurried' package with a prefixed '_'.
+- [ ] - Consider renaming './src/uncurried' file names with prefixed '_'.

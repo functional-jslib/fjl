@@ -1,105 +1,74 @@
-/**
- * Created by elyde on 12/6/2016.
- */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
-var _assign = require('./assign');
+var _objectOps = require('./objectOps');
 
-var _compose = require('./compose');
+Object.keys(_objectOps).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _objectOps[key];
+    }
+  });
+});
 
-var _compose2 = _interopRequireDefault(_compose);
+var _booleanOps = require('./booleanOps');
 
-var _curry = require('./curry');
+Object.keys(_booleanOps).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _booleanOps[key];
+    }
+  });
+});
 
-var _subClass = require('./subClass');
+var _functionOps = require('./functionOps');
 
-var _typeOf = require('./typeOf');
+Object.keys(_functionOps).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _functionOps[key];
+    }
+  });
+});
 
-var _is = require('./is');
+var _listOps = require('./listOps');
 
-var _not = require('./not');
+Object.keys(_listOps).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _listOps[key];
+    }
+  });
+});
 
-var _errorIfNotTypeFactory = require('./errorIfNotTypeFactory');
+var _stringOps = require('./stringOps');
 
-var _errorIfNotTypeFactory2 = _interopRequireDefault(_errorIfNotTypeFactory);
+Object.keys(_stringOps).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _stringOps[key];
+    }
+  });
+});
 
-var _fnOperators = require('./fnOperators');
+var _version = require('../generated-for-src/version');
 
-var _operators = require('./operators');
-
-var _objOperators = require('./objOperators');
-
-var _arrayOperators = require('./arrayOperators');
-
-var _version = require('./generated/version');
-
-var _version2 = _interopRequireDefault(_version);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-    __: _curry.__,
-    apply: _fnOperators.apply,
-    arrayComplement: _arrayOperators.complement,
-    arrayDifference: _arrayOperators.difference,
-    arrayIntersect: _arrayOperators.intersect,
-    arrayUnion: _arrayOperators.union,
-    assign: _assign.assign,
-    assignDeep: _assign.assignDeep,
-    call: _fnOperators.call,
-    complement: _operators.complement,
-    compose: _compose2.default,
-    curry: _curry.curry,
-    curryN: _curry.curryN,
-    curry2: _curry.curry2,
-    curry3: _curry.curry3,
-    curry4: _curry.curry4,
-    curry5: _curry.curry5,
-    difference: _operators.difference,
-    errorIfNotTypeFactory: _errorIfNotTypeFactory2.default,
-    filter: _operators.filter,
-    intersect: _operators.intersect,
-    isset: _is.isset,
-    issetAndOfType: _is.issetAndOfType,
-    isNumber: _is.isNumber,
-    isFunction: _is.isFunction,
-    isArray: _is.isArray,
-    isBoolean: _is.isBoolean,
-    isObject: _is.isObject,
-    isString: _is.isString,
-    isMap: _is.isMap,
-    isSet: _is.isSet,
-    isWeakSet: _is.isWeakSet,
-    isWeakMap: _is.isWeakMap,
-    isUndefined: _is.isUndefined,
-    isNull: _is.isNull,
-    isSymbol: _is.isSymbol,
-    isEmpty: _is.isEmpty,
-    isConstructablePrimitive: _is.isConstructablePrimitive,
-    map: _operators.map,
-    notEmptyAndOfType: _not.notEmptyAndOfType,
-    pureCurry: _curry.pureCurry,
-    pureCurryN: _curry.pureCurryN,
-    pureCurry2: _curry.pureCurry2,
-    pureCurry3: _curry.pureCurry3,
-    pureCurry4: _curry.pureCurry4,
-    pureCurry5: _curry.pureCurry5,
-    objComplement: _objOperators.complement,
-    objDifference: _objOperators.difference,
-    objIntersect: _objOperators.intersect,
-    objUnion: _objOperators.union,
-    reduce: _operators.reduce,
-    reduceRight: _operators.reduceRight,
-    subClass: _subClass.subClass,
-    subClassMulti: _subClass.subClassMulti,
-    typeOf: _typeOf.typeOf,
-    typeOfIs: _typeOf.typeOfIs,
-    union: _operators.union,
-    version: _version2.default
-};
-module.exports = exports['default'];
+Object.defineProperty(exports, 'version', {
+  enumerable: true,
+  get: function get() {
+    return _version.version;
+  }
+});

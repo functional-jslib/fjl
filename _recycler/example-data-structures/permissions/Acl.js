@@ -4,15 +4,15 @@
 
 'use strict';
 
-import {typeOf} from '../../../src/typeOf';
-import {difference as arrayDiff} from '../../../src/arrayOperators';
+import {typeOf} from '../../../src/objectOps/typeOf';
+import {difference as arrayDiff} from '../../../src/listOps';
 import {errorIfNotType} from '../utils';
 import Role from './Role';
 import Resource from './Resource';
 
 let contextName = Acl.name,
-    // isResource = value => typeOfIs(value, Resource),
-    // isRole = value => typeOfIs(value, Role),
+    // isResource = value => typeOfIs(Resource, value),
+    // isRole = value => typeOfIs(Role, value),
     typeOrError = (name, value, type) => errorIfNotType(contextName, name, value, type);
 
 function Acl (config) {

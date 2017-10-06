@@ -1,51 +1,50 @@
 {
   "name": "fjl",
-  "version": "0.10.8",
+  "version": "0.16.2",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl.js",
-  "module": "src/fjl.js",
+  "module": "dist/es6-module/fjl.js",
   "directories": {
     "test": "tests"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-cli": "^6.18.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-es2015-modules-amd": "^6.18.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
-    "babel-plugin-transform-es2015-modules-umd": "^6.18.0",
-    "babel-polyfill": "^6.16.0",
-    "babel-preset-env": "^1.1.1",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-latest": "^6.22.0",
-    "babel-register": "^6.18.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-register": "^6.26.0",
     "chai": "^3.5.0",
     "chalk": "^1.1.3",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-better-rollup": "^1.0.2",
+    "gulp-babel": "^7.0.0",
+    "gulp-better-rollup": "^1.1.1",
     "gulp-concat": "^2.6.1",
     "gulp-duration": "0.0.0",
     "gulp-eslint": "^3.0.1",
     "gulp-fncallback": "^2.0.2",
-    "gulp-header": "^1.8.8",
+    "gulp-header": "^1.8.9",
+    "gulp-if": "^2.0.2",
+    "gulp-jsdoc3": "^1.0.1",
     "gulp-mocha": "^3.0.1",
     "gulp-replace": "^0.5.4",
-    "gulp-uglify": "^2.0.0",
+    "gulp-uglify": "^2.1.2",
     "lazypipe": "^1.0.1",
-    "mocha": "^3.2.0",
+    "mocha": "^3.5.0",
     "random-js": "^1.0.8",
-    "requirejs": "^2.3.2",
-    "rollup": "^0.37.0",
-    "yargs": "^6.5.0"
+    "requirejs": "^2.3.5",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "yargs": "^6.6.0"
   },
   "scripts": {
-    "pre-test": "npm run build",
-    "test": "npm run test-es6 && npm run test-cjs",
-    "test-es6": "mocha tests/for-server/test-*.js tests/for-server/**/test-*.js --compilers js:babel-register --require babel-polyfill",
-    "test-cjs": "mocha tests/for-cjs/**/test-*.js",
-    "build": "gulp build"
+    "test": "mocha tests/test-*.js --plugins babel-plugin-add-module-exports --require babel-register",
+    "tests": "npm run test",
+    "build": "gulp clean && gulp build"
   },
   "repository": {
     "type": "git",
@@ -61,5 +60,6 @@
   "bugs": {
     "url": "https://github.com/elycruz/fjl/issues"
   },
-  "homepage": "https://github.com/elycruz/fjl#readme"
+  "homepage": "https://github.com/elycruz/fjl#readme",
+  "dependencies": {}
 }

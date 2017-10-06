@@ -17,5 +17,5 @@ const fjl = require('fjl');
 
 #### Using es2015 modules:
 ```
-import fjl from './node_modules/fjl/src/fjl';
+import {...} from 'fjl';
 ```

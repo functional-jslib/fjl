@@ -1,98 +1,22 @@
 /**
  * Created by elyde on 12/6/2016.
+ * @file fjl.js
+ * @goal to include everything from haskell's Prelude where it makes sense in order to create
+ *  a subset of functions which can make the javascript developer more efficient and make his/her
+ *  code more concise (and functional).
+ * @description Includes operations from haskell's Prelude.
+ * @motivation preludejs, lodash/fp, RamdaJs, Haskell.
+ * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
+ * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
+ * @todo any cross importing between packages should be done from the package object (package file: E.g., './src/functionOps/functionOps.js').
+ * @todo decide how to include 'uncurried' members in the main export of the library.
+ * @module fjl
  */
 
-'use strict';
+export * from './objectOps';
+export * from './booleanOps';
+export * from './functionOps';
+export * from './listOps';
+export * from './stringOps';
 
-import {assign, assignDeep} from './assign';
-import compose from './compose';
-
-import {__, curry, curryN, curry2, curry3, curry4, curry5,
-    pureCurry, pureCurryN, pureCurry2, pureCurry3, pureCurry4, pureCurry5} from './curry';
-
-import {subClass, subClassMulti} from './subClass';
-import {typeOf, typeOfIs} from './typeOf';
-
-import {isset, issetAndOfType, isNumber,
-    isFunction, isArray, isBoolean, isObject, isString,
-    isUndefined, isNull, isSymbol, isEmpty, isMap, isSet,
-    isWeakMap, isWeakSet, isConstructablePrimitive} from './is';
-
-import {notEmptyAndOfType} from './not';
-import errorIfNotTypeFactory from './errorIfNotTypeFactory';
-import {call, apply} from './fnOperators';
-
-import {complement, difference, union, intersect,  map, filter, reduce, reduceRight} from './operators';
-
-import {complement as objComplement,
-    difference as objDifference,
-    union as objUnion,
-    intersect as objIntersect} from './objOperators';
-
-import {complement as arrayComplement,
-    difference as arrayDifference,
-    union as arrayUnion,
-    intersect as arrayIntersect} from './arrayOperators';
-
-import version from './generated/version';
-
-export default {
-    __,
-    apply,
-    arrayComplement,
-    arrayDifference,
-    arrayIntersect,
-    arrayUnion,
-    assign,
-    assignDeep,
-    call,
-    complement,
-    compose,
-    curry,
-    curryN,
-    curry2,
-    curry3,
-    curry4,
-    curry5,
-    difference,
-    errorIfNotTypeFactory,
-    filter,
-    intersect,
-    isset,
-    issetAndOfType,
-    isNumber,
-    isFunction,
-    isArray,
-    isBoolean,
-    isObject,
-    isString,
-    isMap,
-    isSet,
-    isWeakSet,
-    isWeakMap,
-    isUndefined,
-    isNull,
-    isSymbol,
-    isEmpty,
-    isConstructablePrimitive,
-    map,
-    notEmptyAndOfType,
-    pureCurry,
-    pureCurryN,
-    pureCurry2,
-    pureCurry3,
-    pureCurry4,
-    pureCurry5,
-    objComplement,
-    objDifference,
-    objIntersect,
-    objUnion,
-    reduce,
-    reduceRight,
-    subClass,
-    subClassMulti,
-    typeOf,
-    typeOfIs,
-    union,
-    version
-};
+export {version} from   '../generated-for-src/version';

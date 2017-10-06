@@ -32,7 +32,7 @@ function renderNode(moduleName, memberName, padLeft, docsPath) {
 
     // ~~ REMOVE FROM HERE ~~
     // Added this here temporarily but this should be pushed to it's own stream
-    // and should be contained in an appropriate function and/or class.
+    // and should be contained in an appropriate functionOps and/or class.
         fileName = name.replace(/\s/g, '-'),
         docFilePath = path.join(docsPath, fileName + '.md');
     // If doc file doesn't exist, generate an empty file for it
@@ -40,8 +40,8 @@ function renderNode(moduleName, memberName, padLeft, docsPath) {
         fs.writeFileSync(docFilePath,
             '### ' + label.replace(/[\[\]]/g, '') + '\n' +
             '@todo - Added documentation here.\n' +
-            '[Back to ' + moduleName + ' members list.]' +
-            '(#' + moduleName + '-members-list)\n');
+            '[Back to ' + moduleName + ' members listOps.]' +
+            '(#' + moduleName + '-members-listOps)\n');
     }
     // ~~ /REMOVE FROM HERE ~~
 
