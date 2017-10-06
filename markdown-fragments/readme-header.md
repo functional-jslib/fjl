@@ -5,7 +5,11 @@
 # fjl
 Functional Javascript Library
 
-## This project is in Beta
+## Project is in Beta
+
+## Note!!!
+Beta version is the recommended version (edge) (has almost 99% of haskell's List operations implemented)
+If you'd like the alpha version (previous version) it is tagged at 0.10.7 (this tag is also published on npm).
 
 ## Motivations:
 - Haskell and it's `Prelude`.
