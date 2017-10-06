@@ -5,7 +5,7 @@
 # fjl
 Functional Javascript Library
 
-## This branch is in Alpha
+## This project is in Beta
 
 ## Motivations:
 - Haskell and it's `Prelude`.
