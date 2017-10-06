@@ -99,7 +99,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
 
   /**
-   * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
+   * Checks if value is a valid number (also checks if isNaN so that you don't have to).
    * @function module:objectOps_.isNumber
    * @param value {*}
    * @returns {Boolean}

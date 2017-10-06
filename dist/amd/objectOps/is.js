@@ -100,7 +100,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
 
 
   /**
-   * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
+   * Checks if value is a valid number (also checks if isNaN so that you don't have to).
    * @function module:objectOps.isNumber
    * @param value {*}
    * @returns {Boolean}

@@ -89,7 +89,7 @@ export const
     isBoolean = value => isType(_Boolean, value),
 
     /**
-     * Checks if value is a valid numberOps (also checks if isNaN so that you don't have to).
+     * Checks if value is a valid number (also checks if isNaN so that you don't have to).
      * @function module:objectOps_.isNumber
      * @param value {*}
      * @returns {Boolean}

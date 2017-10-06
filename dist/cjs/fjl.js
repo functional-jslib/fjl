@@ -52,18 +52,6 @@ Object.keys(_listOps).forEach(function (key) {
   });
 });
 
-var _numberOps = require('./numberOps');
-
-Object.keys(_numberOps).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _numberOps[key];
-    }
-  });
-});
-
 var _stringOps = require('./stringOps');
 
 Object.keys(_stringOps).forEach(function (key) {
