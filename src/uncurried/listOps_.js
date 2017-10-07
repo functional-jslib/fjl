@@ -15,7 +15,7 @@ import {
 import {apply} from './jsPlatform/function_';
 import {negateP, negateF} from './functionOps_';
 import {isTruthy, isFalsy} from '../booleanOps';
-import {isString, prop, of, length} from './objectOps_';
+import {isString, isEmptyList, prop, of, length} from './objectOps_';
 import {map} from './listOps/map_';
 
 import {
@@ -28,7 +28,7 @@ import {
     from './listOps/utils_';
 
 // Exported imports
-export {length, map};
+export {map};
 
 // Exported internals
 export const
@@ -131,26 +131,7 @@ export const
         }
         return [init(xs), last(xs)];
     },
-
-    /**
-     * Returns whether a list is empty or not.
-     * @note not to be mistaken with module:objectOps.isEmpty;
-     *  `objectOps.isEmpty` Checks any passed in type for empty;
-     *  `listOps.isEmpty` only checks if length on passed in
-     *  value is not truthy.
-     *  In typed languages this would be all we
-     *  need do due to assuming that only lists make it into our
-     *  function but in javascript this is loose and in order
-     *  to the function to perform well under load and
-     *  for it to follow the specification we are not allowed
-     *  to type check in it.
-     * @note Will keep it like this for now.
-     * @function module:listOps_.isEmpty
-     * @param x {*}
-     * @returns {Boolean}
-     */
-    isEmpty = x => !length(x),
-
+    
     /**
      * Concatenates all the elements of a container of lists.
      * @haskellType `concat :: Foldable t => t [a] -> [a]`
@@ -1085,7 +1066,7 @@ export const
     sortBy = (orderingFn, xs) => copy(xs).sort(orderingFn),
 
     insert = (x, xs) => {
-        if (isEmpty(xs)) {
+        if (isEmptyList(xs)) {
             return aggregatorByType(xs)(copy(xs), x, 0);
         }
         let out = of(xs),
@@ -1111,7 +1092,7 @@ export const
         const limit = length(xs),
             aggregator = aggregatorByType(xs),
             out = of(xs);
-        if (isEmpty(xs)) {
+        if (isEmptyList(xs)) {
             return aggregator(out, x, 0);
         }
         let ind = 0;
@@ -1126,7 +1107,7 @@ export const
     },
 
     nubBy = (pred, list) => {
-        if (isEmpty(list)) {
+        if (isEmptyList(list)) {
             return of(list);
         }
         const limit = length(list);

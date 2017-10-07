@@ -87,7 +87,7 @@ const fs = require('fs'),
 
 gulp.task('generate-version-js', () =>
     (new VersionNumberReadStream())
-        .pipe(fs.createWriteStream('./generated-for-src/version.js')));
+        .pipe(fs.createWriteStream('./src/generated/version.js')));
 
 gulp.task('clean', () => {
     let pathsToDelete = [cjsBuildPath, amdBuildPath, umdBuildPath, iifeBuildPath]

@@ -255,7 +255,7 @@
    * @returns {Boolean}
    */
   isEmptyList = exports.isEmptyList = function isEmptyList(x) {
-    return (0, _object_.length)(x) === 0;
+    return !(0, _object_.length)(x);
   },
 
 

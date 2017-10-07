@@ -131,7 +131,7 @@ describe ('#functionOps', function () {
         });
 
         it ('should be able to compose an arbitrary numberOps of functions and execute them as expected ' +
-            'from generated-for-src functionOps.', function () {
+            'from generated functionOps.', function () {
             let min = curry2(Math.min),
                 max = curry2(Math.max),
                 pow = curry2(Math.pow),

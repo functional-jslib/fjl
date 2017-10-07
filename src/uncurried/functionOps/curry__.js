@@ -8,7 +8,9 @@
 
 import {apply} from './apply_';
 
-import {append, map, filter, length} from '../listOps_';
+import {append, map, filter} from '../listOps_';
+
+import {length} from '../objectOps_';
 
 /**
  * PlaceHolder (__) constructor.

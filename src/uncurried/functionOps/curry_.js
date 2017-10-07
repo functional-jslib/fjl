@@ -7,7 +7,9 @@
 
 import {apply} from './apply_';
 
-import {append, length} from '../listOps_';
+import {append} from '../listOps_';
+
+import {length} from '../objectOps_';
 
 export const
 

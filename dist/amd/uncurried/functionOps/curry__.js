@@ -1,4 +1,4 @@
-define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _listOps_) {
+define(['exports', './apply_', '../listOps_', '../objectOps_'], function (exports, _apply_, _listOps_, _objectOps_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -14,14 +14,6 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
    * @constructor PlaceHolder
    * @private
    */
-  /**
-   * @memberOf functionOps
-   * @author elydelacruz
-   * @created 12/6/2016.
-   * @description Curry implementation with place holder concept (`__`).
-   * @todo Make code here more minimal (reuse small parts here).
-   */
-
   const PlaceHolder = function PlaceHolder() {},
 
 
@@ -38,6 +30,14 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
    * @returns {boolean}
    * @private
    */
+  /**
+   * @memberOf functionOps
+   * @author elydelacruz
+   * @created 12/6/2016.
+   * @description Curry implementation with place holder concept (`__`).
+   * @todo Make code here more minimal (reuse small parts here).
+   */
+
   function isPlaceHolder(instance) {
     return instance instanceof PlaceHolder;
   }
@@ -54,12 +54,12 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
     let out = (0, _listOps_.map)(element => {
       if (!isPlaceHolder(element)) {
         return element;
-      } else if ((0, _listOps_.length)(args)) {
+      } else if ((0, _objectOps_.length)(args)) {
         return args.shift();
       }
       return element;
     }, array);
-    return (0, _listOps_.length)(args) ? (0, _listOps_.append)(out, args) : out;
+    return (0, _objectOps_.length)(args) ? (0, _listOps_.append)(out, args) : out;
   }
 
   /**
@@ -73,7 +73,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
     return (...args) => {
       let concatedArgs = replacePlaceHolders(argsToCurry, args),
           placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-          canBeCalled = (0, _listOps_.length)(placeHolders) === 0 && (0, _listOps_.length)(concatedArgs) >= (0, _listOps_.length)(fn);
+          canBeCalled = (0, _objectOps_.length)(placeHolders) === 0 && (0, _objectOps_.length)(concatedArgs) >= (0, _objectOps_.length)(fn);
       return canBeCalled ? (0, _apply_.apply)(fn, concatedArgs) : (0, _apply_.apply)(curry_, (0, _listOps_.append)([fn], concatedArgs));
     };
   }
@@ -90,7 +90,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
     return (...args) => {
       let concatedArgs = replacePlaceHolders(curriedArgs, args),
           placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-          canBeCalled = (0, _listOps_.length)(concatedArgs) - (0, _listOps_.length)(placeHolders) >= executeArity || !executeArity;
+          canBeCalled = (0, _objectOps_.length)(concatedArgs) - (0, _objectOps_.length)(placeHolders) >= executeArity || !executeArity;
       return !canBeCalled ? (0, _apply_.apply)(curryN_, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
     };
   }

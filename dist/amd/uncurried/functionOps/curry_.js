@@ -1,17 +1,10 @@
-define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _listOps_) {
+define(['exports', './apply_', '../listOps_', '../objectOps_'], function (exports, _apply_, _listOps_, _objectOps_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curryN = exports.curry = undefined;
-  /**
-   * @author elydelacruz
-   * @created 12/6/2016.
-   * @memberOf functionOps_
-   * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
-   */
-
   const
 
   /**
@@ -24,7 +17,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
   curry = exports.curry = (fn, ...argsToCurry) => {
     return (...args) => {
       const concatedArgs = (0, _listOps_.append)(argsToCurry, args);
-      return (0, _listOps_.length)(concatedArgs) < (0, _listOps_.length)(fn) ? (0, _apply_.apply)(curry, (0, _listOps_.append)([fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
+      return (0, _objectOps_.length)(concatedArgs) < (0, _objectOps_.length)(fn) ? (0, _apply_.apply)(curry, (0, _listOps_.append)([fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
     };
   },
 
@@ -40,7 +33,7 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
   curryN = exports.curryN = (executeArity, fn, ...curriedArgs) => {
     return (...args) => {
       let concatedArgs = (0, _listOps_.append)(curriedArgs, args),
-          canBeCalled = (0, _listOps_.length)(concatedArgs) >= executeArity || !executeArity;
+          canBeCalled = (0, _objectOps_.length)(concatedArgs) >= executeArity || !executeArity;
       return !canBeCalled ? (0, _apply_.apply)(curryN, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
     };
   },
@@ -79,5 +72,10 @@ define(['exports', './apply_', '../listOps_'], function (exports, _apply_, _list
    * @param fn {Function}
    * @returns {Function}
    */
-  curry5 = exports.curry5 = fn => curryN(5, fn);
+  curry5 = exports.curry5 = fn => curryN(5, fn); /**
+                                                  * @author elydelacruz
+                                                  * @created 12/6/2016.
+                                                  * @memberOf functionOps_
+                                                  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
+                                                  */
 });

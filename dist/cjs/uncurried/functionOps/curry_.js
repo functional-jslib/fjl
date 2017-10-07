@@ -9,12 +9,7 @@ var _apply_ = require('./apply_');
 
 var _listOps_ = require('../listOps_');
 
-/**
- * @author elydelacruz
- * @created 12/6/2016.
- * @memberOf functionOps_
- * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
- */
+var _objectOps_ = require('../objectOps_');
 
 var
 
@@ -36,7 +31,7 @@ curry = exports.curry = function curry(fn) {
     }
 
     var concatedArgs = (0, _listOps_.append)(argsToCurry, args);
-    return (0, _listOps_.length)(concatedArgs) < (0, _listOps_.length)(fn) ? (0, _apply_.apply)(curry, (0, _listOps_.append)([fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
+    return (0, _objectOps_.length)(concatedArgs) < (0, _objectOps_.length)(fn) ? (0, _apply_.apply)(curry, (0, _listOps_.append)([fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
   };
 },
 
@@ -60,7 +55,7 @@ curryN = exports.curryN = function curryN(executeArity, fn) {
     }
 
     var concatedArgs = (0, _listOps_.append)(curriedArgs, args),
-        canBeCalled = (0, _listOps_.length)(concatedArgs) >= executeArity || !executeArity;
+        canBeCalled = (0, _objectOps_.length)(concatedArgs) >= executeArity || !executeArity;
     return !canBeCalled ? (0, _apply_.apply)(curryN, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
   };
 },
@@ -107,4 +102,9 @@ curry4 = exports.curry4 = function curry4(fn) {
  */
 curry5 = exports.curry5 = function curry5(fn) {
   return curryN(5, fn);
-};
+}; /**
+    * @author elydelacruz
+    * @created 12/6/2016.
+    * @memberOf functionOps_
+    * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
+    */

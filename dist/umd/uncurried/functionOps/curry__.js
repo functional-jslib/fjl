@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './apply_', '../listOps_'], factory);
+    define(['exports', './apply_', '../listOps_', '../objectOps_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./apply_'), require('../listOps_'));
+    factory(exports, require('./apply_'), require('../listOps_'), require('../objectOps_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.apply_, global.listOps_);
+    factory(mod.exports, global.apply_, global.listOps_, global.objectOps_);
     global.curry__ = mod.exports;
   }
-})(this, function (exports, _apply_, _listOps_) {
+})(this, function (exports, _apply_, _listOps_, _objectOps_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -26,14 +26,6 @@
    * @constructor PlaceHolder
    * @private
    */
-  /**
-   * @memberOf functionOps
-   * @author elydelacruz
-   * @created 12/6/2016.
-   * @description Curry implementation with place holder concept (`__`).
-   * @todo Make code here more minimal (reuse small parts here).
-   */
-
   var PlaceHolder = function PlaceHolder() {},
 
 
@@ -50,6 +42,14 @@
    * @returns {boolean}
    * @private
    */
+  /**
+   * @memberOf functionOps
+   * @author elydelacruz
+   * @created 12/6/2016.
+   * @description Curry implementation with place holder concept (`__`).
+   * @todo Make code here more minimal (reuse small parts here).
+   */
+
   function isPlaceHolder(instance) {
     return instance instanceof PlaceHolder;
   }
@@ -66,12 +66,12 @@
     var out = (0, _listOps_.map)(function (element) {
       if (!isPlaceHolder(element)) {
         return element;
-      } else if ((0, _listOps_.length)(args)) {
+      } else if ((0, _objectOps_.length)(args)) {
         return args.shift();
       }
       return element;
     }, array);
-    return (0, _listOps_.length)(args) ? (0, _listOps_.append)(out, args) : out;
+    return (0, _objectOps_.length)(args) ? (0, _listOps_.append)(out, args) : out;
   }
 
   /**
@@ -93,7 +93,7 @@
 
       var concatedArgs = replacePlaceHolders(argsToCurry, args),
           placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-          canBeCalled = (0, _listOps_.length)(placeHolders) === 0 && (0, _listOps_.length)(concatedArgs) >= (0, _listOps_.length)(fn);
+          canBeCalled = (0, _objectOps_.length)(placeHolders) === 0 && (0, _objectOps_.length)(concatedArgs) >= (0, _objectOps_.length)(fn);
       return canBeCalled ? (0, _apply_.apply)(fn, concatedArgs) : (0, _apply_.apply)(curry_, (0, _listOps_.append)([fn], concatedArgs));
     };
   }
@@ -118,7 +118,7 @@
 
       var concatedArgs = replacePlaceHolders(curriedArgs, args),
           placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-          canBeCalled = (0, _listOps_.length)(concatedArgs) - (0, _listOps_.length)(placeHolders) >= executeArity || !executeArity;
+          canBeCalled = (0, _objectOps_.length)(concatedArgs) - (0, _objectOps_.length)(placeHolders) >= executeArity || !executeArity;
       return !canBeCalled ? (0, _apply_.apply)(curryN_, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
     };
   }

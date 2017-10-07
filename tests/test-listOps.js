@@ -11,7 +11,7 @@
 import {assert, expect} from 'chai';
 import {__, compose, negateP} from '../src/functionOps';
 import {split} from '../src/jsPlatform';
-import {isArray, isString} from '../src/objectOps';
+import {isEmptyList, isArray, isString, length} from '../src/objectOps';
 import {isTruthy} from '../src/booleanOps';
 import {lines, unlines, words, unwords} from '../src/stringOps';
 import {
@@ -19,9 +19,9 @@ import {
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
-    head, last, init, tail, uncons, length,
+    head, last, init, tail, uncons,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
-    isEmpty as isEmptyList, iterate, repeat, replicate, cycle,
+    iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,

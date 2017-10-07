@@ -40,7 +40,7 @@ Object.keys(_listOps_).forEach(function (key) {
   });
 });
 
-var _version = require('../generated-for-src/version');
+var _version = require('./generated/version');
 
 Object.defineProperty(exports, 'version', {
   enumerable: true,

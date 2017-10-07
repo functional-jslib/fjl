@@ -186,7 +186,7 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isEmptyList = x => length(x) === 0,
+    isEmptyList = x => !length(x),
 
     /**
      * Checks if object has own properties/enumerable-props or not.

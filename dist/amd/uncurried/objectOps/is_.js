@@ -206,7 +206,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
    * @param x {*}
    * @returns {Boolean}
    */
-  isEmptyList = exports.isEmptyList = x => (0, _object_.length)(x) === 0,
+  isEmptyList = exports.isEmptyList = x => !(0, _object_.length)(x),
 
 
   /**

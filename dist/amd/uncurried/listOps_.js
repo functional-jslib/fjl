@@ -4,9 +4,7 @@ define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOp
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = undefined;
-    exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.isEmpty = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = exports.length = undefined;
-    exports.length = _objectOps_.length;
+    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = undefined;
     exports.map = _map_.map;
 
 
@@ -120,26 +118,6 @@ define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOp
         }
         return [init(xs), last(xs)];
     },
-
-
-    /**
-     * Returns whether a list is empty or not.
-     * @note not to be mistaken with module:objectOps.isEmpty;
-     *  `objectOps.isEmpty` Checks any passed in type for empty;
-     *  `listOps.isEmpty` only checks if length on passed in
-     *  value is not truthy.
-     *  In typed languages this would be all we
-     *  need do due to assuming that only lists make it into our
-     *  function but in javascript this is loose and in order
-     *  to the function to perform well under load and
-     *  for it to follow the specification we are not allowed
-     *  to type check in it.
-     * @note Will keep it like this for now.
-     * @function module:listOps_.isEmpty
-     * @param x {*}
-     * @returns {Boolean}
-     */
-    isEmpty = exports.isEmpty = x => !(0, _objectOps_.length)(x),
 
 
     /**
@@ -1042,7 +1020,7 @@ define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOp
     (0, _map_.map)(item => [valueFn(item), item], xs))),
           sortBy = exports.sortBy = (orderingFn, xs) => (0, _utils_.copy)(xs).sort(orderingFn),
           insert = exports.insert = (x, xs) => {
-        if (isEmpty(xs)) {
+        if ((0, _objectOps_.isEmptyList)(xs)) {
             return (0, _utils_.aggregatorByType)(xs)((0, _utils_.copy)(xs), x, 0);
         }
         let out = (0, _objectOps_.of)(xs),
@@ -1068,7 +1046,7 @@ define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOp
         const limit = (0, _objectOps_.length)(xs),
               aggregator = (0, _utils_.aggregatorByType)(xs),
               out = (0, _objectOps_.of)(xs);
-        if (isEmpty(xs)) {
+        if ((0, _objectOps_.isEmptyList)(xs)) {
             return aggregator(out, x, 0);
         }
         let ind = 0;
@@ -1082,7 +1060,7 @@ define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOp
         return aggregator((0, _utils_.copy)(xs), x);
     },
           nubBy = exports.nubBy = (pred, list) => {
-        if (isEmpty(list)) {
+        if ((0, _objectOps_.isEmptyList)(list)) {
             return (0, _objectOps_.of)(list);
         }
         const limit = (0, _objectOps_.length)(list);

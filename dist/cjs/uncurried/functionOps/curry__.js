@@ -11,19 +11,13 @@ var _apply_ = require('./apply_');
 
 var _listOps_ = require('../listOps_');
 
+var _objectOps_ = require('../objectOps_');
+
 /**
  * PlaceHolder (__) constructor.
  * @constructor PlaceHolder
  * @private
  */
-/**
- * @memberOf functionOps
- * @author elydelacruz
- * @created 12/6/2016.
- * @description Curry implementation with place holder concept (`__`).
- * @todo Make code here more minimal (reuse small parts here).
- */
-
 var PlaceHolder = function PlaceHolder() {},
 
 
@@ -40,6 +34,14 @@ placeHolderInstance = new PlaceHolder();
  * @returns {boolean}
  * @private
  */
+/**
+ * @memberOf functionOps
+ * @author elydelacruz
+ * @created 12/6/2016.
+ * @description Curry implementation with place holder concept (`__`).
+ * @todo Make code here more minimal (reuse small parts here).
+ */
+
 function isPlaceHolder(instance) {
   return instance instanceof PlaceHolder;
 }
@@ -56,12 +58,12 @@ function replacePlaceHolders(array, args) {
   var out = (0, _listOps_.map)(function (element) {
     if (!isPlaceHolder(element)) {
       return element;
-    } else if ((0, _listOps_.length)(args)) {
+    } else if ((0, _objectOps_.length)(args)) {
       return args.shift();
     }
     return element;
   }, array);
-  return (0, _listOps_.length)(args) ? (0, _listOps_.append)(out, args) : out;
+  return (0, _objectOps_.length)(args) ? (0, _listOps_.append)(out, args) : out;
 }
 
 /**
@@ -83,7 +85,7 @@ function curry_(fn) {
 
     var concatedArgs = replacePlaceHolders(argsToCurry, args),
         placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-        canBeCalled = (0, _listOps_.length)(placeHolders) === 0 && (0, _listOps_.length)(concatedArgs) >= (0, _listOps_.length)(fn);
+        canBeCalled = (0, _objectOps_.length)(placeHolders) === 0 && (0, _objectOps_.length)(concatedArgs) >= (0, _objectOps_.length)(fn);
     return canBeCalled ? (0, _apply_.apply)(fn, concatedArgs) : (0, _apply_.apply)(curry_, (0, _listOps_.append)([fn], concatedArgs));
   };
 }
@@ -108,7 +110,7 @@ function curryN_(executeArity, fn) {
 
     var concatedArgs = replacePlaceHolders(curriedArgs, args),
         placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-        canBeCalled = (0, _listOps_.length)(concatedArgs) - (0, _listOps_.length)(placeHolders) >= executeArity || !executeArity;
+        canBeCalled = (0, _objectOps_.length)(concatedArgs) - (0, _objectOps_.length)(placeHolders) >= executeArity || !executeArity;
     return !canBeCalled ? (0, _apply_.apply)(curryN_, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
   };
 }

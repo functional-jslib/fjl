@@ -1,29 +1,22 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './apply_', '../listOps_'], factory);
+    define(['exports', './apply_', '../listOps_', '../objectOps_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./apply_'), require('../listOps_'));
+    factory(exports, require('./apply_'), require('../listOps_'), require('../objectOps_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.apply_, global.listOps_);
+    factory(mod.exports, global.apply_, global.listOps_, global.objectOps_);
     global.curry_ = mod.exports;
   }
-})(this, function (exports, _apply_, _listOps_) {
+})(this, function (exports, _apply_, _listOps_, _objectOps_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curryN = exports.curry = undefined;
-  /**
-   * @author elydelacruz
-   * @created 12/6/2016.
-   * @memberOf functionOps_
-   * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
-   */
-
   var
 
   /**
@@ -44,7 +37,7 @@
       }
 
       var concatedArgs = (0, _listOps_.append)(argsToCurry, args);
-      return (0, _listOps_.length)(concatedArgs) < (0, _listOps_.length)(fn) ? (0, _apply_.apply)(curry, (0, _listOps_.append)([fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
+      return (0, _objectOps_.length)(concatedArgs) < (0, _objectOps_.length)(fn) ? (0, _apply_.apply)(curry, (0, _listOps_.append)([fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
     };
   },
 
@@ -68,7 +61,7 @@
       }
 
       var concatedArgs = (0, _listOps_.append)(curriedArgs, args),
-          canBeCalled = (0, _listOps_.length)(concatedArgs) >= executeArity || !executeArity;
+          canBeCalled = (0, _objectOps_.length)(concatedArgs) >= executeArity || !executeArity;
       return !canBeCalled ? (0, _apply_.apply)(curryN, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
     };
   },
@@ -115,5 +108,10 @@
    */
   curry5 = exports.curry5 = function curry5(fn) {
     return curryN(5, fn);
-  };
+  }; /**
+      * @author elydelacruz
+      * @created 12/6/2016.
+      * @memberOf functionOps_
+      * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
+      */
 });

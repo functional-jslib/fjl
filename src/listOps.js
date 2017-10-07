@@ -14,9 +14,9 @@ import {
     findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith,
     unzip as _unzip, unzipN as _unzipN, map as _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, zipWithN as _zipWithN,
     elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup,
-    head as _head, last as _last, init as _init, tail as _tail, uncons as _uncons, length as _length,
+    head as _head, last as _last, init as _init, tail as _tail, uncons as _uncons,
     reverse as _reverse, intersperse as _intersperse, intercalate as _intercalate, transpose as _transpose,
-    subsequences as _subsequences, permutations as _permutations, isEmpty as _isEmpty, iterate as _iterate,
+    subsequences as _subsequences, permutations as _permutations, iterate as _iterate,
     repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt,
     foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr, concat as _concat,
     concatMap as _concatMap, takeWhile as _takeWhile, dropWhile as _dropWhile, dropWhileEnd as _dropWhileEnd,
@@ -33,7 +33,7 @@ import {
 
 // Single arity methods (and single or more arg functions)
 export {
-    and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, isEmpty, concat, length, reverse, transpose, subsequences,
+    and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, concat, reverse, transpose, subsequences,
     permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub
 }
     from './uncurried/listOps_';
@@ -42,8 +42,8 @@ export {
 export {
     _append, _appendMany, _all, _and, _or, _any, _find, _findIndex, _findIndices, _zip, _zipN, _zipWith,
     _unzip, _unzipN, _map, _mapAccumL, _mapAccumR, _elem, _notElem, _elemIndex, _elemIndices, _lookup,
-    _head, _last, _init, _tail, _uncons, _length, _reverse, _intersperse, _intercalate, _transpose,
-    _subsequences, _permutations, _isEmpty, _iterate, _repeat, _replicate, _cycle, _take,
+    _head, _last, _init, _tail, _uncons, _reverse, _intersperse, _intercalate, _transpose,
+    _subsequences, _permutations, _iterate, _repeat, _replicate, _cycle, _take,
     _drop, _splitAt, _foldl, _foldl1, _foldr, _foldr1, _unfoldr, _concat, _concatMap, _takeWhile, _dropWhile,
     _dropWhileEnd, _partition, _at, _span, _breakOnList, _stripPrefix, _group, _inits, _tails, _isPrefixOf,
     _isSuffixOf, _isInfixOf, _isSubsequenceOf, _filter, _sum, _product, _maximum, _maximumBy, _minimum, _minimumBy,

@@ -16,4 +16,4 @@ export * from './uncurried/objectOps_';
 export * from './uncurried/functionOps_';
 export * from './uncurried/listOps_';
 
-export {version} from   '../generated-for-src/version';
+export {version} from './generated/version';
