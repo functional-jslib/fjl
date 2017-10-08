@@ -8,7 +8,7 @@ Functional Javascript Library
 ## Project is in Beta
 
 ## Note!!!
-Beta version is the recommended version (edge) (has almost 99% of haskell's List operations implemented)
+Beta version is the recommended version (head) (has at least 95% of haskell's List operations implemented)
 If you'd like the alpha version (previous version) it is tagged at 0.10.7 (this tag is also published on npm).
 
 ## Motivations:
@@ -22,10 +22,21 @@ easily in combination with the aforementioned.
 and is built from the ground up using functional concepts.
 - A functional library that is exported to multiple formats
 (umd, amd, commonjs, es6-modules, and iife).
-- "" that has both curried and un-curried versions of included operations.
+- "" that has both curried and un-curried versions of included operations.  Et. al. `append`, `_append` (uncurrued)
 - Etc. etc..
 
+### Notable methods not added from the haskell prelude:
+- Math/Integral/Num/etc. methods
+- `scan*`, `permutations` and several others in the list's prelude (these are pending implementation)
+- Few others from prelude.
+
+### Included methods
+Methods dealing with lists (strings/arrays etc.) and objects.
+Full list coming soon.
+
 ### Needed
+- [ ] - Implementations of the `scan*` methods?
+- [ ] - "" of the Math methods?
 - [ ] - A friendly function names module has to be built
 for some of these functions as most javascript developers
 will not be familiar with the function names and paradigms

@@ -20,7 +20,7 @@ var
  * `instanceof` in function form.
  * @function module:objectOps.instanceOf
  * @param instance {*}
- * @param Type {Function|Class}
+ * @param Type {Function}
  * @returns {Boolean}
  */
 instanceOf = exports.instanceOf = (0, _curry.curry)(_instanceOf_.instanceOf);

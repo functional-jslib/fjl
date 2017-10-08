@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "0.16.4",
+  "version": "0.16.5",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl.js",
   "module": "dist/es6-module/fjl.js",
@@ -55,7 +55,10 @@
   "keywords": [
     "functional",
     "fp",
-    "programming"
+    "programming",
+    "haskell",
+    "prelude",
+    "list"
   ],
   "author": "",
   "license": "ISC",

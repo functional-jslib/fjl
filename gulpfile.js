@@ -42,7 +42,7 @@ const fs = require('fs'),
     {
         cjsBuildPath, amdBuildPath,
         umdBuildPath, iifeBuildPath,
-        buildPathRoot
+        buildPathRoot, markdownFragsPath
     } = gulpConfig.paths,
 
     buildPath = (...tails) => path.join.call(path, buildPathRoot, ...tails),
@@ -52,6 +52,7 @@ const fs = require('fs'),
     iifeModuleName = 'fjl',
     srcsGlob = './src/**/*.js',
 
+    ModuleMemberReadStream = require('./node-scripts/ModuleMemberListReadStream'),
     VersionNumberReadStream = require('./node-scripts/VersionNumberReadStream'),
 
     yargs = require('yargs'),
@@ -84,6 +85,27 @@ const fs = require('fs'),
             })
             .catch(log)
     ;
+
+
+gulp.task('member-list-md', function () {
+    let outputDir = './markdown-fragments/generated',
+        filePath = outputDir + '/member-list.md';
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir);
+    }
+    fs.writeFileSync(filePath, '');
+    return (new ModuleMemberReadStream(
+        require('./dist/cjs/fjl'), 'fjl', markdownFragsPath + '/member-list'
+    ))
+        .pipe(fs.createWriteStream(filePath));
+});
+
+gulp.task('member-list-md-content', ['member-list-md'], function () {
+    return gulp.src(markdownFragsPath + '/member-list/*.md')
+        .pipe(concat(markdownFragsPath + '/generated/member-list-content.md'))
+        .pipe(gulp.dest('./'));
+});
+
 
 gulp.task('generate-version-js', () =>
     (new VersionNumberReadStream())
@@ -184,6 +206,8 @@ gulp.task('jsdoc', () =>
 );
 
 gulp.task('build-readme', [
+    'member-list-md',
+    'member-list-md-content',
     'generate-version-js'
 ], () => gulp.src(gulpConfig.readme)
         .pipe(concat('README.md'))
