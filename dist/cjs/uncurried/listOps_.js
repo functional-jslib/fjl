@@ -305,7 +305,8 @@ subsequences = exports.subsequences = function subsequences(xs) {
     return out;
 },
     permutations = exports.permutations = function permutations(xs) {
-    return [xs];
+    var limit = (0, _objectOps_.length)(xs);
+    return !limit ? [xs] : (0, _utils_._permutationsAlgo)(xs, limit, limit);
 },
     foldl = exports.foldl = _utils_.reduce,
     foldr = exports.foldr = _utils_.reduceRight,

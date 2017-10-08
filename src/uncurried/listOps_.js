@@ -23,7 +23,7 @@ import {
     lengthsToSmallest, aggregateArr, aggregatorByType,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
-    findWhere, copy, genericAscOrdering
+    findWhere, copy, genericAscOrdering, _permutationsAlgo
 }
     from './listOps/utils_';
 
@@ -271,7 +271,11 @@ export const
         return out;
     },
 
-    permutations = xs => [xs],
+    permutations = xs => {
+        const limit = length(xs);
+        return !limit ? [xs] :
+            _permutationsAlgo(xs, limit, limit);
+    },
 
     foldl = reduce,
 

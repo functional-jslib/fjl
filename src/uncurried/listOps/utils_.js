@@ -182,5 +182,27 @@ export const
             let elm = xs[ind];
             if (pred(elm, ind, xs)) { return elm; }
         }
+    },
+
+    _swap = (list, ind1, ind2) => {
+        const tmp = list[ind1];
+        list[ind1] = list[ind2];
+        list[ind2] = tmp;
+        return list;
+    },
+
+    _permutationsAlgo = (listIn, remainderLen, listOut) => {
+        if (remainderLen === 1) { return listIn; }
+
+        for (let i = 0; i < remainderLen; i++) {
+            const newLen = remainderLen - 1;
+
+            _permutationsAlgo(listIn, newLen, listOut);
+
+            // If remainderLen is odd, swap first and last element
+            //  else, swap ith and last element
+            _swap(listIn, (remainderLen % 2 === 1 ? 0 : i), listOut);
+        }
+        return listOut;
     }
 ;

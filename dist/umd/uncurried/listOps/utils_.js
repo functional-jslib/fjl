@@ -16,7 +16,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation_).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -249,5 +249,28 @@
                 return elm;
             }
         }
+    },
+        _swap = exports._swap = function _swap(list, ind1, ind2) {
+        var tmp = list[ind1];
+        list[ind1] = list[ind2];
+        list[ind2] = tmp;
+        return list;
+    },
+        _permutationsAlgo = exports._permutationsAlgo = function _permutationsAlgo(list, remainderLen, listLen) {
+        var out = [list];
+
+        if (remainderLen === 1) {
+            return list;
+        }
+
+        for (var i = 0; i < remainderLen; i++) {
+            var newLen = remainderLen - 1;
+            out.push(_permutationsAlgo(list, newLen, listLen));
+
+            // If remainderLen is odd, swap first and last element
+            //  else, swap ith and last element
+            out.push(_swap(list, remainderLen % 2 === 1 ? 0 : i, newLen));
+        }
+        return out;
     }; // un-curried version
 });
