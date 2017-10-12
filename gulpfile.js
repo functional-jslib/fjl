@@ -86,7 +86,6 @@ const fs = require('fs'),
             .catch(log)
     ;
 
-
 gulp.task('member-list-md', function () {
     let outputDir = './markdown-fragments/generated',
         filePath = outputDir + '/member-list.md';
@@ -105,7 +104,6 @@ gulp.task('member-list-md-content', ['member-list-md'], function () {
         .pipe(concat(markdownFragsPath + '/generated/member-list-content.md'))
         .pipe(gulp.dest('./'));
 });
-
 
 gulp.task('generate-version-js', () =>
     (new VersionNumberReadStream())

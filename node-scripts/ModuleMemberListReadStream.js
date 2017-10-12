@@ -28,12 +28,12 @@ function getEvenNumber(num) {
 function renderNode(moduleName, memberName, padLeft, docsPath) {
     let name = renderLabelNodeName(moduleName, memberName),
         label = renderLabel(name),
-        href = renderHref(name),
+        href = renderHref(name);
 
     // ~~ REMOVE FROM HERE ~~
     // Added this here temporarily but this should be pushed to it's own stream
     // and should be contained in an appropriate functionOps and/or class.
-        fileName = name.replace(/\s/g, '-'),
+     /*   fileName = name.replace(/\s/g, '-'),
         docFilePath = path.join(docsPath, fileName + '.md');
     // If doc file doesn't exist, generate an empty file for it
     if (!fs.existsSync(docFilePath)) {
@@ -42,7 +42,7 @@ function renderNode(moduleName, memberName, padLeft, docsPath) {
             '@todo - Added documentation here.\n' +
             '[Back to ' + moduleName + ' members list.]' +
             '(#' + moduleName + '-members-list)\n');
-    }
+    }*/
     // ~~ /REMOVE FROM HERE ~~
 
     return renderMdLi(label + href, padLeft);
