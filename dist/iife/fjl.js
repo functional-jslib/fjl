@@ -26,18 +26,18 @@ var placeHolderInstance = new PlaceHolder();
  * @returns {Function}
  */
 function curry(fn) {
-  for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    argsToCurry[_key - 1] = arguments[_key];
-  }
-
-  return function () {
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
+    for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        argsToCurry[_key - 1] = arguments[_key];
     }
 
-    var concatedArgs = argsToCurry.concat(args);
-    return concatedArgs.length < fn.length ? curry.apply(null, [fn].concat(concatedArgs)) : fn.apply(null, concatedArgs);
-  };
+    return function () {
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        var concatedArgs = argsToCurry.concat(args);
+        return concatedArgs.length < fn.length ? curry.apply(null, [fn].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+    };
 }
 
 /**
@@ -48,7 +48,7 @@ function curry(fn) {
  * @private
  */
 function isPlaceHolder(instance) {
-  return instance instanceof PlaceHolder;
+    return instance instanceof PlaceHolder;
 }
 
 /**
@@ -60,15 +60,15 @@ function isPlaceHolder(instance) {
  * @private
  */
 function replacePlaceHolders(array, args) {
-  var out = array.map(function (element) {
-    if (!isPlaceHolder(element)) {
-      return element;
-    } else if (args.length > 0) {
-      return args.shift();
-    }
-    return element;
-  });
-  return args.length > 0 ? out.concat(args) : out;
+    var out = array.map(function (element) {
+        if (!isPlaceHolder(element)) {
+            return element;
+        } else if (args.length > 0) {
+            return args.shift();
+        }
+        return element;
+    });
+    return args.length > 0 ? out.concat(args) : out;
 }
 
 /**
@@ -79,20 +79,20 @@ function replacePlaceHolders(array, args) {
  * @returns {Function}
  */
 function curry_(fn) {
-  for (var _len3 = arguments.length, argsToCurry = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-    argsToCurry[_key3 - 1] = arguments[_key3];
-  }
-
-  return function () {
-    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      args[_key4] = arguments[_key4];
+    for (var _len3 = arguments.length, argsToCurry = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        argsToCurry[_key3 - 1] = arguments[_key3];
     }
 
-    var concatedArgs = replacePlaceHolders(argsToCurry, args),
-        placeHolders = concatedArgs.filter(isPlaceHolder),
-        canBeCalled = placeHolders.length === 0 && concatedArgs.length >= fn.length;
-    return canBeCalled ? fn.apply(null, concatedArgs) : curry_.apply(null, [fn].concat(concatedArgs));
-  };
+    return function () {
+        for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+            args[_key4] = arguments[_key4];
+        }
+
+        var concatedArgs = replacePlaceHolders(argsToCurry, args),
+            placeHolders = concatedArgs.filter(isPlaceHolder),
+            canBeCalled = placeHolders.length === 0 && concatedArgs.length >= fn.length;
+        return canBeCalled ? fn.apply(null, concatedArgs) : curry_.apply(null, [fn].concat(concatedArgs));
+    };
 }
 
 /**
@@ -104,20 +104,20 @@ function curry_(fn) {
  * @returns {Function} - Passed in functionOps wrapped in a functionOps for currying.
  */
 function curryN_(executeArity, fn) {
-  for (var _len5 = arguments.length, curriedArgs = Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
-    curriedArgs[_key5 - 2] = arguments[_key5];
-  }
-
-  return function () {
-    for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-      args[_key6] = arguments[_key6];
+    for (var _len5 = arguments.length, curriedArgs = Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
+        curriedArgs[_key5 - 2] = arguments[_key5];
     }
 
-    var concatedArgs = replacePlaceHolders(curriedArgs, args),
-        placeHolders = concatedArgs.filter(isPlaceHolder),
-        canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
-    return !canBeCalled ? curryN_.apply(null, [executeArity, fn].concat(concatedArgs)) : fn.apply(null, concatedArgs);
-  };
+    return function () {
+        for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+            args[_key6] = arguments[_key6];
+        }
+
+        var concatedArgs = replacePlaceHolders(curriedArgs, args),
+            placeHolders = concatedArgs.filter(isPlaceHolder),
+            canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
+        return !canBeCalled ? curryN_.apply(null, [executeArity, fn].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+    };
 }
 
 /**
@@ -129,45 +129,45 @@ function curryN_(executeArity, fn) {
  * @returns {Function}
  */
 function curryN(executeArity, fn) {
-  for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
-    curriedArgs[_key7 - 2] = arguments[_key7];
-  }
-
-  return function () {
-    for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-      args[_key8] = arguments[_key8];
+    for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
+        curriedArgs[_key7 - 2] = arguments[_key7];
     }
 
-    var concatedArgs = curriedArgs.concat(args),
-        canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-    return !canBeCalled ? curryN.apply(null, [executeArity, fn].concat(concatedArgs)) : fn.apply(null, concatedArgs);
-  };
+    return function () {
+        for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
+            args[_key8] = arguments[_key8];
+        }
+
+        var concatedArgs = curriedArgs.concat(args),
+            canBeCalled = concatedArgs.length >= executeArity || !executeArity;
+        return !canBeCalled ? curryN.apply(null, [executeArity, fn].concat(concatedArgs)) : fn.apply(null, concatedArgs);
+    };
 }
 
 var __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
 var curry2_ = function curry2_(fn) {
-  return curryN_(2, fn);
+    return curryN_(2, fn);
 };
 var curry3_ = function curry3_(fn) {
-  return curryN_(3, fn);
+    return curryN_(3, fn);
 };
 var curry4_ = function curry4_(fn) {
-  return curryN_(4, fn);
+    return curryN_(4, fn);
 };
 var curry5_ = function curry5_(fn) {
-  return curryN_(5, fn);
+    return curryN_(5, fn);
 };
 var curry2 = function curry2(fn) {
-  return curryN(2, fn);
+    return curryN(2, fn);
 };
 var curry3 = function curry3(fn) {
-  return curryN(3, fn);
+    return curryN(3, fn);
 };
 var curry4 = function curry4(fn) {
-  return curryN(4, fn);
+    return curryN(4, fn);
 };
 var curry5 = function curry5(fn) {
-  return curryN(5, fn);
+    return curryN(5, fn);
 };
 
 /**
@@ -205,37 +205,37 @@ var fPureTakesOneOrMore = function fPureTakesOneOrMore(name) {
  */
 
 var instanceOf$1 = function instanceOf(instanceConstructor, instance) {
-  return instance instanceof instanceConstructor;
+    return instance instanceof instanceConstructor;
 };
 var hasOwnProperty$1 = fPureTakesOne('hasOwnProperty');
 var length = function length(x) {
-  return x.length;
+    return x.length;
 };
 var toString = function toString(x) {
-  return x.toString();
+    return x.toString();
 };
 var keys = function keys(obj) {
-  return Object.keys(obj);
+    return Object.keys(obj);
 };
 var assign$1 = function () {
-  return Object.assign ? function (obj0) {
-    for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      objs[_key - 1] = arguments[_key];
-    }
+    return Object.assign ? function (obj0) {
+        for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            objs[_key - 1] = arguments[_key];
+        }
 
-    return Object.assign.apply(Object, [obj0].concat(objs));
-  } : function (obj0) {
-    for (var _len2 = arguments.length, objs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-      objs[_key2 - 1] = arguments[_key2];
-    }
+        return Object.assign.apply(Object, [obj0].concat(objs));
+    } : function (obj0) {
+        for (var _len2 = arguments.length, objs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+            objs[_key2 - 1] = arguments[_key2];
+        }
 
-    return objs.reduce(function (topAgg, obj) {
-      return keys(obj).reduce(function (agg, key) {
-        agg[key] = obj[key];
-        return agg;
-      }, topAgg);
-    }, obj0);
-  };
+        return objs.reduce(function (topAgg, obj) {
+            return keys(obj).reduce(function (agg, key) {
+                agg[key] = obj[key];
+                return agg;
+            }, topAgg);
+        }, obj0);
+    };
 }();
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
@@ -484,96 +484,96 @@ var _Null = 'Null';
 var _Undefined = 'Undefined';
 
 var isFunction = function isFunction(value) {
-  return instanceOf$1(Function, value);
+    return instanceOf$1(Function, value);
 };
 var isType = function isType(type, obj) {
-  return typeOf(obj) === (isFunction(type) ? type.name : type);
+    return typeOf(obj) === (isFunction(type) ? type.name : type);
 };
 var isClass = function isClass(x) {
-  return x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10));
+    return x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10));
 };
 var isCallable = function isCallable(x) {
-  return isFunction(x) && !isClass(x);
+    return isFunction(x) && !isClass(x);
 };
 var isArray = function isArray(value) {
-  return isType(Array, value);
+    return isType(Array, value);
 };
 var isObject = function isObject(value) {
-  return isType(_Object, value);
+    return isType(_Object, value);
 };
 var isBoolean = function isBoolean(value) {
-  return isType(_Boolean, value);
+    return isType(_Boolean, value);
 };
 var isNumber = function isNumber(value) {
-  return isType(_Number, value);
+    return isType(_Number, value);
 };
 var isString = function isString(value) {
-  return isType(_String, value);
+    return isType(_String, value);
 };
 var isMap = function isMap(value) {
-  return isType(_Map, value);
+    return isType(_Map, value);
 };
 var isSet = function isSet(value) {
-  return isType(_Set, value);
+    return isType(_Set, value);
 };
 var isWeakMap = function isWeakMap(value) {
-  return isType(_WeakMap, value);
+    return isType(_WeakMap, value);
 };
 var isWeakSet = function isWeakSet(value) {
-  return isType(_WeakSet, value);
+    return isType(_WeakSet, value);
 };
 var isUndefined = function isUndefined(value) {
-  return isType(_Undefined, value);
+    return isType(_Undefined, value);
 };
 var isNull = function isNull(value) {
-  return isType(_Null, value);
+    return isType(_Null, value);
 };
 var isSymbol = function isSymbol(value) {
-  return isType(_Symbol, value);
+    return isType(_Symbol, value);
 };
 var isPromise = function isPromise(value) {
-  return isType('Promise', value);
+    return isType('Promise', value);
 };
 var isUsableImmutablePrimitive = function isUsableImmutablePrimitive(x) {
-  var typeOfX = typeOf(x);
-  return [_String, _Number, _Boolean, _Symbol].some(function (Type) {
-    return Type === typeOfX;
-  });
+    var typeOfX = typeOf(x);
+    return [_String, _Number, _Boolean, _Symbol].some(function (Type) {
+        return Type === typeOfX;
+    });
 };
 var isEmptyList = function isEmptyList(x) {
-  return !length(x);
+    return !length(x);
 };
 var isEmptyObject = function isEmptyObject(obj) {
-  return isEmptyList(keys(obj));
+    return isEmptyList(keys(obj));
 };
 var isEmptyCollection = function isEmptyCollection(x) {
-  return x.size === 0;
+    return x.size === 0;
 };
 var isEmpty = function isEmpty(value) {
-  var typeOfValue = typeOf(value),
-      retVal = void 0;
+    var typeOfValue = typeOf(value),
+        retVal = void 0;
 
-  if (!value) {
-    // '', 0, `null`, `undefined` or `false` then is empty
-    retVal = true;
-  } else if (typeOfValue === _Array || typeOfValue === _Function) {
-    retVal = isEmptyList(value);
-  } else if (typeOfValue === _Number && value !== 0) {
-    retVal = false;
-  } else if (typeOfValue === _Object) {
-    retVal = isEmptyObject(value);
-  } else if (hasOwnProperty$1('size', value)) {
-    retVal = isEmptyCollection(value);
-  } else {
-    retVal = !value;
-  }
-  return retVal;
+    if (!value) {
+        // '', 0, `null`, `undefined` or `false` then is empty
+        retVal = true;
+    } else if (typeOfValue === _Array || typeOfValue === _Function) {
+        retVal = isEmptyList(value);
+    } else if (typeOfValue === _Number && value !== 0) {
+        retVal = false;
+    } else if (typeOfValue === _Object) {
+        retVal = isEmptyObject(value);
+    } else if (hasOwnProperty$1('size', value)) {
+        retVal = isEmptyCollection(value);
+    } else {
+        retVal = !value;
+    }
+    return retVal;
 };
 var notEmptyAndOfType = function notEmptyAndOfType(type, value) {
-  return !isEmpty(value) && isType(type, value);
+    return !isEmpty(value) && isType(type, value);
 };
 var isset = function isset(x) {
-  return !isNull(x) && !isUndefined(x);
+    return !isNull(x) && !isUndefined(x);
 };
 
 var assignDeep$1 = function assignDeep(obj0) {
@@ -741,36 +741,36 @@ var prop = function prop(name, obj) {
  */
 
 var curry$1 = function curry(fn) {
-  for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    argsToCurry[_key - 1] = arguments[_key];
-  }
-
-  return function () {
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
+    for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        argsToCurry[_key - 1] = arguments[_key];
     }
 
-    var concatedArgs = append(argsToCurry, args);
-    return length(concatedArgs) < length(fn) ? apply(curry, append([fn], concatedArgs)) : apply(fn, concatedArgs);
-  };
+    return function () {
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        var concatedArgs = append(argsToCurry, args);
+        return length(concatedArgs) < length(fn) ? apply(curry, append([fn], concatedArgs)) : apply(fn, concatedArgs);
+    };
 };
 var curryN$1 = function curryN(executeArity, fn) {
-  for (var _len3 = arguments.length, curriedArgs = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
-    curriedArgs[_key3 - 2] = arguments[_key3];
-  }
-
-  return function () {
-    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      args[_key4] = arguments[_key4];
+    for (var _len3 = arguments.length, curriedArgs = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
+        curriedArgs[_key3 - 2] = arguments[_key3];
     }
 
-    var concatedArgs = append(curriedArgs, args),
-        canBeCalled = length(concatedArgs) >= executeArity || !executeArity;
-    return !canBeCalled ? apply(curryN, append([executeArity, fn], concatedArgs)) : apply(fn, concatedArgs);
-  };
+    return function () {
+        for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+            args[_key4] = arguments[_key4];
+        }
+
+        var concatedArgs = append(curriedArgs, args),
+            canBeCalled = length(concatedArgs) >= executeArity || !executeArity;
+        return !canBeCalled ? apply(curryN, append([executeArity, fn], concatedArgs)) : apply(fn, concatedArgs);
+    };
 };
 var curry2$1 = function curry2(fn) {
-  return curryN$1(2, fn);
+    return curryN$1(2, fn);
 };
 
 /**
@@ -832,34 +832,34 @@ var __$1 = Object.freeze ? Object.freeze(placeHolderInstance$1) : placeHolderIns
  */
 
 var negateF = function negateF(fn) {
-  return function (a, b) {
-    return !fn(a, b);
-  };
+    return function (a, b) {
+        return !fn(a, b);
+    };
 };
 var negateF3 = function negateF3(fn) {
-  return function (a, b, c) {
-    return !fn(a, b, c);
-  };
+    return function (a, b, c) {
+        return !fn(a, b, c);
+    };
 };
 var negateF4 = function negateF4(fn) {
-  return function (a, b, c, d) {
-    return !fn(a, b, c, d);
-  };
+    return function (a, b, c, d) {
+        return !fn(a, b, c, d);
+    };
 };
 var negateF5 = function negateF5(fn) {
-  return function (a, b, c, d, e) {
-    return !fn(a, b, c, d, e);
-  };
+    return function (a, b, c, d, e) {
+        return !fn(a, b, c, d, e);
+    };
 };
 var negateP = negateF3;
 var negateFMany = function negateFMany(fn) {
-  return function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    return function () {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
 
-    return !apply(fn, reverse$1(args));
-  };
+        return !apply(fn, reverse$1(args));
+    };
 };
 
 /**
@@ -955,7 +955,7 @@ var _Undefined$2 = 'Undefined';
 
 var isFunction$1 = instanceOf$2(Function);
 var isType$1 = curry(function (type, obj) {
-  return typeOf$1(obj) === (isFunction$1(type) ? type.name : type);
+    return typeOf$1(obj) === (isFunction$1(type) ? type.name : type);
 });
 var isArray$1 = isType$1(Array);
 var isObject$1 = isType$1(_Object$1);
@@ -971,45 +971,45 @@ var isNull$1 = isType$1(_Null$2);
 var isSymbol$1 = isType$1(_Symbol$1);
 var isPromise$1 = isType$1('Promise');
 var isUsableImmutablePrimitive$1 = function isUsableImmutablePrimitive(x) {
-  var typeOfX = typeOf$1(x);
-  return [_String$1, _Number$2, _Boolean$1, _Symbol$1].some(function (Type) {
-    return Type === typeOfX;
-  });
+    var typeOfX = typeOf$1(x);
+    return [_String$1, _Number$2, _Boolean$1, _Symbol$1].some(function (Type) {
+        return Type === typeOfX;
+    });
 };
 var isEmptyList$1 = function isEmptyList(x) {
-  return length(x) === 0;
+    return length(x) === 0;
 };
 var isEmptyObject$1 = function isEmptyObject(obj) {
-  return isEmptyList$1(keys(obj));
+    return isEmptyList$1(keys(obj));
 };
 var isEmptyCollection$1 = function isEmptyCollection(x) {
-  return x.size === 0;
+    return x.size === 0;
 };
 var isEmpty$1 = function isEmpty(value) {
-  var typeOfValue = typeOf$1(value),
-      retVal = void 0;
+    var typeOfValue = typeOf$1(value),
+        retVal = void 0;
 
-  if (!value) {
-    // '', 0, `null`, `undefined` or `false` then is empty
-    retVal = true;
-  } else if (typeOfValue === _Array$1 || typeOfValue === _Function$1) {
-    retVal = isEmptyList$1(value);
-  } else if (typeOfValue === _Number$2 && value !== 0) {
-    retVal = false;
-  } else if (typeOfValue === _Object$1) {
-    retVal = isEmptyObject$1(value);
-  } else if (hasOwnProperty$1('size', value)) {
-    retVal = isEmptyCollection$1(value);
-  } else {
-    retVal = !value;
-  }
-  return retVal;
+    if (!value) {
+        // '', 0, `null`, `undefined` or `false` then is empty
+        retVal = true;
+    } else if (typeOfValue === _Array$1 || typeOfValue === _Function$1) {
+        retVal = isEmptyList$1(value);
+    } else if (typeOfValue === _Number$2 && value !== 0) {
+        retVal = false;
+    } else if (typeOfValue === _Object$1) {
+        retVal = isEmptyObject$1(value);
+    } else if (hasOwnProperty$1('size', value)) {
+        retVal = isEmptyCollection$1(value);
+    } else {
+        retVal = !value;
+    }
+    return retVal;
 };
 var notEmptyAndOfType$1 = curry(function (type, value) {
-  return !isEmpty$1(value) && isType$1(type, value);
+    return !isEmpty$1(value) && isType$1(type, value);
 });
 var isset$1 = function isset(x) {
-  return !isNull$1(x) && !isUndefined$1(x);
+    return !isNull$1(x) && !isUndefined$1(x);
 };
 
 /**
@@ -1211,25 +1211,26 @@ var findWhere = function findWhere(pred, xs) {
     }
 };
 var _swap = function _swap(list, ind1, ind2) {
-    var tmp = list[ind1];
-    list[ind1] = list[ind2];
-    list[ind2] = tmp;
-    return list;
+    var copyOfList = copy(list);
+    var tmp = copyOfList[ind1];
+    copyOfList[ind1] = copyOfList[ind2];
+    copyOfList[ind2] = tmp;
+    return copyOfList;
 };
-var _permutationsAlgo = function _permutationsAlgo(list, remainderLen, listLen) {
-    var out = [list];
-
+var _permutationsAlgo = function _permutationsAlgo(listIn, remainderLen) {
     if (remainderLen === 1) {
-        return list;
+        return listIn;
     }
+    var out = [];
 
     for (var i = 0; i < remainderLen; i++) {
         var newLen = remainderLen - 1;
-        out.push(_permutationsAlgo(list, newLen, listLen));
+
+        out = out.concat(_permutationsAlgo(listIn, newLen));
 
         // If remainderLen is odd, swap first and last element
         //  else, swap ith and last element
-        out.push(_swap(list, remainderLen % 2 === 1 ? 0 : i, newLen));
+        out.push(_swap(listIn, remainderLen % 2 === 1 ? 0 : i));
     }
     return out;
 };
@@ -2038,16 +2039,16 @@ var all$1 = curry$1(all);
 var maximumBy$1 = curry$1(maximumBy);
 var minimumBy$1 = curry$1(minimumBy);
 var scanl$1 = function scanl$$1() {
-  return null;
+    return null;
 };
 var scanl1$1 = function scanl1$$1() {
-  return null;
+    return null;
 };
 var scanr$1 = function scanr$$1() {
-  return null;
+    return null;
 };
 var scanr1$1 = function scanr1$$1() {
-  return null;
+    return null;
 };
 var remove$1 = curry$1(remove);
 var sortOn$1 = curry$1(sortOn);
@@ -2178,7 +2179,7 @@ var unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Sat Oct 07 2017 22:38:45 GMT-0400 (EDT) 
+ * Generated Sun Oct 08 2017 20:55:51 GMT-0400 (Eastern Daylight Time) 
  */
 
 var version = '0.16.5';

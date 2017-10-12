@@ -252,25 +252,26 @@ findWhere = exports.findWhere = function findWhere(pred, xs) {
     }
 },
     _swap = exports._swap = function _swap(list, ind1, ind2) {
-    var tmp = list[ind1];
-    list[ind1] = list[ind2];
-    list[ind2] = tmp;
-    return list;
+    var copyOfList = copy(list);
+    var tmp = copyOfList[ind1];
+    copyOfList[ind1] = copyOfList[ind2];
+    copyOfList[ind2] = tmp;
+    return copyOfList;
 },
-    _permutationsAlgo = exports._permutationsAlgo = function _permutationsAlgo(list, remainderLen, listLen) {
-    var out = [list];
-
+    _permutationsAlgo = exports._permutationsAlgo = function _permutationsAlgo(listIn, remainderLen) {
     if (remainderLen === 1) {
-        return list;
+        return listIn;
     }
+    var out = [];
 
     for (var i = 0; i < remainderLen; i++) {
         var newLen = remainderLen - 1;
-        out.push(_permutationsAlgo(list, newLen, listLen));
+
+        out = out.concat(_permutationsAlgo(listIn, newLen));
 
         // If remainderLen is odd, swap first and last element
         //  else, swap ith and last element
-        out.push(_swap(list, remainderLen % 2 === 1 ? 0 : i, newLen));
+        out.push(_swap(listIn, remainderLen % 2 === 1 ? 0 : i));
     }
     return out;
 }; // un-curried version

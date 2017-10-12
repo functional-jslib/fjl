@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.isset = exports.notEmptyAndOfType = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
 
@@ -37,7 +37,7 @@ var
  * @returns {Boolean}
  */
 isFunction = exports.isFunction = function isFunction(value) {
-  return (0, _object_.instanceOf)(Function, value);
+    return (0, _object_.instanceOf)(Function, value);
 },
 
 
@@ -55,7 +55,7 @@ isFunction = exports.isFunction = function isFunction(value) {
  * @return {Boolean}
  */
 isType = exports.isType = function isType(type, obj) {
-  return (0, _typeOf_.typeOf)(obj) === (isFunction(type) ? type.name : type);
+    return (0, _typeOf_.typeOf)(obj) === (isFunction(type) ? type.name : type);
 },
 
 
@@ -66,7 +66,7 @@ isType = exports.isType = function isType(type, obj) {
  * @returns {boolean}
  */
 isClass = exports.isClass = function isClass(x) {
-  return x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10));
+    return x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10));
 },
 
 
@@ -79,7 +79,7 @@ isClass = exports.isClass = function isClass(x) {
  * @returns {Boolean}
  */
 isCallable = exports.isCallable = function isCallable(x) {
-  return isFunction(x) && !isClass(x);
+    return isFunction(x) && !isClass(x);
 },
 
 
@@ -90,7 +90,7 @@ isCallable = exports.isCallable = function isCallable(x) {
  * @returns {boolean}
  */
 isArray = exports.isArray = function isArray(value) {
-  return isType(Array, value);
+    return isType(Array, value);
 },
 
 
@@ -101,7 +101,7 @@ isArray = exports.isArray = function isArray(value) {
  * @returns {Boolean}
  */
 isObject = exports.isObject = function isObject(value) {
-  return isType(_Object, value);
+    return isType(_Object, value);
 },
 
 
@@ -112,7 +112,7 @@ isObject = exports.isObject = function isObject(value) {
  * @returns {Boolean}
  */
 isBoolean = exports.isBoolean = function isBoolean(value) {
-  return isType(_Boolean, value);
+    return isType(_Boolean, value);
 },
 
 
@@ -123,7 +123,7 @@ isBoolean = exports.isBoolean = function isBoolean(value) {
  * @returns {Boolean}
  */
 isNumber = exports.isNumber = function isNumber(value) {
-  return isType(_Number, value);
+    return isType(_Number, value);
 },
 
 
@@ -134,7 +134,7 @@ isNumber = exports.isNumber = function isNumber(value) {
  * @returns {Boolean}
  */
 isString = exports.isString = function isString(value) {
-  return isType(_String, value);
+    return isType(_String, value);
 },
 
 
@@ -145,7 +145,7 @@ isString = exports.isString = function isString(value) {
  * @returns {Boolean}
  */
 isMap = exports.isMap = function isMap(value) {
-  return isType(_Map, value);
+    return isType(_Map, value);
 },
 
 
@@ -156,7 +156,7 @@ isMap = exports.isMap = function isMap(value) {
  * @returns {Boolean}
  */
 isSet = exports.isSet = function isSet(value) {
-  return isType(_Set, value);
+    return isType(_Set, value);
 },
 
 
@@ -167,7 +167,7 @@ isSet = exports.isSet = function isSet(value) {
  * @returns {Boolean}
  */
 isWeakMap = exports.isWeakMap = function isWeakMap(value) {
-  return isType(_WeakMap, value);
+    return isType(_WeakMap, value);
 },
 
 
@@ -178,7 +178,7 @@ isWeakMap = exports.isWeakMap = function isWeakMap(value) {
  * @returns {Boolean}
  */
 isWeakSet = exports.isWeakSet = function isWeakSet(value) {
-  return isType(_WeakSet, value);
+    return isType(_WeakSet, value);
 },
 
 
@@ -189,7 +189,7 @@ isWeakSet = exports.isWeakSet = function isWeakSet(value) {
  * @returns {Boolean}
  */
 isUndefined = exports.isUndefined = function isUndefined(value) {
-  return isType(_Undefined, value);
+    return isType(_Undefined, value);
 },
 
 
@@ -200,7 +200,7 @@ isUndefined = exports.isUndefined = function isUndefined(value) {
  * @returns {Boolean}
  */
 isNull = exports.isNull = function isNull(value) {
-  return isType(_Null, value);
+    return isType(_Null, value);
 },
 
 
@@ -211,7 +211,7 @@ isNull = exports.isNull = function isNull(value) {
  * @returns {Boolean}
  */
 isSymbol = exports.isSymbol = function isSymbol(value) {
-  return isType(_Symbol, value);
+    return isType(_Symbol, value);
 },
 
 
@@ -220,7 +220,7 @@ isSymbol = exports.isSymbol = function isSymbol(value) {
  * @private
  */
 isPromise = exports.isPromise = function isPromise(value) {
-  return isType('Promise', value);
+    return isType('Promise', value);
 },
 
 
@@ -233,10 +233,10 @@ isPromise = exports.isPromise = function isPromise(value) {
  * @returns {Boolean}
  */
 isUsableImmutablePrimitive = exports.isUsableImmutablePrimitive = function isUsableImmutablePrimitive(x) {
-  var typeOfX = (0, _typeOf_.typeOf)(x);
-  return [_String, _Number, _Boolean, _Symbol].some(function (Type) {
-    return Type === typeOfX;
-  });
+    var typeOfX = (0, _typeOf_.typeOf)(x);
+    return [_String, _Number, _Boolean, _Symbol].some(function (Type) {
+        return Type === typeOfX;
+    });
 },
 
 
@@ -247,7 +247,7 @@ isUsableImmutablePrimitive = exports.isUsableImmutablePrimitive = function isUsa
  * @returns {Boolean}
  */
 isEmptyList = exports.isEmptyList = function isEmptyList(x) {
-  return !(0, _object_.length)(x);
+    return !(0, _object_.length)(x);
 },
 
 
@@ -258,7 +258,7 @@ isEmptyList = exports.isEmptyList = function isEmptyList(x) {
  * @returns {Boolean}
  */
 isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
-  return isEmptyList((0, _object_.keys)(obj));
+    return isEmptyList((0, _object_.keys)(obj));
 },
 
 
@@ -269,7 +269,7 @@ isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
  * @returns {Boolean}
  */
 isEmptyCollection = exports.isEmptyCollection = function isEmptyCollection(x) {
-  return x.size === 0;
+    return x.size === 0;
 },
 
 
@@ -280,24 +280,24 @@ isEmptyCollection = exports.isEmptyCollection = function isEmptyCollection(x) {
  * @returns {Boolean}
  */
 isEmpty = exports.isEmpty = function isEmpty(value) {
-  var typeOfValue = (0, _typeOf_.typeOf)(value),
-      retVal = void 0;
+    var typeOfValue = (0, _typeOf_.typeOf)(value),
+        retVal = void 0;
 
-  if (!value) {
-    // '', 0, `null`, `undefined` or `false` then is empty
-    retVal = true;
-  } else if (typeOfValue === _Array || typeOfValue === _Function) {
-    retVal = isEmptyList(value);
-  } else if (typeOfValue === _Number && value !== 0) {
-    retVal = false;
-  } else if (typeOfValue === _Object) {
-    retVal = isEmptyObject(value);
-  } else if ((0, _object_.hasOwnProperty)('size', value)) {
-    retVal = isEmptyCollection(value);
-  } else {
-    retVal = !value;
-  }
-  return retVal;
+    if (!value) {
+        // '', 0, `null`, `undefined` or `false` then is empty
+        retVal = true;
+    } else if (typeOfValue === _Array || typeOfValue === _Function) {
+        retVal = isEmptyList(value);
+    } else if (typeOfValue === _Number && value !== 0) {
+        retVal = false;
+    } else if (typeOfValue === _Object) {
+        retVal = isEmptyObject(value);
+    } else if ((0, _object_.hasOwnProperty)('size', value)) {
+        retVal = isEmptyCollection(value);
+    } else {
+        retVal = !value;
+    }
+    return retVal;
 },
 
 
@@ -311,7 +311,7 @@ isEmpty = exports.isEmpty = function isEmpty(value) {
  * @returns {Boolean}
  */
 notEmptyAndOfType = exports.notEmptyAndOfType = function notEmptyAndOfType(type, value) {
-  return !isEmpty(value) && isType(type, value);
+    return !isEmpty(value) && isType(type, value);
 },
 
 
@@ -322,5 +322,5 @@ notEmptyAndOfType = exports.notEmptyAndOfType = function notEmptyAndOfType(type,
  * @returns {Boolean}
  */
 isset = exports.isset = function isset(x) {
-  return !isNull(x) && !isUndefined(x);
+    return !isNull(x) && !isUndefined(x);
 };

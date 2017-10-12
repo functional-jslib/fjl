@@ -217,25 +217,26 @@ define(['exports', './aggregation_', '../jsPlatform/function_', '../jsPlatform/l
         }
     },
           _swap = exports._swap = (list, ind1, ind2) => {
-        const tmp = list[ind1];
-        list[ind1] = list[ind2];
-        list[ind2] = tmp;
-        return list;
+        const copyOfList = copy(list);
+        const tmp = copyOfList[ind1];
+        copyOfList[ind1] = copyOfList[ind2];
+        copyOfList[ind2] = tmp;
+        return copyOfList;
     },
-          _permutationsAlgo = exports._permutationsAlgo = (list, remainderLen, listLen) => {
-        const out = [list];
-
+          _permutationsAlgo = exports._permutationsAlgo = (listIn, remainderLen) => {
         if (remainderLen === 1) {
-            return list;
+            return listIn;
         }
+        let out = [];
 
         for (let i = 0; i < remainderLen; i++) {
             const newLen = remainderLen - 1;
-            out.push(_permutationsAlgo(list, newLen, listLen));
+
+            out = out.concat(_permutationsAlgo(listIn, newLen));
 
             // If remainderLen is odd, swap first and last element
             //  else, swap ith and last element
-            out.push(_swap(list, remainderLen % 2 === 1 ? 0 : i, newLen));
+            out.push(_swap(listIn, remainderLen % 2 === 1 ? 0 : i));
         }
         return out;
     }; // un-curried version
