@@ -251,26 +251,25 @@
         }
     },
         _swap = exports._swap = function _swap(list, ind1, ind2) {
-        var copyOfList = copy(list);
-        var tmp = copyOfList[ind1];
-        copyOfList[ind1] = copyOfList[ind2];
-        copyOfList[ind2] = tmp;
-        return copyOfList;
+        var tmp = list[ind1];
+        list[ind1] = list[ind2];
+        list[ind2] = tmp;
+        return list;
     },
-        _permutationsAlgo = exports._permutationsAlgo = function _permutationsAlgo(listIn, remainderLen) {
-        if (remainderLen === 1) {
-            return listIn;
-        }
+        _permutationsAlgo = exports._permutationsAlgo = function _permutationsAlgo(listIn, limit, remainderLen) {
         var out = [];
-
+        if (remainderLen === 1) {
+            return copy(listIn);
+        }
         for (var i = 0; i < remainderLen; i++) {
             var newLen = remainderLen - 1;
 
-            out = out.concat(_permutationsAlgo(listIn, newLen));
+            // Capture permutation
+            out.push(_permutationsAlgo(listIn, limit, newLen));
 
             // If remainderLen is odd, swap first and last element
-            //  else, swap ith and last element
-            out.push(_swap(listIn, remainderLen % 2 === 1 ? 0 : i));
+            //  else, swap `ith` and last element
+            _swap(listIn, remainderLen % 2 === 1 ? 0 : i, newLen);
         }
         return out;
     }; // un-curried version

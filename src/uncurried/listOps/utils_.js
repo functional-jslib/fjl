@@ -185,25 +185,24 @@ export const
     },
 
     _swap = (list, ind1, ind2) => {
-        const copyOfList = copy(list);
-        const tmp = copyOfList[ind1];
-        copyOfList[ind1] = copyOfList[ind2];
-        copyOfList[ind2] = tmp;
-        return copyOfList;
+        const tmp = list[ind1];
+        list[ind1] = list[ind2];
+        list[ind2] = tmp;
+        return list;
     },
 
-    _permutationsAlgo = (listIn, remainderLen) => {
-        if (remainderLen === 1) { return listIn; }
+    _permutationsAlgo = (listIn, limit, remainderLen) => {
         let out = [];
-
+        if (remainderLen === 1) { return copy(listIn); }
         for (let i = 0; i < remainderLen; i++) {
             const newLen = remainderLen - 1;
 
-            out = out.concat(_permutationsAlgo(listIn, newLen));
+            // Capture permutation
+            out.push(_permutationsAlgo(listIn, limit, newLen));
 
             // If remainderLen is odd, swap first and last element
-            //  else, swap ith and last element
-            out.push(_swap(listIn, (remainderLen % 2 === 1 ? 0 : i)));
+            //  else, swap `ith` and last element
+            _swap(listIn, (remainderLen % 2 === 1 ? 0 : i), newLen);
         }
         return out;
     }
