@@ -308,6 +308,8 @@ subsequences = exports.subsequences = function subsequences(xs) {
 
 /**
  * Returns a list of permutations for passed in list.
+ *  Use caution with lists above a length of 15 (will take long due to nature of
+ *  algorithm).
  * @function module:listOps.permutations
  * @param xs {Array|String|*} - List.
  * @returns {Array<Array|String|*>} - Array of permutations.

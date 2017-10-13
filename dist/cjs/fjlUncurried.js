@@ -16,6 +16,18 @@ Object.keys(_objectOps_).forEach(function (key) {
   });
 });
 
+var _booleanOps = require('./booleanOps');
+
+Object.keys(_booleanOps).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _booleanOps[key];
+    }
+  });
+});
+
 var _functionOps_ = require('./uncurried/functionOps_');
 
 Object.keys(_functionOps_).forEach(function (key) {
@@ -36,6 +48,18 @@ Object.keys(_listOps_).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _listOps_[key];
+    }
+  });
+});
+
+var _stringOps = require('./stringOps');
+
+Object.keys(_stringOps).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _stringOps[key];
     }
   });
 });
