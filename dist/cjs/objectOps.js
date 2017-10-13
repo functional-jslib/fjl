@@ -38,14 +38,14 @@ Object.keys(_typeOf_).forEach(function (key) {
     });
 });
 
-var _is_ = require('./uncurried/objectOps/is_');
+var _is = require('./objectOps/is');
 
-Object.keys(_is_).forEach(function (key) {
+Object.keys(_is).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
         enumerable: true,
         get: function get() {
-            return _is_[key];
+            return _is[key];
         }
     });
 });
@@ -62,14 +62,14 @@ Object.keys(_of_).forEach(function (key) {
     });
 });
 
-var _setTheory_ = require('./uncurried/objectOps/setTheory_');
+var _setTheory = require('./objectOps/setTheory');
 
-Object.keys(_setTheory_).forEach(function (key) {
+Object.keys(_setTheory).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
         enumerable: true,
         get: function get() {
-            return _setTheory_[key];
+            return _setTheory[key];
         }
     });
 });

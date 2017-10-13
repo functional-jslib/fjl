@@ -5,23 +5,14 @@
  * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
  */
 import {curry} from   '../uncurried/functionOps/curry_';
-import {typeOf} from '../uncurried/objectOps/typeOf_';
-import {instanceOf} from './instanceOf';
-import {length, keys, hasOwnProperty} from '../uncurried/jsPlatform/object_';
-
-let _String = String.name,
-    _Number = Number.name,
-    _Object = Object.name,
-    _Boolean = Boolean.name,
-    _Function = Function.name,
-    _Array = Array.name,
-    _Symbol = 'Symbol',
-    _Map = 'Map',
-    _Set = 'Set',
-    _WeakMap = 'WeakMap',
-    _WeakSet = 'WeakSet',
-    _Null = 'Null',
-    _Undefined = 'Undefined';
+import {isType as _isType, isEmpty} from '../uncurried/objectOps/is_';
+export {isEmpty};
+export {
+    isFunction, isClass, isCallable, isArray, isObject, isBoolean,
+    isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined,
+    isNull, isSymbol, isPromise, isUsableImmutablePrimitive,
+    isEmptyList, isEmptyObject, isEmptyCollection, isset
+} from '../uncurried/objectOps/is_';
 
 export const
 
@@ -31,7 +22,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isFunction = instanceOf(Function),
 
     /**
      * Type checker.  Note** The `Type` passed in, if a constructor, should
@@ -46,7 +36,7 @@ export const
      * @param value {*}
      * @return {Boolean}
      */
-    isType = curry((type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type)),
+    isType = curry(_isType),
 
     /**
      * Checks if `value` is an es2015 `class`.
@@ -54,7 +44,6 @@ export const
      * @param x {*}
      * @returns {boolean}
      */
-    isClass = x => x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10)),
 
     /**
      * Returns a booleanOps depicting whether a value is callable or not.
@@ -64,7 +53,6 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isCallable = x => isFunction(x) && !isClass(x),
 
     /**
      * Checks if value is an arrayOps.
@@ -72,7 +60,6 @@ export const
      * @param value {*}
      * @returns {boolean}
      */
-    isArray = isType(Array),
 
     /**
      * Checks whether value is an object or not.
@@ -80,7 +67,6 @@ export const
      * @param value
      * @returns {Boolean}
      */
-    isObject = isType(_Object),
 
     /**
      * Checks if value is a booleanOps.
@@ -88,7 +74,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isBoolean = isType(_Boolean),
 
     /**
      * Checks if value is a valid number (also checks if isNaN so that you don't have to).
@@ -96,7 +81,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNumber = isType(_Number),
 
     /**
      * Checks whether value is a stringOps or not.
@@ -104,7 +88,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isString = isType(_String),
 
     /**
      * Checks whether value is of `Map` or not.
@@ -112,7 +95,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isMap = isType(_Map),
 
     /**
      * Checks whether value is of `Set` or not.
@@ -120,7 +102,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSet = isType(_Set),
 
     /**
      * Checks whether value is of `WeakMap` or not.
@@ -128,7 +109,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakMap = isType(_WeakMap),
 
     /**
      * Checks whether value is of `WeakSet` or not.
@@ -136,7 +116,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakSet = isType(_WeakSet),
 
     /**
      * Checks if value is undefined.
@@ -144,7 +123,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isUndefined = isType(_Undefined),
 
     /**
      * Checks if value is null.
@@ -152,7 +130,6 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNull = isType(_Null),
 
     /**
      * Checks if value is a `Symbol`.
@@ -160,13 +137,11 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSymbol = isType(_Symbol),
 
     /**
      * @tentative
      * @private
      */
-    isPromise = isType('Promise'),
 
     /**
      * Checks if given `x` is one of the four
@@ -176,11 +151,6 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isUsableImmutablePrimitive = x => {
-        const typeOfX = typeOf(x);
-        return [_String, _Number, _Boolean, _Symbol]
-            .some(Type => Type === typeOfX);
-    },
 
     /**
      * Checks if !length.
@@ -188,7 +158,6 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isEmptyList = x => length(x) === 0,
 
     /**
      * Checks if object has own properties/enumerable-props or not.
@@ -196,7 +165,6 @@ export const
      * @param obj {*}
      * @returns {Boolean}
      */
-    isEmptyObject = obj => isEmptyList(keys(obj)),
 
     /**
      * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
@@ -204,7 +172,6 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isEmptyCollection = x => x.size === 0,
 
     /**
      * Checks to see if passed in argument is empty.
@@ -212,30 +179,6 @@ export const
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
-    isEmpty = value => {
-        let typeOfValue = typeOf(value),
-            retVal;
-
-        if (!value) { // '', 0, `null`, `undefined` or `false` then is empty
-            retVal = true;
-        }
-        else if (typeOfValue === _Array || typeOfValue === _Function) {
-            retVal = isEmptyList(value);
-        }
-        else if (typeOfValue === _Number && value !== 0) {
-            retVal = false;
-        }
-        else if (typeOfValue === _Object) {
-            retVal = isEmptyObject(value);
-        }
-        else if (hasOwnProperty('size', value)) {
-            retVal = isEmptyCollection(value);
-        }
-        else {
-            retVal = !value;
-        }
-        return retVal;
-    },
 
     /**
      * Returns true if an element is not empty and is of type.
@@ -245,7 +188,7 @@ export const
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
-    notEmptyAndOfType = curry((type, value) => !isEmpty(value) && isType(type, value)),
+    notEmptyAndOfType = curry((type, value) => !isEmpty(value) && isType(type, value))
 
     /**
      * Returns whether passed in values is defined and not null.
@@ -253,4 +196,4 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isset = x => !isNull(x) && !isUndefined(x);
+    ;

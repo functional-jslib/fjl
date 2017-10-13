@@ -1,25 +1,17 @@
 import {curry, curry2} from   '../uncurried/functionOps/curry_';
-import {hasOwnProperty, keys} from '../uncurried/jsPlatform/object_';
-import {assignDeep} from '../uncurried/objectOps/assignDeep_';
-import {foldl} from '../listOps';
+import {
+    objUnion as _objUnion,
+    objComplement as _objComplement,
+    objIntersect as _objIntersect,
+    objDifference as _objDifference
+} from '../uncurried/objectOps/setTheory_';
 
 export const
 
-    objUnion = curry((obj1, obj2) => assignDeep(obj1, obj2)),
+    objUnion = curry(_objUnion),
 
-    objIntersect = curry((obj1, obj2) => foldl((agg, key) => {
-        if (hasOwnProperty(key, obj2)) {
-            agg[key] = obj2[key];
-        }
-        return agg;
-    }, {}, keys(obj1))),
+    objIntersect = curry(_objIntersect),
 
-    objDifference = curry((obj1, obj2) => foldl((agg, key) => {
-        if (!hasOwnProperty(key, obj2)) {
-            agg[key] = obj1[key];
-        }
-        return agg;
-    }, {}, keys(obj1))),
+    objDifference = curry(_objDifference),
 
-    objComplement = curry2((obj0, ...objs) => foldl((agg, obj) =>
-        assignDeep(agg, objDifference(obj, obj0)), {}, objs));
+    objComplement = curry2(_objComplement);

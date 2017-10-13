@@ -25,8 +25,8 @@ export const
 
 export * from './uncurried/objectOps/typeOf_';
 
-export * from './uncurried/objectOps/is_';
+export * from './objectOps/is';
 
 export * from './uncurried/objectOps/of_';
 
-export * from './uncurried/objectOps/setTheory_';
+export * from './objectOps/setTheory';

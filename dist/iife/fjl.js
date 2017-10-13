@@ -522,9 +522,6 @@ var isEmpty = function isEmpty(value) {
     }
     return retVal;
 };
-var notEmptyAndOfType = function notEmptyAndOfType(type, value) {
-    return !isEmpty(value) && isType(type, value);
-};
 var isset = function isset(x) {
     return !isNull(x) && !isUndefined(x);
 };
@@ -550,6 +547,17 @@ var assignDeep$1 = function assignDeep(obj0) {
         }, topAgg);
     }, obj0);
 };
+
+/**
+ * Created by elyde on 12/18/2016.
+ * @memberOf objectOps
+ * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
+ * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
+ */
+var isType$1 = curry(isType);
+var notEmptyAndOfType$1 = curry(function (type, value) {
+  return !isEmpty(value) && isType$1(type, value);
+});
 
 /**
  * Created by elydelacruz on 7/22/2017.
@@ -657,123 +665,6 @@ var prop = function prop(name, obj) {
  */
 
 /**
- * Created by elyde on 12/18/2016.
- * @memberOf objectOps
- */
-var _Number$3 = Number.name;
-var _NaN$1 = 'NaN';
-var _Null$3 = 'Null';
-var _Undefined$3 = 'Undefined';
-var _undefined$1 = 'undefined';
-
-/**
- * Returns the class name of an object from it's class stringOps.
- * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
- * @function module:objectOps.typeOf
- * @param value {*}
- * @returns {string} - Constructor's name property if not null or undefined (in which case a
- *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
- */
-function typeOf$1(value) {
-    var retVal = void 0;
-    if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined$1) {
-        retVal = _Undefined$3;
-    } else if (value === null) {
-        retVal = _Null$3;
-    } else {
-        var constructorName = value.constructor.name;
-        retVal = constructorName === _Number$3 && isNaN(value) ? _NaN$1 : constructorName;
-    }
-    return retVal;
-}
-
-/**
- * Created by elydelacruz on 7/22/2017.
- * @memberOf objectOps
- */
-
-var instanceOf$2 = curry(instanceOf$1);
-
-/**
- * Created by elyde on 12/18/2016.
- * @memberOf objectOps
- * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
- * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
- */
-var _String$1 = String.name;
-var _Number$2 = Number.name;
-var _Object$1 = Object.name;
-var _Boolean$1 = Boolean.name;
-var _Function$1 = Function.name;
-var _Array$1 = Array.name;
-var _Symbol$1 = 'Symbol';
-var _Map$1 = 'Map';
-var _Set$1 = 'Set';
-var _WeakMap$1 = 'WeakMap';
-var _WeakSet$1 = 'WeakSet';
-var _Null$2 = 'Null';
-var _Undefined$2 = 'Undefined';
-
-var isFunction$1 = instanceOf$2(Function);
-var isType$1 = curry(function (type, obj) {
-    return typeOf$1(obj) === (isFunction$1(type) ? type.name : type);
-});
-var isArray$1 = isType$1(Array);
-var isObject$1 = isType$1(_Object$1);
-var isBoolean$1 = isType$1(_Boolean$1);
-var isNumber$1 = isType$1(_Number$2);
-var isString$1 = isType$1(_String$1);
-var isMap$1 = isType$1(_Map$1);
-var isSet$1 = isType$1(_Set$1);
-var isWeakMap$1 = isType$1(_WeakMap$1);
-var isWeakSet$1 = isType$1(_WeakSet$1);
-var isUndefined$1 = isType$1(_Undefined$2);
-var isNull$1 = isType$1(_Null$2);
-var isSymbol$1 = isType$1(_Symbol$1);
-var isPromise$1 = isType$1('Promise');
-var isUsableImmutablePrimitive$1 = function isUsableImmutablePrimitive(x) {
-    var typeOfX = typeOf$1(x);
-    return [_String$1, _Number$2, _Boolean$1, _Symbol$1].some(function (Type) {
-        return Type === typeOfX;
-    });
-};
-var isEmptyList$1 = function isEmptyList(x) {
-    return length(x) === 0;
-};
-var isEmptyObject$1 = function isEmptyObject(obj) {
-    return isEmptyList$1(keys(obj));
-};
-var isEmptyCollection$1 = function isEmptyCollection(x) {
-    return x.size === 0;
-};
-var isEmpty$1 = function isEmpty(value) {
-    var typeOfValue = typeOf$1(value),
-        retVal = void 0;
-
-    if (!value) {
-        // '', 0, `null`, `undefined` or `false` then is empty
-        retVal = true;
-    } else if (typeOfValue === _Array$1 || typeOfValue === _Function$1) {
-        retVal = isEmptyList$1(value);
-    } else if (typeOfValue === _Number$2 && value !== 0) {
-        retVal = false;
-    } else if (typeOfValue === _Object$1) {
-        retVal = isEmptyObject$1(value);
-    } else if (hasOwnProperty$1('size', value)) {
-        retVal = isEmptyCollection$1(value);
-    } else {
-        retVal = !value;
-    }
-    return retVal;
-};
-var notEmptyAndOfType$1 = curry(function (type, value) {
-    return !isEmpty$1(value) && isType$1(type, value);
-});
-var isset$1 = function isset(x) {
-    return !isNull$1(x) && !isUndefined$1(x);
-};
-
-/**
  * Created by elydelacruz on 7/22/2017.
  * @memberOf functionOps
  */
@@ -784,15 +675,15 @@ var of$1 = function of(x) {
         args[_key - 1] = arguments[_key];
     }
 
-    if (!isset$1(x)) {
+    if (!isset(x)) {
         return undefined;
     }
     var constructor = x.constructor;
     if (hasOwnProperty$1('of', constructor)) {
         return apply$1(constructor.of, args);
-    } else if (isUsableImmutablePrimitive$1(x)) {
+    } else if (isUsableImmutablePrimitive(x)) {
         return apply$1(constructor, args);
-    } else if (isFunction$1(constructor)) {
+    } else if (isFunction(constructor)) {
         return new (Function.prototype.bind.apply(constructor, [null].concat(args)))();
     }
     return undefined;
@@ -1693,10 +1584,10 @@ var complement = function complement(arr0) {
     }, [], arrays);
 };
 
-var objUnion = function objUnion(obj1, obj2) {
+var objUnion$1 = function objUnion(obj1, obj2) {
     return assignDeep$1(obj1, obj2);
 };
-var objIntersect = function objIntersect(obj1, obj2) {
+var objIntersect$1 = function objIntersect(obj1, obj2) {
     return foldl(function (agg, key) {
         if (hasOwnProperty$1(key, obj2)) {
             agg[key] = obj2[key];
@@ -1704,7 +1595,7 @@ var objIntersect = function objIntersect(obj1, obj2) {
         return agg;
     }, {}, keys(obj1));
 };
-var objDifference = function objDifference(obj1, obj2) {
+var objDifference$1 = function objDifference(obj1, obj2) {
     return foldl(function (agg, key) {
         if (!hasOwnProperty$1(key, obj2)) {
             agg[key] = obj1[key];
@@ -1712,15 +1603,20 @@ var objDifference = function objDifference(obj1, obj2) {
         return agg;
     }, {}, keys(obj1));
 };
-var objComplement = function objComplement(obj0) {
+var objComplement$1 = function objComplement(obj0) {
     for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         objs[_key - 1] = arguments[_key];
     }
 
     return foldl(function (agg, obj) {
-        return assignDeep$1(agg, objDifference(obj, obj0));
+        return assignDeep$1(agg, objDifference$1(obj, obj0));
     }, {}, objs);
 };
+
+var objUnion$$1 = curry(objUnion$1);
+var objIntersect$$1 = curry(objIntersect$1);
+var objDifference$$1 = curry(objDifference$1);
+var objComplement$$1 = curry2(objComplement$1);
 
 /**
  * @module objectOps
@@ -2101,7 +1997,7 @@ var unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Thu Oct 12 2017 23:35:36 GMT-0400 (Eastern Daylight Time) 
+ * Generated Fri Oct 13 2017 11:36:16 GMT-0400 (Eastern Daylight Time) 
  */
 
 var version = '0.17.0';
@@ -2130,8 +2026,10 @@ exports.length = length;
 exports.toString = toString;
 exports.keys = keys;
 exports.typeOf = typeOf;
+exports.isEmpty = isEmpty;
+exports.isType = isType$1;
+exports.notEmptyAndOfType = notEmptyAndOfType$1;
 exports.isFunction = isFunction;
-exports.isType = isType;
 exports.isClass = isClass;
 exports.isCallable = isCallable;
 exports.isArray = isArray;
@@ -2151,14 +2049,12 @@ exports.isUsableImmutablePrimitive = isUsableImmutablePrimitive;
 exports.isEmptyList = isEmptyList;
 exports.isEmptyObject = isEmptyObject;
 exports.isEmptyCollection = isEmptyCollection;
-exports.isEmpty = isEmpty;
-exports.notEmptyAndOfType = notEmptyAndOfType;
 exports.isset = isset;
 exports.of = of;
-exports.objUnion = objUnion;
-exports.objIntersect = objIntersect;
-exports.objDifference = objDifference;
-exports.objComplement = objComplement;
+exports.objUnion = objUnion$$1;
+exports.objIntersect = objIntersect$$1;
+exports.objDifference = objDifference$$1;
+exports.objComplement = objComplement$$1;
 exports.isTruthy = isTruthy;
 exports.isFalsy = isFalsy;
 exports.alwaysTrue = alwaysTrue;

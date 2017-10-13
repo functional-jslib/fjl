@@ -1,17 +1,140 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.isset = exports.notEmptyAndOfType = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
+exports.notEmptyAndOfType = exports.isType = exports.isset = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isFunction = exports.isEmpty = undefined;
+
+var _is_ = require('../uncurried/objectOps/is_');
+
+Object.defineProperty(exports, 'isFunction', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isFunction;
+  }
+});
+Object.defineProperty(exports, 'isClass', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isClass;
+  }
+});
+Object.defineProperty(exports, 'isCallable', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isCallable;
+  }
+});
+Object.defineProperty(exports, 'isArray', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isArray;
+  }
+});
+Object.defineProperty(exports, 'isObject', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isObject;
+  }
+});
+Object.defineProperty(exports, 'isBoolean', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isBoolean;
+  }
+});
+Object.defineProperty(exports, 'isNumber', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isNumber;
+  }
+});
+Object.defineProperty(exports, 'isString', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isString;
+  }
+});
+Object.defineProperty(exports, 'isMap', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isMap;
+  }
+});
+Object.defineProperty(exports, 'isSet', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isSet;
+  }
+});
+Object.defineProperty(exports, 'isWeakMap', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isWeakMap;
+  }
+});
+Object.defineProperty(exports, 'isWeakSet', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isWeakSet;
+  }
+});
+Object.defineProperty(exports, 'isUndefined', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isUndefined;
+  }
+});
+Object.defineProperty(exports, 'isNull', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isNull;
+  }
+});
+Object.defineProperty(exports, 'isSymbol', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isSymbol;
+  }
+});
+Object.defineProperty(exports, 'isPromise', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isPromise;
+  }
+});
+Object.defineProperty(exports, 'isUsableImmutablePrimitive', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isUsableImmutablePrimitive;
+  }
+});
+Object.defineProperty(exports, 'isEmptyList', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isEmptyList;
+  }
+});
+Object.defineProperty(exports, 'isEmptyObject', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isEmptyObject;
+  }
+});
+Object.defineProperty(exports, 'isEmptyCollection', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isEmptyCollection;
+  }
+});
+Object.defineProperty(exports, 'isset', {
+  enumerable: true,
+  get: function get() {
+    return _is_.isset;
+  }
+});
 
 var _curry_ = require('../uncurried/functionOps/curry_');
-
-var _typeOf = require('./typeOf');
-
-var _instanceOf = require('./instanceOf');
-
-var _object_ = require('../uncurried/jsPlatform/object_');
 
 /**
  * Created by elyde on 12/18/2016.
@@ -19,20 +142,7 @@ var _object_ = require('../uncurried/jsPlatform/object_');
  * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
  * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
  */
-var _String = String.name,
-    _Number = Number.name,
-    _Object = Object.name,
-    _Boolean = Boolean.name,
-    _Function = Function.name,
-    _Array = Array.name,
-    _Symbol = 'Symbol',
-    _Map = 'Map',
-    _Set = 'Set',
-    _WeakMap = 'WeakMap',
-    _WeakSet = 'WeakSet',
-    _Null = 'Null',
-    _Undefined = 'Undefined';
-
+exports.isEmpty = _is_.isEmpty;
 var
 
 /**
@@ -41,8 +151,6 @@ var
  * @param value {*}
  * @returns {Boolean}
  */
-isFunction = exports.isFunction = (0, _instanceOf.instanceOf)(Function),
-
 
 /**
  * Type checker.  Note** The `Type` passed in, if a constructor, should
@@ -57,9 +165,7 @@ isFunction = exports.isFunction = (0, _instanceOf.instanceOf)(Function),
  * @param value {*}
  * @return {Boolean}
  */
-isType = exports.isType = (0, _curry_.curry)(function (type, obj) {
-    return (0, _typeOf.typeOf)(obj) === (isFunction(type) ? type.name : type);
-}),
+isType = exports.isType = (0, _curry_.curry)(_is_.isType),
 
 
 /**
@@ -68,10 +174,6 @@ isType = exports.isType = (0, _curry_.curry)(function (type, obj) {
  * @param x {*}
  * @returns {boolean}
  */
-isClass = exports.isClass = function isClass(x) {
-    return x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10));
-},
-
 
 /**
  * Returns a booleanOps depicting whether a value is callable or not.
@@ -81,10 +183,6 @@ isClass = exports.isClass = function isClass(x) {
  * @param x {*}
  * @returns {Boolean}
  */
-isCallable = exports.isCallable = function isCallable(x) {
-    return isFunction(x) && !isClass(x);
-},
-
 
 /**
  * Checks if value is an arrayOps.
@@ -92,8 +190,6 @@ isCallable = exports.isCallable = function isCallable(x) {
  * @param value {*}
  * @returns {boolean}
  */
-isArray = exports.isArray = isType(Array),
-
 
 /**
  * Checks whether value is an object or not.
@@ -101,8 +197,6 @@ isArray = exports.isArray = isType(Array),
  * @param value
  * @returns {Boolean}
  */
-isObject = exports.isObject = isType(_Object),
-
 
 /**
  * Checks if value is a booleanOps.
@@ -110,8 +204,6 @@ isObject = exports.isObject = isType(_Object),
  * @param value {*}
  * @returns {Boolean}
  */
-isBoolean = exports.isBoolean = isType(_Boolean),
-
 
 /**
  * Checks if value is a valid number (also checks if isNaN so that you don't have to).
@@ -119,8 +211,6 @@ isBoolean = exports.isBoolean = isType(_Boolean),
  * @param value {*}
  * @returns {Boolean}
  */
-isNumber = exports.isNumber = isType(_Number),
-
 
 /**
  * Checks whether value is a stringOps or not.
@@ -128,8 +218,6 @@ isNumber = exports.isNumber = isType(_Number),
  * @param value {*}
  * @returns {Boolean}
  */
-isString = exports.isString = isType(_String),
-
 
 /**
  * Checks whether value is of `Map` or not.
@@ -137,8 +225,6 @@ isString = exports.isString = isType(_String),
  * @param value {*}
  * @returns {Boolean}
  */
-isMap = exports.isMap = isType(_Map),
-
 
 /**
  * Checks whether value is of `Set` or not.
@@ -146,8 +232,6 @@ isMap = exports.isMap = isType(_Map),
  * @param value {*}
  * @returns {Boolean}
  */
-isSet = exports.isSet = isType(_Set),
-
 
 /**
  * Checks whether value is of `WeakMap` or not.
@@ -155,8 +239,6 @@ isSet = exports.isSet = isType(_Set),
  * @param value {*}
  * @returns {Boolean}
  */
-isWeakMap = exports.isWeakMap = isType(_WeakMap),
-
 
 /**
  * Checks whether value is of `WeakSet` or not.
@@ -164,8 +246,6 @@ isWeakMap = exports.isWeakMap = isType(_WeakMap),
  * @param value {*}
  * @returns {Boolean}
  */
-isWeakSet = exports.isWeakSet = isType(_WeakSet),
-
 
 /**
  * Checks if value is undefined.
@@ -173,8 +253,6 @@ isWeakSet = exports.isWeakSet = isType(_WeakSet),
  * @param value {*}
  * @returns {Boolean}
  */
-isUndefined = exports.isUndefined = isType(_Undefined),
-
 
 /**
  * Checks if value is null.
@@ -182,8 +260,6 @@ isUndefined = exports.isUndefined = isType(_Undefined),
  * @param value {*}
  * @returns {Boolean}
  */
-isNull = exports.isNull = isType(_Null),
-
 
 /**
  * Checks if value is a `Symbol`.
@@ -191,15 +267,11 @@ isNull = exports.isNull = isType(_Null),
  * @param value {*}
  * @returns {Boolean}
  */
-isSymbol = exports.isSymbol = isType(_Symbol),
-
 
 /**
  * @tentative
  * @private
  */
-isPromise = exports.isPromise = isType('Promise'),
-
 
 /**
  * Checks if given `x` is one of the four
@@ -209,13 +281,6 @@ isPromise = exports.isPromise = isType('Promise'),
  * @param x {*}
  * @returns {Boolean}
  */
-isUsableImmutablePrimitive = exports.isUsableImmutablePrimitive = function isUsableImmutablePrimitive(x) {
-    var typeOfX = (0, _typeOf.typeOf)(x);
-    return [_String, _Number, _Boolean, _Symbol].some(function (Type) {
-        return Type === typeOfX;
-    });
-},
-
 
 /**
  * Checks if !length.
@@ -223,10 +288,6 @@ isUsableImmutablePrimitive = exports.isUsableImmutablePrimitive = function isUsa
  * @param x {*}
  * @returns {Boolean}
  */
-isEmptyList = exports.isEmptyList = function isEmptyList(x) {
-    return (0, _object_.length)(x) === 0;
-},
-
 
 /**
  * Checks if object has own properties/enumerable-props or not.
@@ -234,10 +295,6 @@ isEmptyList = exports.isEmptyList = function isEmptyList(x) {
  * @param obj {*}
  * @returns {Boolean}
  */
-isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
-    return isEmptyList((0, _object_.keys)(obj));
-},
-
 
 /**
  * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
@@ -245,10 +302,6 @@ isEmptyObject = exports.isEmptyObject = function isEmptyObject(obj) {
  * @param x {*}
  * @returns {Boolean}
  */
-isEmptyCollection = exports.isEmptyCollection = function isEmptyCollection(x) {
-    return x.size === 0;
-},
-
 
 /**
  * Checks to see if passed in argument is empty.
@@ -256,27 +309,6 @@ isEmptyCollection = exports.isEmptyCollection = function isEmptyCollection(x) {
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
-isEmpty = exports.isEmpty = function isEmpty(value) {
-    var typeOfValue = (0, _typeOf.typeOf)(value),
-        retVal = void 0;
-
-    if (!value) {
-        // '', 0, `null`, `undefined` or `false` then is empty
-        retVal = true;
-    } else if (typeOfValue === _Array || typeOfValue === _Function) {
-        retVal = isEmptyList(value);
-    } else if (typeOfValue === _Number && value !== 0) {
-        retVal = false;
-    } else if (typeOfValue === _Object) {
-        retVal = isEmptyObject(value);
-    } else if ((0, _object_.hasOwnProperty)('size', value)) {
-        retVal = isEmptyCollection(value);
-    } else {
-        retVal = !value;
-    }
-    return retVal;
-},
-
 
 /**
  * Returns true if an element is not empty and is of type.
@@ -287,9 +319,8 @@ isEmpty = exports.isEmpty = function isEmpty(value) {
  * @returns {Boolean}
  */
 notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry_.curry)(function (type, value) {
-    return !isEmpty(value) && isType(type, value);
-}),
-
+  return !(0, _is_.isEmpty)(value) && isType(type, value);
+})
 
 /**
  * Returns whether passed in values is defined and not null.
@@ -297,6 +328,4 @@ notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry_.curry)(function (typ
  * @param x {*}
  * @returns {Boolean}
  */
-isset = exports.isset = function isset(x) {
-    return !isNull(x) && !isUndefined(x);
-};
+;
