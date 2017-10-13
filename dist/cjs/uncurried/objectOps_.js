@@ -4,18 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _assignDeep_ = require('./objectOps/assignDeep_');
-
-Object.keys(_assignDeep_).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _assignDeep_[key];
-    }
-  });
-});
-
 var _object_ = require('./jsPlatform/object_');
 
 Object.keys(_object_).forEach(function (key) {
@@ -24,6 +12,18 @@ Object.keys(_object_).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _object_[key];
+    }
+  });
+});
+
+var _prop_ = require('./objectOps/prop_');
+
+Object.keys(_prop_).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _prop_[key];
     }
   });
 });
@@ -64,6 +64,18 @@ Object.keys(_of_).forEach(function (key) {
   });
 });
 
+var _assignDeep_ = require('./objectOps/assignDeep_');
+
+Object.keys(_assignDeep_).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _assignDeep_[key];
+    }
+  });
+});
+
 var _setTheory_ = require('./objectOps/setTheory_');
 
 Object.keys(_setTheory_).forEach(function (key) {
@@ -72,18 +84,6 @@ Object.keys(_setTheory_).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _setTheory_[key];
-    }
-  });
-});
-
-var _prop_ = require('./objectOps/prop_');
-
-Object.keys(_prop_).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _prop_[key];
     }
   });
 });

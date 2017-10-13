@@ -5,7 +5,7 @@
  * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
  */
 import {curry} from   '../uncurried/functionOps/curry_';
-import {typeOf} from './typeOf';
+import {typeOf} from '../uncurried/objectOps/typeOf_';
 import {instanceOf} from './instanceOf';
 import {length, keys, hasOwnProperty} from '../uncurried/jsPlatform/object_';
 

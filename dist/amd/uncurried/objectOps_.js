@@ -1,17 +1,8 @@
-define(['exports', './objectOps/assignDeep_', './jsPlatform/object_', './objectOps/typeOf_', './objectOps/is_', './objectOps/of_', './objectOps/setTheory_', './objectOps/prop_'], function (exports, _assignDeep_, _object_, _typeOf_, _is_, _of_, _setTheory_, _prop_) {
+define(['exports', './jsPlatform/object_', './objectOps/prop_', './objectOps/typeOf_', './objectOps/is_', './objectOps/of_', './objectOps/assignDeep_', './objectOps/setTheory_'], function (exports, _object_, _prop_, _typeOf_, _is_, _of_, _assignDeep_, _setTheory_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
-  });
-  Object.keys(_assignDeep_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _assignDeep_[key];
-      }
-    });
   });
   Object.keys(_object_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -19,6 +10,15 @@ define(['exports', './objectOps/assignDeep_', './jsPlatform/object_', './objectO
       enumerable: true,
       get: function () {
         return _object_[key];
+      }
+    });
+  });
+  Object.keys(_prop_).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _prop_[key];
       }
     });
   });
@@ -49,21 +49,21 @@ define(['exports', './objectOps/assignDeep_', './jsPlatform/object_', './objectO
       }
     });
   });
+  Object.keys(_assignDeep_).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _assignDeep_[key];
+      }
+    });
+  });
   Object.keys(_setTheory_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
         return _setTheory_[key];
-      }
-    });
-  });
-  Object.keys(_prop_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _prop_[key];
       }
     });
   });

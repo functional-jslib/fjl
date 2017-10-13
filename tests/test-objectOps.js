@@ -14,7 +14,7 @@ import {assert, expect} from 'chai';
 import {instanceOf, hasOwnProperty, keys} from '../src/uncurried/jsPlatform/object_';
 import {objComplement, objDifference, objUnion, objIntersect} from '../src/objectOps';
 import {apply} from '../src/functionOps/apply';
-import {typeOf} from '../src/objectOps/typeOf';
+import {typeOf} from '../src/uncurried/objectOps/typeOf_';
 import {
     isType,
     isNumber, isFunction, isArray, isBoolean, isObject, isString,

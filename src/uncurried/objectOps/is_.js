@@ -4,7 +4,6 @@
  */
 
 import {typeOf} from './typeOf_';
-
 import {instanceOf, length, keys, hasOwnProperty} from '../jsPlatform/object_';
 
 let _String = String.name,

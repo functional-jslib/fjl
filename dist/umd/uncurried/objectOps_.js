@@ -1,29 +1,20 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './objectOps/assignDeep_', './jsPlatform/object_', './objectOps/typeOf_', './objectOps/is_', './objectOps/of_', './objectOps/setTheory_', './objectOps/prop_'], factory);
+    define(['exports', './jsPlatform/object_', './objectOps/prop_', './objectOps/typeOf_', './objectOps/is_', './objectOps/of_', './objectOps/assignDeep_', './objectOps/setTheory_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./objectOps/assignDeep_'), require('./jsPlatform/object_'), require('./objectOps/typeOf_'), require('./objectOps/is_'), require('./objectOps/of_'), require('./objectOps/setTheory_'), require('./objectOps/prop_'));
+    factory(exports, require('./jsPlatform/object_'), require('./objectOps/prop_'), require('./objectOps/typeOf_'), require('./objectOps/is_'), require('./objectOps/of_'), require('./objectOps/assignDeep_'), require('./objectOps/setTheory_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.assignDeep_, global.object_, global.typeOf_, global.is_, global.of_, global.setTheory_, global.prop_);
+    factory(mod.exports, global.object_, global.prop_, global.typeOf_, global.is_, global.of_, global.assignDeep_, global.setTheory_);
     global.objectOps_ = mod.exports;
   }
-})(this, function (exports, _assignDeep_, _object_, _typeOf_, _is_, _of_, _setTheory_, _prop_) {
+})(this, function (exports, _object_, _prop_, _typeOf_, _is_, _of_, _assignDeep_, _setTheory_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
-  });
-  Object.keys(_assignDeep_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _assignDeep_[key];
-      }
-    });
   });
   Object.keys(_object_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -31,6 +22,15 @@
       enumerable: true,
       get: function () {
         return _object_[key];
+      }
+    });
+  });
+  Object.keys(_prop_).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _prop_[key];
       }
     });
   });
@@ -61,21 +61,21 @@
       }
     });
   });
+  Object.keys(_assignDeep_).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _assignDeep_[key];
+      }
+    });
+  });
   Object.keys(_setTheory_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
         return _setTheory_[key];
-      }
-    });
-  });
-  Object.keys(_prop_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _prop_[key];
       }
     });
   });
