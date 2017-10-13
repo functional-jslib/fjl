@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.notEmptyAndOfType = exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isFunction = exports.keys = exports.toString = exports.length = undefined;
+exports.notEmptyAndOfType = exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports._notEmptyAndOfType = exports._objDifference = exports._objIntersect = exports._objComplement = exports._objUnion = exports._assignDeep = exports._prop = exports._assign = exports._hasOwnProperty = exports._isType = exports._instanceOf = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isFunction = exports.keys = exports.toString = exports.length = undefined;
 
 var _object_ = require('./uncurried/jsPlatform/object_');
 
@@ -193,6 +193,17 @@ var _assignDeep_ = require('./uncurried/objectOps/assignDeep_');
 
 var _setTheory_ = require('./uncurried/objectOps/setTheory_');
 
+exports._instanceOf = _object_.instanceOf;
+exports._isType = _is_.isType;
+exports._hasOwnProperty = _object_.hasOwnProperty;
+exports._assign = _object_.assign;
+exports._prop = _prop_.prop;
+exports._assignDeep = _assignDeep_.assignDeep;
+exports._objUnion = _setTheory_.objUnion;
+exports._objComplement = _setTheory_.objComplement;
+exports._objIntersect = _setTheory_.objIntersect;
+exports._objDifference = _setTheory_.objDifference;
+exports._notEmptyAndOfType = _is_.notEmptyAndOfType;
 var prop = exports.prop = (0, _curry_.curry)(_prop_.prop),
 
 
@@ -386,9 +397,7 @@ isType = exports.isType = (0, _curry_.curry)(_is_.isType),
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
-notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry_.curry)(function (type, value) {
-    return !(0, _is_.isEmpty)(value) && isType(type, value);
-});
+notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry_.curry)(_is_.notEmptyAndOfType);
 
 /**
  * Returns whether passed in values is defined and not null.
