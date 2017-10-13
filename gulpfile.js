@@ -105,7 +105,7 @@ gulp.task('member-list-md-content', ['member-list-md'], function () {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('generate-version-js', () =>
+gulp.task('version', () =>
     (new VersionNumberReadStream())
         .pipe(fs.createWriteStream('./src/generated/version.js')));
 
@@ -132,7 +132,7 @@ gulp.task('cjs', ['eslint'], () =>
         .pipe(gulpBabel(gulpConfig.buildCjsOptions.babel))
         .pipe(gulp.dest(buildPath(cjsBuildPath))));
 
-gulp.task('iife', ['eslint', 'generate-version-js'], () =>
+gulp.task('iife', ['eslint', 'version'], () =>
     rollup.rollup({
         input: 'src/fjl.js',
         plugins: [
@@ -141,11 +141,9 @@ gulp.task('iife', ['eslint', 'generate-version-js'], () =>
                 babelrc: false,
                 presets: [
                     [
-                        'latest',
+                        'es2015',
                         {
-                            es2015: {
-                                modules: false
-                            }
+                            modules: false
                         }
                     ]
                 ],
@@ -164,7 +162,7 @@ gulp.task('iife', ['eslint', 'generate-version-js'], () =>
         sourcemap: true
     })));
 
-gulp.task('es6-module', ['eslint', 'generate-version-js'], () =>
+gulp.task('es6-module', ['eslint', 'version'], () =>
     gulp.src('./src/fjl.js')
         .pipe(gulpRollup(null, {moduleName: iifeModuleName, format: 'es'}))
         .pipe(concat(buildPath('es6-module', iifeFileName)))
@@ -186,9 +184,9 @@ gulp.task('uglify', ['iife'], () => {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd', 'es6-module']);
+gulp.task('build-js', ['version', 'uglify', 'cjs', 'amd', 'umd', 'es6-module']);
 
-gulp.task('jsdoc', () =>
+gulp.task('jsdoc', ['readme'], () =>
     deleteFilePaths(['./jsdocs/**/*'])
         .then(_ =>
             gulp.src(['README.md', './src/**/*.js'], {read: false})
@@ -196,22 +194,23 @@ gulp.task('jsdoc', () =>
                     opts: {
                         'template': 'templates/default',  // same as -t templates/default
                         'encoding': 'utf8',               // same as -e utf8
-                        'destination': './jsdocs/',          // same as -d ./out/
+                        'destination': './jsdocs/',       // same as -d ./out/
                         'recurse': true
                     }
                 }))
         )
 );
 
-gulp.task('build-readme', [
+gulp.task('build-docs', ['jsdoc']);
+
+gulp.task('readme', [
     'member-list-md',
-    'member-list-md-content',
-    'generate-version-js'
+    'member-list-md-content'
 ], () => gulp.src(gulpConfig.readme)
         .pipe(concat('README.md'))
         .pipe(gulp.dest('./')));
 
-gulp.task('build', ['build-js', 'build-readme']);
+gulp.task('build', ['build-js']);
 
 gulp.task('tests', ['eslint'], () =>
     gulp.src(gulpConfig.tests.srcs)
