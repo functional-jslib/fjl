@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../functionOps/curry', '../uncurried/objectOps/instanceOf_'], factory);
+    define(['exports', '../uncurried/functionOps/curry_', '../uncurried/jsPlatform/object_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../functionOps/curry'), require('../uncurried/objectOps/instanceOf_'));
+    factory(exports, require('../uncurried/functionOps/curry_'), require('../uncurried/jsPlatform/object_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.curry, global.instanceOf_);
+    factory(mod.exports, global.curry_, global.object_);
     global.instanceOf = mod.exports;
   }
-})(this, function (exports, _curry, _instanceOf_) {
+})(this, function (exports, _curry_, _object_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -31,5 +31,5 @@
    * @param Type {Function}
    * @returns {Boolean}
    */
-  instanceOf = exports.instanceOf = (0, _curry.curry)(_instanceOf_.instanceOf);
+  instanceOf = exports.instanceOf = (0, _curry_.curry)(_object_.instanceOf);
 });

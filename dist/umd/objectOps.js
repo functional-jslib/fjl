@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/typeOf_', './uncurried/objectOps/is_', './uncurried/objectOps/of_', './uncurried/objectOps/setTheory_', './functionOps/curry', './uncurried/objectOps/assignDeep_'], factory);
+        define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/typeOf_', './uncurried/objectOps/is_', './uncurried/objectOps/of_', './uncurried/objectOps/setTheory_', './uncurried/functionOps/curry_', './uncurried/objectOps/assignDeep_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./uncurried/jsPlatform/object_'), require('./uncurried/objectOps/typeOf_'), require('./uncurried/objectOps/is_'), require('./uncurried/objectOps/of_'), require('./uncurried/objectOps/setTheory_'), require('./functionOps/curry'), require('./uncurried/objectOps/assignDeep_'));
+        factory(exports, require('./uncurried/jsPlatform/object_'), require('./uncurried/objectOps/typeOf_'), require('./uncurried/objectOps/is_'), require('./uncurried/objectOps/of_'), require('./uncurried/objectOps/setTheory_'), require('./uncurried/functionOps/curry_'), require('./uncurried/objectOps/assignDeep_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.object_, global.typeOf_, global.is_, global.of_, global.setTheory_, global.curry, global.assignDeep_);
+        factory(mod.exports, global.object_, global.typeOf_, global.is_, global.of_, global.setTheory_, global.curry_, global.assignDeep_);
         global.objectOps = mod.exports;
     }
-})(this, function (exports, _object_, _typeOf_, _is_, _of_, _setTheory_, _curry, _assignDeep_) {
+})(this, function (exports, _object_, _typeOf_, _is_, _of_, _setTheory_, _curry_, _assignDeep_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -71,8 +71,8 @@
             }
         });
     });
-    var instanceOf = exports.instanceOf = (0, _curry.curry)(_object_.instanceOf),
-        hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_object_.hasOwnProperty),
-        assign = exports.assign = (0, _curry.curry2)(_object_.assign),
-        assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep_.assignDeep);
+    var instanceOf = exports.instanceOf = (0, _curry_.curry)(_object_.instanceOf),
+        hasOwnProperty = exports.hasOwnProperty = (0, _curry_.curry)(_object_.hasOwnProperty),
+        assign = exports.assign = (0, _curry_.curry2)(_object_.assign),
+        assignDeep = exports.assignDeep = (0, _curry_.curry2)(_assignDeep_.assignDeep);
 });

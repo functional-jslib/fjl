@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../listOps', './curry', './apply', './call'], factory);
+    define(['exports', '../jsPlatform/array', '../uncurried/functionOps_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../listOps'), require('./curry'), require('./apply'), require('./call'));
+    factory(exports, require('../jsPlatform/array'), require('../uncurried/functionOps_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.listOps, global.curry, global.apply, global.call);
+    factory(mod.exports, global.array, global.functionOps_);
     global.flip = mod.exports;
   }
-})(this, function (exports, _listOps, _curry, _apply, _call) {
+})(this, function (exports, _array, _functionOps_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -29,12 +29,12 @@
    * @returns {Function}
    */
   flipN = exports.flipN = function flipN(fn) {
-    return (0, _curry.curry3)(function () {
+    return (0, _functionOps_.curry3)(function () {
       for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return (0, _apply.apply)(fn, (0, _listOps.reverse)(args));
+      return (0, _functionOps_.apply)(fn, (0, _array.reverse)(args));
     });
   },
 
@@ -46,8 +46,8 @@
    * @returns {Function}
    */
   flip = exports.flip = function flip(fn) {
-    return (0, _curry.curry)(function (b, a) {
-      return (0, _call.call)(fn, a, b);
+    return (0, _functionOps_.curry)(function (b, a) {
+      return (0, _functionOps_.call)(fn, a, b);
     });
   };
 });

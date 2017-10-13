@@ -2,9 +2,9 @@
  * Created by elydelacruz on 7/22/2017.
  * @memberOf functionOps
  */
-import {curry2} from './curry';
+import {curry2} from '../uncurried/functionOps/curry_';
 
-import {call as pureCall} from '../uncurried/jsPlatform/function_';
+import {call as _call} from '../uncurried/jsPlatform/function_';
 
 export const
 
@@ -15,4 +15,4 @@ export const
      * @param args {*}
      * @returns {*}
      */
-    call = curry2(pureCall);
+    call = curry2(_call);

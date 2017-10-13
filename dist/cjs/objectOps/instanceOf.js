@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.instanceOf = undefined;
 
-var _curry = require('../functionOps/curry');
+var _curry_ = require('../uncurried/functionOps/curry_');
 
-var _instanceOf_ = require('../uncurried/objectOps/instanceOf_');
+var _object_ = require('../uncurried/jsPlatform/object_');
 
 /**
  * Created by elydelacruz on 7/22/2017.
@@ -23,4 +23,4 @@ var
  * @param Type {Function}
  * @returns {Boolean}
  */
-instanceOf = exports.instanceOf = (0, _curry.curry)(_instanceOf_.instanceOf);
+instanceOf = exports.instanceOf = (0, _curry_.curry)(_object_.instanceOf);

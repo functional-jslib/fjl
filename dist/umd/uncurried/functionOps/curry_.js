@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './apply_', '../listOps_', '../objectOps_'], factory);
+        define(['exports', '../jsPlatform_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./apply_'), require('../listOps_'), require('../objectOps_'));
+        factory(exports, require('../jsPlatform_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.apply_, global.listOps_, global.objectOps_);
+        factory(mod.exports, global.jsPlatform_);
         global.curry_ = mod.exports;
     }
-})(this, function (exports, _apply_, _listOps_, _objectOps_) {
+})(this, function (exports, _jsPlatform_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -36,8 +36,8 @@
                 args[_key2] = arguments[_key2];
             }
 
-            var concatedArgs = (0, _listOps_.append)(argsToCurry, args);
-            return (0, _objectOps_.length)(concatedArgs) < (0, _objectOps_.length)(fn) ? (0, _apply_.apply)(curry, (0, _listOps_.append)([fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
+            var concatedArgs = (0, _jsPlatform_.concat)(argsToCurry, args);
+            return (0, _jsPlatform_.length)(concatedArgs) < (0, _jsPlatform_.length)(fn) ? (0, _jsPlatform_.apply)(curry, (0, _jsPlatform_.concat)([fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
         };
     },
 
@@ -60,9 +60,9 @@
                 args[_key4] = arguments[_key4];
             }
 
-            var concatedArgs = (0, _listOps_.append)(curriedArgs, args),
-                canBeCalled = (0, _objectOps_.length)(concatedArgs) >= executeArity || !executeArity;
-            return !canBeCalled ? (0, _apply_.apply)(curryN, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
+            var concatedArgs = (0, _jsPlatform_.concat)(curriedArgs, args),
+                canBeCalled = (0, _jsPlatform_.length)(concatedArgs) >= executeArity || !executeArity;
+            return !canBeCalled ? (0, _jsPlatform_.apply)(curryN, (0, _jsPlatform_.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
         };
     },
 

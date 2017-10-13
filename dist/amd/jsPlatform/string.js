@@ -1,4 +1,4 @@
-define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/string_'], function (exports, _curry, _string_) {
+define(['exports', '../uncurried/functionOps/curry_', '../uncurried/jsPlatform/string_'], function (exports, _curry_, _string_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -21,5 +21,5 @@ define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/string_'], f
    * @private
    */
 
-  const split = exports.split = (0, _curry.curry)(_string_.split);
+  const split = exports.split = (0, _curry_.curry)(_string_.split);
 });

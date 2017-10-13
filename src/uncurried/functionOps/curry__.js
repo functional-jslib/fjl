@@ -6,11 +6,7 @@
  * @todo Make code here more minimal (reuse small parts here).
  */
 
-import {apply} from './apply_';
-
-import {append, map, filter} from '../listOps_';
-
-import {length} from '../objectOps_';
+import {apply, concat, map, filter, length} from '../jsPlatform_';
 
 /**
  * PlaceHolder (__) constructor.
@@ -50,7 +46,7 @@ function replacePlaceHolders (array, args) {
             else if (length(args)) { return args.shift(); }
             return element;
         }, array);
-    return length(args) ? append(out, args) : out;
+    return length(args) ? concat(out, args) : out;
 }
 
 /**
@@ -67,7 +63,7 @@ export function curry_ (fn, ...argsToCurry) {
             canBeCalled = length(placeHolders) === 0 &&
                 length(concatedArgs) >= length(fn);
         return canBeCalled ? apply(fn, concatedArgs) :
-            apply(curry_, append([fn], concatedArgs));
+            apply(curry_, concat([fn], concatedArgs));
     };
 }
 
@@ -85,7 +81,7 @@ export function curryN_ (executeArity, fn, ...curriedArgs) {
             placeHolders = filter(isPlaceHolder, concatedArgs),
             canBeCalled = (length(concatedArgs) - length(placeHolders) >= executeArity) || !executeArity;
         return !canBeCalled ?
-            apply(curryN_, append([executeArity, fn], concatedArgs)) :
+            apply(curryN_, concat([executeArity, fn], concatedArgs)) :
             apply(fn, concatedArgs);
     };
 }

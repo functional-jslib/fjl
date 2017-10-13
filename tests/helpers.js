@@ -6,9 +6,8 @@
 // ~~~ STRIP ~~~
 // This part gets stripped out when
 // generating browser version of test(s).
-import {curry2_, __} from '../src/functionOps/curry';
+import {curry2_, __, compose} from '../src/functionOps';
 import {expect} from 'chai';
-import {compose} from '../src/functionOps/compose';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 

@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './apply_', '../listOps_', '../objectOps_'], factory);
+        define(['exports', '../jsPlatform_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./apply_'), require('../listOps_'), require('../objectOps_'));
+        factory(exports, require('../jsPlatform_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.apply_, global.listOps_, global.objectOps_);
+        factory(mod.exports, global.jsPlatform_);
         global.curry__ = mod.exports;
     }
-})(this, function (exports, _apply_, _listOps_, _objectOps_) {
+})(this, function (exports, _jsPlatform_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -63,15 +63,15 @@
      * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
      */
     function replacePlaceHolders(array, args) {
-        var out = (0, _listOps_.map)(function (element) {
+        var out = (0, _jsPlatform_.map)(function (element) {
             if (!isPlaceHolder(element)) {
                 return element;
-            } else if ((0, _objectOps_.length)(args)) {
+            } else if ((0, _jsPlatform_.length)(args)) {
                 return args.shift();
             }
             return element;
         }, array);
-        return (0, _objectOps_.length)(args) ? (0, _listOps_.append)(out, args) : out;
+        return (0, _jsPlatform_.length)(args) ? (0, _jsPlatform_.concat)(out, args) : out;
     }
 
     /**
@@ -92,9 +92,9 @@
             }
 
             var concatedArgs = replacePlaceHolders(argsToCurry, args),
-                placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-                canBeCalled = (0, _objectOps_.length)(placeHolders) === 0 && (0, _objectOps_.length)(concatedArgs) >= (0, _objectOps_.length)(fn);
-            return canBeCalled ? (0, _apply_.apply)(fn, concatedArgs) : (0, _apply_.apply)(curry_, (0, _listOps_.append)([fn], concatedArgs));
+                placeHolders = (0, _jsPlatform_.filter)(isPlaceHolder, concatedArgs),
+                canBeCalled = (0, _jsPlatform_.length)(placeHolders) === 0 && (0, _jsPlatform_.length)(concatedArgs) >= (0, _jsPlatform_.length)(fn);
+            return canBeCalled ? (0, _jsPlatform_.apply)(fn, concatedArgs) : (0, _jsPlatform_.apply)(curry_, (0, _jsPlatform_.concat)([fn], concatedArgs));
         };
     }
 
@@ -117,9 +117,9 @@
             }
 
             var concatedArgs = replacePlaceHolders(curriedArgs, args),
-                placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-                canBeCalled = (0, _objectOps_.length)(concatedArgs) - (0, _objectOps_.length)(placeHolders) >= executeArity || !executeArity;
-            return !canBeCalled ? (0, _apply_.apply)(curryN_, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
+                placeHolders = (0, _jsPlatform_.filter)(isPlaceHolder, concatedArgs),
+                canBeCalled = (0, _jsPlatform_.length)(concatedArgs) - (0, _jsPlatform_.length)(placeHolders) >= executeArity || !executeArity;
+            return !canBeCalled ? (0, _jsPlatform_.apply)(curryN_, (0, _jsPlatform_.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
         };
     }
 

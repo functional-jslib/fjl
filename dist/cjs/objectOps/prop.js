@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.prop = undefined;
 
-var _curry = require('../functionOps/curry');
+var _curry_ = require('../uncurried/functionOps/curry_');
 
 /**
  * Returns property value if found; Else `undefined`.
@@ -14,7 +14,7 @@ var _curry = require('../functionOps/curry');
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
  */
-var prop = exports.prop = (0, _curry.curry)(function (name, obj) {
+var prop = exports.prop = (0, _curry_.curry)(function (name, obj) {
   return obj[name];
 }); /**
      * @memberOf objectOps

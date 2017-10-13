@@ -1,4 +1,4 @@
-define(['exports', './apply_', '../listOps_', '../objectOps_'], function (exports, _apply_, _listOps_, _objectOps_) {
+define(['exports', '../jsPlatform_'], function (exports, _jsPlatform_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -16,8 +16,8 @@ define(['exports', './apply_', '../listOps_', '../objectOps_'], function (export
      */
     curry = exports.curry = (fn, ...argsToCurry) => {
         return (...args) => {
-            const concatedArgs = (0, _listOps_.append)(argsToCurry, args);
-            return (0, _objectOps_.length)(concatedArgs) < (0, _objectOps_.length)(fn) ? (0, _apply_.apply)(curry, (0, _listOps_.append)([fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
+            const concatedArgs = (0, _jsPlatform_.concat)(argsToCurry, args);
+            return (0, _jsPlatform_.length)(concatedArgs) < (0, _jsPlatform_.length)(fn) ? (0, _jsPlatform_.apply)(curry, (0, _jsPlatform_.concat)([fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
         };
     },
 
@@ -32,9 +32,9 @@ define(['exports', './apply_', '../listOps_', '../objectOps_'], function (export
      */
     curryN = exports.curryN = (executeArity, fn, ...curriedArgs) => {
         return (...args) => {
-            let concatedArgs = (0, _listOps_.append)(curriedArgs, args),
-                canBeCalled = (0, _objectOps_.length)(concatedArgs) >= executeArity || !executeArity;
-            return !canBeCalled ? (0, _apply_.apply)(curryN, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
+            let concatedArgs = (0, _jsPlatform_.concat)(curriedArgs, args),
+                canBeCalled = (0, _jsPlatform_.length)(concatedArgs) >= executeArity || !executeArity;
+            return !canBeCalled ? (0, _jsPlatform_.apply)(curryN, (0, _jsPlatform_.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
         };
     },
 

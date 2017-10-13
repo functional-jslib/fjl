@@ -4,9 +4,9 @@
  * @private
  */
 
-import {curry} from   '../functionOps/curry';
+import {curry} from   '../uncurried/functionOps/curry_';
 
-import {split as pureSplit} from '../uncurried/jsPlatform/string_';
+import {split as _split} from '../uncurried/jsPlatform/string_';
 
 /**
  * Functional version of `String.prototype.split`.
@@ -16,4 +16,4 @@ import {split as pureSplit} from '../uncurried/jsPlatform/string_';
  * @param str {String}
  * @returns {Array}
  */
-export const split = curry(pureSplit);
+export const split = curry(_split);

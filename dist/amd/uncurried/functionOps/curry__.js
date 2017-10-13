@@ -1,4 +1,4 @@
-define(['exports', './apply_', '../listOps_', '../objectOps_'], function (exports, _apply_, _listOps_, _objectOps_) {
+define(['exports', '../jsPlatform_'], function (exports, _jsPlatform_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -51,15 +51,15 @@ define(['exports', './apply_', '../listOps_', '../objectOps_'], function (export
      * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
      */
     function replacePlaceHolders(array, args) {
-        let out = (0, _listOps_.map)(element => {
+        let out = (0, _jsPlatform_.map)(element => {
             if (!isPlaceHolder(element)) {
                 return element;
-            } else if ((0, _objectOps_.length)(args)) {
+            } else if ((0, _jsPlatform_.length)(args)) {
                 return args.shift();
             }
             return element;
         }, array);
-        return (0, _objectOps_.length)(args) ? (0, _listOps_.append)(out, args) : out;
+        return (0, _jsPlatform_.length)(args) ? (0, _jsPlatform_.concat)(out, args) : out;
     }
 
     /**
@@ -72,9 +72,9 @@ define(['exports', './apply_', '../listOps_', '../objectOps_'], function (export
     function curry_(fn, ...argsToCurry) {
         return (...args) => {
             let concatedArgs = replacePlaceHolders(argsToCurry, args),
-                placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-                canBeCalled = (0, _objectOps_.length)(placeHolders) === 0 && (0, _objectOps_.length)(concatedArgs) >= (0, _objectOps_.length)(fn);
-            return canBeCalled ? (0, _apply_.apply)(fn, concatedArgs) : (0, _apply_.apply)(curry_, (0, _listOps_.append)([fn], concatedArgs));
+                placeHolders = (0, _jsPlatform_.filter)(isPlaceHolder, concatedArgs),
+                canBeCalled = (0, _jsPlatform_.length)(placeHolders) === 0 && (0, _jsPlatform_.length)(concatedArgs) >= (0, _jsPlatform_.length)(fn);
+            return canBeCalled ? (0, _jsPlatform_.apply)(fn, concatedArgs) : (0, _jsPlatform_.apply)(curry_, (0, _jsPlatform_.concat)([fn], concatedArgs));
         };
     }
 
@@ -89,9 +89,9 @@ define(['exports', './apply_', '../listOps_', '../objectOps_'], function (export
     function curryN_(executeArity, fn, ...curriedArgs) {
         return (...args) => {
             let concatedArgs = replacePlaceHolders(curriedArgs, args),
-                placeHolders = (0, _listOps_.filter)(isPlaceHolder, concatedArgs),
-                canBeCalled = (0, _objectOps_.length)(concatedArgs) - (0, _objectOps_.length)(placeHolders) >= executeArity || !executeArity;
-            return !canBeCalled ? (0, _apply_.apply)(curryN_, (0, _listOps_.append)([executeArity, fn], concatedArgs)) : (0, _apply_.apply)(fn, concatedArgs);
+                placeHolders = (0, _jsPlatform_.filter)(isPlaceHolder, concatedArgs),
+                canBeCalled = (0, _jsPlatform_.length)(concatedArgs) - (0, _jsPlatform_.length)(placeHolders) >= executeArity || !executeArity;
+            return !canBeCalled ? (0, _jsPlatform_.apply)(curryN_, (0, _jsPlatform_.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
         };
     }
 

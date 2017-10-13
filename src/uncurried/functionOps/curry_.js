@@ -4,13 +4,7 @@
  * @memberOf functionOps_
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
-
-import {apply} from './apply_';
-
-import {append} from '../listOps_';
-
-import {length} from '../objectOps_';
-
+import {apply, length, concat} from '../jsPlatform_';
 export const
 
     /**
@@ -22,9 +16,9 @@ export const
      */
     curry = (fn, ...argsToCurry) => {
         return (...args) => {
-            const concatedArgs = append(argsToCurry, args);
+            const concatedArgs = concat(argsToCurry, args);
             return length(concatedArgs) < length(fn) ?
-                apply(curry, append([fn], concatedArgs)) :
+                apply(curry, concat([fn], concatedArgs)) :
                 apply(fn, concatedArgs);
         };
     },
@@ -39,9 +33,9 @@ export const
      */
     curryN = (executeArity, fn, ...curriedArgs) => {
         return (...args) => {
-            let concatedArgs = append(curriedArgs, args),
+            let concatedArgs = concat(curriedArgs, args),
                 canBeCalled = (length(concatedArgs) >= executeArity) || !executeArity;
-            return !canBeCalled ? apply(curryN, append([executeArity, fn], concatedArgs)) :
+            return !canBeCalled ? apply(curryN, concat([executeArity, fn], concatedArgs)) :
                 apply(fn, concatedArgs);
         };
     },

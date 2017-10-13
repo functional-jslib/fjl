@@ -1,7 +1,7 @@
 /**
  * @memberOf functionOps
  */
-import {curry} from './curry';
+import {curry} from '../uncurried/functionOps/curry_';
 
 import {until as _until} from '../uncurried/functionOps/until_';
 

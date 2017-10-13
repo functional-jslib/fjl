@@ -1,4 +1,4 @@
-define(['exports', '../functionOps/curry'], function (exports, _curry) {
+define(['exports', '../uncurried/functionOps/curry_'], function (exports, _curry_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -14,7 +14,7 @@ define(['exports', '../functionOps/curry'], function (exports, _curry) {
    * @param obj {Object} - Object to search `name` on.
    * @returns {*}
    */
-  const prop = exports.prop = (0, _curry.curry)((name, obj) => obj[name]); /**
-                                                                            * @memberOf objectOps
-                                                                            */
+  const prop = exports.prop = (0, _curry_.curry)((name, obj) => obj[name]); /**
+                                                                             * @memberOf objectOps
+                                                                             */
 });

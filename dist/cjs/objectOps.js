@@ -74,11 +74,11 @@ Object.keys(_setTheory_).forEach(function (key) {
     });
 });
 
-var _curry = require('./functionOps/curry');
+var _curry_ = require('./uncurried/functionOps/curry_');
 
 var _assignDeep_ = require('./uncurried/objectOps/assignDeep_');
 
-var instanceOf = exports.instanceOf = (0, _curry.curry)(_object_.instanceOf),
-    hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_object_.hasOwnProperty),
-    assign = exports.assign = (0, _curry.curry2)(_object_.assign),
-    assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep_.assignDeep);
+var instanceOf = exports.instanceOf = (0, _curry_.curry)(_object_.instanceOf),
+    hasOwnProperty = exports.hasOwnProperty = (0, _curry_.curry)(_object_.hasOwnProperty),
+    assign = exports.assign = (0, _curry_.curry2)(_object_.assign),
+    assignDeep = exports.assignDeep = (0, _curry_.curry2)(_assignDeep_.assignDeep);

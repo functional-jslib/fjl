@@ -2,7 +2,7 @@
  * @memberOf objectOps
  */
 
-import {curry} from   '../functionOps/curry';
+import {curry} from   '../uncurried/functionOps/curry_';
 
 /**
  * Returns property value if found; Else `undefined`.

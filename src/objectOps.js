@@ -1,7 +1,7 @@
 /**
  * @module objectOps
  */
-import {curry, curry2} from './functionOps/curry';
+import {curry, curry2} from './uncurried/functionOps/curry_';
 
 import {
     instanceOf as pureInstanceOf,

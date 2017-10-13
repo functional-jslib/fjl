@@ -1,4 +1,4 @@
-define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/typeOf_', './uncurried/objectOps/is_', './uncurried/objectOps/of_', './uncurried/objectOps/setTheory_', './functionOps/curry', './uncurried/objectOps/assignDeep_'], function (exports, _object_, _typeOf_, _is_, _of_, _setTheory_, _curry, _assignDeep_) {
+define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/typeOf_', './uncurried/objectOps/is_', './uncurried/objectOps/of_', './uncurried/objectOps/setTheory_', './uncurried/functionOps/curry_', './uncurried/objectOps/assignDeep_'], function (exports, _object_, _typeOf_, _is_, _of_, _setTheory_, _curry_, _assignDeep_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -59,8 +59,8 @@ define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/type
             }
         });
     });
-    const instanceOf = exports.instanceOf = (0, _curry.curry)(_object_.instanceOf),
-          hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_object_.hasOwnProperty),
-          assign = exports.assign = (0, _curry.curry2)(_object_.assign),
-          assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep_.assignDeep);
+    const instanceOf = exports.instanceOf = (0, _curry_.curry)(_object_.instanceOf),
+          hasOwnProperty = exports.hasOwnProperty = (0, _curry_.curry)(_object_.hasOwnProperty),
+          assign = exports.assign = (0, _curry_.curry2)(_object_.assign),
+          assignDeep = exports.assignDeep = (0, _curry_.curry2)(_assignDeep_.assignDeep);
 });

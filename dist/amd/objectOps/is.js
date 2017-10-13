@@ -1,4 +1,4 @@
-define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncurried/jsPlatform/object_'], function (exports, _curry, _typeOf, _instanceOf, _object_) {
+define(['exports', '../uncurried/functionOps/curry_', './typeOf', './instanceOf', '../uncurried/jsPlatform/object_'], function (exports, _curry_, _typeOf, _instanceOf, _object_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -49,7 +49,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
      * @param value {*}
      * @return {Boolean}
      */
-    isType = exports.isType = (0, _curry.curry)((type, obj) => (0, _typeOf.typeOf)(obj) === (isFunction(type) ? type.name : type)),
+    isType = exports.isType = (0, _curry_.curry)((type, obj) => (0, _typeOf.typeOf)(obj) === (isFunction(type) ? type.name : type)),
 
 
     /**
@@ -264,7 +264,7 @@ define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncur
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
-    notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry.curry)((type, value) => !isEmpty(value) && isType(type, value)),
+    notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry_.curry)((type, value) => !isEmpty(value) && isType(type, value)),
 
 
     /**

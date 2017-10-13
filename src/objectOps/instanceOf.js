@@ -3,9 +3,9 @@
  * @memberOf objectOps
  */
 
-import {curry} from   '../functionOps/curry';
+import {curry} from   '../uncurried/functionOps/curry_';
 
-import {instanceOf as _instanceOf} from '../uncurried/objectOps/instanceOf_';
+import {instanceOf as _instanceOf} from '../uncurried/jsPlatform/object_';
 
 export const
 

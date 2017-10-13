@@ -1,4 +1,4 @@
-define(['exports', '../listOps', './curry', './apply', './call'], function (exports, _listOps, _curry, _apply, _call) {
+define(['exports', '../jsPlatform/array', '../uncurried/functionOps_'], function (exports, _array, _functionOps_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -16,7 +16,7 @@ define(['exports', '../listOps', './curry', './apply', './call'], function (expo
    * @param fn {Function}
    * @returns {Function}
    */
-  flipN = exports.flipN = fn => (0, _curry.curry3)((...args) => (0, _apply.apply)(fn, (0, _listOps.reverse)(args))),
+  flipN = exports.flipN = fn => (0, _functionOps_.curry3)((...args) => (0, _functionOps_.apply)(fn, (0, _array.reverse)(args))),
 
 
   /**
@@ -25,5 +25,5 @@ define(['exports', '../listOps', './curry', './apply', './call'], function (expo
    * @param fn {Function}
    * @returns {Function}
    */
-  flip = exports.flip = fn => (0, _curry.curry)((b, a) => (0, _call.call)(fn, a, b));
+  flip = exports.flip = fn => (0, _functionOps_.curry)((b, a) => (0, _functionOps_.call)(fn, a, b));
 });

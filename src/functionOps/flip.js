@@ -1,10 +1,8 @@
 /**
  * @memberOf functionOps
  */
-import {reverse} from '../listOps';
-import {curry, curry3} from './curry';
-import {apply} from './apply';
-import {call} from './call';
+import {reverse} from '../jsPlatform/array';
+import {curry, curry3, apply, call} from '../uncurried/functionOps_';
 
 export const
 

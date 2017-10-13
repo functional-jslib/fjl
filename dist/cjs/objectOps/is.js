@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isset = exports.notEmptyAndOfType = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
 
-var _curry = require('../functionOps/curry');
+var _curry_ = require('../uncurried/functionOps/curry_');
 
 var _typeOf = require('./typeOf');
 
@@ -57,7 +57,7 @@ isFunction = exports.isFunction = (0, _instanceOf.instanceOf)(Function),
  * @param value {*}
  * @return {Boolean}
  */
-isType = exports.isType = (0, _curry.curry)(function (type, obj) {
+isType = exports.isType = (0, _curry_.curry)(function (type, obj) {
     return (0, _typeOf.typeOf)(obj) === (isFunction(type) ? type.name : type);
 }),
 
@@ -286,7 +286,7 @@ isEmpty = exports.isEmpty = function isEmpty(value) {
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
-notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry.curry)(function (type, value) {
+notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry_.curry)(function (type, value) {
     return !isEmpty(value) && isType(type, value);
 }),
 

@@ -2,19 +2,12 @@
  * Function operations: `
  * @module functionOps
  */
-export {call} from './functionOps/call';
-
-export {apply} from './functionOps/apply';
-
-export {compose} from './functionOps/compose';
-
-export {curry, curryN, curry2, curry3, curry4, curry5,
-    __, curry_, curryN_, curry2_, curry3_, curry4_, curry5_} from './functionOps/curry';
-
+export * from './functionOps/call';
+export * from './functionOps/apply';
+export * from './uncurried/functionOps/curry_';
+export * from './uncurried/functionOps/curry__';
 export * from './uncurried/functionOps/negate_';
-
-export {id} from './functionOps/id';
-
-export {flip, flipN} from './functionOps/flip';
-
-export {until} from './functionOps/until';
+export * from './uncurried/functionOps/id_';
+export * from './uncurried/functionOps/compose_';
+export * from './functionOps/flip';
+export * from './functionOps/until';

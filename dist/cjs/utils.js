@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fPureTakesOneOrMore_ = exports.fPureTakes2_ = exports.fPureTakesOne_ = exports.fPureTakesOneOrMore = exports.fPureTakes2 = exports.fPureTakesOne = undefined;
 
-var _curry = require('./functionOps/curry');
+var _curry_ = require('./uncurried/functionOps/curry_');
 
 var fPureTakesOne = exports.fPureTakesOne = function fPureTakesOne(name) {
     return function (arg, f) {
@@ -27,17 +27,17 @@ var fPureTakesOne = exports.fPureTakesOne = function fPureTakesOne(name) {
     };
 },
     fPureTakesOne_ = exports.fPureTakesOne_ = function fPureTakesOne_(name) {
-    return (0, _curry.curry)(function (arg, f) {
+    return (0, _curry_.curry)(function (arg, f) {
         return f[name](arg);
     });
 },
     fPureTakes2_ = exports.fPureTakes2_ = function fPureTakes2_(name) {
-    return (0, _curry.curry)(function (arg1, arg2, f) {
+    return (0, _curry_.curry)(function (arg1, arg2, f) {
         return f[name](arg1, arg2);
     });
 },
     fPureTakesOneOrMore_ = exports.fPureTakesOneOrMore_ = function fPureTakesOneOrMore_(name) {
-    return (0, _curry.curry2)(function (f) {
+    return (0, _curry_.curry2)(function (f) {
         for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
             args[_key2 - 1] = arguments[_key2];
         }

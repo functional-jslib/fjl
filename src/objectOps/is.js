@@ -4,7 +4,7 @@
  * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
  * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
  */
-import {curry} from   '../functionOps/curry';
+import {curry} from   '../uncurried/functionOps/curry_';
 import {typeOf} from './typeOf';
 import {instanceOf} from './instanceOf';
 import {length, keys, hasOwnProperty} from '../uncurried/jsPlatform/object_';

@@ -13,7 +13,7 @@ import {
     from './jsPlatform/list_';
 
 import {apply} from './jsPlatform/function_';
-import {negateP, negateF} from './functionOps_';
+import {negateP, negateF} from './functionOps/negate_';
 import {isTruthy, isFalsy} from '../booleanOps';
 import {isString, isEmptyList, prop, of, length} from './objectOps_';
 import {map} from './listOps/map_';
@@ -283,6 +283,15 @@ export const
             _permutationsAlgo(xs, limit, limit);
     },
 
+
+    /**
+     * Reduces a foldable (list etc.) with passed in function.
+     * @function module:listOps_.foldl
+     * @param fn {Function}
+     * @param zero {*} - Aggregator.
+     * @param functor {Array|String|*}
+     * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
+     */
     foldl = reduce,
 
     foldr = reduceRight,

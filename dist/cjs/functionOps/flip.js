@@ -5,13 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.flip = exports.flipN = undefined;
 
-var _listOps = require('../listOps');
+var _array = require('../jsPlatform/array');
 
-var _curry = require('./curry');
-
-var _apply = require('./apply');
-
-var _call = require('./call');
+var _functionOps_ = require('../uncurried/functionOps_');
 
 /**
  * @memberOf functionOps
@@ -25,12 +21,12 @@ var
  * @returns {Function}
  */
 flipN = exports.flipN = function flipN(fn) {
-  return (0, _curry.curry3)(function () {
+  return (0, _functionOps_.curry3)(function () {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return (0, _apply.apply)(fn, (0, _listOps.reverse)(args));
+    return (0, _functionOps_.apply)(fn, (0, _array.reverse)(args));
   });
 },
 
@@ -42,7 +38,7 @@ flipN = exports.flipN = function flipN(fn) {
  * @returns {Function}
  */
 flip = exports.flip = function flip(fn) {
-  return (0, _curry.curry)(function (b, a) {
-    return (0, _call.call)(fn, a, b);
+  return (0, _functionOps_.curry)(function (b, a) {
+    return (0, _functionOps_.call)(fn, a, b);
   });
 };

@@ -1,4 +1,4 @@
-define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/list_'], function (exports, _curry, _list_) {
+define(['exports', '../uncurried/functionOps/curry_', '../uncurried/jsPlatform/list_'], function (exports, _curry_, _list_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -12,9 +12,9 @@ define(['exports', '../functionOps/curry', '../uncurried/jsPlatform/list_'], fun
      * @private
      */
 
-    const concat = exports.concat = (0, _curry.curry)(_list_.concat),
-          slice = exports.slice = (0, _curry.curry)(_list_.slice),
-          includes = exports.includes = (0, _curry.curry)(_list_.includes),
-          indexOf = exports.indexOf = (0, _curry.curry)(_list_.indexOf),
-          lastIndexOf = exports.lastIndexOf = (0, _curry.curry)(_list_.lastIndexOf);
+    const concat = exports.concat = (0, _curry_.curry)(_list_.concat),
+          slice = exports.slice = (0, _curry_.curry)(_list_.slice),
+          includes = exports.includes = (0, _curry_.curry)(_list_.includes),
+          indexOf = exports.indexOf = (0, _curry_.curry)(_list_.indexOf),
+          lastIndexOf = exports.lastIndexOf = (0, _curry_.curry)(_list_.lastIndexOf);
 });

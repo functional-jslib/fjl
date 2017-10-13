@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../functionOps/curry', './typeOf', './instanceOf', '../uncurried/jsPlatform/object_'], factory);
+        define(['exports', '../uncurried/functionOps/curry_', './typeOf', './instanceOf', '../uncurried/jsPlatform/object_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../functionOps/curry'), require('./typeOf'), require('./instanceOf'), require('../uncurried/jsPlatform/object_'));
+        factory(exports, require('../uncurried/functionOps/curry_'), require('./typeOf'), require('./instanceOf'), require('../uncurried/jsPlatform/object_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry, global.typeOf, global.instanceOf, global.object_);
+        factory(mod.exports, global.curry_, global.typeOf, global.instanceOf, global.object_);
         global.is = mod.exports;
     }
-})(this, function (exports, _curry, _typeOf, _instanceOf, _object_) {
+})(this, function (exports, _curry_, _typeOf, _instanceOf, _object_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -61,7 +61,7 @@
      * @param value {*}
      * @return {Boolean}
      */
-    isType = exports.isType = (0, _curry.curry)(function (type, obj) {
+    isType = exports.isType = (0, _curry_.curry)(function (type, obj) {
         return (0, _typeOf.typeOf)(obj) === (isFunction(type) ? type.name : type);
     }),
 
@@ -290,7 +290,7 @@
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
-    notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry.curry)(function (type, value) {
+    notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry_.curry)(function (type, value) {
         return !isEmpty(value) && isType(type, value);
     }),
 

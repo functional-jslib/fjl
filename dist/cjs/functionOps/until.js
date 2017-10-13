@@ -1,28 +1,26 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.until = undefined;
 
-var _curry = require('./curry');
+var _curry_ = require('../uncurried/functionOps/curry_');
 
+var _until_ = require('../uncurried/functionOps/until_');
+
+/**
+ * @memberOf functionOps
+ */
 var
 
 /**
- * Run `operation` until predicate returns `true`.
+ * Run `operation` `until` predicate returns `true`.
  * @function module:functionOps.until
  * @param predicate {Function} :: a -> Boolean
  * @param operation {Function} :: a -> a
  * @param typeInstance {*} :: * - A monoidal zero or some starting point.
  * @returns {*} - What ever type `typeInstance` is
+ * @curried
  */
-until = exports.until = (0, _curry.curry)(function (predicate, operation, typeInstance) {
-    var result = typeInstance;
-    while (!predicate(result)) {
-        result = operation(result);
-    }
-    return result;
-}); /**
-     * @memberOf functionOps
-     */
+until = exports.until = (0, _curry_.curry)(_until_.until);

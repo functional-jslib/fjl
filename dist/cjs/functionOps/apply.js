@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.apply = undefined;
 
-var _curry = require('./curry');
+var _curry_ = require('../uncurried/functionOps/curry_');
 
 var _function_ = require('../uncurried/jsPlatform/function_');
 
@@ -22,4 +22,4 @@ var
  * @param args {*}
  * @returns {*}
  */
-apply = exports.apply = (0, _curry.curry)(_function_.apply);
+apply = exports.apply = (0, _curry_.curry)(_function_.apply);

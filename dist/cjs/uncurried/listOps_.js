@@ -19,7 +19,7 @@ var _list_ = require('./jsPlatform/list_');
 
 var _function_ = require('./jsPlatform/function_');
 
-var _functionOps_ = require('./functionOps_');
+var _negate_ = require('./functionOps/negate_');
 
 var _booleanOps = require('../booleanOps');
 
@@ -304,11 +304,29 @@ subsequences = exports.subsequences = function subsequences(xs) {
     }
     return out;
 },
-    permutations = exports.permutations = function permutations(xs) {
+
+
+/**
+ * Returns a list of permutations for passed in list.
+ * @function module:listOps.permutations
+ * @param xs {Array|String|*} - List.
+ * @returns {Array<Array|String|*>} - Array of permutations.
+ */
+permutations = exports.permutations = function permutations(xs) {
     var limit = (0, _objectOps_.length)(xs);
     return !limit ? [xs] : (0, _utils_._permutationsAlgo)(xs, limit, limit);
 },
-    foldl = exports.foldl = _utils_.reduce,
+
+
+/**
+ * Reduces a foldable (list etc.) with passed in function.
+ * @function module:listOps_.foldl
+ * @param fn {Function}
+ * @param zero {*} - Aggregator.
+ * @param functor {Array|String|*}
+ * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
+ */
+foldl = exports.foldl = _utils_.reduce,
     foldr = exports.foldr = _utils_.reduceRight,
     foldl1 = exports.foldl1 = function foldl1(op, xs) {
     var parts = uncons(xs);
@@ -548,7 +566,7 @@ splitAt = exports.splitAt = function splitAt(ind, list) {
 takeWhile = exports.takeWhile = function takeWhile(pred, list) {
     var zero = (0, _objectOps_.of)(list);
     var operation = (0, _utils_.aggregatorByType)(list);
-    return (0, _utils_.reduceUntil)((0, _functionOps_.negateP)(pred), // predicate
+    return (0, _utils_.reduceUntil)((0, _negate_.negateP)(pred), // predicate
     operation, // operation
     zero, // aggregator
     list);
@@ -600,7 +618,7 @@ dropWhileEnd = exports.dropWhileEnd = function dropWhileEnd(pred, list) {
  * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
  */
 span = exports.span = function span(pred, list) {
-    var splitPoint = (0, _utils_.findIndexWhere)((0, _functionOps_.negateP)(pred), list);
+    var splitPoint = (0, _utils_.findIndexWhere)((0, _negate_.negateP)(pred), list);
     return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
 },
     breakOnList = exports.breakOnList = function breakOnList(pred, list) {
@@ -655,10 +673,10 @@ partition = exports.partition = function partition(pred, list) {
     if (!(0, _objectOps_.length)(list)) {
         return [(0, _objectOps_.of)(list), (0, _objectOps_.of)(list)];
     }
-    return [filter(pred, list), filter((0, _functionOps_.negateP)(pred), list)];
+    return [filter(pred, list), filter((0, _negate_.negateP)(pred), list)];
 },
     elem = exports.elem = _list_.includes,
-    notElem = exports.notElem = (0, _functionOps_.negateF)(_list_.includes),
+    notElem = exports.notElem = (0, _negate_.negateF)(_list_.includes),
     lookup = exports.lookup = at,
     isPrefixOf = exports.isPrefixOf = function isPrefixOf(xs1, xs2) {
     var limit1 = (0, _objectOps_.length)(xs1),

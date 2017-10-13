@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './functionOps/curry'], factory);
+        define(['exports', './uncurried/functionOps/curry_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./functionOps/curry'));
+        factory(exports, require('./uncurried/functionOps/curry_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry);
+        factory(mod.exports, global.curry_);
         global.utils = mod.exports;
     }
-})(this, function (exports, _curry) {
+})(this, function (exports, _curry_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -37,17 +37,17 @@
         };
     },
         fPureTakesOne_ = exports.fPureTakesOne_ = function fPureTakesOne_(name) {
-        return (0, _curry.curry)(function (arg, f) {
+        return (0, _curry_.curry)(function (arg, f) {
             return f[name](arg);
         });
     },
         fPureTakes2_ = exports.fPureTakes2_ = function fPureTakes2_(name) {
-        return (0, _curry.curry)(function (arg1, arg2, f) {
+        return (0, _curry_.curry)(function (arg1, arg2, f) {
             return f[name](arg1, arg2);
         });
     },
         fPureTakesOneOrMore_ = exports.fPureTakesOneOrMore_ = function fPureTakesOneOrMore_(name) {
-        return (0, _curry.curry2)(function (f) {
+        return (0, _curry_.curry2)(function (f) {
             for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
                 args[_key2 - 1] = arguments[_key2];
             }

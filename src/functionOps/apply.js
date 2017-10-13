@@ -2,9 +2,9 @@
  * Created by elydelacruz on 7/22/2017.
  * @memberOf functionOps
  */
-import {curry} from './curry';
+import {curry} from '../uncurried/functionOps/curry_';
 
-import {apply as pureApply} from '../uncurried/jsPlatform/function_';
+import {apply as _apply} from '../uncurried/jsPlatform/function_';
 
 export const
 
@@ -15,4 +15,4 @@ export const
      * @param args {*}
      * @returns {*}
      */
-    apply = curry(pureApply);
+    apply = curry(_apply);

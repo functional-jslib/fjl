@@ -1,4 +1,4 @@
-import {curry, curry2} from   '../functionOps/curry';
+import {curry, curry2} from   '../uncurried/functionOps/curry_';
 import {hasOwnProperty, keys} from '../uncurried/jsPlatform/object_';
 import {assignDeep} from '../uncurried/objectOps/assignDeep_';
 import {foldl} from '../listOps';

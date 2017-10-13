@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../functionOps/curry'], factory);
+    define(['exports', '../uncurried/functionOps/curry_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../functionOps/curry'));
+    factory(exports, require('../uncurried/functionOps/curry_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.curry);
+    factory(mod.exports, global.curry_);
     global.prop = mod.exports;
   }
-})(this, function (exports, _curry) {
+})(this, function (exports, _curry_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -26,7 +26,7 @@
    * @param obj {Object} - Object to search `name` on.
    * @returns {*}
    */
-  var prop = exports.prop = (0, _curry.curry)(function (name, obj) {
+  var prop = exports.prop = (0, _curry_.curry)(function (name, obj) {
     return obj[name];
   }); /**
        * @memberOf objectOps
