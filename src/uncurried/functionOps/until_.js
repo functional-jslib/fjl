@@ -2,7 +2,7 @@ export const
 
     /**
      * Run `operation` until predicate returns `true`.
-     * @function module:function.until
+     * @function module:functionOps_.until
      * @param predicate {Function} :: a -> Boolean
      * @param operation {Function} :: a -> a
      * @param typeInstance {*} :: * - A monoidal zero or some starting point.

@@ -3,20 +3,17 @@
  */
 import {curry} from './curry';
 
+import {until as _until} from '../uncurried/functionOps/until_';
+
 export const
 
     /**
-     * Run `operation` until predicate returns `true`.
+     * Run `operation` `until` predicate returns `true`.
      * @function module:functionOps.until
      * @param predicate {Function} :: a -> Boolean
      * @param operation {Function} :: a -> a
      * @param typeInstance {*} :: * - A monoidal zero or some starting point.
      * @returns {*} - What ever type `typeInstance` is
+     * @curried
      */
-    until = curry((predicate, operation, typeInstance) => {
-        let result = typeInstance;
-        while (!predicate(result)) {
-            result = operation(result);
-        }
-        return result;
-    });
+    until = curry(_until);
