@@ -271,6 +271,12 @@ export const
         return out;
     },
 
+    /**
+     * Returns a list of permutations for passed in list.
+     * @function module:listOps.permutations
+     * @param xs {Array|String|*} - List.
+     * @returns {Array<Array|String|*>} - Array of permutations.
+     */
     permutations = xs => {
         const limit = length(xs);
         return !limit ? [xs] :
