@@ -4,16 +4,28 @@
  */
 
 import {curry, curry2, curry3} from './uncurried/functionOps/curry_';
+
 import {
     apply as _apply,
-    call as _call, reverse} from './uncurried/jsPlatform_';
-import {until as _until} from './uncurried/functionOps/until_';
+    call as _call, reverse
+} from './uncurried/jsPlatform_';
+
+import {
+    until as _until
+} from './uncurried/functionOps/until_';
+
+import {
+    flip as _flip,
+    flipN as _flipN
+} from './uncurried/functionOps/flip_';
 
 export * from './uncurried/functionOps/curry_';
 export * from './uncurried/functionOps/curry__';
 export * from './uncurried/functionOps/negate_';
 export * from './uncurried/functionOps/id_';
 export * from './uncurried/functionOps/compose_';
+
+export {_apply, _call, _until, _flip, _flipN};
 
 export const
 
