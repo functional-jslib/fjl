@@ -1,4 +1,4 @@
-define(['exports', './is_', '../jsPlatform/object_', '../functionOps/apply_'], function (exports, _is_, _object_, _apply_) {
+define(['exports', './is_', '../jsPlatform/object_', '../jsPlatform/function_'], function (exports, _is_, _object_, _function_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -11,9 +11,9 @@ define(['exports', './is_', '../jsPlatform/object_', '../functionOps/apply_'], f
         }
         const constructor = x.constructor;
         if ((0, _object_.hasOwnProperty)('of', constructor)) {
-            return (0, _apply_.apply)(constructor.of, args);
+            return (0, _function_.apply)(constructor.of, args);
         } else if ((0, _is_.isUsableImmutablePrimitive)(x)) {
-            return (0, _apply_.apply)(constructor, args);
+            return (0, _function_.apply)(constructor, args);
         } else if ((0, _is_.isFunction)(constructor)) {
             return new constructor(...args);
         }

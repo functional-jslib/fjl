@@ -84,17 +84,6 @@ export const
     every = fPureTakesOne_('every'),
 
     /**
-     * Concats/appends all functors onto the end of first functor.
-     * Note:  functors passed in after the first one must be of the same type.
-     * @function module:jsPlatform_array.concat
-     * @param functor {Array|Object|*}
-     * @param ...functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
-     */
-    concat = fPureTakesOneOrMore_('concat'),
-
-    /**
      * Array.prototype.join
      * @function module:jsPlatform_array.join
      * @param separator {String|RegExp}
@@ -102,15 +91,6 @@ export const
      * @returns {String}
      */
     join = fPureTakesOne_('join'),
-
-    /**
-     * Same as Array.prototype.slice
-     * @function module:jsPlatform_array.slice
-     * @param separator {String|RegExp}
-     * @param arr{Array}
-     * @returns {Array}
-     */
-    slice = fPureTakes2_('slice'),
 
     /**
      * Same as Array.prototype.push

@@ -7,9 +7,7 @@ exports.flip = exports.flipN = undefined;
 
 var _array_ = require('../jsPlatform/array_');
 
-var _apply_ = require('./apply_');
-
-var _call_ = require('./call_');
+var _function_ = require('../jsPlatform/function_');
 
 var
 
@@ -25,7 +23,7 @@ flipN = exports.flipN = function flipN(fn) {
       args[_key] = arguments[_key];
     }
 
-    return (0, _apply_.apply)(fn, (0, _array_.reverse)(args));
+    return (0, _function_.apply)(fn, (0, _array_.reverse)(args));
   };
 },
 
@@ -38,6 +36,6 @@ flipN = exports.flipN = function flipN(fn) {
  */
 flip = exports.flip = function flip(fn) {
   return function (b, a) {
-    return (0, _call_.call)(fn, a, b);
+    return (0, _function_.call)(fn, a, b);
   };
 };

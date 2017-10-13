@@ -16,8 +16,24 @@ import {
 
 export const
 
+    /**
+     * Concats/appends all functors onto the end of first functor.
+     * Note:  functors passed in after the first one must be of the same type.
+     * @function module:jsPlatform_array.concat
+     * @param functor {Array|Object|*}
+     * @param ...functor {Array|Object|*}
+     * @return {*|Array|Object} - The type passed.
+     * @throws {Error} - When passed in object doesn't have an `every` method.
+     */
     concat = curry(concat_),
 
+    /**
+     * Same as Array.prototype.slice
+     * @function module:jsPlatform_array.slice
+     * @param separator {String|RegExp}
+     * @param arr{Array}
+     * @returns {Array}
+     */
     slice = curry(slice_),
 
     includes = curry(includes_),

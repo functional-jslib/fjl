@@ -4,28 +4,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _apply_ = require('./functionOps/apply_');
+var _function_ = require('./jsPlatform/function_');
 
-Object.keys(_apply_).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _apply_[key];
-    }
-  });
+Object.defineProperty(exports, 'apply', {
+  enumerable: true,
+  get: function get() {
+    return _function_.apply;
+  }
 });
-
-var _call_ = require('./functionOps/call_');
-
-Object.keys(_call_).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _call_[key];
-    }
-  });
+Object.defineProperty(exports, 'call', {
+  enumerable: true,
+  get: function get() {
+    return _function_.call;
+  }
 });
 
 var _compose_ = require('./functionOps/compose_');

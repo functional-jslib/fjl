@@ -1,6 +1,5 @@
 import {reverse} from '../jsPlatform/array_';
-import {apply} from './apply_';
-import {call} from './call_';
+import {apply, call} from '../jsPlatform/function_';
 
 export const
 

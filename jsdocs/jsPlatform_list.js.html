@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: uncurried/functionOps/flip_.js</title>
+    <title>JSDoc: Source: jsPlatform/list.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: uncurried/functionOps/flip_.js</h1>
+    <h1 class="page-title">Source: jsPlatform/list.js</h1>
 
     
 
@@ -26,26 +26,51 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import {reverse} from '../jsPlatform/array_';
-import {apply, call} from '../jsPlatform/function_';
+            <pre class="prettyprint source linenums"><code>/**
+ * List operations that overlap (apart from globally overlapping props and functions like `length` and `toString`)
+ * on both strings and arrays.
+ * @module jsPlatform_list
+ * @private
+ */
+
+import {curry} from  '../uncurried/functionOps/curry_';
+
+import {
+    concat as concat_,
+    slice as slice_,
+    includes as includes_,
+    indexOf as indexOf_,
+    lastIndexOf as lastIndexOf_ } from '../uncurried/jsPlatform/list_';
 
 export const
 
     /**
-     * Flips a functions arguments order and returns a new functionOps requiring such (arguments in reverse order).
-     * @function module:functionOps_.flipN
-     * @param fn {Function}
-     * @returns {Function}
+     * Concats/appends all functors onto the end of first functor.
+     * Note:  functors passed in after the first one must be of the same type.
+     * @function module:jsPlatform_array.concat
+     * @param functor {Array|Object|*}
+     * @param ...functor {Array|Object|*}
+     * @return {*|Array|Object} - The type passed.
+     * @throws {Error} - When passed in object doesn't have an `every` method.
      */
-    flipN = fn => (...args) => apply(fn, reverse(args)),
+    concat = curry(concat_),
 
     /**
-     * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
-     * @function module:functionOps_.flip
-     * @param fn {Function}
-     * @returns {Function}
+     * Same as Array.prototype.slice
+     * @function module:jsPlatform_array.slice
+     * @param separator {String|RegExp}
+     * @param arr{Array}
+     * @returns {Array}
      */
-    flip = fn => (b, a) => call(fn, a, b);
+    slice = curry(slice_),
+
+    includes = curry(includes_),
+
+    indexOf = curry(indexOf_),
+
+    lastIndexOf = curry(lastIndexOf_)
+
+;
 </code></pre>
         </article>
     </section>

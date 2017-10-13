@@ -2,7 +2,7 @@
  * @memberOf functionOps_
  */
 
-import {apply} from './apply_';
+import {apply} from '../jsPlatform/function_';
 
 import {reverse} from '../jsPlatform/array_';
 

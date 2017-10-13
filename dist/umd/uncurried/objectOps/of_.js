@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './is_', '../jsPlatform/object_', '../functionOps/apply_'], factory);
+        define(['exports', './is_', '../jsPlatform/object_', '../jsPlatform/function_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./is_'), require('../jsPlatform/object_'), require('../functionOps/apply_'));
+        factory(exports, require('./is_'), require('../jsPlatform/object_'), require('../jsPlatform/function_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is_, global.object_, global.apply_);
+        factory(mod.exports, global.is_, global.object_, global.function_);
         global.of_ = mod.exports;
     }
-})(this, function (exports, _is_, _object_, _apply_) {
+})(this, function (exports, _is_, _object_, _function_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -27,9 +27,9 @@
         }
         var constructor = x.constructor;
         if ((0, _object_.hasOwnProperty)('of', constructor)) {
-            return (0, _apply_.apply)(constructor.of, args);
+            return (0, _function_.apply)(constructor.of, args);
         } else if ((0, _is_.isUsableImmutablePrimitive)(x)) {
-            return (0, _apply_.apply)(constructor, args);
+            return (0, _function_.apply)(constructor, args);
         } else if ((0, _is_.isFunction)(constructor)) {
             return new (Function.prototype.bind.apply(constructor, [null].concat(args)))();
         }

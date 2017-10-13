@@ -283,7 +283,6 @@ export const
             _permutationsAlgo(xs, limit, limit);
     },
 
-
     /**
      * Reduces a foldable (list etc.) with passed in function.
      * @function module:listOps_.foldl

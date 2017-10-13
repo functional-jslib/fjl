@@ -1,26 +1,20 @@
-define(['exports', './functionOps/apply_', './functionOps/call_', './functionOps/compose_', './functionOps/curry_', './functionOps/curry__', './functionOps/flip_', './functionOps/id_', './functionOps/negate_', './functionOps/until_'], function (exports, _apply_, _call_, _compose_, _curry_, _curry__, _flip_, _id_, _negate_, _until_) {
+define(['exports', './jsPlatform/function_', './functionOps/compose_', './functionOps/curry_', './functionOps/curry__', './functionOps/flip_', './functionOps/id_', './functionOps/negate_', './functionOps/until_'], function (exports, _function_, _compose_, _curry_, _curry__, _flip_, _id_, _negate_, _until_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.keys(_apply_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _apply_[key];
-      }
-    });
+  Object.defineProperty(exports, 'apply', {
+    enumerable: true,
+    get: function () {
+      return _function_.apply;
+    }
   });
-  Object.keys(_call_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _call_[key];
-      }
-    });
+  Object.defineProperty(exports, 'call', {
+    enumerable: true,
+    get: function () {
+      return _function_.call;
+    }
   });
   Object.keys(_compose_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;

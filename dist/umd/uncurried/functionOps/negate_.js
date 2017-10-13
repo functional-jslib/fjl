@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './apply_', '../jsPlatform/array_'], factory);
+        define(['exports', '../jsPlatform/function_', '../jsPlatform/array_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./apply_'), require('../jsPlatform/array_'));
+        factory(exports, require('../jsPlatform/function_'), require('../jsPlatform/array_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.apply_, global.array_);
+        factory(mod.exports, global.function_, global.array_);
         global.negate_ = mod.exports;
     }
-})(this, function (exports, _apply_, _array_) {
+})(this, function (exports, _function_, _array_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -64,7 +64,7 @@
                 args[_key] = arguments[_key];
             }
 
-            return !(0, _apply_.apply)(fn, (0, _array_.reverse)(args));
+            return !(0, _function_.apply)(fn, (0, _array_.reverse)(args));
         };
     };
 });

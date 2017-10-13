@@ -1,4 +1,4 @@
-define(['exports', './apply_', '../jsPlatform/array_'], function (exports, _apply_, _array_) {
+define(['exports', '../jsPlatform/function_', '../jsPlatform/array_'], function (exports, _function_, _array_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -30,5 +30,5 @@ define(['exports', './apply_', '../jsPlatform/array_'], function (exports, _appl
      * @param fn {Function}
      * @returns {Function}
      */
-    negateFMany = exports.negateFMany = fn => (...args) => !(0, _apply_.apply)(fn, (0, _array_.reverse)(args));
+    negateFMany = exports.negateFMany = fn => (...args) => !(0, _function_.apply)(fn, (0, _array_.reverse)(args));
 });
