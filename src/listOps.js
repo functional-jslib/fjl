@@ -10,22 +10,20 @@ import {curry, curry2} from './uncurried/functionOps_';
 
 // Uncurried methods import
 import {
-    append as _append, appendMany as _appendMany, all as _all, and as _and, or as _or, any as _any, find as _find,
+    append as _append, appendMany as _appendMany, all as _all, any as _any, find as _find,
     findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith,
-    unzip as _unzip, unzipN as _unzipN, map as _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, zipWithN as _zipWithN,
+    map as _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, zipWithN as _zipWithN,
     elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup,
-    head as _head, last as _last, init as _init, tail as _tail, uncons as _uncons,
-    reverse as _reverse, intersperse as _intersperse, intercalate as _intercalate, transpose as _transpose,
-    subsequences as _subsequences, permutations as _permutations, iterate as _iterate,
+    intersperse as _intersperse, intercalate as _intercalate, iterate as _iterate,
     repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt,
-    foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr, concat as _concat,
+    foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr,
     concatMap as _concatMap, takeWhile as _takeWhile, dropWhile as _dropWhile, dropWhileEnd as _dropWhileEnd,
     partition as _partition, at as _at, span as _span, breakOnList as _breakOnList, stripPrefix as _stripPrefix,
-    group as _group, inits as _inits, tails as _tails, isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf,
-    isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter as _filter, sum as _sum, product as _product,
-    maximum as _maximum, maximumBy as _maximumBy, minimum as _minimum, minimumBy as _minimumBy, nub as _nub,
+    isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf,
+    isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter as _filter,
+    maximumBy as _maximumBy, minimumBy as _minimumBy,
     remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy,
-    removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sort as _sort, sortOn as _sortOn, sortBy as _sortBy,
+    removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy,
     complement as _complement, difference as _difference, union as _union, intersect as _intersect,
     intersectBy as _intersectBy, groupBy as _groupBy
 }
@@ -40,14 +38,13 @@ export {
 
 // Uncurried methods export
 export {
-    _append, _appendMany, _all, _and, _or, _any, _find, _findIndex, _findIndices, _zip, _zipN, _zipWith,
-    _unzip, _unzipN, _map, _mapAccumL, _mapAccumR, _elem, _notElem, _elemIndex, _elemIndices, _lookup,
-    _head, _last, _init, _tail, _uncons, _reverse, _intersperse, _intercalate, _transpose,
-    _subsequences, _permutations, _iterate, _repeat, _replicate, _cycle, _take,
-    _drop, _splitAt, _foldl, _foldl1, _foldr, _foldr1, _unfoldr, _concat, _concatMap, _takeWhile, _dropWhile,
-    _dropWhileEnd, _partition, _at, _span, _breakOnList, _stripPrefix, _group, _inits, _tails, _isPrefixOf,
-    _isSuffixOf, _isInfixOf, _isSubsequenceOf, _filter, _sum, _product, _maximum, _maximumBy, _minimum, _minimumBy,
-    _nub, _remove, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _sort, _sortOn, _sortBy,
+    _append, _appendMany, _all, _any, _find, _findIndex, _findIndices, _zip, _zipN, _zipWith,
+    _map, _mapAccumL, _mapAccumR, _elem, _notElem, _elemIndex, _elemIndices, _lookup,
+    _intersperse, _intercalate, _iterate, _repeat, _replicate, _cycle, _take,
+    _drop, _splitAt, _foldl, _foldl1, _foldr, _foldr1, _unfoldr, _concatMap, _takeWhile, _dropWhile,
+    _dropWhileEnd, _partition, _at, _span, _breakOnList, _stripPrefix, _isPrefixOf,
+    _isSuffixOf, _isInfixOf, _isSubsequenceOf, _filter, _maximumBy, _minimumBy,
+    _remove, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _sortOn, _sortBy,
     _complement, _difference, _union, _intersect, _intersectBy, _groupBy
 };
 
