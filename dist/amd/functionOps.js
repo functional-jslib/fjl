@@ -1,27 +1,10 @@
-define(['exports', './functionOps/call', './functionOps/apply', './uncurried/functionOps/curry_', './uncurried/functionOps/curry__', './uncurried/functionOps/negate_', './uncurried/functionOps/id_', './uncurried/functionOps/compose_', './functionOps/flip', './functionOps/until'], function (exports, _call, _apply, _curry_, _curry__, _negate_, _id_, _compose_, _flip, _until) {
+define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/curry__', './uncurried/functionOps/negate_', './uncurried/functionOps/id_', './uncurried/functionOps/compose_', './uncurried/jsPlatform_', './uncurried/functionOps/until_'], function (exports, _curry_, _curry__, _negate_, _id_, _compose_, _jsPlatform_, _until_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.keys(_call).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _call[key];
-      }
-    });
-  });
-  Object.keys(_apply).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _apply[key];
-      }
-    });
-  });
+  exports.flip = exports.flipN = exports.until = exports.call = exports.apply = undefined;
   Object.keys(_curry_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
@@ -67,22 +50,59 @@ define(['exports', './functionOps/call', './functionOps/apply', './uncurried/fun
       }
     });
   });
-  Object.keys(_flip).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _flip[key];
-      }
-    });
-  });
-  Object.keys(_until).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _until[key];
-      }
-    });
-  });
+  /**
+   * Function operations: `
+   * @module functionOps
+   */
+
+  const
+
+  /**
+   * Functional `apply` functionOps (takes no context).
+   * @function module:functionOps.apply
+   * @param fn {Function}
+   * @param args {*}
+   * @returns {*}
+   */
+  apply = exports.apply = (0, _curry_.curry)(_jsPlatform_.apply),
+
+
+  /**
+   * Functional `call` function (takes no context).
+   * @function module:functionOps.call
+   * @param fn {Function}
+   * @param args {*}
+   * @returns {*}
+   */
+  call = exports.call = (0, _curry_.curry2)(_jsPlatform_.call),
+
+
+  /**
+   * Run `operation` `until` predicate returns `true`.
+   * @function module:functionOps.until
+   * @param predicate {Function} :: a -> Boolean
+   * @param operation {Function} :: a -> a
+   * @param typeInstance {*} :: * - A monoidal zero or some starting point.
+   * @returns {*} - What ever type `typeInstance` is
+   * @curried
+   */
+  until = exports.until = (0, _curry_.curry)(_until_.until),
+
+
+  /**
+   * Flips a functions arguments order and returns a new functionOps requiring such (arguments in reverse order).
+   * @function module:fnOperators.flipN
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  flipN = exports.flipN = fn => (0, _curry_.curry3)((...args) => apply(fn, (0, _jsPlatform_.reverse)(args))),
+
+
+  /**
+   * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
+   * @function module:fnOperators.flip
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  flip = exports.flip = fn => (0, _curry_.curry)((b, a) => call(fn, a, b));
 });

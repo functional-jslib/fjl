@@ -11,7 +11,7 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {apply} from '../src/functionOps/apply';
+import {apply} from '../src/functionOps';
 import {
     typeOf, isType,
     isNumber, isFunction, isArray, isBoolean, isObject, isString,

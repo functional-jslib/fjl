@@ -366,7 +366,7 @@ isType = exports.isType = (0, _curry_.curry)(_is_.isType),
 
 /**
  * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
- * @function module:objectOps_.isEmptyCollection
+ * @function module:objectOps.isEmptyCollection
  * @param x {*}
  * @returns {Boolean}
  */
