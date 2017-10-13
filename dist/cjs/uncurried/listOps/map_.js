@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.map = undefined;
 
-var _of = require('../../objectOps/of');
+var _of_ = require('../objectOps/of_');
 
 var _aggregation_ = require('./aggregation_');
 
@@ -20,7 +20,7 @@ var _object_ = require('../jsPlatform/object_');
 var map = exports.map = function map(fn, xs) {
     var ind = 0,
         limit = (0, _object_.length)(xs),
-        out = (0, _of.of)(xs),
+        out = (0, _of_.of)(xs),
         aggregate = (0, _aggregation_.aggregatorByType)(xs);
     if (!limit) {
         return out;

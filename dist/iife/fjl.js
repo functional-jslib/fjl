@@ -191,6 +191,21 @@ var curry5 = function curry5(fn) {
     return curryN(5, fn);
 };
 
+/**
+ * @memberOf objectOps_
+ */
+
+/**
+ * Returns property value if found; Else `undefined`.
+ * @function module:objectOps_.prop
+ * @param name {String} - Key to search on `obj`
+ * @param obj {Object} - Object to search `name` on.
+ * @returns {*}
+ */
+var prop$1 = function prop(name, obj) {
+  return obj[name];
+};
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
 } : function (obj) {
@@ -439,7 +454,7 @@ var _Undefined = 'Undefined';
 var isFunction = function isFunction(value) {
     return instanceOf$1(Function, value);
 };
-var isType = function isType(type, obj) {
+var isType$1 = function isType(type, obj) {
     return typeOf(obj) === (isFunction(type) ? type.name : type);
 };
 var isClass = function isClass(x) {
@@ -449,43 +464,43 @@ var isCallable = function isCallable(x) {
     return isFunction(x) && !isClass(x);
 };
 var isArray = function isArray(value) {
-    return isType(Array, value);
+    return isType$1(Array, value);
 };
 var isObject = function isObject(value) {
-    return isType(_Object, value);
+    return isType$1(_Object, value);
 };
 var isBoolean = function isBoolean(value) {
-    return isType(_Boolean, value);
+    return isType$1(_Boolean, value);
 };
 var isNumber = function isNumber(value) {
-    return isType(_Number, value);
+    return isType$1(_Number, value);
 };
 var isString = function isString(value) {
-    return isType(_String, value);
+    return isType$1(_String, value);
 };
 var isMap = function isMap(value) {
-    return isType(_Map, value);
+    return isType$1(_Map, value);
 };
 var isSet = function isSet(value) {
-    return isType(_Set, value);
+    return isType$1(_Set, value);
 };
 var isWeakMap = function isWeakMap(value) {
-    return isType(_WeakMap, value);
+    return isType$1(_WeakMap, value);
 };
 var isWeakSet = function isWeakSet(value) {
-    return isType(_WeakSet, value);
+    return isType$1(_WeakSet, value);
 };
 var isUndefined = function isUndefined(value) {
-    return isType(_Undefined, value);
+    return isType$1(_Undefined, value);
 };
 var isNull = function isNull(value) {
-    return isType(_Null, value);
+    return isType$1(_Null, value);
 };
 var isSymbol = function isSymbol(value) {
-    return isType(_Symbol, value);
+    return isType$1(_Symbol, value);
 };
 var isPromise = function isPromise(value) {
-    return isType('Promise', value);
+    return isType$1('Promise', value);
 };
 var isUsableImmutablePrimitive = function isUsableImmutablePrimitive(x) {
     var typeOfX = typeOf(x);
@@ -549,17 +564,6 @@ var assignDeep$1 = function assignDeep(obj0) {
 };
 
 /**
- * Created by elyde on 12/18/2016.
- * @memberOf objectOps
- * @todo remove `isset`, `isEmpty` and `notEmptyAndOfType`
- * @todo Use the ucurried versions of the methods here from the '../uncurried/*' packages.
- */
-var isType$1 = curry(isType);
-var notEmptyAndOfType$1 = curry(function (type, value) {
-  return !isEmpty(value) && isType$1(type, value);
-});
-
-/**
  * Created by elydelacruz on 7/22/2017.
  * @memberOf functionOps_
  */
@@ -571,25 +575,6 @@ var notEmptyAndOfType$1 = curry(function (type, value) {
  * @param args {*}
  * @returns {*}
  */
-
-var of = function of(x) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-    }
-
-    if (!isset(x)) {
-        return undefined;
-    }
-    var constructor = x.constructor;
-    if (hasOwnProperty$1('of', constructor)) {
-        return apply(constructor.of, args);
-    } else if (isUsableImmutablePrimitive(x)) {
-        return apply(constructor, args);
-    } else if (isFunction(constructor)) {
-        return new (Function.prototype.bind.apply(constructor, [null].concat(args)))();
-    }
-    return undefined;
-};
 
 /**
  * @memberOf functionOps_
@@ -644,33 +629,7 @@ var alwaysFalse = function alwaysFalse() {
   return false;
 };
 
-/**
- * @memberOf objectOps_
- */
-
-/**
- * Returns property value if found; Else `undefined`.
- * @function module:objectOps_.prop
- * @param name {String} - Key to search on `obj`
- * @param obj {Object} - Object to search `name` on.
- * @returns {*}
- */
-var prop = function prop(name, obj) {
-  return obj[name];
-};
-
-/**
- * @module objectOps_
- * @private
- */
-
-/**
- * Created by elydelacruz on 7/22/2017.
- * @memberOf functionOps
- */
-var apply$1 = curry(apply);
-
-var of$1 = function of(x) {
+var of = function of(x) {
     for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         args[_key - 1] = arguments[_key];
     }
@@ -680,14 +639,19 @@ var of$1 = function of(x) {
     }
     var constructor = x.constructor;
     if (hasOwnProperty$1('of', constructor)) {
-        return apply$1(constructor.of, args);
+        return apply(constructor.of, args);
     } else if (isUsableImmutablePrimitive(x)) {
-        return apply$1(constructor, args);
+        return apply(constructor, args);
     } else if (isFunction(constructor)) {
         return new (Function.prototype.bind.apply(constructor, [null].concat(args)))();
     }
     return undefined;
 };
+
+/**
+ * @module objectOps_
+ * @private
+ */
 
 var aggregateStr = function aggregateStr(agg, item) {
     return agg + item;
@@ -721,7 +685,7 @@ var aggregatorByType = function aggregatorByType(x) {
 var map$1 = function map(fn, xs) {
     var ind = 0,
         limit = length(xs),
-        out = of$1(xs),
+        out = of(xs),
         aggregate = aggregatorByType(xs);
     if (!limit) {
         return out;
@@ -1138,7 +1102,7 @@ var breakOnList = function breakOnList(pred, list) {
     var splitPoint = findIndexWhere(pred, list);
     return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
 };
-var at = prop;
+var at = prop$1;
 var find = findWhere;
 var filter$1 = function filter(pred, xs) {
     var ind = 0,
@@ -1613,24 +1577,41 @@ var objComplement$1 = function objComplement(obj0) {
     }, {}, objs);
 };
 
-var objUnion$$1 = curry(objUnion$1);
-var objIntersect$$1 = curry(objIntersect$1);
-var objDifference$$1 = curry(objDifference$1);
-var objComplement$$1 = curry2(objComplement$1);
-
 /**
  * @module objectOps
  */
+var prop$$1 = curry(prop$1);
 var instanceOf$$1 = curry(instanceOf$1);
 var hasOwnProperty$$1 = curry(hasOwnProperty$1);
 var assign$$1 = curry2(assign$1);
 var assignDeep$$1 = curry2(assignDeep$1);
+var objUnion$$1 = curry(objUnion$1);
+var objIntersect$$1 = curry(objIntersect$1);
+var objDifference$$1 = curry(objDifference$1);
+var objComplement$$1 = curry2(objComplement$1);
+var isType$$1 = curry(isType$1);
+var notEmptyAndOfType = curry(function (type, value) {
+    return !isEmpty(value) && isType$$1(type, value);
+});
+
+/**
+ * Returns whether passed in values is defined and not null.
+ * @function module:objectOps.isset
+ * @param x {*}
+ * @returns {Boolean}
+ */
 
 /**
  * Created by elydelacruz on 7/22/2017.
  * @memberOf functionOps
  */
 var call$1 = curry2(call);
+
+/**
+ * Created by elydelacruz on 7/22/2017.
+ * @memberOf functionOps
+ */
+var apply$1 = curry(apply);
 
 /**
  * @memberOf functionOps
@@ -1997,7 +1978,7 @@ var unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Fri Oct 13 2017 11:36:16 GMT-0400 (Eastern Daylight Time) 
+ * Generated Fri Oct 13 2017 12:39:32 GMT-0400 (Eastern Daylight Time) 
  */
 
 var version = '0.17.0';
@@ -2018,17 +1999,20 @@ var version = '0.17.0';
  */
 
 exports.version = version;
+exports.prop = prop$$1;
 exports.instanceOf = instanceOf$$1;
 exports.hasOwnProperty = hasOwnProperty$$1;
 exports.assign = assign$$1;
 exports.assignDeep = assignDeep$$1;
+exports.objUnion = objUnion$$1;
+exports.objIntersect = objIntersect$$1;
+exports.objDifference = objDifference$$1;
+exports.objComplement = objComplement$$1;
+exports.isType = isType$$1;
+exports.notEmptyAndOfType = notEmptyAndOfType;
 exports.length = length;
 exports.toString = toString;
 exports.keys = keys;
-exports.typeOf = typeOf;
-exports.isEmpty = isEmpty;
-exports.isType = isType$1;
-exports.notEmptyAndOfType = notEmptyAndOfType$1;
 exports.isFunction = isFunction;
 exports.isClass = isClass;
 exports.isCallable = isCallable;
@@ -2049,12 +2033,10 @@ exports.isUsableImmutablePrimitive = isUsableImmutablePrimitive;
 exports.isEmptyList = isEmptyList;
 exports.isEmptyObject = isEmptyObject;
 exports.isEmptyCollection = isEmptyCollection;
+exports.isEmpty = isEmpty;
 exports.isset = isset;
+exports.typeOf = typeOf;
 exports.of = of;
-exports.objUnion = objUnion$$1;
-exports.objIntersect = objIntersect$$1;
-exports.objDifference = objDifference$$1;
-exports.objComplement = objComplement$$1;
 exports.isTruthy = isTruthy;
 exports.isFalsy = isFalsy;
 exports.alwaysTrue = alwaysTrue;

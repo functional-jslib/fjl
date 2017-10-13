@@ -1,4 +1,4 @@
-import {of} from   '../../objectOps/of';
+import {of} from   '../objectOps/of_';
 
 import {aggregatorByType}   from './aggregation_';
 

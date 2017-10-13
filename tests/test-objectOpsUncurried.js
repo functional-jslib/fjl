@@ -12,7 +12,11 @@
 'use strict';
 import {assert, expect} from 'chai';
 import {apply} from '../src/uncurried/jsPlatform/function_';
-import {objComplement, objDifference, objUnion, objIntersect,
+import {
+    /*_objComplement as */objComplement,
+    /*_objDifference as */objDifference,
+    /*_objUnion as */objUnion,
+    /*_objIntersect as */objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
