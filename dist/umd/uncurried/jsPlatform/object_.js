@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../../utils'], factory);
+        define(['exports', '../utils_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../../utils'));
+        factory(exports, require('../utils_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.utils);
+        factory(mod.exports, global.utils_);
         global.object_ = mod.exports;
     }
-})(this, function (exports, _utils) {
+})(this, function (exports, _utils_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -38,7 +38,7 @@
      * @param typeInstance {*}
      * @returns {Boolean}
      */
-    hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
+    hasOwnProperty = exports.hasOwnProperty = (0, _utils_.fPureTakesOne)('hasOwnProperty'),
 
 
     /**

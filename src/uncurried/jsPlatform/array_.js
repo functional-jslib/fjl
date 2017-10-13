@@ -6,7 +6,7 @@
  * @todo updated doc blocks to list correct/updated module name.
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../../utils';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils_';
 
 export const
 

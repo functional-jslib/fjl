@@ -1,4 +1,4 @@
-define(['exports', '../../utils'], function (exports, _utils) {
+define(['exports', '../utils_'], function (exports, _utils_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -24,7 +24,7 @@ define(['exports', '../../utils'], function (exports, _utils) {
      * @param typeInstance {*}
      * @returns {Boolean}
      */
-    hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
+    hasOwnProperty = exports.hasOwnProperty = (0, _utils_.fPureTakesOne)('hasOwnProperty'),
 
 
     /**

@@ -5122,6 +5122,195 @@
     
 
     
+    <h4 class="name" id=".partition"><span class="type-signature">(static) </span>partition<span class="signature">(pred, list)</span><span class="type-signature"> &rarr; {Array|String}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items thatdo not match the tuple are in second list in the returned tuple. Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pred</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Predicate<item, index, originalArrayOrString></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>list</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="listOps.js.html">listOps.js</a>, <a href="listOps.js.html#line329">line 329</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Tuple of arrays or strings (depends on incoming list (of type list or string)).
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id=".partition"><span class="type-signature">(static) </span>partition<span class="signature">(pred, list)</span><span class="type-signature"> &rarr; {Array|String|*}</span></h4>
     
 
@@ -5314,7 +5503,7 @@
     
 
     
-    <h4 class="name" id=".partition"><span class="type-signature">(static) </span>partition<span class="signature">(pred, list)</span><span class="type-signature"> &rarr; {Array|String}</span></h4>
+    <h4 class="name" id=".permutations"><span class="type-signature">(static) </span>permutations<span class="signature">(xs)</span><span class="type-signature"> &rarr; {Array.&lt;(Array|String|*)>}</span></h4>
     
 
     
@@ -5322,7 +5511,7 @@
 
 
 <div class="description">
-    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items thatdo not match the tuple are in second list in the returned tuple. Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+    Returns a list of permutations for passed in list.
 </div>
 
 
@@ -5358,30 +5547,7 @@
 
         <tr>
             
-                <td class="name"><code>pred</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Predicate<item, index, originalArrayOrString></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>list</code></td>
+                <td class="name"><code>xs</code></td>
             
 
             <td class="type">
@@ -5403,7 +5569,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">List.</td>
         </tr>
 
     
@@ -5444,7 +5610,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="listOps.js.html">listOps.js</a>, <a href="listOps.js.html#line329">line 329</a>
+        <a href="uncurried_listOps_.js.html">uncurried/listOps_.js</a>, <a href="uncurried_listOps_.js.html#line274">line 274</a>
     </li></ul></dd>
     
 
@@ -5471,7 +5637,7 @@
 
         
 <div class="param-desc">
-    - Tuple of arrays or strings (depends on incoming list (of type list or string)).
+    - Array of permutations.
 </div>
 
 
@@ -5482,10 +5648,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">String</span>
+<span class="param-type">Array.&lt;(Array|String|*)></span>
 
 
     </dd>
@@ -8228,7 +8391,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Oct 12 2017 20:55:15 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Oct 12 2017 22:49:01 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

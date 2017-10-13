@@ -3,7 +3,7 @@
  *      on both strings and arrays.
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../../utils';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils_';
 
 // export {length, toString} from './objectOps_';
 

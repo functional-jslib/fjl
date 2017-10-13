@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.assign = exports.keys = exports.toString = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
 
-var _utils = require('../../utils');
+var _utils_ = require('../utils_');
 
 var
 
@@ -28,7 +28,7 @@ instanceOf = exports.instanceOf = function instanceOf(instanceConstructor, insta
  * @param typeInstance {*}
  * @returns {Boolean}
  */
-hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
+hasOwnProperty = exports.hasOwnProperty = (0, _utils_.fPureTakesOne)('hasOwnProperty'),
 
 
 /**

@@ -2,7 +2,7 @@
  * Created by elydelacruz on 9/6/2017.
  */
 
-import {fPureTakesOne} from '../../utils';
+import {fPureTakesOne} from '../utils_';
 
 /**
  * Functional version of `String.prototype.split`.
