@@ -4,8 +4,8 @@ define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], function
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports._groupBy = exports._intersectBy = exports._intersect = exports._union = exports._difference = exports._complement = exports._sortBy = exports._sortOn = exports._sort = exports._unionBy = undefined;
-    exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._remove = exports._nub = exports._minimumBy = exports._minimum = exports._maximumBy = exports._maximum = exports._product = exports._sum = exports._filter = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._tails = exports._inits = exports._group = exports._stripPrefix = exports._breakOnList = exports._span = exports._at = exports._partition = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._concatMap = exports._concat = exports._unfoldr = exports._foldr1 = exports._foldr = exports._foldl1 = exports._foldl = exports._splitAt = exports._drop = exports._take = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._permutations = exports._subsequences = exports._transpose = exports._intercalate = exports._intersperse = exports._reverse = exports._uncons = exports._tail = exports._init = exports._last = exports._head = exports._lookup = exports._elemIndices = exports._elemIndex = exports._notElem = exports._elem = exports._mapAccumR = exports._mapAccumL = exports._map = exports._unzipN = exports._unzip = exports._zipWith = exports._zipN = exports._zip = exports._findIndices = exports._findIndex = exports._find = exports._any = exports._or = exports._and = exports._all = exports._appendMany = exports._append = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.inits = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.uncons = exports.tail = exports.init = exports.last = exports.head = exports.unzipN = exports.unzip = exports.zipN = exports.or = exports.and = undefined;
+    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = undefined;
+    exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports._groupBy = exports._intersectBy = exports._intersect = exports._union = exports._difference = exports._complement = exports._sortBy = exports._sortOn = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._remove = exports._minimumBy = exports._maximumBy = exports._filter = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._stripPrefix = exports._breakOnList = exports._span = exports._at = exports._partition = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._concatMap = exports._unfoldr = exports._foldr1 = exports._foldr = exports._foldl1 = exports._foldl = exports._splitAt = exports._drop = exports._take = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._intercalate = exports._intersperse = exports._lookup = exports._elemIndices = exports._elemIndex = exports._notElem = exports._elem = exports._mapAccumR = exports._mapAccumL = exports._map = exports._zipWith = exports._zipN = exports._zip = exports._findIndices = exports._findIndex = exports._find = exports._any = exports._all = exports._appendMany = exports._append = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.inits = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.uncons = exports.tail = exports.init = exports.last = exports.head = exports.unzipN = exports.unzip = exports.zipN = exports.or = exports.and = undefined;
     Object.defineProperty(exports, 'and', {
         enumerable: true,
         get: function () {
@@ -153,8 +153,6 @@ define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], function
     exports._append = _listOps_.append;
     exports._appendMany = _listOps_.appendMany;
     exports._all = _listOps_.all;
-    exports._and = _listOps_.and;
-    exports._or = _listOps_.or;
     exports._any = _listOps_.any;
     exports._find = _listOps_.find;
     exports._findIndex = _listOps_.findIndex;
@@ -162,8 +160,6 @@ define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], function
     exports._zip = _listOps_.zip;
     exports._zipN = _listOps_.zipN;
     exports._zipWith = _listOps_.zipWith;
-    exports._unzip = _listOps_.unzip;
-    exports._unzipN = _listOps_.unzipN;
     exports._map = _listOps_.map;
     exports._mapAccumL = _listOps_.mapAccumL;
     exports._mapAccumR = _listOps_.mapAccumR;
@@ -172,17 +168,8 @@ define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], function
     exports._elemIndex = _listOps_.elemIndex;
     exports._elemIndices = _listOps_.elemIndices;
     exports._lookup = _listOps_.lookup;
-    exports._head = _listOps_.head;
-    exports._last = _listOps_.last;
-    exports._init = _listOps_.init;
-    exports._tail = _listOps_.tail;
-    exports._uncons = _listOps_.uncons;
-    exports._reverse = _listOps_.reverse;
     exports._intersperse = _listOps_.intersperse;
     exports._intercalate = _listOps_.intercalate;
-    exports._transpose = _listOps_.transpose;
-    exports._subsequences = _listOps_.subsequences;
-    exports._permutations = _listOps_.permutations;
     exports._iterate = _listOps_.iterate;
     exports._repeat = _listOps_.repeat;
     exports._replicate = _listOps_.replicate;
@@ -195,7 +182,6 @@ define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], function
     exports._foldr = _listOps_.foldr;
     exports._foldr1 = _listOps_.foldr1;
     exports._unfoldr = _listOps_.unfoldr;
-    exports._concat = _listOps_.concat;
     exports._concatMap = _listOps_.concatMap;
     exports._takeWhile = _listOps_.takeWhile;
     exports._dropWhile = _listOps_.dropWhile;
@@ -205,21 +191,13 @@ define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], function
     exports._span = _listOps_.span;
     exports._breakOnList = _listOps_.breakOnList;
     exports._stripPrefix = _listOps_.stripPrefix;
-    exports._group = _listOps_.group;
-    exports._inits = _listOps_.inits;
-    exports._tails = _listOps_.tails;
     exports._isPrefixOf = _listOps_.isPrefixOf;
     exports._isSuffixOf = _listOps_.isSuffixOf;
     exports._isInfixOf = _listOps_.isInfixOf;
     exports._isSubsequenceOf = _listOps_.isSubsequenceOf;
     exports._filter = _listOps_.filter;
-    exports._sum = _listOps_.sum;
-    exports._product = _listOps_.product;
-    exports._maximum = _listOps_.maximum;
     exports._maximumBy = _listOps_.maximumBy;
-    exports._minimum = _listOps_.minimum;
     exports._minimumBy = _listOps_.minimumBy;
-    exports._nub = _listOps_.nub;
     exports._remove = _listOps_.remove;
     exports._insert = _listOps_.insert;
     exports._insertBy = _listOps_.insertBy;
@@ -227,7 +205,6 @@ define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], function
     exports._removeBy = _listOps_.removeBy;
     exports._removeFirstsBy = _listOps_.removeFirstsBy;
     exports._unionBy = _listOps_.unionBy;
-    exports._sort = _listOps_.sort;
     exports._sortOn = _listOps_.sortOn;
     exports._sortBy = _listOps_.sortBy;
     exports._complement = _listOps_.complement;

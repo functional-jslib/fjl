@@ -13,7 +13,8 @@ import {
     objComplement as _objComplement,
     objIntersect as _objIntersect,
     objDifference as _objDifference}    from './uncurried/objectOps/setTheory_';
-import {isType as _isType, isEmpty}     from './uncurried/objectOps/is_';
+import {isType as _isType, notEmptyAndOfType as _notEmptyAndOfType}
+    from './uncurried/objectOps/is_';
 
 export {length, toString, keys} from './uncurried/jsPlatform/object_';
 export * from './uncurried/objectOps/typeOf_';
@@ -24,6 +25,9 @@ export {
     isNull, isSymbol, isPromise, isUsableImmutablePrimitive,
     isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset
 } from './uncurried/objectOps/is_';
+
+export {_instanceOf, _isType, _hasOwnProperty, _assign, _prop, _assignDeep, _objUnion,
+_objComplement, _objIntersect, _objDifference, _notEmptyAndOfType};
 
 export const
 
@@ -224,7 +228,7 @@ export const
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
-    notEmptyAndOfType = curry((type, value) => !isEmpty(value) && isType(type, value));
+    notEmptyAndOfType = curry(_notEmptyAndOfType);
 
     /**
      * Returns whether passed in values is defined and not null.
@@ -232,4 +236,3 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-
