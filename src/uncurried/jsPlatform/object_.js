@@ -6,7 +6,7 @@
  * @todo change all files named '*UnCurried' to '*_'.
  */
 
-import {fPureTakesOne} from '../utils_';
+import {fPureTakes2, fPureTakesOne} from '../utils_';
 
 export const
 
@@ -69,4 +69,51 @@ export const
                     agg[key] = obj[key];
                     return agg;
                 }, topAgg);
-            }, obj0))();
+            }, obj0))(),
+
+    defineProperty = (propName, propDescriptor, obj) =>
+        Object.defineProperty(obj, propName, propDescriptor),
+
+    defineProperties = (propDescriptors, obj) =>
+        Object.defineProperties(obj, propDescriptors),
+
+    defineEnumProp = (propName, propDescriptor, obj) =>
+        defineProperty(propName,
+            assign({enumerable: true}, propDescriptor),
+            obj),
+
+    defineEnumNumber = (propName, obj, defaultValue = undefined) => {
+        let _value = defaultValue;
+        defineEnumProp(propName, {
+            get: function () { return _value; },
+            set: function () { }
+        });
+    };
+
+Object.getOwnPropertyNames(Object)
+    .filter(name => Object[name].length > 1)
+    .reduce((agg, name) => {
+        switch (length(agg[name])) {
+            case 2:
+                agg[name] = fPureTakes2(name);
+                break;
+            case 3:
+                agg[name] = fPureTakes3(name);
+                break;
+            case 4:
+                agg[name] = fPureTakes4(name);
+                break;
+            case 5:
+                agg[name] = fPureTakes5(name);
+                break;
+            default:
+                agg[name] = fPureTakesOne(name);
+                break;
+        }
+        return agg;
+    }, {});
+
+export {
+
+};
+
