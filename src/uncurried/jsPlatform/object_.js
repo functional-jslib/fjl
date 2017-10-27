@@ -6,7 +6,7 @@
  * @todo change all files named '*UnCurried' to '*_'.
  */
 
-import {fPureTakes2, fPureTakesOne} from '../utils_';
+import {fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOne} from '../utils_';
 
 export const
 
@@ -93,7 +93,7 @@ export const
 Object.getOwnPropertyNames(Object)
     .filter(name => Object[name].length > 1)
     .reduce((agg, name) => {
-        switch (length(agg[name])) {
+        switch (length(Object[name])) {
             case 2:
                 agg[name] = fPureTakes2(name);
                 break;

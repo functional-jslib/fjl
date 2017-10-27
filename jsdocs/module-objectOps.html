@@ -1106,7 +1106,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line195">line 195</a>
+        <a href="uncurried_objectOps_is_.js.html">uncurried/objectOps/is_.js</a>, <a href="uncurried_objectOps_is_.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -1259,7 +1259,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="uncurried_objectOps_is_.js.html">uncurried/objectOps/is_.js</a>, <a href="uncurried_objectOps_is_.js.html#line182">line 182</a>
+        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line195">line 195</a>
     </li></ul></dd>
     
 
@@ -2377,159 +2377,6 @@
     
 
     
-    <h4 class="name" id=".isSet"><span class="type-signature">(static) </span>isSet<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Checks whether value is of `Set` or not.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line139">line 139</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id=".isset"><span class="type-signature">(static) </span>isset<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
@@ -2632,6 +2479,159 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line233">line 233</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".isSet"><span class="type-signature">(static) </span>isSet<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks whether value is of `Set` or not.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line139">line 139</a>
     </li></ul></dd>
     
 
@@ -2997,7 +2997,13 @@
 
 
 <div class="description">
-    Type checker.  Note** The `Type` passed in, if a constructor, shouldbe a named constructor/functionOps-instance;  E.g.,``` functionOps SomeName () {} // or var SomeName = functionOps SomeName () {} // or class SomeName {}```
+    Type checker.  Note** The `Type` passed in, if a constructor, should
+be a named constructor/functionOps-instance;  E.g.,
+```
+ functionOps SomeName () {} // or
+ var SomeName = functionOps SomeName () {} // or
+ class SomeName {}
+```
 </div>
 
 
@@ -3329,7 +3335,9 @@
 
 
 <div class="description">
-    Checks if given `x` is one of the four"usable" immutable JS primitives; I.e., One of [String, Boolean, Number, Symbol]
+    Checks if given `x` is one of the four
+"usable" immutable JS primitives; I.e.,
+ One of [String, Boolean, Number, Symbol]
 </div>
 
 
@@ -3949,7 +3957,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Nov 10 2017 20:49:52 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 08 2017 18:50:10 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

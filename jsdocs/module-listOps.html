@@ -99,7 +99,8 @@
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
         <ul>
-            <li>decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).</li>
+            <li>decide whether to throw errors where functions cannot function without a specific type or to
+ return undefined (and also determine which cases are ok for just returning undefined).</li>
         
             <li>code unperformant shorthand in `listOps`</li>
         
@@ -161,7 +162,12 @@
 
 
 <div class="description">
-    Append two lists, i.e.,```append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]```If the first list is not finite, the result is the first list.
+    Append two lists, i.e.,
+```
+append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
+append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
+```
+If the first list is not finite, the result is the first list.
 </div>
 
 
@@ -4712,7 +4718,8 @@
 
 
 <div class="description">
-    Performs a map then a reduce all in one (from left-to-right). Returns a tuplecontaining the aggregated value and the result of mapping the passed in function on passed in list.
+    Performs a map then a reduce all in one (from left-to-right). Returns a tuple
+containing the aggregated value and the result of mapping the passed in function on passed in list.
 </div>
 
 
@@ -4921,7 +4928,8 @@
 
 
 <div class="description">
-    Performs a map and a reduce all in one (from right-to-left). Returns a tuplecontaining the aggregated value and the result of mapping the passed in function on passed in list.
+    Performs a map and a reduce all in one (from right-to-left). Returns a tuple
+containing the aggregated value and the result of mapping the passed in function on passed in list.
 </div>
 
 
@@ -5130,7 +5138,9 @@
 
 
 <div class="description">
-    Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` andthe second list in the tuple is a list of the remaining elements in the given list.**@Note: Not the same as `partition`.  Read descriptions closely!!!
+    Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
+the second list in the tuple is a list of the remaining elements in the given list.
+**@Note: Not the same as `partition`.  Read descriptions closely!!!
 </div>
 
 
@@ -5322,7 +5332,9 @@
 
 
 <div class="description">
-    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items thatdo not match the tuple are in second list in the returned tuple. Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
+do not match the tuple are in second list in the returned tuple.
+ Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
 </div>
 
 
@@ -5511,7 +5523,9 @@
 
 
 <div class="description">
-    Returns a list of permutations for passed in list. Use caution with lists above a length of 15 (will take long due to nature of algorithm).
+    Returns a list of permutations for passed in list.
+ Use caution with lists above a length of 15 (will take long due to nature of
+ algorithm).
 </div>
 
 
@@ -5674,7 +5688,8 @@
 
 
 <div class="description">
-    Splits `x` in two at given `index` (exclusive (includes element/character atgiven index in second part of returned list)).
+    Splits `x` in two at given `index` (exclusive (includes element/character at
+given index in second part of returned list)).
 </div>
 
 
@@ -7002,7 +7017,8 @@
 
 
 <div class="description">
-    zip takes two lists and returns a list of corresponding pairs.If one input list is short, excess elements of the longer list are discarded.
+    zip takes two lists and returns a list of corresponding pairs.
+If one input list is short, excess elements of the longer list are discarded.
 </div>
 
 
@@ -7178,7 +7194,10 @@
 
 
 <div class="description">
-    zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]zipWith generalises zip by zipping with the function given as thefirst argument, instead of a function tupling function (function that returns a tuple). For example,zipWith (+) is applied to two lists to produce the list of corresponding sums.
+    zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith generalises zip by zipping with the function given as the
+first argument, instead of a function tupling function (function that returns a tuple). For example,
+zipWith (+) is applied to two lists to produce the list of corresponding sums.
 </div>
 
 
@@ -7230,7 +7249,8 @@
 
             
 
-            <td class="description last">Takes two parts of a tuple and returns a tuple. E.g., ` op :: a -> b -> (a, b)`</td>
+            <td class="description last">Takes two parts of a tuple and returns a tuple.
+ E.g., ` op :: a -> b -> (a, b)`</td>
         </tr>
 
     
@@ -7376,7 +7396,9 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```zipWith f [] _|_ = []```</code></pre>
+    <pre class="prettyprint"><code>```
+zipWith f [] _|_ = []
+```</code></pre>
 
 
 
@@ -7446,7 +7468,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
         </tr>
 
     
@@ -7686,7 +7710,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`</td>
         </tr>
 
     
@@ -7955,7 +7981,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`</td>
         </tr>
 
     
@@ -8201,7 +8229,9 @@
 
 
 <div class="description">
-    Zips all given lists with tupling function. Note: Haskell types do not have a way (that I know of) to show one or more for params in a function so `@haskellType` below is left there for general purpose not for exactness as is told by aforementioned.
+    Zips all given lists with tupling function. Note: Haskell types do not have
+ a way (that I know of) to show one or more for params in a function so `@haskellType` below
+ is left there for general purpose not for exactness as is told by aforementioned.
 </div>
 
 
@@ -8253,7 +8283,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
         </tr>
 
     
@@ -8391,7 +8423,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Nov 10 2017 20:49:52 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 08 2017 18:50:10 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

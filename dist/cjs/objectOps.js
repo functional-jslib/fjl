@@ -1,188 +1,188 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.notEmptyAndOfType = exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports._notEmptyAndOfType = exports._objDifference = exports._objIntersect = exports._objComplement = exports._objUnion = exports._assignDeep = exports._prop = exports._assign = exports._hasOwnProperty = exports._isType = exports._instanceOf = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isFunction = exports.keys = exports.toString = exports.length = undefined;
 
 var _object_ = require('./uncurried/jsPlatform/object_');
 
 Object.defineProperty(exports, 'length', {
-    enumerable: true,
-    get: function get() {
-        return _object_.length;
-    }
+  enumerable: true,
+  get: function get() {
+    return _object_.length;
+  }
 });
 Object.defineProperty(exports, 'toString', {
-    enumerable: true,
-    get: function get() {
-        return _object_.toString;
-    }
+  enumerable: true,
+  get: function get() {
+    return _object_.toString;
+  }
 });
 Object.defineProperty(exports, 'keys', {
-    enumerable: true,
-    get: function get() {
-        return _object_.keys;
-    }
+  enumerable: true,
+  get: function get() {
+    return _object_.keys;
+  }
 });
 
 var _typeOf_ = require('./uncurried/objectOps/typeOf_');
 
 Object.keys(_typeOf_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _typeOf_[key];
-        }
-    });
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _typeOf_[key];
+    }
+  });
 });
 
 var _of_ = require('./uncurried/objectOps/of_');
 
 Object.keys(_of_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _of_[key];
-        }
-    });
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _of_[key];
+    }
+  });
 });
 
 var _is_ = require('./uncurried/objectOps/is_');
 
 Object.defineProperty(exports, 'isFunction', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isFunction;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isFunction;
+  }
 });
 Object.defineProperty(exports, 'isClass', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isClass;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isClass;
+  }
 });
 Object.defineProperty(exports, 'isCallable', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isCallable;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isCallable;
+  }
 });
 Object.defineProperty(exports, 'isArray', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isArray;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isArray;
+  }
 });
 Object.defineProperty(exports, 'isObject', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isObject;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isObject;
+  }
 });
 Object.defineProperty(exports, 'isBoolean', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isBoolean;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isBoolean;
+  }
 });
 Object.defineProperty(exports, 'isNumber', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isNumber;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isNumber;
+  }
 });
 Object.defineProperty(exports, 'isString', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isString;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isString;
+  }
 });
 Object.defineProperty(exports, 'isMap', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isMap;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isMap;
+  }
 });
 Object.defineProperty(exports, 'isSet', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isSet;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isSet;
+  }
 });
 Object.defineProperty(exports, 'isWeakMap', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isWeakMap;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isWeakMap;
+  }
 });
 Object.defineProperty(exports, 'isWeakSet', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isWeakSet;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isWeakSet;
+  }
 });
 Object.defineProperty(exports, 'isUndefined', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isUndefined;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isUndefined;
+  }
 });
 Object.defineProperty(exports, 'isNull', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isNull;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isNull;
+  }
 });
 Object.defineProperty(exports, 'isSymbol', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isSymbol;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isSymbol;
+  }
 });
 Object.defineProperty(exports, 'isPromise', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isPromise;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isPromise;
+  }
 });
 Object.defineProperty(exports, 'isUsableImmutablePrimitive', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isUsableImmutablePrimitive;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isUsableImmutablePrimitive;
+  }
 });
 Object.defineProperty(exports, 'isEmptyList', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isEmptyList;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isEmptyList;
+  }
 });
 Object.defineProperty(exports, 'isEmptyObject', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isEmptyObject;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isEmptyObject;
+  }
 });
 Object.defineProperty(exports, 'isEmptyCollection', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isEmptyCollection;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isEmptyCollection;
+  }
 });
 Object.defineProperty(exports, 'isEmpty', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isEmpty;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isEmpty;
+  }
 });
 Object.defineProperty(exports, 'isset', {
-    enumerable: true,
-    get: function get() {
-        return _is_.isset;
-    }
+  enumerable: true,
+  get: function get() {
+    return _is_.isset;
+  }
 });
 
 var _curry_ = require('./uncurried/functionOps/curry_');

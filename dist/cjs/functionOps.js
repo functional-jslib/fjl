@@ -1,68 +1,68 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.flip5 = exports.flip4 = exports.flip3 = exports.flip = exports.flipN = exports.until = exports.call = exports.apply = exports._flipN = exports._flip5 = exports._flip4 = exports._flip3 = exports._flip = exports._until = exports._call = exports._apply = undefined;
 
 var _curry_ = require('./uncurried/functionOps/curry_');
 
 Object.keys(_curry_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _curry_[key];
-        }
-    });
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _curry_[key];
+    }
+  });
 });
 
 var _curry__ = require('./uncurried/functionOps/curry__');
 
 Object.keys(_curry__).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _curry__[key];
-        }
-    });
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _curry__[key];
+    }
+  });
 });
 
 var _negate_ = require('./uncurried/functionOps/negate_');
 
 Object.keys(_negate_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _negate_[key];
-        }
-    });
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _negate_[key];
+    }
+  });
 });
 
 var _id_ = require('./uncurried/functionOps/id_');
 
 Object.keys(_id_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _id_[key];
-        }
-    });
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _id_[key];
+    }
+  });
 });
 
 var _compose_ = require('./uncurried/functionOps/compose_');
 
 Object.keys(_compose_).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _compose_[key];
-        }
-    });
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _compose_[key];
+    }
+  });
 });
 
 var _jsPlatform_ = require('./uncurried/jsPlatform_');
@@ -124,13 +124,13 @@ until = exports.until = (0, _curry_.curry)(_until_.until),
  * @returns {Function}
  */
 flipN = exports.flipN = function flipN(fn) {
-    return (0, _curry_.curry3)(function () {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+  return (0, _curry_.curry3)(function () {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-        return apply(fn, (0, _jsPlatform_.reverse)(args));
-    });
+    return apply(fn, (0, _jsPlatform_.reverse)(args));
+  });
 },
 
 
@@ -141,7 +141,7 @@ flipN = exports.flipN = function flipN(fn) {
  * @returns {Function}
  */
 flip = exports.flip = function flip(fn) {
-    return (0, _curry_.curry)((0, _flip_.flip)(fn));
+  return (0, _curry_.curry)((0, _flip_.flip)(fn));
 },
 
 
@@ -152,7 +152,7 @@ flip = exports.flip = function flip(fn) {
  * @returns {Function} - Function<c, b, a>
  */
 flip3 = exports.flip3 = function flip3(fn) {
-    return (0, _curry_.curry)((0, _flip_.flip3)(fn));
+  return (0, _curry_.curry)((0, _flip_.flip3)(fn));
 },
 
 
@@ -163,7 +163,7 @@ flip3 = exports.flip3 = function flip3(fn) {
  * @returns {Function} - Function<d, c, b, a>
  */
 flip4 = exports.flip4 = function flip4(fn) {
-    return (0, _curry_.curry)((0, _flip_.flip4)(fn));
+  return (0, _curry_.curry)((0, _flip_.flip4)(fn));
 },
 
 
@@ -174,5 +174,5 @@ flip4 = exports.flip4 = function flip4(fn) {
  * @returns {Function} - Function<e, d, c, b, a>
  */
 flip5 = exports.flip5 = function flip5(fn) {
-    return (0, _curry_.curry)((0, _flip_.flip5)(fn));
+  return (0, _curry_.curry)((0, _flip_.flip5)(fn));
 };
