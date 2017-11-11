@@ -8,9 +8,9 @@
 'use strict';
 
 import {assert, expect} from 'chai';
-
+import {reverse} from '../src/uncurried/listOps_';
 import {
-    curry2, compose, call, apply, flip, flipN, until, id
+    curry2, compose, call, apply, flip, flip3, flip4, flip5, flipN, until, id
 } from '../src/uncurried/functionOps_';
 
 import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
@@ -18,11 +18,11 @@ import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expect
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#functionOps', function () {
+describe ('#functionOps_', function () {
 
     // @todo implement more extensive tests later
     describe ('#call', function () {
-        it ('should be a functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(call);
         });
         it ('should be curried', function () {
@@ -30,46 +30,62 @@ describe ('#functionOps', function () {
             expectFunction(adder());
             expectEqual(adder(1, 2, 3, 4, 5), 15);
         });
-        it ('should call a functionOps passed into it along with passed in arguments', function () {
+        it ('should call a function passed into it along with passed in arguments', function () {
             expectEqual(call(add, 1, 2, 3, 4, 5), 15);
         });
     });
 
     // @todo implement more extensive tests later
     describe ('#apply', function () {
-        it ('should be a functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(apply);
         });
-        it ('should call a functionOps passed into it with args listOps passed in as second parameter', function () {
+        it ('should call a function passed into it with args listOps passed in as second parameter', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
     });
 
     describe ('#flip', function () {
-        it ('should be a functionOps', function () {
-            expectFunction(flip);
+        const fncs = [flip, flip3, flip4, flip5];
+        it ('each implementation (flip, flip3, flip4, flip5) should be a function', function () {
+            fncs.forEach(expectFunction);
         });
-        it ('should return a functionOps', function () {
-            expectFunction(flip());
-            expectFunction(flip(subtract));
+        it ('each implementation ("") should return a function', function () {
+            fncs.forEach(fn => {
+                expectFunction(fn());
+                expectFunction(fn(subtract));
+            });
         });
-        it ('should return a functionOps which executes its params in reverse.', function () {
-            const subtractor = flip(subtract);
-            expectFunction(subtractor);
-            expectEqual(subtract(2, 1), subtractor(1, 2));
-            expectEqual(subtract(1, 2), subtractor(2, 1));
+        it ('each implementation ("") should return a function which executes its params in reverse.', function () {
+            const
+                concatStr2 = (a, b) => a + b,
+                concatStr3 = (a, b, c) => a + b + c,
+                concatStr4 = (a, b, c, d) => a + b + c + d,
+                concatStr5 = (a, b, c, d, e) => a + b + c + d + e,
+                args = ['a', 'b', 'c', 'd', 'e'];
+            [
+                flip(concatStr2),
+                flip3(concatStr3),
+                flip4(concatStr4),
+                flip5(concatStr5)].forEach((fn, ind) => {
+                    const argsToOpOn = args.slice(0, ind + 2),
+                        argsToOpOnReversed = reverse(argsToOpOn);
+                        expectFunction(fn);
+                        expectEqual(apply(fn, argsToOpOn), argsToOpOnReversed.join(''));
+                        expectEqual(apply(fn, argsToOpOnReversed), argsToOpOn.join(''));
+                });
         });
     });
 
     describe ('#flipN', function () {
-        it ('should be a functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(flipN);
         });
-        it ('should return a functionOps', function () {
+        it ('should return a function', function () {
             expectFunction(flipN());
             expectFunction(flipN(subtract));
         });
-        it ('should return a functionOps which executes its params in reverse.', function () {
+        it ('should return a function which executes its params in reverse.', function () {
             const subtractor = flipN(subtract);
             expectFunction(subtractor);
             expectEqual(subtract(3, 2, 1), subtractor(1, 2, 3));
@@ -78,7 +94,7 @@ describe ('#functionOps', function () {
     });
 
     describe ('#until', function () {
-        it ('should be a functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(until);
         });
 
@@ -104,7 +120,7 @@ describe ('#functionOps', function () {
     });
 
     describe ('#id', function () {
-        it ('should be a functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(id);
         });
         it ('should return whatever you give it', function () {
@@ -119,12 +135,12 @@ describe ('#functionOps', function () {
             expect(compose).to.be.instanceOf(Function);
         });
 
-        it ('should return a functionOps whether or not any parameters were passed in to it.', function () {
+        it ('should return a function whether or not any parameters were passed in to it.', function () {
             expect(compose()).to.be.instanceOf(Function);
             expect(compose(console.log)).to.be.instanceOf(Function);
         });
 
-        it ('should return a functionOps that when used returns the passed in value if `compose` ' +
+        it ('should return a function that when used returns the passed in value if `compose` ' +
             'itself didn\'t receive any parameters.', function () {
             let result = compose();
             expect(result(99)).to.equal(99);

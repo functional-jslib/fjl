@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.flip = exports.flipN = exports.until = exports.call = exports.apply = exports._flipN = exports._flip = exports._until = exports._call = exports._apply = undefined;
+exports.flip5 = exports.flip4 = exports.flip3 = exports.flip = exports.flipN = exports.until = exports.call = exports.apply = exports._flipN = exports._flip5 = exports._flip4 = exports._flip3 = exports._flip = exports._until = exports._call = exports._apply = undefined;
 
 var _curry_ = require('./uncurried/functionOps/curry_');
 
@@ -75,6 +75,9 @@ exports._apply = _jsPlatform_.apply;
 exports._call = _jsPlatform_.call;
 exports._until = _until_.until;
 exports._flip = _flip_.flip;
+exports._flip3 = _flip_.flip3;
+exports._flip4 = _flip_.flip4;
+exports._flip5 = _flip_.flip5;
 exports._flipN = _flip_.flipN; /**
                                 * Function operations: `
                                 * @module functionOps
@@ -138,7 +141,38 @@ flipN = exports.flipN = function flipN(fn) {
  * @returns {Function}
  */
 flip = exports.flip = function flip(fn) {
-    return (0, _curry_.curry)(function (b, a) {
-        return call(fn, a, b);
-    });
+    return (0, _curry_.curry)((0, _flip_.flip)(fn));
+},
+
+
+/**
+ * Returns a function that receives 3 args in reverse (3, 2, 1 etc.).
+ * @function module:functionOps.flip3
+ * @param fn {Function} - Function<a, b, c>
+ * @returns {Function} - Function<c, b, a>
+ */
+flip3 = exports.flip3 = function flip3(fn) {
+    return (0, _curry_.curry)((0, _flip_.flip3)(fn));
+},
+
+
+/**
+ * Returns a function that receives 4 args in reverse (4, 3, 2, 1 etc.).
+ * @function module:functionOps.flip4
+ * @param fn {Function} - Function<a, b, c, d>
+ * @returns {Function} - Function<d, c, b, a>
+ */
+flip4 = exports.flip4 = function flip4(fn) {
+    return (0, _curry_.curry)((0, _flip_.flip4)(fn));
+},
+
+
+/**
+ * Returns a function that receives 5 args in reverse (5, 4, 3, 2, 1 etc.).
+ * @function module:functionOps.flip5
+ * @param fn {Function} - Function<a, b, c, d, e>
+ * @returns {Function} - Function<e, d, c, b, a>
+ */
+flip5 = exports.flip5 = function flip5(fn) {
+    return (0, _curry_.curry)((0, _flip_.flip5)(fn));
 };

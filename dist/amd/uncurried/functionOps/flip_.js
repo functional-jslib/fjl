@@ -4,7 +4,7 @@ define(['exports', '../jsPlatform/array_', '../jsPlatform/function_'], function 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.flip = exports.flipN = undefined;
+  exports.flip = exports.flip5 = exports.flip4 = exports.flip3 = exports.flipN = undefined;
   const
 
   /**
@@ -14,6 +14,33 @@ define(['exports', '../jsPlatform/array_', '../jsPlatform/function_'], function 
    * @returns {Function}
    */
   flipN = exports.flipN = fn => (...args) => (0, _function_.apply)(fn, (0, _array_.reverse)(args)),
+
+
+  /**
+   * Returns a function that receives 3 args in reverse (3, 2, 1 etc.).
+   * @function module:functionOps_.flip3
+   * @param fn {Function} - Function<a, b, c>
+   * @returns {Function} - Function<c, b, a>
+   */
+  flip3 = exports.flip3 = fn => (a, b, c) => (0, _function_.call)(fn, c, b, a),
+
+
+  /**
+   * Returns a function that receives 4 args in reverse (4, 3, 2, 1 etc.).
+   * @function module:functionOps_.flip4
+   * @param fn {Function} - Function<a, b, c, d>
+   * @returns {Function} - Function<d, c, b, a>
+   */
+  flip4 = exports.flip4 = fn => (a, b, c, d) => (0, _function_.call)(fn, d, c, b, a),
+
+
+  /**
+   * Returns a function that receives 5 args in reverse (5, 4, 3, 2, 1 etc.).
+   * @function module:functionOps_.flip5
+   * @param fn {Function} - Function<a, b, c, d, e>
+   * @returns {Function} - Function<e, d, c, b, a>
+   */
+  flip5 = exports.flip5 = fn => (a, b, c, d, e) => (0, _function_.call)(fn, e, d, c, b, a),
 
 
   /**

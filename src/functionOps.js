@@ -16,7 +16,10 @@ import {
 
 import {
     flip as _flip,
-    flipN as _flipN
+    flipN as _flipN,
+    flip3 as _flip3,
+    flip4 as _flip4,
+    flip5 as _flip5
 } from './uncurried/functionOps/flip_';
 
 export * from './uncurried/functionOps/curry_';
@@ -25,7 +28,7 @@ export * from './uncurried/functionOps/negate_';
 export * from './uncurried/functionOps/id_';
 export * from './uncurried/functionOps/compose_';
 
-export {_apply, _call, _until, _flip, _flipN};
+export {_apply, _call, _until, _flip, _flip3, _flip4, _flip5,  _flipN};
 
 export const
 
@@ -72,4 +75,28 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    flip = fn => curry((b, a) => call(fn, a, b));
+    flip = fn => curry(_flip(fn)),
+
+    /**
+     * Returns a function that receives 3 args in reverse (3, 2, 1 etc.).
+     * @function module:functionOps.flip3
+     * @param fn {Function} - Function<a, b, c>
+     * @returns {Function} - Function<c, b, a>
+     */
+    flip3 = fn => curry(_flip3(fn)),
+
+    /**
+     * Returns a function that receives 4 args in reverse (4, 3, 2, 1 etc.).
+     * @function module:functionOps.flip4
+     * @param fn {Function} - Function<a, b, c, d>
+     * @returns {Function} - Function<d, c, b, a>
+     */
+    flip4 = fn => curry(_flip4(fn)),
+
+    /**
+     * Returns a function that receives 5 args in reverse (5, 4, 3, 2, 1 etc.).
+     * @function module:functionOps.flip5
+     * @param fn {Function} - Function<a, b, c, d, e>
+     * @returns {Function} - Function<e, d, c, b, a>
+     */
+    flip5 = fn => curry(_flip5(fn));
