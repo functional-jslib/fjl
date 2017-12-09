@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: fjl</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: fjl</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Includes operations from haskell's Prelude.</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fjl.js.html">fjl.js</a>, <a href="fjl.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html">http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html</a></li>
+        
+            <li><a href="http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html">http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html</a></li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>any cross importing between packages should be done from the package object (package file: E.g., './src/functionOps/functionOps.js').</li>
+        
+            <li>decide how to include 'uncurried' members in the main export of the library.</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".compose"><span class="type-signature">(static) </span>compose<span class="signature">(&hellip;args)</span><span class="type-signature"> &rarr; {function|function}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Composes all functions passed in from right to left passing each functions return value to
+the functionOps on the left of itself.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="uncurried_functionOps_compose_.js.html">uncurried/functionOps/compose_.js</a>, <a href="uncurried_functionOps_compose_.js.html#line3">line 3</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+<ul>
+        <li>
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-objectOps.html">objectOps</a></li><li><a href="module-stringOps.html">stringOps</a></li></ul><h3>Global</h3><ul><li><a href="global.html#version">version</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 08 2017 19:19:29 GMT-0500 (EST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

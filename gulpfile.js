@@ -187,14 +187,14 @@ gulp.task('uglify', ['iife'], () => {
 gulp.task('build-js', ['version', 'uglify', 'cjs', 'amd', 'umd', 'es6-module']);
 
 gulp.task('jsdoc', ['readme'], () =>
-    deleteFilePaths(['./jsdocs/**/*'])
+    deleteFilePaths(['./docs/**/*'])
         .then(_ =>
             gulp.src(['README.md', './src/**/*.js'], {read: false})
                 .pipe(jsdoc({
                     opts: {
                         'template': 'templates/default',  // same as -t templates/default
                         'encoding': 'utf8',               // same as -e utf8
-                        'destination': './jsdocs/',       // same as -d ./out/
+                        'destination': './docs/',       // same as -d ./out/
                         'recurse': true
                     }
                 }))

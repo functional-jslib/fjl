@@ -5,7 +5,7 @@
 # fjl
 Functional Javascript Library
 
-## Project is in Beta
+## Beta Version
 
 ## Note!!!
 Beta version is the recommended version (head) (has at least 95% of haskell's List operations implemented)
@@ -24,6 +24,10 @@ and is built from the ground up using functional concepts.
 (umd, amd, commonjs, es6-modules, and iife).
 - "" that has both curried and un-curried versions of included operations.  Et. al. `append`, `_append` (uncurrued)
 - Etc. etc..
+
+### Docs
+Jsdocs here:
+https://functional-jslib.github.io/fjl/
 
 ### Notable methods not added from the haskell prelude:
 - Math/Integral/Num/etc. methods
