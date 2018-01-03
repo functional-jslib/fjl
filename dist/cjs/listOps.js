@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = undefined;
 exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports._groupBy = exports._intersectBy = exports._intersect = exports._union = exports._difference = exports._complement = exports._sortBy = exports._sortOn = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._remove = exports._minimumBy = exports._maximumBy = exports._filter = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._stripPrefix = exports._breakOnList = exports._span = exports._at = exports._partition = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._concatMap = exports._unfoldr = exports._foldr1 = exports._foldr = exports._foldl1 = exports._foldl = exports._splitAt = exports._drop = exports._take = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._intercalate = exports._intersperse = exports._lookup = exports._elemIndices = exports._elemIndex = exports._notElem = exports._elem = exports._mapAccumR = exports._mapAccumL = exports._map = exports._zipWith = exports._zipN = exports._zip = exports._findIndices = exports._findIndex = exports._find = exports._any = exports._all = exports._appendMany = exports._append = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.inits = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.uncons = exports.tail = exports.init = exports.last = exports.head = exports.unzipN = exports.unzip = exports.zipN = exports.or = exports.and = undefined;
@@ -9,148 +9,148 @@ exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = expor
 var _listOps = require('./uncurried/_listOps');
 
 Object.defineProperty(exports, 'and', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.and;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.and;
+    }
 });
 Object.defineProperty(exports, 'or', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.or;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.or;
+    }
 });
 Object.defineProperty(exports, 'zipN', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.zipN;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.zipN;
+    }
 });
 Object.defineProperty(exports, 'unzip', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.unzip;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.unzip;
+    }
 });
 Object.defineProperty(exports, 'unzipN', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.unzipN;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.unzipN;
+    }
 });
 Object.defineProperty(exports, 'head', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.head;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.head;
+    }
 });
 Object.defineProperty(exports, 'last', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.last;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.last;
+    }
 });
 Object.defineProperty(exports, 'init', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.init;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.init;
+    }
 });
 Object.defineProperty(exports, 'tail', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.tail;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.tail;
+    }
 });
 Object.defineProperty(exports, 'uncons', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.uncons;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.uncons;
+    }
 });
 Object.defineProperty(exports, 'concat', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.concat;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.concat;
+    }
 });
 Object.defineProperty(exports, 'reverse', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.reverse;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.reverse;
+    }
 });
 Object.defineProperty(exports, 'transpose', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.transpose;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.transpose;
+    }
 });
 Object.defineProperty(exports, 'subsequences', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.subsequences;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.subsequences;
+    }
 });
 Object.defineProperty(exports, 'permutations', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.permutations;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.permutations;
+    }
 });
 Object.defineProperty(exports, 'group', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.group;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.group;
+    }
 });
 Object.defineProperty(exports, 'inits', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.inits;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.inits;
+    }
 });
 Object.defineProperty(exports, 'tails', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.tails;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.tails;
+    }
 });
 Object.defineProperty(exports, 'sum', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.sum;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.sum;
+    }
 });
 Object.defineProperty(exports, 'product', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.product;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.product;
+    }
 });
 Object.defineProperty(exports, 'maximum', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.maximum;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.maximum;
+    }
 });
 Object.defineProperty(exports, 'minimum', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.minimum;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.minimum;
+    }
 });
 Object.defineProperty(exports, 'sort', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.sort;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.sort;
+    }
 });
 Object.defineProperty(exports, 'nub', {
-  enumerable: true,
-  get: function get() {
-    return _listOps.nub;
-  }
+    enumerable: true,
+    get: function get() {
+        return _listOps.nub;
+    }
 });
 
 var _functionOps = require('./uncurried/_functionOps');
@@ -653,16 +653,16 @@ zipWith5 = exports.zipWith5 = zipWithN,
     maximumBy = exports.maximumBy = (0, _functionOps.curry)(_listOps.maximumBy),
     minimumBy = exports.minimumBy = (0, _functionOps.curry)(_listOps.minimumBy),
     scanl = exports.scanl = function scanl() {
-  return null;
+    return null;
 },
     scanl1 = exports.scanl1 = function scanl1() {
-  return null;
+    return null;
 },
     scanr = exports.scanr = function scanr() {
-  return null;
+    return null;
 },
     scanr1 = exports.scanr1 = function scanr1() {
-  return null;
+    return null;
 },
     remove = exports.remove = (0, _functionOps.curry)(_listOps.remove),
     sortOn = exports.sortOn = (0, _functionOps.curry)(_listOps.sortOn),

@@ -145,45 +145,45 @@ var call = function call(fn) {
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 var curry = function curry(fn) {
-  for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    argsToCurry[_key - 1] = arguments[_key];
-  }
-
-  return function () {
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
+    for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        argsToCurry[_key - 1] = arguments[_key];
     }
 
-    var concatedArgs = concat(argsToCurry, args);
-    return length(concatedArgs) < length(fn) ? apply(curry, concat([fn], concatedArgs)) : apply(fn, concatedArgs);
-  };
+    return function () {
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        var concatedArgs = concat(argsToCurry, args);
+        return length(concatedArgs) < length(fn) ? apply(curry, concat([fn], concatedArgs)) : apply(fn, concatedArgs);
+    };
 };
 var curryN = function curryN(executeArity, fn) {
-  for (var _len3 = arguments.length, curriedArgs = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
-    curriedArgs[_key3 - 2] = arguments[_key3];
-  }
-
-  return function () {
-    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      args[_key4] = arguments[_key4];
+    for (var _len3 = arguments.length, curriedArgs = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
+        curriedArgs[_key3 - 2] = arguments[_key3];
     }
 
-    var concatedArgs = concat(curriedArgs, args),
-        canBeCalled = length(concatedArgs) >= executeArity || !executeArity;
-    return !canBeCalled ? apply(curryN, concat([executeArity, fn], concatedArgs)) : apply(fn, concatedArgs);
-  };
+    return function () {
+        for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+            args[_key4] = arguments[_key4];
+        }
+
+        var concatedArgs = concat(curriedArgs, args),
+            canBeCalled = length(concatedArgs) >= executeArity || !executeArity;
+        return !canBeCalled ? apply(curryN, concat([executeArity, fn], concatedArgs)) : apply(fn, concatedArgs);
+    };
 };
 var curry2 = function curry2(fn) {
-  return curryN(2, fn);
+    return curryN(2, fn);
 };
 var curry3 = function curry3(fn) {
-  return curryN(3, fn);
+    return curryN(3, fn);
 };
 var curry4 = function curry4(fn) {
-  return curryN(4, fn);
+    return curryN(4, fn);
 };
 var curry5 = function curry5(fn) {
-  return curryN(5, fn);
+    return curryN(5, fn);
 };
 
 /**
@@ -1769,7 +1769,7 @@ var placeHolderInstance = new PlaceHolder();
  * @private
  */
 function isPlaceHolder(instance) {
-  return instance instanceof PlaceHolder;
+    return instance instanceof PlaceHolder;
 }
 
 /**
@@ -1781,15 +1781,15 @@ function isPlaceHolder(instance) {
  * @returns {Array|*} - Returns passed in `_listOps` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders(array, args) {
-  var out = map(function (element) {
-    if (!isPlaceHolder(element)) {
-      return element;
-    } else if (length(args)) {
-      return args.shift();
-    }
-    return element;
-  }, array);
-  return length(args) ? concat(out, args) : out;
+    var out = map(function (element) {
+        if (!isPlaceHolder(element)) {
+            return element;
+        } else if (length(args)) {
+            return args.shift();
+        }
+        return element;
+    }, array);
+    return length(args) ? concat(out, args) : out;
 }
 
 /**
@@ -1800,20 +1800,20 @@ function replacePlaceHolders(array, args) {
  * @returns {Function}
  */
 function curry_(fn) {
-  for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    argsToCurry[_key - 1] = arguments[_key];
-  }
-
-  return function () {
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
+    for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        argsToCurry[_key - 1] = arguments[_key];
     }
 
-    var concatedArgs = replacePlaceHolders(argsToCurry, args),
-        placeHolders = filter(isPlaceHolder, concatedArgs),
-        canBeCalled = length(placeHolders) === 0 && length(concatedArgs) >= length(fn);
-    return canBeCalled ? apply(fn, concatedArgs) : apply(curry_, concat([fn], concatedArgs));
-  };
+    return function () {
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        var concatedArgs = replacePlaceHolders(argsToCurry, args),
+            placeHolders = filter(isPlaceHolder, concatedArgs),
+            canBeCalled = length(placeHolders) === 0 && length(concatedArgs) >= length(fn);
+        return canBeCalled ? apply(fn, concatedArgs) : apply(curry_, concat([fn], concatedArgs));
+    };
 }
 
 /**
@@ -1825,20 +1825,20 @@ function curry_(fn) {
  * @returns {Function} - Passed in _functionOps wrapped in a _functionOps for currying.
  */
 function curryN_(executeArity, fn) {
-  for (var _len3 = arguments.length, curriedArgs = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
-    curriedArgs[_key3 - 2] = arguments[_key3];
-  }
-
-  return function () {
-    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      args[_key4] = arguments[_key4];
+    for (var _len3 = arguments.length, curriedArgs = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
+        curriedArgs[_key3 - 2] = arguments[_key3];
     }
 
-    var concatedArgs = replacePlaceHolders(curriedArgs, args),
-        placeHolders = filter(isPlaceHolder, concatedArgs),
-        canBeCalled = length(concatedArgs) - length(placeHolders) >= executeArity || !executeArity;
-    return !canBeCalled ? apply(curryN_, concat([executeArity, fn], concatedArgs)) : apply(fn, concatedArgs);
-  };
+    return function () {
+        for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+            args[_key4] = arguments[_key4];
+        }
+
+        var concatedArgs = replacePlaceHolders(curriedArgs, args),
+            placeHolders = filter(isPlaceHolder, concatedArgs),
+            canBeCalled = length(concatedArgs) - length(placeHolders) >= executeArity || !executeArity;
+        return !canBeCalled ? apply(curryN_, concat([executeArity, fn], concatedArgs)) : apply(fn, concatedArgs);
+    };
 }
 
 /**
@@ -1848,16 +1848,16 @@ function curryN_(executeArity, fn) {
  */
 var __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
 var curry2_ = function curry2_(fn) {
-  return curryN_(2, fn);
+    return curryN_(2, fn);
 };
 var curry3_ = function curry3_(fn) {
-  return curryN_(3, fn);
+    return curryN_(3, fn);
 };
 var curry4_ = function curry4_(fn) {
-  return curryN_(4, fn);
+    return curryN_(4, fn);
 };
 var curry5_ = function curry5_(fn) {
-  return curryN_(5, fn);
+    return curryN_(5, fn);
 };
 
 /**
@@ -2153,16 +2153,16 @@ var all$1 = curry(all);
 var maximumBy$1 = curry(maximumBy);
 var minimumBy$1 = curry(minimumBy);
 var scanl$1 = function scanl$$1() {
-  return null;
+    return null;
 };
 var scanl1$1 = function scanl1$$1() {
-  return null;
+    return null;
 };
 var scanr$1 = function scanr$$1() {
-  return null;
+    return null;
 };
 var scanr1$1 = function scanr1$$1() {
-  return null;
+    return null;
 };
 var remove$1 = curry(remove);
 var sortOn$1 = curry(sortOn);
@@ -2208,7 +2208,7 @@ var unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Wed Jan 03 2018 00:42:43 GMT-0500 (Eastern Standard Time) 
+ * Generated Wed Jan 03 2018 00:45:34 GMT-0500 (Eastern Standard Time) 
  * @memberOf fjl
  */
 
