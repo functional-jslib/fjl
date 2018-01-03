@@ -65,14 +65,14 @@ Object.keys(_compose_).forEach(function (key) {
     });
 });
 
-var _jsPlatform_ = require('./uncurried/jsPlatform_');
+var _jsPlatform = require('./uncurried/_jsPlatform');
 
 var _until_ = require('./uncurried/functionOps/until_');
 
 var _flip_ = require('./uncurried/functionOps/flip_');
 
-exports._apply = _jsPlatform_.apply;
-exports._call = _jsPlatform_.call;
+exports._apply = _jsPlatform.apply;
+exports._call = _jsPlatform.call;
 exports._until = _until_.until;
 exports._flip = _flip_.flip;
 exports._flip3 = _flip_.flip3;
@@ -92,7 +92,7 @@ var
  * @param args {*}
  * @returns {*}
  */
-apply = exports.apply = (0, _curry_.curry)(_jsPlatform_.apply),
+apply = exports.apply = (0, _curry_.curry)(_jsPlatform.apply),
 
 
 /**
@@ -102,7 +102,7 @@ apply = exports.apply = (0, _curry_.curry)(_jsPlatform_.apply),
  * @param args {*}
  * @returns {*}
  */
-call = exports.call = (0, _curry_.curry2)(_jsPlatform_.call),
+call = exports.call = (0, _curry_.curry2)(_jsPlatform.call),
 
 
 /**
@@ -129,7 +129,7 @@ flipN = exports.flipN = function flipN(fn) {
             args[_key] = arguments[_key];
         }
 
-        return apply(fn, (0, _jsPlatform_.reverse)(args));
+        return apply(fn, (0, _jsPlatform.reverse)(args));
     });
 },
 

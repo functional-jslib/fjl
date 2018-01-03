@@ -8,7 +8,7 @@
 'use strict';
 
 import {assert, expect} from 'chai';
-import {reverse} from '../src/uncurried/listOps_';
+import {reverse} from '../src/uncurried/_listOps';
 import {
     curry2, compose, call, apply, flip, flip3, flip4, flip5, flipN, until, id
 } from '../src/uncurried/_functionOps';

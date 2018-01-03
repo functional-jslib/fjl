@@ -1,4 +1,4 @@
-define(['exports', './uncurried/objectOps_', './booleanOps', './uncurried/_functionOps', './uncurried/listOps_', './stringOps', './generated/version'], function (exports, _objectOps_, _booleanOps, _functionOps, _listOps_, _stringOps, _version) {
+define(['exports', './uncurried/objectOps_', './booleanOps', './uncurried/_functionOps', './uncurried/_listOps', './stringOps', './generated/version'], function (exports, _objectOps_, _booleanOps, _functionOps, _listOps, _stringOps, _version) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -31,12 +31,12 @@ define(['exports', './uncurried/objectOps_', './booleanOps', './uncurried/_funct
       }
     });
   });
-  Object.keys(_listOps_).forEach(function (key) {
+  Object.keys(_listOps).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _listOps_[key];
+        return _listOps[key];
       }
     });
   });

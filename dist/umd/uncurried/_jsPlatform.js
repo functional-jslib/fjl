@@ -8,7 +8,7 @@
       exports: {}
     };
     factory(mod.exports, global.object_, global.array_, global.list_, global.string_, global.function_);
-    global.jsPlatform_ = mod.exports;
+    global._jsPlatform = mod.exports;
   }
 })(this, function (exports, _object_, _array_, _list_, _string_, _function_) {
   'use strict';

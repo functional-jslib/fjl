@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curryN = exports.curry = undefined;
 
-var _jsPlatform_ = require('../jsPlatform_');
+var _jsPlatform = require('../_jsPlatform');
 
 var
 
@@ -26,8 +26,8 @@ curry = exports.curry = function curry(fn) {
       args[_key2] = arguments[_key2];
     }
 
-    var concatedArgs = (0, _jsPlatform_.concat)(argsToCurry, args);
-    return (0, _jsPlatform_.length)(concatedArgs) < (0, _jsPlatform_.length)(fn) ? (0, _jsPlatform_.apply)(curry, (0, _jsPlatform_.concat)([fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
+    var concatedArgs = (0, _jsPlatform.concat)(argsToCurry, args);
+    return (0, _jsPlatform.length)(concatedArgs) < (0, _jsPlatform.length)(fn) ? (0, _jsPlatform.apply)(curry, (0, _jsPlatform.concat)([fn], concatedArgs)) : (0, _jsPlatform.apply)(fn, concatedArgs);
   };
 },
 
@@ -50,9 +50,9 @@ curryN = exports.curryN = function curryN(executeArity, fn) {
       args[_key4] = arguments[_key4];
     }
 
-    var concatedArgs = (0, _jsPlatform_.concat)(curriedArgs, args),
-        canBeCalled = (0, _jsPlatform_.length)(concatedArgs) >= executeArity || !executeArity;
-    return !canBeCalled ? (0, _jsPlatform_.apply)(curryN, (0, _jsPlatform_.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
+    var concatedArgs = (0, _jsPlatform.concat)(curriedArgs, args),
+        canBeCalled = (0, _jsPlatform.length)(concatedArgs) >= executeArity || !executeArity;
+    return !canBeCalled ? (0, _jsPlatform.apply)(curryN, (0, _jsPlatform.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform.apply)(fn, concatedArgs);
   };
 },
 

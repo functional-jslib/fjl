@@ -27,14 +27,14 @@ import {
     complement as _complement, difference as _difference, union as _union, intersect as _intersect,
     intersectBy as _intersectBy, groupBy as _groupBy
 }
-    from './uncurried/listOps_';
+    from './uncurried/_listOps';
 
 // Single arity methods (and single or more arg functions)
 export {
     and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, concat, reverse, transpose, subsequences,
     permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub
 }
-    from './uncurried/listOps_';
+    from './uncurried/_listOps';
 
 // Uncurried methods export
 export {

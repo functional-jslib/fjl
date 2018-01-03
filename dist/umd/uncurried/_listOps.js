@@ -8,7 +8,7 @@
             exports: {}
         };
         factory(mod.exports, global.list_, global.function_, global.negate_, global.booleanOps, global.objectOps_, global.map_, global.utils_);
-        global.listOps_ = mod.exports;
+        global._listOps = mod.exports;
     }
 })(this, function (exports, _list_, _function_, _negate_, _booleanOps, _objectOps_, _map_, _utils_) {
     'use strict';

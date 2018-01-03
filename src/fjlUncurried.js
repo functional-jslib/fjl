@@ -15,7 +15,7 @@
 export * from './uncurried/objectOps_';
 export * from './booleanOps';
 export * from './uncurried/_functionOps';
-export * from './uncurried/listOps_';
+export * from './uncurried/_listOps';
 export * from './stringOps';
 
 export {version} from './generated/version';

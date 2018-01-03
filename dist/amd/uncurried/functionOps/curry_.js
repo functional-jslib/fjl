@@ -1,4 +1,4 @@
-define(['exports', '../jsPlatform_'], function (exports, _jsPlatform_) {
+define(['exports', '../_jsPlatform'], function (exports, _jsPlatform) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -16,8 +16,8 @@ define(['exports', '../jsPlatform_'], function (exports, _jsPlatform_) {
    */
   curry = exports.curry = (fn, ...argsToCurry) => {
     return (...args) => {
-      const concatedArgs = (0, _jsPlatform_.concat)(argsToCurry, args);
-      return (0, _jsPlatform_.length)(concatedArgs) < (0, _jsPlatform_.length)(fn) ? (0, _jsPlatform_.apply)(curry, (0, _jsPlatform_.concat)([fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
+      const concatedArgs = (0, _jsPlatform.concat)(argsToCurry, args);
+      return (0, _jsPlatform.length)(concatedArgs) < (0, _jsPlatform.length)(fn) ? (0, _jsPlatform.apply)(curry, (0, _jsPlatform.concat)([fn], concatedArgs)) : (0, _jsPlatform.apply)(fn, concatedArgs);
     };
   },
 
@@ -32,9 +32,9 @@ define(['exports', '../jsPlatform_'], function (exports, _jsPlatform_) {
    */
   curryN = exports.curryN = (executeArity, fn, ...curriedArgs) => {
     return (...args) => {
-      let concatedArgs = (0, _jsPlatform_.concat)(curriedArgs, args),
-          canBeCalled = (0, _jsPlatform_.length)(concatedArgs) >= executeArity || !executeArity;
-      return !canBeCalled ? (0, _jsPlatform_.apply)(curryN, (0, _jsPlatform_.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
+      let concatedArgs = (0, _jsPlatform.concat)(curriedArgs, args),
+          canBeCalled = (0, _jsPlatform.length)(concatedArgs) >= executeArity || !executeArity;
+      return !canBeCalled ? (0, _jsPlatform.apply)(curryN, (0, _jsPlatform.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform.apply)(fn, concatedArgs);
     };
   },
 

@@ -7,7 +7,7 @@ exports.curry5_ = exports.curry4_ = exports.curry3_ = exports.curry2_ = exports.
 exports.curry_ = curry_;
 exports.curryN_ = curryN_;
 
-var _jsPlatform_ = require('../jsPlatform_');
+var _jsPlatform = require('../_jsPlatform');
 
 /**
  * PlaceHolder (__) constructor.
@@ -51,15 +51,15 @@ function isPlaceHolder(instance) {
  * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders(array, args) {
-  var out = (0, _jsPlatform_.map)(function (element) {
+  var out = (0, _jsPlatform.map)(function (element) {
     if (!isPlaceHolder(element)) {
       return element;
-    } else if ((0, _jsPlatform_.length)(args)) {
+    } else if ((0, _jsPlatform.length)(args)) {
       return args.shift();
     }
     return element;
   }, array);
-  return (0, _jsPlatform_.length)(args) ? (0, _jsPlatform_.concat)(out, args) : out;
+  return (0, _jsPlatform.length)(args) ? (0, _jsPlatform.concat)(out, args) : out;
 }
 
 /**
@@ -80,9 +80,9 @@ function curry_(fn) {
     }
 
     var concatedArgs = replacePlaceHolders(argsToCurry, args),
-        placeHolders = (0, _jsPlatform_.filter)(isPlaceHolder, concatedArgs),
-        canBeCalled = (0, _jsPlatform_.length)(placeHolders) === 0 && (0, _jsPlatform_.length)(concatedArgs) >= (0, _jsPlatform_.length)(fn);
-    return canBeCalled ? (0, _jsPlatform_.apply)(fn, concatedArgs) : (0, _jsPlatform_.apply)(curry_, (0, _jsPlatform_.concat)([fn], concatedArgs));
+        placeHolders = (0, _jsPlatform.filter)(isPlaceHolder, concatedArgs),
+        canBeCalled = (0, _jsPlatform.length)(placeHolders) === 0 && (0, _jsPlatform.length)(concatedArgs) >= (0, _jsPlatform.length)(fn);
+    return canBeCalled ? (0, _jsPlatform.apply)(fn, concatedArgs) : (0, _jsPlatform.apply)(curry_, (0, _jsPlatform.concat)([fn], concatedArgs));
   };
 }
 
@@ -105,9 +105,9 @@ function curryN_(executeArity, fn) {
     }
 
     var concatedArgs = replacePlaceHolders(curriedArgs, args),
-        placeHolders = (0, _jsPlatform_.filter)(isPlaceHolder, concatedArgs),
-        canBeCalled = (0, _jsPlatform_.length)(concatedArgs) - (0, _jsPlatform_.length)(placeHolders) >= executeArity || !executeArity;
-    return !canBeCalled ? (0, _jsPlatform_.apply)(curryN_, (0, _jsPlatform_.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
+        placeHolders = (0, _jsPlatform.filter)(isPlaceHolder, concatedArgs),
+        canBeCalled = (0, _jsPlatform.length)(concatedArgs) - (0, _jsPlatform.length)(placeHolders) >= executeArity || !executeArity;
+    return !canBeCalled ? (0, _jsPlatform.apply)(curryN_, (0, _jsPlatform.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform.apply)(fn, concatedArgs);
   };
 }
 

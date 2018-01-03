@@ -1,4 +1,4 @@
-define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/curry__', './uncurried/functionOps/negate_', './uncurried/functionOps/id_', './uncurried/functionOps/compose_', './uncurried/jsPlatform_', './uncurried/functionOps/until_', './uncurried/functionOps/flip_'], function (exports, _curry_, _curry__, _negate_, _id_, _compose_, _jsPlatform_, _until_, _flip_) {
+define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/curry__', './uncurried/functionOps/negate_', './uncurried/functionOps/id_', './uncurried/functionOps/compose_', './uncurried/_jsPlatform', './uncurried/functionOps/until_', './uncurried/functionOps/flip_'], function (exports, _curry_, _curry__, _negate_, _id_, _compose_, _jsPlatform, _until_, _flip_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -50,8 +50,8 @@ define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/cu
             }
         });
     });
-    exports._apply = _jsPlatform_.apply;
-    exports._call = _jsPlatform_.call;
+    exports._apply = _jsPlatform.apply;
+    exports._call = _jsPlatform.call;
     exports._until = _until_.until;
     exports._flip = _flip_.flip;
     exports._flip3 = _flip_.flip3;
@@ -67,7 +67,7 @@ define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/cu
      * @param args {*}
      * @returns {*}
      */
-    apply = exports.apply = (0, _curry_.curry)(_jsPlatform_.apply),
+    apply = exports.apply = (0, _curry_.curry)(_jsPlatform.apply),
 
 
     /**
@@ -77,7 +77,7 @@ define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/cu
      * @param args {*}
      * @returns {*}
      */
-    call = exports.call = (0, _curry_.curry2)(_jsPlatform_.call),
+    call = exports.call = (0, _curry_.curry2)(_jsPlatform.call),
 
 
     /**
@@ -98,7 +98,7 @@ define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/cu
      * @param fn {Function}
      * @returns {Function}
      */
-    flipN = exports.flipN = fn => (0, _curry_.curry3)((...args) => apply(fn, (0, _jsPlatform_.reverse)(args))),
+    flipN = exports.flipN = fn => (0, _curry_.curry3)((...args) => apply(fn, (0, _jsPlatform.reverse)(args))),
 
 
     /**

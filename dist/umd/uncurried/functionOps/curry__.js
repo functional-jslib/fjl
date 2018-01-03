@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../jsPlatform_'], factory);
+    define(['exports', '../_jsPlatform'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../jsPlatform_'));
+    factory(exports, require('../_jsPlatform'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.jsPlatform_);
+    factory(mod.exports, global._jsPlatform);
     global.curry__ = mod.exports;
   }
-})(this, function (exports, _jsPlatform_) {
+})(this, function (exports, _jsPlatform) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -63,15 +63,15 @@
    * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
    */
   function replacePlaceHolders(array, args) {
-    var out = (0, _jsPlatform_.map)(function (element) {
+    var out = (0, _jsPlatform.map)(function (element) {
       if (!isPlaceHolder(element)) {
         return element;
-      } else if ((0, _jsPlatform_.length)(args)) {
+      } else if ((0, _jsPlatform.length)(args)) {
         return args.shift();
       }
       return element;
     }, array);
-    return (0, _jsPlatform_.length)(args) ? (0, _jsPlatform_.concat)(out, args) : out;
+    return (0, _jsPlatform.length)(args) ? (0, _jsPlatform.concat)(out, args) : out;
   }
 
   /**
@@ -92,9 +92,9 @@
       }
 
       var concatedArgs = replacePlaceHolders(argsToCurry, args),
-          placeHolders = (0, _jsPlatform_.filter)(isPlaceHolder, concatedArgs),
-          canBeCalled = (0, _jsPlatform_.length)(placeHolders) === 0 && (0, _jsPlatform_.length)(concatedArgs) >= (0, _jsPlatform_.length)(fn);
-      return canBeCalled ? (0, _jsPlatform_.apply)(fn, concatedArgs) : (0, _jsPlatform_.apply)(curry_, (0, _jsPlatform_.concat)([fn], concatedArgs));
+          placeHolders = (0, _jsPlatform.filter)(isPlaceHolder, concatedArgs),
+          canBeCalled = (0, _jsPlatform.length)(placeHolders) === 0 && (0, _jsPlatform.length)(concatedArgs) >= (0, _jsPlatform.length)(fn);
+      return canBeCalled ? (0, _jsPlatform.apply)(fn, concatedArgs) : (0, _jsPlatform.apply)(curry_, (0, _jsPlatform.concat)([fn], concatedArgs));
     };
   }
 
@@ -117,9 +117,9 @@
       }
 
       var concatedArgs = replacePlaceHolders(curriedArgs, args),
-          placeHolders = (0, _jsPlatform_.filter)(isPlaceHolder, concatedArgs),
-          canBeCalled = (0, _jsPlatform_.length)(concatedArgs) - (0, _jsPlatform_.length)(placeHolders) >= executeArity || !executeArity;
-      return !canBeCalled ? (0, _jsPlatform_.apply)(curryN_, (0, _jsPlatform_.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
+          placeHolders = (0, _jsPlatform.filter)(isPlaceHolder, concatedArgs),
+          canBeCalled = (0, _jsPlatform.length)(concatedArgs) - (0, _jsPlatform.length)(placeHolders) >= executeArity || !executeArity;
+      return !canBeCalled ? (0, _jsPlatform.apply)(curryN_, (0, _jsPlatform.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform.apply)(fn, concatedArgs);
     };
   }
 

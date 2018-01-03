@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/curry__', './uncurried/functionOps/negate_', './uncurried/functionOps/id_', './uncurried/functionOps/compose_', './uncurried/jsPlatform_', './uncurried/functionOps/until_', './uncurried/functionOps/flip_'], factory);
+        define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/curry__', './uncurried/functionOps/negate_', './uncurried/functionOps/id_', './uncurried/functionOps/compose_', './uncurried/_jsPlatform', './uncurried/functionOps/until_', './uncurried/functionOps/flip_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./uncurried/functionOps/curry_'), require('./uncurried/functionOps/curry__'), require('./uncurried/functionOps/negate_'), require('./uncurried/functionOps/id_'), require('./uncurried/functionOps/compose_'), require('./uncurried/jsPlatform_'), require('./uncurried/functionOps/until_'), require('./uncurried/functionOps/flip_'));
+        factory(exports, require('./uncurried/functionOps/curry_'), require('./uncurried/functionOps/curry__'), require('./uncurried/functionOps/negate_'), require('./uncurried/functionOps/id_'), require('./uncurried/functionOps/compose_'), require('./uncurried/_jsPlatform'), require('./uncurried/functionOps/until_'), require('./uncurried/functionOps/flip_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry_, global.curry__, global.negate_, global.id_, global.compose_, global.jsPlatform_, global.until_, global.flip_);
+        factory(mod.exports, global.curry_, global.curry__, global.negate_, global.id_, global.compose_, global._jsPlatform, global.until_, global.flip_);
         global.functionOps = mod.exports;
     }
-})(this, function (exports, _curry_, _curry__, _negate_, _id_, _compose_, _jsPlatform_, _until_, _flip_) {
+})(this, function (exports, _curry_, _curry__, _negate_, _id_, _compose_, _jsPlatform, _until_, _flip_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -62,8 +62,8 @@
             }
         });
     });
-    exports._apply = _jsPlatform_.apply;
-    exports._call = _jsPlatform_.call;
+    exports._apply = _jsPlatform.apply;
+    exports._call = _jsPlatform.call;
     exports._until = _until_.until;
     exports._flip = _flip_.flip;
     exports._flip3 = _flip_.flip3;
@@ -79,7 +79,7 @@
      * @param args {*}
      * @returns {*}
      */
-    apply = exports.apply = (0, _curry_.curry)(_jsPlatform_.apply),
+    apply = exports.apply = (0, _curry_.curry)(_jsPlatform.apply),
 
 
     /**
@@ -89,7 +89,7 @@
      * @param args {*}
      * @returns {*}
      */
-    call = exports.call = (0, _curry_.curry2)(_jsPlatform_.call),
+    call = exports.call = (0, _curry_.curry2)(_jsPlatform.call),
 
 
     /**
@@ -116,7 +116,7 @@
                 args[_key] = arguments[_key];
             }
 
-            return apply(fn, (0, _jsPlatform_.reverse)(args));
+            return apply(fn, (0, _jsPlatform.reverse)(args));
         });
     },
 

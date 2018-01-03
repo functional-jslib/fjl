@@ -40,14 +40,14 @@ Object.keys(_functionOps).forEach(function (key) {
   });
 });
 
-var _listOps_ = require('./uncurried/listOps_');
+var _listOps = require('./uncurried/_listOps');
 
-Object.keys(_listOps_).forEach(function (key) {
+Object.keys(_listOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _listOps_[key];
+      return _listOps[key];
     }
   });
 });

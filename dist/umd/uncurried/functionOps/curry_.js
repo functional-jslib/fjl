@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../jsPlatform_'], factory);
+    define(['exports', '../_jsPlatform'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../jsPlatform_'));
+    factory(exports, require('../_jsPlatform'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.jsPlatform_);
+    factory(mod.exports, global._jsPlatform);
     global.curry_ = mod.exports;
   }
-})(this, function (exports, _jsPlatform_) {
+})(this, function (exports, _jsPlatform) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -36,8 +36,8 @@
         args[_key2] = arguments[_key2];
       }
 
-      var concatedArgs = (0, _jsPlatform_.concat)(argsToCurry, args);
-      return (0, _jsPlatform_.length)(concatedArgs) < (0, _jsPlatform_.length)(fn) ? (0, _jsPlatform_.apply)(curry, (0, _jsPlatform_.concat)([fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
+      var concatedArgs = (0, _jsPlatform.concat)(argsToCurry, args);
+      return (0, _jsPlatform.length)(concatedArgs) < (0, _jsPlatform.length)(fn) ? (0, _jsPlatform.apply)(curry, (0, _jsPlatform.concat)([fn], concatedArgs)) : (0, _jsPlatform.apply)(fn, concatedArgs);
     };
   },
 
@@ -60,9 +60,9 @@
         args[_key4] = arguments[_key4];
       }
 
-      var concatedArgs = (0, _jsPlatform_.concat)(curriedArgs, args),
-          canBeCalled = (0, _jsPlatform_.length)(concatedArgs) >= executeArity || !executeArity;
-      return !canBeCalled ? (0, _jsPlatform_.apply)(curryN, (0, _jsPlatform_.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform_.apply)(fn, concatedArgs);
+      var concatedArgs = (0, _jsPlatform.concat)(curriedArgs, args),
+          canBeCalled = (0, _jsPlatform.length)(concatedArgs) >= executeArity || !executeArity;
+      return !canBeCalled ? (0, _jsPlatform.apply)(curryN, (0, _jsPlatform.concat)([executeArity, fn], concatedArgs)) : (0, _jsPlatform.apply)(fn, concatedArgs);
     };
   },
 
