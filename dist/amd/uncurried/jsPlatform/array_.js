@@ -1,4 +1,4 @@
-define(['exports', '../utils_'], function (exports, _utils_) {
+define(['exports', '../_utils'], function (exports, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -25,7 +25,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param functor {Array|{map: {Function}}}
    * @returns {Array|{map: {Function}}}
    */
-  map = exports.map = (0, _utils_.fPureTakesOne)('map'),
+  map = exports.map = (0, _utils.fPureTakesOne)('map'),
 
 
   /**
@@ -35,7 +35,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param functor {Array|{filter: {Function}}}
    * @returns {Array|{filter: {Function}}}
    */
-  filter = exports.filter = (0, _utils_.fPureTakesOne)('filter'),
+  filter = exports.filter = (0, _utils.fPureTakesOne)('filter'),
 
 
   /**
@@ -45,7 +45,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param functor {Array|{reduce: {Function}}}
    * @returns {Array|{reduce: {Function}}}
    */
-  reduce = exports.reduce = (0, _utils_.fPureTakes2)('reduce'),
+  reduce = exports.reduce = (0, _utils.fPureTakes2)('reduce'),
 
 
   /**
@@ -55,7 +55,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param functor {Array|{reduceRight: {Function}}}
    * @returns {Array|{reduceRight: {Function}}}
    */
-  reduceRight = exports.reduceRight = (0, _utils_.fPureTakes2)('reduceRight'),
+  reduceRight = exports.reduceRight = (0, _utils.fPureTakes2)('reduceRight'),
 
 
   /**
@@ -65,7 +65,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
    * @throws {Error} - When passed in functor doesn't have a `forEach` method.
    */
-  forEach = exports.forEach = (0, _utils_.fPureTakesOne)('forEach'),
+  forEach = exports.forEach = (0, _utils.fPureTakesOne)('forEach'),
 
 
   /**
@@ -76,7 +76,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @return {*|Array|Object} - The type passed.
    * @throws {Error} - When passed in object doesn't have a `some` method.
    */
-  some = exports.some = (0, _utils_.fPureTakesOne)('some'),
+  some = exports.some = (0, _utils.fPureTakesOne)('some'),
 
 
   /**
@@ -86,7 +86,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @return {*|Array|Object} - The type passed.
    * @throws {Error} - When passed in object doesn't have an `every` method.
    */
-  every = exports.every = (0, _utils_.fPureTakesOne)('every'),
+  every = exports.every = (0, _utils.fPureTakesOne)('every'),
 
 
   /**
@@ -96,7 +96,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param arr {Array}
    * @returns {String}
    */
-  join = exports.join = (0, _utils_.fPureTakesOne)('join'),
+  join = exports.join = (0, _utils.fPureTakesOne)('join'),
 
 
   /**
@@ -105,7 +105,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param arr {Array}
    * @returns {Number}
    */
-  push = exports.push = (0, _utils_.fPureTakesOneOrMore)('push'),
+  push = exports.push = (0, _utils.fPureTakesOneOrMore)('push'),
 
 
   /**

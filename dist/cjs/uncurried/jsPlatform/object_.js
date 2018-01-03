@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.defineEnumNumber = exports.defineEnumProp = exports.defineProperties = exports.defineProperty = exports.assign = exports.keys = exports.toString = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
+exports.assign = exports.keys = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
 
-var _utils_ = require('../utils_');
+var _utils = require('../_utils');
 
 var
 
@@ -28,7 +28,7 @@ instanceOf = exports.instanceOf = function instanceOf(instanceConstructor, insta
  * @param typeInstance {*}
  * @returns {Boolean}
  */
-hasOwnProperty = exports.hasOwnProperty = (0, _utils_.fPureTakesOne)('hasOwnProperty'),
+hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
 
 
 /**
@@ -40,17 +40,6 @@ hasOwnProperty = exports.hasOwnProperty = (0, _utils_.fPureTakesOne)('hasOwnProp
  */
 length = exports.length = function length(x) {
     return x.length;
-},
-
-
-/**
- * @function module:jsPlatform_objectOps_.hasOwnProperty
- * @param x {*}
- * @returns {Number}
- * @throws {Error} - Throws an error if value doesn't have a `toString`.
- */
-toString = exports.toString = function toString(x) {
-    return x.toString();
 },
 
 
@@ -72,7 +61,7 @@ keys = exports.keys = function keys(obj) {
  * @param objs {...{Object}}
  * @returns {Object}
  */
-assign = exports.assign = function () {
+assign = exports.assign = function assign() {
     return Object.assign ? function (obj0) {
         for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             objs[_key - 1] = arguments[_key];
@@ -91,26 +80,6 @@ assign = exports.assign = function () {
             }, topAgg);
         }, obj0);
     };
-}(),
-    defineProperty = exports.defineProperty = function defineProperty(propName, propDescriptor, obj) {
-    return Object.defineProperty(obj, propName, propDescriptor);
-},
-    defineProperties = exports.defineProperties = function defineProperties(propDescriptors, obj) {
-    return Object.defineProperties(obj, propDescriptors);
-},
-    defineEnumProp = exports.defineEnumProp = function defineEnumProp(propName, propDescriptor, obj) {
-    return defineProperty(propName, assign({ enumerable: true }, propDescriptor), obj);
-},
-    defineEnumNumber = exports.defineEnumNumber = function defineEnumNumber(propName, obj) {
-    var defaultValue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
-
-    var _value = defaultValue;
-    defineEnumProp(propName, {
-        get: function get() {
-            return _value;
-        },
-        set: function set() {}
-    });
 }; /**
     * Created by elydelacruz on 9/6/2017.
     * Defines some of the platform methods for objects (the ones used within `fjl`) uncurried for use
@@ -118,26 +87,3 @@ assign = exports.assign = function () {
     *  the library.
     * @todo change all files named '*UnCurried' to '*_'.
     */
-
-Object.getOwnPropertyNames(Object).filter(function (name) {
-    return Object[name].length > 1;
-}).reduce(function (agg, name) {
-    switch (length(Object[name])) {
-        case 2:
-            agg[name] = (0, _utils_.fPureTakes2)(name);
-            break;
-        case 3:
-            agg[name] = (0, _utils_.fPureTakes3)(name);
-            break;
-        case 4:
-            agg[name] = (0, _utils_.fPureTakes4)(name);
-            break;
-        case 5:
-            agg[name] = (0, _utils_.fPureTakes5)(name);
-            break;
-        default:
-            agg[name] = (0, _utils_.fPureTakesOne)(name);
-            break;
-    }
-    return agg;
-}, {});

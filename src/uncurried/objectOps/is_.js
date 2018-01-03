@@ -51,7 +51,7 @@ export const
      * @param x {*}
      * @returns {boolean}
      */
-    isClass = x => x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10)),
+    isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10)),
 
     /**
      * Returns a booleanOps depicting whether a value is callable or not.
@@ -160,12 +160,6 @@ export const
     isSymbol = value => isType(_Symbol, value),
 
     /**
-     * @tentative
-     * @private
-     */
-    isPromise = value => isType('Promise', value),
-
-    /**
      * Checks if given `x` is one of the four
      * "usable" immutable JS primitives; I.e.,
      *  One of [String, Boolean, Number, Symbol]
@@ -233,17 +227,6 @@ export const
         }
         return retVal;
     },
-
-    /**
-     * Returns true if an element is not empty and is of type.
-     * @function module:objectOps_.notEmptyAndOfType
-     * @tentative
-     * @private
-     * @param type {String|Function} - Type to check against (stringOps name or actual constructor).
-     * @param value {*} - Value to check.
-     * @returns {Boolean}
-     */
-    notEmptyAndOfType = (type, value) => !isEmpty(value) && isType(type, value),
 
     /**
      * Returns whether passed in values is defined and not null or not.

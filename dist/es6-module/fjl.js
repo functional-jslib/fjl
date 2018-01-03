@@ -1,8 +1,5 @@
 const fPureTakesOne = name => (arg, f) => f[name](arg);
 const fPureTakes2 = name => (arg1, arg2, f) => f[name](arg1, arg2);
-const fPureTakes3 = name => (arg1, arg2, arg3, f) => f[name](arg1, arg2, arg3);
-const fPureTakes4 = name => (arg1, arg2, arg3, arg4, f) => f[name](arg1, arg2, arg3, arg4);
-const fPureTakes5 = name => (arg1, arg2, arg3, arg4, arg5, f) => f[name](arg1, arg2, arg3, arg4, arg5);
 const fPureTakesOneOrMore = name => (f, ...args) => f[name](...args);
 
 /**
@@ -17,40 +14,15 @@ const instanceOf$1 = (instanceConstructor, instance) =>
         instance instanceof instanceConstructor;
 const hasOwnProperty$1 = fPureTakesOne('hasOwnProperty');
 const length = x => x.length;
-const toString = x => x.toString();
 const keys = obj => Object.keys(obj);
-const assign$1 = (() =>
-        Object.assign ?
+const assign$1 = (() => Object.assign ?
             (obj0, ...objs) => Object.assign(obj0, ...objs) :
             (obj0, ...objs) => objs.reduce((topAgg, obj) => {
                 return keys(obj).reduce((agg, key) => {
                     agg[key] = obj[key];
                     return agg;
                 }, topAgg);
-            }, obj0))();
-
-Object.getOwnPropertyNames(Object)
-    .filter(name => Object[name].length > 1)
-    .reduce((agg, name) => {
-        switch (length(Object[name])) {
-            case 2:
-                agg[name] = fPureTakes2(name);
-                break;
-            case 3:
-                agg[name] = fPureTakes3(name);
-                break;
-            case 4:
-                agg[name] = fPureTakes4(name);
-                break;
-            case 5:
-                agg[name] = fPureTakes5(name);
-                break;
-            default:
-                agg[name] = fPureTakesOne(name);
-                break;
-        }
-        return agg;
-    }, {});
+            }, obj0));
 
 /**
  * Created by elyde on 7/20/2017.
@@ -72,11 +44,9 @@ const reduceRight = fPureTakes2('reduceRight');
 const reverse = defineReverse();
 
 /**
- *  List operations that overlap (apart from globally overlapping props and functions like `length` and `toString`)
+ *  List operations that overlap (apart from globally overlapping props and functions like `length`)
  *      on both strings and arrays.
  */
-
-// export {length, toString} from './objectOps_';
 
 const concat = fPureTakesOneOrMore('concat');
 const slice = fPureTakes2('slice');
@@ -159,10 +129,9 @@ const _Number$1 = Number.name;
 const _NaN = 'NaN';
 const _Null$1 = 'Null';
 const _Undefined$1 = 'Undefined';
-const _undefined = 'undefined';
 
 /**
- * Returns the class name of an object from it's class stringOps.
+ * Returns the class name of an object from it's class string.
  * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
  * @function module:objectOps_.typeOf
  * @param value {*}
@@ -171,7 +140,7 @@ const _undefined = 'undefined';
  */
 function typeOf (value) {
     let retVal;
-    if (typeof value === _undefined) {
+    if (value === undefined) {
         retVal = _Undefined$1;
     }
     else if (value === null) {
@@ -206,7 +175,7 @@ let _Undefined = 'Undefined';
 
 const isFunction = value => instanceOf$1(Function, value);
 const isType$1 = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type);
-const isClass = x => x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10));
+const isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 const isCallable = x => isFunction(x) && !isClass(x);
 const isArray = value => isType$1(Array, value);
 const isObject = value => isType$1(_Object, value);
@@ -220,7 +189,6 @@ const isWeakSet = value => isType$1(_WeakSet, value);
 const isUndefined = value => isType$1(_Undefined, value);
 const isNull = value => isType$1(_Null, value);
 const isSymbol = value => isType$1(_Symbol, value);
-const isPromise = value => isType$1('Promise', value);
 const isUsableImmutablePrimitive = x => {
         const typeOfX = typeOf(x);
         return [_String, _Number, _Boolean, _Symbol]
@@ -253,7 +221,6 @@ const isEmpty = value => {
         }
         return retVal;
     };
-const notEmptyAndOfType$1 = (type, value) => !isEmpty(value) && isType$1(type, value);
 const isset = x => !isNull(x) && !isUndefined(x);
 
 const assignDeep$1 = (obj0, ...objs) =>
@@ -1088,7 +1055,148 @@ const objIntersect$$1 = curry(objIntersect$1);
 const objDifference$$1 = curry(objDifference$1);
 const objComplement$$1 = curry2(objComplement$1);
 const isType$$1 = curry(isType$1);
-const notEmptyAndOfType$$1 = curry(notEmptyAndOfType$1);
+
+    /**
+     * Checks if `value` is an es2015 `class`.
+     * @function module:objectOps.isClass
+     * @param x {*}
+     * @returns {boolean}
+     */
+
+    /**
+     * Returns a booleanOps depicting whether a value is callable or not.
+     * @function module:objectOps.isCallable
+     * @tentative
+     * @private
+     * @param x {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks if value is an arrayOps.
+     * @function module:objectOps.isArray
+     * @param value {*}
+     * @returns {boolean}
+     */
+
+    /**
+     * Checks whether value is an object or not.
+     * @function module:objectOps.isObject
+     * @param value
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks if value is a booleanOps.
+     * @function module:objectOps.isBoolean
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks if value is a valid number (also checks if isNaN so that you don't have to).
+     * @function module:objectOps.isNumber
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks whether value is a stringOps or not.
+     * @function module:objectOps.isString
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks whether value is of `Map` or not.
+     * @function module:objectOps.isMap
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks whether value is of `Set` or not.
+     * @function module:objectOps.isSet
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks whether value is of `WeakMap` or not.
+     * @function module:objectOps.isWeakMap
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks whether value is of `WeakSet` or not.
+     * @function module:objectOps.isWeakSet
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks if value is undefined.
+     * @function module:objectOps.isUndefined
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks if value is null.
+     * @function module:objectOps.isNull
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks if value is a `Symbol`.
+     * @function module:objectOps.isSymbol
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * @tentative
+     * @private
+     */
+
+    /**
+     * Checks if given `x` is one of the four
+     * "usable" immutable JS primitives; I.e.,
+     *  One of [String, Boolean, Number, Symbol]
+     * @function module:objectOps.isUsableImmutablePrimitive
+     * @param x {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks if !length.
+     * @function module:objectOps.isEmptyList
+     * @param x {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks if object has own properties/enumerable-props or not.
+     * @function module:objectOps.isEmptyObject
+     * @param obj {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
+     * @function module:objectOps.isEmptyCollection
+     * @param x {*}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Checks to see if passed in argument is empty.
+     * @function module:objectOps.isEmpty
+     * @param value {*} - Value to check.
+     * @returns {Boolean}
+     */
 
     /**
      * Returns whether passed in values is defined and not null.
@@ -1223,7 +1331,8 @@ const id = x => x;
  * @param args {...Function}
  * @returns {Function}
  */
-const compose = (...args) => arg0 => reduceRight((value, fn) => fn(value), arg0, args);
+const compose = (...args) =>
+        arg0 => reduceRight((value, fn) => fn(value), arg0, args);
 
 /**
  * Function operations: `
@@ -1354,10 +1463,10 @@ const unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Fri Dec 08 2017 19:19:19 GMT-0500 (EST) 
+ * Generated Tue Jan 02 2018 23:03:30 GMT-0500 (Eastern Standard Time) 
  */
 
-let version = '0.17.13';
+let version = '0.18.1';
 
 /**
  * Created by elyde on 12/6/2016.
@@ -1374,4 +1483,4 @@ let version = '0.17.13';
  * @module fjl
  */
 
-export { version, instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, notEmptyAndOfType$1 as _notEmptyAndOfType, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, notEmptyAndOfType$$1 as notEmptyAndOfType, length, toString, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isPromise, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, append as _append, appendMany as _appendMany, all as _all, any as _any, find as _find, findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith, map$1 as _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup, intersperse as _intersperse, intercalate as _intercalate, iterate as _iterate, repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt, foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr, concatMap as _concatMap, takeWhile as _takeWhile, dropWhile as _dropWhile, dropWhileEnd as _dropWhileEnd, partition as _partition, at as _at, span as _span, breakOnList as _breakOnList, stripPrefix as _stripPrefix, isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf, isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter$1 as _filter, maximumBy as _maximumBy, minimumBy as _minimumBy, remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy, removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy, complement as _complement, difference as _difference, union as _union, intersect as _intersect, intersectBy as _intersectBy, groupBy as _groupBy, append$1 as append, appendMany$1 as appendMany, concatMap$1 as concatMap, map$2 as map, intersperse$1 as intersperse, intercalate$1 as intercalate, foldl$1 as foldl, foldr$1 as foldr, foldl1$1 as foldl1, foldr1$1 as foldr1, mapAccumL$1 as mapAccumL, mapAccumR$1 as mapAccumR, iterate$1 as iterate, repeat$1 as repeat, replicate$1 as replicate, cycle$1 as cycle, unfoldr$1 as unfoldr, findIndex$1 as findIndex, findIndices$1 as findIndices, elemIndex$1 as elemIndex, elemIndices$1 as elemIndices, take$1 as take, drop$1 as drop, splitAt$1 as splitAt, takeWhile$1 as takeWhile, dropWhile$1 as dropWhile, dropWhileEnd$1 as dropWhileEnd, span$1 as span, breakOnList$1 as breakOnList, at$1 as at, find$1 as find, filter$2 as filter, partition$1 as partition, elem$1 as elem, notElem$1 as notElem, lookup$1 as lookup, isPrefixOf$1 as isPrefixOf, isSuffixOf$1 as isSuffixOf, isInfixOf$1 as isInfixOf, isSubsequenceOf$1 as isSubsequenceOf, groupBy$1 as groupBy, stripPrefix$1 as stripPrefix, zip$1 as zip, zipWith$1 as zipWith, zipWithN$1 as zipWithN, zipWith3$1 as zipWith3, zipWith4$1 as zipWith4, zipWith5$1 as zipWith5, any$1 as any, all$1 as all, maximumBy$1 as maximumBy, minimumBy$1 as minimumBy, scanl$1 as scanl, scanl1$1 as scanl1, scanr$1 as scanr, scanr1$1 as scanr1, remove$1 as remove, sortOn$1 as sortOn, sortBy$1 as sortBy, insert$1 as insert, insertBy$1 as insertBy, nubBy$1 as nubBy, removeBy$1 as removeBy, removeFirstsBy$1 as removeFirstsBy, unionBy$1 as unionBy, union$1 as union, intersect$1 as intersect, intersectBy$1 as intersectBy, difference$1 as difference, complement$1 as complement, and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, concat$1 as concat, reverse$1 as reverse, transpose, subsequences, permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub, lines, words, unwords, unlines };
+export { version, instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, append as _append, appendMany as _appendMany, all as _all, any as _any, find as _find, findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith, map$1 as _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup, intersperse as _intersperse, intercalate as _intercalate, iterate as _iterate, repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt, foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr, concatMap as _concatMap, takeWhile as _takeWhile, dropWhile as _dropWhile, dropWhileEnd as _dropWhileEnd, partition as _partition, at as _at, span as _span, breakOnList as _breakOnList, stripPrefix as _stripPrefix, isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf, isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter$1 as _filter, maximumBy as _maximumBy, minimumBy as _minimumBy, remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy, removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy, complement as _complement, difference as _difference, union as _union, intersect as _intersect, intersectBy as _intersectBy, groupBy as _groupBy, append$1 as append, appendMany$1 as appendMany, concatMap$1 as concatMap, map$2 as map, intersperse$1 as intersperse, intercalate$1 as intercalate, foldl$1 as foldl, foldr$1 as foldr, foldl1$1 as foldl1, foldr1$1 as foldr1, mapAccumL$1 as mapAccumL, mapAccumR$1 as mapAccumR, iterate$1 as iterate, repeat$1 as repeat, replicate$1 as replicate, cycle$1 as cycle, unfoldr$1 as unfoldr, findIndex$1 as findIndex, findIndices$1 as findIndices, elemIndex$1 as elemIndex, elemIndices$1 as elemIndices, take$1 as take, drop$1 as drop, splitAt$1 as splitAt, takeWhile$1 as takeWhile, dropWhile$1 as dropWhile, dropWhileEnd$1 as dropWhileEnd, span$1 as span, breakOnList$1 as breakOnList, at$1 as at, find$1 as find, filter$2 as filter, partition$1 as partition, elem$1 as elem, notElem$1 as notElem, lookup$1 as lookup, isPrefixOf$1 as isPrefixOf, isSuffixOf$1 as isSuffixOf, isInfixOf$1 as isInfixOf, isSubsequenceOf$1 as isSubsequenceOf, groupBy$1 as groupBy, stripPrefix$1 as stripPrefix, zip$1 as zip, zipWith$1 as zipWith, zipWithN$1 as zipWithN, zipWith3$1 as zipWith3, zipWith4$1 as zipWith4, zipWith5$1 as zipWith5, any$1 as any, all$1 as all, maximumBy$1 as maximumBy, minimumBy$1 as minimumBy, scanl$1 as scanl, scanl1$1 as scanl1, scanr$1 as scanr, scanr1$1 as scanr1, remove$1 as remove, sortOn$1 as sortOn, sortBy$1 as sortBy, insert$1 as insert, insertBy$1 as insertBy, nubBy$1 as nubBy, removeBy$1 as removeBy, removeFirstsBy$1 as removeFirstsBy, unionBy$1 as unionBy, union$1 as union, intersect$1 as intersect, intersectBy$1 as intersectBy, difference$1 as difference, complement$1 as complement, and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, concat$1 as concat, reverse$1 as reverse, transpose, subsequences, permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub, lines, words, unwords, unlines };

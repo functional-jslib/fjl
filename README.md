@@ -91,7 +91,6 @@ import {...} from 'fjl';
 #### Members, Properties and Methods:
 
 - [fjl.length](#fjllength)
-- [fjl.toString](#fjltostring)
 - [fjl.keys](#fjlkeys)
 - [fjl.isFunction](#fjlisfunction)
 - [fjl.isClass](#fjlisclass)
@@ -108,7 +107,6 @@ import {...} from 'fjl';
 - [fjl.isUndefined](#fjlisundefined)
 - [fjl.isNull](#fjlisnull)
 - [fjl.isSymbol](#fjlissymbol)
-- [fjl.isPromise](#fjlispromise)
 - [fjl.isUsableImmutablePrimitive](#fjlisusableimmutableprimitive)
 - [fjl.isEmptyList](#fjlisemptylist)
 - [fjl.isEmptyObject](#fjlisemptyobject)
@@ -125,7 +123,6 @@ import {...} from 'fjl';
 - [fjl._objComplement](#fjl_objcomplement)
 - [fjl._objIntersect](#fjl_objintersect)
 - [fjl._objDifference](#fjl_objdifference)
-- [fjl._notEmptyAndOfType](#fjl_notemptyandoftype)
 - [fjl.prop](#fjlprop)
 - [fjl.instanceOf](#fjlinstanceof)
 - [fjl.hasOwnProperty](#fjlhasownproperty)
@@ -136,7 +133,6 @@ import {...} from 'fjl';
 - [fjl.objDifference](#fjlobjdifference)
 - [fjl.objComplement](#fjlobjcomplement)
 - [fjl.isType](#fjlistype)
-- [fjl.notEmptyAndOfType](#fjlnotemptyandoftype)
 - [fjl.typeOf](#fjltypeof)
 - [fjl.of](#fjlof)
 - [fjl.isTruthy](#fjlistruthy)

@@ -1,14 +1,10 @@
-define(['exports', '../utils_'], function (exports, _utils_) {
+define(['exports', '../_utils'], function (exports, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.concat = undefined;
-
-
-  // export {length, toString} from './objectOps_';
-
   const
 
   /**
@@ -20,7 +16,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @return {*|Array|Object} - The type passed.
    * @throws {Error} - When passed in object doesn't have an `every` method.
    */
-  concat = exports.concat = (0, _utils_.fPureTakesOneOrMore)('concat'),
+  concat = exports.concat = (0, _utils.fPureTakesOneOrMore)('concat'),
 
 
   /**
@@ -30,7 +26,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param arr{Array}
    * @returns {Array}
    */
-  slice = exports.slice = (0, _utils_.fPureTakes2)('slice'),
+  slice = exports.slice = (0, _utils.fPureTakes2)('slice'),
 
 
   /**
@@ -40,7 +36,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param xs {Array|String}
    * @returns {Boolean}
    */
-  includes = exports.includes = (() => 'includes' in Array.prototype ? (0, _utils_.fPureTakesOne)('includes') : (value, xs) => xs.indexOf(value) > -1)(),
+  includes = exports.includes = (() => 'includes' in Array.prototype ? (0, _utils.fPureTakesOne)('includes') : (value, xs) => xs.indexOf(value) > -1)(),
 
 
   /**
@@ -50,7 +46,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param xs {Array|String|*} - list or list like to look in.
    * @returns {Number} - `-1` if element not found else index at which it is found.
    */
-  indexOf = exports.indexOf = (0, _utils_.fPureTakesOne)('indexOf'),
+  indexOf = exports.indexOf = (0, _utils.fPureTakesOne)('indexOf'),
 
 
   /**
@@ -60,8 +56,8 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param xs {Array|String|*} - list or list like to look in.
    * @returns {Number} - `-1` if element not found else index at which it is found.
    */
-  lastIndexOf = exports.lastIndexOf = (0, _utils_.fPureTakesOne)('lastIndexOf'); /**
-                                                                                  *  List operations that overlap (apart from globally overlapping props and functions like `length` and `toString`)
-                                                                                  *      on both strings and arrays.
-                                                                                  */
+  lastIndexOf = exports.lastIndexOf = (0, _utils.fPureTakesOne)('lastIndexOf'); /**
+                                                                                 *  List operations that overlap (apart from globally overlapping props and functions like `length`)
+                                                                                 *      on both strings and arrays.
+                                                                                 */
 });

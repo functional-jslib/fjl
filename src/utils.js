@@ -5,7 +5,7 @@
  */
 
 import {curry, curry2} from './uncurried/functionOps/curry_';
-export * from './uncurried/utils_';
+export * from './uncurried/_utils';
 export const
 
     fPureTakesOne_ = name => curry((arg, f) => f[name](arg)),

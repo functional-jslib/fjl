@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../utils_'], factory);
+    define(['exports', '../_utils'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../utils_'));
+    factory(exports, require('../_utils'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.utils_);
+    factory(mod.exports, global._utils);
     global.string_ = mod.exports;
   }
-})(this, function (exports, _utils_) {
+})(this, function (exports, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -26,7 +26,7 @@
    * @param str {String}
    * @returns {Array}
    */
-  var split = exports.split = (0, _utils_.fPureTakesOne)('split'); /**
-                                                                    * Created by elydelacruz on 9/6/2017.
-                                                                    */
+  var split = exports.split = (0, _utils.fPureTakesOne)('split'); /**
+                                                                   * Created by elydelacruz on 9/6/2017.
+                                                                   */
 });

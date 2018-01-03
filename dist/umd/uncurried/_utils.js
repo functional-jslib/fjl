@@ -8,7 +8,7 @@
             exports: {}
         };
         factory(mod.exports);
-        global.utils_ = mod.exports;
+        global._utils = mod.exports;
     }
 })(this, function (exports) {
     "use strict";

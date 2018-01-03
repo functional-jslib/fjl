@@ -12,11 +12,10 @@ define(['exports'], function (exports) {
     const _Number = Number.name,
           _NaN = 'NaN',
           _Null = 'Null',
-          _Undefined = 'Undefined',
-          _undefined = 'undefined';
+          _Undefined = 'Undefined';
 
     /**
-     * Returns the class name of an object from it's class stringOps.
+     * Returns the class name of an object from it's class string.
      * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
      * @function module:objectOps_.typeOf
      * @param value {*}
@@ -25,7 +24,7 @@ define(['exports'], function (exports) {
      */
     function typeOf(value) {
         let retVal;
-        if (typeof value === _undefined) {
+        if (value === undefined) {
             retVal = _Undefined;
         } else if (value === null) {
             retVal = _Null;

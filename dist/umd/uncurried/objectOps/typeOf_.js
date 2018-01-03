@@ -17,13 +17,6 @@
         value: true
     });
     exports.typeOf = typeOf;
-
-    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-        return typeof obj;
-    } : function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-
     /**
      * Created by elyde on 12/18/2016.
      * @memberOf objectOps_
@@ -31,11 +24,10 @@
     var _Number = Number.name,
         _NaN = 'NaN',
         _Null = 'Null',
-        _Undefined = 'Undefined',
-        _undefined = 'undefined';
+        _Undefined = 'Undefined';
 
     /**
-     * Returns the class name of an object from it's class stringOps.
+     * Returns the class name of an object from it's class string.
      * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
      * @function module:objectOps_.typeOf
      * @param value {*}
@@ -44,7 +36,7 @@
      */
     function typeOf(value) {
         var retVal = void 0;
-        if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined) {
+        if (value === undefined) {
             retVal = _Undefined;
         } else if (value === null) {
             retVal = _Null;

@@ -1,4 +1,4 @@
-define(['exports', '../utils_'], function (exports, _utils_) {
+define(['exports', '../_utils'], function (exports, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -14,7 +14,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
    * @param str {String}
    * @returns {Array}
    */
-  const split = exports.split = (0, _utils_.fPureTakesOne)('split'); /**
-                                                                      * Created by elydelacruz on 9/6/2017.
-                                                                      */
+  const split = exports.split = (0, _utils.fPureTakesOne)('split'); /**
+                                                                     * Created by elydelacruz on 9/6/2017.
+                                                                     */
 });
