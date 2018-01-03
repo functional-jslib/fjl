@@ -12,7 +12,7 @@ var
 /**
  * Concats/appends all functors onto the end of first functor.
  * Note:  functors passed in after the first one must be of the same type.
- * @function module:jsPlatform_list_.concat
+ * @function module:_jsPlatform_list.concat
  * @param functor {Array|Object|*}
  * @param ...functor {Array|Object|*}
  * @return {*|Array|Object} - The type passed.
@@ -23,7 +23,7 @@ concat = exports.concat = (0, _utils.fPureTakesOneOrMore)('concat'),
 
 /**
  * Same as Array.prototype.slice
- * @function module:jsPlatform_list_.slice
+ * @function module:_jsPlatform_list.slice
  * @param separator {String|RegExp}
  * @param arr{Array}
  * @returns {Array}
@@ -33,7 +33,7 @@ slice = exports.slice = (0, _utils.fPureTakes2)('slice'),
 
 /**
  * `Array.prototype.includes` or shim.
- * @function module:jsPlatform_list_.includes
+ * @function module:_jsPlatform_list.includes
  * @param value {*}
  * @param xs {Array|String}
  * @returns {Boolean}
@@ -47,7 +47,7 @@ includes = exports.includes = function () {
 
 /**
  * Searches list/list-like for given element `x`.
- * @function module:jsPlatform_list_.indexOf
+ * @function module:_jsPlatform_list.indexOf
  * @param x {*} - Element to search for.
  * @param xs {Array|String|*} - list or list like to look in.
  * @returns {Number} - `-1` if element not found else index at which it is found.
@@ -57,7 +57,7 @@ indexOf = exports.indexOf = (0, _utils.fPureTakesOne)('indexOf'),
 
 /**
  * Last index of (`Array.prototype.lastIndexOf`).
- * @function module:jsPlatform_list_.lastIndexOf
+ * @function module:_jsPlatform_list.lastIndexOf
  * @param x {*} - Element to search for.
  * @param xs {Array|String|*} - list or list like to look in.
  * @returns {Number} - `-1` if element not found else index at which it is found.

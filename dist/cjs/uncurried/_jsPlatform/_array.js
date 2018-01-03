@@ -28,7 +28,7 @@ defineReverse = exports.defineReverse = function defineReverse() {
 
 /**
  * Maps a _functionOps to functor (_listOps etc.).
- * @function module:jsPlatform_array_.map
+ * @function module:_jsPlatform_array.map
  * @param fn {Function}
  * @param functor {Array|{map: {Function}}}
  * @returns {Array|{map: {Function}}}
@@ -38,7 +38,7 @@ map = exports.map = (0, _utils.fPureTakesOne)('map'),
 
 /**
  * Filters a functor (_listOps etc.) with passed in _functionOps.
- * @function module:jsPlatform_array_.filter
+ * @function module:_jsPlatform_array.filter
  * @param fn {Function}
  * @param functor {Array|{filter: {Function}}}
  * @returns {Array|{filter: {Function}}}
@@ -48,7 +48,7 @@ filter = exports.filter = (0, _utils.fPureTakesOne)('filter'),
 
 /**
  * Reduces a foldable (_listOps etc.) with passed in _functionOps.
- * @function module:jsPlatform_array_.reduce
+ * @function module:_jsPlatform_array.reduce
  * @param fn {Function}
  * @param functor {Array|{reduce: {Function}}}
  * @returns {Array|{reduce: {Function}}}
@@ -58,7 +58,7 @@ reduce = exports.reduce = (0, _utils.fPureTakes2)('reduce'),
 
 /**
  * Reduces a foldable (_listOps etc.) from the right with passed in _functionOps.
- * @function module:jsPlatform_array_.reduceRight
+ * @function module:_jsPlatform_array.reduceRight
  * @param fn {Function}
  * @param functor {Array|{reduceRight: {Function}}}
  * @returns {Array|{reduceRight: {Function}}}
@@ -124,7 +124,7 @@ push = exports.push = (0, _utils.fPureTakesOneOrMore)('push'),
 reverse = exports.reverse = defineReverse(); /**
                                               * Created by elyde on 7/20/2017.
                                               * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
-                                              * @module jsPlatform_arrayOps_
+                                              * @module _jsPlatform_arrayOps
                                               * @private
                                               * @todo updated doc blocks to list correct/updated module name.
                                               */

@@ -37,7 +37,7 @@ var
 
 /**
  * Returns a slice of the given list from `startInd` to the end of the list.
- * @function module:listOpsUtils_.sliceFrom
+ * @function module:_listOpsUtils.sliceFrom
  * @param startInd {Number}
  * @param arr {Array|String|*}
  * @returns {Array|String|*}
@@ -49,7 +49,7 @@ sliceFrom = exports.sliceFrom = function sliceFrom(startInd, arr) {
 
 /**
  * Slices from index `0` to given index.
- * @function module:listOpsUtils_.sliceTo
+ * @function module:_listOpsUtils.sliceTo
  * @param toInd {Number}
  * @param xs {Array|String|*}
  * @returns {Array|String|*}
@@ -72,7 +72,7 @@ copy = exports.copy = function copy(xs) {
 
 /**
  * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
- * @function module:listOpsUtils_.genericAscOrdering
+ * @function module:_listOpsUtils.genericAscOrdering
  * @param a {*}
  * @param b {*}
  * @returns {number}
@@ -89,7 +89,7 @@ genericAscOrdering = exports.genericAscOrdering = function genericAscOrdering(a,
 
 /**
  * Returns length of all passed lists in list.
- * @function module:listOpsUtils_.lengths
+ * @function module:_listOpsUtils.lengths
  * @param lists ...{Array|String|*}
  * @returns {Array|String|*}
  */
@@ -103,7 +103,7 @@ lengths = exports.lengths = function lengths() {
 
 
 /**
- * @function module:listOpsUtils_.lengthsToSmallest
+ * @function module:_listOpsUtils.lengthsToSmallest
  * @param lists {...(Array|String|*)}
  * @returns {Array|String|*}
  */

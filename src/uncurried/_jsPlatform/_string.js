@@ -6,7 +6,7 @@ import {fPureTakesOne} from '../_utils';
 
 /**
  * Functional version of `String.prototype.split`.
- * @function module:stringOps_.split
+ * @function module:_stringOps.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}

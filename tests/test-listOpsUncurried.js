@@ -3,7 +3,7 @@
  * Created by elyde on 12/29/2016.
  * @todo ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
  * @todo ensure expected types (either explicitly or implicitly) are being returned where necessary.
- * @todo Clean up 'test-listOps_' to look more like code that was written expecting uncurried functions not curried ones (code was copied from the tests for the curried version of '_listOps' package).
+ * @todo Clean up 'test-_listOps' to look more like code that was written expecting uncurried functions not curried ones (code was copied from the tests for the curried version of '_listOps' package).
  */
 
 // ~~~ STRIP ~~~
@@ -51,7 +51,7 @@ import {
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#listOps_', function () {
+describe ('#_listOps', function () {
 
     const strToArray = split(''),
         generalEqualityCheck = (a, b) => a === b,

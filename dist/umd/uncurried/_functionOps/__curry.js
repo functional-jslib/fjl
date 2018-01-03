@@ -43,7 +43,7 @@
    * @private
    */
   /**
-   * @memberOf functionOps
+   * @memberOf _functionOps
    * @author elydelacruz
    * @created 12/6/2016.
    * @description Curry implementation with place holder concept (`__`).

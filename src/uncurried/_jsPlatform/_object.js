@@ -12,7 +12,7 @@ export const
 
     /**
      * Returns whether constructor has derived _objectOps.
-     * @function module:jsPlatform_objectOps_.instanceOf
+     * @function module:_jsPlatform_objectOps.instanceOf
      * @param instanceConstructor {Function} - Constructor.
      * @param instance {*}
      * @instance {*}
@@ -22,7 +22,7 @@ export const
         instance instanceof instanceConstructor,
 
     /**
-     * @function module:jsPlatform_objectOps_.hasOwnProperty
+     * @function module:_jsPlatform_objectOps.hasOwnProperty
      * @param propName {*}
      * @param typeInstance {*}
      * @returns {Boolean}
@@ -30,7 +30,7 @@ export const
     hasOwnProperty = fPureTakesOne('hasOwnProperty'),
 
     /**
-     * @function module:jsPlatform_objectOps_.length
+     * @function module:_jsPlatform_objectOps.length
      * @param x {*}
      * @returns {Number}
      * @throws {Error} - Throws an error if value doesn't have a `length` property (
@@ -40,7 +40,7 @@ export const
 
     /**
      * Gets own enumerable keys of passed in object (`Object.keys`).
-     * @function module:jsPlatform_objectOps_.keys
+     * @function module:_jsPlatform_objectOps.keys
      * @param obj {*}
      * @returns {Array<String>}
      */
@@ -48,7 +48,7 @@ export const
 
     /**
      * Defined as `Object.assign` else is the same thing but shimmed.
-     * @function module:jsPlatform_objectOps_.assign
+     * @function module:_jsPlatform_objectOps.assign
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}

@@ -27,7 +27,7 @@ import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, de
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#objectOps_', function () {
+describe ('#_objectOps_', function () {
 
     describe('#hasOwnProperty', function () {
         it ('should be a _functionOps', function () {

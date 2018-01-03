@@ -1,5 +1,5 @@
 /**
- * @module objectOps_
+ * @module _objectOps_
  * @private
  */
 export * from './_jsPlatform/_object';
