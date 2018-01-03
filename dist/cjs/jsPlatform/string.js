@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.split = undefined;
 
-var _curry_ = require('../uncurried/_functionOps/curry_');
+var _curry = require('../uncurried/_functionOps/_curry');
 
-var _string_ = require('../uncurried/jsPlatform/string_');
+var _string_ = require('../uncurried/_jsPlatform/string_');
 
 /**
  * Functional version of `String.prototype.split`.
@@ -23,4 +23,4 @@ var _string_ = require('../uncurried/jsPlatform/string_');
  * @private
  */
 
-var split = exports.split = (0, _curry_.curry)(_string_.split);
+var split = exports.split = (0, _curry.curry)(_string_.split);

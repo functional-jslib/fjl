@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../uncurried/jsPlatform/array_', '../utils'], factory);
+    define(['exports', '../uncurried/_jsPlatform/array_', '../utils'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../uncurried/jsPlatform/array_'), require('../utils'));
+    factory(exports, require('../uncurried/_jsPlatform/array_'), require('../utils'));
   } else {
     var mod = {
       exports: {}
@@ -26,7 +26,7 @@
   var
 
   /**
-   * Maps a _functionOps to functor (listOps etc.).
+   * Maps a _functionOps to functor (_listOps etc.).
    * @function module:jsPlatform_array.map
    * @param fn {Function}
    * @param functor {Array|{map: {Function}}}
@@ -36,7 +36,7 @@
 
 
   /**
-   * Filters a functor (listOps etc.) with passed in _functionOps.
+   * Filters a functor (_listOps etc.) with passed in _functionOps.
    * @function module:jsPlatform_array.filter
    * @param fn {Function}
    * @param functor {Array|{filter: {Function}}}
@@ -46,7 +46,7 @@
 
 
   /**
-   * Reduces a foldable (listOps etc.) with passed in _functionOps.
+   * Reduces a foldable (_listOps etc.) with passed in _functionOps.
    * @function module:jsPlatform_array.reduce
    * @param fn {Function}
    * @param functor {Array|{reduce: {Function}}}
@@ -56,7 +56,7 @@
 
 
   /**
-   * Reduces a foldable (listOps etc.) from the right with passed in _functionOps.
+   * Reduces a foldable (_listOps etc.) from the right with passed in _functionOps.
    * @function module:jsPlatform_array.reduceRight
    * @param fn {Function}
    * @param functor {Array|{reduceRight: {Function}}}

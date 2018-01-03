@@ -15,19 +15,19 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           */
 
 
-var _list_ = require('./jsPlatform/list_');
+var _list_ = require('./_jsPlatform/list_');
 
-var _function_ = require('./jsPlatform/function_');
+var _function_ = require('./_jsPlatform/function_');
 
-var _negate_ = require('./_functionOps/negate_');
+var _negate = require('./_functionOps/_negate');
 
 var _booleanOps = require('../booleanOps');
 
 var _objectOps = require('./_objectOps');
 
-var _map_ = require('./listOps/map_');
+var _map_ = require('./_listOps/map_');
 
-var _utils_ = require('./listOps/utils_');
+var _utils_ = require('./_listOps/utils_');
 
 // Exported imports
 exports.map = _map_.map;
@@ -310,7 +310,7 @@ subsequences = exports.subsequences = function subsequences(xs) {
  * Returns a list of permutations for passed in list.
  *  Use caution with lists above a length of 15 (will take long due to nature of
  *  algorithm).
- * @function module:listOps.permutations
+ * @function module:_listOps.permutations
  * @param xs {Array|String|*} - List.
  * @returns {Array<Array|String|*>} - Array of permutations.
  */
@@ -568,7 +568,7 @@ splitAt = exports.splitAt = function splitAt(ind, list) {
 takeWhile = exports.takeWhile = function takeWhile(pred, list) {
     var zero = (0, _objectOps.of)(list);
     var operation = (0, _utils_.aggregatorByType)(list);
-    return (0, _utils_.reduceUntil)((0, _negate_.negateP)(pred), // predicate
+    return (0, _utils_.reduceUntil)((0, _negate.negateP)(pred), // predicate
     operation, // operation
     zero, // aggregator
     list);
@@ -620,7 +620,7 @@ dropWhileEnd = exports.dropWhileEnd = function dropWhileEnd(pred, list) {
  * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
  */
 span = exports.span = function span(pred, list) {
-    var splitPoint = (0, _utils_.findIndexWhere)((0, _negate_.negateP)(pred), list);
+    var splitPoint = (0, _utils_.findIndexWhere)((0, _negate.negateP)(pred), list);
     return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
 },
     breakOnList = exports.breakOnList = function breakOnList(pred, list) {
@@ -675,10 +675,10 @@ partition = exports.partition = function partition(pred, list) {
     if (!(0, _objectOps.length)(list)) {
         return [(0, _objectOps.of)(list), (0, _objectOps.of)(list)];
     }
-    return [filter(pred, list), filter((0, _negate_.negateP)(pred), list)];
+    return [filter(pred, list), filter((0, _negate.negateP)(pred), list)];
 },
     elem = exports.elem = _list_.includes,
-    notElem = exports.notElem = (0, _negate_.negateF)(_list_.includes),
+    notElem = exports.notElem = (0, _negate.negateF)(_list_.includes),
     lookup = exports.lookup = at,
     isPrefixOf = exports.isPrefixOf = function isPrefixOf(xs1, xs2) {
     var limit1 = (0, _objectOps.length)(xs1),

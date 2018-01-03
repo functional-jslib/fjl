@@ -3,7 +3,7 @@
  * @tentative
  */
 import {curry} from '../../src/functionOps/curry';
-import {isFunction} from '../../src/objectOps/is';
+import {isFunction} from '../../src/_objectOps/is';
 
 export default Object.getOwnPropertyNames(Math).reduce((agg, key) => {
     if (!isFunction(Math[key])) {

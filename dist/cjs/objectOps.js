@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports._objDifference = exports._objIntersect = exports._objComplement = exports._objUnion = exports._assignDeep = exports._prop = exports._assign = exports._hasOwnProperty = exports._isType = exports._instanceOf = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isFunction = exports.keys = exports.length = undefined;
 
-var _object_ = require('./uncurried/jsPlatform/object_');
+var _object_ = require('./uncurried/_jsPlatform/object_');
 
 Object.defineProperty(exports, 'length', {
     enumerable: true,
@@ -20,7 +20,7 @@ Object.defineProperty(exports, 'keys', {
     }
 });
 
-var _typeOf_ = require('./uncurried/objectOps/typeOf_');
+var _typeOf_ = require('./uncurried/_objectOps/typeOf_');
 
 Object.keys(_typeOf_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -32,7 +32,7 @@ Object.keys(_typeOf_).forEach(function (key) {
     });
 });
 
-var _of_ = require('./uncurried/objectOps/of_');
+var _of_ = require('./uncurried/_objectOps/of_');
 
 Object.keys(_of_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -44,7 +44,7 @@ Object.keys(_of_).forEach(function (key) {
     });
 });
 
-var _is_ = require('./uncurried/objectOps/is_');
+var _is_ = require('./uncurried/_objectOps/is_');
 
 Object.defineProperty(exports, 'isFunction', {
     enumerable: true,
@@ -173,13 +173,13 @@ Object.defineProperty(exports, 'isset', {
     }
 });
 
-var _curry_ = require('./uncurried/_functionOps/curry_');
+var _curry = require('./uncurried/_functionOps/_curry');
 
-var _prop_ = require('./uncurried/objectOps/prop_');
+var _prop_ = require('./uncurried/_objectOps/prop_');
 
-var _assignDeep_ = require('./uncurried/objectOps/assignDeep_');
+var _assignDeep_ = require('./uncurried/_objectOps/assignDeep_');
 
-var _setTheory_ = require('./uncurried/objectOps/setTheory_');
+var _setTheory_ = require('./uncurried/_objectOps/setTheory_');
 
 exports._instanceOf = _object_.instanceOf;
 exports._isType = _is_.isType;
@@ -191,29 +191,29 @@ exports._objUnion = _setTheory_.objUnion;
 exports._objComplement = _setTheory_.objComplement;
 exports._objIntersect = _setTheory_.objIntersect;
 exports._objDifference = _setTheory_.objDifference;
-var prop = exports.prop = (0, _curry_.curry)(_prop_.prop),
+var prop = exports.prop = (0, _curry.curry)(_prop_.prop),
 
 
 /**
  * `instanceof` in function form.
- * @function module:objectOps.instanceOf
+ * @function module:_objectOps.instanceOf
  * @param instance {*}
  * @param Type {Function}
  * @returns {Boolean}
  */
-instanceOf = exports.instanceOf = (0, _curry_.curry)(_object_.instanceOf),
-    hasOwnProperty = exports.hasOwnProperty = (0, _curry_.curry)(_object_.hasOwnProperty),
-    assign = exports.assign = (0, _curry_.curry2)(_object_.assign),
-    assignDeep = exports.assignDeep = (0, _curry_.curry2)(_assignDeep_.assignDeep),
-    objUnion = exports.objUnion = (0, _curry_.curry)(_setTheory_.objUnion),
-    objIntersect = exports.objIntersect = (0, _curry_.curry)(_setTheory_.objIntersect),
-    objDifference = exports.objDifference = (0, _curry_.curry)(_setTheory_.objDifference),
-    objComplement = exports.objComplement = (0, _curry_.curry2)(_setTheory_.objComplement),
+instanceOf = exports.instanceOf = (0, _curry.curry)(_object_.instanceOf),
+    hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_object_.hasOwnProperty),
+    assign = exports.assign = (0, _curry.curry2)(_object_.assign),
+    assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep_.assignDeep),
+    objUnion = exports.objUnion = (0, _curry.curry)(_setTheory_.objUnion),
+    objIntersect = exports.objIntersect = (0, _curry.curry)(_setTheory_.objIntersect),
+    objDifference = exports.objDifference = (0, _curry.curry)(_setTheory_.objDifference),
+    objComplement = exports.objComplement = (0, _curry.curry2)(_setTheory_.objComplement),
 
 
 /**
  * Returns whether a value is a functionOps or not.
- * @function module:objectOps.isFunction
+ * @function module:_objectOps.isFunction
  * @param value {*}
  * @returns {Boolean}
  */
@@ -226,23 +226,23 @@ instanceOf = exports.instanceOf = (0, _curry_.curry)(_object_.instanceOf),
  *  var SomeName = _functionOps SomeName () {} // or
  *  class SomeName {}
  * ```
- * @function module:objectOps.isType
+ * @function module:_objectOps.isType
  * @param Type {Function|String} - Constructor or constructor name
  * @param value {*}
  * @return {Boolean}
  */
-isType = exports.isType = (0, _curry_.curry)(_is_.isType);
+isType = exports.isType = (0, _curry.curry)(_is_.isType);
 
 /**
  * Checks if `value` is an es2015 `class`.
- * @function module:objectOps.isClass
+ * @function module:_objectOps.isClass
  * @param x {*}
  * @returns {boolean}
  */
 
 /**
  * Returns a booleanOps depicting whether a value is callable or not.
- * @function module:objectOps.isCallable
+ * @function module:_objectOps.isCallable
  * @tentative
  * @private
  * @param x {*}
@@ -251,84 +251,84 @@ isType = exports.isType = (0, _curry_.curry)(_is_.isType);
 
 /**
  * Checks if value is an arrayOps.
- * @function module:objectOps.isArray
+ * @function module:_objectOps.isArray
  * @param value {*}
  * @returns {boolean}
  */
 
 /**
  * Checks whether value is an object or not.
- * @function module:objectOps.isObject
+ * @function module:_objectOps.isObject
  * @param value
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is a booleanOps.
- * @function module:objectOps.isBoolean
+ * @function module:_objectOps.isBoolean
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is a valid number (also checks if isNaN so that you don't have to).
- * @function module:objectOps.isNumber
+ * @function module:_objectOps.isNumber
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is a stringOps or not.
- * @function module:objectOps.isString
+ * @function module:_objectOps.isString
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is of `Map` or not.
- * @function module:objectOps.isMap
+ * @function module:_objectOps.isMap
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is of `Set` or not.
- * @function module:objectOps.isSet
+ * @function module:_objectOps.isSet
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is of `WeakMap` or not.
- * @function module:objectOps.isWeakMap
+ * @function module:_objectOps.isWeakMap
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is of `WeakSet` or not.
- * @function module:objectOps.isWeakSet
+ * @function module:_objectOps.isWeakSet
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is undefined.
- * @function module:objectOps.isUndefined
+ * @function module:_objectOps.isUndefined
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is null.
- * @function module:objectOps.isNull
+ * @function module:_objectOps.isNull
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is a `Symbol`.
- * @function module:objectOps.isSymbol
+ * @function module:_objectOps.isSymbol
  * @param value {*}
  * @returns {Boolean}
  */
@@ -342,42 +342,42 @@ isType = exports.isType = (0, _curry_.curry)(_is_.isType);
  * Checks if given `x` is one of the four
  * "usable" immutable JS primitives; I.e.,
  *  One of [String, Boolean, Number, Symbol]
- * @function module:objectOps.isUsableImmutablePrimitive
+ * @function module:_objectOps.isUsableImmutablePrimitive
  * @param x {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if !length.
- * @function module:objectOps.isEmptyList
+ * @function module:_objectOps.isEmptyList
  * @param x {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if object has own properties/enumerable-props or not.
- * @function module:objectOps.isEmptyObject
+ * @function module:_objectOps.isEmptyObject
  * @param obj {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
- * @function module:objectOps.isEmptyCollection
+ * @function module:_objectOps.isEmptyCollection
  * @param x {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks to see if passed in argument is empty.
- * @function module:objectOps.isEmpty
+ * @function module:_objectOps.isEmpty
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
 
 /**
  * Returns whether passed in values is defined and not null.
- * @function module:objectOps.isset
+ * @function module:_objectOps.isset
  * @param x {*}
  * @returns {Boolean}
  */

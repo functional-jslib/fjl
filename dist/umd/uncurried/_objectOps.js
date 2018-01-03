@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './jsPlatform/object_', './objectOps/prop_', './objectOps/typeOf_', './objectOps/is_', './objectOps/of_', './objectOps/assignDeep_', './objectOps/setTheory_'], factory);
+    define(['exports', './_jsPlatform/object_', './_objectOps/prop_', './_objectOps/typeOf_', './_objectOps/is_', './_objectOps/of_', './_objectOps/assignDeep_', './_objectOps/setTheory_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./jsPlatform/object_'), require('./objectOps/prop_'), require('./objectOps/typeOf_'), require('./objectOps/is_'), require('./objectOps/of_'), require('./objectOps/assignDeep_'), require('./objectOps/setTheory_'));
+    factory(exports, require('./_jsPlatform/object_'), require('./_objectOps/prop_'), require('./_objectOps/typeOf_'), require('./_objectOps/is_'), require('./_objectOps/of_'), require('./_objectOps/assignDeep_'), require('./_objectOps/setTheory_'));
   } else {
     var mod = {
       exports: {}

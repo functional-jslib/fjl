@@ -23,6 +23,6 @@ export default subClassMulti([Extract, Extend],
             });
         },
         toString: function () {
-            return '[objectOps ' + this.constructor.name + '(' + this.value + ')]';
+            return '[_objectOps ' + this.constructor.name + '(' + this.value + ')]';
         }
     });

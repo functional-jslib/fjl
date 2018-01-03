@@ -23,7 +23,7 @@ import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#objectOps', function () {
+describe ('#_objectOps', function () {
 
     describe('#hasOwnProperty', function () {
         it ('should be a _functionOps', function () {
@@ -132,10 +132,10 @@ describe ('#objectOps', function () {
     });
 
     describe('#isArray', function () {
-        it ('should return `true` when given value is an listOps', function () {
+        it ('should return `true` when given value is an _listOps', function () {
             expectTrue(isArray([]));
         });
-        it ('should return `false` when given value is not an listOps', function () {
+        it ('should return `false` when given value is not an _listOps', function () {
             expectFalse(isArray(function () {}));
         });
     });

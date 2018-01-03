@@ -10,13 +10,13 @@ import {
     concat as listAppend,
     indexOf, slice, includes
 }
-    from './jsPlatform/list_';
+    from './_jsPlatform/list_';
 
-import {apply} from './jsPlatform/function_';
-import {negateP, negateF} from './_functionOps/negate_';
+import {apply} from './_jsPlatform/function_';
+import {negateP, negateF} from './_functionOps/_negate';
 import {isTruthy, isFalsy} from '../booleanOps';
 import {isString, isEmptyList, prop, of, length} from './_objectOps';
-import {map} from './listOps/map_';
+import {map} from './_listOps/map_';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -25,7 +25,7 @@ import {
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, copy, genericAscOrdering, _permutationsAlgo
 }
-    from './listOps/utils_';
+    from './_listOps/utils_';
 
 // Exported imports
 export {map};
@@ -275,7 +275,7 @@ export const
      * Returns a list of permutations for passed in list.
      *  Use caution with lists above a length of 15 (will take long due to nature of
      *  algorithm).
-     * @function module:listOps.permutations
+     * @function module:_listOps.permutations
      * @param xs {Array|String|*} - List.
      * @returns {Array<Array|String|*>} - Array of permutations.
      */

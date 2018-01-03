@@ -1,75 +1,75 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './uncurried/_functionOps/curry_', './uncurried/_functionOps/curry__', './uncurried/_functionOps/negate_', './uncurried/_functionOps/id_', './uncurried/_functionOps/compose_', './uncurried/_jsPlatform', './uncurried/_functionOps/until_', './uncurried/_functionOps/flip_'], factory);
+        define(['exports', './uncurried/_functionOps/_curry', './uncurried/_functionOps/__curry', './uncurried/_functionOps/_negate', './uncurried/_functionOps/_id', './uncurried/_functionOps/_compose', './uncurried/_jsPlatform', './uncurried/_functionOps/_until', './uncurried/_functionOps/_flip'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./uncurried/_functionOps/curry_'), require('./uncurried/_functionOps/curry__'), require('./uncurried/_functionOps/negate_'), require('./uncurried/_functionOps/id_'), require('./uncurried/_functionOps/compose_'), require('./uncurried/_jsPlatform'), require('./uncurried/_functionOps/until_'), require('./uncurried/_functionOps/flip_'));
+        factory(exports, require('./uncurried/_functionOps/_curry'), require('./uncurried/_functionOps/__curry'), require('./uncurried/_functionOps/_negate'), require('./uncurried/_functionOps/_id'), require('./uncurried/_functionOps/_compose'), require('./uncurried/_jsPlatform'), require('./uncurried/_functionOps/_until'), require('./uncurried/_functionOps/_flip'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.curry_, global.curry__, global.negate_, global.id_, global.compose_, global._jsPlatform, global.until_, global.flip_);
+        factory(mod.exports, global._curry, global.__curry, global._negate, global._id, global._compose, global._jsPlatform, global._until, global._flip);
         global.functionOps = mod.exports;
     }
-})(this, function (exports, _curry_, _curry__, _negate_, _id_, _compose_, _jsPlatform, _until_, _flip_) {
+})(this, function (exports, _curry, _curry2, _negate, _id, _compose, _jsPlatform, _until2, _flip2) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
     exports.flip5 = exports.flip4 = exports.flip3 = exports.flip = exports.flipN = exports.until = exports.call = exports.apply = exports._flipN = exports._flip5 = exports._flip4 = exports._flip3 = exports._flip = exports._until = exports._call = exports._apply = undefined;
-    Object.keys(_curry_).forEach(function (key) {
+    Object.keys(_curry).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
             enumerable: true,
             get: function () {
-                return _curry_[key];
+                return _curry[key];
             }
         });
     });
-    Object.keys(_curry__).forEach(function (key) {
+    Object.keys(_curry2).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
             enumerable: true,
             get: function () {
-                return _curry__[key];
+                return _curry2[key];
             }
         });
     });
-    Object.keys(_negate_).forEach(function (key) {
+    Object.keys(_negate).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
             enumerable: true,
             get: function () {
-                return _negate_[key];
+                return _negate[key];
             }
         });
     });
-    Object.keys(_id_).forEach(function (key) {
+    Object.keys(_id).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
             enumerable: true,
             get: function () {
-                return _id_[key];
+                return _id[key];
             }
         });
     });
-    Object.keys(_compose_).forEach(function (key) {
+    Object.keys(_compose).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
             enumerable: true,
             get: function () {
-                return _compose_[key];
+                return _compose[key];
             }
         });
     });
     exports._apply = _jsPlatform.apply;
     exports._call = _jsPlatform.call;
-    exports._until = _until_.until;
-    exports._flip = _flip_.flip;
-    exports._flip3 = _flip_.flip3;
-    exports._flip4 = _flip_.flip4;
-    exports._flip5 = _flip_.flip5;
-    exports._flipN = _flip_.flipN;
+    exports._until = _until2.until;
+    exports._flip = _flip2.flip;
+    exports._flip3 = _flip2.flip3;
+    exports._flip4 = _flip2.flip4;
+    exports._flip5 = _flip2.flip5;
+    exports._flipN = _flip2.flipN;
     var
 
     /**
@@ -79,7 +79,7 @@
      * @param args {*}
      * @returns {*}
      */
-    apply = exports.apply = (0, _curry_.curry)(_jsPlatform.apply),
+    apply = exports.apply = (0, _curry.curry)(_jsPlatform.apply),
 
 
     /**
@@ -89,7 +89,7 @@
      * @param args {*}
      * @returns {*}
      */
-    call = exports.call = (0, _curry_.curry2)(_jsPlatform.call),
+    call = exports.call = (0, _curry.curry2)(_jsPlatform.call),
 
 
     /**
@@ -101,7 +101,7 @@
      * @returns {*} - What ever type `typeInstance` is
      * @curried
      */
-    until = exports.until = (0, _curry_.curry)(_until_.until),
+    until = exports.until = (0, _curry.curry)(_until2.until),
 
 
     /**
@@ -111,7 +111,7 @@
      * @returns {Function}
      */
     flipN = exports.flipN = function flipN(fn) {
-        return (0, _curry_.curry3)(function () {
+        return (0, _curry.curry3)(function () {
             for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
                 args[_key] = arguments[_key];
             }
@@ -128,7 +128,7 @@
      * @returns {Function}
      */
     flip = exports.flip = function flip(fn) {
-        return (0, _curry_.curry)((0, _flip_.flip)(fn));
+        return (0, _curry.curry)((0, _flip2.flip)(fn));
     },
 
 
@@ -139,7 +139,7 @@
      * @returns {Function} - Function<c, b, a>
      */
     flip3 = exports.flip3 = function flip3(fn) {
-        return (0, _curry_.curry)((0, _flip_.flip3)(fn));
+        return (0, _curry.curry)((0, _flip2.flip3)(fn));
     },
 
 
@@ -150,7 +150,7 @@
      * @returns {Function} - Function<d, c, b, a>
      */
     flip4 = exports.flip4 = function flip4(fn) {
-        return (0, _curry_.curry)((0, _flip_.flip4)(fn));
+        return (0, _curry.curry)((0, _flip2.flip4)(fn));
     },
 
 
@@ -161,6 +161,6 @@
      * @returns {Function} - Function<e, d, c, b, a>
      */
     flip5 = exports.flip5 = function flip5(fn) {
-        return (0, _curry_.curry)((0, _flip_.flip5)(fn));
+        return (0, _curry.curry)((0, _flip2.flip5)(fn));
     };
 });

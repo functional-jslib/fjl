@@ -3,7 +3,7 @@
  * @module functionOps
  */
 
-import {curry, curry2, curry3} from './uncurried/_functionOps/curry_';
+import {curry, curry2, curry3} from './uncurried/_functionOps/_curry';
 
 import {
     apply as _apply,
@@ -12,7 +12,7 @@ import {
 
 import {
     until as _until
-} from './uncurried/_functionOps/until_';
+} from './uncurried/_functionOps/_until';
 
 import {
     flip as _flip,
@@ -20,13 +20,13 @@ import {
     flip3 as _flip3,
     flip4 as _flip4,
     flip5 as _flip5
-} from './uncurried/_functionOps/flip_';
+} from './uncurried/_functionOps/_flip';
 
-export * from './uncurried/_functionOps/curry_';
-export * from './uncurried/_functionOps/curry__';
-export * from './uncurried/_functionOps/negate_';
-export * from './uncurried/_functionOps/id_';
-export * from './uncurried/_functionOps/compose_';
+export * from './uncurried/_functionOps/_curry';
+export * from './uncurried/_functionOps/__curry';
+export * from './uncurried/_functionOps/_negate';
+export * from './uncurried/_functionOps/_id';
+export * from './uncurried/_functionOps/_compose';
 
 export {_apply, _call, _until, _flip, _flip3, _flip4, _flip5,  _flipN};
 

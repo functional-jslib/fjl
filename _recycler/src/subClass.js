@@ -1,16 +1,16 @@
 /**
  * Created by elyde on 12/10/2016.
  */
-import {isFunction, notEmptyAndOfType} from '../../src/objectOps/is';
+import {isFunction, notEmptyAndOfType} from '../../src/_objectOps/is';
 import {difference} from '../../src/objectOps';
 import {assign} from '../../src/assign';
 
 /**
  * Normalized the parameters required for `subClassPure` and `subClass` to operate.
  * @param superClass {Function} - Superclass to inherit from.
- * @param constructor {Function|Object} - Required.  Note:  If this param is an objectOps, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
- * @param methods {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an objectOps, this param takes the place of the `statics` param.
- * @param statics {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an objectOps, this param is not used.
+ * @param constructor {Function|Object} - Required.  Note:  If this param is an _objectOps, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
+ * @param methods {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an _objectOps, this param takes the place of the `statics` param.
+ * @param statics {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an _objectOps, this param is not used.
  * @returns {{constructor: (Function|*), methods: *, statics: *, superClass: (*|Object)}}
  */
 function normalizeArgsForDefineSubClass (superClass, constructor, methods, statics) {
@@ -35,9 +35,9 @@ function normalizeArgsForDefineSubClass (superClass, constructor, methods, stati
  * Same as `subClass` with out side-effect of `extend` method and `toString` method.
  * @_functionOps module:fjl.subClassPure
  * @param superClass {Function} - Superclass to inherit from.
- * @param constructor {Function|Object} - Required.  Note:  If this param is an objectOps, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
- * @param [methods] {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an objectOps, this param takes the place of the `statics` param.
- * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an objectOps, this param is not used.
+ * @param constructor {Function|Object} - Required.  Note:  If this param is an _objectOps, then other params shift over by 1 (`methods` becomes `statics` and this param becomes `methods` (constructor key expected else empty stand in constructor is used).
+ * @param [methods] {Object|undefined} - Methods for prototype.  Optional.  Note:  If `constructor` param is an _objectOps, this param takes the place of the `statics` param.
+ * @param [statics] {Object|undefined} - Constructor's static methods.  Optional.  Note:  If `constructor` param is an _objectOps, this param is not used.
  * @returns {Function} - Constructor with extended prototype and added statics.
  */
 export function subClass (superClass, constructor, methods, statics) {
@@ -63,7 +63,7 @@ export function subClass (superClass, constructor, methods, statics) {
 }
 
 /**
- * Same as subClass multi but takes an listOps of Constructor or one constructor at position one.
+ * Same as subClass multi but takes an _listOps of Constructor or one constructor at position one.
  * @param ctorOrCtors {Function|Array<Function>} - SuperClass(es)
  * @param constructorOrMethods {Function|Object}
  * @param [methods] {Object|undefined}

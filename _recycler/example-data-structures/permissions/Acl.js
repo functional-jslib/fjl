@@ -4,7 +4,7 @@
 
 'use strict';
 
-import {typeOf} from '../../../src/objectOps/typeOf';
+import {typeOf} from '../../../src/_objectOps/typeOf';
 import {difference as arrayDiff} from '../../../src/listOps';
 import {errorIfNotType} from '../utils';
 import Role from './Role';

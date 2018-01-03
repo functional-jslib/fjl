@@ -1,4 +1,4 @@
-define(['exports', './jsPlatform/function_', './_functionOps/compose_', './_functionOps/curry_', './_functionOps/curry__', './_functionOps/flip_', './_functionOps/id_', './_functionOps/negate_', './_functionOps/until_'], function (exports, _function_, _compose_, _curry_, _curry__, _flip_, _id_, _negate_, _until_) {
+define(['exports', './_jsPlatform/function_', './_functionOps/_compose', './_functionOps/_curry', './_functionOps/__curry', './_functionOps/_flip', './_functionOps/_id', './_functionOps/_negate', './_functionOps/_until'], function (exports, _function_, _compose, _curry, _curry2, _flip, _id, _negate, _until) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -16,66 +16,66 @@ define(['exports', './jsPlatform/function_', './_functionOps/compose_', './_func
       return _function_.call;
     }
   });
-  Object.keys(_compose_).forEach(function (key) {
+  Object.keys(_compose).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _compose_[key];
+        return _compose[key];
       }
     });
   });
-  Object.keys(_curry_).forEach(function (key) {
+  Object.keys(_curry).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _curry_[key];
+        return _curry[key];
       }
     });
   });
-  Object.keys(_curry__).forEach(function (key) {
+  Object.keys(_curry2).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _curry__[key];
+        return _curry2[key];
       }
     });
   });
-  Object.keys(_flip_).forEach(function (key) {
+  Object.keys(_flip).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _flip_[key];
+        return _flip[key];
       }
     });
   });
-  Object.keys(_id_).forEach(function (key) {
+  Object.keys(_id).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _id_[key];
+        return _id[key];
       }
     });
   });
-  Object.keys(_negate_).forEach(function (key) {
+  Object.keys(_negate).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _negate_[key];
+        return _negate[key];
       }
     });
   });
-  Object.keys(_until_).forEach(function (key) {
+  Object.keys(_until).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _until_[key];
+        return _until[key];
       }
     });
   });

@@ -47,7 +47,7 @@ describe ('#_functionOps', function () {
             expectFunction (addAllInArray);
             expectEqual(addAllInArray([1, 2, 3, 4, 5]), 15);
         });
-        it ('should call a _functionOps passed into it with args listOps passed in as second parameter', function () {
+        it ('should call a _functionOps passed into it with args _listOps passed in as second parameter', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
     });

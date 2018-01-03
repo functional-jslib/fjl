@@ -4,9 +4,9 @@
  * @private
  */
 
-import {curry} from '../uncurried/_functionOps/curry_';
+import {curry} from '../uncurried/_functionOps/_curry';
 
-import {split as _split} from '../uncurried/jsPlatform/string_';
+import {split as _split} from '../uncurried/_jsPlatform/string_';
 
 /**
  * Functional version of `String.prototype.split`.

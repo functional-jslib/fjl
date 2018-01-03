@@ -1,4 +1,4 @@
-define(['exports', './jsPlatform/list_', './jsPlatform/function_', './_functionOps/negate_', '../booleanOps', './_objectOps', './listOps/map_', './listOps/utils_'], function (exports, _list_, _function_, _negate_, _booleanOps, _objectOps, _map_, _utils_) {
+define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functionOps/_negate', '../booleanOps', './_objectOps', './_listOps/map_', './_listOps/utils_'], function (exports, _list_, _function_, _negate, _booleanOps, _objectOps, _map_, _utils_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -265,7 +265,7 @@ define(['exports', './jsPlatform/list_', './jsPlatform/function_', './_functionO
      * Returns a list of permutations for passed in list.
      *  Use caution with lists above a length of 15 (will take long due to nature of
      *  algorithm).
-     * @function module:listOps.permutations
+     * @function module:_listOps.permutations
      * @param xs {Array|String|*} - List.
      * @returns {Array<Array|String|*>} - Array of permutations.
      */
@@ -509,7 +509,7 @@ define(['exports', './jsPlatform/list_', './jsPlatform/function_', './_functionO
     takeWhile = exports.takeWhile = (pred, list) => {
         let zero = (0, _objectOps.of)(list);
         const operation = (0, _utils_.aggregatorByType)(list);
-        return (0, _utils_.reduceUntil)((0, _negate_.negateP)(pred), // predicate
+        return (0, _utils_.reduceUntil)((0, _negate.negateP)(pred), // predicate
         operation, // operation
         zero, // aggregator
         list);
@@ -557,7 +557,7 @@ define(['exports', './jsPlatform/list_', './jsPlatform/function_', './_functionO
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     span = exports.span = (pred, list) => {
-        const splitPoint = (0, _utils_.findIndexWhere)((0, _negate_.negateP)(pred), list);
+        const splitPoint = (0, _utils_.findIndexWhere)((0, _negate.negateP)(pred), list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     },
           breakOnList = exports.breakOnList = (pred, list) => {
@@ -612,10 +612,10 @@ define(['exports', './jsPlatform/list_', './jsPlatform/function_', './_functionO
         if (!(0, _objectOps.length)(list)) {
             return [(0, _objectOps.of)(list), (0, _objectOps.of)(list)];
         }
-        return [filter(pred, list), filter((0, _negate_.negateP)(pred), list)];
+        return [filter(pred, list), filter((0, _negate.negateP)(pred), list)];
     },
           elem = exports.elem = _list_.includes,
-          notElem = exports.notElem = (0, _negate_.negateF)(_list_.includes),
+          notElem = exports.notElem = (0, _negate.negateF)(_list_.includes),
           lookup = exports.lookup = at,
           isPrefixOf = exports.isPrefixOf = (xs1, xs2) => {
         const limit1 = (0, _objectOps.length)(xs1),

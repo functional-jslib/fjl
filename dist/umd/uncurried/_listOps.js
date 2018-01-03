@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './jsPlatform/list_', './jsPlatform/function_', './_functionOps/negate_', '../booleanOps', './_objectOps', './listOps/map_', './listOps/utils_'], factory);
+        define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functionOps/_negate', '../booleanOps', './_objectOps', './_listOps/map_', './_listOps/utils_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./jsPlatform/list_'), require('./jsPlatform/function_'), require('./_functionOps/negate_'), require('../booleanOps'), require('./_objectOps'), require('./listOps/map_'), require('./listOps/utils_'));
+        factory(exports, require('./_jsPlatform/list_'), require('./_jsPlatform/function_'), require('./_functionOps/_negate'), require('../booleanOps'), require('./_objectOps'), require('./_listOps/map_'), require('./_listOps/utils_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.list_, global.function_, global.negate_, global.booleanOps, global._objectOps, global.map_, global.utils_);
+        factory(mod.exports, global.list_, global.function_, global._negate, global.booleanOps, global._objectOps, global.map_, global.utils_);
         global._listOps = mod.exports;
     }
-})(this, function (exports, _list_, _function_, _negate_, _booleanOps, _objectOps, _map_, _utils_) {
+})(this, function (exports, _list_, _function_, _negate, _booleanOps, _objectOps, _map_, _utils_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -336,7 +336,7 @@
      * Returns a list of permutations for passed in list.
      *  Use caution with lists above a length of 15 (will take long due to nature of
      *  algorithm).
-     * @function module:listOps.permutations
+     * @function module:_listOps.permutations
      * @param xs {Array|String|*} - List.
      * @returns {Array<Array|String|*>} - Array of permutations.
      */
@@ -594,7 +594,7 @@
     takeWhile = exports.takeWhile = function takeWhile(pred, list) {
         var zero = (0, _objectOps.of)(list);
         var operation = (0, _utils_.aggregatorByType)(list);
-        return (0, _utils_.reduceUntil)((0, _negate_.negateP)(pred), // predicate
+        return (0, _utils_.reduceUntil)((0, _negate.negateP)(pred), // predicate
         operation, // operation
         zero, // aggregator
         list);
@@ -646,7 +646,7 @@
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     span = exports.span = function span(pred, list) {
-        var splitPoint = (0, _utils_.findIndexWhere)((0, _negate_.negateP)(pred), list);
+        var splitPoint = (0, _utils_.findIndexWhere)((0, _negate.negateP)(pred), list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     },
         breakOnList = exports.breakOnList = function breakOnList(pred, list) {
@@ -701,10 +701,10 @@
         if (!(0, _objectOps.length)(list)) {
             return [(0, _objectOps.of)(list), (0, _objectOps.of)(list)];
         }
-        return [filter(pred, list), filter((0, _negate_.negateP)(pred), list)];
+        return [filter(pred, list), filter((0, _negate.negateP)(pred), list)];
     },
         elem = exports.elem = _list_.includes,
-        notElem = exports.notElem = (0, _negate_.negateF)(_list_.includes),
+        notElem = exports.notElem = (0, _negate.negateF)(_list_.includes),
         lookup = exports.lookup = at,
         isPrefixOf = exports.isPrefixOf = function isPrefixOf(xs1, xs2) {
         var limit1 = (0, _objectOps.length)(xs1),

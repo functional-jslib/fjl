@@ -1,4 +1,4 @@
-define(['exports', './uncurried/_utils', './uncurried/_functionOps/curry_'], function (exports, _utils, _curry_) {
+define(['exports', './uncurried/_utils', './uncurried/_functionOps/_curry'], function (exports, _utils, _curry) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -20,7 +20,7 @@ define(['exports', './uncurried/_utils', './uncurried/_functionOps/curry_'], fun
      * @private
      */
 
-    const fPureTakesOne_ = exports.fPureTakesOne_ = name => (0, _curry_.curry)((arg, f) => f[name](arg)),
-          fPureTakes2_ = exports.fPureTakes2_ = name => (0, _curry_.curry)((arg1, arg2, f) => f[name](arg1, arg2)),
-          fPureTakesOneOrMore_ = exports.fPureTakesOneOrMore_ = name => (0, _curry_.curry2)((f, ...args) => f[name](...args));
+    const fPureTakesOne_ = exports.fPureTakesOne_ = name => (0, _curry.curry)((arg, f) => f[name](arg)),
+          fPureTakes2_ = exports.fPureTakes2_ = name => (0, _curry.curry)((arg1, arg2, f) => f[name](arg1, arg2)),
+          fPureTakesOneOrMore_ = exports.fPureTakesOneOrMore_ = name => (0, _curry.curry2)((f, ...args) => f[name](...args));
 });

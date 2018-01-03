@@ -11,7 +11,7 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {apply} from '../src/uncurried/jsPlatform/function_';
+import {apply} from '../src/uncurried/_jsPlatform/function_';
 import {
     /*_objComplement as */objComplement,
     /*_objDifference as */objDifference,
@@ -136,10 +136,10 @@ describe ('#objectOps_', function () {
     });
 
     describe('#isArray', function () {
-        it ('should return `true` when given value is an listOps', function () {
+        it ('should return `true` when given value is an _listOps', function () {
             expectTrue(isArray([]));
         });
-        it ('should return `false` when given value is not an listOps', function () {
+        it ('should return `false` when given value is not an _listOps', function () {
             expectFalse(isArray(function () {}));
         });
     });

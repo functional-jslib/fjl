@@ -2,7 +2,7 @@
  * Created by elyde on 1/20/2017.
  */
 
-import {typeOf, typeOfIs} from '../../src/objectOps/typeOf';
+import {typeOf, typeOfIs} from '../../src/_objectOps/typeOf';
 
 const typesListToString = types => types.reduce((agg, Type, index) => {
     let typeName = Type instanceof Function ? Type.name : Type;

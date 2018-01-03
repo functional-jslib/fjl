@@ -460,7 +460,7 @@ var aggregatorByType = function aggregatorByType(x) {
 };
 
 /**
- * @function module:listOps.map
+ * @function module:_listOps.map
  * @param fn {Function} - Function to map on functor item(s).
  * @param xs {Array|String|*} - Functor.
  * @returns {Array|String|*} - Functor type that is passed in.
@@ -1561,14 +1561,14 @@ var isType$$1 = curry(isType$1);
 
 /**
  * Checks if `value` is an es2015 `class`.
- * @function module:objectOps.isClass
+ * @function module:_objectOps.isClass
  * @param x {*}
  * @returns {boolean}
  */
 
 /**
  * Returns a booleanOps depicting whether a value is callable or not.
- * @function module:objectOps.isCallable
+ * @function module:_objectOps.isCallable
  * @tentative
  * @private
  * @param x {*}
@@ -1577,84 +1577,84 @@ var isType$$1 = curry(isType$1);
 
 /**
  * Checks if value is an arrayOps.
- * @function module:objectOps.isArray
+ * @function module:_objectOps.isArray
  * @param value {*}
  * @returns {boolean}
  */
 
 /**
  * Checks whether value is an object or not.
- * @function module:objectOps.isObject
+ * @function module:_objectOps.isObject
  * @param value
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is a booleanOps.
- * @function module:objectOps.isBoolean
+ * @function module:_objectOps.isBoolean
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is a valid number (also checks if isNaN so that you don't have to).
- * @function module:objectOps.isNumber
+ * @function module:_objectOps.isNumber
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is a stringOps or not.
- * @function module:objectOps.isString
+ * @function module:_objectOps.isString
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is of `Map` or not.
- * @function module:objectOps.isMap
+ * @function module:_objectOps.isMap
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is of `Set` or not.
- * @function module:objectOps.isSet
+ * @function module:_objectOps.isSet
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is of `WeakMap` or not.
- * @function module:objectOps.isWeakMap
+ * @function module:_objectOps.isWeakMap
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks whether value is of `WeakSet` or not.
- * @function module:objectOps.isWeakSet
+ * @function module:_objectOps.isWeakSet
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is undefined.
- * @function module:objectOps.isUndefined
+ * @function module:_objectOps.isUndefined
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is null.
- * @function module:objectOps.isNull
+ * @function module:_objectOps.isNull
  * @param value {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if value is a `Symbol`.
- * @function module:objectOps.isSymbol
+ * @function module:_objectOps.isSymbol
  * @param value {*}
  * @returns {Boolean}
  */
@@ -1668,42 +1668,42 @@ var isType$$1 = curry(isType$1);
  * Checks if given `x` is one of the four
  * "usable" immutable JS primitives; I.e.,
  *  One of [String, Boolean, Number, Symbol]
- * @function module:objectOps.isUsableImmutablePrimitive
+ * @function module:_objectOps.isUsableImmutablePrimitive
  * @param x {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if !length.
- * @function module:objectOps.isEmptyList
+ * @function module:_objectOps.isEmptyList
  * @param x {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if object has own properties/enumerable-props or not.
- * @function module:objectOps.isEmptyObject
+ * @function module:_objectOps.isEmptyObject
  * @param obj {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
- * @function module:objectOps.isEmptyCollection
+ * @function module:_objectOps.isEmptyCollection
  * @param x {*}
  * @returns {Boolean}
  */
 
 /**
  * Checks to see if passed in argument is empty.
- * @function module:objectOps.isEmpty
+ * @function module:_objectOps.isEmpty
  * @param value {*} - Value to check.
  * @returns {Boolean}
  */
 
 /**
  * Returns whether passed in values is defined and not null.
- * @function module:objectOps.isset
+ * @function module:_objectOps.isset
  * @param x {*}
  * @returns {Boolean}
  */
@@ -1773,12 +1773,12 @@ function isPlaceHolder(instance) {
 }
 
 /**
- * Replaces `placeholder` values in `listOps`.
+ * Replaces `placeholder` values in `_listOps`.
  * @function replacePlaceHolder
  * @private
  * @param array {Array} - Array to replace placeholders in.
  * @param args {Array} - Args from to choose from to replace placeholders.
- * @returns {Array|*} - Returns passed in `listOps` with placeholders replaced by values in `args`.
+ * @returns {Array|*} - Returns passed in `_listOps` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders(array, args) {
   var out = map(function (element) {
@@ -2048,7 +2048,7 @@ var unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Tue Jan 02 2018 23:18:33 GMT-0500 (Eastern Standard Time) 
+ * Generated Tue Jan 02 2018 23:28:55 GMT-0500 (Eastern Standard Time) 
  */
 
 var version = '0.18.2';

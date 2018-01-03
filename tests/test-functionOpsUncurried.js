@@ -40,7 +40,7 @@ describe ('#functionOps_', function () {
         it ('should be a function', function () {
             expectFunction(apply);
         });
-        it ('should call a function passed into it with args listOps passed in as second parameter', function () {
+        it ('should call a function passed into it with args _listOps passed in as second parameter', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
     });

@@ -2,8 +2,8 @@
  * @module jsPlatform_
  * @private
  */
-export * from './jsPlatform/object_';
-export * from './jsPlatform/array_';
-export * from './jsPlatform/list_';
-export * from './jsPlatform/string_';
-export * from './jsPlatform/function_';
+export * from './_jsPlatform/object_';
+export * from './_jsPlatform/array_';
+export * from './_jsPlatform/list_';
+export * from './_jsPlatform/string_';
+export * from './_jsPlatform/function_';

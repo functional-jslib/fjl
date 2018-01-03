@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _function_ = require('./jsPlatform/function_');
+var _function_ = require('./_jsPlatform/function_');
 
 Object.defineProperty(exports, 'apply', {
   enumerable: true,
@@ -19,86 +19,86 @@ Object.defineProperty(exports, 'call', {
   }
 });
 
-var _compose_ = require('./_functionOps/compose_');
+var _compose = require('./_functionOps/_compose');
 
-Object.keys(_compose_).forEach(function (key) {
+Object.keys(_compose).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _compose_[key];
+      return _compose[key];
     }
   });
 });
 
-var _curry_ = require('./_functionOps/curry_');
+var _curry = require('./_functionOps/_curry');
 
-Object.keys(_curry_).forEach(function (key) {
+Object.keys(_curry).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _curry_[key];
+      return _curry[key];
     }
   });
 });
 
-var _curry__ = require('./_functionOps/curry__');
+var _curry2 = require('./_functionOps/__curry');
 
-Object.keys(_curry__).forEach(function (key) {
+Object.keys(_curry2).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _curry__[key];
+      return _curry2[key];
     }
   });
 });
 
-var _flip_ = require('./_functionOps/flip_');
+var _flip = require('./_functionOps/_flip');
 
-Object.keys(_flip_).forEach(function (key) {
+Object.keys(_flip).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _flip_[key];
+      return _flip[key];
     }
   });
 });
 
-var _id_ = require('./_functionOps/id_');
+var _id = require('./_functionOps/_id');
 
-Object.keys(_id_).forEach(function (key) {
+Object.keys(_id).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _id_[key];
+      return _id[key];
     }
   });
 });
 
-var _negate_ = require('./_functionOps/negate_');
+var _negate = require('./_functionOps/_negate');
 
-Object.keys(_negate_).forEach(function (key) {
+Object.keys(_negate).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _negate_[key];
+      return _negate[key];
     }
   });
 });
 
-var _until_ = require('./_functionOps/until_');
+var _until = require('./_functionOps/_until');
 
-Object.keys(_until_).forEach(function (key) {
+Object.keys(_until).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _until_[key];
+      return _until[key];
     }
   });
 });
