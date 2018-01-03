@@ -19,7 +19,7 @@ var _list_ = require('./jsPlatform/list_');
 
 var _function_ = require('./jsPlatform/function_');
 
-var _negate_ = require('./functionOps/negate_');
+var _negate_ = require('./_functionOps/negate_');
 
 var _booleanOps = require('../booleanOps');
 

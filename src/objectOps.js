@@ -1,7 +1,7 @@
 /**
  * @module objectOps
  */
-import {curry, curry2} from './uncurried/functionOps/curry_';
+import {curry, curry2} from './uncurried/_functionOps/curry_';
 import {
     instanceOf as _instanceOf,
     hasOwnProperty as _hasOwnProperty,
@@ -65,10 +65,10 @@ export const
 
     /**
      * Type checker.  Note** The `Type` passed in, if a constructor, should
-     * be a named constructor/functionOps-instance;  E.g.,
+     * be a named constructor/_functionOps-instance;  E.g.,
      * ```
-     *  functionOps SomeName () {} // or
-     *  var SomeName = functionOps SomeName () {} // or
+     *  _functionOps SomeName () {} // or
+     *  var SomeName = _functionOps SomeName () {} // or
      *  class SomeName {}
      * ```
      * @function module:objectOps.isType

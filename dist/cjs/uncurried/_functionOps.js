@@ -19,7 +19,7 @@ Object.defineProperty(exports, 'call', {
   }
 });
 
-var _compose_ = require('./functionOps/compose_');
+var _compose_ = require('./_functionOps/compose_');
 
 Object.keys(_compose_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -31,7 +31,7 @@ Object.keys(_compose_).forEach(function (key) {
   });
 });
 
-var _curry_ = require('./functionOps/curry_');
+var _curry_ = require('./_functionOps/curry_');
 
 Object.keys(_curry_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -43,7 +43,7 @@ Object.keys(_curry_).forEach(function (key) {
   });
 });
 
-var _curry__ = require('./functionOps/curry__');
+var _curry__ = require('./_functionOps/curry__');
 
 Object.keys(_curry__).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -55,7 +55,7 @@ Object.keys(_curry__).forEach(function (key) {
   });
 });
 
-var _flip_ = require('./functionOps/flip_');
+var _flip_ = require('./_functionOps/flip_');
 
 Object.keys(_flip_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -67,7 +67,7 @@ Object.keys(_flip_).forEach(function (key) {
   });
 });
 
-var _id_ = require('./functionOps/id_');
+var _id_ = require('./_functionOps/id_');
 
 Object.keys(_id_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -79,7 +79,7 @@ Object.keys(_id_).forEach(function (key) {
   });
 });
 
-var _negate_ = require('./functionOps/negate_');
+var _negate_ = require('./_functionOps/negate_');
 
 Object.keys(_negate_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -91,7 +91,7 @@ Object.keys(_negate_).forEach(function (key) {
   });
 });
 
-var _until_ = require('./functionOps/until_');
+var _until_ = require('./_functionOps/until_');
 
 Object.keys(_until_).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

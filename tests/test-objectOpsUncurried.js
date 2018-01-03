@@ -30,7 +30,7 @@ import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, de
 describe ('#objectOps_', function () {
 
     describe('#hasOwnProperty', function () {
-        it ('should be a functionOps', function () {
+        it ('should be a _functionOps', function () {
             expectFunction(hasOwnProperty);
         });
         it ('should return true when passed in object has the passed in property name', function () {
@@ -45,10 +45,10 @@ describe ('#objectOps_', function () {
     });
 
     describe('#typeOf', function () {
-        it ('should be a functionOps', function () {
+        it ('should be a _functionOps', function () {
             expectFunction(typeOf);
         });
-        it ('should return a functionOps when no value is passed in (is curried)', function () {
+        it ('should return a _functionOps when no value is passed in (is curried)', function () {
             expectEqual(typeOf(), 'Undefined');
         });
         it ('should return the passed type\'s name', function () {
@@ -68,7 +68,7 @@ describe ('#objectOps_', function () {
     });
 
     describe('#isType', function () {
-        it ('should be a functionOps', function () {
+        it ('should be a _functionOps', function () {
             expectFunction(isType);
         });
         it ('should return `true` when passed in value is of passed in type name/stringOps', function () {
@@ -125,11 +125,11 @@ describe ('#objectOps_', function () {
     });
 
     describe('#isFunction', function () {
-        it('should return true if value is a functionOps', function () {
+        it('should return true if value is a _functionOps', function () {
             [() => {}, Math.pow, console.log, function () {}]
                 .forEach(value => expectTrue(isFunction(value)));
         });
-        it('should return `false` when value is not a functionOps', function () {
+        it('should return `false` when value is not a _functionOps', function () {
             [-1, 0, 1, [], {}, 'abc']
                 .forEach(value => expectFalse(isFunction(value)));
         });
@@ -336,7 +336,7 @@ describe ('#objectOps_', function () {
     });
 
     describe('#objComplement', function () {
-        it('should be a functionOps', function () {
+        it('should be a _functionOps', function () {
             expectFunction(objComplement);
         });
         it('should return an object with only properties not found in the first obj', function () {
@@ -357,7 +357,7 @@ describe ('#objectOps_', function () {
 
     describe('#objDifference', function () {
 
-        it('should be a functionOps', function () {
+        it('should be a _functionOps', function () {
             expectFunction(objDifference);
         });
 
@@ -376,7 +376,7 @@ describe ('#objectOps_', function () {
     });
 
     describe('#objUnion', function () {
-        it('should be a functionOps', function () {
+        it('should be a _functionOps', function () {
             expectFunction(objUnion);
         });
         it ('should return an object containing all properties from the two objects passed in', function () {
@@ -392,7 +392,7 @@ describe ('#objectOps_', function () {
     });
 
     describe('#objIntersect', function () {
-        it('should be a functionOps', function () {
+        it('should be a _functionOps', function () {
             expectFunction(objUnion);
         });
         it ('should return an object that contains values from both passed in objects', function () {

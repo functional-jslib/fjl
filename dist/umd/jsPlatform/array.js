@@ -26,7 +26,7 @@
   var
 
   /**
-   * Maps a functionOps to functor (listOps etc.).
+   * Maps a _functionOps to functor (listOps etc.).
    * @function module:jsPlatform_array.map
    * @param fn {Function}
    * @param functor {Array|{map: {Function}}}
@@ -36,7 +36,7 @@
 
 
   /**
-   * Filters a functor (listOps etc.) with passed in functionOps.
+   * Filters a functor (listOps etc.) with passed in _functionOps.
    * @function module:jsPlatform_array.filter
    * @param fn {Function}
    * @param functor {Array|{filter: {Function}}}
@@ -46,7 +46,7 @@
 
 
   /**
-   * Reduces a foldable (listOps etc.) with passed in functionOps.
+   * Reduces a foldable (listOps etc.) with passed in _functionOps.
    * @function module:jsPlatform_array.reduce
    * @param fn {Function}
    * @param functor {Array|{reduce: {Function}}}
@@ -56,7 +56,7 @@
 
 
   /**
-   * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
+   * Reduces a foldable (listOps etc.) from the right with passed in _functionOps.
    * @function module:jsPlatform_array.reduceRight
    * @param fn {Function}
    * @param functor {Array|{reduceRight: {Function}}}

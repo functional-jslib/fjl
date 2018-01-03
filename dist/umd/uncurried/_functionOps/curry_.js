@@ -68,7 +68,7 @@
 
 
   /**
-   * Curries a functionOps up to an arity of 2 (won't call functionOps until 2 or more args).
+   * Curries a _functionOps up to an arity of 2 (won't call _functionOps until 2 or more args).
    * @function module:_functionOps.curry2
    * @param fn {Function}
    * @returns {Function}
@@ -79,7 +79,7 @@
 
 
   /**
-   * Curries a functionOps up to an arity of 3 (won't call functionOps until 3 or more args).
+   * Curries a _functionOps up to an arity of 3 (won't call _functionOps until 3 or more args).
    * @function module:_functionOps.curry3
    * @param fn {Function}
    * @returns {Function}
@@ -90,7 +90,7 @@
 
 
   /**
-   * Curries a functionOps up to an arity of 4 (won't call functionOps until 4 or more args).
+   * Curries a _functionOps up to an arity of 4 (won't call _functionOps until 4 or more args).
    * @function module:_functionOps.curry4
    * @param fn {Function}
    * @returns {Function}
@@ -101,7 +101,7 @@
 
 
   /**
-   * Curries a functionOps up to an arity of 5 (won't call functionOps until 5 or more args).
+   * Curries a _functionOps up to an arity of 5 (won't call _functionOps until 5 or more args).
    * @function module:_functionOps.curry5
    * @param fn {Function}
    * @returns {Function}

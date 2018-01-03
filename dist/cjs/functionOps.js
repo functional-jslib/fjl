@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.flip5 = exports.flip4 = exports.flip3 = exports.flip = exports.flipN = exports.until = exports.call = exports.apply = exports._flipN = exports._flip5 = exports._flip4 = exports._flip3 = exports._flip = exports._until = exports._call = exports._apply = undefined;
 
-var _curry_ = require('./uncurried/functionOps/curry_');
+var _curry_ = require('./uncurried/_functionOps/curry_');
 
 Object.keys(_curry_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -17,7 +17,7 @@ Object.keys(_curry_).forEach(function (key) {
     });
 });
 
-var _curry__ = require('./uncurried/functionOps/curry__');
+var _curry__ = require('./uncurried/_functionOps/curry__');
 
 Object.keys(_curry__).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -29,7 +29,7 @@ Object.keys(_curry__).forEach(function (key) {
     });
 });
 
-var _negate_ = require('./uncurried/functionOps/negate_');
+var _negate_ = require('./uncurried/_functionOps/negate_');
 
 Object.keys(_negate_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -41,7 +41,7 @@ Object.keys(_negate_).forEach(function (key) {
     });
 });
 
-var _id_ = require('./uncurried/functionOps/id_');
+var _id_ = require('./uncurried/_functionOps/id_');
 
 Object.keys(_id_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -53,7 +53,7 @@ Object.keys(_id_).forEach(function (key) {
     });
 });
 
-var _compose_ = require('./uncurried/functionOps/compose_');
+var _compose_ = require('./uncurried/_functionOps/compose_');
 
 Object.keys(_compose_).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -67,9 +67,9 @@ Object.keys(_compose_).forEach(function (key) {
 
 var _jsPlatform = require('./uncurried/_jsPlatform');
 
-var _until_ = require('./uncurried/functionOps/until_');
+var _until_ = require('./uncurried/_functionOps/until_');
 
-var _flip_ = require('./uncurried/functionOps/flip_');
+var _flip_ = require('./uncurried/_functionOps/flip_');
 
 exports._apply = _jsPlatform.apply;
 exports._call = _jsPlatform.call;
@@ -86,8 +86,8 @@ exports._flipN = _flip_.flipN; /**
 var
 
 /**
- * Functional `apply` functionOps (takes no context).
- * @function module:functionOps.apply
+ * Functional `apply` _functionOps (takes no context).
+ * @function module:_functionOps.apply
  * @param fn {Function}
  * @param args {*}
  * @returns {*}
@@ -135,7 +135,7 @@ flipN = exports.flipN = function flipN(fn) {
 
 
 /**
- * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
+ * Flips a _functionOps's first and second arguments and and returns a new _functionOps requiring said arguments in reverse.
  * @function module:fnOperators.flip
  * @param fn {Function}
  * @returns {Function}

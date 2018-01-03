@@ -28,12 +28,12 @@ describe('monad.Monad', function () {
 
     describe('Construction', function () {
 
-        it('should return `Monad` when called as a functionOps and passed in value is `null` or `undefined`', function () {
+        it('should return `Monad` when called as a _functionOps and passed in value is `null` or `undefined`', function () {
             let result = Monad();
             expectMonad(result);
         });
 
-        it('should return `Monad` when called as a functionOps and passed in value is not `null` and not `undefined`', function () {
+        it('should return `Monad` when called as a _functionOps and passed in value is not `null` and not `undefined`', function () {
             let result = Monad('something');
             expectMonad(result);
         });
@@ -86,7 +86,7 @@ describe('monad.Monad', function () {
         });
 
         it('should return a new instance of Functor that contains the return value ' +
-            'of passed in functionOps\'s call', function () {
+            'of passed in _functionOps\'s call', function () {
             let result = Monad(99).map(num => num * 2);
             expectMonad(result);
             expect(result.value).to.equal(99 * 2);
@@ -103,7 +103,7 @@ describe('monad.Monad', function () {
     });
 
     describe('#chain', function () {
-        it('should map incoming functionOps over it\'s value and flatten it result if it is nested within an ' +
+        it('should map incoming _functionOps over it\'s value and flatten it result if it is nested within an ' +
             'instance of it\'s own type', function () {
             let addReturnsChain = value => Monad(add(1, value)),
                 instance = Monad(99),

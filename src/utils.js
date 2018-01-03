@@ -4,7 +4,7 @@
  * @private
  */
 
-import {curry, curry2} from './uncurried/functionOps/curry_';
+import {curry, curry2} from './uncurried/_functionOps/curry_';
 export * from './uncurried/_utils';
 export const
 

@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './jsPlatform/function_', './functionOps/compose_', './functionOps/curry_', './functionOps/curry__', './functionOps/flip_', './functionOps/id_', './functionOps/negate_', './functionOps/until_'], factory);
+    define(['exports', './jsPlatform/function_', './_functionOps/compose_', './_functionOps/curry_', './_functionOps/curry__', './_functionOps/flip_', './_functionOps/id_', './_functionOps/negate_', './_functionOps/until_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./jsPlatform/function_'), require('./functionOps/compose_'), require('./functionOps/curry_'), require('./functionOps/curry__'), require('./functionOps/flip_'), require('./functionOps/id_'), require('./functionOps/negate_'), require('./functionOps/until_'));
+    factory(exports, require('./jsPlatform/function_'), require('./_functionOps/compose_'), require('./_functionOps/curry_'), require('./_functionOps/curry__'), require('./_functionOps/flip_'), require('./_functionOps/id_'), require('./_functionOps/negate_'), require('./_functionOps/until_'));
   } else {
     var mod = {
       exports: {}

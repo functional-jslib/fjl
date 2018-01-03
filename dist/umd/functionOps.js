@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/curry__', './uncurried/functionOps/negate_', './uncurried/functionOps/id_', './uncurried/functionOps/compose_', './uncurried/_jsPlatform', './uncurried/functionOps/until_', './uncurried/functionOps/flip_'], factory);
+        define(['exports', './uncurried/_functionOps/curry_', './uncurried/_functionOps/curry__', './uncurried/_functionOps/negate_', './uncurried/_functionOps/id_', './uncurried/_functionOps/compose_', './uncurried/_jsPlatform', './uncurried/_functionOps/until_', './uncurried/_functionOps/flip_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./uncurried/functionOps/curry_'), require('./uncurried/functionOps/curry__'), require('./uncurried/functionOps/negate_'), require('./uncurried/functionOps/id_'), require('./uncurried/functionOps/compose_'), require('./uncurried/_jsPlatform'), require('./uncurried/functionOps/until_'), require('./uncurried/functionOps/flip_'));
+        factory(exports, require('./uncurried/_functionOps/curry_'), require('./uncurried/_functionOps/curry__'), require('./uncurried/_functionOps/negate_'), require('./uncurried/_functionOps/id_'), require('./uncurried/_functionOps/compose_'), require('./uncurried/_jsPlatform'), require('./uncurried/_functionOps/until_'), require('./uncurried/_functionOps/flip_'));
     } else {
         var mod = {
             exports: {}
@@ -73,8 +73,8 @@
     var
 
     /**
-     * Functional `apply` functionOps (takes no context).
-     * @function module:functionOps.apply
+     * Functional `apply` _functionOps (takes no context).
+     * @function module:_functionOps.apply
      * @param fn {Function}
      * @param args {*}
      * @returns {*}
@@ -122,7 +122,7 @@
 
 
     /**
-     * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
+     * Flips a _functionOps's first and second arguments and and returns a new _functionOps requiring said arguments in reverse.
      * @function module:fnOperators.flip
      * @param fn {Function}
      * @returns {Function}

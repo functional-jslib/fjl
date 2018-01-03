@@ -3,10 +3,10 @@
  * @private
  */
 export {apply, call} from './jsPlatform/function_';
-export * from './functionOps/compose_';
-export * from './functionOps/curry_';
-export * from './functionOps/curry__';
-export * from './functionOps/flip_';
-export * from './functionOps/id_';
-export * from './functionOps/negate_';
-export * from './functionOps/until_';
+export * from './_functionOps/compose_';
+export * from './_functionOps/curry_';
+export * from './_functionOps/curry__';
+export * from './_functionOps/flip_';
+export * from './_functionOps/id_';
+export * from './_functionOps/negate_';
+export * from './_functionOps/until_';

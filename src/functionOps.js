@@ -3,7 +3,7 @@
  * @module functionOps
  */
 
-import {curry, curry2, curry3} from './uncurried/functionOps/curry_';
+import {curry, curry2, curry3} from './uncurried/_functionOps/curry_';
 
 import {
     apply as _apply,
@@ -12,7 +12,7 @@ import {
 
 import {
     until as _until
-} from './uncurried/functionOps/until_';
+} from './uncurried/_functionOps/until_';
 
 import {
     flip as _flip,
@@ -20,21 +20,21 @@ import {
     flip3 as _flip3,
     flip4 as _flip4,
     flip5 as _flip5
-} from './uncurried/functionOps/flip_';
+} from './uncurried/_functionOps/flip_';
 
-export * from './uncurried/functionOps/curry_';
-export * from './uncurried/functionOps/curry__';
-export * from './uncurried/functionOps/negate_';
-export * from './uncurried/functionOps/id_';
-export * from './uncurried/functionOps/compose_';
+export * from './uncurried/_functionOps/curry_';
+export * from './uncurried/_functionOps/curry__';
+export * from './uncurried/_functionOps/negate_';
+export * from './uncurried/_functionOps/id_';
+export * from './uncurried/_functionOps/compose_';
 
 export {_apply, _call, _until, _flip, _flip3, _flip4, _flip5,  _flipN};
 
 export const
 
     /**
-     * Functional `apply` functionOps (takes no context).
-     * @function module:functionOps.apply
+     * Functional `apply` _functionOps (takes no context).
+     * @function module:_functionOps.apply
      * @param fn {Function}
      * @param args {*}
      * @returns {*}
@@ -70,7 +70,7 @@ export const
     flipN = fn => curry3((...args) => apply(fn, reverse(args))),
 
     /**
-     * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
+     * Flips a _functionOps's first and second arguments and and returns a new _functionOps requiring said arguments in reverse.
      * @function module:fnOperators.flip
      * @param fn {Function}
      * @returns {Function}

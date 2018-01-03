@@ -13,7 +13,7 @@ describe ('Resource', function () {
         it ('should require a `resourceId` to pass construction', function () {
             assert.throws(Resource, TypeError);
         });
-        it ('should pass construction successfully when called as a functionOps and supplying a `resourceId`', function () {
+        it ('should pass construction successfully when called as a _functionOps and supplying a `resourceId`', function () {
             expectInstanceOf(Resource('helloWorld'));
         });
         it ('should pass construction successfully when called with `new` and supplying a `resourceId`', function () {

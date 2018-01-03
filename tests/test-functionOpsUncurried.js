@@ -131,7 +131,7 @@ describe ('#functionOps_', function () {
 
     describe('#compose', function () {
 
-        it ('should be of type functionOps.', function () {
+        it ('should be of type _functionOps.', function () {
             expect(compose).to.be.instanceOf(Function);
         });
 
@@ -147,7 +147,7 @@ describe ('#functionOps_', function () {
         });
 
         it ('should be able to compose an arbitrary numberOps of functions and execute them as expected ' +
-            'from generated functionOps.', function () {
+            'from generated _functionOps.', function () {
             let min = curry2(Math.min),
                 max = curry2(Math.max),
                 pow = curry2(Math.pow),

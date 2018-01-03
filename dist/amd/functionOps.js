@@ -1,4 +1,4 @@
-define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/curry__', './uncurried/functionOps/negate_', './uncurried/functionOps/id_', './uncurried/functionOps/compose_', './uncurried/_jsPlatform', './uncurried/functionOps/until_', './uncurried/functionOps/flip_'], function (exports, _curry_, _curry__, _negate_, _id_, _compose_, _jsPlatform, _until_, _flip_) {
+define(['exports', './uncurried/_functionOps/curry_', './uncurried/_functionOps/curry__', './uncurried/_functionOps/negate_', './uncurried/_functionOps/id_', './uncurried/_functionOps/compose_', './uncurried/_jsPlatform', './uncurried/_functionOps/until_', './uncurried/_functionOps/flip_'], function (exports, _curry_, _curry__, _negate_, _id_, _compose_, _jsPlatform, _until_, _flip_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -61,8 +61,8 @@ define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/cu
     const
 
     /**
-     * Functional `apply` functionOps (takes no context).
-     * @function module:functionOps.apply
+     * Functional `apply` _functionOps (takes no context).
+     * @function module:_functionOps.apply
      * @param fn {Function}
      * @param args {*}
      * @returns {*}
@@ -102,7 +102,7 @@ define(['exports', './uncurried/functionOps/curry_', './uncurried/functionOps/cu
 
 
     /**
-     * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
+     * Flips a _functionOps's first and second arguments and and returns a new _functionOps requiring said arguments in reverse.
      * @function module:fnOperators.flip
      * @param fn {Function}
      * @returns {Function}

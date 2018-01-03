@@ -1,4 +1,4 @@
-define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/typeOf_', './uncurried/objectOps/of_', './uncurried/objectOps/is_', './uncurried/functionOps/curry_', './uncurried/objectOps/prop_', './uncurried/objectOps/assignDeep_', './uncurried/objectOps/setTheory_'], function (exports, _object_, _typeOf_, _of_, _is_, _curry_, _prop_, _assignDeep_, _setTheory_) {
+define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/typeOf_', './uncurried/objectOps/of_', './uncurried/objectOps/is_', './uncurried/_functionOps/curry_', './uncurried/objectOps/prop_', './uncurried/objectOps/assignDeep_', './uncurried/objectOps/setTheory_'], function (exports, _object_, _typeOf_, _of_, _is_, _curry_, _prop_, _assignDeep_, _setTheory_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -200,10 +200,10 @@ define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/type
 
     /**
      * Type checker.  Note** The `Type` passed in, if a constructor, should
-     * be a named constructor/functionOps-instance;  E.g.,
+     * be a named constructor/_functionOps-instance;  E.g.,
      * ```
-     *  functionOps SomeName () {} // or
-     *  var SomeName = functionOps SomeName () {} // or
+     *  _functionOps SomeName () {} // or
+     *  var SomeName = _functionOps SomeName () {} // or
      *  class SomeName {}
      * ```
      * @function module:objectOps.isType

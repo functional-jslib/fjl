@@ -8,7 +8,7 @@ define(['exports', '../_utils'], function (exports, _utils) {
   const
 
   /**
-   * Array.prototype.reverse generator (generates a functionOps that calls the prototype version or a
+   * Array.prototype.reverse generator (generates a _functionOps that calls the prototype version or a
    * shimmed version if it doesn't exist).
    * @returns {Function}
    */
@@ -19,7 +19,7 @@ define(['exports', '../_utils'], function (exports, _utils) {
 
 
   /**
-   * Maps a functionOps to functor (listOps etc.).
+   * Maps a _functionOps to functor (listOps etc.).
    * @function module:jsPlatform_array_.map
    * @param fn {Function}
    * @param functor {Array|{map: {Function}}}
@@ -29,7 +29,7 @@ define(['exports', '../_utils'], function (exports, _utils) {
 
 
   /**
-   * Filters a functor (listOps etc.) with passed in functionOps.
+   * Filters a functor (listOps etc.) with passed in _functionOps.
    * @function module:jsPlatform_array_.filter
    * @param fn {Function}
    * @param functor {Array|{filter: {Function}}}
@@ -39,7 +39,7 @@ define(['exports', '../_utils'], function (exports, _utils) {
 
 
   /**
-   * Reduces a foldable (listOps etc.) with passed in functionOps.
+   * Reduces a foldable (listOps etc.) with passed in _functionOps.
    * @function module:jsPlatform_array_.reduce
    * @param fn {Function}
    * @param functor {Array|{reduce: {Function}}}
@@ -49,7 +49,7 @@ define(['exports', '../_utils'], function (exports, _utils) {
 
 
   /**
-   * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
+   * Reduces a foldable (listOps etc.) from the right with passed in _functionOps.
    * @function module:jsPlatform_array_.reduceRight
    * @param fn {Function}
    * @param functor {Array|{reduceRight: {Function}}}

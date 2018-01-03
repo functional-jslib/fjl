@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOps/negate_', '../booleanOps', './_objectOps', './listOps/map_', './listOps/utils_'], factory);
+        define(['exports', './jsPlatform/list_', './jsPlatform/function_', './_functionOps/negate_', '../booleanOps', './_objectOps', './listOps/map_', './listOps/utils_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./jsPlatform/list_'), require('./jsPlatform/function_'), require('./functionOps/negate_'), require('../booleanOps'), require('./_objectOps'), require('./listOps/map_'), require('./listOps/utils_'));
+        factory(exports, require('./jsPlatform/list_'), require('./jsPlatform/function_'), require('./_functionOps/negate_'), require('../booleanOps'), require('./_objectOps'), require('./listOps/map_'), require('./listOps/utils_'));
     } else {
         var mod = {
             exports: {}

@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/typeOf_', './uncurried/objectOps/of_', './uncurried/objectOps/is_', './uncurried/functionOps/curry_', './uncurried/objectOps/prop_', './uncurried/objectOps/assignDeep_', './uncurried/objectOps/setTheory_'], factory);
+        define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/typeOf_', './uncurried/objectOps/of_', './uncurried/objectOps/is_', './uncurried/_functionOps/curry_', './uncurried/objectOps/prop_', './uncurried/objectOps/assignDeep_', './uncurried/objectOps/setTheory_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./uncurried/jsPlatform/object_'), require('./uncurried/objectOps/typeOf_'), require('./uncurried/objectOps/of_'), require('./uncurried/objectOps/is_'), require('./uncurried/functionOps/curry_'), require('./uncurried/objectOps/prop_'), require('./uncurried/objectOps/assignDeep_'), require('./uncurried/objectOps/setTheory_'));
+        factory(exports, require('./uncurried/jsPlatform/object_'), require('./uncurried/objectOps/typeOf_'), require('./uncurried/objectOps/of_'), require('./uncurried/objectOps/is_'), require('./uncurried/_functionOps/curry_'), require('./uncurried/objectOps/prop_'), require('./uncurried/objectOps/assignDeep_'), require('./uncurried/objectOps/setTheory_'));
     } else {
         var mod = {
             exports: {}
@@ -212,10 +212,10 @@
 
     /**
      * Type checker.  Note** The `Type` passed in, if a constructor, should
-     * be a named constructor/functionOps-instance;  E.g.,
+     * be a named constructor/_functionOps-instance;  E.g.,
      * ```
-     *  functionOps SomeName () {} // or
-     *  var SomeName = functionOps SomeName () {} // or
+     *  _functionOps SomeName () {} // or
+     *  var SomeName = _functionOps SomeName () {} // or
      *  class SomeName {}
      * ```
      * @function module:objectOps.isType

@@ -20,7 +20,7 @@
   var
 
   /**
-   * Array.prototype.reverse generator (generates a functionOps that calls the prototype version or a
+   * Array.prototype.reverse generator (generates a _functionOps that calls the prototype version or a
    * shimmed version if it doesn't exist).
    * @returns {Function}
    */
@@ -37,7 +37,7 @@
 
 
   /**
-   * Maps a functionOps to functor (listOps etc.).
+   * Maps a _functionOps to functor (listOps etc.).
    * @function module:jsPlatform_array_.map
    * @param fn {Function}
    * @param functor {Array|{map: {Function}}}
@@ -47,7 +47,7 @@
 
 
   /**
-   * Filters a functor (listOps etc.) with passed in functionOps.
+   * Filters a functor (listOps etc.) with passed in _functionOps.
    * @function module:jsPlatform_array_.filter
    * @param fn {Function}
    * @param functor {Array|{filter: {Function}}}
@@ -57,7 +57,7 @@
 
 
   /**
-   * Reduces a foldable (listOps etc.) with passed in functionOps.
+   * Reduces a foldable (listOps etc.) with passed in _functionOps.
    * @function module:jsPlatform_array_.reduce
    * @param fn {Function}
    * @param functor {Array|{reduce: {Function}}}
@@ -67,7 +67,7 @@
 
 
   /**
-   * Reduces a foldable (listOps etc.) from the right with passed in functionOps.
+   * Reduces a foldable (listOps etc.) from the right with passed in _functionOps.
    * @function module:jsPlatform_array_.reduceRight
    * @param fn {Function}
    * @param functor {Array|{reduceRight: {Function}}}

@@ -44,7 +44,7 @@ define(['exports', '../jsPlatform/array_', '../jsPlatform/function_'], function 
 
 
   /**
-   * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
+   * Flips a _functionOps's first and second arguments and and returns a new _functionOps requiring said arguments in reverse.
    * @function module:_functionOps.flip
    * @param fn {Function}
    * @returns {Function}

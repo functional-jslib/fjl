@@ -58,7 +58,7 @@ curryN = exports.curryN = function curryN(executeArity, fn) {
 
 
 /**
- * Curries a functionOps up to an arity of 2 (won't call functionOps until 2 or more args).
+ * Curries a _functionOps up to an arity of 2 (won't call _functionOps until 2 or more args).
  * @function module:_functionOps.curry2
  * @param fn {Function}
  * @returns {Function}
@@ -69,7 +69,7 @@ curry2 = exports.curry2 = function curry2(fn) {
 
 
 /**
- * Curries a functionOps up to an arity of 3 (won't call functionOps until 3 or more args).
+ * Curries a _functionOps up to an arity of 3 (won't call _functionOps until 3 or more args).
  * @function module:_functionOps.curry3
  * @param fn {Function}
  * @returns {Function}
@@ -80,7 +80,7 @@ curry3 = exports.curry3 = function curry3(fn) {
 
 
 /**
- * Curries a functionOps up to an arity of 4 (won't call functionOps until 4 or more args).
+ * Curries a _functionOps up to an arity of 4 (won't call _functionOps until 4 or more args).
  * @function module:_functionOps.curry4
  * @param fn {Function}
  * @returns {Function}
@@ -91,7 +91,7 @@ curry4 = exports.curry4 = function curry4(fn) {
 
 
 /**
- * Curries a functionOps up to an arity of 5 (won't call functionOps until 5 or more args).
+ * Curries a _functionOps up to an arity of 5 (won't call _functionOps until 5 or more args).
  * @function module:_functionOps.curry5
  * @param fn {Function}
  * @returns {Function}

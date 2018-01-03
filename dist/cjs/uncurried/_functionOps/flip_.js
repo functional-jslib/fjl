@@ -68,7 +68,7 @@ flip5 = exports.flip5 = function flip5(fn) {
 
 
 /**
- * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
+ * Flips a _functionOps's first and second arguments and and returns a new _functionOps requiring said arguments in reverse.
  * @function module:_functionOps.flip
  * @param fn {Function}
  * @returns {Function}

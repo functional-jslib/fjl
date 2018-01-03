@@ -15,7 +15,7 @@ import Functor from '../../../src/functor/Functor';
 describe ('functor.Functor', function () {
     let expectFunctor = value => expect(value).to.be.instanceOf(Functor);
 
-    it ('should return an new instance when called as a functionOps', function () {
+    it ('should return an new instance when called as a _functionOps', function () {
         expectFunctor(Functor());
     });
     it ('should construct an instance of `Functor` when called with `new`', function () {
@@ -35,7 +35,7 @@ describe ('functor.Functor', function () {
             expect(result.value).to.equal(99 * 2);
         });
         it ('should return a new instance of Functor that contains the return value ' +
-            'of passed in functionOps\'s call', function () {
+            'of passed in _functionOps\'s call', function () {
             let result = Functor(99).map(num => num * 2);
             expectFunctor(result);
             expect(result.value).to.equal(99 * 2);

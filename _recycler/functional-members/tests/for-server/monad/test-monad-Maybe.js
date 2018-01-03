@@ -23,13 +23,13 @@ describe('monad.Maybe', function () {
 
     describe('Construction:', function () {
 
-        it('should contain a `Nothing` when constructed using functionOps syntax and passed in value is `null` or `undefined`', function () {
+        it('should contain a `Nothing` when constructed using _functionOps syntax and passed in value is `null` or `undefined`', function () {
             let result = Maybe();
             expectMaybe(result);
             result.map(expectNothing);
         });
 
-        it('should contain a `Just` when constructed using functionOps syntax functionOps and passed in value is not `null` and not `undefined`', function () {
+        it('should contain a `Just` when constructed using _functionOps syntax _functionOps and passed in value is not `null` and not `undefined`', function () {
             let result = Maybe('something');
             expectMaybe(result);
             result.map(expectJust);
@@ -141,7 +141,7 @@ describe('monad.Maybe', function () {
         });
 
         describe('#chain', function () {
-            it('should map incoming functionOps over it\'s value and flatten it result if it is nested within an ' +
+            it('should map incoming _functionOps over it\'s value and flatten it result if it is nested within an ' +
                 'instance of it\'s own type', function () {
                 let addReturnsJust = value => Just(add(1, value)),
                     instance = Just(99),
@@ -179,7 +179,7 @@ describe('monad.Maybe', function () {
     });
 
     describe('#maybe', function () {
-        it ('should be a functionOps', function () {
+        it ('should be a _functionOps', function () {
             expectFunction(maybe);
         });
         it ('should return the `left` when passed in functor maps to a functor with a value of ' +

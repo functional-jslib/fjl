@@ -13,7 +13,7 @@ describe ('Role', function () {
         it ('should require a `roleId` to pass construction', function () {
             assert.throws(Role, TypeError);
         });
-        it ('should pass construction successfully when called as a functionOps and supplying a `roleId`', function () {
+        it ('should pass construction successfully when called as a _functionOps and supplying a `roleId`', function () {
             expectInstanceOf(Role('helloWorld'));
         });
         it ('should pass construction successfully when called with `new` and supplying a `roleId`', function () {

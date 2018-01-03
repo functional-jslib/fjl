@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.split = undefined;
 
-var _curry_ = require('../uncurried/functionOps/curry_');
+var _curry_ = require('../uncurried/_functionOps/curry_');
 
 var _string_ = require('../uncurried/jsPlatform/string_');
 

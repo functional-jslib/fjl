@@ -10,8 +10,8 @@ const typesListToString = types => types.reduce((agg, Type, index) => {
 }, '[');
 
 /**
- * A factory for attaching a context name to a functionOps that checks if recieved value is of given type.
- * The factory allows you to attach the context name to the returned type checker functionOps.
+ * A factory for attaching a context name to a _functionOps that checks if recieved value is of given type.
+ * The factory allows you to attach the context name to the returned type checker _functionOps.
  * @module errorIfNotTypeFactory
  * @param [contextName] {String} - Name of the context you want attached to the error message.
  * @returns {Function} - Function{key {String, value {*}, ...types {Function|Constructor}>

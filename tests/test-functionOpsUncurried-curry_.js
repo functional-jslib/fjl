@@ -12,30 +12,30 @@ import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expect
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe('#functionOps.curry_', function () {
+describe('#_functionOps.curry_', function () {
 
     // Set curry here to use below
     let multiplyRecursive = (...args) => args.reduce((agg, num) => num * agg, 1),
         addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
         divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
-    it ('should be of type functionOps.', function () {
+    it ('should be of type _functionOps.', function () {
         expect(curry_).to.be.instanceOf(Function);
     });
 
-    it ('should return a functionOps when called with or without args.', function () {
+    it ('should return a _functionOps when called with or without args.', function () {
         expect(curry_()).to.be.instanceOf(Function);
         expect(curry_(99)).to.be.instanceOf(Function);
         expect(curry_(() => {})).to.be.instanceOf(Function);
         expect(curry_(console.log)).to.be.instanceOf(Function);
     });
 
-    /*it ('should return a functionOps that fails when no functionOps is passed (as it\'s first param).', functionOps () {
+    /*it ('should return a _functionOps that fails when no _functionOps is passed (as it\'s first param).', _functionOps () {
      assert.throws(curry_(), Error);
      assert.throws(curry_(99), Error);
      });*/
 
-    it ('should return a properly curried functionOps when correct arity for said functionOps is met.', function () {
+    it ('should return a properly curried _functionOps when correct arity for said _functionOps is met.', function () {
         let min8 = curry_(Math.min, 8),
             max5 = curry_(Math.max, 5),
             pow2 = curry_(Math.pow, 2);
@@ -122,18 +122,18 @@ describe('#functionOps.curry_', function () {
 
 });
 
-describe('#functionOps.curryN_', function () {
+describe('#_functionOps.curryN_', function () {
 
     // Set curry here to use below
     let multiplyRecursive = (...args) => args.reduce((agg, num) => num * agg, 1),
         addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
         divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
-    it ('should be of type functionOps.', function () {
+    it ('should be of type _functionOps.', function () {
         expect(curryN_).to.be.instanceOf(Function);
     });
 
-    it ('should return a functionOps that throws an error when no arguments are passed.', function () {
+    it ('should return a _functionOps that throws an error when no arguments are passed.', function () {
         let result = curryN_();
         expect(result).to.be.instanceOf(Function);
         assert.throws(result, Error);
@@ -160,7 +160,7 @@ describe('#functionOps.curryN_', function () {
 
     });
 
-    it ('should pass in any values passed the arity when executing the curried functionOps', function () {
+    it ('should pass in any values passed the arity when executing the curried _functionOps', function () {
         let add3Nums = curryN_(3, addRecursive);
 
         // Curry add to add 3 numbers

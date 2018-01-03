@@ -24,7 +24,7 @@ describe('functor.Chain', function () {
         expectApply = value => expectInstanceOf(value, Apply),
         expectChain = value => expectInstanceOf(value, Chain);
 
-    it('should return an new instance when called as a functionOps', function () {
+    it('should return an new instance when called as a _functionOps', function () {
         let result = Chain();
         expectChain(result);
         expectApply(result);
@@ -63,7 +63,7 @@ describe('functor.Chain', function () {
             expect(result.value).to.equal(99 * 2);
         });
         it('should return a new instance of Functor that contains the return value ' +
-            'of passed in functionOps\'s call', function () {
+            'of passed in _functionOps\'s call', function () {
             let result = Chain(99).map(num => num * 2);
             expectChain(result);
             expectApply(result);
@@ -73,7 +73,7 @@ describe('functor.Chain', function () {
     });
 
     describe('#chain', function () {
-        it('should map incoming functionOps over it\'s value and flatten it result if it is nested within an ' +
+        it('should map incoming _functionOps over it\'s value and flatten it result if it is nested within an ' +
             'instance of it\'s own type', function () {
             let addReturnsChain = value => Chain(add(1, value)),
                 instance = Chain(99),

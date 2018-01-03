@@ -36,7 +36,7 @@ export const
     flip5 = fn => (a, b, c, d, e) => call(fn, e, d, c, b, a),
 
     /**
-     * Flips a functionOps's first and second arguments and and returns a new functionOps requiring said arguments in reverse.
+     * Flips a _functionOps's first and second arguments and and returns a new _functionOps requiring said arguments in reverse.
      * @function module:_functionOps.flip
      * @param fn {Function}
      * @returns {Function}

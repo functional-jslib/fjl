@@ -25,7 +25,7 @@ describe('functor.Applicative', function () {
         expectApplicative = value => expectInstanceOf(value, Applicative),
         expectValue = (value, expectedValue) => expect(value).to.equal(expectedValue);
 
-    it('should return an new instance when called as a functionOps', function () {
+    it('should return an new instance when called as a _functionOps', function () {
         let result = Applicative();
         expectApplicative(result);
         expectApply(result);
@@ -73,7 +73,7 @@ describe('functor.Applicative', function () {
             expect(result.value).to.equal(99 * 2);
         });
         it('should return a new instance of Functor that contains the return value ' +
-            'of passed in functionOps\'s call', function () {
+            'of passed in _functionOps\'s call', function () {
             let result = Apply(99).map(num => num * 2);
             expectApply(result);
             expectFunctor(result);

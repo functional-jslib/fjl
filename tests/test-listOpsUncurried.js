@@ -679,7 +679,7 @@ describe ('#listOps_', function () {
     });
 
     describe ('#mapAccumL', function () {
-        it ('should map a functionOps/operation on every item of a list and it should return a tuple containing the ' +
+        it ('should map a _functionOps/operation on every item of a list and it should return a tuple containing the ' +
             'accumulated value and the an instance of passed in container with mapped items', function () {
             let xs1 = [],
                 xs2 = '',
@@ -741,7 +741,7 @@ describe ('#listOps_', function () {
     });
 
     describe ('#mapAccumR', function () {
-        it ('should map a functionOps/operation on every item of a list and it should return a tuple containing the ' +
+        it ('should map a _functionOps/operation on every item of a list and it should return a tuple containing the ' +
             'accumulated value and the an instance of passed in container with mapped items', function () {
             let xs1 = [],
                 xs2 = '',
