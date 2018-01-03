@@ -63,7 +63,7 @@
     "list"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "BSD",
   "bugs": {
     "url": "https://github.com/functional-jslib/fjl/issues"
   },
