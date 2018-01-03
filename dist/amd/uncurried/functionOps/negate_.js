@@ -6,7 +6,7 @@ define(['exports', '../jsPlatform/function_', '../jsPlatform/array_'], function 
   });
   exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
   /**
-   * @memberOf functionOps_
+   * @memberOf _functionOps
    */
 
   const negateF = exports.negateF = fn => (a, b) => !fn(a, b),
@@ -17,7 +17,7 @@ define(['exports', '../jsPlatform/function_', '../jsPlatform/array_'], function 
 
   /**
    * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
-   * @function module:functionOps_.negateP
+   * @function module:_functionOps.negateP
    * @param fn {Function}
    * @returns {Function}
    */
@@ -26,7 +26,7 @@ define(['exports', '../jsPlatform/function_', '../jsPlatform/array_'], function 
 
   /**
    * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-   * @function module:functionOps_.negateFMany
+   * @function module:_functionOps.negateFMany
    * @param fn {Function}
    * @returns {Function}
    */

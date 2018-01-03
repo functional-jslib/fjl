@@ -18,7 +18,7 @@
   });
   exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
   /**
-   * @memberOf functionOps_
+   * @memberOf _functionOps
    */
 
   var negateF = exports.negateF = function negateF(fn) {
@@ -45,7 +45,7 @@
 
   /**
    * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
-   * @function module:functionOps_.negateP
+   * @function module:_functionOps.negateP
    * @param fn {Function}
    * @returns {Function}
    */
@@ -54,7 +54,7 @@
 
   /**
    * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-   * @function module:functionOps_.negateFMany
+   * @function module:_functionOps.negateFMany
    * @param fn {Function}
    * @returns {Function}
    */

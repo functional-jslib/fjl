@@ -8,7 +8,7 @@
       exports: {}
     };
     factory(mod.exports, global.function_, global.compose_, global.curry_, global.curry__, global.flip_, global.id_, global.negate_, global.until_);
-    global.functionOps_ = mod.exports;
+    global._functionOps = mod.exports;
   }
 })(this, function (exports, _function_, _compose_, _curry_, _curry__, _flip_, _id_, _negate_, _until_) {
   'use strict';

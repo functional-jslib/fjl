@@ -10,7 +10,7 @@ var _function_ = require('../jsPlatform/function_');
 var _array_ = require('../jsPlatform/array_');
 
 /**
- * @memberOf functionOps_
+ * @memberOf _functionOps
  */
 
 var negateF = exports.negateF = function negateF(fn) {
@@ -37,7 +37,7 @@ var negateF = exports.negateF = function negateF(fn) {
 
 /**
  * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
- * @function module:functionOps_.negateP
+ * @function module:_functionOps.negateP
  * @param fn {Function}
  * @returns {Function}
  */
@@ -46,7 +46,7 @@ negateP = exports.negateP = negateF3,
 
 /**
  * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
- * @function module:functionOps_.negateFMany
+ * @function module:_functionOps.negateFMany
  * @param fn {Function}
  * @returns {Function}
  */

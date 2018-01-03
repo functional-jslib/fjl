@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './uncurried/listOps_', './uncurried/functionOps_'], factory);
+    define(['exports', './uncurried/listOps_', './uncurried/_functionOps'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./uncurried/listOps_'), require('./uncurried/functionOps_'));
+    factory(exports, require('./uncurried/listOps_'), require('./uncurried/_functionOps'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.listOps_, global.functionOps_);
+    factory(mod.exports, global.listOps_, global._functionOps);
     global.listOps = mod.exports;
   }
-})(this, function (exports, _listOps_, _functionOps_) {
+})(this, function (exports, _listOps_, _functionOps) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -243,7 +243,7 @@
    * @param xs2 {Array|String|*} - list or list like.
    * @returns {Array|String|*} - Same type as list like passed in.
    */
-  append = exports.append = (0, _functionOps_.curry)(_listOps_.append),
+  append = exports.append = (0, _functionOps.curry)(_listOps_.append),
 
 
   /**
@@ -256,7 +256,7 @@
    * @param args ...{Array|String|*} - Lists or lists likes.
    * @returns {Array|String|*} - Same type as first list or list like passed in.
    */
-  appendMany = exports.appendMany = (0, _functionOps_.curry2)(_listOps_.appendMany),
+  appendMany = exports.appendMany = (0, _functionOps.curry2)(_listOps_.appendMany),
 
 
   /**
@@ -267,7 +267,7 @@
    * @param foldableOfA {Array|String|*}
    * @returns {Array|String|*}
    */
-  concatMap = exports.concatMap = (0, _functionOps_.curry2)(_listOps_.concatMap),
+  concatMap = exports.concatMap = (0, _functionOps.curry2)(_listOps_.concatMap),
 
 
   /**
@@ -276,7 +276,7 @@
    * @param xs {Array|String|*} - Functor.
    * @returns {Array|String|*} - Functor type that is passed in.
    */
-  map = exports.map = (0, _functionOps_.curry)(_listOps_.map),
+  map = exports.map = (0, _functionOps.curry)(_listOps_.map),
 
 
   /**
@@ -288,7 +288,7 @@
    * @param arr {Array|String|*} - List.
    * @returns {Array|String|*}
    */
-  intersperse = exports.intersperse = (0, _functionOps_.curry)(_listOps_.intersperse),
+  intersperse = exports.intersperse = (0, _functionOps.curry)(_listOps_.intersperse),
 
 
   /**
@@ -299,7 +299,7 @@
    * @param xss {Array|String|*}
    * @returns {Array|String|*}
    */
-  intercalate = exports.intercalate = (0, _functionOps_.curry)(_listOps_.intercalate),
+  intercalate = exports.intercalate = (0, _functionOps.curry)(_listOps_.intercalate),
 
 
   /**
@@ -310,7 +310,7 @@
    * @param functor {Array|String|*}
    * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
    */
-  foldl = exports.foldl = (0, _functionOps_.curry)(_listOps_.foldl),
+  foldl = exports.foldl = (0, _functionOps.curry)(_listOps_.foldl),
 
 
   /**
@@ -321,7 +321,7 @@
    * @param functor {Array|{reduce: {Function}}}
    * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
    */
-  foldr = exports.foldr = (0, _functionOps_.curry)(_listOps_.foldr),
+  foldr = exports.foldr = (0, _functionOps.curry)(_listOps_.foldr),
 
 
   /**
@@ -331,7 +331,7 @@
    * @param functor {Array|{reduce: {Function}}}
    * @returns {*}
    */
-  foldl1 = exports.foldl1 = (0, _functionOps_.curry)(_listOps_.foldl1),
+  foldl1 = exports.foldl1 = (0, _functionOps.curry)(_listOps_.foldl1),
 
 
   /**
@@ -341,7 +341,7 @@
    * @param functor {Array|{reduce: {Function}}}
    * @returns {*}
    */
-  foldr1 = exports.foldr1 = (0, _functionOps_.curry)(_listOps_.foldr1),
+  foldr1 = exports.foldr1 = (0, _functionOps.curry)(_listOps_.foldr1),
 
 
   /**
@@ -353,7 +353,7 @@
    * @param xs {Array|String|*} - list type.
    * @return {Array} - [aggregated, list]
    */
-  mapAccumL = exports.mapAccumL = (0, _functionOps_.curry)(_listOps_.mapAccumL),
+  mapAccumL = exports.mapAccumL = (0, _functionOps.curry)(_listOps_.mapAccumL),
 
 
   /**
@@ -365,7 +365,7 @@
    * @param xs {Array|String|*} - list type.
    * @return {Array} - [aggregated, list]
    */
-  mapAccumR = exports.mapAccumR = (0, _functionOps_.curry)(_listOps_.mapAccumR),
+  mapAccumR = exports.mapAccumR = (0, _functionOps.curry)(_listOps_.mapAccumR),
 
 
   /**
@@ -376,10 +376,10 @@
    * @param x {*} - Starting point.
    * @returns {*}
    */
-  iterate = exports.iterate = (0, _functionOps_.curry)(_listOps_.iterate),
-      repeat = exports.repeat = (0, _functionOps_.curry)(_listOps_.repeat),
+  iterate = exports.iterate = (0, _functionOps.curry)(_listOps_.iterate),
+      repeat = exports.repeat = (0, _functionOps.curry)(_listOps_.repeat),
       replicate = exports.replicate = repeat,
-      cycle = exports.cycle = (0, _functionOps_.curry)(_listOps_.cycle),
+      cycle = exports.cycle = (0, _functionOps.curry)(_listOps_.cycle),
 
 
   /**
@@ -390,7 +390,7 @@
    * @param x {*} - Starting parameter to unfold from.
    * @returns {Array} - An array of whatever you return from `op` yielded.
    */
-  unfoldr = exports.unfoldr = (0, _functionOps_.curry)(_listOps_.unfoldr),
+  unfoldr = exports.unfoldr = (0, _functionOps.curry)(_listOps_.unfoldr),
 
 
   /**
@@ -400,7 +400,7 @@
    * @param arr {Array|String}
    * @returns {Number} - `-1` if predicate not matched else `index` found
    */
-  findIndex = exports.findIndex = (0, _functionOps_.curry)(_listOps_.findIndex),
+  findIndex = exports.findIndex = (0, _functionOps.curry)(_listOps_.findIndex),
 
 
   /**
@@ -409,7 +409,7 @@
    * @param xs {Array|String|*} - list or list like.
    * @returns {Array|undefined}
    */
-  findIndices = exports.findIndices = (0, _functionOps_.curry)(_listOps_.findIndices),
+  findIndices = exports.findIndices = (0, _functionOps.curry)(_listOps_.findIndices),
 
 
   /**
@@ -418,7 +418,7 @@
    * @param xs {Array|String|*} - list or list like.
    * @returns {*}
    */
-  elemIndex = exports.elemIndex = (0, _functionOps_.curry)(_listOps_.elemIndex),
+  elemIndex = exports.elemIndex = (0, _functionOps.curry)(_listOps_.elemIndex),
 
 
   /**
@@ -427,7 +427,7 @@
    * @param xs {Array|String|*} - list or list like.
    * @returns {*}
    */
-  elemIndices = exports.elemIndices = (0, _functionOps_.curry)(_listOps_.elemIndices),
+  elemIndices = exports.elemIndices = (0, _functionOps.curry)(_listOps_.elemIndices),
 
 
   /**
@@ -437,7 +437,7 @@
    * @param limit {Number}
    * @returns {String|Array} - Passed in type's type
    */
-  take = exports.take = (0, _functionOps_.curry)(_listOps_.take),
+  take = exports.take = (0, _functionOps.curry)(_listOps_.take),
 
 
   /**
@@ -447,7 +447,7 @@
    * @param count {Number}
    * @returns {String|Array} - Passed in type's type
    */
-  drop = exports.drop = (0, _functionOps_.curry)(_listOps_.drop),
+  drop = exports.drop = (0, _functionOps.curry)(_listOps_.drop),
 
 
   /**
@@ -458,7 +458,7 @@
    * @param list {Array|String|*} - functor (list or string) to split.
    * @returns {Array} - Array of whatever type `x` was when passed in
    */
-  splitAt = exports.splitAt = (0, _functionOps_.curry)(_listOps_.splitAt),
+  splitAt = exports.splitAt = (0, _functionOps.curry)(_listOps_.splitAt),
 
 
   /**
@@ -468,7 +468,7 @@
    * @param list {Array|String}
    * @returns {Array}
    */
-  takeWhile = exports.takeWhile = (0, _functionOps_.curry)(_listOps_.takeWhile),
+  takeWhile = exports.takeWhile = (0, _functionOps.curry)(_listOps_.takeWhile),
 
 
   /**
@@ -479,7 +479,7 @@
    * @refactor
    * @returns {Array|String}
    */
-  dropWhile = exports.dropWhile = (0, _functionOps_.curry)(_listOps_.dropWhile),
+  dropWhile = exports.dropWhile = (0, _functionOps.curry)(_listOps_.dropWhile),
 
 
   /**
@@ -489,7 +489,7 @@
    * @refactor
    * @returns {Array|String}
    */
-  dropWhileEnd = exports.dropWhileEnd = (0, _functionOps_.curry)(_listOps_.dropWhileEnd),
+  dropWhileEnd = exports.dropWhileEnd = (0, _functionOps.curry)(_listOps_.dropWhileEnd),
 
 
   /**
@@ -501,8 +501,8 @@
    * @param list {Array|String|*} - Predicate<item, index, originalArrayOrString>
    * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
    */
-  span = exports.span = (0, _functionOps_.curry)(_listOps_.span),
-      breakOnList = exports.breakOnList = (0, _functionOps_.curry)(_listOps_.breakOnList),
+  span = exports.span = (0, _functionOps.curry)(_listOps_.span),
+      breakOnList = exports.breakOnList = (0, _functionOps.curry)(_listOps_.breakOnList),
 
 
   /**
@@ -511,7 +511,7 @@
    * @param xs {Array|String|*} - list or list like.
    * @returns {*}
    */
-  at = exports.at = (0, _functionOps_.curry)(_listOps_.at),
+  at = exports.at = (0, _functionOps.curry)(_listOps_.at),
 
 
   /**
@@ -520,8 +520,8 @@
    * @param xs {Array|String|*} - list or list like.
    * @returns {*}
    */
-  find = exports.find = (0, _functionOps_.curry)(_listOps_.find),
-      filter = exports.filter = (0, _functionOps_.curry)(_listOps_.filter),
+  find = exports.find = (0, _functionOps.curry)(_listOps_.find),
+      filter = exports.filter = (0, _functionOps.curry)(_listOps_.filter),
 
 
   /**
@@ -533,14 +533,14 @@
    * @param list {Array|String|*}
    * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
    */
-  partition = exports.partition = (0, _functionOps_.curry)(_listOps_.partition),
-      elem = exports.elem = (0, _functionOps_.curry)(_listOps_.elem),
-      notElem = exports.notElem = (0, _functionOps_.curry2)(_listOps_.notElem),
+  partition = exports.partition = (0, _functionOps.curry)(_listOps_.partition),
+      elem = exports.elem = (0, _functionOps.curry)(_listOps_.elem),
+      notElem = exports.notElem = (0, _functionOps.curry2)(_listOps_.notElem),
       lookup = exports.lookup = at,
-      isPrefixOf = exports.isPrefixOf = (0, _functionOps_.curry)(_listOps_.isPrefixOf),
-      isSuffixOf = exports.isSuffixOf = (0, _functionOps_.curry)(_listOps_.isSuffixOf),
-      isInfixOf = exports.isInfixOf = (0, _functionOps_.curry)(_listOps_.isInfixOf),
-      isSubsequenceOf = exports.isSubsequenceOf = (0, _functionOps_.curry)(_listOps_.isSubsequenceOf),
+      isPrefixOf = exports.isPrefixOf = (0, _functionOps.curry)(_listOps_.isPrefixOf),
+      isSuffixOf = exports.isSuffixOf = (0, _functionOps.curry)(_listOps_.isSuffixOf),
+      isInfixOf = exports.isInfixOf = (0, _functionOps.curry)(_listOps_.isInfixOf),
+      isSubsequenceOf = exports.isSubsequenceOf = (0, _functionOps.curry)(_listOps_.isSubsequenceOf),
 
 
   /**
@@ -552,8 +552,8 @@
    * @param xs {Array|String|*}
    * @returns {*}
    */
-  groupBy = exports.groupBy = (0, _functionOps_.curry)(_listOps_.groupBy),
-      stripPrefix = exports.stripPrefix = (0, _functionOps_.curry)(_listOps_.stripPrefix),
+  groupBy = exports.groupBy = (0, _functionOps.curry)(_listOps_.groupBy),
+      stripPrefix = exports.stripPrefix = (0, _functionOps.curry)(_listOps_.stripPrefix),
 
 
   /**
@@ -565,7 +565,7 @@
    * @param arr2 {Array}
    * @returns {Array<Array<*,*>>}
    */
-  zip = exports.zip = (0, _functionOps_.curry)(_listOps_.zip),
+  zip = exports.zip = (0, _functionOps.curry)(_listOps_.zip),
 
 
   /**
@@ -589,7 +589,7 @@
    * @param xs2 {Array|String|*}
    * @returns {Array<Array<*,*>>}
    */
-  zipWith = exports.zipWith = (0, _functionOps_.curry)(_listOps_.zipWith),
+  zipWith = exports.zipWith = (0, _functionOps.curry)(_listOps_.zipWith),
 
 
   /**
@@ -605,7 +605,7 @@
    * @param lists ...{Array|String|*}
    * @returns {Array<Array<*,*>>}
    */
-  zipWithN = exports.zipWithN = (0, _functionOps_.curry2)(_listOps_.zipWithN),
+  zipWithN = exports.zipWithN = (0, _functionOps.curry2)(_listOps_.zipWithN),
 
 
   /**
@@ -654,10 +654,10 @@
    * @returns {Array<Array<*,*>>}
    */
   zipWith5 = exports.zipWith5 = zipWithN,
-      any = exports.any = (0, _functionOps_.curry)(_listOps_.any),
-      all = exports.all = (0, _functionOps_.curry)(_listOps_.all),
-      maximumBy = exports.maximumBy = (0, _functionOps_.curry)(_listOps_.maximumBy),
-      minimumBy = exports.minimumBy = (0, _functionOps_.curry)(_listOps_.minimumBy),
+      any = exports.any = (0, _functionOps.curry)(_listOps_.any),
+      all = exports.all = (0, _functionOps.curry)(_listOps_.all),
+      maximumBy = exports.maximumBy = (0, _functionOps.curry)(_listOps_.maximumBy),
+      minimumBy = exports.minimumBy = (0, _functionOps.curry)(_listOps_.minimumBy),
       scanl = exports.scanl = function scanl() {
     return null;
   },
@@ -670,10 +670,10 @@
       scanr1 = exports.scanr1 = function scanr1() {
     return null;
   },
-      remove = exports.remove = (0, _functionOps_.curry)(_listOps_.remove),
-      sortOn = exports.sortOn = (0, _functionOps_.curry)(_listOps_.sortOn),
-      sortBy = exports.sortBy = (0, _functionOps_.curry)(_listOps_.sortBy),
-      insert = exports.insert = (0, _functionOps_.curry)(_listOps_.insert),
+      remove = exports.remove = (0, _functionOps.curry)(_listOps_.remove),
+      sortOn = exports.sortOn = (0, _functionOps.curry)(_listOps_.sortOn),
+      sortBy = exports.sortBy = (0, _functionOps.curry)(_listOps_.sortBy),
+      insert = exports.insert = (0, _functionOps.curry)(_listOps_.insert),
 
 
   /**
@@ -689,10 +689,10 @@
    * @param xs {Array|String|*} - List to insert into (note new list is returned)
    * @returns {Array|String|*} - New list.
    */
-  insertBy = exports.insertBy = (0, _functionOps_.curry)(_listOps_.insertBy),
-      nubBy = exports.nubBy = (0, _functionOps_.curry)(_listOps_.nubBy),
-      removeBy = exports.removeBy = (0, _functionOps_.curry)(_listOps_.removeBy),
-      removeFirstsBy = exports.removeFirstsBy = (0, _functionOps_.curry)(_listOps_.removeFirstsBy),
+  insertBy = exports.insertBy = (0, _functionOps.curry)(_listOps_.insertBy),
+      nubBy = exports.nubBy = (0, _functionOps.curry)(_listOps_.nubBy),
+      removeBy = exports.removeBy = (0, _functionOps.curry)(_listOps_.removeBy),
+      removeFirstsBy = exports.removeFirstsBy = (0, _functionOps.curry)(_listOps_.removeFirstsBy),
 
 
   /**
@@ -703,7 +703,7 @@
    * @param arr2 {Array|String|*}
    * @returns {Array|String|*}
    */
-  unionBy = exports.unionBy = (0, _functionOps_.curry)(_listOps_.unionBy),
+  unionBy = exports.unionBy = (0, _functionOps.curry)(_listOps_.unionBy),
 
 
   /**
@@ -713,7 +713,7 @@
    * @param arr2 {Array|String|*}
    * @returns {Array|String|*}
    */
-  union = exports.union = (0, _functionOps_.curry)(_listOps_.union),
+  union = exports.union = (0, _functionOps.curry)(_listOps_.union),
 
 
   /**
@@ -723,7 +723,7 @@
    * @param arr2 {Array|String|*}
    * @returns {Array|String|*}
    */
-  intersect = exports.intersect = (0, _functionOps_.curry)(_listOps_.intersect),
+  intersect = exports.intersect = (0, _functionOps.curry)(_listOps_.intersect),
 
 
   /**
@@ -734,7 +734,7 @@
    * @param list2 {Array|String|*}
    * @return {Array|String|*}
    */
-  intersectBy = exports.intersectBy = (0, _functionOps_.curry)(_listOps_.intersectBy),
+  intersectBy = exports.intersectBy = (0, _functionOps.curry)(_listOps_.intersectBy),
 
 
   /**
@@ -745,7 +745,7 @@
    * @param array2 {Array|String|*}
    * @returns {Array|String|*}
    */
-  difference = exports.difference = (0, _functionOps_.curry)(_listOps_.difference),
+  difference = exports.difference = (0, _functionOps.curry)(_listOps_.difference),
 
 
   /**
@@ -755,5 +755,5 @@
    * @param arrays {...Array}
    * @returns {Array}
    */
-  complement = exports.complement = (0, _functionOps_.curry2)(_listOps_.complement);
+  complement = exports.complement = (0, _functionOps.curry2)(_listOps_.complement);
 });

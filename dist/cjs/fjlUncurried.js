@@ -28,14 +28,14 @@ Object.keys(_booleanOps).forEach(function (key) {
   });
 });
 
-var _functionOps_ = require('./uncurried/functionOps_');
+var _functionOps = require('./uncurried/_functionOps');
 
-Object.keys(_functionOps_).forEach(function (key) {
+Object.keys(_functionOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _functionOps_[key];
+      return _functionOps[key];
     }
   });
 });

@@ -1,5 +1,5 @@
 /**
- * @module functionOps_
+ * @module _functionOps
  * @private
  */
 export {apply, call} from './jsPlatform/function_';

@@ -1,7 +1,7 @@
 /**
  * @author elydelacruz
  * @created 12/6/2016.
- * @memberOf functionOps_
+ * @memberOf _functionOps
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 import {apply, length, concat} from '../jsPlatform_';
@@ -9,7 +9,7 @@ export const
 
     /**
      * Curries a functionOps based on it's defined arity (argument's arrayOps expected length).
-     * @function module:functionOps_.curry
+     * @function module:_functionOps.curry
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -25,7 +25,7 @@ export const
 
     /**
      * Curries a functionOps up to a given arity.
-     * @function module:functionOps_.curryN
+     * @function module:_functionOps.curryN
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*}
@@ -42,7 +42,7 @@ export const
 
     /**
      * Curries a functionOps up to an arity of 2 (won't call functionOps until 2 or more args).
-     * @function module:functionOps_.curry2
+     * @function module:_functionOps.curry2
      * @param fn {Function}
      * @returns {Function}
      */
@@ -50,7 +50,7 @@ export const
 
     /**
      * Curries a functionOps up to an arity of 3 (won't call functionOps until 3 or more args).
-     * @function module:functionOps_.curry3
+     * @function module:_functionOps.curry3
      * @param fn {Function}
      * @returns {Function}
      */
@@ -58,7 +58,7 @@ export const
 
     /**
      * Curries a functionOps up to an arity of 4 (won't call functionOps until 4 or more args).
-     * @function module:functionOps_.curry4
+     * @function module:_functionOps.curry4
      * @param fn {Function}
      * @returns {Function}
      */
@@ -66,7 +66,7 @@ export const
 
     /**
      * Curries a functionOps up to an arity of 5 (won't call functionOps until 5 or more args).
-     * @function module:functionOps_.curry5
+     * @function module:_functionOps.curry5
      * @param fn {Function}
      * @returns {Function}
      */

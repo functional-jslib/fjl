@@ -6,7 +6,7 @@
  * @todo code unperformant shorthand in `listOps`
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
-import {curry, curry2} from './uncurried/functionOps_';
+import {curry, curry2} from './uncurried/_functionOps';
 
 // Uncurried methods import
 import {

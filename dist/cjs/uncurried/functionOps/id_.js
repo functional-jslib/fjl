@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 /**
- * @memberOf functionOps_
+ * @memberOf _functionOps
  */
 
 /**
  * Returns passed in parameter.
  * @haskellType `id :: a -> a`
- * @function module:functionOps_.id
+ * @function module:_functionOps.id
  * @param x {*}
  * @returns {*}
  */
