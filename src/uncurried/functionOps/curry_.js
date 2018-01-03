@@ -4,7 +4,7 @@
  * @memberOf _functionOps
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
-import {apply, length, concat} from '../jsPlatform_';
+import {apply, length, concat} from '../_jsPlatform';
 export const
 
     /**
