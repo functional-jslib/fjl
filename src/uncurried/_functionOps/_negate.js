@@ -4,16 +4,42 @@
 
 import {apply} from '../_jsPlatform/_function';
 
-import {reverse} from '../_jsPlatform/_array';
-
 export const
 
+    /**
+     * Takes a function that takes two parameters and returns a negated version of given
+     * function.
+     * @function module:_negate.negateF
+     * @param fn {Function}
+     * @returns {Function}
+     */
     negateF = fn => (a, b) => !fn(a, b),
 
+    /**
+     * Takes a function that takes three parameters and returns a
+     * negated version of given function.
+     * @function module:_negate.negateF3
+     * @param fn {Function}
+     * @returns {Function}
+     */
     negateF3 = fn => (a, b, c) => !fn(a, b, c),
 
+    /**
+     * Takes a function that takes four parameters and returns a
+     * negated version of given function.
+     * @function module:_negate.negateF4
+     * @param fn {Function}
+     * @returns {Function}
+     */
     negateF4 = fn => (a, b, c, d) => !fn(a, b, c, d),
 
+    /**
+     * Takes a function that takes four parameters and returns a
+     * negated version of given function.
+     * @function module:_negate.negateF5
+     * @param fn {Function}
+     * @returns {Function}
+     */
     negateF5 = fn => (a, b, c, d, e) => !fn(a, b, c, d, e),
 
     /**
@@ -30,4 +56,4 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    negateFMany = fn => (...args) => !apply(fn, reverse(args));
+    negateFMany = fn => (...args) => !apply(fn, args);

@@ -7,28 +7,58 @@ exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = ex
 
 var _function = require('../_jsPlatform/_function');
 
-var _array = require('../_jsPlatform/_array');
+var
 
 /**
- * @memberOf _functionOps
+ * Takes a function that takes two parameters and returns a negated version of given
+ * function.
+ * @function module:_negate.negateF
+ * @param fn {Function}
+ * @returns {Function}
  */
-
-var negateF = exports.negateF = function negateF(fn) {
+negateF = exports.negateF = function negateF(fn) {
   return function (a, b) {
     return !fn(a, b);
   };
 },
-    negateF3 = exports.negateF3 = function negateF3(fn) {
+
+
+/**
+ * Takes a function that takes three parameters and returns a
+ * negated version of given function.
+ * @function module:_negate.negateF3
+ * @param fn {Function}
+ * @returns {Function}
+ */
+negateF3 = exports.negateF3 = function negateF3(fn) {
   return function (a, b, c) {
     return !fn(a, b, c);
   };
 },
-    negateF4 = exports.negateF4 = function negateF4(fn) {
+
+
+/**
+ * Takes a function that takes four parameters and returns a
+ * negated version of given function.
+ * @function module:_negate.negateF4
+ * @param fn {Function}
+ * @returns {Function}
+ */
+negateF4 = exports.negateF4 = function negateF4(fn) {
   return function (a, b, c, d) {
     return !fn(a, b, c, d);
   };
 },
-    negateF5 = exports.negateF5 = function negateF5(fn) {
+
+
+/**
+ * Takes a function that takes four parameters and returns a
+ * negated version of given function.
+ * @function module:_negate.negateF5
+ * @param fn {Function}
+ * @returns {Function}
+ */
+negateF5 = exports.negateF5 = function negateF5(fn) {
   return function (a, b, c, d, e) {
     return !fn(a, b, c, d, e);
   };
@@ -56,6 +86,8 @@ negateFMany = exports.negateFMany = function negateFMany(fn) {
       args[_key] = arguments[_key];
     }
 
-    return !(0, _function.apply)(fn, (0, _array.reverse)(args));
+    return !(0, _function.apply)(fn, args);
   };
-};
+}; /**
+    * @memberOf _functionOps
+    */

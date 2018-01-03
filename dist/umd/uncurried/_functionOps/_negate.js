@@ -1,42 +1,74 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../_jsPlatform/_function', '../_jsPlatform/_array'], factory);
+    define(['exports', '../_jsPlatform/_function'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../_jsPlatform/_function'), require('../_jsPlatform/_array'));
+    factory(exports, require('../_jsPlatform/_function'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global._function, global._array);
+    factory(mod.exports, global._function);
     global._negate = mod.exports;
   }
-})(this, function (exports, _function, _array) {
+})(this, function (exports, _function) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
-  /**
-   * @memberOf _functionOps
-   */
+  var
 
-  var negateF = exports.negateF = function negateF(fn) {
+  /**
+   * Takes a function that takes two parameters and returns a negated version of given
+   * function.
+   * @function module:_negate.negateF
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  negateF = exports.negateF = function negateF(fn) {
     return function (a, b) {
       return !fn(a, b);
     };
   },
-      negateF3 = exports.negateF3 = function negateF3(fn) {
+
+
+  /**
+   * Takes a function that takes three parameters and returns a
+   * negated version of given function.
+   * @function module:_negate.negateF3
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  negateF3 = exports.negateF3 = function negateF3(fn) {
     return function (a, b, c) {
       return !fn(a, b, c);
     };
   },
-      negateF4 = exports.negateF4 = function negateF4(fn) {
+
+
+  /**
+   * Takes a function that takes four parameters and returns a
+   * negated version of given function.
+   * @function module:_negate.negateF4
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  negateF4 = exports.negateF4 = function negateF4(fn) {
     return function (a, b, c, d) {
       return !fn(a, b, c, d);
     };
   },
-      negateF5 = exports.negateF5 = function negateF5(fn) {
+
+
+  /**
+   * Takes a function that takes four parameters and returns a
+   * negated version of given function.
+   * @function module:_negate.negateF5
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  negateF5 = exports.negateF5 = function negateF5(fn) {
     return function (a, b, c, d, e) {
       return !fn(a, b, c, d, e);
     };
@@ -64,7 +96,9 @@
         args[_key] = arguments[_key];
       }
 
-      return !(0, _function.apply)(fn, (0, _array.reverse)(args));
+      return !(0, _function.apply)(fn, args);
     };
-  };
+  }; /**
+      * @memberOf _functionOps
+      */
 });
