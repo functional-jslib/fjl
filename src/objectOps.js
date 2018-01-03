@@ -31,47 +31,104 @@ _objComplement, _objIntersect, _objDifference};
 
 export const
 
+    /**
+     * Gives `undefined` or prop value if it is available.
+     * @function module:objectOps.prop
+     * @param propName {String}
+     * @param obj {*} - Object to search.
+     * @returns {*|undefined}
+     * @curried
+     */
     prop = curry(_prop),
 
     /**
      * `instanceof` in function form.
-     * @function module:_objectOps.instanceOf
+     * @function module:objectOps.instanceOf
      * @param instance {*}
      * @param Type {Function}
      * @returns {Boolean}
+     * @curried
      */
     instanceOf = curry(_instanceOf),
 
+    /**
+     * `hasOwnProperty` as a method (takes object last).
+     * @function module:objectOps.hasOwnProperty
+     * @param propName {String}
+     * @param obj {*} - Object to search.
+     * @returns {Boolean}
+     * @curried
+     */
     hasOwnProperty = curry(_hasOwnProperty),
 
+    /**
+     * `Object.assign` if it is available else a shim.
+     * @function module:objectOps.assign
+     * @param [...obj]{Object} - One or more objects to merge onto first object.
+     * @returns {Object}
+     * @curried - Called after having two or more args
+     */
     assign = curry2(_assign),
 
+    /**
+     * Same as `Object.assign` except does a deep merge.
+     * @function module:objectOps.assignDeep
+     * @param [...obj]{Object} - One or more objects to deep merge onto first object.
+     * @returns {Object}
+     * @curried - Called after having two or more args
+     */
     assignDeep = curry2(_assignDeep),
 
+    /**
+     * Cartesian union for objects (operates on two objects).
+     * @function module:objectOps.objUnion
+     * @param obj1 {Object}
+     * @param obj2 {Object}
+     * @returns {Object} - Unified obj.
+     * @curried
+     */
     objUnion = curry(_objUnion),
 
+    /**
+     * Returns the cartesian intersection of two objects.
+     * @function module:objectOps.objIntersect
+     * @param obj1 {Object}
+     * @param obj2 {Object}
+     * @returns {Object} - Intersection of given objects.
+     * @curried
+     */
     objIntersect = curry(_objIntersect),
 
+    /**
+     * Returns the cartesian difference of two objects.
+     * @function module:objectOps.objDifference
+     * @param obj1 {Object}
+     * @param obj2 {Object}
+     * @returns {Object} - Difference of given objects.
+     * @curried
+     */
     objDifference = curry(_objDifference),
 
+    /**
+     * Returns the cartesian complement of one or more objects on given object.
+     * @function module:objectOps.objDifference
+     * @param obj {Object}
+     * @param [...obj]{Object} - One or more objects to calculate complement from.
+     * @returns {Object} - Complement of given objects.
+     * @curried
+     */
     objComplement = curry2(_objComplement),
 
     /**
-     * Returns whether a value is a functionOps or not.
-     * @function module:_objectOps.isFunction
+     * Returns whether a value is a function or not.
+     * @function module:objectOps.isFunction
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
-     * Type checker.  Note** The `Type` passed in, if a constructor, should
-     * be a named constructor/_functionOps-instance;  E.g.,
-     * ```
-     *  _functionOps SomeName () {} // or
-     *  var SomeName = _functionOps SomeName () {} // or
-     *  class SomeName {}
-     * ```
-     * @function module:_objectOps.isType
+     * Returns a boolean indicating whether a value is of given type or not.
+     * @function module:objectOps.isType
      * @param Type {Function|String} - Constructor or constructor name
      * @param value {*}
      * @return {Boolean}
@@ -80,14 +137,14 @@ export const
 
     /**
      * Checks if `value` is an es2015 `class`.
-     * @function module:_objectOps.isClass
+     * @function module:objectOps.isClass
      * @param x {*}
      * @returns {boolean}
      */
 
     /**
      * Returns a booleanOps depicting whether a value is callable or not.
-     * @function module:_objectOps.isCallable
+     * @function module:objectOps.isCallable
      * @tentative
      * @private
      * @param x {*}
@@ -96,84 +153,84 @@ export const
 
     /**
      * Checks if value is an arrayOps.
-     * @function module:_objectOps.isArray
+     * @function module:objectOps.isArray
      * @param value {*}
      * @returns {boolean}
      */
 
     /**
      * Checks whether value is an object or not.
-     * @function module:_objectOps.isObject
+     * @function module:objectOps.isObject
      * @param value
      * @returns {Boolean}
      */
 
     /**
      * Checks if value is a booleanOps.
-     * @function module:_objectOps.isBoolean
+     * @function module:objectOps.isBoolean
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks if value is a valid number (also checks if isNaN so that you don't have to).
-     * @function module:_objectOps.isNumber
+     * @function module:objectOps.isNumber
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
-     * Checks whether value is a stringOps or not.
-     * @function module:_objectOps.isString
+     * Checks whether value is a string or not.
+     * @function module:objectOps.isString
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks whether value is of `Map` or not.
-     * @function module:_objectOps.isMap
+     * @function module:objectOps.isMap
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks whether value is of `Set` or not.
-     * @function module:_objectOps.isSet
+     * @function module:objectOps.isSet
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks whether value is of `WeakMap` or not.
-     * @function module:_objectOps.isWeakMap
+     * @function module:objectOps.isWeakMap
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks whether value is of `WeakSet` or not.
-     * @function module:_objectOps.isWeakSet
+     * @function module:objectOps.isWeakSet
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks if value is undefined.
-     * @function module:_objectOps.isUndefined
+     * @function module:objectOps.isUndefined
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks if value is null.
-     * @function module:_objectOps.isNull
+     * @function module:objectOps.isNull
      * @param value {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks if value is a `Symbol`.
-     * @function module:_objectOps.isSymbol
+     * @function module:objectOps.isSymbol
      * @param value {*}
      * @returns {Boolean}
      */
@@ -187,42 +244,42 @@ export const
      * Checks if given `x` is one of the four
      * "usable" immutable JS primitives; I.e.,
      *  One of [String, Boolean, Number, Symbol]
-     * @function module:_objectOps.isUsableImmutablePrimitive
+     * @function module:objectOps.isUsableImmutablePrimitive
      * @param x {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks if !length.
-     * @function module:_objectOps.isEmptyList
+     * @function module:objectOps.isEmptyList
      * @param x {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks if object has own properties/enumerable-props or not.
-     * @function module:_objectOps.isEmptyObject
+     * @function module:objectOps.isEmptyObject
      * @param obj {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
-     * @function module:_objectOps.isEmptyCollection
+     * @function module:objectOps.isEmptyCollection
      * @param x {*}
      * @returns {Boolean}
      */
 
     /**
      * Checks to see if passed in argument is empty.
-     * @function module:_objectOps.isEmpty
+     * @function module:objectOps.isEmpty
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
 
     /**
      * Returns whether passed in values is defined and not null.
-     * @function module:_objectOps.isset
+     * @function module:objectOps.isset
      * @param x {*}
      * @returns {Boolean}
      */
