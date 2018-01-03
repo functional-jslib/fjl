@@ -52,7 +52,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elycruz/fjl.git"
+    "url": "git+https://github.com/functional-jslib/fjl.git"
   },
   "keywords": [
     "functional",
@@ -65,8 +65,8 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/elycruz/fjl/issues"
+    "url": "https://github.com/functional-jslib/fjl/issues"
   },
-  "homepage": "https://github.com/elycruz/fjl#readme",
+  "homepage": "https://github.com/functional-jslib/fjl#readme",
   "dependencies": {}
 }
