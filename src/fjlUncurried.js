@@ -12,7 +12,7 @@
  * @module fjlUncurried
  */
 
-export * from './uncurried/objectOps_';
+export * from './uncurried/_objectOps';
 export * from './booleanOps';
 export * from './uncurried/_functionOps';
 export * from './uncurried/_listOps';

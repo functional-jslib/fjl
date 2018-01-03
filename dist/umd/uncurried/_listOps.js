@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOps/negate_', '../booleanOps', './objectOps_', './listOps/map_', './listOps/utils_'], factory);
+        define(['exports', './jsPlatform/list_', './jsPlatform/function_', './functionOps/negate_', '../booleanOps', './_objectOps', './listOps/map_', './listOps/utils_'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./jsPlatform/list_'), require('./jsPlatform/function_'), require('./functionOps/negate_'), require('../booleanOps'), require('./objectOps_'), require('./listOps/map_'), require('./listOps/utils_'));
+        factory(exports, require('./jsPlatform/list_'), require('./jsPlatform/function_'), require('./functionOps/negate_'), require('../booleanOps'), require('./_objectOps'), require('./listOps/map_'), require('./listOps/utils_'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.list_, global.function_, global.negate_, global.booleanOps, global.objectOps_, global.map_, global.utils_);
+        factory(mod.exports, global.list_, global.function_, global.negate_, global.booleanOps, global._objectOps, global.map_, global.utils_);
         global._listOps = mod.exports;
     }
-})(this, function (exports, _list_, _function_, _negate_, _booleanOps, _objectOps_, _map_, _utils_) {
+})(this, function (exports, _list_, _function_, _negate_, _booleanOps, _objectOps, _map_, _utils_) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -92,7 +92,7 @@
             args[_key] = arguments[_key];
         }
 
-        if ((0, _objectOps_.length)(args)) {
+        if ((0, _objectOps.length)(args)) {
             return (0, _function_.apply)(_list_.concat, args);
         }
         throw new Error('`appendMany` requires at least one arg.');
@@ -158,7 +158,7 @@
         if (!xs) {
             return;
         }
-        if ((0, _objectOps_.length)(xs) === 0) {
+        if ((0, _objectOps.length)(xs) === 0) {
             return undefined;
         }
         return [head(xs), tail(xs)];
@@ -176,7 +176,7 @@
         if (!xs) {
             return;
         }
-        if ((0, _objectOps_.length)(xs) === 0) {
+        if ((0, _objectOps.length)(xs) === 0) {
             return undefined;
         }
         return [init(xs), last(xs)];
@@ -191,10 +191,10 @@
      * @returns {Array|String|*}
      */
     concat = exports.concat = function concat(xs) {
-        if (!(0, _objectOps_.length)(xs)) {
+        if (!(0, _objectOps.length)(xs)) {
             return (0, _utils_.copy)(xs);
         }
-        return (0, _objectOps_.isString)(xs) ? xs : (0, _function_.apply)(appendMany, xs);
+        return (0, _objectOps.isString)(xs) ? xs : (0, _function_.apply)(appendMany, xs);
     },
 
 
@@ -222,7 +222,7 @@
         var aggregator = (0, _utils_.aggregatorByType)(x);
         return foldr(function (agg, item, ind) {
             return aggregator(agg, item, ind);
-        }, (0, _objectOps_.of)(x), x);
+        }, (0, _objectOps.of)(x), x);
     },
 
 
@@ -236,9 +236,9 @@
      * @returns {Array|String|*}
      */
     intersperse = exports.intersperse = function intersperse(between, arr) {
-        var limit = (0, _objectOps_.length)(arr),
+        var limit = (0, _objectOps.length)(arr),
             lastInd = limit - 1,
-            aggregator = (0, _objectOps_.of)(arr),
+            aggregator = (0, _objectOps.of)(arr),
             aggregatorOp = (0, _utils_.aggregatorByType)(arr);
         if (!limit) {
             return aggregator;
@@ -280,11 +280,11 @@
      * @returns {Array}
      */
     transpose = exports.transpose = function transpose(xss) {
-        var numLists = (0, _objectOps_.length)(xss),
+        var numLists = (0, _objectOps.length)(xss),
             ind = 0,
             ind2 = void 0;
         if (!numLists) {
-            return (0, _objectOps_.of)(xss);
+            return (0, _objectOps.of)(xss);
         }
         var listLengths = (0, _function_.apply)(_utils_.lengths, xss),
             longestListLen = maximum(listLengths),
@@ -300,7 +300,7 @@
             outLists.push(outList);
         }
         return filter(function (x) {
-            return (0, _objectOps_.length)(x);
+            return (0, _objectOps.length)(x);
         }, outLists);
     },
 
@@ -317,7 +317,7 @@
      * @returns {Array}
      */
     subsequences = exports.subsequences = function subsequences(xs) {
-        var len = Math.pow(2, (0, _objectOps_.length)(xs)),
+        var len = Math.pow(2, (0, _objectOps.length)(xs)),
             out = [];
         for (var i = 0; i < len; i += 1) {
             var entry = [];
@@ -341,7 +341,7 @@
      * @returns {Array<Array|String|*>} - Array of permutations.
      */
     permutations = exports.permutations = function permutations(xs) {
-        var limit = (0, _objectOps_.length)(xs);
+        var limit = (0, _objectOps.length)(xs);
         return !limit ? [xs] : (0, _utils_._permutationsAlgo)(xs, limit, limit);
     },
 
@@ -359,14 +359,14 @@
         foldl1 = exports.foldl1 = function foldl1(op, xs) {
         var parts = uncons(xs);
         if (!parts) {
-            return (0, _objectOps_.of)(xs);
+            return (0, _objectOps.of)(xs);
         }
         return (0, _utils_.reduce)(op, parts[0], parts[1]);
     },
         foldr1 = exports.foldr1 = function foldr1(op, xs) {
         var parts = unconsr(xs);
         if (!parts) {
-            return (0, _objectOps_.of)(xs);
+            return (0, _objectOps.of)(xs);
         }
         return (0, _utils_.reduceRight)(op, parts[1], parts[0]);
     },
@@ -383,13 +383,13 @@
      */
     mapAccumL = exports.mapAccumL = function mapAccumL(op, zero, xs) {
         var list = (0, _utils_.sliceFrom)(0, xs),
-            limit = (0, _objectOps_.length)(xs);
+            limit = (0, _objectOps.length)(xs);
         if (!limit) {
             return [zero, list];
         }
         var ind = 0,
             agg = zero,
-            mapped = (0, _objectOps_.of)(xs),
+            mapped = (0, _objectOps.of)(xs),
             tuple = void 0;
         for (; ind < limit; ind++) {
             tuple = op(agg, list[ind], ind);
@@ -411,13 +411,13 @@
      */
     mapAccumR = exports.mapAccumR = function mapAccumR(op, zero, xs) {
         var list = (0, _utils_.sliceFrom)(0, xs),
-            limit = (0, _objectOps_.length)(xs);
+            limit = (0, _objectOps.length)(xs);
         if (!limit) {
             return [zero, list];
         }
         var ind = limit - 1,
             agg = zero,
-            mapped = (0, _objectOps_.of)(xs),
+            mapped = (0, _objectOps.of)(xs),
             tuple = void 0;
         for (; ind >= 0; ind--) {
             tuple = op(agg, list[ind], ind);
@@ -592,7 +592,7 @@
      * @returns {Array}
      */
     takeWhile = exports.takeWhile = function takeWhile(pred, list) {
-        var zero = (0, _objectOps_.of)(list);
+        var zero = (0, _objectOps.of)(list);
         var operation = (0, _utils_.aggregatorByType)(list);
         return (0, _utils_.reduceUntil)((0, _negate_.negateP)(pred), // predicate
         operation, // operation
@@ -610,7 +610,7 @@
      * @returns {Array|String}
      */
     dropWhile = exports.dropWhile = function dropWhile(pred, list) {
-        var limit = (0, _objectOps_.length)(list),
+        var limit = (0, _objectOps.length)(list),
             splitPoint = (0, _utils_.findIndexWhere)(function (item, ind, list2) {
             return !pred(list[ind], ind, list2);
         }, list);
@@ -627,7 +627,7 @@
      * @returns {Array|String}
      */
     dropWhileEnd = exports.dropWhileEnd = function dropWhileEnd(pred, list) {
-        var limit = (0, _objectOps_.length)(list),
+        var limit = (0, _objectOps.length)(list),
             splitPoint = (0, _utils_.findIndexWhereRight)(function (item, ind, list2) {
             return !pred(list[ind], ind, list2);
         }, list);
@@ -661,7 +661,7 @@
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    at = exports.at = _objectOps_.prop,
+    at = exports.at = _objectOps.prop,
 
 
     /**
@@ -673,9 +673,9 @@
     find = exports.find = _utils_.findWhere,
         filter = exports.filter = function filter(pred, xs) {
         var ind = 0,
-            limit = (0, _objectOps_.length)(xs),
+            limit = (0, _objectOps.length)(xs),
             aggregator = (0, _utils_.aggregatorByType)(xs),
-            out = (0, _objectOps_.of)(xs);
+            out = (0, _objectOps.of)(xs);
         if (!limit) {
             return out;
         }
@@ -698,8 +698,8 @@
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     partition = exports.partition = function partition(pred, list) {
-        if (!(0, _objectOps_.length)(list)) {
-            return [(0, _objectOps_.of)(list), (0, _objectOps_.of)(list)];
+        if (!(0, _objectOps.length)(list)) {
+            return [(0, _objectOps.of)(list), (0, _objectOps.of)(list)];
         }
         return [filter(pred, list), filter((0, _negate_.negateP)(pred), list)];
     },
@@ -707,8 +707,8 @@
         notElem = exports.notElem = (0, _negate_.negateF)(_list_.includes),
         lookup = exports.lookup = at,
         isPrefixOf = exports.isPrefixOf = function isPrefixOf(xs1, xs2) {
-        var limit1 = (0, _objectOps_.length)(xs1),
-            limit2 = (0, _objectOps_.length)(xs2);
+        var limit1 = (0, _objectOps.length)(xs1),
+            limit2 = (0, _objectOps.length)(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || (0, _list_.indexOf)(xs1[0], xs2) === -1) {
             return false;
         }
@@ -721,8 +721,8 @@
         return true;
     },
         isSuffixOf = exports.isSuffixOf = function isSuffixOf(xs1, xs2) {
-        var limit1 = (0, _objectOps_.length)(xs1),
-            limit2 = (0, _objectOps_.length)(xs2);
+        var limit1 = (0, _objectOps.length)(xs1),
+            limit2 = (0, _objectOps.length)(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || (0, _list_.indexOf)(xs1[0], xs2) === -1) {
             return false;
         }
@@ -737,8 +737,8 @@
         return true;
     },
         isInfixOf = exports.isInfixOf = function isInfixOf(xs1, xs2) {
-        var limit1 = (0, _objectOps_.length)(xs1),
-            limit2 = (0, _objectOps_.length)(xs2);
+        var limit1 = (0, _objectOps.length)(xs1),
+            limit2 = (0, _objectOps.length)(xs2);
         if (limit2 < limit1 || !limit1 || !limit2) {
             return false;
         }
@@ -759,8 +759,8 @@
         return false;
     },
         isSubsequenceOf = exports.isSubsequenceOf = function isSubsequenceOf(xs1, xs2) {
-        var len = Math.pow(2, (0, _objectOps_.length)(xs2)),
-            lenXs1 = (0, _objectOps_.length)(xs1);
+        var len = Math.pow(2, (0, _objectOps.length)(xs2)),
+            lenXs1 = (0, _objectOps.length)(xs1);
         var foundLen = void 0,
             i = void 0;
         for (i = 0; i < len; i += 1) {
@@ -807,7 +807,7 @@
      * @returns {*}
      */
     groupBy = exports.groupBy = function groupBy(equalityOp, xs) {
-        var limit = (0, _objectOps_.length)(xs);
+        var limit = (0, _objectOps.length)(xs);
         if (!limit) {
             return (0, _utils_.sliceFrom)(0, xs);
         }
@@ -832,7 +832,7 @@
         return agg;
     },
         inits = exports.inits = function inits(xs) {
-        var limit = (0, _objectOps_.length)(xs),
+        var limit = (0, _objectOps.length)(xs),
             ind = 0,
             agg = [];
         if (!limit) {
@@ -846,7 +846,7 @@
         //map(list => init(list), xs),
 
     tails = exports.tails = function tails(xs) {
-        var limit = (0, _objectOps_.length)(xs),
+        var limit = (0, _objectOps.length)(xs),
             ind = 0,
             agg = [];
         if (!limit) {
@@ -860,7 +860,7 @@
         //map(list => tail(list), xs),
 
     stripPrefix = exports.stripPrefix = function stripPrefix(prefix, list) {
-        return isPrefixOf(prefix, list) ? splitAt((0, _objectOps_.length)(prefix), list)[1] : (0, _utils_.sliceFrom)(0, list);
+        return isPrefixOf(prefix, list) ? splitAt((0, _objectOps.length)(prefix), list)[1] : (0, _utils_.sliceFrom)(0, list);
     },
 
 
@@ -874,8 +874,8 @@
      * @returns {Array<Array<*,*>>}
      */
     zip = exports.zip = function zip(arr1, arr2) {
-        if (!(0, _objectOps_.length)(arr1) || !(0, _objectOps_.length)(arr2)) {
-            return (0, _objectOps_.of)(arr1);
+        if (!(0, _objectOps.length)(arr1) || !(0, _objectOps.length)(arr2)) {
+            return (0, _objectOps.of)(arr1);
         }
 
         var _lengthsToSmallest = (0, _utils_.lengthsToSmallest)(arr1, arr2),
@@ -902,12 +902,12 @@
             lists[_key2] = arguments[_key2];
         }
 
-        var trimmedLists = (0, _function_.apply)(_utils_.lengthsToSmallest, filter(_objectOps_.length, lists)),
-            lenOfTrimmed = (0, _objectOps_.length)(trimmedLists);
+        var trimmedLists = (0, _function_.apply)(_utils_.lengthsToSmallest, filter(_objectOps.length, lists)),
+            lenOfTrimmed = (0, _objectOps.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
         } else if (lenOfTrimmed === 1) {
-            return (0, _utils_.sliceTo)((0, _objectOps_.length)(trimmedLists[0]), trimmedLists[0]);
+            return (0, _utils_.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
         }
         return (0, _utils_.reduce)(function (agg, item, ind) {
             return (0, _utils_.aggregateArr)(agg, (0, _map_.map)(function (xs) {
@@ -974,8 +974,8 @@
      * @returns {Array<Array<*,*>>}
      */
     zipWith = exports.zipWith = function zipWith(op, xs1, xs2) {
-        if (!(0, _objectOps_.length)(xs1) || !(0, _objectOps_.length)(xs2)) {
-            return (0, _objectOps_.of)(xs1);
+        if (!(0, _objectOps.length)(xs1) || !(0, _objectOps.length)(xs2)) {
+            return (0, _objectOps.of)(xs1);
         }
 
         var _lengthsToSmallest3 = (0, _utils_.lengthsToSmallest)(xs1, xs2),
@@ -1008,11 +1008,11 @@
         }
 
         var trimmedLists = (0, _function_.apply)(_utils_.lengthsToSmallest, lists),
-            lenOfTrimmed = (0, _objectOps_.length)(trimmedLists);
+            lenOfTrimmed = (0, _objectOps.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
         } else if (lenOfTrimmed === 1) {
-            return (0, _utils_.sliceTo)((0, _objectOps_.length)(trimmedLists[0]), trimmedLists[0]);
+            return (0, _utils_.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
         }
         return (0, _utils_.reduce)(function (agg, item, ind) {
             return (0, _utils_.aggregateArr)(agg, (0, _function_.apply)(op, (0, _map_.map)(function (xs) {
@@ -1096,10 +1096,10 @@
      * @returns {Array|*}
      */
     unzipN = exports.unzipN = function unzipN(list) {
-        if (!(0, _objectOps_.length)(list)) {
+        if (!(0, _objectOps.length)(list)) {
             return [];
         }
-        var lenItem0 = (0, _objectOps_.length)(list[0]);
+        var lenItem0 = (0, _objectOps.length)(list[0]);
         var zero = lenItem0 ? unfoldr(function (numLists) {
             return numLists-- ? [[], numLists] : undefined;
         }, lenItem0) : [];
@@ -1112,7 +1112,7 @@
     },
         any = exports.any = function any(p, xs) {
         var ind = 0,
-            limit = (0, _objectOps_.length)(xs);
+            limit = (0, _objectOps.length)(xs);
         if (!limit) {
             return false;
         }
@@ -1124,7 +1124,7 @@
         return false;
     },
         all = exports.all = function all(p, xs) {
-        var limit = (0, _objectOps_.length)(xs);
+        var limit = (0, _objectOps.length)(xs);
         var ind = 0;
         if (limit === 0) {
             return false;
@@ -1224,10 +1224,10 @@
         return (0, _utils_.copy)(xs).sort(orderingFn);
     },
         insert = exports.insert = function insert(x, xs) {
-        if ((0, _objectOps_.isEmptyList)(xs)) {
+        if ((0, _objectOps.isEmptyList)(xs)) {
             return (0, _utils_.aggregatorByType)(xs)((0, _utils_.copy)(xs), x, 0);
         }
-        var out = (0, _objectOps_.of)(xs),
+        var out = (0, _objectOps.of)(xs),
             foundIndex = findIndex(function (item) {
             return x <= item;
         }, xs);
@@ -1249,10 +1249,10 @@
      * @returns {Array|String|*} - New list.
      */
     insertBy = exports.insertBy = function insertBy(orderingFn, x, xs) {
-        var limit = (0, _objectOps_.length)(xs),
+        var limit = (0, _objectOps.length)(xs),
             aggregator = (0, _utils_.aggregatorByType)(xs),
-            out = (0, _objectOps_.of)(xs);
-        if ((0, _objectOps_.isEmptyList)(xs)) {
+            out = (0, _objectOps.of)(xs);
+        if ((0, _objectOps.isEmptyList)(xs)) {
             return aggregator(out, x, 0);
         }
         var ind = 0;
@@ -1266,13 +1266,13 @@
         return aggregator((0, _utils_.copy)(xs), x);
     },
         nubBy = exports.nubBy = function nubBy(pred, list) {
-        if ((0, _objectOps_.isEmptyList)(list)) {
-            return (0, _objectOps_.of)(list);
+        if ((0, _objectOps.isEmptyList)(list)) {
+            return (0, _objectOps.of)(list);
         }
-        var limit = (0, _objectOps_.length)(list);
+        var limit = (0, _objectOps.length)(list);
         var ind = 0,
             currItem = void 0,
-            out = (0, _objectOps_.of)(list),
+            out = (0, _objectOps.of)(list),
             anyOp = function anyOp(storedItem) {
             return pred(currItem, storedItem);
         };

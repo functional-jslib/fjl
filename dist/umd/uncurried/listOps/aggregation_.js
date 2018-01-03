@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../objectOps_'], factory);
+        define(['exports', '../_objectOps'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../objectOps_'));
+        factory(exports, require('../_objectOps'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.objectOps_);
+        factory(mod.exports, global._objectOps);
         global.aggregation_ = mod.exports;
     }
-})(this, function (exports, _objectOps_) {
+})(this, function (exports, _objectOps) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -29,7 +29,7 @@
         return agg;
     },
         aggregatorByType = exports.aggregatorByType = function aggregatorByType(x) {
-        switch ((0, _objectOps_.typeOf)(x)) {
+        switch ((0, _objectOps.typeOf)(x)) {
             case 'String':
                 return aggregateStr;
             case 'Array':

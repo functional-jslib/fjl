@@ -15,7 +15,7 @@ import {
 import {apply} from './jsPlatform/function_';
 import {negateP, negateF} from './functionOps/negate_';
 import {isTruthy, isFalsy} from '../booleanOps';
-import {isString, isEmptyList, prop, of, length} from './objectOps_';
+import {isString, isEmptyList, prop, of, length} from './_objectOps';
 import {map} from './listOps/map_';
 
 import {

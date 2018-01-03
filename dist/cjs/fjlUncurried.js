@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectOps_ = require('./uncurried/objectOps_');
+var _objectOps = require('./uncurried/_objectOps');
 
-Object.keys(_objectOps_).forEach(function (key) {
+Object.keys(_objectOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _objectOps_[key];
+      return _objectOps[key];
     }
   });
 });

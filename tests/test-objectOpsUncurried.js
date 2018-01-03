@@ -21,7 +21,7 @@ import {
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet, assignDeep
-} from '../src/uncurried/objectOps_';
+} from '../src/uncurried/_objectOps';
 import {foldl, map, and, head, tail} from "../src/uncurried/_listOps";
 import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, deepCompareObjectsLeft} from './helpers';
 // These variables get set at the top IIFE in the browser.

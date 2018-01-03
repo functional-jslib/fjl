@@ -8,7 +8,7 @@
       exports: {}
     };
     factory(mod.exports, global.object_, global.prop_, global.typeOf_, global.is_, global.of_, global.assignDeep_, global.setTheory_);
-    global.objectOps_ = mod.exports;
+    global._objectOps = mod.exports;
   }
 })(this, function (exports, _object_, _prop_, _typeOf_, _is_, _of_, _assignDeep_, _setTheory_) {
   'use strict';

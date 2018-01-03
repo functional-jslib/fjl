@@ -1,27 +1,27 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './uncurried/objectOps_', './booleanOps', './uncurried/_functionOps', './uncurried/_listOps', './stringOps', './generated/version'], factory);
+    define(['exports', './uncurried/_objectOps', './booleanOps', './uncurried/_functionOps', './uncurried/_listOps', './stringOps', './generated/version'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./uncurried/objectOps_'), require('./booleanOps'), require('./uncurried/_functionOps'), require('./uncurried/_listOps'), require('./stringOps'), require('./generated/version'));
+    factory(exports, require('./uncurried/_objectOps'), require('./booleanOps'), require('./uncurried/_functionOps'), require('./uncurried/_listOps'), require('./stringOps'), require('./generated/version'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.objectOps_, global.booleanOps, global._functionOps, global._listOps, global.stringOps, global.version);
+    factory(mod.exports, global._objectOps, global.booleanOps, global._functionOps, global._listOps, global.stringOps, global.version);
     global.fjlUncurried = mod.exports;
   }
-})(this, function (exports, _objectOps_, _booleanOps, _functionOps, _listOps, _stringOps, _version) {
+})(this, function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps, _version) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.keys(_objectOps_).forEach(function (key) {
+  Object.keys(_objectOps).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _objectOps_[key];
+        return _objectOps[key];
       }
     });
   });
