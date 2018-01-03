@@ -4,18 +4,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _function_ = require('./_jsPlatform/function_');
+var _function = require('./_jsPlatform/_function');
 
 Object.defineProperty(exports, 'apply', {
   enumerable: true,
   get: function get() {
-    return _function_.apply;
+    return _function.apply;
   }
 });
 Object.defineProperty(exports, 'call', {
   enumerable: true,
   get: function get() {
-    return _function_.call;
+    return _function.call;
   }
 });
 

@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functionOps/_negate', '../booleanOps', './_objectOps', './_listOps/map_', './_listOps/utils_'], factory);
+        define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functionOps/_negate', '../booleanOps', './_objectOps', './_listOps/_map', './_listOps/_utils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./_jsPlatform/list_'), require('./_jsPlatform/function_'), require('./_functionOps/_negate'), require('../booleanOps'), require('./_objectOps'), require('./_listOps/map_'), require('./_listOps/utils_'));
+        factory(exports, require('./_jsPlatform/_list'), require('./_jsPlatform/_function'), require('./_functionOps/_negate'), require('../booleanOps'), require('./_objectOps'), require('./_listOps/_map'), require('./_listOps/_utils'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.list_, global.function_, global._negate, global.booleanOps, global._objectOps, global.map_, global.utils_);
+        factory(mod.exports, global._list, global._function, global._negate, global.booleanOps, global._objectOps, global._map, global._utils);
         global._listOps = mod.exports;
     }
-})(this, function (exports, _list_, _function_, _negate, _booleanOps, _objectOps, _map_, _utils_) {
+})(this, function (exports, _list, _function, _negate, _booleanOps, _objectOps, _map, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -56,7 +56,7 @@
         };
     }();
 
-    exports.map = _map_.map;
+    exports.map = _map.map;
 
 
     // Exported internals
@@ -75,7 +75,7 @@
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
      */
-    append = exports.append = _list_.concat,
+    append = exports.append = _list.concat,
 
 
     /**
@@ -93,7 +93,7 @@
         }
 
         if ((0, _objectOps.length)(args)) {
-            return (0, _function_.apply)(_list_.concat, args);
+            return (0, _function.apply)(_list.concat, args);
         }
         throw new Error('`appendMany` requires at least one arg.');
     },
@@ -119,7 +119,7 @@
      * @returns {*}
      */
     last = exports.last = function last(xs) {
-        return xs[(0, _utils_.lastIndex)(xs)];
+        return xs[(0, _utils.lastIndex)(xs)];
     },
 
 
@@ -131,7 +131,7 @@
      * @returns {Array}
      */
     tail = exports.tail = function tail(xs) {
-        return (0, _utils_.sliceFrom)(1, xs);
+        return (0, _utils.sliceFrom)(1, xs);
     },
 
 
@@ -143,7 +143,7 @@
      * @returns {Array|String}
      */
     init = exports.init = function init(xs) {
-        return (0, _utils_.sliceTo)((0, _utils_.lastIndex)(xs), xs);
+        return (0, _utils.sliceTo)((0, _utils.lastIndex)(xs), xs);
     },
 
 
@@ -192,9 +192,9 @@
      */
     concat = exports.concat = function concat(xs) {
         if (!(0, _objectOps.length)(xs)) {
-            return (0, _utils_.copy)(xs);
+            return (0, _utils.copy)(xs);
         }
-        return (0, _objectOps.isString)(xs) ? xs : (0, _function_.apply)(appendMany, xs);
+        return (0, _objectOps.isString)(xs) ? xs : (0, _function.apply)(appendMany, xs);
     },
 
 
@@ -207,7 +207,7 @@
      * @returns {Array|String|*}
      */
     concatMap = exports.concatMap = function concatMap(fn, foldableOfA) {
-        return concat((0, _map_.map)(fn, foldableOfA));
+        return concat((0, _map.map)(fn, foldableOfA));
     },
 
 
@@ -219,7 +219,7 @@
      * @returns {Array|String|*}
      */
     reverse = exports.reverse = function reverse(x) {
-        var aggregator = (0, _utils_.aggregatorByType)(x);
+        var aggregator = (0, _utils.aggregatorByType)(x);
         return foldr(function (agg, item, ind) {
             return aggregator(agg, item, ind);
         }, (0, _objectOps.of)(x), x);
@@ -239,7 +239,7 @@
         var limit = (0, _objectOps.length)(arr),
             lastInd = limit - 1,
             aggregator = (0, _objectOps.of)(arr),
-            aggregatorOp = (0, _utils_.aggregatorByType)(arr);
+            aggregatorOp = (0, _utils.aggregatorByType)(arr);
         if (!limit) {
             return aggregator;
         }
@@ -286,7 +286,7 @@
         if (!numLists) {
             return (0, _objectOps.of)(xss);
         }
-        var listLengths = (0, _function_.apply)(_utils_.lengths, xss),
+        var listLengths = (0, _function.apply)(_utils.lengths, xss),
             longestListLen = maximum(listLengths),
             outLists = [];
         for (; ind < longestListLen; ind += 1) {
@@ -342,7 +342,7 @@
      */
     permutations = exports.permutations = function permutations(xs) {
         var limit = (0, _objectOps.length)(xs);
-        return !limit ? [xs] : (0, _utils_._permutationsAlgo)(xs, limit, limit);
+        return !limit ? [xs] : (0, _utils._permutationsAlgo)(xs, limit, limit);
     },
 
 
@@ -354,21 +354,21 @@
      * @param functor {Array|String|*}
      * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
      */
-    foldl = exports.foldl = _utils_.reduce,
-        foldr = exports.foldr = _utils_.reduceRight,
+    foldl = exports.foldl = _utils.reduce,
+        foldr = exports.foldr = _utils.reduceRight,
         foldl1 = exports.foldl1 = function foldl1(op, xs) {
         var parts = uncons(xs);
         if (!parts) {
             return (0, _objectOps.of)(xs);
         }
-        return (0, _utils_.reduce)(op, parts[0], parts[1]);
+        return (0, _utils.reduce)(op, parts[0], parts[1]);
     },
         foldr1 = exports.foldr1 = function foldr1(op, xs) {
         var parts = unconsr(xs);
         if (!parts) {
             return (0, _objectOps.of)(xs);
         }
-        return (0, _utils_.reduceRight)(op, parts[1], parts[0]);
+        return (0, _utils.reduceRight)(op, parts[1], parts[0]);
     },
 
 
@@ -382,7 +382,7 @@
      * @return {Array} - [aggregated, list]
      */
     mapAccumL = exports.mapAccumL = function mapAccumL(op, zero, xs) {
-        var list = (0, _utils_.sliceFrom)(0, xs),
+        var list = (0, _utils.sliceFrom)(0, xs),
             limit = (0, _objectOps.length)(xs);
         if (!limit) {
             return [zero, list];
@@ -410,7 +410,7 @@
      * @return {Array} - [aggregated, list]
      */
     mapAccumR = exports.mapAccumR = function mapAccumR(op, zero, xs) {
-        var list = (0, _utils_.sliceFrom)(0, xs),
+        var list = (0, _utils.sliceFrom)(0, xs),
             limit = (0, _objectOps.length)(xs);
         if (!limit) {
             return [zero, list];
@@ -510,7 +510,7 @@
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndex = exports.findIndex = _utils_.findIndexWhere,
+    findIndex = exports.findIndex = _utils.findIndexWhere,
 
 
     /**
@@ -519,7 +519,7 @@
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
      */
-    findIndices = exports.findIndices = _utils_.findIndicesWhere,
+    findIndices = exports.findIndices = _utils.findIndicesWhere,
 
 
     /**
@@ -529,7 +529,7 @@
      * @returns {*}
      */
     elemIndex = exports.elemIndex = function elemIndex(x, xs) {
-        var foundInd = (0, _list_.indexOf)(x, xs);
+        var foundInd = (0, _list.indexOf)(x, xs);
         return foundInd !== -1 ? foundInd : undefined;
     },
 
@@ -555,7 +555,7 @@
      * @returns {String|Array} - Passed in type's type
      */
     take = exports.take = function take(limit, list) {
-        return (0, _utils_.sliceTo)(limit, list);
+        return (0, _utils.sliceTo)(limit, list);
     },
 
 
@@ -567,7 +567,7 @@
      * @returns {String|Array} - Passed in type's type
      */
     drop = exports.drop = function drop(count, list) {
-        return (0, _utils_.sliceFrom)(count, list);
+        return (0, _utils.sliceFrom)(count, list);
     },
 
 
@@ -580,7 +580,7 @@
      * @returns {Array} - Array of whatever type `x` was when passed in
      */
     splitAt = exports.splitAt = function splitAt(ind, list) {
-        return [(0, _utils_.sliceTo)(ind, list), (0, _utils_.sliceFrom)(ind, list)];
+        return [(0, _utils.sliceTo)(ind, list), (0, _utils.sliceFrom)(ind, list)];
     },
 
 
@@ -593,8 +593,8 @@
      */
     takeWhile = exports.takeWhile = function takeWhile(pred, list) {
         var zero = (0, _objectOps.of)(list);
-        var operation = (0, _utils_.aggregatorByType)(list);
-        return (0, _utils_.reduceUntil)((0, _negate.negateP)(pred), // predicate
+        var operation = (0, _utils.aggregatorByType)(list);
+        return (0, _utils.reduceUntil)((0, _negate.negateP)(pred), // predicate
         operation, // operation
         zero, // aggregator
         list);
@@ -611,11 +611,11 @@
      */
     dropWhile = exports.dropWhile = function dropWhile(pred, list) {
         var limit = (0, _objectOps.length)(list),
-            splitPoint = (0, _utils_.findIndexWhere)(function (item, ind, list2) {
+            splitPoint = (0, _utils.findIndexWhere)(function (item, ind, list2) {
             return !pred(list[ind], ind, list2);
         }, list);
 
-        return splitPoint === -1 ? (0, _utils_.sliceTo)(limit, list) : (0, _list_.slice)(splitPoint, limit, list);
+        return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _list.slice)(splitPoint, limit, list);
     },
 
 
@@ -628,11 +628,11 @@
      */
     dropWhileEnd = exports.dropWhileEnd = function dropWhileEnd(pred, list) {
         var limit = (0, _objectOps.length)(list),
-            splitPoint = (0, _utils_.findIndexWhereRight)(function (item, ind, list2) {
+            splitPoint = (0, _utils.findIndexWhereRight)(function (item, ind, list2) {
             return !pred(list[ind], ind, list2);
         }, list);
 
-        return splitPoint === -1 ? (0, _utils_.sliceTo)(limit, list) : (0, _utils_.sliceTo)(splitPoint + 1, list);
+        return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _utils.sliceTo)(splitPoint + 1, list);
     },
 
 
@@ -646,11 +646,11 @@
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     span = exports.span = function span(pred, list) {
-        var splitPoint = (0, _utils_.findIndexWhere)((0, _negate.negateP)(pred), list);
+        var splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateP)(pred), list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     },
         breakOnList = exports.breakOnList = function breakOnList(pred, list) {
-        var splitPoint = (0, _utils_.findIndexWhere)(pred, list);
+        var splitPoint = (0, _utils.findIndexWhere)(pred, list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     },
 
@@ -670,11 +670,11 @@
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    find = exports.find = _utils_.findWhere,
+    find = exports.find = _utils.findWhere,
         filter = exports.filter = function filter(pred, xs) {
         var ind = 0,
             limit = (0, _objectOps.length)(xs),
-            aggregator = (0, _utils_.aggregatorByType)(xs),
+            aggregator = (0, _utils.aggregatorByType)(xs),
             out = (0, _objectOps.of)(xs);
         if (!limit) {
             return out;
@@ -703,13 +703,13 @@
         }
         return [filter(pred, list), filter((0, _negate.negateP)(pred), list)];
     },
-        elem = exports.elem = _list_.includes,
-        notElem = exports.notElem = (0, _negate.negateF)(_list_.includes),
+        elem = exports.elem = _list.includes,
+        notElem = exports.notElem = (0, _negate.negateF)(_list.includes),
         lookup = exports.lookup = at,
         isPrefixOf = exports.isPrefixOf = function isPrefixOf(xs1, xs2) {
         var limit1 = (0, _objectOps.length)(xs1),
             limit2 = (0, _objectOps.length)(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || (0, _list_.indexOf)(xs1[0], xs2) === -1) {
+        if (limit2 < limit1 || !limit1 || !limit2 || (0, _list.indexOf)(xs1[0], xs2) === -1) {
             return false;
         }
         var ind = 0;
@@ -723,7 +723,7 @@
         isSuffixOf = exports.isSuffixOf = function isSuffixOf(xs1, xs2) {
         var limit1 = (0, _objectOps.length)(xs1),
             limit2 = (0, _objectOps.length)(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || (0, _list_.indexOf)(xs1[0], xs2) === -1) {
+        if (limit2 < limit1 || !limit1 || !limit2 || (0, _list.indexOf)(xs1[0], xs2) === -1) {
             return false;
         }
         var ind1 = limit1 - 1,
@@ -766,7 +766,7 @@
         for (i = 0; i < len; i += 1) {
             foundLen = 0;
             for (var j = 0; j < len; j += 1) {
-                if (i & 1 << j && (0, _list_.indexOf)(xs2[j], xs1) > -1) {
+                if (i & 1 << j && (0, _list.indexOf)(xs2[j], xs1) > -1) {
                     foundLen += 1;
                 }
                 if (foundLen === lenXs1) {
@@ -809,7 +809,7 @@
     groupBy = exports.groupBy = function groupBy(equalityOp, xs) {
         var limit = (0, _objectOps.length)(xs);
         if (!limit) {
-            return (0, _utils_.sliceFrom)(0, xs);
+            return (0, _utils.sliceFrom)(0, xs);
         }
         var ind = 0,
             prevItem = void 0,
@@ -827,7 +827,7 @@
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(takeWhile(predOp, (0, _list_.slice)(ind, limit, xs)));
+            agg.push(takeWhile(predOp, (0, _list.slice)(ind, limit, xs)));
         }
         return agg;
     },
@@ -839,7 +839,7 @@
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = (0, _utils_.aggregateArr)(agg, (0, _utils_.sliceTo)(ind, xs));
+            agg = (0, _utils.aggregateArr)(agg, (0, _utils.sliceTo)(ind, xs));
         }
         return agg;
     },
@@ -853,14 +853,14 @@
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = (0, _utils_.aggregateArr)(agg, (0, _list_.slice)(ind, limit, xs));
+            agg = (0, _utils.aggregateArr)(agg, (0, _list.slice)(ind, limit, xs));
         }
         return agg;
     },
         //map(list => tail(list), xs),
 
     stripPrefix = exports.stripPrefix = function stripPrefix(prefix, list) {
-        return isPrefixOf(prefix, list) ? splitAt((0, _objectOps.length)(prefix), list)[1] : (0, _utils_.sliceFrom)(0, list);
+        return isPrefixOf(prefix, list) ? splitAt((0, _objectOps.length)(prefix), list)[1] : (0, _utils.sliceFrom)(0, list);
     },
 
 
@@ -878,13 +878,13 @@
             return (0, _objectOps.of)(arr1);
         }
 
-        var _lengthsToSmallest = (0, _utils_.lengthsToSmallest)(arr1, arr2),
+        var _lengthsToSmallest = (0, _utils.lengthsToSmallest)(arr1, arr2),
             _lengthsToSmallest2 = _slicedToArray(_lengthsToSmallest, 2),
             a1 = _lengthsToSmallest2[0],
             a2 = _lengthsToSmallest2[1];
 
-        return (0, _utils_.reduce)(function (agg, item, ind) {
-            return (0, _utils_.aggregateArr)(agg, [item, a2[ind]]);
+        return (0, _utils.reduce)(function (agg, item, ind) {
+            return (0, _utils.aggregateArr)(agg, [item, a2[ind]]);
         }, [], a1);
     },
 
@@ -902,15 +902,15 @@
             lists[_key2] = arguments[_key2];
         }
 
-        var trimmedLists = (0, _function_.apply)(_utils_.lengthsToSmallest, filter(_objectOps.length, lists)),
+        var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, filter(_objectOps.length, lists)),
             lenOfTrimmed = (0, _objectOps.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
         } else if (lenOfTrimmed === 1) {
-            return (0, _utils_.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
+            return (0, _utils.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils_.reduce)(function (agg, item, ind) {
-            return (0, _utils_.aggregateArr)(agg, (0, _map_.map)(function (xs) {
+        return (0, _utils.reduce)(function (agg, item, ind) {
+            return (0, _utils.aggregateArr)(agg, (0, _map.map)(function (xs) {
                 return xs[ind];
             }, trimmedLists));
         }, [], trimmedLists[0]);
@@ -978,13 +978,13 @@
             return (0, _objectOps.of)(xs1);
         }
 
-        var _lengthsToSmallest3 = (0, _utils_.lengthsToSmallest)(xs1, xs2),
+        var _lengthsToSmallest3 = (0, _utils.lengthsToSmallest)(xs1, xs2),
             _lengthsToSmallest4 = _slicedToArray(_lengthsToSmallest3, 2),
             a1 = _lengthsToSmallest4[0],
             a2 = _lengthsToSmallest4[1];
 
-        return (0, _utils_.reduce)(function (agg, item, ind) {
-            return (0, _utils_.aggregateArr)(agg, op(item, a2[ind]));
+        return (0, _utils.reduce)(function (agg, item, ind) {
+            return (0, _utils.aggregateArr)(agg, op(item, a2[ind]));
         }, [], a1);
     },
 
@@ -1007,15 +1007,15 @@
             lists[_key3 - 1] = arguments[_key3];
         }
 
-        var trimmedLists = (0, _function_.apply)(_utils_.lengthsToSmallest, lists),
+        var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists),
             lenOfTrimmed = (0, _objectOps.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
         } else if (lenOfTrimmed === 1) {
-            return (0, _utils_.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
+            return (0, _utils.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils_.reduce)(function (agg, item, ind) {
-            return (0, _utils_.aggregateArr)(agg, (0, _function_.apply)(op, (0, _map_.map)(function (xs) {
+        return (0, _utils.reduce)(function (agg, item, ind) {
+            return (0, _utils.aggregateArr)(agg, (0, _function.apply)(op, (0, _map.map)(function (xs) {
                 return xs[ind];
             }, trimmedLists)));
         }, [], trimmedLists[0]);
@@ -1156,10 +1156,10 @@
         }, 1, arr);
     },
         maximum = exports.maximum = function maximum(list) {
-        return maximumBy(_utils_.genericAscOrdering, list);
+        return maximumBy(_utils.genericAscOrdering, list);
     },
         minimum = exports.minimum = function minimum(list) {
-        return minimumBy(_utils_.genericAscOrdering, list);
+        return minimumBy(_utils.genericAscOrdering, list);
     },
         maximumBy = exports.maximumBy = function maximumBy(ordering, xs) {
         return last(sortBy(ordering, xs));
@@ -1190,13 +1190,13 @@
         }, x, list);
     },
         sort = exports.sort = function sort(xs) {
-        return sortBy(_utils_.genericAscOrdering, xs);
+        return sortBy(_utils.genericAscOrdering, xs);
     },
         sortOn = exports.sortOn = function sortOn(valueFn, xs) {
         return (
 
             // Un-decorate
-            (0, _map_.map)(function (decorated) {
+            (0, _map.map)(function (decorated) {
                 return decorated[1];
             },
 
@@ -1215,23 +1215,23 @@
             },
 
             // Decorate
-            (0, _map_.map)(function (item) {
+            (0, _map.map)(function (item) {
                 return [valueFn(item), item];
             }, xs)))
         );
     },
         sortBy = exports.sortBy = function sortBy(orderingFn, xs) {
-        return (0, _utils_.copy)(xs).sort(orderingFn);
+        return (0, _utils.copy)(xs).sort(orderingFn);
     },
         insert = exports.insert = function insert(x, xs) {
         if ((0, _objectOps.isEmptyList)(xs)) {
-            return (0, _utils_.aggregatorByType)(xs)((0, _utils_.copy)(xs), x, 0);
+            return (0, _utils.aggregatorByType)(xs)((0, _utils.copy)(xs), x, 0);
         }
         var out = (0, _objectOps.of)(xs),
             foundIndex = findIndex(function (item) {
             return x <= item;
         }, xs);
-        return foundIndex === -1 ? append((0, _utils_.sliceFrom)(0, out), x) : concat(intersperse([x], splitAt(foundIndex, xs)));
+        return foundIndex === -1 ? append((0, _utils.sliceFrom)(0, out), x) : concat(intersperse([x], splitAt(foundIndex, xs)));
     },
 
 
@@ -1250,7 +1250,7 @@
      */
     insertBy = exports.insertBy = function insertBy(orderingFn, x, xs) {
         var limit = (0, _objectOps.length)(xs),
-            aggregator = (0, _utils_.aggregatorByType)(xs),
+            aggregator = (0, _utils.aggregatorByType)(xs),
             out = (0, _objectOps.of)(xs);
         if ((0, _objectOps.isEmptyList)(xs)) {
             return aggregator(out, x, 0);
@@ -1263,7 +1263,7 @@
                 return concat(foldl(aggregator, out, [parts[0], [x], parts[1]]));
             }
         }
-        return aggregator((0, _utils_.copy)(xs), x);
+        return aggregator((0, _utils.copy)(xs), x);
     },
         nubBy = exports.nubBy = function nubBy(pred, list) {
         if ((0, _objectOps.isEmptyList)(list)) {
@@ -1309,13 +1309,13 @@
      * @returns {Array|String|*}
      */
     unionBy = exports.unionBy = function unionBy(pred, arr1, arr2) {
-        var aggregator = (0, _utils_.aggregatorByType)(arr1);
+        var aggregator = (0, _utils.aggregatorByType)(arr1);
         return foldl(function (agg, b) {
             var alreadyAdded = any(function (a) {
                 return pred(a, b);
             }, agg);
             return !alreadyAdded ? aggregator(agg, b) : agg;
-        }, (0, _utils_.copy)(arr1), arr2);
+        }, (0, _utils.copy)(arr1), arr2);
     },
 
 
@@ -1328,7 +1328,7 @@
      */
     union = exports.union = function union(arr1, arr2) {
         return append(arr1, filter(function (elm) {
-            return !(0, _list_.includes)(elm, arr1);
+            return !(0, _list.includes)(elm, arr1);
         }, arr2));
     },
 
@@ -1342,7 +1342,7 @@
      */
     intersect = exports.intersect = function intersect(arr1, arr2) {
         return !arr1 || !arr2 || !arr1 && !arr2 ? [] : filter(function (elm) {
-            return (0, _list_.includes)(elm, arr2);
+            return (0, _list.includes)(elm, arr2);
         }, arr1);
     },
 
@@ -1356,7 +1356,7 @@
      * @return {Array|String|*}
      */
     intersectBy = exports.intersectBy = function intersectBy(pred, list1, list2) {
-        var aggregator = (0, _utils_.aggregatorByType)(list1);
+        var aggregator = (0, _utils.aggregatorByType)(list1);
         return foldl(function (agg, a) {
             return any(function (b) {
                 return pred(a, b);
@@ -1376,13 +1376,13 @@
     difference = exports.difference = function difference(array1, array2) {
         // augment this with max length and min length ordering on op
         if (array1 && !array2) {
-            return (0, _utils_.sliceFrom)(0, array1);
+            return (0, _utils.sliceFrom)(0, array1);
         } else if (!array1 && array2 || !array1 && !array2) {
             return [];
         }
-        var aggregator = (0, _utils_.aggregatorByType)(array1);
-        return (0, _utils_.reduce)(function (agg, elm) {
-            return !(0, _list_.includes)(elm, array2) ? aggregator(agg, elm) : agg;
+        var aggregator = (0, _utils.aggregatorByType)(array1);
+        return (0, _utils.reduce)(function (agg, elm) {
+            return !(0, _list.includes)(elm, array2) ? aggregator(agg, elm) : agg;
         }, [], array1);
     },
 
@@ -1399,7 +1399,7 @@
             arrays[_key4 - 1] = arguments[_key4];
         }
 
-        return (0, _utils_.reduce)(function (agg, arr) {
+        return (0, _utils.reduce)(function (agg, arr) {
             return append(agg, difference(arr, arr0));
         }, [], arrays);
     };

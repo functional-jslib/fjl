@@ -11,7 +11,7 @@
 // generating browser version of test(s).
 'use strict';
 import {assert, expect} from 'chai';
-import {apply} from '../src/uncurried/_jsPlatform/function_';
+import {apply} from '../src/uncurried/_jsPlatform/_function';
 import {
     /*_objComplement as */objComplement,
     /*_objDifference as */objDifference,

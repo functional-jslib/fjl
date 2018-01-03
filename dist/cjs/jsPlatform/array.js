@@ -5,12 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.push = exports.join = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.reverse = undefined;
 
-var _array_ = require('../uncurried/_jsPlatform/array_');
+var _array = require('../uncurried/_jsPlatform/_array');
 
 Object.defineProperty(exports, 'reverse', {
   enumerable: true,
   get: function get() {
-    return _array_.reverse;
+    return _array.reverse;
   }
 });
 

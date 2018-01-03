@@ -1,4 +1,4 @@
-define(['exports', './_jsPlatform/function_', './_functionOps/_compose', './_functionOps/_curry', './_functionOps/__curry', './_functionOps/_flip', './_functionOps/_id', './_functionOps/_negate', './_functionOps/_until'], function (exports, _function_, _compose, _curry, _curry2, _flip, _id, _negate, _until) {
+define(['exports', './_jsPlatform/_function', './_functionOps/_compose', './_functionOps/_curry', './_functionOps/__curry', './_functionOps/_flip', './_functionOps/_id', './_functionOps/_negate', './_functionOps/_until'], function (exports, _function, _compose, _curry, _curry2, _flip, _id, _negate, _until) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -7,13 +7,13 @@ define(['exports', './_jsPlatform/function_', './_functionOps/_compose', './_fun
   Object.defineProperty(exports, 'apply', {
     enumerable: true,
     get: function () {
-      return _function_.apply;
+      return _function.apply;
     }
   });
   Object.defineProperty(exports, 'call', {
     enumerable: true,
     get: function () {
-      return _function_.call;
+      return _function.call;
     }
   });
   Object.keys(_compose).forEach(function (key) {

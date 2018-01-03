@@ -12,7 +12,7 @@ import {
     slice as slice_,
     includes as includes_,
     indexOf as indexOf_,
-    lastIndexOf as lastIndexOf_ } from '../uncurried/_jsPlatform/list_';
+    lastIndexOf as lastIndexOf_ } from '../uncurried/_jsPlatform/_list';
 
 export const
 

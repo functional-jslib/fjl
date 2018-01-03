@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform/string_'], factory);
+    define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform/_string'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../uncurried/_functionOps/_curry'), require('../uncurried/_jsPlatform/string_'));
+    factory(exports, require('../uncurried/_functionOps/_curry'), require('../uncurried/_jsPlatform/_string'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global._curry, global.string_);
+    factory(mod.exports, global._curry, global._string);
     global.string = mod.exports;
   }
-})(this, function (exports, _curry, _string_) {
+})(this, function (exports, _curry, _string) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -33,5 +33,5 @@
    * @private
    */
 
-  var split = exports.split = (0, _curry.curry)(_string_.split);
+  var split = exports.split = (0, _curry.curry)(_string.split);
 });

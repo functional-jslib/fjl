@@ -4,86 +4,86 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _object_ = require('./_jsPlatform/object_');
+var _object = require('./_jsPlatform/_object');
 
-Object.keys(_object_).forEach(function (key) {
+Object.keys(_object).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _object_[key];
+      return _object[key];
     }
   });
 });
 
-var _prop_ = require('./_objectOps/prop_');
+var _prop = require('./_objectOps/_prop');
 
-Object.keys(_prop_).forEach(function (key) {
+Object.keys(_prop).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _prop_[key];
+      return _prop[key];
     }
   });
 });
 
-var _typeOf_ = require('./_objectOps/typeOf_');
+var _typeOf = require('./_objectOps/_typeOf');
 
-Object.keys(_typeOf_).forEach(function (key) {
+Object.keys(_typeOf).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _typeOf_[key];
+      return _typeOf[key];
     }
   });
 });
 
-var _is_ = require('./_objectOps/is_');
+var _is = require('./_objectOps/_is');
 
-Object.keys(_is_).forEach(function (key) {
+Object.keys(_is).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _is_[key];
+      return _is[key];
     }
   });
 });
 
-var _of_ = require('./_objectOps/of_');
+var _of = require('./_objectOps/_of');
 
-Object.keys(_of_).forEach(function (key) {
+Object.keys(_of).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _of_[key];
+      return _of[key];
     }
   });
 });
 
-var _assignDeep_ = require('./_objectOps/assignDeep_');
+var _assignDeep = require('./_objectOps/_assignDeep');
 
-Object.keys(_assignDeep_).forEach(function (key) {
+Object.keys(_assignDeep).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _assignDeep_[key];
+      return _assignDeep[key];
     }
   });
 });
 
-var _setTheory_ = require('./_objectOps/setTheory_');
+var _setTheory = require('./_objectOps/_setTheory');
 
-Object.keys(_setTheory_).forEach(function (key) {
+Object.keys(_setTheory).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _setTheory_[key];
+      return _setTheory[key];
     }
   });
 });

@@ -2,9 +2,9 @@
  * @memberOf _functionOps
  */
 
-import {apply} from '../_jsPlatform/function_';
+import {apply} from '../_jsPlatform/_function';
 
-import {reverse} from '../_jsPlatform/array_';
+import {reverse} from '../_jsPlatform/_array';
 
 export const
 

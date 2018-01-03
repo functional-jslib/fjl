@@ -7,7 +7,7 @@ exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = expor
 
 var _curry = require('../uncurried/_functionOps/_curry');
 
-var _list_ = require('../uncurried/_jsPlatform/list_');
+var _list = require('../uncurried/_jsPlatform/_list');
 
 /**
  * List operations that overlap (apart from globally overlapping props and functions like `length`)
@@ -27,7 +27,7 @@ var
  * @return {*|Array|Object} - The type passed.
  * @throws {Error} - When passed in object doesn't have an `every` method.
  */
-concat = exports.concat = (0, _curry.curry)(_list_.concat),
+concat = exports.concat = (0, _curry.curry)(_list.concat),
 
 
 /**
@@ -37,7 +37,7 @@ concat = exports.concat = (0, _curry.curry)(_list_.concat),
  * @param arr{Array}
  * @returns {Array}
  */
-slice = exports.slice = (0, _curry.curry)(_list_.slice),
-    includes = exports.includes = (0, _curry.curry)(_list_.includes),
-    indexOf = exports.indexOf = (0, _curry.curry)(_list_.indexOf),
-    lastIndexOf = exports.lastIndexOf = (0, _curry.curry)(_list_.lastIndexOf);
+slice = exports.slice = (0, _curry.curry)(_list.slice),
+    includes = exports.includes = (0, _curry.curry)(_list.includes),
+    indexOf = exports.indexOf = (0, _curry.curry)(_list.indexOf),
+    lastIndexOf = exports.lastIndexOf = (0, _curry.curry)(_list.lastIndexOf);

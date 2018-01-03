@@ -1,4 +1,4 @@
-define(['exports', '../_jsPlatform/array_', '../_jsPlatform/function_'], function (exports, _array_, _function_) {
+define(['exports', '../_jsPlatform/_array', '../_jsPlatform/_function'], function (exports, _array, _function) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -13,7 +13,7 @@ define(['exports', '../_jsPlatform/array_', '../_jsPlatform/function_'], functio
    * @param fn {Function}
    * @returns {Function}
    */
-  flipN = exports.flipN = fn => (...args) => (0, _function_.apply)(fn, (0, _array_.reverse)(args)),
+  flipN = exports.flipN = fn => (...args) => (0, _function.apply)(fn, (0, _array.reverse)(args)),
 
 
   /**
@@ -22,7 +22,7 @@ define(['exports', '../_jsPlatform/array_', '../_jsPlatform/function_'], functio
    * @param fn {Function} - Function<a, b, c>
    * @returns {Function} - Function<c, b, a>
    */
-  flip3 = exports.flip3 = fn => (a, b, c) => (0, _function_.call)(fn, c, b, a),
+  flip3 = exports.flip3 = fn => (a, b, c) => (0, _function.call)(fn, c, b, a),
 
 
   /**
@@ -31,7 +31,7 @@ define(['exports', '../_jsPlatform/array_', '../_jsPlatform/function_'], functio
    * @param fn {Function} - Function<a, b, c, d>
    * @returns {Function} - Function<d, c, b, a>
    */
-  flip4 = exports.flip4 = fn => (a, b, c, d) => (0, _function_.call)(fn, d, c, b, a),
+  flip4 = exports.flip4 = fn => (a, b, c, d) => (0, _function.call)(fn, d, c, b, a),
 
 
   /**
@@ -40,7 +40,7 @@ define(['exports', '../_jsPlatform/array_', '../_jsPlatform/function_'], functio
    * @param fn {Function} - Function<a, b, c, d, e>
    * @returns {Function} - Function<e, d, c, b, a>
    */
-  flip5 = exports.flip5 = fn => (a, b, c, d, e) => (0, _function_.call)(fn, e, d, c, b, a),
+  flip5 = exports.flip5 = fn => (a, b, c, d, e) => (0, _function.call)(fn, e, d, c, b, a),
 
 
   /**
@@ -49,5 +49,5 @@ define(['exports', '../_jsPlatform/array_', '../_jsPlatform/function_'], functio
    * @param fn {Function}
    * @returns {Function}
    */
-  flip = exports.flip = fn => (b, a) => (0, _function_.call)(fn, a, b);
+  flip = exports.flip = fn => (b, a) => (0, _function.call)(fn, a, b);
 });

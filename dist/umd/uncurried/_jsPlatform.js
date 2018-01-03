@@ -1,63 +1,63 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './_jsPlatform/object_', './_jsPlatform/array_', './_jsPlatform/list_', './_jsPlatform/string_', './_jsPlatform/function_'], factory);
+    define(['exports', './_jsPlatform/_object', './_jsPlatform/_array', './_jsPlatform/_list', './_jsPlatform/_string', './_jsPlatform/_function'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./_jsPlatform/object_'), require('./_jsPlatform/array_'), require('./_jsPlatform/list_'), require('./_jsPlatform/string_'), require('./_jsPlatform/function_'));
+    factory(exports, require('./_jsPlatform/_object'), require('./_jsPlatform/_array'), require('./_jsPlatform/_list'), require('./_jsPlatform/_string'), require('./_jsPlatform/_function'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.object_, global.array_, global.list_, global.string_, global.function_);
+    factory(mod.exports, global._object, global._array, global._list, global._string, global._function);
     global._jsPlatform = mod.exports;
   }
-})(this, function (exports, _object_, _array_, _list_, _string_, _function_) {
+})(this, function (exports, _object, _array, _list, _string, _function) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.keys(_object_).forEach(function (key) {
+  Object.keys(_object).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _object_[key];
+        return _object[key];
       }
     });
   });
-  Object.keys(_array_).forEach(function (key) {
+  Object.keys(_array).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _array_[key];
+        return _array[key];
       }
     });
   });
-  Object.keys(_list_).forEach(function (key) {
+  Object.keys(_list).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _list_[key];
+        return _list[key];
       }
     });
   });
-  Object.keys(_string_).forEach(function (key) {
+  Object.keys(_string).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _string_[key];
+        return _string[key];
       }
     });
   });
-  Object.keys(_function_).forEach(function (key) {
+  Object.keys(_function).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _function_[key];
+        return _function[key];
       }
     });
   });

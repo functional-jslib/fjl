@@ -1,5 +1,5 @@
-import {reverse} from '../_jsPlatform/array_';
-import {apply, call} from '../_jsPlatform/function_';
+import {reverse} from '../_jsPlatform/_array';
+import {apply, call} from '../_jsPlatform/_function';
 
 export const
 

@@ -1,4 +1,4 @@
-define(['exports', '../uncurried/_jsPlatform/array_', '../utils'], function (exports, _array_, _utils) {
+define(['exports', '../uncurried/_jsPlatform/_array', '../utils'], function (exports, _array, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -8,7 +8,7 @@ define(['exports', '../uncurried/_jsPlatform/array_', '../utils'], function (exp
   Object.defineProperty(exports, 'reverse', {
     enumerable: true,
     get: function () {
-      return _array_.reverse;
+      return _array.reverse;
     }
   });
   const

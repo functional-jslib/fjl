@@ -1,51 +1,51 @@
-define(['exports', './_jsPlatform/object_', './_jsPlatform/array_', './_jsPlatform/list_', './_jsPlatform/string_', './_jsPlatform/function_'], function (exports, _object_, _array_, _list_, _string_, _function_) {
+define(['exports', './_jsPlatform/_object', './_jsPlatform/_array', './_jsPlatform/_list', './_jsPlatform/_string', './_jsPlatform/_function'], function (exports, _object, _array, _list, _string, _function) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.keys(_object_).forEach(function (key) {
+  Object.keys(_object).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _object_[key];
+        return _object[key];
       }
     });
   });
-  Object.keys(_array_).forEach(function (key) {
+  Object.keys(_array).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _array_[key];
+        return _array[key];
       }
     });
   });
-  Object.keys(_list_).forEach(function (key) {
+  Object.keys(_list).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _list_[key];
+        return _list[key];
       }
     });
   });
-  Object.keys(_string_).forEach(function (key) {
+  Object.keys(_string).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _string_[key];
+        return _string[key];
       }
     });
   });
-  Object.keys(_function_).forEach(function (key) {
+  Object.keys(_function).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _function_[key];
+        return _function[key];
       }
     });
   });

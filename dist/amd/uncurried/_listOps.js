@@ -1,11 +1,11 @@
-define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functionOps/_negate', '../booleanOps', './_objectOps', './_listOps/map_', './_listOps/utils_'], function (exports, _list_, _function_, _negate, _booleanOps, _objectOps, _map_, _utils_) {
+define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functionOps/_negate', '../booleanOps', './_objectOps', './_listOps/_map', './_listOps/_utils'], function (exports, _list, _function, _negate, _booleanOps, _objectOps, _map, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
     exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = undefined;
-    exports.map = _map_.map;
+    exports.map = _map.map;
 
 
     // Exported internals
@@ -24,7 +24,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
      */
-    append = exports.append = _list_.concat,
+    append = exports.append = _list.concat,
 
 
     /**
@@ -38,7 +38,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      */
     appendMany = exports.appendMany = (...args) => {
         if ((0, _objectOps.length)(args)) {
-            return (0, _function_.apply)(_list_.concat, args);
+            return (0, _function.apply)(_list.concat, args);
         }
         throw new Error('`appendMany` requires at least one arg.');
     },
@@ -61,7 +61,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param xs {Array|String}
      * @returns {*}
      */
-    last = exports.last = xs => xs[(0, _utils_.lastIndex)(xs)],
+    last = exports.last = xs => xs[(0, _utils.lastIndex)(xs)],
 
 
     /**
@@ -71,7 +71,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param xs {Array}
      * @returns {Array}
      */
-    tail = exports.tail = xs => (0, _utils_.sliceFrom)(1, xs),
+    tail = exports.tail = xs => (0, _utils.sliceFrom)(1, xs),
 
 
     /**
@@ -81,7 +81,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param xs {Array|String}
      * @returns {Array|String}
      */
-    init = exports.init = xs => (0, _utils_.sliceTo)((0, _utils_.lastIndex)(xs), xs),
+    init = exports.init = xs => (0, _utils.sliceTo)((0, _utils.lastIndex)(xs), xs),
 
 
     /**
@@ -129,9 +129,9 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      */
     concat = exports.concat = xs => {
         if (!(0, _objectOps.length)(xs)) {
-            return (0, _utils_.copy)(xs);
+            return (0, _utils.copy)(xs);
         }
-        return (0, _objectOps.isString)(xs) ? xs : (0, _function_.apply)(appendMany, xs);
+        return (0, _objectOps.isString)(xs) ? xs : (0, _function.apply)(appendMany, xs);
     },
 
 
@@ -143,7 +143,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param foldableOfA {Array|String|*}
      * @returns {Array|String|*}
      */
-    concatMap = exports.concatMap = (fn, foldableOfA) => concat((0, _map_.map)(fn, foldableOfA)),
+    concatMap = exports.concatMap = (fn, foldableOfA) => concat((0, _map.map)(fn, foldableOfA)),
 
 
     /**
@@ -154,7 +154,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @returns {Array|String|*}
      */
     reverse = exports.reverse = x => {
-        const aggregator = (0, _utils_.aggregatorByType)(x);
+        const aggregator = (0, _utils.aggregatorByType)(x);
         return foldr((agg, item, ind) => aggregator(agg, item, ind), (0, _objectOps.of)(x), x);
     },
 
@@ -172,7 +172,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
         const limit = (0, _objectOps.length)(arr),
               lastInd = limit - 1,
               aggregator = (0, _objectOps.of)(arr),
-              aggregatorOp = (0, _utils_.aggregatorByType)(arr);
+              aggregatorOp = (0, _utils.aggregatorByType)(arr);
         if (!limit) {
             return aggregator;
         }
@@ -217,7 +217,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
         if (!numLists) {
             return (0, _objectOps.of)(xss);
         }
-        const listLengths = (0, _function_.apply)(_utils_.lengths, xss),
+        const listLengths = (0, _function.apply)(_utils.lengths, xss),
               longestListLen = maximum(listLengths),
               outLists = [];
         for (; ind < longestListLen; ind += 1) {
@@ -271,7 +271,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      */
     permutations = exports.permutations = xs => {
         const limit = (0, _objectOps.length)(xs);
-        return !limit ? [xs] : (0, _utils_._permutationsAlgo)(xs, limit, limit);
+        return !limit ? [xs] : (0, _utils._permutationsAlgo)(xs, limit, limit);
     },
 
 
@@ -283,21 +283,21 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param functor {Array|String|*}
      * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
      */
-    foldl = exports.foldl = _utils_.reduce,
-          foldr = exports.foldr = _utils_.reduceRight,
+    foldl = exports.foldl = _utils.reduce,
+          foldr = exports.foldr = _utils.reduceRight,
           foldl1 = exports.foldl1 = (op, xs) => {
         const parts = uncons(xs);
         if (!parts) {
             return (0, _objectOps.of)(xs);
         }
-        return (0, _utils_.reduce)(op, parts[0], parts[1]);
+        return (0, _utils.reduce)(op, parts[0], parts[1]);
     },
           foldr1 = exports.foldr1 = (op, xs) => {
         const parts = unconsr(xs);
         if (!parts) {
             return (0, _objectOps.of)(xs);
         }
-        return (0, _utils_.reduceRight)(op, parts[1], parts[0]);
+        return (0, _utils.reduceRight)(op, parts[1], parts[0]);
     },
 
 
@@ -311,7 +311,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @return {Array} - [aggregated, list]
      */
     mapAccumL = exports.mapAccumL = (op, zero, xs) => {
-        const list = (0, _utils_.sliceFrom)(0, xs),
+        const list = (0, _utils.sliceFrom)(0, xs),
               limit = (0, _objectOps.length)(xs);
         if (!limit) {
             return [zero, list];
@@ -339,7 +339,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @return {Array} - [aggregated, list]
      */
     mapAccumR = exports.mapAccumR = (op, zero, xs) => {
-        const list = (0, _utils_.sliceFrom)(0, xs),
+        const list = (0, _utils.sliceFrom)(0, xs),
               limit = (0, _objectOps.length)(xs);
         if (!limit) {
             return [zero, list];
@@ -435,7 +435,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndex = exports.findIndex = _utils_.findIndexWhere,
+    findIndex = exports.findIndex = _utils.findIndexWhere,
 
 
     /**
@@ -444,7 +444,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
      */
-    findIndices = exports.findIndices = _utils_.findIndicesWhere,
+    findIndices = exports.findIndices = _utils.findIndicesWhere,
 
 
     /**
@@ -454,7 +454,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @returns {*}
      */
     elemIndex = exports.elemIndex = (x, xs) => {
-        const foundInd = (0, _list_.indexOf)(x, xs);
+        const foundInd = (0, _list.indexOf)(x, xs);
         return foundInd !== -1 ? foundInd : undefined;
     },
 
@@ -475,7 +475,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    take = exports.take = (limit, list) => (0, _utils_.sliceTo)(limit, list),
+    take = exports.take = (limit, list) => (0, _utils.sliceTo)(limit, list),
 
 
     /**
@@ -485,7 +485,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    drop = exports.drop = (count, list) => (0, _utils_.sliceFrom)(count, list),
+    drop = exports.drop = (count, list) => (0, _utils.sliceFrom)(count, list),
 
 
     /**
@@ -496,7 +496,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param list {Array|String|*} - functor (list or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
      */
-    splitAt = exports.splitAt = (ind, list) => [(0, _utils_.sliceTo)(ind, list), (0, _utils_.sliceFrom)(ind, list)],
+    splitAt = exports.splitAt = (ind, list) => [(0, _utils.sliceTo)(ind, list), (0, _utils.sliceFrom)(ind, list)],
 
 
     /**
@@ -508,8 +508,8 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      */
     takeWhile = exports.takeWhile = (pred, list) => {
         let zero = (0, _objectOps.of)(list);
-        const operation = (0, _utils_.aggregatorByType)(list);
-        return (0, _utils_.reduceUntil)((0, _negate.negateP)(pred), // predicate
+        const operation = (0, _utils.aggregatorByType)(list);
+        return (0, _utils.reduceUntil)((0, _negate.negateP)(pred), // predicate
         operation, // operation
         zero, // aggregator
         list);
@@ -526,9 +526,9 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      */
     dropWhile = exports.dropWhile = (pred, list) => {
         const limit = (0, _objectOps.length)(list),
-              splitPoint = (0, _utils_.findIndexWhere)((item, ind, list2) => !pred(list[ind], ind, list2), list);
+              splitPoint = (0, _utils.findIndexWhere)((item, ind, list2) => !pred(list[ind], ind, list2), list);
 
-        return splitPoint === -1 ? (0, _utils_.sliceTo)(limit, list) : (0, _list_.slice)(splitPoint, limit, list);
+        return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _list.slice)(splitPoint, limit, list);
     },
 
 
@@ -541,9 +541,9 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      */
     dropWhileEnd = exports.dropWhileEnd = (pred, list) => {
         const limit = (0, _objectOps.length)(list),
-              splitPoint = (0, _utils_.findIndexWhereRight)((item, ind, list2) => !pred(list[ind], ind, list2), list);
+              splitPoint = (0, _utils.findIndexWhereRight)((item, ind, list2) => !pred(list[ind], ind, list2), list);
 
-        return splitPoint === -1 ? (0, _utils_.sliceTo)(limit, list) : (0, _utils_.sliceTo)(splitPoint + 1, list);
+        return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _utils.sliceTo)(splitPoint + 1, list);
     },
 
 
@@ -557,11 +557,11 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     span = exports.span = (pred, list) => {
-        const splitPoint = (0, _utils_.findIndexWhere)((0, _negate.negateP)(pred), list);
+        const splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateP)(pred), list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     },
           breakOnList = exports.breakOnList = (pred, list) => {
-        const splitPoint = (0, _utils_.findIndexWhere)(pred, list);
+        const splitPoint = (0, _utils.findIndexWhere)(pred, list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     },
 
@@ -581,11 +581,11 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    find = exports.find = _utils_.findWhere,
+    find = exports.find = _utils.findWhere,
           filter = exports.filter = (pred, xs) => {
         let ind = 0,
             limit = (0, _objectOps.length)(xs),
-            aggregator = (0, _utils_.aggregatorByType)(xs),
+            aggregator = (0, _utils.aggregatorByType)(xs),
             out = (0, _objectOps.of)(xs);
         if (!limit) {
             return out;
@@ -614,13 +614,13 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
         }
         return [filter(pred, list), filter((0, _negate.negateP)(pred), list)];
     },
-          elem = exports.elem = _list_.includes,
-          notElem = exports.notElem = (0, _negate.negateF)(_list_.includes),
+          elem = exports.elem = _list.includes,
+          notElem = exports.notElem = (0, _negate.negateF)(_list.includes),
           lookup = exports.lookup = at,
           isPrefixOf = exports.isPrefixOf = (xs1, xs2) => {
         const limit1 = (0, _objectOps.length)(xs1),
               limit2 = (0, _objectOps.length)(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || (0, _list_.indexOf)(xs1[0], xs2) === -1) {
+        if (limit2 < limit1 || !limit1 || !limit2 || (0, _list.indexOf)(xs1[0], xs2) === -1) {
             return false;
         }
         let ind = 0;
@@ -634,7 +634,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
           isSuffixOf = exports.isSuffixOf = (xs1, xs2) => {
         const limit1 = (0, _objectOps.length)(xs1),
               limit2 = (0, _objectOps.length)(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || (0, _list_.indexOf)(xs1[0], xs2) === -1) {
+        if (limit2 < limit1 || !limit1 || !limit2 || (0, _list.indexOf)(xs1[0], xs2) === -1) {
             return false;
         }
         let ind1 = limit1 - 1,
@@ -676,7 +676,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
         for (i = 0; i < len; i += 1) {
             foundLen = 0;
             for (let j = 0; j < len; j += 1) {
-                if (i & 1 << j && (0, _list_.indexOf)(xs2[j], xs1) > -1) {
+                if (i & 1 << j && (0, _list.indexOf)(xs2[j], xs1) > -1) {
                     foundLen += 1;
                 }
                 if (foundLen === lenXs1) {
@@ -715,7 +715,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
     groupBy = exports.groupBy = (equalityOp, xs) => {
         const limit = (0, _objectOps.length)(xs);
         if (!limit) {
-            return (0, _utils_.sliceFrom)(0, xs);
+            return (0, _utils.sliceFrom)(0, xs);
         }
         let ind = 0,
             prevItem,
@@ -733,7 +733,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(takeWhile(predOp, (0, _list_.slice)(ind, limit, xs)));
+            agg.push(takeWhile(predOp, (0, _list.slice)(ind, limit, xs)));
         }
         return agg;
     },
@@ -745,7 +745,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = (0, _utils_.aggregateArr)(agg, (0, _utils_.sliceTo)(ind, xs));
+            agg = (0, _utils.aggregateArr)(agg, (0, _utils.sliceTo)(ind, xs));
         }
         return agg;
     },
@@ -759,13 +759,13 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = (0, _utils_.aggregateArr)(agg, (0, _list_.slice)(ind, limit, xs));
+            agg = (0, _utils.aggregateArr)(agg, (0, _list.slice)(ind, limit, xs));
         }
         return agg;
     },
           //map(list => tail(list), xs),
 
-    stripPrefix = exports.stripPrefix = (prefix, list) => isPrefixOf(prefix, list) ? splitAt((0, _objectOps.length)(prefix), list)[1] : (0, _utils_.sliceFrom)(0, list),
+    stripPrefix = exports.stripPrefix = (prefix, list) => isPrefixOf(prefix, list) ? splitAt((0, _objectOps.length)(prefix), list)[1] : (0, _utils.sliceFrom)(0, list),
 
 
     /**
@@ -781,8 +781,8 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
         if (!(0, _objectOps.length)(arr1) || !(0, _objectOps.length)(arr2)) {
             return (0, _objectOps.of)(arr1);
         }
-        const [a1, a2] = (0, _utils_.lengthsToSmallest)(arr1, arr2);
-        return (0, _utils_.reduce)((agg, item, ind) => (0, _utils_.aggregateArr)(agg, [item, a2[ind]]), [], a1);
+        const [a1, a2] = (0, _utils.lengthsToSmallest)(arr1, arr2);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, [item, a2[ind]]), [], a1);
     },
 
 
@@ -795,14 +795,14 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @returns {Array}
      */
     zipN = exports.zipN = (...lists) => {
-        const trimmedLists = (0, _function_.apply)(_utils_.lengthsToSmallest, filter(_objectOps.length, lists)),
+        const trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, filter(_objectOps.length, lists)),
               lenOfTrimmed = (0, _objectOps.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
         } else if (lenOfTrimmed === 1) {
-            return (0, _utils_.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
+            return (0, _utils.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils_.reduce)((agg, item, ind) => (0, _utils_.aggregateArr)(agg, (0, _map_.map)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, (0, _map.map)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
     },
 
 
@@ -866,8 +866,8 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
         if (!(0, _objectOps.length)(xs1) || !(0, _objectOps.length)(xs2)) {
             return (0, _objectOps.of)(xs1);
         }
-        const [a1, a2] = (0, _utils_.lengthsToSmallest)(xs1, xs2);
-        return (0, _utils_.reduce)((agg, item, ind) => (0, _utils_.aggregateArr)(agg, op(item, a2[ind])), [], a1);
+        const [a1, a2] = (0, _utils.lengthsToSmallest)(xs1, xs2);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, op(item, a2[ind])), [], a1);
     },
 
 
@@ -885,14 +885,14 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @returns {Array<Array<*,*>>}
      */
     zipWithN = exports.zipWithN = (op, ...lists) => {
-        const trimmedLists = (0, _function_.apply)(_utils_.lengthsToSmallest, lists),
+        const trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists),
               lenOfTrimmed = (0, _objectOps.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
         } else if (lenOfTrimmed === 1) {
-            return (0, _utils_.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
+            return (0, _utils.sliceTo)((0, _objectOps.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils_.reduce)((agg, item, ind) => (0, _utils_.aggregateArr)(agg, (0, _function_.apply)(op, (0, _map_.map)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, (0, _function.apply)(op, (0, _map.map)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
     },
 
 
@@ -1009,8 +1009,8 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
           not = exports.not = xs => all(_booleanOps.isFalsy, xs),
           sum = exports.sum = list => foldl((agg, x) => agg + x, 0, list),
           product = exports.product = arr => foldl((agg, x) => agg * x, 1, arr),
-          maximum = exports.maximum = list => maximumBy(_utils_.genericAscOrdering, list),
-          minimum = exports.minimum = list => minimumBy(_utils_.genericAscOrdering, list),
+          maximum = exports.maximum = list => maximumBy(_utils.genericAscOrdering, list),
+          minimum = exports.minimum = list => minimumBy(_utils.genericAscOrdering, list),
           maximumBy = exports.maximumBy = (ordering, xs) => last(sortBy(ordering, xs)),
           minimumBy = exports.minimumBy = (ordering, xs) => head(sortBy(ordering, xs)),
           scanl = exports.scanl = () => null,
@@ -1019,11 +1019,11 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
           scanr1 = exports.scanr1 = () => null,
           nub = exports.nub = list => nubBy((a, b) => a === b, list),
           remove = exports.remove = (x, list) => removeBy((a, b) => a === b, x, list),
-          sort = exports.sort = xs => sortBy(_utils_.genericAscOrdering, xs),
+          sort = exports.sort = xs => sortBy(_utils.genericAscOrdering, xs),
           sortOn = exports.sortOn = (valueFn, xs) =>
 
     // Un-decorate
-    (0, _map_.map)(decorated => decorated[1],
+    (0, _map.map)(decorated => decorated[1],
 
     // Decorate and sort
     sortBy(
@@ -1040,15 +1040,15 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
     },
 
     // Decorate
-    (0, _map_.map)(item => [valueFn(item), item], xs))),
-          sortBy = exports.sortBy = (orderingFn, xs) => (0, _utils_.copy)(xs).sort(orderingFn),
+    (0, _map.map)(item => [valueFn(item), item], xs))),
+          sortBy = exports.sortBy = (orderingFn, xs) => (0, _utils.copy)(xs).sort(orderingFn),
           insert = exports.insert = (x, xs) => {
         if ((0, _objectOps.isEmptyList)(xs)) {
-            return (0, _utils_.aggregatorByType)(xs)((0, _utils_.copy)(xs), x, 0);
+            return (0, _utils.aggregatorByType)(xs)((0, _utils.copy)(xs), x, 0);
         }
         let out = (0, _objectOps.of)(xs),
             foundIndex = findIndex(item => x <= item, xs);
-        return foundIndex === -1 ? append((0, _utils_.sliceFrom)(0, out), x) : concat(intersperse([x], splitAt(foundIndex, xs)));
+        return foundIndex === -1 ? append((0, _utils.sliceFrom)(0, out), x) : concat(intersperse([x], splitAt(foundIndex, xs)));
     },
 
 
@@ -1067,7 +1067,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      */
     insertBy = exports.insertBy = (orderingFn, x, xs) => {
         const limit = (0, _objectOps.length)(xs),
-              aggregator = (0, _utils_.aggregatorByType)(xs),
+              aggregator = (0, _utils.aggregatorByType)(xs),
               out = (0, _objectOps.of)(xs);
         if ((0, _objectOps.isEmptyList)(xs)) {
             return aggregator(out, x, 0);
@@ -1080,7 +1080,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
                 return concat(foldl(aggregator, out, [parts[0], [x], parts[1]]));
             }
         }
-        return aggregator((0, _utils_.copy)(xs), x);
+        return aggregator((0, _utils.copy)(xs), x);
     },
           nubBy = exports.nubBy = (pred, list) => {
         if ((0, _objectOps.isEmptyList)(list)) {
@@ -1118,11 +1118,11 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @returns {Array|String|*}
      */
     unionBy = exports.unionBy = (pred, arr1, arr2) => {
-        const aggregator = (0, _utils_.aggregatorByType)(arr1);
+        const aggregator = (0, _utils.aggregatorByType)(arr1);
         return foldl((agg, b) => {
             const alreadyAdded = any(a => pred(a, b), agg);
             return !alreadyAdded ? aggregator(agg, b) : agg;
-        }, (0, _utils_.copy)(arr1), arr2);
+        }, (0, _utils.copy)(arr1), arr2);
     },
 
 
@@ -1133,7 +1133,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param arr2 {Array|String|*}
      * @returns {Array|String|*}
      */
-    union = exports.union = (arr1, arr2) => append(arr1, filter(elm => !(0, _list_.includes)(elm, arr1), arr2)),
+    union = exports.union = (arr1, arr2) => append(arr1, filter(elm => !(0, _list.includes)(elm, arr1), arr2)),
 
 
     /**
@@ -1143,7 +1143,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param arr2 {Array|String|*}
      * @returns {Array|String|*}
      */
-    intersect = exports.intersect = (arr1, arr2) => !arr1 || !arr2 || !arr1 && !arr2 ? [] : filter(elm => (0, _list_.includes)(elm, arr2), arr1),
+    intersect = exports.intersect = (arr1, arr2) => !arr1 || !arr2 || !arr1 && !arr2 ? [] : filter(elm => (0, _list.includes)(elm, arr2), arr1),
 
 
     /**
@@ -1155,7 +1155,7 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @return {Array|String|*}
      */
     intersectBy = exports.intersectBy = (pred, list1, list2) => {
-        const aggregator = (0, _utils_.aggregatorByType)(list1);
+        const aggregator = (0, _utils.aggregatorByType)(list1);
         return foldl((agg, a) => any(b => pred(a, b), list2) ? aggregator(agg, a) : agg, [], list1);
     },
 
@@ -1171,12 +1171,12 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
     difference = exports.difference = (array1, array2) => {
         // augment this with max length and min length ordering on op
         if (array1 && !array2) {
-            return (0, _utils_.sliceFrom)(0, array1);
+            return (0, _utils.sliceFrom)(0, array1);
         } else if (!array1 && array2 || !array1 && !array2) {
             return [];
         }
-        const aggregator = (0, _utils_.aggregatorByType)(array1);
-        return (0, _utils_.reduce)((agg, elm) => !(0, _list_.includes)(elm, array2) ? aggregator(agg, elm) : agg, [], array1);
+        const aggregator = (0, _utils.aggregatorByType)(array1);
+        return (0, _utils.reduce)((agg, elm) => !(0, _list.includes)(elm, array2) ? aggregator(agg, elm) : agg, [], array1);
     },
 
 
@@ -1187,5 +1187,5 @@ define(['exports', './_jsPlatform/list_', './_jsPlatform/function_', './_functio
      * @param arrays {...Array}
      * @returns {Array}
      */
-    complement = exports.complement = (arr0, ...arrays) => (0, _utils_.reduce)((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
+    complement = exports.complement = (arr0, ...arrays) => (0, _utils.reduce)((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
 });

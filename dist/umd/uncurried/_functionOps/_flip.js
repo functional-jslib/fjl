@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../_jsPlatform/array_', '../_jsPlatform/function_'], factory);
+    define(['exports', '../_jsPlatform/_array', '../_jsPlatform/_function'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../_jsPlatform/array_'), require('../_jsPlatform/function_'));
+    factory(exports, require('../_jsPlatform/_array'), require('../_jsPlatform/_function'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.array_, global.function_);
+    factory(mod.exports, global._array, global._function);
     global._flip = mod.exports;
   }
-})(this, function (exports, _array_, _function_) {
+})(this, function (exports, _array, _function) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -31,7 +31,7 @@
         args[_key] = arguments[_key];
       }
 
-      return (0, _function_.apply)(fn, (0, _array_.reverse)(args));
+      return (0, _function.apply)(fn, (0, _array.reverse)(args));
     };
   },
 
@@ -44,7 +44,7 @@
    */
   flip3 = exports.flip3 = function flip3(fn) {
     return function (a, b, c) {
-      return (0, _function_.call)(fn, c, b, a);
+      return (0, _function.call)(fn, c, b, a);
     };
   },
 
@@ -57,7 +57,7 @@
    */
   flip4 = exports.flip4 = function flip4(fn) {
     return function (a, b, c, d) {
-      return (0, _function_.call)(fn, d, c, b, a);
+      return (0, _function.call)(fn, d, c, b, a);
     };
   },
 
@@ -70,7 +70,7 @@
    */
   flip5 = exports.flip5 = function flip5(fn) {
     return function (a, b, c, d, e) {
-      return (0, _function_.call)(fn, e, d, c, b, a);
+      return (0, _function.call)(fn, e, d, c, b, a);
     };
   },
 
@@ -83,7 +83,7 @@
    */
   flip = exports.flip = function flip(fn) {
     return function (b, a) {
-      return (0, _function_.call)(fn, a, b);
+      return (0, _function.call)(fn, a, b);
     };
   };
 });

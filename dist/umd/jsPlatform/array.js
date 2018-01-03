@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../uncurried/_jsPlatform/array_', '../utils'], factory);
+    define(['exports', '../uncurried/_jsPlatform/_array', '../utils'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../uncurried/_jsPlatform/array_'), require('../utils'));
+    factory(exports, require('../uncurried/_jsPlatform/_array'), require('../utils'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.array_, global.utils);
+    factory(mod.exports, global._array, global.utils);
     global.array = mod.exports;
   }
-})(this, function (exports, _array_, _utils) {
+})(this, function (exports, _array, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -20,7 +20,7 @@
   Object.defineProperty(exports, 'reverse', {
     enumerable: true,
     get: function () {
-      return _array_.reverse;
+      return _array.reverse;
     }
   });
   var

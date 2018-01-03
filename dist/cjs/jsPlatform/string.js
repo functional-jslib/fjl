@@ -7,7 +7,7 @@ exports.split = undefined;
 
 var _curry = require('../uncurried/_functionOps/_curry');
 
-var _string_ = require('../uncurried/_jsPlatform/string_');
+var _string = require('../uncurried/_jsPlatform/_string');
 
 /**
  * Functional version of `String.prototype.split`.
@@ -23,4 +23,4 @@ var _string_ = require('../uncurried/_jsPlatform/string_');
  * @private
  */
 
-var split = exports.split = (0, _curry.curry)(_string_.split);
+var split = exports.split = (0, _curry.curry)(_string.split);

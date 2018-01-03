@@ -1,4 +1,4 @@
-define(['exports', '../_jsPlatform/array_'], function (exports, _array_) {
+define(['exports', '../_jsPlatform/_array'], function (exports, _array) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -15,5 +15,5 @@ define(['exports', '../_jsPlatform/array_'], function (exports, _array_) {
    * @param args {...Function}
    * @returns {Function}
    */
-  const compose = exports.compose = (...args) => arg0 => (0, _array_.reduceRight)((value, fn) => fn(value), arg0, args);
+  const compose = exports.compose = (...args) => arg0 => (0, _array.reduceRight)((value, fn) => fn(value), arg0, args);
 });

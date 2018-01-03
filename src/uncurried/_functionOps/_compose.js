@@ -1,4 +1,4 @@
-import {reduceRight} from '../_jsPlatform/array_';
+import {reduceRight} from '../_jsPlatform/_array';
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to

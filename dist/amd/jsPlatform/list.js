@@ -1,4 +1,4 @@
-define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform/list_'], function (exports, _curry, _list_) {
+define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform/_list'], function (exports, _curry, _list) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -23,7 +23,7 @@ define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in object doesn't have an `every` method.
      */
-    concat = exports.concat = (0, _curry.curry)(_list_.concat),
+    concat = exports.concat = (0, _curry.curry)(_list.concat),
 
 
     /**
@@ -33,8 +33,8 @@ define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform
      * @param arr{Array}
      * @returns {Array}
      */
-    slice = exports.slice = (0, _curry.curry)(_list_.slice),
-          includes = exports.includes = (0, _curry.curry)(_list_.includes),
-          indexOf = exports.indexOf = (0, _curry.curry)(_list_.indexOf),
-          lastIndexOf = exports.lastIndexOf = (0, _curry.curry)(_list_.lastIndexOf);
+    slice = exports.slice = (0, _curry.curry)(_list.slice),
+          includes = exports.includes = (0, _curry.curry)(_list.includes),
+          indexOf = exports.indexOf = (0, _curry.curry)(_list.indexOf),
+          lastIndexOf = exports.lastIndexOf = (0, _curry.curry)(_list.lastIndexOf);
 });

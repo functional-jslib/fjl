@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './uncurried/_jsPlatform/object_', './uncurried/_objectOps/typeOf_', './uncurried/_objectOps/of_', './uncurried/_objectOps/is_', './uncurried/_functionOps/_curry', './uncurried/_objectOps/prop_', './uncurried/_objectOps/assignDeep_', './uncurried/_objectOps/setTheory_'], factory);
+        define(['exports', './uncurried/_jsPlatform/_object', './uncurried/_objectOps/_typeOf', './uncurried/_objectOps/_of', './uncurried/_objectOps/_is', './uncurried/_functionOps/_curry', './uncurried/_objectOps/_prop', './uncurried/_objectOps/_assignDeep', './uncurried/_objectOps/_setTheory'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./uncurried/_jsPlatform/object_'), require('./uncurried/_objectOps/typeOf_'), require('./uncurried/_objectOps/of_'), require('./uncurried/_objectOps/is_'), require('./uncurried/_functionOps/_curry'), require('./uncurried/_objectOps/prop_'), require('./uncurried/_objectOps/assignDeep_'), require('./uncurried/_objectOps/setTheory_'));
+        factory(exports, require('./uncurried/_jsPlatform/_object'), require('./uncurried/_objectOps/_typeOf'), require('./uncurried/_objectOps/_of'), require('./uncurried/_objectOps/_is'), require('./uncurried/_functionOps/_curry'), require('./uncurried/_objectOps/_prop'), require('./uncurried/_objectOps/_assignDeep'), require('./uncurried/_objectOps/_setTheory'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.object_, global.typeOf_, global.of_, global.is_, global._curry, global.prop_, global.assignDeep_, global.setTheory_);
+        factory(mod.exports, global._object, global._typeOf, global._of, global._is, global._curry, global._prop, global._assignDeep, global._setTheory);
         global.objectOps = mod.exports;
     }
-})(this, function (exports, _object_, _typeOf_, _of_, _is_, _curry, _prop_, _assignDeep_, _setTheory_) {
+})(this, function (exports, _object, _typeOf, _of, _is, _curry, _prop2, _assignDeep2, _setTheory) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -20,170 +20,170 @@
     Object.defineProperty(exports, 'length', {
         enumerable: true,
         get: function () {
-            return _object_.length;
+            return _object.length;
         }
     });
     Object.defineProperty(exports, 'keys', {
         enumerable: true,
         get: function () {
-            return _object_.keys;
+            return _object.keys;
         }
     });
-    Object.keys(_typeOf_).forEach(function (key) {
+    Object.keys(_typeOf).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
             enumerable: true,
             get: function () {
-                return _typeOf_[key];
+                return _typeOf[key];
             }
         });
     });
-    Object.keys(_of_).forEach(function (key) {
+    Object.keys(_of).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
             enumerable: true,
             get: function () {
-                return _of_[key];
+                return _of[key];
             }
         });
     });
     Object.defineProperty(exports, 'isFunction', {
         enumerable: true,
         get: function () {
-            return _is_.isFunction;
+            return _is.isFunction;
         }
     });
     Object.defineProperty(exports, 'isClass', {
         enumerable: true,
         get: function () {
-            return _is_.isClass;
+            return _is.isClass;
         }
     });
     Object.defineProperty(exports, 'isCallable', {
         enumerable: true,
         get: function () {
-            return _is_.isCallable;
+            return _is.isCallable;
         }
     });
     Object.defineProperty(exports, 'isArray', {
         enumerable: true,
         get: function () {
-            return _is_.isArray;
+            return _is.isArray;
         }
     });
     Object.defineProperty(exports, 'isObject', {
         enumerable: true,
         get: function () {
-            return _is_.isObject;
+            return _is.isObject;
         }
     });
     Object.defineProperty(exports, 'isBoolean', {
         enumerable: true,
         get: function () {
-            return _is_.isBoolean;
+            return _is.isBoolean;
         }
     });
     Object.defineProperty(exports, 'isNumber', {
         enumerable: true,
         get: function () {
-            return _is_.isNumber;
+            return _is.isNumber;
         }
     });
     Object.defineProperty(exports, 'isString', {
         enumerable: true,
         get: function () {
-            return _is_.isString;
+            return _is.isString;
         }
     });
     Object.defineProperty(exports, 'isMap', {
         enumerable: true,
         get: function () {
-            return _is_.isMap;
+            return _is.isMap;
         }
     });
     Object.defineProperty(exports, 'isSet', {
         enumerable: true,
         get: function () {
-            return _is_.isSet;
+            return _is.isSet;
         }
     });
     Object.defineProperty(exports, 'isWeakMap', {
         enumerable: true,
         get: function () {
-            return _is_.isWeakMap;
+            return _is.isWeakMap;
         }
     });
     Object.defineProperty(exports, 'isWeakSet', {
         enumerable: true,
         get: function () {
-            return _is_.isWeakSet;
+            return _is.isWeakSet;
         }
     });
     Object.defineProperty(exports, 'isUndefined', {
         enumerable: true,
         get: function () {
-            return _is_.isUndefined;
+            return _is.isUndefined;
         }
     });
     Object.defineProperty(exports, 'isNull', {
         enumerable: true,
         get: function () {
-            return _is_.isNull;
+            return _is.isNull;
         }
     });
     Object.defineProperty(exports, 'isSymbol', {
         enumerable: true,
         get: function () {
-            return _is_.isSymbol;
+            return _is.isSymbol;
         }
     });
     Object.defineProperty(exports, 'isUsableImmutablePrimitive', {
         enumerable: true,
         get: function () {
-            return _is_.isUsableImmutablePrimitive;
+            return _is.isUsableImmutablePrimitive;
         }
     });
     Object.defineProperty(exports, 'isEmptyList', {
         enumerable: true,
         get: function () {
-            return _is_.isEmptyList;
+            return _is.isEmptyList;
         }
     });
     Object.defineProperty(exports, 'isEmptyObject', {
         enumerable: true,
         get: function () {
-            return _is_.isEmptyObject;
+            return _is.isEmptyObject;
         }
     });
     Object.defineProperty(exports, 'isEmptyCollection', {
         enumerable: true,
         get: function () {
-            return _is_.isEmptyCollection;
+            return _is.isEmptyCollection;
         }
     });
     Object.defineProperty(exports, 'isEmpty', {
         enumerable: true,
         get: function () {
-            return _is_.isEmpty;
+            return _is.isEmpty;
         }
     });
     Object.defineProperty(exports, 'isset', {
         enumerable: true,
         get: function () {
-            return _is_.isset;
+            return _is.isset;
         }
     });
-    exports._instanceOf = _object_.instanceOf;
-    exports._isType = _is_.isType;
-    exports._hasOwnProperty = _object_.hasOwnProperty;
-    exports._assign = _object_.assign;
-    exports._prop = _prop_.prop;
-    exports._assignDeep = _assignDeep_.assignDeep;
-    exports._objUnion = _setTheory_.objUnion;
-    exports._objComplement = _setTheory_.objComplement;
-    exports._objIntersect = _setTheory_.objIntersect;
-    exports._objDifference = _setTheory_.objDifference;
-    var prop = exports.prop = (0, _curry.curry)(_prop_.prop),
+    exports._instanceOf = _object.instanceOf;
+    exports._isType = _is.isType;
+    exports._hasOwnProperty = _object.hasOwnProperty;
+    exports._assign = _object.assign;
+    exports._prop = _prop2.prop;
+    exports._assignDeep = _assignDeep2.assignDeep;
+    exports._objUnion = _setTheory.objUnion;
+    exports._objComplement = _setTheory.objComplement;
+    exports._objIntersect = _setTheory.objIntersect;
+    exports._objDifference = _setTheory.objDifference;
+    var prop = exports.prop = (0, _curry.curry)(_prop2.prop),
 
 
     /**
@@ -193,14 +193,14 @@
      * @param Type {Function}
      * @returns {Boolean}
      */
-    instanceOf = exports.instanceOf = (0, _curry.curry)(_object_.instanceOf),
-        hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_object_.hasOwnProperty),
-        assign = exports.assign = (0, _curry.curry2)(_object_.assign),
-        assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep_.assignDeep),
-        objUnion = exports.objUnion = (0, _curry.curry)(_setTheory_.objUnion),
-        objIntersect = exports.objIntersect = (0, _curry.curry)(_setTheory_.objIntersect),
-        objDifference = exports.objDifference = (0, _curry.curry)(_setTheory_.objDifference),
-        objComplement = exports.objComplement = (0, _curry.curry2)(_setTheory_.objComplement),
+    instanceOf = exports.instanceOf = (0, _curry.curry)(_object.instanceOf),
+        hasOwnProperty = exports.hasOwnProperty = (0, _curry.curry)(_object.hasOwnProperty),
+        assign = exports.assign = (0, _curry.curry2)(_object.assign),
+        assignDeep = exports.assignDeep = (0, _curry.curry2)(_assignDeep2.assignDeep),
+        objUnion = exports.objUnion = (0, _curry.curry)(_setTheory.objUnion),
+        objIntersect = exports.objIntersect = (0, _curry.curry)(_setTheory.objIntersect),
+        objDifference = exports.objDifference = (0, _curry.curry)(_setTheory.objDifference),
+        objComplement = exports.objComplement = (0, _curry.curry2)(_setTheory.objComplement),
 
 
     /**
@@ -223,7 +223,7 @@
      * @param value {*}
      * @return {Boolean}
      */
-    isType = exports.isType = (0, _curry.curry)(_is_.isType);
+    isType = exports.isType = (0, _curry.curry)(_is.isType);
 
     /**
      * Checks if `value` is an es2015 `class`.

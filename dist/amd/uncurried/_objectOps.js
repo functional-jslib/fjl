@@ -1,69 +1,69 @@
-define(['exports', './_jsPlatform/object_', './_objectOps/prop_', './_objectOps/typeOf_', './_objectOps/is_', './_objectOps/of_', './_objectOps/assignDeep_', './_objectOps/setTheory_'], function (exports, _object_, _prop_, _typeOf_, _is_, _of_, _assignDeep_, _setTheory_) {
+define(['exports', './_jsPlatform/_object', './_objectOps/_prop', './_objectOps/_typeOf', './_objectOps/_is', './_objectOps/_of', './_objectOps/_assignDeep', './_objectOps/_setTheory'], function (exports, _object, _prop, _typeOf, _is, _of, _assignDeep, _setTheory) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.keys(_object_).forEach(function (key) {
+  Object.keys(_object).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _object_[key];
+        return _object[key];
       }
     });
   });
-  Object.keys(_prop_).forEach(function (key) {
+  Object.keys(_prop).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _prop_[key];
+        return _prop[key];
       }
     });
   });
-  Object.keys(_typeOf_).forEach(function (key) {
+  Object.keys(_typeOf).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _typeOf_[key];
+        return _typeOf[key];
       }
     });
   });
-  Object.keys(_is_).forEach(function (key) {
+  Object.keys(_is).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _is_[key];
+        return _is[key];
       }
     });
   });
-  Object.keys(_of_).forEach(function (key) {
+  Object.keys(_of).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _of_[key];
+        return _of[key];
       }
     });
   });
-  Object.keys(_assignDeep_).forEach(function (key) {
+  Object.keys(_assignDeep).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _assignDeep_[key];
+        return _assignDeep[key];
       }
     });
   });
-  Object.keys(_setTheory_).forEach(function (key) {
+  Object.keys(_setTheory).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _setTheory_[key];
+        return _setTheory[key];
       }
     });
   });

@@ -2,7 +2,7 @@
  * @module _functionOps
  * @private
  */
-export {apply, call} from './_jsPlatform/function_';
+export {apply, call} from './_jsPlatform/_function';
 export * from './_functionOps/_compose';
 export * from './_functionOps/_curry';
 export * from './_functionOps/__curry';

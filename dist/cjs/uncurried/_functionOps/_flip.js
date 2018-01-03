@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.flip = exports.flip5 = exports.flip4 = exports.flip3 = exports.flipN = undefined;
 
-var _array_ = require('../_jsPlatform/array_');
+var _array = require('../_jsPlatform/_array');
 
-var _function_ = require('../_jsPlatform/function_');
+var _function = require('../_jsPlatform/_function');
 
 var
 
@@ -23,7 +23,7 @@ flipN = exports.flipN = function flipN(fn) {
       args[_key] = arguments[_key];
     }
 
-    return (0, _function_.apply)(fn, (0, _array_.reverse)(args));
+    return (0, _function.apply)(fn, (0, _array.reverse)(args));
   };
 },
 
@@ -36,7 +36,7 @@ flipN = exports.flipN = function flipN(fn) {
  */
 flip3 = exports.flip3 = function flip3(fn) {
   return function (a, b, c) {
-    return (0, _function_.call)(fn, c, b, a);
+    return (0, _function.call)(fn, c, b, a);
   };
 },
 
@@ -49,7 +49,7 @@ flip3 = exports.flip3 = function flip3(fn) {
  */
 flip4 = exports.flip4 = function flip4(fn) {
   return function (a, b, c, d) {
-    return (0, _function_.call)(fn, d, c, b, a);
+    return (0, _function.call)(fn, d, c, b, a);
   };
 },
 
@@ -62,7 +62,7 @@ flip4 = exports.flip4 = function flip4(fn) {
  */
 flip5 = exports.flip5 = function flip5(fn) {
   return function (a, b, c, d, e) {
-    return (0, _function_.call)(fn, e, d, c, b, a);
+    return (0, _function.call)(fn, e, d, c, b, a);
   };
 },
 
@@ -75,6 +75,6 @@ flip5 = exports.flip5 = function flip5(fn) {
  */
 flip = exports.flip = function flip(fn) {
   return function (b, a) {
-    return (0, _function_.call)(fn, a, b);
+    return (0, _function.call)(fn, a, b);
   };
 };

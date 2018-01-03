@@ -2,10 +2,10 @@
  * @module objectOps_
  * @private
  */
-export * from './_jsPlatform/object_';
-export * from './_objectOps/prop_';
-export * from './_objectOps/typeOf_';
-export * from './_objectOps/is_';
-export * from './_objectOps/of_';
-export * from './_objectOps/assignDeep_';
-export * from './_objectOps/setTheory_';
+export * from './_jsPlatform/_object';
+export * from './_objectOps/_prop';
+export * from './_objectOps/_typeOf';
+export * from './_objectOps/_is';
+export * from './_objectOps/_of';
+export * from './_objectOps/_assignDeep';
+export * from './_objectOps/_setTheory';

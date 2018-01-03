@@ -6,7 +6,7 @@
 
 import {curry} from '../uncurried/_functionOps/_curry';
 
-import {split as _split} from '../uncurried/_jsPlatform/string_';
+import {split as _split} from '../uncurried/_jsPlatform/_string';
 
 /**
  * Functional version of `String.prototype.split`.

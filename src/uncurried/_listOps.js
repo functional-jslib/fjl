@@ -10,13 +10,13 @@ import {
     concat as listAppend,
     indexOf, slice, includes
 }
-    from './_jsPlatform/list_';
+    from './_jsPlatform/_list';
 
-import {apply} from './_jsPlatform/function_';
+import {apply} from './_jsPlatform/_function';
 import {negateP, negateF} from './_functionOps/_negate';
 import {isTruthy, isFalsy} from '../booleanOps';
 import {isString, isEmptyList, prop, of, length} from './_objectOps';
-import {map} from './_listOps/map_';
+import {map} from './_listOps/_map';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -25,7 +25,7 @@ import {
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, copy, genericAscOrdering, _permutationsAlgo
 }
-    from './_listOps/utils_';
+    from './_listOps/_utils';
 
 // Exported imports
 export {map};

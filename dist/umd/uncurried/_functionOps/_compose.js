@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../_jsPlatform/array_'], factory);
+    define(['exports', '../_jsPlatform/_array'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../_jsPlatform/array_'));
+    factory(exports, require('../_jsPlatform/_array'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.array_);
+    factory(mod.exports, global._array);
     global._compose = mod.exports;
   }
-})(this, function (exports, _array_) {
+})(this, function (exports, _array) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -33,7 +33,7 @@
     }
 
     return function (arg0) {
-      return (0, _array_.reduceRight)(function (value, fn) {
+      return (0, _array.reduceRight)(function (value, fn) {
         return fn(value);
       }, arg0, args);
     };

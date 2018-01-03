@@ -5,26 +5,26 @@ import {curry, curry2} from './uncurried/_functionOps/_curry';
 import {
     instanceOf as _instanceOf,
     hasOwnProperty as _hasOwnProperty,
-    assign as _assign} from './uncurried/_jsPlatform/object_';
-import {prop as _prop} from './uncurried/_objectOps/prop_';
-import {assignDeep as _assignDeep}      from './uncurried/_objectOps/assignDeep_';
+    assign as _assign} from './uncurried/_jsPlatform/_object';
+import {prop as _prop} from './uncurried/_objectOps/_prop';
+import {assignDeep as _assignDeep}      from './uncurried/_objectOps/_assignDeep';
 import {
     objUnion as _objUnion,
     objComplement as _objComplement,
     objIntersect as _objIntersect,
-    objDifference as _objDifference}    from './uncurried/_objectOps/setTheory_';
+    objDifference as _objDifference}    from './uncurried/_objectOps/_setTheory';
 import {isType as _isType}
-    from './uncurried/_objectOps/is_';
+    from './uncurried/_objectOps/_is';
 
-export {length, keys} from './uncurried/_jsPlatform/object_';
-export * from './uncurried/_objectOps/typeOf_';
-export * from './uncurried/_objectOps/of_';
+export {length, keys} from './uncurried/_jsPlatform/_object';
+export * from './uncurried/_objectOps/_typeOf';
+export * from './uncurried/_objectOps/_of';
 export {
     isFunction, isClass, isCallable, isArray, isObject, isBoolean,
     isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined,
     isNull, isSymbol, isUsableImmutablePrimitive,
     isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset
-} from './uncurried/_objectOps/is_';
+} from './uncurried/_objectOps/_is';
 
 export {_instanceOf, _isType, _hasOwnProperty, _assign, _prop, _assignDeep, _objUnion,
 _objComplement, _objIntersect, _objDifference};

@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
 
-var _function_ = require('../_jsPlatform/function_');
+var _function = require('../_jsPlatform/_function');
 
-var _array_ = require('../_jsPlatform/array_');
+var _array = require('../_jsPlatform/_array');
 
 /**
  * @memberOf _functionOps
@@ -56,6 +56,6 @@ negateFMany = exports.negateFMany = function negateFMany(fn) {
       args[_key] = arguments[_key];
     }
 
-    return !(0, _function_.apply)(fn, (0, _array_.reverse)(args));
+    return !(0, _function.apply)(fn, (0, _array.reverse)(args));
   };
 };

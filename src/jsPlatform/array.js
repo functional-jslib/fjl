@@ -12,7 +12,7 @@ import {fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_} from '../utils';
  * @function module:jsPlatform_array.reverse
  * @return {Array}
  */
-export {reverse} from '../uncurried/_jsPlatform/array_';
+export {reverse} from '../uncurried/_jsPlatform/_array';
 
 export const
 
