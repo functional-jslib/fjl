@@ -57,7 +57,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
    * @param x {*}
    * @returns {boolean}
    */
-  isClass = exports.isClass = x => x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10)),
+  isClass = exports.isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10)),
 
 
   /**

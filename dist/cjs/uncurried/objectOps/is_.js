@@ -66,7 +66,7 @@ isType = exports.isType = function isType(type, obj) {
  * @returns {boolean}
  */
 isClass = exports.isClass = function isClass(x) {
-  return x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10));
+  return x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 },
 
 

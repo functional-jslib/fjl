@@ -1,5 +1,4 @@
 - [fjl.length](#fjllength)
-- [fjl.toString](#fjltostring)
 - [fjl.keys](#fjlkeys)
 - [fjl.isFunction](#fjlisfunction)
 - [fjl.isClass](#fjlisclass)

@@ -91,7 +91,6 @@ import {...} from 'fjl';
 #### Members, Properties and Methods:
 
 - [fjl.length](#fjllength)
-- [fjl.toString](#fjltostring)
 - [fjl.keys](#fjlkeys)
 - [fjl.isFunction](#fjlisfunction)
 - [fjl.isClass](#fjlisclass)

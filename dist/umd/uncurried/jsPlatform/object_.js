@@ -1,22 +1,22 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../utils_'], factory);
+        define(['exports', '../_utils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../utils_'));
+        factory(exports, require('../_utils'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.utils_);
+        factory(mod.exports, global._utils);
         global.object_ = mod.exports;
     }
-})(this, function (exports, _utils_) {
+})(this, function (exports, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.assign = exports.keys = exports.toString = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
+    exports.assign = exports.keys = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
     var
 
     /**
@@ -38,7 +38,7 @@
      * @param typeInstance {*}
      * @returns {Boolean}
      */
-    hasOwnProperty = exports.hasOwnProperty = (0, _utils_.fPureTakesOne)('hasOwnProperty'),
+    hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
 
 
     /**
@@ -50,17 +50,6 @@
      */
     length = exports.length = function length(x) {
         return x.length;
-    },
-
-
-    /**
-     * @function module:jsPlatform_objectOps_.hasOwnProperty
-     * @param x {*}
-     * @returns {Number}
-     * @throws {Error} - Throws an error if value doesn't have a `toString`.
-     */
-    toString = exports.toString = function toString(x) {
-        return x.toString();
     },
 
 

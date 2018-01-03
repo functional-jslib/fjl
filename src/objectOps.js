@@ -16,7 +16,7 @@ import {
 import {isType as _isType}
     from './uncurried/objectOps/is_';
 
-export {length, toString, keys} from './uncurried/jsPlatform/object_';
+export {length, keys} from './uncurried/jsPlatform/object_';
 export * from './uncurried/objectOps/typeOf_';
 export * from './uncurried/objectOps/of_';
 export {

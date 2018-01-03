@@ -1,11 +1,9 @@
 /**
- *  List operations that overlap (apart from globally overlapping props and functions like `length` and `toString`)
+ *  List operations that overlap (apart from globally overlapping props and functions like `length`)
  *      on both strings and arrays.
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils_';
-
-// export {length, toString} from './objectOps_';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_utils';
 
 export const
 

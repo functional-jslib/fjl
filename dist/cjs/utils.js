@@ -5,14 +5,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fPureTakesOneOrMore_ = exports.fPureTakes2_ = exports.fPureTakesOne_ = undefined;
 
-var _utils_ = require('./uncurried/utils_');
+var _utils = require('./uncurried/_utils');
 
-Object.keys(_utils_).forEach(function (key) {
+Object.keys(_utils).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _utils_[key];
+      return _utils[key];
     }
   });
 });

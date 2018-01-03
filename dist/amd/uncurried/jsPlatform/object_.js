@@ -1,10 +1,10 @@
-define(['exports', '../utils_'], function (exports, _utils_) {
+define(['exports', '../_utils'], function (exports, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.assign = exports.keys = exports.toString = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
+    exports.assign = exports.keys = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
     const
 
     /**
@@ -24,7 +24,7 @@ define(['exports', '../utils_'], function (exports, _utils_) {
      * @param typeInstance {*}
      * @returns {Boolean}
      */
-    hasOwnProperty = exports.hasOwnProperty = (0, _utils_.fPureTakesOne)('hasOwnProperty'),
+    hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
 
 
     /**
@@ -35,15 +35,6 @@ define(['exports', '../utils_'], function (exports, _utils_) {
      *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
      */
     length = exports.length = x => x.length,
-
-
-    /**
-     * @function module:jsPlatform_objectOps_.hasOwnProperty
-     * @param x {*}
-     * @returns {Number}
-     * @throws {Error} - Throws an error if value doesn't have a `toString`.
-     */
-    toString = exports.toString = x => x.toString(),
 
 
     /**

@@ -1,28 +1,28 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './uncurried/utils_', './uncurried/functionOps/curry_'], factory);
+    define(['exports', './uncurried/_utils', './uncurried/functionOps/curry_'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./uncurried/utils_'), require('./uncurried/functionOps/curry_'));
+    factory(exports, require('./uncurried/_utils'), require('./uncurried/functionOps/curry_'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.utils_, global.curry_);
+    factory(mod.exports, global._utils, global.curry_);
     global.utils = mod.exports;
   }
-})(this, function (exports, _utils_, _curry_) {
+})(this, function (exports, _utils, _curry_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.fPureTakesOneOrMore_ = exports.fPureTakes2_ = exports.fPureTakesOne_ = undefined;
-  Object.keys(_utils_).forEach(function (key) {
+  Object.keys(_utils).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _utils_[key];
+        return _utils[key];
       }
     });
   });

@@ -1,16 +1,16 @@
-define(['exports', './uncurried/utils_', './uncurried/functionOps/curry_'], function (exports, _utils_, _curry_) {
+define(['exports', './uncurried/_utils', './uncurried/functionOps/curry_'], function (exports, _utils, _curry_) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.fPureTakesOneOrMore_ = exports.fPureTakes2_ = exports.fPureTakesOne_ = undefined;
-  Object.keys(_utils_).forEach(function (key) {
+  Object.keys(_utils).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _utils_[key];
+        return _utils[key];
       }
     });
   });

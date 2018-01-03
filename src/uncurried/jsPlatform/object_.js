@@ -6,7 +6,7 @@
  * @todo change all files named '*UnCurried' to '*_'.
  */
 
-import {fPureTakesOne} from '../utils_';
+import {fPureTakesOne} from '../_utils';
 
 export const
 
@@ -37,14 +37,6 @@ export const
      *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
      */
     length = x => x.length,
-
-    /**
-     * @function module:jsPlatform_objectOps_.hasOwnProperty
-     * @param x {*}
-     * @returns {Number}
-     * @throws {Error} - Throws an error if value doesn't have a `toString`.
-     */
-    toString = x => x.toString(),
 
     /**
      * Gets own enumerable keys of passed in object (`Object.keys`).

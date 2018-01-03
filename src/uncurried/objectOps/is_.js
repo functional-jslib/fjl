@@ -51,7 +51,7 @@ export const
      * @param x {*}
      * @returns {boolean}
      */
-    isClass = x => x && /^\s{0,3}class\s{1,3}/.test(x.toString().substr(0, 10)),
+    isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10)),
 
     /**
      * Returns a booleanOps depicting whether a value is callable or not.

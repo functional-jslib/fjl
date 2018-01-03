@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.assign = exports.keys = exports.toString = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
+exports.assign = exports.keys = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
 
-var _utils_ = require('../utils_');
+var _utils = require('../_utils');
 
 var
 
@@ -28,7 +28,7 @@ instanceOf = exports.instanceOf = function instanceOf(instanceConstructor, insta
  * @param typeInstance {*}
  * @returns {Boolean}
  */
-hasOwnProperty = exports.hasOwnProperty = (0, _utils_.fPureTakesOne)('hasOwnProperty'),
+hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
 
 
 /**
@@ -40,17 +40,6 @@ hasOwnProperty = exports.hasOwnProperty = (0, _utils_.fPureTakesOne)('hasOwnProp
  */
 length = exports.length = function length(x) {
     return x.length;
-},
-
-
-/**
- * @function module:jsPlatform_objectOps_.hasOwnProperty
- * @param x {*}
- * @returns {Number}
- * @throws {Error} - Throws an error if value doesn't have a `toString`.
- */
-toString = exports.toString = function toString(x) {
-    return x.toString();
 },
 
 
