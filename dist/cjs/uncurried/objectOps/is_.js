@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isset = exports.notEmptyAndOfType = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
+exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
 
 var _typeOf_ = require('./typeOf_');
 
@@ -216,15 +216,6 @@ isSymbol = exports.isSymbol = function isSymbol(value) {
 
 
 /**
- * @tentative
- * @private
- */
-isPromise = exports.isPromise = function isPromise(value) {
-  return isType('Promise', value);
-},
-
-
-/**
  * Checks if given `x` is one of the four
  * "usable" immutable JS primitives; I.e.,
  *  One of [String, Boolean, Number, Symbol]
@@ -298,20 +289,6 @@ isEmpty = exports.isEmpty = function isEmpty(value) {
     retVal = !value;
   }
   return retVal;
-},
-
-
-/**
- * Returns true if an element is not empty and is of type.
- * @function module:objectOps_.notEmptyAndOfType
- * @tentative
- * @private
- * @param type {String|Function} - Type to check against (stringOps name or actual constructor).
- * @param value {*} - Value to check.
- * @returns {Boolean}
- */
-notEmptyAndOfType = exports.notEmptyAndOfType = function notEmptyAndOfType(type, value) {
-  return !isEmpty(value) && isType(type, value);
 },
 
 

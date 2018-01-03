@@ -6,9 +6,7 @@
  * @todo change all files named '*UnCurried' to '*_'.
  */
 
-import {fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOne} from '../utils_';
-
-import {flip, flip3, flip4, flip5} from '../functionOps/flip_';
+import {fPureTakesOne} from '../utils_';
 
 export const
 
@@ -71,31 +69,3 @@ export const
                     return agg;
                 }, topAgg);
             }, obj0));
-
-export const ObjectStatics =
-    Object.getOwnPropertyNames(Object)
-        .map(name => {
-            let len = Object[name].length;
-            return [name, len, len > 1 && Object[name] instanceof Function]
-        })
-        .filter(([name, funcLen, takesArgs]) =>  takesArgs)
-        .reduce((agg, [name, funcLen]) => {
-            switch (funcLen) {
-                case 2:
-                    agg[name] = flip(fPureTakes2(name))(Object);
-                    break;
-                case 3:
-                    agg[name] = flip3(fPureTakes3(name))(Object);
-                    break;
-                case 4:
-                    agg[name] = flip4(fPureTakes4(name))(Object);
-                    break;
-                case 5:
-                    agg[name] = flip5(fPureTakes5(name))(Object);
-                    break;
-                default:
-                    agg[name] = flip(fPureTakesOne(name))(Object);
-                    break;
-            }
-            return agg;
-        }, {});

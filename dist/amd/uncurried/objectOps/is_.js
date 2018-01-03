@@ -4,7 +4,7 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.isset = exports.notEmptyAndOfType = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
+  exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
   /**
    * Created by elyde on 12/18/2016.
    * @memberOf objectOps_
@@ -180,13 +180,6 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
 
 
   /**
-   * @tentative
-   * @private
-   */
-  isPromise = exports.isPromise = value => isType('Promise', value),
-
-
-  /**
    * Checks if given `x` is one of the four
    * "usable" immutable JS primitives; I.e.,
    *  One of [String, Boolean, Number, Symbol]
@@ -253,18 +246,6 @@ define(['exports', './typeOf_', '../jsPlatform/object_'], function (exports, _ty
     }
     return retVal;
   },
-
-
-  /**
-   * Returns true if an element is not empty and is of type.
-   * @function module:objectOps_.notEmptyAndOfType
-   * @tentative
-   * @private
-   * @param type {String|Function} - Type to check against (stringOps name or actual constructor).
-   * @param value {*} - Value to check.
-   * @returns {Boolean}
-   */
-  notEmptyAndOfType = exports.notEmptyAndOfType = (type, value) => !isEmpty(value) && isType(type, value),
 
 
   /**

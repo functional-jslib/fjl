@@ -5,8 +5,7 @@
 const _Number = Number.name,
     _NaN = 'NaN',
     _Null = 'Null',
-    _Undefined = 'Undefined',
-    _undefined = 'undefined';
+    _Undefined = 'Undefined';
 
 /**
  * Returns the class name of an object from it's class string.

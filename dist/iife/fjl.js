@@ -11,21 +11,6 @@ var fPureTakes2 = function fPureTakes2(name) {
         return f[name](arg1, arg2);
     };
 };
-var fPureTakes3 = function fPureTakes3(name) {
-    return function (arg1, arg2, arg3, f) {
-        return f[name](arg1, arg2, arg3);
-    };
-};
-var fPureTakes4 = function fPureTakes4(name) {
-    return function (arg1, arg2, arg3, arg4, f) {
-        return f[name](arg1, arg2, arg3, arg4);
-    };
-};
-var fPureTakes5 = function fPureTakes5(name) {
-    return function (arg1, arg2, arg3, arg4, arg5, f) {
-        return f[name](arg1, arg2, arg3, arg4, arg5);
-    };
-};
 var fPureTakesOneOrMore = function fPureTakesOneOrMore(name) {
     return function (f) {
         for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -57,7 +42,7 @@ var toString = function toString(x) {
 var keys = function keys(obj) {
     return Object.keys(obj);
 };
-var assign$1 = function () {
+var assign$1 = function assign() {
     return Object.assign ? function (obj0) {
         for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             objs[_key - 1] = arguments[_key];
@@ -76,30 +61,7 @@ var assign$1 = function () {
             }, topAgg);
         }, obj0);
     };
-}();
-
-Object.getOwnPropertyNames(Object).filter(function (name) {
-    return Object[name].length > 1;
-}).reduce(function (agg, name) {
-    switch (length(Object[name])) {
-        case 2:
-            agg[name] = fPureTakes2(name);
-            break;
-        case 3:
-            agg[name] = fPureTakes3(name);
-            break;
-        case 4:
-            agg[name] = fPureTakes4(name);
-            break;
-        case 5:
-            agg[name] = fPureTakes5(name);
-            break;
-        default:
-            agg[name] = fPureTakesOne(name);
-            break;
-    }
-    return agg;
-}, {});
+};
 
 /**
  * Created by elyde on 7/20/2017.
@@ -244,201 +206,6 @@ var prop$1 = function prop(name, obj) {
   return obj[name];
 };
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-
-
-
-
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var slicedToArray = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if (Symbol.iterator in Object(arr)) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-    }
-  };
-}();
-
 /**
  * Created by elyde on 12/18/2016.
  * @memberOf objectOps_
@@ -447,10 +214,9 @@ var _Number$1 = Number.name;
 var _NaN = 'NaN';
 var _Null$1 = 'Null';
 var _Undefined$1 = 'Undefined';
-var _undefined = 'undefined';
 
 /**
- * Returns the class name of an object from it's class stringOps.
+ * Returns the class name of an object from it's class string.
  * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
  * @function module:objectOps_.typeOf
  * @param value {*}
@@ -459,7 +225,7 @@ var _undefined = 'undefined';
  */
 function typeOf(value) {
     var retVal = void 0;
-    if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === _undefined) {
+    if (value === undefined) {
         retVal = _Undefined$1;
     } else if (value === null) {
         retVal = _Null$1;
@@ -537,9 +303,6 @@ var isNull = function isNull(value) {
 var isSymbol = function isSymbol(value) {
   return isType$1(_Symbol, value);
 };
-var isPromise = function isPromise(value) {
-  return isType$1('Promise', value);
-};
 var isUsableImmutablePrimitive = function isUsableImmutablePrimitive(x) {
   var typeOfX = typeOf(x);
   return [_String, _Number, _Boolean, _Symbol].some(function (Type) {
@@ -574,9 +337,6 @@ var isEmpty = function isEmpty(value) {
     retVal = !value;
   }
   return retVal;
-};
-var notEmptyAndOfType$1 = function notEmptyAndOfType(type, value) {
-  return !isEmpty(value) && isType$1(type, value);
 };
 var isset = function isset(x) {
   return !isNull(x) && !isUndefined(x);
@@ -877,6 +637,191 @@ var _permutationsAlgo = function _permutationsAlgo(listIn, limit, remainderLen) 
     }
     return out;
 };
+
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var slicedToArray = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
 
 /**
  * '_' list operators.
@@ -1618,7 +1563,148 @@ var objIntersect$$1 = curry(objIntersect$1);
 var objDifference$$1 = curry(objDifference$1);
 var objComplement$$1 = curry2(objComplement$1);
 var isType$$1 = curry(isType$1);
-var notEmptyAndOfType$$1 = curry(notEmptyAndOfType$1);
+
+/**
+ * Checks if `value` is an es2015 `class`.
+ * @function module:objectOps.isClass
+ * @param x {*}
+ * @returns {boolean}
+ */
+
+/**
+ * Returns a booleanOps depicting whether a value is callable or not.
+ * @function module:objectOps.isCallable
+ * @tentative
+ * @private
+ * @param x {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks if value is an arrayOps.
+ * @function module:objectOps.isArray
+ * @param value {*}
+ * @returns {boolean}
+ */
+
+/**
+ * Checks whether value is an object or not.
+ * @function module:objectOps.isObject
+ * @param value
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks if value is a booleanOps.
+ * @function module:objectOps.isBoolean
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks if value is a valid number (also checks if isNaN so that you don't have to).
+ * @function module:objectOps.isNumber
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks whether value is a stringOps or not.
+ * @function module:objectOps.isString
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks whether value is of `Map` or not.
+ * @function module:objectOps.isMap
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks whether value is of `Set` or not.
+ * @function module:objectOps.isSet
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks whether value is of `WeakMap` or not.
+ * @function module:objectOps.isWeakMap
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks whether value is of `WeakSet` or not.
+ * @function module:objectOps.isWeakSet
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks if value is undefined.
+ * @function module:objectOps.isUndefined
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks if value is null.
+ * @function module:objectOps.isNull
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks if value is a `Symbol`.
+ * @function module:objectOps.isSymbol
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @tentative
+ * @private
+ */
+
+/**
+ * Checks if given `x` is one of the four
+ * "usable" immutable JS primitives; I.e.,
+ *  One of [String, Boolean, Number, Symbol]
+ * @function module:objectOps.isUsableImmutablePrimitive
+ * @param x {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks if !length.
+ * @function module:objectOps.isEmptyList
+ * @param x {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks if object has own properties/enumerable-props or not.
+ * @function module:objectOps.isEmptyObject
+ * @param obj {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
+ * @function module:objectOps.isEmptyCollection
+ * @param x {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * Checks to see if passed in argument is empty.
+ * @function module:objectOps.isEmpty
+ * @param value {*} - Value to check.
+ * @returns {Boolean}
+ */
 
 /**
  * Returns whether passed in values is defined and not null.
@@ -1823,25 +1909,25 @@ var apply$1 = curry(apply);
 var call$1 = curry2(call);
 var until$$1 = curry(until$1);
 var flipN$$1 = function flipN$$1(fn) {
-  return curry3(function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    return curry3(function () {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
 
-    return apply$1(fn, reverse(args));
-  });
+        return apply$1(fn, reverse(args));
+    });
 };
 var flip$$1 = function flip$$1(fn) {
-  return curry(flip$1(fn));
+    return curry(flip$1(fn));
 };
 var flip3$$1 = function flip3$$1(fn) {
-  return curry(flip3$1(fn));
+    return curry(flip3$1(fn));
 };
 var flip4$$1 = function flip4$$1(fn) {
-  return curry(flip4$1(fn));
+    return curry(flip4$1(fn));
 };
 var flip5$$1 = function flip5$$1(fn) {
-  return curry(flip5$1(fn));
+    return curry(flip5$1(fn));
 };
 
 /**
@@ -1967,10 +2053,10 @@ var unlines = intercalate$1('\n');
 
 /**
  * Content generated by '{project-root}/node-scripts/VersionNumberReadStream.js'.
- * Generated Fri Dec 08 2017 19:19:19 GMT-0500 (EST) 
+ * Generated Tue Jan 02 2018 22:38:00 GMT-0500 (Eastern Standard Time) 
  */
 
-var version = '0.17.13';
+var version = '0.18.0';
 
 /**
  * Created by elyde on 12/6/2016.
@@ -1998,7 +2084,6 @@ exports._objUnion = objUnion$1;
 exports._objComplement = objComplement$1;
 exports._objIntersect = objIntersect$1;
 exports._objDifference = objDifference$1;
-exports._notEmptyAndOfType = notEmptyAndOfType$1;
 exports.prop = prop$$1;
 exports.instanceOf = instanceOf$$1;
 exports.hasOwnProperty = hasOwnProperty$$1;
@@ -2009,7 +2094,6 @@ exports.objIntersect = objIntersect$$1;
 exports.objDifference = objDifference$$1;
 exports.objComplement = objComplement$$1;
 exports.isType = isType$$1;
-exports.notEmptyAndOfType = notEmptyAndOfType$$1;
 exports.length = length;
 exports.toString = toString;
 exports.keys = keys;
@@ -2028,7 +2112,6 @@ exports.isWeakSet = isWeakSet;
 exports.isUndefined = isUndefined;
 exports.isNull = isNull;
 exports.isSymbol = isSymbol;
-exports.isPromise = isPromise;
 exports.isUsableImmutablePrimitive = isUsableImmutablePrimitive;
 exports.isEmptyList = isEmptyList;
 exports.isEmptyObject = isEmptyObject;

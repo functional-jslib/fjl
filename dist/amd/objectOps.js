@@ -4,7 +4,7 @@ define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/type
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.notEmptyAndOfType = exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports._notEmptyAndOfType = exports._objDifference = exports._objIntersect = exports._objComplement = exports._objUnion = exports._assignDeep = exports._prop = exports._assign = exports._hasOwnProperty = exports._isType = exports._instanceOf = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isPromise = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isFunction = exports.keys = exports.toString = exports.length = undefined;
+  exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports._objDifference = exports._objIntersect = exports._objComplement = exports._objUnion = exports._assignDeep = exports._prop = exports._assign = exports._hasOwnProperty = exports._isType = exports._instanceOf = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isFunction = exports.keys = exports.toString = exports.length = undefined;
   Object.defineProperty(exports, 'length', {
     enumerable: true,
     get: function () {
@@ -131,12 +131,6 @@ define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/type
       return _is_.isSymbol;
     }
   });
-  Object.defineProperty(exports, 'isPromise', {
-    enumerable: true,
-    get: function () {
-      return _is_.isPromise;
-    }
-  });
   Object.defineProperty(exports, 'isUsableImmutablePrimitive', {
     enumerable: true,
     get: function () {
@@ -183,7 +177,6 @@ define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/type
   exports._objComplement = _setTheory_.objComplement;
   exports._objIntersect = _setTheory_.objIntersect;
   exports._objDifference = _setTheory_.objDifference;
-  exports._notEmptyAndOfType = _is_.notEmptyAndOfType;
   const prop = exports.prop = (0, _curry_.curry)(_prop_.prop),
 
 
@@ -224,8 +217,7 @@ define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/type
    * @param value {*}
    * @return {Boolean}
    */
-  isType = exports.isType = (0, _curry_.curry)(_is_.isType),
-
+  isType = exports.isType = (0, _curry_.curry)(_is_.isType);
 
   /**
    * Checks if `value` is an es2015 `class`.
@@ -368,16 +360,6 @@ define(['exports', './uncurried/jsPlatform/object_', './uncurried/objectOps/type
    * @param value {*} - Value to check.
    * @returns {Boolean}
    */
-
-  /**
-   * Returns true if an element is not empty and is of type.
-   * @function module:objectOps.notEmptyAndOfType
-   * @tentative
-   * @private* @param type {String|Function} - Type to check against (stringOps name or actual constructor).
-   * @param value {*} - Value to check.
-   * @returns {Boolean}
-   */
-  notEmptyAndOfType = exports.notEmptyAndOfType = (0, _curry_.curry)(_is_.notEmptyAndOfType);
 
   /**
    * Returns whether passed in values is defined and not null.
