@@ -8,6 +8,8 @@
 
 import {fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOne} from '../utils_';
 
+import {flip, flip3, flip4, flip5} from '../functionOps/flip_';
+
 export const
 
     /**
@@ -61,59 +63,39 @@ export const
      * @param objs {...{Object}}
      * @returns {Object}
      */
-    assign = (() =>
-        Object.assign ?
+    assign = (() => Object.assign ?
             (obj0, ...objs) => Object.assign(obj0, ...objs) :
             (obj0, ...objs) => objs.reduce((topAgg, obj) => {
                 return keys(obj).reduce((agg, key) => {
                     agg[key] = obj[key];
                     return agg;
                 }, topAgg);
-            }, obj0))(),
+            }, obj0));
 
-    defineProperty = (propName, propDescriptor, obj) =>
-        Object.defineProperty(obj, propName, propDescriptor),
-
-    defineProperties = (propDescriptors, obj) =>
-        Object.defineProperties(obj, propDescriptors),
-
-    defineEnumProp = (propName, propDescriptor, obj) =>
-        defineProperty(propName,
-            assign({enumerable: true}, propDescriptor),
-            obj),
-
-    defineEnumNumber = (propName, obj, defaultValue = undefined) => {
-        let _value = defaultValue;
-        defineEnumProp(propName, {
-            get: function () { return _value; },
-            set: function () { }
-        });
-    };
-
-Object.getOwnPropertyNames(Object)
-    .filter(name => Object[name].length > 1)
-    .reduce((agg, name) => {
-        switch (length(Object[name])) {
-            case 2:
-                agg[name] = fPureTakes2(name);
-                break;
-            case 3:
-                agg[name] = fPureTakes3(name);
-                break;
-            case 4:
-                agg[name] = fPureTakes4(name);
-                break;
-            case 5:
-                agg[name] = fPureTakes5(name);
-                break;
-            default:
-                agg[name] = fPureTakesOne(name);
-                break;
-        }
-        return agg;
-    }, {});
-
-export {
-
-};
-
+export const ObjectStatics =
+    Object.getOwnPropertyNames(Object)
+        .map(name => {
+            let len = Object[name].length;
+            return [name, len, len > 1 && Object[name] instanceof Function]
+        })
+        .filter(([name, funcLen, takesArgs]) =>  takesArgs)
+        .reduce((agg, [name, funcLen]) => {
+            switch (funcLen) {
+                case 2:
+                    agg[name] = flip(fPureTakes2(name))(Object);
+                    break;
+                case 3:
+                    agg[name] = flip3(fPureTakes3(name))(Object);
+                    break;
+                case 4:
+                    agg[name] = flip4(fPureTakes4(name))(Object);
+                    break;
+                case 5:
+                    agg[name] = flip5(fPureTakes5(name))(Object);
+                    break;
+                default:
+                    agg[name] = flip(fPureTakesOne(name))(Object);
+                    break;
+            }
+            return agg;
+        }, {});

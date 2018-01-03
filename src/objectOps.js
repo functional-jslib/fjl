@@ -13,7 +13,7 @@ import {
     objComplement as _objComplement,
     objIntersect as _objIntersect,
     objDifference as _objDifference}    from './uncurried/objectOps/setTheory_';
-import {isType as _isType, notEmptyAndOfType as _notEmptyAndOfType}
+import {isType as _isType}
     from './uncurried/objectOps/is_';
 
 export {length, toString, keys} from './uncurried/jsPlatform/object_';
@@ -22,12 +22,12 @@ export * from './uncurried/objectOps/of_';
 export {
     isFunction, isClass, isCallable, isArray, isObject, isBoolean,
     isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined,
-    isNull, isSymbol, isPromise, isUsableImmutablePrimitive,
+    isNull, isSymbol, isUsableImmutablePrimitive,
     isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset
 } from './uncurried/objectOps/is_';
 
 export {_instanceOf, _isType, _hasOwnProperty, _assign, _prop, _assignDeep, _objUnion,
-_objComplement, _objIntersect, _objDifference, _notEmptyAndOfType};
+_objComplement, _objIntersect, _objDifference};
 
 export const
 
@@ -76,7 +76,7 @@ export const
      * @param value {*}
      * @return {Boolean}
      */
-    isType = curry(_isType),
+    isType = curry(_isType);
 
     /**
      * Checks if `value` is an es2015 `class`.
@@ -219,16 +219,6 @@ export const
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
-
-    /**
-     * Returns true if an element is not empty and is of type.
-     * @function module:objectOps.notEmptyAndOfType
-     * @tentative
-     * @private* @param type {String|Function} - Type to check against (stringOps name or actual constructor).
-     * @param value {*} - Value to check.
-     * @returns {Boolean}
-     */
-    notEmptyAndOfType = curry(_notEmptyAndOfType);
 
     /**
      * Returns whether passed in values is defined and not null.
