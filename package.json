@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "0.19.0",
+  "version": "0.19.1",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl.js",
   "module": "dist/es6-module/fjl.js",
@@ -63,7 +63,7 @@
     "list"
   ],
   "author": "",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/functional-jslib/fjl/issues"
   },
