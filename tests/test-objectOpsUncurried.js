@@ -5,11 +5,6 @@
  * Created by elyde on 11/25/2016.
  * @todo add more extensive tests for `hasOwnProperty`
  */
-
-// ~~~ STRIP ~~~
-// This part gets stripped out when
-// generating browser version of test(s).
-'use strict';
 import {assert, expect} from 'chai';
 import {apply} from '../src/uncurried/_jsPlatform/_function';
 import {
@@ -24,8 +19,6 @@ import {
 } from '../src/uncurried/_objectOps';
 import {foldl, map, and, head, tail} from "../src/uncurried/_listOps";
 import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, deepCompareObjectsLeft} from './helpers';
-// These variables get set at the top IIFE in the browser.
-// ~~~ /STRIP ~~~
 
 describe ('#_objectOps_', function () {
 
@@ -61,7 +54,8 @@ describe ('#_objectOps_', function () {
                 ['Boolean', true],
                 ['Boolean', false],
                 ['Null', null],
-                ['Undefined', undefined]
+                ['Undefined', undefined],
+                ['Symbol', Symbol('hello')]
             ]
                 .forEach(tuple => expectEqual(apply(typeOf, tuple)));
         });
