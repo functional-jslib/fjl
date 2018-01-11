@@ -15,12 +15,17 @@ import {
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
-    isWeakMap, isWeakSet, assignDeep
+    isWeakMap, isWeakSet, assignDeep, assign
 } from '../src/uncurried/_objectOps';
 import {foldl, map, and, head, tail} from "../src/uncurried/_listOps";
 import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, deepCompareObjectsLeft} from './helpers';
 
 describe ('#_objectOps_', function () {
+
+    const peek = x => {
+        log(x);
+        return x;
+    };
 
     describe('#hasOwnProperty', function () {
         it ('should be a _functionOps', function () {
@@ -301,11 +306,7 @@ describe ('#_objectOps_', function () {
             // `head` pulls item at index `0` of list
             const check1 = foldl(
                 ([_results, _obj, _lastObj], word) => [
-                    (   _results.push(
-                            _obj.hasOwnProperty(word) &&
-                            _lastObj.hasOwnProperty(word) ),
-                            _results
-                    ),
+                    (_results.push(_obj.hasOwnProperty(word) && _lastObj.hasOwnProperty(word)), _results),
                     _obj[word],
                     _lastObj[word]
                 ],
@@ -321,6 +322,46 @@ describe ('#_objectOps_', function () {
 
             // Ensure both objects checked don't have any remaining keys
             expectTrue(and(map(x => !Object.keys(x).length, tail(check1))));
+        });
+
+        it ('should not modify objects other than the first object passed in', function () {
+            expectTrue(deepCompareObjectsLeft(clonedObj, obj));
+            // @todo do a more full proof check here
+        });
+    });
+
+    describe('#assign', function () {
+        const sentence = 'all your base are belong to us',
+            sentence2 = 'hair cut and shampoo',
+            words = sentence.split(' '),
+            wordsLen = words.length,
+            obj = {all: {your: {base: {are: {belong: {to: {us: {}}}}}}}},
+            obj2 = {hair: {cut: {and: {shampoo: 1}}}},
+
+            // Create an object with some random props
+            randomObj = words.reduce((agg, word, ind) => {
+                // quasi tree-like obj
+                agg[word] = {
+                    left: ind ? words[ind - 1] : undefined,
+                    right: ind < wordsLen ? words[ind + 1] : undefined
+                };
+                return agg;
+            }, {}),
+
+            clonedObj = jsonClone(obj),
+
+            // expectTrue(words.map())
+            result1 = assign(randomObj, obj2, clonedObj);
+
+        it ('should assign all props from one object to another recursively', function () {
+            // Check all top level properties
+            expectTrue(words
+                .map(word => result1.hasOwnProperty(word) && result1[word])
+                .every(result => result));
+
+            expectTrue(deepCompareObjectsLeft(obj2, result1));
+
+            expectTrue(deepCompareObjectsLeft(clonedObj, result1));
         });
 
         it ('should not modify objects other than the first object passed in', function () {
