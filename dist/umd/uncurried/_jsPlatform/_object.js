@@ -71,7 +71,7 @@
      * @param objs {...{Object}}
      * @returns {Object}
      */
-    assign = exports.assign = function assign() {
+    assign = exports.assign = function () {
         return Object.assign ? function (obj0) {
             for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
                 objs[_key - 1] = arguments[_key];
@@ -90,11 +90,11 @@
                 }, topAgg);
             }, obj0);
         };
-    }; /**
-        * Created by elydelacruz on 9/6/2017.
-        * Defines some of the platform methods for objects (the ones used within `fjl`) uncurried for use
-        * throughout the library.  @note Doesn't include all methods for objects just the ones used in
-        *  the library.
-        * @todo change all files named '*UnCurried' to '*_'.
-        */
+    }(); /**
+          * Created by elydelacruz on 9/6/2017.
+          * Defines some of the platform methods for objects (the ones used within `fjl`) uncurried for use
+          * throughout the library.  @note Doesn't include all methods for objects just the ones used in
+          *  the library.
+          * @todo change all files named '*UnCurried' to '*_'.
+          */
 });

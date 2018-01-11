@@ -60,4 +60,5 @@ export const
                     agg[key] = obj[key];
                     return agg;
                 }, topAgg);
-            }, obj0))();
+            }, obj0)
+        )();
