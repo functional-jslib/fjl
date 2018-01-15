@@ -3,13 +3,9 @@
  */
 'use strict';
 
-// ~~~ STRIP ~~~
-// This part gets stripped out when
-// generating browser version of test(s).
 import {curry2_, __, compose} from '../src/functionOps';
+
 import {expect} from 'chai';
-// These variables get set at the top IIFE in the browser.
-// ~~~ /STRIP ~~~
 
 const apply = (fn, ...args) => fn.apply(null, args);
 

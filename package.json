@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "0.19.4",
+  "version": "0.19.5",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl.js",
   "module": "dist/es6-module/fjl.js",
@@ -44,10 +44,9 @@
   "scripts": {
     "pre-publish": "npm test && npm run build",
     "test": "mocha tests/test-*.js --plugins babel-plugin-add-module-exports --require babel-register",
-    "tests": "npm test",
     "test-es6": "mocha tests/test-*.js --plugins babel-plugin-add-module-exports --require babel-register",
     "test-cjs": "mocha tests/static-test-cjsLibraryImport.js",
-    "build": "gulp clean && gulp build && gulp docs",
+    "build": "gulp clean && gulp build && npm run test-es6 && npm run test-cjs",
     "docs": "gulp docs",
     "eslint": "gulp eslint"
   },

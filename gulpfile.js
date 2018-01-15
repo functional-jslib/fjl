@@ -86,10 +86,6 @@ const fs = require('fs'),
             .catch(log)
     ;
 
-gulp.task('version', () =>
-    (new VersionNumberReadStream())
-        .pipe(fs.createWriteStream('./src-generated/version.js')));
-
 gulp.task('clean', () => {
     let pathsToDelete = [cjsBuildPath, amdBuildPath, umdBuildPath, iifeBuildPath]
         .map(partialPath => buildPath(partialPath, '**', '*.js'));
@@ -113,7 +109,7 @@ gulp.task('cjs', ['eslint'], () =>
         .pipe(gulpBabel(gulpConfig.buildCjsOptions.babel))
         .pipe(gulp.dest(buildPath(cjsBuildPath))));
 
-gulp.task('iife', ['eslint', 'version'], () =>
+gulp.task('iife', ['eslint'], () =>
     rollup.rollup({
         input: 'src/fjl.js',
         plugins: [
@@ -143,7 +139,7 @@ gulp.task('iife', ['eslint', 'version'], () =>
         sourcemap: true
     })));
 
-gulp.task('es6-module', ['eslint', 'version'], () =>
+gulp.task('es6-module', ['eslint'], () =>
     gulp.src('./src/fjl.js')
         .pipe(gulpRollup(null, {moduleName: iifeModuleName, format: 'es'}))
         .pipe(concat(buildPath('es6-module', iifeFileName)))
@@ -165,7 +161,7 @@ gulp.task('uglify', ['iife'], () => {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('build-js', ['version', 'uglify', 'cjs', 'amd', 'umd', 'es6-module']);
+gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd', 'es6-module']);
 
 gulp.task('docs', () =>
     deleteFilePaths(['./docs/**/*'])

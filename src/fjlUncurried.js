@@ -8,14 +8,10 @@
  * @motivation Haskell's Prelude, preludejs, lodash/fp, RamdaJs.
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
- * @todo any cross importing between packages should be done from the package object (package file: E.g., './src/functionOps/functionOps.js').
  * @module fjlUncurried
  */
-
 export * from './uncurried/_objectOps';
 export * from './booleanOps';
 export * from './uncurried/_functionOps';
 export * from './uncurried/_listOps';
 export * from './stringOps';
-
-export {version} from '../src-generated/version';

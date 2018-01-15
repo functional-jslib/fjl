@@ -63,12 +63,3 @@ Object.keys(_stringOps).forEach(function (key) {
     }
   });
 });
-
-var _version = require('../src-generated/version');
-
-Object.defineProperty(exports, 'version', {
-  enumerable: true,
-  get: function get() {
-    return _version.version;
-  }
-});

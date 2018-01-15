@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './objectOps', './booleanOps', './functionOps', './listOps', './stringOps', '../src-generated/version'], factory);
+    define(['exports', './objectOps', './booleanOps', './functionOps', './listOps', './stringOps'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./objectOps'), require('./booleanOps'), require('./functionOps'), require('./listOps'), require('./stringOps'), require('../src-generated/version'));
+    factory(exports, require('./objectOps'), require('./booleanOps'), require('./functionOps'), require('./listOps'), require('./stringOps'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.objectOps, global.booleanOps, global.functionOps, global.listOps, global.stringOps, global.version);
+    factory(mod.exports, global.objectOps, global.booleanOps, global.functionOps, global.listOps, global.stringOps);
     global.fjl = mod.exports;
   }
-})(this, function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps, _version) {
+})(this, function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -60,11 +60,5 @@
         return _stringOps[key];
       }
     });
-  });
-  Object.defineProperty(exports, 'version', {
-    enumerable: true,
-    get: function () {
-      return _version.version;
-    }
   });
 });

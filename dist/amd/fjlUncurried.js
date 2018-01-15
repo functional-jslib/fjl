@@ -1,4 +1,4 @@
-define(['exports', './uncurried/_objectOps', './booleanOps', './uncurried/_functionOps', './uncurried/_listOps', './stringOps', '../src-generated/version'], function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps, _version) {
+define(['exports', './uncurried/_objectOps', './booleanOps', './uncurried/_functionOps', './uncurried/_listOps', './stringOps'], function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -48,11 +48,5 @@ define(['exports', './uncurried/_objectOps', './booleanOps', './uncurried/_funct
         return _stringOps[key];
       }
     });
-  });
-  Object.defineProperty(exports, 'version', {
-    enumerable: true,
-    get: function () {
-      return _version.version;
-    }
   });
 });
