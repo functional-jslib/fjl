@@ -53,6 +53,19 @@ export const
     },
 
     /**
+     * Generic 'descending order' ordering function (use by the likes of `list.sort` etc.)
+     * @function module:_listOpsUtils.genericDescOrdering
+     * @param a {*}
+     * @param b {*}
+     * @returns {number}
+     */
+    genericDescOrdering = (a, b) => {
+        if (a < b) { return 1; }
+        else if (a > b) { return -1; }
+        return 0;
+    },
+
+    /**
      * Returns length of all passed lists in list.
      * @function module:_listOpsUtils.lengths
      * @param lists ...{Array|String|*}

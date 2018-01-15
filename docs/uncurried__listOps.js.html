@@ -314,17 +314,33 @@ export const
     },
 
     /**
-     * Reduces a foldable (list etc.) with passed in function.
+     * Left associative fold.  Reduces a container of elements down by the given operation (same as [].reduce).
      * @function module:_listOps.foldl
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array|String|*}
-     * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
+     * @returns {*} - Whatever type is lastly returned from `fn`.
      */
     foldl = reduce,
 
+    /**
+     * Right associative fold.  Reduces a container of elements down by the given operation (same as [].reduceRight).
+     * @function module:_listOps.foldr
+     * @param fn {Function}
+     * @param zero {*} - Aggregator.
+     * @param functor {Array|String|*}
+     * @returns {*} - Whatever type is lastly returned from `fn`.
+     */
     foldr = reduceRight,
 
+    /**
+     * A variant of `foldl` except that this one doesn't require the starting point.  The starting point/value will be pulled
+     * out from a copy of the container.
+     * @function module:_listOps.foldl1
+     * @param op {Function}
+     * @param xs {Array|String|*}
+     * @returns {*} - Whatever type is lastly returned from `op`.
+     */
     foldl1 = (op, xs) => {
         const parts = uncons(xs);
         if (!parts) {
@@ -333,6 +349,14 @@ export const
         return reduce(op, parts[0], parts[1]);
     },
 
+    /**
+     * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
+     * out from a copy of the container.
+     * @function module:_listOps.foldr1
+     * @param op {Function}
+     * @param xs {Array|String|*}
+     * @returns {*} - Whatever type is lastly returned from `op`.
+     */
     foldr1 = (op, xs) => {
         const parts = unconsr(xs);
         if (!parts) {
@@ -614,13 +638,21 @@ export const
     at = prop,
 
     /**
+     * Find an item in structure of elements based on given predicate (`pred`).
      * @function module:_listOps.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
-     * @returns {*}
+     * @returns {*} - Found item.
      */
     find = findWhere,
 
+    /**
+     * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
+     * @function module:_listOps.filter
+     * @param pred {Function}
+     * @param xs {Array|String|*} - list or list like.
+     * @returns {Array|String|*} - Structure of filtered elements.
+     */
     filter = (pred, xs) => {
         let ind = 0,
             limit = length(xs),
@@ -653,8 +685,22 @@ export const
         return [filter(pred, list), filter(negateP(pred), list)];
     },
 
+    /**
+     * Returns a boolean indicating whether an element exists in given structure of elements.
+     * @function module:_listOps.elem
+     * @param element {*}
+     * @param xs {Array|String|*}
+     * @returns {Boolean}
+     */
     elem = includes,
 
+    /**
+     * The opposite of `elem` - Returns a boolean indicating whether an element exists in given list.
+     * @function module:_listOps.elem
+     * @param element {*}
+     * @param xs {Array|String|*}
+     * @returns {Boolean}
+     */
     notElem = negateF(includes),
 
     lookup = at,
@@ -1026,6 +1072,13 @@ export const
         }, zero, list);
     },
 
+    /**
+     * Returns true if any item in container passes predicate `p`.
+     * @function module:_listOps.any
+     * @param p {Function} - Predicate.
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
     any = (p, xs) => {
         let ind = 0,
             limit = length(xs);
@@ -1040,6 +1093,13 @@ export const
         return false;
     },
 
+    /**
+     * Returns true if all items in container pass predicate `p`.
+     * @function module:_listOps.all
+     * @param p {Function} - Predicate.
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
     all = (p, xs) => {
         const limit = length(xs);
         let ind = 0;
@@ -1054,23 +1114,72 @@ export const
         return true;
     },
 
+    /**
+     * Conjuction of container of bools (or truthy and/or falsy values);  Returns
+     * `true` if all in container are 'truthy' else returns `false`
+     * @function module:_listOps.and
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
     and = xs => all(isTruthy, xs),
 
+    /**
+     * Returns a boolean indicating whether any item in container is 'truthy' or not.
+     * **Note** The haskell type for this function only takes two items, but here
+     * we allow the passing of more than one item (may change later to adhere to the haskell type).
+     * @function module:_listOps.or
+     * @haskellType `or :: Bool -> Bool -> Bool`
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
     or = xs => any(isTruthy, xs),
 
+    /**
+     * Returns a boolean indicating whether all items in container are 'falsy' or not.
+     * **Note** The haskell type for this function only takes two items, but here
+     * we allow the passing of more than one item (may change later to adhere to the haskell type).
+     * @function module:_listOps.not
+     * @haskellType `not :: Bool -> Bool`
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
     not = xs => all(isFalsy, xs),
 
+    /**
+     * Computes the sum of the numbers of a structure.
+     * @function module:_listOps.sum
+     * @haskellType `sum :: (List t, Num a) => t a -> a`
+     * @param list {Array|String}
+     * @returns {Number}
+     */
     sum = list => foldl((agg, x) => agg + x, 0, list),
 
-    product = arr => foldl((agg, x) => agg * x, 1, arr),
+    /**
+     * Computes the product of the numbers of a structure.
+     * @function module:_listOps.product
+     * @haskellType `product :: (List t, Num a) => t a -> a`
+     * @param list {Array|String}
+     * @returns {Number}
+     */
+    product = list => foldl((agg, x) => agg * x, 1, list),
 
-    maximum = list => maximumBy(genericAscOrdering, list),
+    /**
+     * Returns the largest element in a non-empty structure of elements.
+     * @function module:_listOps.maximum
+     * @haskellType `maximum :: forall a . Ord a => t a -> a`
+     * @param list {Array|String}
+     * @returns {*} - Whatever type the array is made of (if any).
+     */
+    maximum = list => last(sortBy(genericAscOrdering, list)),
 
-    minimum = list => minimumBy(genericAscOrdering, list),
-
-    maximumBy = (ordering, xs) => last(sortBy(ordering, xs)),
-
-    minimumBy = (ordering, xs) => head(sortBy(ordering, xs)),
+    /**
+     * Returns the smallest element in a non-empty structure of elements.
+     * @function module:_listOps.minimum
+     * @haskellType `minimum :: forall a . Ord a => t a -> a`
+     * @param list {Array|String}
+     * @returns {*} - Whatever type the array is made of (if any).
+     */
+    minimum = list => head(sortBy(genericAscOrdering, list)),
 
     scanl = () => null,
 
@@ -1111,7 +1220,7 @@ export const
             )
         ),
 
-    sortBy = (orderingFn, xs) => copy(xs).sort(orderingFn),
+    sortBy = (orderingFn, xs) => copy(xs).sort(orderingFn || genericAscOrdering),
 
     insert = (x, xs) => {
         if (isEmptyList(xs)) {
@@ -1281,7 +1390,7 @@ export const
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 15 2018 16:01:40 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 15 2018 17:15:23 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

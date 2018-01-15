@@ -49,7 +49,6 @@ import {
     partition as _partition, at as _at, span as _span, breakOnList as _breakOnList, stripPrefix as _stripPrefix,
     isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf,
     isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter as _filter,
-    maximumBy as _maximumBy, minimumBy as _minimumBy,
     remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy,
     removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy,
     complement as _complement, difference as _difference, union as _union, intersect as _intersect,
@@ -71,7 +70,7 @@ export {
     _intersperse, _intercalate, _iterate, _repeat, _replicate, _cycle, _take,
     _drop, _splitAt, _foldl, _foldl1, _foldr, _foldr1, _unfoldr, _concatMap, _takeWhile, _dropWhile,
     _dropWhileEnd, _partition, _at, _span, _breakOnList, _stripPrefix, _isPrefixOf,
-    _isSuffixOf, _isInfixOf, _isSubsequenceOf, _filter, _maximumBy, _minimumBy,
+    _isSuffixOf, _isInfixOf, _isSubsequenceOf, _filter,
     _remove, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _sortOn, _sortBy,
     _complement, _difference, _union, _intersect, _intersectBy, _groupBy
 };
@@ -87,7 +86,7 @@ export const
      * ```
      * If the first list is not finite, the result is the first list.
      * @haskellType `append :: List a => a -> a -> a`
-     * @function module:_listOps.append
+     * @function module:listOps.append
      * @param xs1 {Array|String|*} - list or list like.
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
@@ -99,7 +98,7 @@ export const
      * @haskellType `appendMany :: List a => a -> [a] -> a
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:_listOps.appendMany
+     * @function module:listOps.appendMany
      * @param x {Array|String|*}
      * @param args ...{Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
@@ -109,7 +108,7 @@ export const
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
      * @haskellType `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
-     * @function module:_listOps.concatMap
+     * @function module:listOps.concatMap
      * @param fn {Function}
      * @param foldableOfA {Array|String|*}
      * @returns {Array|String|*}
@@ -117,7 +116,7 @@ export const
     concatMap = curry2(_concatMap),
 
     /**
-     * @function module:_listOps.map
+     * @function module:listOps.map
      * @param fn {Function} - Function to map on functor item(s).
      * @param xs {Array|String|*} - Functor.
      * @returns {Array|String|*} - Functor type that is passed in.
@@ -126,7 +125,7 @@ export const
 
     /**
      * Takes an element and a list and `intersperses' that element between the elements of the list. For example
-     * @function module:_listOps.intersperse
+     * @function module:listOps.intersperse
      * @note In our version of the function javascript is loosely typed so, so is our function (to much overhead to make
      *  it typed) so `between` can be any value.
      * @param between {*} - Should be of the same type of elements contained in list.
@@ -138,7 +137,7 @@ export const
     /**
      * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
      * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
-     * @function module:_listOps.intercalate
+     * @function module:listOps.intercalate
      * @param xs {Array|String|*}
      * @param xss {Array|String|*}
      * @returns {Array|String|*}
@@ -147,7 +146,7 @@ export const
 
     /**
      * Reduces a foldable (list etc.) with passed in function.
-     * @function module:_listOps.foldl
+     * @function module:listOps.foldl
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array|String|*}
@@ -157,7 +156,7 @@ export const
 
     /**
      * Reduces a foldable (list etc.) from right to left with passed in function.
-     * @function module:_listOps.foldr
+     * @function module:listOps.foldr
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array|{reduce: {Function}}}
@@ -167,7 +166,7 @@ export const
 
     /**
      * Reduces a foldable (list etc.) with passed in function.
-     * @function module:_listOps.foldl1
+     * @function module:listOps.foldl1
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {*}
@@ -176,7 +175,7 @@ export const
 
     /**
      * Reduces a foldable (list etc.) from right to left with passed in function.
-     * @function module:_listOps.foldr1
+     * @function module:listOps.foldr1
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {*}
@@ -186,7 +185,7 @@ export const
     /**
      * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:_listOps.mapAccumL
+     * @function module:listOps.mapAccumL
      * @param op {Function} - Function&lt;aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array|String|*} - list type.
@@ -197,7 +196,7 @@ export const
     /**
      * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:_listOps.mapAccumR
+     * @function module:listOps.mapAccumR
      * @param op {Function} - Function&lt;aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array|String|*} - list type.
@@ -207,7 +206,7 @@ export const
 
     /**
      * Iterate on value (`x`) with `op` up to `limit`.
-     * @function module:_listOps.iterate
+     * @function module:listOps.iterate
      * @param limit {Number}
      * @param op {Function} - Operation
      * @param x {*} - Starting point.
@@ -224,7 +223,7 @@ export const
     /**
      * Unfolds a value into a list of somethings.
      * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
-     * @function module:_listOps.unfoldr
+     * @function module:listOps.unfoldr
      * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregate and item to unfold in next iteration).
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
@@ -233,7 +232,7 @@ export const
 
     /**
      * Finds index in string or list (alias for `findIndex`).
-     * @function module:_listOps.findIndex
+     * @function module:listOps.findIndex
      * @param pred {Function} - Predicate&lt;element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -241,7 +240,7 @@ export const
     findIndex = curry(_findIndex),
 
     /**
-     * @function module:_listOps.findIndices
+     * @function module:listOps.findIndices
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
@@ -249,7 +248,7 @@ export const
     findIndices = curry(_findIndices),
 
     /**
-     * @function module:_listOps.elemIndex
+     * @function module:listOps.elemIndex
      * @param x {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -257,7 +256,7 @@ export const
     elemIndex = curry(_elemIndex),
 
     /**
-     * @function module:_listOps.elemIndices
+     * @function module:listOps.elemIndices
      * @param value {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -266,7 +265,7 @@ export const
 
     /**
      * Takes `n` items from start of list to `limit` (exclusive).
-     * @function module:_listOps.take
+     * @function module:listOps.take
      * @param list {Array|String}
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
@@ -275,7 +274,7 @@ export const
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
-     * @function module:_listOps.take
+     * @function module:listOps.take
      * @param list {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
@@ -285,7 +284,7 @@ export const
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
      * given index in second part of returned list)).
-     * @function module:_listOps.splitAt
+     * @function module:listOps.splitAt
      * @param ind {Number} - Index to split at.
      * @param list {Array|String|*} - functor (list or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
@@ -294,7 +293,7 @@ export const
 
     /**
      * Gives an list with passed elements while predicate was true.
-     * @function module:_listOps.takeWhile
+     * @function module:listOps.takeWhile
      * @param pred {Function} - Predicate&lt;*, index, list|string>
      * @param list {Array|String}
      * @returns {Array}
@@ -303,7 +302,7 @@ export const
 
     /**
      * Returns an list without elements that match predicate.
-     * @function module:_listOps.dropWhile
+     * @function module:listOps.dropWhile
      * @param pred {Function} - Predicate&lt;*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -312,7 +311,7 @@ export const
     dropWhile = curry(_dropWhile),
 
     /**
-     * @function module:_listOps.dropWhile
+     * @function module:listOps.dropWhile
      * @param pred {Function} - Predicate&lt;*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -324,7 +323,7 @@ export const
      * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
      * the second list in the tuple is a list of the remaining elements in the given list.
      * **@Note: Not the same as `partition`.  Read descriptions closely!!!
-     * @function module:_listOps.partition
+     * @function module:listOps.partition
      * @param pred {Function} - Predicate&lt;item, index, originalArrayOrString>
      * @param list {Array|String|*} - Predicate&lt;item, index, originalArrayOrString>
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
@@ -334,7 +333,7 @@ export const
     breakOnList = curry(_breakOnList),
 
     /**
-     * @function module:_listOps.at
+     * @function module:listOps.at
      * @param ind {Number} - Index.
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -342,7 +341,7 @@ export const
     at = curry(_at),
 
     /**
-     * @function module:_listOps.find
+     * @function module:listOps.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -355,7 +354,7 @@ export const
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
      * do not match the tuple are in second list in the returned tuple.
      *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-     * @function module:_listOps.partition
+     * @function module:listOps.partition
      * @param pred {Function} - Predicate&lt;item, index, originalArrayOrString>
      * @param list {Array|String|*}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
@@ -380,7 +379,7 @@ export const
      * Allows you to group items in a list based on your supplied equality check.
      * @note Sames `group` but allows you to specify equality operation.
      * @haskellType `groupBy :: (a -> a -> Bool) -> [a] -> [[a]]`
-     * @function module:_listOps.groupBy
+     * @function module:listOps.groupBy
      * @param equalityOp {Function}
      * @param xs {Array|String|*}
      * @returns {*}
@@ -393,7 +392,7 @@ export const
      * zip takes two lists and returns a list of corresponding pairs.
      * If one input list is short, excess elements of the longer list are discarded.
      * @haskellType `zip :: [a] -> [b] -> [(a, b)]`
-     * @function module:_listOps.zip
+     * @function module:listOps.zip
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array&lt;Array&lt;*,*>>}
@@ -414,7 +413,7 @@ export const
      * zipWith f [] _|_ = []
      * ```
      * @haskellType `zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]`
-     * @function module:_listOps.zipWith
+     * @function module:listOps.zipWith
      * @param op {Function} - Takes two parts of a tuple and returns a tuple.
      *  E.g., ` op :: a -> b -> (a, b)`
      * @param xs1 {Array|String|*}
@@ -429,7 +428,7 @@ export const
      *  is left there for general purpose not for exactness as is told by aforementioned.
      * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
      *  of lists to zip.
-     * @function module:_listOps.zipWithN
+     * @function module:listOps.zipWithN
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> (a, b, c)`
@@ -441,7 +440,7 @@ export const
     /**
      * Zips 3 lists with tupling function.
      * @haskellType `zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]`
-     * @function module:_listOps.zipWith3
+     * @function module:listOps.zipWith3
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> (a, b, c)`
@@ -455,7 +454,7 @@ export const
     /**
      * Zips 4 lists with tupling function.
      * @haskellType `zipWith4 :: (a -> b -> c -> d -> e) -> [a] -> [b] -> [c]  -> [d] -> [e]`
-     * @function module:_listOps.zipWith4
+     * @function module:listOps.zipWith4
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`
@@ -470,7 +469,7 @@ export const
     /**
      * Zips 5 lists.
      * @haskellType `zipWith5 :: (a -> b -> c -> d -> e -> f) -> [a] -> [b] -> [c]  -> [d] -> [e] -> [f]`
-     * @function module:_listOps.zipWith5
+     * @function module:listOps.zipWith5
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`
@@ -486,10 +485,6 @@ export const
     any = curry(_any),
 
     all = curry(_all),
-
-    maximumBy = curry(_maximumBy),
-
-    minimumBy = curry(_minimumBy),
 
     scanl = () => null,
 
@@ -510,7 +505,7 @@ export const
     /**
      * A version of `insert` that allows you to specify the ordering of the inserted
      * item;  Before/at, or after
-     * @function module:_listOps.insertBy
+     * @function module:listOps.insertBy
      * @haskellType `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
      * @note `Ordering` === // something that is order-able
      * @todo Optimize and work the logic of this function;  Think about the types that will be
@@ -530,7 +525,7 @@ export const
 
     /**
      * Returns the union on elements matching boolean check passed in.
-     * @function module:_listOps.unionBy
+     * @function module:listOps.unionBy
      * @param pred {Function} - `pred :: a -> a -> Bool`
      * @param arr1 {Array|String|*}
      * @param arr2 {Array|String|*}
@@ -540,7 +535,7 @@ export const
 
     /**
      * Creates a union on matching elements from array1.
-     * @function module:_listOps.union
+     * @function module:listOps.union
      * @param arr1 {Array|String|*}
      * @param arr2 {Array|String|*}
      * @returns {Array|String|*}
@@ -549,7 +544,7 @@ export const
 
     /**
      * Performs an intersection on list 1 with  elements from list 2.
-     * @function module:_listOps.intersect
+     * @function module:listOps.intersect
      * @param arr1 {Array|String|*}
      * @param arr2 {Array|String|*}
      * @returns {Array|String|*}
@@ -558,7 +553,7 @@ export const
 
     /**
      * Returns an intersection by predicate.
-     * @function module:_listOps.intersectBy
+     * @function module:listOps.intersectBy
      * @param pred {Function} - `pred :: a -> b -> Bool`
      * @param list1 {Array|String|*}
      * @param list2 {Array|String|*}
@@ -569,7 +564,7 @@ export const
     /**
      * Returns the difference of list 1 from list 2.
      * @note The `difference` operation here is non-associative;  E.g., `a - b` is not equal to `b - a`;
-     * @function module:_listOps.difference
+     * @function module:listOps.difference
      * @param array1 {Array|String|*}
      * @param array2 {Array|String|*}
      * @returns {Array|String|*}
@@ -578,7 +573,7 @@ export const
 
     /**
      * Returns the complement of list 0 and the reset of the passed in arrays.
-     * @function module:_listOps.complement
+     * @function module:listOps.complement
      * @param arr0 {Array}
      * @param arrays {...Array}
      * @returns {Array}
@@ -600,7 +595,7 @@ export const
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 15 2018 16:01:40 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 15 2018 17:15:23 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

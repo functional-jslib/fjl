@@ -29,7 +29,7 @@ import {
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
-    filter, sum, product, maximum, maximumBy, minimum, minimumBy, nub, remove, insert, insertBy,
+    filter, sum, product, maximum, minimum, nub, remove, insert, insertBy,
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
     complement, difference, union, intersect, intersectBy, groupBy
 } from '../src/uncurried/_listOps';
@@ -2385,34 +2385,6 @@ describe ('#_listOps', function () {
             expectShallowEquals(genericInsert(99, []), [99]);
             expectShallowEquals(genericInsert('a', []), ['a']);
             expectShallowEquals(genericInsert('a', ''), 'a');
-        });
-    });
-
-    describe ('#maximumBy', function () {
-        const genericMaximum = xs => maximumBy(genericOrdering, xs);
-        it ('should be able return the maximum of a given list', function () {
-            expectEqual(genericMaximum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 5);
-            expectEqual(genericMaximum(range(-5, -1).concat([-3, -5, -7])), -1);
-        });
-        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
-            assert.throws(() => genericMaximum(null), Error);
-            assert.throws(() => genericMaximum(undefined), Error);
-            // assert.throws(() => genericMaximum([]), Error);
-            assert.throws(() => genericMaximum(), Error);
-        });
-    });
-
-    describe ('#minimumBy', function () {
-        const genericMinimum = xs => minimumBy(genericOrdering, xs);
-        it ('should be able return the minimum of a given list', function () {
-            expectEqual(genericMinimum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 1);
-            expectEqual(genericMinimum(range(-5, -1).concat([-3, -7, -5])), -7);
-        });
-        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
-            assert.throws(() => genericMinimum(null), Error);
-            assert.throws(() => genericMinimum(undefined), Error);
-            // expectEqual(genericMinimum([]), Infinity);
-            assert.throws(() => genericMinimum(), Error);
         });
     });
 
