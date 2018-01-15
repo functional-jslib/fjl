@@ -16,8 +16,8 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = undefined;
-    exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports._groupBy = exports._intersectBy = exports._intersect = exports._union = exports._difference = exports._complement = exports._sortBy = exports._sortOn = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._remove = exports._minimumBy = exports._maximumBy = exports._filter = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._stripPrefix = exports._breakOnList = exports._span = exports._at = exports._partition = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._concatMap = exports._unfoldr = exports._foldr1 = exports._foldr = exports._foldl1 = exports._foldl = exports._splitAt = exports._drop = exports._take = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._intercalate = exports._intersperse = exports._lookup = exports._elemIndices = exports._elemIndex = exports._notElem = exports._elem = exports._mapAccumR = exports._mapAccumL = exports._map = exports._zipWith = exports._zipN = exports._zip = exports._findIndices = exports._findIndex = exports._find = exports._any = exports._all = exports._appendMany = exports._append = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.inits = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.uncons = exports.tail = exports.init = exports.last = exports.head = exports.unzipN = exports.unzip = exports.zipN = exports.or = exports.and = undefined;
+    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = undefined;
+    exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports._groupBy = exports._intersectBy = exports._intersect = exports._union = exports._difference = exports._complement = exports._sortBy = exports._sortOn = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._remove = exports._filter = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._stripPrefix = exports._breakOnList = exports._span = exports._at = exports._partition = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._concatMap = exports._unfoldr = exports._foldr1 = exports._foldr = exports._foldl1 = exports._foldl = exports._splitAt = exports._drop = exports._take = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._intercalate = exports._intersperse = exports._lookup = exports._elemIndices = exports._elemIndex = exports._notElem = exports._elem = exports._mapAccumR = exports._mapAccumL = exports._map = exports._zipWith = exports._zipN = exports._zip = exports._findIndices = exports._findIndex = exports._find = exports._any = exports._all = exports._appendMany = exports._append = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.inits = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.uncons = exports.tail = exports.init = exports.last = exports.head = exports.unzipN = exports.unzip = exports.zipN = exports.or = exports.and = undefined;
     Object.defineProperty(exports, 'and', {
         enumerable: true,
         get: function () {
@@ -208,8 +208,6 @@
     exports._isInfixOf = _listOps.isInfixOf;
     exports._isSubsequenceOf = _listOps.isSubsequenceOf;
     exports._filter = _listOps.filter;
-    exports._maximumBy = _listOps.maximumBy;
-    exports._minimumBy = _listOps.minimumBy;
     exports._remove = _listOps.remove;
     exports._insert = _listOps.insert;
     exports._insertBy = _listOps.insertBy;
@@ -238,7 +236,7 @@
      * ```
      * If the first list is not finite, the result is the first list.
      * @haskellType `append :: List a => a -> a -> a`
-     * @function module:_listOps.append
+     * @function module:listOps.append
      * @param xs1 {Array|String|*} - list or list like.
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
@@ -251,7 +249,7 @@
      * @haskellType `appendMany :: List a => a -> [a] -> a
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:_listOps.appendMany
+     * @function module:listOps.appendMany
      * @param x {Array|String|*}
      * @param args ...{Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
@@ -262,7 +260,7 @@
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
      * @haskellType `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
-     * @function module:_listOps.concatMap
+     * @function module:listOps.concatMap
      * @param fn {Function}
      * @param foldableOfA {Array|String|*}
      * @returns {Array|String|*}
@@ -271,7 +269,7 @@
 
 
     /**
-     * @function module:_listOps.map
+     * @function module:listOps.map
      * @param fn {Function} - Function to map on functor item(s).
      * @param xs {Array|String|*} - Functor.
      * @returns {Array|String|*} - Functor type that is passed in.
@@ -281,7 +279,7 @@
 
     /**
      * Takes an element and a list and `intersperses' that element between the elements of the list. For example
-     * @function module:_listOps.intersperse
+     * @function module:listOps.intersperse
      * @note In our version of the function javascript is loosely typed so, so is our function (to much overhead to make
      *  it typed) so `between` can be any value.
      * @param between {*} - Should be of the same type of elements contained in list.
@@ -294,7 +292,7 @@
     /**
      * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
      * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
-     * @function module:_listOps.intercalate
+     * @function module:listOps.intercalate
      * @param xs {Array|String|*}
      * @param xss {Array|String|*}
      * @returns {Array|String|*}
@@ -304,7 +302,7 @@
 
     /**
      * Reduces a foldable (list etc.) with passed in function.
-     * @function module:_listOps.foldl
+     * @function module:listOps.foldl
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array|String|*}
@@ -315,7 +313,7 @@
 
     /**
      * Reduces a foldable (list etc.) from right to left with passed in function.
-     * @function module:_listOps.foldr
+     * @function module:listOps.foldr
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array|{reduce: {Function}}}
@@ -326,7 +324,7 @@
 
     /**
      * Reduces a foldable (list etc.) with passed in function.
-     * @function module:_listOps.foldl1
+     * @function module:listOps.foldl1
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {*}
@@ -336,7 +334,7 @@
 
     /**
      * Reduces a foldable (list etc.) from right to left with passed in function.
-     * @function module:_listOps.foldr1
+     * @function module:listOps.foldr1
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {*}
@@ -347,7 +345,7 @@
     /**
      * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:_listOps.mapAccumL
+     * @function module:listOps.mapAccumL
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array|String|*} - list type.
@@ -359,7 +357,7 @@
     /**
      * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:_listOps.mapAccumR
+     * @function module:listOps.mapAccumR
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array|String|*} - list type.
@@ -370,7 +368,7 @@
 
     /**
      * Iterate on value (`x`) with `op` up to `limit`.
-     * @function module:_listOps.iterate
+     * @function module:listOps.iterate
      * @param limit {Number}
      * @param op {Function} - Operation
      * @param x {*} - Starting point.
@@ -385,7 +383,7 @@
     /**
      * Unfolds a value into a list of somethings.
      * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
-     * @function module:_listOps.unfoldr
+     * @function module:listOps.unfoldr
      * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregate and item to unfold in next iteration).
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
@@ -395,7 +393,7 @@
 
     /**
      * Finds index in string or list (alias for `findIndex`).
-     * @function module:_listOps.findIndex
+     * @function module:listOps.findIndex
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -404,7 +402,7 @@
 
 
     /**
-     * @function module:_listOps.findIndices
+     * @function module:listOps.findIndices
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
@@ -413,7 +411,7 @@
 
 
     /**
-     * @function module:_listOps.elemIndex
+     * @function module:listOps.elemIndex
      * @param x {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -422,7 +420,7 @@
 
 
     /**
-     * @function module:_listOps.elemIndices
+     * @function module:listOps.elemIndices
      * @param value {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -432,7 +430,7 @@
 
     /**
      * Takes `n` items from start of list to `limit` (exclusive).
-     * @function module:_listOps.take
+     * @function module:listOps.take
      * @param list {Array|String}
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
@@ -442,7 +440,7 @@
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
-     * @function module:_listOps.take
+     * @function module:listOps.take
      * @param list {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
@@ -453,7 +451,7 @@
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
      * given index in second part of returned list)).
-     * @function module:_listOps.splitAt
+     * @function module:listOps.splitAt
      * @param ind {Number} - Index to split at.
      * @param list {Array|String|*} - functor (list or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
@@ -463,7 +461,7 @@
 
     /**
      * Gives an list with passed elements while predicate was true.
-     * @function module:_listOps.takeWhile
+     * @function module:listOps.takeWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @returns {Array}
@@ -473,7 +471,7 @@
 
     /**
      * Returns an list without elements that match predicate.
-     * @function module:_listOps.dropWhile
+     * @function module:listOps.dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -483,7 +481,7 @@
 
 
     /**
-     * @function module:_listOps.dropWhile
+     * @function module:listOps.dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -496,7 +494,7 @@
      * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
      * the second list in the tuple is a list of the remaining elements in the given list.
      * **@Note: Not the same as `partition`.  Read descriptions closely!!!
-     * @function module:_listOps.partition
+     * @function module:listOps.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array|String|*} - Predicate<item, index, originalArrayOrString>
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
@@ -506,7 +504,7 @@
 
 
     /**
-     * @function module:_listOps.at
+     * @function module:listOps.at
      * @param ind {Number} - Index.
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -515,7 +513,7 @@
 
 
     /**
-     * @function module:_listOps.find
+     * @function module:listOps.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -528,7 +526,7 @@
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
      * do not match the tuple are in second list in the returned tuple.
      *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-     * @function module:_listOps.partition
+     * @function module:listOps.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array|String|*}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
@@ -547,7 +545,7 @@
      * Allows you to group items in a list based on your supplied equality check.
      * @note Sames `group` but allows you to specify equality operation.
      * @haskellType `groupBy :: (a -> a -> Bool) -> [a] -> [[a]]`
-     * @function module:_listOps.groupBy
+     * @function module:listOps.groupBy
      * @param equalityOp {Function}
      * @param xs {Array|String|*}
      * @returns {*}
@@ -560,7 +558,7 @@
      * zip takes two lists and returns a list of corresponding pairs.
      * If one input list is short, excess elements of the longer list are discarded.
      * @haskellType `zip :: [a] -> [b] -> [(a, b)]`
-     * @function module:_listOps.zip
+     * @function module:listOps.zip
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
@@ -582,7 +580,7 @@
      * zipWith f [] _|_ = []
      * ```
      * @haskellType `zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]`
-     * @function module:_listOps.zipWith
+     * @function module:listOps.zipWith
      * @param op {Function} - Takes two parts of a tuple and returns a tuple.
      *  E.g., ` op :: a -> b -> (a, b)`
      * @param xs1 {Array|String|*}
@@ -598,7 +596,7 @@
      *  is left there for general purpose not for exactness as is told by aforementioned.
      * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
      *  of lists to zip.
-     * @function module:_listOps.zipWithN
+     * @function module:listOps.zipWithN
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> (a, b, c)`
@@ -611,7 +609,7 @@
     /**
      * Zips 3 lists with tupling function.
      * @haskellType `zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]`
-     * @function module:_listOps.zipWith3
+     * @function module:listOps.zipWith3
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> (a, b, c)`
@@ -626,7 +624,7 @@
     /**
      * Zips 4 lists with tupling function.
      * @haskellType `zipWith4 :: (a -> b -> c -> d -> e) -> [a] -> [b] -> [c]  -> [d] -> [e]`
-     * @function module:_listOps.zipWith4
+     * @function module:listOps.zipWith4
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`
@@ -642,7 +640,7 @@
     /**
      * Zips 5 lists.
      * @haskellType `zipWith5 :: (a -> b -> c -> d -> e -> f) -> [a] -> [b] -> [c]  -> [d] -> [e] -> [f]`
-     * @function module:_listOps.zipWith5
+     * @function module:listOps.zipWith5
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`
@@ -656,8 +654,6 @@
     zipWith5 = exports.zipWith5 = zipWithN,
         any = exports.any = (0, _functionOps.curry)(_listOps.any),
         all = exports.all = (0, _functionOps.curry)(_listOps.all),
-        maximumBy = exports.maximumBy = (0, _functionOps.curry)(_listOps.maximumBy),
-        minimumBy = exports.minimumBy = (0, _functionOps.curry)(_listOps.minimumBy),
         scanl = exports.scanl = function scanl() {
         return null;
     },
@@ -679,7 +675,7 @@
     /**
      * A version of `insert` that allows you to specify the ordering of the inserted
      * item;  Before/at, or after
-     * @function module:_listOps.insertBy
+     * @function module:listOps.insertBy
      * @haskellType `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
      * @note `Ordering` === // something that is order-able
      * @todo Optimize and work the logic of this function;  Think about the types that will be
@@ -697,7 +693,7 @@
 
     /**
      * Returns the union on elements matching boolean check passed in.
-     * @function module:_listOps.unionBy
+     * @function module:listOps.unionBy
      * @param pred {Function} - `pred :: a -> a -> Bool`
      * @param arr1 {Array|String|*}
      * @param arr2 {Array|String|*}
@@ -708,7 +704,7 @@
 
     /**
      * Creates a union on matching elements from array1.
-     * @function module:_listOps.union
+     * @function module:listOps.union
      * @param arr1 {Array|String|*}
      * @param arr2 {Array|String|*}
      * @returns {Array|String|*}
@@ -718,7 +714,7 @@
 
     /**
      * Performs an intersection on list 1 with  elements from list 2.
-     * @function module:_listOps.intersect
+     * @function module:listOps.intersect
      * @param arr1 {Array|String|*}
      * @param arr2 {Array|String|*}
      * @returns {Array|String|*}
@@ -728,7 +724,7 @@
 
     /**
      * Returns an intersection by predicate.
-     * @function module:_listOps.intersectBy
+     * @function module:listOps.intersectBy
      * @param pred {Function} - `pred :: a -> b -> Bool`
      * @param list1 {Array|String|*}
      * @param list2 {Array|String|*}
@@ -740,7 +736,7 @@
     /**
      * Returns the difference of list 1 from list 2.
      * @note The `difference` operation here is non-associative;  E.g., `a - b` is not equal to `b - a`;
-     * @function module:_listOps.difference
+     * @function module:listOps.difference
      * @param array1 {Array|String|*}
      * @param array2 {Array|String|*}
      * @returns {Array|String|*}
@@ -750,7 +746,7 @@
 
     /**
      * Returns the complement of list 0 and the reset of the passed in arrays.
-     * @function module:_listOps.complement
+     * @function module:listOps.complement
      * @param arr0 {Array}
      * @param arrays {...Array}
      * @returns {Array}

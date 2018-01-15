@@ -16,7 +16,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimumBy = exports.maximumBy = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = undefined;
+    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = undefined;
 
     var _slicedToArray = function () {
         function sliceIterator(arr, i) {
@@ -347,23 +347,53 @@
 
 
     /**
-     * Reduces a foldable (list etc.) with passed in function.
+     * Left associative fold.  Reduces a container of elements down by the given operation (same as [].reduce).
      * @function module:_listOps.foldl
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array|String|*}
-     * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
+     * @returns {*} - Whatever type is lastly returned from `fn`.
      */
     foldl = exports.foldl = _utils.reduce,
-        foldr = exports.foldr = _utils.reduceRight,
-        foldl1 = exports.foldl1 = function foldl1(op, xs) {
+
+
+    /**
+     * Right associative fold.  Reduces a container of elements down by the given operation (same as [].reduceRight).
+     * @function module:_listOps.foldr
+     * @param fn {Function}
+     * @param zero {*} - Aggregator.
+     * @param functor {Array|String|*}
+     * @returns {*} - Whatever type is lastly returned from `fn`.
+     */
+    foldr = exports.foldr = _utils.reduceRight,
+
+
+    /**
+     * A variant of `foldl` except that this one doesn't require the starting point.  The starting point/value will be pulled
+     * out from a copy of the container.
+     * @function module:_listOps.foldl1
+     * @param op {Function}
+     * @param xs {Array|String|*}
+     * @returns {*} - Whatever type is lastly returned from `op`.
+     */
+    foldl1 = exports.foldl1 = function foldl1(op, xs) {
         var parts = uncons(xs);
         if (!parts) {
             return (0, _objectOps.of)(xs);
         }
         return (0, _utils.reduce)(op, parts[0], parts[1]);
     },
-        foldr1 = exports.foldr1 = function foldr1(op, xs) {
+
+
+    /**
+     * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
+     * out from a copy of the container.
+     * @function module:_listOps.foldr1
+     * @param op {Function}
+     * @param xs {Array|String|*}
+     * @returns {*} - Whatever type is lastly returned from `op`.
+     */
+    foldr1 = exports.foldr1 = function foldr1(op, xs) {
         var parts = unconsr(xs);
         if (!parts) {
             return (0, _objectOps.of)(xs);
@@ -665,13 +695,23 @@
 
 
     /**
+     * Find an item in structure of elements based on given predicate (`pred`).
      * @function module:_listOps.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
-     * @returns {*}
+     * @returns {*} - Found item.
      */
     find = exports.find = _utils.findWhere,
-        filter = exports.filter = function filter(pred, xs) {
+
+
+    /**
+     * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
+     * @function module:_listOps.filter
+     * @param pred {Function}
+     * @param xs {Array|String|*} - list or list like.
+     * @returns {Array|String|*} - Structure of filtered elements.
+     */
+    filter = exports.filter = function filter(pred, xs) {
         var ind = 0,
             limit = (0, _objectOps.length)(xs),
             aggregator = (0, _utils.aggregatorByType)(xs),
@@ -703,8 +743,26 @@
         }
         return [filter(pred, list), filter((0, _negate.negateP)(pred), list)];
     },
-        elem = exports.elem = _list.includes,
-        notElem = exports.notElem = (0, _negate.negateF)(_list.includes),
+
+
+    /**
+     * Returns a boolean indicating whether an element exists in given structure of elements.
+     * @function module:_listOps.elem
+     * @param element {*}
+     * @param xs {Array|String|*}
+     * @returns {Boolean}
+     */
+    elem = exports.elem = _list.includes,
+
+
+    /**
+     * The opposite of `elem` - Returns a boolean indicating whether an element exists in given list.
+     * @function module:_listOps.elem
+     * @param element {*}
+     * @param xs {Array|String|*}
+     * @returns {Boolean}
+     */
+    notElem = exports.notElem = (0, _negate.negateF)(_list.includes),
         lookup = exports.lookup = at,
         isPrefixOf = exports.isPrefixOf = function isPrefixOf(xs1, xs2) {
         var limit1 = (0, _objectOps.length)(xs1),
@@ -831,7 +889,19 @@
         }
         return agg;
     },
-        inits = exports.inits = function inits(xs) {
+
+
+    /**
+     * The inits function returns all initial segments of the argument, shortest first. For example,
+     * ```
+     * shallowEquals(inits('abc'), ['','a','ab','abc'])
+     * ```
+     * @function module:_listOps.inits
+     * @haskellType `inits :: [a] -> [[a]]`
+     * @param xs {Array|String|*}
+     * @returns {Array}
+     */
+    inits = exports.inits = function inits(xs) {
         var limit = (0, _objectOps.length)(xs),
             ind = 0,
             agg = [];
@@ -845,6 +915,16 @@
     },
         //map(list => init(list), xs),
 
+    /**
+     * The inits function returns all initial segments of the argument, shortest first. For example,
+     * ```
+     * shallowEquals(tails('abc'), ['abc', 'bc', 'c',''])
+     * ```
+     * @function module:_listOps.tails
+     * @haskellType `tails :: [a] -> [[a]]`
+     * @param xs {Array|String|*}
+     * @returns {Array}
+     */
     tails = exports.tails = function tails(xs) {
         var limit = (0, _objectOps.length)(xs),
             ind = 0,
@@ -1110,7 +1190,16 @@
             return agg;
         }, zero, list);
     },
-        any = exports.any = function any(p, xs) {
+
+
+    /**
+     * Returns true if any item in container passes predicate `p`.
+     * @function module:_listOps.any
+     * @param p {Function} - Predicate.
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
+    any = exports.any = function any(p, xs) {
         var ind = 0,
             limit = (0, _objectOps.length)(xs);
         if (!limit) {
@@ -1123,7 +1212,16 @@
         }
         return false;
     },
-        all = exports.all = function all(p, xs) {
+
+
+    /**
+     * Returns true if all items in container pass predicate `p`.
+     * @function module:_listOps.all
+     * @param p {Function} - Predicate.
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
+    all = exports.all = function all(p, xs) {
         var limit = (0, _objectOps.length)(xs);
         var ind = 0;
         if (limit === 0) {
@@ -1136,48 +1234,146 @@
         }
         return true;
     },
-        and = exports.and = function and(xs) {
+
+
+    /**
+     * Conjuction of container of bools (or truthy and/or falsy values);  Returns
+     * `true` if all in container are 'truthy' else returns `false`
+     * @function module:_listOps.and
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
+    and = exports.and = function and(xs) {
         return all(_booleanOps.isTruthy, xs);
     },
-        or = exports.or = function or(xs) {
+
+
+    /**
+     * Returns a boolean indicating whether any item in container is 'truthy' or not.
+     * **Note** The haskell type for this function only takes two items, but here
+     * we allow the passing of more than one item (may change later to adhere to the haskell type).
+     * @function module:_listOps.or
+     * @haskellType `or :: Bool -> Bool -> Bool`
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
+    or = exports.or = function or(xs) {
         return any(_booleanOps.isTruthy, xs);
     },
-        not = exports.not = function not(xs) {
+
+
+    /**
+     * Returns a boolean indicating whether all items in container are 'falsy' or not.
+     * **Note** The haskell type for this function only takes two items, but here
+     * we allow the passing of more than one item (may change later to adhere to the haskell type).
+     * @function module:_listOps.not
+     * @haskellType `not :: Bool -> Bool`
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
+    not = exports.not = function not(xs) {
         return all(_booleanOps.isFalsy, xs);
     },
-        sum = exports.sum = function sum(list) {
+
+
+    /**
+     * Computes the sum of the numbers of a structure.
+     * @function module:_listOps.sum
+     * @haskellType `sum :: (List t, Num a) => t a -> a`
+     * @param list {Array|String}
+     * @returns {Number}
+     */
+    sum = exports.sum = function sum(list) {
         return foldl(function (agg, x) {
             return agg + x;
         }, 0, list);
     },
-        product = exports.product = function product(arr) {
+
+
+    /**
+     * Computes the product of the numbers of a structure.
+     * @function module:_listOps.product
+     * @haskellType `product :: (List t, Num a) => t a -> a`
+     * @param list {Array|String}
+     * @returns {Number}
+     */
+    product = exports.product = function product(list) {
         return foldl(function (agg, x) {
             return agg * x;
-        }, 1, arr);
+        }, 1, list);
     },
-        maximum = exports.maximum = function maximum(list) {
-        return maximumBy(_utils.genericAscOrdering, list);
+
+
+    /**
+     * Returns the largest element in a non-empty structure of elements.
+     * @function module:_listOps.maximum
+     * @haskellType `maximum :: forall a . Ord a => t a -> a`
+     * @param list {Array|String}
+     * @returns {*} - Whatever type the array is made of (if any).
+     */
+    maximum = exports.maximum = function maximum(list) {
+        return last(sortBy(_utils.genericAscOrdering, list));
     },
-        minimum = exports.minimum = function minimum(list) {
-        return minimumBy(_utils.genericAscOrdering, list);
+
+
+    /**
+     * Returns the smallest element in a non-empty structure of elements.
+     * @function module:_listOps.minimum
+     * @haskellType `minimum :: forall a . Ord a => t a -> a`
+     * @param list {Array|String}
+     * @returns {*} - Whatever type the array is made of (if any).
+     */
+    minimum = exports.minimum = function minimum(list) {
+        return head(sortBy(_utils.genericAscOrdering, list));
     },
-        maximumBy = exports.maximumBy = function maximumBy(ordering, xs) {
-        return last(sortBy(ordering, xs));
+
+
+    /**
+     * @function module:_listOps.scanl
+     * @param fn {Function}
+     * @param zero {*}
+     * @param xs {Array|String|*}
+     * @returns {Array|*}
+     */
+    scanl = exports.scanl = function scanl(fn, zero, xs) {
+        if (!xs || !(0, _objectOps.length)(xs)) {
+            return zero;
+        }
+        var limit = (0, _objectOps.length)(xs);
+        var ind = -1,
+            result = zero,
+            out = [];
+        while (ind++ < limit) {
+            result = fn(result, xs[ind], ind, xs);
+            out.push(result);
+        }
+        return out;
     },
-        minimumBy = exports.minimumBy = function minimumBy(ordering, xs) {
-        return head(sortBy(ordering, xs));
+        scanl1 = exports.scanl1 = function scanl1(fn, xs) {
+        if (!xs || !xs.length) {
+            return [];
+        }
+        return scanl(fn, head(xs), tail(xs));
     },
-        scanl = exports.scanl = function scanl() {
-        return null;
+        scanr = exports.scanr = function scanr(fn, zero, xs) {
+        if (!xs || !(0, _objectOps.length)(xs)) {
+            return [];
+        }
+        var limit = (0, _objectOps.length)(xs);
+        var ind = limit,
+            result = xs[0],
+            out = [];
+        while (ind-- > -1) {
+            result = fn(result, xs[ind], ind, xs);
+            out.push(result);
+        }
+        return out;
     },
-        scanl1 = exports.scanl1 = function scanl1() {
-        return null;
-    },
-        scanr = exports.scanr = function scanr() {
-        return null;
-    },
-        scanr1 = exports.scanr1 = function scanr1() {
-        return null;
+        scanr1 = exports.scanr1 = function scanr1(fn, xs) {
+        if (!xs || !xs.length) {
+            return [];
+        }
+        return scanr(fn, last(xs), init(xs));
     },
         nub = exports.nub = function nub(list) {
         return nubBy(function (a, b) {
@@ -1221,7 +1417,7 @@
         );
     },
         sortBy = exports.sortBy = function sortBy(orderingFn, xs) {
-        return (0, _utils.copy)(xs).sort(orderingFn);
+        return (0, _utils.copy)(xs).sort(orderingFn || _utils.genericAscOrdering);
     },
         insert = exports.insert = function insert(x, xs) {
         if ((0, _objectOps.isEmptyList)(xs)) {

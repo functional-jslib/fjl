@@ -819,12 +819,9 @@ var slicedToArray = function () {
 }();
 
 /**
- * '_' list operators.
+ * List operations module.
  * @module _listOps
- * @private
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
- * @todo code unperformant shorthand in `listOps`
- * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
 // Exported internals
 var append = concat;
@@ -1346,22 +1343,16 @@ var sum = function sum(list) {
         return agg + x;
     }, 0, list);
 };
-var product = function product(arr) {
+var product = function product(list) {
     return foldl(function (agg, x) {
         return agg * x;
-    }, 1, arr);
+    }, 1, list);
 };
 var maximum = function maximum(list) {
-    return maximumBy(genericAscOrdering, list);
+    return last(sortBy(genericAscOrdering, list));
 };
 var minimum = function minimum(list) {
-    return minimumBy(genericAscOrdering, list);
-};
-var maximumBy = function maximumBy(ordering, xs) {
-    return last(sortBy(ordering, xs));
-};
-var minimumBy = function minimumBy(ordering, xs) {
-    return head(sortBy(ordering, xs));
+    return head(sortBy(genericAscOrdering, list));
 };
 var nub = function nub(list) {
     return nubBy(function (a, b) {
@@ -1405,7 +1396,7 @@ var sortOn = function sortOn(valueFn, xs) {
     );
 };
 var sortBy = function sortBy(orderingFn, xs) {
-    return copy(xs).sort(orderingFn);
+    return copy(xs).sort(orderingFn || genericAscOrdering);
 };
 var insert = function insert(x, xs) {
     if (isEmptyList(xs)) {
@@ -2150,8 +2141,6 @@ var zipWith4$1 = zipWithN$1;
 var zipWith5$1 = zipWithN$1;
 var any$1 = curry(any);
 var all$1 = curry(all);
-var maximumBy$1 = curry(maximumBy);
-var minimumBy$1 = curry(minimumBy);
 var scanl$1 = function scanl$$1() {
     return null;
 };
@@ -2351,8 +2340,6 @@ exports._isSuffixOf = isSuffixOf;
 exports._isInfixOf = isInfixOf;
 exports._isSubsequenceOf = isSubsequenceOf;
 exports._filter = filter$1;
-exports._maximumBy = maximumBy;
-exports._minimumBy = minimumBy;
 exports._remove = remove;
 exports._insert = insert;
 exports._insertBy = insertBy;
@@ -2418,8 +2405,6 @@ exports.zipWith4 = zipWith4$1;
 exports.zipWith5 = zipWith5$1;
 exports.any = any$1;
 exports.all = all$1;
-exports.maximumBy = maximumBy$1;
-exports.minimumBy = minimumBy$1;
 exports.scanl = scanl$1;
 exports.scanl1 = scanl1$1;
 exports.scanr = scanr$1;

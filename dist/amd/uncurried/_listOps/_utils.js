@@ -4,7 +4,7 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericDescOrdering = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -62,6 +62,23 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
         if (a > b) {
             return 1;
         } else if (a < b) {
+            return -1;
+        }
+        return 0;
+    },
+
+
+    /**
+     * Generic 'descending order' ordering function (use by the likes of `list.sort` etc.)
+     * @function module:_listOpsUtils.genericDescOrdering
+     * @param a {*}
+     * @param b {*}
+     * @returns {number}
+     */
+    genericDescOrdering = exports.genericDescOrdering = (a, b) => {
+        if (a < b) {
+            return 1;
+        } else if (a > b) {
             return -1;
         }
         return 0;

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
+exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericDescOrdering = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
 
 var _aggregation = require('./_aggregation');
 
@@ -81,6 +81,23 @@ genericAscOrdering = exports.genericAscOrdering = function genericAscOrdering(a,
     if (a > b) {
         return 1;
     } else if (a < b) {
+        return -1;
+    }
+    return 0;
+},
+
+
+/**
+ * Generic 'descending order' ordering function (use by the likes of `list.sort` etc.)
+ * @function module:_listOpsUtils.genericDescOrdering
+ * @param a {*}
+ * @param b {*}
+ * @returns {number}
+ */
+genericDescOrdering = exports.genericDescOrdering = function genericDescOrdering(a, b) {
+    if (a < b) {
+        return 1;
+    } else if (a > b) {
         return -1;
     }
     return 0;
