@@ -18,4 +18,4 @@ export * from './uncurried/_functionOps';
 export * from './uncurried/_listOps';
 export * from './stringOps';
 
-export {version} from './generated/version';
+export {version} from '../src-generated/version';

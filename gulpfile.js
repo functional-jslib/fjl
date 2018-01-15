@@ -107,7 +107,7 @@ gulp.task('member-list-md-content', ['member-list-md'], function () {
 
 gulp.task('version', () =>
     (new VersionNumberReadStream())
-        .pipe(fs.createWriteStream('./src/generated/version.js')));
+        .pipe(fs.createWriteStream('./src-generated/version.js')));
 
 gulp.task('clean', () => {
     let pathsToDelete = [cjsBuildPath, amdBuildPath, umdBuildPath, iifeBuildPath]

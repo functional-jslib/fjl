@@ -19,4 +19,4 @@ export * from './functionOps';
 export * from './listOps';
 export * from './stringOps';
 
-export {version} from './generated/version';
+export {version} from '../src-generated/version';
