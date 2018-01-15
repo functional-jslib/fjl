@@ -86,25 +86,6 @@ const fs = require('fs'),
             .catch(log)
     ;
 
-gulp.task('member-list-md', function () {
-    let outputDir = './markdown-fragments/generated',
-        filePath = outputDir + '/member-list.md';
-    if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir);
-    }
-    fs.writeFileSync(filePath, '');
-    return (new ModuleMemberReadStream(
-        require('./dist/cjs/fjl'), 'fjl', markdownFragsPath + '/member-list'
-    ))
-        .pipe(fs.createWriteStream(filePath));
-});
-
-gulp.task('member-list-md-content', ['member-list-md'], function () {
-    return gulp.src(markdownFragsPath + '/member-list/*.md')
-        .pipe(concat(markdownFragsPath + '/generated/member-list-content.md'))
-        .pipe(gulp.dest('./'));
-});
-
 gulp.task('version', () =>
     (new VersionNumberReadStream())
         .pipe(fs.createWriteStream('./src-generated/version.js')));
@@ -203,10 +184,7 @@ gulp.task('docs', ['readme'], () =>
 
 gulp.task('build-docs', ['docs']);
 
-gulp.task('readme', [
-    'member-list-md',
-    'member-list-md-content'
-], () => gulp.src(gulpConfig.readme)
+gulp.task('readme', () => gulp.src(gulpConfig.readme)
         .pipe(concat('README.md'))
         .pipe(gulp.dest('./')));
 

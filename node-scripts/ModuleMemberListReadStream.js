@@ -38,10 +38,19 @@ function renderNode(moduleName, memberName, padLeft, docsPath) {
     // If doc file doesn't exist, generate an empty file for it
     if (!fs.existsSync(docFilePath)) {
         fs.writeFileSync(docFilePath,
-            '### ' + label.replace(/[\[\]]/g, '') + '\n' +
-            '@todo - Added documentation here.\n' +
-            '[Back to ' + moduleName + ' members list.]' +
-            '(#' + moduleName + '-members-list)\n');
+`### ${label.replace(/[\[\]]/g, '')}
+@todo - Added documentation here.
+
+#### Parameters
+
+#### Returns
+ 
+#### Haskell Type
+\`\`
+[Back to  + ${moduleName} members list.]
+(#${moduleName}-members-list)
+`
+        );
     }
     // ~~ /REMOVE FROM HERE ~~
 
