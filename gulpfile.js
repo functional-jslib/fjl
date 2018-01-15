@@ -42,7 +42,7 @@ const fs = require('fs'),
     {
         cjsBuildPath, amdBuildPath,
         umdBuildPath, iifeBuildPath,
-        buildPathRoot, markdownFragsPath
+        buildPathRoot
     } = gulpConfig.paths,
 
     buildPath = (...tails) => path.join.call(path, buildPathRoot, ...tails),
@@ -167,7 +167,7 @@ gulp.task('uglify', ['iife'], () => {
 
 gulp.task('build-js', ['version', 'uglify', 'cjs', 'amd', 'umd', 'es6-module']);
 
-gulp.task('docs', ['readme'], () =>
+gulp.task('docs', () =>
     deleteFilePaths(['./docs/**/*'])
         .then(_ =>
             gulp.src(['README.md', './src/**/*.js'], {read: false})
@@ -183,10 +183,6 @@ gulp.task('docs', ['readme'], () =>
 );
 
 gulp.task('build-docs', ['docs']);
-
-gulp.task('readme', () => gulp.src(gulpConfig.readme)
-        .pipe(concat('README.md'))
-        .pipe(gulp.dest('./')));
 
 gulp.task('build', ['build-js']);
 

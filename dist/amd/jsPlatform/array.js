@@ -14,7 +14,7 @@ define(['exports', '../uncurried/_jsPlatform/_array', '../utils'], function (exp
   const
 
   /**
-   * Maps a _functionOps to functor (_listOps etc.).
+   * Maps a function to functor (lists etc.).
    * @function module:jsPlatform_array.map
    * @param fn {Function}
    * @param functor {Array|{map: {Function}}}
@@ -24,7 +24,7 @@ define(['exports', '../uncurried/_jsPlatform/_array', '../utils'], function (exp
 
 
   /**
-   * Filters a functor (_listOps etc.) with passed in _functionOps.
+   * Filters a functor (lists etc.) with passed in function.
    * @function module:jsPlatform_array.filter
    * @param fn {Function}
    * @param functor {Array|{filter: {Function}}}
@@ -34,7 +34,7 @@ define(['exports', '../uncurried/_jsPlatform/_array', '../utils'], function (exp
 
 
   /**
-   * Reduces a foldable (_listOps etc.) with passed in _functionOps.
+   * Reduces a foldable (lists etc.) with passed in function.
    * @function module:jsPlatform_array.reduce
    * @param fn {Function}
    * @param functor {Array|{reduce: {Function}}}
@@ -44,7 +44,7 @@ define(['exports', '../uncurried/_jsPlatform/_array', '../utils'], function (exp
 
 
   /**
-   * Reduces a foldable (_listOps etc.) from the right with passed in _functionOps.
+   * Reduces a foldable (lists etc.) from the right with passed in function.
    * @function module:jsPlatform_array.reduceRight
    * @param fn {Function}
    * @param functor {Array|{reduceRight: {Function}}}

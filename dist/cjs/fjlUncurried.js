@@ -64,7 +64,7 @@ Object.keys(_stringOps).forEach(function (key) {
   });
 });
 
-var _version = require('./generated/version');
+var _version = require('../src-generated/version');
 
 Object.defineProperty(exports, 'version', {
   enumerable: true,
