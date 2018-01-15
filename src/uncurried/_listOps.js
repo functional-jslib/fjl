@@ -797,6 +797,16 @@ export const
         return agg;
     },
 
+    /**
+     * The inits function returns all initial segments of the argument, shortest first. For example,
+     * ```
+     * shallowEquals(inits('abc'), ['','a','ab','abc'])
+     * ```
+     * @function module:_listOps.inits
+     * @haskellType `inits :: [a] -> [[a]]`
+     * @param xs {Array|String|*}
+     * @returns {Array}
+     */
     inits = xs => {
         let limit = length(xs),
             ind = 0,
@@ -810,6 +820,16 @@ export const
         return agg;
     }, //map(list => init(list), xs),
 
+    /**
+     * The inits function returns all initial segments of the argument, shortest first. For example,
+     * ```
+     * shallowEquals(tails('abc'), ['abc', 'bc', 'c',''])
+     * ```
+     * @function module:_listOps.tails
+     * @haskellType `tails :: [a] -> [[a]]`
+     * @param xs {Array|String|*}
+     * @returns {Array}
+     */
     tails = xs => {
         let limit = length(xs),
             ind = 0,
@@ -1150,13 +1170,52 @@ export const
      */
     minimum = list => head(sortBy(genericAscOrdering, list)),
 
-    scanl = () => null,
+    /**
+     * @function module:_listOps.scanl
+     * @param fn {Function}
+     * @param zero {*}
+     * @param xs {Array|String|*}
+     * @returns {Array|*}
+     */
+    scanl = (fn, zero, xs) => {
+        if (!xs || !length(xs)) {
+            return zero;
+        }
+        const limit = length(xs);
+        let ind = -1,
+            result = zero,
+            out = [];
+        while (ind++ < limit) {
+            result = fn(result, xs[ind], ind, xs);
+            out.push(result);
+        }
+        return out;
+    },
 
-    scanl1 = () => null,
+    scanl1 = (fn, xs) => {
+        if (!xs || !xs.length) { return []; }
+        return scanl(fn, head(xs), tail(xs));
+    },
 
-    scanr = () => null,
+    scanr = (fn, zero, xs) => {
+        if (!xs || !length(xs)) {
+            return [];
+        }
+        const limit = length(xs);
+        let ind = limit,
+            result = xs[0],
+            out = [];
+        while (ind-- > -1) {
+            result = fn(result, xs[ind], ind, xs);
+            out.push(result);
+        }
+        return out;
+    },
 
-    scanr1 = () => null,
+    scanr1 = (fn, xs) => {
+        if (!xs || !xs.length) { return []; }
+        return scanr(fn, last(xs), init(xs));
+    },
 
     nub = list => nubBy((a, b) => a === b, list),
 
