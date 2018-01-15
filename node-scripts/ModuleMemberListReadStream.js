@@ -81,7 +81,13 @@ util.inherits(ModuleMemberListReadStream, Readable);
 ModuleMemberListReadStream.prototype._read = function () {
     if (!this._startedReading) {
         this._startedReading = true;
-        Object.keys(this._moduleToUse).forEach(function (key) {
+        // Separate names starting with '_' from others
+        const [with_, without_] = this._moduleToUse.partition(
+                key => key[0] === '_',
+                Object.keys(this._moduleToUse).sort()
+            ),
+            names = without_.concat(with_);
+        names.forEach(function (key) {
             this.push(renderNode(this._moduleToUseName, key, 0, this._docsPath));
         }, this);
     }

@@ -186,7 +186,7 @@ gulp.task('uglify', ['iife'], () => {
 
 gulp.task('build-js', ['version', 'uglify', 'cjs', 'amd', 'umd', 'es6-module']);
 
-gulp.task('jsdoc', ['readme'], () =>
+gulp.task('docs', ['readme'], () =>
     deleteFilePaths(['./docs/**/*'])
         .then(_ =>
             gulp.src(['README.md', './src/**/*.js'], {read: false})
@@ -201,7 +201,7 @@ gulp.task('jsdoc', ['readme'], () =>
         )
 );
 
-gulp.task('build-docs', ['jsdoc']);
+gulp.task('build-docs', ['docs']);
 
 gulp.task('readme', [
     'member-list-md',
