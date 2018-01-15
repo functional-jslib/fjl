@@ -44,10 +44,9 @@ the libraries functions should be exported with clear and meaningful
 names (they haven't been reviewed for export yet).
 
 ## Reasoning for paradigms
-### Use of for loops instead of built-ins:
+### Use of for-loops/while-loops instead of built-ins:
 - They are faster than iterating with functional array additions (`map`, `forEach` etc.)
 as you can see from many performance tests online @todo add references here
 (or writing your own @todo add references here).
-- They perform faster than `while` and `do {} while {}` loops.
 - They allow us to make our curried functional additions (`map`, `some` etc.)
 more performant than just currying the built in ones.

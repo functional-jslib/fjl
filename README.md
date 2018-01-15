@@ -501,6 +501,18 @@ import {...} from 'fjl';
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl.flip3
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.flip4
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.flip5
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl.flipN
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -641,11 +653,7 @@ import {...} from 'fjl';
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.isPromise
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.isset
+### fjl.isSet
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -769,10 +777,6 @@ import {...} from 'fjl';
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl.notEmptyAndOfType
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl.nub
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -810,11 +814,14 @@ import {...} from 'fjl';
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.permutations
-Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.product
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl.prop
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -843,22 +850,18 @@ Method not implemented yet.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.scanl
-Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.scanl1
-Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.scanr
-Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.scanr1
-Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -907,10 +910,6 @@ Method not implemented yet.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl.takeWhile
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl.toString
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -998,10 +997,6 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._and
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl._any
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -1014,6 +1009,18 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl._apply
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._assign
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._assignDeep
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl._at
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -1022,11 +1029,11 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._complement
+### fjl._call
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._concat
+### fjl._complement
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -1082,6 +1089,26 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
+### fjl._flip
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._flip3
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._flip4
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._flip5
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._flipN
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
 ### fjl._foldl
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -1098,23 +1125,11 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._group
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl._groupBy
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._head
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._init
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._inits
+### fjl._hasOwnProperty
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -1123,6 +1138,10 @@ Method not implemented yet.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl._insertBy
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._instanceOf
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -1158,11 +1177,11 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._iterate
+### fjl._isType
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._last
+### fjl._iterate
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -1182,15 +1201,7 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._maximum
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl._maximumBy
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._minimum
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -1202,15 +1213,23 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._nub
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl._nubBy
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._or
+### fjl._objComplement
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._objDifference
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._objIntersect
+@todo - Added documentation here.
+[Back to fjl members list.](#fjl-members-list)
+
+### fjl._objUnion
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -1218,11 +1237,7 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._permutations
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._product
+### fjl._prop
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -1246,14 +1261,6 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._reverse
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._sort
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl._sortBy
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
@@ -1274,35 +1281,11 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._subsequences
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._sum
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._tail
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._tails
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
 ### fjl._take
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
 ### fjl._takeWhile
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._transpose
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._uncons
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
@@ -1318,11 +1301,7 @@ Method not implemented yet.
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 
-### fjl._unzip
-@todo - Added documentation here.
-[Back to fjl members list.](#fjl-members-list)
-
-### fjl._unzipN
+### fjl._until
 @todo - Added documentation here.
 [Back to fjl members list.](#fjl-members-list)
 

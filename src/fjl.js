@@ -8,11 +8,8 @@
  * @motivation preludejs, lodash/fp, RamdaJs, Haskell.
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
- * @todo any cross importing between packages should be done from the package object (package file: E.g., './src/functionOps/functionOps.js').
- * @todo decide how to include 'uncurried' members in the main export of the library.
  * @module fjl
  */
-
 export * from './objectOps';
 export * from './booleanOps';
 export * from './functionOps';
