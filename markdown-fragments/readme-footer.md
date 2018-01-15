@@ -10,8 +10,7 @@
 - 8+
 
 ## License:
-[GPL v2+](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html") AND
-[MIT](http://opensource.org/licenses/MIT "http://opensource.org/licenses/MIT")
+BSD-3-Clause (included in repo).
 
 ## Dev notes:
 - './.babelrc' is used only for tests.  Babel configurations found in './gulpfileConfig.json' are the 
