@@ -53,19 +53,6 @@ export const
     },
 
     /**
-     * Generic 'descending order' ordering function (use by the likes of `list.sort` etc.)
-     * @function module:_listOpsUtils.genericDescOrdering
-     * @param a {*}
-     * @param b {*}
-     * @returns {number}
-     */
-    genericDescOrdering = (a, b) => {
-        if (a < b) { return 1; }
-        else if (a > b) { return -1; }
-        return 0;
-    },
-
-    /**
      * Returns length of all passed lists in list.
      * @function module:_listOpsUtils.lengths
      * @param lists ...{Array|String|*}
@@ -85,6 +72,14 @@ export const
             sliceTo(smallLen, list) : copy(list), lists);
     },
 
+    /**
+     * Reduces until predicate.
+     * @param pred
+     * @param op
+     * @param agg
+     * @param arr
+     * @returns {*}
+     */
     reduceUntil = (pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
@@ -97,6 +92,14 @@ export const
         return result;
     },
 
+    /**
+     * Reduces until predicate (from the right).
+     * @param pred
+     * @param op
+     * @param agg
+     * @param arr
+     * @returns {*}
+     */
     reduceRightUntil = (pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
@@ -111,14 +114,14 @@ export const
 
     reduce = (operation, agg, arr) =>
         reduceUntil(
-            alwaysFalse,            // predicate
+            alwaysFalse,            // until-predicate
             operation,              // operation
             agg,                    // aggregator
             arr),                   // list
 
     reduceRight = (operation, agg, arr) =>
         reduceRightUntil(
-            alwaysFalse,            // predicate
+            alwaysFalse,            // until-predicate
             operation,              // operation
             agg,                    // aggregator
             arr),                   // list

@@ -897,10 +897,10 @@ export const
      * @param arr3 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip3 = zipN,
+    zip3 = (arr1, arr2, arr3) => zipN(arr1, arr2, arr3),
 
     /**
-     * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
+     * @haskellType `zip4 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
      * @function module:_listOps.zip4
      * @param arr1 {Array}
      * @param arr2 {Array}
@@ -908,18 +908,19 @@ export const
      * @param arr4 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip4 = zipN,
+    zip4 = (arr1, arr2, arr3, arr4) => zipN(arr1, arr2, arr3, arr4),
 
     /**
-     * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
+     * @haskellType `zip5 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
      * @function module:_listOps.zip5
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @param arr3 {Array}
      * @param arr4 {Array}
+     * @param arr5 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip5 = zipN,
+    zip5 = (arr1, arr2, arr3, arr4, arr5) => zipN(arr1, arr2, arr3, arr4, arr5),
 
     /**
      * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
@@ -991,7 +992,7 @@ export const
      * @param xs3 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith3 = zipWithN,
+    zipWith3 = (op, xs1, xs2, xs3) => zipWithN(op, xs1, xs2, xs3),
 
     /**
      * Zips 4 lists with tupling function.
@@ -1006,7 +1007,7 @@ export const
      * @param xs4 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith4 = zipWithN,
+    zipWith4 = (op, xs1, xs2, xs3, xs4) => zipWithN(op, xs1, xs2, xs3, xs4),
 
     /**
      * Zips 5 lists.
@@ -1022,7 +1023,7 @@ export const
      * @param xs5 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith5 = zipWithN,
+    zipWith5 = (op, xs1, xs2, xs3, xs4, xs5) => zipWithN(op, xs1, xs2, xs3, xs4, xs5),
 
     /**
      * unzip transforms a list of pairs into a list of first components and a list of second components.
@@ -1179,7 +1180,7 @@ export const
      */
     scanl = (fn, zero, xs) => {
         if (!xs || !length(xs)) {
-            return zero;
+            return [];
         }
         const limit = length(xs);
         let ind = -1,
@@ -1231,17 +1232,7 @@ export const
             // Decorate and sort
             sortBy(
                 // Ordering
-                (a1, b1) => {
-                    let a = a1[0],
-                        b = b1[0];
-                    if (a > b) {
-                        return 1;
-                    }
-                    else if (a < b) {
-                        return -1;
-                    }
-                    return 0;
-                },
+                ([a0], [b0]) => genericAscOrdering(a0, b0),
 
                 // Decorate
                 map(item => [valueFn(item), item], xs)
