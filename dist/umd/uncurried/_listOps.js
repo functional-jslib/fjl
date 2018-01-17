@@ -1005,11 +1005,13 @@
      * @param arr3 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip3 = exports.zip3 = zipN,
+    zip3 = exports.zip3 = function zip3(arr1, arr2, arr3) {
+        return zipN(arr1, arr2, arr3);
+    },
 
 
     /**
-     * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
+     * @haskellType `zip4 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
      * @function module:_listOps.zip4
      * @param arr1 {Array}
      * @param arr2 {Array}
@@ -1017,19 +1019,24 @@
      * @param arr4 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip4 = exports.zip4 = zipN,
+    zip4 = exports.zip4 = function zip4(arr1, arr2, arr3, arr4) {
+        return zipN(arr1, arr2, arr3, arr4);
+    },
 
 
     /**
-     * @haskellType `zip3 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
+     * @haskellType `zip5 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
      * @function module:_listOps.zip5
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @param arr3 {Array}
      * @param arr4 {Array}
+     * @param arr5 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip5 = exports.zip5 = zipN,
+    zip5 = exports.zip5 = function zip5(arr1, arr2, arr3, arr4, arr5) {
+        return zipN(arr1, arr2, arr3, arr4, arr5);
+    },
 
 
     /**
@@ -1114,7 +1121,9 @@
      * @param xs3 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith3 = exports.zipWith3 = zipWithN,
+    zipWith3 = exports.zipWith3 = function zipWith3(op, xs1, xs2, xs3) {
+        return zipWithN(op, xs1, xs2, xs3);
+    },
 
 
     /**
@@ -1130,7 +1139,9 @@
      * @param xs4 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith4 = exports.zipWith4 = zipWithN,
+    zipWith4 = exports.zipWith4 = function zipWith4(op, xs1, xs2, xs3, xs4) {
+        return zipWithN(op, xs1, xs2, xs3, xs4);
+    },
 
 
     /**
@@ -1147,7 +1158,9 @@
      * @param xs5 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith5 = exports.zipWith5 = zipWithN,
+    zipWith5 = exports.zipWith5 = function zipWith5(op, xs1, xs2, xs3, xs4, xs5) {
+        return zipWithN(op, xs1, xs2, xs3, xs4, xs5);
+    },
 
 
     /**
@@ -1337,7 +1350,7 @@
      */
     scanl = exports.scanl = function scanl(fn, zero, xs) {
         if (!xs || !(0, _objectOps.length)(xs)) {
-            return zero;
+            return [];
         }
         var limit = (0, _objectOps.length)(xs);
         var ind = -1,
@@ -1399,15 +1412,14 @@
             // Decorate and sort
             sortBy(
             // Ordering
-            function (a1, b1) {
-                var a = a1[0],
-                    b = b1[0];
-                if (a > b) {
-                    return 1;
-                } else if (a < b) {
-                    return -1;
-                }
-                return 0;
+            function (_ref, _ref2) {
+                var _ref4 = _slicedToArray(_ref, 1),
+                    a0 = _ref4[0];
+
+                var _ref3 = _slicedToArray(_ref2, 1),
+                    b0 = _ref3[0];
+
+                return (0, _utils.genericAscOrdering)(a0, b0);
             },
 
             // Decorate

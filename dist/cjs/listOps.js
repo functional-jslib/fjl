@@ -597,7 +597,7 @@ zipWith = exports.zipWith = (0, _functionOps.curry)(_listOps.zipWith),
  * @param lists ...{Array|String|*}
  * @returns {Array<Array<*,*>>}
  */
-zipWithN = exports.zipWithN = (0, _functionOps.curry2)(_listOps.zipWithN),
+zipWithN = exports.zipWithN = (0, _functionOps.curry3)(_listOps.zipWithN),
 
 
 /**
@@ -612,7 +612,7 @@ zipWithN = exports.zipWithN = (0, _functionOps.curry2)(_listOps.zipWithN),
  * @param xs3 {Array|String|*}
  * @returns {Array<Array<*,*>>}
  */
-zipWith3 = exports.zipWith3 = zipWithN,
+zipWith3 = exports.zipWith3 = (0, _functionOps.curry4)(zipWithN),
 
 
 /**
@@ -628,7 +628,7 @@ zipWith3 = exports.zipWith3 = zipWithN,
  * @param xs4 {Array|String|*}
  * @returns {Array<Array<*,*>>}
  */
-zipWith4 = exports.zipWith4 = zipWithN,
+zipWith4 = exports.zipWith4 = (0, _functionOps.curry5)(zipWithN),
 
 
 /**
@@ -645,21 +645,13 @@ zipWith4 = exports.zipWith4 = zipWithN,
  * @param xs5 {Array|String|*}
  * @returns {Array<Array<*,*>>}
  */
-zipWith5 = exports.zipWith5 = zipWithN,
+zipWith5 = exports.zipWith5 = (0, _functionOps.curryN)(6, zipWithN),
     any = exports.any = (0, _functionOps.curry)(_listOps.any),
     all = exports.all = (0, _functionOps.curry)(_listOps.all),
-    scanl = exports.scanl = function scanl() {
-    return null;
-},
-    scanl1 = exports.scanl1 = function scanl1() {
-    return null;
-},
-    scanr = exports.scanr = function scanr() {
-    return null;
-},
-    scanr1 = exports.scanr1 = function scanr1() {
-    return null;
-},
+    scanl = exports.scanl = (0, _functionOps.curry)(_listOps.scanl),
+    scanl1 = exports.scanl1 = (0, _functionOps.curry)(_listOps.scanl1),
+    scanr = exports.scanr = (0, _functionOps.curry)(_listOps.scanr),
+    scanr1 = exports.scanr1 = (0, _functionOps.curry)(_listOps.scanr1),
     remove = exports.remove = (0, _functionOps.curry)(_listOps.remove),
     sortOn = exports.sortOn = (0, _functionOps.curry)(_listOps.sortOn),
     sortBy = exports.sortBy = (0, _functionOps.curry)(_listOps.sortBy),

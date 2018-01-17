@@ -4,7 +4,7 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericDescOrdering = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -69,23 +69,6 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
 
 
     /**
-     * Generic 'descending order' ordering function (use by the likes of `list.sort` etc.)
-     * @function module:_listOpsUtils.genericDescOrdering
-     * @param a {*}
-     * @param b {*}
-     * @returns {number}
-     */
-    genericDescOrdering = exports.genericDescOrdering = (a, b) => {
-        if (a < b) {
-            return 1;
-        } else if (a > b) {
-            return -1;
-        }
-        return 0;
-    },
-
-
-    /**
      * Returns length of all passed lists in list.
      * @function module:_listOpsUtils.lengths
      * @param lists ...{Array|String|*}
@@ -104,7 +87,17 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
               smallLen = Math.min.apply(Math, listLengths);
         return (0, _map.map)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list), lists);
     },
-          reduceUntil = exports.reduceUntil = (pred, op, agg, arr) => {
+
+
+    /**
+     * Reduces until predicate.
+     * @param pred
+     * @param op
+     * @param agg
+     * @param arr
+     * @returns {*}
+     */
+    reduceUntil = exports.reduceUntil = (pred, op, agg, arr) => {
         const limit = (0, _object.length)(arr);
         if (!limit) {
             return agg;
@@ -119,7 +112,17 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
         }
         return result;
     },
-          reduceRightUntil = exports.reduceRightUntil = (pred, op, agg, arr) => {
+
+
+    /**
+     * Reduces until predicate (from the right).
+     * @param pred
+     * @param op
+     * @param agg
+     * @param arr
+     * @returns {*}
+     */
+    reduceRightUntil = exports.reduceRightUntil = (pred, op, agg, arr) => {
         const limit = (0, _object.length)(arr);
         if (!limit) {
             return agg;
@@ -134,13 +137,13 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
         }
         return result;
     },
-          reduce = exports.reduce = (operation, agg, arr) => reduceUntil(_booleanOps.alwaysFalse, // predicate
+          reduce = exports.reduce = (operation, agg, arr) => reduceUntil(_booleanOps.alwaysFalse, // until-predicate
     operation, // operation
     agg, // aggregator
     arr),
           // list
 
-    reduceRight = exports.reduceRight = (operation, agg, arr) => reduceRightUntil(_booleanOps.alwaysFalse, // predicate
+    reduceRight = exports.reduceRight = (operation, agg, arr) => reduceRightUntil(_booleanOps.alwaysFalse, // until-predicate
     operation, // operation
     agg, // aggregator
     arr),

@@ -363,13 +363,13 @@ const reduceRightUntil = (pred, op, agg, arr) => {
     };
 const reduce$1 = (operation, agg, arr) =>
         reduceUntil(
-            alwaysFalse,            // predicate
+            alwaysFalse,            // until-predicate
             operation,              // operation
             agg,                    // aggregator
             arr);
 const reduceRight$1 = (operation, agg, arr) =>
         reduceRightUntil(
-            alwaysFalse,            // predicate
+            alwaysFalse,            // until-predicate
             operation,              // operation
             agg,                    // aggregator
             arr);
@@ -909,6 +909,42 @@ const sum = list => foldl((agg, x) => agg + x, 0, list);
 const product = list => foldl((agg, x) => agg * x, 1, list);
 const maximum = list => last(sortBy(genericAscOrdering, list));
 const minimum = list => head(sortBy(genericAscOrdering, list));
+const scanl = (fn, zero, xs) => {
+        if (!xs || !length(xs)) {
+            return [];
+        }
+        const limit = length(xs);
+        let ind = -1,
+            result = zero,
+            out = [];
+        while (ind++ < limit) {
+            result = fn(result, xs[ind], ind, xs);
+            out.push(result);
+        }
+        return out;
+    };
+const scanl1 = (fn, xs) => {
+        if (!xs || !xs.length) { return []; }
+        return scanl(fn, head(xs), tail(xs));
+    };
+const scanr = (fn, zero, xs) => {
+        if (!xs || !length(xs)) {
+            return [];
+        }
+        const limit = length(xs);
+        let ind = limit,
+            result = xs[0],
+            out = [];
+        while (ind-- > -1) {
+            result = fn(result, xs[ind], ind, xs);
+            out.push(result);
+        }
+        return out;
+    };
+const scanr1 = (fn, xs) => {
+        if (!xs || !xs.length) { return []; }
+        return scanr(fn, last(xs), init(xs));
+    };
 const nub = list => nubBy((a, b) => a === b, list);
 const remove = (x, list) => removeBy((a, b) => a === b, x, list);
 const sort = xs => sortBy(genericAscOrdering, xs);
@@ -920,17 +956,7 @@ const sortOn = (valueFn, xs) =>
             // Decorate and sort
             sortBy(
                 // Ordering
-                (a1, b1) => {
-                    let a = a1[0],
-                        b = b1[0];
-                    if (a > b) {
-                        return 1;
-                    }
-                    else if (a < b) {
-                        return -1;
-                    }
-                    return 0;
-                },
+                ([a0], [b0]) => genericAscOrdering(a0, b0),
 
                 // Decorate
                 map$1(item => [valueFn(item), item], xs)
@@ -1563,16 +1589,16 @@ const groupBy$1 = curry(groupBy);
 const stripPrefix$1 = curry(stripPrefix);
 const zip$1 = curry(zip);
 const zipWith$1 = curry(zipWith);
-const zipWithN$1 = curry2(zipWithN);
-const zipWith3$1 = zipWithN$1;
-const zipWith4$1 = zipWithN$1;
-const zipWith5$1 = zipWithN$1;
+const zipWithN$1 = curry3(zipWithN);
+const zipWith3$1 = curry4(zipWithN$1);
+const zipWith4$1 = curry5(zipWithN$1);
+const zipWith5$1 = curryN(6, zipWithN$1);
 const any$1 = curry(any);
 const all$1 = curry(all);
-const scanl$1 = () => null;
-const scanl1$1 = () => null;
-const scanr$1 = () => null;
-const scanr1$1 = () => null;
+const scanl$1 = curry(scanl);
+const scanl1$1 = curry(scanl1);
+const scanr$1 = curry(scanr);
+const scanr1$1 = curry(scanr1);
 const remove$1 = curry(remove);
 const sortOn$1 = curry(sortOn);
 const sortBy$1 = curry(sortBy);

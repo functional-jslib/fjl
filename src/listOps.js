@@ -6,7 +6,7 @@
  * @todo code unperformant shorthand in `listOps`
  * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
-import {curry, curry2} from './uncurried/_functionOps';
+import {curry, curry2, curry3, curry4, curry5, curryN} from './uncurried/_functionOps';
 
 // Uncurried methods import
 import {
@@ -24,7 +24,8 @@ import {
     remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy,
     removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy,
     complement as _complement, difference as _difference, union as _union, intersect as _intersect,
-    intersectBy as _intersectBy, groupBy as _groupBy
+    intersectBy as _intersectBy, groupBy as _groupBy,
+    scanl as _scanl, scanl1 as _scanl1, scanr as _scanr, scanr1 as _scanr1
 }
     from './uncurried/_listOps';
 
@@ -407,7 +408,7 @@ export const
      * @param lists ...{Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWithN = curry2(_zipWithN),
+    zipWithN = curry3(_zipWithN),
 
     /**
      * Zips 3 lists with tupling function.
@@ -421,7 +422,7 @@ export const
      * @param xs3 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith3 = zipWithN,
+    zipWith3 = curry4(zipWithN),
 
     /**
      * Zips 4 lists with tupling function.
@@ -436,7 +437,7 @@ export const
      * @param xs4 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith4 = zipWithN,
+    zipWith4 = curry5(zipWithN),
 
     /**
      * Zips 5 lists.
@@ -452,19 +453,19 @@ export const
      * @param xs5 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith5 = zipWithN,
+    zipWith5 = curryN(6, zipWithN),
 
     any = curry(_any),
 
     all = curry(_all),
 
-    scanl = () => null,
+    scanl = curry(_scanl),
 
-    scanl1 = () => null,
+    scanl1 = curry(_scanl1),
 
-    scanr = () => null,
+    scanr = curry(_scanr),
 
-    scanr1 = () => null,
+    scanr1 = curry(_scanr1),
 
     remove = curry(_remove),
 

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericDescOrdering = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
+exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
 
 var _aggregation = require('./_aggregation');
 
@@ -88,23 +88,6 @@ genericAscOrdering = exports.genericAscOrdering = function genericAscOrdering(a,
 
 
 /**
- * Generic 'descending order' ordering function (use by the likes of `list.sort` etc.)
- * @function module:_listOpsUtils.genericDescOrdering
- * @param a {*}
- * @param b {*}
- * @returns {number}
- */
-genericDescOrdering = exports.genericDescOrdering = function genericDescOrdering(a, b) {
-    if (a < b) {
-        return 1;
-    } else if (a > b) {
-        return -1;
-    }
-    return 0;
-},
-
-
-/**
  * Returns length of all passed lists in list.
  * @function module:_listOpsUtils.lengths
  * @param lists ...{Array|String|*}
@@ -135,7 +118,17 @@ lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
         return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list);
     }, lists);
 },
-    reduceUntil = exports.reduceUntil = function reduceUntil(pred, op, agg, arr) {
+
+
+/**
+ * Reduces until predicate.
+ * @param pred
+ * @param op
+ * @param agg
+ * @param arr
+ * @returns {*}
+ */
+reduceUntil = exports.reduceUntil = function reduceUntil(pred, op, agg, arr) {
     var limit = (0, _object.length)(arr);
     if (!limit) {
         return agg;
@@ -150,7 +143,17 @@ lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
     }
     return result;
 },
-    reduceRightUntil = exports.reduceRightUntil = function reduceRightUntil(pred, op, agg, arr) {
+
+
+/**
+ * Reduces until predicate (from the right).
+ * @param pred
+ * @param op
+ * @param agg
+ * @param arr
+ * @returns {*}
+ */
+reduceRightUntil = exports.reduceRightUntil = function reduceRightUntil(pred, op, agg, arr) {
     var limit = (0, _object.length)(arr);
     if (!limit) {
         return agg;
@@ -166,7 +169,7 @@ lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
     return result;
 },
     reduce = exports.reduce = function reduce(operation, agg, arr) {
-    return reduceUntil(_booleanOps.alwaysFalse, // predicate
+    return reduceUntil(_booleanOps.alwaysFalse, // until-predicate
     operation, // operation
     agg, // aggregator
     arr);
@@ -174,7 +177,7 @@ lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
     // list
 
 reduceRight = exports.reduceRight = function reduceRight(operation, agg, arr) {
-    return reduceRightUntil(_booleanOps.alwaysFalse, // predicate
+    return reduceRightUntil(_booleanOps.alwaysFalse, // until-predicate
     operation, // operation
     agg, // aggregator
     arr);

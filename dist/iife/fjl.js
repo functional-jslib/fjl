@@ -550,13 +550,13 @@ var reduceRightUntil = function reduceRightUntil(pred, op, agg, arr) {
     return result;
 };
 var reduce$1 = function reduce(operation, agg, arr) {
-    return reduceUntil(alwaysFalse, // predicate
+    return reduceUntil(alwaysFalse, // until-predicate
     operation, // operation
     agg, // aggregator
     arr);
 };
 var reduceRight$1 = function reduceRight(operation, agg, arr) {
-    return reduceRightUntil(alwaysFalse, // predicate
+    return reduceRightUntil(alwaysFalse, // until-predicate
     operation, // operation
     agg, // aggregator
     arr);
@@ -1354,6 +1354,46 @@ var maximum = function maximum(list) {
 var minimum = function minimum(list) {
     return head(sortBy(genericAscOrdering, list));
 };
+var scanl = function scanl(fn, zero, xs) {
+    if (!xs || !length(xs)) {
+        return [];
+    }
+    var limit = length(xs);
+    var ind = -1,
+        result = zero,
+        out = [];
+    while (ind++ < limit) {
+        result = fn(result, xs[ind], ind, xs);
+        out.push(result);
+    }
+    return out;
+};
+var scanl1 = function scanl1(fn, xs) {
+    if (!xs || !xs.length) {
+        return [];
+    }
+    return scanl(fn, head(xs), tail(xs));
+};
+var scanr = function scanr(fn, zero, xs) {
+    if (!xs || !length(xs)) {
+        return [];
+    }
+    var limit = length(xs);
+    var ind = limit,
+        result = xs[0],
+        out = [];
+    while (ind-- > -1) {
+        result = fn(result, xs[ind], ind, xs);
+        out.push(result);
+    }
+    return out;
+};
+var scanr1 = function scanr1(fn, xs) {
+    if (!xs || !xs.length) {
+        return [];
+    }
+    return scanr(fn, last(xs), init(xs));
+};
 var nub = function nub(list) {
     return nubBy(function (a, b) {
         return a === b;
@@ -1378,15 +1418,14 @@ var sortOn = function sortOn(valueFn, xs) {
         // Decorate and sort
         sortBy(
         // Ordering
-        function (a1, b1) {
-            var a = a1[0],
-                b = b1[0];
-            if (a > b) {
-                return 1;
-            } else if (a < b) {
-                return -1;
-            }
-            return 0;
+        function (_ref, _ref2) {
+            var _ref4 = slicedToArray(_ref, 1),
+                a0 = _ref4[0];
+
+            var _ref3 = slicedToArray(_ref2, 1),
+                b0 = _ref3[0];
+
+            return genericAscOrdering(a0, b0);
         },
 
         // Decorate
@@ -2135,24 +2174,16 @@ var groupBy$1 = curry(groupBy);
 var stripPrefix$1 = curry(stripPrefix);
 var zip$1 = curry(zip);
 var zipWith$1 = curry(zipWith);
-var zipWithN$1 = curry2(zipWithN);
-var zipWith3$1 = zipWithN$1;
-var zipWith4$1 = zipWithN$1;
-var zipWith5$1 = zipWithN$1;
+var zipWithN$1 = curry3(zipWithN);
+var zipWith3$1 = curry4(zipWithN$1);
+var zipWith4$1 = curry5(zipWithN$1);
+var zipWith5$1 = curryN(6, zipWithN$1);
 var any$1 = curry(any);
 var all$1 = curry(all);
-var scanl$1 = function scanl$$1() {
-    return null;
-};
-var scanl1$1 = function scanl1$$1() {
-    return null;
-};
-var scanr$1 = function scanr$$1() {
-    return null;
-};
-var scanr1$1 = function scanr1$$1() {
-    return null;
-};
+var scanl$1 = curry(scanl);
+var scanl1$1 = curry(scanl1);
+var scanr$1 = curry(scanr);
+var scanr1$1 = curry(scanr1);
 var remove$1 = curry(remove);
 var sortOn$1 = curry(sortOn);
 var sortBy$1 = curry(sortBy);
