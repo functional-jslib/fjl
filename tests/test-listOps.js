@@ -349,7 +349,26 @@ describe ('#listOps', function () {
     });
 
     describe ('#subsequences', function () {
-        it ('should have more tests.');
+        it ('should return all sub-sequences of a sequence', function () {
+            const candidates = ['abc', 'abc'.split('')],
+            results = candidates.map(subsequences),
+            expectedLen = Math.pow(2, candidates[0].length);
+            log(candidates, results);
+            expectTrue(results.every(result => result.length === expectedLen));
+            expectTrue(results.every(result =>
+                    !result.filter((subSeq, ind) =>
+                        result.indexOf(subSeq) !== ind ||
+                        result.lastIndexOf(subSeq) !== ind
+                    ).length
+                )
+            );
+            // @see quick reference on subsequence algorithms
+            // https://discuss.codechef.com/questions/17235/print-all-possible-subsequences-of-string-using-dynamic-programming
+        });
+        it ('should return a list with an empty list when receiving an empty list', function () {
+            log(subsequences(''), ['']);
+            log(subsequences([]), [[]]);
+        });
     });
 
     describe ('#permutations', function () {

@@ -242,15 +242,22 @@ define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functio
      *  will generate 65536 sub-sequences!  So caution should be taken to not
      *  use this with sequences above a certain length on certain platform (the browser thread in specific).
      * @function module:_listOps.subsequences
+     * @jsperftest https://jsperf.com/subsequences
      * @param xs {Array|String}
-     * @returns {Array}
+     * @returns {Array.<Array>}
      */
     subsequences = exports.subsequences = xs => {
-        const len = Math.pow(2, (0, _objectOps.length)(xs)),
+        // if (isset(xs) && !xs.hasOwnProperty('length')) {
+        //     throw new Error('`sub-sequences` function can only operate on values that have a `length` property and ' +
+        //         'have index-able properties (`obj[0] //etc... (Arrays, strings etc.)`).  ' +
+        //         'Type given "' + typeOf(xs) + '".  Given `toString`: "' + xs + '";');
+        // }
+        const listLen = (0, _objectOps.length)(xs),
+              len = Math.pow(2, listLen),
               out = [];
         for (let i = 0; i < len; i += 1) {
-            const entry = [];
-            for (let j = 0; j < len; j += 1) {
+            let entry = [];
+            for (let j = 0; j < listLen; j += 1) {
                 if (i & 1 << j) {
                     entry.push(xs[j]);
                 }
