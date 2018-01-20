@@ -914,12 +914,13 @@ const scanl = (fn, zero, xs) => {
             return [];
         }
         const limit = length(xs);
-        let ind = -1,
+        let ind = 0,
             result = zero,
             out = [];
-        while (ind++ < limit) {
+        while (ind < limit) {
             result = fn(result, xs[ind], ind, xs);
             out.push(result);
+            ind++;
         }
         return out;
     };
@@ -932,12 +933,13 @@ const scanr = (fn, zero, xs) => {
             return [];
         }
         const limit = length(xs);
-        let ind = limit,
+        let ind = limit - 1,
             result = xs[0],
             out = [];
-        while (ind-- > -1) {
+        while (ind > -1) {
             result = fn(result, xs[ind], ind, xs);
             out.push(result);
+            ind--;
         }
         return out;
     };

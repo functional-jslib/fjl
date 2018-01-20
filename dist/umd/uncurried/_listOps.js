@@ -1353,12 +1353,13 @@
             return [];
         }
         var limit = (0, _objectOps.length)(xs);
-        var ind = -1,
+        var ind = 0,
             result = zero,
             out = [];
-        while (ind++ < limit) {
+        while (ind < limit) {
             result = fn(result, xs[ind], ind, xs);
             out.push(result);
+            ind++;
         }
         return out;
     },
@@ -1373,12 +1374,13 @@
             return [];
         }
         var limit = (0, _objectOps.length)(xs);
-        var ind = limit,
+        var ind = limit - 1,
             result = xs[0],
             out = [];
-        while (ind-- > -1) {
+        while (ind > -1) {
             result = fn(result, xs[ind], ind, xs);
             out.push(result);
+            ind--;
         }
         return out;
     },

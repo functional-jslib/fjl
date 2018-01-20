@@ -58,7 +58,24 @@ describe ('#listOps', function () {
             else if (a < b) { return -1; }
             return 0;
         },
-        equal = (a, b) => a === b;
+        equal = (a, b) => a === b,
+        // const listToLinkedList = list => {
+        //     const unlinkedNodes = list.map(char => ({data: char})),
+        //         lastNode = unlinkedNodes.pop();
+        //         return unlinkedNodes.reduceRight((agg, item) => {
+        //             item.next = agg;
+        //             return item;
+        //         }, (lastNode.next = null, lastNode));
+        // },
+        linkedListToList = linkedList => {
+            const out = [];
+            let node = linkedList;
+            while (node.next) {
+                out.push({data: node.data});
+                node = node.next;
+            }
+            return out;
+        };
 
     describe ('#append', function () {
         it ('should be able to append two lists.', function () {
@@ -2336,39 +2353,142 @@ describe ('#listOps', function () {
     });
 
     describe ('#scanl', function () {
-        const listToLinkedList = list => {
-            const unlinkedNodes = list.map(char => ({data: char})),
-                lastNode = unlinkedNodes.pop();
-                return unlinkedNodes.reduceRight((agg, item) => {
-                    item.next = agg;
-                    return item;
-                }, (lastNode.next = null, lastNode));
-        },
-        linkedListToList = linkedList => {
-            const out = [];
-            let node = linkedList;
-            while (node.next) {
-                out.push({data: node.data});
-                node = node.next;
-            }
-            return out;
-        };
-        it ('should return a list of successive reduced values from left to right', function () {
-            const unlinkedNodes = alphabetArray.map(char => ({data: char})),
-                result = scanl((agg, item) => {
-                    agg.next = item;
-                    item.next = null;
-                    return item;
-                }, {}, unlinkedNodes);
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+
+        it ('should return a list of successively reduced values from left to right', function () {
+            // Generate linked-list structure
+            const result = scanl((agg, item) => {
+                agg.next = item;
+                item.next = null;
+                return item;
+            }, {}, unlinkedNodes);
 
             // Expect every item in result to be a linked list with remaining items linked to said item
-            // result.every(node => {
-            //     alphabetArray.slice(alphabetArray.indexOf(node.data)).every(char => {
-            //         linkedListToList(node).every()
-            //     });
-            // });
+            expect(
+                result.every(node => {
+                    const nodesList = linkedListToList(node);
+                    return alphabetArray.slice(alphabetArray.indexOf(node.data)).every((char, ind1) => {
+                        const charCodeToTest = char.charCodeAt(0);
+                        return nodesList.slice(ind1).every((data, ind2) =>
+                            data.data.charCodeAt(0) - ind2 === charCodeToTest
+                        );
+                    });
+                })
+            )
+                .to.equal(true);
             // log (result);
             // log(linkedListToList(listToLinkedList(alphabetArray)));
+        });
+
+        it ('should return an empty list when receiving an empty one', function () {
+            expectShallowEquals(scanl(x => x * 2, 99, []), []);
+            expectShallowEquals(scanl(x => x + 2, '99', ''), []);
+        });
+    });
+
+    describe ('#scanl1', function () {
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+
+        it ('should return a list of successively reduced values from left to right', function () {
+            // Generate linked-list structure
+            const result = scanl1((agg, item) => {
+                agg.next = item;
+                item.next = null;
+                return item;
+            }, [{}].concat(unlinkedNodes));
+
+            // Expect every item in result to be a linked list with remaining items linked to said item
+            expect(
+                result.every(node => {
+                    const nodesList = linkedListToList(node);
+                    return alphabetArray.slice(alphabetArray.indexOf(node.data)).every((char, ind1) => {
+                        const charCodeToTest = char.charCodeAt(0);
+                        return nodesList.slice(ind1).every((data, ind2) =>
+                            data.data.charCodeAt(0) - ind2 === charCodeToTest
+                        );
+                    });
+                })
+            )
+                .to.equal(true);
+            // log (result);
+            // log(linkedListToList(listToLinkedList(alphabetArray)));
+        });
+
+        it ('should return an empty list when receiving an empty one', function () {
+            expectShallowEquals(scanl1(x => x * 2, []), []);
+            expectShallowEquals(scanl1(x => x + 2, ''), []);
+        });
+    });
+
+    describe ('#scanr', function () {
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+
+        it ('should return a list of successively reduced values from left to right', function () {
+            // Generate linked-list structure
+            const result = scanr((agg, item) => {
+                agg.next = item;
+                item.next = null;
+                return item;
+            }, {}, unlinkedNodes);
+
+            // Expect every item in result to be a linked list with remaining items linked to said item
+            expect(
+                result.every(node => {
+                    const nodesList = linkedListToList(node);
+                    return alphabetArray.slice(0, alphabetArray.indexOf(node.data) + 1)
+                        .reverse()
+                        .every((char, ind1) => {
+                            const charCodeToTest = char.charCodeAt(0);
+                            return nodesList.slice(ind1).every((data, ind2) =>
+                                data.data.charCodeAt(0) + ind2 === charCodeToTest
+                            );
+                        });
+                })
+            )
+                .to.equal(true);
+            // log(linkedListToList(listToLinkedList(alphabetArray)));
+        });
+
+        it ('should return an empty list when receiving an empty one', function () {
+            expectShallowEquals(scanr(x => x * 2, 99, []), []);
+            expectShallowEquals(scanr(x => x + 2, '99', ''), []);
+        });
+    });
+
+    describe ('#scanr1', function () {
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+
+        it ('should return a list of successively reduced values from left to right', function () {
+            // Generate linked-list structure
+            const result = scanr1((agg, item) => {
+                agg.next = item;
+                item.next = null;
+                return item;
+            }, [{}].concat(unlinkedNodes));
+
+            // Expect every item in result to be a linked list with remaining items linked to said item
+            expect(
+                result.every(node => {
+                    const nodesList = linkedListToList(node);
+                    return alphabetArray
+                        .slice(0, alphabetArray.indexOf(node.data) + 1)
+                        .reverse()
+                        .every((char, ind1) => {
+                            const charCodeToTest = char.charCodeAt(0);
+                            return nodesList.slice(ind1).every((data, ind2) =>
+                                data.data.charCodeAt(0) + ind2 === charCodeToTest
+                            );
+                        });
+                })
+            )
+                .to.equal(true);
+            // log (result);
+            // log(linkedListToList(listToLinkedList(alphabetArray)));
+        });
+
+        it ('should return an empty list when receiving an empty one', function () {
+            expectShallowEquals(scanr1(x => x * 2, []), []);
+            expectShallowEquals(scanr1(x => x + 2, ''), []);
         });
     });
 
