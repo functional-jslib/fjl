@@ -255,11 +255,6 @@ export const
      * @returns {Array.<Array>}
      */
     subsequences = xs => {
-        // if (isset(xs) && !xs.hasOwnProperty('length')) {
-        //     throw new Error('`sub-sequences` function can only operate on values that have a `length` property and ' +
-        //         'have index-able properties (`obj[0] //etc... (Arrays, strings etc.)`).  ' +
-        //         'Type given "' + typeOf(xs) + '".  Given `toString`: "' + xs + '";');
-        // }
         const listLen = length(xs),
             len = Math.pow(2, listLen),
             out = [];
@@ -268,6 +263,32 @@ export const
             for (let j = 0; j < listLen; j += 1) {
                 if (i & (1 << j)) {
                     entry.push(xs[j]);
+                }
+            }
+            out.push(entry);
+        }
+        return out;
+    },
+
+    /**
+     * Same as `subsequences` but returns an `Array.<Type>` instead
+     *  of an array of arrays.  **Note:** `Type` here means
+     *  a string, an instance of array, or some indexable-like type.
+     * @function module:_listOps.subsequences1
+     * @jsperftest https://jsperf.com/subsequences
+     * @param xs {Array|String}
+     * @returns {Array.<(Array|String|*)>}
+     */
+    subsequences1 = xs => {
+        const listLen = length(xs),
+            len = Math.pow(2, listLen),
+            aggregator = aggregatorByType(xs),
+            out = [];
+        for (let i = 0; i < len; i += 1) {
+            let entry = of(xs);
+            for (let j = 0; j < listLen; j += 1) {
+                if (i & (1 << j)) {
+                    entry = aggregator(entry, xs[j]);
                 }
             }
             out.push(entry);
