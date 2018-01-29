@@ -20,7 +20,7 @@ export const
      * @param arr {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFrom = (startInd, arr) => slice(startInd, length(arr), arr),
+    sliceFrom = (startInd, arr) => slice(startInd, undefined, arr),
 
     /**
      * Slices from index `0` to given index.
@@ -207,14 +207,13 @@ export const
         return list;
     },
 
-    _permutationsAlgo = (listIn, limit, remainderLen) => {
-        let out = [];
-        if (remainderLen === 1) { return copy(listIn); }
+    _permutationsAlgo = (listIn, limit, remainderLen, out = []) => {
+        if (remainderLen === 1) { out.push(copy(listIn)); return out; }
         for (let i = 0; i < remainderLen; i++) {
             const newLen = remainderLen - 1;
 
             // Capture permutation
-            out.push(_permutationsAlgo(listIn, limit, newLen));
+            _permutationsAlgo(listIn, limit, newLen, out);
 
             // If remainderLen is odd, swap first and last element
             //  else, swap `ith` and last element

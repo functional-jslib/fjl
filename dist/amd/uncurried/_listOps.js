@@ -4,7 +4,7 @@ define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functio
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = undefined;
+    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences1 = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = undefined;
     exports.map = _map.map;
 
 
@@ -247,11 +247,6 @@ define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functio
      * @returns {Array.<Array>}
      */
     subsequences = exports.subsequences = xs => {
-        // if (isset(xs) && !xs.hasOwnProperty('length')) {
-        //     throw new Error('`sub-sequences` function can only operate on values that have a `length` property and ' +
-        //         'have index-able properties (`obj[0] //etc... (Arrays, strings etc.)`).  ' +
-        //         'Type given "' + typeOf(xs) + '".  Given `toString`: "' + xs + '";');
-        // }
         const listLen = (0, _objectOps.length)(xs),
               len = Math.pow(2, listLen),
               out = [];
@@ -260,6 +255,33 @@ define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functio
             for (let j = 0; j < listLen; j += 1) {
                 if (i & 1 << j) {
                     entry.push(xs[j]);
+                }
+            }
+            out.push(entry);
+        }
+        return out;
+    },
+
+
+    /**
+     * Same as `subsequences` but returns an `Array.<Type>` instead
+     *  of an array of arrays.  **Note:** `Type` here means
+     *  a string, an instance of array, or some indexable-like type.
+     * @function module:_listOps.subsequences1
+     * @jsperftest https://jsperf.com/subsequences
+     * @param xs {Array|String}
+     * @returns {Array.<(Array|String|*)>}
+     */
+    subsequences1 = exports.subsequences1 = xs => {
+        const listLen = (0, _objectOps.length)(xs),
+              len = Math.pow(2, listLen),
+              aggregator = (0, _utils.aggregatorByType)(xs),
+              out = [];
+        for (let i = 0; i < len; i += 1) {
+            let entry = (0, _objectOps.of)(xs);
+            for (let j = 0; j < listLen; j += 1) {
+                if (i & 1 << j) {
+                    entry = aggregator(entry, xs[j]);
                 }
             }
             out.push(entry);
@@ -278,7 +300,7 @@ define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functio
      */
     permutations = exports.permutations = xs => {
         const limit = (0, _objectOps.length)(xs);
-        return !limit ? [xs] : (0, _utils._permutationsAlgo)(xs, limit, limit);
+        return !limit || limit === 1 ? [xs] : (0, _utils._permutationsAlgo)(xs, limit, limit);
     },
 
 

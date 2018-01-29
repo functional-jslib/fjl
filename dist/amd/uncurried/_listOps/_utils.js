@@ -29,7 +29,7 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
      * @param arr {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFrom = exports.sliceFrom = (startInd, arr) => (0, _list.slice)(startInd, (0, _object.length)(arr), arr),
+    sliceFrom = exports.sliceFrom = (startInd, arr) => (0, _list.slice)(startInd, undefined, arr),
 
 
     /**
@@ -242,16 +242,15 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
         list[ind2] = tmp;
         return list;
     },
-          _permutationsAlgo = exports._permutationsAlgo = (listIn, limit, remainderLen) => {
-        let out = [];
+          _permutationsAlgo = exports._permutationsAlgo = (listIn, limit, remainderLen, out = []) => {
         if (remainderLen === 1) {
-            return copy(listIn);
+            out.push(copy(listIn));return out;
         }
         for (let i = 0; i < remainderLen; i++) {
             const newLen = remainderLen - 1;
 
             // Capture permutation
-            out.push(_permutationsAlgo(listIn, limit, newLen));
+            _permutationsAlgo(listIn, limit, newLen, out);
 
             // If remainderLen is odd, swap first and last element
             //  else, swap `ith` and last element

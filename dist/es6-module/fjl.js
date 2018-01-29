@@ -324,7 +324,7 @@ const map$1 = (fn, xs) => {
  * @module listOpsUtils_
  * @private
  */
-const sliceFrom = (startInd, arr) => slice(startInd, length(arr), arr);
+const sliceFrom = (startInd, arr) => slice(startInd, undefined, arr);
 const sliceTo = (toInd, xs) => slice(0, toInd, xs);
 const copy = xs => sliceFrom(0, xs);
 const genericAscOrdering = (a, b) => {
@@ -417,14 +417,13 @@ const _swap = (list, ind1, ind2) => {
         list[ind2] = tmp;
         return list;
     };
-const _permutationsAlgo = (listIn, limit, remainderLen) => {
-        let out = [];
-        if (remainderLen === 1) { return copy(listIn); }
+const _permutationsAlgo = (listIn, limit, remainderLen, out = []) => {
+        if (remainderLen === 1) { out.push(copy(listIn)); return out; }
         for (let i = 0; i < remainderLen; i++) {
             const newLen = remainderLen - 1;
 
             // Capture permutation
-            out.push(_permutationsAlgo(listIn, limit, newLen));
+            _permutationsAlgo(listIn, limit, newLen, out);
 
             // If remainderLen is odd, swap first and last element
             //  else, swap `ith` and last element
@@ -518,11 +517,6 @@ const transpose = xss => {
         return filter$1(x => length(x), outLists);
     };
 const subsequences = xs => {
-        // if (isset(xs) && !xs.hasOwnProperty('length')) {
-        //     throw new Error('`sub-sequences` function can only operate on values that have a `length` property and ' +
-        //         'have index-able properties (`obj[0] //etc... (Arrays, strings etc.)`).  ' +
-        //         'Type given "' + typeOf(xs) + '".  Given `toString`: "' + xs + '";');
-        // }
         const listLen = length(xs),
             len = Math.pow(2, listLen),
             out = [];
@@ -539,7 +533,7 @@ const subsequences = xs => {
     };
 const permutations = xs => {
         const limit = length(xs);
-        return !limit ? [xs] :
+        return !limit || limit === 1 ? [xs] :
             _permutationsAlgo(xs, limit, limit);
     };
 const foldl = reduce$1;

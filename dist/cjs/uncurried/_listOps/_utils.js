@@ -43,7 +43,7 @@ var
  * @returns {Array|String|*}
  */
 sliceFrom = exports.sliceFrom = function sliceFrom(startInd, arr) {
-    return (0, _list.slice)(startInd, (0, _object.length)(arr), arr);
+    return (0, _list.slice)(startInd, undefined, arr);
 },
 
 
@@ -278,15 +278,16 @@ findWhere = exports.findWhere = function findWhere(pred, xs) {
     return list;
 },
     _permutationsAlgo = exports._permutationsAlgo = function _permutationsAlgo(listIn, limit, remainderLen) {
-    var out = [];
+    var out = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
     if (remainderLen === 1) {
-        return copy(listIn);
+        out.push(copy(listIn));return out;
     }
     for (var i = 0; i < remainderLen; i++) {
         var newLen = remainderLen - 1;
 
         // Capture permutation
-        out.push(_permutationsAlgo(listIn, limit, newLen));
+        _permutationsAlgo(listIn, limit, newLen, out);
 
         // If remainderLen is odd, swap first and last element
         //  else, swap `ith` and last element

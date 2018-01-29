@@ -306,7 +306,7 @@ export const
      */
     permutations = xs => {
         const limit = length(xs);
-        return !limit ? [xs] :
+        return !limit || limit === 1 ? [xs] :
             _permutationsAlgo(xs, limit, limit);
     },
 

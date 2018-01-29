@@ -485,7 +485,7 @@ var map$1 = function map(fn, xs) {
  * @private
  */
 var sliceFrom = function sliceFrom(startInd, arr) {
-    return slice(startInd, length(arr), arr);
+    return slice(startInd, undefined, arr);
 };
 var sliceTo = function sliceTo(toInd, xs) {
     return slice(0, toInd, xs);
@@ -616,15 +616,16 @@ var _swap = function _swap(list, ind1, ind2) {
     return list;
 };
 var _permutationsAlgo = function _permutationsAlgo(listIn, limit, remainderLen) {
-    var out = [];
+    var out = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
     if (remainderLen === 1) {
-        return copy(listIn);
+        out.push(copy(listIn));return out;
     }
     for (var i = 0; i < remainderLen; i++) {
         var newLen = remainderLen - 1;
 
         // Capture permutation
-        out.push(_permutationsAlgo(listIn, limit, newLen));
+        _permutationsAlgo(listIn, limit, newLen, out);
 
         // If remainderLen is odd, swap first and last element
         //  else, swap `ith` and last element
@@ -920,11 +921,6 @@ var transpose = function transpose(xss) {
     }, outLists);
 };
 var subsequences = function subsequences(xs) {
-    // if (isset(xs) && !xs.hasOwnProperty('length')) {
-    //     throw new Error('`sub-sequences` function can only operate on values that have a `length` property and ' +
-    //         'have index-able properties (`obj[0] //etc... (Arrays, strings etc.)`).  ' +
-    //         'Type given "' + typeOf(xs) + '".  Given `toString`: "' + xs + '";');
-    // }
     var listLen = length(xs),
         len = Math.pow(2, listLen),
         out = [];
@@ -941,7 +937,7 @@ var subsequences = function subsequences(xs) {
 };
 var permutations = function permutations(xs) {
     var limit = length(xs);
-    return !limit ? [xs] : _permutationsAlgo(xs, limit, limit);
+    return !limit || limit === 1 ? [xs] : _permutationsAlgo(xs, limit, limit);
 };
 var foldl = reduce$1;
 var foldr = reduceRight$1;

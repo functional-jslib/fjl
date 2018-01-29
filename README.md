@@ -33,7 +33,7 @@ Methods dealing with lists (strings/arrays etc.) and objects.
 Full list coming soon.
 
 ### Needed
-- [ ] - Implementations of the `scan*` methods?
+- [x] - ~~Implementations of the `scan*` methods?~~ Implemented as of version `0.21.0`
 - [ ] - "" of the Math methods?
 - [ ] - A friendly function names module has to be built
 for some of these functions as most javascript developers
