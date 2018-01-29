@@ -14,7 +14,7 @@ Functional Javascript Library
  and is built from the ground up using functional concepts.
 - A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
 - A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `_append` (uncurrued)
+    `append`, `_append` (uncurried)
 - Etc. etc..
 
 ### Docs
