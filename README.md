@@ -8,25 +8,36 @@ Functional Javascript Library
 ## Motivations:
 - Haskell and it's `Prelude`.
 - Lambda Calculus.
-- The need for a way to do strong, and loose, type checking in combination,
-however necessary, in actual javascript code (not in typescript).
-- The need to be able to write functional code very quickly and
-easily in combination with the aforementioned.
+- The need for a way to do strongly typed javascript (in actual code (not with typescript)).
+- The need to be able to write functional code very quickly and easily.
 - A functional library that takes advantage of the es6 features of the language
-and is built from the ground up using functional concepts.
-- A functional library that is exported to multiple formats
-(umd, amd, commonjs, es6-modules, and iife).
-- "" that has both curried and un-curried versions of included operations.  Et. al. `append`, `_append` (uncurrued)
+ and is built from the ground up using functional concepts.
+- A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
+- A functional library that has curried and un-curried versions of included operations.  Et. al.
+    `append`, `_append` (uncurrued)
 - Etc. etc..
 
 ### Docs
+Docs at the, jsdocs link listed further below, are divided by the operations ported over from the haskell prelude:
+
+#### `listOps`
+The `listOps` modules contains docs for everything imported from the `Data.List` haskell module.
+
+#### `functionOps`
+The methods comprising `functionsOps` are:
+```
+apply, call, curry, curry2, curry3, curry4, curry5, curryN,
+until, flip, flip3, flip4, flip5, flipN,
+negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
+id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders
+```
+
+
 Jsdocs here:
 https://functional-jslib.github.io/fjl/
 
 ### Notable methods not added from the haskell prelude:
 - Math/Integral/Num/etc. methods
-- `scan*`, `permutations` and several others in the list's prelude (these are pending implementation)
-- Few others from prelude.
 
 ### Included methods
 Methods dealing with lists (strings/arrays etc.) and objects.
