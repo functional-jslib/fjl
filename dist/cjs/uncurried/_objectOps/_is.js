@@ -11,7 +11,7 @@ var _object = require('../_jsPlatform/_object');
 
 /**
  * Created by elyde on 12/18/2016.
- * @memberOf _objectOps_
+ * @memberOf _objectOps
  */
 
 var _String = String.name,

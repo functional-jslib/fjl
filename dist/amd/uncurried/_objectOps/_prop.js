@@ -5,7 +5,7 @@ define(["exports"], function (exports) {
     value: true
   });
   /**
-   * @memberOf _objectOps_
+   * @memberOf _objectOps
    */
 
   /**

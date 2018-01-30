@@ -1,5 +1,5 @@
 /**
- * @memberOf _objectOps_
+ * @memberOf _objectOps
  */
 
 /**

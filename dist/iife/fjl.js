@@ -187,7 +187,7 @@ var curry5 = function curry5(fn) {
 };
 
 /**
- * @memberOf _objectOps_
+ * @memberOf _objectOps
  */
 
 /**
@@ -203,7 +203,7 @@ var prop$1 = function prop(name, obj) {
 
 /**
  * Created by elyde on 12/18/2016.
- * @memberOf _objectOps_
+ * @memberOf _objectOps
  */
 var _Number$1 = Number.name;
 var _NaN = 'NaN';
@@ -233,7 +233,7 @@ function typeOf(value) {
 
 /**
  * Created by elyde on 12/18/2016.
- * @memberOf _objectOps_
+ * @memberOf _objectOps
  */
 
 var _String = String.name;
@@ -432,7 +432,7 @@ var of = function of(x) {
 };
 
 /**
- * @module _objectOps_
+ * @module _objectOps
  * @private
  */
 

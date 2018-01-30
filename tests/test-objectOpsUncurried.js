@@ -20,7 +20,7 @@ import {
 import {foldl, map, and, head, tail} from "../src/uncurried/_listOps";
 import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, deepCompareObjectsLeft} from './helpers';
 
-describe ('#_objectOps_', function () {
+describe ('#_objectOps', function () {
 
     const peek = x => {
         log(x);

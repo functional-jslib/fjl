@@ -19,7 +19,7 @@
     exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
     /**
      * Created by elyde on 12/18/2016.
-     * @memberOf _objectOps_
+     * @memberOf _objectOps
      */
 
     var _String = String.name,

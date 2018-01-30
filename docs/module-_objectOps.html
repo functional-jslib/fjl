@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: objectOps</title>
+    <title>JSDoc: Module: _objectOps</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: objectOps</h1>
+    <h1 class="page-title">Module: _objectOps</h1>
 
     
 
@@ -29,6 +29,8 @@
 <header>
     
         
+            
+        
     
 </header>
 
@@ -36,6 +38,82 @@
     <div class="container-overview">
     
         
+            <div class="description">Object operations (uncurried).</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="uncurried__objectOps.js.html">uncurried/_objectOps.js</a>, <a href="uncurried__objectOps.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
     
@@ -64,7 +142,7 @@
     
 
     
-    <h4 class="name" id=".assign"><span class="type-signature">(static) </span>assign<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id="._isArray"><span class="type-signature">(static) </span>_isArray<span class="signature">(value)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
     
 
     
@@ -72,689 +150,7 @@
 
 
 <div class="description">
-    `Object.assign` if it is available else a shim.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>...obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">One or more objects to merge onto first object.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line64">line 64</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".assignDeep"><span class="type-signature">(static) </span>assignDeep<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Same as `Object.assign` except does a deep merge.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>...obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">One or more objects to deep merge onto first object.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line73">line 73</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".hasOwnProperty"><span class="type-signature">(static) </span>hasOwnProperty<span class="signature">(propName, obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    `hasOwnProperty` as a method (takes object last).
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>propName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Object to search.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line54">line 54</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".instanceOf"><span class="type-signature">(static) </span>instanceOf<span class="signature">(instance, Type)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    `instanceof` in function form.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>instance</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Type</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line44">line 44</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".isArray"><span class="type-signature">(static) </span>isArray<span class="signature">(value)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Checks if value is an array.
+    Checks if value is an array (same as `Array.isArray`).
 </div>
 
 
@@ -847,7 +243,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line154">line 154</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line65">line 65</a>
     </li></ul></dd>
     
 
@@ -899,7 +295,7 @@
     
 
     
-    <h4 class="name" id=".isBoolean"><span class="type-signature">(static) </span>isBoolean<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isBoolean"><span class="type-signature">(static) </span>_isBoolean<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -1000,7 +396,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line168">line 168</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line81">line 81</a>
     </li></ul></dd>
     
 
@@ -1052,7 +448,160 @@
     
 
     
-    <h4 class="name" id=".isClass"><span class="type-signature">(static) </span>isClass<span class="signature">(x)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="._isCallable"><span class="type-signature">(static) </span>_isCallable<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Returns a boolean depicting whether a value is callable or not.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="._isClass"><span class="type-signature">(static) </span>_isClass<span class="signature">(x)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
     
 
     
@@ -1153,7 +702,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line138">line 138</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -1205,7 +754,7 @@
     
 
     
-    <h4 class="name" id=".isEmpty"><span class="type-signature">(static) </span>isEmpty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isEmpty"><span class="type-signature">(static) </span>_isEmpty<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -1213,7 +762,7 @@
 
 
 <div class="description">
-    Checks to see if passed in argument is empty.
+    Checks to see if passed in value is empty;  I.e., check for one of '', 0, `null`, `undefined`, `false`, empty array, empty object, empty function (zero arity), or empty collection (es6 Map, Set, WeakMap, or WeakSet etc. (`!value.size`);
 </div>
 
 
@@ -1306,7 +855,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line273">line 273</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line201">line 201</a>
     </li></ul></dd>
     
 
@@ -1358,7 +907,7 @@
     
 
     
-    <h4 class="name" id=".isEmptyCollection"><span class="type-signature">(static) </span>isEmptyCollection<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isEmptyCollection"><span class="type-signature">(static) </span>_isEmptyCollection<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -1459,7 +1008,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line266">line 266</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line193">line 193</a>
     </li></ul></dd>
     
 
@@ -1511,7 +1060,7 @@
     
 
     
-    <h4 class="name" id=".isEmptyList"><span class="type-signature">(static) </span>isEmptyList<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isEmptyList"><span class="type-signature">(static) </span>_isEmptyList<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -1612,7 +1161,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line252">line 252</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line177">line 177</a>
     </li></ul></dd>
     
 
@@ -1664,7 +1213,7 @@
     
 
     
-    <h4 class="name" id=".isEmptyObject"><span class="type-signature">(static) </span>isEmptyObject<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isEmptyObject"><span class="type-signature">(static) </span>_isEmptyObject<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -1765,7 +1314,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line259">line 259</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line185">line 185</a>
     </li></ul></dd>
     
 
@@ -1817,7 +1366,7 @@
     
 
     
-    <h4 class="name" id=".isFunction"><span class="type-signature">(static) </span>isFunction<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isFunction"><span class="type-signature">(static) </span>_isFunction<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -1825,7 +1374,7 @@
 
 
 <div class="description">
-    Returns whether a value is a function or not.
+    Returns whether a value is a _functionOps or not.
 </div>
 
 
@@ -1918,7 +1467,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line131">line 131</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -1970,7 +1519,7 @@
     
 
     
-    <h4 class="name" id=".isMap"><span class="type-signature">(static) </span>isMap<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isMap"><span class="type-signature">(static) </span>_isMap<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -2071,7 +1620,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line189">line 189</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line105">line 105</a>
     </li></ul></dd>
     
 
@@ -2123,7 +1672,7 @@
     
 
     
-    <h4 class="name" id=".isNull"><span class="type-signature">(static) </span>isNull<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isNull"><span class="type-signature">(static) </span>_isNull<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -2224,7 +1773,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line224">line 224</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line145">line 145</a>
     </li></ul></dd>
     
 
@@ -2276,7 +1825,7 @@
     
 
     
-    <h4 class="name" id=".isNumber"><span class="type-signature">(static) </span>isNumber<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isNumber"><span class="type-signature">(static) </span>_isNumber<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -2377,7 +1926,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line175">line 175</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line89">line 89</a>
     </li></ul></dd>
     
 
@@ -2429,7 +1978,7 @@
     
 
     
-    <h4 class="name" id=".isObject"><span class="type-signature">(static) </span>isObject<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isObject"><span class="type-signature">(static) </span>_isObject<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -2525,7 +2074,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line161">line 161</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -2577,160 +2126,7 @@
     
 
     
-    <h4 class="name" id=".isset"><span class="type-signature">(static) </span>isset<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Returns whether passed in values is defined and not null.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>x</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line280">line 280</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".isSet"><span class="type-signature">(static) </span>isSet<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isSet"><span class="type-signature">(static) </span>_isSet<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -2831,7 +2227,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line196">line 196</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line113">line 113</a>
     </li></ul></dd>
     
 
@@ -2883,7 +2279,7 @@
     
 
     
-    <h4 class="name" id=".isString"><span class="type-signature">(static) </span>isString<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isset"><span class="type-signature">(static) </span>_isset<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -2891,7 +2287,160 @@
 
 
 <div class="description">
-    Checks whether value is a string or not.
+    Returns whether passed in values is defined and not null or not.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line233">line 233</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="._isString"><span class="type-signature">(static) </span>_isString<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks whether value is a stringOps or not.
 </div>
 
 
@@ -2984,7 +2533,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line182">line 182</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line97">line 97</a>
     </li></ul></dd>
     
 
@@ -3036,7 +2585,7 @@
     
 
     
-    <h4 class="name" id=".isSymbol"><span class="type-signature">(static) </span>isSymbol<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isSymbol"><span class="type-signature">(static) </span>_isSymbol<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -3137,7 +2686,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line231">line 231</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line153">line 153</a>
     </li></ul></dd>
     
 
@@ -3189,7 +2738,7 @@
     
 
     
-    <h4 class="name" id=".isType"><span class="type-signature">(static) </span>isType<span class="signature">(Type, value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isType"><span class="type-signature">(static) </span>_isType<span class="signature">(type, obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -3197,7 +2746,7 @@
 
 
 <div class="description">
-    Returns a boolean indicating whether a value is of given type or not.
+    Type checker.  Note** The `Type` passed in, if a constructor, shouldbe a named constructor/_functionOps-instance;  E.g.,``` _functionOps SomeName () {} // or var SomeName = _functionOps SomeName () {} // or class SomeName {}```
 </div>
 
 
@@ -3233,7 +2782,7 @@
 
         <tr>
             
-                <td class="name"><code>Type</code></td>
+                <td class="name"><code>type</code></td>
             
 
             <td class="type">
@@ -3259,7 +2808,7 @@
 
         <tr>
             
-                <td class="name"><code>value</code></td>
+                <td class="name"><code>obj</code></td>
             
 
             <td class="type">
@@ -3316,7 +2865,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line122">line 122</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -3368,7 +2917,7 @@
     
 
     
-    <h4 class="name" id=".isUndefined"><span class="type-signature">(static) </span>isUndefined<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isUndefined"><span class="type-signature">(static) </span>_isUndefined<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -3469,7 +3018,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line217">line 217</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -3521,7 +3070,7 @@
     
 
     
-    <h4 class="name" id=".isUsableImmutablePrimitive"><span class="type-signature">(static) </span>isUsableImmutablePrimitive<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isUsableImmutablePrimitive"><span class="type-signature">(static) </span>_isUsableImmutablePrimitive<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -3529,7 +3078,7 @@
 
 
 <div class="description">
-    Checks if given `x` is one of the four"usable" immutable JS primitives; I.e., One of [String, Boolean, Number, Symbol]
+    Checks if given `x` is set and of one of [String, Boolean, Number, Symbol] (null and undefined are immutable but are not "usable" (usually not what we want to operate on).
 </div>
 
 
@@ -3610,6 +3159,8 @@
     
 
     
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>If needed copy&paste implementation to your project.</li></ul></dd>
+    
 
     
 
@@ -3622,7 +3173,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line243">line 243</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line161">line 161</a>
     </li></ul></dd>
     
 
@@ -3674,7 +3225,7 @@
     
 
     
-    <h4 class="name" id=".isWeakMap"><span class="type-signature">(static) </span>isWeakMap<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isWeakMap"><span class="type-signature">(static) </span>_isWeakMap<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -3775,7 +3326,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line203">line 203</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line121">line 121</a>
     </li></ul></dd>
     
 
@@ -3827,7 +3378,7 @@
     
 
     
-    <h4 class="name" id=".isWeakSet"><span class="type-signature">(static) </span>isWeakSet<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="._isWeakSet"><span class="type-signature">(static) </span>_isWeakSet<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
     
@@ -3928,7 +3479,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line210">line 210</a>
+        <a href="uncurried__objectOps__is.js.html">uncurried/_objectOps/_is.js</a>, <a href="uncurried__objectOps__is.js.html#line129">line 129</a>
     </li></ul></dd>
     
 
@@ -3980,1077 +3531,6 @@
     
 
     
-    <h4 class="name" id=".keys"><span class="type-signature">(static) </span>keys<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Array.&lt;String>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Gets own enumerable keys of passed in object (same as `Object.keys`).
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line319">line 319</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array.&lt;String></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".length"><span class="type-signature">(static) </span>length<span class="signature">(x)</span><span class="type-signature"> &rarr; {Number}</span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>x</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line311">line 311</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        - Throws an error if value doesn't have a `length` property ( `null`, `undefined`, {Boolean}, Symbol, et. al.).
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Number</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".objDifference"><span class="type-signature">(static) </span>objDifference<span class="signature">(obj1, obj2)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Returns the cartesian difference of two objects.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj1</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>obj2</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line102">line 102</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Difference of given objects.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".objDifference"><span class="type-signature">(static) </span>objDifference<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Returns the cartesian complement of one or more objects on given object.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>...obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">One or more objects to calculate complement from.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line112">line 112</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Complement of given objects.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".objIntersect"><span class="type-signature">(static) </span>objIntersect<span class="signature">(obj1, obj2)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Returns the cartesian intersection of two objects.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj1</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>obj2</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line92">line 92</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Intersection of given objects.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".objUnion"><span class="type-signature">(static) </span>objUnion<span class="signature">(obj1, obj2)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Cartesian union for objects (operates on two objects).
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj1</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>obj2</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line82">line 82</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Unified obj.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id=".of"><span class="type-signature">(static) </span>of<span class="signature">(x, &hellip;args<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {*|undefined}</span></h4>
     
 
@@ -5059,7 +3539,7 @@
 
 
 <div class="description">
-    Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):- If exists `(value).constructor.of` uses this.- If value is of one String, Boolean, Symbol, or Number types calls it's constructor as a function (in cast form;  E.g., `constructor(...args)` )- Else if constructor is a function, thus far, then calls constructor using the `new` keyword (with any passed in args).
+    Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):```// - If exists `(value).constructor.of` uses this.// - If value is of one String, Boolean, Symbol, or Number types calls it's//      constructor as a function (in cast form;  E.g., `constructor(...args)` )// - Else if constructor is a function, thus far, then calls constructor using//      the `new` keyword (with any passed in args).```
 </div>
 
 
@@ -5197,7 +3677,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line300">line 300</a>
+        <a href="uncurried__objectOps__of.js.html">uncurried/_objectOps/_of.js</a>, <a href="uncurried__objectOps__of.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -5256,7 +3736,7 @@
     
 
     
-    <h4 class="name" id=".prop"><span class="type-signature">(static) </span>prop<span class="signature">(propName, obj)</span><span class="type-signature"> &rarr; {*|undefined}</span></h4>
+    <h4 class="name" id=".prop"><span class="type-signature">(static) </span>prop<span class="signature">(name, obj)</span><span class="type-signature"> &rarr; {*}</span></h4>
     
 
     
@@ -5264,7 +3744,7 @@
 
 
 <div class="description">
-    Gives `undefined` or prop value if it is available.
+    Returns property value if found; Else `undefined`.
 </div>
 
 
@@ -5300,7 +3780,7 @@
 
         <tr>
             
-                <td class="name"><code>propName</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -5316,7 +3796,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Key to search on `obj`</td>
         </tr>
 
     
@@ -5329,7 +3809,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -5339,7 +3819,7 @@
 
             
 
-            <td class="description last">Object to search.</td>
+            <td class="description last">Object to search `name` on.</td>
         </tr>
 
     
@@ -5380,7 +3860,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line34">line 34</a>
+        <a href="uncurried__objectOps__prop.js.html">uncurried/_objectOps/_prop.js</a>, <a href="uncurried__objectOps__prop.js.html#line5">line 5</a>
     </li></ul></dd>
     
 
@@ -5415,9 +3895,6 @@
     <dd>
         
 <span class="param-type">*</span>
-|
-
-<span class="param-type">undefined</span>
 
 
     </dd>
@@ -5536,7 +4013,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line287">line 287</a>
+        <a href="uncurried__objectOps__typeOf.js.html">uncurried/_objectOps/_typeOf.js</a>, <a href="uncurried__objectOps__typeOf.js.html#line10">line 10</a>
     </li></ul></dd>
     
 

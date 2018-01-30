@@ -110,7 +110,7 @@ const curry4 = fn => curryN(4, fn);
 const curry5 = fn => curryN(5, fn);
 
 /**
- * @memberOf _objectOps_
+ * @memberOf _objectOps
  */
 
 /**
@@ -124,7 +124,7 @@ const prop$1 = (name, obj) => obj[name];
 
 /**
  * Created by elyde on 12/18/2016.
- * @memberOf _objectOps_
+ * @memberOf _objectOps
  */
 const _Number$1 = Number.name;
 const _NaN = 'NaN';
@@ -157,7 +157,7 @@ function typeOf (value) {
 
 /**
  * Created by elyde on 12/18/2016.
- * @memberOf _objectOps_
+ * @memberOf _objectOps
  */
 
 let _String = String.name;
@@ -279,7 +279,7 @@ const of = (x, ...args) => {
 };
 
 /**
- * @module _objectOps_
+ * @module _objectOps
  * @private
  */
 

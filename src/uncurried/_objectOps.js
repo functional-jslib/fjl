@@ -1,6 +1,6 @@
 /**
- * @module _objectOps_
- * @private
+ * @module _objectOps
+ * @description Object operations (uncurried).
  */
 export * from './_jsPlatform/_object';
 export * from './_objectOps/_prop';

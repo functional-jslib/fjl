@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 /**
- * @memberOf _objectOps_
+ * @memberOf _objectOps
  */
 
 /**

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: uncurried/_listOps/_map.js</title>
+    <title>JSDoc: Source: uncurried/_objectOps.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: uncurried/_listOps/_map.js</h1>
+    <h1 class="page-title">Source: uncurried/_objectOps.js</h1>
 
     
 
@@ -26,29 +26,17 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import {of} from '../_objectOps/_of';
-
-import {aggregatorByType}   from './_aggregation';
-
-import {length}              from '../_jsPlatform/_object';
-
-/**
- * @function module:_listOps.map
- * @param fn {Function} - Function to map on functor item(s).
- * @param xs {Array|String|*} - Functor.
- * @returns {Array|String|*} - Functor type that is passed in.
+            <pre class="prettyprint source linenums"><code>/**
+ * @module _objectOps
+ * @description Object operations (uncurried).
  */
-export const map = (fn, xs) => {
-    let ind = 0,
-        limit = length(xs),
-        out = of(xs),
-        aggregate = aggregatorByType(xs);
-    if (!limit) { return out; }
-    for (; ind &lt; limit; ind += 1) {
-        out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
-    }
-    return out;
-};
+export * from './_jsPlatform/_object';
+export * from './_objectOps/_prop';
+export * from './_objectOps/_typeOf';
+export * from './_objectOps/_is';
+export * from './_objectOps/_of';
+export * from './_objectOps/_assignDeep';
+export * from './_objectOps/_setTheory';
 </code></pre>
         </article>
     </section>
