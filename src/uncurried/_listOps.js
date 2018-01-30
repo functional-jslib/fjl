@@ -2,6 +2,7 @@
  * List operations module.
  * @module _listOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
+ * @private
  */
 import {
     concat as listAppend,
