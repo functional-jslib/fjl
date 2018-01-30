@@ -11,7 +11,7 @@ import {split} from './jsPlatform/string';
 export const
 
     /**
-     * Splits a stringOps on all '\n', '\r', '\n\r', or '\r\n' characters.
+     * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
      * @function module:stringOps.lines
      * @param str {String}
      * @returns {Array}
@@ -19,7 +19,7 @@ export const
     lines = split(/[\n\r]/gm),
 
     /**
-     * Splits a stringOps on all '\s' and/or all '\t' characters.
+     * Splits a string on all '\s' and/or all '\t' characters.
      * @function module:stringOps.words
      * @param str{String}
      * @returns {Array}

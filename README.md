@@ -14,11 +14,27 @@ Functional Javascript Library
  and is built from the ground up using functional concepts.
 - A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
 - A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `_append` (uncurried)
+    `append`, `_append` (un-curried version)
+- A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
+are separated out 'Data.List' etc..
 - Etc. etc..
 
 ### Docs
+
+**JSDocs** [https://functional-jslib.github.io/fjl]
+
+ The docs are divided into modules though all methods in the library all live on `fjl` or the top level export
+ of the library (the docs are written out that way to easier understand the separation and the grouping of
+ methods (will give users a better idea of what methods are for what (without reading to much documentation))).
+
+Modules with a prefixed '_' contain docs for uncurried members.
+Modules without a prefixed '_' contain docs for curried members (one set of docs will be generated per module in
+the future).
+
 Docs at the, jsdocs link listed further below, are divided by the operations ported over from the haskell prelude:
+
+#### `booleanOps`
+@todo List methods here
 
 #### `listOps`
 The `listOps` modules contains docs for everything imported from the `Data.List` haskell module.
@@ -32,24 +48,25 @@ negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
 id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders
 ```
 
+#### `objectOps`
+@todo List methods here
 
-Jsdocs here:
-https://functional-jslib.github.io/fjl/
+#### `stringOps`
+@todo List methods here
 
 ### Notable methods not added from the haskell prelude:
 - Math/Integral/Num/etc. methods
 
-### Included methods
-Methods dealing with lists (strings/arrays etc.) and objects.
-Full list coming soon.
+Jsdocs here:
+https://functional-jslib.github.io/fjl/
 
 ### Needed
 - [x] - ~~Implementations of the `scan*` methods?~~ Implemented as of version `0.21.0`
-- [ ] - "" of the Math methods?
-- [ ] - A friendly function names module has to be built
+- [ ] ~~- "" of the Math methods?~~
+- [X] ~~- A friendly function names module should be considered built
 for some of these functions as most javascript developers
 will not be familiar with the function names and paradigms
-used in haskell.
+used in haskell.~~
 - [ ] - Also some of the utility functions used to create
 the libraries functions should be exported with clear and meaningful
 names (they haven't been reviewed for export yet).
@@ -64,7 +81,8 @@ more performant than just currying the built in ones.
 
 ## Sections in Readme:
 - [Getting Started](#getting-started)
-- [Unit Tests](#unit-tests)
+- [Development](#development)
+- ~~[Unit Tests](#unit-tests)~~
 - [Requirements](#requirements)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
@@ -72,7 +90,7 @@ more performant than just currying the built in ones.
 ## Getting Started:
 
 ### In Browser:
-In the './dist' folder there are three distributed builds available for the
+In the './dist' folder there are four distributed builds available for the
 browser:
 
 - './dist/amd' - Asynchronous module format.
@@ -92,14 +110,40 @@ import {...} from 'fjl';
 const fjl = require('fjl');
 ```
 
-## Unit Tests:
-To run unit tests:
+## Development:
+- Sources are in './src'
+    - Sources are divided by un-curried definitions ('./src/uncurried')
+    and curried definitions (files in './src/**/*' except the ones in './src/uncurried' (of course)).
+    - './src/jsPlatform' and './src/uncurried/jsPlatform' are native platform specific method versions
+     pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (listOps, functionOps etc.).
+    - About non-conformity to full modularity (one-function-per-file):
+      The library could have been written this way initially but wasn't, specifically to make development on the library easier
+      (though it can be argued that development is actually more difficult this way,
+      the trade-off of being able to think of functions in groups/modules and their relations is easier than having to think about
+      functions as a smattering (of-them) numbering in the 100's of them (remember we export the curried and un-curried versions of prelude functions).
+- Distributions are in './dist'
+- Docs are generated via jsdoc to './docs' dir.
+- Docs are written inline, in source using [jsdoc](http://usejsdoc.com) format.
+ and are generated out (to the './docs' folder) in html format (which get pulled by github onto
+ [https://functional-jslib.github.io/fjl] (via the repo's settings).
 
-1.)  First do an `npm install` in project root.
+### For development tasks:
+See `scripts` field in `package.json`.
 
-2.)  For running tests on './src' with node:
-Run one of the following from your terminal (from repo root):
- - `$ npm test` 
+**Note about 'pre-publish' script task:** 'pre-publish' wasn't confused with default 'prepublish' task.  'pre-publish'
+task is just for getting conceptual pre-publish functionality locally (on dev-machine) without npm's default 'prepublish' side-effects/functionality (our
+'pre-publish' doesn't get triggered by 'travis-ci' and the like since it isn't formally used for pre-publish on these
+platforms, etc..).
+
+### Dev notes:
+- './.babelrc' is used only for tests.  Babel configurations found in './gulpfileConfig.json' are the
+configurations used for building the project.
+
+### Unit testing:
+Unit tests are grouped by exported module:
+'tests/test-listOps.js' - Tests 'listOps' module etc.
+
+We are using 'chai' and 'mocha' though we may want to move to 'jest' in the future.
 
 ## Requirements:
 - Javascript versions Ecmascript 5+
@@ -113,12 +157,7 @@ Run one of the following from your terminal (from repo root):
 - 8+
 
 ## License:
-[GPL v2+](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html") AND
-[MIT](http://opensource.org/licenses/MIT "http://opensource.org/licenses/MIT")
-
-## Dev notes:
-- './.babelrc' is used only for tests.  Babel configurations found in './gulpfileConfig.json' are the 
-configurations used for building the project.
+[BSD 3 Clause](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html") AND
 
 ## Resource:
 - Docs format: http://usejsdoc.org/

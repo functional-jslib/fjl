@@ -291,13 +291,6 @@ objComplement = exports.objComplement = (0, _curry.curry2)(_setTheory.objComplem
 
 
 /**
- * Returns whether a value is a function or not.
- * @function module:objectOps.isFunction
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
  * Returns a boolean indicating whether a value is of given type or not.
  * @function module:objectOps.isType
  * @param Type {Function|String} - Constructor or constructor name
@@ -307,6 +300,13 @@ objComplement = exports.objComplement = (0, _curry.curry2)(_setTheory.objComplem
 isType = exports.isType = (0, _curry.curry)(_is.isType);
 
 /**
+ * Returns whether a value is a function or not.
+ * @function module:objectOps.isFunction
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
  * Checks if `value` is an es2015 `class`.
  * @function module:objectOps.isClass
  * @param x {*}
@@ -314,7 +314,7 @@ isType = exports.isType = (0, _curry.curry)(_is.isType);
  */
 
 /**
- * Returns a booleanOps depicting whether a value is callable or not.
+ * Returns a boolean depicting whether a value is callable or not.
  * @function module:objectOps.isCallable
  * @tentative
  * @private
@@ -323,7 +323,7 @@ isType = exports.isType = (0, _curry.curry)(_is.isType);
  */
 
 /**
- * Checks if value is an arrayOps.
+ * Checks if value is an array.
  * @function module:objectOps.isArray
  * @param value {*}
  * @returns {boolean}
@@ -337,7 +337,7 @@ isType = exports.isType = (0, _curry.curry)(_is.isType);
  */
 
 /**
- * Checks if value is a booleanOps.
+ * Checks if value is a boolean.
  * @function module:objectOps.isBoolean
  * @param value {*}
  * @returns {Boolean}
@@ -453,4 +453,43 @@ isType = exports.isType = (0, _curry.curry)(_is.isType);
  * @function module:objectOps.isset
  * @param x {*}
  * @returns {Boolean}
+ */
+
+/**
+ * Returns the constructor/class/type name of a value.
+ * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
+ * @note Returns 'Undefined' if value is `undefined`
+ * @note Returns 'Null' if value is `null`
+ * For values that have no concrete constructors and/or casters
+ * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
+ * @function module:objectOps.typeOf
+ * @param value {*}
+ * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
+ */
+
+/**
+ * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
+ * - If exists `(value).constructor.of` uses this.
+ * - If value is of one String, Boolean, Symbol, or Number types calls it's constructor as a function (in cast form;  E.g., `constructor(...args)` )
+ * - Else if constructor is a function, thus far, then calls constructor using the `new` keyword (with any passed in args).
+ * @function module:objectOps.of
+ * @param x {*} - Value to derive returned value's type from.
+ * @param [args] {...*} - Any args to pass in to matched construction strategy.
+ * @returns {*|undefined} - New value of given value's type else `undefined`.
+ */
+
+/**
+ * @function module:objectOps.length
+ * @param x {*}
+ * @returns {Number}
+ * @throws {Error} - Throws an error if value doesn't have a `length` property (
+ *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
+ */
+
+/**
+ * Gets own enumerable keys of passed in object (same as `Object.keys`).
+ * @function module:objectOps.keys
+ * @param obj {*}
+ * @returns {Array<String>}
  */

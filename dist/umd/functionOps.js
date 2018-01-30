@@ -73,10 +73,10 @@
     var
 
     /**
-     * Functional `apply` _functionOps (takes no context).
-     * @function module:_functionOps.apply
+     * Functional `apply` function (takes no context).
+     * @function module:functionOps.apply
      * @param fn {Function}
-     * @param args {*}
+     * @param [args] {Array<*>}
      * @returns {*}
      * @curried - Triggered at 2 or more args.
      */
@@ -87,7 +87,7 @@
      * Functional `call` function (takes no context).
      * @function module:functionOps.call
      * @param fn {Function}
-     * @param args {*}
+     * @param [args] {...*}
      * @returns {*}
      * @curried
      */
@@ -125,7 +125,7 @@
 
 
     /**
-     * Flips a _functionOps's first and second arguments and and returns a new _functionOps requiring said arguments in reverse.
+     * Flips a function's first and second arguments and and returns a new function requiring said arguments in reverse.
      * @function module:fnOperators.flip
      * @param fn {Function}
      * @returns {Function}
@@ -241,28 +241,32 @@
      */
 
     /**
-     * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call function until 2 or more args).
+     * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers))
+     * (won't call function until 2 or more args (not counting placeholder (`__`) value).
      * @function module:functionOps.curry2_
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
-     * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call function until 3 or more args).
+     * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers))
+     * (won't call function until 3 or more args (not counting placeholder (`__`) value).
      * @function module:functionOps.curry3_
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
-     * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call function until 4 or more args).
+     * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))
+     * (won't call function until 4 or more args (not counting placeholder (`__`) value).
      * @function module:functionOps.curry4_
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
-     * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call function until 5 or more args).
+     * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))
+     * (won't call function until 5 or more args (not counting placeholder (`__`) value).
      * @function module:functionOps.curry5_
      * @param fn {Function}
      * @returns {Function}
@@ -302,14 +306,14 @@
 
     /**
      * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
-     * @function module:_functionOps.negateP
+     * @function module:functionOps.negateP
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-     * @function module:_functionOps.negateFMany
+     * @function module:functionOps.negateFMany
      * @param fn {Function}
      * @returns {Function}
      */
@@ -326,7 +330,7 @@
      * Composes all functions passed in from right to left passing each functions return value to
      * the function on the left of itself.
      * @function module:functionOps.compose
-     * @param ...args {Function}
+     * @param args {...Function}
      * @returns {Function}
      */
 });

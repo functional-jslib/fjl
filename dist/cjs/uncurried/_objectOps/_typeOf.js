@@ -14,12 +14,16 @@ var _Number = Number.name,
     _Undefined = 'Undefined';
 
 /**
- * Returns the class name of an object from it's class string.
- * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
+ * Returns the constructor/class/type name of a value.
+ * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
+ * @note Returns 'Undefined' if value is `undefined`
+ * @note Returns 'Null' if value is `null`
+ * For values that have no concrete constructors and/or casters
+ * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
  * @function module:_objectOps.typeOf
  * @param value {*}
- * @returns {string} - Constructor's name property if not null or undefined (in which case a
- *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
+ * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
  */
 function typeOf(value) {
     var retVal = void 0;

@@ -1,7 +1,7 @@
 import {isFunction, isset} from './_is';
 import {hasOwnProperty} from '../_jsPlatform/_object';
 import {apply} from '../_jsPlatform/_function';
-import {typeOf} from "./_typeOf";
+import {typeOf} from './_typeOf';
 
 /**
  * Checks if given `x` is set and of one of

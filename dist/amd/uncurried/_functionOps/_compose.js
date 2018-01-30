@@ -12,7 +12,7 @@ define(['exports', '../_jsPlatform/_array'], function (exports, _array) {
    * the functionOps on the left of itself.
    * @function module:_functionOps.compose
    * @type {Function}
-   * @param args {...Function}
+   * @param args {...{Function}}
    * @returns {Function}
    */
   const compose = exports.compose = (...args) => arg0 => (0, _array.reduceRight)((value, fn) => fn(value), arg0, args);

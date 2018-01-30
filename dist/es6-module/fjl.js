@@ -132,12 +132,16 @@ const _Null$1 = 'Null';
 const _Undefined$1 = 'Undefined';
 
 /**
- * Returns the class name of an object from it's class string.
- * @note Returns 'NaN' if value `isNaN` and value type is 'Number'.
+ * Returns the constructor/class/type name of a value.
+ * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
+ * @note Returns 'Undefined' if value is `undefined`
+ * @note Returns 'Null' if value is `null`
+ * For values that have no concrete constructors and/or casters
+ * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
  * @function module:_objectOps.typeOf
  * @param value {*}
- * @returns {string} - Constructor's name property if not null or undefined (in which case a
- *  name representing those types is returned ('Null' and or 'Undefined' (es6 compliant))).
+ * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
  */
 function typeOf (value) {
     let retVal;
@@ -178,7 +182,7 @@ const isFunction = value => instanceOf$1(Function, value);
 const isType$1 = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type);
 const isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 const isCallable = x => isFunction(x) && !isClass(x);
-const isArray = value => isType$1(Array, value);
+const {isArray} = Array;
 const isObject = value => isType$1(_Object, value);
 const isBoolean = value => isType$1(_Boolean, value);
 const isNumber = value => isType$1(_Number, value);
@@ -192,8 +196,9 @@ const isNull = value => isType$1(_Null, value);
 const isSymbol = value => isType$1(_Symbol, value);
 const isUsableImmutablePrimitive = x => {
         const typeOfX = typeOf(x);
-        return [_String, _Number, _Boolean, _Symbol]
-            .some(Type => Type === typeOfX);
+        return isset(x) &&
+            [_String, _Number, _Boolean, _Symbol]
+                .some(Type => Type === typeOfX);
     };
 const isEmptyList = x => !length(x);
 const isEmptyObject = obj => isEmptyList(keys(obj));
@@ -201,20 +206,19 @@ const isEmptyCollection = x => x.size === 0;
 const isEmpty = value => {
         let typeOfValue = typeOf(value),
             retVal;
-
-        if (!value) { // '', 0, `null`, `undefined` or `false` then is empty
+        if (!value) { // if '', 0, `null`, `undefined`, or `false` then is empty
             retVal = true;
         }
         else if (typeOfValue === _Array || typeOfValue === _Function) {
             retVal = isEmptyList(value);
         }
-        else if (typeOfValue === _Number && value !== 0) {
+        else if (typeOfValue === _Number) {
             retVal = false;
         }
         else if (typeOfValue === _Object) {
             retVal = isEmptyObject(value);
         }
-        else if (hasOwnProperty$1('size', value)) {
+        else if (hasOwnProperty$1('size', value) && isNumber(value.size)) {
             retVal = isEmptyCollection(value);
         }
         else {
@@ -222,7 +226,7 @@ const isEmpty = value => {
         }
         return retVal;
     };
-const isset = x => !isNull(x) && !isUndefined(x);
+const isset = x => x !== null && x !== undefined;
 
 const assignDeep$1 = (obj0, ...objs) =>
         objs.reduce((topAgg, obj) =>
@@ -263,13 +267,42 @@ const isFalsy = value => !value;
 const alwaysTrue = () => true;
 const alwaysFalse = () => false;
 
+/**
+ * Checks if given `x` is set and of one of
+ *  [String, Boolean, Number, or Symbol] (null and undefined are immutable
+ *   but are not "usable" or 'not what we usually want to operate on'.
+ * @private
+ * @param x {*}
+ * @returns {Boolean}
+ */
+function isUsableImmutablePrimitive$1 (x) {
+    const typeOfX = typeOf(x);
+    return isset(x) &&
+        [String.name, Number.name, Boolean.name, Symbol.name]
+            .some(Type => Type === typeOfX);
+}
+
+/**
+ * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
+ * ```
+ * // - If exists `(value).constructor.of` uses this.
+ * // - If value is of one String, Boolean, Symbol, or Number types calls it's
+ * //      constructor as a function (in cast form;  E.g., `constructor(...args)` )
+ * // - Else if constructor is a function, thus far, then calls constructor using
+ * //      the `new` keyword (with any passed in args).
+ * ```
+ * @function module:_objectOps.of
+ * @param x {*} - Value to derive returned value's type from.
+ * @param [args] {...*} - Any args to pass in to matched construction strategy.
+ * @returns {*|undefined} - New value of given value's type else `undefined`.
+ */
 const of = (x, ...args) => {
     if (!isset(x)) { return undefined; }
     const constructor = x.constructor;
     if (hasOwnProperty$1('of', constructor)) {
         return apply(constructor.of, args);
     }
-    else if (isUsableImmutablePrimitive(x)) {
+    else if (isUsableImmutablePrimitive$1(x)) {
         return apply(constructor, args);
     }
     else if (isFunction(constructor)) {
@@ -280,7 +313,7 @@ const of = (x, ...args) => {
 
 /**
  * @module _objectOps
- * @private
+ * @description Object operations (uncurried).
  */
 
 const aggregateStr = (agg, item) => agg + item;
@@ -1081,6 +1114,13 @@ const objComplement$$1 = curry2(objComplement$1);
 const isType$$1 = curry(isType$1);
 
     /**
+     * Returns whether a value is a function or not.
+     * @function module:objectOps.isFunction
+     * @param value {*}
+     * @returns {Boolean}
+     */
+
+    /**
      * Checks if `value` is an es2015 `class`.
      * @function module:objectOps.isClass
      * @param x {*}
@@ -1088,7 +1128,7 @@ const isType$$1 = curry(isType$1);
      */
 
     /**
-     * Returns a booleanOps depicting whether a value is callable or not.
+     * Returns a boolean depicting whether a value is callable or not.
      * @function module:objectOps.isCallable
      * @tentative
      * @private
@@ -1097,7 +1137,7 @@ const isType$$1 = curry(isType$1);
      */
 
     /**
-     * Checks if value is an arrayOps.
+     * Checks if value is an array.
      * @function module:objectOps.isArray
      * @param value {*}
      * @returns {boolean}
@@ -1111,7 +1151,7 @@ const isType$$1 = curry(isType$1);
      */
 
     /**
-     * Checks if value is a booleanOps.
+     * Checks if value is a boolean.
      * @function module:objectOps.isBoolean
      * @param value {*}
      * @returns {Boolean}
@@ -1227,6 +1267,45 @@ const isType$$1 = curry(isType$1);
      * @function module:objectOps.isset
      * @param x {*}
      * @returns {Boolean}
+     */
+
+    /**
+     * Returns the constructor/class/type name of a value.
+     * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
+     * @note Returns 'Undefined' if value is `undefined`
+     * @note Returns 'Null' if value is `null`
+     * For values that have no concrete constructors and/or casters
+     * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
+     * @function module:objectOps.typeOf
+     * @param value {*}
+     * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+     *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
+     */
+
+    /**
+     * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
+     * - If exists `(value).constructor.of` uses this.
+     * - If value is of one String, Boolean, Symbol, or Number types calls it's constructor as a function (in cast form;  E.g., `constructor(...args)` )
+     * - Else if constructor is a function, thus far, then calls constructor using the `new` keyword (with any passed in args).
+     * @function module:objectOps.of
+     * @param x {*} - Value to derive returned value's type from.
+     * @param [args] {...*} - Any args to pass in to matched construction strategy.
+     * @returns {*|undefined} - New value of given value's type else `undefined`.
+     */
+
+    /**
+     * @function module:objectOps.length
+     * @param x {*}
+     * @returns {Number}
+     * @throws {Error} - Throws an error if value doesn't have a `length` property (
+     *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
+     */
+
+    /**
+     * Gets own enumerable keys of passed in object (same as `Object.keys`).
+     * @function module:objectOps.keys
+     * @param obj {*}
+     * @returns {Array<String>}
      */
 
 const until$1 = (predicate, operation, typeInstance) => {
@@ -1352,7 +1431,7 @@ const id = x => x;
  * the functionOps on the left of itself.
  * @function module:_functionOps.compose
  * @type {Function}
- * @param args {...Function}
+ * @param args {...{Function}}
  * @returns {Function}
  */
 const compose = (...args) =>
@@ -1442,28 +1521,32 @@ const flip5$$1 = fn => curry(flip5$1(fn));
      */
 
     /**
-     * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call function until 2 or more args).
+     * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers))
+     * (won't call function until 2 or more args (not counting placeholder (`__`) value).
      * @function module:functionOps.curry2_
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
-     * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call function until 3 or more args).
+     * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers))
+     * (won't call function until 3 or more args (not counting placeholder (`__`) value).
      * @function module:functionOps.curry3_
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
-     * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call function until 4 or more args).
+     * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))
+     * (won't call function until 4 or more args (not counting placeholder (`__`) value).
      * @function module:functionOps.curry4_
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
-     * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call function until 5 or more args).
+     * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))
+     * (won't call function until 5 or more args (not counting placeholder (`__`) value).
      * @function module:functionOps.curry5_
      * @param fn {Function}
      * @returns {Function}
@@ -1503,14 +1586,14 @@ const flip5$$1 = fn => curry(flip5$1(fn));
 
     /**
      * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
-     * @function module:_functionOps.negateP
+     * @function module:functionOps.negateP
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-     * @function module:_functionOps.negateFMany
+     * @function module:functionOps.negateFMany
      * @param fn {Function}
      * @returns {Function}
      */
@@ -1527,14 +1610,12 @@ const flip5$$1 = fn => curry(flip5$1(fn));
      * Composes all functions passed in from right to left passing each functions return value to
      * the function on the left of itself.
      * @function module:functionOps.compose
-     * @param ...args {Function}
+     * @param args {...Function}
      * @returns {Function}
      */
 
 /**
  * @module _functionOps
- * @memberOf functionOps
- * @private
  */
 
 /**

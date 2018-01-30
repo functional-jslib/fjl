@@ -5,7 +5,7 @@ import {reduceRight} from '../_jsPlatform/_array';
  * the functionOps on the left of itself.
  * @function module:_functionOps.compose
  * @type {Function}
- * @param args {...Function}
+ * @param args {...{Function}}
  * @returns {Function}
  */
 export const compose = (...args) =>

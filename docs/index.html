@@ -57,29 +57,39 @@
 and is built from the ground up using functional concepts.</li>
 <li>A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).</li>
 <li>A functional library that has curried and un-curried versions of included operations.  Et. al.
-  <code>append</code>, <code>_append</code> (uncurried)</li>
+  <code>append</code>, <code>_append</code> (un-curried version)</li>
+<li>A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
+are separated out 'Data.List' etc..</li>
 <li>Etc. etc..</li>
 </ul>
-<h3>Docs</h3><p>Docs at the, jsdocs link listed further below, are divided by the operations ported over from the haskell prelude:</p>
+<h3>Docs</h3><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
+<p> The docs are divided into modules though all methods in the library all live on <code>fjl</code> or the top level export
+ of the library (the docs are written out that way to easier understand the separation and the grouping of
+ methods (will give users a better idea of what methods are for what (without reading to much documentation))).</p>
+<p>Modules with a prefixed '<em>' contain docs for uncurried members.
+Modules without a prefixed '</em>' contain docs for curried members (one set of docs will be generated per module in
+the future).</p>
+<p>Docs at the, jsdocs link listed further below, are divided by the operations ported over from the haskell prelude:</p>
+<h4><code>booleanOps</code></h4><p>@todo List methods here</p>
 <h4><code>listOps</code></h4><p>The <code>listOps</code> modules contains docs for everything imported from the <code>Data.List</code> haskell module.</p>
 <h4><code>functionOps</code></h4><p>The methods comprising <code>functionsOps</code> are:</p>
 <pre class="prettyprint source"><code>apply, call, curry, curry2, curry3, curry4, curry5, curryN,
 until, flip, flip3, flip4, flip5, flipN,
 negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
-id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders</code></pre><p>Jsdocs here:
-https://functional-jslib.github.io/fjl/</p>
+id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders</code></pre><h4><code>objectOps</code></h4><p>@todo List methods here</p>
+<h4><code>stringOps</code></h4><p>@todo List methods here</p>
 <h3>Notable methods not added from the haskell prelude:</h3><ul>
 <li>Math/Integral/Num/etc. methods</li>
 </ul>
-<h3>Included methods</h3><p>Methods dealing with lists (strings/arrays etc.) and objects.
-Full list coming soon.</p>
+<p>Jsdocs here:
+https://functional-jslib.github.io/fjl/</p>
 <h3>Needed</h3><ul>
 <li>[x] - <del>Implementations of the <code>scan*</code> methods?</del> Implemented as of version <code>0.21.0</code></li>
-<li>[ ] - &quot;&quot; of the Math methods?</li>
-<li>[ ] - A friendly function names module has to be built
+<li>[ ] <del>- &quot;&quot; of the Math methods?</del></li>
+<li>[X] <del>- A friendly function names module should be considered built
 for some of these functions as most javascript developers
 will not be familiar with the function names and paradigms
-used in haskell.</li>
+used in haskell.</del></li>
 <li>[ ] - Also some of the utility functions used to create
 the libraries functions should be exported with clear and meaningful
 names (they haven't been reviewed for export yet).</li>
@@ -93,12 +103,13 @@ more performant than just currying the built in ones.</li>
 </ul>
 <h2>Sections in Readme:</h2><ul>
 <li><a href="#getting-started">Getting Started</a></li>
-<li><a href="#unit-tests">Unit Tests</a></li>
+<li><a href="#development">Development</a></li>
+<li><del><a href="#unit-tests">Unit Tests</a></del></li>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#supported-platforms">Supported Platforms</a></li>
 <li><a href="#license">License</a></li>
 </ul>
-<h2>Getting Started:</h2><h3>In Browser:</h3><p>In the './dist' folder there are three distributed builds available for the
+<h2>Getting Started:</h2><h3>In Browser:</h3><p>In the './dist' folder there are four distributed builds available for the
 browser:</p>
 <ul>
 <li>'./dist/amd' - Asynchronous module format.</li>
@@ -106,13 +117,37 @@ browser:</p>
 <li>'./dist/iife' - Immediately Invoked Function Execution - (exports <code>fjl</code> as a global).</li>
 <li>'./dist/umd' - Universal module definition format.</li>
 </ul>
-<h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h2>Unit Tests:</h2><p>To run unit tests:</p>
-<p>1.)  First do an <code>npm install</code> in project root.</p>
-<p>2.)  For running tests on './src' with node:
-Run one of the following from your terminal (from repo root):</p>
-<ul>
-<li><code>$ npm test</code> </li>
+<h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h2>Development:</h2><ul>
+<li>Sources are in './src'<ul>
+<li>Sources are divided by un-curried definitions ('./src/uncurried')
+and curried definitions (files in './src/<em>*/</em>' except the ones in './src/uncurried' (of course)).</li>
+<li>'./src/jsPlatform' and './src/uncurried/jsPlatform' are native platform specific method versions
+pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (listOps, functionOps etc.).</li>
+<li>About non-conformity to full modularity (one-function-per-file):
+The library could have been written this way initially but wasn't, specifically to make development on the library easier
+(though it can be argued that development is actually more difficult this way,
+the trade-off of being able to think of functions in groups/modules and their relations is easier than having to think about
+functions as a smattering (of-them) numbering in the 100's of them (remember we export the curried and un-curried versions of prelude functions).</li>
 </ul>
+</li>
+<li>Distributions are in './dist'</li>
+<li>Docs are generated via jsdoc to './docs' dir.</li>
+<li>Docs are written inline, in source using <a href="http://usejsdoc.com">jsdoc</a> format.
+and are generated out (to the './docs' folder) in html format (which get pulled by github onto
+[https://functional-jslib.github.io/fjl] (via the repo's settings).</li>
+</ul>
+<h3>For development tasks:</h3><p>See <code>scripts</code> field in <code>package.json</code>.</p>
+<p><strong>Note about 'pre-publish' script task:</strong> 'pre-publish' wasn't confused with default 'prepublish' task.  'pre-publish'
+task is just for getting conceptual pre-publish functionality locally (on dev-machine) without npm's default 'prepublish' side-effects/functionality (our
+'pre-publish' doesn't get triggered by 'travis-ci' and the like since it isn't formally used for pre-publish on these
+platforms, etc..).</p>
+<h3>Dev notes:</h3><ul>
+<li>'./.babelrc' is used only for tests.  Babel configurations found in './gulpfileConfig.json' are the
+configurations used for building the project.</li>
+</ul>
+<h3>Unit testing:</h3><p>Unit tests are grouped by exported module:
+'tests/test-listOps.js' - Tests 'listOps' module etc.</p>
+<p>We are using 'chai' and 'mocha' though we may want to move to 'jest' in the future.</p>
 <h2>Requirements:</h2><ul>
 <li>Javascript versions Ecmascript 5+</li>
 </ul>
@@ -122,12 +157,7 @@ Run one of the following from your terminal (from repo root):</p>
 <h3>NodeJs</h3><ul>
 <li>8+</li>
 </ul>
-<h2>License:</h2><p><a href="http://www.gnu.org/licenses/gpl-2.0.html" title="http://www.gnu.org/licenses/gpl-2.0.html">GPL v2+</a> AND
-<a href="http://opensource.org/licenses/MIT" title="http://opensource.org/licenses/MIT">MIT</a></p>
-<h2>Dev notes:</h2><ul>
-<li>'./.babelrc' is used only for tests.  Babel configurations found in './gulpfileConfig.json' are the 
-configurations used for building the project.</li>
-</ul>
+<h2>License:</h2><p><a href="http://www.gnu.org/licenses/gpl-2.0.html" title="http://www.gnu.org/licenses/gpl-2.0.html">BSD 3 Clause</a> AND</p>
 <h2>Resource:</h2><ul>
 <li>Docs format: http://usejsdoc.org/</li>
 <li>Haskell docs search engine: https://www.haskell.org/hoogle/</li>
@@ -150,7 +180,7 @@ configurations used for building the project.</li>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 29 2018 22:02:48 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 29 2018 23:34:15 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
