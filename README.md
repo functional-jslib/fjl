@@ -3,7 +3,74 @@
 [![NPM version](https://badge.fury.io/js/fjl.svg)](http://badge.fury.io/js/fjl)
 [![Dependencies](https://david-dm.org/functional-jslib/fjl.png)](https://david-dm.org/functional-jslib/fjl)
 # fjl
-Functional Javascript Library
+Functional Javascript Library (inspired by Haskell's Prelude)
+
+### Docs
+
+**JSDocs** [https://functional-jslib.github.io/fjl]
+
+ The docs are divided into modules though all methods in the library all live on `fjl` or the top level export
+ of the library (the docs are written out that way to easier understand the separation and the grouping of
+ methods (will give users a better idea of what methods are for what (without reading to much documentation))).
+
+Modules with a prefixed '_' contain docs for un-curried members.
+Modules without a prefixed '_' contain docs for curried members (one set of docs will be generated per module in
+the future).
+
+The jsdocs link listed above has the modules included on `fjl`, divided by the operation types ported over from the haskell prelude:
+
+#### `booleanOps`
+```
+isTruthy, isFalsy, alwaysTrue, alwaysFalse
+```
+
+#### `listOps`
+The `listOps` modules contains docs for everything imported from the `Data.List` haskell module.
+```
+append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
+reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
+permutations, foldl, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
+replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices,
+take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at,
+find, filter, map, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf,
+isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3,
+zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, 
+any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, 
+scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy,
+removeBy, removeFirstBy, unionBy, union, intersect, intersectBy, difference,
+complement
+```
+
+#### `functionOps`
+The methods comprising `functionsOps` are:
+```
+apply, call, curry, curry2, curry3, curry4, curry5, curryN,
+until, flip, flip3, flip4, flip5, flipN,
+negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
+id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders
+```
+
+#### `objectOps`
+```
+assignDeep, assign, of, prop, typeOf, isType,
+isFunction, isType, isClass, isCallable,
+isArray, isObject, isBoolean, isNumber, isString, isMap,
+isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
+ isUsableImmutablePrimitive,
+isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset,
+objUnion, objIntersect, objDifference, objComplement
+```
+
+#### `stringOps`
+```
+lines, words, unwords, unlines
+```
+
+### Notable methods not added from the haskell prelude:
+- Math/Integral/Num/etc. methods
+
+Jsdocs here:
+https://functional-jslib.github.io/fjl/
 
 ## Motivations:
 - Haskell and it's `Prelude`.
@@ -18,47 +85,6 @@ Functional Javascript Library
 - A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
 are separated out 'Data.List' etc..
 - Etc. etc..
-
-### Docs
-
-**JSDocs** [https://functional-jslib.github.io/fjl]
-
- The docs are divided into modules though all methods in the library all live on `fjl` or the top level export
- of the library (the docs are written out that way to easier understand the separation and the grouping of
- methods (will give users a better idea of what methods are for what (without reading to much documentation))).
-
-Modules with a prefixed '_' contain docs for uncurried members.
-Modules without a prefixed '_' contain docs for curried members (one set of docs will be generated per module in
-the future).
-
-Docs at the, jsdocs link listed further below, are divided by the operations ported over from the haskell prelude:
-
-#### `booleanOps`
-@todo List methods here
-
-#### `listOps`
-The `listOps` modules contains docs for everything imported from the `Data.List` haskell module.
-
-#### `functionOps`
-The methods comprising `functionsOps` are:
-```
-apply, call, curry, curry2, curry3, curry4, curry5, curryN,
-until, flip, flip3, flip4, flip5, flipN,
-negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
-id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders
-```
-
-#### `objectOps`
-@todo List methods here
-
-#### `stringOps`
-@todo List methods here
-
-### Notable methods not added from the haskell prelude:
-- Math/Integral/Num/etc. methods
-
-Jsdocs here:
-https://functional-jslib.github.io/fjl/
 
 ### Needed
 - [x] - ~~Implementations of the `scan*` methods?~~ Implemented as of version `0.21.0`

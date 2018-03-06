@@ -47,7 +47,42 @@
 <a href="http://badge.fury.io/gh/functional-jslib%2Ffjl"><img src="https://badge.fury.io/gh/functional-jslib%2Ffjl.svg" alt="GitHub version"></a>
 <a href="http://badge.fury.io/js/fjl"><img src="https://badge.fury.io/js/fjl.svg" alt="NPM version"></a>
 <a href="https://david-dm.org/functional-jslib/fjl"><img src="https://david-dm.org/functional-jslib/fjl.png" alt="Dependencies"></a></p>
-<h1>fjl</h1><p>Functional Javascript Library</p>
+<h1>fjl</h1><p>Functional Javascript Library (inspired by Haskell's Prelude)</p>
+<h3>Docs</h3><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
+<p> The docs are divided into modules though all methods in the library all live on <code>fjl</code> or the top level export
+ of the library (the docs are written out that way to easier understand the separation and the grouping of
+ methods (will give users a better idea of what methods are for what (without reading to much documentation))).</p>
+<p>Modules with a prefixed '<em>' contain docs for un-curried members.
+Modules without a prefixed '</em>' contain docs for curried members (one set of docs will be generated per module in
+the future).</p>
+<p>The jsdocs link listed above has the modules included on <code>fjl</code>, divided by the operation types ported over from the haskell prelude:</p>
+<h4><code>booleanOps</code></h4><pre class="prettyprint source"><code>isTruthy, isFalsy, alwaysTrue, alwaysFalse</code></pre><h4><code>listOps</code></h4><p>The <code>listOps</code> modules contains docs for everything imported from the <code>Data.List</code> haskell module.</p>
+<pre class="prettyprint source"><code>append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
+reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
+permutations, foldl, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
+replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices,
+take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at,
+find, filter, map, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf,
+isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3,
+zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, 
+any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, 
+scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy,
+removeBy, removeFirstBy, unionBy, union, intersect, intersectBy, difference,
+complement</code></pre><h4><code>functionOps</code></h4><p>The methods comprising <code>functionsOps</code> are:</p>
+<pre class="prettyprint source"><code>apply, call, curry, curry2, curry3, curry4, curry5, curryN,
+until, flip, flip3, flip4, flip5, flipN,
+negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
+id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders</code></pre><h4><code>objectOps</code></h4><pre class="prettyprint source"><code>assignDeep, assign, of, prop, typeOf, isType,
+isFunction, isType, isClass, isCallable,
+isArray, isObject, isBoolean, isNumber, isString, isMap,
+isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
+ isUsableImmutablePrimitive,
+isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset,
+objUnion, objIntersect, objDifference, objComplement</code></pre><h4><code>stringOps</code></h4><pre class="prettyprint source"><code>lines, words, unwords, unlines</code></pre><h3>Notable methods not added from the haskell prelude:</h3><ul>
+<li>Math/Integral/Num/etc. methods</li>
+</ul>
+<p>Jsdocs here:
+https://functional-jslib.github.io/fjl/</p>
 <h2>Motivations:</h2><ul>
 <li>Haskell and it's <code>Prelude</code>.</li>
 <li>Lambda Calculus.</li>
@@ -62,27 +97,6 @@ and is built from the ground up using functional concepts.</li>
 are separated out 'Data.List' etc..</li>
 <li>Etc. etc..</li>
 </ul>
-<h3>Docs</h3><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
-<p> The docs are divided into modules though all methods in the library all live on <code>fjl</code> or the top level export
- of the library (the docs are written out that way to easier understand the separation and the grouping of
- methods (will give users a better idea of what methods are for what (without reading to much documentation))).</p>
-<p>Modules with a prefixed '<em>' contain docs for uncurried members.
-Modules without a prefixed '</em>' contain docs for curried members (one set of docs will be generated per module in
-the future).</p>
-<p>Docs at the, jsdocs link listed further below, are divided by the operations ported over from the haskell prelude:</p>
-<h4><code>booleanOps</code></h4><p>@todo List methods here</p>
-<h4><code>listOps</code></h4><p>The <code>listOps</code> modules contains docs for everything imported from the <code>Data.List</code> haskell module.</p>
-<h4><code>functionOps</code></h4><p>The methods comprising <code>functionsOps</code> are:</p>
-<pre class="prettyprint source"><code>apply, call, curry, curry2, curry3, curry4, curry5, curryN,
-until, flip, flip3, flip4, flip5, flipN,
-negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
-id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders</code></pre><h4><code>objectOps</code></h4><p>@todo List methods here</p>
-<h4><code>stringOps</code></h4><p>@todo List methods here</p>
-<h3>Notable methods not added from the haskell prelude:</h3><ul>
-<li>Math/Integral/Num/etc. methods</li>
-</ul>
-<p>Jsdocs here:
-https://functional-jslib.github.io/fjl/</p>
 <h3>Needed</h3><ul>
 <li>[x] - <del>Implementations of the <code>scan*</code> methods?</del> Implemented as of version <code>0.21.0</code></li>
 <li>[ ] <del>- &quot;&quot; of the Math methods?</del></li>
@@ -180,7 +194,7 @@ configurations used for building the project.</li>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 29 2018 23:39:37 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Mar 05 2018 23:23:50 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
