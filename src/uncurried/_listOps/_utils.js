@@ -1,6 +1,6 @@
 /**
  * List operator utils module.
- * @module listOpsUtils_
+ * @module _listOpUtils
  * @private
  */
 import {apply}              from '../_jsPlatform/_function';  // un-curried version
@@ -33,11 +33,19 @@ export const
 
     /**
      * Slices a copy of list.
-     * @function listOpsUtils_.sliceFrom
+     * @function _listOpUtils.sliceFrom
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
     copy = xs => sliceFrom(0, xs),
+
+    /**
+     * Slices a copy of list.
+     * @function _listOpUtils.sliceCopy
+     * @param xs {Array|String|*}
+     * @returns {Array|String|*}
+     */
+    sliceCopy = copy,
 
     /**
      * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
@@ -128,7 +136,7 @@ export const
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOpsUtils_lastIndex
+     * @function module:_listOpUtilslastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -136,7 +144,7 @@ export const
 
     /**
      * Finds index in string or list.
-     * @function module:listOpsUtils_findIndexWhere
+     * @function module:_listOpUtilsfindIndexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -153,7 +161,7 @@ export const
 
     /**
      * Finds index in list from right to left.
-     * @function module:listOpsUtils_findIndexWhereRight
+     * @function module:_listOpUtilsfindIndexWhereRight
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -185,7 +193,7 @@ export const
     },
 
     /**
-     * @function module:listOpsUtils_find
+     * @function module:_listOpUtilsfind
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}

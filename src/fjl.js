@@ -15,3 +15,5 @@ export * from './booleanOps';
 export * from './functionOps';
 export * from './listOps';
 export * from './stringOps';
+export * from './utils';
+export * from './uncurried/_listOps/_utils';

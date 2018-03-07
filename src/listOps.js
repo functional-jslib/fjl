@@ -29,6 +29,8 @@ import {
 }
     from './uncurried/_listOps';
 
+export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';
+
 // Single arity methods (and single or more arg functions)
 export {
     and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, concat, reverse, transpose, subsequences,

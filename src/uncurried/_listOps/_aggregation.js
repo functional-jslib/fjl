@@ -22,5 +22,3 @@ export const
             default: return aggregateObj;
         }
     };
-
-

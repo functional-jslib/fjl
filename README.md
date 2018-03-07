@@ -55,19 +55,57 @@ These methods are not really from the haskell library but are utilities for maki
 working with javascript objects a little bit easier.
  
 ```
-assignDeep, assign, of, prop, typeOf, isType,
-isFunction, isType, isClass, isCallable,
+assignDeep, assign, of, prop, typeOf, isType, instanceOf, 
+isFunction, isClass, isCallable,
 isArray, isObject, isBoolean, isNumber, isString, isMap,
 isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
  isUsableImmutablePrimitive, isEmpty, isset,
 isEmptyList, isEmptyObject, isEmptyCollection,
-objUnion, objIntersect, objDifference, objComplement
+hasOwnProperty, length, keys,
+objUnion, objIntersect, objDifference, objComplement,
 ```
 
 #### `stringOps`
 ```
 lines, words, unwords, unlines
 ```
+
+#### `jsPlatform`
+Non-haskell/javascript-specific exports:
+```
+slice, includes, indexOf, lastIndexOf, split, push
+```
+
+**Note:**
+- `split` is for strings.
+- `push` is for arrays.
+
+#### Utilities
+**Note:** Utility functions are generally not curried (minus a few exceptions: 
+    `fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_`
+).
+
+##### Low level utilities
+Turning regular methods into functional ones;  I.e., these 
+take a `name` and return a function that take an-argument/arguments and a type value 
+that has a method of `name` on it.  
+The function returned takes arguments first and functor/member last.
+```
+fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
+fPureTakesOneOrMore, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_
+```
+
+##### List operation utilities
+**Uncurried**
+```
+sliceFrom, sliceTo, slice, sliceCopy
+genericAscOrdering, lengths, lengthsToSmallest, 
+reduceUntil, reduceRightUntil, reduce, reduceRight,
+lastIndex, findIndexWhere, findIndicesWhere, findWhere,
+aggregateStr, aggregateArr, aggregateObj, aggregateByType,
+```
+**Note:**
+- `lastIndex` gives you the last index of a list.
 
 ### Notable methods not added from the haskell prelude:
 - Math/Integral/Num/etc. methods
@@ -93,7 +131,7 @@ are separated out 'Data.List' etc..
 - [X] - ~~Also some of the utility functions used to create
 the libraries functions should be exported with clear and meaningful
 names (they haven't been reviewed for export yet).~~.  
-Used utility methods added as of this version. 
+Internal utility methods are exported as of this version. 
 
 ## Reasoning for paradigms
 ### Use of for-loops/while-loops instead of built-ins:
@@ -176,7 +214,7 @@ We are using 'chai' and 'mocha' though we may want to move to 'jest' in the futu
 - 8+
 
 ## License:
-[BSD 3 Clause](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html") AND
+[BSD 3 Clause](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html")
 
 ## Resource:
 - Docs format: http://usejsdoc.org/
