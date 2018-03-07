@@ -78,7 +78,6 @@ slice, includes, indexOf, lastIndexOf, split, push
 
 **Note:**
 - `split` is for strings.
-- `push` is for arrays.
 
 #### Utilities
 **Note:** Utility functions are generally not curried (minus a few exceptions: 
@@ -94,7 +93,6 @@ The function returned takes arguments first and functor/member last.
 fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
 fPureTakesOneOrMore, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_
 ```
-
 ##### List operation utilities
 **Uncurried**
 ```
