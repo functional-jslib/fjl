@@ -470,6 +470,7 @@ var of = function of(x) {
 /**
  * @module _objectOps
  * @description Object operations (uncurried).
+ * @private
  */
 
 var aggregateStr = function aggregateStr(agg, item) {
@@ -859,6 +860,7 @@ var slicedToArray = function () {
  * List operations module.
  * @module _listOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
+ * @private
  */
 // Exported internals
 var append = concat;
@@ -2206,6 +2208,7 @@ var flip5$$1 = function flip5$$1(fn) {
 
 /**
  * @module _functionOps
+ * @private
  */
 
 /**

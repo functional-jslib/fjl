@@ -25,11 +25,11 @@ isTruthy, isFalsy, alwaysTrue, alwaysFalse
 ```
 
 #### `listOps`
-The `listOps` modules contains docs for everything imported from the `Data.List` haskell module.
+List operations imported from the `Data.List` haskell module.
 ```
 append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
 reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
-permutations, foldl, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
+permutations, foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
 replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices,
 take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at,
 find, filter, map, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf,
@@ -42,7 +42,7 @@ complement
 ```
 
 #### `functionOps`
-The methods comprising `functionsOps` are:
+The methods comprising function operations are:
 ```
 apply, call, curry, curry2, curry3, curry4, curry5, curryN,
 until, flip, flip3, flip4, flip5, flipN,
@@ -51,13 +51,16 @@ id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeh
 ```
 
 #### `objectOps`
+These methods are not really from the haskell library but are utilities for making 
+working with javascript objects a little bit easier.
+ 
 ```
 assignDeep, assign, of, prop, typeOf, isType,
 isFunction, isType, isClass, isCallable,
 isArray, isObject, isBoolean, isNumber, isString, isMap,
 isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
- isUsableImmutablePrimitive,
-isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset,
+ isUsableImmutablePrimitive, isEmpty, isset,
+isEmptyList, isEmptyObject, isEmptyCollection,
 objUnion, objIntersect, objDifference, objComplement
 ```
 
@@ -87,28 +90,19 @@ are separated out 'Data.List' etc..
 - Etc. etc..
 
 ### Needed
-- [x] - ~~Implementations of the `scan*` methods?~~ Implemented as of version `0.21.0`
-- [ ] ~~- "" of the Math methods?~~
-- [X] ~~- A friendly function names module should be considered built
-for some of these functions as most javascript developers
-will not be familiar with the function names and paradigms
-used in haskell.~~
-- [ ] - Also some of the utility functions used to create
+- [X] - ~~Also some of the utility functions used to create
 the libraries functions should be exported with clear and meaningful
-names (they haven't been reviewed for export yet).
+names (they haven't been reviewed for export yet).~~.  
+Used utility methods added as of this version. 
 
 ## Reasoning for paradigms
 ### Use of for-loops/while-loops instead of built-ins:
-- They are faster than iterating with functional array additions (`map`, `forEach` etc.)
-as you can see from many performance tests online @todo add references here
-(or writing your own @todo add references here).
-- They allow us to make our curried functional additions (`map`, `some` etc.)
-more performant than just currying the built in ones.
+- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.).
+@todo add performance tests to the library and link to performance tests on jsperf
 
 ## Sections in Readme:
 - [Getting Started](#getting-started)
 - [Development](#development)
-- ~~[Unit Tests](#unit-tests)~~
 - [Requirements](#requirements)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
@@ -116,13 +110,12 @@ more performant than just currying the built in ones.
 ## Getting Started:
 
 ### In Browser:
-In the './dist' folder there are four distributed builds available for the
-browser:
-
-- './dist/amd' - Asynchronous module format.
-- './dist/cjs' - CommonJs module format.
-- './dist/iife' - Immediately Invoked Function Execution - (exports `fjl` as a global).
-- './dist/umd' - Universal module definition format.
+See desired export type below:
+- './dist/amd/' - Asynchronous module format.
+- './dist/cjs/' - CommonJs module format.
+- './dist/umd/' - Universal module definition format.
+- './dist/iife/' - Immediately Invoked Function Execution - (exports `fjl` as a global).
+- './dist/es6-module/' - Ecmascript 6 module format.
 
 ### In NodeJs: 
 

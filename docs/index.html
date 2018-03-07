@@ -56,10 +56,10 @@
 Modules without a prefixed '</em>' contain docs for curried members (one set of docs will be generated per module in
 the future).</p>
 <p>The jsdocs link listed above has the modules included on <code>fjl</code>, divided by the operation types ported over from the haskell prelude:</p>
-<h4><code>booleanOps</code></h4><pre class="prettyprint source"><code>isTruthy, isFalsy, alwaysTrue, alwaysFalse</code></pre><h4><code>listOps</code></h4><p>The <code>listOps</code> modules contains docs for everything imported from the <code>Data.List</code> haskell module.</p>
+<h4><code>booleanOps</code></h4><pre class="prettyprint source"><code>isTruthy, isFalsy, alwaysTrue, alwaysFalse</code></pre><h4><code>listOps</code></h4><p>List operations imported from the <code>Data.List</code> haskell module.</p>
 <pre class="prettyprint source"><code>append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
 reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
-permutations, foldl, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
+permutations, foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
 replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices,
 take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at,
 find, filter, map, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf,
@@ -68,16 +68,18 @@ zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN,
 any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, 
 scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy,
 removeBy, removeFirstBy, unionBy, union, intersect, intersectBy, difference,
-complement</code></pre><h4><code>functionOps</code></h4><p>The methods comprising <code>functionsOps</code> are:</p>
+complement</code></pre><h4><code>functionOps</code></h4><p>The methods comprising function operations are:</p>
 <pre class="prettyprint source"><code>apply, call, curry, curry2, curry3, curry4, curry5, curryN,
 until, flip, flip3, flip4, flip5, flipN,
 negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
-id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders</code></pre><h4><code>objectOps</code></h4><pre class="prettyprint source"><code>assignDeep, assign, of, prop, typeOf, isType,
+id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders</code></pre><h4><code>objectOps</code></h4><p>These methods are not really from the haskell library but are utilities for making 
+working with javascript objects a little bit easier.</p>
+<pre class="prettyprint source"><code>assignDeep, assign, of, prop, typeOf, isType,
 isFunction, isType, isClass, isCallable,
 isArray, isObject, isBoolean, isNumber, isString, isMap,
 isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
- isUsableImmutablePrimitive,
-isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset,
+ isUsableImmutablePrimitive, isEmpty, isset,
+isEmptyList, isEmptyObject, isEmptyCollection,
 objUnion, objIntersect, objDifference, objComplement</code></pre><h4><code>stringOps</code></h4><pre class="prettyprint source"><code>lines, words, unwords, unlines</code></pre><h3>Notable methods not added from the haskell prelude:</h3><ul>
 <li>Math/Integral/Num/etc. methods</li>
 </ul>
@@ -98,38 +100,28 @@ are separated out 'Data.List' etc..</li>
 <li>Etc. etc..</li>
 </ul>
 <h3>Needed</h3><ul>
-<li>[x] - <del>Implementations of the <code>scan*</code> methods?</del> Implemented as of version <code>0.21.0</code></li>
-<li>[ ] <del>- &quot;&quot; of the Math methods?</del></li>
-<li>[X] <del>- A friendly function names module should be considered built
-for some of these functions as most javascript developers
-will not be familiar with the function names and paradigms
-used in haskell.</del></li>
-<li>[ ] - Also some of the utility functions used to create
+<li>[X] - <del>Also some of the utility functions used to create
 the libraries functions should be exported with clear and meaningful
-names (they haven't been reviewed for export yet).</li>
+names (they haven't been reviewed for export yet).</del>.<br>Used utility methods added as of this version. </li>
 </ul>
 <h2>Reasoning for paradigms</h2><h3>Use of for-loops/while-loops instead of built-ins:</h3><ul>
-<li>They are faster than iterating with functional array additions (<code>map</code>, <code>forEach</code> etc.)
-as you can see from many performance tests online @todo add references here
-(or writing your own @todo add references here).</li>
-<li>They allow us to make our curried functional additions (<code>map</code>, <code>some</code> etc.)
-more performant than just currying the built in ones.</li>
+<li>They are faster than iterating with es5 functional array additions (<code>map</code>, <code>forEach</code> etc.).
+@todo add performance tests to the library and link to performance tests on jsperf</li>
 </ul>
 <h2>Sections in Readme:</h2><ul>
 <li><a href="#getting-started">Getting Started</a></li>
 <li><a href="#development">Development</a></li>
-<li><del><a href="#unit-tests">Unit Tests</a></del></li>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#supported-platforms">Supported Platforms</a></li>
 <li><a href="#license">License</a></li>
 </ul>
-<h2>Getting Started:</h2><h3>In Browser:</h3><p>In the './dist' folder there are four distributed builds available for the
-browser:</p>
+<h2>Getting Started:</h2><h3>In Browser:</h3><p>See desired export type below:</p>
 <ul>
-<li>'./dist/amd' - Asynchronous module format.</li>
-<li>'./dist/cjs' - CommonJs module format.</li>
-<li>'./dist/iife' - Immediately Invoked Function Execution - (exports <code>fjl</code> as a global).</li>
-<li>'./dist/umd' - Universal module definition format.</li>
+<li>'./dist/amd/' - Asynchronous module format.</li>
+<li>'./dist/cjs/' - CommonJs module format.</li>
+<li>'./dist/umd/' - Universal module definition format.</li>
+<li>'./dist/iife/' - Immediately Invoked Function Execution - (exports <code>fjl</code> as a global).</li>
+<li>'./dist/es6-module/' - Ecmascript 6 module format.</li>
 </ul>
 <h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h2>Development:</h2><ul>
 <li>Sources are in './src'<ul>
@@ -194,7 +186,7 @@ configurations used for building the project.</li>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Mar 05 2018 23:23:50 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 07 2018 08:56:40 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

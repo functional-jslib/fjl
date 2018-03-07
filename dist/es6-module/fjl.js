@@ -314,6 +314,7 @@ const of = (x, ...args) => {
 /**
  * @module _objectOps
  * @description Object operations (uncurried).
+ * @private
  */
 
 const aggregateStr = (agg, item) => agg + item;
@@ -469,6 +470,7 @@ const _permutationsAlgo = (listIn, limit, remainderLen, out = []) => {
  * List operations module.
  * @module _listOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
+ * @private
  */
 // Exported internals
 const append = concat;
@@ -1616,6 +1618,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
 
 /**
  * @module _functionOps
+ * @private
  */
 
 /**
