@@ -256,7 +256,7 @@
                 out.push(ind);
             }
         }
-        return out;
+        return out.length ? out : undefined;
     },
 
 

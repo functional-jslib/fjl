@@ -23,10 +23,9 @@ import {
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
-    filter, sum, product, maximum, minimum, nub, remove, insert,
-    nubBy, removeBy, removeFirstsBy, unionBy, intersectBy,
-    groupBy, sortBy, insertBy, sort, sortOn,
-    complement, difference, union, intersect,
+    filter, sum, product, maximum, minimum, nub, remove, insert, insertBy,
+    nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
+    complement, difference, union, intersect, intersectBy, groupBy,
     scanl, scanl1, scanr, scanr1
 } from '../src/listOps';
 
@@ -91,7 +90,7 @@ describe ('#listOps', function () {
             expectShallowEquals(append([], []), []);
         });
         it ('should throw an error when receiving Nothing', function () {
-            // assert.throws(append, Error);
+            // assert.throws(append, Error); // method is curried - cannot call like this
             assert.throws(() => append(null), Error);
             assert.throws(() => append(undefined), Error);
             assert.throws(() => append(null, []), Error);
@@ -255,6 +254,18 @@ describe ('#listOps', function () {
                 map(op, split('', word)),
                 ['ha', 'ea', 'la', 'la', 'oa'] );
         });
+        it ('should be able to map a function over a object.', function () {
+            const word = 'hello',
+                op = char => char + 'a',
+                objReductionOp = (agg, x, ind) => (
+                    agg[ind] = `${ind} bottles of beer on the wall`, agg
+                ),
+                obj = word.split(' ').reduce(objReductionOp, {}),
+                result = map(op, obj);
+
+            // Ensure values in result end with 'aa' (as dictated by `op`);
+            expectTrue(Object.keys(result).every(key => /walla$/.test(result[key])));
+        });
         it ('should return an empty list when receiving an empty list', function () {
             expectShallowEquals(map(x => x, []), []);
             expectShallowEquals(map(x => x, ''), '');
@@ -292,7 +303,6 @@ describe ('#listOps', function () {
         it ('should return a list with the same item when the list has a length of `1`', function () {
             expectEqual(intersperse(', ', 'a'), 'a');
             expectShallowEquals(intersperse(', ', ['a']), ['a']);
-            log()
         });
         it ('should return an empty list when receiving an empty list', function () {
             expectEqual(intersperse('', ''), '');
@@ -347,8 +357,8 @@ describe ('#listOps', function () {
     describe ('#subsequences', function () {
         it ('should return all sub-sequences of a sequence', function () {
             const candidates = ['abc', 'abc'.split('')],
-            results = candidates.map(subsequences),
-            expectedLen = Math.pow(2, candidates[0].length);
+                results = candidates.map(subsequences),
+                expectedLen = Math.pow(2, candidates[0].length);
             log(candidates, results);
             expectTrue(results.every(result => result.length === expectedLen));
             expectTrue(results.every(result =>
@@ -368,7 +378,50 @@ describe ('#listOps', function () {
     });
 
     describe ('#permutations', function () {
-        it ('should have more tests.');
+
+        const areAllPermutesUnique = permutes => {
+                const xs = permutes,
+                    limit = xs.length;
+                for (let i = 0; i < limit; i += 1) {
+                    let str = xs[i].join('');
+                    for (let j = 0; j < limit; j += 1) {
+                        if (j !== i && xs[j].join('') === str) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            },
+
+            howManyPermutes = n => {
+                if (n <= 0) {
+                    return 0;
+                }
+                let lastPermutes = 1,
+                    i = 1;
+                while (i <= n) {
+                    lastPermutes = i * lastPermutes;
+                    i += 1;
+                }
+                return lastPermutes;
+            };
+
+        it ('Should return unique permutations for a given set of items', function () {
+            const lists = 'abcd'.split('').reduceRight((agg, item, ind, list) =>
+                agg.concat([list.slice(ind)]), []); // I know laziness lol
+            expectLength(4, lists);
+            expectTrue(lists.every(
+                (xs, ind) => xs.length === ind + 1
+            ));
+            expectTrue(
+                lists.every(xs => {
+                    const result = permutations(xs);
+                    return areAllPermutesUnique(peek('permutations', result)) &&
+                        peek('permute-count',
+                            howManyPermutes(xs.length)) === result.length;
+                })
+            );
+        });
     });
 
     describe ('#foldl', function () {
@@ -1557,26 +1610,29 @@ describe ('#listOps', function () {
     });
 
     describe ('#findIndices', function () {
-        it ('should', function () {
-            const token = 'aecedegefehea',
-                tokenParts = token.split(''),
-                eIndices = [1, 3, 5, 7, 9, 11],
-                notEIndices = [0, 2, 4, 6, 8, 10, 12],
-                aIndices = [0, 12],
-                noIndices = [],
-                indiceTests = [
-                    [findIndices(x => x === 'e'), eIndices],
-                    [findIndices(x => x !== 'e'), notEIndices],
-                    [findIndices(x => x === 'a'), aIndices],
-                    [findIndices(x => false), noIndices]
-                ];
-            // expectTrue(
-            //     all(xs =>
-            //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
-            //         [token, tokenParts])
-            // );
-            // @todo add tests
+        it ('should return indices for all items that match passed in predicate', function () {
+            const tokenInits = inits(intersperse('e', alphabetArray)),
+                indicePred = x => x === 'e',
+                expectedResults = tokenInits.map(xs =>
+                    xs.map((x, ind) => [ind, x])
+                        .filter(([ind, x]) => indicePred(x))
+                )
+                    .map(xs => !xs.length ? undefined : xs.map(([x]) => x)),
+                results = map(xs => findIndices(indicePred, xs), tokenInits);
+
+            // log(expectedResults);
+            expectTrue(
+                results.every((xs, ind) => {
+                    const expected = expectedResults[ind];
+                    return xs === expected || ( // match undefined
+                        xs.every((x, ind2) => x === expected[ind2]) &&
+                        xs.length === expected.length
+                    );
+                })
+            );
         });
+
+        it ('should have more tests');
     });
 
     describe ('#zip', function () {
@@ -1755,7 +1811,7 @@ describe ('#listOps', function () {
                 lenAlphaArray = length(alphabetArray),
                 result = unzipN(subj);
 
-            log (subj, result);
+            // log (subj, result);
 
             // First ensure our subject is valid
             // --------------------------------------
@@ -2036,23 +2092,65 @@ describe ('#listOps', function () {
     });
 
     describe ('#union', function () {
-        it ('should return an union of the two arrays', function () {
-            let testCases = [
-                // subj1, subj2, expectLen, expectedElements
+        const mixedMatchRange = append(range(13, 8, -1), range(1, 3));
+            // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
+            // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
+        // [ascRanges, descRanges] =
+        //     map(argsSet =>
+        //         map(rangeArgs => apply(range, rangeArgs), argsSet),
+        //         [ascRangeArgs, descRangeArgs]
+        //     ),
+        // [rl1, rl2, rl3, rl4] = ascRanges,
+        // [lr1, lr2, lr3, lr4] = descRanges;
+        it ('should return a union on list 1 with list two', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],
                 [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 8, [1, 2, 3, 4, 5, 6, 7, 8]],
-                [[1, 2, 3, 4, 5], [1, 2, 3], 5, [1, 2, 3, 4 ,5]]
-            ];
-            testCases.forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = union(subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                result.forEach((elm, ind) => {
-                    expectEqual(elm, expectedElms[ind]);
+                [[1, 2, 3, 4, 5], [1, 2, 3], 5, [1, 2, 3, 4 ,5]],
+                [mixedMatchRange, range(18, 21), 13, mixedMatchRange.concat(range(18, 21))]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = union(subj1, subj2);
+                    // log('union', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
                 });
-            });
         });
-        // @todo Add more tests
+        it ('should return a copy of left-most array when right-most list is empty', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [range(1, 5), [], 5, range(1, 5)],
+                [range(1, 8), [], 8, range(1, 8)],
+                [range(1, 13), [], 13, range(1, 13)],
+                [mixedMatchRange, [], 9, mixedMatchRange]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = union(subj1, subj2);
+                    // log('union', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
+        });
+        it ('should return a copy of right-most list when left-most list is empty', function () {
+            [// subj1, subj2, expectResultLen, expectedResultElements
+                [range(1, 5), [], 5, range(1, 5)],
+                [range(1, 8), [], 8, range(1, 8)],
+                [range(1, 13), [], 13, range(1, 13)],
+                [mixedMatchRange, [], 9, mixedMatchRange]
+            ]
+                .forEach(testCase => {
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = union(subj1, subj2);
+                    // log('union', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
+        });
+        it ('should return an empty list when receiving empty lists', function () {
+            expectEqual(union('', ''), '');
+            expectShallowEquals(union([], []), []);
+        });
     });
 
     describe ('#sort', function () {
@@ -2060,7 +2158,7 @@ describe ('#listOps', function () {
             expectShallowEquals(sort(range(10, 0, -1)), range(0, 10, 1));
             expectShallowEquals(sort(range(0, 10)), range(0, 10));
             compose(expectShallowEquals(__, alphabetArray), sort, reverse)(alphabetArray);
-            compose(log, sort, reverse)(alphabetArray);
+            compose(/*log,*/ sort, reverse)(alphabetArray);
         });
         it ('should return a copy of original list when said list is already sorted', function () {
             compose(expectShallowEquals(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
@@ -2082,7 +2180,7 @@ describe ('#listOps', function () {
             expectShallowEquals(sortOnIdentity(range10To0), range0To10);
             expectShallowEquals(sortOnIdentity(range0To10), range0To10);
             compose(expectShallowEquals(__, alphabetArray), sortOnIdentity, reverse)(alphabetArray);
-            compose(log, sortOnIdentity, reverse)(alphabetArray);
+            compose(/*log,*/ sortOnIdentity, reverse)(alphabetArray);
         });
         it ('should return a copy of original list when said list is already sorted', function () {
             compose(expectShallowEquals(__, ['a', 'b', 'c']), sortOnIdentity, take(3))(alphabetArray);
@@ -2185,7 +2283,7 @@ describe ('#listOps', function () {
                 }, concat([alphabetArray, alphabetArray, alphabetArray]));
 
             // Expect vowels removed from the same places in both lists
-            expectTrue(all(tuple => !log(tuple) && tuple[0] === tuple[1], [[
+            expectTrue(all(tuple => /*!log(tuple) &&*/ tuple[0] === tuple[1], [[
                 removeFirstsBy(equal, cycle(3, alphabetString), vowels),
                 concat(subj1)
             ]]));
@@ -2213,13 +2311,13 @@ describe ('#listOps', function () {
             // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
             // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
             equalityCheck = (a, b) => a === b;
-        // [ascRanges, descRanges] =
-        //     map(argsSet =>
-        //         map(rangeArgs => apply(range, rangeArgs), argsSet),
-        //         [ascRangeArgs, descRangeArgs]
-        //     ),
-        // [rl1, rl2, rl3, rl4] = ascRanges,
-        // [lr1, lr2, lr3, lr4] = descRanges;
+            // [ascRanges, descRanges] =
+            //     map(argsSet =>
+            //         map(rangeArgs => apply(range, rangeArgs), argsSet),
+            //         [ascRangeArgs, descRangeArgs]
+            //     ),
+            // [rl1, rl2, rl3, rl4] = ascRanges,
+            // [lr1, lr2, lr3, lr4] = descRanges;
         it ('should return a union on list 1 with list two', function () {
             [// subj1, subj2, expectResultLen, expectedResultElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],

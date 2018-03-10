@@ -647,7 +647,7 @@ var findIndicesWhere = function findIndicesWhere(pred, xs) {
             out.push(ind);
         }
     }
-    return out;
+    return out.length ? out : undefined;
 };
 var findWhere = function findWhere(pred, xs) {
     var ind = 0,

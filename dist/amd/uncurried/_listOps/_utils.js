@@ -222,7 +222,7 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
                 out.push(ind);
             }
         }
-        return out;
+        return out.length ? out : undefined;
     },
 
 

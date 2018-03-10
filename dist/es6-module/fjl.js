@@ -439,7 +439,7 @@ const findIndicesWhere = (pred, xs) => {
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) { out.push(ind); }
         }
-        return out;
+        return out.length ? out : undefined;
     };
 const findWhere = (pred, xs) => {
         let ind = 0,

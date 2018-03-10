@@ -189,7 +189,7 @@ export const
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) { out.push(ind); }
         }
-        return out;
+        return out.length ? out : undefined;
     },
 
     /**

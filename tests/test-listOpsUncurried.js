@@ -3,7 +3,7 @@
  * Created by elyde on 12/29/2016.
  * @note ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
  * @note ensure expected types (either explicitly or implicitly) are being returned where necessary.
- * @todo Clean up 'test-_listOps' to look more like code that was written expecting uncurried functions not curried ones (code was copied from the tests for the curried version of '_listOps' package).
+ * @good-to-have-todo Clean up 'test-listOpsUncurried' to look more like code that was written expecting uncurried functions not curried ones (code was copied from the tests for the curried version of '_listOps' package).
  */
 
 import {assert, expect} from 'chai';
@@ -26,7 +26,8 @@ import {
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert, insertBy,
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
-    complement, difference, union, intersect, intersectBy, groupBy
+    complement, difference, union, intersect, intersectBy, groupBy,
+    scanl, scanl1, scanr, scanr1
 } from '../src/uncurried/_listOps';
 
 import {
@@ -48,12 +49,29 @@ describe ('#_listOps', function () {
 
     const strToArray = split(''),
         generalEqualityCheck = (a, b) => a === b,
-    genericOrdering = (a, b) => {
-        if (a > b) { return 1; }
-        else if (a < b) { return -1; }
-        return 0;
-    },
-    equal = (a, b) => a === b;
+        genericOrdering = (a, b) => {
+            if (a > b) { return 1; }
+            else if (a < b) { return -1; }
+            return 0;
+        },
+        equal = (a, b) => a === b,
+        // const listToLinkedList = list => {
+        //     const unlinkedNodes = list.map(char => ({data: char})),
+        //         lastNode = unlinkedNodes.pop();
+        //         return unlinkedNodes.reduceRight((agg, item) => {
+        //             item.next = agg;
+        //             return item;
+        //         }, (lastNode.next = null, lastNode));
+        // },
+        linkedListToList = linkedList => {
+            const out = [];
+            let node = linkedList;
+            while (node.next) {
+                out.push({data: node.data});
+                node = node.next;
+            }
+            return out;
+        };
 
     describe ('#append', function () {
         it ('should be able to append two lists.', function () {
@@ -118,11 +136,11 @@ describe ('#_listOps', function () {
     });
 
     describe ('#head', function () {
-        it ('should return the first item in an _listOps and/or stringOps.', function () {
+        it ('should return the first item in an list and/or string.', function () {
             expectEqual(head('Hello'), 'H');
             expectEqual(head(split('', 'Hello')), 'H');
         });
-        it ('should return `undefined` when an empty _listOps and/or stringOps is passed in', function () {
+        it ('should return `undefined` when an empty list and/or string is passed in', function () {
             expectEqual(undefined, head([]));
             expectEqual(undefined, head(''));
         });
@@ -132,12 +150,12 @@ describe ('#_listOps', function () {
     });
 
     describe ('#last', function () {
-        it ('should return the last item in an _listOps and/or stringOps.', function () {
+        it ('should return the last item in an list and/or string.', function () {
             const word = 'Hello';
             compose(expectEqual('o'), last)(word);
             compose(expectEqual('o'), last, strToArray)(word);
         });
-        it ('should return `undefined` when an empty _listOps is passed in', function () {
+        it ('should return `undefined` when an empty list is passed in', function () {
             expectEqual(undefined, last([]));
             expectEqual(undefined, last(''));
         });
@@ -883,10 +901,10 @@ describe ('#_listOps', function () {
 
     describe ('#take', function () {
         const hello = 'hello';
-        it ('should return taken items from _listOps and/or stringOps until limit', function () {
+        it ('should return taken items from list and/or string until limit', function () {
             const word = hello;
 
-            // Test `take` on word parts and word (_listOps and stringOps)
+            // Test `take` on word parts and word (listOps and string)
             strToArray(word).forEach((part, ind, wordParts)=> {
                 // Get human index (counting from `1`) and preliminaries
                 const humanInd = ind + 1,
@@ -907,7 +925,7 @@ describe ('#_listOps', function () {
             compose(expectEqual(0), length, xs => take(0, xs))(split('', hello));
             compose(expectEqual(0), length, xs => take(0, xs))(hello);
         });
-        it ('should return an empty _listOps and/or stringOps when called with with an empty _listOps or stringOps', function () {
+        it ('should return an empty list and/or string when called with with an empty list or string', function () {
             let count = 5;
             while (count) {
                 compose(expectEqual(0), length, xs => take(count, xs))('');
@@ -922,12 +940,12 @@ describe ('#_listOps', function () {
 
     describe ('#drop', function () {
         const hello = 'hello';
-        it ('should return a new _listOps/stringOps with dropped items from original until limit', function () {
+        it ('should return a new list/stringOps with dropped items from original until limit', function () {
             const word = hello,
                 wordParts = strToArray(word),
                 partsLength = wordParts.length - 1;
 
-            // Test `take` on word parts and word (_listOps and stringOps)
+            // Test `take` on word parts and word (listOps and string)
             wordParts.forEach((part, ind, wordParts)=> {
                 // Get human index (counting from `1`) and preliminaries
                 const humanInd = ind + 1,
@@ -948,7 +966,7 @@ describe ('#_listOps', function () {
             compose(expectEqual(length(hello)), length)(drop(0, split('', hello)));
             compose(expectEqual(length(hello)), length)(drop(0, hello));
         });
-        it ('should return an empty _listOps and/or stringOps when called with with an empty _listOps or stringOps', function () {
+        it ('should return an empty list and/or string when called with with an empty list or string', function () {
             let count = 5;
             while (count) {
                 compose(expectEqual(0), length)(drop(count, ''));
@@ -969,35 +987,35 @@ describe ('#_listOps', function () {
             wordLen = length(word),
             phraseAppendageLen = length(phraseAppendage);
 
-        it ('should split an _listOps and/or stringOps at given index', function () {
+        it ('should split an list and/or string at given index', function () {
             const result = splitAt(wordLen, phrase),
                 result2 = splitAt(wordLen, phrase.split(''));
 
-            // Ensure returned type for stringOps case is correct
+            // Ensure returned type for string case is correct
             expectTrue(typeof result[0] === 'string');
             expectTrue(typeof result[1] === 'string');
 
-            // Expect returned stringOps parts are equal
+            // Expect returned string parts are equal
             expectEqual(result[0], word);
             expectEqual(result[1], phraseAppendage);
 
-            // Ensure returned type for _listOps use case is correct
+            // Ensure returned type for list use case is correct
             expectTrue(Array.isArray(result2[0]));
             expectTrue(Array.isArray(result2[1]));
 
-            // Ensure returned _listOps parts are equal
+            // Ensure returned list parts are equal
             expectEqual(length(result2[0]), wordLen);
             expectEqual(length(result2[1]), phraseAppendageLen);
 
-            // Check each char/element in returned parts for _listOps use case
+            // Check each char/element in returned parts for list use case
             [word, phraseAppendage].forEach((str, ind) =>
                 expectTrue(str.split('')
                     .every((char, ind2) => result2[ind][ind2] === char)) );
         });
-        it ('should return an _listOps of empty _listOps and/or stringOps when receiving an empty one of either', function () {
+        it ('should return an list of empty list and/or string when receiving an empty one of either', function () {
             splitAt(3, []).concat(splitAt(2, '')).forEach(expectLength(0));
         });
-        it ('should return entirely, passed in, _listOps and/or stringOps as second part of ' +
+        it ('should return entirely, passed in, list and/or string as second part of ' +
             'split in return when `0` is passed in as the first param', function () {
             const splitPhrase = phrase.split('');
             expectTrue(splitAt(0, phrase)
@@ -1033,7 +1051,7 @@ describe ('#_listOps', function () {
                         length(expectedResult) === length(result) &&
                             // Ensure elements where matched
                             all((x, ind) => x === expectedResult[ind], result),
-                            // Use cases (one with stringOps other with _listOps)
+                            // Use cases (one with string other with list)
                             [takeWhile(predicate, word.split('')),
                                 takeWhile(predicate, word)]
                     ));
@@ -1084,7 +1102,7 @@ describe ('#_listOps', function () {
                         length(expectedResult) === length(result) &&
                             // Ensure elements where matched
                             all((x, ind) => x === expectedResult[ind], result),
-                            // Use cases (one with stringOps other with _listOps)
+                            // Use cases (one with string other with list)
                             [dropWhile(predicate, word.split('')),
                                 dropWhile(predicate, word)]
                     ));
@@ -1137,7 +1155,7 @@ describe ('#_listOps', function () {
                     length(expectedResult) === length(result) &&
                     // Ensure elements where matched
                     all((x, ind) => x === expectedResult[ind], result),
-                    // Use cases (one with stringOps other with _listOps)
+                    // Use cases (one with string other with list)
                     [dropWhileEnd(predicate, word.split('')),
                         dropWhileEnd(predicate, word)]
                 ));
@@ -1177,8 +1195,8 @@ describe ('#_listOps', function () {
     });
 
     describe ('#span', function () {
-        it ('should take elements into first _listOps while predicate is fulfilled and elements ' +
-            'that didn\'t match into second _listOps', function () {
+        it ('should take elements into first list while predicate is fulfilled and elements ' +
+            'that didn\'t match into second list', function () {
             const word = 'abcdefg',
                 expectedResults = [word.substring(0, 4), word.substring(4)],
                 predicate = x => x !== 'e';
@@ -1197,11 +1215,11 @@ describe ('#_listOps', function () {
                         // Ensure elements where matched
                         all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
                         tuple),
-                    // Use cases (one with stringOps other with _listOps)
+                    // Use cases (one with string other with list)
                     [span(predicate, word.split('')), span(predicate, word)]
                 ));
         });
-        it ('should return an _listOps of empty arrays and/or strings when an empty list is passed in', function () {
+        it ('should return an list of empty arrays and/or strings when an empty list is passed in', function () {
             expectTrue(
                 all(tuple =>
                     length(tuple) === 2 &&
@@ -1213,8 +1231,8 @@ describe ('#_listOps', function () {
     });
 
     describe ('#breakOnList', function () {
-        it ('should take elements into first _listOps while !predicate is fulfilled and elements ' +
-            'that didn\'t match into second _listOps', function () {
+        it ('should take elements into first list while !predicate is fulfilled and elements ' +
+            'that didn\'t match into second list', function () {
             const word = 'abcdefg',
                 expectedResults = [word.substring(0, 4), word.substring(4)],
                 predicate = x => x === 'e';
@@ -1233,11 +1251,11 @@ describe ('#_listOps', function () {
                         // Ensure elements where matched
                         all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
                         tuple),
-                    // Use cases (one with stringOps other with _listOps)
+                    // Use cases (one with string other with list)
                     [breakOnList(predicate, word.split('')), breakOnList(predicate, word)]
                 ));
         });
-        it ('should return an _listOps of empty arrays and/or strings when an empty list is passed in', function () {
+        it ('should return an list of empty arrays and/or strings when an empty list is passed in', function () {
             expectTrue(
                 all(tuple =>
                     length(tuple) === 2 &&
@@ -1500,8 +1518,8 @@ describe ('#_listOps', function () {
     });
 
     describe ('#partition', function () {
-        it ('should take elements into first _listOps while predicate is fulfilled and elements ' +
-            'that didn\'t match into second _listOps', function () {
+        it ('should take elements into first list while predicate is fulfilled and elements ' +
+            'that didn\'t match into second list', function () {
             const word = 'abcdefg',
                 expectedResults = ['abcdfg', 'e'],
                 predicate = x => x !== 'e';
@@ -1520,11 +1538,11 @@ describe ('#_listOps', function () {
                         // Ensure elements where matched
                         all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
                         tuple),
-                    // Use cases (one with stringOps other with _listOps)
+                    // Use cases (one with string other with list)
                     [partition(predicate, word.split('')), partition(predicate, word)]
                 ));
         });
-        it ('should return an _listOps of empty arrays and/or strings when an empty list is passed in', function () {
+        it ('should return an list of empty arrays and/or strings when an empty list is passed in', function () {
             expectTrue(
                 all(tuple =>
                     length(tuple) === 2 &&
@@ -1597,27 +1615,29 @@ describe ('#_listOps', function () {
     });
 
     describe ('#findIndices', function () {
+        it ('should return indices for all items that match passed in predicate', function () {
+            const tokenInits = inits(intersperse('e', alphabetArray)),
+                indicePred = x => x === 'e',
+                expectedResults = tokenInits.map(xs =>
+                    xs.map((x, ind) => [ind, x])
+                        .filter(([ind, x]) => indicePred(x))
+                )
+                    .map(xs => !xs.length ? undefined : xs.map(([x]) => x)),
+                results = map(xs => findIndices(indicePred, xs), tokenInits);
+
+            // log(expectedResults);
+            expectTrue(
+                results.every((xs, ind) => {
+                    const expected = expectedResults[ind];
+                    return xs === expected || ( // match undefined
+                        xs.every((x, ind2) => x === expected[ind2]) &&
+                        xs.length === expected.length
+                    );
+                })
+            );
+        });
+
         it ('should have more tests');
-        // it ('should', function () {
-        //     const token = 'aecedegefehea',
-        //         tokenParts = token.split(''),
-        //         eIndices = [1, 3, 5, 7, 9, 11],
-        //         notEIndices = [0, 2, 4, 6, 8, 10, 12],
-        //         aIndices = [0, 12],
-        //         noIndices = [],
-        //         indiceTests = [
-        //             [findIndices(x => x === 'e'), eIndices],
-        //             [findIndices(x => x !== 'e'), notEIndices],
-        //             [findIndices(x => x === 'a'), aIndices],
-        //             [findIndices(x => false), noIndices]
-        //         ];
-        //     // expectTrue(
-        //     //     all(xs =>
-        //     //         all((key, ind2) => key === args[1][ind2], args[0](xs)),
-        //     //         [token, tokenParts])
-        //     // );
-        //     // @todo add tests
-        // });
     });
 
     describe ('#zip', function () {
@@ -2006,7 +2026,6 @@ describe ('#_listOps', function () {
             testCases.forEach(testCase => {
                 let [subjects, expectedLen, expectedElms] = testCase,
                     result = complement.apply(null, subjects);
-                // log(result);
                 expectEqual(result.length, expectedLen);
                 result.forEach((elm, ind) => {
                     expectEqual(elm, expectedElms[ind]);
@@ -2261,16 +2280,12 @@ describe ('#_listOps', function () {
             // Remove first occurrences of `vowels` in `alphabet * 3`
             const subj1 = iterate(length(vowels), (value, ind) => {
                     const foundInd = value.indexOf(vowels[ind]);
-                    // log(value, foundInd);
                     if (foundInd > -1) {
                         const parts = splitAt(foundInd, value);
-                        // log(parts);
                         return concat([parts[0], tail(parts[1])]);
                     }
                     return value;
                 }, concat([alphabetArray, alphabetArray, alphabetArray]));
-
-            // log(subj1);
 
             // Expect vowels removed from the same places in both lists
             expectTrue(all(tuple => /*!log(tuple) &&*/ tuple[0] === tuple[1], [[
@@ -2346,12 +2361,12 @@ describe ('#_listOps', function () {
                 [mixedMatchRange, [], 9, mixedMatchRange]
             ]
                 .forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = unionBy(equalityCheck, subj1, subj2);
-                // log('unionBy', result);
-                expectEqual(result.length, expectedLen);
-                expectShallowEquals(result, expectedElms);
-            });
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    // log('unionBy', result);
+                    expectEqual(result.length, expectedLen);
+                    expectShallowEquals(result, expectedElms);
+                });
         });
         it ('should return an empty list when receiving empty lists', function () {
             expectEqual(unionBy(equalityCheck, '', ''), '');
@@ -2429,11 +2444,11 @@ describe ('#_listOps', function () {
 
     describe ('#insertBy', function () {
         const injectValueAtIndex = (x, ind, list) => {
-            if (ind <= 0) { return [x].concat(list); }
-            else if (ind > list.length - 1) { return list.concat([x]); }
-            return list.slice(0, ind).concat([x], list.slice(ind));
-        },
-        genericInsert = (x, xs) => insertBy(genericOrdering, x, xs);
+                if (ind <= 0) { return [x].concat(list); }
+                else if (ind > list.length - 1) { return list.concat([x]); }
+                return list.slice(0, ind).concat([x], list.slice(ind));
+            },
+            genericInsert = (x, xs) => insertBy(genericOrdering, x, xs);
         it ('Should insert a value before value that matches equality check', function () {
             // expectShallowEquals(genericInsert(99, range(0, 144, 5))
             const range0To145 = range(0, 145, 5),
@@ -2452,6 +2467,146 @@ describe ('#_listOps', function () {
             expectShallowEquals(genericInsert(99, []), [99]);
             expectShallowEquals(genericInsert('a', []), ['a']);
             expectShallowEquals(genericInsert('a', ''), 'a');
+        });
+    });
+
+    describe ('#scanl', function () {
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+
+        it ('should return a list of successively reduced values from left to right', function () {
+            // Generate linked-list structure
+            const result = scanl((agg, item) => {
+                agg.next = item;
+                item.next = null;
+                return item;
+            }, {}, unlinkedNodes);
+
+            // Expect every item in result to be a linked list with remaining items linked to said item
+            expect(
+                result.every(node => {
+                    const nodesList = linkedListToList(node);
+                    return alphabetArray.slice(alphabetArray.indexOf(node.data)).every((char, ind1) => {
+                        const charCodeToTest = char.charCodeAt(0);
+                        return nodesList.slice(ind1).every((data, ind2) =>
+                            data.data.charCodeAt(0) - ind2 === charCodeToTest
+                        );
+                    });
+                })
+            )
+                .to.equal(true);
+            // log (result);
+            // log(linkedListToList(listToLinkedList(alphabetArray)));
+        });
+
+        it ('should return an empty list when receiving an empty one', function () {
+            expectShallowEquals(scanl(x => x * 2, 99, []), []);
+            expectShallowEquals(scanl(x => x + 2, '99', ''), []);
+        });
+    });
+
+    describe ('#scanl1', function () {
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+
+        it ('should return a list of successively reduced values from left to right', function () {
+            // Generate linked-list structure
+            const result = scanl1((agg, item) => {
+                agg.next = item;
+                item.next = null;
+                return item;
+            }, [{}].concat(unlinkedNodes));
+
+            // Expect every item in result to be a linked list with remaining items linked to said item
+            expect(
+                result.every(node => {
+                    const nodesList = linkedListToList(node);
+                    return alphabetArray.slice(alphabetArray.indexOf(node.data)).every((char, ind1) => {
+                        const charCodeToTest = char.charCodeAt(0);
+                        return nodesList.slice(ind1).every((data, ind2) =>
+                            data.data.charCodeAt(0) - ind2 === charCodeToTest
+                        );
+                    });
+                })
+            )
+                .to.equal(true);
+            // log (result);
+            // log(linkedListToList(listToLinkedList(alphabetArray)));
+        });
+
+        it ('should return an empty list when receiving an empty one', function () {
+            expectShallowEquals(scanl1(x => x * 2, []), []);
+            expectShallowEquals(scanl1(x => x + 2, ''), []);
+        });
+    });
+
+    describe ('#scanr', function () {
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+
+        it ('should return a list of successively reduced values from left to right', function () {
+            // Generate linked-list structure
+            const result = scanr((agg, item) => {
+                agg.next = item;
+                item.next = null;
+                return item;
+            }, {}, unlinkedNodes);
+
+            // Expect every item in result to be a linked list with remaining items linked to said item
+            expect(
+                result.every(node => {
+                    const nodesList = linkedListToList(node);
+                    return alphabetArray.slice(0, alphabetArray.indexOf(node.data) + 1)
+                        .reverse()
+                        .every((char, ind1) => {
+                            const charCodeToTest = char.charCodeAt(0);
+                            return nodesList.slice(ind1).every((data, ind2) =>
+                                data.data.charCodeAt(0) + ind2 === charCodeToTest
+                            );
+                        });
+                })
+            )
+                .to.equal(true);
+            // log(linkedListToList(listToLinkedList(alphabetArray)));
+        });
+
+        it ('should return an empty list when receiving an empty one', function () {
+            expectShallowEquals(scanr(x => x * 2, 99, []), []);
+            expectShallowEquals(scanr(x => x + 2, '99', ''), []);
+        });
+    });
+
+    describe ('#scanr1', function () {
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+
+        it ('should return a list of successively reduced values from left to right', function () {
+            // Generate linked-list structure
+            const result = scanr1((agg, item) => {
+                agg.next = item;
+                item.next = null;
+                return item;
+            }, [{}].concat(unlinkedNodes));
+
+            // Expect every item in result to be a linked list with remaining items linked to said item
+            expect(
+                result.every(node => {
+                    const nodesList = linkedListToList(node);
+                    return alphabetArray
+                        .slice(0, alphabetArray.indexOf(node.data) + 1)
+                        .reverse()
+                        .every((char, ind1) => {
+                            const charCodeToTest = char.charCodeAt(0);
+                            return nodesList.slice(ind1).every((data, ind2) =>
+                                data.data.charCodeAt(0) + ind2 === charCodeToTest
+                            );
+                        });
+                })
+            )
+                .to.equal(true);
+            // log (result);
+            // log(linkedListToList(listToLinkedList(alphabetArray)));
+        });
+
+        it ('should return an empty list when receiving an empty one', function () {
+            expectShallowEquals(scanr1(x => x * 2, []), []);
+            expectShallowEquals(scanr1(x => x + 2, ''), []);
         });
     });
 

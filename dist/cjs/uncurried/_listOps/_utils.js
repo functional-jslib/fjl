@@ -257,7 +257,7 @@ findIndicesWhere = exports.findIndicesWhere = function findIndicesWhere(pred, xs
             out.push(ind);
         }
     }
-    return out;
+    return out.length ? out : undefined;
 },
 
 
