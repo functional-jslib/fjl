@@ -636,10 +636,10 @@ var findIndexWhereRight = function findIndexWhereRight(pred, arr) {
     return ind;
 };
 var findIndicesWhere = function findIndicesWhere(pred, xs) {
-    var limit = length(xs);
-    if (!limit) {
+    if (!xs || !xs.length) {
         return undefined;
     }
+    var limit = length(xs);
     var ind = 0,
         out = [];
     for (; ind < limit; ind++) {

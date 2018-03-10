@@ -1632,7 +1632,11 @@ describe ('#listOps', function () {
             );
         });
 
-        it ('should have more tests');
+        it ('should return `undefined` when doesn\'t find element at indice', function () {
+            expectEqual(findIndices(x => !!x, undefined), undefined);
+            expectEqual(findIndices(x => !!x, null), undefined);
+            expectEqual(findIndices(x => !!x, []), undefined);
+        });
     });
 
     describe ('#zip', function () {

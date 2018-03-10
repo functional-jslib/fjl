@@ -211,10 +211,10 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
      * @returns {Array|undefined}
      */
     findIndicesWhere = exports.findIndicesWhere = (pred, xs) => {
-        const limit = (0, _object.length)(xs);
-        if (!limit) {
+        if (!xs || !xs.length) {
             return undefined;
         }
+        const limit = (0, _object.length)(xs);
         let ind = 0,
             out = [];
         for (; ind < limit; ind++) {

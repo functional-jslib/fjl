@@ -432,8 +432,8 @@ const findIndexWhereRight = (pred, arr) => {
         return ind;
     };
 const findIndicesWhere = (pred, xs) => {
+        if (!xs || !xs.length) { return undefined; }
         const limit = length(xs);
-        if (!limit) { return undefined; }
         let ind = 0,
             out = [];
         for (; ind < limit; ind++) {

@@ -245,10 +245,10 @@
      * @returns {Array|undefined}
      */
     findIndicesWhere = exports.findIndicesWhere = function findIndicesWhere(pred, xs) {
-        var limit = (0, _object.length)(xs);
-        if (!limit) {
+        if (!xs || !xs.length) {
             return undefined;
         }
+        var limit = (0, _object.length)(xs);
         var ind = 0,
             out = [];
         for (; ind < limit; ind++) {
