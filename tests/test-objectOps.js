@@ -3,30 +3,25 @@
  */
 /**
  * Created by elyde on 11/25/2016.
- * @todo add more extensive tests for `hasOwnProperty`
  */
-
-// ~~~ STRIP ~~~
-// This part gets stripped out when
-// generating browser version of test(s).
-'use strict';
 import {assert, expect} from 'chai';
 import {apply} from '../src/functionOps';
 import {
-    typeOf, isType,
-    isNumber, isFunction, isArray, isBoolean, isObject, isString,
-    isUndefined, isNull, isSymbol, isMap, isSet,
-    isWeakMap, isWeakSet,
     objComplement, objDifference, objUnion, objIntersect,
-    instanceOf, hasOwnProperty, keys} from '../src/objectOps';
-import {expectTrue, expectFalse, expectEqual, expectFunction} from './helpers';
-// These variables get set at the top IIFE in the browser.
-// ~~~ /STRIP ~~~
+    typeOf, instanceOf, hasOwnProperty, keys,
+    isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
+    isUndefined, isNull, isSymbol, isMap, isSet,
+    isWeakMap, isWeakSet, assignDeep, assign
+} from '../src/objectOps';
+import {foldl, map, and, head, tail} from "../src/uncurried/_listOps";
+import {
+    expectTrue, expectFalse, expectEqual, expectFunction,
+    jsonClone, deepCompareObjectsLeft} from './helpers';
 
 describe ('#_objectOps', function () {
 
     describe('#hasOwnProperty', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(hasOwnProperty);
         });
         it ('should return true when passed in object has the passed in property name', function () {
@@ -41,10 +36,10 @@ describe ('#_objectOps', function () {
     });
 
     describe('#typeOf', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(typeOf);
         });
-        it ('should return a _functionOps when no value is passed in (is curried)', function () {
+        it ('should return a function when no value is passed in (is curried)', function () {
             expectEqual(typeOf(), 'Undefined');
         });
         it ('should return the passed type\'s name', function () {
@@ -57,14 +52,15 @@ describe ('#_objectOps', function () {
                 ['Boolean', true],
                 ['Boolean', false],
                 ['Null', null],
-                ['Undefined', undefined]
+                ['Undefined', undefined],
+                ['Symbol', Symbol('hello')]
             ]
                 .forEach(tuple => expectEqual(apply(typeOf, tuple)));
         });
     });
 
     describe('#isType', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(isType);
         });
         it ('should return `true` when passed in value is of passed in type name/stringOps', function () {
@@ -121,11 +117,11 @@ describe ('#_objectOps', function () {
     });
 
     describe('#isFunction', function () {
-        it('should return true if value is a _functionOps', function () {
+        it('should return true if value is a function', function () {
             [() => {}, Math.pow, console.log, function () {}]
                 .forEach(value => expectTrue(isFunction(value)));
         });
-        it('should return `false` when value is not a _functionOps', function () {
+        it('should return `false` when value is not a function', function () {
             [-1, 0, 1, [], {}, 'abc']
                 .forEach(value => expectFalse(isFunction(value)));
         });
@@ -269,8 +265,104 @@ describe ('#_objectOps', function () {
         })
     });
 
+    describe('#assignDeep', function () {
+        const sentence = 'all your base are belong to us',
+            words = sentence.split(' '),
+            wordsLen = words.length,
+            obj = {all: {your: {base: {are: {belong: {to: {us: {}}}}}}}},
+            obj2 = {hair: {cut: {and: {shampoo: 1}}}},
+
+            // Create an object with some random props
+            randomObj = words.reduce((agg, word, ind) => {
+                // quasi tree-like obj
+                agg[word] = {
+                    left: ind ? words[ind - 1] : undefined,
+                    right: ind < wordsLen ? words[ind + 1] : undefined
+                };
+                return agg;
+            }, {}),
+
+            clonedObj = jsonClone(obj),
+
+            // expectTrue(words.map())
+            result1 = assignDeep(randomObj, obj2, clonedObj);
+
+        it ('should assign all props from one object to another recursively', function () {
+            // Check all top level properties
+            expectTrue(words
+                .map(word => result1.hasOwnProperty(word) && result1[word])
+                .every(result => result));
+
+            // Expect true that all results (head of return) of accumalated value are `true`
+            // and checks container of booleans
+            // `head` pulls item at index `0` of list
+            const check1 = foldl(
+                ([_results, _obj, _lastObj], word) => [
+                    (_results.push(_obj.hasOwnProperty(word) && _lastObj.hasOwnProperty(word)), _results),
+                    _obj[word],
+                    _lastObj[word]
+                ],
+                // [checks, result-of-op, test-against-obj]
+                [[], result1, clonedObj], // clone object so we don't destroy/alter it
+                words
+            );
+
+            // log(check1);
+
+            // Expect original object and resulting objects to both have the same nested properties
+            expectTrue(and(head(check1)));
+
+            // Ensure both objects checked don't have any remaining keys
+            expectTrue(and(map(x => !Object.keys(x).length, tail(check1))));
+        });
+
+        it ('should not modify objects other than the first object passed in', function () {
+            expectTrue(deepCompareObjectsLeft(clonedObj, obj));
+            // @todo do a more full proof check here
+        });
+    });
+
+    describe('#assign', function () {
+        const sentence = 'all your base are belong to us',
+            words = sentence.split(' '),
+            wordsLen = words.length,
+            obj = {all: {your: {base: {are: {belong: {to: {us: {}}}}}}}},
+            obj2 = {hair: {cut: {and: {shampoo: 1}}}},
+
+            // Create an object with some random props
+            randomObj = words.reduce((agg, word, ind) => {
+                // quasi tree-like obj
+                agg[word] = {
+                    left: ind ? words[ind - 1] : undefined,
+                    right: ind < wordsLen ? words[ind + 1] : undefined
+                };
+                return agg;
+            }, {}),
+
+            clonedObj = jsonClone(obj),
+
+            // expectTrue(words.map())
+            result1 = assign(randomObj, obj2, clonedObj);
+
+        it ('should assign all props from one object to another recursively', function () {
+            // Check all top level properties
+            expectTrue(words
+                .map(word => result1.hasOwnProperty(word) && result1[word])
+                .every(result => result));
+
+            expectTrue(deepCompareObjectsLeft(obj2, result1));
+
+            expectTrue(deepCompareObjectsLeft(clonedObj, result1));
+        });
+
+        it ('should not modify objects other than the first object passed in', function () {
+            expectTrue(deepCompareObjectsLeft(clonedObj, obj));
+            // @todo do a more full proof check here
+        });
+    });
+
     describe('#objComplement', function () {
-        it('should be a _functionOps', function () {
+        it('should be a function', function () {
             expectFunction(objComplement);
         });
         it('should return an object with only properties not found in the first obj', function () {
@@ -291,7 +383,7 @@ describe ('#_objectOps', function () {
 
     describe('#objDifference', function () {
 
-        it('should be a _functionOps', function () {
+        it('should be a function', function () {
             expectFunction(objDifference);
         });
 
@@ -310,7 +402,7 @@ describe ('#_objectOps', function () {
     });
 
     describe('#objUnion', function () {
-        it('should be a _functionOps', function () {
+        it('should be a function', function () {
             expectFunction(objUnion);
         });
         it ('should return an object containing all properties from the two objects passed in', function () {
@@ -326,7 +418,7 @@ describe ('#_objectOps', function () {
     });
 
     describe('#objIntersect', function () {
-        it('should be a _functionOps', function () {
+        it('should be a function', function () {
             expectFunction(objUnion);
         });
         it ('should return an object that contains values from both passed in objects', function () {

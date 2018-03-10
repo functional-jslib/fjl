@@ -3,32 +3,25 @@
  */
 /**
  * Created by elyde on 11/25/2016.
- * @todo add more extensive tests for `hasOwnProperty`
  */
 import {assert, expect} from 'chai';
 import {apply} from '../src/uncurried/_jsPlatform/_function';
 import {
-    /*_objComplement as */objComplement,
-    /*_objDifference as */objDifference,
-    /*_objUnion as */objUnion,
-    /*_objIntersect as */objIntersect,
+    objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet, assignDeep, assign
 } from '../src/uncurried/_objectOps';
 import {foldl, map, and, head, tail} from "../src/uncurried/_listOps";
-import {expectTrue, expectFalse, expectEqual, expectFunction, log, jsonClone, deepCompareObjectsLeft} from './helpers';
+import {
+    expectTrue, expectFalse, expectEqual, expectFunction,
+    jsonClone, deepCompareObjectsLeft} from './helpers';
 
 describe ('#_objectOps', function () {
 
-    const peek = x => {
-        log(x);
-        return x;
-    };
-
     describe('#hasOwnProperty', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(hasOwnProperty);
         });
         it ('should return true when passed in object has the passed in property name', function () {
@@ -43,10 +36,10 @@ describe ('#_objectOps', function () {
     });
 
     describe('#typeOf', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(typeOf);
         });
-        it ('should return a _functionOps when no value is passed in (is curried)', function () {
+        it ('should return a function when no value is passed in (is curried)', function () {
             expectEqual(typeOf(), 'Undefined');
         });
         it ('should return the passed type\'s name', function () {
@@ -67,7 +60,7 @@ describe ('#_objectOps', function () {
     });
 
     describe('#isType', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(isType);
         });
         it ('should return `true` when passed in value is of passed in type name/stringOps', function () {
@@ -124,11 +117,11 @@ describe ('#_objectOps', function () {
     });
 
     describe('#isFunction', function () {
-        it('should return true if value is a _functionOps', function () {
+        it('should return true if value is a function', function () {
             [() => {}, Math.pow, console.log, function () {}]
                 .forEach(value => expectTrue(isFunction(value)));
         });
-        it('should return `false` when value is not a _functionOps', function () {
+        it('should return `false` when value is not a function', function () {
             [-1, 0, 1, [], {}, 'abc']
                 .forEach(value => expectFalse(isFunction(value)));
         });
@@ -274,7 +267,6 @@ describe ('#_objectOps', function () {
 
     describe('#assignDeep', function () {
         const sentence = 'all your base are belong to us',
-            sentence2 = 'hair cut and shampoo',
             words = sentence.split(' '),
             wordsLen = words.length,
             obj = {all: {your: {base: {are: {belong: {to: {us: {}}}}}}}},
@@ -332,7 +324,6 @@ describe ('#_objectOps', function () {
 
     describe('#assign', function () {
         const sentence = 'all your base are belong to us',
-            sentence2 = 'hair cut and shampoo',
             words = sentence.split(' '),
             wordsLen = words.length,
             obj = {all: {your: {base: {are: {belong: {to: {us: {}}}}}}}},
@@ -371,7 +362,7 @@ describe ('#_objectOps', function () {
     });
 
     describe('#objComplement', function () {
-        it('should be a _functionOps', function () {
+        it('should be a function', function () {
             expectFunction(objComplement);
         });
         it('should return an object with only properties not found in the first obj', function () {
@@ -392,7 +383,7 @@ describe ('#_objectOps', function () {
 
     describe('#objDifference', function () {
 
-        it('should be a _functionOps', function () {
+        it('should be a function', function () {
             expectFunction(objDifference);
         });
 
@@ -411,7 +402,7 @@ describe ('#_objectOps', function () {
     });
 
     describe('#objUnion', function () {
-        it('should be a _functionOps', function () {
+        it('should be a function', function () {
             expectFunction(objUnion);
         });
         it ('should return an object containing all properties from the two objects passed in', function () {
@@ -427,7 +418,7 @@ describe ('#_objectOps', function () {
     });
 
     describe('#objIntersect', function () {
-        it('should be a _functionOps', function () {
+        it('should be a function', function () {
             expectFunction(objUnion);
         });
         it ('should return an object that contains values from both passed in objects', function () {
