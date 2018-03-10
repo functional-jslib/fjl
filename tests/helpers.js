@@ -86,6 +86,8 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
 
     log = console.log.bind(console),
 
+    peek = (...args) => (log(...args), args.pop()),
+
     alphabetCharCodeRange = range('a'.charCodeAt(0), 'z'.charCodeAt(0)),
 
     alphabetArray = alphabetCharCodeRange
@@ -120,5 +122,6 @@ export default {
     alphabetCharCodeRange,
     alphabetArray,
     alphabetString,
-    jsonClone
+    jsonClone,
+    peek
 };

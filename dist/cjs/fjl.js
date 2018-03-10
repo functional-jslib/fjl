@@ -63,3 +63,27 @@ Object.keys(_stringOps).forEach(function (key) {
     }
   });
 });
+
+var _utils = require('./utils');
+
+Object.keys(_utils).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _utils[key];
+    }
+  });
+});
+
+var _utils2 = require('./uncurried/_listOps/_utils');
+
+Object.keys(_utils2).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _utils2[key];
+    }
+  });
+});

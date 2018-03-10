@@ -4,7 +4,7 @@ define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functio
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.subsequences1 = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = undefined;
+    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences1 = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.map = undefined;
     exports.map = _map.map;
 
 
@@ -288,6 +288,13 @@ define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functio
         }
         return out;
     },
+          swapped = exports.swapped = (ind1, ind2, list) => {
+        const out = (0, _utils.sliceFrom)(0, list),
+              tmp = out[ind1];
+        out[ind1] = out[ind2];
+        out[ind2] = tmp;
+        return out;
+    },
 
 
     /**
@@ -300,7 +307,29 @@ define(['exports', './_jsPlatform/_list', './_jsPlatform/_function', './_functio
      */
     permutations = exports.permutations = xs => {
         const limit = (0, _objectOps.length)(xs);
-        return !limit || limit === 1 ? [xs] : (0, _utils._permutationsAlgo)(xs, limit, limit);
+
+        if (!limit || limit === 1) {
+            return [xs];
+        }
+
+        let list = (0, _utils.sliceFrom)(0, xs),
+            c = repeat(limit, 0),
+            i = 0;
+
+        const out = [list];
+
+        for (; i < limit; i++) {
+            if (c[i] < i) {
+                list = swapped(i % 2 === 0 ? 0 : c[i], i, list);
+                out.push(list);
+                c[i] += 1;
+                i = 0;
+                continue;
+            }
+            c[i] = 0;
+        }
+
+        return out;
     },
 
 

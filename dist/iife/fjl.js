@@ -11,6 +11,21 @@ var fPureTakes2 = function fPureTakes2(name) {
         return f[name](arg1, arg2);
     };
 };
+var fPureTakes3 = function fPureTakes3(name) {
+    return function (arg1, arg2, arg3, f) {
+        return f[name](arg1, arg2, arg3);
+    };
+};
+var fPureTakes4 = function fPureTakes4(name) {
+    return function (arg1, arg2, arg3, arg4, f) {
+        return f[name](arg1, arg2, arg3, arg4);
+    };
+};
+var fPureTakes5 = function fPureTakes5(name) {
+    return function (arg1, arg2, arg3, arg4, arg5, f) {
+        return f[name](arg1, arg2, arg3, arg4, arg5);
+    };
+};
 var fPureTakesOneOrMore = function fPureTakesOneOrMore(name) {
     return function (f) {
         for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -518,7 +533,7 @@ var map$1 = function map(fn, xs) {
 
 /**
  * List operator utils module.
- * @module listOpsUtils_
+ * @module _listOpUtils
  * @private
  */
 var sliceFrom = function sliceFrom(startInd, arr) {
@@ -530,6 +545,7 @@ var sliceTo = function sliceTo(toInd, xs) {
 var copy = function copy(xs) {
     return sliceFrom(0, xs);
 };
+var sliceCopy = copy;
 var genericAscOrdering = function genericAscOrdering(a, b) {
     if (a > b) {
         return 1;
@@ -645,30 +661,6 @@ var findWhere = function findWhere(pred, xs) {
             return elm;
         }
     }
-};
-var _swap = function _swap(list, ind1, ind2) {
-    var tmp = list[ind1];
-    list[ind1] = list[ind2];
-    list[ind2] = tmp;
-    return list;
-};
-var _permutationsAlgo = function _permutationsAlgo(listIn, limit, remainderLen) {
-    var out = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-
-    if (remainderLen === 1) {
-        out.push(copy(listIn));return out;
-    }
-    for (var i = 0; i < remainderLen; i++) {
-        var newLen = remainderLen - 1;
-
-        // Capture permutation
-        _permutationsAlgo(listIn, limit, newLen, out);
-
-        // If remainderLen is odd, swap first and last element
-        //  else, swap `ith` and last element
-        _swap(listIn, remainderLen % 2 === 1 ? 0 : i, newLen);
-    }
-    return out;
 };
 
 var asyncGenerator = function () {
@@ -973,9 +965,38 @@ var subsequences = function subsequences(xs) {
     }
     return out;
 };
+var swapped = function swapped(ind1, ind2, list) {
+    var out = sliceFrom(0, list),
+        tmp = out[ind1];
+    out[ind1] = out[ind2];
+    out[ind2] = tmp;
+    return out;
+};
 var permutations = function permutations(xs) {
     var limit = length(xs);
-    return !limit || limit === 1 ? [xs] : _permutationsAlgo(xs, limit, limit);
+
+    if (!limit || limit === 1) {
+        return [xs];
+    }
+
+    var list = sliceFrom(0, xs),
+        c = repeat(limit, 0),
+        i = 0;
+
+    var out = [list];
+
+    for (; i < limit; i++) {
+        if (c[i] < i) {
+            list = swapped(i % 2 === 0 ? 0 : c[i], i, list);
+            out.push(list);
+            c[i] += 1;
+            i = 0;
+            continue;
+        }
+        c[i] = 0;
+    }
+
+    return out;
 };
 var foldl = reduce$1;
 var foldr = reduceRight$1;
@@ -2212,6 +2233,83 @@ var flip5$$1 = function flip5$$1(fn) {
  */
 
 /**
+ * Created by elydelacruz on 7/22/2017.
+ * @module utils
+ * @private
+ */
+
+var fPureTakesOne_ = function fPureTakesOne_(name) {
+    return curry(function (arg, f) {
+        return f[name](arg);
+    });
+};
+var fPureTakes2_ = function fPureTakes2_(name) {
+    return curry(function (arg1, arg2, f) {
+        return f[name](arg1, arg2);
+    });
+};
+var fPureTakesOneOrMore_ = function fPureTakesOneOrMore_(name) {
+    return curry2(function (f) {
+        for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            args[_key - 1] = arguments[_key];
+        }
+
+        return f[name].apply(f, args);
+    });
+};
+
+/**
+ * Created by elyde on 7/20/2017.
+ * Curried functional versions of common array methods (`filter`, `map`, etc.).
+ * @module jsPlatform_array
+ * @private
+ */
+
+var map$3 = fPureTakesOne_('map');
+var filter$3 = fPureTakesOne_('filter');
+var reduce$2 = fPureTakes2_('reduce');
+var reduceRight$2 = fPureTakes2_('reduceRight');
+var forEach$1 = fPureTakesOne_('forEach');
+var some$1 = fPureTakesOne_('some');
+var every$1 = fPureTakesOne_('every');
+var join$1 = fPureTakesOne_('join');
+var push$1 = fPureTakesOneOrMore_('push');
+
+/**
+ * List operations that overlap (apart from globally overlapping props and functions like `length`)
+ * on both strings and arrays.
+ * @module jsPlatform_list
+ * @private
+ */
+
+var concat$2 = curry(concat);
+var slice$1 = curry(slice);
+var includes$1 = curry(includes);
+var indexOf$1 = curry(indexOf);
+var lastIndexOf$1 = curry(lastIndexOf);
+
+/**
+ * Created by elydelacruz on 9/6/2017.
+ * @module jsPlatform_string
+ * @private
+ */
+
+/**
+ * Functional version of `String.prototype.split`.
+ * @curried
+ * @function module:jsPlatform_string.split
+ * @param separator {String|RegExp}
+ * @param str {String}
+ * @returns {Array}
+ */
+var split$1 = curry(split);
+
+/**
+ * @module jsPlatform
+ * @private
+ */
+
+/**
  * List operators.
  * @module listOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to
@@ -2289,22 +2387,6 @@ var intersect$1 = curry(intersect);
 var intersectBy$1 = curry(intersectBy);
 var difference$1 = curry(difference);
 var complement$1 = curry2(complement);
-
-/**
- * Created by elydelacruz on 9/6/2017.
- * @module jsPlatform_string
- * @private
- */
-
-/**
- * Functional version of `String.prototype.split`.
- * @curried
- * @function module:jsPlatform_string.split
- * @param separator {String|RegExp}
- * @param str {String}
- * @returns {Array}
- */
-var split$1 = curry(split);
 
 /**
  * Contains functions for operating strings.
@@ -2545,6 +2627,12 @@ exports.intersect = intersect$1;
 exports.intersectBy = intersectBy$1;
 exports.difference = difference$1;
 exports.complement = complement$1;
+exports.slice = slice$1;
+exports.includes = includes$1;
+exports.indexOf = indexOf$1;
+exports.lastIndexOf = lastIndexOf$1;
+exports.split = split$1;
+exports.push = push$1;
 exports.and = and;
 exports.or = or;
 exports.zipN = zipN;
@@ -2573,6 +2661,35 @@ exports.lines = lines;
 exports.words = words;
 exports.unwords = unwords;
 exports.unlines = unlines;
+exports.fPureTakesOne_ = fPureTakesOne_;
+exports.fPureTakes2_ = fPureTakes2_;
+exports.fPureTakesOneOrMore_ = fPureTakesOneOrMore_;
+exports.fPureTakesOne = fPureTakesOne;
+exports.fPureTakes2 = fPureTakes2;
+exports.fPureTakes3 = fPureTakes3;
+exports.fPureTakes4 = fPureTakes4;
+exports.fPureTakes5 = fPureTakes5;
+exports.fPureTakesOneOrMore = fPureTakesOneOrMore;
+exports.sliceFrom = sliceFrom;
+exports.sliceTo = sliceTo;
+exports.copy = copy;
+exports.sliceCopy = sliceCopy;
+exports.genericAscOrdering = genericAscOrdering;
+exports.lengths = lengths;
+exports.lengthsToSmallest = lengthsToSmallest;
+exports.reduceUntil = reduceUntil;
+exports.reduceRightUntil = reduceRightUntil;
+exports.reduce = reduce$1;
+exports.reduceRight = reduceRight$1;
+exports.lastIndex = lastIndex;
+exports.findIndexWhere = findIndexWhere;
+exports.findIndexWhereRight = findIndexWhereRight;
+exports.findIndicesWhere = findIndicesWhere;
+exports.findWhere = findWhere;
+exports.aggregateStr = aggregateStr;
+exports.aggregateArr = aggregateArr;
+exports.aggregateObj = aggregateObj;
+exports.aggregatorByType = aggregatorByType;
 
 return exports;
 

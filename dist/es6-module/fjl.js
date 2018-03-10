@@ -1,5 +1,8 @@
 const fPureTakesOne = name => (arg, f) => f[name](arg);
 const fPureTakes2 = name => (arg1, arg2, f) => f[name](arg1, arg2);
+const fPureTakes3 = name => (arg1, arg2, arg3, f) => f[name](arg1, arg2, arg3);
+const fPureTakes4 = name => (arg1, arg2, arg3, arg4, f) => f[name](arg1, arg2, arg3, arg4);
+const fPureTakes5 = name => (arg1, arg2, arg3, arg4, arg5, f) => f[name](arg1, arg2, arg3, arg4, arg5);
 const fPureTakesOneOrMore = name => (f, ...args) => f[name](...args);
 
 /**
@@ -55,6 +58,7 @@ const includes = (() => 'includes' in Array.prototype ?
             fPureTakesOne('includes') :
             (value, xs) => xs.indexOf(value) > -1)();
 const indexOf = fPureTakesOne('indexOf');
+const lastIndexOf = fPureTakesOne('lastIndexOf');
 
 /**
  * Created by elydelacruz on 9/6/2017.
@@ -355,12 +359,13 @@ const map$1 = (fn, xs) => {
 
 /**
  * List operator utils module.
- * @module listOpsUtils_
+ * @module _listOpUtils
  * @private
  */
 const sliceFrom = (startInd, arr) => slice(startInd, undefined, arr);
 const sliceTo = (toInd, xs) => slice(0, toInd, xs);
 const copy = xs => sliceFrom(0, xs);
+const sliceCopy = copy;
 const genericAscOrdering = (a, b) => {
         if (a > b) { return 1; }
         else if (a < b) { return -1; }
@@ -444,26 +449,6 @@ const findWhere = (pred, xs) => {
             let elm = xs[ind];
             if (pred(elm, ind, xs)) { return elm; }
         }
-    };
-const _swap = (list, ind1, ind2) => {
-        const tmp = list[ind1];
-        list[ind1] = list[ind2];
-        list[ind2] = tmp;
-        return list;
-    };
-const _permutationsAlgo = (listIn, limit, remainderLen, out = []) => {
-        if (remainderLen === 1) { out.push(copy(listIn)); return out; }
-        for (let i = 0; i < remainderLen; i++) {
-            const newLen = remainderLen - 1;
-
-            // Capture permutation
-            _permutationsAlgo(listIn, limit, newLen, out);
-
-            // If remainderLen is odd, swap first and last element
-            //  else, swap `ith` and last element
-            _swap(listIn, (remainderLen % 2 === 1 ? 0 : i), newLen);
-        }
-        return out;
     };
 
 /**
@@ -566,10 +551,38 @@ const subsequences = xs => {
         }
         return out;
     };
+const swapped = (ind1, ind2, list) => {
+        const out = sliceFrom(0, list),
+            tmp = out[ind1];
+        out[ind1] = out[ind2];
+        out[ind2] = tmp;
+        return out;
+    };
 const permutations = xs => {
         const limit = length(xs);
-        return !limit || limit === 1 ? [xs] :
-            _permutationsAlgo(xs, limit, limit);
+
+        if (!limit || limit === 1) {
+            return [xs];
+        }
+
+        let list = sliceFrom(0, xs),
+            c = repeat(limit, 0),
+            i = 0;
+
+        const out = [list];
+
+        for (; i < limit; i++) {
+            if (c[i] < i) {
+                list = swapped(i % 2 === 0 ? 0 : c[i], i, list);
+                out.push(list);
+                c[i] += 1;
+                i = 0;
+                continue;
+            }
+            c[i] = 0;
+        }
+
+        return out;
     };
 const foldl = reduce$1;
 const foldr = reduceRight$1;
@@ -1622,6 +1635,58 @@ const flip5$$1 = fn => curry(flip5$1(fn));
  */
 
 /**
+ * Created by elydelacruz on 7/22/2017.
+ * @module utils
+ * @private
+ */
+
+const fPureTakesOne_ = name => curry((arg, f) => f[name](arg));
+const fPureTakes2_ = name => curry((arg1, arg2, f) => f[name](arg1, arg2));
+const fPureTakesOneOrMore_ = name => curry2((f, ...args) => f[name](...args));
+
+/**
+ * Created by elyde on 7/20/2017.
+ * Curried functional versions of common array methods (`filter`, `map`, etc.).
+ * @module jsPlatform_array
+ * @private
+ */
+
+const push$1 = fPureTakesOneOrMore_('push');
+
+/**
+ * List operations that overlap (apart from globally overlapping props and functions like `length`)
+ * on both strings and arrays.
+ * @module jsPlatform_list
+ * @private
+ */
+
+const slice$1 = curry(slice);
+const includes$1 = curry(includes);
+const indexOf$1 = curry(indexOf);
+const lastIndexOf$1 = curry(lastIndexOf);
+
+/**
+ * Created by elydelacruz on 9/6/2017.
+ * @module jsPlatform_string
+ * @private
+ */
+
+/**
+ * Functional version of `String.prototype.split`.
+ * @curried
+ * @function module:jsPlatform_string.split
+ * @param separator {String|RegExp}
+ * @param str {String}
+ * @returns {Array}
+ */
+const split$1 = curry(split);
+
+/**
+ * @module jsPlatform
+ * @private
+ */
+
+/**
  * List operators.
  * @module listOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to
@@ -1701,22 +1766,6 @@ const difference$1 = curry(difference);
 const complement$1 = curry2(complement);
 
 /**
- * Created by elydelacruz on 9/6/2017.
- * @module jsPlatform_string
- * @private
- */
-
-/**
- * Functional version of `String.prototype.split`.
- * @curried
- * @function module:jsPlatform_string.split
- * @param separator {String|RegExp}
- * @param str {String}
- * @returns {Array}
- */
-const split$1 = curry(split);
-
-/**
  * Contains functions for operating strings.
  * @author elyde
  * @created 7/9/2017.
@@ -1740,4 +1789,4 @@ const unlines = intercalate$1('\n');
  * @module fjl
  */
 
-export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, append as _append, appendMany as _appendMany, all as _all, any as _any, find as _find, findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith, map$1 as _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup, intersperse as _intersperse, intercalate as _intercalate, iterate as _iterate, repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt, foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr, concatMap as _concatMap, takeWhile as _takeWhile, dropWhile as _dropWhile, dropWhileEnd as _dropWhileEnd, partition as _partition, at as _at, span as _span, breakOnList as _breakOnList, stripPrefix as _stripPrefix, isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf, isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter$1 as _filter, remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy, removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy, complement as _complement, difference as _difference, union as _union, intersect as _intersect, intersectBy as _intersectBy, groupBy as _groupBy, append$1 as append, appendMany$1 as appendMany, concatMap$1 as concatMap, map$2 as map, intersperse$1 as intersperse, intercalate$1 as intercalate, foldl$1 as foldl, foldr$1 as foldr, foldl1$1 as foldl1, foldr1$1 as foldr1, mapAccumL$1 as mapAccumL, mapAccumR$1 as mapAccumR, iterate$1 as iterate, repeat$1 as repeat, replicate$1 as replicate, cycle$1 as cycle, unfoldr$1 as unfoldr, findIndex$1 as findIndex, findIndices$1 as findIndices, elemIndex$1 as elemIndex, elemIndices$1 as elemIndices, take$1 as take, drop$1 as drop, splitAt$1 as splitAt, takeWhile$1 as takeWhile, dropWhile$1 as dropWhile, dropWhileEnd$1 as dropWhileEnd, span$1 as span, breakOnList$1 as breakOnList, at$1 as at, find$1 as find, filter$2 as filter, partition$1 as partition, elem$1 as elem, notElem$1 as notElem, lookup$1 as lookup, isPrefixOf$1 as isPrefixOf, isSuffixOf$1 as isSuffixOf, isInfixOf$1 as isInfixOf, isSubsequenceOf$1 as isSubsequenceOf, groupBy$1 as groupBy, stripPrefix$1 as stripPrefix, zip$1 as zip, zipWith$1 as zipWith, zipWithN$1 as zipWithN, zipWith3$1 as zipWith3, zipWith4$1 as zipWith4, zipWith5$1 as zipWith5, any$1 as any, all$1 as all, scanl$1 as scanl, scanl1$1 as scanl1, scanr$1 as scanr, scanr1$1 as scanr1, remove$1 as remove, sortOn$1 as sortOn, sortBy$1 as sortBy, insert$1 as insert, insertBy$1 as insertBy, nubBy$1 as nubBy, removeBy$1 as removeBy, removeFirstsBy$1 as removeFirstsBy, unionBy$1 as unionBy, union$1 as union, intersect$1 as intersect, intersectBy$1 as intersectBy, difference$1 as difference, complement$1 as complement, and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, concat$1 as concat, reverse$1 as reverse, transpose, subsequences, permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub, lines, words, unwords, unlines };
+export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, append as _append, appendMany as _appendMany, all as _all, any as _any, find as _find, findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith, map$1 as _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup, intersperse as _intersperse, intercalate as _intercalate, iterate as _iterate, repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt, foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr, concatMap as _concatMap, takeWhile as _takeWhile, dropWhile as _dropWhile, dropWhileEnd as _dropWhileEnd, partition as _partition, at as _at, span as _span, breakOnList as _breakOnList, stripPrefix as _stripPrefix, isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf, isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter$1 as _filter, remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy, removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy, complement as _complement, difference as _difference, union as _union, intersect as _intersect, intersectBy as _intersectBy, groupBy as _groupBy, append$1 as append, appendMany$1 as appendMany, concatMap$1 as concatMap, map$2 as map, intersperse$1 as intersperse, intercalate$1 as intercalate, foldl$1 as foldl, foldr$1 as foldr, foldl1$1 as foldl1, foldr1$1 as foldr1, mapAccumL$1 as mapAccumL, mapAccumR$1 as mapAccumR, iterate$1 as iterate, repeat$1 as repeat, replicate$1 as replicate, cycle$1 as cycle, unfoldr$1 as unfoldr, findIndex$1 as findIndex, findIndices$1 as findIndices, elemIndex$1 as elemIndex, elemIndices$1 as elemIndices, take$1 as take, drop$1 as drop, splitAt$1 as splitAt, takeWhile$1 as takeWhile, dropWhile$1 as dropWhile, dropWhileEnd$1 as dropWhileEnd, span$1 as span, breakOnList$1 as breakOnList, at$1 as at, find$1 as find, filter$2 as filter, partition$1 as partition, elem$1 as elem, notElem$1 as notElem, lookup$1 as lookup, isPrefixOf$1 as isPrefixOf, isSuffixOf$1 as isSuffixOf, isInfixOf$1 as isInfixOf, isSubsequenceOf$1 as isSubsequenceOf, groupBy$1 as groupBy, stripPrefix$1 as stripPrefix, zip$1 as zip, zipWith$1 as zipWith, zipWithN$1 as zipWithN, zipWith3$1 as zipWith3, zipWith4$1 as zipWith4, zipWith5$1 as zipWith5, any$1 as any, all$1 as all, scanl$1 as scanl, scanl1$1 as scanl1, scanr$1 as scanr, scanr1$1 as scanr1, remove$1 as remove, sortOn$1 as sortOn, sortBy$1 as sortBy, insert$1 as insert, insertBy$1 as insertBy, nubBy$1 as nubBy, removeBy$1 as removeBy, removeFirstsBy$1 as removeFirstsBy, unionBy$1 as unionBy, union$1 as union, intersect$1 as intersect, intersectBy$1 as intersectBy, difference$1 as difference, complement$1 as complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, concat$1 as concat, reverse$1 as reverse, transpose, subsequences, permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub, lines, words, unwords, unlines, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };

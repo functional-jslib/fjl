@@ -1,23 +1,59 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './uncurried/_listOps', './uncurried/_functionOps'], factory);
+        define(['exports', './jsPlatform', './uncurried/_listOps', './uncurried/_functionOps'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./uncurried/_listOps'), require('./uncurried/_functionOps'));
+        factory(exports, require('./jsPlatform'), require('./uncurried/_listOps'), require('./uncurried/_functionOps'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global._listOps, global._functionOps);
+        factory(mod.exports, global.jsPlatform, global._listOps, global._functionOps);
         global.listOps = mod.exports;
     }
-})(this, function (exports, _listOps, _functionOps) {
+})(this, function (exports, _jsPlatform, _listOps, _functionOps) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = undefined;
-    exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports._groupBy = exports._intersectBy = exports._intersect = exports._union = exports._difference = exports._complement = exports._sortBy = exports._sortOn = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._remove = exports._filter = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._stripPrefix = exports._breakOnList = exports._span = exports._at = exports._partition = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._concatMap = exports._unfoldr = exports._foldr1 = exports._foldr = exports._foldl1 = exports._foldl = exports._splitAt = exports._drop = exports._take = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._intercalate = exports._intersperse = exports._lookup = exports._elemIndices = exports._elemIndex = exports._notElem = exports._elem = exports._mapAccumR = exports._mapAccumL = exports._map = exports._zipWith = exports._zipN = exports._zip = exports._findIndices = exports._findIndex = exports._find = exports._any = exports._all = exports._appendMany = exports._append = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.inits = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.uncons = exports.tail = exports.init = exports.last = exports.head = exports.unzipN = exports.unzip = exports.zipN = exports.or = exports.and = undefined;
+    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = undefined;
+    exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports._groupBy = exports._intersectBy = exports._intersect = exports._union = exports._difference = exports._complement = exports._sortBy = exports._sortOn = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._remove = exports._filter = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._stripPrefix = exports._breakOnList = exports._span = exports._at = exports._partition = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._concatMap = exports._unfoldr = exports._foldr1 = exports._foldr = exports._foldl1 = exports._foldl = exports._splitAt = exports._drop = exports._take = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._intercalate = exports._intersperse = exports._lookup = exports._elemIndices = exports._elemIndex = exports._notElem = exports._elem = exports._mapAccumR = exports._mapAccumL = exports._map = exports._zipWith = exports._zipN = exports._zip = exports._findIndices = exports._findIndex = exports._find = exports._any = exports._all = exports._appendMany = exports._append = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.inits = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.uncons = exports.tail = exports.init = exports.last = exports.head = exports.unzipN = exports.unzip = exports.zipN = exports.or = exports.and = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = undefined;
+    Object.defineProperty(exports, 'slice', {
+        enumerable: true,
+        get: function () {
+            return _jsPlatform.slice;
+        }
+    });
+    Object.defineProperty(exports, 'includes', {
+        enumerable: true,
+        get: function () {
+            return _jsPlatform.includes;
+        }
+    });
+    Object.defineProperty(exports, 'indexOf', {
+        enumerable: true,
+        get: function () {
+            return _jsPlatform.indexOf;
+        }
+    });
+    Object.defineProperty(exports, 'lastIndexOf', {
+        enumerable: true,
+        get: function () {
+            return _jsPlatform.lastIndexOf;
+        }
+    });
+    Object.defineProperty(exports, 'split', {
+        enumerable: true,
+        get: function () {
+            return _jsPlatform.split;
+        }
+    });
+    Object.defineProperty(exports, 'push', {
+        enumerable: true,
+        get: function () {
+            return _jsPlatform.push;
+        }
+    });
     Object.defineProperty(exports, 'and', {
         enumerable: true,
         get: function () {

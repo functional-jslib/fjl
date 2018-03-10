@@ -1,24 +1,19 @@
 /* eslint global: describe:true,it:true */
 /**
  * Created by elyde on 12/29/2016.
- * @todo ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
- * @todo ensure expected types (either explicitly or implicitly) are being returned where necessary.
+ * @note ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
+ * @note ensure expected types (either explicitly or implicitly) are being returned where necessary.
  * @todo Clean up 'test-_listOps' to look more like code that was written expecting uncurried functions not curried ones (code was copied from the tests for the curried version of '_listOps' package).
  */
 
-// ~~~ STRIP ~~~
-// This part gets stripped out when
-// generating browser version of test(s).
-'use strict';
 import {assert, expect} from 'chai';
 import {__, compose, negateP} from '../src/functionOps';
-import {split} from '../src/jsPlatform/string';
+import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/objectOps';
 import {isTruthy} from '../src/booleanOps';
 import {lines, unlines, words, unwords} from '../src/stringOps';
 import {
-    append, appendMany,
-    all, and, or, any, find, findIndex, findIndices,
+    append, appendMany, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
@@ -43,13 +38,11 @@ import {
     expectLength,
     expectTrue,
     expectFalse,
-    expectInstanceOf,
     alphabetArray,
     alphabetCharCodeRange,
-    log, alphabetString
+    log, alphabetString,
+    peek
 } from './helpers';
-// These variables get set at the top IIFE in the browser.
-// ~~~ /STRIP ~~~
 
 describe ('#_listOps', function () {
 
@@ -105,7 +98,7 @@ describe ('#_listOps', function () {
             expectShallowEquals(appendMany(alphabetArray, []), alphabetArray);
             expectEqual(appendMany(alphabetString, ''), alphabetString);
         });
-        it ('should return a copy of the original list only receiving it', function () {
+        it ('should return a copy of the original list when only receiving it', function () {
             expectShallowEquals(appendMany(alphabetArray), alphabetArray);
             expectEqual(appendMany(alphabetString), alphabetString);
         });
@@ -248,6 +241,18 @@ describe ('#_listOps', function () {
                 map(op, split('', word)),
                 ['ha', 'ea', 'la', 'la', 'oa'] );
         });
+        it ('should be able to map a function over a object.', function () {
+            const word = 'hello',
+                op = char => char + 'a',
+                objReductionOp = (agg, x, ind) => (
+                    agg[ind] = `${ind} bottles of beer on the wall`, agg
+                ),
+                obj = word.split(' ').reduce(objReductionOp, {}),
+                result = map(op, obj);
+
+            // Ensure values in result end with 'aa' (as dictated by `op`);
+            expectTrue(Object.keys(result).every(key => /walla$/.test(result[key])));
+        });
         it ('should return an empty list when receiving an empty list', function () {
             expectShallowEquals(map(x => x, []), []);
             expectShallowEquals(map(x => x, ''), '');
@@ -337,11 +342,73 @@ describe ('#_listOps', function () {
     });
 
     describe ('#subsequences', function () {
-        it ('should have more tests.');
+        it ('should return all sub-sequences of a sequence', function () {
+            const candidates = ['abc', 'abc'.split('')],
+                results = candidates.map(subsequences),
+                expectedLen = Math.pow(2, candidates[0].length);
+            log(candidates, results);
+            expectTrue(results.every(result => result.length === expectedLen));
+            expectTrue(results.every(result =>
+                    !result.filter((subSeq, ind) =>
+                        result.indexOf(subSeq) !== ind ||
+                        result.lastIndexOf(subSeq) !== ind
+                    ).length
+                )
+            );
+            // @see quick reference on subsequence algorithms
+            // https://discuss.codechef.com/questions/17235/print-all-possible-subsequences-of-string-using-dynamic-programming
+        });
+        it ('should return a list with an empty list when receiving an empty list', function () {
+            log(subsequences(''), ['']);
+            log(subsequences([]), [[]]);
+        });
     });
 
     describe ('#permutations', function () {
-        it ('should have more tests.');
+
+        const areAllPermutesUnique = permutes => {
+                const xs = permutes,
+                    limit = xs.length;
+                for (let i = 0; i < limit; i += 1) {
+                    let str = xs[i].join('');
+                    for (let j = 0; j < limit; j += 1) {
+                        if (j !== i && xs[j].join('') === str) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            },
+
+            howManyPermutes = n => {
+                if (n <= 0) {
+                    return 0;
+                }
+                let lastPermutes = 1,
+                    i = 1;
+                while (i <= n) {
+                    lastPermutes = i * lastPermutes;
+                    i += 1;
+                }
+                return lastPermutes;
+            };
+
+        it ('Should return unique permutations for a given set of items', function () {
+            const lists = 'abcd'.split('').reduceRight((agg, item, ind, list) =>
+                agg.concat([list.slice(ind)]), []); // I know laziness lol
+            expectLength(4, lists);
+            expectTrue(lists.every(
+                (xs, ind) => xs.length === ind + 1
+            ));
+            expectTrue(
+                lists.every(xs => {
+                    const result = permutations(xs);
+                    return areAllPermutesUnique(peek('permutations', result)) &&
+                        peek('permute-count',
+                            howManyPermutes(xs.length)) === result.length;
+                })
+            );
+        });
     });
 
     describe ('#foldl', function () {

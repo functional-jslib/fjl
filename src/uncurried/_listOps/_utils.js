@@ -206,27 +206,6 @@ export const
             let elm = xs[ind];
             if (pred(elm, ind, xs)) { return elm; }
         }
-    },
-
-    _swap = (list, ind1, ind2) => {
-        const tmp = list[ind1];
-        list[ind1] = list[ind2];
-        list[ind2] = tmp;
-        return list;
-    },
-
-    _permutationsAlgo = (listIn, limit, remainderLen, out = []) => {
-        if (remainderLen === 1) { out.push(copy(listIn)); return out; }
-        for (let i = 0; i < remainderLen; i++) {
-            const newLen = remainderLen - 1;
-
-            // Capture permutation
-            _permutationsAlgo(listIn, limit, newLen, out);
-
-            // If remainderLen is odd, swap first and last element
-            //  else, swap `ith` and last element
-            _swap(listIn, (remainderLen % 2 === 1 ? 0 : i), newLen);
-        }
-        return out;
     }
+
 ;

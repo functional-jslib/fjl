@@ -16,7 +16,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports._permutationsAlgo = exports._swap = exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -29,7 +29,7 @@
     // un-curried version good for both strings and arrays
     /**
      * List operator utils module.
-     * @module listOpsUtils_
+     * @module _listOpUtils
      * @private
      */
     var
@@ -60,13 +60,22 @@
 
     /**
      * Slices a copy of list.
-     * @function listOpsUtils_.sliceFrom
+     * @function _listOpUtils.sliceFrom
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
     copy = exports.copy = function copy(xs) {
         return sliceFrom(0, xs);
     },
+
+
+    /**
+     * Slices a copy of list.
+     * @function _listOpUtils.sliceCopy
+     * @param xs {Array|String|*}
+     * @returns {Array|String|*}
+     */
+    sliceCopy = exports.sliceCopy = copy,
 
 
     /**
@@ -185,7 +194,7 @@
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOpsUtils_lastIndex
+     * @function module:_listOpUtilslastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -196,7 +205,7 @@
 
     /**
      * Finds index in string or list.
-     * @function module:listOpsUtils_findIndexWhere
+     * @function module:_listOpUtilsfindIndexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -214,7 +223,7 @@
 
     /**
      * Finds index in list from right to left.
-     * @function module:listOpsUtils_findIndexWhereRight
+     * @function module:_listOpUtilsfindIndexWhereRight
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -252,7 +261,7 @@
 
 
     /**
-     * @function module:listOpsUtils_find
+     * @function module:_listOpUtilsfind
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -269,29 +278,5 @@
                 return elm;
             }
         }
-    },
-        _swap = exports._swap = function _swap(list, ind1, ind2) {
-        var tmp = list[ind1];
-        list[ind1] = list[ind2];
-        list[ind2] = tmp;
-        return list;
-    },
-        _permutationsAlgo = exports._permutationsAlgo = function _permutationsAlgo(listIn, limit, remainderLen) {
-        var out = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-
-        if (remainderLen === 1) {
-            out.push(copy(listIn));return out;
-        }
-        for (var i = 0; i < remainderLen; i++) {
-            var newLen = remainderLen - 1;
-
-            // Capture permutation
-            _permutationsAlgo(listIn, limit, newLen, out);
-
-            // If remainderLen is odd, swap first and last element
-            //  else, swap `ith` and last element
-            _swap(listIn, remainderLen % 2 === 1 ? 0 : i, newLen);
-        }
-        return out;
     }; // un-curried version
 });

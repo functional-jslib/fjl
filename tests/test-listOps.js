@@ -1,13 +1,10 @@
+/* eslint global: describe:true,it:true */
 /**
  * Created by elyde on 12/29/2016.
- * @todo ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
- * @todo ensure expected types (either explicitly or implicitly) are being returned where necessary.
+ * @note ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
+ * @note ensure expected types (either explicitly or implicitly) are being returned where necessary.
  */
 
-// ~~~ STRIP ~~~
-// This part gets stripped out when
-// generating browser version of test(s).
-'use strict';
 import {assert, expect} from 'chai';
 import {__, compose, negateP} from '../src/functionOps';
 import {split} from '../src/jsPlatform';
@@ -44,10 +41,9 @@ import {
     expectFalse,
     alphabetArray,
     alphabetCharCodeRange,
-    log, alphabetString
+    log, alphabetString,
+    peek
 } from './helpers';
-// These variables get set at the top IIFE in the browser.
-// ~~~ /STRIP ~~~
 
 describe ('#listOps', function () {
 
@@ -105,8 +101,8 @@ describe ('#listOps', function () {
 
     describe ('#appendMany', function () {
         const unfoldRBy4 = list => unfoldr(remainder =>
-                remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
-            , list),
+                    remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
+                , list),
             arrayParts= unfoldRBy4(alphabetArray),
             stringParts = unfoldRBy4(alphabetString);
 

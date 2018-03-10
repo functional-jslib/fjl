@@ -21,7 +21,7 @@ import {
     lengthsToSmallest, aggregateArr, aggregatorByType,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
-    findWhere, copy, genericAscOrdering, _permutationsAlgo
+    findWhere, copy, genericAscOrdering
 }
     from './_listOps/_utils';
 
@@ -297,6 +297,14 @@ export const
         return out;
     },
 
+    swapped = (ind1, ind2, list) => {
+        const out = sliceFrom(0, list),
+            tmp = out[ind1];
+        out[ind1] = out[ind2];
+        out[ind2] = tmp;
+        return out;
+    },
+
     /**
      * Returns a list of permutations for passed in list.
      *  Use caution with lists above a length of 15 (will take long due to nature of
@@ -307,8 +315,29 @@ export const
      */
     permutations = xs => {
         const limit = length(xs);
-        return !limit || limit === 1 ? [xs] :
-            _permutationsAlgo(xs, limit, limit);
+
+        if (!limit || limit === 1) {
+            return [xs];
+        }
+
+        let list = sliceFrom(0, xs),
+            c = repeat(limit, 0),
+            i = 0;
+
+        const out = [list];
+
+        for (; i < limit; i++) {
+            if (c[i] < i) {
+                list = swapped(i % 2 === 0 ? 0 : c[i], i, list);
+                out.push(list);
+                c[i] += 1;
+                i = 0;
+                continue;
+            }
+            c[i] = 0;
+        }
+
+        return out;
     },
 
     /**
