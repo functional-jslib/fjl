@@ -76,8 +76,8 @@ Non-haskell/javascript-specific exports:
 slice, includes, indexOf, lastIndexOf, split, push
 ```
 
-**Note:**
-- `split` is for strings.
+**Note for haskell developers:**
+- `split` in javascript is for strings.
 
 #### Utilities
 **Note:** Utility functions are generally not curried (minus a few exceptions: 
@@ -95,6 +95,7 @@ fPureTakesOneOrMore, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_
 ```
 ##### List operation utilities
 **Uncurried**
+
 ```
 sliceFrom, sliceTo, slice, sliceCopy
 genericAscOrdering, lengths, lengthsToSmallest, 
@@ -102,6 +103,7 @@ reduceUntil, reduceRightUntil, reduce, reduceRight,
 lastIndex, findIndexWhere, findIndicesWhere, findWhere,
 aggregateStr, aggregateArr, aggregateObj, aggregateByType,
 ```
+
 **Note:**
 - `lastIndex` gives you the last index of a list.
 
