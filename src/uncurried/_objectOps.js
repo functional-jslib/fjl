@@ -25,6 +25,10 @@ export const
     toArray = x => {
         let out;
         switch (typeOf(x)) {
+            case 'Null':
+            case 'Undefined':
+                out = [];
+                break;
             case String.name:
             case Array.name:
             case 'WeakMap':
