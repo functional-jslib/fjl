@@ -432,4 +432,16 @@ describe ('#_objectOps', function () {
         });
     });
 
+    describe ('#toArrayMap', function () {
+        it ('should have more tests');
+    });
+
+    describe ('#fromArrayMap', function () {
+        it ('should have more tests');
+    });
+
+    describe ('#toArray', function () {
+        it ('should have more tests');
+    });
+
 });
