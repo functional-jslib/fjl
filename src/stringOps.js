@@ -4,7 +4,7 @@
  * @created 7/9/2017.
  * @module stringOps
  */
-import {intercalate} from './listOps';
+import {intercalate, _map, _splitAt} from './listOps';
 
 import {split} from './jsPlatform/string';
 
@@ -40,4 +40,31 @@ export const
      * @param list {Array|String|*}
      * @returns {Array}
      */
-    unlines = intercalate('\n');
+    unlines = intercalate('\n'),
+
+    /**
+     * Lower cases first character of string.
+     * @function module:stringOps.lcaseFirst
+     * @param xs {String}
+     * @returns {string}
+     */
+    lcaseFirst = xs => (xs[0] || '').toLowerCase() + xs.substring(1),
+
+    /**
+     * Upper cases first character of string.
+     * @function module:stringOps.ucaseFirst
+     * @param xs {String}
+     * @returns {string}
+     */
+    ucaseFirst = xs => (xs[0] || '').toUpperCase() + xs.substring(1),
+
+    /**
+     * Class cases a string.
+     * @function module:stringOps.camelCase
+     * @param [pattern=/[^a-z\d/i]/] {RegExp} - Optional.
+     * @param xs {String}
+     * @returns {string}
+     */
+    camelCase = (pattern, xs) => _map(ucaseFirst, _splitAt(pattern || /[^a-z\d]/i, xs))
+
+    ;

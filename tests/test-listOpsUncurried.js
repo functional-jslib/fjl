@@ -1967,6 +1967,18 @@ describe ('#_listOps', function () {
         });
     });
 
+    describe ('#lcaseFirst', function () {
+        it ('should have more tests');
+    });
+
+    describe ('#ucaseFirst', function () {
+        it ('should have more tests');
+    });
+
+    describe ('#camelCase', function () {
+        it ('should have more tests');
+    });
+
     describe ('#nub', function () {
         it ('should remove all but first occurrences of repeat items in a list.', function () {
             expectEqual(nub('conundrum'), 'conudrm');
