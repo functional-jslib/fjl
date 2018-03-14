@@ -41,8 +41,31 @@ removeBy, removeFirstBy, unionBy, union, intersect, intersectBy, difference,
 complement
 ```
 
+##### Note: `iterate`, `repeat`, `replicate`, `cycle`
+In javascript we do not have lazy lists (infinite lists) like in haskell so 
+the aforementioned methods take an integer as their first parameter (in our implementation)
+(since we need to know when to their internal loops);  E.g.,
+
+Javascript: `take(3, iterate(a => a * 2), [1..])` 
+Haskell: `take 3 $ iterate (a -> a * 2) [1..]`
+
+**Notice** the `[1..]`, this doesn't exist in javascript;  In haskell this is an infinite lazy list 
+
+So our haskell definitions for our methods are 
+- `iterate :: (a -> a) -> [a]` 
+- `repeat :: a -> [a]`
+- `replicate :: Int -> a -> [a]`
+- `cycle :: [a] -> [a]`
+ 
+In javascript:
+- `repeat` and `replicate` become the same:
+`repeat :: Int -> a -> [a]`
+`replicate:: Int -> a -> [a]`
+- `cycle` becomes `cycle :: Int -> [a] -> [a]`
+- `iterate` becomes `iterate :: Int -> (a -> a) -> [a]`
+
 #### `functionOps`
-The methods comprising function operations are:
+The methods that comprise function operations are:
 ```
 apply, call, curry, curry2, curry3, curry4, curry5, curryN,
 until, flip, flip3, flip4, flip5, flipN,
@@ -66,6 +89,7 @@ objUnion, objIntersect, objDifference, objComplement,
 ```
 
 #### `stringOps`
+Import from 'Data.List' (in haskell):
 ```
 lines, words, unwords, unlines
 ```
@@ -93,6 +117,7 @@ The function returned takes arguments first and functor/member last.
 fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
 fPureTakesOneOrMore, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_
 ```
+
 ##### List operation utilities
 **Uncurried**
 
