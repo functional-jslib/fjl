@@ -48,7 +48,7 @@ export const
      * @param xs {String}
      * @returns {string}
      */
-    lcaseFirst = xs => (xs[0] || '').toLowerCase() + xs.substring(1),
+    lcaseFirst = xs => xs[0].toLowerCase() + xs.substring(1),
 
     /**
      * Upper cases first character of string.
@@ -56,7 +56,7 @@ export const
      * @param xs {String}
      * @returns {string}
      */
-    ucaseFirst = xs => (xs[0] || '').toUpperCase() + xs.substring(1),
+    ucaseFirst = xs => xs[0].toUpperCase() + xs.substring(1),
 
     /**
      * Class cases a string.

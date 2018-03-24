@@ -101,17 +101,10 @@ export const
      * @haskellType `uncons :: [a] -> Maybe (a, [a])`
      * @function module:_listOps.uncons
      * @param xs {Array|String}
-     * @returns {Array|String|*|undefined}
+     * @returns {Array|undefined}
      */
-    uncons = xs => {
-        if (!xs) {
-            return;
-        }
-        if (length(xs) === 0) {
-            return undefined;
-        }
-        return [head(xs), tail(xs)];
-    },
+    uncons = xs =>
+        !xs || length(xs) === 0 ? undefined : [head(xs), tail(xs)],
 
     /**
      * Returns `tail` and `head` of passed in list/string in a tuple.
@@ -120,15 +113,7 @@ export const
      * @param xs {Array|String}
      * @returns {Array|String|*|undefined}
      */
-    unconsr = xs => {
-        if (!xs) {
-            return;
-        }
-        if (length(xs) === 0) {
-            return undefined;
-        }
-        return [init(xs), last(xs)];
-    },
+    unconsr = xs => !xs || length(xs) === 0 ? undefined : [init(xs), last(xs)],
     
     /**
      * Concatenates all the elements of a container of lists.
@@ -137,10 +122,7 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    concat = xs => {
-        if (!length(xs)) { return copy(xs); }
-        return isString(xs) ? xs : apply(appendMany, xs);
-    },
+    concat = xs => !length(xs) ? copy(xs) : apply(appendMany, xs),
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -174,24 +156,23 @@ export const
      *  it typed) so `between` can be any value.
      * @param between {*} - Should be of the same type of elements contained in list.
      * @param arr {Array|String|*} - List.
-     * @returns {Array|String|*}
+     * @returns {Array}
      */
     intersperse = (between, arr) => {
         const limit = length(arr),
             lastInd = limit - 1,
-            aggregator = of(arr),
-            aggregatorOp = aggregatorByType(arr);
+            out = [];
         if (!limit) {
-            return aggregator;
+            return out;
         }
         return foldl((agg, item, ind) => {
-            return ind === lastInd ?
-                aggregatorOp(agg, item) :
-                aggregatorOp(
-                    aggregatorOp(agg, item),
-                    between
-                );
-        }, aggregator, arr);
+            return (
+                ind === lastInd ?
+                    agg.push(item) :
+                    agg.push(item, between),
+                agg
+            );
+        }, out, arr);
     },
 
     /**
@@ -1343,20 +1324,20 @@ export const
     },
 
     nubBy = (pred, list) => {
-        if (isEmptyList(list)) {
-            return of(list);
+        if (!length(list)) {
+            return [];
         }
         const limit = length(list);
         let ind = 0,
             currItem,
-            out = of(list),
+            out = [],
             anyOp = storedItem => pred(currItem, storedItem);
         for (; ind < limit; ind += 1) {
             currItem = list[ind];
             if (any(anyOp, out)) {
                 continue;
             }
-            out = append(out, currItem);
+            out.push(currItem);
         }
         return out;
     },

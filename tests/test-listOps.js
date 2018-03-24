@@ -249,7 +249,6 @@ describe ('#listOps', function () {
         it ('should be able to map a function over a list.', function () {
             const word = 'hello',
                 op = char => char + 'a';
-            expectEqual(map(op, word), 'haealalaoa');
             expectShallowEquals(
                 map(op, split('', word)),
                 ['ha', 'ea', 'la', 'la', 'oa'] );
@@ -295,35 +294,26 @@ describe ('#listOps', function () {
 
     describe ('#intersperse', function () {
         it ('should be able to inject a list (string or array) in-between the items of a list of the same type.', function () {
-            const result1 = intersperse(', ', alphabetArray).join(''),
-                result2 = intersperse(', ', alphabetString);
+            const result1 = intersperse(', ', alphabetArray).join('');
             expectEqual(result1, alphabetArray.join(', '));
-            expectEqual(result2, alphabetArray.join(', '));
         });
         it ('should return a list with the same item when the list has a length of `1`', function () {
-            expectEqual(intersperse(', ', 'a'), 'a');
             expectShallowEquals(intersperse(', ', ['a']), ['a']);
         });
         it ('should return an empty list when receiving an empty list', function () {
-            expectEqual(intersperse('', ''), '');
             expectShallowEquals(intersperse('', []), []);
         });
     });
 
     describe ('#intercalate', function () {
         it ('should intercalate a list within another list and then perform concat on the result', function () {
-            const result1 = intercalate(', ', alphabetArray),
-                result2 = intercalate(', ', alphabetString);
+            const result1 = intercalate(', ', alphabetArray);
             expectEqual(result1, alphabetArray.join(', '));
-            expectEqual(result2, alphabetArray.join(', '));
         });
         it ('should return a list with the same item when the list has a length of `1`', function () {
-            expectEqual(intercalate(', ', 'a'), 'a');
-            expectShallowEquals(intercalate(', ', ['a']), 'a');
             expectShallowEquals(intercalate(', ', [['a']]), ['a']); // Ensure list is flattened one level
         });
         it ('should return an empty list when receiving an empty list', function () {
-            expectEqual(intercalate('', ''), '');
             expectShallowEquals(intercalate('', []), []);
             expectShallowEquals(intercalate('', [[]]), []); // Ensures list is flattened one level
         });
@@ -1929,7 +1919,6 @@ describe ('#listOps', function () {
             });
         });
         it ('should return empty lists when receiving empty lists', function () {
-            expectEqual(unlines(''), '');
             expectShallowEquals(unlines([]), []);
         });
         it ('should throw Errors when receiving nothing', function () {
@@ -1953,7 +1942,6 @@ describe ('#listOps', function () {
             });
         });
         it ('should return empty lists when receiving empty lists', function () {
-            expectEqual(unwords(''), '');
             expectShallowEquals(unwords([]), []);
         });
         it ('should throw Errors when receiving nothing', function () {
@@ -1964,20 +1952,14 @@ describe ('#listOps', function () {
 
     describe ('#nub', function () {
         it ('should remove all but first occurrences of repeat items in a list.', function () {
-            expectEqual(nub('conundrum'), 'conudrm');
-            expectEqual(nub(map(char => char + char, alphabetString)), alphabetString);
-            expectShallowEquals(
-                nub(concatMap(char => char + char, alphabetString).split('')),
-                alphabetArray
-            );
+            expectShallowEquals(nub('conundrum'.split('')), 'conudrm'.split(''));
+            expectShallowEquals(nub(map(char => char + char, alphabetArray).join('').split('')), alphabetArray);
         });
         it ('should return a copy of the passed in list with items intact if there ' +
             'aren\'t any repeat items', function () {
-            expectEqual(nub(alphabetString), alphabetString);
             expectShallowEquals(nub(alphabetArray), alphabetArray);
         });
         it ('should return empty lists when receiving empty lists', function () {
-            expectEqual(nub(''), '');
             expectShallowEquals(nub([]), []);
         });
         it ('should throw Errors when receiving nothing', function () {
@@ -2225,20 +2207,14 @@ describe ('#listOps', function () {
 
     describe ('#nubBy', function () {
         it ('should remove all but first occurrences of repeat items in a list.', function () {
-            expectEqual(nubBy(equal, 'conundrum'), 'conudrm');
-            expectEqual(nubBy(equal, map(char => char + char, alphabetString)), alphabetString);
-            expectShallowEquals(
-                nubBy(equal, concatMap(char => char + char, alphabetString).split('')),
-                alphabetArray
-            );
+            expectShallowEquals(nubBy(equal, 'conundrum'.split('')), 'conudrm'.split(''));
+            expectShallowEquals(nubBy(equal, map(char => char + char, alphabetArray).join('').split('')), alphabetArray);
         });
         it ('should return a copy of the passed in list with items intact if there ' +
             'aren\'t any repeat items', function () {
-            expectEqual(nubBy(equal, alphabetString), alphabetString);
             expectShallowEquals(nubBy(equal, alphabetArray), alphabetArray);
         });
         it ('should return empty lists when receiving empty lists', function () {
-            expectEqual(nubBy(equal, ''), '');
             expectShallowEquals(nubBy(equal, []), []);
         });
         it ('should throw Errors when receiving nothing', function () {

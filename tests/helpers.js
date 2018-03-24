@@ -73,6 +73,8 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
 
     expectShallowEquals = curry2_((a, b) => expectTrue(shallowCompareOnLeft(a, b))),
 
+    expectShallowEqual = expectShallowEquals,
+
     expectDeepEquals = curry2_((a, b) => expectTrue(deepCompareLeft(a, b))),
 
     range = curry2_((from, to, step = 1) => {
@@ -100,28 +102,3 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
     jsonClone = x => JSON.parse(JSON.stringify(x))
 
     ;
-
-export default {
-    expectFunction,
-    expectInstanceOf,
-    expectEqual,
-    expectFalse,
-    expectTrue,
-    expectLength,
-    expectShallowEquals,
-    expectDeepEquals,
-    hasOwnProperty,
-    length,
-    add,
-    multiply,
-    divide,
-    shallowCompareArraysLeft,
-    shallowCompareObjectsLeft,
-    shallowCompareOnLeft,
-    range,
-    alphabetCharCodeRange,
-    alphabetArray,
-    alphabetString,
-    jsonClone,
-    peek
-};

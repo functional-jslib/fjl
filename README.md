@@ -227,6 +227,10 @@ Unit tests are grouped by exported module:
 
 We are using 'chai' and 'mocha' though we may want to move to 'jest' in the future.
 
+### Perf Tests:
+- `subsequences`: https://jsperf.com/subsequences/6
+
+
 ## Requirements:
 - Javascript versions Ecmascript 5+
 
