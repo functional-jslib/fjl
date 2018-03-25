@@ -13,7 +13,7 @@ import {
 import {apply} from './_jsPlatform/_function';
 import {negateP, negateF} from './_functionOps/_negate';
 import {isTruthy, isFalsy} from '../booleanOps';
-import {isString, isEmptyList, prop, length/*, isset*/} from './_objectOps';
+import {prop, length} from './_objectOps';
 import {map} from './_listOps/_map';
 
 import {
@@ -616,10 +616,11 @@ export const
     },
 
     /**
+     * Gets item at index.
      * @function module:_listOps.at
      * @param ind {Number} - Index.
      * @param xs {Array|String|*} - list or list like.
-     * @returns {*}
+     * @returns {*|undefined} - Item or `undefined`.
      */
     at = prop,
 

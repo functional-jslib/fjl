@@ -5,6 +5,10 @@
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 import {apply, length, concat} from '../_jsPlatform';
+import {fnOrError} from "../_utils";
+
+const notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
+
 export const
 
     /**
@@ -14,14 +18,7 @@ export const
      * @param argsToCurry {...*}
      * @returns {Function}
      */
-    curry = (fn, ...argsToCurry) => {
-        return (...args) => {
-            const concatedArgs = concat(argsToCurry, args);
-            return length(concatedArgs) < length(fn) ?
-                apply(curry, concat([fn], concatedArgs)) :
-                apply(fn, concatedArgs);
-        };
-    },
+    curry = (fn, ...argsToCurry) => curryN(fnOrError(notFnErrPrefix, fn).length, fn, ...argsToCurry),
 
     /**
      * Curries a functionOps up to a given arity.
@@ -35,8 +32,8 @@ export const
         return (...args) => {
             let concatedArgs = concat(curriedArgs, args),
                 canBeCalled = (length(concatedArgs) >= executeArity) || !executeArity;
-            return !canBeCalled ? apply(curryN, concat([executeArity, fn], concatedArgs)) :
-                apply(fn, concatedArgs);
+            return !canBeCalled ? apply(curryN, concat([executeArity, fnOrError(notFnErrPrefix, fn)], concatedArgs)) :
+                apply(fnOrError(notFnErrPrefix, fn), concatedArgs);
         };
     },
 

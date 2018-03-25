@@ -24,7 +24,7 @@ describe ('#_functionOps', function () {
 
     // @todo implement more extensive tests later
     describe ('#call', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(call);
         });
         it ('should be curried', function () {
@@ -32,14 +32,14 @@ describe ('#_functionOps', function () {
             expectFunction(adder());
             expectEqual(adder(1, 2, 3, 4, 5), 15);
         });
-        it ('should call a _functionOps passed into it along with passed in arguments', function () {
+        it ('should call a function passed into it along with passed in arguments', function () {
             expectEqual(call(add, 1, 2, 3, 4, 5), 15);
         });
     });
 
     // @todo implement more extensive tests later
     describe ('#apply', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(apply);
         });
         it ('should be curried', function () {
@@ -47,20 +47,20 @@ describe ('#_functionOps', function () {
             expectFunction (addAllInArray);
             expectEqual(addAllInArray([1, 2, 3, 4, 5]), 15);
         });
-        it ('should call a _functionOps passed into it with args _listOps passed in as second parameter', function () {
+        it ('should call a function passed into it with args _listOps passed in as second parameter', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
     });
 
     describe ('#flip', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(flip);
         });
-        it ('should return a _functionOps', function () {
+        it ('should return a function', function () {
             expectFunction(flip());
             expectFunction(flip(subtract));
         });
-        it ('should return a _functionOps which executes its params in reverse.', function () {
+        it ('should return a function which executes its params in reverse.', function () {
             const subtractor = flip(subtract);
             expectFunction(subtractor);
             expectEqual(subtract(2, 1), subtractor(1, 2));
@@ -69,14 +69,14 @@ describe ('#_functionOps', function () {
     });
 
     describe ('#flipN', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(flipN);
         });
-        it ('should return a _functionOps', function () {
+        it ('should return a function', function () {
             expectFunction(flipN());
             expectFunction(flipN(subtract));
         });
-        it ('should return a _functionOps which executes its params in reverse.', function () {
+        it ('should return a function which executes its params in reverse.', function () {
             const subtractor = flipN(subtract);
             expectFunction(subtractor);
             expectEqual(subtract(3, 2, 1), subtractor(1, 2, 3));
@@ -85,7 +85,7 @@ describe ('#_functionOps', function () {
     });
 
     describe ('#until', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(until);
         });
 
@@ -111,7 +111,7 @@ describe ('#_functionOps', function () {
     });
 
     describe ('#id', function () {
-        it ('should be a _functionOps', function () {
+        it ('should be a function', function () {
             expectFunction(id);
         });
         it ('should return whatever you give it', function () {
@@ -122,23 +122,23 @@ describe ('#_functionOps', function () {
 
     describe('#compose', function () {
 
-        it ('should be of type _functionOps.', function () {
+        it ('should be of type function.', function () {
             expect(compose).to.be.instanceOf(Function);
         });
 
-        it ('should return a _functionOps whether or not any parameters were passed in to it.', function () {
+        it ('should return a function whether or not any parameters were passed in to it.', function () {
             expect(compose()).to.be.instanceOf(Function);
             expect(compose(console.log)).to.be.instanceOf(Function);
         });
 
-        it ('should return a _functionOps that when used returns the passed in value if `compose` ' +
+        it ('should return a function that when used returns the passed in value if `compose` ' +
             'itself didn\'t receive any parameters.', function () {
             let result = compose();
             expect(result(99)).to.equal(99);
         });
 
         it ('should be able to compose an arbitrary numberOps of functions and execute them as expected ' +
-            'from generated _functionOps.', function () {
+            'from generated function.', function () {
             let min = curry2(Math.min),
                 max = curry2(Math.max),
                 pow = curry2(Math.pow),
@@ -155,23 +155,22 @@ describe ('#_functionOps', function () {
 
     describe('#curry', function () {
 
-        it ('should be of type _functionOps.', function () {
+        it ('should be of type function.', function () {
             expectFunction(curry);
         });
 
-        it ('should return a _functionOps when called with or without args.', function () {
-            expectFunction(curry());
-            expectFunction(curry(99));
-            expectFunction(curry(() => {}));
-            expectFunction(curry(console.log));
+        it ('should return a function when called with one or more "correct" args.', function () {
+            expectFunction(curry(log, 99));
+            expectFunction(curry(log));
         });
 
-        it ('should return a _functionOps that fails when no _functionOps is passed in (as it\'s first param).', function () {
-            assert.throws(curry(), Error);
-            assert.throws(curry(99), Error);
+        it ('should throw an error when receiving anything other than a function for first param', function () {
+            [99, false, true, null, undefined, [], {}].forEach(x => {
+                assert.throws(() => curry(x), Error);
+            });
         });
 
-        it ('should return a curried _functionOps.', function () {
+        it ('should return a curried function.', function () {
             let min8 = curry(Math.min, 8),
                 max5 = curry(Math.max, 5),
                 pow2 = curry(Math.pow, 2);
@@ -235,17 +234,17 @@ describe ('#_functionOps', function () {
             addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
             divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
-        it ('should be of type _functionOps.', function () {
+        it ('should be of type function.', function () {
             expect(curryN).to.be.instanceOf(Function);
         });
 
-        it ('should return a _functionOps that throws an error when no arguments are passed.', function () {
+        it ('should return a function that throws an error when no arguments are passed.', function () {
             let result = curryN();
             expect(result).to.be.instanceOf(Function);
             assert.throws(result, Error);
         });
 
-        it ('should pass in any values passed the arity when executing the curried _functionOps', function () {
+        it ('should pass in any values passed the arity when executing the curried function', function () {
             let add3Nums = curryN(3, addRecursive);
 
             // Curry add to add 3 numbers
@@ -296,23 +295,17 @@ describe ('#_functionOps', function () {
             addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
             divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
-        it ('should be of type _functionOps.', function () {
+        it ('should be of type function.', function () {
             expect(curry_).to.be.instanceOf(Function);
         });
 
-        it ('should return a _functionOps when called with or without args.', function () {
-            expect(curry_()).to.be.instanceOf(Function);
-            expect(curry_(99)).to.be.instanceOf(Function);
-            expect(curry_(() => {})).to.be.instanceOf(Function);
-            expect(curry_(console.log)).to.be.instanceOf(Function);
+        it ('should throw an error when receiving anything other than a function for first param', function () {
+            [99, false, true, null, undefined, [], {}].forEach(x => {
+                assert.throws(() => curry_(x), Error);
+            });
         });
 
-        /*it ('should return a _functionOps that fails when no _functionOps is passed (as it\'s first param).', _functionOps () {
-         assert.throws(curry_(), Error);
-         assert.throws(curry_(99), Error);
-         });*/
-
-        it ('should return a properly curried _functionOps when correct arity for said _functionOps is met.', function () {
+        it ('should return a properly curried function when correct arity for said function is met.', function () {
             let min8 = curry_(Math.min, 8),
                 max5 = curry_(Math.max, 5),
                 pow2 = curry_(Math.pow, 2);
@@ -406,11 +399,11 @@ describe ('#_functionOps', function () {
             addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
             divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
-        it ('should be of type _functionOps.', function () {
+        it ('should be of type function.', function () {
             expect(curryN_).to.be.instanceOf(Function);
         });
 
-        it ('should return a _functionOps that throws an error when no arguments are passed.', function () {
+        it ('should return a function that throws an error when no arguments are passed.', function () {
             let result = curryN_();
             expect(result).to.be.instanceOf(Function);
             assert.throws(result, Error);
@@ -437,7 +430,7 @@ describe ('#_functionOps', function () {
 
         });
 
-        it ('should pass in any values passed the arity when executing the curried _functionOps', function () {
+        it ('should pass in any values passed the arity when executing the curried function', function () {
             let add3Nums = curryN_(3, addRecursive);
 
             // Curry add to add 3 numbers
