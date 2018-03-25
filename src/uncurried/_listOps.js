@@ -13,12 +13,12 @@ import {
 import {apply} from './_jsPlatform/_function';
 import {negateP, negateF} from './_functionOps/_negate';
 import {isTruthy, isFalsy} from '../booleanOps';
-import {isString, isEmptyList, prop, of, length/*, isset*/} from './_objectOps';
+import {isString, isEmptyList, prop, length/*, isset*/} from './_objectOps';
 import {map} from './_listOps/_map';
 
 import {
     sliceFrom, sliceTo, lengths,
-    lengthsToSmallest, aggregateArr, aggregatorByType,
+    lengthsToSmallest, aggregateArr,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, copy, genericAscOrdering
@@ -141,7 +141,7 @@ export const
      * @param x {Array|String|*}
      * @returns {Array|String|*}
      */
-    reverse = x => foldr((agg, item, ind) => (agg.push(item), agg), x),
+    reverse = x => foldr((agg, item, ind) => (agg.push(item), agg), [], x),
 
     /**
      * Takes an element and a list and `intersperses' that element between the elements of the list. For example
@@ -342,10 +342,7 @@ export const
      */
     foldl1 = (op, xs) => {
         const parts = uncons(xs);
-        if (!parts) {
-            return [];
-        }
-        return reduce(op, parts[0], parts[1]);
+        return !parts ? [] : reduce(op, parts[0], parts[1]);
     },
 
     /**
@@ -358,10 +355,7 @@ export const
      */
     foldr1 = (op, xs) => {
         const parts = unconsr(xs);
-        if (!parts) {
-            return [];
-        }
-        return reduceRight(op, parts[1], parts[0]);
+        return !parts ? [] : reduceRight(op, parts[1], parts[0]);
     },
 
     /**
@@ -419,30 +413,33 @@ export const
     },
 
     /**
-     * Iterate on value (`x`) with `op` up to `limit`.
+     * iterate f x returns an infinite list of repeated applications of f to x.
      * @function module:_listOps.iterate
+     * @example `iterate(5, f, x) == [x, f(x), f(f(x)), ...]`
      * @param limit {Number}
-     * @param op {Function} - Operation
+     * @param op {Function} - Operation.
      * @param x {*} - Starting point.
      * @returns {*}
      */
     iterate = (limit, op, x) => {
         let ind = 0,
-            out = x;
+            out = [],
+            lastX = x;
         for (; ind < limit; ind += 1) {
-            out = op(out, ind);
+            out.push(lastX);
+            lastX = op(lastX);
         }
         return out;
     },
 
     /**
-     * Repeats `x` `limit` number of times
+     * Repeats `x` `limit` number of times.
      * @function module:_listOps.repeat
      * @param limit {Number}
      * @param x {*}
      * @return {Array}
      */
-    repeat = (limit, x) => iterate(limit, aggregateArr, []),
+    repeat = (limit, x) => iterate(limit, a => a, x),
 
     /**
      * Same as `repeat` due to the nature of javascript (see haskell version for usage).
@@ -1261,8 +1258,8 @@ export const
     sortBy = (orderingFn, xs) => copy(xs).sort(orderingFn || genericAscOrdering),
 
     insert = (x, xs) => {
-        if (isEmptyList(xs)) {
-            return aggregatorByType(xs)(copy(xs), x, 0);
+        if (!length(xs)) {
+            return [x];
         }
         const foundIndex = findIndex(item => x <= item, xs);
         return foundIndex === -1 ? [x] :
@@ -1283,21 +1280,18 @@ export const
      * @returns {Array|String|*} - New list.
      */
     insertBy = (orderingFn, x, xs) => {
-        const limit = length(xs),
-            aggregator = aggregatorByType(xs),
-            out = [];
-        if (isEmptyList(xs)) {
-            return aggregator(out, x, 0);
+        const limit = length(xs);
+        if (!limit) {
+            return [x];
         }
         let ind = 0;
         for (; ind < limit; ind += 1) {
             if (orderingFn(x, xs[ind]) <= 0) {
                 const parts = splitAt(ind, xs);
-                // Fold parts[0], [x], parts[1] into `out` and `concat`
-                return concat(foldl(aggregator, out, [parts[0], [x], parts[1]]));
+                return concat([parts[0], [x], parts[1]]);
             }
         }
-        return aggregator(copy(xs), x);
+        return aggregateArr(copy(xs), x);
     },
 
     nubBy = (pred, list) => {
@@ -1324,6 +1318,7 @@ export const
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
         return append(parts[0], tail(parts[1]));
     },
+
 
     removeFirstsBy = (pred, xs1, xs2) =>
         foldl((agg, item) => removeBy(pred, item, agg), xs1, xs2),

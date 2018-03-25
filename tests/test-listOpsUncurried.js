@@ -283,12 +283,10 @@ describe ('#_listOps', function () {
     describe ('#reverse', function () {
         it ('should reverse a list passed in.', function () {
             const word = 'hello';
-            expectEqual(reverse(word), 'olleh');
             expectShallowEquals(reverse(split('', word)), split('', 'olleh'));
         });
         it ('should return an empty list when receiving an empty list', function () {
             expectShallowEquals(reverse([]), []);
-            expectEqual(reverse(''), '');
         });
         it ('should throw an error when receiving no value', function () {
             assert.throws(reverse, Error);
@@ -419,8 +417,12 @@ describe ('#_listOps', function () {
             };
 
         it ('Should return unique permutations for a given set of items', function () {
-            const lists = 'abcd'.split('').reduceRight((agg, item, ind, list) =>
-                agg.concat([list.slice(ind)]), []); // I know laziness lol
+            const lists = 'abcd'
+                .split('')
+                .reduceRight((agg, item, ind, list) =>
+                    agg.concat([list.slice(ind)]), [])
+            ;
+            log(lists);
             expectLength(4, lists);
             expectTrue(lists.every(
                 (xs, ind) => xs.length === ind + 1
@@ -428,9 +430,8 @@ describe ('#_listOps', function () {
             expectTrue(
                 lists.every(xs => {
                     const result = permutations(xs);
-                    return areAllPermutesUnique(peek('permutations', result)) &&
-                        peek('permute-count',
-                            howManyPermutes(xs.length)) === result.length;
+                    return areAllPermutesUnique(result) &&
+                            howManyPermutes(xs.length) === result.length;
                 })
             );
         });
@@ -509,12 +510,7 @@ describe ('#_listOps', function () {
             );
         });
         it ('should return the zero value when an empty list is passed in', function () {
-            expectEqual(foldl1((agg, item) => agg + item, ''), '');
             expectShallowEquals(foldl1((agg, item) => agg + item, []), []);
-        });
-        it ('should return `undefined` when receiving nothing (`null` or `undefined`)', function () {
-            expectEqual(foldl1((agg, item) => agg + item, null), undefined);
-            expectEqual(foldl1((agg, item) => agg + item, undefined), undefined);
         });
     });
 
@@ -589,12 +585,7 @@ describe ('#_listOps', function () {
             );
         });
         it ('should return the zero value when an empty list is passed in', function () {
-            expectEqual(foldr1((agg, item) => agg + item, ''), '');
             expectShallowEquals(foldr1((agg, item) => agg + item, []), []);
-        });
-        it ('should return `undefined` when receiving nothing (`null` or `undefined`)', function () {
-            expectEqual(foldr1((agg, item) => agg + item, null), undefined);
-            expectEqual(foldr1((agg, item) => agg + item, undefined), undefined);
         });
     });
 
@@ -892,6 +883,18 @@ describe ('#_listOps', function () {
                     ])
             );
         });
+    });
+
+    describe ('#iterate', function () {
+        it ('should have more tests');
+    });
+
+    describe ('#repeat, replicate', function () {
+        it ('should have more tests');
+    });
+
+    describe ('#cycle', function () {
+        it ('should have more tests');
     });
 
     describe ('#unfoldr', function () {
@@ -1298,20 +1301,13 @@ describe ('#_listOps', function () {
 
     describe ('#group', function () {
         it ('should return a list of lists which contain the (sequential) matches', function () {
-            const expectedResultFlattened = ['M', 'i', 'ss', 'i', 'ss', 'i', 'pp', 'i'];
-            expectShallowEquals(group('Mississippi'), expectedResultFlattened);
-            expectShallowEquals(
-                // Flatten results first
-                group('Mississippi'.split('')).map(item => item.join('')),
-                expectedResultFlattened
-            );
+            const expectedResultFlattened = [['M'], ['i'], ['s,', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
+            expectDeepEquals(group('Mississippi'), expectedResultFlattened);
+            expectDeepEquals(group('Mississippi'.split('')), expectedResultFlattened);
         });
         it ('should return a list of lists containing individual ungrouped items', function () {
-            expectShallowEquals(group(alphabetString), alphabetArray);
-            expectShallowEquals(
-                // Flatten result first
-                group(alphabetArray).map(item => item.join('')),
-                alphabetArray);
+            expectDeepEquals(group(alphabetString), alphabetArray);
+            expectDeepEquals(group(alphabetArray), alphabetArray);
         });
     });
 
@@ -2291,29 +2287,20 @@ describe ('#_listOps', function () {
         it ('should remove all first occurrences of all items in second list by passed in ' +
             'equality operation.', function () {
             // Remove first occurrences of `vowels` in `alphabet * 3`
-            const subj1 = iterate(length(vowels), (value, ind) => {
-                    const foundInd = value.indexOf(vowels[ind]);
+            const subj1 = iterate(length(vowels), (vowel, ind) => {
+                    const foundInd = vowel.indexOf(vowels[ind]);
                     if (foundInd > -1) {
-                        const parts = splitAt(foundInd, value);
+                        const parts = splitAt(foundInd, vowel);
                         return concat([parts[0], tail(parts[1])]);
                     }
-                    return value;
+                    return vowel;
                 }, concat([alphabetArray, alphabetArray, alphabetArray]));
 
             // Expect vowels removed from the same places in both lists
-            expectTrue(all(tuple => /*!log(tuple) &&*/ tuple[0] === tuple[1], [[
-                removeFirstsBy(equal, cycle(3, alphabetString), vowels),
-                concat(subj1)
-            ]]));
-
-            // Expect vowels removed from the same places in both lists
-            expectShallowEquals(
+            expectDeepEquals(
                 removeFirstsBy(equal, cycle(3, alphabetArray), vowelsArray),
                 subj1
             );
-
-            // log(removeFirstsBy(equal, cycle(3, alphabetArray), 'aeiou'.split('')));
-            // log(removeFirstsBy(equal, cycle(3, alphabetString), 'aeiou'));
         });
         it ('should return copy of original list when no items from second list are found in it.', function () {
             expectEqual(removeFirstsBy(equal, consonants, vowels), consonants);
@@ -2419,19 +2406,17 @@ describe ('#_listOps', function () {
 
     describe ('#groupBy', function () {
         it ('should return a list of lists which contain the (sequential) matches on equality function', function () {
-            const expectedResultFlattened = ['M', 'i', 'ss', 'i', 'ss', 'i', 'pp', 'i'];
-            expectShallowEquals(groupBy(generalEqualityCheck, 'Mississippi'), expectedResultFlattened);
-            expectShallowEquals(
-                // Flatten results first
-                groupBy(generalEqualityCheck, 'Mississippi'.split('')).map(item => item.join('')),
-                expectedResultFlattened
+            const expectedResult = [['M'], ['i'], ['s,', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
+            expectDeepEquals(groupBy(generalEqualityCheck, 'Mississippi'), expectedResult);
+            expectDeepEquals(
+                groupBy(generalEqualityCheck, 'Mississippi'.split('')),
+                expectedResult
             );
         });
         it ('should return a list of lists containing individual un-grouped items or items that do not match equality function', function () {
-            expectShallowEquals(groupBy(generalEqualityCheck, alphabetString), alphabetArray);
-            expectShallowEquals(
-                // Flatten result first
-                groupBy(generalEqualityCheck, alphabetArray).map(item => item.join('')),
+            expectDeepEquals(groupBy(generalEqualityCheck, alphabetString), alphabetArray);
+            expectDeepEquals(
+                groupBy(generalEqualityCheck, alphabetArray),
                 alphabetArray);
         });
     });
