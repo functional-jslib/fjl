@@ -12,7 +12,7 @@ import {curry, curry2, curry3, curry4, curry5, curryN} from './uncurried/_functi
 import {
     append as _append, appendMany as _appendMany, all as _all, any as _any, find as _find,
     findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith,
-    map as _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, zipWithN as _zipWithN,
+    _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, zipWithN as _zipWithN,
     elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup,
     intersperse as _intersperse, intercalate as _intercalate, iterate as _iterate,
     repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt,

@@ -14,7 +14,7 @@ import {apply} from './_jsPlatform/_function';
 import {negateP, negateF} from './_functionOps/_negate';
 import {isTruthy, isFalsy} from '../booleanOps';
 import {prop, length} from './_objectOps';
-import {map} from './_listOps/_map';
+import _map from './_listOps/_map';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -26,7 +26,7 @@ import {
     from './_listOps/_utils';
 
 // Exported imports
-export {map};
+export {_map};
 
 // Exported internals
 export const
@@ -132,7 +132,7 @@ export const
      * @param foldableOfA {Array|String|*}
      * @returns {Array|String|*}
      */
-    concatMap = (fn, foldableOfA) => concat(map(fn, foldableOfA)),
+    concatMap = (fn, foldableOfA) => concat(_map(fn, foldableOfA)),
 
     /**
      * Returns a copy of the passed in list reverses.
@@ -833,7 +833,7 @@ export const
             agg.push(sliceTo(ind, xs));
         }
         return agg;
-    }, //map(list => init(list), xs),
+    }, //_map(list => init(list), xs),
 
     /**
      * The inits function returns all initial segments of the argument, shortest first. For example,
@@ -856,7 +856,7 @@ export const
             agg.push(slice(ind, limit, xs));
         }
         return agg;
-    }, //map(list => tail(list), xs),
+    }, //_map(list => tail(list), xs),
 
     stripPrefix = (prefix, list) =>
         isPrefixOf(prefix, list) ?
@@ -900,7 +900,7 @@ export const
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                aggregateArr(agg, map(xs => xs[ind], trimmedLists)),
+                aggregateArr(agg, _map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     },
 
@@ -991,7 +991,7 @@ export const
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                aggregateArr(agg, apply(op, map(xs => xs[ind], trimmedLists))),
+                aggregateArr(agg, apply(op, _map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     },
 
@@ -1244,7 +1244,7 @@ export const
     sortOn = (valueFn, xs) =>
 
         // Un-decorate
-        map(decorated => decorated[1],
+        _map(decorated => decorated[1],
 
             // Decorate and sort
             sortBy(
@@ -1252,7 +1252,7 @@ export const
                 ([a0], [b0]) => genericAscOrdering(a0, b0),
 
                 // Decorate
-                map(item => [valueFn(item), item], xs)
+                _map(item => [valueFn(item), item], xs)
             )
         ),
 

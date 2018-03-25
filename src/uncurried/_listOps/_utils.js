@@ -7,7 +7,7 @@ import {apply}              from '../_jsPlatform/_function';  // un-curried vers
 import {slice}              from '../_jsPlatform/_list';      // un-curried version good for both strings and arrays
 import {length}             from '../_jsPlatform/_object';
 import {alwaysFalse}        from '../../booleanOps';
-import {map}                from './_map';
+import _map                 from './_map';
 
 export * from './_aggregation';
 
@@ -66,7 +66,7 @@ export const
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
-    lengths = (...lists) => length(lists) ? map(length, lists) : [],
+    lengths = (...lists) => length(lists) ? _map(length, lists) : [],
 
     /**
      * @function module:_listOpsUtils.lengthsToSmallest
@@ -76,7 +76,7 @@ export const
     lengthsToSmallest = (...lists) => {
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
-        return map((list, ind) => listLengths[ind] > smallLen ?
+        return _map((list, ind) => listLengths[ind] > smallLen ?
             sliceTo(smallLen, list) : copy(list), lists);
     },
 

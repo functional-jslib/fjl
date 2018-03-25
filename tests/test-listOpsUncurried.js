@@ -15,7 +15,7 @@ import {lines, unlines, words, unwords} from '../src/stringOps';
 import {
     append, appendMany, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
-    map, mapAccumL, mapAccumR,
+    _map as map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
     head, last, init, tail, uncons,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
@@ -1621,9 +1621,10 @@ describe ('#_listOps', function () {
         it ('should return indices for all items that match passed in predicate', function () {
             const tokenInits = inits(intersperse('e', alphabetArray)),
                 indicePred = x => x === 'e',
-                expectedResults = tokenInits.map(xs =>
-                    xs.map((x, ind) => [ind, x])
-                        .filter(([ind, x]) => indicePred(x))
+                expectedResults = map(xs =>
+                        xs.map((x, ind) => [ind, x])
+                            .filter(([ind, x]) => indicePred(x)),
+                        tokenInits
                 )
                     .map(xs => !xs.length ? undefined : xs.map(([x]) => x)),
                 results = map(xs => findIndices(indicePred, xs), tokenInits);
@@ -1641,7 +1642,7 @@ describe ('#_listOps', function () {
         });
 
         it ('should return `undefined` when doesn\'t find element at indice', function () {
-            expectEqual(findIndices(x => !!x), undefined);
+            expectEqual(findIndices(x => !!x, undefined), undefined);
             expectEqual(findIndices(x => !!x, null), undefined);
             expectEqual(findIndices(x => !!x, []), undefined);
         });
