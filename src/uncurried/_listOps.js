@@ -198,7 +198,7 @@ export const
         let numLists = length(xss),
             ind = 0, ind2;
         if (!numLists) {
-            return of(xss);
+            return [];
         }
         const listLengths = apply(lengths, xss),
             longestListLen = maximum(listLengths),
@@ -270,7 +270,7 @@ export const
     },
 
     swapped = (ind1, ind2, list) => {
-        const out = sliceFrom(0, list),
+        const out = copy(list),
             tmp = out[ind1];
         out[ind1] = out[ind2];
         out[ind2] = tmp;
@@ -292,7 +292,7 @@ export const
             return [xs];
         }
 
-        let list = sliceFrom(0, xs),
+        let list = copy(xs),
             c = repeat(limit, 0),
             i = 0;
 
@@ -374,7 +374,7 @@ export const
      * @return {Array} - [aggregated, list]
      */
     mapAccumL = (op, zero, xs) => {
-        const list = sliceFrom(0, xs),
+        const list = copy(xs),
             limit = length(xs);
         if (!limit) {
             return [zero, list];
@@ -401,7 +401,7 @@ export const
      * @return {Array} - [aggregated, list]
      */
     mapAccumR = (op, zero, xs) => {
-        const list = sliceFrom(0, xs),
+        const list = copy(xs),
             limit = length(xs);
         if (!limit) {
             return [zero, list];
@@ -791,7 +791,7 @@ export const
     groupBy = (equalityOp, xs) => {
         const limit = length(xs);
         if (!limit) {
-            return sliceFrom(0, xs);
+            return copy(xs);
         }
         let ind = 0,
             prevItem,
@@ -863,7 +863,7 @@ export const
     stripPrefix = (prefix, list) =>
         isPrefixOf(prefix, list) ?
             splitAt(length(prefix), list)[1] :
-            sliceFrom(0, list),
+            copy(list),
 
     /**
      * zip takes two lists and returns a list of corresponding pairs.
@@ -1285,7 +1285,7 @@ export const
     insertBy = (orderingFn, x, xs) => {
         const limit = length(xs),
             aggregator = aggregatorByType(xs),
-            out = of(xs);
+            out = [];
         if (isEmptyList(xs)) {
             return aggregator(out, x, 0);
         }
@@ -1336,13 +1336,12 @@ export const
      * @param arr2 {Array|String|*}
      * @returns {Array|String|*}
      */
-    unionBy = (pred, arr1, arr2) => {
-        const aggregator = aggregatorByType(arr1);
-        return foldl((agg, b) => {
-            const alreadyAdded = any(a => pred(a, b), agg);
-            return !alreadyAdded ? aggregator(agg, b) : agg;
-        }, copy(arr1), arr2);
-    },
+    unionBy = (pred, arr1, arr2) =>
+        foldl((agg, b) => {
+                const alreadyAdded = any(a => pred(a, b), agg);
+                return !alreadyAdded ? (agg.push(b), agg) : agg;
+            }, copy(arr1), arr2
+        ),
 
     /**
      * Creates a union on matching elements from array1.
@@ -1374,12 +1373,10 @@ export const
      * @param list2 {Array|String|*}
      * @return {Array|String|*}
      */
-    intersectBy = (pred, list1, list2) => {
-        const aggregator = aggregatorByType(list1);
-        return foldl((agg, a) =>
-                any(b => pred(a, b), list2) ? aggregator(agg, a) : agg
-            , [], list1);
-    },
+    intersectBy = (pred, list1, list2) =>
+        foldl((agg, a) =>
+                any(b => pred(a, b), list2) ? (agg.push(a), agg) : agg
+            , [], list1),
 
     /**
      * Returns the difference of list 1 from list 2.
@@ -1391,14 +1388,13 @@ export const
      */
     difference = (array1, array2) => { // augment this with max length and min length ordering on op
         if (array1 && !array2) {
-            return sliceFrom(0, array1);
+            return copy(array1);
         }
         else if (!array1 && array2 || (!array1 && !array2)) {
             return [];
         }
-        const aggregator = aggregatorByType(array1);
         return reduce((agg, elm) =>
-                !includes(elm, array2) ? aggregator(agg, elm) : agg
+                !includes(elm, array2) ? (agg.push(elm), agg) : agg
             , [], array1);
     },
 
