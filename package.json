@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "0.21.22",
+  "version": "0.22.0",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl.js",
   "module": "dist/es6-module/fjl.js",
