@@ -1,21 +1,22 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(["exports"], factory);
+        define(['exports', './_objectOps/_typeOf'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports);
+        factory(exports, require('./_objectOps/_typeOf'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports);
+        factory(mod.exports, global._typeOf);
         global._utils = mod.exports;
     }
-})(this, function (exports) {
-    "use strict";
+})(this, function (exports, _typeOf) {
+    'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
+    exports.fnOrError = exports.fPureTakesOneOrMore = exports.fPureTakes5 = exports.fPureTakes4 = exports.fPureTakes3 = exports.fPureTakes2 = exports.fPureTakesOne = undefined;
     var fPureTakesOne = exports.fPureTakesOne = function fPureTakesOne(name) {
         return function (arg, f) {
             return f[name](arg);
@@ -49,5 +50,11 @@
 
             return f[name].apply(f, args);
         };
+    },
+        fnOrError = exports.fnOrError = function fnOrError(symbolName, f) {
+        if (!f || f.constructor !== Function) {
+            throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + (0, _typeOf.typeOf)(f) + ';  Value received: ' + f + '.'));
+        }
+        return f;
     };
 });

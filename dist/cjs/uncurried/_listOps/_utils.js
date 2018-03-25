@@ -25,7 +25,11 @@ var _object = require('../_jsPlatform/_object');
 
 var _booleanOps = require('../../booleanOps');
 
-var _map = require('./_map');
+var _map2 = require('./_map');
+
+var _map3 = _interopRequireDefault(_map2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // un-curried version good for both strings and arrays
 /**
@@ -107,7 +111,7 @@ lengths = exports.lengths = function lengths() {
         lists[_key] = arguments[_key];
     }
 
-    return (0, _object.length)(lists) ? (0, _map.map)(_object.length, lists) : [];
+    return (0, _object.length)(lists) ? (0, _map3.default)(_object.length, lists) : [];
 },
 
 
@@ -123,7 +127,7 @@ lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
 
     var listLengths = (0, _function.apply)(lengths, lists),
         smallLen = Math.min.apply(Math, listLengths);
-    return (0, _map.map)(function (list, ind) {
+    return (0, _map3.default)(function (list, ind) {
         return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list);
     }, lists);
 },

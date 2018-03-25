@@ -4,7 +4,7 @@ define(['exports', './listOps', './jsPlatform/string'], function (exports, _list
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.unlines = exports.unwords = exports.words = exports.lines = undefined;
+  exports.camelCase = exports.ucaseFirst = exports.lcaseFirst = exports.unlines = exports.unwords = exports.words = exports.lines = undefined;
   /**
    * Contains functions for operating strings.
    * @author elyde
@@ -46,5 +46,33 @@ define(['exports', './listOps', './jsPlatform/string'], function (exports, _list
    * @param list {Array|String|*}
    * @returns {Array}
    */
-  unlines = exports.unlines = (0, _listOps.intercalate)('\n');
+  unlines = exports.unlines = (0, _listOps.intercalate)('\n'),
+
+
+  /**
+   * Lower cases first character of string.
+   * @function module:stringOps.lcaseFirst
+   * @param xs {String}
+   * @returns {string}
+   */
+  lcaseFirst = exports.lcaseFirst = xs => xs[0].toLowerCase() + xs.substring(1),
+
+
+  /**
+   * Upper cases first character of string.
+   * @function module:stringOps.ucaseFirst
+   * @param xs {String}
+   * @returns {string}
+   */
+  ucaseFirst = exports.ucaseFirst = xs => xs[0].toUpperCase() + xs.substring(1),
+
+
+  /**
+   * Class cases a string.
+   * @function module:stringOps.camelCase
+   * @param xs {String}
+   * @param [pattern=/[^a-z\d/i]/] {RegExp} - Optional.
+   * @returns {string}
+   */
+  camelCase = exports.camelCase = (xs, pattern) => (0, _listOps._map)(ucaseFirst, (0, _listOps._splitAt)(pattern || /[^a-z\d]/i, xs));
 });

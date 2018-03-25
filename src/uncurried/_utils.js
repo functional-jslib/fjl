@@ -17,7 +17,7 @@ export const
     fnOrError = (symbolName, f) => {
         if (!f || f.constructor !== Function) {
             throw new Error (`${symbolName} should be a function. ` +
-                `Type received: ${typeOf(f)};  Value received: ${f}.`)
+                `Type received: ${typeOf(f)};  Value received: ${f}.`);
         }
         return f;
     };

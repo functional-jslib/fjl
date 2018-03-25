@@ -1,8 +1,12 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.fnOrError = exports.fPureTakesOneOrMore = exports.fPureTakes5 = exports.fPureTakes4 = exports.fPureTakes3 = exports.fPureTakes2 = exports.fPureTakesOne = undefined;
+
+var _typeOf = require('./_objectOps/_typeOf');
+
 var fPureTakesOne = exports.fPureTakesOne = function fPureTakesOne(name) {
     return function (arg, f) {
         return f[name](arg);
@@ -36,4 +40,10 @@ var fPureTakesOne = exports.fPureTakesOne = function fPureTakesOne(name) {
 
         return f[name].apply(f, args);
     };
+},
+    fnOrError = exports.fnOrError = function fnOrError(symbolName, f) {
+    if (!f || f.constructor !== Function) {
+        throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + (0, _typeOf.typeOf)(f) + ';  Value received: ' + f + '.'));
+    }
+    return f;
 };

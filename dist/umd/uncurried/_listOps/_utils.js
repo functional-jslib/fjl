@@ -10,7 +10,7 @@
         factory(mod.exports, global._aggregation, global._function, global._list, global._object, global.booleanOps, global._map);
         global._utils = mod.exports;
     }
-})(this, function (exports, _aggregation, _function, _list, _object, _booleanOps, _map) {
+})(this, function (exports, _aggregation, _function, _list, _object, _booleanOps, _map2) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -26,6 +26,15 @@
             }
         });
     });
+
+    var _map3 = _interopRequireDefault(_map2);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
+
     // un-curried version good for both strings and arrays
     /**
      * List operator utils module.
@@ -106,7 +115,7 @@
             lists[_key] = arguments[_key];
         }
 
-        return (0, _object.length)(lists) ? (0, _map.map)(_object.length, lists) : [];
+        return (0, _object.length)(lists) ? (0, _map3.default)(_object.length, lists) : [];
     },
 
 
@@ -122,7 +131,7 @@
 
         var listLengths = (0, _function.apply)(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
-        return (0, _map.map)(function (list, ind) {
+        return (0, _map3.default)(function (list, ind) {
             return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list);
         }, lists);
     },

@@ -1,29 +1,29 @@
-define(['exports', '../_objectOps/_of', './_aggregation', '../_jsPlatform/_object'], function (exports, _of, _aggregation, _object) {
+define(['exports', '../_jsPlatform/_object'], function (exports, _object) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.map = undefined;
+    exports.default = _map;
 
 
     /**
      * @function module:_listOps.map
-     * @param fn {Function} - Function to map on functor item(s).
-     * @param xs {Array|String|*} - Functor.
-     * @returns {Array|String|*} - Functor type that is passed in.
+     * @param fn {Function} - Function to map on array.
+     * @param xs {Array}
+     * @returns {Array}
      */
-    const map = exports.map = (fn, xs) => {
+    function _map(fn, xs) {
         let ind = 0,
             limit = (0, _object.length)(xs),
-            out = (0, _of.of)(xs),
-            aggregate = (0, _aggregation.aggregatorByType)(xs);
+            out = [];
         if (!limit) {
             return out;
         }
-        for (; ind < limit; ind += 1) {
-            out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
+        while (ind < limit) {
+            out.push(fn(xs[ind], ind, xs));
+            ind += 1;
         }
         return out;
-    };
+    }
 });

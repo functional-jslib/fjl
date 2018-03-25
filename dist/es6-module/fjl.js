@@ -1,9 +1,53 @@
+/**
+ * Created by elyde on 12/18/2016.
+ * @memberOf _objectOps
+ */
+const _Number = Number.name;
+const _NaN = 'NaN';
+const _Null = 'Null';
+const _Undefined = 'Undefined';
+
+/**
+ * Returns the constructor/class/type name of a value.
+ * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
+ * @note Returns 'Undefined' if value is `undefined`
+ * @note Returns 'Null' if value is `null`
+ * For values that have no concrete constructors and/or casters
+ * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
+ * @function module:_objectOps.typeOf
+ * @param value {*}
+ * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
+ */
+function typeOf (value) {
+    let retVal;
+    if (value === undefined) {
+        retVal = _Undefined;
+    }
+    else if (value === null) {
+        retVal = _Null;
+    }
+    else {
+        let constructorName = (value).constructor.name;
+        retVal = constructorName === _Number && isNaN(value) ?
+            _NaN : constructorName;
+    }
+    return retVal;
+}
+
 const fPureTakesOne = name => (arg, f) => f[name](arg);
 const fPureTakes2 = name => (arg1, arg2, f) => f[name](arg1, arg2);
 const fPureTakes3 = name => (arg1, arg2, arg3, f) => f[name](arg1, arg2, arg3);
 const fPureTakes4 = name => (arg1, arg2, arg3, arg4, f) => f[name](arg1, arg2, arg3, arg4);
 const fPureTakes5 = name => (arg1, arg2, arg3, arg4, arg5, f) => f[name](arg1, arg2, arg3, arg4, arg5);
 const fPureTakesOneOrMore = name => (f, ...args) => f[name](...args);
+const fnOrError = (symbolName, f) => {
+        if (!f || f.constructor !== Function) {
+            throw new Error (`${symbolName} should be a function. ` +
+                `Type received: ${typeOf(f)};  Value received: ${f}.`);
+        }
+        return f;
+    };
 
 /**
  * Created by elydelacruz on 9/6/2017.
@@ -92,20 +136,15 @@ const call = (fn, ...args) => apply(fn, args);
  * @memberOf _functionOps
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
-const curry = (fn, ...argsToCurry) => {
-        return (...args) => {
-            const concatedArgs = concat(argsToCurry, args);
-            return length(concatedArgs) < length(fn) ?
-                apply(curry, concat([fn], concatedArgs)) :
-                apply(fn, concatedArgs);
-        };
-    };
+const notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
+
+const curry = (fn, ...argsToCurry) => curryN(fnOrError(notFnErrPrefix, fn).length, fn, ...argsToCurry);
 const curryN = (executeArity, fn, ...curriedArgs) => {
         return (...args) => {
             let concatedArgs = concat(curriedArgs, args),
                 canBeCalled = (length(concatedArgs) >= executeArity) || !executeArity;
-            return !canBeCalled ? apply(curryN, concat([executeArity, fn], concatedArgs)) :
-                apply(fn, concatedArgs);
+            return !canBeCalled ? apply(curryN, concat([executeArity, fnOrError(notFnErrPrefix, fn)], concatedArgs)) :
+                apply(fnOrError(notFnErrPrefix, fn), concatedArgs);
         };
     };
 const curry2 = fn => curryN(2, fn);
@@ -130,46 +169,9 @@ const prop$1 = (name, obj) => obj[name];
  * Created by elyde on 12/18/2016.
  * @memberOf _objectOps
  */
-const _Number$1 = Number.name;
-const _NaN = 'NaN';
-const _Null$1 = 'Null';
-const _Undefined$1 = 'Undefined';
-
-/**
- * Returns the constructor/class/type name of a value.
- * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
- * @note Returns 'Undefined' if value is `undefined`
- * @note Returns 'Null' if value is `null`
- * For values that have no concrete constructors and/or casters
- * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
- * @function module:_objectOps.typeOf
- * @param value {*}
- * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
- *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
- */
-function typeOf (value) {
-    let retVal;
-    if (value === undefined) {
-        retVal = _Undefined$1;
-    }
-    else if (value === null) {
-        retVal = _Null$1;
-    }
-    else {
-        let constructorName = (value).constructor.name;
-        retVal = constructorName === _Number$1 && isNaN(value) ?
-            _NaN : constructorName;
-    }
-    return retVal;
-}
-
-/**
- * Created by elyde on 12/18/2016.
- * @memberOf _objectOps
- */
 
 let _String = String.name;
-let _Number = Number.name;
+let _Number$1 = Number.name;
 let _Object = Object.name;
 let _Boolean = Boolean.name;
 let _Function = Function.name;
@@ -179,8 +181,8 @@ let _Map = 'Map';
 let _Set = 'Set';
 let _WeakMap = 'WeakMap';
 let _WeakSet = 'WeakSet';
-let _Null = 'Null';
-let _Undefined = 'Undefined';
+let _Null$1 = 'Null';
+let _Undefined$1 = 'Undefined';
 
 const isFunction = value => instanceOf$1(Function, value);
 const isType$1 = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type);
@@ -189,19 +191,19 @@ const isCallable = x => isFunction(x) && !isClass(x);
 const {isArray} = Array;
 const isObject = value => isType$1(_Object, value);
 const isBoolean = value => isType$1(_Boolean, value);
-const isNumber = value => isType$1(_Number, value);
+const isNumber = value => isType$1(_Number$1, value);
 const isString = value => isType$1(_String, value);
 const isMap = value => isType$1(_Map, value);
 const isSet = value => isType$1(_Set, value);
 const isWeakMap = value => isType$1(_WeakMap, value);
 const isWeakSet = value => isType$1(_WeakSet, value);
-const isUndefined = value => isType$1(_Undefined, value);
-const isNull = value => isType$1(_Null, value);
+const isUndefined = value => isType$1(_Undefined$1, value);
+const isNull = value => isType$1(_Null$1, value);
 const isSymbol = value => isType$1(_Symbol, value);
 const isUsableImmutablePrimitive = x => {
         const typeOfX = typeOf(x);
         return isset(x) &&
-            [_String, _Number, _Boolean, _Symbol]
+            [_String, _Number$1, _Boolean, _Symbol]
                 .some(Type => Type === typeOfX);
     };
 const isEmptyList = x => !length(x);
@@ -216,7 +218,7 @@ const isEmpty = value => {
         else if (typeOfValue === _Array || typeOfValue === _Function) {
             retVal = isEmptyList(value);
         }
-        else if (typeOfValue === _Number) {
+        else if (typeOfValue === _Number$1) {
             retVal = false;
         }
         else if (typeOfValue === _Object) {
@@ -321,6 +323,24 @@ const of = (x, ...args) => {
  * @private
  */
 
+/**
+ * @function module:_listOps.map
+ * @param fn {Function} - Function to map on array.
+ * @param xs {Array}
+ * @returns {Array}
+ */
+function _map (fn, xs) {
+    let ind = 0,
+        limit = length(xs),
+        out = [];
+    if (!limit) { return out; }
+    while (ind < limit) {
+        out.push(fn(xs[ind], ind, xs));
+        ind += 1;
+    }
+    return out;
+}
+
 const aggregateStr = (agg, item) => agg + item;
 const aggregateArr = (agg, item) => {
         agg.push(item);
@@ -340,24 +360,6 @@ const aggregatorByType = x => {
     };
 
 /**
- * @function module:_listOps.map
- * @param fn {Function} - Function to map on functor item(s).
- * @param xs {Array|String|*} - Functor.
- * @returns {Array|String|*} - Functor type that is passed in.
- */
-const map$1 = (fn, xs) => {
-    let ind = 0,
-        limit = length(xs),
-        out = of(xs),
-        aggregate = aggregatorByType(xs);
-    if (!limit) { return out; }
-    for (; ind < limit; ind += 1) {
-        out = aggregate(out, fn(xs[ind], ind, xs), ind, xs);
-    }
-    return out;
-};
-
-/**
  * List operator utils module.
  * @module _listOpUtils
  * @private
@@ -371,11 +373,11 @@ const genericAscOrdering = (a, b) => {
         else if (a < b) { return -1; }
         return 0;
     };
-const lengths = (...lists) => length(lists) ? map$1(length, lists) : [];
+const lengths = (...lists) => length(lists) ? _map(length, lists) : [];
 const lengthsToSmallest = (...lists) => {
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
-        return map$1((list, ind) => listLengths[ind] > smallLen ?
+        return _map((list, ind) => listLengths[ind] > smallLen ?
             sliceTo(smallLen, list) : copy(list), lists);
     };
 const reduceUntil = (pred, op, agg, arr) => {
@@ -467,59 +469,32 @@ const head = x => x[0];
 const last = xs => xs[lastIndex(xs)];
 const tail = xs => sliceFrom(1, xs);
 const init = xs => sliceTo(lastIndex(xs), xs);
-const uncons = xs => {
-        if (!xs) {
-            return;
-        }
-        if (length(xs) === 0) {
-            return undefined;
-        }
-        return [head(xs), tail(xs)];
-    };
-const unconsr = xs => {
-        if (!xs) {
-            return;
-        }
-        if (length(xs) === 0) {
-            return undefined;
-        }
-        return [init(xs), last(xs)];
-    };
-const concat$1 = xs => {
-        if (!length(xs)) { return copy(xs); }
-        return isString(xs) ? xs : apply(appendMany, xs);
-    };
-const concatMap = (fn, foldableOfA) => concat$1(map$1(fn, foldableOfA));
-const reverse$1 = x => {
-        const aggregator = aggregatorByType(x);
-        return foldr (
-            (agg, item, ind) => aggregator(agg, item, ind),
-            of(x), x
-        );
-    };
+const uncons = xs =>
+        !xs || length(xs) === 0 ? undefined : [head(xs), tail(xs)];
+const unconsr = xs => !xs || length(xs) === 0 ? undefined : [init(xs), last(xs)];
+const concat$1 = xs => !length(xs) ? copy(xs) : apply(appendMany, xs);
+const concatMap = (fn, foldableOfA) => concat$1(_map(fn, foldableOfA));
+const reverse$1 = x => foldr((agg, item) => (agg.push(item), agg), [], x);
 const intersperse = (between, arr) => {
         const limit = length(arr),
             lastInd = limit - 1,
-            aggregator = of(arr),
-            aggregatorOp = aggregatorByType(arr);
+            out = [];
         if (!limit) {
-            return aggregator;
+            return out;
         }
-        return foldl((agg, item, ind) => {
-            return ind === lastInd ?
-                aggregatorOp(agg, item) :
-                aggregatorOp(
-                    aggregatorOp(agg, item),
-                    between
-                );
-        }, aggregator, arr);
+        return foldl((agg, item, ind) => (
+                ind === lastInd ?
+                    agg.push(item) :
+                    agg.push(item, between),
+                agg
+            ), out, arr);
     };
 const intercalate = (xs, xss) => concat$1(intersperse(xs, xss));
 const transpose = xss => {
         let numLists = length(xss),
             ind = 0, ind2;
         if (!numLists) {
-            return of(xss);
+            return [];
         }
         const listLengths = apply(lengths, xss),
             longestListLen = maximum(listLengths),
@@ -552,7 +527,7 @@ const subsequences = xs => {
         return out;
     };
 const swapped = (ind1, ind2, list) => {
-        const out = sliceFrom(0, list),
+        const out = copy(list),
             tmp = out[ind1];
         out[ind1] = out[ind2];
         out[ind2] = tmp;
@@ -565,7 +540,7 @@ const permutations = xs => {
             return [xs];
         }
 
-        let list = sliceFrom(0, xs),
+        let list = copy(xs),
             c = repeat(limit, 0),
             i = 0;
 
@@ -588,27 +563,21 @@ const foldl = reduce$1;
 const foldr = reduceRight$1;
 const foldl1 = (op, xs) => {
         const parts = uncons(xs);
-        if (!parts) {
-            return of(xs);
-        }
-        return reduce$1(op, parts[0], parts[1]);
+        return !parts ? [] : reduce$1(op, parts[0], parts[1]);
     };
 const foldr1 = (op, xs) => {
         const parts = unconsr(xs);
-        if (!parts) {
-            return of(xs);
-        }
-        return reduceRight$1(op, parts[1], parts[0]);
+        return !parts ? [] : reduceRight$1(op, parts[1], parts[0]);
     };
 const mapAccumL = (op, zero, xs) => {
-        const list = sliceFrom(0, xs),
+        const list = copy(xs),
             limit = length(xs);
         if (!limit) {
             return [zero, list];
         }
         let ind = 0,
             agg = zero,
-            mapped = of(xs),
+            mapped = [],
             tuple;
         for (; ind < limit; ind++) {
             tuple = op(agg, list[ind], ind);
@@ -618,14 +587,14 @@ const mapAccumL = (op, zero, xs) => {
         return [agg, mapped];
     };
 const mapAccumR = (op, zero, xs) => {
-        const list = sliceFrom(0, xs),
+        const list = copy(xs),
             limit = length(xs);
         if (!limit) {
             return [zero, list];
         }
         let ind = limit - 1,
             agg = zero,
-            mapped = of(xs),
+            mapped = [],
             tuple;
         for (; ind >= 0; ind--) {
             tuple = op(agg, list[ind], ind);
@@ -636,17 +605,15 @@ const mapAccumR = (op, zero, xs) => {
     };
 const iterate = (limit, op, x) => {
         let ind = 0,
-            out = x;
+            out = [],
+            lastX = x;
         for (; ind < limit; ind += 1) {
-            out = op(out, ind);
+            out.push(lastX);
+            lastX = op(lastX);
         }
         return out;
     };
-const repeat = (limit, x) =>
-        iterate(limit, agg => {
-            agg.push(x);
-            return agg;
-        }, []);
+const repeat = (limit, x) => iterate(limit, a => a, x);
 const replicate = repeat;
 const cycle = (limit, xs) => concat$1(replicate(limit, xs));
 const unfoldr = (op, x) => {
@@ -668,20 +635,14 @@ const elemIndex = (x, xs) => {
 const elemIndices = (value, xs) => findIndices(x => x === value, xs);
 const take = (limit, list) => sliceTo(limit, list);
 const drop = (count, list) => sliceFrom(count, list);
-const splitAt = (ind, list) => [
-        sliceTo(ind, list),
-        sliceFrom(ind, list)
-    ];
-const takeWhile = (pred, list) => {
-        let zero = of(list);
-        const operation = aggregatorByType(list);
-        return reduceUntil(
+const splitAt = (ind, list) => [ sliceTo(ind, list), sliceFrom(ind, list) ];
+const takeWhile = (pred, list) =>
+        reduceUntil(
             negateP(pred),  // predicate
-            operation,      // operation
-            zero,           // aggregator
+            aggregateArr,   // operation
+            [],             // aggregator
             list
         );
-    };
 const dropWhile = (pred, list) => {
         const limit = length(list),
             splitPoint =
@@ -717,24 +678,21 @@ const find = findWhere;
 const filter$1 = (pred, xs) => {
         let ind = 0,
             limit = length(xs),
-            aggregator = aggregatorByType(xs),
-            out = of(xs);
+            out = [];
         if (!limit) {
             return out;
         }
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) {
-                out = aggregator(out, xs[ind]);
+                out.push(xs[ind]);
             }
         }
         return out;
     };
-const partition = (pred, list) => {
-        if (!length(list)) {
-            return [of(list), of(list)];
-        }
-        return [filter$1(pred, list), filter$1(negateP(pred), list)];
-    };
+const partition = (pred, list) =>
+        !length(list) ?
+            [[], []] :
+                [filter$1(pred, list), filter$1(negateP(pred), list)];
 const elem = includes;
 const notElem = negateF(includes);
 const lookup = at;
@@ -812,7 +770,7 @@ const group = xs => groupBy((a, b) => a === b, xs);
 const groupBy = (equalityOp, xs) => {
         const limit = length(xs);
         if (!limit) {
-            return sliceFrom(0, xs);
+            return copy(xs);
         }
         let ind = 0,
             prevItem,
@@ -842,7 +800,7 @@ const inits = xs => {
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = aggregateArr(agg, sliceTo(ind, xs));
+            agg.push(sliceTo(ind, xs));
         }
         return agg;
     };
@@ -854,17 +812,17 @@ const tails = xs => {
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = aggregateArr(agg, slice(ind, limit, xs));
+            agg.push(slice(ind, limit, xs));
         }
         return agg;
     };
 const stripPrefix = (prefix, list) =>
         isPrefixOf(prefix, list) ?
             splitAt(length(prefix), list)[1] :
-            sliceFrom(0, list);
+            copy(list);
 const zip = (arr1, arr2) => {
         if (!length(arr1) || !length(arr2)) {
-            return of(arr1);
+            return [];
         }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
         return reduce$1((agg, item, ind) =>
@@ -881,12 +839,12 @@ const zipN = (...lists) => {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce$1((agg, item, ind) =>
-                aggregateArr(agg, map$1(xs => xs[ind], trimmedLists)),
+                aggregateArr(agg, _map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     };
 const zipWith = (op, xs1, xs2) => {
         if (!length(xs1) || !length(xs2)) {
-            return of(xs1);
+            return [];
         }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
         return reduce$1((agg, item, ind) =>
@@ -903,7 +861,7 @@ const zipWithN = (op, ...lists) => {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce$1((agg, item, ind) =>
-                aggregateArr(agg, apply(op, map$1(xs => xs[ind], trimmedLists))),
+                aggregateArr(agg, apply(op, _map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     };
 const unzip = arr =>
@@ -1001,7 +959,7 @@ const sort = xs => sortBy(genericAscOrdering, xs);
 const sortOn = (valueFn, xs) =>
 
         // Un-decorate
-        map$1(decorated => decorated[1],
+        _map(decorated => decorated[1],
 
             // Decorate and sort
             sortBy(
@@ -1009,51 +967,47 @@ const sortOn = (valueFn, xs) =>
                 ([a0], [b0]) => genericAscOrdering(a0, b0),
 
                 // Decorate
-                map$1(item => [valueFn(item), item], xs)
+                _map(item => [valueFn(item), item], xs)
             )
         );
 const sortBy = (orderingFn, xs) => copy(xs).sort(orderingFn || genericAscOrdering);
 const insert = (x, xs) => {
-        if (isEmptyList(xs)) {
-            return aggregatorByType(xs)(copy(xs), x, 0);
+        if (!length(xs)) {
+            return [x];
         }
-        let out = of(xs),
-            foundIndex = findIndex(item => x <= item, xs);
-        return foundIndex === -1 ? append(sliceFrom(0, out), x) :
+        const foundIndex = findIndex(item => x <= item, xs);
+        return foundIndex === -1 ? [x] :
             concat$1(intersperse([x], splitAt(foundIndex, xs)));
     };
 const insertBy = (orderingFn, x, xs) => {
-        const limit = length(xs),
-            aggregator = aggregatorByType(xs),
-            out = of(xs);
-        if (isEmptyList(xs)) {
-            return aggregator(out, x, 0);
+        const limit = length(xs);
+        if (!limit) {
+            return [x];
         }
         let ind = 0;
         for (; ind < limit; ind += 1) {
             if (orderingFn(x, xs[ind]) <= 0) {
                 const parts = splitAt(ind, xs);
-                // Fold parts[0], [x], parts[1] into `out` and `concat`
-                return concat$1(foldl(aggregator, out, [parts[0], [x], parts[1]]));
+                return concat$1([parts[0], [x], parts[1]]);
             }
         }
-        return aggregator(copy(xs), x);
+        return aggregateArr(copy(xs), x);
     };
 const nubBy = (pred, list) => {
-        if (isEmptyList(list)) {
-            return of(list);
+        if (!length(list)) {
+            return [];
         }
         const limit = length(list);
         let ind = 0,
             currItem,
-            out = of(list),
+            out = [],
             anyOp = storedItem => pred(currItem, storedItem);
         for (; ind < limit; ind += 1) {
             currItem = list[ind];
             if (any(anyOp, out)) {
                 continue;
             }
-            out = append(out, currItem);
+            out.push(currItem);
         }
         return out;
     };
@@ -1064,35 +1018,31 @@ const removeBy = (pred, x, list) => { // @todo optimize this implementation
     };
 const removeFirstsBy = (pred, xs1, xs2) =>
         foldl((agg, item) => removeBy(pred, item, agg), xs1, xs2);
-const unionBy = (pred, arr1, arr2) => {
-        const aggregator = aggregatorByType(arr1);
-        return foldl((agg, b) => {
-            const alreadyAdded = any(a => pred(a, b), agg);
-            return !alreadyAdded ? aggregator(agg, b) : agg;
-        }, copy(arr1), arr2);
-    };
+const unionBy = (pred, arr1, arr2) =>
+        foldl((agg, b) => {
+                const alreadyAdded = any(a => pred(a, b), agg);
+                return !alreadyAdded ? (agg.push(b), agg) : agg;
+            }, copy(arr1), arr2
+        );
 const union = (arr1, arr2) =>
         append(arr1,
             filter$1(elm => !includes(elm, arr1), arr2));
 const intersect = (arr1, arr2) =>
         !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
             filter$1(elm => includes(elm, arr2), arr1);
-const intersectBy = (pred, list1, list2) => {
-        const aggregator = aggregatorByType(list1);
-        return foldl((agg, a) =>
-                any(b => pred(a, b), list2) ? aggregator(agg, a) : agg
+const intersectBy = (pred, list1, list2) =>
+        foldl((agg, a) =>
+                any(b => pred(a, b), list2) ? (agg.push(a), agg) : agg
             , [], list1);
-    };
 const difference = (array1, array2) => { // augment this with max length and min length ordering on op
         if (array1 && !array2) {
-            return sliceFrom(0, array1);
+            return copy(array1);
         }
         else if (!array1 && array2 || (!array1 && !array2)) {
             return [];
         }
-        const aggregator = aggregatorByType(array1);
         return reduce$1((agg, elm) =>
-                !includes(elm, array2) ? aggregator(agg, elm) : agg
+                !includes(elm, array2) ? (agg.push(elm), agg) : agg
             , [], array1);
     };
 const complement = (arr0, ...arrays) =>
@@ -1351,6 +1301,7 @@ const flip$1 = fn => (b, a) => call(fn, a, b);
  * @private
  */
 const PlaceHolder = function PlaceHolder() {};
+const notFnErrPrefix$1 = '`fn` in `curry_(fn, ...args)`';
 const placeHolderInstance = new PlaceHolder();
 
 /**
@@ -1388,14 +1339,7 @@ function replacePlaceHolders (array, args) {
  * @returns {Function}
  */
 function curry_ (fn, ...argsToCurry) {
-    return (...args) => {
-        let concatedArgs = replacePlaceHolders(argsToCurry, args),
-            placeHolders = filter(isPlaceHolder, concatedArgs),
-            canBeCalled = length(placeHolders) === 0 &&
-                length(concatedArgs) >= length(fn);
-        return canBeCalled ? apply(fn, concatedArgs) :
-            apply(curry_, concat([fn], concatedArgs));
-    };
+    return curryN_(fnOrError(notFnErrPrefix$1, fn).length, fn, ...argsToCurry);
 }
 
 /**
@@ -1412,8 +1356,8 @@ function curryN_ (executeArity, fn, ...curriedArgs) {
             placeHolders = filter(isPlaceHolder, concatedArgs),
             canBeCalled = (length(concatedArgs) - length(placeHolders) >= executeArity) || !executeArity;
         return !canBeCalled ?
-            apply(curryN_, concat([executeArity, fn], concatedArgs)) :
-            apply(fn, concatedArgs);
+            apply(curryN_, concat([executeArity, fnOrError(notFnErrPrefix$1, fn)], concatedArgs)) :
+            apply(fnOrError(notFnErrPrefix$1, fn), concatedArgs);
     };
 }
 
@@ -1699,7 +1643,7 @@ const split$1 = curry(split);
 const append$1 = curry(append);
 const appendMany$1 = curry2(appendMany);
 const concatMap$1 = curry2(concatMap);
-const map$2 = curry(map$1);
+const map$1 = curry(_map);
 const intersperse$1 = curry(intersperse);
 const intercalate$1 = curry(intercalate);
 const foldl$1 = curry(foldl);
@@ -1775,6 +1719,9 @@ const lines = split$1(/[\n\r]/gm);
 const words = split$1(/[\s\t]/gm);
 const unwords = intercalate$1(' ');
 const unlines = intercalate$1('\n');
+const lcaseFirst = xs => xs[0].toLowerCase() + xs.substring(1);
+const ucaseFirst = xs => xs[0].toUpperCase() + xs.substring(1);
+const camelCase = (xs, pattern) => _map(ucaseFirst, splitAt(pattern || /[^a-z\d]/i, xs));
 
 /**
  * Created by elyde on 12/6/2016.
@@ -1789,4 +1736,4 @@ const unlines = intercalate$1('\n');
  * @module fjl
  */
 
-export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, append as _append, appendMany as _appendMany, all as _all, any as _any, find as _find, findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith, map$1 as _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup, intersperse as _intersperse, intercalate as _intercalate, iterate as _iterate, repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt, foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr, concatMap as _concatMap, takeWhile as _takeWhile, dropWhile as _dropWhile, dropWhileEnd as _dropWhileEnd, partition as _partition, at as _at, span as _span, breakOnList as _breakOnList, stripPrefix as _stripPrefix, isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf, isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter$1 as _filter, remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy, removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy, complement as _complement, difference as _difference, union as _union, intersect as _intersect, intersectBy as _intersectBy, groupBy as _groupBy, append$1 as append, appendMany$1 as appendMany, concatMap$1 as concatMap, map$2 as map, intersperse$1 as intersperse, intercalate$1 as intercalate, foldl$1 as foldl, foldr$1 as foldr, foldl1$1 as foldl1, foldr1$1 as foldr1, mapAccumL$1 as mapAccumL, mapAccumR$1 as mapAccumR, iterate$1 as iterate, repeat$1 as repeat, replicate$1 as replicate, cycle$1 as cycle, unfoldr$1 as unfoldr, findIndex$1 as findIndex, findIndices$1 as findIndices, elemIndex$1 as elemIndex, elemIndices$1 as elemIndices, take$1 as take, drop$1 as drop, splitAt$1 as splitAt, takeWhile$1 as takeWhile, dropWhile$1 as dropWhile, dropWhileEnd$1 as dropWhileEnd, span$1 as span, breakOnList$1 as breakOnList, at$1 as at, find$1 as find, filter$2 as filter, partition$1 as partition, elem$1 as elem, notElem$1 as notElem, lookup$1 as lookup, isPrefixOf$1 as isPrefixOf, isSuffixOf$1 as isSuffixOf, isInfixOf$1 as isInfixOf, isSubsequenceOf$1 as isSubsequenceOf, groupBy$1 as groupBy, stripPrefix$1 as stripPrefix, zip$1 as zip, zipWith$1 as zipWith, zipWithN$1 as zipWithN, zipWith3$1 as zipWith3, zipWith4$1 as zipWith4, zipWith5$1 as zipWith5, any$1 as any, all$1 as all, scanl$1 as scanl, scanl1$1 as scanl1, scanr$1 as scanr, scanr1$1 as scanr1, remove$1 as remove, sortOn$1 as sortOn, sortBy$1 as sortBy, insert$1 as insert, insertBy$1 as insertBy, nubBy$1 as nubBy, removeBy$1 as removeBy, removeFirstsBy$1 as removeFirstsBy, unionBy$1 as unionBy, union$1 as union, intersect$1 as intersect, intersectBy$1 as intersectBy, difference$1 as difference, complement$1 as complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, concat$1 as concat, reverse$1 as reverse, transpose, subsequences, permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub, lines, words, unwords, unlines, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };
+export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, append as _append, appendMany as _appendMany, all as _all, any as _any, find as _find, findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith, _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup, intersperse as _intersperse, intercalate as _intercalate, iterate as _iterate, repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt, foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr, concatMap as _concatMap, takeWhile as _takeWhile, dropWhile as _dropWhile, dropWhileEnd as _dropWhileEnd, partition as _partition, at as _at, span as _span, breakOnList as _breakOnList, stripPrefix as _stripPrefix, isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf, isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter$1 as _filter, remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy, removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy, complement as _complement, difference as _difference, union as _union, intersect as _intersect, intersectBy as _intersectBy, groupBy as _groupBy, append$1 as append, appendMany$1 as appendMany, concatMap$1 as concatMap, map$1 as map, intersperse$1 as intersperse, intercalate$1 as intercalate, foldl$1 as foldl, foldr$1 as foldr, foldl1$1 as foldl1, foldr1$1 as foldr1, mapAccumL$1 as mapAccumL, mapAccumR$1 as mapAccumR, iterate$1 as iterate, repeat$1 as repeat, replicate$1 as replicate, cycle$1 as cycle, unfoldr$1 as unfoldr, findIndex$1 as findIndex, findIndices$1 as findIndices, elemIndex$1 as elemIndex, elemIndices$1 as elemIndices, take$1 as take, drop$1 as drop, splitAt$1 as splitAt, takeWhile$1 as takeWhile, dropWhile$1 as dropWhile, dropWhileEnd$1 as dropWhileEnd, span$1 as span, breakOnList$1 as breakOnList, at$1 as at, find$1 as find, filter$2 as filter, partition$1 as partition, elem$1 as elem, notElem$1 as notElem, lookup$1 as lookup, isPrefixOf$1 as isPrefixOf, isSuffixOf$1 as isSuffixOf, isInfixOf$1 as isInfixOf, isSubsequenceOf$1 as isSubsequenceOf, groupBy$1 as groupBy, stripPrefix$1 as stripPrefix, zip$1 as zip, zipWith$1 as zipWith, zipWithN$1 as zipWithN, zipWith3$1 as zipWith3, zipWith4$1 as zipWith4, zipWith5$1 as zipWith5, any$1 as any, all$1 as all, scanl$1 as scanl, scanl1$1 as scanl1, scanr$1 as scanr, scanr1$1 as scanr1, remove$1 as remove, sortOn$1 as sortOn, sortBy$1 as sortBy, insert$1 as insert, insertBy$1 as insertBy, nubBy$1 as nubBy, removeBy$1 as removeBy, removeFirstsBy$1 as removeFirstsBy, unionBy$1 as unionBy, union$1 as union, intersect$1 as intersect, intersectBy$1 as intersectBy, difference$1 as difference, complement$1 as complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, and, or, zipN, unzip, unzipN, head, last, init, tail, uncons, concat$1 as concat, reverse$1 as reverse, transpose, subsequences, permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };

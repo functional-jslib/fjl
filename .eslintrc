@@ -113,7 +113,7 @@
     "no-return-assign":       2,  // - disallow use of assignment in return statement
     "no-script-url":          0,  // - disallow use of javascript: urls.
     "no-self-compare":        2,  // - disallow comparisons where both sides are exactly the same (off by default)
-    "no-sequences":           2,  // - disallow use of comma operator
+    "no-sequences":           0,  // - disallow use of comma operator
     "no-throw-literal":       2,  // - restrict what can be thrown as an exception (off by default)
     "no-unused-expressions":  0,  // - disallow usage of expressions in statement position ** Note ** Chai's functional style triggers this error.  Off for now.
     "no-void":                2,  // - disallow use of void operator (off by default)

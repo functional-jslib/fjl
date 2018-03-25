@@ -1,4 +1,4 @@
-define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform/_list', '../_jsPlatform/_object', '../../booleanOps', './_map'], function (exports, _aggregation, _function, _list, _object, _booleanOps, _map) {
+define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform/_list', '../_jsPlatform/_object', '../../booleanOps', './_map'], function (exports, _aggregation, _function, _list, _object, _booleanOps, _map2) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -14,6 +14,15 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
             }
         });
     });
+
+    var _map3 = _interopRequireDefault(_map2);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
+
     // un-curried version good for both strings and arrays
     /**
      * List operator utils module.
@@ -83,7 +92,7 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
-    lengths = exports.lengths = (...lists) => (0, _object.length)(lists) ? (0, _map.map)(_object.length, lists) : [],
+    lengths = exports.lengths = (...lists) => (0, _object.length)(lists) ? (0, _map3.default)(_object.length, lists) : [],
 
 
     /**
@@ -94,7 +103,7 @@ define(['exports', './_aggregation', '../_jsPlatform/_function', '../_jsPlatform
     lengthsToSmallest = exports.lengthsToSmallest = (...lists) => {
         const listLengths = (0, _function.apply)(lengths, lists),
               smallLen = Math.min.apply(Math, listLengths);
-        return (0, _map.map)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list), lists);
+        return (0, _map3.default)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list), lists);
     },
 
 

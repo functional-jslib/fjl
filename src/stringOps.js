@@ -61,10 +61,10 @@ export const
     /**
      * Class cases a string.
      * @function module:stringOps.camelCase
-     * @param [pattern=/[^a-z\d/i]/] {RegExp} - Optional.
      * @param xs {String}
+     * @param [pattern=/[^a-z\d/i]/] {RegExp} - Optional.
      * @returns {string}
      */
-    camelCase = (pattern, xs) => _map(ucaseFirst, _splitAt(pattern || /[^a-z\d]/i, xs))
+    camelCase = (xs, pattern) => _map(ucaseFirst, _splitAt(pattern || /[^a-z\d]/i, xs))
 
     ;
