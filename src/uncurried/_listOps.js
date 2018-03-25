@@ -141,13 +141,7 @@ export const
      * @param x {Array|String|*}
      * @returns {Array|String|*}
      */
-    reverse = x => {
-        const aggregator = aggregatorByType(x);
-        return foldr (
-            (agg, item, ind) => aggregator(agg, item, ind),
-            of(x), x
-        );
-    },
+    reverse = x => foldr((agg, item, ind) => (agg.push(item), agg), x),
 
     /**
      * Takes an element and a list and `intersperses' that element between the elements of the list. For example
@@ -165,14 +159,12 @@ export const
         if (!limit) {
             return out;
         }
-        return foldl((agg, item, ind) => {
-            return (
+        return foldl((agg, item, ind) => (
                 ind === lastInd ?
                     agg.push(item) :
                     agg.push(item, between),
                 agg
-            );
-        }, out, arr);
+            ), out, arr);
     },
 
     /**
@@ -264,13 +256,12 @@ export const
     subsequences1 = xs => {
         const listLen = length(xs),
             len = Math.pow(2, listLen),
-            aggregator = aggregatorByType(xs),
             out = [];
         for (let i = 0; i < len; i += 1) {
-            let entry = of(xs);
+            let entry = [];
             for (let j = 0; j < listLen; j += 1) {
                 if (i & (1 << j)) {
-                    entry = aggregator(entry, xs[j]);
+                    entry.push(xs[j]);
                 }
             }
             out.push(entry);
@@ -352,7 +343,7 @@ export const
     foldl1 = (op, xs) => {
         const parts = uncons(xs);
         if (!parts) {
-            return of(xs);
+            return [];
         }
         return reduce(op, parts[0], parts[1]);
     },
@@ -368,7 +359,7 @@ export const
     foldr1 = (op, xs) => {
         const parts = unconsr(xs);
         if (!parts) {
-            return of(xs);
+            return [];
         }
         return reduceRight(op, parts[1], parts[0]);
     },
@@ -390,7 +381,7 @@ export const
         }
         let ind = 0,
             agg = zero,
-            mapped = of(xs),
+            mapped = [],
             tuple;
         for (; ind < limit; ind++) {
             tuple = op(agg, list[ind], ind);
@@ -417,7 +408,7 @@ export const
         }
         let ind = limit - 1,
             agg = zero,
-            mapped = of(xs),
+            mapped = [],
             tuple;
         for (; ind >= 0; ind--) {
             tuple = op(agg, list[ind], ind);
@@ -451,11 +442,7 @@ export const
      * @param x {*}
      * @return {Array}
      */
-    repeat = (limit, x) =>
-        iterate(limit, agg => {
-            agg.push(x);
-            return agg;
-        }, []),
+    repeat = (limit, x) => iterate(limit, aggregateArr, []),
 
     /**
      * Same as `repeat` due to the nature of javascript (see haskell version for usage).
@@ -556,10 +543,7 @@ export const
      * @param list {Array|String|*} - functor (list or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
      */
-    splitAt = (ind, list) => [
-        sliceTo(ind, list),
-        sliceFrom(ind, list)
-    ],
+    splitAt = (ind, list) => [ sliceTo(ind, list), sliceFrom(ind, list) ],
 
     /**
      * Gives an list with passed elements while predicate was true.
@@ -568,16 +552,13 @@ export const
      * @param list {Array|String}
      * @returns {Array}
      */
-    takeWhile = (pred, list) => {
-        let zero = of(list);
-        const operation = aggregatorByType(list);
-        return reduceUntil(
+    takeWhile = (pred, list) =>
+        reduceUntil(
             negateP(pred),  // predicate
-            operation,      // operation
-            zero,           // aggregator
+            aggregateArr,   // operation
+            [],             // aggregator
             list
-        );
-    },
+        ),
 
     /**
      * Returns an list without elements that match predicate.
@@ -664,14 +645,13 @@ export const
     filter = (pred, xs) => {
         let ind = 0,
             limit = length(xs),
-            aggregator = aggregatorByType(xs),
-            out = of(xs);
+            out = [];
         if (!limit) {
             return out;
         }
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) {
-                out = aggregator(out, xs[ind]);
+                out.push(xs[ind]);
             }
         }
         return out;
@@ -686,12 +666,10 @@ export const
      * @param list {Array|String|*}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
-    partition = (pred, list) => {
-        if (!length(list)) {
-            return [of(list), of(list)];
-        }
-        return [filter(pred, list), filter(negateP(pred), list)];
-    },
+    partition = (pred, list) =>
+        !length(list) ?
+            [[], []] :
+                [filter(pred, list), filter(negateP(pred), list)],
 
     /**
      * Returns a boolean indicating whether an element exists in given structure of elements.
@@ -854,7 +832,7 @@ export const
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = aggregateArr(agg, sliceTo(ind, xs));
+            agg.push(sliceTo(ind, xs));
         }
         return agg;
     }, //map(list => init(list), xs),
@@ -877,7 +855,7 @@ export const
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg = aggregateArr(agg, slice(ind, limit, xs));
+            agg.push(slice(ind, limit, xs));
         }
         return agg;
     }, //map(list => tail(list), xs),
@@ -898,7 +876,7 @@ export const
      */
     zip = (arr1, arr2) => {
         if (!length(arr1) || !length(arr2)) {
-            return of(arr1);
+            return [];
         }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
         return reduce((agg, item, ind) =>
@@ -984,7 +962,7 @@ export const
      */
     zipWith = (op, xs1, xs2) => {
         if (!length(xs1) || !length(xs2)) {
-            return of(xs1);
+            return [];
         }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
         return reduce((agg, item, ind) =>
@@ -1286,9 +1264,8 @@ export const
         if (isEmptyList(xs)) {
             return aggregatorByType(xs)(copy(xs), x, 0);
         }
-        let out = of(xs),
-            foundIndex = findIndex(item => x <= item, xs);
-        return foundIndex === -1 ? append(sliceFrom(0, out), x) :
+        const foundIndex = findIndex(item => x <= item, xs);
+        return foundIndex === -1 ? [x] :
             concat(intersperse([x], splitAt(foundIndex, xs)));
     },
 
