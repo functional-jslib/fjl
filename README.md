@@ -5,6 +5,10 @@
 # fjl
 Functional Javascript Library (inspired by Haskell's Prelude)
 
+## Note about 0.22.0
+Support for return strings as lists has been removed for operations in 'listOps' and '_listOps'.
+All methods that generate new lists now return arrays explicitely.
+
 ### Docs
 
 **JSDocs** [https://functional-jslib.github.io/fjl]
