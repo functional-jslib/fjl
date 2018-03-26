@@ -51,13 +51,13 @@ export const
      * @haskellType `appendMany :: List a => a -> [a] -> a
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:_listOps.appendMany
+     * @function module:_listOps._appendMany
      * @param args ...{Array} - Lists or lists likes.
      * @returns {Array} - Same type as first list or list like passed in.
      */
-    appendMany = (...args) => {
+    _appendMany = (...args) => {
         if (length(args)) { return apply(listAppend, args); }
-        throw new Error('`appendMany` requires at least one arg.');
+        throw new Error('`_appendMany` requires at least one arg.');
     },
 
     /**
@@ -122,7 +122,7 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    concat = xs => !length(xs) ? copy(xs) : apply(appendMany, xs),
+    concat = xs => !length(xs) ? copy(xs) : apply(_appendMany, xs),
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.

@@ -10,7 +10,7 @@ import {curry, curry2, curry3, curry4, curry5, curryN} from './uncurried/_functi
 
 // Uncurried methods import
 import {
-    append as _append, appendMany as _appendMany, all as _all, any as _any, find as _find,
+    append as _append, _appendMany, all as _all, any as _any, find as _find,
     findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith,
     _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, zipWithN as _zipWithN,
     elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup,
@@ -191,7 +191,7 @@ export const
 
     repeat = curry(_repeat),
 
-    replicate = repeat,
+    replicate = curry(_replicate),
 
     cycle = curry(_cycle),
 
