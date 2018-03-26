@@ -39,15 +39,15 @@ export const
      * ```
      * If the first list is not finite, the result is the first list.
      * @haskellType `append :: List a => a -> a -> a`
-     * @function module:_listOps.append
+     * @function module:_listOps._append
      * @param xs1 {Array} - list or list like.
      * @param xs2 {Array} - list or list like.
      * @returns {Array} - Same type as list like passed in.
      */
-    append = listAppend,
+    _append = listAppend,
 
     /**
-     * Append two or more lists, i.e., same as `append` but for two ore more lists.
+     * Append two or more lists, i.e., same as `_append` but for two ore more lists.
      * @haskellType `appendMany :: List a => a -> [a] -> a
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
@@ -1317,7 +1317,7 @@ export const
     removeBy = (pred, x, list) => { // @todo optimize this implementation
         const foundIndex = findIndex(item => pred(x, item), list),
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-        return append(parts[0], tail(parts[1]));
+        return _append(parts[0], tail(parts[1]));
     },
 
 
@@ -1347,7 +1347,7 @@ export const
      * @returns {Array}
      */
     union = (arr1, arr2) =>
-        append(arr1,
+        _append(arr1,
             filter(elm => !includes(elm, arr1), arr2)),
 
     /**
@@ -1402,4 +1402,4 @@ export const
      * @returns {Array}
      */
     complement = (arr0, ...arrays) =>
-        reduce((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
+        reduce((agg, arr) => _append(agg, difference(arr, arr0)), [], arrays);

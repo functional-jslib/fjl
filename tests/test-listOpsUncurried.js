@@ -13,7 +13,7 @@ import {isEmptyList, isArray, isString, length} from '../src/objectOps';
 import {isTruthy} from '../src/booleanOps';
 import {lines, unlines, words, unwords} from '../src/stringOps';
 import {
-    append, _appendMany, all, and, or, any, find, findIndex, findIndices,
+    _append, _appendMany, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
     _map as map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
@@ -73,29 +73,29 @@ describe ('#_listOps', function () {
             return out;
         };
 
-    describe ('#append', function () {
+    describe ('#_append', function () {
         it ('should be able to append two lists.', function () {
-            expectShallowEquals(append(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
-            expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
+            expectShallowEquals(_append(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
+            expectEqual(_append(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
         });
         it ('should return the a copy of the original list when appending to an empty list', function () {
-            expectShallowEquals(append(alphabetArray, []), alphabetArray);
-            expectEqual(append(alphabetString, ''), alphabetString);
+            expectShallowEquals(_append(alphabetArray, []), alphabetArray);
+            expectEqual(_append(alphabetString, ''), alphabetString);
         });
         it ('should return a copy of the original list only receiving it', function () {
-            expectShallowEquals(append(alphabetArray), alphabetArray);
-            expectEqual(append(alphabetString), alphabetString);
+            expectShallowEquals(_append(alphabetArray), alphabetArray);
+            expectEqual(_append(alphabetString), alphabetString);
         });
         it ('should return an empty list when appending empty lists', function () {
-            expectEqual(append('', ''), '');
-            expectShallowEquals(append([], []), []);
+            expectEqual(_append('', ''), '');
+            expectShallowEquals(_append([], []), []);
         });
         it ('should throw an error when receiving Nothing', function () {
-            assert.throws(append, Error);
-            assert.throws(() => append(null), Error);
-            assert.throws(() => append(undefined), Error);
-            assert.throws(() => append(null, []), Error);
-            assert.throws(() => append(undefined, []), Error);
+            assert.throws(_append, Error);
+            assert.throws(() => _append(null), Error);
+            assert.throws(() => _append(undefined), Error);
+            assert.throws(() => _append(null, []), Error);
+            assert.throws(() => _append(undefined, []), Error);
         });
     });
 
@@ -2113,7 +2113,7 @@ describe ('#_listOps', function () {
     });
 
     describe ('#union', function () {
-        const mixedMatchRange = append(range(13, 8, -1), range(1, 3));
+        const mixedMatchRange = _append(range(13, 8, -1), range(1, 3));
             // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
             // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
         // [ascRanges, descRanges] =
@@ -2313,7 +2313,7 @@ describe ('#_listOps', function () {
     });
 
     describe ('#unionBy', function () {
-        const mixedMatchRange = append(range(13, 8, -1), range(1, 3)),
+        const mixedMatchRange = _append(range(13, 8, -1), range(1, 3)),
             // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
             // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
             equalityCheck = (a, b) => a === b;
