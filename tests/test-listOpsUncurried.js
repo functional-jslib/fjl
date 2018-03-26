@@ -17,7 +17,7 @@ import {
     zip, zipN, zipWith, unzip, unzipN,
     _map as map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
-    _head, _last, init, tail, uncons,
+    _head, _last, init, _tail, uncons,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
     iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
@@ -178,17 +178,17 @@ describe ('#_listOps', function () {
         });
     });
 
-    describe ('#tail', function () {
+    describe ('#_tail', function () {
         it ('should return everything except the last item of an _listOps', function () {
-            compose(expectEqual('ello'), xs => intercalate('', xs), tail, strToArray)('hello');
-            compose(expectEqual('ello'), tail)('hello');
+            compose(expectEqual('ello'), xs => intercalate('', xs), _tail, strToArray)('hello');
+            compose(expectEqual('ello'), _tail)('hello');
         });
         it ('should return an empty _listOps when receiving an empty _listOps', function () {
-            compose(expectEqual(0), length, tail)([]);
-            compose(expectEqual(0), length, tail)('');
+            compose(expectEqual(0), length, _tail)([]);
+            compose(expectEqual(0), length, _tail)('');
         });
         it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(tail, Error);
+            assert.throws(_tail, Error);
         });
     });
 
@@ -944,7 +944,7 @@ describe ('#_listOps', function () {
             }
         });
         it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(tail, Error);
+            assert.throws(_tail, Error);
         });
     });
 
@@ -985,7 +985,7 @@ describe ('#_listOps', function () {
             }
         });
         it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(tail, Error);
+            assert.throws(_tail, Error);
         });
     });
 
@@ -2007,9 +2007,9 @@ describe ('#_listOps', function () {
         it ('should remove the first occurrence of an item in a list.', function () {
             expectEqual(remove('l', 'hello world'), 'helo world');
             expectEqual(remove('l', 'hello world'.split('')).join(''), 'helo world');
-            expectEqual(remove('a', alphabetString), tail(alphabetString));
+            expectEqual(remove('a', alphabetString), _tail(alphabetString));
             expectEqual(remove('z', alphabetString), init(alphabetString));
-            expectShallowEquals(remove('a', alphabetArray), tail(alphabetArray));
+            expectShallowEquals(remove('a', alphabetArray), _tail(alphabetArray));
             expectShallowEquals(remove('z', alphabetArray), init(alphabetArray));
             // log(remove('d', alphabetString));
         });
@@ -2262,9 +2262,9 @@ describe ('#_listOps', function () {
         it ('should remove the first occurrence of an item in a list.', function () {
             expectEqual(removeBy(equal, 'l', 'hello world'), 'helo world');
             expectEqual(removeBy(equal, 'l', 'hello world'.split('')).join(''), 'helo world');
-            expectEqual(removeBy(equal, 'a', alphabetString), tail(alphabetString));
+            expectEqual(removeBy(equal, 'a', alphabetString), _tail(alphabetString));
             expectEqual(removeBy(equal, 'z', alphabetString), init(alphabetString));
-            expectShallowEquals(removeBy(equal, 'a', alphabetArray), tail(alphabetArray));
+            expectShallowEquals(removeBy(equal, 'a', alphabetArray), _tail(alphabetArray));
             expectShallowEquals(removeBy(equal, 'z', alphabetArray), init(alphabetArray));
             // log(removeBy('d', alphabetString));
         });
@@ -2292,7 +2292,7 @@ describe ('#_listOps', function () {
                     const foundInd = vowel.indexOf(vowels[ind]);
                     if (foundInd > -1) {
                         const parts = splitAt(foundInd, vowel);
-                        return concat([parts[0], tail(parts[1])]);
+                        return concat([parts[0], _tail(parts[1])]);
                     }
                     return vowel;
                 }, concat([alphabetArray, alphabetArray, alphabetArray]));

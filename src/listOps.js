@@ -10,7 +10,7 @@ import {curry, curry2, curry3, curry4, curry5, curryN} from './uncurried/_functi
 
 // Uncurried methods import
 import {
-    _append, _appendMany, _head, _last, all as _all, any as _any, find as _find,
+    _append, _appendMany, _head, _last, _tail, all as _all, any as _any, find as _find,
     findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith,
     _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, zipWithN as _zipWithN,
     elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup,
@@ -33,14 +33,14 @@ export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';
 
 // Single arity methods (and single or more arg functions)
 export {
-    and, or, zipN, unzip, unzipN, init, tail, uncons, concat, reverse, transpose, subsequences,
+    and, or, zipN, unzip, unzipN, init, uncons, concat, reverse, transpose, subsequences,
     permutations, group, inits, tails, sum, product, maximum, minimum, sort, nub
 }
     from './uncurried/_listOps';
 
 // Uncurried methods export
 export {
-    _append, _appendMany, _all, _head, _last, _any, _find, _findIndex, _findIndices, _zip, _zipN, _zipWith,
+    _append, _appendMany, _all, _head, _last, _tail, _any, _find, _findIndex, _findIndices, _zip, _zipN, _zipWith,
     _map, _mapAccumL, _mapAccumR, _elem, _notElem, _elemIndex, _elemIndices, _lookup,
     _intersperse, _intercalate, _iterate, _repeat, _replicate, _cycle, _take,
     _drop, _splitAt, _foldl, _foldl1, _foldr, _foldr1, _unfoldr, _concatMap, _takeWhile, _dropWhile,
@@ -81,8 +81,10 @@ export const
     appendMany = curry2(_appendMany),
 
     head = _head,
-    
+
     last = _last,
+
+    tail = _tail,
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.

@@ -13,7 +13,7 @@ import {
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet, assignDeep, assign
 } from '../src/uncurried/_objectOps';
-import {foldl, _map as map, and, _head as head, tail} from "../src/uncurried/_listOps";
+import {foldl, _map, and, _head, _tail} from "../src/uncurried/_listOps";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
     jsonClone, deepCompareObjectsLeft} from './helpers';
@@ -310,10 +310,10 @@ describe ('#_objectOps', function () {
             // log(check1);
 
             // Expect original object and resulting objects to both have the same nested properties
-            expectTrue(and(head(check1)));
+            expectTrue(and(_head(check1)));
 
             // Ensure both objects checked don't have any remaining keys
-            expectTrue(and(map(x => !Object.keys(x).length, tail(check1))));
+            expectTrue(and(_map(x => !Object.keys(x).length, _tail(check1))));
         });
 
         it ('should not modify objects other than the first object passed in', function () {
