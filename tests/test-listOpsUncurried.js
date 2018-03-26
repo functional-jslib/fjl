@@ -17,7 +17,7 @@ import {
     zip, zipN, zipWith, unzip, unzipN,
     _map as map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
-    _head, last, init, tail, uncons,
+    _head, _last, init, tail, uncons,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
     iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
@@ -149,18 +149,18 @@ describe ('#_listOps', function () {
         });
     });
 
-    describe ('#last', function () {
+    describe ('#_last', function () {
         it ('should return the last item in an list and/or string.', function () {
             const word = 'Hello';
-            compose(expectEqual('o'), last)(word);
-            compose(expectEqual('o'), last, strToArray)(word);
+            compose(expectEqual('o'), _last)(word);
+            compose(expectEqual('o'), _last, strToArray)(word);
         });
         it ('should return `undefined` when an empty list is passed in', function () {
-            expectEqual(undefined, last([]));
-            expectEqual(undefined, last(''));
+            expectEqual(undefined, _last([]));
+            expectEqual(undefined, _last(''));
         });
         it ('should throw an error when no parameters is passed in', function () {
-            assert.throws(last, Error);
+            assert.throws(_last, Error);
         });
     });
 

@@ -72,11 +72,11 @@ export const
     /**
      * Returns last item of list.
      * @haskellType `last :: [a] -> a`
-     * @function module:_listOps.last
+     * @function module:_listOps._last
      * @param xs {Array|String}
      * @returns {*}
      */
-    last = xs => xs[lastIndex(xs)],
+    _last = xs => xs[lastIndex(xs)],
 
     /**
      * Returns tail part of list (everything after the first item as new list).
@@ -113,7 +113,7 @@ export const
      * @param xs {Array|String}
      * @returns {Array|String|*|undefined}
      */
-    unconsr = xs => !xs || length(xs) === 0 ? undefined : [init(xs), last(xs)],
+    unconsr = xs => !xs || length(xs) === 0 ? undefined : [init(xs), _last(xs)],
     
     /**
      * Concatenates all the elements of a container of lists.
@@ -1175,7 +1175,7 @@ export const
      * @param list {Array|String}
      * @returns {*} - Whatever type the array is made of (if any).
      */
-    maximum = list => last(sortBy(genericAscOrdering, list)),
+    maximum = list => _last(sortBy(genericAscOrdering, list)),
 
     /**
      * Returns the smallest element in a non-empty structure of elements.
@@ -1232,7 +1232,7 @@ export const
 
     scanr1 = (fn, xs) => {
         if (!xs || !xs.length) { return []; }
-        return scanr(fn, last(xs), init(xs));
+        return scanr(fn, _last(xs), init(xs));
     },
 
     nub = list => nubBy((a, b) => a === b, list),
