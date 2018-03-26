@@ -90,11 +90,11 @@ export const
     /**
      * Returns everything except last item of list as new list.
      * @haskellType `init :: [a] -> [a]`
-     * @function module:_listOps.init
+     * @function module:_listOps._init
      * @param xs {Array|String}
      * @returns {Array|String}
      */
-    init = xs => sliceTo(lastIndex(xs), xs),
+    _init = xs => sliceTo(lastIndex(xs), xs),
 
     /**
      * Returns `head` and `tail` of passed in list/string in a tuple.
@@ -113,7 +113,7 @@ export const
      * @param xs {Array|String}
      * @returns {Array|String|*|undefined}
      */
-    unconsr = xs => !xs || length(xs) === 0 ? undefined : [init(xs), _last(xs)],
+    unconsr = xs => !xs || length(xs) === 0 ? undefined : [_init(xs), _last(xs)],
     
     /**
      * Concatenates all the elements of a container of lists.
@@ -817,12 +817,12 @@ export const
      * ```
      * shallowEquals(inits('abc'), ['','a','ab','abc'])
      * ```
-     * @function module:_listOps.inits
+     * @function module:_listOps._inits
      * @haskellType `inits :: [a] -> [[a]]`
      * @param xs {Array}
      * @returns {Array}
      */
-    inits = xs => {
+    _inits = xs => {
         let limit = length(xs),
             ind = 0,
             agg = [];
@@ -833,7 +833,7 @@ export const
             agg.push(sliceTo(ind, xs));
         }
         return agg;
-    }, //_map(list => init(list), xs),
+    }, //_map(list => _init(list), xs),
 
     /**
      * The inits function returns all initial segments of the argument, shortest first. For example,
@@ -1232,7 +1232,7 @@ export const
 
     scanr1 = (fn, xs) => {
         if (!xs || !xs.length) { return []; }
-        return scanr(fn, _last(xs), init(xs));
+        return scanr(fn, _last(xs), _init(xs));
     },
 
     nub = list => nubBy((a, b) => a === b, list),

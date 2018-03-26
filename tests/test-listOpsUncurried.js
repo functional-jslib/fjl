@@ -17,12 +17,12 @@ import {
     zip, zipN, zipWith, unzip, unzipN,
     _map as map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
-    _head, _last, init, _tail, uncons,
+    _head, _last, _init, _tail, uncons,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
     iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
-    at, span, breakOnList, stripPrefix, group, inits, tails,
+    at, span, breakOnList, stripPrefix, group, _inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
     filter, sum, product, maximum, minimum, nub, remove, insert, insertBy,
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
@@ -164,17 +164,17 @@ describe ('#_listOps', function () {
         });
     });
 
-    describe ('#init', function () {
+    describe ('#_init', function () {
         it ('should return everything except the last item of an _listOps and/or stringOps', function () {
-            compose(expectEqual('orange'), xs => intercalate('', xs), init, strToArray)('oranges');
-            compose(expectEqual('orange'), init)('oranges');
+            compose(expectEqual('orange'), xs => intercalate('', xs), _init, strToArray)('oranges');
+            compose(expectEqual('orange'), _init)('oranges');
         });
         it ('should return an empty _listOps when an empty _listOps and/or stringOps is passed in', function () {
-            compose(expectEqual(0), length, init)([]);
-            compose(expectEqual(0), length, init)('');
+            compose(expectEqual(0), length, _init)([]);
+            compose(expectEqual(0), length, _init)('');
         });
         it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(init, Error);
+            assert.throws(_init, Error);
         });
     });
 
@@ -1311,16 +1311,16 @@ describe ('#_listOps', function () {
         });
     });
 
-    describe ('#inits', function () {
+    describe ('#_inits', function () {
         it ('should unfold a list into list of all possible ' +
             'non-omitting sequential sets that start with initial item', function () {
             expectTrue(all(
                     (item, ind, original) => length(item) === ind,
-                    inits(alphabetString)
+                    _inits(alphabetString)
             ));
             expectTrue(all(
                     (item, ind, original) => length(item) === ind,
-                    inits(alphabetArray)
+                    _inits(alphabetArray)
                 ));
         });
     });
@@ -1354,21 +1354,21 @@ describe ('#_listOps', function () {
         it ('should return `true` when a list is a prefix of another', function () {
             expectTrue(all(
                 xs => isPrefixOf('abc', xs),
-                splitAt(3, inits(alphabetString))[1]
+                splitAt(3, _inits(alphabetString))[1]
             ));
             expectTrue(all(
                 xs => isPrefixOf('abc'.split(''), xs),
-                splitAt(3, inits(alphabetArray))[1]
+                splitAt(3, _inits(alphabetArray))[1]
             ));
         });
         it ('should return `false` when a list is not prefix of second list', function () {
             expectTrue(all(
                 xs => !isPrefixOf('!@#', xs),
-                splitAt(3, inits(alphabetString))[1]
+                splitAt(3, _inits(alphabetString))[1]
             ));
             expectTrue(all(
                 xs => !isPrefixOf('!@#'.split(''), xs),
-                splitAt(3, inits(alphabetArray))[1]
+                splitAt(3, _inits(alphabetArray))[1]
             ));
         });
     });
@@ -1619,7 +1619,7 @@ describe ('#_listOps', function () {
 
     describe ('#findIndices', function () {
         it ('should return indices for all items that match passed in predicate', function () {
-            const tokenInits = inits(intersperse('e', alphabetArray)),
+            const tokenInits = _inits(intersperse('e', alphabetArray)),
                 indicePred = x => x === 'e',
                 expectedResults = map(xs =>
                         xs.map((x, ind) => [ind, x])
@@ -2008,9 +2008,9 @@ describe ('#_listOps', function () {
             expectEqual(remove('l', 'hello world'), 'helo world');
             expectEqual(remove('l', 'hello world'.split('')).join(''), 'helo world');
             expectEqual(remove('a', alphabetString), _tail(alphabetString));
-            expectEqual(remove('z', alphabetString), init(alphabetString));
+            expectEqual(remove('z', alphabetString), _init(alphabetString));
             expectShallowEquals(remove('a', alphabetArray), _tail(alphabetArray));
-            expectShallowEquals(remove('z', alphabetArray), init(alphabetArray));
+            expectShallowEquals(remove('z', alphabetArray), _init(alphabetArray));
             // log(remove('d', alphabetString));
         });
         it ('should return an empty list when receiving an empty list', function () {
@@ -2263,9 +2263,9 @@ describe ('#_listOps', function () {
             expectEqual(removeBy(equal, 'l', 'hello world'), 'helo world');
             expectEqual(removeBy(equal, 'l', 'hello world'.split('')).join(''), 'helo world');
             expectEqual(removeBy(equal, 'a', alphabetString), _tail(alphabetString));
-            expectEqual(removeBy(equal, 'z', alphabetString), init(alphabetString));
+            expectEqual(removeBy(equal, 'z', alphabetString), _init(alphabetString));
             expectShallowEquals(removeBy(equal, 'a', alphabetArray), _tail(alphabetArray));
-            expectShallowEquals(removeBy(equal, 'z', alphabetArray), init(alphabetArray));
+            expectShallowEquals(removeBy(equal, 'z', alphabetArray), _init(alphabetArray));
             // log(removeBy('d', alphabetString));
         });
         it ('should return an empty list when receiving an empty list', function () {
