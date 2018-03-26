@@ -63,11 +63,11 @@ export const
     /**
      * Returns head of list (first item of list).
      * @haskellType `head :: [a] -> a`
-     * @function module:_listOps.head
+     * @function module:_listOps._head
      * @param x {Array|String}
      * @returns {*} - First item from list
      */
-    head = x => x[0],
+    _head = x => x[0],
 
     /**
      * Returns last item of list.
@@ -104,7 +104,7 @@ export const
      * @returns {Array|undefined}
      */
     uncons = xs =>
-        !xs || length(xs) === 0 ? undefined : [head(xs), tail(xs)],
+        !xs || length(xs) === 0 ? undefined : [_head(xs), tail(xs)],
 
     /**
      * Returns `tail` and `head` of passed in list/string in a tuple.
@@ -1184,7 +1184,7 @@ export const
      * @param list {Array|String}
      * @returns {*} - Whatever type the array is made of (if any).
      */
-    minimum = list => head(sortBy(genericAscOrdering, list)),
+    minimum = list => _head(sortBy(genericAscOrdering, list)),
 
     /**
      * @function module:_listOps.scanl
@@ -1211,7 +1211,7 @@ export const
 
     scanl1 = (fn, xs) => {
         if (!xs || !xs.length) { return []; }
-        return scanl(fn, head(xs), tail(xs));
+        return scanl(fn, _head(xs), tail(xs));
     },
 
     scanr = (fn, zero, xs) => {
@@ -1319,7 +1319,6 @@ export const
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
         return _append(parts[0], tail(parts[1]));
     },
-
 
     removeFirstsBy = (pred, xs1, xs2) =>
         foldl((agg, item) => removeBy(pred, item, agg), xs1, xs2),

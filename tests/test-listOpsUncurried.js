@@ -17,7 +17,7 @@ import {
     zip, zipN, zipWith, unzip, unzipN,
     _map as map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
-    head, last, init, tail, uncons,
+    _head, last, init, tail, uncons,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
     iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
@@ -135,17 +135,17 @@ describe ('#_listOps', function () {
         });
     });
 
-    describe ('#head', function () {
+    describe ('#_head', function () {
         it ('should return the first item in an list and/or string.', function () {
-            expectEqual(head('Hello'), 'H');
-            expectEqual(head(split('', 'Hello')), 'H');
+            expectEqual(_head('Hello'), 'H');
+            expectEqual(_head(split('', 'Hello')), 'H');
         });
         it ('should return `undefined` when an empty list and/or string is passed in', function () {
-            expectEqual(undefined, head([]));
-            expectEqual(undefined, head(''));
+            expectEqual(undefined, _head([]));
+            expectEqual(undefined, _head(''));
         });
         it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(head, Error);
+            assert.throws(_head, Error);
         });
     });
 
@@ -1331,7 +1331,7 @@ describe ('#_listOps', function () {
             const limit = length(alphabetString);
             expectTrue(all(
                 (item, ind) => {
-                    const headOfLast = head(item);
+                    const headOfLast = _head(item);
                     // log (headOfLast, alphabetString[ind]);//, resultList);
                     return length(item) ? length(item) === limit - ind &&
                        headOfLast === alphabetString[ind] : true
@@ -1340,7 +1340,7 @@ describe ('#_listOps', function () {
             ));
             expectTrue(all(
                 (item, ind) => {
-                    const headOfLast = head(item);
+                    const headOfLast = _head(item);
                     //log (headOfLast, alphabetString[ind]);
                     return length(item) ? length(item) === limit - ind &&
                        headOfLast === alphabetArray[ind] : true
