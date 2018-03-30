@@ -8,13 +8,13 @@ import {
     concat as listAppend,
     indexOf, slice, includes
 }
-    from './_jsPlatform/_list';
+    from '../_jsPlatform/_list';
 
-import {apply} from './_jsPlatform/_function';
-import {negateP, negateF} from './_functionOps/_negate';
-import {isTruthy, isFalsy} from '../booleanOps';
-import {prop, length} from './_objectOps';
-import _map from './_listOps/_map';
+import {apply} from '../_jsPlatform/_function';
+import {negateP, negateF} from '../_functionOps/_negate';
+import {isTruthy, isFalsy} from '../../booleanOps';
+import {prop, length} from '../_objectOps/_objectOps';
+import _map from './_map';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -23,7 +23,7 @@ import {
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, copy, genericAscOrdering
 }
-    from './_listOps/_utils';
+    from './_utils';
 
 // Exported imports
 export {_map};

@@ -6,7 +6,7 @@
  * @todo change all files named '*UnCurried' to '*_'.
  */
 
-import {fPureTakesOne} from '../_utils';
+import {fPureTakesOne} from '../_objectOps/_utils';
 
 export const
 

@@ -4,13 +4,11 @@
  * @todo decide whether to throw errors where functions cannot function without a specific type or to
  *  return undefined (and also determine which cases are ok for just returning undefined).
  */
-import {curry, curry2, curry3, curry4, curry5, curryN} from './uncurried/_functionOps';
-
-import _map from './uncurried/_listOps/_map';
+import {curry, curry2, curry3, curry4, curry5, curryN} from './uncurried/_functionOps/_functionOps';
 
 import {
     _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr,
-    _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose,
+    _map, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose,
     _subsequences, _subsequences1, _swapped, _permutations, _foldl, _foldl1,
     _foldr, _foldr1, _unfoldr, _mapAccumL, _mapAccumR, _iterate, _repeat,
     _replicate, _cycle, _findIndex, _findIndices, _elemIndex, _elemIndices,
@@ -23,7 +21,7 @@ import {
     _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy,
     _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference,
     _complement
-} from './uncurried/_listOps';
+} from './uncurried/_listOps/_listOps';
 
 // Export single arity methods
 export {
@@ -38,7 +36,7 @@ export {
 
 export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';
 
-export * from './uncurried/_listOps';
+export * from './uncurried/_listOps/_listOps';
 
 export const
 

@@ -1,6 +1,6 @@
 import {assignDeep} from './_assignDeep';
 import {hasOwnProperty, keys} from '../_jsPlatform/_object';
-import {_foldl as foldl} from '../_listOps';
+import {_foldl as foldl} from '../_listOps/_listOps';
 
 export const
 

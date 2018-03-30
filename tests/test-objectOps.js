@@ -13,7 +13,7 @@ import {
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet, assignDeep, assign
 } from '../src/objectOps';
-import {_foldl as foldl, _map, _and as and, _head, _tail} from "../src/uncurried/_listOps";
+import {_foldl as foldl, _map, _and as and, _head, _tail} from "../src/uncurried/_listOps/_listOps";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
     jsonClone, deepCompareObjectsLeft} from './helpers';

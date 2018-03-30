@@ -8,7 +8,7 @@ import {curry, curry2, curry3} from './uncurried/_functionOps/_curry';
 import {
     apply as _apply,
     call as _call, reverse
-} from './uncurried/_jsPlatform';
+} from './uncurried/_jsPlatform/_jsPlatform';
 
 import {
     until as _until

@@ -10,8 +10,8 @@
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  * @module fjlUncurried
  */
-export * from './uncurried/_objectOps';
+export * from './uncurried/_objectOps/_objectOps';
 export * from './booleanOps';
-export * from './uncurried/_functionOps';
-export * from './uncurried/_listOps';
+export * from './uncurried/_functionOps/_functionOps';
+export * from './uncurried/_listOps/_listOps';
 export * from './stringOps';
