@@ -1,16 +1,4 @@
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(['exports', './_jsPlatform/_function', './_functionOps/_compose', './_functionOps/_curry', './_functionOps/__curry', './_functionOps/_flip', './_functionOps/_id', './_functionOps/_negate', './_functionOps/_until'], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require('./_jsPlatform/_function'), require('./_functionOps/_compose'), require('./_functionOps/_curry'), require('./_functionOps/__curry'), require('./_functionOps/_flip'), require('./_functionOps/_id'), require('./_functionOps/_negate'), require('./_functionOps/_until'));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global._function, global._compose, global._curry, global.__curry, global._flip, global._id, global._negate, global._until);
-    global._functionOps = mod.exports;
-  }
-})(this, function (exports, _function, _compose, _curry, _curry2, _flip, _id, _negate, _until) {
+define(['exports', '../_jsPlatform/_function', './_compose', './_curry', './__curry', './_flip', './_id', './_negate', './_until'], function (exports, _function, _compose, _curry, _curry2, _flip, _id, _negate, _until) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

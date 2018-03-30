@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.split = undefined;
 
-var _utils = require('../_utils');
+var _utils = require('../_objectOps/_utils');
 
 /**
  * Functional version of `String.prototype.split`.

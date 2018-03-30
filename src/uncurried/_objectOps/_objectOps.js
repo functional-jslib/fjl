@@ -3,15 +3,15 @@
  * @description Object operations (uncurried).
  * @private
  */
-export * from './_jsPlatform/_object';
-export * from './_objectOps/_prop';
-export * from './_objectOps/_typeOf';
-export * from './_objectOps/_is';
-export * from './_objectOps/_of';
-export * from './_objectOps/_assignDeep';
-export * from './_objectOps/_setTheory';
+export * from '../_jsPlatform/_object';
+export * from './_prop';
+export * from './_typeOf';
+export * from './_is';
+export * from './_of';
+export * from './_assignDeep';
+export * from './_setTheory';
 
-import {typeOf} from './_objectOps/_typeOf';
+import {typeOf} from './_typeOf';
 
 export const
 

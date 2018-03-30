@@ -47,7 +47,52 @@
 <a href="http://badge.fury.io/gh/functional-jslib%2Ffjl"><img src="https://badge.fury.io/gh/functional-jslib%2Ffjl.svg" alt="GitHub version"></a>
 <a href="http://badge.fury.io/js/fjl"><img src="https://badge.fury.io/js/fjl.svg" alt="NPM version"></a>
 <a href="https://david-dm.org/functional-jslib/fjl"><img src="https://david-dm.org/functional-jslib/fjl.png" alt="Dependencies"></a></p>
-<h1>fjl</h1><p>Functional Javascript Library (inspired by Haskell's Prelude)</p>
+<h1>fjl</h1><p>Functional Javascript Library (inspired by Haskell's Prelude).</p>
+<h2>Note about 0.22.0</h2><p>Support for return strings as lists has been removed for operations in 'listOps' and '_listOps'.
+All methods that generate new lists now return arrays explicitely.</p>
+<h2>Sections in Readme:</h2><ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#docs">Docs</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#supported-platforms">Supported Platforms</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2>Requirements:</h2><ul>
+<li>Javascript Ecmascript 5+.</li>
+</ul>
+<h3>Supported Platforms:</h3><h4>Browsers</h4><ul>
+<li>IE9+, and all other modern day browsers.</li>
+</ul>
+<h4>NodeJs</h4><ul>
+<li>8+</li>
+</ul>
+<h2>Getting Started:</h2><h3>In Browser:</h3><p>See desired export type below:</p>
+<ul>
+<li>'./dist/amd/' - Asynchronous module format.</li>
+<li>'./dist/cjs/' - CommonJs module format.</li>
+<li>'./dist/umd/' - Universal module definition format.</li>
+<li>'./dist/iife/' - Immediately Invoked Function Execution - (exports <code>fjl</code> as a global).</li>
+<li>'./dist/es6-module/' - Ecmascript 6 module format.</li>
+</ul>
+<h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h2>Motivations:</h2><ul>
+<li>Haskell and it's <code>Prelude</code>.</li>
+<li>Lambda Calculus.</li>
+<li>The need for a way to do strongly typed javascript (in actual code (not with typescript)).</li>
+<li>The need to be able to write functional code very quickly and easily.</li>
+<li>A functional library that takes advantage of the es6 features of the language
+and is built from the ground up using functional concepts.</li>
+<li>A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).</li>
+<li>A functional library that has curried and un-curried versions of included operations.  Et. al.
+  <code>append</code>, <code>_append</code> (un-curried version)</li>
+<li>A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
+are separated out 'Data.List' (in our lib is './src/listOps.js') etc..</li>
+<li>Etc. etc..</li>
+</ul>
+<h3>Reasoning for paradigms</h3><h4>Use of while-and-for-loops instead of built-ins:</h4><ul>
+<li>They are faster than iterating with es5 functional array additions (<code>map</code>, <code>forEach</code> etc.).</li>
+</ul>
 <h3>Docs</h3><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
 <p> The docs are divided into modules though all methods in the library all live on <code>fjl</code> or the top level export
  of the library (the docs are written out that way to easier understand the separation and the grouping of
@@ -129,48 +174,10 @@ aggregateStr, aggregateArr, aggregateObj, aggregateByType,</code></pre><p><stron
 </ul>
 <p>Jsdocs here:
 https://functional-jslib.github.io/fjl/</p>
-<h2>Motivations:</h2><ul>
-<li>Haskell and it's <code>Prelude</code>.</li>
-<li>Lambda Calculus.</li>
-<li>The need for a way to do strongly typed javascript (in actual code (not with typescript)).</li>
-<li>The need to be able to write functional code very quickly and easily.</li>
-<li>A functional library that takes advantage of the es6 features of the language
-and is built from the ground up using functional concepts.</li>
-<li>A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).</li>
-<li>A functional library that has curried and un-curried versions of included operations.  Et. al.
-  <code>append</code>, <code>_append</code> (un-curried version)</li>
-<li>A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' etc..</li>
-<li>Etc. etc..</li>
-</ul>
-<h3>Needed</h3><ul>
-<li>[X] - <del>Also some of the utility functions used to create
-the libraries functions should be exported with clear and meaningful
-names (they haven't been reviewed for export yet).</del>.<br>Internal utility methods are exported as of this version. </li>
-</ul>
-<h2>Reasoning for paradigms</h2><h3>Use of for-loops/while-loops instead of built-ins:</h3><ul>
-<li>They are faster than iterating with es5 functional array additions (<code>map</code>, <code>forEach</code> etc.).
-@todo add performance tests to the library and link to performance tests on jsperf</li>
-</ul>
-<h2>Sections in Readme:</h2><ul>
-<li><a href="#getting-started">Getting Started</a></li>
-<li><a href="#development">Development</a></li>
-<li><a href="#requirements">Requirements</a></li>
-<li><a href="#supported-platforms">Supported Platforms</a></li>
-<li><a href="#license">License</a></li>
-</ul>
-<h2>Getting Started:</h2><h3>In Browser:</h3><p>See desired export type below:</p>
-<ul>
-<li>'./dist/amd/' - Asynchronous module format.</li>
-<li>'./dist/cjs/' - CommonJs module format.</li>
-<li>'./dist/umd/' - Universal module definition format.</li>
-<li>'./dist/iife/' - Immediately Invoked Function Execution - (exports <code>fjl</code> as a global).</li>
-<li>'./dist/es6-module/' - Ecmascript 6 module format.</li>
-</ul>
-<h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h2>Development:</h2><ul>
+<h2>Development:</h2><ul>
 <li>Sources are in './src'<ul>
 <li>Sources are divided by un-curried definitions ('./src/uncurried')
-and curried definitions (files in './src/*<em>/</em>' except the ones in './src/uncurried' (of course)).</li>
+and curried definitions (files in './src/<em>*/</em>' except the ones in './src/uncurried' (of course)).</li>
 <li>'./src/jsPlatform' and './src/uncurried/jsPlatform' are native platform specific method versions
 pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (listOps, functionOps etc.).</li>
 <li>About non-conformity to full modularity (one-function-per-file):
@@ -201,19 +208,10 @@ configurations used for building the project.</li>
 <h3>Perf Tests:</h3><ul>
 <li><code>subsequences</code>: https://jsperf.com/subsequences/6</li>
 </ul>
-<h2>Requirements:</h2><ul>
-<li>Javascript versions Ecmascript 5+</li>
-</ul>
-<h2>Supported Platforms:</h2><h3>Browsers</h3><ul>
-<li>IE9+, and all other modern day browsers.</li>
-</ul>
-<h3>NodeJs</h3><ul>
-<li>8+</li>
-</ul>
 <h2>License:</h2><p><a href="http://www.gnu.org/licenses/gpl-2.0.html" title="http://www.gnu.org/licenses/gpl-2.0.html">BSD 3 Clause</a></p>
 <h2>Resource:</h2><ul>
 <li>Docs format: http://usejsdoc.org/</li>
-<li>Haskell docs search engine: https://<a href="http://www.haskell.org/hoogle/">www.haskell.org/hoogle/</a></li>
+<li>Haskell docs search engine: https://www.haskell.org/hoogle/</li>
 <li>Listing of entire Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html</li>
 <li>Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html</li>
 </ul></article>
@@ -227,13 +225,13 @@ configurations used for building the project.</li>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-objectOps.html">objectOps</a></li><li><a href="module-stringOps.html">stringOps</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-objectOps.html">objectOps</a></li><li><a href="module-stringOps.html">stringOps</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Mar 25 2018 18:11:41 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Mar 30 2018 14:25:27 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -6,8 +6,8 @@
  * @todo Make code here more minimal (reuse small parts here).
  */
 
-import {apply, concat, map, filter, length} from '../_jsPlatform';
-import {fnOrError} from '../_utils';
+import {apply, concat, map, filter, length} from '../_jsPlatform/_jsPlatform';
+import {fnOrError} from '../_objectOps/_utils';
 
 /**
  * PlaceHolder (__) constructor.

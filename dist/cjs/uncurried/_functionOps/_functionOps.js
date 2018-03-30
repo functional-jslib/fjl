@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _function = require('./_jsPlatform/_function');
+var _function = require('../_jsPlatform/_function');
 
 Object.defineProperty(exports, 'apply', {
   enumerable: true,
@@ -19,7 +19,7 @@ Object.defineProperty(exports, 'call', {
   }
 });
 
-var _compose = require('./_functionOps/_compose');
+var _compose = require('./_compose');
 
 Object.keys(_compose).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -31,7 +31,7 @@ Object.keys(_compose).forEach(function (key) {
   });
 });
 
-var _curry = require('./_functionOps/_curry');
+var _curry = require('./_curry');
 
 Object.keys(_curry).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -43,7 +43,7 @@ Object.keys(_curry).forEach(function (key) {
   });
 });
 
-var _curry2 = require('./_functionOps/__curry');
+var _curry2 = require('./__curry');
 
 Object.keys(_curry2).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -55,7 +55,7 @@ Object.keys(_curry2).forEach(function (key) {
   });
 });
 
-var _flip = require('./_functionOps/_flip');
+var _flip = require('./_flip');
 
 Object.keys(_flip).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -67,7 +67,7 @@ Object.keys(_flip).forEach(function (key) {
   });
 });
 
-var _id = require('./_functionOps/_id');
+var _id = require('./_id');
 
 Object.keys(_id).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -79,7 +79,7 @@ Object.keys(_id).forEach(function (key) {
   });
 });
 
-var _negate = require('./_functionOps/_negate');
+var _negate = require('./_negate');
 
 Object.keys(_negate).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -91,7 +91,7 @@ Object.keys(_negate).forEach(function (key) {
   });
 });
 
-var _until = require('./_functionOps/_until');
+var _until = require('./_until');
 
 Object.keys(_until).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

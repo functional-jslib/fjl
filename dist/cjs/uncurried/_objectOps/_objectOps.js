@@ -12,7 +12,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           */
 
 
-var _object = require('./_jsPlatform/_object');
+var _object = require('../_jsPlatform/_object');
 
 Object.keys(_object).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -24,7 +24,7 @@ Object.keys(_object).forEach(function (key) {
     });
 });
 
-var _prop = require('./_objectOps/_prop');
+var _prop = require('./_prop');
 
 Object.keys(_prop).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -36,7 +36,7 @@ Object.keys(_prop).forEach(function (key) {
     });
 });
 
-var _typeOf = require('./_objectOps/_typeOf');
+var _typeOf = require('./_typeOf');
 
 Object.keys(_typeOf).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -48,7 +48,7 @@ Object.keys(_typeOf).forEach(function (key) {
     });
 });
 
-var _is = require('./_objectOps/_is');
+var _is = require('./_is');
 
 Object.keys(_is).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -60,7 +60,7 @@ Object.keys(_is).forEach(function (key) {
     });
 });
 
-var _of = require('./_objectOps/_of');
+var _of = require('./_of');
 
 Object.keys(_of).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -72,7 +72,7 @@ Object.keys(_of).forEach(function (key) {
     });
 });
 
-var _assignDeep = require('./_objectOps/_assignDeep');
+var _assignDeep = require('./_assignDeep');
 
 Object.keys(_assignDeep).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -84,7 +84,7 @@ Object.keys(_assignDeep).forEach(function (key) {
     });
 });
 
-var _setTheory = require('./_objectOps/_setTheory');
+var _setTheory = require('./_setTheory');
 
 Object.keys(_setTheory).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;

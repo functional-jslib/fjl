@@ -4,8 +4,8 @@
  * @memberOf _functionOps
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
-import {apply, length, concat} from '../_jsPlatform';
-import {fnOrError} from '../_utils';
+import {apply, length, concat} from '../_jsPlatform/_jsPlatform';
+import {fnOrError} from '../_objectOps/_utils';
 
 const notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 

@@ -1,4 +1,4 @@
-define(['exports', './_objectOps/_typeOf'], function (exports, _typeOf) {
+define(['exports', './_typeOf'], function (exports, _typeOf) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

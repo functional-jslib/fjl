@@ -3,11 +3,71 @@
 [![NPM version](https://badge.fury.io/js/fjl.svg)](http://badge.fury.io/js/fjl)
 [![Dependencies](https://david-dm.org/functional-jslib/fjl.png)](https://david-dm.org/functional-jslib/fjl)
 # fjl
-Functional Javascript Library (inspired by Haskell's Prelude)
+Functional Javascript Library (inspired by Haskell's Prelude).
 
 ## Note about 0.22.0
 Support for return strings as lists has been removed for operations in 'listOps' and '_listOps'.
 All methods that generate new lists now return arrays explicitely.
+
+## Sections in Readme:
+- [Getting Started](#getting-started)
+- [Requirements](#requirements)
+- [Motivation](#motivation)
+- [Docs](#docs)
+- [Development](#development)
+- [Supported Platforms](#supported-platforms)
+- [License](#license)
+
+## Requirements:
+- Javascript Ecmascript 5+.
+
+### Supported Platforms:
+
+#### Browsers
+- IE9+, and all other modern day browsers.
+
+#### NodeJs
+- 8+
+
+## Getting Started:
+
+### In Browser:
+See desired export type below:
+- './dist/amd/' - Asynchronous module format.
+- './dist/cjs/' - CommonJs module format.
+- './dist/umd/' - Universal module definition format.
+- './dist/iife/' - Immediately Invoked Function Execution - (exports `fjl` as a global).
+- './dist/es6-module/' - Ecmascript 6 module format.
+
+### In NodeJs: 
+
+#### Using es2015 modules:
+```
+import {...} from 'fjl';
+```
+
+#### Using CommonJs modules:
+```
+const fjl = require('fjl');
+```
+
+## Motivations:
+- Haskell and it's `Prelude`.
+- Lambda Calculus.
+- The need for a way to do strongly typed javascript (in actual code (not with typescript)).
+- The need to be able to write functional code very quickly and easily.
+- A functional library that takes advantage of the es6 features of the language
+ and is built from the ground up using functional concepts.
+- A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
+- A functional library that has curried and un-curried versions of included operations.  Et. al.
+    `append`, `_append` (un-curried version)
+- A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
+are separated out 'Data.List' (in our lib is './src/listOps.js') etc..
+- Etc. etc..
+
+### Reasoning for paradigms
+#### Use of while-and-for-loops instead of built-ins:
+- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.).
 
 ### Docs
 
@@ -142,60 +202,6 @@ aggregateStr, aggregateArr, aggregateObj, aggregateByType,
 Jsdocs here:
 https://functional-jslib.github.io/fjl/
 
-## Motivations:
-- Haskell and it's `Prelude`.
-- Lambda Calculus.
-- The need for a way to do strongly typed javascript (in actual code (not with typescript)).
-- The need to be able to write functional code very quickly and easily.
-- A functional library that takes advantage of the es6 features of the language
- and is built from the ground up using functional concepts.
-- A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
-- A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `_append` (un-curried version)
-- A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' etc..
-- Etc. etc..
-
-### Needed
-- [X] - ~~Also some of the utility functions used to create
-the libraries functions should be exported with clear and meaningful
-names (they haven't been reviewed for export yet).~~.  
-Internal utility methods are exported as of this version. 
-
-## Reasoning for paradigms
-### Use of for-loops/while-loops instead of built-ins:
-- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.).
-@todo add performance tests to the library and link to performance tests on jsperf
-
-## Sections in Readme:
-- [Getting Started](#getting-started)
-- [Development](#development)
-- [Requirements](#requirements)
-- [Supported Platforms](#supported-platforms)
-- [License](#license)
-
-## Getting Started:
-
-### In Browser:
-See desired export type below:
-- './dist/amd/' - Asynchronous module format.
-- './dist/cjs/' - CommonJs module format.
-- './dist/umd/' - Universal module definition format.
-- './dist/iife/' - Immediately Invoked Function Execution - (exports `fjl` as a global).
-- './dist/es6-module/' - Ecmascript 6 module format.
-
-### In NodeJs: 
-
-#### Using es2015 modules:
-```
-import {...} from 'fjl';
-```
-
-#### Using CommonJs modules:
-```
-const fjl = require('fjl');
-```
-
 ## Development:
 - Sources are in './src'
     - Sources are divided by un-curried definitions ('./src/uncurried')
@@ -233,18 +239,6 @@ We are using 'chai' and 'mocha' though we may want to move to 'jest' in the futu
 
 ### Perf Tests:
 - `subsequences`: https://jsperf.com/subsequences/6
-
-
-## Requirements:
-- Javascript versions Ecmascript 5+
-
-## Supported Platforms:
-
-### Browsers
-- IE9+, and all other modern day browsers.
-
-### NodeJs
-- 8+
 
 ## License:
 [BSD 3 Clause](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html")

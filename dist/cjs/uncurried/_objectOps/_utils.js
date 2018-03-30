@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fnOrError = exports.fPureTakesOneOrMore = exports.fPureTakes5 = exports.fPureTakes4 = exports.fPureTakes3 = exports.fPureTakes2 = exports.fPureTakesOne = undefined;
 
-var _typeOf = require('./_objectOps/_typeOf');
+var _typeOf = require('./_typeOf');
 
 var fPureTakesOne = exports.fPureTakesOne = function fPureTakesOne(name) {
     return function (arg, f) {

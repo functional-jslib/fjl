@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './_assignDeep', '../_jsPlatform/_object', '../_listOps'], factory);
+        define(['exports', './_assignDeep', '../_jsPlatform/_object', '../_listOps/_listOps'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./_assignDeep'), require('../_jsPlatform/_object'), require('../_listOps'));
+        factory(exports, require('./_assignDeep'), require('../_jsPlatform/_object'), require('../_listOps/_listOps'));
     } else {
         var mod = {
             exports: {}
@@ -21,7 +21,7 @@
         return (0, _assignDeep.assignDeep)(obj1, obj2);
     },
         objIntersect = exports.objIntersect = function objIntersect(obj1, obj2) {
-        return (0, _listOps.foldl)(function (agg, key) {
+        return (0, _listOps._foldl)(function (agg, key) {
             if ((0, _object.hasOwnProperty)(key, obj2)) {
                 agg[key] = obj2[key];
             }
@@ -29,7 +29,7 @@
         }, {}, (0, _object.keys)(obj1));
     },
         objDifference = exports.objDifference = function objDifference(obj1, obj2) {
-        return (0, _listOps.foldl)(function (agg, key) {
+        return (0, _listOps._foldl)(function (agg, key) {
             if (!(0, _object.hasOwnProperty)(key, obj2)) {
                 agg[key] = obj1[key];
             }
@@ -41,7 +41,7 @@
             objs[_key - 1] = arguments[_key];
         }
 
-        return (0, _listOps.foldl)(function (agg, obj) {
+        return (0, _listOps._foldl)(function (agg, obj) {
             return (0, _assignDeep.assignDeep)(agg, objDifference(obj, obj0));
         }, {}, objs);
     };

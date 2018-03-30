@@ -13,12 +13,12 @@ import {
     isUndefined, isNull, isSymbol, isMap, isSet,
     isWeakMap, isWeakSet, assignDeep, assign
 } from '../src/objectOps';
-import {foldl, _map as map, and, head, tail} from "../src/uncurried/_listOps";
+import {_foldl as foldl, _map, _and as and, _head, _tail} from "../src/uncurried/_listOps/_listOps";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
     jsonClone, deepCompareObjectsLeft} from './helpers';
 
-describe ('#_objectOps', function () {
+describe ('#objectOps', function () {
 
     describe('#hasOwnProperty', function () {
         it ('should be a function', function () {
@@ -293,7 +293,7 @@ describe ('#_objectOps', function () {
                 .map(word => result1.hasOwnProperty(word) && result1[word])
                 .every(result => result));
 
-            // Expect true that all results (head of return) of accumalated value are `true`
+            // Expect true that all results (_head of return) of accumalated value are `true`
             // and checks container of booleans
             // `head` pulls item at index `0` of list
             const check1 = foldl(
@@ -310,10 +310,10 @@ describe ('#_objectOps', function () {
             // log(check1);
 
             // Expect original object and resulting objects to both have the same nested properties
-            expectTrue(and(head(check1)));
+            expectTrue(and(_head(check1)));
 
             // Ensure both objects checked don't have any remaining keys
-            expectTrue(and(map(x => !Object.keys(x).length, tail(check1))));
+            expectTrue(and(_map(x => !Object.keys(x).length, _tail(check1))));
         });
 
         it ('should not modify objects other than the first object passed in', function () {
