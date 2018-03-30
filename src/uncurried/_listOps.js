@@ -118,48 +118,48 @@ export const
     /**
      * Concatenates all the elements of a container of lists.
      * @haskellType `concat :: Foldable t => t [a] -> [a]`
-     * @function module:_listOps.concat
+     * @function module:_listOps._concat
      * @param xs {Array}
      * @returns {Array}
      */
-    concat = xs => !length(xs) ? copy(xs) : apply(_appendMany, xs),
+    _concat = xs => !length(xs) ? copy(xs) : apply(_appendMany, xs),
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
      * @haskellType `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
-     * @function module:_listOps.concatMap
+     * @function module:_listOps._concatMap
      * @param fn {Function}
      * @param foldableOfA {Array}
      * @returns {Array}
      */
-    concatMap = (fn, foldableOfA) => concat(_map(fn, foldableOfA)),
+    _concatMap = (fn, foldableOfA) => _concat(_map(fn, foldableOfA)),
 
     /**
      * Returns a copy of the passed in list reverses.
      * @haskellType `reverse :: [a] -> [a]`
-     * @function module:_listOps.reverse
+     * @function module:_listOps._reverse
      * @param x {Array}
      * @returns {Array}
      */
-    reverse = x => foldr((agg, item) => (agg.push(item), agg), [], x),
+    _reverse = x => _foldr((agg, item) => (agg.push(item), agg), [], x),
 
     /**
      * Takes an element and a list and `intersperses' that element between the elements of the list. For example
-     * @function module:_listOps.intersperse
+     * @function module:_listOps._intersperse
      * @note In our version of the function javascript is loosely typed so, so is our function (to much overhead to make
      *  it typed) so `between` can be any value.
      * @param between {*} - Should be of the same type of elements contained in list.
      * @param arr {Array} - List.
      * @returns {Array}
      */
-    intersperse = (between, arr) => {
+    _intersperse = (between, arr) => {
         const limit = length(arr),
             lastInd = limit - 1,
             out = [];
         if (!limit) {
             return out;
         }
-        return foldl((agg, item, ind) => (
+        return _foldl((agg, item, ind) => (
                 ind === lastInd ?
                     agg.push(item) :
                     agg.push(item, between),
@@ -170,12 +170,12 @@ export const
     /**
      * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
      * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
-     * @function module:_listOps.intercalate
+     * @function module:_listOps._intercalate
      * @param xs {Array}
      * @param xss {Array}
      * @returns {Array}
      */
-    intercalate = (xs, xss) => concat(intersperse(xs, xss)),
+    _intercalate = (xs, xss) => _concat(_intersperse(xs, xss)),
 
     /**
      * Transposes rows and columns into lists by index;  E.g.,
@@ -190,11 +190,11 @@ export const
      * @note Empty lists are ignored.
      * @todo upgrade this function to support lists of strings.
      * @haskellType `transpose :: [[a]] -> [[a]]`
-     * @function module:_listOps.transpose
+     * @function module:_listOps._transpose
      * @param xss {Array}
      * @returns {Array}
      */
-    transpose = xss => {
+    _transpose = xss => {
         let numLists = length(xss),
             ind = 0, ind2;
         if (!numLists) {
@@ -213,7 +213,7 @@ export const
             }
             outLists.push(outList);
         }
-        return filter(x => length(x), outLists);
+        return _filter(x => length(x), outLists);
     },
 
     /**
@@ -228,7 +228,7 @@ export const
      * @param xs {Array|String}
      * @returns {Array.<Array>}
      */
-    subsequences = xs => {
+    _subsequences = xs => {
         const listLen = length(xs),
             len = Math.pow(2, listLen),
             out = [];
@@ -248,12 +248,12 @@ export const
      * Same as `subsequences` but returns an `Array.<Type>` instead
      *  of an array of arrays.  **Note:** `Type` here means
      *  a string, an instance of array, or some indexable-like type.
-     * @function module:_listOps.subsequences1
+     * @function module:_listOps._subsequences1
      * @jsperftest https://jsperf.com/subsequences
      * @param xs {Array|String}
      * @returns {Array.<(Array|String|*)>}
      */
-    subsequences1 = xs => {
+    _subsequences1 = xs => {
         const listLen = length(xs),
             len = Math.pow(2, listLen),
             out = [];
@@ -269,7 +269,7 @@ export const
         return out;
     },
 
-    swapped = (ind1, ind2, list) => {
+    _swapped = (ind1, ind2, list) => {
         const out = copy(list),
             tmp = out[ind1];
         out[ind1] = out[ind2];
@@ -281,11 +281,11 @@ export const
      * Returns a list of permutations for passed in list.
      *  Use caution with lists above a length of 15 (will take long due to nature of
      *  algorithm).
-     * @function module:_listOps.permutations
+     * @function module:_listOps._permutations
      * @param xs {Array} - List.
      * @returns {Array<Array|String|*>} - Array of permutations.
      */
-    permutations = xs => {
+    _permutations = xs => {
         const limit = length(xs);
 
         if (!limit || limit === 1) {
@@ -293,14 +293,14 @@ export const
         }
 
         let list = copy(xs),
-            c = repeat(limit, 0),
+            c = _repeat(limit, 0),
             i = 0;
 
         const out = [list];
 
         for (; i < limit; i++) {
             if (c[i] < i) {
-                list = swapped(i % 2 === 0 ? 0 : c[i], i, list);
+                list = _swapped(i % 2 === 0 ? 0 : c[i], i, list);
                 out.push(list);
                 c[i] += 1;
                 i = 0;
@@ -314,33 +314,33 @@ export const
 
     /**
      * Left associative fold.  Reduces a container of elements down by the given operation (same as [].reduce).
-     * @function module:_listOps.foldl
+     * @function module:_listOps._foldl
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array}
      * @returns {*} - Whatever type is lastly returned from `fn`.
      */
-    foldl = reduce,
+    _foldl = reduce,
 
     /**
      * Right associative fold.  Reduces a container of elements down by the given operation (same as [].reduceRight).
-     * @function module:_listOps.foldr
+     * @function module:_listOps._foldr
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array}
      * @returns {*} - Whatever type is lastly returned from `fn`.
      */
-    foldr = reduceRight,
+    _foldr = reduceRight,
 
     /**
      * A variant of `foldl` except that this one doesn't require the starting point.  The starting point/value will be pulled
      * out from a copy of the container.
-     * @function module:_listOps.foldl1
+     * @function module:_listOps._foldl1
      * @param op {Function}
      * @param xs {Array}
      * @returns {*} - Whatever type is lastly returned from `op`.
      */
-    foldl1 = (op, xs) => {
+    _foldl1 = (op, xs) => {
         const parts = _uncons(xs);
         return !parts ? [] : reduce(op, parts[0], parts[1]);
     },
@@ -348,12 +348,12 @@ export const
     /**
      * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
      * out from a copy of the container.
-     * @function module:_listOps.foldr1
+     * @function module:_listOps._foldr1
      * @param op {Function}
      * @param xs {Array}
      * @returns {*} - Whatever type is lastly returned from `op`.
      */
-    foldr1 = (op, xs) => {
+    _foldr1 = (op, xs) => {
         const parts = _unconsr(xs);
         return !parts ? [] : reduceRight(op, parts[1], parts[0]);
     },
@@ -361,13 +361,13 @@ export const
     /**
      * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:_listOps.mapAccumL
+     * @function module:_listOps._mapAccumL
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array} - list type.
      * @return {Array} - [aggregated, list]
      */
-    mapAccumL = (op, zero, xs) => {
+    _mapAccumL = (op, zero, xs) => {
         const list = copy(xs),
             limit = length(xs);
         if (!limit) {
@@ -388,13 +388,13 @@ export const
     /**
      * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:_listOps.mapAccumR
+     * @function module:_listOps._mapAccumR
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array} - list type.
      * @return {Array} - [aggregated, list]
      */
-    mapAccumR = (op, zero, xs) => {
+    _mapAccumR = (op, zero, xs) => {
         const list = copy(xs),
             limit = length(xs);
         if (!limit) {
@@ -414,14 +414,14 @@ export const
 
     /**
      * iterate f x returns an infinite list of repeated applications of f to x.
-     * @function module:_listOps.iterate
+     * @function module:_listOps._iterate
      * @example `iterate(5, f, x) == [x, f(x), f(f(x)), ...]`
      * @param limit {Number}
      * @param op {Function} - Operation.
      * @param x {*} - Starting point.
      * @returns {*}
      */
-    iterate = (limit, op, x) => {
+    _iterate = (limit, op, x) => {
         let ind = 0,
             out = [],
             lastX = x;
@@ -439,35 +439,35 @@ export const
      * @param x {*}
      * @return {Array}
      */
-    repeat = (limit, x) => iterate(limit, a => a, x),
+    _repeat = (limit, x) => _iterate(limit, a => a, x),
 
     /**
      * Same as `repeat` due to the nature of javascript (see haskell version for usage).
-     * @function module:_listOps.replicate
+     * @function module:_listOps._replicate
      * @param limit {Number}
      * @param x {*}
      * @return {Array}
      */
-    replicate = repeat,
+    _replicate = _repeat,
 
     /**
      * Replicates a list `limit` number of times and appends the results (concat)
-     * @function module:_listOps.cycle
+     * @function module:_listOps._cycle
      * @param limit {Number}
      * @param xs {Array}
      * @returns {Array}
      */
-    cycle = (limit, xs) => concat(replicate(limit, xs)),
+    _cycle = (limit, xs) => _concat(_replicate(limit, xs)),
 
     /**
      * Unfolds a value into a list of somethings.
      * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
-     * @function module:_listOps.unfoldr
+     * @function module:_listOps._unfoldr
      * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregate and item to unfold in next iteration).
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
      */
-    unfoldr = (op, x) => {
+    _unfoldr = (op, x) => {
         let ind = 0,
             out = [],
             resultTuple = op(x, ind, out);
@@ -480,12 +480,12 @@ export const
 
     /**
      * Finds index in string or list (alias for `findIndex`).
-     * @function module:_listOps.findIndex
+     * @function module:_listOps._findIndex
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndex = findIndexWhere,
+    _findIndex = findIndexWhere,
 
     /**
      * @function module:_listOps.findIndices
@@ -493,26 +493,26 @@ export const
      * @param xs {Array} - list or list like.
      * @returns {Array|undefined}
      */
-    findIndices = findIndicesWhere,
+    _findIndices = findIndicesWhere,
 
     /**
-     * @function module:_listOps.elemIndex
+     * @function module:_listOps._elemIndex
      * @param x {*} - Element to search for.
      * @param xs {Array} - list or list like.
      * @returns {*}
      */
-    elemIndex = (x, xs) => {
+    _elemIndex = (x, xs) => {
         const foundInd = indexOf(x, xs);
         return foundInd !== -1 ? foundInd : undefined;
     },
 
     /**
-     * @function module:_listOps.elemIndices
+     * @function module:_listOps._elemIndices
      * @param value {*} - Element to search for.
      * @param xs {Array} - list or list like.
      * @returns {*}
      */
-    elemIndices = (value, xs) => findIndices(x => x === value, xs),
+    _elemIndices = (value, xs) => _findIndices(x => x === value, xs),
 
     /**
      * Takes `n` items from start of list to `limit` (exclusive).
@@ -521,16 +521,16 @@ export const
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    take = (limit, list) => sliceTo(limit, list),
+    _take = (limit, list) => sliceTo(limit, list),
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
-     * @function module:_listOps.take
+     * @function module:_listOps._take
      * @param list {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    drop = (count, list) => sliceFrom(count, list),
+    _drop = (count, list) => sliceFrom(count, list),
 
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
@@ -544,12 +544,12 @@ export const
 
     /**
      * Gives an list with passed elements while predicate was true.
-     * @function module:_listOps.takeWhile
+     * @function module:_listOps._takeWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @returns {Array}
      */
-    takeWhile = (pred, list) =>
+    _takeWhile = (pred, list) =>
         reduceUntil(
             negateP(pred),  // predicate
             aggregateArr,   // operation
@@ -559,13 +559,13 @@ export const
 
     /**
      * Returns an list without elements that match predicate.
-     * @function module:_listOps.dropWhile
+     * @function module:_listOps._dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
      * @returns {Array|String}
      */
-    dropWhile = (pred, list) => {
+    _dropWhile = (pred, list) => {
         const limit = length(list),
             splitPoint =
                 findIndexWhere((item, ind, list2) =>
@@ -577,13 +577,13 @@ export const
     },
 
     /**
-     * @function module:_listOps.dropWhile
+     * @function module:_listOps._dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
      * @returns {Array|String}
      */
-    dropWhileEnd = (pred, list) => {
+    _dropWhileEnd = (pred, list) => {
         const limit = length(list),
             splitPoint =
                 findIndexWhereRight((item, ind, list2) =>
@@ -598,18 +598,18 @@ export const
      * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
      * the second list in the tuple is a list of the remaining elements in the given list.
      * **@Note: Not the same as `partition`.  Read descriptions closely!!!
-     * @function module:_listOps.partition
+     * @function module:_listOps._span
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array} - Predicate<item, index, originalArrayOrString>
      * @returns {Array} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
-    span = (pred, list) => {
+    _span = (pred, list) => {
         const splitPoint = findIndexWhere(negateP(pred), list);
         return splitPoint === -1 ?
             splitAt(0, list) : splitAt(splitPoint, list);
     },
 
-    breakOnList = (pred, list) => {
+    _breakOnList = (pred, list) => {
         const splitPoint = findIndexWhere(pred, list);
         return splitPoint === -1 ?
             splitAt(0, list) : splitAt(splitPoint, list);
@@ -622,7 +622,7 @@ export const
      * @param xs {Array} - list or list like.
      * @returns {*|undefined} - Item or `undefined`.
      */
-    at = prop,
+    _at = prop,
 
     /**
      * Find an item in structure of elements based on given predicate (`pred`).
@@ -631,16 +631,16 @@ export const
      * @param xs {Array} - list or list like.
      * @returns {*} - Found item.
      */
-    find = findWhere,
+    _find = findWhere,
 
     /**
      * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
-     * @function module:_listOps.filter
+     * @function module:_listOps._filter
      * @param pred {Function}
      * @param xs {Array} - list or list like.
      * @returns {Array} - Structure of filtered elements.
      */
-    filter = (pred, xs) => {
+    _filter = (pred, xs) => {
         let ind = 0,
             limit = length(xs),
             out = [];
@@ -659,37 +659,37 @@ export const
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
      * do not match the tuple are in second list in the returned tuple.
      *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-     * @function module:_listOps.partition
+     * @function module:_listOps._partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
-    partition = (pred, list) =>
+    _partition = (pred, list) =>
         !length(list) ?
             [[], []] :
-                [filter(pred, list), filter(negateP(pred), list)],
+                [_filter(pred, list), _filter(negateP(pred), list)],
 
     /**
      * Returns a boolean indicating whether an element exists in given structure of elements.
-     * @function module:_listOps.elem
+     * @function module:_listOps._elem
      * @param element {*}
      * @param xs {Array}
      * @returns {Boolean}
      */
-    elem = includes,
+    _elem = includes,
 
     /**
      * The opposite of `elem` - Returns a boolean indicating whether an element exists in given list.
-     * @function module:_listOps.elem
+     * @function module:_listOps._notElem
      * @param element {*}
      * @param xs {Array}
      * @returns {Boolean}
      */
-    notElem = negateF(includes),
+    _notElem = negateF(includes),
 
-    lookup = at,
+    _lookup = _at,
 
-    isPrefixOf = (xs1, xs2) => {
+    _isPrefixOf = (xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
@@ -807,7 +807,7 @@ export const
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(takeWhile(predOp, slice(ind, limit, xs)));
+            agg.push(_takeWhile(predOp, slice(ind, limit, xs)));
         }
         return agg;
     },
@@ -859,7 +859,7 @@ export const
     }, //_map(list => tail(list), xs),
 
     stripPrefix = (prefix, list) =>
-        isPrefixOf(prefix, list) ?
+        _isPrefixOf(prefix, list) ?
             splitAt(length(prefix), list)[1] :
             copy(list),
 
@@ -891,7 +891,7 @@ export const
      * @returns {Array}
      */
     zipN = (...lists) => {
-        const trimmedLists = apply(lengthsToSmallest, filter(length, lists)),
+        const trimmedLists = apply(lengthsToSmallest, _filter(length, lists)),
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
@@ -1049,7 +1049,7 @@ export const
      * @returns {Array|*}
      */
     unzip = arr =>
-        foldl((agg, item) => {
+        _foldl((agg, item) => {
             agg[0].push(item[0]);
             agg[1].push(item[1]);
             return agg;
@@ -1069,9 +1069,9 @@ export const
         }
         const lenItem0 = length(list[0]);
         let zero = lenItem0 ?
-            unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
+            _unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
             [];
-        return foldl((agg, item) => {
+        return _foldl((agg, item) => {
             agg.forEach((outList, ind) => outList.push(item[ind]));
             return agg;
         }, zero, list);
@@ -1157,7 +1157,7 @@ export const
      * @param list {Array|String}
      * @returns {Number}
      */
-    sum = list => foldl((agg, x) => agg + x, 0, list),
+    sum = list => _foldl((agg, x) => agg + x, 0, list),
 
     /**
      * Computes the product of the numbers of a structure.
@@ -1166,7 +1166,7 @@ export const
      * @param list {Array|String}
      * @returns {Number}
      */
-    product = list => foldl((agg, x) => agg * x, 1, list),
+    product = list => _foldl((agg, x) => agg * x, 1, list),
 
     /**
      * Returns the largest element in a non-empty structure of elements.
@@ -1262,9 +1262,9 @@ export const
         if (!length(xs)) {
             return [x];
         }
-        const foundIndex = findIndex(item => x <= item, xs);
+        const foundIndex = _findIndex(item => x <= item, xs);
         return foundIndex === -1 ? [x] :
-            concat(intersperse([x], splitAt(foundIndex, xs)));
+            _concat(_intersperse([x], splitAt(foundIndex, xs)));
     },
 
     /**
@@ -1289,7 +1289,7 @@ export const
         for (; ind < limit; ind += 1) {
             if (orderingFn(x, xs[ind]) <= 0) {
                 const parts = splitAt(ind, xs);
-                return concat([parts[0], [x], parts[1]]);
+                return _concat([parts[0], [x], parts[1]]);
             }
         }
         return aggregateArr(copy(xs), x);
@@ -1315,13 +1315,13 @@ export const
     },
 
     removeBy = (pred, x, list) => { // @todo optimize this implementation
-        const foundIndex = findIndex(item => pred(x, item), list),
+        const foundIndex = _findIndex(item => pred(x, item), list),
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
         return _append(parts[0], _tail(parts[1]));
     },
 
     removeFirstsBy = (pred, xs1, xs2) =>
-        foldl((agg, item) => removeBy(pred, item, agg), xs1, xs2),
+        _foldl((agg, item) => removeBy(pred, item, agg), xs1, xs2),
 
     /**
      * Returns the union on elements matching boolean check passed in.
@@ -1332,7 +1332,7 @@ export const
      * @returns {Array}
      */
     unionBy = (pred, arr1, arr2) =>
-        foldl((agg, b) => {
+        _foldl((agg, b) => {
                 const alreadyAdded = any(a => pred(a, b), agg);
                 return !alreadyAdded ? (agg.push(b), agg) : agg;
             }, copy(arr1), arr2
@@ -1347,7 +1347,7 @@ export const
      */
     union = (arr1, arr2) =>
         _append(arr1,
-            filter(elm => !includes(elm, arr1), arr2)),
+            _filter(elm => !includes(elm, arr1), arr2)),
 
     /**
      * Performs an intersection on list 1 with  elements from list 2.
@@ -1358,7 +1358,7 @@ export const
      */
     intersect = (arr1, arr2) =>
         !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
-            filter(elm => includes(elm, arr2), arr1),
+            _filter(elm => includes(elm, arr2), arr1),
 
     /**
      * Returns an intersection by predicate.
@@ -1369,7 +1369,7 @@ export const
      * @return {Array}
      */
     intersectBy = (pred, list1, list2) =>
-        foldl((agg, a) =>
+        _foldl((agg, a) =>
                 any(b => pred(a, b), list2) ? (agg.push(a), agg) : agg
             , [], list1),
 

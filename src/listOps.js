@@ -3,56 +3,43 @@
  * @module listOps
  * @todo decide whether to throw errors where functions cannot function without a specific type or to
  *  return undefined (and also determine which cases are ok for just returning undefined).
- * @todo code unperformant shorthand in `listOps`
- * @todo rename monoid functions to normal functions since we are not really defining methods for monoids here.
  */
 import {curry, curry2, curry3, curry4, curry5, curryN} from './uncurried/_functionOps';
 
-// Uncurried methods import
+import {_map} from './uncurried/_listOps/_map';
+
 import {
-    _append, _appendMany, _head, _last, _tail, _init, _inits, _uncons, _unconsr,
-    all as _all, any as _any, find as _find,
-    findIndex as _findIndex, findIndices as _findIndices, zip as _zip, zipN as _zipN, zipWith as _zipWith,
-    _map, mapAccumL as _mapAccumL, mapAccumR as _mapAccumR, zipWithN as _zipWithN,
-    elem as _elem, notElem as _notElem, elemIndex as _elemIndex, elemIndices as _elemIndices, lookup as _lookup,
-    intersperse as _intersperse, intercalate as _intercalate, iterate as _iterate,
-    repeat as _repeat, replicate as _replicate, cycle as _cycle, take as _take, drop as _drop, splitAt as _splitAt,
-    foldl as _foldl, foldl1 as _foldl1, foldr as _foldr, foldr1 as _foldr1, unfoldr as _unfoldr,
-    concatMap as _concatMap, takeWhile as _takeWhile, dropWhile as _dropWhile, dropWhileEnd as _dropWhileEnd,
-    partition as _partition, at as _at, span as _span, breakOnList as _breakOnList, stripPrefix as _stripPrefix,
-    isPrefixOf as _isPrefixOf, isSuffixOf as _isSuffixOf,
-    isInfixOf as _isInfixOf, isSubsequenceOf as _isSubsequenceOf, filter as _filter,
-    remove as _remove, insert as _insert, insertBy as _insertBy, nubBy as _nubBy, removeBy as _removeBy,
-    removeFirstsBy as _removeFirstsBy, unionBy as _unionBy, sortOn as _sortOn, sortBy as _sortBy,
-    complement as _complement, difference as _difference, union as _union, intersect as _intersect,
-    intersectBy as _intersectBy, groupBy as _groupBy,
-    scanl as _scanl, scanl1 as _scanl1, scanr as _scanr, scanr1 as _scanr1
+    _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr,
+    _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose,
+    _subsequences, _subsequences1, _swapped, _permutations, _foldl, _foldl1,
+    _foldr, _foldr1, _unfoldr, _mapAccumL, _mapAccumR, _iterate, _repeat,
+    _replicate, _cycle, _findIndex, _findIndices, _elemIndex, _elemIndices,
+    _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span,
+    _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup,
+    _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy,
+    _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith,
+    _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all,
+    _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1,
+    _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy,
+    _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference,
+    _complement
+} from './uncurried/_listOps';
+
+// Export single arity methods
+export {
+    _and as and, _or as or, _zipN as zipN, _unzip as unzip, _unzipN as unzipN,
+    _concat as concat, _reverse as reverse, _transpose as transpose,
+    _subsequences as subsequences, _permutations as permutations,
+    _group as group, _tails as tails, _sum as sum, _product as product,
+    _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub,
+    _head as head, _last as last, _tail as tail, _init as init, _inits as inits,
+    _uncons as uncons, _unconsr as unconsr
 }
-    from './uncurried/_listOps';
 
 export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';
 
-// Single arity methods (and single or more arg functions)
-export {
-    and, or, zipN, unzip, unzipN, concat, reverse, transpose, subsequences,
-    permutations, group, tails, sum, product, maximum, minimum, sort, nub
-}
-    from './uncurried/_listOps';
+export * from './uncurried/_listOps';
 
-// Uncurried methods export
-export {
-    _append, _appendMany, _all, _head, _last, _tail, _init, _inits,
-    _any, _find, _findIndex, _findIndices, _zip, _zipN, _zipWith, _uncons, _unconsr,
-    _map, _mapAccumL, _mapAccumR, _elem, _notElem, _elemIndex, _elemIndices, _lookup,
-    _intersperse, _intercalate, _iterate, _repeat, _replicate, _cycle, _take,
-    _drop, _splitAt, _foldl, _foldl1, _foldr, _foldr1, _unfoldr, _concatMap, _takeWhile, _dropWhile,
-    _dropWhileEnd, _partition, _at, _span, _breakOnList, _stripPrefix, _isPrefixOf,
-    _isSuffixOf, _isInfixOf, _isSubsequenceOf, _filter,
-    _remove, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _sortOn, _sortBy,
-    _complement, _difference, _union, _intersect, _intersectBy, _groupBy
-};
-
-// Exported internals
 export const
 
     /**
@@ -81,20 +68,6 @@ export const
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
     appendMany = curry2(_appendMany),
-
-    head = _head,
-
-    last = _last,
-
-    tail = _tail,
-
-    init = _init,
-
-    inits = _inits,
-
-    uncons = _uncons,
-
-    unconsr = _unconsr,
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -569,4 +542,6 @@ export const
      * @param arrays {...Array}
      * @returns {Array}
      */
-    complement = curry2(_complement);
+    complement = curry2(_complement)
+
+;
