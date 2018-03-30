@@ -32,7 +32,7 @@ export {
     _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub,
     _head as head, _last as last, _tail as tail, _init as init, _inits as inits,
     _uncons as uncons, _unconsr as unconsr, _subsequences1 as subsequences1,
-    _swapped as swapped,
+    _swapped as swapped
 };
 
 export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';

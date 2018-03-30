@@ -2577,159 +2577,6 @@
     
 
     
-    <h4 class="name" id=".isSet"><span class="type-signature">(static) </span>isSet<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Checks whether value is of `Set` or not.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line196">line 196</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id=".isset"><span class="type-signature">(static) </span>isset<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
 
@@ -2832,6 +2679,159 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line280">line 280</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".isSet"><span class="type-signature">(static) </span>isSet<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks whether value is of `Set` or not.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="objectOps.js.html">objectOps.js</a>, <a href="objectOps.js.html#line196">line 196</a>
     </li></ul></dd>
     
 
@@ -3529,9 +3529,7 @@
 
 
 <div class="description">
-    Checks if given `x` is one of the four
-"usable" immutable JS primitives; I.e.,
- One of [String, Boolean, Number, Symbol]
+    Checks if given `x` is one of the four"usable" immutable JS primitives; I.e., One of [String, Boolean, Number, Symbol]
 </div>
 
 
@@ -4260,8 +4258,7 @@
 <dl>
     <dt>
         <div class="param-desc">
-        - Throws an error if value doesn't have a `length` property (
- `null`, `undefined`, {Boolean}, Symbol, et. al.).
+        - Throws an error if value doesn't have a `length` property ( `null`, `undefined`, {Boolean}, Symbol, et. al.).
         </div>
     </dt>
     <dd></dd>
@@ -5062,10 +5059,7 @@
 
 
 <div class="description">
-    Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
-- If exists `(value).constructor.of` uses this.
-- If value is of one String, Boolean, Symbol, or Number types calls it's constructor as a function (in cast form;  E.g., `constructor(...args)` )
-- Else if constructor is a function, thus far, then calls constructor using the `new` keyword (with any passed in args).
+    Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):- If exists `(value).constructor.of` uses this.- If value is of one String, Boolean, Symbol, or Number types calls it's constructor as a function (in cast form;  E.g., `constructor(...args)` )- Else if constructor is a function, thus far, then calls constructor using the `new` keyword (with any passed in args).
 </div>
 
 
@@ -5569,8 +5563,7 @@
 
         
 <div class="param-desc">
-    - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
- normalized names are 'Null', 'Undefined', 'NaN' respectively).
+    - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose normalized names are 'Null', 'Undefined', 'NaN' respectively).
 </div>
 
 
@@ -5609,13 +5602,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-fjlUncurried.html">fjlUncurried</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-objectOps.html">objectOps</a></li><li><a href="module-stringOps.html">stringOps</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-objectOps.html">objectOps</a></li><li><a href="module-stringOps.html">stringOps</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Mar 25 2018 18:11:41 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Mar 30 2018 14:06:46 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

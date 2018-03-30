@@ -4,7 +4,8 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.unconsr = exports.uncons = exports.inits = exports.init = exports.tail = exports.last = exports.head = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.unzipN = exports.unzip = exports.zipN = exports.or = exports.and = undefined;
+    exports.complement = exports.difference = exports.intersectBy = exports.intersect = exports.union = undefined;
+    exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.swapped = exports.subsequences1 = exports.unconsr = exports.uncons = exports.inits = exports.init = exports.tail = exports.last = exports.head = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.unzipN = exports.unzip = exports.zipN = exports.not = exports.or = exports.and = undefined;
     Object.defineProperty(exports, 'slice', {
         enumerable: true,
         get: function () {
@@ -52,6 +53,7 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
     });
     exports.and = _listOps._and;
     exports.or = _listOps._or;
+    exports.not = _listOps._not;
     exports.zipN = _listOps._zipN;
     exports.unzip = _listOps._unzip;
     exports.unzipN = _listOps._unzipN;
@@ -75,6 +77,8 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
     exports.inits = _listOps._inits;
     exports.uncons = _listOps._uncons;
     exports.unconsr = _listOps._unconsr;
+    exports.subsequences1 = _listOps._subsequences1;
+    exports.swapped = _listOps._swapped;
     const
 
     /**
@@ -383,7 +387,7 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
     partition = exports.partition = (0, _functionOps.curry)(_listOps._partition),
           elem = exports.elem = (0, _functionOps.curry)(_listOps._elem),
           notElem = exports.notElem = (0, _functionOps.curry2)(_listOps._notElem),
-          lookup = exports.lookup = at,
+          lookup = exports.lookup = (0, _functionOps.curry)(_listOps._lookup),
           isPrefixOf = exports.isPrefixOf = (0, _functionOps.curry)(_listOps._isPrefixOf),
           isSuffixOf = exports.isSuffixOf = (0, _functionOps.curry)(_listOps._isSuffixOf),
           isInfixOf = exports.isInfixOf = (0, _functionOps.curry)(_listOps._isInfixOf),
@@ -413,6 +417,9 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
      * @returns {Array<Array<*,*>>}
      */
     zip = exports.zip = (0, _functionOps.curry)(_listOps._zip),
+          zip3 = exports.zip3 = (0, _functionOps.curry)(_listOps._zip3),
+          zip4 = exports.zip4 = (0, _functionOps.curry)(_listOps._zip4),
+          zip5 = exports.zip5 = (0, _functionOps.curry)(_listOps._zip5),
 
 
     /**
@@ -452,7 +459,7 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
      * @param lists ...{Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWithN = exports.zipWithN = (0, _functionOps.curry3)(_listOps._zipWithN),
+    zipWithN = exports.zipWithN = (0, _functionOps.curry)(_listOps._zipWithN),
 
 
     /**
@@ -467,7 +474,7 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
      * @param xs3 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith3 = exports.zipWith3 = (0, _functionOps.curry4)(zipWithN),
+    zipWith3 = exports.zipWith3 = (0, _functionOps.curry)(_listOps._zipWith3),
 
 
     /**
@@ -483,7 +490,7 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
      * @param xs4 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith4 = exports.zipWith4 = (0, _functionOps.curry5)(zipWithN),
+    zipWith4 = exports.zipWith4 = (0, _functionOps.curry)(_listOps._zipWith4),
 
 
     /**
@@ -500,7 +507,7 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
      * @param xs5 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith5 = exports.zipWith5 = (0, _functionOps.curryN)(6, zipWithN),
+    zipWith5 = exports.zipWith5 = (0, _functionOps.curry)(_listOps._zipWith5),
           any = exports.any = (0, _functionOps.curry)(_listOps._any),
           all = exports.all = (0, _functionOps.curry)(_listOps._all),
           scanl = exports.scanl = (0, _functionOps.curry)(_listOps._scanl),
