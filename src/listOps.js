@@ -6,7 +6,7 @@
  */
 import {curry, curry2, curry3, curry4, curry5, curryN} from './uncurried/_functionOps';
 
-import {_map} from './uncurried/_listOps/_map';
+import _map from './uncurried/_listOps/_map';
 
 import {
     _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr,
