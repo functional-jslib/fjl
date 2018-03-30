@@ -20,7 +20,7 @@ import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expect
 // These variables get set at the top IIFE in the browser.
 // ~~~ /STRIP ~~~
 
-describe ('#_functionOps', function () {
+describe ('#functionOps', function () {
 
     // @todo implement more extensive tests later
     describe ('#call', function () {
