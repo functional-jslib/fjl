@@ -17,7 +17,7 @@ import {
     zip, zipN, zipWith, unzip, unzipN,
     _map as map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
-    _head, _last, _init, _tail, uncons,
+    _head, _last, _init, _tail, _uncons,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
     iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
@@ -192,26 +192,26 @@ describe ('#_listOps', function () {
         });
     });
 
-    describe ('#uncons', function () {
+    describe ('#_uncons', function () {
         it ('should return the "head" and "tail" of a list in a two item array.', function () {
-            expectShallowEquals(uncons('hello'), ['h', 'ello']);
-            expectDeepEquals(uncons(split('', 'hello')), ['h', split('', 'ello')]);
+            expectShallowEquals(_uncons('hello'), ['h', 'ello']);
+            expectDeepEquals(_uncons(split('', 'hello')), ['h', split('', 'ello')]);
         });
         it ('should return an empty tail when there\'s only one item in list.', function () {
-            expectShallowEquals(uncons('a'), ['a', '']);
-            expectDeepEquals(uncons([0]), [0, []]);
+            expectShallowEquals(_uncons('a'), ['a', '']);
+            expectDeepEquals(_uncons([0]), [0, []]);
         });
         it ('should return `undefined` for empty lists.', function () {
-            expectEqual(uncons(''), undefined);
-            expectEqual(uncons([]), undefined);
+            expectEqual(_uncons(''), undefined);
+            expectEqual(_uncons([]), undefined);
         });
         it ('should return `undefined` when no value is passed in or a falsy value is passed in', function () {
-            expectEqual(uncons(null), undefined);
-            expectEqual(uncons(undefined), undefined);
-            expectEqual(uncons(), undefined);
-            expectEqual(uncons(0), undefined);
-            expectEqual(uncons(false), undefined);
-            expectEqual(uncons(''), undefined);
+            expectEqual(_uncons(null), undefined);
+            expectEqual(_uncons(undefined), undefined);
+            expectEqual(_uncons(), undefined);
+            expectEqual(_uncons(0), undefined);
+            expectEqual(_uncons(false), undefined);
+            expectEqual(_uncons(''), undefined);
         });
     });
 

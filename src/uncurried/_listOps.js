@@ -99,21 +99,21 @@ export const
     /**
      * Returns `head` and `tail` of passed in list/string in a tuple.
      * @haskellType `uncons :: [a] -> Maybe (a, [a])`
-     * @function module:_listOps.uncons
+     * @function module:_listOps._uncons
      * @param xs {Array|String}
      * @returns {Array|undefined}
      */
-    uncons = xs =>
+    _uncons = xs =>
         !xs || length(xs) === 0 ? undefined : [_head(xs), _tail(xs)],
 
     /**
      * Returns `tail` and `head` of passed in list/string in a tuple.
      * @haskellType `unconsr :: [a] -> Maybe ([a], a)`
-     * @function module:_listOps.unconsr
+     * @function module:_listOps._unconsr
      * @param xs {Array|String}
      * @returns {Array|String|*|undefined}
      */
-    unconsr = xs => !xs || length(xs) === 0 ? undefined : [_init(xs), _last(xs)],
+    _unconsr = xs => !xs || length(xs) === 0 ? undefined : [_init(xs), _last(xs)],
     
     /**
      * Concatenates all the elements of a container of lists.
@@ -341,7 +341,7 @@ export const
      * @returns {*} - Whatever type is lastly returned from `op`.
      */
     foldl1 = (op, xs) => {
-        const parts = uncons(xs);
+        const parts = _uncons(xs);
         return !parts ? [] : reduce(op, parts[0], parts[1]);
     },
 
@@ -354,7 +354,7 @@ export const
      * @returns {*} - Whatever type is lastly returned from `op`.
      */
     foldr1 = (op, xs) => {
-        const parts = unconsr(xs);
+        const parts = _unconsr(xs);
         return !parts ? [] : reduceRight(op, parts[1], parts[0]);
     },
 
