@@ -1,4 +1,4 @@
-define(['exports', './uncurried/_objectOps', './booleanOps', './uncurried/_functionOps', './uncurried/_listOps', './stringOps'], function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps) {
+define(['exports', './uncurried/_objectOps/_objectOps', './booleanOps', './uncurried/_functionOps/_functionOps', './uncurried/_listOps/_listOps', './stringOps'], function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

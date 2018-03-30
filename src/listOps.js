@@ -4,7 +4,7 @@
  * @todo decide whether to throw errors where functions cannot function without a specific type or to
  *  return undefined (and also determine which cases are ok for just returning undefined).
  */
-import {curry, curry2, curry3, curry4, curry5, curryN} from './uncurried/_functionOps/_functionOps';
+import {curry, curry2} from './uncurried/_functionOps/_functionOps';
 
 import {
     _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr,
@@ -25,14 +25,15 @@ import {
 
 // Export single arity methods
 export {
-    _and as and, _or as or, _zipN as zipN, _unzip as unzip, _unzipN as unzipN,
+    _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN,
     _concat as concat, _reverse as reverse, _transpose as transpose,
     _subsequences as subsequences, _permutations as permutations,
     _group as group, _tails as tails, _sum as sum, _product as product,
     _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub,
     _head as head, _last as last, _tail as tail, _init as init, _inits as inits,
-    _uncons as uncons, _unconsr as unconsr
-}
+    _uncons as uncons, _unconsr as unconsr, _subsequences1 as subsequences1,
+    _swapped as swapped,
+};
 
 export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';
 
@@ -327,7 +328,7 @@ export const
 
     notElem = curry2(_notElem),
 
-    lookup = at,
+    lookup = curry(_lookup),
 
     isPrefixOf = curry(_isPrefixOf),
 
@@ -360,6 +361,12 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zip = curry(_zip),
+
+    zip3 = curry(_zip3),
+
+    zip4 = curry(_zip4),
+
+    zip5 = curry(_zip5),
 
     /**
      * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
@@ -397,7 +404,7 @@ export const
      * @param lists ...{Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWithN = curry3(_zipWithN),
+    zipWithN = curry(_zipWithN),
 
     /**
      * Zips 3 lists with tupling function.
@@ -411,7 +418,7 @@ export const
      * @param xs3 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith3 = curry4(zipWithN),
+    zipWith3 = curry(_zipWith3),
 
     /**
      * Zips 4 lists with tupling function.
@@ -426,7 +433,7 @@ export const
      * @param xs4 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith4 = curry5(zipWithN),
+    zipWith4 = curry(_zipWith4),
 
     /**
      * Zips 5 lists.
@@ -442,7 +449,7 @@ export const
      * @param xs5 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith5 = curryN(6, zipWithN),
+    zipWith5 = curry(_zipWith5),
 
     any = curry(_any),
 

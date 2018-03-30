@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.reverse = exports.push = exports.join = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.defineReverse = undefined;
 
-var _utils = require('../_utils');
+var _utils = require('../_objectOps/_utils');
 
 var
 

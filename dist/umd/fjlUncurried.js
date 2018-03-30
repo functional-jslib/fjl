@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './uncurried/_objectOps', './booleanOps', './uncurried/_functionOps', './uncurried/_listOps', './stringOps'], factory);
+    define(['exports', './uncurried/_objectOps/_objectOps', './booleanOps', './uncurried/_functionOps/_functionOps', './uncurried/_listOps/_listOps', './stringOps'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./uncurried/_objectOps'), require('./booleanOps'), require('./uncurried/_functionOps'), require('./uncurried/_listOps'), require('./stringOps'));
+    factory(exports, require('./uncurried/_objectOps/_objectOps'), require('./booleanOps'), require('./uncurried/_functionOps/_functionOps'), require('./uncurried/_listOps/_listOps'), require('./stringOps'));
   } else {
     var mod = {
       exports: {}

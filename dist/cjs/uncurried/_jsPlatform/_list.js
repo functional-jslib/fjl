@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.concat = undefined;
 
-var _utils = require('../_utils');
+var _utils = require('../_objectOps/_utils');
 
 var
 

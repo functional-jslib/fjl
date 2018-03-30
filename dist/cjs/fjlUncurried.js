@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectOps = require('./uncurried/_objectOps');
+var _objectOps = require('./uncurried/_objectOps/_objectOps');
 
 Object.keys(_objectOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -28,7 +28,7 @@ Object.keys(_booleanOps).forEach(function (key) {
   });
 });
 
-var _functionOps = require('./uncurried/_functionOps');
+var _functionOps = require('./uncurried/_functionOps/_functionOps');
 
 Object.keys(_functionOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -40,7 +40,7 @@ Object.keys(_functionOps).forEach(function (key) {
   });
 });
 
-var _listOps = require('./uncurried/_listOps');
+var _listOps = require('./uncurried/_listOps/_listOps');
 
 Object.keys(_listOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
