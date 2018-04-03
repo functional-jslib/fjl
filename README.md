@@ -54,8 +54,8 @@ const fjl = require('fjl');
 ## Motivations:
 - Haskell and it's `Prelude`.
 - Lambda Calculus.
-- The need for a way to do strongly typed javascript (in actual code (not with typescript)).
-- The need to be able to write functional code very quickly and easily.
+- The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
+- The need to be able to write functional code very quickly and easily (all methods in `fjl` are curried and lib also includes versions of all methods uncurried).
 - A functional library that takes advantage of the es6 features of the language
  and is built from the ground up using functional concepts.
 - A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
@@ -68,6 +68,8 @@ are separated out 'Data.List' (in our lib is './src/listOps.js') etc..
 ### Reasoning for paradigms
 #### Use of while-and-for-loops instead of built-ins:
 - They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.).
+- @todo include jsperf links for above here. 
+- @todo map performance of our lib here.
 
 ### Docs
 
