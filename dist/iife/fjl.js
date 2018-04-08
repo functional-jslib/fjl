@@ -17,7 +17,7 @@ var _Undefined = 'Undefined';
  * @note Returns 'Null' if value is `null`
  * For values that have no concrete constructors and/or casters
  * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
- * @function module:_objectOps.typeOf
+ * @function module:objectOps.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
  *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
@@ -272,7 +272,7 @@ var _Undefined$1 = 'Undefined';
 
 /**
  * Returns whether a value is a _functionOps or not.
- * @function module:_objectOps._isFunction
+ * @function module:objectOps._isFunction
  * @param value {*}
  * @returns {Boolean}
  */
@@ -483,6 +483,16 @@ var of = function of(x) {
     return undefined;
 };
 
+var log = console.log.bind(console);
+var error = console.error.bind(console);
+var peek = function peek() {
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return log.apply(undefined, args), args.pop();
+};
+
 var asyncGenerator = function () {
   function AwaitValue(value) {
     this.value = value;
@@ -673,6 +683,41 @@ var slicedToArray = function () {
  * @description Object operations (uncurried).
  * @private
  */
+var jsonClone = function jsonClone(x) {
+    return JSON.parse(JSON.stringify(x));
+};
+var toArrayMap = function toArrayMap(obj) {
+    return Object.keys(obj).map(function (key) {
+        return [key, obj[key]];
+    });
+};
+var fromArrayMap = function fromArrayMap(xs) {
+    return xs.reduce(function (agg, _ref) {
+        var _ref2 = slicedToArray(_ref, 2),
+            key = _ref2[0],
+            value = _ref2[1];
+
+        agg[key] = value;
+        return agg;
+    }, {});
+};
+var toArray = function toArray(x) {
+    switch (typeOf(x)) {
+        case 'Null':
+        case 'Undefined':
+            return [];
+        case String.name:
+        case Array.name:
+        case 'WeakMap':
+        case 'WeakSet':
+        case 'Map':
+        case 'Set':
+            return Array.from(x);
+        case Object.name:
+        default:
+            return toArrayMap(x);
+    }
+};
 
 /**
  * @function module:_listOps.map
@@ -850,12 +895,10 @@ var findWhere = function findWhere(pred, xs) {
 };
 
 /**
- * List operations module.
+ * List operations module (un-curried version).
  * @module _listOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
  * @private
  */
-// Exported internals
 var _append = concat;
 var _appendMany = function _appendMany() {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
@@ -1654,201 +1697,6 @@ var objDifference$$1 = curry(objDifference$1);
 var objComplement$$1 = curry2(objComplement$1);
 var isType$$1 = curry(isType$1);
 
-/**
- * Returns whether a value is a function or not.
- * @function module:objectOps.isFunction
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks if `value` is an es2015 `class`.
- * @function module:objectOps.isClass
- * @param x {*}
- * @returns {boolean}
- */
-
-/**
- * Returns a boolean depicting whether a value is callable or not.
- * @function module:objectOps.isCallable
- * @tentative
- * @private
- * @param x {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks if value is an array.
- * @function module:objectOps.isArray
- * @param value {*}
- * @returns {boolean}
- */
-
-/**
- * Checks whether value is an object or not.
- * @function module:objectOps.isObject
- * @param value
- * @returns {Boolean}
- */
-
-/**
- * Checks if value is a boolean.
- * @function module:objectOps.isBoolean
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks if value is a valid number (also checks if isNaN so that you don't have to).
- * @function module:objectOps.isNumber
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks whether value is a string or not.
- * @function module:objectOps.isString
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks whether value is of `Map` or not.
- * @function module:objectOps.isMap
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks whether value is of `Set` or not.
- * @function module:objectOps.isSet
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks whether value is of `WeakMap` or not.
- * @function module:objectOps.isWeakMap
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks whether value is of `WeakSet` or not.
- * @function module:objectOps.isWeakSet
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks if value is undefined.
- * @function module:objectOps.isUndefined
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks if value is null.
- * @function module:objectOps.isNull
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks if value is a `Symbol`.
- * @function module:objectOps.isSymbol
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * @tentative
- * @private
- */
-
-/**
- * Checks if given `x` is one of the four
- * "usable" immutable JS primitives; I.e.,
- *  One of [String, Boolean, Number, Symbol]
- * @function module:objectOps.isUsableImmutablePrimitive
- * @param x {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks if !length.
- * @function module:objectOps.isEmptyList
- * @param x {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks if object has own properties/enumerable-props or not.
- * @function module:objectOps.isEmptyObject
- * @param obj {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
- * @function module:objectOps.isEmptyCollection
- * @param x {*}
- * @returns {Boolean}
- */
-
-/**
- * Checks to see if passed in argument is empty.
- * @function module:objectOps.isEmpty
- * @param value {*} - Value to check.
- * @returns {Boolean}
- */
-
-/**
- * Returns whether passed in values is defined and not null.
- * @function module:objectOps.isset
- * @param x {*}
- * @returns {Boolean}
- */
-
-/**
- * Returns the constructor/class/type name of a value.
- * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
- * @note Returns 'Undefined' if value is `undefined`
- * @note Returns 'Null' if value is `null`
- * For values that have no concrete constructors and/or casters
- * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
- * @function module:objectOps.typeOf
- * @param value {*}
- * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
- *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
- */
-
-/**
- * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
- * - If exists `(value).constructor.of` uses this.
- * - If value is of one String, Boolean, Symbol, or Number types calls it's constructor as a function (in cast form;  E.g., `constructor(...args)` )
- * - Else if constructor is a function, thus far, then calls constructor using the `new` keyword (with any passed in args).
- * @function module:objectOps.of
- * @param x {*} - Value to derive returned value's type from.
- * @param [args] {...*} - Any args to pass in to matched construction strategy.
- * @returns {*|undefined} - New value of given value's type else `undefined`.
- */
-
-/**
- * @function module:objectOps.length
- * @param x {*}
- * @returns {Number}
- * @throws {Error} - Throws an error if value doesn't have a `length` property (
- *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
- */
-
-/**
- * Gets own enumerable keys of passed in object (same as `Object.keys`).
- * @function module:objectOps.keys
- * @param obj {*}
- * @returns {Array<String>}
- */
-
 var until$1 = function until(predicate, operation, typeInstance) {
     var result = typeInstance;
     while (!predicate(result)) {
@@ -2000,7 +1848,7 @@ var curry5_ = function curry5_(fn) {
 /**
  * Returns passed in parameter.
  * @haskellType `id :: a -> a`
- * @function module:_functionOps.id
+ * @function module:functionOps.id
  * @param x {*}
  * @returns {*}
  */
@@ -2306,8 +2154,6 @@ var split$1 = curry(split);
 /**
  * List operators.
  * @module listOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to
- *  return undefined (and also determine which cases are ok for just returning undefined).
  */
 var append = curry(_append);
 var appendMany = curry2(_appendMany);
@@ -2434,6 +2280,10 @@ exports.objIntersect = objIntersect$$1;
 exports.objDifference = objDifference$$1;
 exports.objComplement = objComplement$$1;
 exports.isType = isType$$1;
+exports.jsonClone = jsonClone;
+exports.fromArrayMap = fromArrayMap;
+exports.toArrayMap = toArrayMap;
+exports.toArray = toArray;
 exports.length = length;
 exports.keys = keys;
 exports.isFunction = isFunction;
@@ -2459,6 +2309,9 @@ exports.isEmpty = isEmpty;
 exports.isset = isset;
 exports.typeOf = typeOf;
 exports.of = of;
+exports.log = log;
+exports.error = error;
+exports.peek = peek;
 exports.isTruthy = isTruthy;
 exports.isFalsy = isFalsy;
 exports.alwaysTrue = alwaysTrue;

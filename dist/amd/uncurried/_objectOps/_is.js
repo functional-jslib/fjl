@@ -28,7 +28,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Returns whether a value is a _functionOps or not.
-     * @function module:_objectOps._isFunction
+     * @function module:objectOps._isFunction
      * @param value {*}
      * @returns {Boolean}
      */
@@ -43,7 +43,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
      *  var SomeName = _functionOps SomeName () {} // or
      *  class SomeName {}
      * ```
-     * @function module:_objectOps._isType
+     * @function module:objectOps._isType
      * @param type {Function|String} - Constructor or constructor name
      * @param obj {*}
      * @return {Boolean}
@@ -53,7 +53,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if `value` is an es2015 `class`.
-     * @function module:_objectOps._isClass
+     * @function module:objectOps._isClass
      * @param x {*}
      * @returns {boolean}
      */
@@ -62,7 +62,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Returns a boolean depicting whether a value is callable or not.
-     * @function module:_objectOps._isCallable
+     * @function module:objectOps._isCallable
      * @tentative
      * @param x {*}
      * @returns {Boolean}
@@ -72,7 +72,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if value is an array (same as `Array.isArray`).
-     * @function module:_objectOps._isArray
+     * @function module:objectOps._isArray
      * @param value {*}
      * @returns {boolean}
      */
@@ -81,7 +81,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks whether value is an object or not.
-     * @function module:_objectOps._isObject
+     * @function module:objectOps._isObject
      * @param value
      * @returns {Boolean}
      */
@@ -90,7 +90,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if value is a boolean.
-     * @function module:_objectOps._isBoolean
+     * @function module:objectOps._isBoolean
      * @param value {*}
      * @returns {Boolean}
      */
@@ -99,7 +99,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if value is a valid number (also checks if isNaN so that you don't have to).
-     * @function module:_objectOps._isNumber
+     * @function module:objectOps._isNumber
      * @param value {*}
      * @returns {Boolean}
      */
@@ -108,7 +108,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks whether value is a stringOps or not.
-     * @function module:_objectOps._isString
+     * @function module:objectOps._isString
      * @param value {*}
      * @returns {Boolean}
      */
@@ -117,7 +117,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks whether value is of `Map` or not.
-     * @function module:_objectOps._isMap
+     * @function module:objectOps._isMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -126,7 +126,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks whether value is of `Set` or not.
-     * @function module:_objectOps._isSet
+     * @function module:objectOps._isSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -135,7 +135,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks whether value is of `WeakMap` or not.
-     * @function module:_objectOps._isWeakMap
+     * @function module:objectOps._isWeakMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -144,7 +144,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks whether value is of `WeakSet` or not.
-     * @function module:_objectOps._isWeakSet
+     * @function module:objectOps._isWeakSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -153,7 +153,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if value is undefined.
-     * @function module:_objectOps._isUndefined
+     * @function module:objectOps._isUndefined
      * @param value {*}
      * @returns {Boolean}
      */
@@ -162,7 +162,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if value is null.
-     * @function module:_objectOps._isNull
+     * @function module:objectOps._isNull
      * @param value {*}
      * @returns {Boolean}
      */
@@ -171,7 +171,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if value is a `Symbol`.
-     * @function module:_objectOps._isSymbol
+     * @function module:objectOps._isSymbol
      * @param value {*}
      * @returns {Boolean}
      */
@@ -183,7 +183,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
      *  [String, Boolean, Number, Symbol] (null and undefined are immutable
      *  but are not "usable" (usually not what we want to operate on).
      * @deprecated If needed copy&paste implementation to your project.
-     * @function module:_objectOps._isUsableImmutablePrimitive
+     * @function module:objectOps._isUsableImmutablePrimitive
      * @param x {*}
      * @returns {Boolean}
      */
@@ -195,7 +195,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if !length.
-     * @function module:_objectOps._isEmptyList
+     * @function module:objectOps._isEmptyList
      * @param x {*}
      * @returns {Boolean}
      */
@@ -204,7 +204,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if object has own properties/enumerable-props or not.
-     * @function module:_objectOps._isEmptyObject
+     * @function module:objectOps._isEmptyObject
      * @param obj {*}
      * @returns {Boolean}
      */
@@ -213,7 +213,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
-     * @function module:_objectOps._isEmptyCollection
+     * @function module:objectOps._isEmptyCollection
      * @param x {*}
      * @returns {Boolean}
      */
@@ -224,7 +224,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
      * Checks to see if passed in value is empty;  I.e.,
      *  check for one of '', 0, `null`, `undefined`, `false`, empty array, empty object, empty function (zero arity),
      *  or empty collection (es6 Map, Set, WeakMap, or WeakSet etc. (`!value.size`);
-     * @function module:_objectOps._isEmpty
+     * @function module:objectOps._isEmpty
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
@@ -251,7 +251,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Returns whether passed in values is defined and not null or not.
-     * @function module:_objectOps._isset
+     * @function module:objectOps._isset
      * @param x {*}
      * @returns {Boolean}
      */

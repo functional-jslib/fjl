@@ -23,7 +23,7 @@
   /**
    * Returns passed in parameter.
    * @haskellType `id :: a -> a`
-   * @function module:_functionOps.id
+   * @function module:functionOps.id
    * @param x {*}
    * @returns {*}
    */

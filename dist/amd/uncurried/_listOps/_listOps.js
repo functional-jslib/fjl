@@ -15,9 +15,6 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     }
 
     exports._map = _map3.default;
-
-
-    // Exported internals
     const
 
     /**
@@ -223,7 +220,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      *  Also note that for 2^16 (or for a sequence of 16 characters) this algorithm
      *  will generate 65536 sub-sequences!  So caution should be taken to not
      *  use this with sequences above a certain length on certain platform (the browser thread in specific).
-     * @function module:_listOps.subsequences
+     * @function module:_listOps._subsequences
      * @jsperftest https://jsperf.com/subsequences
      * @param xs {Array|String}
      * @returns {Array.<Array>}
@@ -269,7 +266,17 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
         }
         return out;
     },
-          _swapped = exports._swapped = (ind1, ind2, list) => {
+
+
+    /**
+     * Returns an array with the given indices swapped.
+     * @function module:_listOps._swapped
+     * @param ind1 {Number}
+     * @param ind2 {Number}
+     * @param list {Array}
+     * @returns {Array} - Copy of incoming with swapped values at indices.
+     */
+    _swapped = exports._swapped = (ind1, ind2, list) => {
         const out = (0, _utils.copy)(list),
               tmp = out[ind1];
         out[ind1] = out[ind2];
@@ -443,7 +450,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Repeats `x` `limit` number of times.
-     * @function module:_listOps.repeat
+     * @function module:_listOps._repeat
      * @param limit {Number}
      * @param x {*}
      * @return {Array}
@@ -502,7 +509,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
 
     /**
-     * @function module:_listOps.findIndices
+     * @function module:_listOps._findIndices
      * @param pred {Function}
      * @param xs {Array} - list or list like.
      * @returns {Array|undefined}
@@ -533,7 +540,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Takes `n` items from start of list to `limit` (exclusive).
-     * @function module:_listOps.take
+     * @function module:_listOps._take
      * @param list {Array|String}
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
@@ -627,7 +634,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Gets item at index.
-     * @function module:_listOps.at
+     * @function module:_listOps._at
      * @param ind {Number} - Index.
      * @param xs {Array} - list or list like.
      * @returns {*|undefined} - Item or `undefined`.
@@ -637,7 +644,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Find an item in structure of elements based on given predicate (`pred`).
-     * @function module:_listOps.find
+     * @function module:_listOps._find
      * @param pred {Function}
      * @param xs {Array} - list or list like.
      * @returns {*} - Found item.
@@ -698,8 +705,24 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * @returns {Boolean}
      */
     _notElem = exports._notElem = (0, _negate.negateF)(_list.includes),
-          _lookup = exports._lookup = _at,
-          _isPrefixOf = exports._isPrefixOf = (xs1, xs2) => {
+
+
+    /**
+     * Same as _listOps._at - Returns property value at key/indice.
+     * @function module:_objectOps._lookup
+     * @type {module:_objectOps.prop}
+     */
+    _lookup = exports._lookup = _at,
+
+
+    /**
+     * Checks if list `xs1` is a prefix of list `xs2`
+     * @function module:_listOps._isPrefixOf
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {boolean}
+     */
+    _isPrefixOf = exports._isPrefixOf = (xs1, xs2) => {
         const limit1 = (0, _objectOps.length)(xs1),
               limit2 = (0, _objectOps.length)(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || (0, _list.indexOf)(xs1[0], xs2) === -1) {
@@ -713,7 +736,16 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
         }
         return true;
     },
-          _isSuffixOf = exports._isSuffixOf = (xs1, xs2) => {
+
+
+    /**
+     * Checks if list `xs1` is a suffix of list `xs2`
+     * @function module:_listOps._isSuffixOf
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {boolean}
+     */
+    _isSuffixOf = exports._isSuffixOf = (xs1, xs2) => {
         const limit1 = (0, _objectOps.length)(xs1),
               limit2 = (0, _objectOps.length)(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || (0, _list.indexOf)(xs1[0], xs2) === -1) {
@@ -729,7 +761,16 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
         }
         return true;
     },
-          _isInfixOf = exports._isInfixOf = (xs1, xs2) => {
+
+
+    /**
+     * Checks if list `xs1` is an infix of list `xs2`
+     * @function module:_listOps._isInfixOf
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {boolean}
+     */
+    _isInfixOf = exports._isInfixOf = (xs1, xs2) => {
         const limit1 = (0, _objectOps.length)(xs1),
               limit2 = (0, _objectOps.length)(xs2);
         if (limit2 < limit1 || !limit1 || !limit2) {
@@ -751,7 +792,16 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
         }
         return false;
     },
-          _isSubsequenceOf = exports._isSubsequenceOf = (xs1, xs2) => {
+
+
+    /**
+     * Checks if list `xs1` is a sub-sequence of list `xs2`
+     * @function module:_listOps._isPrefixOf
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {boolean}
+     */
+    _isSubsequenceOf = exports._isSubsequenceOf = (xs1, xs2) => {
         const len = Math.pow(2, (0, _objectOps.length)(xs2)),
               lenXs1 = (0, _objectOps.length)(xs1);
         let foundLen, i;
@@ -869,6 +919,13 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     },
           //_map(list => tail(list), xs),
 
+    /**
+     * Strips prefix list from given list
+     * @function module:_listOps._stripPrefix
+     * @param prefix {Array|String|*}
+     * @param list {Array|string|*}
+     * @returns {Array|*}
+     */
     _stripPrefix = exports._stripPrefix = (prefix, list) => _isPrefixOf(prefix, list) ? _splitAt((0, _objectOps.length)(prefix), list)[1] : (0, _utils.copy)(list),
 
 
@@ -1004,7 +1061,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Zips 3 lists with tupling function.
      * @haskellType `zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]`
-     * @function module:_listOps.zipWith3
+     * @function module:_listOps._zipWith3
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> (a, b, c)`
@@ -1019,7 +1076,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Zips 4 lists with tupling function.
      * @haskellType `zipWith4 :: (a -> b -> c -> d -> e) -> [a] -> [b] -> [c]  -> [d] -> [e]`
-     * @function module:_listOps.zipWith4
+     * @function module:_listOps._zipWith4
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`
@@ -1233,13 +1290,35 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
         }
         return out;
     },
-          _scanl1 = exports._scanl1 = (fn, xs) => {
+
+
+    /**
+     * `scanl1` is a variant of `scanl` that has no starting value argument:
+     * `shallowCompare(scanl1(fn, [x1, x2, ...]), [x1, fn(x1, x2), ...]) // true`
+     * @function module:_listOps._scanl1
+     * @param fn {Function}
+     * @param xs {Array}
+     * @returns {Array|*}
+     */
+    _scanl1 = exports._scanl1 = (fn, xs) => {
         if (!xs || !xs.length) {
             return [];
         }
         return _scanl(fn, _head(xs), _tail(xs));
     },
-          _scanr = exports._scanr = (fn, zero, xs) => {
+
+
+    /**
+     * Same as `scanl` but from the right (similiar to `foldr`'s relationship to `foldl`).
+     * Note also `scanr`'s relationship ot `foldr`:
+     * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
+     * @function module:_listOps._scanr
+     * @param fn {Function}
+     * @param zero {*}
+     * @param xs {Array}
+     * @returns {Array|*}
+     */
+    _scanr = exports._scanr = (fn, zero, xs) => {
         if (!xs || !(0, _objectOps.length)(xs)) {
             return [];
         }
@@ -1254,16 +1333,82 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
         }
         return out;
     },
-          _scanr1 = exports._scanr1 = (fn, xs) => {
+
+
+    /**
+     * Same as `scanr` but takes no zero/accumulator value.
+     * @function module:_listOps._scanr1
+     * @param fn {Function}
+     * @param xs {Array}
+     * @returns {Array|*}
+     */
+    _scanr1 = exports._scanr1 = (fn, xs) => {
         if (!xs || !xs.length) {
             return [];
         }
         return _scanr(fn, _last(xs), _init(xs));
     },
-          _nub = exports._nub = list => _nubBy((a, b) => a === b, list),
-          _remove = exports._remove = (x, list) => _removeBy((a, b) => a === b, x, list),
-          _sort = exports._sort = xs => _sortBy(_utils.genericAscOrdering, xs),
-          _sortOn = exports._sortOn = (valueFn, xs) =>
+
+
+    /**
+     * The nub function removes duplicate elements from a list.
+     * In particular, it keeps only the first occurrence of each element.
+     * (The name nub means `essence'.) It is a special case of nubBy, which
+     * allows the programmer to supply their own equality test.
+     * ```shallowCompare( nub ([1,2,3,4,3,2,1,2,4,3,5]), [1,2,3,4,5] )```
+     * @function module:_listOps._nub
+     * @param list {Array|String|*}
+     * @returns {Array}
+     */
+    _nub = exports._nub = list => _nubBy((a, b) => a === b, list),
+
+
+    /**
+     * `remove(x, xs)` removes the first occurrence of `x` from `xs`.
+     * For example, `remove('a', 'banana') === 'bnana';`
+     * @function module:_listOps._remove
+     * @param x {*}
+     * @param list {Array|String|*}
+     * @returns {Array}
+     */
+    _remove = exports._remove = (x, list) => _removeBy((a, b) => a === b, x, list),
+
+
+    /**
+     * The sort function implements a stable sorting algorithm.
+     * It is a special case of sortBy, which allows the programmer
+     * to supply their own comparison function.
+     * ```shallowCompare(sort ([1,6,4,3,2,5]), [1,2,3,4,5,6]) // true```
+     * @function module:_listOps._sort
+     * @param xs {Array|String|*}
+     * @returns {Array}
+     */
+    _sort = exports._sort = xs => _sortBy(_utils.genericAscOrdering, xs),
+
+
+    /**
+     * Sort a list by comparing the results of a key function applied to each
+     * element. sortOn f is equivalent to sortBy (comparing f), but has the
+     * performance advantage of only evaluating f once for each element in the
+     * input list. This is called the decorate-sort-undecorate paradigm, or
+     * Schwartzian transform.
+     *
+     * Elements are arranged from from lowest to highest, keeping duplicates
+     * in the order they appeared in the input.
+     *
+     * Ex:
+     * ```
+     * shallowEquals(
+     *  sortOn (head, [[2, "world"], [4, "!"], [1, "Hello"]]),
+     *  [[1,"Hello"],[2,"world"],[4,"!"]]
+     * ) // true
+     * ```
+     * @function module:_listOps._sortOn
+     * @param valueFn {Function}
+     * @param xs {Array|String|*}
+     * @returns {Array}
+     */
+    _sortOn = exports._sortOn = (valueFn, xs) =>
 
     // Un-decorate
     (0, _map3.default)(decorated => decorated[1],
@@ -1275,8 +1420,34 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     // Decorate
     (0, _map3.default)(item => [valueFn(item), item], xs))),
-          _sortBy = exports._sortBy = (orderingFn, xs) => (0, _utils.copy)(xs).sort(orderingFn || _utils.genericAscOrdering),
-          _insert = exports._insert = (x, xs) => {
+
+
+    /**
+     * The sortBy function is the non-overloaded (in haskell terms) version of sort.
+     * @haskellExample ```
+     *  >>> sortBy (\(a,_) (b,_) -> compare a b) [(2, "world"), (4, "!"), (1, "Hello")]
+     *  [(1,"Hello"),(2,"world"),(4,"!")]
+     * ```
+     * @function module:_listOps._sortBy
+     * @param orderingFn {Function}
+     * @param xs {Array|String|*}
+     * @returns {Array|String|*}
+     */
+    _sortBy = exports._sortBy = (orderingFn, xs) => (0, _utils.copy)(xs).sort(orderingFn || _utils.genericAscOrdering),
+
+
+    /**
+     * The insert function takes an element and a list and inserts the element
+     * into the list at the first position where it is less than or equal to the
+     * next element. In particular, if the list is sorted before the call, the
+     * result will also be sorted. It is a special case of insertBy, which allows
+     * the programmer to supply their own comparison function.
+     * @function module:_listOps._insert
+     * @param x {*}
+     * @param xs {Array|*}
+     * @returns {Array}
+     */
+    _insert = exports._insert = (x, xs) => {
         if (!(0, _objectOps.length)(xs)) {
             return [x];
         }
@@ -1312,7 +1483,16 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
         }
         return (0, _utils.aggregateArr)((0, _utils.copy)(xs), x);
     },
-          _nubBy = exports._nubBy = (pred, list) => {
+
+
+    /**
+     * The nubBy function behaves just like nub, except it uses a user-supplied equality predicate.
+     * @function module:_listOps._nubBy
+     * @param pred {Function}
+     * @param list {Array|String|*}
+     * @returns {Array}
+     */
+    _nubBy = exports._nubBy = (pred, list) => {
         if (!(0, _objectOps.length)(list)) {
             return [];
         }
@@ -1330,13 +1510,33 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
         }
         return out;
     },
-          _removeBy = exports._removeBy = (pred, x, list) => {
+
+
+    /**
+     * Behaves the same as `remove`, but takes a user-supplied equality predicate.
+     * @function module:_listOps._removeBy
+     * @param pred {Function}
+     * @param x {*}
+     * @param list {Array|String|*}
+     * @returns {Array}
+     */
+    _removeBy = exports._removeBy = (pred, x, list) => {
         // @todo optimize this implementation
         const foundIndex = _findIndex(item => pred(x, item), list),
               parts = _splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
         return _append(parts[0], _tail(parts[1]));
     },
-          _removeFirstsBy = exports._removeFirstsBy = (pred, xs1, xs2) => _foldl((agg, item) => _removeBy(pred, item, agg), xs1, xs2),
+
+
+    /**
+     * The `removeFirstsBy` function takes a predicate and two lists and returns the first list with the first
+     * occurrence of each element of the second list removed.
+     * @param pred {Function}
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {Array}
+     */
+    _removeFirstsBy = exports._removeFirstsBy = (pred, xs1, xs2) => _foldl((agg, item) => _removeBy(pred, item, agg), xs1, xs2),
 
 
     /**

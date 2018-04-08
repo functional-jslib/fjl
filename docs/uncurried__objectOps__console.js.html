@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: uncurried/_functionOps/_id.js</title>
+    <title>JSDoc: Source: uncurried/_objectOps/_console.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: uncurried/_functionOps/_id.js</h1>
+    <h1 class="page-title">Source: uncurried/_objectOps/_console.js</h1>
 
     
 
@@ -26,18 +26,33 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @memberOf _functionOps
- */
+            <pre class="prettyprint source linenums"><code>export const
 
-/**
- * Returns passed in parameter.
- * @haskellType `id :: a -> a`
- * @function module:_functionOps.id
- * @param x {*}
- * @returns {*}
- */
-export const id = x => x;
+    /**
+     * `Console.log` method.
+     * @function module:objectOps.log
+     * @params args {...*}
+     * @returns {void}
+     */
+    log = console.log.bind(console),
+
+    /**
+     * `Console.error` method.
+     * @function module:objectOps.error
+     * @params args {...*}
+     * @returns {void}
+     */
+    error = console.error.bind(console),
+
+    /**
+     * Peeks at incoming value(s) and returns the last value.
+     * @function module:objectOps.peek
+     * @param args {...*}
+     * @returns {*} - Last given value (if one or more values) else first value.
+     */
+    peek = (...args) => (log(...args), args.pop())
+
+;
 </code></pre>
         </article>
     </section>

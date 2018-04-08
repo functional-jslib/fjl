@@ -63,8 +63,6 @@ var _functionOps = require('./uncurried/_functionOps/_functionOps');
 /**
  * List operators.
  * @module listOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to
- *  return undefined (and also determine which cases are ok for just returning undefined).
  */
 exports.and = _listOps._and;
 exports.or = _listOps._or;

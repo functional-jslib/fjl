@@ -38,7 +38,7 @@
 
     /**
      * Returns whether a value is a _functionOps or not.
-     * @function module:_objectOps._isFunction
+     * @function module:objectOps._isFunction
      * @param value {*}
      * @returns {Boolean}
      */

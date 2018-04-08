@@ -14,7 +14,7 @@ const _Undefined = 'Undefined';
  * @note Returns 'Null' if value is `null`
  * For values that have no concrete constructors and/or casters
  * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
- * @function module:_objectOps.typeOf
+ * @function module:objectOps.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
  *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
@@ -317,11 +317,38 @@ const of = (x, ...args) => {
     return undefined;
 };
 
+const log = console.log.bind(console);
+const error = console.error.bind(console);
+const peek = (...args) => (log(...args), args.pop());
+
 /**
  * @module _objectOps
  * @description Object operations (uncurried).
  * @private
  */
+const jsonClone = x => JSON.parse(JSON.stringify(x));
+const toArrayMap = obj => Object.keys(obj).map(key => [key, obj[key]]);
+const fromArrayMap = xs => xs.reduce((agg, [key, value]) => {
+        agg[key] = value;
+        return agg;
+    }, {});
+const toArray = x => {
+        switch (typeOf(x)) {
+            case 'Null':
+            case 'Undefined':
+                return [];
+            case String.name:
+            case Array.name:
+            case 'WeakMap':
+            case 'WeakSet':
+            case 'Map':
+            case 'Set':
+                return Array.from(x);
+            case Object.name:
+            default:
+                return toArrayMap(x);
+        }
+    };
 
 /**
  * @function module:_listOps.map
@@ -454,12 +481,10 @@ const findWhere = (pred, xs) => {
     };
 
 /**
- * List operations module.
+ * List operations module (un-curried version).
  * @module _listOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to return undefined (and also determine which cases are ok for just returning undefined).
  * @private
  */
-// Exported internals
 const _append = concat;
 const _appendMany = (...args) => {
         if (length(args)) { return apply(concat, args); }
@@ -1100,201 +1125,6 @@ const objDifference$$1 = curry(objDifference$1);
 const objComplement$$1 = curry2(objComplement$1);
 const isType$$1 = curry(isType$1);
 
-    /**
-     * Returns whether a value is a function or not.
-     * @function module:objectOps.isFunction
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if `value` is an es2015 `class`.
-     * @function module:objectOps.isClass
-     * @param x {*}
-     * @returns {boolean}
-     */
-
-    /**
-     * Returns a boolean depicting whether a value is callable or not.
-     * @function module:objectOps.isCallable
-     * @tentative
-     * @private
-     * @param x {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if value is an array.
-     * @function module:objectOps.isArray
-     * @param value {*}
-     * @returns {boolean}
-     */
-
-    /**
-     * Checks whether value is an object or not.
-     * @function module:objectOps.isObject
-     * @param value
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if value is a boolean.
-     * @function module:objectOps.isBoolean
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if value is a valid number (also checks if isNaN so that you don't have to).
-     * @function module:objectOps.isNumber
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks whether value is a string or not.
-     * @function module:objectOps.isString
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks whether value is of `Map` or not.
-     * @function module:objectOps.isMap
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks whether value is of `Set` or not.
-     * @function module:objectOps.isSet
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks whether value is of `WeakMap` or not.
-     * @function module:objectOps.isWeakMap
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks whether value is of `WeakSet` or not.
-     * @function module:objectOps.isWeakSet
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if value is undefined.
-     * @function module:objectOps.isUndefined
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if value is null.
-     * @function module:objectOps.isNull
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if value is a `Symbol`.
-     * @function module:objectOps.isSymbol
-     * @param value {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * @tentative
-     * @private
-     */
-
-    /**
-     * Checks if given `x` is one of the four
-     * "usable" immutable JS primitives; I.e.,
-     *  One of [String, Boolean, Number, Symbol]
-     * @function module:objectOps.isUsableImmutablePrimitive
-     * @param x {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if !length.
-     * @function module:objectOps.isEmptyList
-     * @param x {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if object has own properties/enumerable-props or not.
-     * @function module:objectOps.isEmptyObject
-     * @param obj {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
-     * @function module:objectOps.isEmptyCollection
-     * @param x {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Checks to see if passed in argument is empty.
-     * @function module:objectOps.isEmpty
-     * @param value {*} - Value to check.
-     * @returns {Boolean}
-     */
-
-    /**
-     * Returns whether passed in values is defined and not null.
-     * @function module:objectOps.isset
-     * @param x {*}
-     * @returns {Boolean}
-     */
-
-    /**
-     * Returns the constructor/class/type name of a value.
-     * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
-     * @note Returns 'Undefined' if value is `undefined`
-     * @note Returns 'Null' if value is `null`
-     * For values that have no concrete constructors and/or casters
-     * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
-     * @function module:objectOps.typeOf
-     * @param value {*}
-     * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
-     *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
-     */
-
-    /**
-     * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
-     * - If exists `(value).constructor.of` uses this.
-     * - If value is of one String, Boolean, Symbol, or Number types calls it's constructor as a function (in cast form;  E.g., `constructor(...args)` )
-     * - Else if constructor is a function, thus far, then calls constructor using the `new` keyword (with any passed in args).
-     * @function module:objectOps.of
-     * @param x {*} - Value to derive returned value's type from.
-     * @param [args] {...*} - Any args to pass in to matched construction strategy.
-     * @returns {*|undefined} - New value of given value's type else `undefined`.
-     */
-
-    /**
-     * @function module:objectOps.length
-     * @param x {*}
-     * @returns {Number}
-     * @throws {Error} - Throws an error if value doesn't have a `length` property (
-     *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
-     */
-
-    /**
-     * Gets own enumerable keys of passed in object (same as `Object.keys`).
-     * @function module:objectOps.keys
-     * @param obj {*}
-     * @returns {Array<String>}
-     */
-
 const until$1 = (predicate, operation, typeInstance) => {
         let result = typeInstance;
         while (!predicate(result)) {
@@ -1401,7 +1231,7 @@ let curry5_ = fn => curryN_(5, fn);
 /**
  * Returns passed in parameter.
  * @haskellType `id :: a -> a`
- * @function module:_functionOps.id
+ * @function module:functionOps.id
  * @param x {*}
  * @returns {*}
  */
@@ -1655,8 +1485,6 @@ const split$1 = curry(split);
 /**
  * List operators.
  * @module listOps
- * @todo decide whether to throw errors where functions cannot function without a specific type or to
- *  return undefined (and also determine which cases are ok for just returning undefined).
  */
 const append = curry(_append);
 const appendMany = curry2(_appendMany);
@@ -1757,4 +1585,4 @@ const camelCase = (xs, pattern) => _map(ucaseFirst, _splitAt(pattern || /[^a-z\d
  * @module fjl
  */
 
-export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _subsequences1 as subsequences1, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _subsequences1, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };
+export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, jsonClone, fromArrayMap, toArrayMap, toArray, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, log, error, peek, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _subsequences1 as subsequences1, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _subsequences1, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };

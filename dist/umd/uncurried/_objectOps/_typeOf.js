@@ -33,7 +33,7 @@
      * @note Returns 'Null' if value is `null`
      * For values that have no concrete constructors and/or casters
      * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
-     * @function module:_objectOps.typeOf
+     * @function module:objectOps.typeOf
      * @param value {*}
      * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
      *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
