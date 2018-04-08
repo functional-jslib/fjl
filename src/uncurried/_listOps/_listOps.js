@@ -600,6 +600,7 @@ export const
      * break (< 9) [1,2,3] == ([],[1,2,3])
      * break (> 9) [1,2,3] == ([1,2,3],[])
      * ```
+     * @function module:_listOps._breakOnList
      * @param pred {Function}
      * @param list {Array|String|*}
      * @returns {Array}
