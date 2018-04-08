@@ -728,7 +728,24 @@
         var splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateP)(pred), list);
         return splitPoint === -1 ? _splitAt(0, list) : _splitAt(splitPoint, list);
     },
-        _breakOnList = exports._breakOnList = function _breakOnList(pred, list) {
+
+
+    /**
+     * breakOnList, applied to a predicate p and a list xs, returns a tuple
+     * where first element is longest prefix (possibly empty) of xs of elements
+     * that do not satisfy p and second element is the remainder of the list:
+     * @haskellExample
+     * Replace `break` with `breakOnList` for our version.
+     * ```
+     * break (> 3) [1,2,3,4,1,2,3,4] == ([1,2,3],[4,1,2,3,4])
+     * break (< 9) [1,2,3] == ([],[1,2,3])
+     * break (> 9) [1,2,3] == ([1,2,3],[])
+     * ```
+     * @param pred {Function}
+     * @param list {Array|String|*}
+     * @returns {Array}
+     */
+    _breakOnList = exports._breakOnList = function _breakOnList(pred, list) {
         var splitPoint = (0, _utils.findIndexWhere)(pred, list);
         return splitPoint === -1 ? _splitAt(0, list) : _splitAt(splitPoint, list);
     },

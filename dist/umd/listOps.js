@@ -240,9 +240,36 @@
      * @returns {*}
      */
     iterate = exports.iterate = (0, _functionOps.curry)(_listOps._iterate),
-        repeat = exports.repeat = (0, _functionOps.curry)(_listOps._repeat),
-        replicate = exports.replicate = (0, _functionOps.curry)(_listOps._replicate),
-        cycle = exports.cycle = (0, _functionOps.curry)(_listOps._cycle),
+
+
+    /**
+     * Repeats `x` `limit` number of times.
+     * @function module:listOps.repeat
+     * @param limit {Number}
+     * @param x {*}
+     * @return {Array}
+     */
+    repeat = exports.repeat = (0, _functionOps.curry)(_listOps._repeat),
+
+
+    /**
+     * Same as `repeat` due to the nature of javascript (see haskell version for usage).
+     * @function module:listOps.replicate
+     * @param limit {Number}
+     * @param x {*}
+     * @return {Array}
+     */
+    replicate = exports.replicate = (0, _functionOps.curry)(_listOps._replicate),
+
+
+    /**
+     * Replicates a list `limit` number of times and appends the results (concat)
+     * @function module:listOps.cycle
+     * @param limit {Number}
+     * @param xs {Array}
+     * @returns {Array}
+     */
+    cycle = exports.cycle = (0, _functionOps.curry)(_listOps._cycle),
 
 
     /**
@@ -365,7 +392,24 @@
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     span = exports.span = (0, _functionOps.curry)(_listOps._span),
-        breakOnList = exports.breakOnList = (0, _functionOps.curry)(_listOps._breakOnList),
+
+
+    /**
+     * breakOnList, applied to a predicate p and a list xs, returns a tuple
+     * where first element is longest prefix (possibly empty) of xs of elements
+     * that do not satisfy p and second element is the remainder of the list:
+     * @haskellExample
+     * Replace `break` with `breakOnList` for our version.
+     * ```
+     * break (> 3) [1,2,3,4,1,2,3,4] == ([1,2,3],[4,1,2,3,4])
+     * break (< 9) [1,2,3] == ([],[1,2,3])
+     * break (> 9) [1,2,3] == ([1,2,3],[])
+     * ```
+     * @param pred {Function}
+     * @param list {Array|String|*}
+     * @returns {Array}
+     */
+    breakOnList = exports.breakOnList = (0, _functionOps.curry)(_listOps._breakOnList),
 
 
     /**
@@ -397,13 +441,74 @@
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     partition = exports.partition = (0, _functionOps.curry)(_listOps._partition),
-        elem = exports.elem = (0, _functionOps.curry)(_listOps._elem),
-        notElem = exports.notElem = (0, _functionOps.curry2)(_listOps._notElem),
-        lookup = exports.lookup = (0, _functionOps.curry)(_listOps._lookup),
-        isPrefixOf = exports.isPrefixOf = (0, _functionOps.curry)(_listOps._isPrefixOf),
-        isSuffixOf = exports.isSuffixOf = (0, _functionOps.curry)(_listOps._isSuffixOf),
-        isInfixOf = exports.isInfixOf = (0, _functionOps.curry)(_listOps._isInfixOf),
-        isSubsequenceOf = exports.isSubsequenceOf = (0, _functionOps.curry)(_listOps._isSubsequenceOf),
+
+
+    /**
+     * Returns a boolean indicating whether an element exists in given structure of elements.
+     * @function module:listOps.elem
+     * @param element {*}
+     * @param xs {Array}
+     * @returns {Boolean}
+     */
+    elem = exports.elem = (0, _functionOps.curry)(_listOps._elem),
+
+
+    /**
+     * The opposite of `elem` - Returns a boolean indicating whether an element exists in given list.
+     * @function module:listOps.notElem
+     * @param element {*}
+     * @param xs {Array}
+     * @returns {Boolean}
+     */
+    notElem = exports.notElem = (0, _functionOps.curry2)(_listOps._notElem),
+
+
+    /**
+     * Same as _listOps._at - Returns property value at key/indice.
+     * @function module:_objectOps._lookup
+     * @type {module:_objectOps.prop}
+     */
+    lookup = exports.lookup = (0, _functionOps.curry)(_listOps._lookup),
+
+
+    /**
+     * Checks if list `xs1` is a prefix of list `xs2`
+     * @function module:listOps.isPrefixOf
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {boolean}
+     */
+    isPrefixOf = exports.isPrefixOf = (0, _functionOps.curry)(_listOps._isPrefixOf),
+
+
+    /**
+     * Checks if list `xs1` is a suffix of list `xs2`
+     * @function module:listOps.isSuffixOf
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {boolean}
+     */
+    isSuffixOf = exports.isSuffixOf = (0, _functionOps.curry)(_listOps._isSuffixOf),
+
+
+    /**
+     * Checks if list `xs1` is an infix of list `xs2`
+     * @function module:listOps.isInfixOf
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {boolean}
+     */
+    isInfixOf = exports.isInfixOf = (0, _functionOps.curry)(_listOps._isInfixOf),
+
+
+    /**
+     * Checks if list `xs1` is a sub-sequence of list `xs2`
+     * @function module:listOps.isPrefixOf
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {boolean}
+     */
+    isSubsequenceOf = exports.isSubsequenceOf = (0, _functionOps.curry)(_listOps._isSubsequenceOf),
 
 
     /**
@@ -416,7 +521,16 @@
      * @returns {*}
      */
     groupBy = exports.groupBy = (0, _functionOps.curry)(_listOps._groupBy),
-        stripPrefix = exports.stripPrefix = (0, _functionOps.curry)(_listOps._stripPrefix),
+
+
+    /**
+     * Strips prefix list from given list
+     * @function module:listOps.stripPrefix
+     * @param prefix {Array|String|*}
+     * @param list {Array|string|*}
+     * @returns {Array|*}
+     */
+    stripPrefix = exports.stripPrefix = (0, _functionOps.curry)(_listOps._stripPrefix),
 
 
     /**
@@ -429,9 +543,42 @@
      * @returns {Array<Array<*,*>>}
      */
     zip = exports.zip = (0, _functionOps.curry)(_listOps._zip),
-        zip3 = exports.zip3 = (0, _functionOps.curry)(_listOps._zip3),
-        zip4 = exports.zip4 = (0, _functionOps.curry)(_listOps._zip4),
-        zip5 = exports.zip5 = (0, _functionOps.curry)(_listOps._zip5),
+
+
+    /**
+     * @haskellType `zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]`
+     * @function module:listOps.zip3
+     * @param arr1 {Array}
+     * @param arr2 {Array}
+     * @param arr3 {Array}
+     * @returns {Array<Array<*,*>>}
+     */
+    zip3 = exports.zip3 = (0, _functionOps.curry)(_listOps._zip3),
+
+
+    /**
+     * @haskellType `zip4 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
+     * @function module:listOps.zip4
+     * @param arr1 {Array}
+     * @param arr2 {Array}
+     * @param arr3 {Array}
+     * @param arr4 {Array}
+     * @returns {Array<Array<*,*>>}
+     */
+    zip4 = exports.zip4 = (0, _functionOps.curry)(_listOps._zip4),
+
+
+    /**
+     * @haskellType `zip5 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
+     * @function module:listOps.zip5
+     * @param arr1 {Array}
+     * @param arr2 {Array}
+     * @param arr3 {Array}
+     * @param arr4 {Array}
+     * @param arr5 {Array}
+     * @returns {Array<Array<*,*>>}
+     */
+    zip5 = exports.zip5 = (0, _functionOps.curry)(_listOps._zip5),
 
 
     /**
@@ -520,16 +667,142 @@
      * @returns {Array<Array<*,*>>}
      */
     zipWith5 = exports.zipWith5 = (0, _functionOps.curry)(_listOps._zipWith5),
-        any = exports.any = (0, _functionOps.curry)(_listOps._any),
-        all = exports.all = (0, _functionOps.curry)(_listOps._all),
-        scanl = exports.scanl = (0, _functionOps.curry)(_listOps._scanl),
-        scanl1 = exports.scanl1 = (0, _functionOps.curry)(_listOps._scanl1),
-        scanr = exports.scanr = (0, _functionOps.curry)(_listOps._scanr),
-        scanr1 = exports.scanr1 = (0, _functionOps.curry)(_listOps._scanr1),
-        remove = exports.remove = (0, _functionOps.curry)(_listOps._remove),
-        sortOn = exports.sortOn = (0, _functionOps.curry)(_listOps._sortOn),
-        sortBy = exports.sortBy = (0, _functionOps.curry)(_listOps._sortBy),
-        insert = exports.insert = (0, _functionOps.curry)(_listOps._insert),
+
+
+    /**
+     * Returns true if any item in container passes predicate `p`.
+     * @function module:listOps.any
+     * @param p {Function} - Predicate.
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
+    any = exports.any = (0, _functionOps.curry)(_listOps._any),
+
+
+    /**
+     * Returns true if all items in container pass predicate `p`.
+     * @function module:listOps.all
+     * @param p {Function} - Predicate.
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
+    all = exports.all = (0, _functionOps.curry)(_listOps._all),
+
+
+    /**
+     * scanl is similar to foldl, but returns a list of successive reduced values from the left:
+     * ```
+     * scanl f z [x1, x2, ...] == [z, z `f` x1, (z `f` x1) `f` x2, ...]
+     * ```
+     * Also note that:
+     * ```
+     * last (scanl f z xs) == foldl f z xs.
+     * ```
+     * @function module:listOps.scanl
+     * @param fn {Function}
+     * @param zero {*}
+     * @param xs {Array}
+     * @returns {Array|*}
+     */
+    scanl = exports.scanl = (0, _functionOps.curry)(_listOps._scanl),
+
+
+    /**
+     * `scanl1` is a variant of `scanl` that has no starting value argument:
+     * `shallowCompare(scanl1(fn, [x1, x2, ...]), [x1, fn(x1, x2), ...]) // true`
+     * @function module:listOps.scanl1
+     * @param fn {Function}
+     * @param xs {Array}
+     * @returns {Array|*}
+     */
+    scanl1 = exports.scanl1 = (0, _functionOps.curry)(_listOps._scanl1),
+
+
+    /**
+     * Same as `scanl` but from the right (similiar to `foldr`'s relationship to `foldl`).
+     * Note also `scanr`'s relationship ot `foldr`:
+     * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
+     * @function module:listOps.scanr
+     * @param fn {Function}
+     * @param zero {*}
+     * @param xs {Array}
+     * @returns {Array|*}
+     */
+    scanr = exports.scanr = (0, _functionOps.curry)(_listOps._scanr),
+
+
+    /**
+     * Same as `scanr` but takes no zero/accumulator value.
+     * @function module:listOps.scanr1
+     * @param fn {Function}
+     * @param xs {Array}
+     * @returns {Array|*}
+     */
+    scanr1 = exports.scanr1 = (0, _functionOps.curry)(_listOps._scanr1),
+
+
+    /**
+     * `remove(x, xs)` removes the first occurrence of `x` from `xs`.
+     * For example, `remove('a', 'banana') === 'bnana';`
+     * @function module:listOps.remove
+     * @param x {*}
+     * @param list {Array|String|*}
+     * @returns {Array}
+     */
+    remove = exports.remove = (0, _functionOps.curry)(_listOps._remove),
+
+
+    /**
+     * Sort a list by comparing the results of a key function applied to each
+     * element. sortOn f is equivalent to sortBy (comparing f), but has the
+     * performance advantage of only evaluating f once for each element in the
+     * input list. This is called the decorate-sort-undecorate paradigm, or
+     * Schwartzian transform.
+     *
+     * Elements are arranged from from lowest to highest, keeping duplicates
+     * in the order they appeared in the input.
+     *
+     * Ex:
+     * ```
+     * shallowEquals(
+     *  sortOn (head, [[2, "world"], [4, "!"], [1, "Hello"]]),
+     *  [[1,"Hello"],[2,"world"],[4,"!"]]
+     * ) // true
+     * ```
+     * @function module:listOps.sortOn
+     * @param valueFn {Function}
+     * @param xs {Array|String|*}
+     * @returns {Array}
+     */
+    sortOn = exports.sortOn = (0, _functionOps.curry)(_listOps._sortOn),
+
+
+    /**
+     * The sortBy function is the non-overloaded (in haskell terms) version of sort.
+     * @haskellExample ```
+     *  >>> sortBy (\(a,_) (b,_) -> compare a b) [(2, "world"), (4, "!"), (1, "Hello")]
+     *  [(1,"Hello"),(2,"world"),(4,"!")]
+     * ```
+     * @function module:listOps.sortBy
+     * @param orderingFn {Function}
+     * @param xs {Array|String|*}
+     * @returns {Array|String|*}
+     */
+    sortBy = exports.sortBy = (0, _functionOps.curry)(_listOps._sortBy),
+
+
+    /**
+     * The insert function takes an element and a list and inserts the element
+     * into the list at the first position where it is less than or equal to the
+     * next element. In particular, if the list is sorted before the call, the
+     * result will also be sorted. It is a special case of insertBy, which allows
+     * the programmer to supply their own comparison function.
+     * @function module:listOps.insert
+     * @param x {*}
+     * @param xs {Array|*}
+     * @returns {Array}
+     */
+    insert = exports.insert = (0, _functionOps.curry)(_listOps._insert),
 
 
     /**
@@ -546,9 +819,39 @@
      * @returns {Array|String|*} - New list.
      */
     insertBy = exports.insertBy = (0, _functionOps.curry)(_listOps._insertBy),
-        nubBy = exports.nubBy = (0, _functionOps.curry)(_listOps._nubBy),
-        removeBy = exports.removeBy = (0, _functionOps.curry)(_listOps._removeBy),
-        removeFirstsBy = exports.removeFirstsBy = (0, _functionOps.curry)(_listOps._removeFirstsBy),
+
+
+    /**
+     * The nubBy function behaves just like nub, except it uses a user-supplied equality predicate.
+     * @function module:listOps.nubBy
+     * @param pred {Function}
+     * @param list {Array|String|*}
+     * @returns {Array}
+     */
+    nubBy = exports.nubBy = (0, _functionOps.curry)(_listOps._nubBy),
+
+
+    /**
+     * Behaves the same as `remove`, but takes a user-supplied equality predicate.
+     * @function module:listOps.removeBy
+     * @param pred {Function}
+     * @param x {*}
+     * @param list {Array|String|*}
+     * @returns {Array}
+     */
+    removeBy = exports.removeBy = (0, _functionOps.curry)(_listOps._removeBy),
+
+
+    /**
+     * The `removeFirstsBy` function takes a predicate and two lists and returns the first list with the first
+     * occurrence of each element of the second list removed.
+     * @function module:listOps.removeFirstBy
+     * @param pred {Function}
+     * @param xs1 {Array|String|*}
+     * @param xs2 {Array|String|*}
+     * @returns {Array}
+     */
+    removeFirstsBy = exports.removeFirstsBy = (0, _functionOps.curry)(_listOps._removeFirstsBy),
 
 
     /**
