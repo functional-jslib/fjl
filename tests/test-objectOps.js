@@ -10,13 +10,14 @@ import {
     objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
-    isUndefined, isNull, isSymbol, isMap, isSet,
+    isUndefined, isNull, isSymbol, isMap, isSet, jsonClone,
+    fromArrayMap, toArrayMap, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign
 } from '../src/objectOps';
 import {_foldl as foldl, _map, _and as and, _head, _tail} from "../src/uncurried/_listOps/_listOps";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
-    jsonClone, deepCompareObjectsLeft} from './helpers';
+    deepCompareObjectsLeft} from './helpers';
 
 describe ('#objectOps', function () {
 
@@ -430,6 +431,62 @@ describe ('#objectOps', function () {
                 expectEqual(result[key], subj2[key]);
             });
         });
+    });
+
+    describe ('#jsonClone', function () {
+        it ('should be a function', function () {
+            expect(jsonClone).to.be.instanceOf(Function);
+        });
+        it ('should have more tests');
+        // @todo add more extensive tests here
+    });
+
+    describe ('#fromArrayMap', function () {
+        it ('should be a function', function () {
+            expect(fromArrayMap).to.be.instanceOf(Function);
+        });
+        it ('should have more tests');
+        // @todo add more extensive tests here
+    });
+
+    describe ('#toArrayMap', function () {
+        it ('should be a function', function () {
+            expect(toArrayMap).to.be.instanceOf(Function);
+        });
+        it ('should have more tests');
+        // @todo add more extensive tests here
+    });
+
+    describe ('#toArray', function () {
+        it ('should be a function', function () {
+            expect(toArray).to.be.instanceOf(Function);
+        });
+        it ('should have more tests');
+        // @todo add more extensive tests here
+    });
+
+    describe ('#log', function () {
+        it ('should be a function', function () {
+            expect(log).to.be.instanceOf(Function);
+        });
+        it ('should have more tests');
+        // @todo add more extensive tests here
+    });
+
+    describe ('#error', function () {
+        it ('should be a function', function () {
+            expect(error).to.be.instanceOf(Function);
+        });
+        it ('should have more tests');
+        // @todo add more extensive tests here
+    });
+
+    describe ('#peek', function () {
+        it ('should be a function', function () {
+            expect(peek).to.be.instanceOf(Function);
+        });
+        it ('should have more tests');
+        // @todo add more extensive tests here
     });
 
 });
