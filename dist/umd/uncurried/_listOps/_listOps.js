@@ -16,7 +16,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports._complement = exports._difference = exports._intersectBy = exports._intersect = exports._union = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._sortBy = exports._sortOn = exports._sort = exports._remove = exports._nub = exports._scanr1 = exports._scanr = exports._scanl1 = exports._scanl = exports._minimum = exports._maximum = exports._product = exports._sum = exports._not = exports._or = exports._and = exports._all = exports._any = exports._unzipN = exports._unzip = exports._zipWith5 = exports._zipWith4 = exports._zipWith3 = exports._zipWithN = exports._zipWith = exports._zip5 = exports._zip4 = exports._zip3 = exports._zipN = exports._zip = exports._stripPrefix = exports._tails = exports._inits = exports._groupBy = exports._group = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._lookup = exports._notElem = exports._elem = exports._partition = exports._filter = exports._find = exports._at = exports._breakOnList = exports._span = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._splitAt = exports._drop = exports._take = exports._elemIndices = exports._elemIndex = exports._findIndices = exports._findIndex = exports._unfoldr = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._mapAccumR = exports._mapAccumL = exports._foldr1 = exports._foldl1 = exports._foldr = exports._foldl = exports._permutations = exports._swapped = exports._subsequences1 = exports._subsequences = exports._transpose = exports._intercalate = exports._intersperse = exports._reverse = exports._concatMap = exports._concat = exports._unconsr = exports._uncons = exports._init = exports._tail = exports._last = exports._head = exports._appendMany = exports._append = exports._map = undefined;
+    exports._complement = exports._difference = exports._intersectBy = exports._intersect = exports._union = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._sortBy = exports._sortOn = exports._sort = exports._remove = exports._nub = exports._scanr1 = exports._scanr = exports._scanl1 = exports._scanl = exports._minimum = exports._maximum = exports._product = exports._sum = exports._not = exports._or = exports._and = exports._all = exports._any = exports._unzipN = exports._unzip = exports._zipWith5 = exports._zipWith4 = exports._zipWith3 = exports._zipWithN = exports._zipWith = exports._zip5 = exports._zip4 = exports._zip3 = exports._zipN = exports._zip = exports._stripPrefix = exports._tails = exports._inits = exports._groupBy = exports._group = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._lookup = exports._notElem = exports._elem = exports._partition = exports._filter = exports._find = exports._at = exports._breakOnList = exports._span = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._splitAt = exports._drop = exports._take = exports._elemIndices = exports._elemIndex = exports._findIndices = exports._findIndex = exports._unfoldr = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._mapAccumR = exports._mapAccumL = exports._foldr1 = exports._foldl1 = exports._foldr = exports._foldl = exports._permutations = exports._swapped = exports._subsequences = exports._transpose = exports._intercalate = exports._intersperse = exports._reverse = exports._concatMap = exports._concat = exports._unconsr = exports._uncons = exports._init = exports._tail = exports._last = exports._head = exports._appendMany = exports._append = exports._map = undefined;
 
     var _map3 = _interopRequireDefault(_map2);
 
@@ -306,32 +306,6 @@
      * @returns {Array.<Array>}
      */
     _subsequences = exports._subsequences = function _subsequences(xs) {
-        var listLen = (0, _objectOps.length)(xs),
-            len = Math.pow(2, listLen),
-            out = [];
-        for (var i = 0; i < len; i += 1) {
-            var entry = [];
-            for (var j = 0; j < listLen; j += 1) {
-                if (i & 1 << j) {
-                    entry.push(xs[j]);
-                }
-            }
-            out.push(entry);
-        }
-        return out;
-    },
-
-
-    /**
-     * Same as `subsequences` but returns an `Array.<Type>` instead
-     *  of an array of arrays.  **Note:** `Type` here means
-     *  a string, an instance of array, or some indexable-like type.
-     * @function module:_listOps._subsequences1
-     * @jsperftest https://jsperf.com/subsequences
-     * @param xs {Array|String}
-     * @returns {Array.<(Array|String|*)>}
-     */
-    _subsequences1 = exports._subsequences1 = function _subsequences1(xs) {
         var listLen = (0, _objectOps.length)(xs),
             len = Math.pow(2, listLen),
             out = [];

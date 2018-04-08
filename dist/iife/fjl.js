@@ -992,21 +992,6 @@ var _subsequences = function _subsequences(xs) {
     }
     return out;
 };
-var _subsequences1 = function _subsequences1(xs) {
-    var listLen = length(xs),
-        len = Math.pow(2, listLen),
-        out = [];
-    for (var i = 0; i < len; i += 1) {
-        var entry = [];
-        for (var j = 0; j < listLen; j += 1) {
-            if (i & 1 << j) {
-                entry.push(xs[j]);
-            }
-        }
-        out.push(entry);
-    }
-    return out;
-};
 var _swapped = function _swapped(ind1, ind2, list) {
     var out = copy(list),
         tmp = out[ind1];
@@ -2379,7 +2364,6 @@ exports.init = _init;
 exports.inits = _inits;
 exports.uncons = _uncons;
 exports.unconsr = _unconsr;
-exports.subsequences1 = _subsequences1;
 exports.swapped = _swapped;
 exports.append = append;
 exports.appendMany = appendMany;
@@ -2474,7 +2458,6 @@ exports._intersperse = _intersperse;
 exports._intercalate = _intercalate;
 exports._transpose = _transpose;
 exports._subsequences = _subsequences;
-exports._subsequences1 = _subsequences1;
 exports._swapped = _swapped;
 exports._permutations = _permutations;
 exports._foldl = _foldl;
