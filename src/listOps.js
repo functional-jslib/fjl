@@ -7,7 +7,7 @@ import {curry, curry2} from './uncurried/_functionOps/_functionOps';
 import {
     _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr,
     _map, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose,
-    _subsequences, _subsequences1, _swapped, _permutations, _foldl, _foldl1,
+    _subsequences, _swapped, _permutations, _foldl, _foldl1,
     _foldr, _foldr1, _unfoldr, _mapAccumL, _mapAccumR, _iterate, _repeat,
     _replicate, _cycle, _findIndex, _findIndices, _elemIndex, _elemIndices,
     _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span,
@@ -29,7 +29,7 @@ export {
     _group as group, _tails as tails, _sum as sum, _product as product,
     _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub,
     _head as head, _last as last, _tail as tail, _init as init, _inits as inits,
-    _uncons as uncons, _unconsr as unconsr, _subsequences1 as subsequences1,
+    _uncons as uncons, _unconsr as unconsr,
     _swapped as swapped
 };
 

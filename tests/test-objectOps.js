@@ -14,7 +14,7 @@ import {
     fromArrayMap, toArrayMap, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign
 } from '../src/objectOps';
-import {_foldl as foldl, _map, _and as and, _head, _tail} from "../src/uncurried/_listOps/_listOps";
+import {_foldl, _map, _and, _head, _tail, _subsequences} from "../src/uncurried/_listOps/_listOps";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
     deepCompareObjectsLeft} from './helpers';
@@ -297,7 +297,7 @@ describe ('#objectOps', function () {
             // Expect true that all results (_head of return) of accumalated value are `true`
             // and checks container of booleans
             // `head` pulls item at index `0` of list
-            const check1 = foldl(
+            const check1 = _foldl(
                 ([_results, _obj, _lastObj], word) => [
                     (_results.push(_obj.hasOwnProperty(word) && _lastObj.hasOwnProperty(word)), _results),
                     _obj[word],
@@ -311,10 +311,10 @@ describe ('#objectOps', function () {
             // log(check1);
 
             // Expect original object and resulting objects to both have the same nested properties
-            expectTrue(and(_head(check1)));
+            expectTrue(_and(_head(check1)));
 
             // Ensure both objects checked don't have any remaining keys
-            expectTrue(and(_map(x => !Object.keys(x).length, _tail(check1))));
+            expectTrue(_and(_map(x => !Object.keys(x).length, _tail(check1))));
         });
 
         it ('should not modify objects other than the first object passed in', function () {
@@ -485,8 +485,14 @@ describe ('#objectOps', function () {
         it ('should be a function', function () {
             expect(peek).to.be.instanceOf(Function);
         });
-        it ('should have more tests');
-        // @todo add more extensive tests here
+        it ('should return last arg passed in when being called with one or more args.', function () {
+            _subsequences('abcde').concat([
+                [99], [true], [undefined], [null], ['Output tested from `peek`']
+            ]).forEach(xs => {
+                expect(peek.apply(null, xs)).to.equal(xs.pop());
+            });
+
+        });
     });
 
 });

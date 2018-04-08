@@ -242,31 +242,6 @@ export const
     },
 
     /**
-     * Same as `subsequences` but returns an `Array.<Type>` instead
-     *  of an array of arrays.  **Note:** `Type` here means
-     *  a string, an instance of array, or some indexable-like type.
-     * @function module:_listOps._subsequences1
-     * @jsperftest https://jsperf.com/subsequences
-     * @param xs {Array|String}
-     * @returns {Array.<(Array|String|*)>}
-     */
-    _subsequences1 = xs => {
-        const listLen = length(xs),
-            len = Math.pow(2, listLen),
-            out = [];
-        for (let i = 0; i < len; i += 1) {
-            let entry = [];
-            for (let j = 0; j < listLen; j += 1) {
-                if (i & (1 << j)) {
-                    entry.push(xs[j]);
-                }
-            }
-            out.push(entry);
-        }
-        return out;
-    },
-
-    /**
      * Returns an array with the given indices swapped.
      * @function module:_listOps._swapped
      * @param ind1 {Number}
