@@ -392,6 +392,7 @@ define(['exports', './jsPlatform', './uncurried/_listOps/_listOps', './uncurried
      * break (< 9) [1,2,3] == ([],[1,2,3])
      * break (> 9) [1,2,3] == ([1,2,3],[])
      * ```
+     * @function module:listOps.breakOnList
      * @param pred {Function}
      * @param list {Array|String|*}
      * @returns {Array}

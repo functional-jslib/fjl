@@ -31,7 +31,7 @@
         }
 
         return objs.reduce(function (topAgg, obj) {
-            return (0, _object.keys)(obj).reduce(function (agg, key) {
+            return !obj ? topAgg : (0, _object.keys)(obj).reduce(function (agg, key) {
                 var propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection
                 if ((0, _object.hasOwnProperty)(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {

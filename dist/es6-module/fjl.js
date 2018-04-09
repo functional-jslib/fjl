@@ -236,21 +236,21 @@ const isset = x => x !== null && x !== undefined;
 
 const assignDeep$1 = (obj0, ...objs) =>
         objs.reduce((topAgg, obj) =>
-                keys(obj).reduce((agg, key) => {
-                    let propDescription = Object.getOwnPropertyDescriptor(agg, key);
-                    // If property is not writable move to next item in collection
-                    if (hasOwnProperty$1(key, agg) && propDescription &&
-                        !(propDescription.get && propDescription.set) &&
-                        !propDescription.writable) {
-                        return agg;
-                    }
-                    if (isObject(agg[key]) && isObject(obj[key])) {
-                        assignDeep$1(agg[key], obj[key]);
-                    }
-                    else { agg[key] = obj[key]; }
+            !obj ? topAgg : keys(obj).reduce((agg, key) => {
+                let propDescription = Object.getOwnPropertyDescriptor(agg, key);
+                // If property is not writable move to next item in collection
+                if (hasOwnProperty$1(key, agg) && propDescription &&
+                    !(propDescription.get && propDescription.set) &&
+                    !propDescription.writable) {
                     return agg;
-                }, topAgg)
-            , obj0);
+                }
+                if (isObject(agg[key]) && isObject(obj[key])) {
+                    assignDeep$1(agg[key], obj[key]);
+                }
+                else { agg[key] = obj[key]; }
+                return agg;
+            }, topAgg)
+        , obj0);
 
 /**
  * @memberOf _functionOps

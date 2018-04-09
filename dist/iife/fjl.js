@@ -366,7 +366,7 @@ var assignDeep$1 = function assignDeep(obj0) {
     }
 
     return objs.reduce(function (topAgg, obj) {
-        return keys(obj).reduce(function (agg, key) {
+        return !obj ? topAgg : keys(obj).reduce(function (agg, key) {
             var propDescription = Object.getOwnPropertyDescriptor(agg, key);
             // If property is not writable move to next item in collection
             if (hasOwnProperty$1(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
