@@ -14,12 +14,23 @@ import {
     fromArrayMap, toArrayMap, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign
 } from '../src/objectOps';
-import {_foldl, _map, _and, _head, _tail, _subsequences} from "../src/uncurried/_listOps/_listOps";
+import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_listOps/_listOps";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
     deepCompareObjectsLeft} from './helpers';
 
 describe ('#objectOps', function () {
+    const charCodeToCharArrayMap = unfoldr(
+        (charCode, ind) => ind === 26 ? undefined :
+            [[charCode, String.fromCharCode(charCode)], ++charCode],
+        'a'.charCodeAt(0)
+        ),
+        charCodeToCharMap = charCodeToCharArrayMap.reduce((agg, [charCode, char]) => {
+            agg[charCode] = char;
+            return agg;
+        }, {});
+
+    // log (charCodeToCharArrayMap, charCodeToCharMap);
 
     describe('#hasOwnProperty', function () {
         it ('should be a function', function () {
@@ -119,8 +130,8 @@ describe ('#objectOps', function () {
 
     describe('#isFunction', function () {
         it('should return true if value is a function', function () {
-            [() => {}, Math.pow, console.log, function () {}]
-                .forEach(value => expectTrue(isFunction(value)));
+            [(() => undefined), function () {}]
+                .forEach(value => expect(value).to.be.instanceOf(Function));
         });
         it('should return `false` when value is not a function', function () {
             [-1, 0, 1, [], {}, 'abc']
@@ -169,13 +180,13 @@ describe ('#objectOps', function () {
     });
 
     describe('#isString', function () {
-        it ('should return `true` when given value is a stringOps', function () {
+        it ('should return `true` when given value is a stringOps', () => {
             expectTrue(isString('hello'));
             expectTrue(isString(String('hello')));
         });
-        it ('should return `false` when given value is not a stringOps', function () {
-            expectFalse(isString(function () {}));
-            expectFalse(isString(NaN));
+        it ('should return `false` when given value is not a stringOps', () => {
+            expect(isString(function () {})).to.equal(false);
+            expect(isString(NaN)).to.equal(false);
         });
     });
 
@@ -437,24 +448,54 @@ describe ('#objectOps', function () {
         it ('should be a function', function () {
             expect(jsonClone).to.be.instanceOf(Function);
         });
-        it ('should have more tests');
-        // @todo add more extensive tests here
-    });
-
-    describe ('#fromArrayMap', function () {
-        it ('should be a function', function () {
-            expect(fromArrayMap).to.be.instanceOf(Function);
-        });
-        it ('should have more tests');
+        it ('should return results the same as `JSON.parse(JSON.stringify(...))`');
         // @todo add more extensive tests here
     });
 
     describe ('#toArrayMap', function () {
-        it ('should be a function', function () {
-            expect(toArrayMap).to.be.instanceOf(Function);
+        test ('should convert an object to an array map', () => {
+            // Ensure map was converted to array map properly
+            expect(all(([charCode, char], ind) => {
+                    const [charCode1, char1] = charCodeToCharArrayMap[ind];
+                    return `${charCode1}` === charCode && char1 === char;
+                }, toArrayMap(charCodeToCharMap)
+            ))
+                .to.equal(true);
         });
-        it ('should have more tests');
-        // @todo add more extensive tests here
+        test ('should return an empty an array when receiving an empty object', () => {
+            const result = toArrayMap({});
+            expect(result).to.be.instanceOf(Array);
+            expect(result.length).to.equal(0);
+        });
+        test ('Should throw an error when receiving `undefined` or `null`', () => {
+            assert.throws(toArrayMap, Error);
+            assert.throws(() => toArrayMap(null), Error);
+        });
+    });
+
+    describe ('#fromArrayMap', function () {
+        test ('should return an object from an array map', () => {
+            const result = fromArrayMap(charCodeToCharArrayMap);
+            expect(isObject(result)).to.equal(true);
+            expect(
+                all(([charCode, char]) =>
+                    result[charCode] === char,
+                    charCodeToCharArrayMap
+                )
+            )
+                .to.equal(true);
+        });
+
+        test ('should return an empty object when receiving an empty array', () => {
+            const result = fromArrayMap([]);
+            expect(isObject(result)).to.equal(true);
+            expect(keys(result).length).to.equal(0);
+        });
+
+        test ('should throw an error when receiving `null` and/or `undefined', () => {
+            assert.throws(fromArrayMap, Error);
+            assert.throws(() => fromArrayMap(null), Error);
+        });
     });
 
     describe ('#toArray', function () {
@@ -467,7 +508,7 @@ describe ('#objectOps', function () {
 
     describe ('#log', function () {
         it ('should be a function', function () {
-            expect(log).to.be.instanceOf(Function);
+            expect(typeof log).to.equal('function');
         });
         it ('should have more tests');
         // @todo add more extensive tests here
@@ -475,7 +516,7 @@ describe ('#objectOps', function () {
 
     describe ('#error', function () {
         it ('should be a function', function () {
-            expect(error).to.be.instanceOf(Function);
+            expect(typeof error).to.equal('function');
         });
         it ('should have more tests');
         // @todo add more extensive tests here

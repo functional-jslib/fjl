@@ -12,7 +12,7 @@ define(['exports', './_typeOf'], function (exports, _typeOf) {
           fPureTakes5 = exports.fPureTakes5 = name => (arg1, arg2, arg3, arg4, arg5, f) => f[name](arg1, arg2, arg3, arg4, arg5),
           fPureTakesOneOrMore = exports.fPureTakesOneOrMore = name => (f, ...args) => f[name](...args),
           fnOrError = exports.fnOrError = (symbolName, f) => {
-        if (!f || f.constructor !== Function) {
+        if (!f || typeof f !== 'function') {
             throw new Error(`${symbolName} should be a function. ` + `Type received: ${(0, _typeOf.typeOf)(f)};  Value received: ${f}.`);
         }
         return f;

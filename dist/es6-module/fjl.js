@@ -42,7 +42,7 @@ const fPureTakes4 = name => (arg1, arg2, arg3, arg4, f) => f[name](arg1, arg2, a
 const fPureTakes5 = name => (arg1, arg2, arg3, arg4, arg5, f) => f[name](arg1, arg2, arg3, arg4, arg5);
 const fPureTakesOneOrMore = name => (f, ...args) => f[name](...args);
 const fnOrError = (symbolName, f) => {
-        if (!f || f.constructor !== Function) {
+        if (!f || typeof f !== 'function') {
             throw new Error (`${symbolName} should be a function. ` +
                 `Type received: ${typeOf(f)};  Value received: ${f}.`);
         }

@@ -15,7 +15,7 @@ export const
     fPureTakesOneOrMore = name => (f, ...args) => f[name](...args),
 
     fnOrError = (symbolName, f) => {
-        if (!f || f.constructor !== Function) {
+        if (!f || typeof f !== 'function') {
             throw new Error (`${symbolName} should be a function. ` +
                 `Type received: ${typeOf(f)};  Value received: ${f}.`);
         }

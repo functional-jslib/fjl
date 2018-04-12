@@ -42,7 +42,7 @@ var fPureTakesOne = exports.fPureTakesOne = function fPureTakesOne(name) {
     };
 },
     fnOrError = exports.fnOrError = function fnOrError(symbolName, f) {
-    if (!f || f.constructor !== Function) {
+    if (!f || typeof f !== 'function') {
         throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + (0, _typeOf.typeOf)(f) + ';  Value received: ' + f + '.'));
     }
     return f;

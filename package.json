@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "0.23.1",
+  "version": "0.23.3",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl.js",
   "module": "dist/es6-module/fjl.js",
@@ -42,13 +42,18 @@
     "yargs": "^6.6.0"
   },
   "scripts": {
-    "pre-publish": "npm run build",
-    "test": "npm run test-es6",
-    "test-es6": "mocha tests/test-*.js --plugins babel-plugin-add-module-exports --require babel-register",
-    "test-cjs": "mocha tests/static-test-cjsLibraryImport.js",
-    "build": "gulp clean && gulp build && npm run test-es6 && npm run test-cjs",
+    "pre-publish": "npm run build && npm run test-builds",
+    "test": "jest --testMatch **/tests/test-*.js",
+    "test-builds": "jest --testMatch **/tests/*-test-*.js",
+    "build": "gulp clean && gulp build",
     "docs": "gulp docs",
     "eslint": "gulp eslint"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/test-*.js"
+    ],
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -69,5 +74,8 @@
     "url": "https://github.com/functional-jslib/fjl/issues"
   },
   "homepage": "https://github.com/functional-jslib/fjl#readme",
-  "dependencies": {}
+  "dependencies": {
+    "babel-jest": "^22.4.3",
+    "jest": "^22.4.3"
+  }
 }
