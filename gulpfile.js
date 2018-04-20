@@ -161,7 +161,7 @@ gulp.task('uglify', ['iife'], () => {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd', 'es6-module']);
+gulp.task('build-js', ['uglify', 'cjs', 'amd', 'umd', 'es6-module', 'build-js-for-package']);
 
 gulp.task('docs', () =>
     deleteFilePaths(['./docs/**/*'])
@@ -181,6 +181,17 @@ gulp.task('docs', () =>
 gulp.task('build-docs', ['docs']);
 
 gulp.task('build', ['build-js']);
+
+gulp.task('build-js-for-package', () => {
+    return gulp.src('./src/fjl.js')
+        .pipe(gulpRollup(null, {moduleName: iifeModuleName, format: 'es'}))
+        .pipe(concat(buildPath('package/fjl.mjs')))
+        .pipe(gulp.dest('./'))
+        .pipe(gulpBabel(gulpConfig.buildCjsOptions.babel))
+        .pipe(concat(buildPath('package/fjl.js')))
+        .pipe(gulp.dest('./'));
+});
+
 
 gulp.task('tests', ['eslint'], () =>
     gulp.src(gulpConfig.tests.srcs)

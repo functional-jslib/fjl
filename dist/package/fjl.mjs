@@ -108,6 +108,13 @@ const lastIndexOf = fPureTakesOne('lastIndexOf');
  * Created by elydelacruz on 9/6/2017.
  */
 
+/**
+ * Functional version of `String.prototype.split`.
+ * @function module:_stringOps.split
+ * @param separator {String|RegExp}
+ * @param str {String}
+ * @returns {Array}
+ */
 const split = fPureTakesOne('split');
 
 /**
@@ -266,6 +273,14 @@ const isFalsy = value => !value;
 const alwaysTrue = () => true;
 const alwaysFalse = () => false;
 
+/**
+ * Checks if given `x` is set and of one of
+ *  [String, Boolean, Number, or Symbol] (null and undefined are immutable
+ *   but are not "usable" or 'not what we usually want to operate on'.
+ * @private
+ * @param x {*}
+ * @returns {Boolean}
+ */
 function isUsableImmutablePrimitive$1 (x) {
     const typeOfX = typeOf(x);
     return isset(x) &&
@@ -335,6 +350,12 @@ const toArray = x => {
         }
     };
 
+/**
+ * @function module:_listOps.map
+ * @param fn {Function} - Function to map on array.
+ * @param xs {Array}
+ * @returns {Array}
+ */
 function _map (fn, xs) {
     let ind = 0,
         limit = length(xs),
@@ -1111,6 +1132,11 @@ const flip$1 = fn => (b, a) => call(fn, a, b);
  * @todo Make code here more minimal (reuse small parts here).
  */
 
+/**
+ * PlaceHolder (__) constructor.
+ * @constructor PlaceHolder
+ * @private
+ */
 const PlaceHolder = function PlaceHolder() {};
 const notFnErrPrefix$1 = '`fn` in `curry_(fn, ...args)`';
 const placeHolderInstance = new PlaceHolder();
@@ -1196,6 +1222,14 @@ let curry5_ = fn => curryN_(5, fn);
  */
 const id = x => x;
 
+/**
+ * Composes all functions passed in from right to left passing each functions return value to
+ * the functionOps on the left of itself.
+ * @function module:_functionOps.compose
+ * @type {Function}
+ * @param args {...{Function}}
+ * @returns {Function}
+ */
 const compose = (...args) =>
         arg0 => reduceRight((value, fn) => fn(value), arg0, args);
 
@@ -1418,6 +1452,14 @@ const lastIndexOf$1 = curry(lastIndexOf);
  * @private
  */
 
+/**
+ * Functional version of `String.prototype.split`.
+ * @curried
+ * @function module:jsPlatform_string.split
+ * @param separator {String|RegExp}
+ * @param str {String}
+ * @returns {Array}
+ */
 const split$1 = curry(split);
 
 /**
