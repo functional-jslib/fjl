@@ -5,10 +5,6 @@
 # fjl
 Functional Javascript Library (inspired by Haskell's Prelude).
 
-## Note about 0.22.0
-Support for return strings as lists has been removed for operations in 'listOps' and '_listOps'.
-All methods that generate new lists now return arrays explicitely.
-
 ## Sections in Readme:
 - [Getting Started](#getting-started)
 - [Requirements](#requirements)
@@ -38,6 +34,11 @@ See desired export type below:
 - './dist/umd/' - Universal module definition format.
 - './dist/iife/' - Immediately Invoked Function Execution - (exports `fjl` as a global).
 - './dist/es6-module/' - Ecmascript 6 module format.
+
+**Note:** 
+The './dist/package/fjl*' files are for the new setup in ecma262 proposals
+for es6 modules ('*.mjs' for es6 module and '*.js' for common-js module) (these are used
+ in package.json as the default exports). 
 
 ### In NodeJs: 
 

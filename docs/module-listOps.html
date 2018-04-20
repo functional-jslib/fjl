@@ -508,7 +508,12 @@
 
 
 <div class="description">
-    Append two lists, i.e.,```append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]```If the first list is not finite, the result is the first list.
+    Append two lists, i.e.,
+```
+append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
+append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
+```
+If the first list is not finite, the result is the first list.
 </div>
 
 
@@ -1082,7 +1087,9 @@
 
 
 <div class="description">
-    breakOnList, applied to a predicate p and a list xs, returns a tuplewhere first element is longest prefix (possibly empty) of xs of elementsthat do not satisfy p and second element is the remainder of the list:
+    breakOnList, applied to a predicate p and a list xs, returns a tuple
+where first element is longest prefix (possibly empty) of xs of elements
+that do not satisfy p and second element is the remainder of the list:
 </div>
 
 
@@ -4407,7 +4414,11 @@
 
 
 <div class="description">
-    The insert function takes an element and a list and inserts the elementinto the list at the first position where it is less than or equal to thenext element. In particular, if the list is sorted before the call, theresult will also be sorted. It is a special case of insertBy, which allowsthe programmer to supply their own comparison function.
+    The insert function takes an element and a list and inserts the element
+into the list at the first position where it is less than or equal to the
+next element. In particular, if the list is sorted before the call, the
+result will also be sorted. It is a special case of insertBy, which allows
+the programmer to supply their own comparison function.
 </div>
 
 
@@ -4586,7 +4597,8 @@
 
 
 <div class="description">
-    A version of `insert` that allows you to specify the ordering of the inserteditem;  Before/at, or after
+    A version of `insert` that allows you to specify the ordering of the inserted
+item;  Before/at, or after
 </div>
 
 
@@ -4743,7 +4755,8 @@
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
         <ul>
-            <li>Optimize and work the logic of this function;  Think about the types that will be operated on by this functions logic.</li>
+            <li>Optimize and work the logic of this function;  Think about the types that will be
+ operated on by this functions logic.</li>
         </ul>
     </dd>
     
@@ -6740,7 +6753,8 @@
 
 
 <div class="description">
-    Performs a map then a reduce all in one (from left-to-right). Returns a tuplecontaining the aggregated value and the result of mapping the passed in function on passed in list.
+    Performs a map then a reduce all in one (from left-to-right). Returns a tuple
+containing the aggregated value and the result of mapping the passed in function on passed in list.
 </div>
 
 
@@ -6949,7 +6963,8 @@
 
 
 <div class="description">
-    Performs a map and a reduce all in one (from right-to-left). Returns a tuplecontaining the aggregated value and the result of mapping the passed in function on passed in list.
+    Performs a map and a reduce all in one (from right-to-left). Returns a tuple
+containing the aggregated value and the result of mapping the passed in function on passed in list.
 </div>
 
 
@@ -7516,7 +7531,9 @@
 
 
 <div class="description">
-    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items thatdo not match the tuple are in second list in the returned tuple. Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+    Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
+do not match the tuple are in second list in the returned tuple.
+ Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
 </div>
 
 
@@ -7705,7 +7722,9 @@
 
 
 <div class="description">
-    Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` andthe second list in the tuple is a list of the remaining elements in the given list.**@Note: Not the same as `partition`.  Read descriptions closely!!!
+    Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
+the second list in the tuple is a list of the remaining elements in the given list.
+**@Note: Not the same as `partition`.  Read descriptions closely!!!
 </div>
 
 
@@ -7897,7 +7916,8 @@
 
 
 <div class="description">
-    `remove(x, xs)` removes the first occurrence of `x` from `xs`.For example, `remove('a', 'banana') === 'bnana';`
+    `remove(x, xs)` removes the first occurrence of `x` from `xs`.
+For example, `remove('a', 'banana') === 'bnana';`
 </div>
 
 
@@ -8284,7 +8304,8 @@
 
 
 <div class="description">
-    The `removeFirstsBy` function takes a predicate and two lists and returns the first list with the firstoccurrence of each element of the second list removed.
+    The `removeFirstsBy` function takes a predicate and two lists and returns the first list with the first
+occurrence of each element of the second list removed.
 </div>
 
 
@@ -8847,7 +8868,14 @@
 
 
 <div class="description">
-    scanl is similar to foldl, but returns a list of successive reduced values from the left:```scanl f z [x1, x2, ...] == [z, z `f` x1, (z `f` x1) `f` x2, ...]```Also note that:```last (scanl f z xs) == foldl f z xs.```
+    scanl is similar to foldl, but returns a list of successive reduced values from the left:
+```
+scanl f z [x1, x2, ...] == [z, z `f` x1, (z `f` x1) `f` x2, ...]
+```
+Also note that:
+```
+last (scanl f z xs) == foldl f z xs.
+```
 </div>
 
 
@@ -9049,7 +9077,8 @@
 
 
 <div class="description">
-    `scanl1` is a variant of `scanl` that has no starting value argument:`shallowCompare(scanl1(fn, [x1, x2, ...]), [x1, fn(x1, x2), ...]) // true`
+    `scanl1` is a variant of `scanl` that has no starting value argument:
+`shallowCompare(scanl1(fn, [x1, x2, ...]), [x1, fn(x1, x2), ...]) // true`
 </div>
 
 
@@ -9228,7 +9257,9 @@
 
 
 <div class="description">
-    Same as `scanl` but from the right (similiar to `foldr`'s relationship to `foldl`).Note also `scanr`'s relationship ot `foldr`:`head (scanr(fn, z, xs)) === foldr(fn, z, xs).
+    Same as `scanl` but from the right (similiar to `foldr`'s relationship to `foldl`).
+Note also `scanr`'s relationship ot `foldr`:
+`head (scanr(fn, z, xs)) === foldr(fn, z, xs).
 </div>
 
 
@@ -9797,7 +9828,22 @@
 
 
 <div class="description">
-    Sort a list by comparing the results of a key function applied to eachelement. sortOn f is equivalent to sortBy (comparing f), but has theperformance advantage of only evaluating f once for each element in theinput list. This is called the decorate-sort-undecorate paradigm, orSchwartzian transform.Elements are arranged from from lowest to highest, keeping duplicatesin the order they appeared in the input.Ex:```shallowEquals( sortOn (head, [[2, "world"], [4, "!"], [1, "Hello"]]), [[1,"Hello"],[2,"world"],[4,"!"]]) // true```
+    Sort a list by comparing the results of a key function applied to each
+element. sortOn f is equivalent to sortBy (comparing f), but has the
+performance advantage of only evaluating f once for each element in the
+input list. This is called the decorate-sort-undecorate paradigm, or
+Schwartzian transform.
+
+Elements are arranged from from lowest to highest, keeping duplicates
+in the order they appeared in the input.
+
+Ex:
+```
+shallowEquals(
+ sortOn (head, [[2, "world"], [4, "!"], [1, "Hello"]]),
+ [[1,"Hello"],[2,"world"],[4,"!"]]
+) // true
+```
 </div>
 
 
@@ -9979,7 +10025,8 @@
 
 
 <div class="description">
-    Splits `x` in two at given `index` (exclusive (includes element/character atgiven index in second part of returned list)).
+    Splits `x` in two at given `index` (exclusive (includes element/character at
+given index in second part of returned list)).
 </div>
 
 
@@ -11498,7 +11545,8 @@
 
 
 <div class="description">
-    zip takes two lists and returns a list of corresponding pairs.If one input list is short, excess elements of the longer list are discarded.
+    zip takes two lists and returns a list of corresponding pairs.
+If one input list is short, excess elements of the longer list are discarded.
 </div>
 
 
@@ -12328,7 +12376,10 @@
 
 
 <div class="description">
-    zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]zipWith generalises zip by zipping with the function given as thefirst argument, instead of a function tupling function (function that returns a tuple). For example,zipWith (+) is applied to two lists to produce the list of corresponding sums.
+    zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith generalises zip by zipping with the function given as the
+first argument, instead of a function tupling function (function that returns a tuple). For example,
+zipWith (+) is applied to two lists to produce the list of corresponding sums.
 </div>
 
 
@@ -12380,7 +12431,8 @@
 
             
 
-            <td class="description last">Takes two parts of a tuple and returns a tuple. E.g., ` op :: a -> b -> (a, b)`</td>
+            <td class="description last">Takes two parts of a tuple and returns a tuple.
+ E.g., ` op :: a -> b -> (a, b)`</td>
         </tr>
 
     
@@ -12526,7 +12578,9 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```zipWith f [] _|_ = []```</code></pre>
+    <pre class="prettyprint"><code>```
+zipWith f [] _|_ = []
+```</code></pre>
 
 
 
@@ -12596,7 +12650,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
         </tr>
 
     
@@ -12836,7 +12892,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`</td>
         </tr>
 
     
@@ -13105,7 +13163,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`</td>
         </tr>
 
     
@@ -13351,7 +13411,9 @@
 
 
 <div class="description">
-    Zips all given lists with tupling function. Note: Haskell types do not have a way (that I know of) to show one or more for params in a function so `@haskellType` below is left there for general purpose not for exactness as is told by aforementioned.
+    Zips all given lists with tupling function. Note: Haskell types do not have
+ a way (that I know of) to show one or more for params in a function so `@haskellType` below
+ is left there for general purpose not for exactness as is told by aforementioned.
 </div>
 
 
@@ -13403,7 +13465,9 @@
 
             
 
-            <td class="description last">Takes expected number of parts for tuple and returns a tuple of said parts: E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
+            <td class="description last">Takes expected number of parts for tuple and returns a tuple
+ of said parts:
+ E.g., ` op :: a -> b -> c -> (a, b, c)`</td>
         </tr>
 
     
@@ -13541,7 +13605,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 08 2018 14:18:54 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Apr 19 2018 20:34:12 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
