@@ -10,7 +10,8 @@ import {__, compose, negateP} from '../src/functionOps';
 import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/objectOps';
 import {isTruthy} from '../src/booleanOps';
-import {lines, unlines, words, unwords} from '../src/stringOps';
+import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase}
+    from '../src/stringOps';
 import {
     append, appendMany, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
@@ -347,7 +348,7 @@ describe ('#listOps', function () {
             const candidates = ['abc', 'abc'.split('')],
                 results = candidates.map(subsequences),
                 expectedLen = Math.pow(2, candidates[0].length);
-            log(candidates, results);
+            // log(candidates, results);
             expectTrue(results.every(result => result.length === expectedLen));
             expectTrue(results.every(result =>
                     !result.filter((subSeq, ind) =>
@@ -598,8 +599,8 @@ describe ('#listOps', function () {
             expectShallowEquals(concatMap(id, [[], [], []]), []);
         });
         it ('should throw an error when receiving `undefined` or `null` in it\'s list position', function () {
-            assert.throws(() => concatMap(id, null), Error);
-            assert.throws(() => concatMap(id, undefined), Error);
+            assert.throws(() => peek('concatmap', concatMap(id, null)), Error);
+            assert.throws(() => peek('concatmap', concatMap(id, undefined)), Error);
         });
     });
 
@@ -1263,7 +1264,7 @@ describe ('#listOps', function () {
 
     describe ('#group', function () {
         it ('should return a list of lists which contain the (sequential) matches', function () {
-            const expectedResultFlattened = [['M'], ['i'], ['s,', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
+            const expectedResultFlattened = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
             expectDeepEquals(group('Mississippi'), expectedResultFlattened);
             expectDeepEquals(group('Mississippi'.split('')), expectedResultFlattened);
         });
@@ -2232,24 +2233,20 @@ describe ('#listOps', function () {
             consonantsArray = consonants.split('');
         it ('should remove all first occurrences of all items in second list by passed in ' +
             'equality operation.', function () {
-            // Remove first occurrences of `vowels` in `alphabet * 3`
-            const subj1 = iterate(length(vowels), (value, ind) => {
-                    const foundInd = value.indexOf(vowels[ind]);
-                    if (foundInd > -1) {
-                        const parts = splitAt(foundInd, value);
+            // Remove from first entry on both
+            const fiveArrays = map(_ => alphabetArray, vowelsArray),
+                catedArrays = concat(fiveArrays),
+                expected = foldl((agg, vowel) => {
+                        const parts = splitAt(agg.indexOf(vowel), agg);
                         return concat([parts[0], tail(parts[1])]);
-                    }
-                    return value;
-                }, concat([alphabetArray, alphabetArray, alphabetArray]));
+                    }, catedArrays, vowelsArray),
+                rslt = removeFirstsBy(equal, concat(fiveArrays), vowelsArray);
 
             // Expect vowels removed from the same places in both lists
             expectDeepEquals(
-                removeFirstsBy(equal, cycle(3, alphabetArray), vowelsArray),
-                subj1
+                peek('removeFirstBy Result', rslt.join('')),
+                peek('removeFirstBy2 Expected', expected.join(''))
             );
-
-            // log(removeFirstsBy(equal, cycle(3, alphabetArray), 'aeiou'.split('')));
-            // log(removeFirstsBy(equal, cycle(3, alphabetString), 'aeiou'));
         });
         it ('should return copy of original list when no items from second list are found in it.', function () {
             expectEqual(removeFirstsBy(equal, consonants, vowels), consonants);
@@ -2355,7 +2352,7 @@ describe ('#listOps', function () {
 
     describe ('#groupBy', function () {
         it ('should return a list of lists which contain the (sequential) matches on equality function', function () {
-            const expectedResult = [['M'], ['i'], ['s,', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
+            const expectedResult = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
             expectDeepEquals(groupBy(generalEqualityCheck, 'Mississippi'), expectedResult);
             expectDeepEquals(
                 groupBy(generalEqualityCheck, 'Mississippi'.split('')),
@@ -2554,6 +2551,55 @@ describe ('#listOps', function () {
         it ('should return an empty list when receiving an empty one', function () {
             expectShallowEquals(scanr1(x => x * 2, []), []);
             expectShallowEquals(scanr1(x => x + 2, ''), []);
+        });
+    });
+
+    describe ('#lcaseFirst', () => {
+        it ('should return passed in non-empty string with first alpha char toUpperCase', () => {
+           expect(lcaseFirst('ABC')).to.equal('aBC');
+        });
+        it ('should return given non-empty string if it cannot be operated on;  Non-alpha char at index `0` or "empty string"', () => {
+            expect(lcaseFirst('$$ABC')).to.equal('$$ABC');
+        });
+        it ('should throw an error when receiving an empty-string or any value that is not a string', () => {
+            [null, undefined, [], {}]
+                .forEach(xs =>
+                    assert.throws(() => lcaseFirst(xs), Error)
+                );
+        });
+    });
+
+    describe ('#ucaseFirst', () => {
+        it ('should return passed in non-empty string with first alpha char toUpperCase', () => {
+           expect(ucaseFirst('abc')).to.equal('Abc');
+        });
+        it ('should return given non-empty string if it cannot be operated on;  Non-alpha char at index `0` or "empty string"', () => {
+            expect(ucaseFirst('$$abc')).to.equal('$$abc');
+        });
+        it ('should throw an error when receiving an empty-string or any value that is not a string', () => {
+            [null, undefined, [], {}]
+                .forEach(xs =>
+                    assert.throws(() => ucaseFirst(xs), Error)
+                );
+        });
+    });
+
+    describe ('#camelCase', () => {
+        it ('should return a "camel-cased" version of passed in non-empty string', () => {
+            [
+                ['all-your-base', 'AllYourBase'],
+                ['ALL-YOUR-BASE', 'AllYourBase'],
+                ['$$abc', 'Abc']
+            ]
+                .forEach(([given, expected]) => {
+                    expect(camelCase(given)).to.equal(expected);
+                });
+        });
+        it ('should throw an error when receiving an empty-string or any value that is not a string', () => {
+            [null, undefined, [], {}]
+                .forEach(xs =>
+                    assert.throws(() => ucaseFirst(xs), Error)
+                );
         });
     });
 

@@ -58,18 +58,14 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
             .some(bln => !bln)
     ),
 
-    deepCompareLeft = (incoming, against) => {
-        return Object.keys(incoming).some(key => {
+    deepCompareLeft = (incoming, against) =>
+        incoming === against || Object.keys(incoming).every(key => {
             const typeOfValue = typeof incoming[key];
-            return !(
-                typeOfValue !== 'string' ||
-                typeOfValue !== 'object' ||
-                typeOfValue !== 'Array' ?
-                    against[key] === incoming[key] :
-                        deepCompareLeft(incoming[key], against[key])
-            );
-        });
-    },
+            // console.log('deepcompare', incoming[key], against[key]);
+            return typeOfValue === 'object' ?
+               deepCompareLeft(incoming[key], against[key]) :
+                against[key] === incoming[key];
+        }),
 
     expectShallowEquals = curry2_((a, b) => expectTrue(shallowCompareOnLeft(a, b))),
 
@@ -90,14 +86,14 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
 
     peek = (...args) => (log(...args), args.pop()),
 
+    allYourBase = {all: {your: {base: {are: {belong: {to: {us: 0}}}}}}},
+
     alphabetCharCodeRange = range('a'.charCodeAt(0), 'z'.charCodeAt(0)),
 
     alphabetArray = alphabetCharCodeRange
         .map(charCode => String.fromCharCode(charCode)),
 
     alphabetString = alphabetArray.join(''),
-
-    peak = (...args) => apply(log, args),
 
     jsonClone = x => JSON.parse(JSON.stringify(x))
 
