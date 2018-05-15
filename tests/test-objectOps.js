@@ -17,7 +17,9 @@ import {
 import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_listOps/_listOps";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
-    deepCompareObjectsLeft} from './helpers';
+    deepCompareObjectsLeft, allYourBase, expectDeepEquals
+} from './helpers';
+import {inspect} from 'util';
 
 describe ('#objectOps', function () {
     const charCodeToCharArrayMap = unfoldr(
@@ -448,8 +450,9 @@ describe ('#objectOps', function () {
         it ('should be a function', function () {
             expect(jsonClone).to.be.instanceOf(Function);
         });
-        it ('should return results the same as `JSON.parse(JSON.stringify(...))`');
-        // @todo add more extensive tests here
+        // it ('should return results the same as `JSON.parse(JSON.stringify(...))`', () => {
+            // expect(expectDeepEquals(jsonClone(allYourBase), allYourBase)).to.equal(true);
+        // });
     });
 
     describe ('#toArrayMap', function () {
@@ -499,10 +502,18 @@ describe ('#objectOps', function () {
     });
 
     describe ('#toArray', function () {
-        it ('should be a function', function () {
+        const rslt = toArrayMap(allYourBase),
+            expectedRslt = [['all', [['your', [['base', [['are', [['belong', [['to', [['us', 0]]]]]]]]]]]]]];
+        test ('should be a function', function () {
             expect(toArray).to.be.instanceOf(Function);
         });
-        it ('should have more tests');
+        test ('should return an empty array for `null` and/or `undefined`', () => {
+            [null, undefined].forEach(x => expect(toArray(x)).to.be.instanceOf(Array));
+        });
+        test ('should return an array map for "Object"\'s', () => {
+            expectDeepEquals(peek('toarray', inspect(rslt, {depth: 20}), rslt), peek('toarray', inspect(expectedRslt, {depth: 20}), expectedRslt));
+            expectDeepEquals(toArray({hello: 'world'}), [['hello', 'world']]);
+        });
         // @todo add more extensive tests here
     });
 
@@ -510,7 +521,7 @@ describe ('#objectOps', function () {
         it ('should be a function', function () {
             expect(typeof log).to.equal('function');
         });
-        it ('should have more tests');
+        // it ('should have more tests');
         // @todo add more extensive tests here
     });
 
@@ -518,7 +529,7 @@ describe ('#objectOps', function () {
         it ('should be a function', function () {
             expect(typeof error).to.equal('function');
         });
-        it ('should have more tests');
+        // it ('should have more tests');
         // @todo add more extensive tests here
     });
 
@@ -532,7 +543,6 @@ describe ('#objectOps', function () {
             ]).forEach(xs => {
                 expect(peek.apply(null, xs)).to.equal(xs.pop());
             });
-
         });
     });
 

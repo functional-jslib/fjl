@@ -30,10 +30,15 @@ export const
      * @param obj {(Object|Array|*)}
      * @returns {*}
      */
-    toArrayMap = obj => Object.keys(obj).map(key => [key, obj[key]]),
+    toArrayMap = obj => Object.keys(obj).map(key => {
+        if (typeof obj[key] === 'object') {
+            return [key, toArrayMap(obj[key])];
+        }
+        return [key, obj[key]];
+    }),
 
     /**
-     * Converts an array-map into an object.
+     * Converts an array-map into an object (one level).
      * @param xs {Array|*} - Array-map (associated list).
      * @returns {*}
      */

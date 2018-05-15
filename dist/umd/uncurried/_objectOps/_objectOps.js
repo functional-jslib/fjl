@@ -128,6 +128,12 @@
         };
     }();
 
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+    } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+
     var
 
     /**
@@ -149,13 +155,16 @@
      */
     toArrayMap = exports.toArrayMap = function toArrayMap(obj) {
         return Object.keys(obj).map(function (key) {
+            if (_typeof(obj[key]) === 'object') {
+                return [key, toArrayMap(obj[key])];
+            }
             return [key, obj[key]];
         });
     },
 
 
     /**
-     * Converts an array-map into an object.
+     * Converts an array-map into an object (one level).
      * @param xs {Array|*} - Array-map (associated list).
      * @returns {*}
      */

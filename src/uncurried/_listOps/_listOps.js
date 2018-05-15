@@ -407,7 +407,7 @@ export const
             lastX = x;
         for (; ind < limit; ind += 1) {
             out.push(lastX);
-            lastX = op(lastX);
+            lastX = op(lastX, ind);
         }
         return out;
     },
@@ -1484,7 +1484,7 @@ export const
      * @returns {Array}
      */
     _removeFirstsBy = (pred, xs1, xs2) =>
-        _foldl((agg, item) => _removeBy(pred, item, agg), xs1, xs2),
+        _foldl((agg, x2) => _removeBy(pred, x2, agg), xs1, xs2),
 
     /**
      * Returns the union on elements matching boolean check passed in.

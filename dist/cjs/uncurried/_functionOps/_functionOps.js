@@ -6,17 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 
 var _function = require('../_jsPlatform/_function');
 
-Object.defineProperty(exports, 'apply', {
-  enumerable: true,
-  get: function get() {
-    return _function.apply;
-  }
-});
-Object.defineProperty(exports, 'call', {
-  enumerable: true,
-  get: function get() {
-    return _function.call;
-  }
+Object.keys(_function).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _function[key];
+    }
+  });
 });
 
 var _compose = require('./_compose');

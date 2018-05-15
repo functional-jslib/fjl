@@ -162,7 +162,6 @@ export const
      * Checks if given `x` is set and of one of
      *  [String, Boolean, Number, Symbol] (null and undefined are immutable
      *  but are not "usable" (usually not what we want to operate on).
-     * @deprecated If needed copy&paste implementation to your project.
      * @function module:objectOps._isUsableImmutablePrimitive
      * @param x {*}
      * @returns {Boolean}
@@ -207,12 +206,13 @@ export const
      * @returns {Boolean}
      */
     isEmpty = value => {
-        let typeOfValue = typeOf(value),
-            retVal;
+        let retVal;
         if (!value) { // if '', 0, `null`, `undefined`, or `false` then is empty
             retVal = true;
         }
-        else if (typeOfValue === _Array || typeOfValue === _Function) {
+
+        const typeOfValue = typeOf(value);
+        if (typeOfValue === _Array || typeOfValue === _Function) {
             retVal = isEmptyList(value);
         }
         else if (typeOfValue === _Number) {

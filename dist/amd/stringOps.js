@@ -1,4 +1,4 @@
-define(['exports', './listOps', './jsPlatform/string'], function (exports, _listOps, _string) {
+define(['exports', './listOps', './jsPlatform/string', './uncurried/_functionOps/_compose', './jsPlatform/array'], function (exports, _listOps, _string, _compose, _array) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -50,7 +50,7 @@ define(['exports', './listOps', './jsPlatform/string'], function (exports, _list
 
 
   /**
-   * Lower cases first character of string.
+   * Lower cases first character of a non-empty string.
    * @function module:stringOps.lcaseFirst
    * @param xs {String}
    * @returns {string}
@@ -59,7 +59,7 @@ define(['exports', './listOps', './jsPlatform/string'], function (exports, _list
 
 
   /**
-   * Upper cases first character of string.
+   * Upper cases first character of a non-empty string.
    * @function module:stringOps.ucaseFirst
    * @param xs {String}
    * @returns {string}
@@ -68,11 +68,11 @@ define(['exports', './listOps', './jsPlatform/string'], function (exports, _list
 
 
   /**
-   * Class cases a string.
+   * Camel cases (class case) a string.
    * @function module:stringOps.camelCase
    * @param xs {String}
-   * @param [pattern=/[^a-z\d/i]/] {RegExp} - Optional.
+   * @param [pattern=/[^a-z\d/i]/] {RegExp} - Pattern to split on.  Optional.
    * @returns {string}
    */
-  camelCase = exports.camelCase = (xs, pattern) => (0, _listOps._map)(ucaseFirst, (0, _listOps._splitAt)(pattern || /[^a-z\d]/i, xs));
+  camelCase = exports.camelCase = (xs, pattern) => (0, _compose.compose)((0, _array.join)(''), (0, _listOps.map)(str => ucaseFirst(str.toLowerCase())), (0, _listOps.filter)(x => !!x), (0, _string.split)(pattern || /[^a-z\d]/i))(xs);
 });

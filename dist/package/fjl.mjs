@@ -210,12 +210,13 @@ const isEmptyList = x => !length(x);
 const isEmptyObject = obj => isEmptyList(keys(obj));
 const isEmptyCollection = x => x.size === 0;
 const isEmpty = value => {
-        let typeOfValue = typeOf(value),
-            retVal;
+        let retVal;
         if (!value) { // if '', 0, `null`, `undefined`, or `false` then is empty
             retVal = true;
         }
-        else if (typeOfValue === _Array || typeOfValue === _Function) {
+
+        const typeOfValue = typeOf(value);
+        if (typeOfValue === _Array || typeOfValue === _Function) {
             retVal = isEmptyList(value);
         }
         else if (typeOfValue === _Number$1) {
@@ -327,7 +328,12 @@ const peek = (...args) => (log(...args), args.pop());
  * @private
  */
 const jsonClone = x => JSON.parse(JSON.stringify(x));
-const toArrayMap = obj => Object.keys(obj).map(key => [key, obj[key]]);
+const toArrayMap = obj => Object.keys(obj).map(key => {
+        if (typeof obj[key] === 'object') {
+            return [key, toArrayMap(obj[key])];
+        }
+        return [key, obj[key]];
+    });
 const fromArrayMap = xs => xs.reduce((agg, [key, value]) => {
         agg[key] = value;
         return agg;
@@ -634,7 +640,7 @@ const _iterate = (limit, op, x) => {
             lastX = x;
         for (; ind < limit; ind += 1) {
             out.push(lastX);
-            lastX = op(lastX);
+            lastX = op(lastX, ind);
         }
         return out;
     };
@@ -1049,7 +1055,7 @@ const _removeBy = (pred, x, list) => { // @todo optimize this implementation
         return _append(parts[0], _tail(parts[1]));
     };
 const _removeFirstsBy = (pred, xs1, xs2) =>
-        _foldl((agg, item) => _removeBy(pred, item, agg), xs1, xs2);
+        _foldl((agg, x2) => _removeBy(pred, x2, agg), xs1, xs2);
 const _unionBy = (pred, arr1, arr2) =>
         _foldl((agg, b) => {
                 const alreadyAdded = _any(a => pred(a, b), agg);
@@ -1432,6 +1438,7 @@ const fPureTakesOneOrMore_ = name => curry2((f, ...args) => f[name](...args));
  * @private
  */
 
+const join$1 = fPureTakesOne_('join');
 const push$1 = fPureTakesOneOrMore_('push');
 
 /**
@@ -1555,7 +1562,12 @@ const unwords = intercalate(' ');
 const unlines = intercalate('\n');
 const lcaseFirst = xs => xs[0].toLowerCase() + xs.substring(1);
 const ucaseFirst = xs => xs[0].toUpperCase() + xs.substring(1);
-const camelCase = (xs, pattern) => _map(ucaseFirst, _splitAt(pattern || /[^a-z\d]/i, xs));
+const camelCase = (xs, pattern) => compose(
+            join$1(''),
+            map$1(str => ucaseFirst(str.toLowerCase())),
+            filter$1(x => !!x),
+            split$1(pattern || /[^a-z\d]/i)
+        )(xs);
 
 /**
  * Created by elyde on 12/6/2016.

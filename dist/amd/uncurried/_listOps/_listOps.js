@@ -416,7 +416,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
             lastX = x;
         for (; ind < limit; ind += 1) {
             out.push(lastX);
-            lastX = op(lastX);
+            lastX = op(lastX, ind);
         }
         return out;
     },
@@ -1528,7 +1528,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * @param xs2 {Array|String|*}
      * @returns {Array}
      */
-    _removeFirstsBy = exports._removeFirstsBy = (pred, xs1, xs2) => _foldl((agg, item) => _removeBy(pred, item, agg), xs1, xs2),
+    _removeFirstsBy = exports._removeFirstsBy = (pred, xs1, xs2) => _foldl((agg, x2) => _removeBy(pred, x2, agg), xs1, xs2),
 
 
     /**

@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './listOps', './jsPlatform/string'], factory);
+    define(['exports', './listOps', './jsPlatform/string', './uncurried/_functionOps/_compose', './jsPlatform/array'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./listOps'), require('./jsPlatform/string'));
+    factory(exports, require('./listOps'), require('./jsPlatform/string'), require('./uncurried/_functionOps/_compose'), require('./jsPlatform/array'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.listOps, global.string);
+    factory(mod.exports, global.listOps, global.string, global._compose, global.array);
     global.stringOps = mod.exports;
   }
-})(this, function (exports, _listOps, _string) {
+})(this, function (exports, _listOps, _string, _compose, _array) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -62,7 +62,7 @@
 
 
   /**
-   * Lower cases first character of string.
+   * Lower cases first character of a non-empty string.
    * @function module:stringOps.lcaseFirst
    * @param xs {String}
    * @returns {string}
@@ -73,7 +73,7 @@
 
 
   /**
-   * Upper cases first character of string.
+   * Upper cases first character of a non-empty string.
    * @function module:stringOps.ucaseFirst
    * @param xs {String}
    * @returns {string}
@@ -84,13 +84,17 @@
 
 
   /**
-   * Class cases a string.
+   * Camel cases (class case) a string.
    * @function module:stringOps.camelCase
    * @param xs {String}
-   * @param [pattern=/[^a-z\d/i]/] {RegExp} - Optional.
+   * @param [pattern=/[^a-z\d/i]/] {RegExp} - Pattern to split on.  Optional.
    * @returns {string}
    */
   camelCase = exports.camelCase = function camelCase(xs, pattern) {
-    return (0, _listOps._map)(ucaseFirst, (0, _listOps._splitAt)(pattern || /[^a-z\d]/i, xs));
+    return (0, _compose.compose)((0, _array.join)(''), (0, _listOps.map)(function (str) {
+      return ucaseFirst(str.toLowerCase());
+    }), (0, _listOps.filter)(function (x) {
+      return !!x;
+    }), (0, _string.split)(pattern || /[^a-z\d]/i))(xs);
   };
 });

@@ -94,11 +94,16 @@ define(['exports', '../_jsPlatform/_object', './_prop', './_typeOf', './_is', '.
      * @param obj {(Object|Array|*)}
      * @returns {*}
      */
-    toArrayMap = exports.toArrayMap = obj => Object.keys(obj).map(key => [key, obj[key]]),
+    toArrayMap = exports.toArrayMap = obj => Object.keys(obj).map(key => {
+        if (typeof obj[key] === 'object') {
+            return [key, toArrayMap(obj[key])];
+        }
+        return [key, obj[key]];
+    }),
 
 
     /**
-     * Converts an array-map into an object.
+     * Converts an array-map into an object (one level).
      * @param xs {Array|*} - Array-map (associated list).
      * @returns {*}
      */

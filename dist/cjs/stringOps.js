@@ -9,6 +9,10 @@ var _listOps = require('./listOps');
 
 var _string = require('./jsPlatform/string');
 
+var _compose = require('./uncurried/_functionOps/_compose');
+
+var _array = require('./jsPlatform/array');
+
 /**
  * Contains functions for operating strings.
  * @author elyde
@@ -54,7 +58,7 @@ unlines = exports.unlines = (0, _listOps.intercalate)('\n'),
 
 
 /**
- * Lower cases first character of string.
+ * Lower cases first character of a non-empty string.
  * @function module:stringOps.lcaseFirst
  * @param xs {String}
  * @returns {string}
@@ -65,7 +69,7 @@ lcaseFirst = exports.lcaseFirst = function lcaseFirst(xs) {
 
 
 /**
- * Upper cases first character of string.
+ * Upper cases first character of a non-empty string.
  * @function module:stringOps.ucaseFirst
  * @param xs {String}
  * @returns {string}
@@ -76,12 +80,16 @@ ucaseFirst = exports.ucaseFirst = function ucaseFirst(xs) {
 
 
 /**
- * Class cases a string.
+ * Camel cases (class case) a string.
  * @function module:stringOps.camelCase
  * @param xs {String}
- * @param [pattern=/[^a-z\d/i]/] {RegExp} - Optional.
+ * @param [pattern=/[^a-z\d/i]/] {RegExp} - Pattern to split on.  Optional.
  * @returns {string}
  */
 camelCase = exports.camelCase = function camelCase(xs, pattern) {
-  return (0, _listOps._map)(ucaseFirst, (0, _listOps._splitAt)(pattern || /[^a-z\d]/i, xs));
+  return (0, _compose.compose)((0, _array.join)(''), (0, _listOps.map)(function (str) {
+    return ucaseFirst(str.toLowerCase());
+  }), (0, _listOps.filter)(function (x) {
+    return !!x;
+  }), (0, _string.split)(pattern || /[^a-z\d]/i))(xs);
 };
