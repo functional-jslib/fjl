@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.assign = exports.keys = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
 
@@ -18,7 +18,7 @@ var
  * @returns {Boolean}
  */
 instanceOf = exports.instanceOf = function instanceOf(instanceConstructor, instance) {
-  return instance instanceof instanceConstructor;
+    return instance instanceof instanceConstructor;
 },
 
 
@@ -39,7 +39,7 @@ hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnPrope
  *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
  */
 length = exports.length = function length(x) {
-  return x.length;
+    return x.length;
 },
 
 
@@ -50,7 +50,7 @@ length = exports.length = function length(x) {
  * @returns {Array<String>}
  */
 keys = exports.keys = function keys(obj) {
-  return Object.keys(obj);
+    return Object.keys(obj);
 },
 
 
@@ -62,24 +62,24 @@ keys = exports.keys = function keys(obj) {
  * @returns {Object}
  */
 assign = exports.assign = function () {
-  return Object.assign ? function (obj0) {
-    for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      objs[_key - 1] = arguments[_key];
-    }
+    return Object.assign ? function (obj0) {
+        for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            objs[_key - 1] = arguments[_key];
+        }
 
-    return Object.assign.apply(Object, [obj0].concat(objs));
-  } : function (obj0) {
-    for (var _len2 = arguments.length, objs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-      objs[_key2 - 1] = arguments[_key2];
-    }
+        return Object.assign.apply(Object, [obj0].concat(objs));
+    } : function (obj0) {
+        for (var _len2 = arguments.length, objs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+            objs[_key2 - 1] = arguments[_key2];
+        }
 
-    return objs.reduce(function (topAgg, obj) {
-      return keys(obj).reduce(function (agg, key) {
-        agg[key] = obj[key];
-        return agg;
-      }, topAgg);
-    }, obj0);
-  };
+        return objs.reduce(function (topAgg, obj) {
+            return keys(obj).reduce(function (agg, key) {
+                agg[key] = obj[key];
+                return agg;
+            }, topAgg);
+        }, obj0);
+    };
 }(); /**
       * Created by elydelacruz on 9/6/2017.
       * Defines some of the platform methods for objects (the ones used within `fjl`) uncurried for use

@@ -16,17 +16,14 @@
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(exports, 'apply', {
-    enumerable: true,
-    get: function () {
-      return _function.apply;
-    }
-  });
-  Object.defineProperty(exports, 'call', {
-    enumerable: true,
-    get: function () {
-      return _function.call;
-    }
+  Object.keys(_function).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _function[key];
+      }
+    });
   });
   Object.keys(_compose).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;

@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.complement = exports.difference = exports.intersectBy = exports.intersect = undefined;
 exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.swapped = exports.unconsr = exports.uncons = exports.inits = exports.init = exports.tail = exports.last = exports.head = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.unzipN = exports.unzip = exports.zipN = exports.not = exports.or = exports.and = undefined;
@@ -9,52 +9,52 @@ exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = ex
 var _jsPlatform = require('./jsPlatform');
 
 Object.defineProperty(exports, 'slice', {
-  enumerable: true,
-  get: function get() {
-    return _jsPlatform.slice;
-  }
+    enumerable: true,
+    get: function get() {
+        return _jsPlatform.slice;
+    }
 });
 Object.defineProperty(exports, 'includes', {
-  enumerable: true,
-  get: function get() {
-    return _jsPlatform.includes;
-  }
+    enumerable: true,
+    get: function get() {
+        return _jsPlatform.includes;
+    }
 });
 Object.defineProperty(exports, 'indexOf', {
-  enumerable: true,
-  get: function get() {
-    return _jsPlatform.indexOf;
-  }
+    enumerable: true,
+    get: function get() {
+        return _jsPlatform.indexOf;
+    }
 });
 Object.defineProperty(exports, 'lastIndexOf', {
-  enumerable: true,
-  get: function get() {
-    return _jsPlatform.lastIndexOf;
-  }
+    enumerable: true,
+    get: function get() {
+        return _jsPlatform.lastIndexOf;
+    }
 });
 Object.defineProperty(exports, 'split', {
-  enumerable: true,
-  get: function get() {
-    return _jsPlatform.split;
-  }
+    enumerable: true,
+    get: function get() {
+        return _jsPlatform.split;
+    }
 });
 Object.defineProperty(exports, 'push', {
-  enumerable: true,
-  get: function get() {
-    return _jsPlatform.push;
-  }
+    enumerable: true,
+    get: function get() {
+        return _jsPlatform.push;
+    }
 });
 
 var _listOps = require('./uncurried/_listOps/_listOps');
 
 Object.keys(_listOps).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _listOps[key];
-    }
-  });
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+            return _listOps[key];
+        }
+    });
 });
 
 var _functionOps = require('./uncurried/_functionOps/_functionOps');

@@ -5,11 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.toArray = exports.fromArrayMap = exports.toArrayMap = exports.jsonClone = undefined;
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @module _objectOps
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @description Object operations (uncurried).
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @private
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /**
+                                                                                                                                                                                                                                                                               * @module _objectOps
+                                                                                                                                                                                                                                                                               * @description Object operations (uncurried).
+                                                                                                                                                                                                                                                                               * @private
+                                                                                                                                                                                                                                                                               */
 
 
 var _object = require('../_jsPlatform/_object');
@@ -128,13 +130,16 @@ jsonClone = exports.jsonClone = function jsonClone(x) {
  */
 toArrayMap = exports.toArrayMap = function toArrayMap(obj) {
     return Object.keys(obj).map(function (key) {
+        if (_typeof(obj[key]) === 'object') {
+            return [key, toArrayMap(obj[key])];
+        }
         return [key, obj[key]];
     });
 },
 
 
 /**
- * Converts an array-map into an object.
+ * Converts an array-map into an object (one level).
  * @param xs {Array|*} - Array-map (associated list).
  * @returns {*}
  */

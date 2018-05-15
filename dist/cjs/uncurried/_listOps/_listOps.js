@@ -462,7 +462,7 @@ _iterate = exports._iterate = function _iterate(limit, op, x) {
         lastX = x;
     for (; ind < limit; ind += 1) {
         out.push(lastX);
-        lastX = op(lastX);
+        lastX = op(lastX, ind);
     }
     return out;
 },
@@ -1705,8 +1705,8 @@ _removeBy = exports._removeBy = function _removeBy(pred, x, list) {
  * @returns {Array}
  */
 _removeFirstsBy = exports._removeFirstsBy = function _removeFirstsBy(pred, xs1, xs2) {
-    return _foldl(function (agg, item) {
-        return _removeBy(pred, item, agg);
+    return _foldl(function (agg, x2) {
+        return _removeBy(pred, x2, agg);
     }, xs1, xs2);
 },
 

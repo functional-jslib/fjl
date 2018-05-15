@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 /**
  * Created by elyde on 12/18/2016.
  * @memberOf _objectOps
@@ -332,12 +334,14 @@ var isEmptyCollection = function isEmptyCollection(x) {
     return x.size === 0;
 };
 var isEmpty = function isEmpty(value) {
-    var typeOfValue = typeOf(value),
-        retVal = void 0;
+    var retVal = void 0;
     if (!value) {
         // if '', 0, `null`, `undefined`, or `false` then is empty
         retVal = true;
-    } else if (typeOfValue === _Array || typeOfValue === _Function) {
+    }
+
+    var typeOfValue = typeOf(value);
+    if (typeOfValue === _Array || typeOfValue === _Function) {
         retVal = isEmptyList(value);
     } else if (typeOfValue === _Number$1) {
         retVal = false;
@@ -497,6 +501,9 @@ var jsonClone = function jsonClone(x) {
 };
 var toArrayMap = function toArrayMap(obj) {
     return Object.keys(obj).map(function (key) {
+        if (_typeof(obj[key]) === 'object') {
+            return [key, toArrayMap(obj[key])];
+        }
         return [key, obj[key]];
     });
 };
@@ -884,7 +891,7 @@ var _iterate = function _iterate(limit, op, x) {
         lastX = x;
     for (; ind < limit; ind += 1) {
         out.push(lastX);
-        lastX = op(lastX);
+        lastX = op(lastX, ind);
     }
     return out;
 };
@@ -1398,8 +1405,8 @@ var _removeBy = function _removeBy(pred, x, list) {
     return _append(parts[0], _tail(parts[1]));
 };
 var _removeFirstsBy = function _removeFirstsBy(pred, xs1, xs2) {
-    return _foldl(function (agg, item) {
-        return _removeBy(pred, item, agg);
+    return _foldl(function (agg, x2) {
+        return _removeBy(pred, x2, agg);
     }, xs1, xs2);
 };
 var _unionBy = function _unionBy(pred, arr1, arr2) {
@@ -1901,6 +1908,7 @@ var fPureTakesOneOrMore_ = function fPureTakesOneOrMore_(name) {
  * @private
  */
 
+var join$1 = fPureTakesOne_('join');
 var push$1 = fPureTakesOneOrMore_('push');
 
 /**
@@ -2029,7 +2037,11 @@ var ucaseFirst = function ucaseFirst(xs) {
     return xs[0].toUpperCase() + xs.substring(1);
 };
 var camelCase = function camelCase(xs, pattern) {
-    return _map(ucaseFirst, _splitAt(pattern || /[^a-z\d]/i, xs));
+    return compose(join$1(''), map$1(function (str) {
+        return ucaseFirst(str.toLowerCase());
+    }), filter$1(function (x) {
+        return !!x;
+    }), split$1(pattern || /[^a-z\d]/i))(xs);
 };
 
 /**

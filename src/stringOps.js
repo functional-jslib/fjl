@@ -6,8 +6,8 @@
  */
 import {intercalate, map, filter} from './listOps';
 import {split} from './jsPlatform/string';
-import {compose} from "./uncurried/_functionOps/_compose";
-import {join} from "./jsPlatform/array";
+import {compose} from './uncurried/_functionOps/_compose';
+import {join} from './jsPlatform/array';
 
 export const
 
