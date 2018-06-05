@@ -495,6 +495,141 @@ var peek = function peek() {
   return log.apply(undefined, args), args.pop();
 };
 
+/**
+ * @module errorThrowing
+ * @description Contains error throwing facilities for when a value doesn't match a type.
+ *  In addition gives you curried and uncurried versions of the multi arity functions.
+ */
+var isCheckableType = function isCheckableType(type) {
+    return isString(type) || isFunction(type);
+};
+var _errorIfNotCheckableType = function _errorIfNotCheckableType(contextName, type) {
+    if (!isCheckableType(type)) {
+        throw new Error(contextName + ' expects `type` to be of type `String` or `Function`.' + ('  Type received `' + typeOf(type) + '`.  Value `' + type + '`.'));
+    }
+    return type;
+};
+var getTypeName = function getTypeName(type) {
+    return _errorIfNotCheckableType('getTypeName', type) && isString(type) ? type : type.name;
+};
+var _defaultTypeChecker = function _defaultTypeChecker(Type, value) {
+    return isType$1(getTypeName(Type), value) || isFunction(Type) && isset(value) && value instanceof Type;
+};
+var multiTypesToString = function multiTypesToString(types) {
+    return types.length ? types.map(function (type) {
+        return '`' + getTypeName(type) + '`';
+    }).join(', ') : '';
+};
+var defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {
+    var contextName = tmplContext.contextName,
+        valueName = tmplContext.valueName,
+        value = tmplContext.value,
+        expectedTypeName = tmplContext.expectedTypeName,
+        foundTypeName = tmplContext.foundTypeName,
+        messageSuffix = tmplContext.messageSuffix,
+        isMultiTypeNames = isArray(expectedTypeName),
+        typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+        typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
+
+    return (contextName ? '`' + contextName + '.' : '`') + (valueName + '` is not ' + typesCopy + ': ' + typesToMatchCopy + '.  ') + ('Type received: ' + foundTypeName + '.  Value: ' + value + ';') + ('' + (messageSuffix ? '  ' + messageSuffix + ';' : ''));
+};
+var _getErrorIfNotTypeThrower = function _getErrorIfNotTypeThrower(errorMessageCall) {
+    var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
+    return function (ValueType, contextName, valueName, value) {
+        var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+
+        var expectedTypeName = getTypeName(ValueType),
+            foundTypeName = typeOf(value);
+        if (typeChecker(ValueType, value)) {
+            return value;
+        } // Value matches type
+        throw new Error(errorMessageCall({ contextName: contextName, valueName: valueName, value: value, expectedTypeName: expectedTypeName, foundTypeName: foundTypeName, messageSuffix: messageSuffix }));
+    };
+};
+var _getErrorIfNotTypesThrower = function _getErrorIfNotTypesThrower(errorMessageCall) {
+    var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
+    return function (valueTypes, contextName, valueName, value) {
+        var expectedTypeNames = valueTypes.map(getTypeName),
+            matchFound = valueTypes.some(function (ValueType) {
+            return typeChecker(ValueType, value);
+        }),
+            foundTypeName = typeOf(value);
+        if (matchFound) {
+            return value;
+        }
+        throw new Error(errorMessageCall({
+            contextName: contextName, valueName: valueName, value: value,
+            expectedTypeName: expectedTypeNames, foundTypeName: foundTypeName
+        }));
+    };
+};
+var _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
+var _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall);
+var defaultTypeChecker = curry(_defaultTypeChecker);
+var errorIfNotType = curry(_errorIfNotType);
+var errorIfNotTypes = curry4(_errorIfNotTypes);
+
+/**
+ * @typedef {*} Any - Synonym for 'any value'.
+ */
+
+/**
+ * @typedef {String|Function} TypeRef
+ * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
+ */
+
+/**
+ * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
+ * @description Template context used for error message renderers (functions that take a context obj and return a string).
+ * @property value {*}
+ * @property valueName {String}
+ * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
+ * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
+ * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
+ *  directing user to fix where his/her error has occurred).  Optional.
+ */
+
+/**
+ * @typedef {Array<(String|Function)>} TypesArray
+ */
+
+/**
+ * @typedef {Function} TypeChecker
+ * @description Checks whether a value is of given type.
+ * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @typedef {Function} ErrorMessageCall
+ * @description Error message template function.
+ * @param tmplContext {TemplateContext}
+ * @returns {String}
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotType
+ * @description Used to ensure value matches passed in type.
+ * @param type {TypeRef} - Constructor name or constructor.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - What ever value is.
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotTypes
+ * @description Used to ensure a value matches one of one or more types passed in.
+ * @param valueTypes {TypesArray} - Array of constructor names or constructors.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - Whatever value is.
+ */
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
 } : function (obj) {
@@ -2238,18 +2373,22 @@ var words = split$1(/[\s\t]/gm);
 var unwords = intercalate(' ');
 var unlines = intercalate('\n');
 var lcaseFirst = function lcaseFirst(xs) {
-  return xs[0].toLowerCase() + xs.substring(1);
+    _errorIfNotType(String, 'lcaseFirst', 'xs', xs);
+    return xs[0].toLowerCase() + xs.substring(1);
 };
 var ucaseFirst = function ucaseFirst(xs) {
-  return xs[0].toUpperCase() + xs.substring(1);
+    _errorIfNotType(String, 'ucaseFirst', 'xs', xs);
+    return xs[0].toUpperCase() + xs.substring(1);
 };
-var camelCase = function camelCase(xs, pattern) {
-  return compose(join$1(''), map$1(function (str) {
-    return ucaseFirst(str.toLowerCase());
-  }), filter$1(function (x) {
-    return !!x;
-  }), split$1(pattern || /[^a-z\d]/i))(xs);
+var camelCase = function camelCase(xs) {
+    var pattern = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : /[^a-z\d]/i;
+    return compose(join$1(''), map$1(function (str) {
+        return ucaseFirst(str.toLowerCase());
+    }), filter$1(function (x) {
+        return !!x;
+    }), split$1(pattern))(_errorIfNotType(String, 'camelCase', 'xs', xs));
 };
+var classCase = compose(ucaseFirst, camelCase);
 
 /**
  * Created by elyde on 12/6/2016.
@@ -2566,6 +2705,7 @@ exports.unlines = unlines;
 exports.lcaseFirst = lcaseFirst;
 exports.ucaseFirst = ucaseFirst;
 exports.camelCase = camelCase;
+exports.classCase = classCase;
 exports.fPureTakesOne_ = fPureTakesOne_;
 exports.fPureTakes2_ = fPureTakes2_;
 exports.fPureTakesOneOrMore_ = fPureTakesOneOrMore_;

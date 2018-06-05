@@ -1,4 +1,4 @@
-define(['exports', '../_jsPlatform/_object', './_prop', './_typeOf', './_is', './_of', './_assignDeep', './_setTheory', './_console'], function (exports, _object, _prop, _typeOf, _is, _of, _assignDeep, _setTheory, _console) {
+define(['exports', '../_jsPlatform/_object', './_prop', './_typeOf', './_is', './_of', './_assignDeep', './_setTheory', './_console', './_errorThrowing'], function (exports, _object, _prop, _typeOf, _is, _of, _assignDeep, _setTheory, _console, _errorThrowing) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -77,6 +77,20 @@ define(['exports', '../_jsPlatform/_object', './_prop', './_typeOf', './_is', '.
             }
         });
     });
+    Object.keys(_errorThrowing).forEach(function (key) {
+        if (key === "default" || key === "__esModule") return;
+        Object.defineProperty(exports, key, {
+            enumerable: true,
+            get: function () {
+                return _errorThrowing[key];
+            }
+        });
+    });
+    /**
+     * @module _objectOps
+     * @description Object operations (uncurried).
+     * @private
+     */
     const
 
     /**
@@ -138,9 +152,5 @@ define(['exports', '../_jsPlatform/_object', './_prop', './_typeOf', './_is', '.
             default:
                 return toArrayMap(x);
         }
-    }; /**
-        * @module _objectOps
-        * @description Object operations (uncurried).
-        * @private
-        */
+    };
 });

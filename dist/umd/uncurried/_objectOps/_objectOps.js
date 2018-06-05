@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../_jsPlatform/_object', './_prop', './_typeOf', './_is', './_of', './_assignDeep', './_setTheory', './_console'], factory);
+        define(['exports', '../_jsPlatform/_object', './_prop', './_typeOf', './_is', './_of', './_assignDeep', './_setTheory', './_console', './_errorThrowing'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../_jsPlatform/_object'), require('./_prop'), require('./_typeOf'), require('./_is'), require('./_of'), require('./_assignDeep'), require('./_setTheory'), require('./_console'));
+        factory(exports, require('../_jsPlatform/_object'), require('./_prop'), require('./_typeOf'), require('./_is'), require('./_of'), require('./_assignDeep'), require('./_setTheory'), require('./_console'), require('./_errorThrowing'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global._object, global._prop, global._typeOf, global._is, global._of, global._assignDeep, global._setTheory, global._console);
+        factory(mod.exports, global._object, global._prop, global._typeOf, global._is, global._of, global._assignDeep, global._setTheory, global._console, global._errorThrowing);
         global._objectOps = mod.exports;
     }
-})(this, function (exports, _object, _prop, _typeOf, _is, _of, _assignDeep, _setTheory, _console) {
+})(this, function (exports, _object, _prop, _typeOf, _is, _of, _assignDeep, _setTheory, _console, _errorThrowing) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -86,6 +86,15 @@
             enumerable: true,
             get: function () {
                 return _console[key];
+            }
+        });
+    });
+    Object.keys(_errorThrowing).forEach(function (key) {
+        if (key === "default" || key === "__esModule") return;
+        Object.defineProperty(exports, key, {
+            enumerable: true,
+            get: function () {
+                return _errorThrowing[key];
             }
         });
     });

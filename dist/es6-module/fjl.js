@@ -308,6 +308,111 @@ const error = console.error.bind(console);
 const peek = (...args) => (log(...args), args.pop());
 
 /**
+ * @module errorThrowing
+ * @description Contains error throwing facilities for when a value doesn't match a type.
+ *  In addition gives you curried and uncurried versions of the multi arity functions.
+ */
+const isCheckableType = type => isString(type) || isFunction(type);
+const _errorIfNotCheckableType = (contextName, type) => {
+        if (!isCheckableType(type)) {
+            throw new Error (`${contextName} expects \`type\` to be of type \`String\` or \`Function\`.` +
+                `  Type received \`${typeOf(type)}\`.  Value \`${type}\`.`);
+        }
+        return type;
+    };
+const getTypeName = type =>
+        _errorIfNotCheckableType('getTypeName', type) &&
+            isString(type) ? type : type.name;
+const _defaultTypeChecker = (Type, value) => isType$1(getTypeName(Type), value) || (
+        isFunction(Type) && isset(value) && value instanceof Type);
+const multiTypesToString = types => types.length ?
+             types.map(type => `\`${getTypeName(type)}\``).join(', ') : '';
+const defaultErrorMessageCall = tmplContext => {
+        const {
+            contextName, valueName, value, expectedTypeName,
+            foundTypeName, messageSuffix
+        } = tmplContext,
+            isMultiTypeNames = isArray(expectedTypeName),
+            typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+            typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
+        return (contextName ? `\`${contextName}.` : '`') +
+            `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` +
+            `Type received: ${foundTypeName}.  Value: ${value};` +
+            `${messageSuffix ?  '  ' + messageSuffix + ';' : ''}`;
+    };
+const _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
+      (ValueType, contextName, valueName, value, messageSuffix = null) => {
+        const expectedTypeName = getTypeName(ValueType),
+            foundTypeName = typeOf(value);
+        if (typeChecker(ValueType, value)) { return value; } // Value matches type
+        throw new Error(errorMessageCall(
+            {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
+        ));
+    };
+const _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
+
+/**
+ * @typedef {*} Any - Synonym for 'any value'.
+ */
+
+/**
+ * @typedef {String|Function} TypeRef
+ * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
+ */
+
+/**
+ * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
+ * @description Template context used for error message renderers (functions that take a context obj and return a string).
+ * @property value {*}
+ * @property valueName {String}
+ * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
+ * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
+ * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
+ *  directing user to fix where his/her error has occurred).  Optional.
+ */
+
+/**
+ * @typedef {Array<(String|Function)>} TypesArray
+ */
+
+/**
+ * @typedef {Function} TypeChecker
+ * @description Checks whether a value is of given type.
+ * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @typedef {Function} ErrorMessageCall
+ * @description Error message template function.
+ * @param tmplContext {TemplateContext}
+ * @returns {String}
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotType
+ * @description Used to ensure value matches passed in type.
+ * @param type {TypeRef} - Constructor name or constructor.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - What ever value is.
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotTypes
+ * @description Used to ensure a value matches one of one or more types passed in.
+ * @param valueTypes {TypesArray} - Array of constructor names or constructors.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - Whatever value is.
+ */
+
+/**
  * @module _objectOps
  * @description Object operations (uncurried).
  * @private
@@ -1518,14 +1623,21 @@ const lines = split$1(/[\n\r]/gm);
 const words = split$1(/[\s\t]/gm);
 const unwords = intercalate(' ');
 const unlines = intercalate('\n');
-const lcaseFirst = xs => xs[0].toLowerCase() + xs.substring(1);
-const ucaseFirst = xs => xs[0].toUpperCase() + xs.substring(1);
-const camelCase = (xs, pattern) => compose(
+const lcaseFirst = xs => {
+        _errorIfNotType(String, 'lcaseFirst', 'xs', xs);
+        return xs[0].toLowerCase() + xs.substring(1);
+    };
+const ucaseFirst = xs => {
+        _errorIfNotType(String, 'ucaseFirst', 'xs', xs);
+        return xs[0].toUpperCase() + xs.substring(1);
+    };
+const camelCase = (xs, pattern = /[^a-z\d]/i) => compose(
             join$1(''),
             map$1(str => ucaseFirst(str.toLowerCase())),
             filter$1(x => !!x),
-            split$1(pattern || /[^a-z\d]/i)
-        )(xs);
+            split$1(pattern)
+        )(_errorIfNotType(String, 'camelCase', 'xs', xs));
+const classCase = compose(ucaseFirst, camelCase);
 
 /**
  * Created by elyde on 12/6/2016.
@@ -1540,4 +1652,4 @@ const camelCase = (xs, pattern) => compose(
  * @module fjl
  */
 
-export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, jsonClone, fromArrayMap, toArrayMap, toArray, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, log, error, peek, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };
+export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, jsonClone, fromArrayMap, toArrayMap, toArray, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, log, error, peek, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };
