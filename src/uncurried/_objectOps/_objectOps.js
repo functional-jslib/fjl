@@ -11,6 +11,7 @@ export * from './_of';
 export * from './_assignDeep';
 export * from './_setTheory';
 export * from './_console';
+export * from './_errorThrowing';
 
 import {typeOf} from './_typeOf';
 

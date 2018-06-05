@@ -7,13 +7,13 @@ import {
     concat as listAppend,
     indexOf, slice, includes
 }
-    from '../_jsPlatform/_list';
+                            from '../_jsPlatform/_list';
 
-import {apply} from '../_jsPlatform/_function';
-import {negateP, negateF} from '../_functionOps/_negate';
-import {isTruthy, isFalsy} from '../../booleanOps';
-import {prop, length} from '../_objectOps/_objectOps';
-import _map from './_map';
+import {apply}              from '../_jsPlatform/_function';
+import {negateP, negateF}   from '../_functionOps/_negate';
+import {isTruthy, isFalsy}  from '../../booleanOps';
+import {prop, length}       from '../_objectOps/_objectOps';
+import _map                 from './_map';
 
 import {
     sliceFrom, sliceTo, lengths,

@@ -10,7 +10,7 @@ import {__, compose, negateP} from '../src/functionOps';
 import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/objectOps';
 import {isTruthy} from '../src/booleanOps';
-import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase}
+import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase}
     from '../src/stringOps';
 import {
     append, appendMany, all, and, or, any, find, findIndex, findIndices,
@@ -2598,7 +2598,26 @@ describe ('#listOps', function () {
         it ('should throw an error when receiving an empty-string or any value that is not a string', () => {
             [null, undefined, [], {}]
                 .forEach(xs =>
-                    assert.throws(() => ucaseFirst(xs), Error)
+                    assert.throws(() => camelCase(xs), Error)
+                );
+        });
+    });
+    
+    describe ('#classCase', () => {
+        it ('should return a "camel-cased" version of passed in non-empty string', () => {
+            [
+                ['all-your-base', 'AllYourBase'],
+                ['ALL-YOUR-BASE', 'AllYourBase'],
+                ['$$abc', 'Abc']
+            ]
+                .forEach(([given, expected]) => {
+                    expect(classCase(given)).to.equal(expected);
+                });
+        });
+        it ('should throw an error when receiving an empty-string or any value that is not a string', () => {
+            [null, undefined, [], {}]
+                .forEach(xs =>
+                    assert.throws(() => classCase(xs), Error)
                 );
         });
     });
