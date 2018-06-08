@@ -12,13 +12,13 @@ export const
 
     /**
      * Returns whether constructor has derived _objectOps.
-     * @function module:_jsPlatform_objectOps.instanceOf
+     * @function module:_jsPlatform_objectOps._instanceOf
      * @param instanceConstructor {Function} - Constructor.
      * @param instance {*}
      * @instance {*}
      * @returns {Boolean}
      */
-    instanceOf = (instanceConstructor, instance) =>
+    _instanceOf = (instanceConstructor, instance) =>
         instance instanceof instanceConstructor,
 
     /**
@@ -27,7 +27,7 @@ export const
      * @param typeInstance {*}
      * @returns {Boolean}
      */
-    hasOwnProperty = fPureTakesOne('hasOwnProperty'),
+    _hasOwnProperty = fPureTakesOne('hasOwnProperty'),
 
     /**
      * @function module:_jsPlatform_objectOps.length
@@ -48,12 +48,12 @@ export const
 
     /**
      * Defined as `Object.assign` else is the same thing but shimmed.
-     * @function module:_jsPlatform_objectOps.assign
+     * @function module:_jsPlatform_objectOps._assign
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}
      */
-    assign = (() => Object.assign ?
+    _assign = (() => Object.assign ?
             (obj0, ...objs) => Object.assign(obj0, ...objs) :
             (obj0, ...objs) => objs.reduce((topAgg, obj) => {
                 return keys(obj).reduce((agg, key) => {

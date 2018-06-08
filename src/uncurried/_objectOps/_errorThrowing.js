@@ -4,7 +4,7 @@
  *  In addition gives you curried and uncurried versions of the multi arity functions.
  */
 import {typeOf} from './_typeOf';
-import {isset, isType, isString, isArray, isFunction} from './_is';
+import {isset, _isType, isString, isArray, isFunction} from './_is';
 import {curry, curry4} from '../_functionOps/_curry';
 
 export const
@@ -34,7 +34,6 @@ export const
 
     /**
      * Resolves/normalizes a type name from either a string or a constructor.
-     * @private
      * @function module:errorThrowing.getTypeName
      * @param type {Function|String} - String or function representing a type.
      * @returns {String}
@@ -51,13 +50,12 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    _defaultTypeChecker = (Type, value) => isType(getTypeName(Type), value) || (
+    _defaultTypeChecker = (Type, value) => _isType(getTypeName(Type), value) || (
         isFunction(Type) && isset(value) && value instanceof Type),
 
     /**
      * Pretty prints an array of types/type-strings for use by error messages;
      * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
-     * @private
      * @function module:errorThrowing.multiTypesToString
      * @param types {Array|TypesArray}
      * @return {String}

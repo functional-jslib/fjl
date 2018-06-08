@@ -2,34 +2,18 @@
  * @module objectOps
  */
 import {curry, curry2} from './uncurried/_functionOps/_curry';
+import {_instanceOf, _hasOwnProperty, _assign} from './uncurried/_jsPlatform/_object';
 import {
-    instanceOf as _instanceOf,
-    hasOwnProperty as _hasOwnProperty,
-    assign as _assign} from './uncurried/_jsPlatform/_object';
-import {prop as _prop} from './uncurried/_objectOps/_prop';
-import {assignDeep as _assignDeep}      from './uncurried/_objectOps/_assignDeep';
+    _prop, _isType, _fromAssocListOnKey, _fromAssocListOnKeys,
+    _toAssocListOnKey, _toAssocListOnKeys} from './uncurried/_objectOps/_objectOps';
+import {_assignDeep} from './uncurried/_objectOps/_assignDeep';
 import {
-    objUnion as _objUnion,
-    objComplement as _objComplement,
-    objIntersect as _objIntersect,
-    objDifference as _objDifference}    from './uncurried/_objectOps/_setTheory';
-import {isType as _isType}
-    from './uncurried/_objectOps/_is';
+    _objUnion, _objComplement, _objIntersect, _objDifference}
+    from './uncurried/_objectOps/_setTheory';
 
-export {jsonClone, fromArrayMap, toArrayMap, toArray} from './uncurried/_objectOps/_objectOps';
+export * from './uncurried/_objectOps/_objectOps';
+
 export {length, keys} from './uncurried/_jsPlatform/_object';
-export * from './uncurried/_objectOps/_typeOf';
-export * from './uncurried/_objectOps/_of';
-export * from './uncurried/_objectOps/_console';
-export {
-    isFunction, isClass, isCallable, isArray, isObject, isBoolean,
-    isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined,
-    isNull, isSymbol, isUsableImmutablePrimitive,
-    isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset
-} from './uncurried/_objectOps/_is';
-
-export {_instanceOf, _isType, _hasOwnProperty, _assign, _prop, _assignDeep, _objUnion,
-_objComplement, _objIntersect, _objDifference};
 
 export const
 
@@ -128,4 +112,23 @@ export const
      * @param value {*}
      * @return {Boolean}
      */
-    isType = curry(_isType);
+    isType = curry(_isType),
+
+    toAssocListOnKey = curry(_toAssocListOnKey),
+
+    /**
+     * Converts incoming object into an associated lists and all subsequent
+     * objects values found at key that is one of given `keys`
+     * @function module:objectOps.toAssocListOnKeys
+     * @param keys {Array.<*>} - Usually `Array.<String>`.
+     * @param obj {*} - Object to convert on.
+     * @returns {any[]} - Associated list
+     * @curried
+     */
+    toAssocListOnKeys = curry(_toAssocListOnKeys),
+
+    fromAssocListOnKey = curry(_fromAssocListOnKey),
+
+    fromAssocListOnKeys = curry(_fromAssocListOnKeys)
+
+;

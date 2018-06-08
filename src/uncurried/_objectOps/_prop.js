@@ -4,9 +4,9 @@
 
 /**
  * Returns property value if found; Else `undefined`.
- * @function module:_objectOps.prop
+ * @function module:_objectOps._prop
  * @param name {String} - Key to search on `obj`
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
  */
-export const prop = (name, obj) => obj[name];
+export const _prop = (name, obj) => obj[name];
