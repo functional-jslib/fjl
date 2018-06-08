@@ -2622,4 +2622,28 @@ describe ('#listOps', function () {
         });
     });
 
+    describe ('#toAssocList', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#toAssocListOnKey', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#toAssocListOnKeys', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#fromAssocList', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#fromAssocListOnKey', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#fromAssocListOnKeys', () => {
+        it ('requires more tests');
+    });
+
 });
