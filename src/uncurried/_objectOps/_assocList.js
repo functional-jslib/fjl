@@ -10,7 +10,7 @@ export const
      * @param obj {(Object|Array|*)}
      * @returns {Array.<*, *>}
      */
-    toAssocList = obj => Object.keys(obj).map(key =>
+    toAssocList = obj => !obj ? [] : Object.keys(obj).map(key =>
         isObject(obj[key]) ?
             [key, toAssocList(obj[key])] :
             [key, obj[key]]
@@ -34,7 +34,7 @@ export const
      * @param obj {*} - Object to convert on.
      * @returns {any[]} - Associated list
      */
-    _toAssocListOnKeys = (keys, obj) => Object.keys(obj).map(key =>
+    _toAssocListOnKeys = (keys, obj) => !obj ? [] : Object.keys(obj).map(key =>
         keys.includes(key) && isObject(obj[key]) ?
             [key, _toAssocListOnKeys(keys, obj[key])] :
             [key, obj[key]]
@@ -47,7 +47,7 @@ export const
      * @param xs {Array.<Array>} - Associated list.
      * @returns {Object}
      */
-    fromAssocList = xs => xs.reduce((agg, [key, value]) => {
+    fromAssocList = xs => !xs ? [] : xs.reduce((agg, [key, value]) => {
         if (isArray(value) && isArray(value[0])) {
             agg[key] = fromAssocList(value);
             return agg;
@@ -72,7 +72,7 @@ export const
      * @param xs {Array|*} - Associated list.
      * @returns {Object}
      */
-    _fromAssocListOnKeys = (keys, xs) => xs.reduce((agg, [k, value]) => {
+    _fromAssocListOnKeys = (keys, xs) => !xs ? [] : xs.reduce((agg, [k, value]) => {
         if (keys.includes(k) && isArray(value) && isArray(value[0])) {
             agg[k] = _fromAssocListOnKeys(keys, value);
             return agg;

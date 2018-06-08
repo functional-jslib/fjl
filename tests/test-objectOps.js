@@ -12,7 +12,9 @@ import {
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet, jsonClone,
     fromArrayMap, toArrayMap, toArray, log, peek, error,
-    isWeakMap, isWeakSet, assignDeep, assign
+    isWeakMap, isWeakSet, assignDeep, assign,
+    toAssocList, toAssocListOnKey, toAssocListOnKeys,
+    fromAssocList, fromAssocListOnKey, fromAssocListOnKeys
 } from '../src/objectOps';
 import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_listOps/_listOps";
 import {
@@ -455,52 +457,6 @@ describe ('#objectOps', function () {
         // });
     });
 
-    describe ('#toArrayMap', function () {
-        test ('should convert an object to an array map', () => {
-            // Ensure map was converted to array map properly
-            expect(all(([charCode, char], ind) => {
-                    const [charCode1, char1] = charCodeToCharArrayMap[ind];
-                    return `${charCode1}` === charCode && char1 === char;
-                }, toArrayMap(charCodeToCharMap)
-            ))
-                .to.equal(true);
-        });
-        test ('should return an empty an array when receiving an empty object', () => {
-            const result = toArrayMap({});
-            expect(result).to.be.instanceOf(Array);
-            expect(result.length).to.equal(0);
-        });
-        test ('Should throw an error when receiving `undefined` or `null`', () => {
-            assert.throws(toArrayMap, Error);
-            assert.throws(() => toArrayMap(null), Error);
-        });
-    });
-
-    describe ('#fromArrayMap', function () {
-        test ('should return an object from an array map', () => {
-            const result = fromArrayMap(charCodeToCharArrayMap);
-            expect(isObject(result)).to.equal(true);
-            expect(
-                all(([charCode, char]) =>
-                    result[charCode] === char,
-                    charCodeToCharArrayMap
-                )
-            )
-                .to.equal(true);
-        });
-
-        test ('should return an empty object when receiving an empty array', () => {
-            const result = fromArrayMap([]);
-            expect(isObject(result)).to.equal(true);
-            expect(keys(result).length).to.equal(0);
-        });
-
-        test ('should throw an error when receiving `null` and/or `undefined', () => {
-            assert.throws(fromArrayMap, Error);
-            assert.throws(() => fromArrayMap(null), Error);
-        });
-    });
-
     describe ('#toArray', function () {
         const rslt = toArrayMap(allYourBase),
             expectedRslt = [['all', [['your', [['base', [['are', [['belong', [['to', [['us', 0]]]]]]]]]]]]]];
@@ -542,6 +498,95 @@ describe ('#objectOps', function () {
                 [99], [true], [undefined], [null], ['Output tested from `peek`']
             ]).forEach(xs => {
                 expect(peek.apply(null, xs)).to.equal(xs.pop());
+            });
+        });
+    });
+
+    describe ('#toAssocList', () => {
+        it ('should be able to turn an object into an associated list', () => {
+            const expected = [[
+                    'all', [[
+                        'your', [[
+                            'base', [[
+                                'are', [[
+                                    'belong', [[
+                                        'to', [[
+                                            'us', 0
+                                        ]]
+                                    ]]
+                                ]]
+                            ]]
+                        ]]
+                    ]]
+                ]],
+                result = toAssocList(allYourBase);
+            expect(result).to.be.instanceOf(Array);
+            expect(result).to.deep.equal(expected);
+        });
+        it ('should return an empty array when receiving `{}`, `null`, or `undefined`.', () => {
+            [[], null, undefined].forEach(x => {
+                const result = toAssocList(x);
+                expect(isArray(result)).to.equal(true);
+                expect(result.length).to.equal(0);
+            });
+        });
+    });
+
+    describe ('#toAssocListOnKey', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#toAssocListOnKeys', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#fromAssocList', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#fromAssocListOnKey', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#fromAssocListOnKeys', () => {
+        it ('requires more tests');
+    });
+
+    describe ('#toArrayMap', function () {
+        test ('should convert an object to an array map', () => {
+            // Ensure map was converted to array map properly
+            expect(all(([charCode, char], ind) => {
+                    const [charCode1, char1] = charCodeToCharArrayMap[ind];
+                    return `${charCode1}` === charCode && char1 === char;
+                }, toArrayMap(charCodeToCharMap)
+            ))
+                .to.equal(true);
+        });
+        test ('should return an empty array when receiving `{}`, `null`, or `undefined`', () => {
+            const result = toArrayMap({});
+            expect(result).to.be.instanceOf(Array);
+            expect(result.length).to.equal(0);
+        });
+    });
+
+    describe ('#fromArrayMap', function () {
+        test ('should return an object from an array map', () => {
+            const result = fromArrayMap(charCodeToCharArrayMap);
+            expect(isObject(result)).to.equal(true);
+            expect(
+                all(([charCode, char]) =>
+                    result[charCode] === char,
+                    charCodeToCharArrayMap
+                )
+            )
+                .to.equal(true);
+        });
+
+        test ('should return an empty object when receiving `[]`, `null`, or `undefined`', () => {
+            [[], null, undefined].forEach(x => {
+                const result = fromArrayMap(x);
+                expect(isObject(result)).to.equal(true);
+                expect(keys(result).length).to.equal(0);
             });
         });
     });
