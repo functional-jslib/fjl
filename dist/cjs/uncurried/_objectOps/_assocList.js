@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.fromArrayMap = exports.toArrayMap = exports._fromAssocListOnKeys = exports._fromAssocListOnKey = exports.fromAssocList = exports._toAssocListOnKeys = exports._toAssocListOnKey = exports.toAssocList = undefined;
 
@@ -20,9 +20,9 @@ var
  * @returns {Array.<*, *>}
  */
 toAssocList = exports.toAssocList = function toAssocList(obj) {
-  return Object.keys(obj).map(function (key) {
-    return (0, _is.isObject)(obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
-  });
+    return !obj ? [] : Object.keys(obj).map(function (key) {
+        return (0, _is.isObject)(obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
+    });
 },
 
 
@@ -35,7 +35,7 @@ toAssocList = exports.toAssocList = function toAssocList(obj) {
  * @returns {any[]} - Associated list
  */
 _toAssocListOnKey = exports._toAssocListOnKey = function _toAssocListOnKey(key, obj) {
-  return _toAssocListOnKeys([key], obj);
+    return _toAssocListOnKeys([key], obj);
 },
 
 
@@ -48,9 +48,9 @@ _toAssocListOnKey = exports._toAssocListOnKey = function _toAssocListOnKey(key, 
  * @returns {any[]} - Associated list
  */
 _toAssocListOnKeys = exports._toAssocListOnKeys = function _toAssocListOnKeys(keys, obj) {
-  return Object.keys(obj).map(function (key) {
-    return keys.includes(key) && (0, _is.isObject)(obj[key]) ? [key, _toAssocListOnKeys(keys, obj[key])] : [key, obj[key]];
-  });
+    return !obj ? [] : Object.keys(obj).map(function (key) {
+        return keys.includes(key) && (0, _is.isObject)(obj[key]) ? [key, _toAssocListOnKeys(keys, obj[key])] : [key, obj[key]];
+    });
 },
 
 
@@ -62,18 +62,18 @@ _toAssocListOnKeys = exports._toAssocListOnKeys = function _toAssocListOnKeys(ke
  * @returns {Object}
  */
 fromAssocList = exports.fromAssocList = function fromAssocList(xs) {
-  return xs.reduce(function (agg, _ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-        key = _ref2[0],
-        value = _ref2[1];
+    return !xs ? {} : xs.reduce(function (agg, _ref) {
+        var _ref2 = _slicedToArray(_ref, 2),
+            key = _ref2[0],
+            value = _ref2[1];
 
-    if ((0, _is.isArray)(value) && (0, _is.isArray)(value[0])) {
-      agg[key] = fromAssocList(value);
-      return agg;
-    }
-    agg[key] = value;
-    return agg;
-  }, {});
+        if ((0, _is.isArray)(value) && (0, _is.isArray)(value[0])) {
+            agg[key] = fromAssocList(value);
+            return agg;
+        }
+        agg[key] = value;
+        return agg;
+    }, {});
 },
 
 
@@ -85,7 +85,7 @@ fromAssocList = exports.fromAssocList = function fromAssocList(xs) {
  * @returns {*}
  */
 _fromAssocListOnKey = exports._fromAssocListOnKey = function _fromAssocListOnKey(key, xs) {
-  return _fromAssocListOnKeys([key], xs);
+    return _fromAssocListOnKeys([key], xs);
 },
 
 
@@ -97,18 +97,18 @@ _fromAssocListOnKey = exports._fromAssocListOnKey = function _fromAssocListOnKey
  * @returns {Object}
  */
 _fromAssocListOnKeys = exports._fromAssocListOnKeys = function _fromAssocListOnKeys(keys, xs) {
-  return xs.reduce(function (agg, _ref3) {
-    var _ref4 = _slicedToArray(_ref3, 2),
-        k = _ref4[0],
-        value = _ref4[1];
+    return !xs ? [] : xs.reduce(function (agg, _ref3) {
+        var _ref4 = _slicedToArray(_ref3, 2),
+            k = _ref4[0],
+            value = _ref4[1];
 
-    if (keys.includes(k) && (0, _is.isArray)(value) && (0, _is.isArray)(value[0])) {
-      agg[k] = _fromAssocListOnKeys(keys, value);
-      return agg;
-    }
-    agg[k] = value;
-    return agg;
-  }, {});
+        if (keys.includes(k) && (0, _is.isArray)(value) && (0, _is.isArray)(value[0])) {
+            agg[k] = _fromAssocListOnKeys(keys, value);
+            return agg;
+        }
+        agg[k] = value;
+        return agg;
+    }, {});
 },
 
 

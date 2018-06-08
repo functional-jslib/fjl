@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.classCase = exports.camelCase = exports.ucaseFirst = exports.lcaseFirst = exports.unlines = exports.unwords = exports.words = exports.lines = undefined;
 
@@ -61,8 +61,8 @@ unlines = exports.unlines = (0, _listOps.intercalate)('\n'),
  * @throws {Error} - Throws error if receiving anything that is not a string.
  */
 lcaseFirst = exports.lcaseFirst = function lcaseFirst(xs) {
-  (0, _errorThrowing._errorIfNotType)(String, 'lcaseFirst', 'xs', xs);
-  return xs[0].toLowerCase() + xs.substring(1);
+    (0, _errorThrowing._errorIfNotType)(String, 'lcaseFirst', 'xs', xs);
+    return xs[0].toLowerCase() + xs.substring(1);
 },
 
 
@@ -74,8 +74,8 @@ lcaseFirst = exports.lcaseFirst = function lcaseFirst(xs) {
  * @throws {Error} - Throws error if receiving anything that is not a string.
  */
 ucaseFirst = exports.ucaseFirst = function ucaseFirst(xs) {
-  (0, _errorThrowing._errorIfNotType)(String, 'ucaseFirst', 'xs', xs);
-  return xs[0].toUpperCase() + xs.substring(1);
+    (0, _errorThrowing._errorIfNotType)(String, 'ucaseFirst', 'xs', xs);
+    return xs[0].toUpperCase() + xs.substring(1);
 },
 
 
@@ -89,12 +89,12 @@ ucaseFirst = exports.ucaseFirst = function ucaseFirst(xs) {
  * @curried
  */
 camelCase = exports.camelCase = function camelCase(xs) {
-  var pattern = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : /[^a-z\d]/i;
-  return (0, _compose.compose)((0, _array.join)(''), (0, _listOps.map)(function (str) {
-    return ucaseFirst(str.toLowerCase());
-  }), (0, _listOps.filter)(function (x) {
-    return !!x;
-  }), (0, _string.split)(pattern))((0, _errorThrowing._errorIfNotType)(String, 'camelCase', 'xs', xs));
+    var pattern = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : /[^a-z\d]/i;
+    return (0, _compose.compose)((0, _array.join)(''), (0, _listOps.map)(function (str) {
+        return ucaseFirst(str.toLowerCase());
+    }), (0, _listOps.filter)(function (x) {
+        return !!x;
+    }), (0, _string.split)(pattern))((0, _errorThrowing._errorIfNotType)(String, 'camelCase', 'xs', xs));
 },
 
 

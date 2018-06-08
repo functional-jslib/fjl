@@ -47,7 +47,7 @@ export const
      * @param xs {Array.<Array>} - Associated list.
      * @returns {Object}
      */
-    fromAssocList = xs => !xs ? [] : xs.reduce((agg, [key, value]) => {
+    fromAssocList = xs => !xs ? {} : xs.reduce((agg, [key, value]) => {
         if (isArray(value) && isArray(value[0])) {
             agg[key] = fromAssocList(value);
             return agg;

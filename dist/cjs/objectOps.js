@@ -1,35 +1,35 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.fromAssocListOnKeys = exports.fromAssocListOnKey = exports.toAssocListOnKeys = exports.toAssocListOnKey = exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports.keys = exports.length = undefined;
 
 var _objectOps = require('./uncurried/_objectOps/_objectOps');
 
 Object.keys(_objectOps).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _objectOps[key];
-    }
-  });
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+            return _objectOps[key];
+        }
+    });
 });
 
 var _object = require('./uncurried/_jsPlatform/_object');
 
 Object.defineProperty(exports, 'length', {
-  enumerable: true,
-  get: function get() {
-    return _object.length;
-  }
+    enumerable: true,
+    get: function get() {
+        return _object.length;
+    }
 });
 Object.defineProperty(exports, 'keys', {
-  enumerable: true,
-  get: function get() {
-    return _object.keys;
-  }
+    enumerable: true,
+    get: function get() {
+        return _object.keys;
+    }
 });
 
 var _curry = require('./uncurried/_functionOps/_curry');

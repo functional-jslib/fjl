@@ -1604,7 +1604,7 @@ var toArray = function toArray(x) {
 };
 
 var toAssocList = function toAssocList(obj) {
-    return Object.keys(obj).map(function (key) {
+    return !obj ? [] : Object.keys(obj).map(function (key) {
         return isObject(obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
     });
 };
@@ -1612,12 +1612,12 @@ var _toAssocListOnKey = function _toAssocListOnKey(key, obj) {
     return _toAssocListOnKeys([key], obj);
 };
 var _toAssocListOnKeys = function _toAssocListOnKeys(keys, obj) {
-    return Object.keys(obj).map(function (key) {
+    return !obj ? [] : Object.keys(obj).map(function (key) {
         return keys.includes(key) && isObject(obj[key]) ? [key, _toAssocListOnKeys(keys, obj[key])] : [key, obj[key]];
     });
 };
 var fromAssocList = function fromAssocList(xs) {
-    return xs.reduce(function (agg, _ref5) {
+    return !xs ? {} : xs.reduce(function (agg, _ref5) {
         var _ref6 = _slicedToArray(_ref5, 2),
             key = _ref6[0],
             value = _ref6[1];
@@ -1634,7 +1634,7 @@ var _fromAssocListOnKey = function _fromAssocListOnKey(key, xs) {
     return _fromAssocListOnKeys([key], xs);
 };
 var _fromAssocListOnKeys = function _fromAssocListOnKeys(keys, xs) {
-    return xs.reduce(function (agg, _ref7) {
+    return !xs ? [] : xs.reduce(function (agg, _ref7) {
         var _ref8 = _slicedToArray(_ref7, 2),
             k = _ref8[0],
             value = _ref8[1];

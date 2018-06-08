@@ -1212,18 +1212,18 @@ const toArray = x => {
         }
     };
 
-const toAssocList = obj => Object.keys(obj).map(key =>
+const toAssocList = obj => !obj ? [] : Object.keys(obj).map(key =>
         isObject(obj[key]) ?
             [key, toAssocList(obj[key])] :
             [key, obj[key]]
     );
 const _toAssocListOnKey = (key, obj) => _toAssocListOnKeys([key], obj);
-const _toAssocListOnKeys = (keys, obj) => Object.keys(obj).map(key =>
+const _toAssocListOnKeys = (keys, obj) => !obj ? [] : Object.keys(obj).map(key =>
         keys.includes(key) && isObject(obj[key]) ?
             [key, _toAssocListOnKeys(keys, obj[key])] :
             [key, obj[key]]
     );
-const fromAssocList = xs => xs.reduce((agg, [key, value]) => {
+const fromAssocList = xs => !xs ? {} : xs.reduce((agg, [key, value]) => {
         if (isArray(value) && isArray(value[0])) {
             agg[key] = fromAssocList(value);
             return agg;
@@ -1232,7 +1232,7 @@ const fromAssocList = xs => xs.reduce((agg, [key, value]) => {
         return agg;
     }, {});
 const _fromAssocListOnKey = (key, xs) => _fromAssocListOnKeys([key], xs);
-const _fromAssocListOnKeys = (keys, xs) => xs.reduce((agg, [k, value]) => {
+const _fromAssocListOnKeys = (keys, xs) => !xs ? [] : xs.reduce((agg, [k, value]) => {
         if (keys.includes(k) && isArray(value) && isArray(value[0])) {
             agg[k] = _fromAssocListOnKeys(keys, value);
             return agg;
