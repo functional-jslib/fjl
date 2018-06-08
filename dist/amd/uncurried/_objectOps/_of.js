@@ -39,7 +39,7 @@ define(['exports', './_is', '../_jsPlatform/_object', '../_jsPlatform/_function'
             return undefined;
         }
         const constructor = x.constructor;
-        if ((0, _object.hasOwnProperty)('of', constructor)) {
+        if ((0, _object._hasOwnProperty)('of', constructor)) {
             return (0, _function.apply)(constructor.of, args);
         } else if (isUsableImmutablePrimitive(x)) {
             return (0, _function.apply)(constructor, args);

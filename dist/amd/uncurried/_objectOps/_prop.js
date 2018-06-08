@@ -10,10 +10,10 @@ define(["exports"], function (exports) {
 
   /**
    * Returns property value if found; Else `undefined`.
-   * @function module:_objectOps.prop
+   * @function module:_objectOps._prop
    * @param name {String} - Key to search on `obj`
    * @param obj {Object} - Object to search `name` on.
    * @returns {*}
    */
-  const prop = exports.prop = (name, obj) => obj[name];
+  const _prop = exports._prop = (name, obj) => obj[name];
 });

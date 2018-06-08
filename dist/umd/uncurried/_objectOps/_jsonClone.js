@@ -8,7 +8,7 @@
       exports: {}
     };
     factory(mod.exports);
-    global._prop = mod.exports;
+    global._jsonClone = mod.exports;
   }
 })(this, function (exports) {
   "use strict";
@@ -16,18 +16,15 @@
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  /**
-   * @memberOf _objectOps
-   */
+  var
 
   /**
-   * Returns property value if found; Else `undefined`.
-   * @function module:_objectOps._prop
-   * @param name {String} - Key to search on `obj`
-   * @param obj {Object} - Object to search `name` on.
+   * Clones and object or array using `JSON.parse(JSON.stringify(...))` pattern.
+   * @function module:objectOps.jsonClone
+   * @param x {*}
    * @returns {*}
    */
-  var _prop = exports._prop = function _prop(name, obj) {
-    return obj[name];
+  jsonClone = exports.jsonClone = function jsonClone(x) {
+    return JSON.parse(JSON.stringify(x));
   };
 });

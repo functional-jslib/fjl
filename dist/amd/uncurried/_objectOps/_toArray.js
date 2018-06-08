@@ -1,6 +1,11 @@
-import {typeOf} from './_typeOf';
+define(['exports', './_typeOf'], function (exports, _typeOf) {
+    'use strict';
 
-export const
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.toArray = undefined;
+    const
 
     /**
      * Attempts to convert incoming value into an array.  This method will yield
@@ -12,8 +17,8 @@ export const
      * @param x {*} - Anything
      * @returns {Array}
      */
-    toArray = x => {
-        switch (typeOf(x)) {
+    toArray = exports.toArray = x => {
+        switch ((0, _typeOf.typeOf)(x)) {
             case 'Null':
             case 'Undefined':
                 return [];
@@ -28,6 +33,5 @@ export const
             default:
                 return Object.keys(x).map(key => [key, x[key]]);
         }
-    }
-
-;
+    };
+});

@@ -57,12 +57,12 @@ const fnOrError = (symbolName, f) => {
  * @todo change all files named '*UnCurried' to '*_'.
  */
 
-const instanceOf$1 = (instanceConstructor, instance) =>
+const _instanceOf = (instanceConstructor, instance) =>
         instance instanceof instanceConstructor;
-const hasOwnProperty$1 = fPureTakesOne('hasOwnProperty');
+const _hasOwnProperty = fPureTakesOne('hasOwnProperty');
 const length = x => x.length;
 const keys = obj => Object.keys(obj);
-const assign$1 = (() => Object.assign ?
+const _assign = (() => Object.assign ?
             (obj0, ...objs) => Object.assign(obj0, ...objs) :
             (obj0, ...objs) => objs.reduce((topAgg, obj) => {
                 return keys(obj).reduce((agg, key) => {
@@ -158,12 +158,12 @@ const curry5 = fn => curryN(5, fn);
 
 /**
  * Returns property value if found; Else `undefined`.
- * @function module:_objectOps.prop
+ * @function module:_objectOps._prop
  * @param name {String} - Key to search on `obj`
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
  */
-const prop$1 = (name, obj) => obj[name];
+const _prop = (name, obj) => obj[name];
 
 /**
  * Created by elyde on 12/18/2016.
@@ -184,22 +184,22 @@ let _WeakSet = 'WeakSet';
 let _Null$1 = 'Null';
 let _Undefined$1 = 'Undefined';
 
-const isFunction = value => instanceOf$1(Function, value);
-const isType$1 = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type);
+const isFunction = value => _instanceOf(Function, value);
+const _isType = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type);
 const isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 const isCallable = x => isFunction(x) && !isClass(x);
 const {isArray} = Array;
-const isObject = value => isType$1(_Object, value);
-const isBoolean = value => isType$1(_Boolean, value);
-const isNumber = value => isType$1(_Number$1, value);
-const isString = value => isType$1(_String, value);
-const isMap = value => isType$1(_Map, value);
-const isSet = value => isType$1(_Set, value);
-const isWeakMap = value => isType$1(_WeakMap, value);
-const isWeakSet = value => isType$1(_WeakSet, value);
-const isUndefined = value => isType$1(_Undefined$1, value);
-const isNull = value => isType$1(_Null$1, value);
-const isSymbol = value => isType$1(_Symbol, value);
+const isObject = value => _isType(_Object, value);
+const isBoolean = value => _isType(_Boolean, value);
+const isNumber = value => _isType(_Number$1, value);
+const isString = value => _isType(_String, value);
+const isMap = value => _isType(_Map, value);
+const isSet = value => _isType(_Set, value);
+const isWeakMap = value => _isType(_WeakMap, value);
+const isWeakSet = value => _isType(_WeakSet, value);
+const isUndefined = value => _isType(_Undefined$1, value);
+const isNull = value => _isType(_Null$1, value);
+const isSymbol = value => _isType(_Symbol, value);
 const isUsableImmutablePrimitive = x => {
         const typeOfX = typeOf(x);
         return isset(x) &&
@@ -225,7 +225,7 @@ const isEmpty = value => {
         else if (typeOfValue === _Object) {
             retVal = isEmptyObject(value);
         }
-        else if (hasOwnProperty$1('size', value) && isNumber(value.size)) {
+        else if (_hasOwnProperty('size', value) && isNumber(value.size)) {
             retVal = isEmptyCollection(value);
         }
         else {
@@ -234,45 +234,6 @@ const isEmpty = value => {
         return retVal;
     };
 const isset = x => x !== null && x !== undefined;
-
-const assignDeep$1 = (obj0, ...objs) =>
-        objs.reduce((topAgg, obj) =>
-            !obj ? topAgg : keys(obj).reduce((agg, key) => {
-                let propDescription = Object.getOwnPropertyDescriptor(agg, key);
-                // If property is not writable move to next item in collection
-                if (hasOwnProperty$1(key, agg) && propDescription &&
-                    !(propDescription.get && propDescription.set) &&
-                    !propDescription.writable) {
-                    return agg;
-                }
-                if (isObject(agg[key]) && isObject(obj[key])) {
-                    assignDeep$1(agg[key], obj[key]);
-                }
-                else { agg[key] = obj[key]; }
-                return agg;
-            }, topAgg)
-        , obj0);
-
-/**
- * @memberOf _functionOps
- */
-
-const negateF = fn => (a, b) => !fn(a, b);
-const negateF3 = fn => (a, b, c) => !fn(a, b, c);
-const negateF4 = fn => (a, b, c, d) => !fn(a, b, c, d);
-const negateF5 = fn => (a, b, c, d, e) => !fn(a, b, c, d, e);
-const negateP = negateF3;
-const negateFMany = fn => (...args) => !apply(fn, args);
-
-/**
- * Created by elyde on 7/15/2017.
- * @module booleanOps
- */
-
-const isTruthy = value => !!value;
-const isFalsy = value => !value;
-const alwaysTrue = () => true;
-const alwaysFalse = () => false;
 
 /**
  * Checks if given `x` is set and of one of
@@ -306,7 +267,7 @@ function isUsableImmutablePrimitive$1 (x) {
 const of = (x, ...args) => {
     if (!isset(x)) { return undefined; }
     const constructor = x.constructor;
-    if (hasOwnProperty$1('of', constructor)) {
+    if (_hasOwnProperty('of', constructor)) {
         return apply(constructor.of, args);
     }
     else if (isUsableImmutablePrimitive$1(x)) {
@@ -318,148 +279,44 @@ const of = (x, ...args) => {
     return undefined;
 };
 
-const log = console.log.bind(console);
-const error = console.error.bind(console);
-const peek = (...args) => (log(...args), args.pop());
+const _assignDeep = (obj0, ...objs) =>
+        objs.reduce((topAgg, obj) =>
+            !obj ? topAgg : keys(obj).reduce((agg, key) => {
+                let propDescription = Object.getOwnPropertyDescriptor(agg, key);
+                // If property is not writable move to next item in collection
+                if (_hasOwnProperty(key, agg) && propDescription &&
+                    !(propDescription.get && propDescription.set) &&
+                    !propDescription.writable) {
+                    return agg;
+                }
+                if (isObject(agg[key]) && isObject(obj[key])) {
+                    _assignDeep(agg[key], obj[key]);
+                }
+                else { agg[key] = obj[key]; }
+                return agg;
+            }, topAgg)
+        , obj0);
 
 /**
- * @module errorThrowing
- * @description Contains error throwing facilities for when a value doesn't match a type.
- *  In addition gives you curried and uncurried versions of the multi arity functions.
- */
-const isCheckableType = type => isString(type) || isFunction(type);
-const _errorIfNotCheckableType = (contextName, type) => {
-        if (!isCheckableType(type)) {
-            throw new Error (`${contextName} expects \`type\` to be of type \`String\` or \`Function\`.` +
-                `  Type received \`${typeOf(type)}\`.  Value \`${type}\`.`);
-        }
-        return type;
-    };
-const getTypeName = type =>
-        _errorIfNotCheckableType('getTypeName', type) &&
-            isString(type) ? type : type.name;
-const _defaultTypeChecker = (Type, value) => isType$1(getTypeName(Type), value) || (
-        isFunction(Type) && isset(value) && value instanceof Type);
-const multiTypesToString = types => types.length ?
-             types.map(type => `\`${getTypeName(type)}\``).join(', ') : '';
-const defaultErrorMessageCall = tmplContext => {
-        const {
-            contextName, valueName, value, expectedTypeName,
-            foundTypeName, messageSuffix
-        } = tmplContext,
-            isMultiTypeNames = isArray(expectedTypeName),
-            typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
-            typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
-        return (contextName ? `\`${contextName}.` : '`') +
-            `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` +
-            `Type received: ${foundTypeName}.  Value: ${value};` +
-            `${messageSuffix ?  '  ' + messageSuffix + ';' : ''}`;
-    };
-const _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
-      (ValueType, contextName, valueName, value, messageSuffix = null) => {
-        const expectedTypeName = getTypeName(ValueType),
-            foundTypeName = typeOf(value);
-        if (typeChecker(ValueType, value)) { return value; } // Value matches type
-        throw new Error(errorMessageCall(
-            {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
-        ));
-    };
-const _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
-
-/**
- * @typedef {*} Any - Synonym for 'any value'.
+ * @memberOf _functionOps
  */
 
-/**
- * @typedef {String|Function} TypeRef
- * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
- */
+const negateF = fn => (a, b) => !fn(a, b);
+const negateF3 = fn => (a, b, c) => !fn(a, b, c);
+const negateF4 = fn => (a, b, c, d) => !fn(a, b, c, d);
+const negateF5 = fn => (a, b, c, d, e) => !fn(a, b, c, d, e);
+const negateP = negateF3;
+const negateFMany = fn => (...args) => !apply(fn, args);
 
 /**
- * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
- * @description Template context used for error message renderers (functions that take a context obj and return a string).
- * @property value {*}
- * @property valueName {String}
- * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
- * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
- * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
- *  directing user to fix where his/her error has occurred).  Optional.
+ * Created by elyde on 7/15/2017.
+ * @module booleanOps
  */
 
-/**
- * @typedef {Array<(String|Function)>} TypesArray
- */
-
-/**
- * @typedef {Function} TypeChecker
- * @description Checks whether a value is of given type.
- * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * @typedef {Function} ErrorMessageCall
- * @description Error message template function.
- * @param tmplContext {TemplateContext}
- * @returns {String}
- */
-
-/**
- * @typedef {Function} ErrorIfNotType
- * @description Used to ensure value matches passed in type.
- * @param type {TypeRef} - Constructor name or constructor.
- * @param contextName {String}
- * @param valueName {String}
- * @param value {*}
- * @throws {Error} - If value doesn't match type.
- * @returns {*} - What ever value is.
- */
-
-/**
- * @typedef {Function} ErrorIfNotTypes
- * @description Used to ensure a value matches one of one or more types passed in.
- * @param valueTypes {TypesArray} - Array of constructor names or constructors.
- * @param contextName {String}
- * @param valueName {String}
- * @param value {*}
- * @throws {Error} - If value doesn't match type.
- * @returns {*} - Whatever value is.
- */
-
-/**
- * @module _objectOps
- * @description Object operations (uncurried).
- * @private
- */
-const jsonClone = x => JSON.parse(JSON.stringify(x));
-const toArrayMap = obj => Object.keys(obj).map(key => {
-        if (typeof obj[key] === 'object') {
-            return [key, toArrayMap(obj[key])];
-        }
-        return [key, obj[key]];
-    });
-const fromArrayMap = xs => xs.reduce((agg, [key, value]) => {
-        agg[key] = value;
-        return agg;
-    }, {});
-const toArray = x => {
-        switch (typeOf(x)) {
-            case 'Null':
-            case 'Undefined':
-                return [];
-            case String.name:
-            case Array.name:
-            case 'WeakMap':
-            case 'WeakSet':
-            case 'Map':
-            case 'Set':
-                return Array.from(x);
-            case Object.name:
-            default:
-                return toArrayMap(x);
-        }
-    };
+const isTruthy = value => !!value;
+const isFalsy = value => !value;
+const alwaysTrue = () => true;
+const alwaysFalse = () => false;
 
 /**
  * @function module:_listOps.map
@@ -809,7 +666,7 @@ const _breakOnList = (pred, list) => {
         return splitPoint === -1 ?
             _splitAt(0, list) : _splitAt(splitPoint, list);
     };
-const _at = prop$1;
+const _at = _prop;
 const _find = findWhere;
 const _filter = (pred, xs) => {
         let ind = 0,
@@ -1191,35 +1048,224 @@ const _difference = (array1, array2) => { // augment this with max length and mi
 const _complement = (arr0, ...arrays) =>
         reduce$1((agg, arr) => _append(agg, _difference(arr, arr0)), [], arrays);
 
-const objUnion$1 = (obj1, obj2) => assignDeep$1(obj1, obj2);
-const objIntersect$1 = (obj1, obj2) => _foldl((agg, key) => {
-        if (hasOwnProperty$1(key, obj2)) {
+const _objUnion = (obj1, obj2) => _assignDeep(obj1, obj2);
+const _objIntersect = (obj1, obj2) => _foldl((agg, key) => {
+        if (_hasOwnProperty(key, obj2)) {
             agg[key] = obj2[key];
         }
         return agg;
     }, {}, keys(obj1));
-const objDifference$1 = (obj1, obj2) => _foldl((agg, key) => {
-        if (!hasOwnProperty$1(key, obj2)) {
+const _objDifference = (obj1, obj2) => _foldl((agg, key) => {
+        if (!_hasOwnProperty(key, obj2)) {
             agg[key] = obj1[key];
         }
         return agg;
     }, {}, keys(obj1));
-const objComplement$1 = (obj0, ...objs) => _foldl((agg, obj) =>
-        assignDeep$1(agg, objDifference$1(obj, obj0)), {}, objs);
+const _objComplement = (obj0, ...objs) => _foldl((agg, obj) =>
+        _assignDeep(agg, _objDifference(obj, obj0)), {}, objs);
+
+const log = console.log.bind(console);
+const error = console.error.bind(console);
+const peek = (...args) => (log(...args), args.pop());
+
+/**
+ * @module errorThrowing
+ * @description Contains error throwing facilities for when a value doesn't match a type.
+ *  In addition gives you curried and uncurried versions of the multi arity functions.
+ */
+const isCheckableType = type => isString(type) || isFunction(type);
+const _errorIfNotCheckableType = (contextName, type) => {
+        if (!isCheckableType(type)) {
+            throw new Error (`${contextName} expects \`type\` to be of type \`String\` or \`Function\`.` +
+                `  Type received \`${typeOf(type)}\`.  Value \`${type}\`.`);
+        }
+        return type;
+    };
+const getTypeName = type =>
+        _errorIfNotCheckableType('getTypeName', type) &&
+            isString(type) ? type : type.name;
+const _defaultTypeChecker = (Type, value) => _isType(getTypeName(Type), value) || (
+        isFunction(Type) && isset(value) && value instanceof Type);
+const multiTypesToString = types => types.length ?
+             types.map(type => `\`${getTypeName(type)}\``).join(', ') : '';
+const defaultErrorMessageCall = tmplContext => {
+        const {
+            contextName, valueName, value, expectedTypeName,
+            foundTypeName, messageSuffix
+        } = tmplContext,
+            isMultiTypeNames = isArray(expectedTypeName),
+            typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+            typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
+        return (contextName ? `\`${contextName}.` : '`') +
+            `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` +
+            `Type received: ${foundTypeName}.  Value: ${value};` +
+            `${messageSuffix ?  '  ' + messageSuffix + ';' : ''}`;
+    };
+const _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
+      (ValueType, contextName, valueName, value, messageSuffix = null) => {
+        const expectedTypeName = getTypeName(ValueType),
+            foundTypeName = typeOf(value);
+        if (typeChecker(ValueType, value)) { return value; } // Value matches type
+        throw new Error(errorMessageCall(
+            {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
+        ));
+    };
+const _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
+      (valueTypes, contextName, valueName, value) => {
+            const expectedTypeNames = valueTypes.map(getTypeName),
+                matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
+                foundTypeName = typeOf(value);
+            if (matchFound) { return value; }
+            throw new Error(
+                errorMessageCall({
+                    contextName, valueName, value,
+                    expectedTypeName: expectedTypeNames, foundTypeName
+                })
+            );
+        };
+const _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
+const _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall);
+const defaultTypeChecker = curry(_defaultTypeChecker);
+const errorIfNotType = curry(_errorIfNotType);
+const errorIfNotTypes = curry4(_errorIfNotTypes);
+const getErrorIfNotTypeThrower = errorMessageCall => curry(_getErrorIfNotTypeThrower(errorMessageCall));
+const getErrorIfNotTypesThrower = errorMessageCall => curry4(_getErrorIfNotTypesThrower(errorMessageCall));
+
+/**
+ * @typedef {*} Any - Synonym for 'any value'.
+ */
+
+/**
+ * @typedef {String|Function} TypeRef
+ * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
+ */
+
+/**
+ * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
+ * @description Template context used for error message renderers (functions that take a context obj and return a string).
+ * @property value {*}
+ * @property valueName {String}
+ * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
+ * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
+ * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
+ *  directing user to fix where his/her error has occurred).  Optional.
+ */
+
+/**
+ * @typedef {Array<(String|Function)>} TypesArray
+ */
+
+/**
+ * @typedef {Function} TypeChecker
+ * @description Checks whether a value is of given type.
+ * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @typedef {Function} ErrorMessageCall
+ * @description Error message template function.
+ * @param tmplContext {TemplateContext}
+ * @returns {String}
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotType
+ * @description Used to ensure value matches passed in type.
+ * @param type {TypeRef} - Constructor name or constructor.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - What ever value is.
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotTypes
+ * @description Used to ensure a value matches one of one or more types passed in.
+ * @param valueTypes {TypesArray} - Array of constructor names or constructors.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - Whatever value is.
+ */
+
+const jsonClone = x => JSON.parse(JSON.stringify(x));
+
+const toArray = x => {
+        switch (typeOf(x)) {
+            case 'Null':
+            case 'Undefined':
+                return [];
+            case String.name:
+            case Array.name:
+            case 'WeakMap':
+            case 'WeakSet':
+            case 'Map':
+            case 'Set':
+                return Array.from(x);
+            case Object.name:
+            default:
+                return Object.keys(x).map(key => [key, x[key]]);
+        }
+    };
+
+const toAssocList = obj => Object.keys(obj).map(key =>
+        isObject(obj[key]) ?
+            [key, toAssocList(obj[key])] :
+            [key, obj[key]]
+    );
+const _toAssocListOnKey = (key, obj) => _toAssocListOnKeys([key], obj);
+const _toAssocListOnKeys = (keys, obj) => Object.keys(obj).map(key =>
+        keys.includes(key) && isObject(obj[key]) ?
+            [key, _toAssocListOnKeys(keys, obj[key])] :
+            [key, obj[key]]
+    );
+const fromAssocList = xs => xs.reduce((agg, [key, value]) => {
+        if (isArray(value) && isArray(value[0])) {
+            agg[key] = fromAssocList(value);
+            return agg;
+        }
+        agg[key] = value;
+        return agg;
+    }, {});
+const _fromAssocListOnKey = (key, xs) => _fromAssocListOnKeys([key], xs);
+const _fromAssocListOnKeys = (keys, xs) => xs.reduce((agg, [k, value]) => {
+        if (keys.includes(k) && isArray(value) && isArray(value[0])) {
+            agg[k] = _fromAssocListOnKeys(keys, value);
+            return agg;
+        }
+        agg[k] = value;
+        return agg;
+    }, {});
+const toArrayMap = toAssocList;
+const fromArrayMap = fromAssocList;
+
+/**
+ * @module _objectOps
+ * @description Object operations (un-curried).
+ * @private
+ */
 
 /**
  * @module objectOps
  */
-const prop$$1 = curry(prop$1);
-const instanceOf$$1 = curry(instanceOf$1);
-const hasOwnProperty$$1 = curry(hasOwnProperty$1);
-const assign$$1 = curry2(assign$1);
-const assignDeep$$1 = curry2(assignDeep$1);
-const objUnion$$1 = curry(objUnion$1);
-const objIntersect$$1 = curry(objIntersect$1);
-const objDifference$$1 = curry(objDifference$1);
-const objComplement$$1 = curry2(objComplement$1);
-const isType$$1 = curry(isType$1);
+const prop = curry(_prop);
+const instanceOf = curry(_instanceOf);
+const hasOwnProperty = curry(_hasOwnProperty);
+const assign = curry2(_assign);
+const assignDeep = curry2(_assignDeep);
+const objUnion = curry(_objUnion);
+const objIntersect = curry(_objIntersect);
+const objDifference = curry(_objDifference);
+const objComplement = curry2(_objComplement);
+const isType = curry(_isType);
+const toAssocListOnKey = curry(_toAssocListOnKey);
+const toAssocListOnKeys = curry(_toAssocListOnKeys);
+const fromAssocListOnKey = curry(_fromAssocListOnKey);
+const fromAssocListOnKeys = curry(_fromAssocListOnKeys);
 
 const until$1 = (predicate, operation, typeInstance) => {
         let result = typeInstance;
@@ -1694,4 +1740,4 @@ const classCase = compose(ucaseFirst, camelCase);
  * @module fjl
  */
 
-export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, jsonClone, fromArrayMap, toArrayMap, toArray, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, log, error, peek, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };
+export { prop, instanceOf, hasOwnProperty, assign, assignDeep, objUnion, objIntersect, objDifference, objComplement, isType, toAssocListOnKey, toAssocListOnKeys, fromAssocListOnKey, fromAssocListOnKeys, length, keys, _instanceOf, _hasOwnProperty, _assign, _prop, typeOf, isFunction, _isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, _assignDeep, _objUnion, _objIntersect, _objDifference, _objComplement, log, error, peek, isCheckableType, _errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, _toAssocListOnKey, _toAssocListOnKeys, fromAssocList, _fromAssocListOnKey, _fromAssocListOnKeys, toArrayMap, fromArrayMap, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };

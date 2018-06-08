@@ -1,6 +1,23 @@
-import {typeOf} from './_typeOf';
+(function (global, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(['exports', './_typeOf'], factory);
+    } else if (typeof exports !== "undefined") {
+        factory(exports, require('./_typeOf'));
+    } else {
+        var mod = {
+            exports: {}
+        };
+        factory(mod.exports, global._typeOf);
+        global._toArray = mod.exports;
+    }
+})(this, function (exports, _typeOf) {
+    'use strict';
 
-export const
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.toArray = undefined;
+    var
 
     /**
      * Attempts to convert incoming value into an array.  This method will yield
@@ -12,8 +29,8 @@ export const
      * @param x {*} - Anything
      * @returns {Array}
      */
-    toArray = x => {
-        switch (typeOf(x)) {
+    toArray = exports.toArray = function toArray(x) {
+        switch ((0, _typeOf.typeOf)(x)) {
             case 'Null':
             case 'Undefined':
                 return [];
@@ -26,8 +43,9 @@ export const
                 return Array.from(x);
             case Object.name:
             default:
-                return Object.keys(x).map(key => [key, x[key]]);
+                return Object.keys(x).map(function (key) {
+                    return [key, x[key]];
+                });
         }
-    }
-
-;
+    };
+});

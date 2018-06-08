@@ -74,7 +74,7 @@ export const
      */
     _fromAssocListOnKeys = (keys, xs) => xs.reduce((agg, [k, value]) => {
         if (keys.includes(k) && isArray(value) && isArray(value[0])) {
-            agg[k] = fromAssocListOnKeys(keys, value);
+            agg[k] = _fromAssocListOnKeys(keys, value);
             return agg;
         }
         agg[k] = value;
