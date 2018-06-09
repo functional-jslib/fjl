@@ -1,11 +1,7 @@
 /**
- * Created by u067265 on 5/1/17.
+ * Created by elyde on 5/1/17.
  */
 
-// ~~~ STRIP ~~~
-// This part gets stripped out when
-// generating browser version of test(s).
-'use strict';
 import {assert, expect} from 'chai';
 
 import {
@@ -17,8 +13,6 @@ import {
 from '../src/functionOps';
 
 import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
-// These variables get set at the top IIFE in the browser.
-// ~~~ /STRIP ~~~
 
 describe ('#functionOps', function () {
 

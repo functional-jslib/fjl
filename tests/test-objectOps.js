@@ -22,6 +22,7 @@ import {
     deepCompareObjectsLeft, allYourBase, expectDeepEquals
 } from './helpers';
 import {inspect} from 'util';
+import exampleNavHashMap from './fixtures/example_nav_hasmap';
 
 describe ('#objectOps', function () {
     const charCodeToCharArrayMap = unfoldr(
@@ -533,11 +534,76 @@ describe ('#objectOps', function () {
     });
 
     describe ('#toAssocListOnKey', () => {
-        it ('requires more tests');
+        it ('should be able to turn an object into an associated list', () => {
+            const keyToCheck = 'items',
+                result = toAssocListOnKey(keyToCheck, exampleNavHashMap),
+                removeKeyRecursive = (key, obj) => {
+                    const out = jsonClone(obj);
+                    keys(out).forEach(k => {
+                        if (k === key) {
+                            delete out[k];
+                            return;
+                        }
+                        isObject(out[k]) ? removeKey
+                    })
+
+                };
+                checkExpectations = (key, obj, touchedObj, objTypeConstraint) => {
+                };
+                // checkExpectations = (key, obj, touchedObj, objTypeConstraint) => {
+                //     keys(obj).forEach(k => {
+                //         if (k !== key) {
+                //             return;
+                //         }
+                //         const isMatchedType = isType(objTypeConstraint);
+                //         expect(touchedObj).to.be.instanceOf(objTypeConstraint);
+                //         expect(touchedObj[key]).to.be.instanceOf(Array);
+                //         touchedObj[key].forEach(([k2, value]) => {
+                //             if (!isMatchedType(value)) {
+                //                 keys(obj[key]).forEach(k3 => {
+                //                     if (k3 === key) { return; }
+                //                     if (isMatchedType(obj[key][k3])) {
+                //
+                //                     }
+                //                     expect(obj[key][k3]).to.equal(value[k3]);
+                //                 });
+                //             }
+                //             checkExpectations(key, obj[key], value, objTypeConstraint);
+                //         });
+                //     });
+                // };
+
+            checkExpectations(keyToCheck, exampleNavHashMap, result, Object);
+            expect(result).to.be.instanceOf(Object);
+        });
+        it ('should return an empty object when receiving an object with no "own" enumerable ' +
+            'properties (`false`, `0/0`, etc.)', () => {
+            [0/0, Symbol('abc'), true, false, {}, []].forEach(obj => {
+                const result = toAssocListOnKey('some-key', obj);
+                expect(result).to.deep.equal({});
+            });
+        });
+        it ('should throw an error when receiving `null`, or `undefined`.', () => {
+            [null, undefined].forEach(x => {
+                assert.throws(() => toAssocListOnKey('items', x), Error);
+            });
+        });
     });
 
     describe ('#toAssocListOnKeys', () => {
         it ('requires more tests');
+        it ('should return an empty object when receiving an object with no "own" enumerable ' +
+            'properties (`false`, `0/0`, etc.)', () => {
+            [0/0, Symbol('abc'), true, false, {}, []].forEach(obj => {
+                const result = toAssocListOnKeys(['some-key'], obj);
+                expect(result).to.deep.equal({});
+            });
+        });
+        it ('should throw an error when receiving `null`, or `undefined`.', () => {
+            [null, undefined].forEach(x => {
+                assert.throws(() => toAssocListOnKeys(['items'], x), Error);
+            });
+        });
     });
 
     describe ('#fromAssocList', () => {

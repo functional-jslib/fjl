@@ -114,7 +114,7 @@ export const
      */
     isType = curry(_isType),
 
-    toAssocListOnKey = curry(_toAssocListOnKey),
+    toAssocListOnKey = curry2(_toAssocListOnKey),
 
     /**
      * Converts incoming object into an associated lists and all subsequent
@@ -125,10 +125,10 @@ export const
      * @returns {any[]} - Associated list
      * @curried
      */
-    toAssocListOnKeys = curry(_toAssocListOnKeys),
+    toAssocListOnKeys = curry2(_toAssocListOnKeys),
 
-    fromAssocListOnKey = curry(_fromAssocListOnKey),
+    fromAssocListOnKey = curry2(_fromAssocListOnKey),
 
-    fromAssocListOnKeys = curry(_fromAssocListOnKeys)
+    fromAssocListOnKeys = curry2(_fromAssocListOnKeys)
 
 ;

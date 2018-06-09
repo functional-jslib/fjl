@@ -1,4 +1,6 @@
-import {isArray, isObject} from './_is';
+import {isArray, isObject, _isType as isType} from './_is';
+import {_assign as assign} from '../_jsPlatform/_object';
+import {of} from './_of';
 
 export const
 
@@ -6,12 +8,14 @@ export const
      * Returns an associated list representing incoming value (object, array, etc.).
      * @note Does deep conversion on all values of direct type 'Object' (Pojo's).
      * @note Useful for working with object primitive (json and the like).
+     * @note Note only convert objects of the same type of object given (so if object is for example of 'Object' type then
+     *  only objects matching that type will be converted (to assoc-lists).
      * @function module:objectOps._toAssocList
      * @param obj {(Object|Array|*)}
      * @returns {Array.<*, *>}
      */
     toAssocList = obj => !obj ? [] : Object.keys(obj).map(key =>
-        isObject(obj[key]) ?
+        isType(obj.constructor, obj[key]) ?
             [key, toAssocList(obj[key])] :
             [key, obj[key]]
     ),
@@ -32,13 +36,20 @@ export const
      * @function module:_objectOps._toAssocListOnKeys
      * @param keys {Array.<*>} - Usually `Array.<String>`.
      * @param obj {*} - Object to convert on.
-     * @returns {any[]} - Associated list
+     * @param [objTypeConstraint=undefined] {*} - Type constraint for key value.
+     * @returns {object|*} - Object if no `objTypeConstraint` is passed in. Otherwise object of type `objTypeConstraint`.
      */
-    _toAssocListOnKeys = (keys, obj) => !obj ? [] : Object.keys(obj).map(key =>
-        keys.includes(key) && isObject(obj[key]) ?
-            [key, _toAssocListOnKeys(keys, obj[key])] :
-            [key, obj[key]]
-    ),
+    _toAssocListOnKeys = (keys, obj, objTypeConstraint) => {
+        return Object.keys(obj).reduce((agg, key) => {
+                // If not key to operate on (or if constraint and constraint failed) exit
+                if (!keys.includes(key) || (objTypeConstraint && !isType(objTypeConstraint, obj[key]))) {
+                    return agg;
+                }
+                agg[key] = _toAssocListOnKeys(keys, obj[key], objTypeConstraint);
+                return agg;
+            }, assign(objTypeConstraint ? new objTypeConstraint() : {}, obj)
+        )
+    },
 
     /**
      * From associated list to object.
