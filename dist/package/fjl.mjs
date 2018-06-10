@@ -1213,16 +1213,22 @@ const toArray = x => {
     };
 
 const toAssocList = obj => !obj ? [] : Object.keys(obj).map(key =>
-        isObject(obj[key]) ?
+        _isType(obj.constructor, obj[key]) ?
             [key, toAssocList(obj[key])] :
             [key, obj[key]]
     );
 const _toAssocListOnKey = (key, obj) => _toAssocListOnKeys([key], obj);
-const _toAssocListOnKeys = (keys, obj) => !obj ? [] : Object.keys(obj).map(key =>
-        keys.includes(key) && isObject(obj[key]) ?
-            [key, _toAssocListOnKeys(keys, obj[key])] :
-            [key, obj[key]]
-    );
+const _toAssocListOnKeys = (keys$$1, obj, objTypeConstraint) => {
+        return Object.keys(obj).reduce((agg, key) => {
+                // If not key to operate on (or if constraint and constraint failed) exit
+                if (!keys$$1.includes(key) || (objTypeConstraint && !_isType(objTypeConstraint, obj[key]))) {
+                    return agg;
+                }
+                agg[key] = _toAssocListOnKeys(keys$$1, obj[key], objTypeConstraint);
+                return agg;
+            }, _assign(objTypeConstraint ? new objTypeConstraint() : {}, obj)
+        );
+    };
 const fromAssocList = xs => !xs ? {} : xs.reduce((agg, [key, value]) => {
         if (isArray(value) && isArray(value[0])) {
             agg[key] = fromAssocList(value);
@@ -1232,9 +1238,9 @@ const fromAssocList = xs => !xs ? {} : xs.reduce((agg, [key, value]) => {
         return agg;
     }, {});
 const _fromAssocListOnKey = (key, xs) => _fromAssocListOnKeys([key], xs);
-const _fromAssocListOnKeys = (keys, xs) => !xs ? [] : xs.reduce((agg, [k, value]) => {
-        if (keys.includes(k) && isArray(value) && isArray(value[0])) {
-            agg[k] = _fromAssocListOnKeys(keys, value);
+const _fromAssocListOnKeys = (keys$$1, xs) => !xs ? [] : xs.reduce((agg, [k, value]) => {
+        if (keys$$1.includes(k) && isArray(value) && isArray(value[0])) {
+            agg[k] = _fromAssocListOnKeys(keys$$1, value);
             return agg;
         }
         agg[k] = value;
@@ -1262,10 +1268,10 @@ const objIntersect = curry(_objIntersect);
 const objDifference = curry(_objDifference);
 const objComplement = curry2(_objComplement);
 const isType = curry(_isType);
-const toAssocListOnKey = curry(_toAssocListOnKey);
-const toAssocListOnKeys = curry(_toAssocListOnKeys);
-const fromAssocListOnKey = curry(_fromAssocListOnKey);
-const fromAssocListOnKeys = curry(_fromAssocListOnKeys);
+const toAssocListOnKey = curry2(_toAssocListOnKey);
+const toAssocListOnKeys = curry2(_toAssocListOnKeys);
+const fromAssocListOnKey = curry2(_fromAssocListOnKey);
+const fromAssocListOnKeys = curry2(_fromAssocListOnKeys);
 
 const until$1 = (predicate, operation, typeInstance) => {
         let result = typeInstance;

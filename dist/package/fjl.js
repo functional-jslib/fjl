@@ -1605,16 +1605,21 @@ var toArray = function toArray(x) {
 
 var toAssocList = function toAssocList(obj) {
     return !obj ? [] : Object.keys(obj).map(function (key) {
-        return isObject(obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
+        return _isType(obj.constructor, obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
     });
 };
 var _toAssocListOnKey = function _toAssocListOnKey(key, obj) {
     return _toAssocListOnKeys([key], obj);
 };
-var _toAssocListOnKeys = function _toAssocListOnKeys(keys, obj) {
-    return !obj ? [] : Object.keys(obj).map(function (key) {
-        return keys.includes(key) && isObject(obj[key]) ? [key, _toAssocListOnKeys(keys, obj[key])] : [key, obj[key]];
-    });
+var _toAssocListOnKeys = function _toAssocListOnKeys(keys$$1, obj, objTypeConstraint) {
+    return Object.keys(obj).reduce(function (agg, key) {
+        // If not key to operate on (or if constraint and constraint failed) exit
+        if (!keys$$1.includes(key) || objTypeConstraint && !_isType(objTypeConstraint, obj[key])) {
+            return agg;
+        }
+        agg[key] = _toAssocListOnKeys(keys$$1, obj[key], objTypeConstraint);
+        return agg;
+    }, _assign(objTypeConstraint ? new objTypeConstraint() : {}, obj));
 };
 var fromAssocList = function fromAssocList(xs) {
     return !xs ? {} : xs.reduce(function (agg, _ref5) {
@@ -1633,14 +1638,14 @@ var fromAssocList = function fromAssocList(xs) {
 var _fromAssocListOnKey = function _fromAssocListOnKey(key, xs) {
     return _fromAssocListOnKeys([key], xs);
 };
-var _fromAssocListOnKeys = function _fromAssocListOnKeys(keys, xs) {
+var _fromAssocListOnKeys = function _fromAssocListOnKeys(keys$$1, xs) {
     return !xs ? [] : xs.reduce(function (agg, _ref7) {
         var _ref8 = _slicedToArray(_ref7, 2),
             k = _ref8[0],
             value = _ref8[1];
 
-        if (keys.includes(k) && isArray(value) && isArray(value[0])) {
-            agg[k] = _fromAssocListOnKeys(keys, value);
+        if (keys$$1.includes(k) && isArray(value) && isArray(value[0])) {
+            agg[k] = _fromAssocListOnKeys(keys$$1, value);
             return agg;
         }
         agg[k] = value;
@@ -1669,10 +1674,10 @@ var objIntersect = curry(_objIntersect);
 var objDifference = curry(_objDifference);
 var objComplement = curry2(_objComplement);
 var isType = curry(_isType);
-var toAssocListOnKey = curry(_toAssocListOnKey);
-var toAssocListOnKeys = curry(_toAssocListOnKeys);
-var fromAssocListOnKey = curry(_fromAssocListOnKey);
-var fromAssocListOnKeys = curry(_fromAssocListOnKeys);
+var toAssocListOnKey = curry2(_toAssocListOnKey);
+var toAssocListOnKeys = curry2(_toAssocListOnKeys);
+var fromAssocListOnKey = curry2(_fromAssocListOnKey);
+var fromAssocListOnKeys = curry2(_fromAssocListOnKeys);
 
 var until$1 = function until$1(predicate, operation, typeInstance) {
     var result = typeInstance;

@@ -1,4 +1,4 @@
-define(['exports', './_is'], function (exports, _is) {
+define(['exports', './_is', '../_jsPlatform/_object', './_of'], function (exports, _is, _object, _of) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -11,11 +11,13 @@ define(['exports', './_is'], function (exports, _is) {
      * Returns an associated list representing incoming value (object, array, etc.).
      * @note Does deep conversion on all values of direct type 'Object' (Pojo's).
      * @note Useful for working with object primitive (json and the like).
+     * @note Note only convert objects of the same type of object given (so if object is for example of 'Object' type then
+     *  only objects matching that type will be converted (to assoc-lists).
      * @function module:objectOps._toAssocList
      * @param obj {(Object|Array|*)}
      * @returns {Array.<*, *>}
      */
-    toAssocList = exports.toAssocList = obj => !obj ? [] : Object.keys(obj).map(key => (0, _is.isObject)(obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]]),
+    toAssocList = exports.toAssocList = obj => !obj ? [] : Object.keys(obj).map(key => (0, _is._isType)(obj.constructor, obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]]),
 
 
     /**
@@ -35,9 +37,19 @@ define(['exports', './_is'], function (exports, _is) {
      * @function module:_objectOps._toAssocListOnKeys
      * @param keys {Array.<*>} - Usually `Array.<String>`.
      * @param obj {*} - Object to convert on.
-     * @returns {any[]} - Associated list
+     * @param [objTypeConstraint=undefined] {*} - Type constraint for key value.
+     * @returns {object|*} - Object if no `objTypeConstraint` is passed in. Otherwise object of type `objTypeConstraint`.
      */
-    _toAssocListOnKeys = exports._toAssocListOnKeys = (keys, obj) => !obj ? [] : Object.keys(obj).map(key => keys.includes(key) && (0, _is.isObject)(obj[key]) ? [key, _toAssocListOnKeys(keys, obj[key])] : [key, obj[key]]),
+    _toAssocListOnKeys = exports._toAssocListOnKeys = (keys, obj, objTypeConstraint) => {
+        return Object.keys(obj).reduce((agg, key) => {
+            // If not key to operate on (or if constraint and constraint failed) exit
+            if (!keys.includes(key) || objTypeConstraint && !(0, _is._isType)(objTypeConstraint, obj[key])) {
+                return agg;
+            }
+            agg[key] = _toAssocListOnKeys(keys, obj[key], objTypeConstraint);
+            return agg;
+        }, (0, _object._assign)(objTypeConstraint ? new objTypeConstraint() : {}, obj));
+    },
 
 
     /**

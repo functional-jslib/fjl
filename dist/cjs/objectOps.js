@@ -1,35 +1,35 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.fromAssocListOnKeys = exports.fromAssocListOnKey = exports.toAssocListOnKeys = exports.toAssocListOnKey = exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports.keys = exports.length = undefined;
 
 var _objectOps = require('./uncurried/_objectOps/_objectOps');
 
 Object.keys(_objectOps).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _objectOps[key];
-        }
-    });
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _objectOps[key];
+    }
+  });
 });
 
 var _object = require('./uncurried/_jsPlatform/_object');
 
 Object.defineProperty(exports, 'length', {
-    enumerable: true,
-    get: function get() {
-        return _object.length;
-    }
+  enumerable: true,
+  get: function get() {
+    return _object.length;
+  }
 });
 Object.defineProperty(exports, 'keys', {
-    enumerable: true,
-    get: function get() {
-        return _object.keys;
-    }
+  enumerable: true,
+  get: function get() {
+    return _object.keys;
+  }
 });
 
 var _curry = require('./uncurried/_functionOps/_curry');
@@ -145,7 +145,7 @@ objComplement = exports.objComplement = (0, _curry.curry2)(_setTheory._objComple
  * @return {Boolean}
  */
 isType = exports.isType = (0, _curry.curry)(_objectOps._isType),
-    toAssocListOnKey = exports.toAssocListOnKey = (0, _curry.curry)(_objectOps._toAssocListOnKey),
+    toAssocListOnKey = exports.toAssocListOnKey = (0, _curry.curry2)(_objectOps._toAssocListOnKey),
 
 
 /**
@@ -157,6 +157,6 @@ isType = exports.isType = (0, _curry.curry)(_objectOps._isType),
  * @returns {any[]} - Associated list
  * @curried
  */
-toAssocListOnKeys = exports.toAssocListOnKeys = (0, _curry.curry)(_objectOps._toAssocListOnKeys),
-    fromAssocListOnKey = exports.fromAssocListOnKey = (0, _curry.curry)(_objectOps._fromAssocListOnKey),
-    fromAssocListOnKeys = exports.fromAssocListOnKeys = (0, _curry.curry)(_objectOps._fromAssocListOnKeys);
+toAssocListOnKeys = exports.toAssocListOnKeys = (0, _curry.curry2)(_objectOps._toAssocListOnKeys),
+    fromAssocListOnKey = exports.fromAssocListOnKey = (0, _curry.curry2)(_objectOps._fromAssocListOnKey),
+    fromAssocListOnKeys = exports.fromAssocListOnKeys = (0, _curry.curry2)(_objectOps._fromAssocListOnKeys);

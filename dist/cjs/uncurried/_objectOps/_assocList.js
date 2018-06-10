@@ -9,19 +9,25 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _is = require('./_is');
 
+var _object = require('../_jsPlatform/_object');
+
+var _of = require('./_of');
+
 var
 
 /**
  * Returns an associated list representing incoming value (object, array, etc.).
  * @note Does deep conversion on all values of direct type 'Object' (Pojo's).
  * @note Useful for working with object primitive (json and the like).
+ * @note Note only convert objects of the same type of object given (so if object is for example of 'Object' type then
+ *  only objects matching that type will be converted (to assoc-lists).
  * @function module:objectOps._toAssocList
  * @param obj {(Object|Array|*)}
  * @returns {Array.<*, *>}
  */
 toAssocList = exports.toAssocList = function toAssocList(obj) {
     return !obj ? [] : Object.keys(obj).map(function (key) {
-        return (0, _is.isObject)(obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
+        return (0, _is._isType)(obj.constructor, obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
     });
 },
 
@@ -45,12 +51,18 @@ _toAssocListOnKey = exports._toAssocListOnKey = function _toAssocListOnKey(key, 
  * @function module:_objectOps._toAssocListOnKeys
  * @param keys {Array.<*>} - Usually `Array.<String>`.
  * @param obj {*} - Object to convert on.
- * @returns {any[]} - Associated list
+ * @param [objTypeConstraint=undefined] {*} - Type constraint for key value.
+ * @returns {object|*} - Object if no `objTypeConstraint` is passed in. Otherwise object of type `objTypeConstraint`.
  */
-_toAssocListOnKeys = exports._toAssocListOnKeys = function _toAssocListOnKeys(keys, obj) {
-    return !obj ? [] : Object.keys(obj).map(function (key) {
-        return keys.includes(key) && (0, _is.isObject)(obj[key]) ? [key, _toAssocListOnKeys(keys, obj[key])] : [key, obj[key]];
-    });
+_toAssocListOnKeys = exports._toAssocListOnKeys = function _toAssocListOnKeys(keys, obj, objTypeConstraint) {
+    return Object.keys(obj).reduce(function (agg, key) {
+        // If not key to operate on (or if constraint and constraint failed) exit
+        if (!keys.includes(key) || objTypeConstraint && !(0, _is._isType)(objTypeConstraint, obj[key])) {
+            return agg;
+        }
+        agg[key] = _toAssocListOnKeys(keys, obj[key], objTypeConstraint);
+        return agg;
+    }, (0, _object._assign)(objTypeConstraint ? new objTypeConstraint() : {}, obj));
 },
 
 

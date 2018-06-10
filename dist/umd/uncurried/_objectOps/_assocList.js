@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './_is'], factory);
+        define(['exports', './_is', '../_jsPlatform/_object', './_of'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./_is'));
+        factory(exports, require('./_is'), require('../_jsPlatform/_object'), require('./_of'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global._is);
+        factory(mod.exports, global._is, global._object, global._of);
         global._assocList = mod.exports;
     }
-})(this, function (exports, _is) {
+})(this, function (exports, _is, _object, _of) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -62,13 +62,15 @@
      * Returns an associated list representing incoming value (object, array, etc.).
      * @note Does deep conversion on all values of direct type 'Object' (Pojo's).
      * @note Useful for working with object primitive (json and the like).
+     * @note Note only convert objects of the same type of object given (so if object is for example of 'Object' type then
+     *  only objects matching that type will be converted (to assoc-lists).
      * @function module:objectOps._toAssocList
      * @param obj {(Object|Array|*)}
      * @returns {Array.<*, *>}
      */
     toAssocList = exports.toAssocList = function toAssocList(obj) {
         return !obj ? [] : Object.keys(obj).map(function (key) {
-            return (0, _is.isObject)(obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
+            return (0, _is._isType)(obj.constructor, obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
         });
     },
 
@@ -92,12 +94,18 @@
      * @function module:_objectOps._toAssocListOnKeys
      * @param keys {Array.<*>} - Usually `Array.<String>`.
      * @param obj {*} - Object to convert on.
-     * @returns {any[]} - Associated list
+     * @param [objTypeConstraint=undefined] {*} - Type constraint for key value.
+     * @returns {object|*} - Object if no `objTypeConstraint` is passed in. Otherwise object of type `objTypeConstraint`.
      */
-    _toAssocListOnKeys = exports._toAssocListOnKeys = function _toAssocListOnKeys(keys, obj) {
-        return !obj ? [] : Object.keys(obj).map(function (key) {
-            return keys.includes(key) && (0, _is.isObject)(obj[key]) ? [key, _toAssocListOnKeys(keys, obj[key])] : [key, obj[key]];
-        });
+    _toAssocListOnKeys = exports._toAssocListOnKeys = function _toAssocListOnKeys(keys, obj, objTypeConstraint) {
+        return Object.keys(obj).reduce(function (agg, key) {
+            // If not key to operate on (or if constraint and constraint failed) exit
+            if (!keys.includes(key) || objTypeConstraint && !(0, _is._isType)(objTypeConstraint, obj[key])) {
+                return agg;
+            }
+            agg[key] = _toAssocListOnKeys(keys, obj[key], objTypeConstraint);
+            return agg;
+        }, (0, _object._assign)(objTypeConstraint ? new objTypeConstraint() : {}, obj));
     },
 
 

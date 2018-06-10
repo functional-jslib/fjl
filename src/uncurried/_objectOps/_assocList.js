@@ -48,7 +48,7 @@ export const
                 agg[key] = _toAssocListOnKeys(keys, obj[key], objTypeConstraint);
                 return agg;
             }, assign(objTypeConstraint ? new objTypeConstraint() : {}, obj)
-        )
+        );
     },
 
     /**
