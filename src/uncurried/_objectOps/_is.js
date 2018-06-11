@@ -39,7 +39,7 @@ export const
      *  class SomeName {}
      * ```
      * @function module:objectOps._isType
-     * @param type {Function|String} - Constructor or constructor name
+     * @param type {Function|ObjectConstructor|String} - Constructor or constructor name
      * @param obj {*}
      * @return {Boolean}
      */

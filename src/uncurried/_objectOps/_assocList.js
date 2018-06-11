@@ -1,6 +1,5 @@
-import {isArray, isObject, _isType as isType} from './_is';
-import {_assign as assign} from '../_jsPlatform/_object';
-import {of} from './_of';
+import {isArray, _isType} from './_is';
+import {_assign, keys} from '../_jsPlatform/_object';
 
 export const
 
@@ -14,8 +13,8 @@ export const
      * @param obj {(Object|Array|*)}
      * @returns {Array.<*, *>}
      */
-    toAssocList = obj => !obj ? [] : Object.keys(obj).map(key =>
-        isType(obj.constructor, obj[key]) ?
+    toAssocList = obj => !obj ? [] : keys(obj).map(key =>
+        _isType(obj.constructor, obj[key]) ?
             [key, toAssocList(obj[key])] :
             [key, obj[key]]
     ),
@@ -31,25 +30,31 @@ export const
     _toAssocListOnKey = (key, obj) => _toAssocListOnKeys([key], obj),
 
     /**
-     * Converts incoming object into an associated lists and all subsequent
-     * objects values found at key that is one of given `keys`
+     * Converts all objects found at keys contained in `ks` to associated lists.  Additionally, only
+     * values found that match the given constraint-type will be converted.  (Returns a copy of incoming object).
+     * @note This method is recursive and will search the given objects tree recursively.
+     * @note All objects in object tree are copies of original(s).
      * @function module:_objectOps._toAssocListOnKeys
-     * @param keys {Array.<*>} - Usually `Array.<String>`.
+     * @param ks {Array.<*>} - Keys.  Usually `Array.<String>`.
      * @param obj {*} - Object to convert on.
-     * @param [objTypeConstraint=undefined] {*} - Type constraint for key value.
-     * @returns {object|*} - Object if no `objTypeConstraint` is passed in. Otherwise object of type `objTypeConstraint`.
+     * @param [objTypeConstraint=Object] {Constructor|Function} - Type constraint for key value.  Default `Object`.
+     * @returns {Array}
      */
-    _toAssocListOnKeys = (keys, obj, objTypeConstraint) => {
-        return Object.keys(obj).reduce((agg, key) => {
-                // If not key to operate on (or if constraint and constraint failed) exit
-                if (!keys.includes(key) || (objTypeConstraint && !isType(objTypeConstraint, obj[key]))) {
-                    return agg;
+    _toAssocListOnKeys = (ks, obj, objTypeConstraint = Object) =>
+        keys(obj).reduce((agg, key) => {
+                const foundObj = obj[key],
+                    matchesConstrainedType = (objTypeConstraint && _isType(objTypeConstraint, foundObj)),
+                    keyValNeedsConversion = ks.includes(key) && matchesConstrainedType;
+                if (keyValNeedsConversion) {
+                    agg[key] = keys(foundObj).map(k => {
+                        return _isType(objTypeConstraint, foundObj[k]) ?
+                            [k, _toAssocListOnKeys(ks, foundObj[k], objTypeConstraint)] :
+                            [k, foundObj]
+                    });
                 }
-                agg[key] = _toAssocListOnKeys(keys, obj[key], objTypeConstraint);
                 return agg;
-            }, assign(objTypeConstraint ? new objTypeConstraint() : {}, obj)
-        );
-    },
+            }, _assign(objTypeConstraint ? new objTypeConstraint() : {}, obj)
+        ),
 
     /**
      * From associated list to object.
@@ -79,13 +84,13 @@ export const
     /**
      * Converts an associated list into an object and any subsequent key matching `keys`
      * @function module:objectOps.fromAssocListOnKeys
-     * @param keys {Array.<String>}
+     * @param ks {Array.<String>} - Property keys array.
      * @param xs {Array|*} - Associated list.
      * @returns {Object}
      */
-    _fromAssocListOnKeys = (keys, xs) => !xs ? [] : xs.reduce((agg, [k, value]) => {
-        if (keys.includes(k) && isArray(value) && isArray(value[0])) {
-            agg[k] = _fromAssocListOnKeys(keys, value);
+    _fromAssocListOnKeys = (ks, xs) => !xs ? [] : xs.reduce((agg, [k, value]) => {
+        if (ks.includes(k) && isArray(value) && isArray(value[0])) {
+            agg[k] = _fromAssocListOnKeys(ks, value);
             return agg;
         }
         agg[k] = value;

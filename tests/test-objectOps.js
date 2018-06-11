@@ -537,43 +537,50 @@ describe ('#objectOps', function () {
         it ('should be able to turn an object into an associated list', () => {
             const keyToCheck = 'items',
                 result = toAssocListOnKey(keyToCheck, exampleNavHashMap),
-                removeKeyRecursive = (key, obj) => {
-                    const out = jsonClone(obj);
-                    keys(out).forEach(k => {
-                        if (k === key) {
-                            delete out[k];
+                compareAssocListExceptKey = (key, obj, converted) =>
+                    converted.forEach(([k, v]) => {
+                        if (key === k) { return; }
+                        switch (typeOf(v)) {
+                            case 'Array':
+                            case 'Object':
+                                expect(obj[key]).to.deep.equal(v);
+                                break;
+                            default:
+                                expect(obj[key]).to.equal(v);
+                                break;
+                        }
+                    }),
+                checkExpectations = (key, obj, touchedObj, objTypeConstraint) => {
+                    keys(obj).forEach(k => {
+                        if (k !== key) {
                             return;
                         }
-                        isObject(out[k]) ? removeKey
-                    })
-
+                        expect(touchedObj).to.be.instanceOf(objTypeConstraint);
+                        expect(touchedObj[key]).to.be.instanceOf(Array);
+                        compareAssocListExceptKey(key, obj, touchedObj[key]);
+                        // if (isType(objTypeConstraint, obj)) {
+                        //     checkExpectations (key, obj[key], touchedObj)
+                        // }
+                        // Loop through converted
+                            // For every key that matches 'key'
+                            // Expect
+                        // expect(touchedObj[key]).to.be.instanceOf(Array);
+                        // touchedObj[key].forEach(([k2, value]) => {
+                        //     if (!isMatchedType(value)) {
+                        //         keys(obj[key]).forEach(k3 => {
+                        //             if (k3 === key) { return; }
+                        //             if (isMatchedType(obj[key][k3])) {
+                        //
+                        //             }
+                        //             expect(obj[key][k3]).to.equal(value[k3]);
+                        //         });
+                        //     }
+                        //     checkExpectations(key, obj[key], value, objTypeConstraint);
+                        // });
+                    });
                 };
-                checkExpectations = (key, obj, touchedObj, objTypeConstraint) => {
-                };
-                // checkExpectations = (key, obj, touchedObj, objTypeConstraint) => {
-                //     keys(obj).forEach(k => {
-                //         if (k !== key) {
-                //             return;
-                //         }
-                //         const isMatchedType = isType(objTypeConstraint);
-                //         expect(touchedObj).to.be.instanceOf(objTypeConstraint);
-                //         expect(touchedObj[key]).to.be.instanceOf(Array);
-                //         touchedObj[key].forEach(([k2, value]) => {
-                //             if (!isMatchedType(value)) {
-                //                 keys(obj[key]).forEach(k3 => {
-                //                     if (k3 === key) { return; }
-                //                     if (isMatchedType(obj[key][k3])) {
-                //
-                //                     }
-                //                     expect(obj[key][k3]).to.equal(value[k3]);
-                //                 });
-                //             }
-                //             checkExpectations(key, obj[key], value, objTypeConstraint);
-                //         });
-                //     });
-                // };
 
-            checkExpectations(keyToCheck, exampleNavHashMap, result, Object);
+            checkExpectations(keyToCheck, exampleNavHashMap, result, exampleNavHashMap.constructor);
             expect(result).to.be.instanceOf(Object);
         });
         it ('should return an empty object when receiving an object with no "own" enumerable ' +
