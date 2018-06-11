@@ -13,8 +13,7 @@ import {
     isUndefined, isNull, isSymbol, isMap, isSet, jsonClone,
     fromArrayMap, toArrayMap, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign,
-    toAssocList, toAssocListOnKey, toAssocListOnKeys,
-    fromAssocList, fromAssocListOnKey, fromAssocListOnKeys
+    toAssocList, toAssocListDeep, fromAssocList,
 } from '../src/objectOps';
 import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_listOps/_listOps";
 import {
@@ -459,19 +458,24 @@ describe ('#objectOps', function () {
     });
 
     describe ('#toArray', function () {
-        const rslt = toArrayMap(allYourBase),
-            expectedRslt = [['all', [['your', [['base', [['are', [['belong', [['to', [['us', 0]]]]]]]]]]]]]];
+
         test ('should be a function', function () {
             expect(toArray).to.be.instanceOf(Function);
         });
         test ('should return an empty array for `null` and/or `undefined`', () => {
             [null, undefined].forEach(x => expect(toArray(x)).to.be.instanceOf(Array));
         });
+
+        // @todo add more extensive tests here
+    });
+
+    describe ('#toArrayDeep', function () {
+        const rslt = toAssocListDeep(allYourBase),
+            expectedRslt = [['all', [['your', [['base', [['are', [['belong', [['to', [['us', 0]]]]]]]]]]]]]];
         test ('should return an array map for "Object"\'s', () => {
             expectDeepEquals(peek('toarray', inspect(rslt, {depth: 20}), rslt), peek('toarray', inspect(expectedRslt, {depth: 20}), expectedRslt));
             expectDeepEquals(toArray({hello: 'world'}), [['hello', 'world']]);
         });
-        // @todo add more extensive tests here
     });
 
     describe ('#log', function () {
@@ -503,129 +507,7 @@ describe ('#objectOps', function () {
         });
     });
 
-    describe ('#toAssocList', () => {
-        it ('should be able to turn an object into an associated list', () => {
-            const expected = [[
-                    'all', [[
-                        'your', [[
-                            'base', [[
-                                'are', [[
-                                    'belong', [[
-                                        'to', [[
-                                            'us', 0
-                                        ]]
-                                    ]]
-                                ]]
-                            ]]
-                        ]]
-                    ]]
-                ]],
-                result = toAssocList(allYourBase);
-            expect(result).to.be.instanceOf(Array);
-            expect(result).to.deep.equal(expected);
-        });
-        it ('should return an empty array when receiving `{}`, `null`, or `undefined`.', () => {
-            [[], null, undefined].forEach(x => {
-                const result = toAssocList(x);
-                expect(isArray(result)).to.equal(true);
-                expect(result.length).to.equal(0);
-            });
-        });
-    });
-
-    describe ('#toAssocListOnKey', () => {
-        it ('should be able to turn an object into an associated list', () => {
-            const keyToCheck = 'items',
-                result = toAssocListOnKey(keyToCheck, exampleNavHashMap),
-                compareAssocListExceptKey = (key, obj, converted) =>
-                    converted.forEach(([k, v]) => {
-                        if (key === k) { return; }
-                        switch (typeOf(v)) {
-                            case 'Array':
-                            case 'Object':
-                                expect(obj[key]).to.deep.equal(v);
-                                break;
-                            default:
-                                expect(obj[key]).to.equal(v);
-                                break;
-                        }
-                    }),
-                checkExpectations = (key, obj, touchedObj, objTypeConstraint) => {
-                    keys(obj).forEach(k => {
-                        if (k !== key) {
-                            return;
-                        }
-                        expect(touchedObj).to.be.instanceOf(objTypeConstraint);
-                        expect(touchedObj[key]).to.be.instanceOf(Array);
-                        compareAssocListExceptKey(key, obj, touchedObj[key]);
-                        // if (isType(objTypeConstraint, obj)) {
-                        //     checkExpectations (key, obj[key], touchedObj)
-                        // }
-                        // Loop through converted
-                            // For every key that matches 'key'
-                            // Expect
-                        // expect(touchedObj[key]).to.be.instanceOf(Array);
-                        // touchedObj[key].forEach(([k2, value]) => {
-                        //     if (!isMatchedType(value)) {
-                        //         keys(obj[key]).forEach(k3 => {
-                        //             if (k3 === key) { return; }
-                        //             if (isMatchedType(obj[key][k3])) {
-                        //
-                        //             }
-                        //             expect(obj[key][k3]).to.equal(value[k3]);
-                        //         });
-                        //     }
-                        //     checkExpectations(key, obj[key], value, objTypeConstraint);
-                        // });
-                    });
-                };
-
-            checkExpectations(keyToCheck, exampleNavHashMap, result, exampleNavHashMap.constructor);
-            expect(result).to.be.instanceOf(Object);
-        });
-        it ('should return an empty object when receiving an object with no "own" enumerable ' +
-            'properties (`false`, `0/0`, etc.)', () => {
-            [0/0, Symbol('abc'), true, false, {}, []].forEach(obj => {
-                const result = toAssocListOnKey('some-key', obj);
-                expect(result).to.deep.equal({});
-            });
-        });
-        it ('should throw an error when receiving `null`, or `undefined`.', () => {
-            [null, undefined].forEach(x => {
-                assert.throws(() => toAssocListOnKey('items', x), Error);
-            });
-        });
-    });
-
-    describe ('#toAssocListOnKeys', () => {
-        it ('requires more tests');
-        it ('should return an empty object when receiving an object with no "own" enumerable ' +
-            'properties (`false`, `0/0`, etc.)', () => {
-            [0/0, Symbol('abc'), true, false, {}, []].forEach(obj => {
-                const result = toAssocListOnKeys(['some-key'], obj);
-                expect(result).to.deep.equal({});
-            });
-        });
-        it ('should throw an error when receiving `null`, or `undefined`.', () => {
-            [null, undefined].forEach(x => {
-                assert.throws(() => toAssocListOnKeys(['items'], x), Error);
-            });
-        });
-    });
-
-    describe ('#fromAssocList', () => {
-        it ('requires more tests');
-    });
-
-    describe ('#fromAssocListOnKey', () => {
-        it ('requires more tests');
-    });
-
-    describe ('#fromAssocListOnKeys', () => {
-        it ('requires more tests');
-    });
-
-    describe ('#toArrayMap', function () {
+    describe ('#toArrayMap, #toAssocList', function () {
         test ('should convert an object to an array map', () => {
             // Ensure map was converted to array map properly
             expect(all(([charCode, char], ind) => {
@@ -642,7 +524,33 @@ describe ('#objectOps', function () {
         });
     });
 
-    describe ('#fromArrayMap', function () {
+    describe ('#toAssocListDeep', () => {
+        it ('should be able to turn an object into an associated list', () => {
+            const expected = [[
+                    'all', [[
+                        'your', [[
+                            'base', [[
+                                'are', [[
+                                    'belong', [[
+                                        'to', [[
+                                            'us', 0
+                                        ]]
+                                    ]]
+                                ]]
+                            ]]
+                        ]]
+                    ]]
+                ]],
+                result = toAssocListDeep(allYourBase, allYourBase.constructor);
+            expect(result).to.be.instanceOf(Array);
+            expect(result).to.deep.equal(expected);
+        });
+        it ('should throw an error when receiving `null`, or `undefined`.', () => {
+            [null, undefined].forEach(x => assert.throws(() => toAssocListDeep(x), Error));
+        });
+    });
+
+    describe ('#fromArrayMap, #fromAssocList', function () {
         test ('should return an object from an array map', () => {
             const result = fromArrayMap(charCodeToCharArrayMap);
             expect(isObject(result)).to.equal(true);
@@ -655,12 +563,8 @@ describe ('#objectOps', function () {
                 .to.equal(true);
         });
 
-        test ('should return an empty object when receiving `[]`, `null`, or `undefined`', () => {
-            [[], null, undefined].forEach(x => {
-                const result = fromArrayMap(x);
-                expect(isObject(result)).to.equal(true);
-                expect(keys(result).length).to.equal(0);
-            });
+        test ('should throw an error when receiving `null`, or `undefined`', () => {
+            [null, undefined].forEach(x => assert.throws(() => fromArrayMap(x), Error));
         });
     });
 

@@ -3,9 +3,7 @@
  */
 import {curry, curry2} from './uncurried/_functionOps/_curry';
 import {_instanceOf, _hasOwnProperty, _assign} from './uncurried/_jsPlatform/_object';
-import {
-    _prop, _isType, _fromAssocListOnKey, _fromAssocListOnKeys,
-    _toAssocListOnKey, _toAssocListOnKeys} from './uncurried/_objectOps/_objectOps';
+import {_prop, _isType} from './uncurried/_objectOps/_objectOps';
 import {_assignDeep} from './uncurried/_objectOps/_assignDeep';
 import {
     _objUnion, _objComplement, _objIntersect, _objDifference}
@@ -112,23 +110,6 @@ export const
      * @param value {*}
      * @return {Boolean}
      */
-    isType = curry(_isType),
-
-    toAssocListOnKey = curry2(_toAssocListOnKey),
-
-    /**
-     * Converts incoming object into an associated lists and all subsequent
-     * objects values found at key that is one of given `keys`
-     * @function module:objectOps.toAssocListOnKeys
-     * @param keys {Array.<*>} - Usually `Array.<String>`.
-     * @param obj {*} - Object to convert on.
-     * @returns {any[]} - Associated list
-     * @curried
-     */
-    toAssocListOnKeys = curry2(_toAssocListOnKeys),
-
-    fromAssocListOnKey = curry2(_fromAssocListOnKey),
-
-    fromAssocListOnKeys = curry2(_fromAssocListOnKeys)
+    isType = curry(_isType)
 
 ;

@@ -1,4 +1,5 @@
 import {typeOf} from './_typeOf';
+import {toAssocList} from './_assocList';
 
 export const
 
@@ -26,7 +27,7 @@ export const
                 return Array.from(x);
             case Object.name:
             default:
-                return Object.keys(x).map(key => [key, x[key]]);
+                return toAssocList(x);
         }
     }
 
