@@ -1,4 +1,4 @@
-define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_functionOps/_negate', '../../booleanOps', '../_objectOps/_objectOps', './_map', './_utils'], function (exports, _list, _function, _negate, _booleanOps, _objectOps, _map2, _utils) {
+define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_functionOps/_negate', '../../booleanOps', '../_object/_object', './_map', './_utils'], function (exports, _list, _function, _negate, _booleanOps, _objectOps, _map2, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -701,7 +701,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Same as _listOps._at - Returns property value at key/indice.
-     * @function module:_objectOps._lookup
+     * @function module:_object._lookup
      * @type {module:_objectOps.prop}
      */
     _lookup = exports._lookup = _at,

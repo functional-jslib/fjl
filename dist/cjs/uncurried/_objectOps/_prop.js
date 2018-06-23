@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", {
 
 /**
  * Returns property value if found; Else `undefined`.
- * @function module:_objectOps._prop
+ * @function module:_object._prop
  * @param name {String} - Key to search on `obj`
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}

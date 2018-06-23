@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.aggregatorByType = exports.aggregateObj = exports.aggregateArr = exports.aggregateStr = undefined;
 
-var _objectOps = require('../_objectOps/_objectOps');
+var _objectOps = require('../_object/_object');
 
 var aggregateStr = exports.aggregateStr = function aggregateStr(agg, item) {
     return agg + item;

@@ -10,7 +10,7 @@
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  * @module fjl
  */
-export * from './objectOps';
+export * from './object';
 export * from './booleanOps';
 export * from './functionOps';
 export * from './listOps';

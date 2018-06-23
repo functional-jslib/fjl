@@ -1,4 +1,4 @@
-define(['exports', './listOps', './jsPlatform/string', './uncurried/_functionOps/_compose', './jsPlatform/array', './uncurried/_objectOps/_errorThrowing'], function (exports, _listOps, _string, _compose, _array, _errorThrowing) {
+define(['exports', './listOps', './jsPlatform/string', './uncurried/_functionOps/_compose', './jsPlatform/array', './uncurried/_object/_errorThrowing'], function (exports, _listOps, _string, _compose, _array, _errorThrowing) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

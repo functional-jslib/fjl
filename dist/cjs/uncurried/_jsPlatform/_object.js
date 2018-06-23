@@ -5,12 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports._assign = exports.keys = exports.length = exports._hasOwnProperty = exports._instanceOf = undefined;
 
-var _utils = require('../_objectOps/_utils');
+var _utils = require('../_object/_utils');
 
 var
 
 /**
- * Returns whether constructor has derived _objectOps.
+ * Returns whether constructor has derived _object.
  * @function module:_jsPlatform_objectOps._instanceOf
  * @param instanceConstructor {Function} - Constructor.
  * @param instance {*}

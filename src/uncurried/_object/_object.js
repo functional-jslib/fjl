@@ -1,5 +1,5 @@
 /**
- * @module _objectOps
+ * @module _object
  * @description Object operations (un-curried).
  * @private
  */

@@ -3,7 +3,7 @@
  *      on both strings and arrays.
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_objectOps/_utils';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_object/_utils';
 
 export const
 

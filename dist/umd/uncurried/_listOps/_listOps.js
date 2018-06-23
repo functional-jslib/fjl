@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_functionOps/_negate', '../../booleanOps', '../_objectOps/_objectOps', './_map', './_utils'], factory);
+        define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_functionOps/_negate', '../../booleanOps', '../_object/_object', './_map', './_utils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../_jsPlatform/_list'), require('../_jsPlatform/_function'), require('../_functionOps/_negate'), require('../../booleanOps'), require('../_objectOps/_objectOps'), require('./_map'), require('./_utils'));
+        factory(exports, require('../_jsPlatform/_list'), require('../_jsPlatform/_function'), require('../_functionOps/_negate'), require('../../booleanOps'), require('../_object/_object'), require('./_map'), require('./_utils'));
     } else {
         var mod = {
             exports: {}
@@ -805,7 +805,7 @@
 
     /**
      * Same as _listOps._at - Returns property value at key/indice.
-     * @function module:_objectOps._lookup
+     * @function module:_object._lookup
      * @type {module:_objectOps.prop}
      */
     _lookup = exports._lookup = _at,

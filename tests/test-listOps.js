@@ -8,7 +8,7 @@
 import {assert, expect} from 'chai';
 import {__, compose, negateP} from '../src/functionOps';
 import {split} from '../src/jsPlatform';
-import {isEmptyList, isArray, isString, length} from '../src/objectOps';
+import {isEmptyList, isArray, isString, length} from '../src/object';
 import {isTruthy} from '../src/booleanOps';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase}
     from '../src/stringOps';

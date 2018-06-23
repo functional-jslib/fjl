@@ -29,7 +29,7 @@ define(['exports', './_is', '../_jsPlatform/_object', '../_jsPlatform/_function'
      * // - Else if constructor is a function, thus far, then calls constructor using
      * //      the `new` keyword (with any passed in args).
      * ```
-     * @function module:_objectOps.of
+     * @function module:_object.of
      * @param x {*} - Value to derive returned value's type from.
      * @param [args] {...*} - Any args to pass in to matched construction strategy.
      * @returns {*|undefined} - New value of given value's type else `undefined`.

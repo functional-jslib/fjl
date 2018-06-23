@@ -6,13 +6,13 @@
  * @todo change all files named '*UnCurried' to '*_'.
  */
 
-import {fPureTakesOne} from '../_objectOps/_utils';
+import {fPureTakesOne} from '../_object/_utils';
 
 export const
 
     /**
-     * Returns whether constructor has derived _objectOps.
-     * @function module:_jsPlatform_objectOps._instanceOf
+     * Returns whether constructor has derived _object.
+     * @function module:_jsPlatform_object._instanceOf
      * @param instanceConstructor {Function} - Constructor.
      * @param instance {*}
      * @instance {*}
@@ -22,7 +22,7 @@ export const
         instance instanceof instanceConstructor,
 
     /**
-     * @function module:_jsPlatform_objectOps.hasOwnProperty
+     * @function module:_jsPlatform_object.hasOwnProperty
      * @param propName {*}
      * @param typeInstance {*}
      * @returns {Boolean}
@@ -30,7 +30,7 @@ export const
     _hasOwnProperty = fPureTakesOne('hasOwnProperty'),
 
     /**
-     * @function module:_jsPlatform_objectOps.length
+     * @function module:_jsPlatform_object.length
      * @param x {*}
      * @returns {Number}
      * @throws {Error} - Throws an error if value doesn't have a `length` property (
@@ -40,7 +40,7 @@ export const
 
     /**
      * Gets own enumerable keys of passed in object (`Object.keys`).
-     * @function module:_jsPlatform_objectOps.keys
+     * @function module:_jsPlatform_object.keys
      * @param obj {*}
      * @returns {Array<String>}
      */
@@ -48,7 +48,7 @@ export const
 
     /**
      * Defined as `Object.assign` else is the same thing but shimmed.
-     * @function module:_jsPlatform_objectOps._assign
+     * @function module:_jsPlatform_object._assign
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}

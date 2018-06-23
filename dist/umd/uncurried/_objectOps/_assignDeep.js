@@ -20,7 +20,7 @@
     var
     /**
      * Merges all objects down into one.
-     * @function module:_objectOps.assignDeep
+     * @function module:_object.assignDeep
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}

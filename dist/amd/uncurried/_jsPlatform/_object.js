@@ -1,4 +1,4 @@
-define(['exports', '../_objectOps/_utils'], function (exports, _utils) {
+define(['exports', '../_object/_utils'], function (exports, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -8,7 +8,7 @@ define(['exports', '../_objectOps/_utils'], function (exports, _utils) {
     const
 
     /**
-     * Returns whether constructor has derived _objectOps.
+     * Returns whether constructor has derived _object.
      * @function module:_jsPlatform_objectOps._instanceOf
      * @param instanceConstructor {Function} - Constructor.
      * @param instance {*}

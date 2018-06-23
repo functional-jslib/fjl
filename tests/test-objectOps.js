@@ -14,7 +14,7 @@ import {
     fromArrayMap, toArrayMap, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign,
     toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep
-} from '../src/objectOps';
+} from '../src/object';
 import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_listOps/_listOps";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
@@ -23,7 +23,7 @@ import {
 import {inspect} from 'util';
 import exampleNavHashMap from './fixtures/example_nav_hasmap';
 
-describe ('#objectOps', function () {
+describe ('#object', function () {
     const charCodeToCharArrayMap = unfoldr(
         (charCode, ind) => ind === 26 ? undefined :
             [[charCode, String.fromCharCode(charCode)], ++charCode],

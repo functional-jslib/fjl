@@ -12,7 +12,7 @@ import {
 import {apply}              from '../_jsPlatform/_function';
 import {negateP, negateF}   from '../_functionOps/_negate';
 import {isTruthy, isFalsy}  from '../../booleanOps';
-import {_prop, length}       from '../_objectOps/_objectOps';
+import {_prop, length}       from '../_object/_object';
 import _map                 from './_map';
 
 import {
@@ -685,8 +685,8 @@ export const
 
     /**
      * Same as _listOps._at - Returns property value at key/indice.
-     * @function module:objectOps._lookup
-     * @type {module:objectOps.prop}
+     * @function module:object._lookup
+     * @type {module:object.prop}
      */
     _lookup = _at,
 

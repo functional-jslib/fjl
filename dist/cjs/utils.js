@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fPureTakesOneOrMore_ = exports.fPureTakes2_ = exports.fPureTakesOne_ = undefined;
 
-var _utils = require('./uncurried/_objectOps/_utils');
+var _utils = require('./uncurried/_object/_utils');
 
 Object.keys(_utils).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;

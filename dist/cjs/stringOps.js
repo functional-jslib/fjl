@@ -13,7 +13,7 @@ var _compose = require('./uncurried/_functionOps/_compose');
 
 var _array = require('./jsPlatform/array');
 
-var _errorThrowing = require('./uncurried/_objectOps/_errorThrowing');
+var _errorThrowing = require('./uncurried/_object/_errorThrowing');
 
 var
 

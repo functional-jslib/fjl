@@ -20,7 +20,7 @@ var _negate = require('../_functionOps/_negate');
 
 var _booleanOps = require('../../booleanOps');
 
-var _objectOps = require('../_objectOps/_objectOps');
+var _objectOps = require('../_object/_object');
 
 var _map2 = require('./_map');
 
@@ -771,7 +771,7 @@ _notElem = exports._notElem = (0, _negate.negateF)(_list.includes),
 
 /**
  * Same as _listOps._at - Returns property value at key/indice.
- * @function module:_objectOps._lookup
+ * @function module:_object._lookup
  * @type {module:_objectOps.prop}
  */
 _lookup = exports._lookup = _at,

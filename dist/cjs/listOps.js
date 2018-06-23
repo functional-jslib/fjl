@@ -466,7 +466,7 @@ notElem = exports.notElem = (0, _functionOps.curry2)(_listOps._notElem),
 
 /**
  * Same as _listOps._at - Returns property value at key/indice.
- * @function module:_objectOps._lookup
+ * @function module:_object._lookup
  * @type {module:_objectOps.prop}
  */
 lookup = exports.lookup = (0, _functionOps.curry)(_listOps._lookup),

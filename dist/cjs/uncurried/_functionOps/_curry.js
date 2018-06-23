@@ -7,7 +7,7 @@ exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curr
 
 var _jsPlatform = require('../_jsPlatform/_jsPlatform');
 
-var _utils = require('../_objectOps/_utils');
+var _utils = require('../_object/_utils');
 
 /**
  * @author elydelacruz

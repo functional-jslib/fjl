@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports.keys = exports.length = undefined;
 
-var _objectOps = require('./uncurried/_objectOps/_objectOps');
+var _objectOps = require('./uncurried/_object/_object');
 
 Object.keys(_objectOps).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -34,9 +34,9 @@ Object.defineProperty(exports, 'keys', {
 
 var _curry = require('./uncurried/_functionOps/_curry');
 
-var _assignDeep2 = require('./uncurried/_objectOps/_assignDeep');
+var _assignDeep2 = require('./uncurried/_object/_assignDeep');
 
-var _setTheory = require('./uncurried/_objectOps/_setTheory');
+var _setTheory = require('./uncurried/_object/_setTheory');
 
 var
 

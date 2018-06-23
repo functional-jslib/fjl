@@ -9,7 +9,7 @@ exports.curryN_ = curryN_;
 
 var _jsPlatform = require('../_jsPlatform/_jsPlatform');
 
-var _utils = require('../_objectOps/_utils');
+var _utils = require('../_object/_utils');
 
 /**
  * PlaceHolder (__) constructor.

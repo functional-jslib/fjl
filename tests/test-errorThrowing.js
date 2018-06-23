@@ -1,5 +1,5 @@
 import {expect, assert} from 'chai';
-import {log} from '../src/uncurried/_objectOps/_errorThrowing';
+import {log} from '../src/uncurried/_object/_errorThrowing';
 import {
     getTypeName,
     multiTypesToString,
@@ -8,7 +8,7 @@ import {
     getErrorIfNotTypesThrower,
     errorIfNotType,
     errorIfNotTypes
-} from '../src/uncurried/_objectOps/_errorThrowing';
+} from '../src/uncurried/_object/_errorThrowing';
 
 describe ('#errorThrowing', () => {
 

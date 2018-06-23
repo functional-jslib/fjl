@@ -7,7 +7,7 @@
  */
 
 import {apply, concat, map, filter, length} from '../_jsPlatform/_jsPlatform';
-import {fnOrError} from '../_objectOps/_utils';
+import {fnOrError} from '../_object/_utils';
 
 /**
  * PlaceHolder (__) constructor.

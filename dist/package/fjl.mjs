@@ -158,7 +158,7 @@ const curry5 = fn => curryN(5, fn);
 
 /**
  * Returns property value if found; Else `undefined`.
- * @function module:_objectOps._prop
+ * @function module:_object._prop
  * @param name {String} - Key to search on `obj`
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
@@ -259,7 +259,7 @@ function isUsableImmutablePrimitive$1 (x) {
  * // - Else if constructor is a function, thus far, then calls constructor using
  * //      the `new` keyword (with any passed in args).
  * ```
- * @function module:_objectOps.of
+ * @function module:_object.of
  * @param x {*} - Value to derive returned value's type from.
  * @param [args] {...*} - Any args to pass in to matched construction strategy.
  * @returns {*|undefined} - New value of given value's type else `undefined`.

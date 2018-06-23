@@ -2,7 +2,7 @@ export const
 
     /**
      * `Console.log` method.
-     * @function module:objectOps.log
+     * @function module:object.log
      * @params args {...*}
      * @returns {void}
      */
@@ -10,7 +10,7 @@ export const
 
     /**
      * `Console.error` method.
-     * @function module:objectOps.error
+     * @function module:object.error
      * @params args {...*}
      * @returns {void}
      */
@@ -18,7 +18,7 @@ export const
 
     /**
      * Peeks at incoming value(s) and returns the last value.
-     * @function module:objectOps.peek
+     * @function module:object.peek
      * @param args {...*}
      * @returns {*} - Last given value (if one or more values) else first value.
      */

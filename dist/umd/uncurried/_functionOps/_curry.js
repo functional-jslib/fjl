@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../_jsPlatform/_jsPlatform', '../_objectOps/_utils'], factory);
+        define(['exports', '../_jsPlatform/_jsPlatform', '../_object/_utils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../_jsPlatform/_jsPlatform'), require('../_objectOps/_utils'));
+        factory(exports, require('../_jsPlatform/_jsPlatform'), require('../_object/_utils'));
     } else {
         var mod = {
             exports: {}

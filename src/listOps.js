@@ -379,8 +379,8 @@ export const
 
     /**
      * Same as _listOps._at - Returns property value at key/indice.
-     * @function module:objectOps._lookup
-     * @type {module:objectOps.prop}
+     * @function module:object._lookup
+     * @type {module:object.prop}
      */
     lookup = curry(_lookup),
 
