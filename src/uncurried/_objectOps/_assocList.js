@@ -1,11 +1,11 @@
 import {isArray, _isType} from './_is';
-import {_assign, keys} from '../_jsPlatform/_object';
+import {keys} from '../_jsPlatform/_object';
 
 export const
 
     /**
-     * Returns an associated from given object.
-     * @note Useful for working with object primitive (json and the like).
+     * Returns an associated list from given object.
+     * @note Useful for working with plain javascript objects.
      * @function module:objectOps._toAssocList
      * @param obj {(Object|Array|*)}
      * @returns {Array.<*, *>}
@@ -48,7 +48,7 @@ export const
      */
     fromAssocListDeep = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
         if (isArray(value) && isArray(value[0])) {
-            agg[key] = fromAssocList(value);
+            agg[key] = fromAssocListDeep(value, OutType);
             return agg;
         }
         agg[key] = value;
@@ -60,6 +60,7 @@ export const
      * @alias `toAssocList`
      * @function module:objectOps.toArrayMap
      * @param obj {(Object|Array|*)}
+     * @deprecated
      * @returns {*}
      */
     toArrayMap = toAssocList,
@@ -69,6 +70,7 @@ export const
      * @alias `fromAssocList`
      * @function module:objectOps.fromArrayMap
      * @param xs {Array|*} - Array-map (associated list).
+     * @deprecated
      * @returns {*}
      */
     fromArrayMap = fromAssocList

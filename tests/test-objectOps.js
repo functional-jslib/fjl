@@ -13,7 +13,7 @@ import {
     isUndefined, isNull, isSymbol, isMap, isSet, jsonClone,
     fromArrayMap, toArrayMap, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign,
-    toAssocList, toAssocListDeep, fromAssocList,
+    toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep
 } from '../src/objectOps';
 import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_listOps/_listOps";
 import {
@@ -458,24 +458,13 @@ describe ('#objectOps', function () {
     });
 
     describe ('#toArray', function () {
-
         test ('should be a function', function () {
             expect(toArray).to.be.instanceOf(Function);
         });
         test ('should return an empty array for `null` and/or `undefined`', () => {
             [null, undefined].forEach(x => expect(toArray(x)).to.be.instanceOf(Array));
         });
-
         // @todo add more extensive tests here
-    });
-
-    describe ('#toArrayDeep', function () {
-        const rslt = toAssocListDeep(allYourBase),
-            expectedRslt = [['all', [['your', [['base', [['are', [['belong', [['to', [['us', 0]]]]]]]]]]]]]];
-        test ('should return an array map for "Object"\'s', () => {
-            expectDeepEquals(peek('toarray', inspect(rslt, {depth: 20}), rslt), peek('toarray', inspect(expectedRslt, {depth: 20}), expectedRslt));
-            expectDeepEquals(toArray({hello: 'world'}), [['hello', 'world']]);
-        });
     });
 
     describe ('#log', function () {
@@ -541,7 +530,25 @@ describe ('#objectOps', function () {
                         ]]
                     ]]
                 ]],
-                result = toAssocListDeep(allYourBase, allYourBase.constructor);
+                result = toAssocListDeep(allYourBase, allYourBase.constructor),
+            verifyResult = (assocList, obj) => {
+                assocList.forEach(([key, value]) => {
+                    if (obj[key].constructor === obj.constructor) {
+                        expect(value).to.be.instanceOf(Array);
+                        return verifyResult(value, obj[key]);
+                    }
+                    switch (obj[key].constructor) {
+                        case Array:
+                        case Object:
+                            expect(value).to.deep.equal(obj[key]);
+                            break;
+                        default:
+                            expect(value).to.equal(obj[key]);
+                            break;
+                    }
+                });
+            };
+            verifyResult(result, allYourBase);
             expect(result).to.be.instanceOf(Array);
             expect(result).to.deep.equal(expected);
         });
@@ -562,9 +569,37 @@ describe ('#objectOps', function () {
             )
                 .to.equal(true);
         });
-
         test ('should throw an error when receiving `null`, or `undefined`', () => {
             [null, undefined].forEach(x => assert.throws(() => fromArrayMap(x), Error));
+        });
+    });
+
+    describe ('#fromAssocListDeep', () => {
+        it ('should be able to convert an associated list to a deeply converted object of given type', () => {
+            const assocList = [[
+                    'all', [[
+                        'your', [[
+                            'base', [[
+                                'are', [[
+                                    'belong', [[
+                                        'to', [[
+                                            'us', 0
+                                        ]]
+                                    ]]
+                                ]]
+                            ]]
+                        ]]
+                    ]]
+                ]],
+            result = fromAssocListDeep(assocList);
+            // log(inspect(result, {depth: 11}));
+            expect(result).to.deep.equal(allYourBase);
+        });
+        it ('should throw an error when receiving anything other than an array or reducible', () => {
+            assert.throws(fromAssocListDeep, Error);
+            [null, undefined, 99, true, Symbol('99'), 'hello'].forEach(x =>
+                assert.throws(() => fromAssocListDeep(x), Error)
+            );
         });
     });
 
