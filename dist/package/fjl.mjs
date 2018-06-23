@@ -1194,6 +1194,27 @@ const getErrorIfNotTypesThrower = errorMessageCall => curry4(_getErrorIfNotTypes
 
 const jsonClone = x => JSON.parse(JSON.stringify(x));
 
+const toAssocList = obj => keys(obj).map(key => [key, obj[key]]);
+const toAssocListDeep = (obj, TypeConstraint = Object) => keys(obj).map(key =>
+        TypeConstraint && _isType(TypeConstraint, obj[key]) ?
+            [key, toAssocListDeep(obj[key], TypeConstraint)] :
+            [key, obj[key]]
+    );
+const fromAssocList = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+const fromAssocListDeep = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
+        if (isArray(value) && isArray(value[0])) {
+            agg[key] = fromAssocListDeep(value, OutType);
+            return agg;
+        }
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+const toArrayMap = toAssocList;
+const fromArrayMap = fromAssocList;
+
 const toArray = x => {
         switch (typeOf(x)) {
             case 'Null':
@@ -1208,46 +1229,9 @@ const toArray = x => {
                 return Array.from(x);
             case Object.name:
             default:
-                return Object.keys(x).map(key => [key, x[key]]);
+                return toAssocList(x);
         }
     };
-
-const toAssocList = obj => !obj ? [] : Object.keys(obj).map(key =>
-        _isType(obj.constructor, obj[key]) ?
-            [key, toAssocList(obj[key])] :
-            [key, obj[key]]
-    );
-const _toAssocListOnKey = (key, obj) => _toAssocListOnKeys([key], obj);
-const _toAssocListOnKeys = (keys$$1, obj, objTypeConstraint) => {
-        return Object.keys(obj).reduce((agg, key) => {
-                // If not key to operate on (or if constraint and constraint failed) exit
-                if (!keys$$1.includes(key) || (objTypeConstraint && !_isType(objTypeConstraint, obj[key]))) {
-                    return agg;
-                }
-                agg[key] = _toAssocListOnKeys(keys$$1, obj[key], objTypeConstraint);
-                return agg;
-            }, _assign(objTypeConstraint ? new objTypeConstraint() : {}, obj)
-        );
-    };
-const fromAssocList = xs => !xs ? {} : xs.reduce((agg, [key, value]) => {
-        if (isArray(value) && isArray(value[0])) {
-            agg[key] = fromAssocList(value);
-            return agg;
-        }
-        agg[key] = value;
-        return agg;
-    }, {});
-const _fromAssocListOnKey = (key, xs) => _fromAssocListOnKeys([key], xs);
-const _fromAssocListOnKeys = (keys$$1, xs) => !xs ? [] : xs.reduce((agg, [k, value]) => {
-        if (keys$$1.includes(k) && isArray(value) && isArray(value[0])) {
-            agg[k] = _fromAssocListOnKeys(keys$$1, value);
-            return agg;
-        }
-        agg[k] = value;
-        return agg;
-    }, {});
-const toArrayMap = toAssocList;
-const fromArrayMap = fromAssocList;
 
 /**
  * @module _objectOps
@@ -1268,10 +1252,6 @@ const objIntersect = curry(_objIntersect);
 const objDifference = curry(_objDifference);
 const objComplement = curry2(_objComplement);
 const isType = curry(_isType);
-const toAssocListOnKey = curry2(_toAssocListOnKey);
-const toAssocListOnKeys = curry2(_toAssocListOnKeys);
-const fromAssocListOnKey = curry2(_fromAssocListOnKey);
-const fromAssocListOnKeys = curry2(_fromAssocListOnKeys);
 
 const until$1 = (predicate, operation, typeInstance) => {
         let result = typeInstance;
@@ -1746,4 +1726,4 @@ const classCase = compose(ucaseFirst, camelCase);
  * @module fjl
  */
 
-export { prop, instanceOf, hasOwnProperty, assign, assignDeep, objUnion, objIntersect, objDifference, objComplement, isType, toAssocListOnKey, toAssocListOnKeys, fromAssocListOnKey, fromAssocListOnKeys, length, keys, _instanceOf, _hasOwnProperty, _assign, _prop, typeOf, isFunction, _isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, _assignDeep, _objUnion, _objIntersect, _objDifference, _objComplement, log, error, peek, isCheckableType, _errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, _toAssocListOnKey, _toAssocListOnKeys, fromAssocList, _fromAssocListOnKey, _fromAssocListOnKeys, toArrayMap, fromArrayMap, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };
+export { prop, instanceOf, hasOwnProperty, assign, assignDeep, objUnion, objIntersect, objDifference, objComplement, isType, length, keys, _instanceOf, _hasOwnProperty, _assign, _prop, typeOf, isFunction, _isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, _assignDeep, _objUnion, _objIntersect, _objDifference, _objComplement, log, error, peek, isCheckableType, _errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, toArrayMap, fromArrayMap, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };

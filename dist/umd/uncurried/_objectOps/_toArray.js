@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './_typeOf'], factory);
+        define(['exports', './_typeOf', './_assocList'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./_typeOf'));
+        factory(exports, require('./_typeOf'), require('./_assocList'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global._typeOf);
+        factory(mod.exports, global._typeOf, global._assocList);
         global._toArray = mod.exports;
     }
-})(this, function (exports, _typeOf) {
+})(this, function (exports, _typeOf, _assocList) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -43,9 +43,7 @@
                 return Array.from(x);
             case Object.name:
             default:
-                return Object.keys(x).map(function (key) {
-                    return [key, x[key]];
-                });
+                return (0, _assocList.toAssocList)(x);
         }
     };
 });

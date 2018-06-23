@@ -7,6 +7,8 @@ exports.toArray = undefined;
 
 var _typeOf = require('./_typeOf');
 
+var _assocList = require('./_assocList');
+
 var
 
 /**
@@ -33,8 +35,6 @@ toArray = exports.toArray = function toArray(x) {
             return Array.from(x);
         case Object.name:
         default:
-            return Object.keys(x).map(function (key) {
-                return [key, x[key]];
-            });
+            return (0, _assocList.toAssocList)(x);
     }
 };

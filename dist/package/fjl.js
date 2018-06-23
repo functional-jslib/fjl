@@ -1583,6 +1583,46 @@ var jsonClone = function jsonClone(x) {
     return JSON.parse(JSON.stringify(x));
 };
 
+var toAssocList = function toAssocList(obj) {
+    return keys(obj).map(function (key) {
+        return [key, obj[key]];
+    });
+};
+var toAssocListDeep = function toAssocListDeep(obj) {
+    var TypeConstraint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
+    return keys(obj).map(function (key) {
+        return TypeConstraint && _isType(TypeConstraint, obj[key]) ? [key, toAssocListDeep(obj[key], TypeConstraint)] : [key, obj[key]];
+    });
+};
+var fromAssocList = function fromAssocList(xs) {
+    var OutType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
+    return xs.reduce(function (agg, _ref5) {
+        var _ref6 = _slicedToArray(_ref5, 2),
+            key = _ref6[0],
+            value = _ref6[1];
+
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+};
+var fromAssocListDeep = function fromAssocListDeep(xs) {
+    var OutType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
+    return xs.reduce(function (agg, _ref7) {
+        var _ref8 = _slicedToArray(_ref7, 2),
+            key = _ref8[0],
+            value = _ref8[1];
+
+        if (isArray(value) && isArray(value[0])) {
+            agg[key] = fromAssocListDeep(value, OutType);
+            return agg;
+        }
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+};
+var toArrayMap = toAssocList;
+var fromArrayMap = fromAssocList;
+
 var toArray = function toArray(x) {
     switch (typeOf(x)) {
         case 'Null':
@@ -1597,63 +1637,9 @@ var toArray = function toArray(x) {
             return Array.from(x);
         case Object.name:
         default:
-            return Object.keys(x).map(function (key) {
-                return [key, x[key]];
-            });
+            return toAssocList(x);
     }
 };
-
-var toAssocList = function toAssocList(obj) {
-    return !obj ? [] : Object.keys(obj).map(function (key) {
-        return _isType(obj.constructor, obj[key]) ? [key, toAssocList(obj[key])] : [key, obj[key]];
-    });
-};
-var _toAssocListOnKey = function _toAssocListOnKey(key, obj) {
-    return _toAssocListOnKeys([key], obj);
-};
-var _toAssocListOnKeys = function _toAssocListOnKeys(keys$$1, obj, objTypeConstraint) {
-    return Object.keys(obj).reduce(function (agg, key) {
-        // If not key to operate on (or if constraint and constraint failed) exit
-        if (!keys$$1.includes(key) || objTypeConstraint && !_isType(objTypeConstraint, obj[key])) {
-            return agg;
-        }
-        agg[key] = _toAssocListOnKeys(keys$$1, obj[key], objTypeConstraint);
-        return agg;
-    }, _assign(objTypeConstraint ? new objTypeConstraint() : {}, obj));
-};
-var fromAssocList = function fromAssocList(xs) {
-    return !xs ? {} : xs.reduce(function (agg, _ref5) {
-        var _ref6 = _slicedToArray(_ref5, 2),
-            key = _ref6[0],
-            value = _ref6[1];
-
-        if (isArray(value) && isArray(value[0])) {
-            agg[key] = fromAssocList(value);
-            return agg;
-        }
-        agg[key] = value;
-        return agg;
-    }, {});
-};
-var _fromAssocListOnKey = function _fromAssocListOnKey(key, xs) {
-    return _fromAssocListOnKeys([key], xs);
-};
-var _fromAssocListOnKeys = function _fromAssocListOnKeys(keys$$1, xs) {
-    return !xs ? [] : xs.reduce(function (agg, _ref7) {
-        var _ref8 = _slicedToArray(_ref7, 2),
-            k = _ref8[0],
-            value = _ref8[1];
-
-        if (keys$$1.includes(k) && isArray(value) && isArray(value[0])) {
-            agg[k] = _fromAssocListOnKeys(keys$$1, value);
-            return agg;
-        }
-        agg[k] = value;
-        return agg;
-    }, {});
-};
-var toArrayMap = toAssocList;
-var fromArrayMap = fromAssocList;
 
 /**
  * @module _objectOps
@@ -1674,10 +1660,6 @@ var objIntersect = curry(_objIntersect);
 var objDifference = curry(_objDifference);
 var objComplement = curry2(_objComplement);
 var isType = curry(_isType);
-var toAssocListOnKey = curry2(_toAssocListOnKey);
-var toAssocListOnKeys = curry2(_toAssocListOnKeys);
-var fromAssocListOnKey = curry2(_fromAssocListOnKey);
-var fromAssocListOnKeys = curry2(_fromAssocListOnKeys);
 
 var until$1 = function until$1(predicate, operation, typeInstance) {
     var result = typeInstance;
@@ -2252,10 +2234,6 @@ exports.objIntersect = objIntersect;
 exports.objDifference = objDifference;
 exports.objComplement = objComplement;
 exports.isType = isType;
-exports.toAssocListOnKey = toAssocListOnKey;
-exports.toAssocListOnKeys = toAssocListOnKeys;
-exports.fromAssocListOnKey = fromAssocListOnKey;
-exports.fromAssocListOnKeys = fromAssocListOnKeys;
 exports.length = length;
 exports.keys = keys;
 exports._instanceOf = _instanceOf;
@@ -2312,11 +2290,9 @@ exports.getErrorIfNotTypesThrower = getErrorIfNotTypesThrower;
 exports.jsonClone = jsonClone;
 exports.toArray = toArray;
 exports.toAssocList = toAssocList;
-exports._toAssocListOnKey = _toAssocListOnKey;
-exports._toAssocListOnKeys = _toAssocListOnKeys;
+exports.toAssocListDeep = toAssocListDeep;
 exports.fromAssocList = fromAssocList;
-exports._fromAssocListOnKey = _fromAssocListOnKey;
-exports._fromAssocListOnKeys = _fromAssocListOnKeys;
+exports.fromAssocListDeep = fromAssocListDeep;
 exports.toArrayMap = toArrayMap;
 exports.fromArrayMap = fromArrayMap;
 exports.isTruthy = isTruthy;

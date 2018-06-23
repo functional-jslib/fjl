@@ -1,4 +1,4 @@
-define(['exports', './_typeOf'], function (exports, _typeOf) {
+define(['exports', './_typeOf', './_assocList'], function (exports, _typeOf, _assocList) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -31,7 +31,7 @@ define(['exports', './_typeOf'], function (exports, _typeOf) {
                 return Array.from(x);
             case Object.name:
             default:
-                return Object.keys(x).map(key => [key, x[key]]);
+                return (0, _assocList.toAssocList)(x);
         }
     };
 });

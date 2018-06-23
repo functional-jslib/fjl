@@ -4,7 +4,7 @@ define(['exports', './uncurried/_objectOps/_objectOps', './uncurried/_jsPlatform
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.fromAssocListOnKeys = exports.fromAssocListOnKey = exports.toAssocListOnKeys = exports.toAssocListOnKey = exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports.keys = exports.length = undefined;
+  exports.isType = exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = exports.assignDeep = exports.assign = exports.hasOwnProperty = exports.instanceOf = exports.prop = exports.keys = exports.length = undefined;
   Object.keys(_objectOps).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
@@ -132,20 +132,5 @@ define(['exports', './uncurried/_objectOps/_objectOps', './uncurried/_jsPlatform
    * @param value {*}
    * @return {Boolean}
    */
-  isType = exports.isType = (0, _curry.curry)(_objectOps._isType),
-        toAssocListOnKey = exports.toAssocListOnKey = (0, _curry.curry2)(_objectOps._toAssocListOnKey),
-
-
-  /**
-   * Converts incoming object into an associated lists and all subsequent
-   * objects values found at key that is one of given `keys`
-   * @function module:objectOps.toAssocListOnKeys
-   * @param keys {Array.<*>} - Usually `Array.<String>`.
-   * @param obj {*} - Object to convert on.
-   * @returns {any[]} - Associated list
-   * @curried
-   */
-  toAssocListOnKeys = exports.toAssocListOnKeys = (0, _curry.curry2)(_objectOps._toAssocListOnKeys),
-        fromAssocListOnKey = exports.fromAssocListOnKey = (0, _curry.curry2)(_objectOps._fromAssocListOnKey),
-        fromAssocListOnKeys = exports.fromAssocListOnKeys = (0, _curry.curry2)(_objectOps._fromAssocListOnKeys);
+  isType = exports.isType = (0, _curry.curry)(_objectOps._isType);
 });
