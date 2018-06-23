@@ -12,7 +12,7 @@ import {
 import {apply}              from '../_jsPlatform/_function';
 import {negateP, negateF}   from '../_functionOps/_negate';
 import {isTruthy, isFalsy}  from '../../booleanOps';
-import {prop, length}       from '../_objectOps/_objectOps';
+import {_prop, length}       from '../_objectOps/_objectOps';
 import _map                 from './_map';
 
 import {
@@ -618,7 +618,7 @@ export const
      * @param xs {Array} - list or list like.
      * @returns {*|undefined} - Item or `undefined`.
      */
-    _at = prop,
+    _at = _prop,
 
     /**
      * Find an item in structure of elements based on given predicate (`pred`).

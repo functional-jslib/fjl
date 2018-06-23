@@ -84,35 +84,35 @@ var fnOrError = function fnOrError(symbolName, f) {
  * @todo change all files named '*UnCurried' to '*_'.
  */
 
-var instanceOf$1 = function instanceOf(instanceConstructor, instance) {
-  return instance instanceof instanceConstructor;
+var _instanceOf = function _instanceOf(instanceConstructor, instance) {
+    return instance instanceof instanceConstructor;
 };
-var hasOwnProperty$1 = fPureTakesOne('hasOwnProperty');
+var _hasOwnProperty = fPureTakesOne('hasOwnProperty');
 var length = function length(x) {
-  return x.length;
+    return x.length;
 };
 var keys = function keys(obj) {
-  return Object.keys(obj);
+    return Object.keys(obj);
 };
-var assign$1 = function () {
-  return Object.assign ? function (obj0) {
-    for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      objs[_key - 1] = arguments[_key];
-    }
+var _assign = function () {
+    return Object.assign ? function (obj0) {
+        for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            objs[_key - 1] = arguments[_key];
+        }
 
-    return Object.assign.apply(Object, [obj0].concat(objs));
-  } : function (obj0) {
-    for (var _len2 = arguments.length, objs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-      objs[_key2 - 1] = arguments[_key2];
-    }
+        return Object.assign.apply(Object, [obj0].concat(objs));
+    } : function (obj0) {
+        for (var _len2 = arguments.length, objs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+            objs[_key2 - 1] = arguments[_key2];
+        }
 
-    return objs.reduce(function (topAgg, obj) {
-      return keys(obj).reduce(function (agg, key) {
-        agg[key] = obj[key];
-        return agg;
-      }, topAgg);
-    }, obj0);
-  };
+        return objs.reduce(function (topAgg, obj) {
+            return keys(obj).reduce(function (agg, key) {
+                agg[key] = obj[key];
+                return agg;
+            }, topAgg);
+        }, obj0);
+    };
 }();
 
 /**
@@ -202,38 +202,38 @@ var call = function call(fn) {
 var notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 
 var curry = function curry(fn) {
-  for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    argsToCurry[_key - 1] = arguments[_key];
-  }
-
-  return curryN.apply(undefined, [fnOrError(notFnErrPrefix, fn).length, fn].concat(argsToCurry));
-};
-var curryN = function curryN(executeArity, fn) {
-  for (var _len2 = arguments.length, curriedArgs = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-    curriedArgs[_key2 - 2] = arguments[_key2];
-  }
-
-  return function () {
-    for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      args[_key3] = arguments[_key3];
+    for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        argsToCurry[_key - 1] = arguments[_key];
     }
 
-    var concatedArgs = concat(curriedArgs, args),
-        canBeCalled = length(concatedArgs) >= executeArity || !executeArity;
-    return !canBeCalled ? apply(curryN, concat([executeArity, fnOrError(notFnErrPrefix, fn)], concatedArgs)) : apply(fnOrError(notFnErrPrefix, fn), concatedArgs);
-  };
+    return curryN.apply(undefined, [fnOrError(notFnErrPrefix, fn).length, fn].concat(argsToCurry));
+};
+var curryN = function curryN(executeArity, fn) {
+    for (var _len2 = arguments.length, curriedArgs = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        curriedArgs[_key2 - 2] = arguments[_key2];
+    }
+
+    return function () {
+        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            args[_key3] = arguments[_key3];
+        }
+
+        var concatedArgs = concat(curriedArgs, args),
+            canBeCalled = length(concatedArgs) >= executeArity || !executeArity;
+        return !canBeCalled ? apply(curryN, concat([executeArity, fnOrError(notFnErrPrefix, fn)], concatedArgs)) : apply(fnOrError(notFnErrPrefix, fn), concatedArgs);
+    };
 };
 var curry2 = function curry2(fn) {
-  return curryN(2, fn);
+    return curryN(2, fn);
 };
 var curry3 = function curry3(fn) {
-  return curryN(3, fn);
+    return curryN(3, fn);
 };
 var curry4 = function curry4(fn) {
-  return curryN(4, fn);
+    return curryN(4, fn);
 };
 var curry5 = function curry5(fn) {
-  return curryN(5, fn);
+    return curryN(5, fn);
 };
 
 /**
@@ -242,12 +242,12 @@ var curry5 = function curry5(fn) {
 
 /**
  * Returns property value if found; Else `undefined`.
- * @function module:_objectOps.prop
+ * @function module:_objectOps._prop
  * @param name {String} - Key to search on `obj`
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
  */
-var prop$1 = function prop(name, obj) {
+var _prop = function _prop(name, obj) {
   return obj[name];
 };
 
@@ -277,92 +277,140 @@ var _Undefined$1 = 'Undefined';
  * @returns {Boolean}
  */
 var isFunction = function isFunction(value) {
-  return instanceOf$1(Function, value);
+    return _instanceOf(Function, value);
 };
-var isType$1 = function isType(type, obj) {
-  return typeOf(obj) === (isFunction(type) ? type.name : type);
+var _isType = function _isType(type, obj) {
+    return typeOf(obj) === (isFunction(type) ? type.name : type);
 };
 var isClass = function isClass(x) {
-  return x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
+    return x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 };
 var isCallable = function isCallable(x) {
-  return isFunction(x) && !isClass(x);
+    return isFunction(x) && !isClass(x);
 };
 var isArray = Array.isArray;
 var isObject = function isObject(value) {
-  return isType$1(_Object, value);
+    return _isType(_Object, value);
 };
 var isBoolean = function isBoolean(value) {
-  return isType$1(_Boolean, value);
+    return _isType(_Boolean, value);
 };
 var isNumber = function isNumber(value) {
-  return isType$1(_Number$1, value);
+    return _isType(_Number$1, value);
 };
 var isString = function isString(value) {
-  return isType$1(_String, value);
+    return _isType(_String, value);
 };
 var isMap = function isMap(value) {
-  return isType$1(_Map, value);
+    return _isType(_Map, value);
 };
 var isSet = function isSet(value) {
-  return isType$1(_Set, value);
+    return _isType(_Set, value);
 };
 var isWeakMap = function isWeakMap(value) {
-  return isType$1(_WeakMap, value);
+    return _isType(_WeakMap, value);
 };
 var isWeakSet = function isWeakSet(value) {
-  return isType$1(_WeakSet, value);
+    return _isType(_WeakSet, value);
 };
 var isUndefined = function isUndefined(value) {
-  return isType$1(_Undefined$1, value);
+    return _isType(_Undefined$1, value);
 };
 var isNull = function isNull(value) {
-  return isType$1(_Null$1, value);
+    return _isType(_Null$1, value);
 };
 var isSymbol = function isSymbol(value) {
-  return isType$1(_Symbol, value);
+    return _isType(_Symbol, value);
 };
 var isUsableImmutablePrimitive = function isUsableImmutablePrimitive(x) {
-  var typeOfX = typeOf(x);
-  return isset(x) && [_String, _Number$1, _Boolean, _Symbol].some(function (Type) {
-    return Type === typeOfX;
-  });
+    var typeOfX = typeOf(x);
+    return isset(x) && [_String, _Number$1, _Boolean, _Symbol].some(function (Type) {
+        return Type === typeOfX;
+    });
 };
 var isEmptyList = function isEmptyList(x) {
-  return !length(x);
+    return !length(x);
 };
 var isEmptyObject = function isEmptyObject(obj) {
-  return isEmptyList(keys(obj));
+    return isEmptyList(keys(obj));
 };
 var isEmptyCollection = function isEmptyCollection(x) {
-  return x.size === 0;
+    return x.size === 0;
 };
 var isEmpty = function isEmpty(value) {
-  var retVal = void 0;
-  if (!value) {
-    // if '', 0, `null`, `undefined`, or `false` then is empty
-    retVal = true;
-  }
+    var retVal = void 0;
+    if (!value) {
+        // if '', 0, `null`, `undefined`, or `false` then is empty
+        retVal = true;
+    }
 
-  var typeOfValue = typeOf(value);
-  if (typeOfValue === _Array || typeOfValue === _Function) {
-    retVal = isEmptyList(value);
-  } else if (typeOfValue === _Number$1) {
-    retVal = false;
-  } else if (typeOfValue === _Object) {
-    retVal = isEmptyObject(value);
-  } else if (hasOwnProperty$1('size', value) && isNumber(value.size)) {
-    retVal = isEmptyCollection(value);
-  } else {
-    retVal = !value;
-  }
-  return retVal;
+    var typeOfValue = typeOf(value);
+    if (typeOfValue === _Array || typeOfValue === _Function) {
+        retVal = isEmptyList(value);
+    } else if (typeOfValue === _Number$1) {
+        retVal = false;
+    } else if (typeOfValue === _Object) {
+        retVal = isEmptyObject(value);
+    } else if (_hasOwnProperty('size', value) && isNumber(value.size)) {
+        retVal = isEmptyCollection(value);
+    } else {
+        retVal = !value;
+    }
+    return retVal;
 };
 var isset = function isset(x) {
-  return x !== null && x !== undefined;
+    return x !== null && x !== undefined;
 };
 
-var assignDeep$1 = function assignDeep(obj0) {
+/**
+ * Checks if given `x` is set and of one of
+ *  [String, Boolean, Number, or Symbol] (null and undefined are immutable
+ *   but are not "usable" or 'not what we usually want to operate on'.
+ * @private
+ * @param x {*}
+ * @returns {Boolean}
+ */
+function isUsableImmutablePrimitive$1(x) {
+    var typeOfX = typeOf(x);
+    return isset(x) && [String.name, Number.name, Boolean.name, Symbol.name].some(function (Type) {
+        return Type === typeOfX;
+    });
+}
+
+/**
+ * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
+ * ```
+ * // - If exists `(value).constructor.of` uses this.
+ * // - If value is of one String, Boolean, Symbol, or Number types calls it's
+ * //      constructor as a function (in cast form;  E.g., `constructor(...args)` )
+ * // - Else if constructor is a function, thus far, then calls constructor using
+ * //      the `new` keyword (with any passed in args).
+ * ```
+ * @function module:_objectOps.of
+ * @param x {*} - Value to derive returned value's type from.
+ * @param [args] {...*} - Any args to pass in to matched construction strategy.
+ * @returns {*|undefined} - New value of given value's type else `undefined`.
+ */
+var of = function of(x) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+    }
+
+    if (!isset(x)) {
+        return undefined;
+    }
+    var constructor = x.constructor;
+    if (_hasOwnProperty('of', constructor)) {
+        return apply(constructor.of, args);
+    } else if (isUsableImmutablePrimitive$1(x)) {
+        return apply(constructor, args);
+    } else if (isFunction(constructor)) {
+        return new (Function.prototype.bind.apply(constructor, [null].concat(args)))();
+    }
+    return undefined;
+};
+
+var _assignDeep = function _assignDeep(obj0) {
     for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         objs[_key - 1] = arguments[_key];
     }
@@ -371,11 +419,11 @@ var assignDeep$1 = function assignDeep(obj0) {
         return !obj ? topAgg : keys(obj).reduce(function (agg, key) {
             var propDescription = Object.getOwnPropertyDescriptor(agg, key);
             // If property is not writable move to next item in collection
-            if (hasOwnProperty$1(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
+            if (_hasOwnProperty(key, agg) && propDescription && !(propDescription.get && propDescription.set) && !propDescription.writable) {
                 return agg;
             }
             if (isObject(agg[key]) && isObject(obj[key])) {
-                assignDeep(agg[key], obj[key]);
+                _assignDeep(agg[key], obj[key]);
             } else {
                 agg[key] = obj[key];
             }
@@ -438,207 +486,179 @@ var alwaysFalse = function alwaysFalse() {
 };
 
 /**
- * Checks if given `x` is set and of one of
- *  [String, Boolean, Number, or Symbol] (null and undefined are immutable
- *   but are not "usable" or 'not what we usually want to operate on'.
- * @private
- * @param x {*}
- * @returns {Boolean}
+ * @function module:_listOps.map
+ * @param fn {Function} - Function to map on array.
+ * @param xs {Array}
+ * @returns {Array}
  */
-function isUsableImmutablePrimitive$1(x) {
-    var typeOfX = typeOf(x);
-    return isset(x) && [String.name, Number.name, Boolean.name, Symbol.name].some(function (Type) {
-        return Type === typeOfX;
-    });
+function _map(fn, xs) {
+    var ind = 0,
+        limit = length(xs),
+        out = [];
+    if (!limit) {
+        return out;
+    }
+    while (ind < limit) {
+        out.push(fn(xs[ind], ind, xs));
+        ind += 1;
+    }
+    return out;
 }
 
+var aggregateStr = function aggregateStr(agg, item) {
+    return agg + item;
+};
+var aggregateArr = function aggregateArr(agg, item) {
+    agg.push(item);
+    return agg;
+};
+var aggregateObj = function aggregateObj(agg, item, ind) {
+    agg[ind] = item;
+    return agg;
+};
+var aggregatorByType = function aggregatorByType(x) {
+    switch (typeOf(x)) {
+        case 'String':
+            return aggregateStr;
+        case 'Array':
+            return aggregateArr;
+        case 'Object':
+        default:
+            return aggregateObj;
+    }
+};
+
 /**
- * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
- * ```
- * // - If exists `(value).constructor.of` uses this.
- * // - If value is of one String, Boolean, Symbol, or Number types calls it's
- * //      constructor as a function (in cast form;  E.g., `constructor(...args)` )
- * // - Else if constructor is a function, thus far, then calls constructor using
- * //      the `new` keyword (with any passed in args).
- * ```
- * @function module:_objectOps.of
- * @param x {*} - Value to derive returned value's type from.
- * @param [args] {...*} - Any args to pass in to matched construction strategy.
- * @returns {*|undefined} - New value of given value's type else `undefined`.
+ * List operator utils module.
+ * @module _listOpUtils
+ * @private
  */
-var of = function of(x) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
+var sliceFrom = function sliceFrom(startInd, arr) {
+    return slice(startInd, undefined, arr);
+};
+var sliceTo = function sliceTo(toInd, xs) {
+    return slice(0, toInd, xs);
+};
+var copy = function copy(xs) {
+    return sliceFrom(0, xs);
+};
+var sliceCopy = copy;
+var genericAscOrdering = function genericAscOrdering(a, b) {
+    if (a > b) {
+        return 1;
+    } else if (a < b) {
+        return -1;
+    }
+    return 0;
+};
+var lengths = function lengths() {
+    for (var _len = arguments.length, lists = Array(_len), _key = 0; _key < _len; _key++) {
+        lists[_key] = arguments[_key];
     }
 
-    if (!isset(x)) {
+    return length(lists) ? _map(length, lists) : [];
+};
+var lengthsToSmallest = function lengthsToSmallest() {
+    for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        lists[_key2] = arguments[_key2];
+    }
+
+    var listLengths = apply(lengths, lists),
+        smallLen = Math.min.apply(Math, listLengths);
+    return _map(function (list, ind) {
+        return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list);
+    }, lists);
+};
+var reduceUntil = function reduceUntil(pred, op, agg, arr) {
+    var limit = length(arr);
+    if (!limit) {
+        return agg;
+    }
+    var ind = 0,
+        result = agg;
+    for (; ind < limit; ind++) {
+        if (pred(arr[ind], ind, arr)) {
+            break;
+        }
+        result = op(result, arr[ind], ind, arr);
+    }
+    return result;
+};
+var reduceRightUntil = function reduceRightUntil(pred, op, agg, arr) {
+    var limit = length(arr);
+    if (!limit) {
+        return agg;
+    }
+    var ind = limit - 1,
+        result = agg;
+    for (; ind >= 0; ind--) {
+        if (pred(arr[ind], ind, arr)) {
+            break;
+        }
+        result = op(result, arr[ind], ind, arr);
+    }
+    return result;
+};
+var reduce$1 = function reduce(operation, agg, arr) {
+    return reduceUntil(alwaysFalse, // until-predicate
+    operation, // operation
+    agg, // aggregator
+    arr);
+};
+var reduceRight$1 = function reduceRight(operation, agg, arr) {
+    return reduceRightUntil(alwaysFalse, // until-predicate
+    operation, // operation
+    agg, // aggregator
+    arr);
+};
+var lastIndex = function lastIndex(x) {
+    var len = length(x);return len ? len - 1 : 0;
+};
+var findIndexWhere = function findIndexWhere(pred, arr) {
+    var ind = -1,
+        predicateFulfilled = false;
+    var limit = length(arr);
+    while (ind < limit && !predicateFulfilled) {
+        predicateFulfilled = pred(arr[++ind], ind, arr);
+    }
+    return ind;
+};
+var findIndexWhereRight = function findIndexWhereRight(pred, arr) {
+    var limit = length(arr);
+    var ind = limit,
+        predicateFulfilled = false;
+    for (; ind >= 0 && !predicateFulfilled; --ind) {
+        predicateFulfilled = pred(arr[ind], ind, arr);
+    }
+    return ind;
+};
+var findIndicesWhere = function findIndicesWhere(pred, xs) {
+    if (!xs || !xs.length) {
         return undefined;
     }
-    var constructor = x.constructor;
-    if (hasOwnProperty$1('of', constructor)) {
-        return apply(constructor.of, args);
-    } else if (isUsableImmutablePrimitive$1(x)) {
-        return apply(constructor, args);
-    } else if (isFunction(constructor)) {
-        return new (Function.prototype.bind.apply(constructor, [null].concat(args)))();
+    var limit = length(xs);
+    var ind = 0,
+        out = [];
+    for (; ind < limit; ind++) {
+        if (pred(xs[ind], ind, xs)) {
+            out.push(ind);
+        }
     }
-    return undefined;
+    return out.length ? out : undefined;
 };
-
-var log = console.log.bind(console);
-var error = console.error.bind(console);
-var peek = function peek() {
-  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
-
-  return log.apply(undefined, args), args.pop();
-};
-
-/**
- * @module errorThrowing
- * @description Contains error throwing facilities for when a value doesn't match a type.
- *  In addition gives you curried and uncurried versions of the multi arity functions.
- */
-var isCheckableType = function isCheckableType(type) {
-  return isString(type) || isFunction(type);
-};
-var _errorIfNotCheckableType = function _errorIfNotCheckableType(contextName, type) {
-  if (!isCheckableType(type)) {
-    throw new Error(contextName + ' expects `type` to be of type `String` or `Function`.' + ('  Type received `' + typeOf(type) + '`.  Value `' + type + '`.'));
-  }
-  return type;
-};
-var getTypeName = function getTypeName(type) {
-  return _errorIfNotCheckableType('getTypeName', type) && isString(type) ? type : type.name;
-};
-var _defaultTypeChecker = function _defaultTypeChecker(Type, value) {
-  return isType$1(getTypeName(Type), value) || isFunction(Type) && isset(value) && value instanceof Type;
-};
-var multiTypesToString = function multiTypesToString(types) {
-  return types.length ? types.map(function (type) {
-    return '`' + getTypeName(type) + '`';
-  }).join(', ') : '';
-};
-var defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {
-  var contextName = tmplContext.contextName,
-      valueName = tmplContext.valueName,
-      value = tmplContext.value,
-      expectedTypeName = tmplContext.expectedTypeName,
-      foundTypeName = tmplContext.foundTypeName,
-      messageSuffix = tmplContext.messageSuffix,
-      isMultiTypeNames = isArray(expectedTypeName),
-      typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
-      typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
-
-  return (contextName ? '`' + contextName + '.' : '`') + (valueName + '` is not ' + typesCopy + ': ' + typesToMatchCopy + '.  ') + ('Type received: ' + foundTypeName + '.  Value: ' + value + ';') + ('' + (messageSuffix ? '  ' + messageSuffix + ';' : ''));
-};
-var _getErrorIfNotTypeThrower = function _getErrorIfNotTypeThrower(errorMessageCall) {
-  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
-  return function (ValueType, contextName, valueName, value) {
-    var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-
-    var expectedTypeName = getTypeName(ValueType),
-        foundTypeName = typeOf(value);
-    if (typeChecker(ValueType, value)) {
-      return value;
-    } // Value matches type
-    throw new Error(errorMessageCall({ contextName: contextName, valueName: valueName, value: value, expectedTypeName: expectedTypeName, foundTypeName: foundTypeName, messageSuffix: messageSuffix }));
-  };
-};
-var _getErrorIfNotTypesThrower = function _getErrorIfNotTypesThrower(errorMessageCall) {
-  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
-  return function (valueTypes, contextName, valueName, value) {
-    var expectedTypeNames = valueTypes.map(getTypeName),
-        matchFound = valueTypes.some(function (ValueType) {
-      return typeChecker(ValueType, value);
-    }),
-        foundTypeName = typeOf(value);
-    if (matchFound) {
-      return value;
+var findWhere = function findWhere(pred, xs) {
+    var ind = 0,
+        limit = length(xs);
+    if (!limit) {
+        return;
     }
-    throw new Error(errorMessageCall({
-      contextName: contextName, valueName: valueName, value: value,
-      expectedTypeName: expectedTypeNames, foundTypeName: foundTypeName
-    }));
-  };
+    for (; ind < limit; ind++) {
+        var elm = xs[ind];
+        if (pred(elm, ind, xs)) {
+            return elm;
+        }
+    }
 };
-var _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
-var _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall);
-var defaultTypeChecker = curry(_defaultTypeChecker);
-var errorIfNotType = curry(_errorIfNotType);
-var errorIfNotTypes = curry4(_errorIfNotTypes);
-
-/**
- * @typedef {*} Any - Synonym for 'any value'.
- */
-
-/**
- * @typedef {String|Function} TypeRef
- * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
- */
-
-/**
- * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
- * @description Template context used for error message renderers (functions that take a context obj and return a string).
- * @property value {*}
- * @property valueName {String}
- * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
- * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
- * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
- *  directing user to fix where his/her error has occurred).  Optional.
- */
-
-/**
- * @typedef {Array<(String|Function)>} TypesArray
- */
-
-/**
- * @typedef {Function} TypeChecker
- * @description Checks whether a value is of given type.
- * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * @typedef {Function} ErrorMessageCall
- * @description Error message template function.
- * @param tmplContext {TemplateContext}
- * @returns {String}
- */
-
-/**
- * @typedef {Function} ErrorIfNotType
- * @description Used to ensure value matches passed in type.
- * @param type {TypeRef} - Constructor name or constructor.
- * @param contextName {String}
- * @param valueName {String}
- * @param value {*}
- * @throws {Error} - If value doesn't match type.
- * @returns {*} - What ever value is.
- */
-
-/**
- * @typedef {Function} ErrorIfNotTypes
- * @description Used to ensure a value matches one of one or more types passed in.
- * @param valueTypes {TypesArray} - Array of constructor names or constructors.
- * @param contextName {String}
- * @param valueName {String}
- * @param value {*}
- * @throws {Error} - If value doesn't match type.
- * @returns {*} - Whatever value is.
- */
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-
-
-
 
 var asyncGenerator = function () {
   function AwaitValue(value) {
@@ -824,225 +844,6 @@ var slicedToArray = function () {
     }
   };
 }();
-
-/**
- * @module _objectOps
- * @description Object operations (uncurried).
- * @private
- */
-var jsonClone = function jsonClone(x) {
-    return JSON.parse(JSON.stringify(x));
-};
-var toArrayMap = function toArrayMap(obj) {
-    return Object.keys(obj).map(function (key) {
-        if (_typeof(obj[key]) === 'object') {
-            return [key, toArrayMap(obj[key])];
-        }
-        return [key, obj[key]];
-    });
-};
-var fromArrayMap = function fromArrayMap(xs) {
-    return xs.reduce(function (agg, _ref) {
-        var _ref2 = slicedToArray(_ref, 2),
-            key = _ref2[0],
-            value = _ref2[1];
-
-        agg[key] = value;
-        return agg;
-    }, {});
-};
-var toArray = function toArray(x) {
-    switch (typeOf(x)) {
-        case 'Null':
-        case 'Undefined':
-            return [];
-        case String.name:
-        case Array.name:
-        case 'WeakMap':
-        case 'WeakSet':
-        case 'Map':
-        case 'Set':
-            return Array.from(x);
-        case Object.name:
-        default:
-            return toArrayMap(x);
-    }
-};
-
-/**
- * @function module:_listOps.map
- * @param fn {Function} - Function to map on array.
- * @param xs {Array}
- * @returns {Array}
- */
-function _map(fn, xs) {
-    var ind = 0,
-        limit = length(xs),
-        out = [];
-    if (!limit) {
-        return out;
-    }
-    while (ind < limit) {
-        out.push(fn(xs[ind], ind, xs));
-        ind += 1;
-    }
-    return out;
-}
-
-var aggregateStr = function aggregateStr(agg, item) {
-    return agg + item;
-};
-var aggregateArr = function aggregateArr(agg, item) {
-    agg.push(item);
-    return agg;
-};
-var aggregateObj = function aggregateObj(agg, item, ind) {
-    agg[ind] = item;
-    return agg;
-};
-var aggregatorByType = function aggregatorByType(x) {
-    switch (typeOf(x)) {
-        case 'String':
-            return aggregateStr;
-        case 'Array':
-            return aggregateArr;
-        case 'Object':
-        default:
-            return aggregateObj;
-    }
-};
-
-/**
- * List operator utils module.
- * @module _listOpUtils
- * @private
- */
-var sliceFrom = function sliceFrom(startInd, arr) {
-    return slice(startInd, undefined, arr);
-};
-var sliceTo = function sliceTo(toInd, xs) {
-    return slice(0, toInd, xs);
-};
-var copy = function copy(xs) {
-    return sliceFrom(0, xs);
-};
-var sliceCopy = copy;
-var genericAscOrdering = function genericAscOrdering(a, b) {
-    if (a > b) {
-        return 1;
-    } else if (a < b) {
-        return -1;
-    }
-    return 0;
-};
-var lengths = function lengths() {
-    for (var _len = arguments.length, lists = Array(_len), _key = 0; _key < _len; _key++) {
-        lists[_key] = arguments[_key];
-    }
-
-    return length(lists) ? _map(length, lists) : [];
-};
-var lengthsToSmallest = function lengthsToSmallest() {
-    for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        lists[_key2] = arguments[_key2];
-    }
-
-    var listLengths = apply(lengths, lists),
-        smallLen = Math.min.apply(Math, listLengths);
-    return _map(function (list, ind) {
-        return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list);
-    }, lists);
-};
-var reduceUntil = function reduceUntil(pred, op, agg, arr) {
-    var limit = length(arr);
-    if (!limit) {
-        return agg;
-    }
-    var ind = 0,
-        result = agg;
-    for (; ind < limit; ind++) {
-        if (pred(arr[ind], ind, arr)) {
-            break;
-        }
-        result = op(result, arr[ind], ind, arr);
-    }
-    return result;
-};
-var reduceRightUntil = function reduceRightUntil(pred, op, agg, arr) {
-    var limit = length(arr);
-    if (!limit) {
-        return agg;
-    }
-    var ind = limit - 1,
-        result = agg;
-    for (; ind >= 0; ind--) {
-        if (pred(arr[ind], ind, arr)) {
-            break;
-        }
-        result = op(result, arr[ind], ind, arr);
-    }
-    return result;
-};
-var reduce$1 = function reduce(operation, agg, arr) {
-    return reduceUntil(alwaysFalse, // until-predicate
-    operation, // operation
-    agg, // aggregator
-    arr);
-};
-var reduceRight$1 = function reduceRight(operation, agg, arr) {
-    return reduceRightUntil(alwaysFalse, // until-predicate
-    operation, // operation
-    agg, // aggregator
-    arr);
-};
-var lastIndex = function lastIndex(x) {
-    var len = length(x);return len ? len - 1 : 0;
-};
-var findIndexWhere = function findIndexWhere(pred, arr) {
-    var ind = -1,
-        predicateFulfilled = false;
-    var limit = length(arr);
-    while (ind < limit && !predicateFulfilled) {
-        predicateFulfilled = pred(arr[++ind], ind, arr);
-    }
-    return ind;
-};
-var findIndexWhereRight = function findIndexWhereRight(pred, arr) {
-    var limit = length(arr);
-    var ind = limit,
-        predicateFulfilled = false;
-    for (; ind >= 0 && !predicateFulfilled; --ind) {
-        predicateFulfilled = pred(arr[ind], ind, arr);
-    }
-    return ind;
-};
-var findIndicesWhere = function findIndicesWhere(pred, xs) {
-    if (!xs || !xs.length) {
-        return undefined;
-    }
-    var limit = length(xs);
-    var ind = 0,
-        out = [];
-    for (; ind < limit; ind++) {
-        if (pred(xs[ind], ind, xs)) {
-            out.push(ind);
-        }
-    }
-    return out.length ? out : undefined;
-};
-var findWhere = function findWhere(pred, xs) {
-    var ind = 0,
-        limit = length(xs);
-    if (!limit) {
-        return;
-    }
-    for (; ind < limit; ind++) {
-        var elm = xs[ind];
-        if (pred(elm, ind, xs)) {
-            return elm;
-        }
-    }
-};
 
 /**
  * List operations module (un-curried version).
@@ -1298,7 +1099,7 @@ var _breakOnList = function _breakOnList(pred, list) {
     var splitPoint = findIndexWhere(pred, list);
     return splitPoint === -1 ? _splitAt(0, list) : _splitAt(splitPoint, list);
 };
-var _at = prop$1;
+var _at = _prop;
 var _find = findWhere;
 var _filter = function _filter(pred, xs) {
     var ind = 0,
@@ -1789,48 +1590,267 @@ var _complement = function _complement(arr0) {
     }, [], arrays);
 };
 
-var objUnion$1 = function objUnion(obj1, obj2) {
-    return assignDeep$1(obj1, obj2);
+var _objUnion = function _objUnion(obj1, obj2) {
+    return _assignDeep(obj1, obj2);
 };
-var objIntersect$1 = function objIntersect(obj1, obj2) {
+var _objIntersect = function _objIntersect(obj1, obj2) {
     return _foldl(function (agg, key) {
-        if (hasOwnProperty$1(key, obj2)) {
+        if (_hasOwnProperty(key, obj2)) {
             agg[key] = obj2[key];
         }
         return agg;
     }, {}, keys(obj1));
 };
-var objDifference$1 = function objDifference(obj1, obj2) {
+var _objDifference = function _objDifference(obj1, obj2) {
     return _foldl(function (agg, key) {
-        if (!hasOwnProperty$1(key, obj2)) {
+        if (!_hasOwnProperty(key, obj2)) {
             agg[key] = obj1[key];
         }
         return agg;
     }, {}, keys(obj1));
 };
-var objComplement$1 = function objComplement(obj0) {
+var _objComplement = function _objComplement(obj0) {
     for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         objs[_key - 1] = arguments[_key];
     }
 
     return _foldl(function (agg, obj) {
-        return assignDeep$1(agg, objDifference$1(obj, obj0));
+        return _assignDeep(agg, _objDifference(obj, obj0));
     }, {}, objs);
 };
+
+var log = console.log.bind(console);
+var error = console.error.bind(console);
+var peek = function peek() {
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return log.apply(undefined, args), args.pop();
+};
+
+/**
+ * @module errorThrowing
+ * @description Contains error throwing facilities for when a value doesn't match a type.
+ *  In addition gives you curried and uncurried versions of the multi arity functions.
+ */
+var isCheckableType = function isCheckableType(type) {
+    return isString(type) || isFunction(type);
+};
+var _errorIfNotCheckableType = function _errorIfNotCheckableType(contextName, type) {
+    if (!isCheckableType(type)) {
+        throw new Error(contextName + ' expects `type` to be of type `String` or `Function`.' + ('  Type received `' + typeOf(type) + '`.  Value `' + type + '`.'));
+    }
+    return type;
+};
+var getTypeName = function getTypeName(type) {
+    return _errorIfNotCheckableType('getTypeName', type) && isString(type) ? type : type.name;
+};
+var _defaultTypeChecker = function _defaultTypeChecker(Type, value) {
+    return _isType(getTypeName(Type), value) || isFunction(Type) && isset(value) && value instanceof Type;
+};
+var multiTypesToString = function multiTypesToString(types) {
+    return types.length ? types.map(function (type) {
+        return '`' + getTypeName(type) + '`';
+    }).join(', ') : '';
+};
+var defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {
+    var contextName = tmplContext.contextName,
+        valueName = tmplContext.valueName,
+        value = tmplContext.value,
+        expectedTypeName = tmplContext.expectedTypeName,
+        foundTypeName = tmplContext.foundTypeName,
+        messageSuffix = tmplContext.messageSuffix,
+        isMultiTypeNames = isArray(expectedTypeName),
+        typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+        typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
+
+    return (contextName ? '`' + contextName + '.' : '`') + (valueName + '` is not ' + typesCopy + ': ' + typesToMatchCopy + '.  ') + ('Type received: ' + foundTypeName + '.  Value: ' + value + ';') + ('' + (messageSuffix ? '  ' + messageSuffix + ';' : ''));
+};
+var _getErrorIfNotTypeThrower = function _getErrorIfNotTypeThrower(errorMessageCall) {
+    var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
+    return function (ValueType, contextName, valueName, value) {
+        var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+
+        var expectedTypeName = getTypeName(ValueType),
+            foundTypeName = typeOf(value);
+        if (typeChecker(ValueType, value)) {
+            return value;
+        } // Value matches type
+        throw new Error(errorMessageCall({ contextName: contextName, valueName: valueName, value: value, expectedTypeName: expectedTypeName, foundTypeName: foundTypeName, messageSuffix: messageSuffix }));
+    };
+};
+var _getErrorIfNotTypesThrower = function _getErrorIfNotTypesThrower(errorMessageCall) {
+    var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
+    return function (valueTypes, contextName, valueName, value) {
+        var expectedTypeNames = valueTypes.map(getTypeName),
+            matchFound = valueTypes.some(function (ValueType) {
+            return typeChecker(ValueType, value);
+        }),
+            foundTypeName = typeOf(value);
+        if (matchFound) {
+            return value;
+        }
+        throw new Error(errorMessageCall({
+            contextName: contextName, valueName: valueName, value: value,
+            expectedTypeName: expectedTypeNames, foundTypeName: foundTypeName
+        }));
+    };
+};
+var _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
+var _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall);
+var defaultTypeChecker = curry(_defaultTypeChecker);
+var errorIfNotType = curry(_errorIfNotType);
+var errorIfNotTypes = curry4(_errorIfNotTypes);
+var getErrorIfNotTypeThrower = function getErrorIfNotTypeThrower(errorMessageCall) {
+    return curry(_getErrorIfNotTypeThrower(errorMessageCall));
+};
+var getErrorIfNotTypesThrower = function getErrorIfNotTypesThrower(errorMessageCall) {
+    return curry4(_getErrorIfNotTypesThrower(errorMessageCall));
+};
+
+/**
+ * @typedef {*} Any - Synonym for 'any value'.
+ */
+
+/**
+ * @typedef {String|Function} TypeRef
+ * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
+ */
+
+/**
+ * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
+ * @description Template context used for error message renderers (functions that take a context obj and return a string).
+ * @property value {*}
+ * @property valueName {String}
+ * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
+ * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
+ * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
+ *  directing user to fix where his/her error has occurred).  Optional.
+ */
+
+/**
+ * @typedef {Array<(String|Function)>} TypesArray
+ */
+
+/**
+ * @typedef {Function} TypeChecker
+ * @description Checks whether a value is of given type.
+ * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @typedef {Function} ErrorMessageCall
+ * @description Error message template function.
+ * @param tmplContext {TemplateContext}
+ * @returns {String}
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotType
+ * @description Used to ensure value matches passed in type.
+ * @param type {TypeRef} - Constructor name or constructor.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - What ever value is.
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotTypes
+ * @description Used to ensure a value matches one of one or more types passed in.
+ * @param valueTypes {TypesArray} - Array of constructor names or constructors.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - Whatever value is.
+ */
+
+var jsonClone = function jsonClone(x) {
+  return JSON.parse(JSON.stringify(x));
+};
+
+var toAssocList = function toAssocList(obj) {
+    return keys(obj).map(function (key) {
+        return [key, obj[key]];
+    });
+};
+var toAssocListDeep = function toAssocListDeep(obj) {
+    var TypeConstraint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
+    return keys(obj).map(function (key) {
+        return TypeConstraint && _isType(TypeConstraint, obj[key]) ? [key, toAssocListDeep(obj[key], TypeConstraint)] : [key, obj[key]];
+    });
+};
+var fromAssocList = function fromAssocList(xs) {
+    var OutType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
+    return xs.reduce(function (agg, _ref) {
+        var _ref2 = slicedToArray(_ref, 2),
+            key = _ref2[0],
+            value = _ref2[1];
+
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+};
+var fromAssocListDeep = function fromAssocListDeep(xs) {
+    var OutType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
+    return xs.reduce(function (agg, _ref3) {
+        var _ref4 = slicedToArray(_ref3, 2),
+            key = _ref4[0],
+            value = _ref4[1];
+
+        if (isArray(value) && isArray(value[0])) {
+            agg[key] = fromAssocListDeep(value, OutType);
+            return agg;
+        }
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+};
+var toArrayMap = toAssocList;
+var fromArrayMap = fromAssocList;
+
+var toArray$1 = function toArray(x) {
+    switch (typeOf(x)) {
+        case 'Null':
+        case 'Undefined':
+            return [];
+        case String.name:
+        case Array.name:
+        case 'WeakMap':
+        case 'WeakSet':
+        case 'Map':
+        case 'Set':
+            return Array.from(x);
+        case Object.name:
+        default:
+            return toAssocList(x);
+    }
+};
+
+/**
+ * @module _objectOps
+ * @description Object operations (un-curried).
+ * @private
+ */
 
 /**
  * @module objectOps
  */
-var prop$$1 = curry(prop$1);
-var instanceOf$$1 = curry(instanceOf$1);
-var hasOwnProperty$$1 = curry(hasOwnProperty$1);
-var assign$$1 = curry2(assign$1);
-var assignDeep$$1 = curry2(assignDeep$1);
-var objUnion$$1 = curry(objUnion$1);
-var objIntersect$$1 = curry(objIntersect$1);
-var objDifference$$1 = curry(objDifference$1);
-var objComplement$$1 = curry2(objComplement$1);
-var isType$$1 = curry(isType$1);
+var prop = curry(_prop);
+var instanceOf = curry(_instanceOf);
+var hasOwnProperty = curry(_hasOwnProperty);
+var assign = curry2(_assign);
+var assignDeep = curry2(_assignDeep);
+var objUnion = curry(_objUnion);
+var objIntersect = curry(_objIntersect);
+var objDifference = curry(_objDifference);
+var objComplement = curry2(_objComplement);
+var isType = curry(_isType);
 
 var until$1 = function until(predicate, operation, typeInstance) {
     var result = typeInstance;
@@ -1894,7 +1914,7 @@ var placeHolderInstance = new PlaceHolder();
  * @private
  */
 function isPlaceHolder(instance) {
-  return instance instanceof PlaceHolder;
+    return instance instanceof PlaceHolder;
 }
 
 /**
@@ -1906,15 +1926,15 @@ function isPlaceHolder(instance) {
  * @returns {Array|*} - Returns passed in `_listOps` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders(array, args) {
-  var out = map(function (element) {
-    if (!isPlaceHolder(element)) {
-      return element;
-    } else if (length(args)) {
-      return args.shift();
-    }
-    return element;
-  }, array);
-  return length(args) ? concat(out, args) : out;
+    var out = map(function (element) {
+        if (!isPlaceHolder(element)) {
+            return element;
+        } else if (length(args)) {
+            return args.shift();
+        }
+        return element;
+    }, array);
+    return length(args) ? concat(out, args) : out;
 }
 
 /**
@@ -1925,11 +1945,11 @@ function replacePlaceHolders(array, args) {
  * @returns {Function}
  */
 function curry_(fn) {
-  for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    argsToCurry[_key - 1] = arguments[_key];
-  }
+    for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        argsToCurry[_key - 1] = arguments[_key];
+    }
 
-  return curryN_.apply(undefined, [fnOrError(notFnErrPrefix$1, fn).length, fn].concat(argsToCurry));
+    return curryN_.apply(undefined, [fnOrError(notFnErrPrefix$1, fn).length, fn].concat(argsToCurry));
 }
 
 /**
@@ -1941,20 +1961,20 @@ function curry_(fn) {
  * @returns {Function} - Passed in _functionOps wrapped in a _functionOps for currying.
  */
 function curryN_(executeArity, fn) {
-  for (var _len2 = arguments.length, curriedArgs = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-    curriedArgs[_key2 - 2] = arguments[_key2];
-  }
-
-  return function () {
-    for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      args[_key3] = arguments[_key3];
+    for (var _len2 = arguments.length, curriedArgs = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        curriedArgs[_key2 - 2] = arguments[_key2];
     }
 
-    var concatedArgs = replacePlaceHolders(curriedArgs, args),
-        placeHolders = filter(isPlaceHolder, concatedArgs),
-        canBeCalled = length(concatedArgs) - length(placeHolders) >= executeArity || !executeArity;
-    return !canBeCalled ? apply(curryN_, concat([executeArity, fnOrError(notFnErrPrefix$1, fn)], concatedArgs)) : apply(fnOrError(notFnErrPrefix$1, fn), concatedArgs);
-  };
+    return function () {
+        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            args[_key3] = arguments[_key3];
+        }
+
+        var concatedArgs = replacePlaceHolders(curriedArgs, args),
+            placeHolders = filter(isPlaceHolder, concatedArgs),
+            canBeCalled = length(concatedArgs) - length(placeHolders) >= executeArity || !executeArity;
+        return !canBeCalled ? apply(curryN_, concat([executeArity, fnOrError(notFnErrPrefix$1, fn)], concatedArgs)) : apply(fnOrError(notFnErrPrefix$1, fn), concatedArgs);
+    };
 }
 
 /**
@@ -1964,16 +1984,16 @@ function curryN_(executeArity, fn) {
  */
 var __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
 var curry2_ = function curry2_(fn) {
-  return curryN_(2, fn);
+    return curryN_(2, fn);
 };
 var curry3_ = function curry3_(fn) {
-  return curryN_(3, fn);
+    return curryN_(3, fn);
 };
 var curry4_ = function curry4_(fn) {
-  return curryN_(4, fn);
+    return curryN_(4, fn);
 };
 var curry5_ = function curry5_(fn) {
-  return curryN_(5, fn);
+    return curryN_(5, fn);
 };
 
 /**
@@ -2020,25 +2040,25 @@ var apply$1 = curry(apply);
 var call$1 = curry2(call);
 var until$$1 = curry(until$1);
 var flipN$$1 = function flipN$$1(fn) {
-  return curry3(function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    return curry3(function () {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
 
-    return apply$1(fn, reverse(args));
-  });
+        return apply$1(fn, reverse(args));
+    });
 };
 var flip$$1 = function flip$$1(fn) {
-  return curry(flip$1(fn));
+    return curry(flip$1(fn));
 };
 var flip3$$1 = function flip3$$1(fn) {
-  return curry(flip3$1(fn));
+    return curry(flip3$1(fn));
 };
 var flip4$$1 = function flip4$$1(fn) {
-  return curry(flip4$1(fn));
+    return curry(flip4$1(fn));
 };
 var flip5$$1 = function flip5$$1(fn) {
-  return curry(flip5$1(fn));
+    return curry(flip5$1(fn));
 };
 
 /**
@@ -2216,23 +2236,23 @@ var flip5$$1 = function flip5$$1(fn) {
  */
 
 var fPureTakesOne_ = function fPureTakesOne_(name) {
-  return curry(function (arg, f) {
-    return f[name](arg);
-  });
+    return curry(function (arg, f) {
+        return f[name](arg);
+    });
 };
 var fPureTakes2_ = function fPureTakes2_(name) {
-  return curry(function (arg1, arg2, f) {
-    return f[name](arg1, arg2);
-  });
+    return curry(function (arg1, arg2, f) {
+        return f[name](arg1, arg2);
+    });
 };
 var fPureTakesOneOrMore_ = function fPureTakesOneOrMore_(name) {
-  return curry2(function (f) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
+    return curry2(function (f) {
+        for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            args[_key - 1] = arguments[_key];
+        }
 
-    return f[name].apply(f, args);
-  });
+        return f[name].apply(f, args);
+    });
 };
 
 /**
@@ -2373,20 +2393,20 @@ var words = split$1(/[\s\t]/gm);
 var unwords = intercalate(' ');
 var unlines = intercalate('\n');
 var lcaseFirst = function lcaseFirst(xs) {
-  _errorIfNotType(String, 'lcaseFirst', 'xs', xs);
-  return xs[0].toLowerCase() + xs.substring(1);
+    _errorIfNotType(String, 'lcaseFirst', 'xs', xs);
+    return xs[0].toLowerCase() + xs.substring(1);
 };
 var ucaseFirst = function ucaseFirst(xs) {
-  _errorIfNotType(String, 'ucaseFirst', 'xs', xs);
-  return xs[0].toUpperCase() + xs.substring(1);
+    _errorIfNotType(String, 'ucaseFirst', 'xs', xs);
+    return xs[0].toUpperCase() + xs.substring(1);
 };
 var camelCase = function camelCase(xs) {
-  var pattern = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : /[^a-z\d]/i;
-  return compose(join$1(''), map$1(function (str) {
-    return ucaseFirst(str.toLowerCase());
-  }), filter$1(function (x) {
-    return !!x;
-  }), split$1(pattern))(_errorIfNotType(String, 'camelCase', 'xs', xs));
+    var pattern = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : /[^a-z\d]/i;
+    return compose(join$1(''), map$1(function (str) {
+        return ucaseFirst(str.toLowerCase());
+    }), filter$1(function (x) {
+        return !!x;
+    }), split$1(pattern))(_errorIfNotType(String, 'camelCase', 'xs', xs));
 };
 var classCase = compose(ucaseFirst, camelCase);
 
@@ -2403,36 +2423,27 @@ var classCase = compose(ucaseFirst, camelCase);
  * @module fjl
  */
 
-exports._instanceOf = instanceOf$1;
-exports._isType = isType$1;
-exports._hasOwnProperty = hasOwnProperty$1;
-exports._assign = assign$1;
-exports._prop = prop$1;
-exports._assignDeep = assignDeep$1;
-exports._objUnion = objUnion$1;
-exports._objComplement = objComplement$1;
-exports._objIntersect = objIntersect$1;
-exports._objDifference = objDifference$1;
-exports.prop = prop$$1;
-exports.instanceOf = instanceOf$$1;
-exports.hasOwnProperty = hasOwnProperty$$1;
-exports.assign = assign$$1;
-exports.assignDeep = assignDeep$$1;
-exports.objUnion = objUnion$$1;
-exports.objIntersect = objIntersect$$1;
-exports.objDifference = objDifference$$1;
-exports.objComplement = objComplement$$1;
-exports.isType = isType$$1;
-exports.jsonClone = jsonClone;
-exports.fromArrayMap = fromArrayMap;
-exports.toArrayMap = toArrayMap;
-exports.toArray = toArray;
+exports.prop = prop;
+exports.instanceOf = instanceOf;
+exports.hasOwnProperty = hasOwnProperty;
+exports.assign = assign;
+exports.assignDeep = assignDeep;
+exports.objUnion = objUnion;
+exports.objIntersect = objIntersect;
+exports.objDifference = objDifference;
+exports.objComplement = objComplement;
+exports.isType = isType;
 exports.length = length;
 exports.keys = keys;
+exports._instanceOf = _instanceOf;
+exports._hasOwnProperty = _hasOwnProperty;
+exports._assign = _assign;
+exports._prop = _prop;
+exports.typeOf = typeOf;
 exports.isFunction = isFunction;
+exports._isType = _isType;
 exports.isClass = isClass;
 exports.isCallable = isCallable;
-exports.isArray = isArray;
 exports.isObject = isObject;
 exports.isBoolean = isBoolean;
 exports.isNumber = isNumber;
@@ -2450,11 +2461,39 @@ exports.isEmptyObject = isEmptyObject;
 exports.isEmptyCollection = isEmptyCollection;
 exports.isEmpty = isEmpty;
 exports.isset = isset;
-exports.typeOf = typeOf;
+exports.isArray = isArray;
 exports.of = of;
+exports._assignDeep = _assignDeep;
+exports._objUnion = _objUnion;
+exports._objIntersect = _objIntersect;
+exports._objDifference = _objDifference;
+exports._objComplement = _objComplement;
 exports.log = log;
 exports.error = error;
 exports.peek = peek;
+exports.isCheckableType = isCheckableType;
+exports._errorIfNotCheckableType = _errorIfNotCheckableType;
+exports.getTypeName = getTypeName;
+exports._defaultTypeChecker = _defaultTypeChecker;
+exports.multiTypesToString = multiTypesToString;
+exports.defaultErrorMessageCall = defaultErrorMessageCall;
+exports._getErrorIfNotTypeThrower = _getErrorIfNotTypeThrower;
+exports._getErrorIfNotTypesThrower = _getErrorIfNotTypesThrower;
+exports._errorIfNotType = _errorIfNotType;
+exports._errorIfNotTypes = _errorIfNotTypes;
+exports.defaultTypeChecker = defaultTypeChecker;
+exports.errorIfNotType = errorIfNotType;
+exports.errorIfNotTypes = errorIfNotTypes;
+exports.getErrorIfNotTypeThrower = getErrorIfNotTypeThrower;
+exports.getErrorIfNotTypesThrower = getErrorIfNotTypesThrower;
+exports.jsonClone = jsonClone;
+exports.toArray = toArray$1;
+exports.toAssocList = toAssocList;
+exports.toAssocListDeep = toAssocListDeep;
+exports.fromAssocList = fromAssocList;
+exports.fromAssocListDeep = fromAssocListDeep;
+exports.toArrayMap = toArrayMap;
+exports.fromArrayMap = fromArrayMap;
 exports.isTruthy = isTruthy;
 exports.isFalsy = isFalsy;
 exports.alwaysTrue = alwaysTrue;

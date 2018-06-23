@@ -51,7 +51,7 @@ var of = exports.of = function of(x) {
         return undefined;
     }
     var constructor = x.constructor;
-    if ((0, _object.hasOwnProperty)('of', constructor)) {
+    if ((0, _object._hasOwnProperty)('of', constructor)) {
         return (0, _function.apply)(constructor.of, args);
     } else if (isUsableImmutablePrimitive(x)) {
         return (0, _function.apply)(constructor, args);

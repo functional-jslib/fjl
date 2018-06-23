@@ -699,7 +699,7 @@ _breakOnList = exports._breakOnList = function _breakOnList(pred, list) {
  * @param xs {Array} - list or list like.
  * @returns {*|undefined} - Item or `undefined`.
  */
-_at = exports._at = _objectOps.prop,
+_at = exports._at = _objectOps._prop,
 
 
 /**

@@ -4,7 +4,7 @@
  */
 
 import {typeOf} from './_typeOf';
-import {instanceOf, length, keys, hasOwnProperty} from '../_jsPlatform/_object';
+import {_instanceOf, length, keys, _hasOwnProperty} from '../_jsPlatform/_object';
 
 let _String = String.name,
     _Number = Number.name,
@@ -28,7 +28,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isFunction = value => instanceOf(Function, value),
+    isFunction = value => _instanceOf(Function, value),
 
     /**
      * Type checker.  Note** The `Type` passed in, if a constructor, should
@@ -39,11 +39,11 @@ export const
      *  class SomeName {}
      * ```
      * @function module:objectOps._isType
-     * @param type {Function|String} - Constructor or constructor name
+     * @param type {Function|ObjectConstructor|String} - Constructor or constructor name
      * @param obj {*}
      * @return {Boolean}
      */
-    isType = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type),
+    _isType = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type),
 
     /**
      * Checks if `value` is an es2015 `class`.
@@ -76,7 +76,7 @@ export const
      * @param value
      * @returns {Boolean}
      */
-    isObject = value => isType(_Object, value),
+    isObject = value => _isType(_Object, value),
 
     /**
      * Checks if value is a boolean.
@@ -84,7 +84,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isBoolean = value => isType(_Boolean, value),
+    isBoolean = value => _isType(_Boolean, value),
 
     /**
      * Checks if value is a valid number (also checks if isNaN so that you don't have to).
@@ -92,7 +92,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNumber = value => isType(_Number, value),
+    isNumber = value => _isType(_Number, value),
 
     /**
      * Checks whether value is a stringOps or not.
@@ -100,7 +100,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isString = value => isType(_String, value),
+    isString = value => _isType(_String, value),
 
     /**
      * Checks whether value is of `Map` or not.
@@ -108,7 +108,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isMap = value => isType(_Map, value),
+    isMap = value => _isType(_Map, value),
 
     /**
      * Checks whether value is of `Set` or not.
@@ -116,7 +116,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSet = value => isType(_Set, value),
+    isSet = value => _isType(_Set, value),
 
     /**
      * Checks whether value is of `WeakMap` or not.
@@ -124,7 +124,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakMap = value => isType(_WeakMap, value),
+    isWeakMap = value => _isType(_WeakMap, value),
 
     /**
      * Checks whether value is of `WeakSet` or not.
@@ -132,7 +132,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakSet = value => isType(_WeakSet, value),
+    isWeakSet = value => _isType(_WeakSet, value),
 
     /**
      * Checks if value is undefined.
@@ -140,7 +140,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isUndefined = value => isType(_Undefined, value),
+    isUndefined = value => _isType(_Undefined, value),
 
     /**
      * Checks if value is null.
@@ -148,7 +148,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNull = value => isType(_Null, value),
+    isNull = value => _isType(_Null, value),
 
     /**
      * Checks if value is a `Symbol`.
@@ -156,7 +156,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSymbol = value => isType(_Symbol, value),
+    isSymbol = value => _isType(_Symbol, value),
 
     /**
      * Checks if given `x` is set and of one of
@@ -221,7 +221,7 @@ export const
         else if (typeOfValue === _Object) {
             retVal = isEmptyObject(value);
         }
-        else if (hasOwnProperty('size', value) && isNumber(value.size)) {
+        else if (_hasOwnProperty('size', value) && isNumber(value.size)) {
             retVal = isEmptyCollection(value);
         }
         else {

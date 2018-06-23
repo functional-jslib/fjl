@@ -22,12 +22,12 @@
 
   /**
    * Returns property value if found; Else `undefined`.
-   * @function module:_objectOps.prop
+   * @function module:_objectOps._prop
    * @param name {String} - Key to search on `obj`
    * @param obj {Object} - Object to search `name` on.
    * @returns {*}
    */
-  var prop = exports.prop = function prop(name, obj) {
+  var _prop = exports._prop = function _prop(name, obj) {
     return obj[name];
   };
 });
