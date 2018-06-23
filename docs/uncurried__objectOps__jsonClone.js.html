@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: fjl.js</title>
+    <title>JSDoc: Source: uncurried/_objectOps/_jsonClone.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: fjl.js</h1>
+    <h1 class="page-title">Source: uncurried/_objectOps/_jsonClone.js</h1>
 
     
 
@@ -26,25 +26,17 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Created by elyde on 12/6/2016.
- * @file fjl.js
- * @goal to include everything from haskell's Prelude where it makes sense in order to create
- *  a subset of functions which can make the javascript developer more efficient and make his/her
- *  code more concise (and functional).
- * @description Includes operations from haskell's Prelude.
- * @motivation preludejs, lodash/fp, RamdaJs, Haskell.
- * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
- * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
- * @module fjl
- */
-export * from './objectOps';
-export * from './booleanOps';
-export * from './functionOps';
-export * from './listOps';
-export * from './stringOps';
-export * from './utils';
-export * from './uncurried/_listOps/_utils';
+            <pre class="prettyprint source linenums"><code>export const
+
+    /**
+     * Clones and object or array using `JSON.parse(JSON.stringify(...))` pattern.
+     * @function module:objectOps.jsonClone
+     * @param x {*}
+     * @returns {*}
+     */
+    jsonClone = x => JSON.parse(JSON.stringify(x))
+
+;
 </code></pre>
         </article>
     </section>
