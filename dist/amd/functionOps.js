@@ -96,7 +96,7 @@ define(['exports', './uncurried/_functionOps/_curry', './uncurried/_functionOps/
 
     /**
      * Flips a functions arguments order and returns a new function requiring such (arguments in reverse order).
-     * @function module:fnOperators.flipN
+     * @function module:function.flipN
      * @param fn {Function}
      * @returns {Function}
      * @curried - Triggered at 3 or more (args).
@@ -106,7 +106,7 @@ define(['exports', './uncurried/_functionOps/_curry', './uncurried/_functionOps/
 
     /**
      * Flips a function's first and second arguments and and returns a new function requiring said arguments in reverse.
-     * @function module:fnOperators.flip
+     * @function module:function.flip
      * @param fn {Function}
      * @returns {Function}
      * @curried

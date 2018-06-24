@@ -253,7 +253,7 @@ export const
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
-     * @function module:list.take
+     * @function module:list.drop
      * @param list {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
@@ -290,7 +290,7 @@ export const
     dropWhile = curry(_dropWhile),
 
     /**
-     * @function module:list.dropWhile
+     * @function module:list.dropWhileEnd
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -410,7 +410,7 @@ export const
 
     /**
      * Checks if list `xs1` is a sub-sequence of list `xs2`
-     * @function module:list.isPrefixOf
+     * @function module:list.isSubsequenceOf
      * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
      * @returns {boolean}

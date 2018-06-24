@@ -108,7 +108,7 @@
 
     /**
      * Flips a functions arguments order and returns a new function requiring such (arguments in reverse order).
-     * @function module:fnOperators.flipN
+     * @function module:function.flipN
      * @param fn {Function}
      * @returns {Function}
      * @curried - Triggered at 3 or more (args).
@@ -126,7 +126,7 @@
 
     /**
      * Flips a function's first and second arguments and and returns a new function requiring said arguments in reverse.
-     * @function module:fnOperators.flip
+     * @function module:function.flip
      * @param fn {Function}
      * @returns {Function}
      * @curried
