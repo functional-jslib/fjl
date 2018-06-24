@@ -1,9 +1,6 @@
 /**
  * @memberOf _function
- * @author elydelacruz
- * @created 12/6/2016.
  * @description Curry implementation with place holder concept (`__`).
- * @todo Make code here more minimal (reuse small parts here).
  */
 
 import {apply, concat, map, filter, length} from '../_jsPlatform/_jsPlatform';

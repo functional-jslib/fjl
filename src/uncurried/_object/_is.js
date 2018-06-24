@@ -210,7 +210,6 @@ export const
         if (!value) { // if '', 0, `null`, `undefined`, or `false` then is empty
             retVal = true;
         }
-
         const typeOfValue = typeOf(value);
         if (typeOfValue === _Array || typeOfValue === _Function) {
             retVal = isEmptyList(value);

@@ -1,6 +1,6 @@
 /**
  * @module fjl
- * @description Includes operations from haskell's Prelude.
+ * @description Exports all module methods (object, list, string modules etc.).
  * @goal to include everything from haskell's Prelude where it makes sense in order to create
  *  a subset of functions which can make the javascript developer more efficient and make his/her
  *  code more concise (and functional).

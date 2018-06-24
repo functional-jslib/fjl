@@ -1,6 +1,6 @@
 /**
- * Created by elyde on 7/15/2017.
  * @module boolean
+ * @description Contains functional version of 'always-true', 'always-false', 'is-truthy', and 'is-falsy'.
  */
 
 export const

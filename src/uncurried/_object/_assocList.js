@@ -39,15 +39,15 @@ export const
     }, new OutType()),
 
     /**
-     * From associated list to object.
+     * From associated list to object (deep conversion on associative lists (array of 2 value arrays)).
      * @note Considers array of arrays associated lists.
-     * @function module:object.fromAssocList
+     * @function module:object.fromAssocListDeep
      * @param xs {Array.<Array>} - Associated list.
      * @param [OutType = Object] {Constructor|Function} - Output type.  Default `Object`.
      * @returns {*} - Default is `Object`
      */
     fromAssocListDeep = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
-        if (isArray(value) && isArray(value[0])) {
+        if (isArray(value) && isArray(value[0]) && value[0].length === 2) {
             agg[key] = fromAssocListDeep(value, OutType);
             return agg;
         }

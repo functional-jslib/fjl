@@ -1,22 +1,6 @@
-import {isFunction, isset} from './_is';
+import {isFunction, isset, isUsableImmutablePrimitive} from './_is';
 import {_hasOwnProperty} from '../_jsPlatform/_object';
 import {apply} from '../_jsPlatform/_function';
-import {typeOf} from './_typeOf';
-
-/**
- * Checks if given `x` is set and of one of
- *  [String, Boolean, Number, or Symbol] (null and undefined are immutable
- *   but are not "usable" or 'not what we usually want to operate on'.
- * @private
- * @param x {*}
- * @returns {Boolean}
- */
-function isUsableImmutablePrimitive (x) {
-    const typeOfX = typeOf(x);
-    return isset(x) &&
-        [String.name, Number.name, Boolean.name, Symbol.name]
-            .some(Type => Type === typeOfX);
-}
 
 /**
  * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):

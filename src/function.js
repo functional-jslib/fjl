@@ -1,6 +1,6 @@
 /**
- * Function operations: `
  * @module function
+ * @description Function operations/combinators.
  */
 
 import {curry, curry2, curry3} from './uncurried/_function/_curry';
