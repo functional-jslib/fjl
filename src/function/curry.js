@@ -3,7 +3,7 @@ import fnOrError from './fnOrError';
 /**
  * @author elydelacruz
  * @created 12/6/2016.
- * @memberOf _function
+ * @memberOf function
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 

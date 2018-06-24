@@ -1,6 +1,5 @@
 /**
- * @module _function
- * @private
+ * @module function
  */
 export * from './jsPlatform/function';
 export * from './function/compose';

@@ -6,7 +6,7 @@ export const
     /**
      * Returns an associated list from given object.
      * @note Useful for working with plain javascript objects.
-     * @function module:object._toAssocList
+     * @function module:object.toAssocList
      * @param obj {(Object|Array|*)}
      * @returns {Array.<*, *>}
      */
@@ -53,26 +53,5 @@ export const
         }
         agg[key] = value;
         return agg;
-    }, new OutType()),
-
-    /**
-     * Returns an array map (associated list) representing incoming value (object, array, etc.).
-     * @alias `toAssocList`
-     * @function module:object.toArrayMap
-     * @param obj {(Object|Array|*)}
-     * @deprecated
-     * @returns {*}
-     */
-    toArrayMap = toAssocList,
-
-    /**
-     * Converts an array-map into an object (one level).
-     * @alias `fromAssocList`
-     * @function module:object.fromArrayMap
-     * @param xs {Array|*} - Array-map (associated list).
-     * @deprecated
-     * @returns {*}
-     */
-    fromArrayMap = fromAssocList
-
+    }, new OutType())
 ;

@@ -11,14 +11,14 @@ import {
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet, jsonClone,
-    fromArrayMap, toArrayMap, toArray, log, peek, error,
+    fromAssocList, toAssocList, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign,
-    toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep
+    toAssocListDeep, fromAssocListDeep
 } from '../src/object';
-import {foldl, map, _and, head, tail, subsequences, unfoldr, all} from '../src/list/list';
+import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../src/list';
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
-    deepCompareObjectsLeft, allYourBase, expectDeepEquals
+    deepCompareObjectsLeft, allYourBase
 } from './helpers';
 
 describe ('#object', function () {
@@ -324,10 +324,10 @@ describe ('#object', function () {
             // log(check1);
 
             // Expect original object and resulting objects to both have the same nested properties
-            expectTrue(_and(head(check1)));
+            expectTrue(and(head(check1)));
 
             // Ensure both objects checked don't have any remaining keys
-            expectTrue(_and(map(x => !Object.keys(x).length, tail(check1))));
+            expectTrue(and(map(x => !Object.keys(x).length, tail(check1))));
         });
 
         it ('should not modify objects other than the first object passed in', function () {
@@ -494,18 +494,18 @@ describe ('#object', function () {
         });
     });
 
-    describe ('#toArrayMap, #toAssocList', function () {
+    describe ('#toAssocList, #toAssocList', function () {
         test ('should convert an object to an array map', () => {
             // Ensure map was converted to array map properly
             expect(all(([charCode, char], ind) => {
                     const [charCode1, char1] = charCodeToCharArrayMap[ind];
                     return `${charCode1}` === charCode && char1 === char;
-                }, toArrayMap(charCodeToCharMap)
+                }, toAssocList(charCodeToCharMap)
             ))
                 .to.equal(true);
         });
         test ('should return an empty array when receiving `{}`, `null`, or `undefined`', () => {
-            const result = toArrayMap({});
+            const result = toAssocList({});
             expect(result).to.be.instanceOf(Array);
             expect(result.length).to.equal(0);
         });
@@ -555,9 +555,9 @@ describe ('#object', function () {
         });
     });
 
-    describe ('#fromArrayMap, #fromAssocList', function () {
+    describe ('#fromAssocList, #fromAssocList', function () {
         test ('should return an object from an array map', () => {
-            const result = fromArrayMap(charCodeToCharArrayMap);
+            const result = fromAssocList(charCodeToCharArrayMap);
             expect(isObject(result)).to.equal(true);
             expect(
                 all(([charCode, char]) =>
@@ -568,7 +568,7 @@ describe ('#object', function () {
                 .to.equal(true);
         });
         test ('should throw an error when receiving `null`, or `undefined`', () => {
-            [null, undefined].forEach(x => assert.throws(() => fromArrayMap(x), Error));
+            [null, undefined].forEach(x => assert.throws(() => fromAssocList(x), Error));
         });
     });
 

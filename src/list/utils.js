@@ -3,11 +3,12 @@
  * @module _listOpUtils
  * @private
  */
-import {apply}              from '../jsPlatform/function';  // un-curried version
-import {slice}              from '../jsPlatform/list';      // un-curried version good for both strings and arrays
-import {length}             from '../jsPlatform/object';
-import {alwaysFalse}        from '../boolean';
-import map                 from './map';
+import {apply}          from '../jsPlatform/function';  // un-curried version
+import {slice}          from '../jsPlatform/list';      // un-curried version good for both strings and arrays
+import {length}         from '../jsPlatform/object';
+import {alwaysFalse}    from '../boolean';
+import map              from './map';
+import {curry}          from '../function/curry';
 
 export * from './aggregation';
 
@@ -15,21 +16,21 @@ export const
 
     /**
      * Returns a slice of the given list from `startInd` to the end of the list.
-     * @function module:_listUtils.sliceFrom
+     * @function module:listUtils.sliceFrom
      * @param startInd {Number}
      * @param arr {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFrom = (startInd, arr) => slice(startInd, undefined, arr),
+    sliceFrom = curry((startInd, arr) => slice(startInd, undefined, arr)),
 
     /**
      * Slices from index `0` to given index.
-     * @function module:_listUtils.sliceTo
+     * @function module:listUtils.sliceTo
      * @param toInd {Number}
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceTo = (toInd, xs) => slice(0, toInd, xs),
+    sliceTo = curry((toInd, xs) => slice(0, toInd, xs)),
 
     /**
      * Slices a copy of list.
@@ -37,7 +38,7 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    copy = xs => sliceFrom(0, xs),
+    copy = sliceFrom(0),
 
     /**
      * Slices a copy of list.
@@ -49,27 +50,27 @@ export const
 
     /**
      * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
-     * @function module:_listUtils.genericAscOrdering
+     * @function module:listUtils.genericAscOrdering
      * @param a {*}
      * @param b {*}
      * @returns {number}
      */
-    genericAscOrdering = (a, b) => {
+    genericAscOrdering = curry((a, b) => {
         if (a > b) { return 1; }
         else if (a < b) { return -1; }
         return 0;
-    },
+    }),
 
     /**
      * Returns length of all passed lists in list.
-     * @function module:_listUtils.lengths
+     * @function module:listUtils.lengths
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
     lengths = (...lists) => length(lists) ? map(length, lists) : [],
 
     /**
-     * @function module:_listUtils.lengthsToSmallest
+     * @function module:listUtils.lengthsToSmallest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
@@ -88,7 +89,7 @@ export const
      * @param arr
      * @returns {*}
      */
-    reduceUntil = (pred, op, agg, arr) => {
+    reduceUntil = curry((pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
         let ind = 0,
@@ -98,7 +99,7 @@ export const
             result = op(result, arr[ind], ind, arr);
         }
         return result;
-    },
+    }),
 
     /**
      * Reduces until predicate (from the right).
@@ -108,7 +109,7 @@ export const
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = (pred, op, agg, arr) => {
+    reduceRightUntil = curry((pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
         let ind = limit - 1,
@@ -118,25 +119,15 @@ export const
             result = op(result, arr[ind], ind, arr);
         }
         return result;
-    },
+    }),
 
-    reduce = (operation, agg, arr) =>
-        reduceUntil(
-            alwaysFalse,            // until-predicate
-            operation,              // operation
-            agg,                    // aggregator
-            arr),                   // list
+    reduce = reduceUntil(alwaysFalse),
 
-    reduceRight = (operation, agg, arr) =>
-        reduceRightUntil(
-            alwaysFalse,            // until-predicate
-            operation,              // operation
-            agg,                    // aggregator
-            arr),                   // list
+    reduceRight = reduceRightUntil(alwaysFalse),
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:_listOpUtilslastIndex
+     * @function module:listOpUtilslastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -144,12 +135,12 @@ export const
 
     /**
      * Finds index in string or list.
-     * @function module:_listOpUtilsfindIndexWhere
+     * @function module:listOpUtilsfindIndexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndexWhere = (pred, arr) => {
+    findIndexWhere = curry((pred, arr) => {
         let ind = -1,
             predicateFulfilled = false;
         const limit = length(arr);
@@ -157,16 +148,16 @@ export const
             predicateFulfilled = pred(arr[++ind], ind, arr);
         }
         return ind;
-    },
+    }),
 
     /**
      * Finds index in list from right to left.
-     * @function module:_listOpUtilsfindIndexWhereRight
+     * @function module:listOpUtilsfindIndexWhereRight
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndexWhereRight = (pred, arr) => {
+    findIndexWhereRight = curry((pred, arr) => {
         const limit = length(arr);
         let ind = limit,
             predicateFulfilled = false;
@@ -174,14 +165,14 @@ export const
             predicateFulfilled = pred(arr[ind], ind, arr);
         }
         return ind;
-    },
+    }),
 
     /**
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
      */
-    findIndicesWhere = (pred, xs) => {
+    findIndicesWhere = curry((pred, xs) => {
         if (!xs || !xs.length) { return undefined; }
         const limit = length(xs);
         let ind = 0,
@@ -190,15 +181,15 @@ export const
             if (pred(xs[ind], ind, xs)) { out.push(ind); }
         }
         return out.length ? out : undefined;
-    },
+    }),
 
     /**
-     * @function module:_listOpUtilsfind
+     * @function module:listOpUtilsfind
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    findWhere = (pred, xs) => {
+    findWhere = curry((pred, xs) => {
         let ind = 0,
             limit = length(xs);
         if (!limit) { return; }
@@ -206,6 +197,6 @@ export const
             let elm = xs[ind];
             if (pred(elm, ind, xs)) { return elm; }
         }
-    }
+    })
 
 ;

@@ -5,6 +5,7 @@
 
 import {typeOf} from './typeOf';
 import {instanceOf, length, keys, hasOwnProperty} from '../jsPlatform/object';
+import {curry} from '../function/curry';
 
 let _String = String.name,
     _Number = Number.name,
@@ -43,7 +44,7 @@ export const
      * @param obj {*}
      * @return {Boolean}
      */
-    isType = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type),
+    isType = curry((type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type)),
 
     /**
      * Checks if `value` is an es2015 `class`.

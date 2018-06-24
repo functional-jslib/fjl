@@ -1,6 +1,6 @@
 import {assignDeep} from './assignDeep';
 import {hasOwnProperty, keys} from '../jsPlatform/object';
-import {foldl} from '../list/list';
+import {foldl} from '../list';
 import {curry} from '../function/curry';
 
 export const

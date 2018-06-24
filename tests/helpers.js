@@ -7,8 +7,6 @@ import {curry2_, __, compose} from '../src/function';
 
 import {expect} from 'chai';
 
-const apply = (fn, ...args) => fn.apply(null, args);
-
 export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.instanceOf(instance)),
 
     expectFunction = value => expectInstanceOf(value, Function),

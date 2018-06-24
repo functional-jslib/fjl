@@ -1,5 +1,5 @@
 /**
- * @memberOf _function
+ * @memberOf function
  */
 
 import {apply} from '../jsPlatform/function';

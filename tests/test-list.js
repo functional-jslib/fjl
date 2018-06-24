@@ -82,18 +82,14 @@ describe ('#list', function () {
             expectShallowEquals(append(alphabetArray, []), alphabetArray);
             expectEqual(append(alphabetString, ''), alphabetString);
         });
-        it ('should return a copy of the original list only receiving it', function () {
-            expectShallowEquals(append(alphabetArray), alphabetArray);
-            expectEqual(append(alphabetString), alphabetString);
-        });
         it ('should return an empty list when appending empty lists', function () {
             expectEqual(append('', ''), '');
             expectShallowEquals(append([], []), []);
         });
-        it ('should throw an error when receiving Nothing', function () {
+        it ('should throw an error when receiving `2` or more Nothings', function () {
             // assert.throws(append, Error); // method is curried - cannot call like this
-            assert.throws(() => append(null), Error);
-            assert.throws(() => append(undefined), Error);
+            assert.throws(() => append(null, null), Error);
+            assert.throws(() => append(undefined, null), Error);
             assert.throws(() => append(null, []), Error);
             assert.throws(() => append(undefined, []), Error);
         });

@@ -1,5 +1,5 @@
 import {expect, assert} from 'chai';
-import {log} from '../src/object/errorThrowing';
+
 import {
     getTypeName,
     multiTypesToString,

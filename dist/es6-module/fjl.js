@@ -1,6 +1,6 @@
 /**
  * Created by elyde on 12/18/2016.
- * @memberOf _object
+ * @memberOf object
  */
 const _Number = Number.name;
 const _NaN = 'NaN';
@@ -35,12 +35,35 @@ function typeOf (value) {
     return retVal;
 }
 
-const fPureTakesOne = name => (arg, f) => f[name](arg);
-const fPureTakes2 = name => (arg1, arg2, f) => f[name](arg1, arg2);
-const fPureTakes3 = name => (arg1, arg2, arg3, f) => f[name](arg1, arg2, arg3);
-const fPureTakes4 = name => (arg1, arg2, arg3, arg4, f) => f[name](arg1, arg2, arg3, arg4);
-const fPureTakes5 = name => (arg1, arg2, arg3, arg4, arg5, f) => f[name](arg1, arg2, arg3, arg4, arg5);
-const fPureTakesOneOrMore = name => (f, ...args) => f[name](...args);
+const fnOrError$1 = (symbolName, f) => {
+        if (!f || typeof f !== 'function') {
+            throw new Error(`${symbolName} should be a function. ` +
+                `Type received: ${typeOf(f)};  Value received: ${f}.`);
+        }
+        return f;
+    };
+
+const curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
+const curry = (fn, ...argsToCurry) => curryN(fnOrError$1(curryNotFnErrPrefix, fn).length, fn, ...argsToCurry);
+const curryN = (executeArity, fn, ...curriedArgs) => {
+        return (...args) => {
+            let concatedArgs = curriedArgs.concat(args),
+                canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
+            return !canBeCalled ? curryN.apply(null, [executeArity, fnOrError$1(curryNotFnErrPrefix, fn)].concat(concatedArgs)) :
+                fnOrError$1(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
+        };
+    };
+const curry2 = fn => curryN(2, fn);
+const curry3 = fn => curryN(3, fn);
+const curry4 = fn => curryN(4, fn);
+const curry5 = fn => curryN(5, fn);
+
+const fPureTakesOne = name => curry((arg, f) => f[name](arg));
+const fPureTakes2 = name => curry((arg1, arg2, f) => f[name](arg1, arg2));
+const fPureTakes3 = name => curry((arg1, arg2, arg3, f) => f[name](arg1, arg2, arg3));
+const fPureTakes4 = name => curry((arg1, arg2, arg3, arg4, f) => f[name](arg1, arg2, arg3, arg4));
+const fPureTakes5 = name => curry((arg1, arg2, arg3, arg4, arg5, f) => f[name](arg1, arg2, arg3, arg4, arg5));
+const fPureTakesOneOrMore = name => curry2((f, ...args) => f[name](...args));
 const fnOrError = (symbolName, f) => {
         if (!f || typeof f !== 'function') {
             throw new Error (`${symbolName} should be a function. ` +
@@ -57,12 +80,12 @@ const fnOrError = (symbolName, f) => {
  * @todo change all files named '*UnCurried' to '*_'.
  */
 
-const _instanceOf = (instanceConstructor, instance) =>
-        instance instanceof instanceConstructor;
-const _hasOwnProperty = fPureTakesOne('hasOwnProperty');
+const instanceOf = curry((instanceConstructor, instance) =>
+        instance instanceof instanceConstructor);
+const hasOwnProperty = fPureTakesOne('hasOwnProperty');
 const length = x => x.length;
-const keys = obj => Object.keys(obj);
-const _assign = (() => Object.assign ?
+const {keys} = Object;
+const assign = (() => Object.assign ?
             (obj0, ...objs) => Object.assign(obj0, ...objs) :
             (obj0, ...objs) => objs.reduce((topAgg, obj) => {
                 return keys(obj).reduce((agg, key) => {
@@ -73,81 +96,8 @@ const _assign = (() => Object.assign ?
         )();
 
 /**
- * Created by elyde on 7/20/2017.
- * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
- * @todo updated doc blocks to list correct/updated module name.
- */
-
-const defineReverse = () =>
-        Array.prototype.reverse ? x => x.reverse() :
-            x => x.reduceRight((agg, item) => {
-                agg.push(item);
-                return agg;
-            }, []);
-const map = fPureTakesOne('map');
-const filter = fPureTakesOne('filter');
-const reduceRight = fPureTakes2('reduceRight');
-const reverse = defineReverse();
-
-/**
- *  List operations that overlap (apart from globally overlapping props and functions like `length`)
- *      on both strings and arrays.
- */
-
-const concat = fPureTakesOneOrMore('concat');
-const slice = fPureTakes2('slice');
-const includes = (() => 'includes' in Array.prototype ?
-            fPureTakesOne('includes') :
-            (value, xs) => xs.indexOf(value) > -1)();
-const indexOf = fPureTakesOne('indexOf');
-const lastIndexOf = fPureTakesOne('lastIndexOf');
-
-/**
- * Created by elydelacruz on 9/6/2017.
- */
-
-const split = fPureTakesOne('split');
-
-/**
- * Created by elydelacruz on 9/7/2017.
- * @module _jsPlatform_function
- * @private
- */
-const apply = (fn, args) => fn.apply(null, args);
-const call = (fn, ...args) => apply(fn, args);
-
-/**
- * @module jsPlatform_
- * @private
- */
-
-/**
- * @author elydelacruz
- * @created 12/6/2016.
- * @memberOf _function
- * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
- */
-const notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
-
-const curry = (fn, ...argsToCurry) => curryN(fnOrError(notFnErrPrefix, fn).length, fn, ...argsToCurry);
-const curryN = (executeArity, fn, ...curriedArgs) => {
-        return (...args) => {
-            let concatedArgs = concat(curriedArgs, args),
-                canBeCalled = (length(concatedArgs) >= executeArity) || !executeArity;
-            return !canBeCalled ? apply(curryN, concat([executeArity, fnOrError(notFnErrPrefix, fn)], concatedArgs)) :
-                apply(fnOrError(notFnErrPrefix, fn), concatedArgs);
-        };
-    };
-const curry2 = fn => curryN(2, fn);
-const curry3 = fn => curryN(3, fn);
-const curry4 = fn => curryN(4, fn);
-const curry5 = fn => curryN(5, fn);
-
-/**
  * Created by elyde on 12/18/2016.
- * @memberOf _object
+ * @memberOf object
  */
 
 let _String = String.name;
@@ -164,22 +114,22 @@ let _WeakSet = 'WeakSet';
 let _Null$1 = 'Null';
 let _Undefined$1 = 'Undefined';
 
-const isFunction = value => _instanceOf(Function, value);
-const _isType = (type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type);
+const isFunction = instanceOf(Function);
+const isType = curry((type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type));
 const isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 const isCallable = x => isFunction(x) && !isClass(x);
 const {isArray} = Array;
-const isObject = value => _isType(_Object, value);
-const isBoolean = value => _isType(_Boolean, value);
-const isNumber = value => _isType(_Number$1, value);
-const isString = value => _isType(_String, value);
-const isMap = value => _isType(_Map, value);
-const isSet = value => _isType(_Set, value);
-const isWeakMap = value => _isType(_WeakMap, value);
-const isWeakSet = value => _isType(_WeakSet, value);
-const isUndefined = value => _isType(_Undefined$1, value);
-const isNull = value => _isType(_Null$1, value);
-const isSymbol = value => _isType(_Symbol, value);
+const isObject = isType(_Object);
+const isBoolean = isType(_Boolean);
+const isNumber = isType(_Number$1);
+const isString = isType(_String);
+const isMap = isType(_Map);
+const isSet = isType(_Set);
+const isWeakMap =isType(_WeakMap);
+const isWeakSet = isType(_WeakSet);
+const isUndefined = isType(_Undefined$1);
+const isNull = isType(_Null$1);
+const isSymbol = isType(_Symbol);
 const isUsableImmutablePrimitive = x => {
         const typeOfX = typeOf(x);
         return isset(x) &&
@@ -194,7 +144,6 @@ const isEmpty = value => {
         if (!value) { // if '', 0, `null`, `undefined`, or `false` then is empty
             retVal = true;
         }
-
         const typeOfValue = typeOf(value);
         if (typeOfValue === _Array || typeOfValue === _Function) {
             retVal = isEmptyList(value);
@@ -205,7 +154,7 @@ const isEmpty = value => {
         else if (typeOfValue === _Object) {
             retVal = isEmptyObject(value);
         }
-        else if (_hasOwnProperty('size', value) && isNumber(value.size)) {
+        else if (hasOwnProperty('size', value) && isNumber(value.size)) {
             retVal = isEmptyCollection(value);
         }
         else {
@@ -215,7 +164,31 @@ const isEmpty = value => {
     };
 const isset = x => x !== null && x !== undefined;
 
-const _fromNamespace = (nsString, obj) => {
+/**
+ * @memberOf object
+ */
+
+const prop = curry((name, obj) => isset(obj) ? obj[name] : undefined);
+
+const apply = curry((fn, args) => fn.apply(null, args));
+const call = curry2((fn, ...args) => apply(fn, args));
+
+const of = (x, ...args) => {
+    if (!isset(x)) { return undefined; }
+    const constructor = x.constructor;
+    if (hasOwnProperty('of', constructor)) {
+        return apply(constructor.of, args);
+    }
+    else if (isUsableImmutablePrimitive(x)) {
+        return apply(constructor, args);
+    }
+    else if (isFunction(constructor)) {
+        return new constructor(...args);
+    }
+    return undefined;
+};
+
+const fromNamespace = curry((nsString, obj) => {
         if (!obj) { return obj; }
         if (nsString.indexOf('.') === -1) {
             return obj[nsString];
@@ -232,82 +205,53 @@ const _fromNamespace = (nsString, obj) => {
             parent = node;
         }
         return parent;
-    };
+    });
 
-/**
- * @memberOf _object
- */
-
-const _prop = (name, obj) => isset(obj) ? obj[name] : undefined;
-
-function isUsableImmutablePrimitive$1 (x) {
-    const typeOfX = typeOf(x);
-    return isset(x) &&
-        [String.name, Number.name, Boolean.name, Symbol.name]
-            .some(Type => Type === typeOfX);
-}
-
-/**
- * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
- * ```
- * // - If exists `(value).constructor.of` uses this.
- * // - If value is of one String, Boolean, Symbol, or Number types calls it's
- * //      constructor as a function (in cast form;  E.g., `constructor(...args)` )
- * // - Else if constructor is a function, thus far, then calls constructor using
- * //      the `new` keyword (with any passed in args).
- * ```
- * @function module:object.of
- * @param x {*} - Value to derive returned value's type from.
- * @param [args] {...*} - Any args to pass in to matched construction strategy.
- * @returns {*|undefined} - New value of given value's type else `undefined`.
- */
-const of = (x, ...args) => {
-    if (!isset(x)) { return undefined; }
-    const constructor = x.constructor;
-    if (_hasOwnProperty('of', constructor)) {
-        return apply(constructor.of, args);
-    }
-    else if (isUsableImmutablePrimitive$1(x)) {
-        return apply(constructor, args);
-    }
-    else if (isFunction(constructor)) {
-        return new constructor(...args);
-    }
-    return undefined;
-};
-
-const _assignDeep = (obj0, ...objs) =>
+const assignDeep = curry2((obj0, ...objs) =>
         objs.reduce((topAgg, obj) =>
             !obj ? topAgg : keys(obj).reduce((agg, key) => {
                 let propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection
-                if (_hasOwnProperty(key, agg) && propDescription &&
+                if (hasOwnProperty(key, agg) && propDescription &&
                     !(propDescription.get && propDescription.set) &&
                     !propDescription.writable) {
                     return agg;
                 }
                 if (isObject(agg[key]) && isObject(obj[key])) {
-                    _assignDeep(agg[key], obj[key]);
+                    assignDeep(agg[key], obj[key]);
                 }
                 else { agg[key] = obj[key]; }
                 return agg;
             }, topAgg)
-        , obj0);
+        , obj0));
 
 /**
- * @memberOf _function
+ *  List operations that overlap (apart from globally overlapping props and functions like `length`)
+ *      on both strings and arrays.
  */
 
-const negateF = fn => (a, b) => !fn(a, b);
-const negateF3 = fn => (a, b, c) => !fn(a, b, c);
-const negateF4 = fn => (a, b, c, d) => !fn(a, b, c, d);
-const negateF5 = fn => (a, b, c, d, e) => !fn(a, b, c, d, e);
+const concat$1 = fPureTakesOneOrMore('concat');
+const slice = fPureTakes2('slice');
+const includes = (() => 'includes' in Array.prototype ?
+            fPureTakesOne('includes') :
+            (value, xs) => xs.indexOf(value) > -1)();
+const indexOf = fPureTakesOne('indexOf');
+const lastIndexOf = fPureTakesOne('lastIndexOf');
+
+/**
+ * @memberOf function
+ */
+
+const negateF = fn => curry((a, b) => !fn(a, b));
+const negateF3 = fn => curry((a, b, c) => !fn(a, b, c));
+const negateF4 = fn => curry((a, b, c, d) => !fn(a, b, c, d));
+const negateF5 = fn => curry((a, b, c, d, e) => !fn(a, b, c, d, e));
 const negateP = negateF3;
 const negateFMany = fn => (...args) => !apply(fn, args);
 
 /**
- * Created by elyde on 7/15/2017.
  * @module boolean
+ * @description Contains functional version of 'always-true', 'always-false', 'is-truthy', and 'is-falsy'.
  */
 
 const isTruthy = value => !!value;
@@ -315,7 +259,7 @@ const isFalsy = value => !value;
 const alwaysTrue = () => true;
 const alwaysFalse = () => false;
 
-function _map (fn, xs) {
+const map = curry((fn, xs) =>  {
     let ind = 0,
         limit = length(xs),
         out = [];
@@ -325,7 +269,7 @@ function _map (fn, xs) {
         ind += 1;
     }
     return out;
-}
+});
 
 const aggregateStr = (agg, item) => agg + item;
 const aggregateArr = (agg, item) => {
@@ -350,23 +294,23 @@ const aggregatorByType = x => {
  * @module _listOpUtils
  * @private
  */
-const sliceFrom = (startInd, arr) => slice(startInd, undefined, arr);
-const sliceTo = (toInd, xs) => slice(0, toInd, xs);
-const copy = xs => sliceFrom(0, xs);
+const sliceFrom = curry((startInd, arr) => slice(startInd, undefined, arr));
+const sliceTo = curry((toInd, xs) => slice(0, toInd, xs));
+const copy = sliceFrom(0);
 const sliceCopy = copy;
-const genericAscOrdering = (a, b) => {
+const genericAscOrdering = curry((a, b) => {
         if (a > b) { return 1; }
         else if (a < b) { return -1; }
         return 0;
-    };
-const lengths = (...lists) => length(lists) ? _map(length, lists) : [];
+    });
+const lengths = (...lists) => length(lists) ? map(length, lists) : [];
 const lengthsToSmallest = (...lists) => {
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
-        return _map((list, ind) => listLengths[ind] > smallLen ?
+        return map((list, ind) => listLengths[ind] > smallLen ?
             sliceTo(smallLen, list) : copy(list), lists);
     };
-const reduceUntil = (pred, op, agg, arr) => {
+const reduceUntil = curry((pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
         let ind = 0,
@@ -376,8 +320,8 @@ const reduceUntil = (pred, op, agg, arr) => {
             result = op(result, arr[ind], ind, arr);
         }
         return result;
-    };
-const reduceRightUntil = (pred, op, agg, arr) => {
+    });
+const reduceRightUntil = curry((pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
         let ind = limit - 1,
@@ -387,21 +331,11 @@ const reduceRightUntil = (pred, op, agg, arr) => {
             result = op(result, arr[ind], ind, arr);
         }
         return result;
-    };
-const reduce$1 = (operation, agg, arr) =>
-        reduceUntil(
-            alwaysFalse,            // until-predicate
-            operation,              // operation
-            agg,                    // aggregator
-            arr);
-const reduceRight$1 = (operation, agg, arr) =>
-        reduceRightUntil(
-            alwaysFalse,            // until-predicate
-            operation,              // operation
-            agg,                    // aggregator
-            arr);
+    });
+const reduce = reduceUntil(alwaysFalse);
+const reduceRight = reduceRightUntil(alwaysFalse);
 const lastIndex = x => { const len = length(x); return len ? len - 1 : 0; };
-const findIndexWhere = (pred, arr) => {
+const findIndexWhere = curry((pred, arr) => {
         let ind = -1,
             predicateFulfilled = false;
         const limit = length(arr);
@@ -409,8 +343,8 @@ const findIndexWhere = (pred, arr) => {
             predicateFulfilled = pred(arr[++ind], ind, arr);
         }
         return ind;
-    };
-const findIndexWhereRight = (pred, arr) => {
+    });
+const findIndexWhereRight = curry((pred, arr) => {
         const limit = length(arr);
         let ind = limit,
             predicateFulfilled = false;
@@ -418,8 +352,8 @@ const findIndexWhereRight = (pred, arr) => {
             predicateFulfilled = pred(arr[ind], ind, arr);
         }
         return ind;
-    };
-const findIndicesWhere = (pred, xs) => {
+    });
+const findIndicesWhere = curry((pred, xs) => {
         if (!xs || !xs.length) { return undefined; }
         const limit = length(xs);
         let ind = 0,
@@ -428,8 +362,8 @@ const findIndicesWhere = (pred, xs) => {
             if (pred(xs[ind], ind, xs)) { out.push(ind); }
         }
         return out.length ? out : undefined;
-    };
-const findWhere = (pred, xs) => {
+    });
+const findWhere = curry((pred, xs) => {
         let ind = 0,
             limit = length(xs);
         if (!limit) { return; }
@@ -437,51 +371,81 @@ const findWhere = (pred, xs) => {
             let elm = xs[ind];
             if (pred(elm, ind, xs)) { return elm; }
         }
-    };
+    });
+
+/**
+ * Created by elyde on 7/20/2017.
+ * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
+ * @module _jsPlatform_arrayOps
+ * @private
+ * @todo updated doc blocks to list correct/updated module name.
+ */
+
+const defineReverse = () =>
+        Array.prototype.reverse ? x => x.reverse() :
+            x => x.reduceRight((agg, item) => {
+                agg.push(item);
+                return agg;
+            }, []);
+const reduceRight$1 = fPureTakes2('reduceRight');
+const join = fPureTakesOne('join');
+const push = fPureTakesOneOrMore('push');
+const reverse$1 = defineReverse();
+
+/**
+ * Created by elydelacruz on 9/6/2017.
+ */
+
+const split = fPureTakesOne('split');
+
+/**
+ * @module jsPlatform_
+ * @private
+ */
 
 /**
  * List operations module (un-curried version).
- * @module _list
+ * @module list
  * @private
  */
-const _append = concat;
-const _appendMany = (...args) => {
-        if (length(args)) { return apply(concat, args); }
+const append = concat$1;
+const appendMany = curry2((...args) => {
+        if (length(args)) { return apply(concat$1, args); }
         throw new Error('`appendMany` requires at least one arg.');
-    };
-const _head = x => x[0];
-const _last = xs => xs[lastIndex(xs)];
-const _tail = xs => sliceFrom(1, xs);
-const _init = xs => sliceTo(lastIndex(xs), xs);
-const _uncons = xs =>
-        !xs || length(xs) === 0 ? undefined : [_head(xs), _tail(xs)];
-const _unconsr = xs => !xs || length(xs) === 0 ? undefined : [_init(xs), _last(xs)];
-const _concat = xs => !length(xs) ? copy(xs) : apply(_appendMany, xs);
-const _concatMap = (fn, foldableOfA) => _concat(_map(fn, foldableOfA));
-const _reverse = x => _foldr((agg, item) => (agg.push(item), agg), [], x);
-const _intersperse = (between, arr) => {
+    });
+const head = x => x[0];
+const last = xs => xs[lastIndex(xs)];
+const tail = xs => sliceFrom(1, xs);
+const init = xs => sliceTo(lastIndex(xs), xs);
+const uncons = xs =>
+        !xs || length(xs) === 0 ? undefined : [head(xs), tail(xs)];
+const unconsr = xs => !xs || length(xs) === 0 ? undefined : [init(xs), last(xs)];
+const concat$$1 = xs => !length(xs) ? copy(xs) : apply(appendMany, xs);
+const concatMap = curry((fn, foldableOfA) => concat$$1(map(fn, foldableOfA)));
+const reverse = x => foldr((agg, item) => (agg.push(item), agg), [], x);
+const intersperse = curry((between, arr) => {
         const limit = length(arr),
             lastInd = limit - 1,
             out = [];
         if (!limit) {
             return out;
         }
-        return _foldl((agg, item, ind) => (
+        return foldl((agg, item, ind) => (
                 ind === lastInd ?
                     agg.push(item) :
                     agg.push(item, between),
                 agg
             ), out, arr);
-    };
-const _intercalate = (xs, xss) => _concat(_intersperse(xs, xss));
-const _transpose = xss => {
+    });
+const intercalate = curry((xs, xss) => concat$$1(intersperse(xs, xss)));
+const transpose = xss => {
         let numLists = length(xss),
             ind = 0, ind2;
         if (!numLists) {
             return [];
         }
         const listLengths = apply(lengths, xss),
-            longestListLen = _maximum(listLengths),
+            longestListLen = maximum(listLengths),
             outLists = [];
         for (; ind < longestListLen; ind += 1) {
             const outList = [];
@@ -493,9 +457,9 @@ const _transpose = xss => {
             }
             outLists.push(outList);
         }
-        return _filter(x => length(x), outLists);
+        return filter(x => length(x), outLists);
     };
-const _subsequences = xs => {
+const subsequences = xs => {
         const listLen = length(xs),
             len = Math.pow(2, listLen),
             out = [];
@@ -510,14 +474,14 @@ const _subsequences = xs => {
         }
         return out;
     };
-const _swapped = (ind1, ind2, list) => {
+const swapped = curry((ind1, ind2, list) => {
         const out = copy(list),
             tmp = out[ind1];
         out[ind1] = out[ind2];
         out[ind2] = tmp;
         return out;
-    };
-const _permutations = xs => {
+    });
+const permutations = xs => {
         const limit = length(xs);
 
         if (!limit || limit === 1) {
@@ -525,14 +489,14 @@ const _permutations = xs => {
         }
 
         let list = copy(xs),
-            c = _repeat(limit, 0),
+            c = repeat(limit, 0),
             i = 0;
 
         const out = [list];
 
         for (; i < limit; i++) {
             if (c[i] < i) {
-                list = _swapped(i % 2 === 0 ? 0 : c[i], i, list);
+                list = swapped(i % 2 === 0 ? 0 : c[i], i, list);
                 out.push(list);
                 c[i] += 1;
                 i = 0;
@@ -543,17 +507,17 @@ const _permutations = xs => {
 
         return out;
     };
-const _foldl = reduce$1;
-const _foldr = reduceRight$1;
-const _foldl1 = (op, xs) => {
-        const parts = _uncons(xs);
-        return !parts ? [] : reduce$1(op, parts[0], parts[1]);
-    };
-const _foldr1 = (op, xs) => {
-        const parts = _unconsr(xs);
-        return !parts ? [] : reduceRight$1(op, parts[1], parts[0]);
-    };
-const _mapAccumL = (op, zero, xs) => {
+const foldl = reduce;
+const foldr = reduceRight;
+const foldl1 = curry((op, xs) => {
+        const parts = uncons(xs);
+        return !parts ? [] : reduce(op, parts[0], parts[1]);
+    });
+const foldr1 = curry((op, xs) => {
+        const parts = unconsr(xs);
+        return !parts ? [] : reduceRight(op, parts[1], parts[0]);
+    });
+const mapAccumL = curry((op, zero, xs) => {
         const list = copy(xs),
             limit = length(xs);
         if (!limit) {
@@ -569,8 +533,8 @@ const _mapAccumL = (op, zero, xs) => {
             mapped = tuple[1];
         }
         return [agg, mapped];
-    };
-const _mapAccumR = (op, zero, xs) => {
+    });
+const mapAccumR = curry((op, zero, xs) => {
         const list = copy(xs),
             limit = length(xs);
         if (!limit) {
@@ -586,8 +550,8 @@ const _mapAccumR = (op, zero, xs) => {
             mapped = tuple[1];
         }
         return [agg, mapped];
-    };
-const _iterate = (limit, op, x) => {
+    });
+const iterate = curry((limit, op, x) => {
         let ind = 0,
             out = [],
             lastX = x;
@@ -596,11 +560,11 @@ const _iterate = (limit, op, x) => {
             lastX = op(lastX, ind);
         }
         return out;
-    };
-const _repeat = (limit, x) => _iterate(limit, a => a, x);
-const _replicate = _repeat;
-const _cycle = (limit, xs) => _concat(_replicate(limit, xs));
-const _unfoldr = (op, x) => {
+    });
+const repeat = curry((limit, x) => iterate(limit, a => a, x));
+const replicate = repeat;
+const cycle = curry((limit, xs) => concat$$1(replicate(limit, xs)));
+const unfoldr = curry((op, x) => {
         let ind = 0,
             out = [],
             resultTuple = op(x, ind, out);
@@ -609,25 +573,25 @@ const _unfoldr = (op, x) => {
             resultTuple = op(resultTuple[1], ++ind, out);
         }
         return out;
-    };
-const _findIndex = findIndexWhere;
-const _findIndices = findIndicesWhere;
-const _elemIndex = (x, xs) => {
+    });
+const findIndex = findIndexWhere;
+const findIndices = findIndicesWhere;
+const elemIndex = curry((x, xs) => {
         const foundInd = indexOf(x, xs);
         return foundInd !== -1 ? foundInd : undefined;
-    };
-const _elemIndices = (value, xs) => _findIndices(x => x === value, xs);
-const _take = (limit, list) => sliceTo(limit, list);
-const _drop = (count, list) => sliceFrom(count, list);
-const _splitAt = (ind, list) => [ sliceTo(ind, list), sliceFrom(ind, list) ];
-const _takeWhile = (pred, list) =>
+    });
+const elemIndices = curry((value, xs) => findIndices(x => x === value, xs));
+const take = sliceTo;
+const drop = sliceFrom;
+const splitAt = (ind, list) => [ sliceTo(ind, list), sliceFrom(ind, list) ];
+const takeWhile = curry((pred, list) =>
         reduceUntil(
             negateP(pred),  // predicate
             aggregateArr,   // operation
             [],             // aggregator
             list
-        );
-const _dropWhile = (pred, list) => {
+        ));
+const dropWhile = curry((pred, list) => {
         const limit = length(list),
             splitPoint =
                 findIndexWhere((item, ind, list2) =>
@@ -636,8 +600,8 @@ const _dropWhile = (pred, list) => {
         return splitPoint === -1 ?
             sliceTo(limit, list) :
             slice(splitPoint, limit, list);
-    };
-const _dropWhileEnd = (pred, list) => {
+    });
+const dropWhileEnd = curry((pred, list) => {
         const limit = length(list),
             splitPoint =
                 findIndexWhereRight((item, ind, list2) =>
@@ -646,20 +610,20 @@ const _dropWhileEnd = (pred, list) => {
         return splitPoint === -1 ?
             sliceTo(limit, list) :
             sliceTo(splitPoint + 1, list);
-    };
-const _span = (pred, list) => {
+    });
+const span = curry((pred, list) => {
         const splitPoint = findIndexWhere(negateP(pred), list);
         return splitPoint === -1 ?
-            _splitAt(0, list) : _splitAt(splitPoint, list);
-    };
-const _breakOnList = (pred, list) => {
+            splitAt(0, list) : splitAt(splitPoint, list);
+    });
+const breakOnList = curry((pred, list) => {
         const splitPoint = findIndexWhere(pred, list);
         return splitPoint === -1 ?
-            _splitAt(0, list) : _splitAt(splitPoint, list);
-    };
-const _at = _prop;
-const _find = findWhere;
-const _filter = (pred, xs) => {
+            splitAt(0, list) : splitAt(splitPoint, list);
+    });
+const at = prop;
+const find = findWhere;
+const filter = curry((pred, xs) => {
         let ind = 0,
             limit = length(xs),
             out = [];
@@ -672,15 +636,15 @@ const _filter = (pred, xs) => {
             }
         }
         return out;
-    };
-const _partition = (pred, list) =>
+    });
+const partition = curry((pred, list) =>
         !length(list) ?
             [[], []] :
-                [_filter(pred, list), _filter(negateP(pred), list)];
-const _elem = includes;
-const _notElem = negateF(includes);
-const _lookup = _at;
-const _isPrefixOf = (xs1, xs2) => {
+                [filter(pred, list), filter(negateP(pred), list)]);
+const elem = includes;
+const notElem = negateF(includes);
+const lookup = at;
+const isPrefixOf = curry((xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
@@ -693,8 +657,8 @@ const _isPrefixOf = (xs1, xs2) => {
             }
         }
         return true;
-    };
-const _isSuffixOf = (xs1, xs2) => {
+    });
+const isSuffixOf = curry((xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
@@ -709,8 +673,8 @@ const _isSuffixOf = (xs1, xs2) => {
             ind2 -= 1;
         }
         return true;
-    };
-const _isInfixOf = (xs1, xs2) => {
+    });
+const isInfixOf = curry((xs1, xs2) => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
         if (limit2 < limit1 || !limit1 || !limit2) {
@@ -731,8 +695,8 @@ const _isInfixOf = (xs1, xs2) => {
             }
         }
         return false;
-    };
-const _isSubsequenceOf = (xs1, xs2) => {
+    });
+const isSubsequenceOf = curry((xs1, xs2) => {
         const len = Math.pow(2, length(xs2)),
             lenXs1 = length(xs1);
         let foundLen,
@@ -749,9 +713,9 @@ const _isSubsequenceOf = (xs1, xs2) => {
             }
         }
         return false;
-    };
-const _group = xs => _groupBy((a, b) => a === b, xs);
-const _groupBy = (equalityOp, xs) => {
+    });
+const group = xs => groupBy((a, b) => a === b, xs);
+const groupBy = curry((equalityOp, xs) => {
         const limit = length(xs);
         if (!limit) {
             return copy(xs);
@@ -772,11 +736,11 @@ const _groupBy = (equalityOp, xs) => {
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(_takeWhile(predOp, slice(ind, limit, xs)));
+            agg.push(takeWhile(predOp, slice(ind, limit, xs)));
         }
         return agg;
-    };
-const _inits = xs => {
+    });
+const inits = xs => {
         let limit = length(xs),
             ind = 0,
             agg = [];
@@ -788,7 +752,7 @@ const _inits = xs => {
         }
         return agg;
     };
-const _tails = xs => {
+const tails = xs => {
         let limit = length(xs),
             ind = 0,
             agg = [];
@@ -800,21 +764,21 @@ const _tails = xs => {
         }
         return agg;
     };
-const _stripPrefix = (prefix, list) =>
-        _isPrefixOf(prefix, list) ?
-            _splitAt(length(prefix), list)[1] :
-            copy(list);
-const _zip = (arr1, arr2) => {
+const stripPrefix = curry((prefix, list) =>
+        isPrefixOf(prefix, list) ?
+            splitAt(length(prefix), list)[1] :
+            copy(list));
+const zip = curry((arr1, arr2) => {
         if (!length(arr1) || !length(arr2)) {
             return [];
         }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
-        return reduce$1((agg, item, ind) =>
+        return reduce((agg, item, ind) =>
                 aggregateArr(agg, [item, a2[ind]]),
             [], a1);
-    };
-const _zipN = (...lists) => {
-        const trimmedLists = apply(lengthsToSmallest, _filter(length, lists)),
+    });
+const zipN = (...lists) => {
+        const trimmedLists = apply(lengthsToSmallest, filter(length, lists)),
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
@@ -822,23 +786,23 @@ const _zipN = (...lists) => {
         else if (lenOfTrimmed === 1) {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
-        return reduce$1((agg, item, ind) =>
-                aggregateArr(agg, _map(xs => xs[ind], trimmedLists)),
+        return reduce((agg, item, ind) =>
+                aggregateArr(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     };
-const _zip3 = (arr1, arr2, arr3) => _zipN(arr1, arr2, arr3);
-const _zip4 = (arr1, arr2, arr3, arr4) => _zipN(arr1, arr2, arr3, arr4);
-const _zip5 = (arr1, arr2, arr3, arr4, arr5) => _zipN(arr1, arr2, arr3, arr4, arr5);
-const _zipWith = (op, xs1, xs2) => {
+const zip3 = curry((arr1, arr2, arr3) => zipN(arr1, arr2, arr3));
+const zip4 = curry((arr1, arr2, arr3, arr4) => zipN(arr1, arr2, arr3, arr4));
+const zip5 = curry((arr1, arr2, arr3, arr4, arr5) => zipN(arr1, arr2, arr3, arr4, arr5));
+const zipWith = curry((op, xs1, xs2) => {
         if (!length(xs1) || !length(xs2)) {
             return [];
         }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
-        return reduce$1((agg, item, ind) =>
+        return reduce((agg, item, ind) =>
                 aggregateArr(agg, op(item, a2[ind])),
             [], a1);
-    };
-const _zipWithN = (op, ...lists) => {
+    });
+const zipWithN = curry((op, ...lists) => {
         const trimmedLists = apply(lengthsToSmallest, lists),
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) {
@@ -847,33 +811,33 @@ const _zipWithN = (op, ...lists) => {
         else if (lenOfTrimmed === 1) {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
-        return reduce$1((agg, item, ind) =>
-                aggregateArr(agg, apply(op, _map(xs => xs[ind], trimmedLists))),
+        return reduce((agg, item, ind) =>
+                aggregateArr(agg, apply(op, map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
-    };
-const _zipWith3 = (op, xs1, xs2, xs3) => _zipWithN(op, xs1, xs2, xs3);
-const _zipWith4 = (op, xs1, xs2, xs3, xs4) => _zipWithN(op, xs1, xs2, xs3, xs4);
-const _zipWith5 = (op, xs1, xs2, xs3, xs4, xs5) => _zipWithN(op, xs1, xs2, xs3, xs4, xs5);
-const _unzip = arr =>
-        _foldl((agg, item) => {
+    });
+const zipWith3 = curry((op, xs1, xs2, xs3) => zipWithN(op, xs1, xs2, xs3));
+const zipWith4 = curry((op, xs1, xs2, xs3, xs4) => zipWithN(op, xs1, xs2, xs3, xs4));
+const zipWith5 = curry((op, xs1, xs2, xs3, xs4, xs5) => zipWithN(op, xs1, xs2, xs3, xs4, xs5));
+const unzip = arr =>
+        foldl((agg, item) => {
             agg[0].push(item[0]);
             agg[1].push(item[1]);
             return agg;
         }, [[], []], arr);
-const _unzipN = list => {
+const unzipN = list => {
         if (!length(list)) {
             return [];
         }
         const lenItem0 = length(list[0]);
         let zero = lenItem0 ?
-            _unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
+            unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
             [];
-        return _foldl((agg, item) => {
+        return foldl((agg, item) => {
             agg.forEach((outList, ind) => outList.push(item[ind]));
             return agg;
         }, zero, list);
     };
-const _any = (p, xs) => {
+const any = curry((p, xs) => {
         let ind = 0,
             limit = length(xs);
         if (!limit) {
@@ -885,8 +849,8 @@ const _any = (p, xs) => {
             }
         }
         return false;
-    };
-const _all = (p, xs) => {
+    });
+const all = curry((p, xs) => {
         const limit = length(xs);
         let ind = 0;
         if (limit === 0) {
@@ -898,15 +862,15 @@ const _all = (p, xs) => {
             }
         }
         return true;
-    };
-const _and = xs => _all(isTruthy, xs);
-const _or = xs => _any(isTruthy, xs);
-const _not = xs => _all(isFalsy, xs);
-const _sum = list => _foldl((agg, x) => agg + x, 0, list);
-const _product = list => _foldl((agg, x) => agg * x, 1, list);
-const _maximum = list => _last(_sortBy(genericAscOrdering, list));
-const _minimum = list => _head(_sortBy(genericAscOrdering, list));
-const _scanl = (fn, zero, xs) => {
+    });
+const and = xs => all(isTruthy, xs);
+const or = xs => any(isTruthy, xs);
+const not = xs => all(isFalsy, xs);
+const sum = list => foldl((agg, x) => agg + x, 0, list);
+const product = list => foldl((agg, x) => agg * x, 1, list);
+const maximum = list => last(sortBy(genericAscOrdering, list));
+const minimum = list => head(sortBy(genericAscOrdering, list));
+const scanl = curry((fn, zero, xs) => {
         if (!xs || !length(xs)) {
             return [];
         }
@@ -920,12 +884,12 @@ const _scanl = (fn, zero, xs) => {
             ind++;
         }
         return out;
-    };
-const _scanl1 = (fn, xs) => {
+    });
+const scanl1 = curry((fn, xs) => {
         if (!xs || !xs.length) { return []; }
-        return _scanl(fn, _head(xs), _tail(xs));
-    };
-const _scanr = (fn, zero, xs) => {
+        return scanl(fn, head(xs), tail(xs));
+    });
+const scanr = curry((fn, zero, xs) => {
         if (!xs || !length(xs)) {
             return [];
         }
@@ -939,38 +903,39 @@ const _scanr = (fn, zero, xs) => {
             ind--;
         }
         return out;
-    };
-const _scanr1 = (fn, xs) => {
+    });
+const scanr1 = curry((fn, xs) => {
         if (!xs || !xs.length) { return []; }
-        return _scanr(fn, _last(xs), _init(xs));
-    };
-const _nub = list => _nubBy((a, b) => a === b, list);
-const _remove = (x, list) => _removeBy((a, b) => a === b, x, list);
-const _sort = xs => _sortBy(genericAscOrdering, xs);
-const _sortOn = (valueFn, xs) =>
+        return scanr(fn, last(xs), init(xs));
+    });
+const nub = list => nubBy((a, b) => a === b, list);
+const remove = curry((x, list) => removeBy((a, b) => a === b, x, list));
+const sort = xs => sortBy(genericAscOrdering, xs);
+const sortOn = curry((valueFn, xs) =>
 
         // Un-decorate
-        _map(decorated => decorated[1],
+        map(decorated => decorated[1],
 
             // Decorate and sort
-            _sortBy(
+            sortBy(
                 // Ordering
                 ([a0], [b0]) => genericAscOrdering(a0, b0),
 
                 // Decorate
-                _map(item => [valueFn(item), item], xs)
+                map(item => [valueFn(item), item], xs)
             )
-        );
-const _sortBy = (orderingFn, xs) => copy(xs).sort(orderingFn || genericAscOrdering);
-const _insert = (x, xs) => {
+        )
+    );
+const sortBy = curry((orderingFn, xs) => copy(xs).sort(orderingFn || genericAscOrdering));
+const insert = curry((x, xs) => {
         if (!length(xs)) {
             return [x];
         }
-        const foundIndex = _findIndex(item => x <= item, xs);
+        const foundIndex = findIndex(item => x <= item, xs);
         return foundIndex === -1 ? [x] :
-            _concat(_intersperse([x], _splitAt(foundIndex, xs)));
-    };
-const _insertBy = (orderingFn, x, xs) => {
+            concat$$1(intersperse([x], splitAt(foundIndex, xs)));
+    });
+const insertBy = curry((orderingFn, x, xs) => {
         const limit = length(xs);
         if (!limit) {
             return [x];
@@ -978,13 +943,13 @@ const _insertBy = (orderingFn, x, xs) => {
         let ind = 0;
         for (; ind < limit; ind += 1) {
             if (orderingFn(x, xs[ind]) <= 0) {
-                const parts = _splitAt(ind, xs);
-                return _concat([parts[0], [x], parts[1]]);
+                const parts = splitAt(ind, xs);
+                return concat$$1([parts[0], [x], parts[1]]);
             }
         }
         return aggregateArr(copy(xs), x);
-    };
-const _nubBy = (pred, list) => {
+    });
+const nubBy = curry((pred, list) => {
         if (!length(list)) {
             return [];
         }
@@ -995,65 +960,65 @@ const _nubBy = (pred, list) => {
             anyOp = storedItem => pred(currItem, storedItem);
         for (; ind < limit; ind += 1) {
             currItem = list[ind];
-            if (_any(anyOp, out)) {
+            if (any(anyOp, out)) {
                 continue;
             }
             out.push(currItem);
         }
         return out;
-    };
-const _removeBy = (pred, x, list) => { // @todo optimize this implementation
-        const foundIndex = _findIndex(item => pred(x, item), list),
-            parts = _splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-        return _append(parts[0], _tail(parts[1]));
-    };
-const _removeFirstsBy = (pred, xs1, xs2) =>
-        _foldl((agg, x2) => _removeBy(pred, x2, agg), xs1, xs2);
-const _unionBy = (pred, arr1, arr2) =>
-        _foldl((agg, b) => {
-                const alreadyAdded = _any(a => pred(a, b), agg);
+    });
+const removeBy = curry((pred, x, list) => { // @todo optimize this implementation
+        const foundIndex = findIndex(item => pred(x, item), list),
+            parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
+        return append(parts[0], tail(parts[1]));
+    });
+const removeFirstsBy = curry((pred, xs1, xs2) =>
+        foldl((agg, x2) => removeBy(pred, x2, agg), xs1, xs2));
+const unionBy = curry((pred, arr1, arr2) =>
+        foldl((agg, b) => {
+                const alreadyAdded = any(a => pred(a, b), agg);
                 return !alreadyAdded ? (agg.push(b), agg) : agg;
             }, copy(arr1), arr2
-        );
-const _union = (arr1, arr2) =>
-        _append(arr1,
-            _filter(elm => !includes(elm, arr1), arr2));
-const _intersect = (arr1, arr2) =>
+        ));
+const union = curry((arr1, arr2) =>
+        append(arr1,
+            filter(elm => !includes(elm, arr1), arr2)));
+const intersect = curry((arr1, arr2) =>
         !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
-            _filter(elm => includes(elm, arr2), arr1);
-const _intersectBy = (pred, list1, list2) =>
-        _foldl((agg, a) =>
-                _any(b => pred(a, b), list2) ? (agg.push(a), agg) : agg
-            , [], list1);
-const _difference = (array1, array2) => { // augment this with max length and min length ordering on op
+            filter(elm => includes(elm, arr2), arr1));
+const intersectBy = curry((pred, list1, list2) =>
+        foldl((agg, a) =>
+                any(b => pred(a, b), list2) ? (agg.push(a), agg) : agg
+            , [], list1));
+const difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
         if (array1 && !array2) {
             return copy(array1);
         }
         else if (!array1 && array2 || (!array1 && !array2)) {
             return [];
         }
-        return reduce$1((agg, elm) =>
+        return reduce((agg, elm) =>
                 !includes(elm, array2) ? (agg.push(elm), agg) : agg
             , [], array1);
-    };
-const _complement = (arr0, ...arrays) =>
-        reduce$1((agg, arr) => _append(agg, _difference(arr, arr0)), [], arrays);
+    });
+const complement = curry((arr0, ...arrays) =>
+        reduce((agg, arr) => append(agg, difference(arr, arr0)), [], arrays));
 
-const _objUnion = (obj1, obj2) => _assignDeep(obj1, obj2);
-const _objIntersect = (obj1, obj2) => _foldl((agg, key) => {
-        if (_hasOwnProperty(key, obj2)) {
+const objUnion = curry((obj1, obj2) => assignDeep(obj1, obj2));
+const objIntersect = curry((obj1, obj2) => foldl((agg, key) => {
+        if (hasOwnProperty(key, obj2)) {
             agg[key] = obj2[key];
         }
         return agg;
-    }, {}, keys(obj1));
-const _objDifference = (obj1, obj2) => _foldl((agg, key) => {
-        if (!_hasOwnProperty(key, obj2)) {
+    }, {}, keys(obj1)));
+const objDifference = curry((obj1, obj2) => foldl((agg, key) => {
+        if (!hasOwnProperty(key, obj2)) {
             agg[key] = obj1[key];
         }
         return agg;
-    }, {}, keys(obj1));
-const _objComplement = (obj0, ...objs) => _foldl((agg, obj) =>
-        _assignDeep(agg, _objDifference(obj, obj0)), {}, objs);
+    }, {}, keys(obj1)));
+const objComplement = curry((obj0, ...objs) => foldl((agg, obj) =>
+        assignDeep(agg, objDifference(obj, obj0)), {}, objs));
 
 const log = console.log.bind(console);
 const error = console.error.bind(console);
@@ -1065,7 +1030,7 @@ const peek = (...args) => (log(...args), args.pop());
  *  In addition gives you curried and uncurried versions of the multi arity functions.
  */
 const isCheckableType = type => isString(type) || isFunction(type);
-const _errorIfNotCheckableType = (contextName, type) => {
+const errorIfNotCheckableType = (contextName, type) => {
         if (!isCheckableType(type)) {
             throw new Error (`${contextName} expects \`type\` to be of type \`String\` or \`Function\`.` +
                 `  Type received \`${typeOf(type)}\`.  Value \`${type}\`.`);
@@ -1073,10 +1038,10 @@ const _errorIfNotCheckableType = (contextName, type) => {
         return type;
     };
 const getTypeName = type => {
-        _errorIfNotCheckableType('getTypeName', type);
+        errorIfNotCheckableType('getTypeName', type);
         return type.name || type;
     };
-const _defaultTypeChecker = (Type, value) => _isType(getTypeName(Type), value) || (
+const _defaultTypeChecker = (Type, value) => isType(getTypeName(Type), value) || (
         isFunction(Type) && isset(value) && value instanceof Type);
 const multiTypesToString = types => types.length ?
              types.map(type => `\`${getTypeName(type)}\``).join(', ') : '';
@@ -1188,7 +1153,7 @@ const jsonClone = x => JSON.parse(JSON.stringify(x));
 
 const toAssocList = obj => keys(obj).map(key => [key, obj[key]]);
 const toAssocListDeep = (obj, TypeConstraint = Object) => keys(obj).map(key =>
-        TypeConstraint && _isType(TypeConstraint, obj[key]) ?
+        TypeConstraint && isType(TypeConstraint, obj[key]) ?
             [key, toAssocListDeep(obj[key], TypeConstraint)] :
             [key, obj[key]]
     );
@@ -1197,15 +1162,13 @@ const fromAssocList = (xs, OutType = Object) => xs.reduce((agg, [key, value]) =>
         return agg;
     }, new OutType());
 const fromAssocListDeep = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
-        if (isArray(value) && isArray(value[0])) {
+        if (isArray(value) && isArray(value[0]) && value[0].length === 2) {
             agg[key] = fromAssocListDeep(value, OutType);
             return agg;
         }
         agg[key] = value;
         return agg;
     }, new OutType());
-const toArrayMap = toAssocList;
-const fromArrayMap = fromAssocList;
 
 const toArray = x => {
         switch (typeOf(x)) {
@@ -1226,50 +1189,20 @@ const toArray = x => {
     };
 
 /**
- * @module _object
- * @description Object operations (un-curried).
- * @private
- */
-
-/**
  * @module object
+ * @description Object operations/combinators.
  */
-const prop = curry(_prop);
-const instanceOf = curry(_instanceOf);
-const hasOwnProperty = curry(_hasOwnProperty);
-const assign = curry2(_assign);
-const assignDeep = curry2(_assignDeep);
-const objUnion = curry(_objUnion);
-const objIntersect = curry(_objIntersect);
-const objDifference = curry(_objDifference);
-const objComplement = curry2(_objComplement);
-const isType = curry(_isType);
-const fromNamespace = curry(_fromNamespace);
 
-const until$1 = (predicate, operation, typeInstance) => {
-        let result = typeInstance;
-        while (!predicate(result)) {
-            result = operation(result);
-        }
-        return result;
-    };
-
-const flipN$1 = fn => (...args) => apply(fn, reverse(args));
-const flip3$1 = fn => (a, b, c) => call(fn, c, b, a);
-const flip4$1 = fn => (a, b, c, d) => call(fn, d, c, b, a);
-const flip5$1 = fn => (a, b, c, d, e) => call(fn, e, d, c, b, a);
-const flip$1 = fn => (b, a) => call(fn, a, b);
+const compose = (...args) =>
+        arg0 => reduceRight$1((value, fn) => fn(value), arg0, args);
 
 /**
- * @memberOf _function
- * @author elydelacruz
- * @created 12/6/2016.
+ * @memberOf function
  * @description Curry implementation with place holder concept (`__`).
- * @todo Make code here more minimal (reuse small parts here).
  */
 
 const PlaceHolder = function PlaceHolder() {};
-const notFnErrPrefix$1 = '`fn` in `curry_(fn, ...args)`';
+const notFnErrPrefix = '`fn` in `curry_(fn, ...args)`';
 const placeHolderInstance = new PlaceHolder();
 
 /**
@@ -1291,12 +1224,12 @@ function isPlaceHolder (instance) {
  * @returns {Array|*} - Returns passed in `list` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders (array, args) {
-    let out = map(element => {
+    let out = array.map(element => {
             if (!isPlaceHolder(element)) { return element; }
-            else if (length(args)) { return args.shift(); }
+            else if (args.length) { return args.shift(); }
             return element;
-        }, array);
-    return length(args) ? concat(out, args) : out;
+        });
+    return args.length ? out.concat(args) : out;
 }
 
 /**
@@ -1307,7 +1240,7 @@ function replacePlaceHolders (array, args) {
  * @returns {Function}
  */
 function curry_ (fn, ...argsToCurry) {
-    return curryN_(fnOrError(notFnErrPrefix$1, fn).length, fn, ...argsToCurry);
+    return curryN_(fnOrError$1(notFnErrPrefix, fn).length, fn, ...argsToCurry);
 }
 
 /**
@@ -1321,17 +1254,17 @@ function curry_ (fn, ...argsToCurry) {
 function curryN_ (executeArity, fn, ...curriedArgs) {
     return (...args) => {
         let concatedArgs = replacePlaceHolders(curriedArgs, args),
-            placeHolders = filter(isPlaceHolder, concatedArgs),
-            canBeCalled = (length(concatedArgs) - length(placeHolders) >= executeArity) || !executeArity;
+            placeHolders = concatedArgs.filter(isPlaceHolder),
+            canBeCalled = (concatedArgs.length - placeHolders.length >= executeArity) || !executeArity;
         return !canBeCalled ?
-            apply(curryN_, concat([executeArity, fnOrError(notFnErrPrefix$1, fn)], concatedArgs)) :
-            apply(fnOrError(notFnErrPrefix$1, fn), concatedArgs);
+            curryN_.apply(null, [executeArity, fnOrError$1(notFnErrPrefix, fn)].concat(concatedArgs)) :
+            fnOrError$1(notFnErrPrefix, fn).apply(null, concatedArgs);
     };
 }
 
 /**
  * Place holder object (frozen) used by curry.
- * @memberOf _function
+ * @memberOf function
  * @type {PlaceHolder}
  */
 let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
@@ -1340,8 +1273,14 @@ let curry3_ = fn => curryN_(3, fn);
 let curry4_ = fn => curryN_(4, fn);
 let curry5_ = fn => curryN_(5, fn);
 
+const flipN = fn => curry2((...args) => apply(fn, reverse$1(args)));
+const flip3 = fn => curry((a, b, c) => call(fn, c, b, a));
+const flip4 = fn => curry((a, b, c, d) => call(fn, d, c, b, a));
+const flip5 = fn => curry((a, b, c, d, e) => call(fn, e, d, c, b, a));
+const flip = fn => curry((b, a) => call(fn, a, b));
+
 /**
- * @memberOf _function
+ * @memberOf function
  */
 
 /**
@@ -1353,303 +1292,17 @@ let curry5_ = fn => curryN_(5, fn);
  */
 const id = x => x;
 
-const compose = (...args) =>
-        arg0 => reduceRight((value, fn) => fn(value), arg0, args);
+const until = curry((predicate, operation, typeInstance) => {
+        let result = typeInstance;
+        while (!predicate(result)) {
+            result = operation(result);
+        }
+        return result;
+    });
 
 /**
- * Function operations: `
  * @module function
  */
-
-const apply$1 = curry(apply);
-const call$1 = curry2(call);
-const until$$1 = curry(until$1);
-const flipN$$1 = fn => curry3((...args) => apply$1(fn, reverse(args)));
-const flip$$1 = fn => curry(flip$1(fn));
-const flip3$$1 = fn => curry(flip3$1(fn));
-const flip4$$1 = fn => curry(flip4$1(fn));
-const flip5$$1 = fn => curry(flip5$1(fn));
-
-    /**
-     * Curries a function based on it's defined arity (argument's arrayOps expected length).
-     * @function module:function.curry
-     * @param fn {Function}
-     * @param argsToCurry {...*}
-     * @returns {Function}
-     * @curried
-     */
-
-    /**
-     * Curries a function up to a given arity.
-     * @function module:function.curryN
-     * @param executeArity {Number}
-     * @param fn {Function}
-     * @param curriedArgs {...*}
-     * @returns {Function}
-     */
-
-    /**
-     * Curries a function up to an arity of 2 (won't call function until 2 or more args).
-     * @function module:function.curry2
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Curries a function up to an arity of 3 (won't call function until 3 or more args).
-     * @function module:function.curry3
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Curries a function up to an arity of 4 (won't call function until 4 or more args).
-     * @function module:function.curry4
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Curries a function up to an arity of 5 (won't call function until 5 or more args).
-     * @function module:function.curry5
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
-     * @function module:function.curry_
-     * @param fn {Function}
-     * @param argsToCurry {...*}
-     * @returns {Function}
-     */
-
-    /**
-     * Curries a function up to given arity also enforces arity via placeholder values (`__`).
-     * @function module:function.curryN_
-     * @param executeArity {Number}
-     * @param fn {Function}
-     * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
-     * @returns {Function} - Passed in function wrapped in a function for currying.
-     */
-
-    /**
-     * Place holder object (frozen) used by curry.
-     * @memberOf function
-     * @type {PlaceHolder}
-     */
-
-    /**
-     * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers))
-     * (won't call function until 2 or more args (not counting placeholder (`__`) value).
-     * @function module:function.curry2_
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers))
-     * (won't call function until 3 or more args (not counting placeholder (`__`) value).
-     * @function module:function.curry3_
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))
-     * (won't call function until 4 or more args (not counting placeholder (`__`) value).
-     * @function module:function.curry4_
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))
-     * (won't call function until 5 or more args (not counting placeholder (`__`) value).
-     * @function module:function.curry5_
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Takes a function that takes two parameters and returns a negated version of given
-     * function.
-     * @function module:function.negateF
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Takes a function that takes three parameters and returns a
-     * negated version of given function.
-     * @function module:function.negateF3
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Takes a function that takes four parameters and returns a
-     * negated version of given function.
-     * @function module:function.negateF4
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Takes a function that takes four parameters and returns a
-     * negated version of given function.
-     * @function module:function.negateF5
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
-     * @function module:function.negateP
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-     * @function module:function.negateFMany
-     * @param fn {Function}
-     * @returns {Function}
-     */
-
-    /**
-     * Composes all functions passed in from right to left passing each functions return value to
-     * the function on the left of itself.
-     * @function module:function.compose
-     * @param args {...Function}
-     * @returns {Function}
-     */
-
-/**
- * @module _function
- * @private
- */
-
-/**
- * Created by elydelacruz on 7/22/2017.
- * @module utils
- * @private
- */
-
-const fPureTakesOne = name => curry((arg, f) => f[name](arg));
-const fPureTakes2 = name => curry((arg1, arg2, f) => f[name](arg1, arg2));
-const fPureTakesOneOrMore = name => curry2((f, ...args) => f[name](...args));
-
-/**
- * Created by elyde on 7/20/2017.
- * Curried functional versions of common array methods (`filter`, `map`, etc.).
- * @module jsPlatform_array
- * @private
- */
-
-const join$1 = fPureTakesOne('join');
-const push$1 = fPureTakesOneOrMore('push');
-
-/**
- * List operations that overlap (apart from globally overlapping props and functions like `length`)
- * on both strings and arrays.
- * @module jsPlatform_list
- * @private
- */
-
-const slice$1 = curry(slice);
-const includes$1 = curry(includes);
-const indexOf$1 = curry(indexOf);
-const lastIndexOf$1 = curry(lastIndexOf);
-
-/**
- * Created by elydelacruz on 9/6/2017.
- * @module jsPlatform_string
- * @private
- */
-
-const split$1 = curry(split);
-
-/**
- * @module jsPlatform
- * @private
- */
-
-/**
- * List operators.
- * @module list
- */
-const append = curry(_append);
-const appendMany = curry2(_appendMany);
-const concatMap = curry2(_concatMap);
-const map$1 = curry(_map);
-const intersperse = curry(_intersperse);
-const intercalate = curry(_intercalate);
-const foldl = curry(_foldl);
-const foldr = curry(_foldr);
-const foldl1 = curry(_foldl1);
-const foldr1 = curry(_foldr1);
-const mapAccumL = curry(_mapAccumL);
-const mapAccumR = curry(_mapAccumR);
-const iterate = curry(_iterate);
-const repeat = curry(_repeat);
-const replicate = curry(_replicate);
-const cycle = curry(_cycle);
-const unfoldr = curry(_unfoldr);
-const findIndex = curry(_findIndex);
-const findIndices = curry(_findIndices);
-const elemIndex = curry(_elemIndex);
-const elemIndices = curry(_elemIndices);
-const take = curry(_take);
-const drop = curry(_drop);
-const splitAt = curry(_splitAt);
-const takeWhile = curry(_takeWhile);
-const dropWhile = curry(_dropWhile);
-const dropWhileEnd = curry(_dropWhileEnd);
-const span = curry(_span);
-const breakOnList = curry(_breakOnList);
-const at = curry(_at);
-const find = curry(_find);
-const filter$1 = curry(_filter);
-const partition = curry(_partition);
-const elem = curry(_elem);
-const notElem = curry2(_notElem);
-const lookup = curry(_lookup);
-const isPrefixOf = curry(_isPrefixOf);
-const isSuffixOf = curry(_isSuffixOf);
-const isInfixOf = curry(_isInfixOf);
-const isSubsequenceOf = curry(_isSubsequenceOf);
-const groupBy = curry(_groupBy);
-const stripPrefix = curry(_stripPrefix);
-const zip = curry(_zip);
-const zip3 = curry(_zip3);
-const zip4 = curry(_zip4);
-const zip5 = curry(_zip5);
-const zipWith = curry(_zipWith);
-const zipWithN = curry(_zipWithN);
-const zipWith3 = curry(_zipWith3);
-const zipWith4 = curry(_zipWith4);
-const zipWith5 = curry(_zipWith5);
-const any = curry(_any);
-const all = curry(_all);
-const scanl = curry(_scanl);
-const scanl1 = curry(_scanl1);
-const scanr = curry(_scanr);
-const scanr1 = curry(_scanr1);
-const remove = curry(_remove);
-const sortOn = curry(_sortOn);
-const sortBy = curry(_sortBy);
-const insert = curry(_insert);
-const insertBy = curry(_insertBy);
-const nubBy = curry(_nubBy);
-const removeBy = curry(_removeBy);
-const removeFirstsBy = curry(_removeFirstsBy);
-const unionBy = curry(_unionBy);
-const union = curry(_union);
-const intersect = curry(_intersect);
-const intersectBy = curry(_intersectBy);
-const difference = curry(_difference);
-const complement = curry2(_complement);
 
 /**
  * Contains functions for operating strings.
@@ -1657,8 +1310,8 @@ const complement = curry2(_complement);
  * @created 7/9/2017.
  * @module string
  */
-const lines = split$1(/[\n\r]/gm);
-const words = split$1(/[\s\t]/gm);
+const lines = split(/[\n\r]/gm);
+const words = split(/[\s\t]/gm);
 const unwords = intercalate(' ');
 const unlines = intercalate('\n');
 const lcaseFirst = xs => {
@@ -1670,16 +1323,16 @@ const ucaseFirst = xs => {
         return xs[0].toUpperCase() + xs.substring(1);
     };
 const camelCase = (xs, pattern = /[^a-z\d]/i) => compose(
-            join$1(''),
-            map$1(str => ucaseFirst(str.toLowerCase())),
-            filter$1(x => !!x),
-            split$1(pattern)
+            join(''),
+            map(str => ucaseFirst(str.toLowerCase())),
+            filter(x => !!x),
+            split(pattern)
         )(_errorIfNotType(String, 'camelCase', 'xs', xs));
 const classCase = compose(ucaseFirst, camelCase);
 
 /**
  * @module fjl
- * @description Includes operations from haskell's Prelude.
+ * @description Exports all module methods (object, list, string modules etc.).
  * @goal to include everything from haskell's Prelude where it makes sense in order to create
  *  a subset of functions which can make the javascript developer more efficient and make his/her
  *  code more concise (and functional).
@@ -1688,4 +1341,4 @@ const classCase = compose(ucaseFirst, camelCase);
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
 
-export { prop, instanceOf, hasOwnProperty, assign, assignDeep, objUnion, objIntersect, objDifference, objComplement, isType, fromNamespace, length, keys, _instanceOf, _hasOwnProperty, _assign, _prop, typeOf, isFunction, _isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, _fromNamespace, _assignDeep, _objUnion, _objIntersect, _objDifference, _objComplement, log, error, peek, isCheckableType, _errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, toArrayMap, fromArrayMap, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };
+export { instanceOf, hasOwnProperty, length, keys, assign, prop, typeOf, isFunction, isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, fromNamespace, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, isCheckableType, errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply, call, compose, curryNotFnErrPrefix, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, flipN, flip3, flip4, flip5, flip, id, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, until, map, append, appendMany, head, last, tail, init, uncons, unconsr, concat$$1 as concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, split, push, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };

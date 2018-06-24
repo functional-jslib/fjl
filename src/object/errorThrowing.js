@@ -14,6 +14,7 @@ export const
      * @function module:object.isCheckableType
      * @param type {TypeRef}
      * @returns {Boolean}
+     * @private
      */
     isCheckableType = type => isString(type) || isFunction(type),
 
@@ -23,6 +24,7 @@ export const
      * @param contextName {String}
      * @param type {TypeRef}
      * @returns {TypeRef} - Type passed in if `type` is checkable
+     * @private
      */
     errorIfNotCheckableType = (contextName, type) => {
         if (!isCheckableType(type)) {
@@ -50,6 +52,7 @@ export const
      * @param Type {String|Function} - Type name, constructor and/or class.
      * @param value {*}
      * @returns {Boolean}
+     * @private
      */
     _defaultTypeChecker = (Type, value) => isType(getTypeName(Type), value) || (
         isFunction(Type) && isset(value) && value instanceof Type),
