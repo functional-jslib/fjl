@@ -95,7 +95,7 @@ export const
     isNumber = value => _isType(_Number, value),
 
     /**
-     * Checks whether value is a stringOps or not.
+     * Checks whether value is a string or not.
      * @function module:object._isString
      * @param value {*}
      * @returns {Boolean}

@@ -79,7 +79,7 @@ describe ('#object', function () {
         it ('should be a function', function () {
             expectFunction(isType);
         });
-        it ('should return `true` when passed in value is of passed in type name/stringOps', function () {
+        it ('should return `true` when passed in value is of passed in type name/string', function () {
             [
                 ['Array', []],
                 ['Object', {}],
@@ -105,7 +105,7 @@ describe ('#object', function () {
             ]
                 .forEach(tuple => expectTrue(apply(isType, tuple)));
         });
-        it ('should return `false` when passed in value is not of passed in type name/stringOps', function () {
+        it ('should return `false` when passed in value is not of passed in type name/string', function () {
             [
                 ['Object', []],
                 ['Array', {}],
@@ -184,11 +184,11 @@ describe ('#object', function () {
     });
 
     describe('#isString', function () {
-        it ('should return `true` when given value is a stringOps', () => {
+        it ('should return `true` when given value is a string', () => {
             expectTrue(isString('hello'));
             expectTrue(isString(String('hello')));
         });
-        it ('should return `false` when given value is not a stringOps', () => {
+        it ('should return `false` when given value is not a string', () => {
             expect(isString(function () {})).to.equal(false);
             expect(isString(NaN)).to.equal(false);
         });

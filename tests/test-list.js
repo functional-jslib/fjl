@@ -11,7 +11,7 @@ import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/object';
 import {isTruthy} from '../src/booleanOps';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase}
-    from '../src/stringOps';
+    from '../src/string';
 import {
     append, appendMany, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
@@ -913,7 +913,7 @@ describe ('#list', function () {
 
     describe ('#drop', function () {
         const hello = 'hello';
-        it ('should return a new list/stringOps with dropped items from original until limit', function () {
+        it ('should return a new list/string with dropped items from original until limit', function () {
             const word = hello,
                 wordParts = strToArray(word),
                 partsLength = wordParts.length - 1;

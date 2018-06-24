@@ -2,7 +2,7 @@
  * Contains functions for operating strings.
  * @author elyde
  * @created 7/9/2017.
- * @module stringOps
+ * @module string
  */
 import {intercalate, map, filter} from './list';
 import {split} from './jsPlatform/string';
@@ -14,7 +14,7 @@ export const
 
     /**
      * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
-     * @function module:stringOps.lines
+     * @function module:string.lines
      * @param str {String}
      * @returns {Array}
      */
@@ -22,7 +22,7 @@ export const
 
     /**
      * Splits a string on all '\s' and/or all '\t' characters.
-     * @function module:stringOps.words
+     * @function module:string.words
      * @param str{String}
      * @returns {Array}
      */
@@ -30,7 +30,7 @@ export const
 
     /**
      * Intersperse an array of strings with '\s' and then concats them.
-     * @function module:stringOps.unwords
+     * @function module:string.unwords
      * @param arr {String}
      * @returns {Array}
      */
@@ -38,7 +38,7 @@ export const
 
     /**
      * Intersperses a '\n' character into a list of strings and then concats it.
-     * @function module:stringOps.unlines
+     * @function module:string.unlines
      * @param list {Array|String|*}
      * @returns {Array}
      */
@@ -46,7 +46,7 @@ export const
 
     /**
      * Lower cases first character of a non-empty string.
-     * @function module:stringOps.lcaseFirst
+     * @function module:string.lcaseFirst
      * @param xs {String}
      * @returns {string}
      * @throws {Error} - Throws error if receiving anything that is not a string.
@@ -58,7 +58,7 @@ export const
 
     /**
      * Upper cases first character of a non-empty string.
-     * @function module:stringOps.ucaseFirst
+     * @function module:string.ucaseFirst
      * @param xs {String}
      * @returns {string}
      * @throws {Error} - Throws error if receiving anything that is not a string.
@@ -70,7 +70,7 @@ export const
 
     /**
      * Camel cases (class case) a string.
-     * @function module:stringOps.camelCase
+     * @function module:string.camelCase
      * @param xs {String}
      * @param [pattern=/[^a-z\d/i]/] {RegExp} - Pattern to split on.  Optional.
      * @throws {Error} - Throws error if param `xs` is not a string.
@@ -86,9 +86,9 @@ export const
 
     /**
      * Class cases a string.  Uses pattern /[^a-z\d/i]/ to split on.
-     * If you require a different pattern use `stringOps.camelCase(str, pattern)`
+     * If you require a different pattern use `string.camelCase(str, pattern)`
      * and then upper case first character (`ucaseFirst`).
-     * @function module:stringOps.classCase
+     * @function module:string.classCase
      * @param xs {String}
      * @returns {string}
      * @throws {Error} - Throws error if `xs` is not a string (via `camelCase` call).

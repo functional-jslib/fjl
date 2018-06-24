@@ -155,7 +155,7 @@ hasOwnProperty, length, keys,
 objUnion, objIntersect, objDifference, objComplement,
 ```
 
-#### `stringOps`
+#### `string`
 Import from 'Data.List' (in haskell):
 ```
 lines, words, unwords, unlines
