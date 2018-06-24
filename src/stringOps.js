@@ -4,7 +4,7 @@
  * @created 7/9/2017.
  * @module stringOps
  */
-import {intercalate, map, filter} from './listOps';
+import {intercalate, map, filter} from './list';
 import {split} from './jsPlatform/string';
 import {compose} from './uncurried/_functionOps/_compose';
 import {join} from './jsPlatform/array';

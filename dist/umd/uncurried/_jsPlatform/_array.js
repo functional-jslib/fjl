@@ -37,7 +37,7 @@
 
 
   /**
-   * Maps a _functionOps to functor (_listOps etc.).
+   * Maps a _functionOps to functor (_list etc.).
    * @function module:_jsPlatform_array.map
    * @param fn {Function}
    * @param functor {Array|{map: {Function}}}
@@ -47,7 +47,7 @@
 
 
   /**
-   * Filters a functor (_listOps etc.) with passed in _functionOps.
+   * Filters a functor (_list etc.) with passed in _functionOps.
    * @function module:_jsPlatform_array.filter
    * @param fn {Function}
    * @param functor {Array|{filter: {Function}}}
@@ -57,7 +57,7 @@
 
 
   /**
-   * Reduces a foldable (_listOps etc.) with passed in _functionOps.
+   * Reduces a foldable (_list etc.) with passed in _functionOps.
    * @function module:_jsPlatform_array.reduce
    * @param fn {Function}
    * @param functor {Array|{reduce: {Function}}}
@@ -67,7 +67,7 @@
 
 
   /**
-   * Reduces a foldable (_listOps etc.) from the right with passed in _functionOps.
+   * Reduces a foldable (_list etc.) from the right with passed in _functionOps.
    * @function module:_jsPlatform_array.reduceRight
    * @param fn {Function}
    * @param functor {Array|{reduceRight: {Function}}}
@@ -127,7 +127,7 @@
 
 
   /**
-   * Reverses an _listOps (shimmed if not exists).
+   * Reverses an _list (shimmed if not exists).
    * @function module:listPrelude.reverse
    * @return {Array}
    */

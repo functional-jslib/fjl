@@ -28,7 +28,7 @@ import {
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
     complement, difference, union, intersect, intersectBy, groupBy,
     scanl, scanl1, scanr, scanr1
-} from '../src/listOps';
+} from '../src/list';
 
 import {
     range,
@@ -45,7 +45,7 @@ import {
     peek
 } from './helpers';
 
-describe ('#listOps', function () {
+describe ('#list', function () {
 
     const strToArray = split(''),
         generalEqualityCheck = (a, b) => a === b,
@@ -877,7 +877,7 @@ describe ('#listOps', function () {
         it ('should return taken items from list and/or string until limit', function () {
             const word = hello;
 
-            // Test `take` on word parts and word (listOps and string)
+            // Test `take` on word parts and word (list and string)
             strToArray(word).forEach((part, ind, wordParts)=> {
                 // Get human index (counting from `1`) and preliminaries
                 const humanInd = ind + 1,
@@ -918,7 +918,7 @@ describe ('#listOps', function () {
                 wordParts = strToArray(word),
                 partsLength = wordParts.length - 1;
 
-            // Test `take` on word parts and word (listOps and string)
+            // Test `take` on word parts and word (list and string)
             wordParts.forEach((part, ind, wordParts)=> {
                 // Get human index (counting from `1`) and preliminaries
                 const humanInd = ind + 1,

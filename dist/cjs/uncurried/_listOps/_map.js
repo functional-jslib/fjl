@@ -8,7 +8,7 @@ exports.default = _map;
 var _object = require('../_jsPlatform/_object');
 
 /**
- * @function module:_listOps.map
+ * @function module:_list.map
  * @param fn {Function} - Function to map on array.
  * @param xs {Array}
  * @returns {Array}

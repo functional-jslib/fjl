@@ -63,7 +63,7 @@ const fjl = require('fjl');
 - A functional library that has curried and un-curried versions of included operations.  Et. al.
     `append`, `_append` (un-curried version)
 - A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' (in our lib is './src/listOps.js') etc..
+are separated out 'Data.List' (in our lib is './src/list.js') etc..
 - Etc. etc..
 
 ### Reasoning for paradigms
@@ -91,7 +91,7 @@ The jsdocs link listed above has the modules included on `fjl`, divided by the o
 isTruthy, isFalsy, alwaysTrue, alwaysFalse
 ```
 
-#### `listOps`
+#### `list`
 List operations imported from the `Data.List` haskell module.
 ```
 append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
@@ -140,7 +140,7 @@ negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
 id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders
 ```
 
-#### `objectOps`
+#### `object`
 These methods are not really from the haskell library but are utilities for making 
 working with javascript objects a little bit easier.
  
@@ -210,7 +210,7 @@ https://functional-jslib.github.io/fjl/
     - Sources are divided by un-curried definitions ('./src/uncurried')
     and curried definitions (files in './src/**/*' except the ones in './src/uncurried' (of course)).
     - './src/jsPlatform' and './src/uncurried/jsPlatform' are native platform specific method versions
-     pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (listOps, functionOps etc.).
+     pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (list, functionOps etc.).
     - About non-conformity to full modularity (one-function-per-file):
       The library could have been written this way initially but wasn't, specifically to make development on the library easier
       (though it can be argued that development is actually more difficult this way,
@@ -236,7 +236,7 @@ configurations used for building the project.
 
 ### Unit testing:
 Unit tests are grouped by exported module:
-'tests/test-listOps.js' - Tests 'listOps' module etc.
+'tests/test-list.js' - Tests 'list' module etc.
 
 We are using 'chai' and 'mocha' though we may want to move to 'jest' in the future.
 

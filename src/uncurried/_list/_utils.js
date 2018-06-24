@@ -15,7 +15,7 @@ export const
 
     /**
      * Returns a slice of the given list from `startInd` to the end of the list.
-     * @function module:_listOpsUtils.sliceFrom
+     * @function module:_listUtils.sliceFrom
      * @param startInd {Number}
      * @param arr {Array|String|*}
      * @returns {Array|String|*}
@@ -24,7 +24,7 @@ export const
 
     /**
      * Slices from index `0` to given index.
-     * @function module:_listOpsUtils.sliceTo
+     * @function module:_listUtils.sliceTo
      * @param toInd {Number}
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
@@ -49,7 +49,7 @@ export const
 
     /**
      * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
-     * @function module:_listOpsUtils.genericAscOrdering
+     * @function module:_listUtils.genericAscOrdering
      * @param a {*}
      * @param b {*}
      * @returns {number}
@@ -62,14 +62,14 @@ export const
 
     /**
      * Returns length of all passed lists in list.
-     * @function module:_listOpsUtils.lengths
+     * @function module:_listUtils.lengths
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
     lengths = (...lists) => length(lists) ? _map(length, lists) : [],
 
     /**
-     * @function module:_listOpsUtils.lengthsToSmallest
+     * @function module:_listUtils.lengthsToSmallest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */

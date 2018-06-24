@@ -25,7 +25,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * ```
      * If the first list is not finite, the result is the first list.
      * @haskellType `append :: List a => a -> a -> a`
-     * @function module:_listOps._append
+     * @function module:_list._append
      * @param xs1 {Array} - list or list like.
      * @param xs2 {Array} - list or list like.
      * @returns {Array} - Same type as list like passed in.
@@ -38,7 +38,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * @haskellType `appendMany :: List a => a -> [a] -> a
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:_listOps._appendMany
+     * @function module:_list._appendMany
      * @param args ...{Array} - Lists or lists likes.
      * @returns {Array} - Same type as first list or list like passed in.
      */
@@ -53,7 +53,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Returns head of list (first item of list).
      * @haskellType `head :: [a] -> a`
-     * @function module:_listOps._head
+     * @function module:_list._head
      * @param x {Array|String}
      * @returns {*} - First item from list
      */
@@ -63,7 +63,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Returns last item of list.
      * @haskellType `last :: [a] -> a`
-     * @function module:_listOps._last
+     * @function module:_list._last
      * @param xs {Array|String}
      * @returns {*}
      */
@@ -73,7 +73,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Returns tail part of list (everything after the first item as new list).
      * @haskelType `tail :: [a] -> [a]`
-     * @function module:_listOps._tail
+     * @function module:_list._tail
      * @param xs {Array}
      * @returns {Array}
      */
@@ -83,7 +83,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Returns everything except last item of list as new list.
      * @haskellType `init :: [a] -> [a]`
-     * @function module:_listOps._init
+     * @function module:_list._init
      * @param xs {Array|String}
      * @returns {Array|String}
      */
@@ -93,7 +93,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Returns `head` and `tail` of passed in list/string in a tuple.
      * @haskellType `uncons :: [a] -> Maybe (a, [a])`
-     * @function module:_listOps._uncons
+     * @function module:_list._uncons
      * @param xs {Array|String}
      * @returns {Array|undefined}
      */
@@ -103,7 +103,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Returns `tail` and `head` of passed in list/string in a tuple.
      * @haskellType `unconsr :: [a] -> Maybe ([a], a)`
-     * @function module:_listOps._unconsr
+     * @function module:_list._unconsr
      * @param xs {Array|String}
      * @returns {Array|String|*|undefined}
      */
@@ -113,7 +113,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Concatenates all the elements of a container of lists.
      * @haskellType `concat :: Foldable t => t [a] -> [a]`
-     * @function module:_listOps._concat
+     * @function module:_list._concat
      * @param xs {Array}
      * @returns {Array}
      */
@@ -123,7 +123,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
      * @haskellType `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
-     * @function module:_listOps._concatMap
+     * @function module:_list._concatMap
      * @param fn {Function}
      * @param foldableOfA {Array}
      * @returns {Array}
@@ -134,7 +134,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Returns a copy of the passed in list reverses.
      * @haskellType `reverse :: [a] -> [a]`
-     * @function module:_listOps._reverse
+     * @function module:_list._reverse
      * @param x {Array}
      * @returns {Array}
      */
@@ -143,7 +143,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Takes an element and a list and `intersperses' that element between the elements of the list. For example
-     * @function module:_listOps._intersperse
+     * @function module:_list._intersperse
      * @note In our version of the function javascript is loosely typed so, so is our function (to much overhead to make
      *  it typed) so `between` can be any value.
      * @param between {*} - Should be of the same type of elements contained in list.
@@ -164,7 +164,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
      * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
-     * @function module:_listOps._intercalate
+     * @function module:_list._intercalate
      * @param xs {Array}
      * @param xss {Array}
      * @returns {Array}
@@ -185,7 +185,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * @note Empty lists are ignored.
      * @todo upgrade this function to support lists of strings.
      * @haskellType `transpose :: [[a]] -> [[a]]`
-     * @function module:_listOps._transpose
+     * @function module:_list._transpose
      * @param xss {Array}
      * @returns {Array}
      */
@@ -220,7 +220,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      *  Also note that for 2^16 (or for a sequence of 16 characters) this algorithm
      *  will generate 65536 sub-sequences!  So caution should be taken to not
      *  use this with sequences above a certain length on certain platform (the browser thread in specific).
-     * @function module:_listOps._subsequences
+     * @function module:_list._subsequences
      * @jsperftest https://jsperf.com/subsequences
      * @param xs {Array|String}
      * @returns {Array.<Array>}
@@ -244,7 +244,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns an array with the given indices swapped.
-     * @function module:_listOps._swapped
+     * @function module:_list._swapped
      * @param ind1 {Number}
      * @param ind2 {Number}
      * @param list {Array}
@@ -263,7 +263,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * Returns a list of permutations for passed in list.
      *  Use caution with lists above a length of 15 (will take long due to nature of
      *  algorithm).
-     * @function module:_listOps._permutations
+     * @function module:_list._permutations
      * @param xs {Array} - List.
      * @returns {Array<Array|String|*>} - Array of permutations.
      */
@@ -297,7 +297,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Left associative fold.  Reduces a container of elements down by the given operation (same as [].reduce).
-     * @function module:_listOps._foldl
+     * @function module:_list._foldl
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array}
@@ -308,7 +308,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Right associative fold.  Reduces a container of elements down by the given operation (same as [].reduceRight).
-     * @function module:_listOps._foldr
+     * @function module:_list._foldr
      * @param fn {Function}
      * @param zero {*} - Aggregator.
      * @param functor {Array}
@@ -320,7 +320,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * A variant of `foldl` except that this one doesn't require the starting point.  The starting point/value will be pulled
      * out from a copy of the container.
-     * @function module:_listOps._foldl1
+     * @function module:_list._foldl1
      * @param op {Function}
      * @param xs {Array}
      * @returns {*} - Whatever type is lastly returned from `op`.
@@ -334,7 +334,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
      * out from a copy of the container.
-     * @function module:_listOps._foldr1
+     * @function module:_list._foldr1
      * @param op {Function}
      * @param xs {Array}
      * @returns {*} - Whatever type is lastly returned from `op`.
@@ -348,7 +348,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:_listOps._mapAccumL
+     * @function module:_list._mapAccumL
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array} - list type.
@@ -376,7 +376,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:_listOps._mapAccumR
+     * @function module:_list._mapAccumR
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
      * @param zero {*} - An instance of the passed in list type used to aggregate on.
      * @param xs {Array} - list type.
@@ -403,7 +403,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * iterate f x returns an infinite list of repeated applications of f to x.
-     * @function module:_listOps._iterate
+     * @function module:_list._iterate
      * @example `iterate(5, f, x) == [x, f(x), f(f(x)), ...]`
      * @param limit {Number}
      * @param op {Function} - Operation.
@@ -424,7 +424,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Repeats `x` `limit` number of times.
-     * @function module:_listOps._repeat
+     * @function module:_list._repeat
      * @param limit {Number}
      * @param x {*}
      * @return {Array}
@@ -434,7 +434,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Same as `repeat` due to the nature of javascript (see haskell version for usage).
-     * @function module:_listOps._replicate
+     * @function module:_list._replicate
      * @param limit {Number}
      * @param x {*}
      * @return {Array}
@@ -444,7 +444,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Replicates a list `limit` number of times and appends the results (concat)
-     * @function module:_listOps._cycle
+     * @function module:_list._cycle
      * @param limit {Number}
      * @param xs {Array}
      * @returns {Array}
@@ -455,7 +455,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Unfolds a value into a list of somethings.
      * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
-     * @function module:_listOps._unfoldr
+     * @function module:_list._unfoldr
      * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregate and item to unfold in next iteration).
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
@@ -474,7 +474,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Finds index in string or list (alias for `findIndex`).
-     * @function module:_listOps._findIndex
+     * @function module:_list._findIndex
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -483,7 +483,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
 
     /**
-     * @function module:_listOps._findIndices
+     * @function module:_list._findIndices
      * @param pred {Function}
      * @param xs {Array} - list or list like.
      * @returns {Array|undefined}
@@ -492,7 +492,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
 
     /**
-     * @function module:_listOps._elemIndex
+     * @function module:_list._elemIndex
      * @param x {*} - Element to search for.
      * @param xs {Array} - list or list like.
      * @returns {*}
@@ -504,7 +504,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
 
     /**
-     * @function module:_listOps._elemIndices
+     * @function module:_list._elemIndices
      * @param value {*} - Element to search for.
      * @param xs {Array} - list or list like.
      * @returns {*}
@@ -514,7 +514,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Takes `n` items from start of list to `limit` (exclusive).
-     * @function module:_listOps._take
+     * @function module:_list._take
      * @param list {Array|String}
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
@@ -524,7 +524,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
-     * @function module:_listOps._take
+     * @function module:_list._take
      * @param list {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
@@ -535,7 +535,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
      * given index in second part of returned list)).
-     * @function module:_listOps._splitAt
+     * @function module:_list._splitAt
      * @param ind {Number} - Index to split at.
      * @param list {Array} - functor (list or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
@@ -545,7 +545,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Gives an list with passed elements while predicate was true.
-     * @function module:_listOps._takeWhile
+     * @function module:_list._takeWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @returns {Array}
@@ -558,7 +558,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns an list without elements that match predicate.
-     * @function module:_listOps._dropWhile
+     * @function module:_list._dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -573,7 +573,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
 
     /**
-     * @function module:_listOps._dropWhile
+     * @function module:_list._dropWhile
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -591,7 +591,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
      * the second list in the tuple is a list of the remaining elements in the given list.
      * **@Note: Not the same as `partition`.  Read descriptions closely!!!
-     * @function module:_listOps._span
+     * @function module:_list._span
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array} - Predicate<item, index, originalArrayOrString>
      * @returns {Array} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
@@ -613,7 +613,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * break (< 9) [1,2,3] == ([],[1,2,3])
      * break (> 9) [1,2,3] == ([1,2,3],[])
      * ```
-     * @function module:_listOps._breakOnList
+     * @function module:_list._breakOnList
      * @param pred {Function}
      * @param list {Array|String|*}
      * @returns {Array}
@@ -626,7 +626,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Gets item at index.
-     * @function module:_listOps._at
+     * @function module:_list._at
      * @param ind {Number} - Index.
      * @param xs {Array} - list or list like.
      * @returns {*|undefined} - Item or `undefined`.
@@ -636,7 +636,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Find an item in structure of elements based on given predicate (`pred`).
-     * @function module:_listOps._find
+     * @function module:_list._find
      * @param pred {Function}
      * @param xs {Array} - list or list like.
      * @returns {*} - Found item.
@@ -646,7 +646,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
-     * @function module:_listOps._filter
+     * @function module:_list._filter
      * @param pred {Function}
      * @param xs {Array} - list or list like.
      * @returns {Array} - Structure of filtered elements.
@@ -671,7 +671,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
      * do not match the tuple are in second list in the returned tuple.
      *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
-     * @function module:_listOps._partition
+     * @function module:_list._partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
@@ -681,7 +681,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns a boolean indicating whether an element exists in given structure of elements.
-     * @function module:_listOps._elem
+     * @function module:_list._elem
      * @param element {*}
      * @param xs {Array}
      * @returns {Boolean}
@@ -691,7 +691,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * The opposite of `elem` - Returns a boolean indicating whether an element exists in given list.
-     * @function module:_listOps._notElem
+     * @function module:_list._notElem
      * @param element {*}
      * @param xs {Array}
      * @returns {Boolean}
@@ -700,7 +700,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
 
     /**
-     * Same as _listOps._at - Returns property value at key/indice.
+     * Same as _list._at - Returns property value at key/indice.
      * @function module:_object._lookup
      * @type {module:_objectOps.prop}
      */
@@ -709,7 +709,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Checks if list `xs1` is a prefix of list `xs2`
-     * @function module:_listOps._isPrefixOf
+     * @function module:_list._isPrefixOf
      * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
      * @returns {boolean}
@@ -732,7 +732,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Checks if list `xs1` is a suffix of list `xs2`
-     * @function module:_listOps._isSuffixOf
+     * @function module:_list._isSuffixOf
      * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
      * @returns {boolean}
@@ -757,7 +757,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Checks if list `xs1` is an infix of list `xs2`
-     * @function module:_listOps._isInfixOf
+     * @function module:_list._isInfixOf
      * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
      * @returns {boolean}
@@ -788,7 +788,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Checks if list `xs1` is a sub-sequence of list `xs2`
-     * @function module:_listOps._isPrefixOf
+     * @function module:_list._isPrefixOf
      * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
      * @returns {boolean}
@@ -820,7 +820,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * It is a special case of groupBy, which allows the programmer to supply
      *  their own equality test.
      * @haskellType `group :: Eq a => [a] -> [[a]]`
-     * @function module:_listOps._group
+     * @function module:_list._group
      * @param xs {Array}
      * @returns {Array<Array|String|*>|*}
      */
@@ -831,7 +831,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * Allows you to group items in a list based on your supplied equality check.
      * @note Sames `group` but allows you to specify equality operation.
      * @haskellType `groupBy :: (a -> a -> Bool) -> [a] -> [[a]]`
-     * @function module:_listOps._groupBy
+     * @function module:_list._groupBy
      * @param equalityOp {Function}
      * @param xs {Array}
      * @returns {*}
@@ -868,7 +868,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * ```
      * shallowEquals(inits('abc'), ['','a','ab','abc'])
      * ```
-     * @function module:_listOps._inits
+     * @function module:_list._inits
      * @haskellType `inits :: [a] -> [[a]]`
      * @param xs {Array}
      * @returns {Array}
@@ -892,7 +892,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * ```
      * shallowEquals(tails('abc'), ['abc', 'bc', 'c',''])
      * ```
-     * @function module:_listOps._tails
+     * @function module:_list._tails
      * @haskellType `tails :: [a] -> [[a]]`
      * @param xs {Array}
      * @returns {Array}
@@ -913,7 +913,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Strips prefix list from given list
-     * @function module:_listOps._stripPrefix
+     * @function module:_list._stripPrefix
      * @param prefix {Array|String|*}
      * @param list {Array|string|*}
      * @returns {Array|*}
@@ -925,7 +925,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * zip takes two lists and returns a list of corresponding pairs.
      * If one input list is short, excess elements of the longer list are discarded.
      * @haskellType `zip :: [a] -> [b] -> [(a, b)]`
-     * @function module:_listOps._zip
+     * @function module:_list._zip
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
@@ -943,7 +943,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * zipN takes one or more lists and returns a list containing lists of all indices
      * at a given index, index by index.
      * If one input list is short, excess elements of the longer list are discarded.
-     * @function module:_listOps._zipN
+     * @function module:_list._zipN
      * @param lists {Array|String} - One ore more lists of the same type.
      * @returns {Array}
      */
@@ -961,7 +961,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * @haskellType `zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]`
-     * @function module:_listOps._zip3
+     * @function module:_list._zip3
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @param arr3 {Array}
@@ -972,7 +972,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * @haskellType `zip4 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
-     * @function module:_listOps._zip4
+     * @function module:_list._zip4
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @param arr3 {Array}
@@ -984,7 +984,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * @haskellType `zip5 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
-     * @function module:_listOps._zip5
+     * @function module:_list._zip5
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @param arr3 {Array}
@@ -1009,7 +1009,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * zipWith f [] _|_ = []
      * ```
      * @haskellType `zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]`
-     * @function module:_listOps._zipWith
+     * @function module:_list._zipWith
      * @param op {Function} - Takes two parts of a tuple and returns a tuple.
      *  E.g., ` op :: a -> b -> (a, b)`
      * @param xs1 {Array}
@@ -1031,7 +1031,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      *  is left there for general purpose not for exactness as is told by aforementioned.
      * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
      *  of lists to zip.
-     * @function module:_listOps._zipWithN
+     * @function module:_list._zipWithN
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> (a, b, c)`
@@ -1053,7 +1053,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Zips 3 lists with tupling function.
      * @haskellType `zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]`
-     * @function module:_listOps._zipWith3
+     * @function module:_list._zipWith3
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> (a, b, c)`
@@ -1068,7 +1068,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Zips 4 lists with tupling function.
      * @haskellType `zipWith4 :: (a -> b -> c -> d -> e) -> [a] -> [b] -> [c]  -> [d] -> [e]`
-     * @function module:_listOps._zipWith4
+     * @function module:_list._zipWith4
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`
@@ -1084,7 +1084,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Zips 5 lists.
      * @haskellType `zipWith5 :: (a -> b -> c -> d -> e -> f) -> [a] -> [b] -> [c]  -> [d] -> [e] -> [f]`
-     * @function module:_listOps._zipWith5
+     * @function module:_list._zipWith5
      * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
      *  of said parts:
      *  E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`
@@ -1102,7 +1102,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * unzip transforms a list of pairs into a list of first components and a list of second components.
      * @haskellType `unzip :: [(a, b)] -> ([a], [b])`
      * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
-     * @function module:_listOps._unzip
+     * @function module:_list._unzip
      * @param arr {Array|*}
      * @returns {Array|*}
      */
@@ -1117,7 +1117,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * unzip transforms a list of pairs into a list of first components and a list of second components.
      * @sudoHaskellType `unzipN :: [(a, b, ...x)] -> ([a], [b], ...[x])`
      * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
-     * @function module:_listOps._unzip
+     * @function module:_list._unzip
      * @param list {Array|*} - List of tuples (lists).
      * @returns {Array|*}
      */
@@ -1136,7 +1136,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns true if any item in container passes predicate `p`.
-     * @function module:_listOps._any
+     * @function module:_list._any
      * @param p {Function} - Predicate.
      * @param xs {Array|String}
      * @returns {Boolean}
@@ -1158,7 +1158,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns true if all items in container pass predicate `p`.
-     * @function module:_listOps._all
+     * @function module:_list._all
      * @param p {Function} - Predicate.
      * @param xs {Array|String}
      * @returns {Boolean}
@@ -1181,7 +1181,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Conjuction of container of bools (or truthy and/or falsy values);  Returns
      * `true` if all in container are 'truthy' else returns `false`
-     * @function module:_listOps._and
+     * @function module:_list._and
      * @param xs {Array|String}
      * @returns {Boolean}
      */
@@ -1192,7 +1192,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * Returns a boolean indicating whether any item in container is 'truthy' or not.
      * **Note** The haskell type for this function only takes two items, but here
      * we allow the passing of more than one item (may change later to adhere to the haskell type).
-     * @function module:_listOps._or
+     * @function module:_list._or
      * @haskellType `or :: Bool -> Bool -> Bool`
      * @param xs {Array|String}
      * @returns {Boolean}
@@ -1204,7 +1204,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * Returns a boolean indicating whether all items in container are 'falsy' or not.
      * **Note** The haskell type for this function only takes two items, but here
      * we allow the passing of more than one item (may change later to adhere to the haskell type).
-     * @function module:_listOps._not
+     * @function module:_list._not
      * @haskellType `not :: Bool -> Bool`
      * @param xs {Array|String}
      * @returns {Boolean}
@@ -1214,7 +1214,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Computes the sum of the numbers of a structure.
-     * @function module:_listOps._sum
+     * @function module:_list._sum
      * @haskellType `sum :: (List t, Num a) => t a -> a`
      * @param list {Array|String}
      * @returns {Number}
@@ -1224,7 +1224,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Computes the product of the numbers of a structure.
-     * @function module:_listOps._product
+     * @function module:_list._product
      * @haskellType `product :: (List t, Num a) => t a -> a`
      * @param list {Array|String}
      * @returns {Number}
@@ -1234,7 +1234,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns the largest element in a non-empty structure of elements.
-     * @function module:_listOps._maximum
+     * @function module:_list._maximum
      * @haskellType `maximum :: forall a . Ord a => t a -> a`
      * @param list {Array|String}
      * @returns {*} - Whatever type the array is made of (if any).
@@ -1244,7 +1244,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns the smallest element in a non-empty structure of elements.
-     * @function module:_listOps._minimum
+     * @function module:_list._minimum
      * @haskellType `minimum :: forall a . Ord a => t a -> a`
      * @param list {Array|String}
      * @returns {*} - Whatever type the array is made of (if any).
@@ -1261,7 +1261,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * ```
      * last (scanl f z xs) == foldl f z xs.
      * ```
-     * @function module:_listOps._scanl
+     * @function module:_list._scanl
      * @param fn {Function}
      * @param zero {*}
      * @param xs {Array}
@@ -1287,7 +1287,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * `scanl1` is a variant of `scanl` that has no starting value argument:
      * `shallowCompare(scanl1(fn, [x1, x2, ...]), [x1, fn(x1, x2), ...]) // true`
-     * @function module:_listOps._scanl1
+     * @function module:_list._scanl1
      * @param fn {Function}
      * @param xs {Array}
      * @returns {Array|*}
@@ -1304,7 +1304,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * Same as `scanl` but from the right (similiar to `foldr`'s relationship to `foldl`).
      * Note also `scanr`'s relationship ot `foldr`:
      * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
-     * @function module:_listOps._scanr
+     * @function module:_list._scanr
      * @param fn {Function}
      * @param zero {*}
      * @param xs {Array}
@@ -1329,7 +1329,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Same as `scanr` but takes no zero/accumulator value.
-     * @function module:_listOps._scanr1
+     * @function module:_list._scanr1
      * @param fn {Function}
      * @param xs {Array}
      * @returns {Array|*}
@@ -1348,7 +1348,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * (The name nub means `essence'.) It is a special case of nubBy, which
      * allows the programmer to supply their own equality test.
      * ```shallowCompare( nub ([1,2,3,4,3,2,1,2,4,3,5]), [1,2,3,4,5] )```
-     * @function module:_listOps._nub
+     * @function module:_list._nub
      * @param list {Array|String|*}
      * @returns {Array}
      */
@@ -1358,7 +1358,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * `remove(x, xs)` removes the first occurrence of `x` from `xs`.
      * For example, `remove('a', 'banana') === 'bnana';`
-     * @function module:_listOps._remove
+     * @function module:_list._remove
      * @param x {*}
      * @param list {Array|String|*}
      * @returns {Array}
@@ -1371,7 +1371,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * It is a special case of sortBy, which allows the programmer
      * to supply their own comparison function.
      * ```shallowCompare(sort ([1,6,4,3,2,5]), [1,2,3,4,5,6]) // true```
-     * @function module:_listOps._sort
+     * @function module:_list._sort
      * @param xs {Array|String|*}
      * @returns {Array}
      */
@@ -1395,7 +1395,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      *  [[1,"Hello"],[2,"world"],[4,"!"]]
      * ) // true
      * ```
-     * @function module:_listOps._sortOn
+     * @function module:_list._sortOn
      * @param valueFn {Function}
      * @param xs {Array|String|*}
      * @returns {Array}
@@ -1420,7 +1420,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      *  >>> sortBy (\(a,_) (b,_) -> compare a b) [(2, "world"), (4, "!"), (1, "Hello")]
      *  [(1,"Hello"),(2,"world"),(4,"!")]
      * ```
-     * @function module:_listOps._sortBy
+     * @function module:_list._sortBy
      * @param orderingFn {Function}
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
@@ -1434,7 +1434,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * next element. In particular, if the list is sorted before the call, the
      * result will also be sorted. It is a special case of insertBy, which allows
      * the programmer to supply their own comparison function.
-     * @function module:_listOps._insert
+     * @function module:_list._insert
      * @param x {*}
      * @param xs {Array|*}
      * @returns {Array}
@@ -1451,7 +1451,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * A version of `insert` that allows you to specify the ordering of the inserted
      * item;  Before/at, or after
-     * @function module:_listOps._insertBy
+     * @function module:_list._insertBy
      * @haskellType `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
      * @note `Ordering` === // something that is order-able
      * @todo Optimize and work the logic of this function;  Think about the types that will be
@@ -1479,7 +1479,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * The nubBy function behaves just like nub, except it uses a user-supplied equality predicate.
-     * @function module:_listOps._nubBy
+     * @function module:_list._nubBy
      * @param pred {Function}
      * @param list {Array|String|*}
      * @returns {Array}
@@ -1506,7 +1506,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Behaves the same as `remove`, but takes a user-supplied equality predicate.
-     * @function module:_listOps._removeBy
+     * @function module:_list._removeBy
      * @param pred {Function}
      * @param x {*}
      * @param list {Array|String|*}
@@ -1533,7 +1533,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns the union on elements matching boolean check passed in.
-     * @function module:_listOps._unionBy
+     * @function module:_list._unionBy
      * @param pred {Function} - `pred :: a -> a -> Bool`
      * @param arr1 {Array}
      * @param arr2 {Array}
@@ -1547,7 +1547,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Creates a union on matching elements from array1.
-     * @function module:_listOps._union
+     * @function module:_list._union
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
@@ -1557,7 +1557,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Performs an intersection on list 1 with  elements from list 2.
-     * @function module:_listOps._intersect
+     * @function module:_list._intersect
      * @param arr1 {Array}
      * @param arr2 {Array}
      * @returns {Array}
@@ -1567,7 +1567,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns an intersection by predicate.
-     * @function module:_listOps._intersectBy
+     * @function module:_list._intersectBy
      * @param pred {Function} - `pred :: a -> b -> Bool`
      * @param list1 {Array}
      * @param list2 {Array}
@@ -1579,7 +1579,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     /**
      * Returns the difference of list 1 from list 2.
      * @note The `difference` operation here is non-associative;  E.g., `a - b` is not equal to `b - a`;
-     * @function module:_listOps._difference
+     * @function module:_list._difference
      * @param array1 {Array}
      * @param array2 {Array}
      * @returns {Array}
@@ -1597,7 +1597,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
 
     /**
      * Returns the complement of list 0 and the reset of the passed in arrays.
-     * @function module:_listOps._complement
+     * @function module:_list._complement
      * @param arr0 {Array}
      * @param arrays {...Array}
      * @returns {Array}

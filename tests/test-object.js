@@ -15,7 +15,7 @@ import {
     isWeakMap, isWeakSet, assignDeep, assign,
     toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep
 } from '../src/object';
-import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_listOps/_listOps";
+import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_list/_list";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
     deepCompareObjectsLeft, allYourBase, expectDeepEquals
@@ -144,10 +144,10 @@ describe ('#object', function () {
     });
 
     describe('#isArray', function () {
-        it ('should return `true` when given value is an _listOps', function () {
+        it ('should return `true` when given value is an _list', function () {
             expectTrue(isArray([]));
         });
-        it ('should return `false` when given value is not an _listOps', function () {
+        it ('should return `false` when given value is not an _list', function () {
             expectFalse(isArray(function () {}));
         });
     });

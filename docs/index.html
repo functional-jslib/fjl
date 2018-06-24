@@ -89,7 +89,7 @@ and is built from the ground up using functional concepts.</li>
 <li>A functional library that has curried and un-curried versions of included operations.  Et. al.
   <code>append</code>, <code>_append</code> (un-curried version)</li>
 <li>A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' (in our lib is './src/listOps.js') etc..</li>
+are separated out 'Data.List' (in our lib is './src/list.js') etc..</li>
 <li>Etc. etc..</li>
 </ul>
 <h3>Reasoning for paradigms</h3><h4>Use of while-and-for-loops instead of built-ins:</h4><ul>
@@ -207,7 +207,7 @@ platforms, etc..).</p>
 configurations used for building the project.</li>
 </ul>
 <h3>Unit testing:</h3><p>Unit tests are grouped by exported module:
-'tests/test-listOps.js' - Tests 'listOps' module etc.</p>
+'tests/test-list.js' - Tests 'listOps' module etc.</p>
 <p>We are using 'chai' and 'mocha' though we may want to move to 'jest' in the future.</p>
 <h3>Perf Tests:</h3><ul>
 <li><code>subsequences</code>: https://jsperf.com/subsequences/6</li>

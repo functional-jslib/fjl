@@ -8,6 +8,7 @@ export * from './_prop';
 export * from './_typeOf';
 export * from './_is';
 export * from './_of';
+export * from './_fromNamespace';
 export * from './_assignDeep';
 export * from './_setTheory';
 export * from './_console';

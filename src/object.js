@@ -2,6 +2,7 @@
  * @module object
  */
 import {curry, curry2} from './uncurried/_functionOps/_curry';
+import {_fromNamespace} from './uncurried/_object/_fromNamespace';
 import {_instanceOf, _hasOwnProperty, _assign} from './uncurried/_jsPlatform/_object';
 import {_prop, _isType} from './uncurried/_object/_object';
 import {_assignDeep} from './uncurried/_object/_assignDeep';
@@ -110,6 +111,20 @@ export const
      * @param value {*}
      * @return {Boolean}
      */
-    isType = curry(_isType)
+    isType = curry(_isType),
+
+    /**
+     * Gives you value at key/namespace-key;  E.g.,
+     * ```
+     *   fromNamespace('all.your.base', {all: {your: {base: 99}}}) === 99
+     * ```
+     * @note same as `_fromNamespace` except, is curried
+     * @function module:object.fromNamespace
+     * @param nsString {String}
+     * @param obj {*}
+     * @returns {*}
+     * @curried
+     */
+    fromNamespace = curry(_fromNamespace)
 
 ;

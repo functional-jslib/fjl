@@ -44,12 +44,12 @@ define(['exports', '../_jsPlatform/_jsPlatform', '../_object/_utils'], function 
     }
 
     /**
-     * Replaces `placeholder` values in `_listOps`.
+     * Replaces `placeholder` values in `_list`.
      * @function replacePlaceHolder
      * @private
      * @param array {Array} - Array to replace placeholders in.
      * @param args {Array} - Args from to choose from to replace placeholders.
-     * @returns {Array|*} - Returns passed in `_listOps` with placeholders replaced by values in `args`.
+     * @returns {Array|*} - Returns passed in `_list` with placeholders replaced by values in `args`.
      */
     function replacePlaceHolders(array, args) {
         let out = (0, _jsPlatform.map)(element => {

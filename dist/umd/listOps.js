@@ -464,7 +464,7 @@
 
 
     /**
-     * Same as _listOps._at - Returns property value at key/indice.
+     * Same as _list._at - Returns property value at key/indice.
      * @function module:_object._lookup
      * @type {module:_objectOps.prop}
      */
