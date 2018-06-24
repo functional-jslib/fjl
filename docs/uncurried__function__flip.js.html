@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: uncurried/_jsPlatform/_array.js | Source: uncurried/_jsPlatform/_array.js</title>
+    <title>Source: uncurried/_function/_flip.js | Source: uncurried/_function/_flip.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: uncurried/_jsPlatform/_array.js</a></h1>
+        <h1><a href="index.html" class="link">Source: uncurried/_function/_flip.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,117 +46,50 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Created by elyde on 7/20/2017.
- * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
- * @todo updated doc blocks to list correct/updated module name.
- */
-
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_object/_utils';
+            <pre class="prettyprint source linenums"><code>import {reverse} from '../_jsPlatform/_array';
+import {apply, call} from '../_jsPlatform/_function';
 
 export const
 
     /**
-     * Array.prototype.reverse generator (generates a _function that calls the prototype version or a
-     * shimmed version if it doesn't exist).
+     * Flips a functions arguments order and returns a new function requiring such (arguments in reverse order).
+     * @function module:_function.flipN
+     * @param fn {Function}
      * @returns {Function}
      */
-    defineReverse = () =>
-        Array.prototype.reverse ? x => x.reverse() :
-            x => x.reduceRight((agg, item) => {
-                agg.push(item);
-                return agg;
-            }, []),
+    flipN = fn => (...args) => apply(fn, reverse(args)),
 
     /**
-     * Maps a _function to functor (_list etc.).
-     * @function module:_jsPlatform_array.map
+     * Returns a function that receives 3 args in reverse (3, 2, 1 etc.).
+     * @function module:_function.flip3
+     * @param fn {Function} - Function&lt;a, b, c>
+     * @returns {Function} - Function&lt;c, b, a>
+     */
+    flip3 = fn => (a, b, c) => call(fn, c, b, a),
+
+    /**
+     * Returns a function that receives 4 args in reverse (4, 3, 2, 1 etc.).
+     * @function module:_function.flip4
+     * @param fn {Function} - Function&lt;a, b, c, d>
+     * @returns {Function} - Function&lt;d, c, b, a>
+     */
+    flip4 = fn => (a, b, c, d) => call(fn, d, c, b, a),
+
+    /**
+     * Returns a function that receives 5 args in reverse (5, 4, 3, 2, 1 etc.).
+     * @function module:_function.flip5
+     * @param fn {Function} - Function&lt;a, b, c, d, e>
+     * @returns {Function} - Function&lt;e, d, c, b, a>
+     */
+    flip5 = fn => (a, b, c, d, e) => call(fn, e, d, c, b, a),
+
+    /**
+     * Flips a _function's first and second arguments and and returns a new _function requiring said arguments in reverse.
+     * @function module:_function.flip
      * @param fn {Function}
-     * @param functor {Array|{map: {Function}}}
-     * @returns {Array|{map: {Function}}}
+     * @returns {Function}
      */
-    map = fPureTakesOne('map'),
-
-    /**
-     * Filters a functor (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.filter
-     * @param fn {Function}
-     * @param functor {Array|{filter: {Function}}}
-     * @returns {Array|{filter: {Function}}}
-     */
-    filter = fPureTakesOne('filter'),
-
-    /**
-     * Reduces a foldable (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.reduce
-     * @param fn {Function}
-     * @param functor {Array|{reduce: {Function}}}
-     * @returns {Array|{reduce: {Function}}}
-     */
-    reduce = fPureTakes2('reduce'),
-
-    /**
-     * Reduces a foldable (_list etc.) from the right with passed in _function.
-     * @function module:_jsPlatform_array.reduceRight
-     * @param fn {Function}
-     * @param functor {Array|{reduceRight: {Function}}}
-     * @returns {Array|{reduceRight: {Function}}}
-     */
-    reduceRight = fPureTakes2('reduceRight'),
-
-    /**
-     * For each on functor (Array|Object|etc.).
-     * @param fn {Function}
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
-     * @throws {Error} - When passed in functor doesn't have a `forEach` method.
-     */
-    forEach = fPureTakesOne('forEach'),
-
-    /**
-     * Returns `true` if `fn` (predicate) returns true for at least one item
-     * in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have a `some` method.
-     */
-    some = fPureTakesOne('some'),
-
-    /**
-     * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
-     */
-    every = fPureTakesOne('every'),
-
-    /**
-     * Array.prototype.join
-     * @function module:listPrelude.join
-     * @param separator {String|RegExp}
-     * @param arr {Array}
-     * @returns {String}
-     */
-    join = fPureTakesOne('join'),
-
-    /**
-     * Same as Array.prototype.push
-     * @param item {*}
-     * @param arr {Array}
-     * @returns {Number}
-     */
-    push = fPureTakesOneOrMore('push'),
-
-    /**
-     * Reverses an _list (shimmed if not exists).
-     * @function module:listPrelude.reverse
-     * @return {Array}
-     */
-    reverse = defineReverse();
+    flip = fn => (b, a) => call(fn, a, b);
 </code></pre>
         </article>
     </section>

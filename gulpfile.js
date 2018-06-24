@@ -169,7 +169,7 @@ gulp.task('docs', () =>
             gulp.src(['README.md', './src/**/*.js'], {read: false})
                 .pipe(jsdoc({
                     opts: {
-                        'template': 'templates/default',  // same as -t templates/default
+                        'template': 'node_modules/tui-jsdoc-template',  // same as -t templates/default
                         'encoding': 'utf8',               // same as -e utf8
                         'destination': './docs/',       // same as -d ./out/
                         'recurse': true

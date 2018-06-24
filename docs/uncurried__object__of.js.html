@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: uncurried/_jsPlatform/_array.js | Source: uncurried/_jsPlatform/_array.js</title>
+    <title>Source: uncurried/_object/_of.js | Source: uncurried/_object/_of.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: uncurried/_jsPlatform/_array.js</a></h1>
+        <h1><a href="index.html" class="link">Source: uncurried/_object/_of.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,117 +46,54 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Created by elyde on 7/20/2017.
- * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
+            <pre class="prettyprint source linenums"><code>import {isFunction, isset} from './_is';
+import {_hasOwnProperty} from '../_jsPlatform/_object';
+import {apply} from '../_jsPlatform/_function';
+import {typeOf} from './_typeOf';
+
+/**
+ * Checks if given `x` is set and of one of
+ *  [String, Boolean, Number, or Symbol] (null and undefined are immutable
+ *   but are not "usable" or 'not what we usually want to operate on'.
  * @private
- * @todo updated doc blocks to list correct/updated module name.
+ * @param x {*}
+ * @returns {Boolean}
  */
+function isUsableImmutablePrimitive (x) {
+    const typeOfX = typeOf(x);
+    return isset(x) &amp;&amp;
+        [String.name, Number.name, Boolean.name, Symbol.name]
+            .some(Type => Type === typeOfX);
+}
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_object/_utils';
-
-export const
-
-    /**
-     * Array.prototype.reverse generator (generates a _function that calls the prototype version or a
-     * shimmed version if it doesn't exist).
-     * @returns {Function}
-     */
-    defineReverse = () =>
-        Array.prototype.reverse ? x => x.reverse() :
-            x => x.reduceRight((agg, item) => {
-                agg.push(item);
-                return agg;
-            }, []),
-
-    /**
-     * Maps a _function to functor (_list etc.).
-     * @function module:_jsPlatform_array.map
-     * @param fn {Function}
-     * @param functor {Array|{map: {Function}}}
-     * @returns {Array|{map: {Function}}}
-     */
-    map = fPureTakesOne('map'),
-
-    /**
-     * Filters a functor (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.filter
-     * @param fn {Function}
-     * @param functor {Array|{filter: {Function}}}
-     * @returns {Array|{filter: {Function}}}
-     */
-    filter = fPureTakesOne('filter'),
-
-    /**
-     * Reduces a foldable (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.reduce
-     * @param fn {Function}
-     * @param functor {Array|{reduce: {Function}}}
-     * @returns {Array|{reduce: {Function}}}
-     */
-    reduce = fPureTakes2('reduce'),
-
-    /**
-     * Reduces a foldable (_list etc.) from the right with passed in _function.
-     * @function module:_jsPlatform_array.reduceRight
-     * @param fn {Function}
-     * @param functor {Array|{reduceRight: {Function}}}
-     * @returns {Array|{reduceRight: {Function}}}
-     */
-    reduceRight = fPureTakes2('reduceRight'),
-
-    /**
-     * For each on functor (Array|Object|etc.).
-     * @param fn {Function}
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
-     * @throws {Error} - When passed in functor doesn't have a `forEach` method.
-     */
-    forEach = fPureTakesOne('forEach'),
-
-    /**
-     * Returns `true` if `fn` (predicate) returns true for at least one item
-     * in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have a `some` method.
-     */
-    some = fPureTakesOne('some'),
-
-    /**
-     * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
-     */
-    every = fPureTakesOne('every'),
-
-    /**
-     * Array.prototype.join
-     * @function module:listPrelude.join
-     * @param separator {String|RegExp}
-     * @param arr {Array}
-     * @returns {String}
-     */
-    join = fPureTakesOne('join'),
-
-    /**
-     * Same as Array.prototype.push
-     * @param item {*}
-     * @param arr {Array}
-     * @returns {Number}
-     */
-    push = fPureTakesOneOrMore('push'),
-
-    /**
-     * Reverses an _list (shimmed if not exists).
-     * @function module:listPrelude.reverse
-     * @return {Array}
-     */
-    reverse = defineReverse();
+/**
+ * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
+ * ```
+ * // - If exists `(value).constructor.of` uses this.
+ * // - If value is of one String, Boolean, Symbol, or Number types calls it's
+ * //      constructor as a function (in cast form;  E.g., `constructor(...args)` )
+ * // - Else if constructor is a function, thus far, then calls constructor using
+ * //      the `new` keyword (with any passed in args).
+ * ```
+ * @function module:object.of
+ * @param x {*} - Value to derive returned value's type from.
+ * @param [args] {...*} - Any args to pass in to matched construction strategy.
+ * @returns {*|undefined} - New value of given value's type else `undefined`.
+ */
+export const of = (x, ...args) => {
+    if (!isset(x)) { return undefined; }
+    const constructor = x.constructor;
+    if (_hasOwnProperty('of', constructor)) {
+        return apply(constructor.of, args);
+    }
+    else if (isUsableImmutablePrimitive(x)) {
+        return apply(constructor, args);
+    }
+    else if (isFunction(constructor)) {
+        return new constructor(...args);
+    }
+    return undefined;
+};
 </code></pre>
         </article>
     </section>

@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: uncurried/_jsPlatform/_array.js | Source: uncurried/_jsPlatform/_array.js</title>
+    <title>Source: uncurried/_function/_curry.js | Source: uncurried/_function/_curry.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: uncurried/_jsPlatform/_array.js</a></h1>
+        <h1><a href="index.html" class="link">Source: uncurried/_function/_curry.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -47,116 +47,75 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Created by elyde on 7/20/2017.
- * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
- * @todo updated doc blocks to list correct/updated module name.
+ * @author elydelacruz
+ * @created 12/6/2016.
+ * @memberOf _function
+ * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
+import {apply, length, concat} from '../_jsPlatform/_jsPlatform';
+import {fnOrError} from '../_object/_utils';
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_object/_utils';
+const notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 
 export const
 
     /**
-     * Array.prototype.reverse generator (generates a _function that calls the prototype version or a
-     * shimmed version if it doesn't exist).
+     * Curries a function based on it's defined arity (argument's arrayOps expected length).
+     * @function module:_function.curry
+     * @param fn {Function}
+     * @param argsToCurry {...*}
      * @returns {Function}
      */
-    defineReverse = () =>
-        Array.prototype.reverse ? x => x.reverse() :
-            x => x.reduceRight((agg, item) => {
-                agg.push(item);
-                return agg;
-            }, []),
+    curry = (fn, ...argsToCurry) => curryN(fnOrError(notFnErrPrefix, fn).length, fn, ...argsToCurry),
 
     /**
-     * Maps a _function to functor (_list etc.).
-     * @function module:_jsPlatform_array.map
+     * Curries a function up to a given arity.
+     * @function module:_function.curryN
+     * @param executeArity {Number}
      * @param fn {Function}
-     * @param functor {Array|{map: {Function}}}
-     * @returns {Array|{map: {Function}}}
+     * @param curriedArgs {...*}
+     * @returns {Function}
      */
-    map = fPureTakesOne('map'),
+    curryN = (executeArity, fn, ...curriedArgs) => {
+        return (...args) => {
+            let concatedArgs = concat(curriedArgs, args),
+                canBeCalled = (length(concatedArgs) >= executeArity) || !executeArity;
+            return !canBeCalled ? apply(curryN, concat([executeArity, fnOrError(notFnErrPrefix, fn)], concatedArgs)) :
+                apply(fnOrError(notFnErrPrefix, fn), concatedArgs);
+        };
+    },
 
     /**
-     * Filters a functor (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.filter
+     * Curries a _function up to an arity of 2 (won't call _function until 2 or more args).
+     * @function module:_function.curry2
      * @param fn {Function}
-     * @param functor {Array|{filter: {Function}}}
-     * @returns {Array|{filter: {Function}}}
+     * @returns {Function}
      */
-    filter = fPureTakesOne('filter'),
+    curry2 = fn => curryN(2, fn),
 
     /**
-     * Reduces a foldable (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.reduce
+     * Curries a _function up to an arity of 3 (won't call _function until 3 or more args).
+     * @function module:_function.curry3
      * @param fn {Function}
-     * @param functor {Array|{reduce: {Function}}}
-     * @returns {Array|{reduce: {Function}}}
+     * @returns {Function}
      */
-    reduce = fPureTakes2('reduce'),
+    curry3 = fn => curryN(3, fn),
 
     /**
-     * Reduces a foldable (_list etc.) from the right with passed in _function.
-     * @function module:_jsPlatform_array.reduceRight
+     * Curries a _function up to an arity of 4 (won't call _function until 4 or more args).
+     * @function module:_function.curry4
      * @param fn {Function}
-     * @param functor {Array|{reduceRight: {Function}}}
-     * @returns {Array|{reduceRight: {Function}}}
+     * @returns {Function}
      */
-    reduceRight = fPureTakes2('reduceRight'),
+    curry4 = fn => curryN(4, fn),
 
     /**
-     * For each on functor (Array|Object|etc.).
+     * Curries a _function up to an arity of 5 (won't call _function until 5 or more args).
+     * @function module:_function.curry5
      * @param fn {Function}
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
-     * @throws {Error} - When passed in functor doesn't have a `forEach` method.
+     * @returns {Function}
      */
-    forEach = fPureTakesOne('forEach'),
-
-    /**
-     * Returns `true` if `fn` (predicate) returns true for at least one item
-     * in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have a `some` method.
-     */
-    some = fPureTakesOne('some'),
-
-    /**
-     * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
-     */
-    every = fPureTakesOne('every'),
-
-    /**
-     * Array.prototype.join
-     * @function module:listPrelude.join
-     * @param separator {String|RegExp}
-     * @param arr {Array}
-     * @returns {String}
-     */
-    join = fPureTakesOne('join'),
-
-    /**
-     * Same as Array.prototype.push
-     * @param item {*}
-     * @param arr {Array}
-     * @returns {Number}
-     */
-    push = fPureTakesOneOrMore('push'),
-
-    /**
-     * Reverses an _list (shimmed if not exists).
-     * @function module:listPrelude.reverse
-     * @return {Array}
-     */
-    reverse = defineReverse();
+    curry5 = fn => curryN(5, fn);
 </code></pre>
         </article>
     </section>

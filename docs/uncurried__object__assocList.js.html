@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: uncurried/_jsPlatform/_array.js | Source: uncurried/_jsPlatform/_array.js</title>
+    <title>Source: uncurried/_object/_assocList.js | Source: uncurried/_object/_assocList.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: uncurried/_jsPlatform/_array.js</a></h1>
+        <h1><a href="index.html" class="link">Source: uncurried/_object/_assocList.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,117 +46,84 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Created by elyde on 7/20/2017.
- * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
- * @todo updated doc blocks to list correct/updated module name.
- */
-
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_object/_utils';
+            <pre class="prettyprint source linenums"><code>import {isArray, _isType} from './_is';
+import {keys} from '../_jsPlatform/_object';
 
 export const
 
     /**
-     * Array.prototype.reverse generator (generates a _function that calls the prototype version or a
-     * shimmed version if it doesn't exist).
-     * @returns {Function}
+     * Returns an associated list from given object.
+     * @note Useful for working with plain javascript objects.
+     * @function module:object._toAssocList
+     * @param obj {(Object|Array|*)}
+     * @returns {Array.&lt;*, *>}
      */
-    defineReverse = () =>
-        Array.prototype.reverse ? x => x.reverse() :
-            x => x.reduceRight((agg, item) => {
-                agg.push(item);
-                return agg;
-            }, []),
+    toAssocList = obj => keys(obj).map(key => [key, obj[key]]),
 
     /**
-     * Maps a _function to functor (_list etc.).
-     * @function module:_jsPlatform_array.map
-     * @param fn {Function}
-     * @param functor {Array|{map: {Function}}}
-     * @returns {Array|{map: {Function}}}
+     * Returns an associated list from given object (deeply (on incoming object's type)).
+     * @note Does deep conversion on all values of passed in type's type.
+     * @function module:object.toAssocListDeep
+     * @param obj {*}
+     * @param [TypeConstraint = Object] {(Constructor|Function)} - Type constraint to convert on.
+     * @returns {*}
      */
-    map = fPureTakesOne('map'),
+    toAssocListDeep = (obj, TypeConstraint = Object) => keys(obj).map(key =>
+        TypeConstraint &amp;&amp; _isType(TypeConstraint, obj[key]) ?
+            [key, toAssocListDeep(obj[key], TypeConstraint)] :
+            [key, obj[key]]
+    ),
 
     /**
-     * Filters a functor (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.filter
-     * @param fn {Function}
-     * @param functor {Array|{filter: {Function}}}
-     * @returns {Array|{filter: {Function}}}
+     * From associated list to object.
+     * @function module:object.fromAssocList
+     * @param xs {Array.&lt;Array>} - Associated list.
+     * @param [OutType = Object] {Constructor|Function} - Output type.  Default `Object`.
+     * @returns {*} - Default is `Object`
      */
-    filter = fPureTakesOne('filter'),
+    fromAssocList = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
+        agg[key] = value;
+        return agg;
+    }, new OutType()),
 
     /**
-     * Reduces a foldable (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.reduce
-     * @param fn {Function}
-     * @param functor {Array|{reduce: {Function}}}
-     * @returns {Array|{reduce: {Function}}}
+     * From associated list to object.
+     * @note Considers array of arrays associated lists.
+     * @function module:object.fromAssocList
+     * @param xs {Array.&lt;Array>} - Associated list.
+     * @param [OutType = Object] {Constructor|Function} - Output type.  Default `Object`.
+     * @returns {*} - Default is `Object`
      */
-    reduce = fPureTakes2('reduce'),
+    fromAssocListDeep = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
+        if (isArray(value) &amp;&amp; isArray(value[0])) {
+            agg[key] = fromAssocListDeep(value, OutType);
+            return agg;
+        }
+        agg[key] = value;
+        return agg;
+    }, new OutType()),
 
     /**
-     * Reduces a foldable (_list etc.) from the right with passed in _function.
-     * @function module:_jsPlatform_array.reduceRight
-     * @param fn {Function}
-     * @param functor {Array|{reduceRight: {Function}}}
-     * @returns {Array|{reduceRight: {Function}}}
+     * Returns an array map (associated list) representing incoming value (object, array, etc.).
+     * @alias `toAssocList`
+     * @function module:object.toArrayMap
+     * @param obj {(Object|Array|*)}
+     * @deprecated
+     * @returns {*}
      */
-    reduceRight = fPureTakes2('reduceRight'),
+    toArrayMap = toAssocList,
 
     /**
-     * For each on functor (Array|Object|etc.).
-     * @param fn {Function}
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
-     * @throws {Error} - When passed in functor doesn't have a `forEach` method.
+     * Converts an array-map into an object (one level).
+     * @alias `fromAssocList`
+     * @function module:object.fromArrayMap
+     * @param xs {Array|*} - Array-map (associated list).
+     * @deprecated
+     * @returns {*}
      */
-    forEach = fPureTakesOne('forEach'),
+    fromArrayMap = fromAssocList
 
-    /**
-     * Returns `true` if `fn` (predicate) returns true for at least one item
-     * in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have a `some` method.
-     */
-    some = fPureTakesOne('some'),
-
-    /**
-     * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
-     */
-    every = fPureTakesOne('every'),
-
-    /**
-     * Array.prototype.join
-     * @function module:listPrelude.join
-     * @param separator {String|RegExp}
-     * @param arr {Array}
-     * @returns {String}
-     */
-    join = fPureTakesOne('join'),
-
-    /**
-     * Same as Array.prototype.push
-     * @param item {*}
-     * @param arr {Array}
-     * @returns {Number}
-     */
-    push = fPureTakesOneOrMore('push'),
-
-    /**
-     * Reverses an _list (shimmed if not exists).
-     * @function module:listPrelude.reverse
-     * @return {Array}
-     */
-    reverse = defineReverse();
+;
 </code></pre>
         </article>
     </section>

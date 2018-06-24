@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: uncurried/_jsPlatform/_array.js | Source: uncurried/_jsPlatform/_array.js</title>
+    <title>Source: object.js | Source: object.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: uncurried/_jsPlatform/_array.js</a></h1>
+        <h1><a href="index.html" class="link">Source: object.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -47,116 +47,135 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Created by elyde on 7/20/2017.
- * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
- * @todo updated doc blocks to list correct/updated module name.
+ * @module object
  */
+import {curry, curry2} from './uncurried/_function/_curry';
+import {_fromNamespace} from './uncurried/_object/_fromNamespace';
+import {_instanceOf, _hasOwnProperty, _assign} from './uncurried/_jsPlatform/_object';
+import {_prop, _isType} from './uncurried/_object/_object';
+import {_assignDeep} from './uncurried/_object/_assignDeep';
+import {
+    _objUnion, _objComplement, _objIntersect, _objDifference}
+    from './uncurried/_object/_setTheory';
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_object/_utils';
+export * from './uncurried/_object/_object';
+
+export {length, keys} from './uncurried/_jsPlatform/_object';
 
 export const
 
     /**
-     * Array.prototype.reverse generator (generates a _function that calls the prototype version or a
-     * shimmed version if it doesn't exist).
-     * @returns {Function}
+     * Gives `undefined` or prop value if it is available.
+     * @function module:object.prop
+     * @param propName {String}
+     * @param obj {*} - Object to search.
+     * @returns {*|undefined}
+     * @curried
      */
-    defineReverse = () =>
-        Array.prototype.reverse ? x => x.reverse() :
-            x => x.reduceRight((agg, item) => {
-                agg.push(item);
-                return agg;
-            }, []),
+    prop = curry(_prop),
 
     /**
-     * Maps a _function to functor (_list etc.).
-     * @function module:_jsPlatform_array.map
-     * @param fn {Function}
-     * @param functor {Array|{map: {Function}}}
-     * @returns {Array|{map: {Function}}}
+     * `instanceof` in function form.
+     * @function module:object.instanceOf
+     * @param instance {*}
+     * @param Type {Function}
+     * @returns {Boolean}
+     * @curried
      */
-    map = fPureTakesOne('map'),
+    instanceOf = curry(_instanceOf),
 
     /**
-     * Filters a functor (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.filter
-     * @param fn {Function}
-     * @param functor {Array|{filter: {Function}}}
-     * @returns {Array|{filter: {Function}}}
+     * `hasOwnProperty` as a method (takes object last).
+     * @function module:object.hasOwnProperty
+     * @param propName {String}
+     * @param obj {*} - Object to search.
+     * @returns {Boolean}
+     * @curried
      */
-    filter = fPureTakesOne('filter'),
+    hasOwnProperty = curry(_hasOwnProperty),
 
     /**
-     * Reduces a foldable (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.reduce
-     * @param fn {Function}
-     * @param functor {Array|{reduce: {Function}}}
-     * @returns {Array|{reduce: {Function}}}
+     * `Object.assign` if it is available else a shim.
+     * @function module:object.assign
+     * @param [...obj]{Object} - One or more objects to merge onto first object.
+     * @returns {Object}
+     * @curried - Called after having two or more args
      */
-    reduce = fPureTakes2('reduce'),
+    assign = curry2(_assign),
 
     /**
-     * Reduces a foldable (_list etc.) from the right with passed in _function.
-     * @function module:_jsPlatform_array.reduceRight
-     * @param fn {Function}
-     * @param functor {Array|{reduceRight: {Function}}}
-     * @returns {Array|{reduceRight: {Function}}}
+     * Same as `Object.assign` except does a deep merge.
+     * @function module:object.assignDeep
+     * @param [...obj]{Object} - One or more objects to deep merge onto first object.
+     * @returns {Object}
+     * @curried - Called after having two or more args
      */
-    reduceRight = fPureTakes2('reduceRight'),
+    assignDeep = curry2(_assignDeep),
 
     /**
-     * For each on functor (Array|Object|etc.).
-     * @param fn {Function}
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
-     * @throws {Error} - When passed in functor doesn't have a `forEach` method.
+     * Cartesian union for objects (operates on two objects).
+     * @function module:object.objUnion
+     * @param obj1 {Object}
+     * @param obj2 {Object}
+     * @returns {Object} - Unified obj.
+     * @curried
      */
-    forEach = fPureTakesOne('forEach'),
+    objUnion = curry(_objUnion),
 
     /**
-     * Returns `true` if `fn` (predicate) returns true for at least one item
-     * in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have a `some` method.
+     * Returns the cartesian intersection of two objects.
+     * @function module:object.objIntersect
+     * @param obj1 {Object}
+     * @param obj2 {Object}
+     * @returns {Object} - Intersection of given objects.
+     * @curried
      */
-    some = fPureTakesOne('some'),
+    objIntersect = curry(_objIntersect),
 
     /**
-     * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
+     * Returns the cartesian difference of two objects.
+     * @function module:object.objDifference
+     * @param obj1 {Object}
+     * @param obj2 {Object}
+     * @returns {Object} - Difference of given objects.
+     * @curried
      */
-    every = fPureTakesOne('every'),
+    objDifference = curry(_objDifference),
 
     /**
-     * Array.prototype.join
-     * @function module:listPrelude.join
-     * @param separator {String|RegExp}
-     * @param arr {Array}
-     * @returns {String}
+     * Returns the cartesian complement of one or more objects on given object.
+     * @function module:object.objDifference
+     * @param obj {Object}
+     * @param [...obj]{Object} - One or more objects to calculate complement from.
+     * @returns {Object} - Complement of given objects.
+     * @curried
      */
-    join = fPureTakesOne('join'),
+    objComplement = curry2(_objComplement),
 
     /**
-     * Same as Array.prototype.push
-     * @param item {*}
-     * @param arr {Array}
-     * @returns {Number}
+     * Returns a boolean indicating whether a value is of given type or not.
+     * @function module:object.isType
+     * @param Type {Function|String} - Constructor or constructor name
+     * @param value {*}
+     * @return {Boolean}
      */
-    push = fPureTakesOneOrMore('push'),
+    isType = curry(_isType),
 
     /**
-     * Reverses an _list (shimmed if not exists).
-     * @function module:listPrelude.reverse
-     * @return {Array}
+     * Gives you value at key/namespace-key;  E.g.,
+     * ```
+     *   fromNamespace('all.your.base', {all: {your: {base: 99}}}) === 99
+     * ```
+     * @note same as `_fromNamespace` except, is curried
+     * @function module:object.fromNamespace
+     * @param nsString {String}
+     * @param obj {*}
+     * @returns {*}
+     * @curried
      */
-    reverse = defineReverse();
+    fromNamespace = curry(_fromNamespace)
+
+;
 </code></pre>
         </article>
     </section>

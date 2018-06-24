@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: uncurried/_jsPlatform/_array.js | Source: uncurried/_jsPlatform/_array.js</title>
+    <title>Source: string.js | Source: string.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: uncurried/_jsPlatform/_array.js</a></h1>
+        <h1><a href="index.html" class="link">Source: string.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -47,116 +47,103 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Created by elyde on 7/20/2017.
- * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
- * @todo updated doc blocks to list correct/updated module name.
+ * Contains functions for operating strings.
+ * @author elyde
+ * @created 7/9/2017.
+ * @module string
  */
-
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_object/_utils';
+import {intercalate, map, filter} from './list';
+import {split} from './jsPlatform/string';
+import {compose} from './uncurried/_function/_compose';
+import {join} from './jsPlatform/array';
+import {_errorIfNotType} from './uncurried/_object/_errorThrowing';
 
 export const
 
     /**
-     * Array.prototype.reverse generator (generates a _function that calls the prototype version or a
-     * shimmed version if it doesn't exist).
-     * @returns {Function}
+     * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
+     * @function module:string.lines
+     * @param str {String}
+     * @returns {Array}
      */
-    defineReverse = () =>
-        Array.prototype.reverse ? x => x.reverse() :
-            x => x.reduceRight((agg, item) => {
-                agg.push(item);
-                return agg;
-            }, []),
+    lines = split(/[\n\r]/gm),
 
     /**
-     * Maps a _function to functor (_list etc.).
-     * @function module:_jsPlatform_array.map
-     * @param fn {Function}
-     * @param functor {Array|{map: {Function}}}
-     * @returns {Array|{map: {Function}}}
+     * Splits a string on all '\s' and/or all '\t' characters.
+     * @function module:string.words
+     * @param str{String}
+     * @returns {Array}
      */
-    map = fPureTakesOne('map'),
+    words = split(/[\s\t]/gm),
 
     /**
-     * Filters a functor (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.filter
-     * @param fn {Function}
-     * @param functor {Array|{filter: {Function}}}
-     * @returns {Array|{filter: {Function}}}
+     * Intersperse an array of strings with '\s' and then concats them.
+     * @function module:string.unwords
+     * @param arr {String}
+     * @returns {Array}
      */
-    filter = fPureTakesOne('filter'),
+    unwords = intercalate(' '),
 
     /**
-     * Reduces a foldable (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.reduce
-     * @param fn {Function}
-     * @param functor {Array|{reduce: {Function}}}
-     * @returns {Array|{reduce: {Function}}}
+     * Intersperses a '\n' character into a list of strings and then concats it.
+     * @function module:string.unlines
+     * @param list {Array|String|*}
+     * @returns {Array}
      */
-    reduce = fPureTakes2('reduce'),
+    unlines = intercalate('\n'),
 
     /**
-     * Reduces a foldable (_list etc.) from the right with passed in _function.
-     * @function module:_jsPlatform_array.reduceRight
-     * @param fn {Function}
-     * @param functor {Array|{reduceRight: {Function}}}
-     * @returns {Array|{reduceRight: {Function}}}
+     * Lower cases first character of a non-empty string.
+     * @function module:string.lcaseFirst
+     * @param xs {String}
+     * @returns {string}
+     * @throws {Error} - Throws error if receiving anything that is not a string.
      */
-    reduceRight = fPureTakes2('reduceRight'),
+    lcaseFirst = xs => {
+        _errorIfNotType(String, 'lcaseFirst', 'xs', xs);
+        return xs[0].toLowerCase() + xs.substring(1);
+    },
 
     /**
-     * For each on functor (Array|Object|etc.).
-     * @param fn {Function}
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
-     * @throws {Error} - When passed in functor doesn't have a `forEach` method.
+     * Upper cases first character of a non-empty string.
+     * @function module:string.ucaseFirst
+     * @param xs {String}
+     * @returns {string}
+     * @throws {Error} - Throws error if receiving anything that is not a string.
      */
-    forEach = fPureTakesOne('forEach'),
+    ucaseFirst = xs => {
+        _errorIfNotType(String, 'ucaseFirst', 'xs', xs);
+        return xs[0].toUpperCase() + xs.substring(1);
+    },
 
     /**
-     * Returns `true` if `fn` (predicate) returns true for at least one item
-     * in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have a `some` method.
+     * Camel cases (class case) a string.
+     * @function module:string.camelCase
+     * @param xs {String}
+     * @param [pattern=/[^a-z\d/i]/] {RegExp} - Pattern to split on.  Optional.
+     * @throws {Error} - Throws error if param `xs` is not a string.
+     * @returns {string}
+     * @curried
      */
-    some = fPureTakesOne('some'),
+    camelCase = (xs, pattern = /[^a-z\d]/i) => compose(
+            join(''),
+            map(str => ucaseFirst(str.toLowerCase())),
+            filter(x => !!x),
+            split(pattern)
+        )(_errorIfNotType(String, 'camelCase', 'xs', xs)),
 
     /**
-     * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
+     * Class cases a string.  Uses pattern /[^a-z\d/i]/ to split on.
+     * If you require a different pattern use `string.camelCase(str, pattern)`
+     * and then upper case first character (`ucaseFirst`).
+     * @function module:string.classCase
+     * @param xs {String}
+     * @returns {string}
+     * @throws {Error} - Throws error if `xs` is not a string (via `camelCase` call).
      */
-    every = fPureTakesOne('every'),
+    classCase = compose(ucaseFirst, camelCase)
 
-    /**
-     * Array.prototype.join
-     * @function module:listPrelude.join
-     * @param separator {String|RegExp}
-     * @param arr {Array}
-     * @returns {String}
-     */
-    join = fPureTakesOne('join'),
-
-    /**
-     * Same as Array.prototype.push
-     * @param item {*}
-     * @param arr {Array}
-     * @returns {Number}
-     */
-    push = fPureTakesOneOrMore('push'),
-
-    /**
-     * Reverses an _list (shimmed if not exists).
-     * @function module:listPrelude.reverse
-     * @return {Array}
-     */
-    reverse = defineReverse();
+;
 </code></pre>
         </article>
     </section>

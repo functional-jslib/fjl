@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: uncurried/_jsPlatform/_array.js | Source: uncurried/_jsPlatform/_array.js</title>
+    <title>Source: uncurried/_function/__curry.js | Source: uncurried/_function/__curry.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: uncurried/_jsPlatform/_array.js</a></h1>
+        <h1><a href="index.html" class="link">Source: uncurried/_function/__curry.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -47,116 +47,129 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Created by elyde on 7/20/2017.
- * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
- * @todo updated doc blocks to list correct/updated module name.
+ * @memberOf _function
+ * @author elydelacruz
+ * @created 12/6/2016.
+ * @description Curry implementation with place holder concept (`__`).
+ * @todo Make code here more minimal (reuse small parts here).
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../_object/_utils';
+import {apply, concat, map, filter, length} from '../_jsPlatform/_jsPlatform';
+import {fnOrError} from '../_object/_utils';
 
-export const
+/**
+ * PlaceHolder (__) constructor.
+ * @constructor PlaceHolder
+ * @private
+ */
+const PlaceHolder = function PlaceHolder() {},
+
+    notFnErrPrefix = '`fn` in `curry_(fn, ...args)`',
 
     /**
-     * Array.prototype.reverse generator (generates a _function that calls the prototype version or a
-     * shimmed version if it doesn't exist).
+     * Placeholder instance.
+     * @type {PlaceHolder}
+     * @private
+     */
+    placeHolderInstance = new PlaceHolder();
+
+/**
+ * Checks to see if value is a `PlaceHolder`.
+ * @param instance {*}
+ * @returns {boolean}
+ * @private
+ */
+function isPlaceHolder (instance) {
+    return instance instanceof PlaceHolder;
+}
+
+/**
+ * Replaces `placeholder` values in `_list`.
+ * @function replacePlaceHolder
+ * @private
+ * @param array {Array} - Array to replace placeholders in.
+ * @param args {Array} - Args from to choose from to replace placeholders.
+ * @returns {Array|*} - Returns passed in `_list` with placeholders replaced by values in `args`.
+ */
+function replacePlaceHolders (array, args) {
+    let out = map(element => {
+            if (!isPlaceHolder(element)) { return element; }
+            else if (length(args)) { return args.shift(); }
+            return element;
+        }, array);
+    return length(args) ? concat(out, args) : out;
+}
+
+/**
+ * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
+ * @function module:_function.curry_
+ * @param fn {Function}
+ * @param argsToCurry {...*}
+ * @returns {Function}
+ */
+export function curry_ (fn, ...argsToCurry) {
+    return curryN_(fnOrError(notFnErrPrefix, fn).length, fn, ...argsToCurry);
+}
+
+/**
+ * Curries a _function up to given arity also enforces arity via placeholder values (`__`).
+ * @function module:_function.curryN_
+ * @param executeArity {Number}
+ * @param fn {Function}
+ * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
+ * @returns {Function} - Passed in _function wrapped in a _function for currying.
+ */
+export function curryN_ (executeArity, fn, ...curriedArgs) {
+    return (...args) => {
+        let concatedArgs = replacePlaceHolders(curriedArgs, args),
+            placeHolders = filter(isPlaceHolder, concatedArgs),
+            canBeCalled = (length(concatedArgs) - length(placeHolders) >= executeArity) || !executeArity;
+        return !canBeCalled ?
+            apply(curryN_, concat([executeArity, fnOrError(notFnErrPrefix, fn)], concatedArgs)) :
+            apply(fnOrError(notFnErrPrefix, fn), concatedArgs);
+    };
+}
+
+/**
+ * Place holder object (frozen) used by curry.
+ * @memberOf _function
+ * @type {PlaceHolder}
+ */
+export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance,
+
+    /**
+     * Curries a _function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call _function until 2 or more args).
+     * @function module:_function.curry2_
+     * @param fn {Function}
      * @returns {Function}
      */
-    defineReverse = () =>
-        Array.prototype.reverse ? x => x.reverse() :
-            x => x.reduceRight((agg, item) => {
-                agg.push(item);
-                return agg;
-            }, []),
+    curry2_ = fn => curryN_(2, fn),
 
     /**
-     * Maps a _function to functor (_list etc.).
-     * @function module:_jsPlatform_array.map
+     * Curries a _function up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call _function until 3 or more args).
+     * @function module:_function.curry3_
      * @param fn {Function}
-     * @param functor {Array|{map: {Function}}}
-     * @returns {Array|{map: {Function}}}
+     * @returns {Function}
      */
-    map = fPureTakesOne('map'),
+    curry3_ = fn => curryN_(3, fn),
 
     /**
-     * Filters a functor (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.filter
+     * Curries a _function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call _function until 4 or more args).
+     * @function module:_function.curry4_
      * @param fn {Function}
-     * @param functor {Array|{filter: {Function}}}
-     * @returns {Array|{filter: {Function}}}
+     * @returns {Function}
      */
-    filter = fPureTakesOne('filter'),
+    curry4_ = fn => curryN_(4, fn),
 
     /**
-     * Reduces a foldable (_list etc.) with passed in _function.
-     * @function module:_jsPlatform_array.reduce
+     * Curries a _function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call _function until 5 or more args).
+     * @function module:_function.curry5_
      * @param fn {Function}
-     * @param functor {Array|{reduce: {Function}}}
-     * @returns {Array|{reduce: {Function}}}
+     * @returns {Function}
      */
-    reduce = fPureTakes2('reduce'),
+    curry5_ = fn => curryN_(5, fn)
 
-    /**
-     * Reduces a foldable (_list etc.) from the right with passed in _function.
-     * @function module:_jsPlatform_array.reduceRight
-     * @param fn {Function}
-     * @param functor {Array|{reduceRight: {Function}}}
-     * @returns {Array|{reduceRight: {Function}}}
-     */
-    reduceRight = fPureTakes2('reduceRight'),
-
-    /**
-     * For each on functor (Array|Object|etc.).
-     * @param fn {Function}
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
-     * @throws {Error} - When passed in functor doesn't have a `forEach` method.
-     */
-    forEach = fPureTakesOne('forEach'),
-
-    /**
-     * Returns `true` if `fn` (predicate) returns true for at least one item
-     * in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have a `some` method.
-     */
-    some = fPureTakesOne('some'),
-
-    /**
-     * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
-     * @param fn {Function} - Predicate.
-     * @param functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
-     */
-    every = fPureTakesOne('every'),
-
-    /**
-     * Array.prototype.join
-     * @function module:listPrelude.join
-     * @param separator {String|RegExp}
-     * @param arr {Array}
-     * @returns {String}
-     */
-    join = fPureTakesOne('join'),
-
-    /**
-     * Same as Array.prototype.push
-     * @param item {*}
-     * @param arr {Array}
-     * @returns {Number}
-     */
-    push = fPureTakesOneOrMore('push'),
-
-    /**
-     * Reverses an _list (shimmed if not exists).
-     * @function module:listPrelude.reverse
-     * @return {Array}
-     */
-    reverse = defineReverse();
+;
 </code></pre>
         </article>
     </section>
