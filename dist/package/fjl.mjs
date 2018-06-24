@@ -1,6 +1,6 @@
 /**
  * Created by elyde on 12/18/2016.
- * @memberOf _objectOps
+ * @memberOf _object
  */
 const _Number = Number.name;
 const _NaN = 'NaN';
@@ -14,7 +14,7 @@ const _Undefined = 'Undefined';
  * @note Returns 'Null' if value is `null`
  * For values that have no concrete constructors and/or casters
  * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
- * @function module:objectOps.typeOf
+ * @function module:object.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
  *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
@@ -110,7 +110,7 @@ const lastIndexOf = fPureTakesOne('lastIndexOf');
 
 /**
  * Functional version of `String.prototype.split`.
- * @function module:_stringOps.split
+ * @function module:_string.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}
@@ -133,7 +133,7 @@ const call = (fn, ...args) => apply(fn, args);
 /**
  * @author elydelacruz
  * @created 12/6/2016.
- * @memberOf _functionOps
+ * @memberOf _function
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 const notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
@@ -153,21 +153,8 @@ const curry4 = fn => curryN(4, fn);
 const curry5 = fn => curryN(5, fn);
 
 /**
- * @memberOf _objectOps
- */
-
-/**
- * Returns property value if found; Else `undefined`.
- * @function module:_object._prop
- * @param name {String} - Key to search on `obj`
- * @param obj {Object} - Object to search `name` on.
- * @returns {*}
- */
-const _prop = (name, obj) => obj[name];
-
-/**
  * Created by elyde on 12/18/2016.
- * @memberOf _objectOps
+ * @memberOf _object
  */
 
 let _String = String.name;
@@ -235,6 +222,39 @@ const isEmpty = value => {
     };
 const isset = x => x !== null && x !== undefined;
 
+const _fromNamespace = (nsString, obj) => {
+        if (!obj) { return obj; }
+        if (nsString.indexOf('.') === -1) {
+            return obj[nsString];
+        }
+        const parts = nsString.split('.'),
+            limit = parts.length;
+        let ind = 0,
+            parent = obj;
+        for (; ind < limit; ind += 1) {
+            const node = parent[parts[ind]];
+            if (!isset(node)) {
+                return node;
+            }
+            parent = node;
+        }
+        return parent;
+    };
+
+/**
+ * @memberOf _object
+ */
+
+/**
+ * Returns property value if found; Else `undefined`.
+ * @note This method is null/undefined safe (will not throw on `null` or `undefined`).
+ * @function module:object._prop
+ * @param name {String} - Key to search on `obj`
+ * @param obj {Object} - Object to search `name` on.
+ * @returns {*}
+ */
+const _prop = (name, obj) => isset(obj) ? obj[name] : undefined;
+
 /**
  * Checks if given `x` is set and of one of
  *  [String, Boolean, Number, or Symbol] (null and undefined are immutable
@@ -259,7 +279,7 @@ function isUsableImmutablePrimitive$1 (x) {
  * // - Else if constructor is a function, thus far, then calls constructor using
  * //      the `new` keyword (with any passed in args).
  * ```
- * @function module:_object.of
+ * @function module:object.of
  * @param x {*} - Value to derive returned value's type from.
  * @param [args] {...*} - Any args to pass in to matched construction strategy.
  * @returns {*|undefined} - New value of given value's type else `undefined`.
@@ -298,7 +318,7 @@ const _assignDeep = (obj0, ...objs) =>
         , obj0);
 
 /**
- * @memberOf _functionOps
+ * @memberOf _function
  */
 
 const negateF = fn => (a, b) => !fn(a, b);
@@ -310,7 +330,7 @@ const negateFMany = fn => (...args) => !apply(fn, args);
 
 /**
  * Created by elyde on 7/15/2017.
- * @module booleanOps
+ * @module boolean
  */
 
 const isTruthy = value => !!value;
@@ -450,7 +470,7 @@ const findWhere = (pred, xs) => {
 
 /**
  * List operations module (un-curried version).
- * @module _listOps
+ * @module _list
  * @private
  */
 const _append = concat;
@@ -1069,7 +1089,7 @@ const error = console.error.bind(console);
 const peek = (...args) => (log(...args), args.pop());
 
 /**
- * @module errorThrowing
+ * @module object
  * @description Contains error throwing facilities for when a value doesn't match a type.
  *  In addition gives you curried and uncurried versions of the multi arity functions.
  */
@@ -1081,9 +1101,10 @@ const _errorIfNotCheckableType = (contextName, type) => {
         }
         return type;
     };
-const getTypeName = type =>
-        _errorIfNotCheckableType('getTypeName', type) &&
-            isString(type) ? type : type.name;
+const getTypeName = type => {
+        _errorIfNotCheckableType('getTypeName', type);
+        return type.name || type;
+    };
 const _defaultTypeChecker = (Type, value) => _isType(getTypeName(Type), value) || (
         isFunction(Type) && isset(value) && value instanceof Type);
 const multiTypesToString = types => types.length ?
@@ -1234,13 +1255,13 @@ const toArray = x => {
     };
 
 /**
- * @module _objectOps
+ * @module _object
  * @description Object operations (un-curried).
  * @private
  */
 
 /**
- * @module objectOps
+ * @module object
  */
 const prop = curry(_prop);
 const instanceOf = curry(_instanceOf);
@@ -1252,6 +1273,7 @@ const objIntersect = curry(_objIntersect);
 const objDifference = curry(_objDifference);
 const objComplement = curry2(_objComplement);
 const isType = curry(_isType);
+const fromNamespace = curry(_fromNamespace);
 
 const until$1 = (predicate, operation, typeInstance) => {
         let result = typeInstance;
@@ -1268,7 +1290,7 @@ const flip5$1 = fn => (a, b, c, d, e) => call(fn, e, d, c, b, a);
 const flip$1 = fn => (b, a) => call(fn, a, b);
 
 /**
- * @memberOf _functionOps
+ * @memberOf _function
  * @author elydelacruz
  * @created 12/6/2016.
  * @description Curry implementation with place holder concept (`__`).
@@ -1312,7 +1334,7 @@ function replacePlaceHolders (array, args) {
 }
 
 /**
- * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
+ * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
  * @function module:_function.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
@@ -1343,7 +1365,7 @@ function curryN_ (executeArity, fn, ...curriedArgs) {
 
 /**
  * Place holder object (frozen) used by curry.
- * @memberOf _functionOps
+ * @memberOf _function
  * @type {PlaceHolder}
  */
 let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
@@ -1353,13 +1375,13 @@ let curry4_ = fn => curryN_(4, fn);
 let curry5_ = fn => curryN_(5, fn);
 
 /**
- * @memberOf _functionOps
+ * @memberOf _function
  */
 
 /**
  * Returns passed in parameter.
  * @haskellType `id :: a -> a`
- * @function module:functionOps.id
+ * @function module:function.id
  * @param x {*}
  * @returns {*}
  */
@@ -1367,7 +1389,7 @@ const id = x => x;
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
- * the functionOps on the left of itself.
+ * the function on the left of itself.
  * @function module:_function.compose
  * @type {Function}
  * @param args {...{Function}}
@@ -1378,7 +1400,7 @@ const compose = (...args) =>
 
 /**
  * Function operations: `
- * @module functionOps
+ * @module function
  */
 
 const apply$1 = curry(apply);
@@ -1392,7 +1414,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
 
     /**
      * Curries a function based on it's defined arity (argument's arrayOps expected length).
-     * @function module:functionOps.curry
+     * @function module:function.curry
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -1401,7 +1423,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
 
     /**
      * Curries a function up to a given arity.
-     * @function module:functionOps.curryN
+     * @function module:function.curryN
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*}
@@ -1410,35 +1432,35 @@ const flip5$$1 = fn => curry(flip5$1(fn));
 
     /**
      * Curries a function up to an arity of 2 (won't call function until 2 or more args).
-     * @function module:functionOps.curry2
+     * @function module:function.curry2
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Curries a function up to an arity of 3 (won't call function until 3 or more args).
-     * @function module:functionOps.curry3
+     * @function module:function.curry3
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Curries a function up to an arity of 4 (won't call function until 4 or more args).
-     * @function module:functionOps.curry4
+     * @function module:function.curry4
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Curries a function up to an arity of 5 (won't call function until 5 or more args).
-     * @function module:functionOps.curry5
+     * @function module:function.curry5
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
-     * @function module:functionOps.curry_
+     * @function module:function.curry_
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -1446,7 +1468,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
 
     /**
      * Curries a function up to given arity also enforces arity via placeholder values (`__`).
-     * @function module:functionOps.curryN_
+     * @function module:function.curryN_
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -1455,14 +1477,14 @@ const flip5$$1 = fn => curry(flip5$1(fn));
 
     /**
      * Place holder object (frozen) used by curry.
-     * @memberOf functionOps
+     * @memberOf function
      * @type {PlaceHolder}
      */
 
     /**
      * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers))
      * (won't call function until 2 or more args (not counting placeholder (`__`) value).
-     * @function module:functionOps.curry2_
+     * @function module:function.curry2_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -1470,7 +1492,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
     /**
      * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers))
      * (won't call function until 3 or more args (not counting placeholder (`__`) value).
-     * @function module:functionOps.curry3_
+     * @function module:function.curry3_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -1478,7 +1500,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
     /**
      * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))
      * (won't call function until 4 or more args (not counting placeholder (`__`) value).
-     * @function module:functionOps.curry4_
+     * @function module:function.curry4_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -1486,7 +1508,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
     /**
      * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))
      * (won't call function until 5 or more args (not counting placeholder (`__`) value).
-     * @function module:functionOps.curry5_
+     * @function module:function.curry5_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -1494,7 +1516,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
     /**
      * Takes a function that takes two parameters and returns a negated version of given
      * function.
-     * @function module:functionOps.negateF
+     * @function module:function.negateF
      * @param fn {Function}
      * @returns {Function}
      */
@@ -1502,7 +1524,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
     /**
      * Takes a function that takes three parameters and returns a
      * negated version of given function.
-     * @function module:functionOps.negateF3
+     * @function module:function.negateF3
      * @param fn {Function}
      * @returns {Function}
      */
@@ -1510,7 +1532,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
     /**
      * Takes a function that takes four parameters and returns a
      * negated version of given function.
-     * @function module:functionOps.negateF4
+     * @function module:function.negateF4
      * @param fn {Function}
      * @returns {Function}
      */
@@ -1518,43 +1540,35 @@ const flip5$$1 = fn => curry(flip5$1(fn));
     /**
      * Takes a function that takes four parameters and returns a
      * negated version of given function.
-     * @function module:functionOps.negateF5
+     * @function module:function.negateF5
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
-     * @function module:functionOps.negateP
+     * @function module:function.negateP
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-     * @function module:functionOps.negateFMany
+     * @function module:function.negateFMany
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
-     * Returns passed in parameter.
-     * @haskellType `id :: a -> a`
-     * @function module:functionOps.id
-     * @param x {*}
-     * @returns {*}
-     */
-
-    /**
      * Composes all functions passed in from right to left passing each functions return value to
      * the function on the left of itself.
-     * @function module:functionOps.compose
+     * @function module:function.compose
      * @param args {...Function}
      * @returns {Function}
      */
 
 /**
- * @module _functionOps
+ * @module _function
  * @private
  */
 
@@ -1613,7 +1627,7 @@ const split$1 = curry(split);
 
 /**
  * List operators.
- * @module listOps
+ * @module list
  */
 const append = curry(_append);
 const appendMany = curry2(_appendMany);
@@ -1691,7 +1705,7 @@ const complement = curry2(_complement);
  * Contains functions for operating strings.
  * @author elyde
  * @created 7/9/2017.
- * @module stringOps
+ * @module string
  */
 const lines = split$1(/[\n\r]/gm);
 const words = split$1(/[\s\t]/gm);
@@ -1714,16 +1728,14 @@ const camelCase = (xs, pattern = /[^a-z\d]/i) => compose(
 const classCase = compose(ucaseFirst, camelCase);
 
 /**
- * Created by elyde on 12/6/2016.
- * @file fjl.js
+ * @module fjl
+ * @description Includes operations from haskell's Prelude.
  * @goal to include everything from haskell's Prelude where it makes sense in order to create
  *  a subset of functions which can make the javascript developer more efficient and make his/her
  *  code more concise (and functional).
- * @description Includes operations from haskell's Prelude.
  * @motivation preludejs, lodash/fp, RamdaJs, Haskell.
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
- * @module fjl
  */
 
-export { prop, instanceOf, hasOwnProperty, assign, assignDeep, objUnion, objIntersect, objDifference, objComplement, isType, length, keys, _instanceOf, _hasOwnProperty, _assign, _prop, typeOf, isFunction, _isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, _assignDeep, _objUnion, _objIntersect, _objDifference, _objComplement, log, error, peek, isCheckableType, _errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, toArrayMap, fromArrayMap, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };
+export { prop, instanceOf, hasOwnProperty, assign, assignDeep, objUnion, objIntersect, objDifference, objComplement, isType, fromNamespace, length, keys, _instanceOf, _hasOwnProperty, _assign, _prop, typeOf, isFunction, _isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, _fromNamespace, _assignDeep, _objUnion, _objIntersect, _objDifference, _objComplement, log, error, peek, isCheckableType, _errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, toArrayMap, fromArrayMap, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };

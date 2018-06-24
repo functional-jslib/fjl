@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.concat = undefined;
 
-var _curry = require('../uncurried/_functionOps/_curry');
+var _curry = require('../uncurried/_function/_curry');
 
 var _list = require('../uncurried/_jsPlatform/_list');
 

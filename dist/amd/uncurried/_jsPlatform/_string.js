@@ -9,7 +9,7 @@ define(['exports', '../_object/_utils'], function (exports, _utils) {
 
   /**
    * Functional version of `String.prototype.split`.
-   * @function module:_stringOps.split
+   * @function module:_string.split
    * @param separator {String|RegExp}
    * @param str {String}
    * @returns {Array}

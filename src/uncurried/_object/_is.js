@@ -24,7 +24,7 @@ export const
 
     /**
      * Returns whether a value is a _function or not.
-     * @function module:object._isFunction
+     * @function module:object.isFunction
      * @param value {*}
      * @returns {Boolean}
      */
@@ -47,7 +47,7 @@ export const
 
     /**
      * Checks if `value` is an es2015 `class`.
-     * @function module:object._isClass
+     * @function module:object.isClass
      * @param x {*}
      * @returns {boolean}
      */
@@ -55,7 +55,7 @@ export const
 
     /**
      * Returns a boolean depicting whether a value is callable or not.
-     * @function module:object._isCallable
+     * @function module:object.isCallable
      * @tentative
      * @param x {*}
      * @returns {Boolean}
@@ -64,7 +64,7 @@ export const
 
     /**
      * Checks if value is an array (same as `Array.isArray`).
-     * @function module:object._isArray
+     * @function module:object.isArray
      * @param value {*}
      * @returns {boolean}
      */
@@ -72,7 +72,7 @@ export const
 
     /**
      * Checks whether value is an object or not.
-     * @function module:object._isObject
+     * @function module:object.isObject
      * @param value
      * @returns {Boolean}
      */
@@ -80,7 +80,7 @@ export const
 
     /**
      * Checks if value is a boolean.
-     * @function module:object._isBoolean
+     * @function module:object.isBoolean
      * @param value {*}
      * @returns {Boolean}
      */
@@ -88,7 +88,7 @@ export const
 
     /**
      * Checks if value is a valid number (also checks if isNaN so that you don't have to).
-     * @function module:object._isNumber
+     * @function module:object.isNumber
      * @param value {*}
      * @returns {Boolean}
      */
@@ -96,7 +96,7 @@ export const
 
     /**
      * Checks whether value is a string or not.
-     * @function module:object._isString
+     * @function module:object.isString
      * @param value {*}
      * @returns {Boolean}
      */
@@ -104,7 +104,7 @@ export const
 
     /**
      * Checks whether value is of `Map` or not.
-     * @function module:object._isMap
+     * @function module:object.isMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -112,7 +112,7 @@ export const
 
     /**
      * Checks whether value is of `Set` or not.
-     * @function module:object._isSet
+     * @function module:object.isSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -120,7 +120,7 @@ export const
 
     /**
      * Checks whether value is of `WeakMap` or not.
-     * @function module:object._isWeakMap
+     * @function module:object.isWeakMap
      * @param value {*}
      * @returns {Boolean}
      */
@@ -128,7 +128,7 @@ export const
 
     /**
      * Checks whether value is of `WeakSet` or not.
-     * @function module:object._isWeakSet
+     * @function module:object.isWeakSet
      * @param value {*}
      * @returns {Boolean}
      */
@@ -136,7 +136,7 @@ export const
 
     /**
      * Checks if value is undefined.
-     * @function module:object._isUndefined
+     * @function module:object.isUndefined
      * @param value {*}
      * @returns {Boolean}
      */
@@ -144,7 +144,7 @@ export const
 
     /**
      * Checks if value is null.
-     * @function module:object._isNull
+     * @function module:object.isNull
      * @param value {*}
      * @returns {Boolean}
      */
@@ -152,7 +152,7 @@ export const
 
     /**
      * Checks if value is a `Symbol`.
-     * @function module:object._isSymbol
+     * @function module:object.isSymbol
      * @param value {*}
      * @returns {Boolean}
      */
@@ -162,7 +162,7 @@ export const
      * Checks if given `x` is set and of one of
      *  [String, Boolean, Number, Symbol] (null and undefined are immutable
      *  but are not "usable" (usually not what we want to operate on).
-     * @function module:object._isUsableImmutablePrimitive
+     * @function module:object.isUsableImmutablePrimitive
      * @param x {*}
      * @returns {Boolean}
      */
@@ -175,7 +175,7 @@ export const
 
     /**
      * Checks if !length.
-     * @function module:object._isEmptyList
+     * @function module:object.isEmptyList
      * @param x {*}
      * @returns {Boolean}
      */
@@ -183,7 +183,7 @@ export const
 
     /**
      * Checks if object has own properties/enumerable-props or not.
-     * @function module:object._isEmptyObject
+     * @function module:object.isEmptyObject
      * @param obj {*}
      * @returns {Boolean}
      */
@@ -191,7 +191,7 @@ export const
 
     /**
      * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
-     * @function module:object._isEmptyCollection
+     * @function module:object.isEmptyCollection
      * @param x {*}
      * @returns {Boolean}
      */
@@ -201,7 +201,7 @@ export const
      * Checks to see if passed in value is empty;  I.e.,
      *  check for one of '', 0, `null`, `undefined`, `false`, empty array, empty object, empty function (zero arity),
      *  or empty collection (es6 Map, Set, WeakMap, or WeakSet etc. (`!value.size`);
-     * @function module:object._isEmpty
+     * @function module:object.isEmpty
      * @param value {*} - Value to check.
      * @returns {Boolean}
      */
@@ -232,7 +232,7 @@ export const
 
     /**
      * Returns whether passed in values is defined and not null or not.
-     * @function module:object._isset
+     * @function module:object.isset
      * @param x {*}
      * @returns {Boolean}
      */

@@ -17,7 +17,7 @@ Object.keys(_utils).forEach(function (key) {
     });
 });
 
-var _curry = require('./uncurried/_functionOps/_curry');
+var _curry = require('./uncurried/_function/_curry');
 
 /**
  * Created by elydelacruz on 7/22/2017.

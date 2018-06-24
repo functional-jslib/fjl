@@ -3,7 +3,7 @@ var fjl = (function (exports) {
 
 /**
  * Created by elyde on 12/18/2016.
- * @memberOf _objectOps
+ * @memberOf _object
  */
 var _Number = Number.name;
 var _NaN = 'NaN';
@@ -17,7 +17,7 @@ var _Undefined = 'Undefined';
  * @note Returns 'Null' if value is `null`
  * For values that have no concrete constructors and/or casters
  * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
- * @function module:objectOps.typeOf
+ * @function module:object.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
  *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
@@ -165,7 +165,7 @@ var lastIndexOf = fPureTakesOne('lastIndexOf');
 
 /**
  * Functional version of `String.prototype.split`.
- * @function module:_stringOps.split
+ * @function module:_string.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}
@@ -196,7 +196,7 @@ var call = function call(fn) {
 /**
  * @author elydelacruz
  * @created 12/6/2016.
- * @memberOf _functionOps
+ * @memberOf _function
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 var notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
@@ -237,23 +237,8 @@ var curry5 = function curry5(fn) {
 };
 
 /**
- * @memberOf _objectOps
- */
-
-/**
- * Returns property value if found; Else `undefined`.
- * @function module:_object._prop
- * @param name {String} - Key to search on `obj`
- * @param obj {Object} - Object to search `name` on.
- * @returns {*}
- */
-var _prop = function _prop(name, obj) {
-  return obj[name];
-};
-
-/**
  * Created by elyde on 12/18/2016.
- * @memberOf _objectOps
+ * @memberOf _object
  */
 
 var _String = String.name;
@@ -272,7 +257,7 @@ var _Undefined$1 = 'Undefined';
 
 /**
  * Returns whether a value is a _function or not.
- * @function module:objectOps._isFunction
+ * @function module:object.isFunction
  * @param value {*}
  * @returns {Boolean}
  */
@@ -362,6 +347,43 @@ var isset = function isset(x) {
     return x !== null && x !== undefined;
 };
 
+var _fromNamespace = function _fromNamespace(nsString, obj) {
+    if (!obj) {
+        return obj;
+    }
+    if (nsString.indexOf('.') === -1) {
+        return obj[nsString];
+    }
+    var parts = nsString.split('.'),
+        limit = parts.length;
+    var ind = 0,
+        parent = obj;
+    for (; ind < limit; ind += 1) {
+        var node = parent[parts[ind]];
+        if (!isset(node)) {
+            return node;
+        }
+        parent = node;
+    }
+    return parent;
+};
+
+/**
+ * @memberOf _object
+ */
+
+/**
+ * Returns property value if found; Else `undefined`.
+ * @note This method is null/undefined safe (will not throw on `null` or `undefined`).
+ * @function module:object._prop
+ * @param name {String} - Key to search on `obj`
+ * @param obj {Object} - Object to search `name` on.
+ * @returns {*}
+ */
+var _prop = function _prop(name, obj) {
+  return isset(obj) ? obj[name] : undefined;
+};
+
 /**
  * Checks if given `x` is set and of one of
  *  [String, Boolean, Number, or Symbol] (null and undefined are immutable
@@ -386,7 +408,7 @@ function isUsableImmutablePrimitive$1(x) {
  * // - Else if constructor is a function, thus far, then calls constructor using
  * //      the `new` keyword (with any passed in args).
  * ```
- * @function module:_object.of
+ * @function module:object.of
  * @param x {*} - Value to derive returned value's type from.
  * @param [args] {...*} - Any args to pass in to matched construction strategy.
  * @returns {*|undefined} - New value of given value's type else `undefined`.
@@ -433,7 +455,7 @@ var _assignDeep = function _assignDeep(obj0) {
 };
 
 /**
- * @memberOf _functionOps
+ * @memberOf _function
  */
 
 var negateF = function negateF(fn) {
@@ -469,7 +491,7 @@ var negateFMany = function negateFMany(fn) {
 
 /**
  * Created by elyde on 7/15/2017.
- * @module booleanOps
+ * @module boolean
  */
 
 var isTruthy = function isTruthy(value) {
@@ -847,7 +869,7 @@ var slicedToArray = function () {
 
 /**
  * List operations module (un-curried version).
- * @module _listOps
+ * @module _list
  * @private
  */
 var _append = concat;
@@ -1630,7 +1652,7 @@ var peek = function peek() {
 };
 
 /**
- * @module errorThrowing
+ * @module object
  * @description Contains error throwing facilities for when a value doesn't match a type.
  *  In addition gives you curried and uncurried versions of the multi arity functions.
  */
@@ -1644,7 +1666,8 @@ var _errorIfNotCheckableType = function _errorIfNotCheckableType(contextName, ty
     return type;
 };
 var getTypeName = function getTypeName(type) {
-    return _errorIfNotCheckableType('getTypeName', type) && isString(type) ? type : type.name;
+    _errorIfNotCheckableType('getTypeName', type);
+    return type.name || type;
 };
 var _defaultTypeChecker = function _defaultTypeChecker(Type, value) {
     return _isType(getTypeName(Type), value) || isFunction(Type) && isset(value) && value instanceof Type;
@@ -1833,13 +1856,13 @@ var toArray$1 = function toArray(x) {
 };
 
 /**
- * @module _objectOps
+ * @module _object
  * @description Object operations (un-curried).
  * @private
  */
 
 /**
- * @module objectOps
+ * @module object
  */
 var prop = curry(_prop);
 var instanceOf = curry(_instanceOf);
@@ -1851,6 +1874,7 @@ var objIntersect = curry(_objIntersect);
 var objDifference = curry(_objDifference);
 var objComplement = curry2(_objComplement);
 var isType = curry(_isType);
+var fromNamespace = curry(_fromNamespace);
 
 var until$1 = function until(predicate, operation, typeInstance) {
     var result = typeInstance;
@@ -1891,7 +1915,7 @@ var flip$1 = function flip(fn) {
 };
 
 /**
- * @memberOf _functionOps
+ * @memberOf _function
  * @author elydelacruz
  * @created 12/6/2016.
  * @description Curry implementation with place holder concept (`__`).
@@ -1938,7 +1962,7 @@ function replacePlaceHolders(array, args) {
 }
 
 /**
- * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
+ * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
  * @function module:_function.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
@@ -1979,7 +2003,7 @@ function curryN_(executeArity, fn) {
 
 /**
  * Place holder object (frozen) used by curry.
- * @memberOf _functionOps
+ * @memberOf _function
  * @type {PlaceHolder}
  */
 var __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
@@ -1997,13 +2021,13 @@ var curry5_ = function curry5_(fn) {
 };
 
 /**
- * @memberOf _functionOps
+ * @memberOf _function
  */
 
 /**
  * Returns passed in parameter.
  * @haskellType `id :: a -> a`
- * @function module:functionOps.id
+ * @function module:function.id
  * @param x {*}
  * @returns {*}
  */
@@ -2013,7 +2037,7 @@ var id = function id(x) {
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
- * the functionOps on the left of itself.
+ * the function on the left of itself.
  * @function module:_function.compose
  * @type {Function}
  * @param args {...{Function}}
@@ -2033,7 +2057,7 @@ var compose = function compose() {
 
 /**
  * Function operations: `
- * @module functionOps
+ * @module function
  */
 
 var apply$1 = curry(apply);
@@ -2063,7 +2087,7 @@ var flip5$$1 = function flip5$$1(fn) {
 
 /**
  * Curries a function based on it's defined arity (argument's arrayOps expected length).
- * @function module:functionOps.curry
+ * @function module:function.curry
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -2072,7 +2096,7 @@ var flip5$$1 = function flip5$$1(fn) {
 
 /**
  * Curries a function up to a given arity.
- * @function module:functionOps.curryN
+ * @function module:function.curryN
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*}
@@ -2081,35 +2105,35 @@ var flip5$$1 = function flip5$$1(fn) {
 
 /**
  * Curries a function up to an arity of 2 (won't call function until 2 or more args).
- * @function module:functionOps.curry2
+ * @function module:function.curry2
  * @param fn {Function}
  * @returns {Function}
  */
 
 /**
  * Curries a function up to an arity of 3 (won't call function until 3 or more args).
- * @function module:functionOps.curry3
+ * @function module:function.curry3
  * @param fn {Function}
  * @returns {Function}
  */
 
 /**
  * Curries a function up to an arity of 4 (won't call function until 4 or more args).
- * @function module:functionOps.curry4
+ * @function module:function.curry4
  * @param fn {Function}
  * @returns {Function}
  */
 
 /**
  * Curries a function up to an arity of 5 (won't call function until 5 or more args).
- * @function module:functionOps.curry5
+ * @function module:function.curry5
  * @param fn {Function}
  * @returns {Function}
  */
 
 /**
  * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @function module:functionOps.curry_
+ * @function module:function.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -2117,7 +2141,7 @@ var flip5$$1 = function flip5$$1(fn) {
 
 /**
  * Curries a function up to given arity also enforces arity via placeholder values (`__`).
- * @function module:functionOps.curryN_
+ * @function module:function.curryN_
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -2126,14 +2150,14 @@ var flip5$$1 = function flip5$$1(fn) {
 
 /**
  * Place holder object (frozen) used by curry.
- * @memberOf functionOps
+ * @memberOf function
  * @type {PlaceHolder}
  */
 
 /**
  * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers))
  * (won't call function until 2 or more args (not counting placeholder (`__`) value).
- * @function module:functionOps.curry2_
+ * @function module:function.curry2_
  * @param fn {Function}
  * @returns {Function}
  */
@@ -2141,7 +2165,7 @@ var flip5$$1 = function flip5$$1(fn) {
 /**
  * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers))
  * (won't call function until 3 or more args (not counting placeholder (`__`) value).
- * @function module:functionOps.curry3_
+ * @function module:function.curry3_
  * @param fn {Function}
  * @returns {Function}
  */
@@ -2149,7 +2173,7 @@ var flip5$$1 = function flip5$$1(fn) {
 /**
  * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))
  * (won't call function until 4 or more args (not counting placeholder (`__`) value).
- * @function module:functionOps.curry4_
+ * @function module:function.curry4_
  * @param fn {Function}
  * @returns {Function}
  */
@@ -2157,7 +2181,7 @@ var flip5$$1 = function flip5$$1(fn) {
 /**
  * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))
  * (won't call function until 5 or more args (not counting placeholder (`__`) value).
- * @function module:functionOps.curry5_
+ * @function module:function.curry5_
  * @param fn {Function}
  * @returns {Function}
  */
@@ -2165,7 +2189,7 @@ var flip5$$1 = function flip5$$1(fn) {
 /**
  * Takes a function that takes two parameters and returns a negated version of given
  * function.
- * @function module:functionOps.negateF
+ * @function module:function.negateF
  * @param fn {Function}
  * @returns {Function}
  */
@@ -2173,7 +2197,7 @@ var flip5$$1 = function flip5$$1(fn) {
 /**
  * Takes a function that takes three parameters and returns a
  * negated version of given function.
- * @function module:functionOps.negateF3
+ * @function module:function.negateF3
  * @param fn {Function}
  * @returns {Function}
  */
@@ -2181,7 +2205,7 @@ var flip5$$1 = function flip5$$1(fn) {
 /**
  * Takes a function that takes four parameters and returns a
  * negated version of given function.
- * @function module:functionOps.negateF4
+ * @function module:function.negateF4
  * @param fn {Function}
  * @returns {Function}
  */
@@ -2189,43 +2213,35 @@ var flip5$$1 = function flip5$$1(fn) {
 /**
  * Takes a function that takes four parameters and returns a
  * negated version of given function.
- * @function module:functionOps.negateF5
+ * @function module:function.negateF5
  * @param fn {Function}
  * @returns {Function}
  */
 
 /**
  * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
- * @function module:functionOps.negateP
+ * @function module:function.negateP
  * @param fn {Function}
  * @returns {Function}
  */
 
 /**
  * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
- * @function module:functionOps.negateFMany
+ * @function module:function.negateFMany
  * @param fn {Function}
  * @returns {Function}
  */
 
 /**
- * Returns passed in parameter.
- * @haskellType `id :: a -> a`
- * @function module:functionOps.id
- * @param x {*}
- * @returns {*}
- */
-
-/**
  * Composes all functions passed in from right to left passing each functions return value to
  * the function on the left of itself.
- * @function module:functionOps.compose
+ * @function module:function.compose
  * @param args {...Function}
  * @returns {Function}
  */
 
 /**
- * @module _functionOps
+ * @module _function
  * @private
  */
 
@@ -2308,7 +2324,7 @@ var split$1 = curry(split);
 
 /**
  * List operators.
- * @module listOps
+ * @module list
  */
 var append = curry(_append);
 var appendMany = curry2(_appendMany);
@@ -2386,7 +2402,7 @@ var complement = curry2(_complement);
  * Contains functions for operating strings.
  * @author elyde
  * @created 7/9/2017.
- * @module stringOps
+ * @module string
  */
 var lines = split$1(/[\n\r]/gm);
 var words = split$1(/[\s\t]/gm);
@@ -2411,16 +2427,14 @@ var camelCase = function camelCase(xs) {
 var classCase = compose(ucaseFirst, camelCase);
 
 /**
- * Created by elyde on 12/6/2016.
- * @file fjl.js
+ * @module fjl
+ * @description Includes operations from haskell's Prelude.
  * @goal to include everything from haskell's Prelude where it makes sense in order to create
  *  a subset of functions which can make the javascript developer more efficient and make his/her
  *  code more concise (and functional).
- * @description Includes operations from haskell's Prelude.
  * @motivation preludejs, lodash/fp, RamdaJs, Haskell.
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
- * @module fjl
  */
 
 exports.prop = prop;
@@ -2433,6 +2447,7 @@ exports.objIntersect = objIntersect;
 exports.objDifference = objDifference;
 exports.objComplement = objComplement;
 exports.isType = isType;
+exports.fromNamespace = fromNamespace;
 exports.length = length;
 exports.keys = keys;
 exports._instanceOf = _instanceOf;
@@ -2463,6 +2478,7 @@ exports.isEmpty = isEmpty;
 exports.isset = isset;
 exports.isArray = isArray;
 exports.of = of;
+exports._fromNamespace = _fromNamespace;
 exports._assignDeep = _assignDeep;
 exports._objUnion = _objUnion;
 exports._objIntersect = _objIntersect;

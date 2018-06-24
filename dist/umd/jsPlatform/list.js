@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform/_list'], factory);
+        define(['exports', '../uncurried/_function/_curry', '../uncurried/_jsPlatform/_list'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('../uncurried/_functionOps/_curry'), require('../uncurried/_jsPlatform/_list'));
+        factory(exports, require('../uncurried/_function/_curry'), require('../uncurried/_jsPlatform/_list'));
     } else {
         var mod = {
             exports: {}
