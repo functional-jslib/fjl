@@ -14,4 +14,4 @@ export * from './function';
 export * from './list';
 export * from './string';
 export * from './utils';
-export * from './uncurried/_list/_utils';
+export * from './list/utils';

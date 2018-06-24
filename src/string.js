@@ -6,9 +6,9 @@
  */
 import {intercalate, map, filter} from './list';
 import {split} from './jsPlatform/string';
-import {compose} from './uncurried/_function/_compose';
+import {compose} from './function/compose';
 import {join} from './jsPlatform/array';
-import {_errorIfNotType} from './uncurried/_object/_errorThrowing';
+import {_errorIfNotType} from './object/errorThrowing';
 
 export const
 

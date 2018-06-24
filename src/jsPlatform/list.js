@@ -1,45 +1,59 @@
 /**
- * List operations that overlap (apart from globally overlapping props and functions like `length`)
- * on both strings and arrays.
- * @module jsPlatform_list
- * @private
+ *  List operations that overlap (apart from globally overlapping props and functions like `length`)
+ *      on both strings and arrays.
  */
 
-import {curry} from '../uncurried/_function/_curry';
-
-import {
-    concat as concat_,
-    slice as slice_,
-    includes as includes_,
-    indexOf as indexOf_,
-    lastIndexOf as lastIndexOf_ } from '../uncurried/_jsPlatform/_list';
+import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils';
 
 export const
 
     /**
      * Concats/appends all functors onto the end of first functor.
      * Note:  functors passed in after the first one must be of the same type.
-     * @function module:jsPlatform_array.concat
+     * @function module:_jsPlatform_list.concat
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
      * @throws {Error} - When passed in object doesn't have an `every` method.
      */
-    concat = curry(concat_),
+    concat = fPureTakesOneOrMore('concat'),
 
     /**
      * Same as Array.prototype.slice
-     * @function module:jsPlatform_array.slice
+     * @function module:_jsPlatform_list.slice
      * @param separator {String|RegExp}
      * @param arr{Array}
      * @returns {Array}
      */
-    slice = curry(slice_),
+    slice = fPureTakes2('slice'),
 
-    includes = curry(includes_),
+    /**
+     * `Array.prototype.includes` or shim.
+     * @function module:_jsPlatform_list.includes
+     * @param value {*}
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
+    includes = (() => 'includes' in Array.prototype ?
+            fPureTakesOne('includes') :
+            (value, xs) => xs.indexOf(value) > -1)(),
 
-    indexOf = curry(indexOf_),
+    /**
+     * Searches list/list-like for given element `x`.
+     * @function module:_jsPlatform_list.indexOf
+     * @param x {*} - Element to search for.
+     * @param xs {Array|String|*} - list or list like to look in.
+     * @returns {Number} - `-1` if element not found else index at which it is found.
+     */
+    indexOf = fPureTakesOne('indexOf'),
 
-    lastIndexOf = curry(lastIndexOf_)
+    /**
+     * Last index of (`Array.prototype.lastIndexOf`).
+     * @function module:_jsPlatform_list.lastIndexOf
+     * @param x {*} - Element to search for.
+     * @param xs {Array|String|*} - list or list like to look in.
+     * @returns {Number} - `-1` if element not found else index at which it is found.
+     */
+    lastIndexOf = fPureTakesOne('lastIndexOf')
 
 ;

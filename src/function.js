@@ -3,16 +3,16 @@
  * @description Function operations/combinators.
  */
 
-import {curry, curry2, curry3} from './uncurried/_function/_curry';
+import {curry, curry2, curry3} from './function/curry';
 
 import {
     apply as _apply,
     call as _call, reverse
-} from './uncurried/_jsPlatform/_jsPlatform';
+} from './jsPlatform/jsPlatform';
 
 import {
     until as _until
-} from './uncurried/_function/_until';
+} from './function/until';
 
 import {
     flip as _flip,
@@ -20,13 +20,13 @@ import {
     flip3 as _flip3,
     flip4 as _flip4,
     flip5 as _flip5
-} from './uncurried/_function/_flip';
+} from './function/flip';
 
-export * from './uncurried/_function/_curry';
-export * from './uncurried/_function/__curry';
-export * from './uncurried/_function/_negate';
-export * from './uncurried/_function/_id';
-export * from './uncurried/_function/_compose';
+export * from './function/curry';
+export * from './function/_curry';
+export * from './function/negate';
+export * from './function/id';
+export * from './function/compose';
 
 export {_apply, _call, _until, _flip, _flip3, _flip4, _flip5,  _flipN};
 

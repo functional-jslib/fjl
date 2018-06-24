@@ -15,7 +15,7 @@ import {
     isWeakMap, isWeakSet, assignDeep, assign,
     toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep
 } from '../src/object';
-import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_list/_list";
+import {_foldl, map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/list/list";
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
     deepCompareObjectsLeft, allYourBase, expectDeepEquals
@@ -144,10 +144,10 @@ describe ('#object', function () {
     });
 
     describe('#isArray', function () {
-        it ('should return `true` when given value is an _list', function () {
+        it ('should return `true` when given value is an list', function () {
             expectTrue(isArray([]));
         });
-        it ('should return `false` when given value is not an _list', function () {
+        it ('should return `false` when given value is not an list', function () {
             expectFalse(isArray(function () {}));
         });
     });
@@ -329,7 +329,7 @@ describe ('#object', function () {
             expectTrue(_and(_head(check1)));
 
             // Ensure both objects checked don't have any remaining keys
-            expectTrue(_and(_map(x => !Object.keys(x).length, _tail(check1))));
+            expectTrue(_and(map(x => !Object.keys(x).length, _tail(check1))));
         });
 
         it ('should not modify objects other than the first object passed in', function () {

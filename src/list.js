@@ -2,11 +2,11 @@
  * List operators.
  * @module list
  */
-import {curry, curry2} from './uncurried/_function/_function';
+import {curry, curry2} from './function/function';
 
 import {
     _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr,
-    _map, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose,
+    map, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose,
     _subsequences, _swapped, _permutations, _foldl, _foldl1,
     _foldr, _foldr1, _unfoldr, _mapAccumL, _mapAccumR, _iterate, _repeat,
     _replicate, _cycle, _findIndex, _findIndices, _elemIndex, _elemIndices,
@@ -19,7 +19,7 @@ import {
     _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy,
     _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference,
     _complement
-} from './uncurried/_list/_list';
+} from './list/list';
 
 // Export single arity methods
 export {
@@ -35,7 +35,7 @@ export {
 
 export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';
 
-export * from './uncurried/_list/_list';
+export * from './list/list';
 
 export const
 
@@ -79,7 +79,7 @@ export const
      * @param xs {Array|String|*} - Functor.
      * @returns {Array|String|*} - Functor type that is passed in.
      */
-    map = curry(_map),
+    map = curry(map),
 
     /**
      * Takes an element and a list and `intersperses' that element between the elements of the list. For example
@@ -375,7 +375,7 @@ export const
     notElem = curry2(_notElem),
 
     /**
-     * Same as _list._at - Returns property value at key/indice.
+     * Same as list._at - Returns property value at key/indice.
      * @function module:object._lookup
      * @type {module:object.prop}
      */

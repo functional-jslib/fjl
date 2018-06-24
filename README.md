@@ -172,7 +172,7 @@ slice, includes, indexOf, lastIndexOf, split, push
 
 #### Utilities
 **Note:** Utility functions are generally not curried (minus a few exceptions: 
-    `fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_`
+    `fPureTakesOne, fPureTakes2, fPureTakesOneOrMore`
 ).
 
 ##### Low level utilities
@@ -182,7 +182,7 @@ that has a method of `name` on it.
 The function returned takes arguments first and functor/member last.
 ```
 fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
-fPureTakesOneOrMore, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_
+fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore
 ```
 
 ##### List operation utilities

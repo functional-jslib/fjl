@@ -41,7 +41,7 @@ describe ('#function', function () {
             expectFunction (addAllInArray);
             expectEqual(addAllInArray([1, 2, 3, 4, 5]), 15);
         });
-        it ('should call a function passed into it with args _list passed in as second parameter', function () {
+        it ('should call a function passed into it with args list passed in as second parameter', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
     });

@@ -369,7 +369,7 @@ var _fromNamespace = function _fromNamespace(nsString, obj) {
 /**
  * Returns property value if found; Else `undefined`.
  * @note This method is null/undefined safe (will not throw on `null` or `undefined`).
- * @function module:object._prop
+ * @function module:object.prop
  * @param name {String} - Key to search on `obj`
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
@@ -502,7 +502,7 @@ var alwaysFalse = function alwaysFalse() {
 };
 
 /**
- * @function module:_list.map
+ * @function module:list.map
  * @param fn {Function} - Function to map on array.
  * @param xs {Array}
  * @returns {Array}
@@ -1751,12 +1751,12 @@ function isPlaceHolder(instance) {
 }
 
 /**
- * Replaces `placeholder` values in `_list`.
+ * Replaces `placeholder` values in `list`.
  * @function replacePlaceHolder
  * @private
  * @param array {Array} - Array to replace placeholders in.
  * @param args {Array} - Args from to choose from to replace placeholders.
- * @returns {Array|*} - Returns passed in `_list` with placeholders replaced by values in `args`.
+ * @returns {Array|*} - Returns passed in `list` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders(array, args) {
     var out = map(function (element) {
@@ -1772,7 +1772,7 @@ function replacePlaceHolders(array, args) {
 
 /**
  * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @function module:_function.curry_
+ * @function module:function.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -1786,12 +1786,12 @@ function curry_(fn) {
 }
 
 /**
- * Curries a _function up to given arity also enforces arity via placeholder values (`__`).
- * @function module:_function.curryN_
+ * Curries a function up to given arity also enforces arity via placeholder values (`__`).
+ * @function module:function.curryN_
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
- * @returns {Function} - Passed in _function wrapped in a _function for currying.
+ * @returns {Function} - Passed in function wrapped in a function for currying.
  */
 function curryN_(executeArity, fn) {
     for (var _len21 = arguments.length, curriedArgs = Array(_len21 > 2 ? _len21 - 2 : 0), _key21 = 2; _key21 < _len21; _key21++) {
@@ -1847,7 +1847,7 @@ var id = function id(x) {
 /**
  * Composes all functions passed in from right to left passing each functions return value to
  * the function on the left of itself.
- * @function module:_function.compose
+ * @function module:function.compose
  * @type {Function}
  * @param args {...{Function}}
  * @returns {Function}
@@ -2060,17 +2060,17 @@ var flip5$$1 = function flip5$$1(fn) {
  * @private
  */
 
-var fPureTakesOne_ = function fPureTakesOne_(name) {
+var fPureTakesOne = function fPureTakesOne(name) {
     return curry(function (arg, f) {
         return f[name](arg);
     });
 };
-var fPureTakes2_ = function fPureTakes2_(name) {
+var fPureTakes2 = function fPureTakes2(name) {
     return curry(function (arg1, arg2, f) {
         return f[name](arg1, arg2);
     });
 };
-var fPureTakesOneOrMore_ = function fPureTakesOneOrMore_(name) {
+var fPureTakesOneOrMore = function fPureTakesOneOrMore(name) {
     return curry2(function (f) {
         for (var _len25 = arguments.length, args = Array(_len25 > 1 ? _len25 - 1 : 0), _key25 = 1; _key25 < _len25; _key25++) {
             args[_key25 - 1] = arguments[_key25];
@@ -2087,8 +2087,8 @@ var fPureTakesOneOrMore_ = function fPureTakesOneOrMore_(name) {
  * @private
  */
 
-var join$1 = fPureTakesOne_('join');
-var push$1 = fPureTakesOneOrMore_('push');
+var join$1 = fPureTakesOne('join');
+var push$1 = fPureTakesOneOrMore('push');
 
 /**
  * List operations that overlap (apart from globally overlapping props and functions like `length`)
@@ -2562,9 +2562,9 @@ exports.lcaseFirst = lcaseFirst;
 exports.ucaseFirst = ucaseFirst;
 exports.camelCase = camelCase;
 exports.classCase = classCase;
-exports.fPureTakesOne_ = fPureTakesOne_;
-exports.fPureTakes2_ = fPureTakes2_;
-exports.fPureTakesOneOrMore_ = fPureTakesOneOrMore_;
+exports.fPureTakesOne = fPureTakesOne;
+exports.fPureTakes2 = fPureTakes2;
+exports.fPureTakesOneOrMore = fPureTakesOneOrMore;
 exports.fPureTakesOne = fPureTakesOne;
 exports.fPureTakes2 = fPureTakes2;
 exports.fPureTakes3 = fPureTakes3;

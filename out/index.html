@@ -208,13 +208,13 @@ objUnion, objIntersect, objDifference, objComplement,</code></pre><h4><code>stri
 <li><code>split</code> in javascript is for strings.</li>
 </ul>
 <h4>Utilities</h4><p><strong>Note:</strong> Utility functions are generally not curried (minus a few exceptions: 
-    <code>fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_</code>
+    <code>fPureTakesOne, fPureTakes2, fPureTakesOneOrMore</code>
 ).</p>
 <h5>Low level utilities</h5><p>Turning regular methods into functional ones;  I.e., these 
 take a <code>name</code> and return a function that take an-argument/arguments and a type value 
 that has a method of <code>name</code> on it.<br>The function returned takes arguments first and functor/member last.</p>
 <pre class="prettyprint source"><code>fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
-fPureTakesOneOrMore, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_</code></pre><h5>List operation utilities</h5><p><strong>Uncurried</strong></p>
+fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore</code></pre><h5>List operation utilities</h5><p><strong>Uncurried</strong></p>
 <pre class="prettyprint source"><code>sliceFrom, sliceTo, slice, sliceCopy
 genericAscOrdering, lengths, lengthsToSmallest, 
 reduceUntil, reduceRightUntil, reduce, reduceRight,
