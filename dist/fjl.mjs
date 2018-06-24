@@ -488,7 +488,7 @@ const findWhere = (pred, xs) => {
 const _append = concat;
 const _appendMany = (...args) => {
         if (length(args)) { return apply(concat, args); }
-        throw new Error('`_appendMany` requires at least one arg.');
+        throw new Error('`appendMany` requires at least one arg.');
     };
 const _head = x => x[0];
 const _last = xs => xs[lastIndex(xs)];

@@ -61,7 +61,7 @@ const fjl = require('fjl');
  and is built from the ground up using functional concepts.
 - A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
 - A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `_append` (un-curried version)
+    `append`, `append` (un-curried version)
 - A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
 are separated out 'Data.List' (in our lib is './src/list.js') etc..
 - Etc. etc..

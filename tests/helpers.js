@@ -58,17 +58,6 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
             .some(bln => !bln)
     ),
 
-    deepCompareAssocListOnPred = (pred, a, b) =>
-        Object.keys(a).every((key, ind) => {
-            if (!pred(key, ind, a)) {
-                return true;
-            }
-            const [k, v] = b[ind];
-            switch (typeOf(v)) {
-                // case 'Array'
-            }
-        }),
-
     deepCompareLeft = (incoming, against) =>
         incoming === against || Object.keys(incoming).every(key => {
             const typeOfValue = typeof incoming[key];

@@ -12,7 +12,7 @@ import {
 }
 from '../src/function';
 
-import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
+import {log, add, subtract, expectEqual, expectFunction} from './helpers';
 
 describe ('#function', function () {
 

@@ -15,13 +15,11 @@ import {
     isWeakMap, isWeakSet, assignDeep, assign,
     toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep
 } from '../src/object';
-import {_foldl, map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/list/list";
+import {foldl, map, _and, head, tail, subsequences, unfoldr, all} from '../src/list/list';
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
     deepCompareObjectsLeft, allYourBase, expectDeepEquals
 } from './helpers';
-import {inspect} from 'util';
-import exampleNavHashMap from './fixtures/example_nav_hasmap';
 
 describe ('#object', function () {
     const charCodeToCharArrayMap = unfoldr(
@@ -309,10 +307,10 @@ describe ('#object', function () {
                 .map(word => result1.hasOwnProperty(word) && result1[word])
                 .every(result => result));
 
-            // Expect true that all results (_head of return) of accumalated value are `true`
+            // Expect true that all results (head of return) of accumalated value are `true`
             // and checks container of booleans
             // `head` pulls item at index `0` of list
-            const check1 = _foldl(
+            const check1 = foldl(
                 ([_results, _obj, _lastObj], word) => [
                     (_results.push(_obj.hasOwnProperty(word) && _lastObj.hasOwnProperty(word)), _results),
                     _obj[word],
@@ -326,10 +324,10 @@ describe ('#object', function () {
             // log(check1);
 
             // Expect original object and resulting objects to both have the same nested properties
-            expectTrue(_and(_head(check1)));
+            expectTrue(_and(head(check1)));
 
             // Ensure both objects checked don't have any remaining keys
-            expectTrue(_and(map(x => !Object.keys(x).length, _tail(check1))));
+            expectTrue(_and(map(x => !Object.keys(x).length, tail(check1))));
         });
 
         it ('should not modify objects other than the first object passed in', function () {
@@ -488,7 +486,7 @@ describe ('#object', function () {
             expect(peek).to.be.instanceOf(Function);
         });
         it ('should return last arg passed in when being called with one or more args.', function () {
-            _subsequences('abcde').concat([
+            subsequences('abcde').concat([
                 [99], [true], [undefined], [null], ['Output tested from `peek`']
             ]).forEach(xs => {
                 expect(peek.apply(null, xs)).to.equal(xs.pop());

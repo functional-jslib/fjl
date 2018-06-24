@@ -1,15 +1,19 @@
+import fnOrError from './fnOrError';
+
 /**
  * @author elydelacruz
  * @created 12/6/2016.
  * @memberOf _function
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
-import {apply, length, concat} from '../jsPlatform/jsPlatform';
-import {fnOrError} from '../utils';
-
-const notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 
 export const
+
+    /**
+     * @private
+     * @type {string}
+     */
+    curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`',
 
     /**
      * Curries a function based on it's defined arity (argument's arrayOps expected length).
@@ -18,7 +22,7 @@ export const
      * @param argsToCurry {...*}
      * @returns {Function}
      */
-    curry = (fn, ...argsToCurry) => curryN(fnOrError(notFnErrPrefix, fn).length, fn, ...argsToCurry),
+    curry = (fn, ...argsToCurry) => curryN(fnOrError(curryNotFnErrPrefix, fn).length, fn, ...argsToCurry),
 
     /**
      * Curries a function up to a given arity.
@@ -30,10 +34,10 @@ export const
      */
     curryN = (executeArity, fn, ...curriedArgs) => {
         return (...args) => {
-            let concatedArgs = concat(curriedArgs, args),
-                canBeCalled = (length(concatedArgs) >= executeArity) || !executeArity;
-            return !canBeCalled ? apply(curryN, concat([executeArity, fnOrError(notFnErrPrefix, fn)], concatedArgs)) :
-                apply(fnOrError(notFnErrPrefix, fn), concatedArgs);
+            let concatedArgs = curriedArgs.concat(args),
+                canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
+            return !canBeCalled ? curryN.apply(null, [executeArity, fnOrError(curryNotFnErrPrefix, fn)].concat(concatedArgs)) :
+                fnOrError(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
         };
     },
 

@@ -19,12 +19,12 @@ export const
 
     /**
      * Throws an error if `type` is not a checkable type (can't be checked by the `TypeChecker` type)
-     * @function module:object._errorIfNotCheckableType
+     * @function module:object.errorIfNotCheckableType
      * @param contextName {String}
      * @param type {TypeRef}
      * @returns {TypeRef} - Type passed in if `type` is checkable
      */
-    _errorIfNotCheckableType = (contextName, type) => {
+    errorIfNotCheckableType = (contextName, type) => {
         if (!isCheckableType(type)) {
             throw new Error (`${contextName} expects \`type\` to be of type \`String\` or \`Function\`.` +
                 `  Type received \`${typeOf(type)}\`.  Value \`${type}\`.`);
@@ -40,7 +40,7 @@ export const
      * @private
      */
     getTypeName = type => {
-        _errorIfNotCheckableType('getTypeName', type);
+        errorIfNotCheckableType('getTypeName', type);
         return type.name || type;
     },
 

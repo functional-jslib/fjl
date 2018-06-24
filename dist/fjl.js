@@ -717,7 +717,7 @@ let _appendMany = function _appendMany() {
     if (length(args)) {
         return apply(concat, args);
     }
-    throw new Error('`_appendMany` requires at least one arg.');
+    throw new Error('`appendMany` requires at least one arg.');
 };
 let _head = function _head(x) {
     return x[0];

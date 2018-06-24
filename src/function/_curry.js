@@ -3,8 +3,7 @@
  * @description Curry implementation with place holder concept (`__`).
  */
 
-import {apply, concat, map, filter, length} from '../jsPlatform/jsPlatform';
-import {fnOrError} from '../utils';
+import fnOrError from './fnOrError';
 
 /**
  * PlaceHolder (__) constructor.
@@ -41,12 +40,12 @@ function isPlaceHolder (instance) {
  * @returns {Array|*} - Returns passed in `list` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders (array, args) {
-    let out = map(element => {
+    let out = array.map(element => {
             if (!isPlaceHolder(element)) { return element; }
-            else if (length(args)) { return args.shift(); }
+            else if (args.length) { return args.shift(); }
             return element;
-        }, array);
-    return length(args) ? concat(out, args) : out;
+        });
+    return args.length ? out.concat(args) : out;
 }
 
 /**
@@ -71,11 +70,11 @@ export function curry_ (fn, ...argsToCurry) {
 export function curryN_ (executeArity, fn, ...curriedArgs) {
     return (...args) => {
         let concatedArgs = replacePlaceHolders(curriedArgs, args),
-            placeHolders = filter(isPlaceHolder, concatedArgs),
-            canBeCalled = (length(concatedArgs) - length(placeHolders) >= executeArity) || !executeArity;
+            placeHolders = concatedArgs.filter(isPlaceHolder),
+            canBeCalled = (concatedArgs.length - placeHolders.length >= executeArity) || !executeArity;
         return !canBeCalled ?
-            apply(curryN_, concat([executeArity, fnOrError(notFnErrPrefix, fn)], concatedArgs)) :
-            apply(fnOrError(notFnErrPrefix, fn), concatedArgs);
+            curryN_.apply(null, [executeArity, fnOrError(notFnErrPrefix, fn)].concat(concatedArgs)) :
+            fnOrError(notFnErrPrefix, fn).apply(null, concatedArgs);
     };
 }
 

@@ -2,19 +2,19 @@
  * List operators.
  * @module list
  */
-import {curry, curry2} from './function/function';
+import {curry, curry2} from './function';
 
 import {
-    _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr,
-    map, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose,
-    _subsequences, _swapped, _permutations, _foldl, _foldl1,
-    _foldr, _foldr1, _unfoldr, _mapAccumL, _mapAccumR, _iterate, _repeat,
-    _replicate, _cycle, _findIndex, _findIndices, _elemIndex, _elemIndices,
-    _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span,
-    _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup,
-    _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy,
-    _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith,
-    _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all,
+    append, appendMany, head, last, tail, init, uncons, unconsr,
+    map, concat, concatMap, reverse, intersperse, intercalate, transpose,
+    subsequences, swapped, permutations, foldl, foldl1,
+    foldr, foldr1, unfoldr, mapAccumL, mapAccumR, iterate, repeat,
+    replicate, cycle, findIndex, findIndices, elemIndex, elemIndices,
+    take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span,
+    breakOnList, at, find, filter, partition, elem, notElem, lookup,
+    isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy,
+    inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith,
+    zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, _all,
     _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1,
     _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy,
     _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference,
@@ -23,14 +23,14 @@ import {
 
 // Export single arity methods
 export {
-    _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN,
-    _concat as concat, _reverse as reverse, _transpose as transpose,
-    _subsequences as subsequences, _permutations as permutations,
-    _group as group, _tails as tails, _sum as sum, _product as product,
+    _and as and, _or as or, _not as not, zipN as zipN, unzip as unzip, unzipN as unzipN,
+    concat as concat, reverse as reverse, transpose as transpose,
+    subsequences as subsequences, permutations as permutations,
+    group as group, tails as tails, _sum as sum, _product as product,
     _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub,
-    _head as head, _last as last, _tail as tail, _init as init, _inits as inits,
-    _uncons as uncons, _unconsr as unconsr,
-    _swapped as swapped
+    head as head, last as last, tail as tail, init as init, inits as inits,
+    uncons as uncons, unconsr as unconsr,
+    swapped as swapped
 };
 
 export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';
@@ -49,7 +49,7 @@ export const
      * @param xs2 {Array|String|*} - list or list like.
      * @returns {Array|String|*} - Same type as list like passed in.
      */
-    append = curry(_append),
+    append = curry(append),
 
     /**
      * Append two or more lists, i.e., same as `append` but for two ore more lists.
@@ -61,7 +61,7 @@ export const
      * @param args ...{Array|String|*} - Lists or lists likes.
      * @returns {Array|String|*} - Same type as first list or list like passed in.
      */
-    appendMany = curry2(_appendMany),
+    appendMany = curry2(appendMany),
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -71,7 +71,7 @@ export const
      * @param foldableOfA {Array|String|*}
      * @returns {Array|String|*}
      */
-    concatMap = curry2(_concatMap),
+    concatMap = curry2(concatMap),
 
     /**
      * @function module:list.map
@@ -90,7 +90,7 @@ export const
      * @param arr {Array|String|*} - List.
      * @returns {Array|String|*}
      */
-    intersperse = curry(_intersperse),
+    intersperse = curry(intersperse),
 
     /**
      * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
@@ -100,7 +100,7 @@ export const
      * @param xss {Array|String|*}
      * @returns {Array|String|*}
      */
-    intercalate = curry(_intercalate),
+    intercalate = curry(intercalate),
 
     /**
      * Reduces a foldable (list etc.) with passed in function.
@@ -110,7 +110,7 @@ export const
      * @param functor {Array|String|*}
      * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
      */
-    foldl = curry(_foldl),
+    foldl = curry(foldl),
 
     /**
      * Reduces a foldable (list etc.) from right to left with passed in function.
@@ -120,7 +120,7 @@ export const
      * @param functor {Array|{reduce: {Function}}}
      * @returns {*} - Usually same type as aggregate (`zero`) (depends on `fn`).
      */
-    foldr = curry(_foldr),
+    foldr = curry(foldr),
 
     /**
      * Reduces a foldable (list etc.) with passed in function.
@@ -129,7 +129,7 @@ export const
      * @param functor {Array|{reduce: {Function}}}
      * @returns {*}
      */
-    foldl1 = curry(_foldl1),
+    foldl1 = curry(foldl1),
 
     /**
      * Reduces a foldable (list etc.) from right to left with passed in function.
@@ -138,7 +138,7 @@ export const
      * @param functor {Array|{reduce: {Function}}}
      * @returns {*}
      */
-    foldr1 = curry(_foldr1),
+    foldr1 = curry(foldr1),
 
     /**
      * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
@@ -149,7 +149,7 @@ export const
      * @param xs {Array|String|*} - list type.
      * @return {Array} - [aggregated, list]
      */
-    mapAccumL = curry(_mapAccumL),
+    mapAccumL = curry(mapAccumL),
 
     /**
      * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
@@ -160,7 +160,7 @@ export const
      * @param xs {Array|String|*} - list type.
      * @return {Array} - [aggregated, list]
      */
-    mapAccumR = curry(_mapAccumR),
+    mapAccumR = curry(mapAccumR),
 
     /**
      * Iterate on value (`x`) with `op` up to `limit`.
@@ -170,7 +170,7 @@ export const
      * @param x {*} - Starting point.
      * @returns {*}
      */
-    iterate = curry(_iterate),
+    iterate = curry(iterate),
 
     /**
      * Repeats `x` `limit` number of times.
@@ -179,7 +179,7 @@ export const
      * @param x {*}
      * @return {Array}
      */
-    repeat = curry(_repeat),
+    repeat = curry(repeat),
 
     /**
      * Same as `repeat` due to the nature of javascript (see haskell version for usage).
@@ -188,7 +188,7 @@ export const
      * @param x {*}
      * @return {Array}
      */
-    replicate = curry(_replicate),
+    replicate = curry(replicate),
 
     /**
      * Replicates a list `limit` number of times and appends the results (concat)
@@ -197,7 +197,7 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    cycle = curry(_cycle),
+    cycle = curry(cycle),
 
     /**
      * Unfolds a value into a list of somethings.
@@ -207,7 +207,7 @@ export const
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
      */
-    unfoldr = curry(_unfoldr),
+    unfoldr = curry(unfoldr),
 
     /**
      * Finds index in string or list (alias for `findIndex`).
@@ -216,7 +216,7 @@ export const
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndex = curry(_findIndex),
+    findIndex = curry(findIndex),
 
     /**
      * @function module:list.findIndices
@@ -224,7 +224,7 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
      */
-    findIndices = curry(_findIndices),
+    findIndices = curry(findIndices),
 
     /**
      * @function module:list.elemIndex
@@ -232,7 +232,7 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    elemIndex = curry(_elemIndex),
+    elemIndex = curry(elemIndex),
 
     /**
      * @function module:list.elemIndices
@@ -240,7 +240,7 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    elemIndices = curry(_elemIndices),
+    elemIndices = curry(elemIndices),
 
     /**
      * Takes `n` items from start of list to `limit` (exclusive).
@@ -249,7 +249,7 @@ export const
      * @param limit {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    take = curry(_take),
+    take = curry(take),
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
@@ -258,7 +258,7 @@ export const
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
      */
-    drop = curry(_drop),
+    drop = curry(drop),
 
     /**
      * Splits `x` in two at given `index` (exclusive (includes element/character at
@@ -268,7 +268,7 @@ export const
      * @param list {Array|String|*} - functor (list or string) to split.
      * @returns {Array} - Array of whatever type `x` was when passed in
      */
-    splitAt = curry(_splitAt),
+    splitAt = curry(splitAt),
 
     /**
      * Gives an list with passed elements while predicate was true.
@@ -277,7 +277,7 @@ export const
      * @param list {Array|String}
      * @returns {Array}
      */
-    takeWhile = curry(_takeWhile),
+    takeWhile = curry(takeWhile),
 
     /**
      * Returns an list without elements that match predicate.
@@ -287,7 +287,7 @@ export const
      * @refactor
      * @returns {Array|String}
      */
-    dropWhile = curry(_dropWhile),
+    dropWhile = curry(dropWhile),
 
     /**
      * @function module:list.dropWhileEnd
@@ -296,7 +296,7 @@ export const
      * @refactor
      * @returns {Array|String}
      */
-    dropWhileEnd = curry(_dropWhileEnd),
+    dropWhileEnd = curry(dropWhileEnd),
 
     /**
      * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
@@ -307,7 +307,7 @@ export const
      * @param list {Array|String|*} - Predicate<item, index, originalArrayOrString>
      * @returns {Array|String|*} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
-    span = curry(_span),
+    span = curry(span),
 
     /**
      * breakOnList, applied to a predicate p and a list xs, returns a tuple
@@ -325,7 +325,7 @@ export const
      * @param list {Array|String|*}
      * @returns {Array}
      */
-    breakOnList = curry(_breakOnList),
+    breakOnList = curry(breakOnList),
 
     /**
      * @function module:list.at
@@ -333,7 +333,7 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    at = curry(_at),
+    at = curry(at),
 
     /**
      * @function module:list.find
@@ -341,9 +341,9 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
      */
-    find = curry(_find),
+    find = curry(find),
 
-    filter = curry(_filter),
+    filter = curry(filter),
 
     /**
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
@@ -354,7 +354,7 @@ export const
      * @param list {Array|String|*}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
-    partition = curry(_partition),
+    partition = curry(partition),
 
     /**
      * Returns a boolean indicating whether an element exists in given structure of elements.
@@ -363,7 +363,7 @@ export const
      * @param xs {Array}
      * @returns {Boolean}
      */
-    elem = curry(_elem),
+    elem = curry(elem),
 
     /**
      * The opposite of `elem` - Returns a boolean indicating whether an element exists in given list.
@@ -372,14 +372,14 @@ export const
      * @param xs {Array}
      * @returns {Boolean}
      */
-    notElem = curry2(_notElem),
+    notElem = curry2(notElem),
 
     /**
-     * Same as list._at - Returns property value at key/indice.
-     * @function module:object._lookup
+     * Same as list.at - Returns property value at key/indice.
+     * @function module:object.lookup
      * @type {module:object.prop}
      */
-    lookup = curry(_lookup),
+    lookup = curry(lookup),
 
     /**
      * Checks if list `xs1` is a prefix of list `xs2`
@@ -388,7 +388,7 @@ export const
      * @param xs2 {Array|String|*}
      * @returns {boolean}
      */
-    isPrefixOf = curry(_isPrefixOf),
+    isPrefixOf = curry(isPrefixOf),
 
     /**
      * Checks if list `xs1` is a suffix of list `xs2`
@@ -397,7 +397,7 @@ export const
      * @param xs2 {Array|String|*}
      * @returns {boolean}
      */
-    isSuffixOf = curry(_isSuffixOf),
+    isSuffixOf = curry(isSuffixOf),
 
     /**
      * Checks if list `xs1` is an infix of list `xs2`
@@ -406,7 +406,7 @@ export const
      * @param xs2 {Array|String|*}
      * @returns {boolean}
      */
-    isInfixOf = curry(_isInfixOf),
+    isInfixOf = curry(isInfixOf),
 
     /**
      * Checks if list `xs1` is a sub-sequence of list `xs2`
@@ -415,7 +415,7 @@ export const
      * @param xs2 {Array|String|*}
      * @returns {boolean}
      */
-    isSubsequenceOf = curry(_isSubsequenceOf),
+    isSubsequenceOf = curry(isSubsequenceOf),
 
     /**
      * Allows you to group items in a list based on your supplied equality check.
@@ -426,7 +426,7 @@ export const
      * @param xs {Array|String|*}
      * @returns {*}
      */
-    groupBy = curry(_groupBy),
+    groupBy = curry(groupBy),
 
     /**
      * Strips prefix list from given list
@@ -435,7 +435,7 @@ export const
      * @param list {Array|string|*}
      * @returns {Array|*}
      */
-    stripPrefix = curry(_stripPrefix),
+    stripPrefix = curry(stripPrefix),
 
     /**
      * zip takes two lists and returns a list of corresponding pairs.
@@ -446,7 +446,7 @@ export const
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip = curry(_zip),
+    zip = curry(zip),
 
     /**
      * @haskellType `zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]`
@@ -456,7 +456,7 @@ export const
      * @param arr3 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip3 = curry(_zip3),
+    zip3 = curry(zip3),
 
     /**
      * @haskellType `zip4 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
@@ -467,7 +467,7 @@ export const
      * @param arr4 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip4 = curry(_zip4),
+    zip4 = curry(zip4),
 
     /**
      * @haskellType `zip5 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
@@ -479,7 +479,7 @@ export const
      * @param arr5 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip5 = curry(_zip5),
+    zip5 = curry(zip5),
 
     /**
      * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
@@ -502,7 +502,7 @@ export const
      * @param xs2 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith = curry(_zipWith),
+    zipWith = curry(zipWith),
 
     /**
      * Zips all given lists with tupling function. Note: Haskell types do not have
@@ -517,7 +517,7 @@ export const
      * @param lists ...{Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWithN = curry(_zipWithN),
+    zipWithN = curry(zipWithN),
 
     /**
      * Zips 3 lists with tupling function.
@@ -531,7 +531,7 @@ export const
      * @param xs3 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith3 = curry(_zipWith3),
+    zipWith3 = curry(zipWith3),
 
     /**
      * Zips 4 lists with tupling function.
@@ -546,7 +546,7 @@ export const
      * @param xs4 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith4 = curry(_zipWith4),
+    zipWith4 = curry(zipWith4),
 
     /**
      * Zips 5 lists.
@@ -562,7 +562,7 @@ export const
      * @param xs5 {Array|String|*}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith5 = curry(_zipWith5),
+    zipWith5 = curry(zipWith5),
 
     /**
      * Returns true if any item in container passes predicate `p`.
@@ -571,7 +571,7 @@ export const
      * @param xs {Array|String}
      * @returns {Boolean}
      */
-    any = curry(_any),
+    any = curry(any),
 
     /**
      * Returns true if all items in container pass predicate `p`.
