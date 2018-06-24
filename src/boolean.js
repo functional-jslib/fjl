@@ -1,13 +1,13 @@
 /**
  * Created by elyde on 7/15/2017.
- * @module booleanOps
+ * @module boolean
  */
 
 export const
 
     /**
      * Returns whether `value` is 'truthy' or not
-     * @function module:booleanOps.isTruthy
+     * @function module:boolean.isTruthy
      * @param value
      * @returns {Boolean}
      */
@@ -15,7 +15,7 @@ export const
 
     /**
      * Returns whether `value` is 'falsy' or not
-     * @function module:booleanOps.isFalsy
+     * @function module:boolean.isFalsy
      * @param value
      * @returns {Boolean}
      */
@@ -23,14 +23,14 @@ export const
 
     /**
      * Returns `true`.
-     * @function module:booleanOps.alwaysTrue
+     * @function module:boolean.alwaysTrue
      * @returns {Boolean}
      */
     alwaysTrue = () => true,
 
     /**
      * Returns `false`.
-     * @function module:booleanOps.alwaysFalse
+     * @function module:boolean.alwaysFalse
      * @returns {Boolean}
      */
     alwaysFalse = () => false;

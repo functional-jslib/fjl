@@ -6,7 +6,7 @@
 import {apply}              from '../_jsPlatform/_function';  // un-curried version
 import {slice}              from '../_jsPlatform/_list';      // un-curried version good for both strings and arrays
 import {length}             from '../_jsPlatform/_object';
-import {alwaysFalse}        from '../../booleanOps';
+import {alwaysFalse}        from '../../boolean';
 import _map                 from './_map';
 
 export * from './_aggregation';

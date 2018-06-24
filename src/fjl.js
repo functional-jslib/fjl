@@ -11,7 +11,7 @@
  * @module fjl
  */
 export * from './object';
-export * from './booleanOps';
+export * from './boolean';
 export * from './function';
 export * from './list';
 export * from './string';

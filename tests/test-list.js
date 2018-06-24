@@ -9,7 +9,7 @@ import {assert, expect} from 'chai';
 import {__, compose, negateP} from '../src/function';
 import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/object';
-import {isTruthy} from '../src/booleanOps';
+import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase}
     from '../src/string';
 import {

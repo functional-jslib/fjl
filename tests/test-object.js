@@ -162,11 +162,11 @@ describe ('#object', function () {
     });
 
     describe('#isBoolean', function () {
-        it ('should return `true` when given value is a booleanOps', function () {
+        it ('should return `true` when given value is a boolean', function () {
             expectTrue(isBoolean(true));
             expectTrue(isBoolean(false));
         });
-        it ('should return `false` when given value is not a booleanOps', function () {
+        it ('should return `false` when given value is not a boolean', function () {
             expectFalse(isBoolean(function () {}));
         });
     });

@@ -11,7 +11,7 @@ import {
 
 import {apply}              from '../_jsPlatform/_function';
 import {negateP, negateF}   from '../_function/_negate';
-import {isTruthy, isFalsy}  from '../../booleanOps';
+import {isTruthy, isFalsy}  from '../../boolean';
 import {_prop, length}       from '../_object/_object';
 import _map                 from './_map';
 
