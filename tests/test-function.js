@@ -10,11 +10,11 @@ import {
     curry_, curry2_, curry3_, curry5_, curryN_,
     flip, flipN, until, id
 }
-from '../src/functionOps';
+from '../src/function';
 
 import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
 
-describe ('#functionOps', function () {
+describe ('#function', function () {
 
     // @todo implement more extensive tests later
     describe ('#call', function () {

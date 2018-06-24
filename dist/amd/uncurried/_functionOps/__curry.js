@@ -65,7 +65,7 @@ define(['exports', '../_jsPlatform/_jsPlatform', '../_object/_utils'], function 
 
     /**
      * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
-     * @function module:_functionOps.curry_
+     * @function module:_function.curry_
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -75,12 +75,12 @@ define(['exports', '../_jsPlatform/_jsPlatform', '../_object/_utils'], function 
     }
 
     /**
-     * Curries a _functionOps up to given arity also enforces arity via placeholder values (`__`).
-     * @function module:_functionOps.curryN_
+     * Curries a _function up to given arity also enforces arity via placeholder values (`__`).
+     * @function module:_function.curryN_
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
-     * @returns {Function} - Passed in _functionOps wrapped in a _functionOps for currying.
+     * @returns {Function} - Passed in _function wrapped in a _function for currying.
      */
     function curryN_(executeArity, fn, ...curriedArgs) {
         return (...args) => {
@@ -100,8 +100,8 @@ define(['exports', '../_jsPlatform/_jsPlatform', '../_object/_utils'], function 
 
 
     /**
-     * Curries a _functionOps up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call _functionOps until 2 or more args).
-     * @function module:_functionOps.curry2_
+     * Curries a _function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call _function until 2 or more args).
+     * @function module:_function.curry2_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -109,8 +109,8 @@ define(['exports', '../_jsPlatform/_jsPlatform', '../_object/_utils'], function 
 
 
     /**
-     * Curries a _functionOps up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call _functionOps until 3 or more args).
-     * @function module:_functionOps.curry3_
+     * Curries a _function up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call _function until 3 or more args).
+     * @function module:_function.curry3_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -118,8 +118,8 @@ define(['exports', '../_jsPlatform/_jsPlatform', '../_object/_utils'], function 
 
 
     /**
-     * Curries a _functionOps up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call _functionOps until 4 or more args).
-     * @function module:_functionOps.curry4_
+     * Curries a _function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call _function until 4 or more args).
+     * @function module:_function.curry4_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -127,8 +127,8 @@ define(['exports', '../_jsPlatform/_jsPlatform', '../_object/_utils'], function 
 
 
     /**
-     * Curries a _functionOps up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call _functionOps until 5 or more args).
-     * @function module:_functionOps.curry5_
+     * Curries a _function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call _function until 5 or more args).
+     * @function module:_function.curry5_
      * @param fn {Function}
      * @returns {Function}
      */

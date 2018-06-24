@@ -32,7 +32,7 @@ function renderNode(moduleName, memberName, padLeft, docsPath) {
 
     // ~~ REMOVE FROM HERE ~~
     // Added this here temporarily but this should be pushed to it's own stream
-    // and should be contained in an appropriate _functionOps and/or class.
+    // and should be contained in an appropriate _function and/or class.
         fileName = name.replace(/\s/g, '-'),
         docFilePath = path.join(docsPath, fileName + '.md');
     // If doc file doesn't exist, generate an empty file for it

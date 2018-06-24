@@ -1,7 +1,7 @@
 /**
  * @module object
  */
-import {curry, curry2} from './uncurried/_functionOps/_curry';
+import {curry, curry2} from './uncurried/_function/_curry';
 import {_fromNamespace} from './uncurried/_object/_fromNamespace';
 import {_instanceOf, _hasOwnProperty, _assign} from './uncurried/_jsPlatform/_object';
 import {_prop, _isType} from './uncurried/_object/_object';

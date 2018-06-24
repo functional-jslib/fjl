@@ -131,7 +131,7 @@ In javascript:
 - `cycle` becomes `cycle :: Int -> [a] -> [a]`
 - `iterate` becomes `iterate :: Int -> (a -> a) -> [a]`
 
-#### `functionOps`
+#### `function`
 The methods that comprise function operations are:
 ```
 apply, call, curry, curry2, curry3, curry4, curry5, curryN,
@@ -210,7 +210,7 @@ https://functional-jslib.github.io/fjl/
     - Sources are divided by un-curried definitions ('./src/uncurried')
     and curried definitions (files in './src/**/*' except the ones in './src/uncurried' (of course)).
     - './src/jsPlatform' and './src/uncurried/jsPlatform' are native platform specific method versions
-     pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (list, functionOps etc.).
+     pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (list, function etc.).
     - About non-conformity to full modularity (one-function-per-file):
       The library could have been written this way initially but wasn't, specifically to make development on the library easier
       (though it can be argued that development is actually more difficult this way,

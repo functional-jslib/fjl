@@ -5,7 +5,7 @@
  * @private
  */
 
-import {curry} from '../uncurried/_functionOps/_curry';
+import {curry} from '../uncurried/_function/_curry';
 
 import {
     concat as concat_,

@@ -1,5 +1,5 @@
 /**
- * @memberOf _functionOps
+ * @memberOf _function
  */
 
 import {apply} from '../_jsPlatform/_function';
@@ -44,7 +44,7 @@ export const
 
     /**
      * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
-     * @function module:_functionOps.negateP
+     * @function module:_function.negateP
      * @param fn {Function}
      * @returns {Function}
      */
@@ -52,7 +52,7 @@ export const
 
     /**
      * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-     * @function module:_functionOps.negateFMany
+     * @function module:_function.negateFMany
      * @param fn {Function}
      * @returns {Function}
      */

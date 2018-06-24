@@ -5,7 +5,7 @@
  */
 import {typeOf} from './_typeOf';
 import {isset, _isType, isString, isArray, isFunction} from './_is';
-import {curry, curry4} from '../_functionOps/_curry';
+import {curry, curry4} from '../_function/_curry';
 
 export const
 

@@ -1,11 +1,11 @@
 /**
- * @memberOf _functionOps
+ * @memberOf _function
  */
 
 /**
  * Returns passed in parameter.
  * @haskellType `id :: a -> a`
- * @function module:functionOps.id
+ * @function module:function.id
  * @param x {*}
  * @returns {*}
  */

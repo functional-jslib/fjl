@@ -1,9 +1,9 @@
 /**
  * Function operations: `
- * @module functionOps
+ * @module function
  */
 
-import {curry, curry2, curry3} from './uncurried/_functionOps/_curry';
+import {curry, curry2, curry3} from './uncurried/_function/_curry';
 
 import {
     apply as _apply,
@@ -12,7 +12,7 @@ import {
 
 import {
     until as _until
-} from './uncurried/_functionOps/_until';
+} from './uncurried/_function/_until';
 
 import {
     flip as _flip,
@@ -20,13 +20,13 @@ import {
     flip3 as _flip3,
     flip4 as _flip4,
     flip5 as _flip5
-} from './uncurried/_functionOps/_flip';
+} from './uncurried/_function/_flip';
 
-export * from './uncurried/_functionOps/_curry';
-export * from './uncurried/_functionOps/__curry';
-export * from './uncurried/_functionOps/_negate';
-export * from './uncurried/_functionOps/_id';
-export * from './uncurried/_functionOps/_compose';
+export * from './uncurried/_function/_curry';
+export * from './uncurried/_function/__curry';
+export * from './uncurried/_function/_negate';
+export * from './uncurried/_function/_id';
+export * from './uncurried/_function/_compose';
 
 export {_apply, _call, _until, _flip, _flip3, _flip4, _flip5,  _flipN};
 
@@ -34,7 +34,7 @@ export const
 
     /**
      * Functional `apply` function (takes no context).
-     * @function module:functionOps.apply
+     * @function module:function.apply
      * @param fn {Function}
      * @param [args] {Array<*>}
      * @returns {*}
@@ -44,7 +44,7 @@ export const
 
     /**
      * Functional `call` function (takes no context).
-     * @function module:functionOps.call
+     * @function module:function.call
      * @param fn {Function}
      * @param [args] {...*}
      * @returns {*}
@@ -54,7 +54,7 @@ export const
 
     /**
      * Run `operation` `until` predicate returns `true`.
-     * @function module:functionOps.until
+     * @function module:function.until
      * @param predicate {Function} :: a -> Boolean
      * @param operation {Function} :: a -> a
      * @param typeInstance {*} :: * - A monoidal zero or some starting point.
@@ -83,7 +83,7 @@ export const
 
     /**
      * Returns a function that receives 3 args in reverse (3, 2, 1 etc.).
-     * @function module:functionOps.flip3
+     * @function module:function.flip3
      * @param fn {Function} - Function<a, b, c>
      * @returns {Function} - Function<c, b, a>
      * @curried
@@ -92,7 +92,7 @@ export const
 
     /**
      * Returns a function that receives 4 args in reverse (4, 3, 2, 1 etc.).
-     * @function module:functionOps.flip4
+     * @function module:function.flip4
      * @param fn {Function} - Function<a, b, c, d>
      * @returns {Function} - Function<d, c, b, a>
      * @curried
@@ -101,7 +101,7 @@ export const
 
     /**
      * Returns a function that receives 5 args in reverse (5, 4, 3, 2, 1 etc.).
-     * @function module:functionOps.flip5
+     * @function module:function.flip5
      * @param fn {Function} - Function<a, b, c, d, e>
      * @returns {Function} - Function<e, d, c, b, a>
      * @curried
@@ -110,7 +110,7 @@ export const
 
     /**
      * Curries a function based on it's defined arity (argument's arrayOps expected length).
-     * @function module:functionOps.curry
+     * @function module:function.curry
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -119,7 +119,7 @@ export const
 
     /**
      * Curries a function up to a given arity.
-     * @function module:functionOps.curryN
+     * @function module:function.curryN
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*}
@@ -128,35 +128,35 @@ export const
 
     /**
      * Curries a function up to an arity of 2 (won't call function until 2 or more args).
-     * @function module:functionOps.curry2
+     * @function module:function.curry2
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Curries a function up to an arity of 3 (won't call function until 3 or more args).
-     * @function module:functionOps.curry3
+     * @function module:function.curry3
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Curries a function up to an arity of 4 (won't call function until 4 or more args).
-     * @function module:functionOps.curry4
+     * @function module:function.curry4
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Curries a function up to an arity of 5 (won't call function until 5 or more args).
-     * @function module:functionOps.curry5
+     * @function module:function.curry5
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
-     * @function module:functionOps.curry_
+     * @function module:function.curry_
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -164,7 +164,7 @@ export const
 
     /**
      * Curries a function up to given arity also enforces arity via placeholder values (`__`).
-     * @function module:functionOps.curryN_
+     * @function module:function.curryN_
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
@@ -173,14 +173,14 @@ export const
 
     /**
      * Place holder object (frozen) used by curry.
-     * @memberOf functionOps
+     * @memberOf function
      * @type {PlaceHolder}
      */
 
     /**
      * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers))
      * (won't call function until 2 or more args (not counting placeholder (`__`) value).
-     * @function module:functionOps.curry2_
+     * @function module:function.curry2_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -188,7 +188,7 @@ export const
     /**
      * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers))
      * (won't call function until 3 or more args (not counting placeholder (`__`) value).
-     * @function module:functionOps.curry3_
+     * @function module:function.curry3_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -196,7 +196,7 @@ export const
     /**
      * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))
      * (won't call function until 4 or more args (not counting placeholder (`__`) value).
-     * @function module:functionOps.curry4_
+     * @function module:function.curry4_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -204,7 +204,7 @@ export const
     /**
      * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))
      * (won't call function until 5 or more args (not counting placeholder (`__`) value).
-     * @function module:functionOps.curry5_
+     * @function module:function.curry5_
      * @param fn {Function}
      * @returns {Function}
      */
@@ -212,7 +212,7 @@ export const
     /**
      * Takes a function that takes two parameters and returns a negated version of given
      * function.
-     * @function module:functionOps.negateF
+     * @function module:function.negateF
      * @param fn {Function}
      * @returns {Function}
      */
@@ -220,7 +220,7 @@ export const
     /**
      * Takes a function that takes three parameters and returns a
      * negated version of given function.
-     * @function module:functionOps.negateF3
+     * @function module:function.negateF3
      * @param fn {Function}
      * @returns {Function}
      */
@@ -228,7 +228,7 @@ export const
     /**
      * Takes a function that takes four parameters and returns a
      * negated version of given function.
-     * @function module:functionOps.negateF4
+     * @function module:function.negateF4
      * @param fn {Function}
      * @returns {Function}
      */
@@ -236,21 +236,21 @@ export const
     /**
      * Takes a function that takes four parameters and returns a
      * negated version of given function.
-     * @function module:functionOps.negateF5
+     * @function module:function.negateF5
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Negates a javascript-'generic' predicate; `Function<element, index, list>`.
-     * @function module:functionOps.negateP
+     * @function module:function.negateP
      * @param fn {Function}
      * @returns {Function}
      */
 
     /**
      * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-     * @function module:functionOps.negateFMany
+     * @function module:function.negateFMany
      * @param fn {Function}
      * @returns {Function}
      */
@@ -258,7 +258,7 @@ export const
     /**
      * Returns passed in parameter.
      * @haskellType `id :: a -> a`
-     * @function module:functionOps.id
+     * @function module:function.id
      * @param x {*}
      * @returns {*}
      */
@@ -266,7 +266,7 @@ export const
     /**
      * Composes all functions passed in from right to left passing each functions return value to
      * the function on the left of itself.
-     * @function module:functionOps.compose
+     * @function module:function.compose
      * @param args {...Function}
      * @returns {Function}
      */

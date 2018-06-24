@@ -12,7 +12,7 @@
  */
 export * from './object';
 export * from './booleanOps';
-export * from './functionOps';
+export * from './function';
 export * from './list';
 export * from './string';
 export * from './utils';

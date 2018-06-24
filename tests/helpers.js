@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import {curry2_, __, compose} from '../src/functionOps';
+import {curry2_, __, compose} from '../src/function';
 
 import {expect} from 'chai';
 

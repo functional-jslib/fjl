@@ -5,7 +5,7 @@
  * Created by elyde on 11/25/2016.
  */
 import {assert, expect} from 'chai';
-import {apply} from '../src/functionOps';
+import {apply} from '../src/function';
 import {
     objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,

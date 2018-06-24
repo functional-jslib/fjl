@@ -4,7 +4,7 @@
  * @private
  */
 
-import {curry} from '../uncurried/_functionOps/_curry';
+import {curry} from '../uncurried/_function/_curry';
 
 import {split as _split} from '../uncurried/_jsPlatform/_string';
 

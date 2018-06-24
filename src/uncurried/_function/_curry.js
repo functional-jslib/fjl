@@ -1,7 +1,7 @@
 /**
  * @author elydelacruz
  * @created 12/6/2016.
- * @memberOf _functionOps
+ * @memberOf _function
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 import {apply, length, concat} from '../_jsPlatform/_jsPlatform';
@@ -12,8 +12,8 @@ const notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 export const
 
     /**
-     * Curries a functionOps based on it's defined arity (argument's arrayOps expected length).
-     * @function module:_functionOps.curry
+     * Curries a function based on it's defined arity (argument's arrayOps expected length).
+     * @function module:_function.curry
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
@@ -21,8 +21,8 @@ export const
     curry = (fn, ...argsToCurry) => curryN(fnOrError(notFnErrPrefix, fn).length, fn, ...argsToCurry),
 
     /**
-     * Curries a functionOps up to a given arity.
-     * @function module:_functionOps.curryN
+     * Curries a function up to a given arity.
+     * @function module:_function.curryN
      * @param executeArity {Number}
      * @param fn {Function}
      * @param curriedArgs {...*}
@@ -38,32 +38,32 @@ export const
     },
 
     /**
-     * Curries a _functionOps up to an arity of 2 (won't call _functionOps until 2 or more args).
-     * @function module:_functionOps.curry2
+     * Curries a _function up to an arity of 2 (won't call _function until 2 or more args).
+     * @function module:_function.curry2
      * @param fn {Function}
      * @returns {Function}
      */
     curry2 = fn => curryN(2, fn),
 
     /**
-     * Curries a _functionOps up to an arity of 3 (won't call _functionOps until 3 or more args).
-     * @function module:_functionOps.curry3
+     * Curries a _function up to an arity of 3 (won't call _function until 3 or more args).
+     * @function module:_function.curry3
      * @param fn {Function}
      * @returns {Function}
      */
     curry3 = fn => curryN(3, fn),
 
     /**
-     * Curries a _functionOps up to an arity of 4 (won't call _functionOps until 4 or more args).
-     * @function module:_functionOps.curry4
+     * Curries a _function up to an arity of 4 (won't call _function until 4 or more args).
+     * @function module:_function.curry4
      * @param fn {Function}
      * @returns {Function}
      */
     curry4 = fn => curryN(4, fn),
 
     /**
-     * Curries a _functionOps up to an arity of 5 (won't call _functionOps until 5 or more args).
-     * @function module:_functionOps.curry5
+     * Curries a _function up to an arity of 5 (won't call _function until 5 or more args).
+     * @function module:_function.curry5
      * @param fn {Function}
      * @returns {Function}
      */

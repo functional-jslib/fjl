@@ -27,7 +27,7 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
     const
 
     /**
-     * Returns whether a value is a _functionOps or not.
+     * Returns whether a value is a _function or not.
      * @function module:objectOps._isFunction
      * @param value {*}
      * @returns {Boolean}
@@ -37,10 +37,10 @@ define(['exports', './_typeOf', '../_jsPlatform/_object'], function (exports, _t
 
     /**
      * Type checker.  Note** The `Type` passed in, if a constructor, should
-     * be a named constructor/_functionOps-instance;  E.g.,
+     * be a named constructor/_function-instance;  E.g.,
      * ```
-     *  _functionOps SomeName () {} // or
-     *  var SomeName = _functionOps SomeName () {} // or
+     *  _function SomeName () {} // or
+     *  var SomeName = _function SomeName () {} // or
      *  class SomeName {}
      * ```
      * @function module:objectOps._isType

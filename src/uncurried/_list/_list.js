@@ -10,7 +10,7 @@ import {
                             from '../_jsPlatform/_list';
 
 import {apply}              from '../_jsPlatform/_function';
-import {negateP, negateF}   from '../_functionOps/_negate';
+import {negateP, negateF}   from '../_function/_negate';
 import {isTruthy, isFalsy}  from '../../booleanOps';
 import {_prop, length}       from '../_object/_object';
 import _map                 from './_map';

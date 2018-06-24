@@ -1,5 +1,5 @@
 /**
- * @memberOf _functionOps
+ * @memberOf _function
  * @author elydelacruz
  * @created 12/6/2016.
  * @description Curry implementation with place holder concept (`__`).
@@ -53,8 +53,8 @@ function replacePlaceHolders (array, args) {
 }
 
 /**
- * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @function module:_functionOps.curry_
+ * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
+ * @function module:_function.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -64,12 +64,12 @@ export function curry_ (fn, ...argsToCurry) {
 }
 
 /**
- * Curries a _functionOps up to given arity also enforces arity via placeholder values (`__`).
- * @function module:_functionOps.curryN_
+ * Curries a _function up to given arity also enforces arity via placeholder values (`__`).
+ * @function module:_function.curryN_
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
- * @returns {Function} - Passed in _functionOps wrapped in a _functionOps for currying.
+ * @returns {Function} - Passed in _function wrapped in a _function for currying.
  */
 export function curryN_ (executeArity, fn, ...curriedArgs) {
     return (...args) => {
@@ -84,38 +84,38 @@ export function curryN_ (executeArity, fn, ...curriedArgs) {
 
 /**
  * Place holder object (frozen) used by curry.
- * @memberOf _functionOps
+ * @memberOf _function
  * @type {PlaceHolder}
  */
 export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance,
 
     /**
-     * Curries a _functionOps up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call _functionOps until 2 or more args).
-     * @function module:_functionOps.curry2_
+     * Curries a _function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call _function until 2 or more args).
+     * @function module:_function.curry2_
      * @param fn {Function}
      * @returns {Function}
      */
     curry2_ = fn => curryN_(2, fn),
 
     /**
-     * Curries a _functionOps up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call _functionOps until 3 or more args).
-     * @function module:_functionOps.curry3_
+     * Curries a _function up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call _function until 3 or more args).
+     * @function module:_function.curry3_
      * @param fn {Function}
      * @returns {Function}
      */
     curry3_ = fn => curryN_(3, fn),
 
     /**
-     * Curries a _functionOps up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call _functionOps until 4 or more args).
-     * @function module:_functionOps.curry4_
+     * Curries a _function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call _function until 4 or more args).
+     * @function module:_function.curry4_
      * @param fn {Function}
      * @returns {Function}
      */
     curry4_ = fn => curryN_(4, fn),
 
     /**
-     * Curries a _functionOps up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call _functionOps until 5 or more args).
-     * @function module:_functionOps.curry5_
+     * Curries a _function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call _function until 5 or more args).
+     * @function module:_function.curry5_
      * @param fn {Function}
      * @returns {Function}
      */

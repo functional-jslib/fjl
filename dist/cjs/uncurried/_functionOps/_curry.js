@@ -21,7 +21,7 @@ var
 
 /**
  * Curries a functionOps based on it's defined arity (argument's arrayOps expected length).
- * @function module:_functionOps.curry
+ * @function module:_function.curry
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -37,7 +37,7 @@ curry = exports.curry = function curry(fn) {
 
 /**
  * Curries a functionOps up to a given arity.
- * @function module:_functionOps.curryN
+ * @function module:_function.curryN
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*}
@@ -61,8 +61,8 @@ curryN = exports.curryN = function curryN(executeArity, fn) {
 
 
 /**
- * Curries a _functionOps up to an arity of 2 (won't call _functionOps until 2 or more args).
- * @function module:_functionOps.curry2
+ * Curries a _function up to an arity of 2 (won't call _function until 2 or more args).
+ * @function module:_function.curry2
  * @param fn {Function}
  * @returns {Function}
  */
@@ -72,8 +72,8 @@ curry2 = exports.curry2 = function curry2(fn) {
 
 
 /**
- * Curries a _functionOps up to an arity of 3 (won't call _functionOps until 3 or more args).
- * @function module:_functionOps.curry3
+ * Curries a _function up to an arity of 3 (won't call _function until 3 or more args).
+ * @function module:_function.curry3
  * @param fn {Function}
  * @returns {Function}
  */
@@ -83,8 +83,8 @@ curry3 = exports.curry3 = function curry3(fn) {
 
 
 /**
- * Curries a _functionOps up to an arity of 4 (won't call _functionOps until 4 or more args).
- * @function module:_functionOps.curry4
+ * Curries a _function up to an arity of 4 (won't call _function until 4 or more args).
+ * @function module:_function.curry4
  * @param fn {Function}
  * @returns {Function}
  */
@@ -94,8 +94,8 @@ curry4 = exports.curry4 = function curry4(fn) {
 
 
 /**
- * Curries a _functionOps up to an arity of 5 (won't call _functionOps until 5 or more args).
- * @function module:_functionOps.curry5
+ * Curries a _function up to an arity of 5 (won't call _function until 5 or more args).
+ * @function module:_function.curry5
  * @param fn {Function}
  * @returns {Function}
  */

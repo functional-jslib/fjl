@@ -20,7 +20,7 @@
 
     /**
      * Run `operation` until predicate returns `true`.
-     * @function module:_functionOps._until
+     * @function module:_function._until
      * @param predicate {Function} :: a -> Boolean
      * @param operation {Function} :: a -> a
      * @param typeInstance {*} :: * - A monoidal zero or some starting point.

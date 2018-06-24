@@ -6,7 +6,7 @@
  */
 import {intercalate, map, filter} from './list';
 import {split} from './jsPlatform/string';
-import {compose} from './uncurried/_functionOps/_compose';
+import {compose} from './uncurried/_function/_compose';
 import {join} from './jsPlatform/array';
 import {_errorIfNotType} from './uncurried/_object/_errorThrowing';
 

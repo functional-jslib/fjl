@@ -2,7 +2,7 @@
  * List operators.
  * @module list
  */
-import {curry, curry2} from './uncurried/_functionOps/_functionOps';
+import {curry, curry2} from './uncurried/_function/_function';
 
 import {
     _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr,

@@ -29,7 +29,7 @@ var _String = String.name,
     _Undefined = 'Undefined';
 
 /**
- * Returns whether a value is a _functionOps or not.
+ * Returns whether a value is a _function or not.
  * @function module:objectOps._isFunction
  * @param value {*}
  * @returns {Boolean}

@@ -6,7 +6,7 @@
  */
 
 import {assert, expect} from 'chai';
-import {__, compose, negateP} from '../src/functionOps';
+import {__, compose, negateP} from '../src/function';
 import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/object';
 import {isTruthy} from '../src/booleanOps';
@@ -737,7 +737,7 @@ describe ('#list', function () {
     });
 
     describe ('#mapAccumL', function () {
-        it ('should map a _functionOps/operation on every item of a list and it should return a tuple containing the ' +
+        it ('should map a _function/operation on every item of a list and it should return a tuple containing the ' +
             'accumulated value and the an instance of passed in container with mapped items', function () {
             let xs1 = [],
                 xs2 = '',
@@ -799,7 +799,7 @@ describe ('#list', function () {
     });
 
     describe ('#mapAccumR', function () {
-        it ('should map a _functionOps/operation on every item of a list and it should return a tuple containing the ' +
+        it ('should map a _function/operation on every item of a list and it should return a tuple containing the ' +
             'accumulated value and the an instance of passed in container with mapped items', function () {
             let xs1 = [],
                 xs2 = '',

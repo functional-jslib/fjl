@@ -1,5 +1,5 @@
 /**
- * @module _functionOps
+ * @module _function
  * @private
  */
 export * from '../_jsPlatform/_function';
