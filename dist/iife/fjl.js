@@ -405,7 +405,7 @@ var negateF5 = function negateF5(fn) {
   });
 };
 var negateP = negateF3;
-var negateFMany = function negateFMany(fn) {
+var negateFN = function negateFN(fn) {
   return function () {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
@@ -456,7 +456,7 @@ var map = curry(function (fn, xs) {
 var aggregateStr = function aggregateStr(agg, item) {
     return agg + item;
 };
-var aggregateArr = function aggregateArr(agg, item) {
+var aggregateArr$ = function aggregateArr$(agg, item) {
     agg.push(item);
     return agg;
 };
@@ -469,7 +469,7 @@ var aggregatorByType = function aggregatorByType(x) {
         case 'String':
             return aggregateStr;
         case 'Array':
-            return aggregateArr;
+            return aggregateArr$;
         case 'Object':
         default:
             return aggregateObj;
@@ -842,7 +842,7 @@ var appendMany = curry2(function () {
     if (length(args)) {
         return apply(concat$1, args);
     }
-    throw new Error('`appendMany` requires at least one arg.');
+    throw new Error('`appendN` requires at least one arg.');
 });
 var head = function head(x) {
     return x[0];
@@ -1050,7 +1050,7 @@ var splitAt = function splitAt(ind, list) {
 };
 var takeWhile = curry(function (pred, list) {
     return reduceUntil(negateP(pred), // predicate
-    aggregateArr, // operation
+    aggregateArr$, // operation
     [], // aggregator
     list);
 });
@@ -1238,7 +1238,7 @@ var zip = curry(function (arr1, arr2) {
         a2 = _lengthsToSmallest2[1];
 
     return reduce(function (agg, item, ind) {
-        return aggregateArr(agg, [item, a2[ind]]);
+        return aggregateArr$(agg, [item, a2[ind]]);
     }, [], a1);
 });
 var zipN = function zipN() {
@@ -1254,7 +1254,7 @@ var zipN = function zipN() {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce(function (agg, item, ind) {
-        return aggregateArr(agg, map(function (xs) {
+        return aggregateArr$(agg, map(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1279,7 +1279,7 @@ var zipWith = curry(function (op, xs1, xs2) {
         a2 = _lengthsToSmallest4[1];
 
     return reduce(function (agg, item, ind) {
-        return aggregateArr(agg, op(item, a2[ind]));
+        return aggregateArr$(agg, op(item, a2[ind]));
     }, [], a1);
 });
 var zipWithN = curry(function (op) {
@@ -1295,7 +1295,7 @@ var zipWithN = curry(function (op) {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce(function (agg, item, ind) {
-        return aggregateArr(agg, apply(op, map(function (xs) {
+        return aggregateArr$(agg, apply(op, map(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1488,7 +1488,7 @@ var insertBy = curry(function (orderingFn, x, xs) {
             return concat$$1([parts[0], [x], parts[1]]);
         }
     }
-    return aggregateArr(copy(xs), x);
+    return aggregateArr$(copy(xs), x);
 });
 var nubBy = curry(function (pred, list) {
     if (!length(list)) {
@@ -2126,7 +2126,7 @@ exports.negateF3 = negateF3;
 exports.negateF4 = negateF4;
 exports.negateF5 = negateF5;
 exports.negateP = negateP;
-exports.negateFMany = negateFMany;
+exports.negateFN = negateFN;
 exports.until = until;
 exports.map = map;
 exports.append = append;
@@ -2264,7 +2264,7 @@ exports.findIndexWhereRight = findIndexWhereRight;
 exports.findIndicesWhere = findIndicesWhere;
 exports.findWhere = findWhere;
 exports.aggregateStr = aggregateStr;
-exports.aggregateArr = aggregateArr;
+exports.aggregateArr$ = aggregateArr$;
 exports.aggregateObj = aggregateObj;
 exports.aggregatorByType = aggregatorByType;
 

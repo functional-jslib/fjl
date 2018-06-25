@@ -12,7 +12,7 @@ export const
      * @returns {Object}
      */
     assignDeep = curry2((obj0, ...objs) =>
-        objs.reduce((topAgg, obj) =>
+        !obj0 ? obj0 : objs.reduce((topAgg, obj) =>
             !obj ? topAgg : keys(obj).reduce((agg, key) => {
                 let propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection

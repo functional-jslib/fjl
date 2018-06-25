@@ -17,7 +17,7 @@
         value: true
     });
     exports.complement = exports.difference = exports.intersectBy = exports.intersect = undefined;
-    exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
+    exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendN = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
     Object.defineProperty(exports, 'slice', {
         enumerable: true,
         get: function () {
@@ -122,14 +122,14 @@
 
     /**
      * Append two or more lists, i.e., same as `append` but for two ore more lists.
-     * @haskellType `appendMany :: List a => a -> [a] -> a
+     * @haskellType `appendN :: List a => a -> [a] -> a
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:list.appendMany
+     * @function module:list.appendN
      * @param args ...{Array} - Lists or lists likes.
      * @returns {Array} - Same type as first list or list like passed in.
      */
-    appendMany = exports.appendMany = (0, _curry.curry2)(function () {
+    appendMany = exports.appendN = (0, _curry.curry2)(function () {
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
@@ -137,7 +137,7 @@
         if ((0, _object.length)(args)) {
             return (0, _function.apply)(_list.concat, args);
         }
-        throw new Error('`appendMany` requires at least one arg.');
+        throw new Error('`appendN` requires at least one arg.');
     }),
 
 
@@ -681,7 +681,7 @@
      */
     takeWhile = exports.takeWhile = (0, _curry.curry)(function (pred, list) {
         return (0, _utils.reduceUntil)((0, _negate.negateP)(pred), // predicate
-        _utils.aggregateArr, // operation
+        _utils.aggregateArr$, // operation
         [], // aggregator
         list);
     }),
@@ -1085,7 +1085,7 @@
             a2 = _lengthsToSmallest2[1];
 
         return (0, _utils.reduce)(function (agg, item, ind) {
-            return (0, _utils.aggregateArr)(agg, [item, a2[ind]]);
+            return (0, _utils.aggregateArr$)(agg, [item, a2[ind]]);
         }, [], a1);
     }),
 
@@ -1111,7 +1111,7 @@
             return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
         }
         return (0, _utils.reduce)(function (agg, item, ind) {
-            return (0, _utils.aggregateArr)(agg, (0, _map2.default)(function (xs) {
+            return (0, _utils.aggregateArr$)(agg, (0, _map2.default)(function (xs) {
                 return xs[ind];
             }, trimmedLists));
         }, [], trimmedLists[0]);
@@ -1192,7 +1192,7 @@
             a2 = _lengthsToSmallest4[1];
 
         return (0, _utils.reduce)(function (agg, item, ind) {
-            return (0, _utils.aggregateArr)(agg, op(item, a2[ind]));
+            return (0, _utils.aggregateArr$)(agg, op(item, a2[ind]));
         }, [], a1);
     }),
 
@@ -1223,7 +1223,7 @@
             return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
         }
         return (0, _utils.reduce)(function (agg, item, ind) {
-            return (0, _utils.aggregateArr)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
+            return (0, _utils.aggregateArr$)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
                 return xs[ind];
             }, trimmedLists)));
         }, [], trimmedLists[0]);
@@ -1712,7 +1712,7 @@
                 return concat([parts[0], [x], parts[1]]);
             }
         }
-        return (0, _utils.aggregateArr)((0, _utils.copy)(xs), x);
+        return (0, _utils.aggregateArr$)((0, _utils.copy)(xs), x);
     }),
 
 

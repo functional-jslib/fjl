@@ -94,7 +94,7 @@ isTruthy, isFalsy, alwaysTrue, alwaysFalse
 #### `list`
 List operations imported from the `Data.List` haskell module.
 ```
-append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
+append, appendN, head, last, tail, init, uncons, unconsr, concat, concatMap,
 reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
 permutations, foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
 replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices,
@@ -136,7 +136,7 @@ The methods that comprise function operations are:
 ```
 apply, call, curry, curry2, curry3, curry4, curry5, curryN,
 until, flip, flip3, flip4, flip5, flipN,
-negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
+negateF, negateP, negateF3, negateF4, negateF5, negateFN,
 id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders
 ```
 
@@ -193,7 +193,7 @@ sliceFrom, sliceTo, slice, sliceCopy
 genericAscOrdering, lengths, lengthsToSmallest, 
 reduceUntil, reduceRightUntil, reduce, reduceRight,
 lastIndex, findIndexWhere, findIndicesWhere, findWhere,
-aggregateStr, aggregateArr, aggregateObj, aggregateByType,
+aggregateStr, aggregateArr$, aggregateObj, aggregateByType,
 ```
 
 **Note:**

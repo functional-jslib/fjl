@@ -10,7 +10,7 @@ import {alwaysFalse}    from '../boolean';
 import map              from './map';
 import {curry}          from '../function/curry';
 
-export * from './aggregation';
+
 
 export const
 

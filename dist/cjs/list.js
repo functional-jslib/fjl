@@ -93,14 +93,14 @@ append = exports.append = _list.concat,
 
 /**
  * Append two or more lists, i.e., same as `append` but for two ore more lists.
- * @haskellType `appendMany :: List a => a -> [a] -> a
+ * @haskellType `appendN :: List a => a -> [a] -> a
  * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
  *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
- * @function module:list.appendMany
+ * @function module:list.appendN
  * @param args ...{Array} - Lists or lists likes.
  * @returns {Array} - Same type as first list or list like passed in.
  */
-appendMany = exports.appendMany = (0, _curry.curry2)(function () {
+appendMany = exports.appendN = (0, _curry.curry2)(function () {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
     }
@@ -108,7 +108,7 @@ appendMany = exports.appendMany = (0, _curry.curry2)(function () {
     if ((0, _object.length)(args)) {
         return (0, _function.apply)(_list.concat, args);
     }
-    throw new Error('`appendMany` requires at least one arg.');
+    throw new Error('`appendN` requires at least one arg.');
 }),
 
 
@@ -652,7 +652,7 @@ splitAt = exports.splitAt = function splitAt(ind, list) {
  */
 takeWhile = exports.takeWhile = (0, _curry.curry)(function (pred, list) {
     return (0, _utils.reduceUntil)((0, _negate.negateP)(pred), // predicate
-    _utils.aggregateArr, // operation
+    _utils.aggregateArr$, // operation
     [], // aggregator
     list);
 }),
@@ -1056,7 +1056,7 @@ zip = exports.zip = (0, _curry.curry)(function (arr1, arr2) {
         a2 = _lengthsToSmallest2[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr)(agg, [item, a2[ind]]);
+        return (0, _utils.aggregateArr$)(agg, [item, a2[ind]]);
     }, [], a1);
 }),
 
@@ -1082,7 +1082,7 @@ zipN = exports.zipN = function zipN() {
         return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
     }
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr)(agg, (0, _map2.default)(function (xs) {
+        return (0, _utils.aggregateArr$)(agg, (0, _map2.default)(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1163,7 +1163,7 @@ zipWith = exports.zipWith = (0, _curry.curry)(function (op, xs1, xs2) {
         a2 = _lengthsToSmallest4[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr)(agg, op(item, a2[ind]));
+        return (0, _utils.aggregateArr$)(agg, op(item, a2[ind]));
     }, [], a1);
 }),
 
@@ -1194,7 +1194,7 @@ zipWithN = exports.zipWithN = (0, _curry.curry)(function (op) {
         return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
     }
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
+        return (0, _utils.aggregateArr$)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1683,7 +1683,7 @@ insertBy = exports.insertBy = (0, _curry.curry)(function (orderingFn, x, xs) {
             return concat([parts[0], [x], parts[1]]);
         }
     }
-    return (0, _utils.aggregateArr)((0, _utils.copy)(xs), x);
+    return (0, _utils.aggregateArr$)((0, _utils.copy)(xs), x);
 }),
 
 

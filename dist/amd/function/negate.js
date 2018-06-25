@@ -4,7 +4,7 @@ define(['exports', '../jsPlatform/function', './curry'], function (exports, _fun
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
+  exports.negateFN = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
   /**
    * @memberOf function
    */
@@ -63,9 +63,9 @@ define(['exports', '../jsPlatform/function', './curry'], function (exports, _fun
   /**
    * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
    * The return function is variadic (or accepts one or more arguments (and isn't curried)).
-   * @function module:function.negateFMany
+   * @function module:function.negateFN
    * @param fn {Function}
    * @returns {Function}
    */
-  negateFMany = exports.negateFMany = fn => (...args) => !(0, _function.apply)(fn, args);
+  negateFN = exports.negateFN = fn => (...args) => !(0, _function.apply)(fn, args);
 });

@@ -401,7 +401,7 @@ let negateF5 = function negateF5(fn) {
     };
 };
 let negateP = negateF3;
-let negateFMany = function negateFMany(fn) {
+let negateFN = function negateFN(fn) {
     return function () {
         for (let _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
             args[_key9] = arguments[_key9];
@@ -551,7 +551,7 @@ function _map(fn, xs) {
 let aggregateStr = function aggregateStr(agg, item) {
     return agg + item;
 };
-let aggregateArr = function aggregateArr(agg, item) {
+let aggregateArr$ = function aggregateArr$(agg, item) {
     agg.push(item);
     return agg;
 };
@@ -564,7 +564,7 @@ let aggregatorByType = function aggregatorByType(x) {
         case 'String':
             return aggregateStr;
         case 'Array':
-            return aggregateArr;
+            return aggregateArr$;
         case 'Object':
         default:
             return aggregateObj;
@@ -717,7 +717,7 @@ let _appendMany = function _appendMany() {
     if (length(args)) {
         return apply(concat, args);
     }
-    throw new Error('`appendMany` requires at least one arg.');
+    throw new Error('`appendN` requires at least one arg.');
 };
 let _head = function _head(x) {
     return x[0];
@@ -929,7 +929,7 @@ let _splitAt = function _splitAt(ind, list) {
 };
 let _takeWhile = function _takeWhile(pred, list) {
     return reduceUntil(negateP(pred), // predicate
-    aggregateArr, // operation
+    aggregateArr$, // operation
     [], // aggregator
     list);
 };
@@ -1117,7 +1117,7 @@ let _zip = function _zip(arr1, arr2) {
         a2 = _lengthsToSmallest2[1];
 
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, [item, a2[ind]]);
+        return aggregateArr$(agg, [item, a2[ind]]);
     }, [], a1);
 };
 let _zipN = function _zipN() {
@@ -1133,7 +1133,7 @@ let _zipN = function _zipN() {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, _map(function (xs) {
+        return aggregateArr$(agg, _map(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1158,7 +1158,7 @@ let _zipWith = function _zipWith(op, xs1, xs2) {
         a2 = _lengthsToSmallest4[1];
 
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, op(item, a2[ind]));
+        return aggregateArr$(agg, op(item, a2[ind]));
     }, [], a1);
 };
 let _zipWithN = function _zipWithN(op) {
@@ -1174,7 +1174,7 @@ let _zipWithN = function _zipWithN(op) {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, apply(op, _map(function (xs) {
+        return aggregateArr$(agg, apply(op, _map(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1367,7 +1367,7 @@ let _insertBy = function _insertBy(orderingFn, x, xs) {
             return _concat([parts[0], [x], parts[1]]);
         }
     }
-    return aggregateArr(copy(xs), x);
+    return aggregateArr$(copy(xs), x);
 };
 let _nubBy = function _nubBy(pred, list) {
     if (!length(list)) {
@@ -1842,7 +1842,7 @@ let flip5$$1 = function flip5$$1(fn) {
 
 /**
  * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
- * @function module:functionOps.negateFMany
+ * @function module:functionOps.negateFN
  * @param fn {Function}
  * @returns {Function}
  */
@@ -2135,7 +2135,7 @@ exports.negateF3 = negateF3;
 exports.negateF4 = negateF4;
 exports.negateF5 = negateF5;
 exports.negateP = negateP;
-exports.negateFMany = negateFMany;
+exports.negateFN = negateFN;
 exports.id = id;
 exports.compose = compose;
 exports.and = _and;
@@ -2374,6 +2374,6 @@ exports.findIndexWhereRight = findIndexWhereRight;
 exports.findIndicesWhere = findIndicesWhere;
 exports.findWhere = findWhere;
 exports.aggregateStr = aggregateStr;
-exports.aggregateArr = aggregateArr;
+exports.aggregateArr$ = aggregateArr$;
 exports.aggregateObj = aggregateObj;
 exports.aggregatorByType = aggregatorByType;

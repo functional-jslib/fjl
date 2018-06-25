@@ -6,14 +6,14 @@
  */
 
 import {assert, expect} from 'chai';
-import {__, compose, negateP} from '../src/function';
+import {__, compose, negateF2} from '../src/function';
 import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/object';
 import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase}
     from '../src/string';
 import {
-    append, appendMany, all, and, or, any, find, findIndex, findIndices,
+    append, appendN, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
@@ -95,7 +95,7 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#appendMany', function () {
+    describe ('#appendN', function () {
         const unfoldRBy4 = list => unfoldr(remainder =>
                     remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
                 , list),
@@ -103,27 +103,27 @@ describe ('#list', function () {
             stringParts = unfoldRBy4(alphabetString);
 
         it ('should be able to append two lists.', function () {
-            expectShallowEquals(appendMany.apply(null, arrayParts), alphabetArray);
-            expectShallowEquals(appendMany.apply(null, stringParts), alphabetString);
-            expectShallowEquals(appendMany(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
-            expectEqual(appendMany(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
+            expectShallowEquals(appendN.apply(null, arrayParts), alphabetArray);
+            expectShallowEquals(appendN.apply(null, stringParts), alphabetString);
+            expectShallowEquals(appendN(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
+            expectEqual(appendN(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
         });
         it ('should return the copy of the original list when appending to an empty list', function () {
-            expectShallowEquals(appendMany(alphabetArray, []), alphabetArray);
-            expectEqual(appendMany(alphabetString, ''), alphabetString);
+            expectShallowEquals(appendN(alphabetArray, []), alphabetArray);
+            expectEqual(appendN(alphabetString, ''), alphabetString);
         });
         it ('should return an empty list when appending empty lists', function () {
-            expectEqual(appendMany('', '', ''), '');
-            expectEqual(appendMany('', ''), '');
-            expectShallowEquals(appendMany([], [], []), []);
-            expectShallowEquals(appendMany([], []), []);
+            expectEqual(appendN('', '', ''), '');
+            expectEqual(appendN('', ''), '');
+            expectShallowEquals(appendN([], [], []), []);
+            expectShallowEquals(appendN([], []), []);
         });
         it ('should throw an error when receiving Nothing', function () {
-            // assert.throws(appendMany, Error);
-            assert.throws(() => appendMany(null, null), Error);
-            assert.throws(() => appendMany(undefined, undefined), Error);
-            assert.throws(() => appendMany(null, []), Error);
-            assert.throws(() => appendMany(undefined, []), Error);
+            // assert.throws(appendN, Error);
+            assert.throws(() => appendN(null, null), Error);
+            assert.throws(() => appendN(undefined, undefined), Error);
+            assert.throws(() => appendN(null, []), Error);
+            assert.throws(() => appendN(undefined, []), Error);
         });
     });
 
@@ -344,7 +344,6 @@ describe ('#list', function () {
             const candidates = ['abc', 'abc'.split('')],
                 results = candidates.map(subsequences),
                 expectedLen = Math.pow(2, candidates[0].length);
-            // log(candidates, results);
             expectTrue(results.every(result => result.length === expectedLen));
             expectTrue(results.every(result =>
                     !result.filter((subSeq, ind) =>
@@ -357,8 +356,6 @@ describe ('#list', function () {
             // https://discuss.codechef.com/questions/17235/print-all-possible-subsequences-of-string-using-dynamic-programming
         });
         it ('should return a list with an empty list when receiving an empty list', function () {
-            log(subsequences(''), ['']);
-            log(subsequences([]), [[]]);
         });
     });
 
@@ -586,7 +583,6 @@ describe ('#list', function () {
             // @investigate is babel shimming String.fromCharCode;
             //  When passing this function direct to `[].map` it returns a weird result (seems like it's returning
             //  an instance of `String` using `new` and it's constructor)?
-            // log (alphabetArray);
             expectShallowEquals(concatMap(charCodeToCharOp, charCodeRange), alphabetArray.join(''));
             expectShallowEquals(concatMap(charCode => [String.fromCharCode(charCode)], charCodeRange), alphabetArray);
         });
@@ -595,8 +591,8 @@ describe ('#list', function () {
             expectShallowEquals(concatMap(id, [[], [], []]), []);
         });
         it ('should throw an error when receiving `undefined` or `null` in it\'s list position', function () {
-            assert.throws(() => peek('concatmap', concatMap(id, null)), Error);
-            assert.throws(() => peek('concatmap', concatMap(id, undefined)), Error);
+            assert.throws(() => concatMap(id, null), Error);
+            assert.throws(() => concatMap(id, undefined), Error);
         });
     });
 
@@ -772,13 +768,11 @@ describe ('#list', function () {
             expectTrue(
                 all(tuple => {
                         const reducedForCompare = foldl((agg, item, ind) => {
-                                // log(agg, item, tuple[0][1][ind], xs2);
                                 if (Array.isArray(agg)) { agg.push(tuple[2](agg, item, ind)); }
                                 else { agg += tuple[2](agg, item, ind); }
                                 return agg;
                             },
                             tuple[3], tuple[1]);
-                        // log(tuple[0][0], reducedForCompare);
                         // Check that mapped have equal length
                         return length(tuple[0][1]) === length(tuple[1]) &&
                             // Check aggregated are equal
@@ -834,13 +828,11 @@ describe ('#list', function () {
             expectTrue(
                 all(tuple => {
                         const reducedForCompare = foldr((agg, item, ind) => {
-                                // log(agg, item, tuple[0][1][ind], xs2);
                                 if (Array.isArray(agg)) { agg.push(tuple[2](agg, item, ind)); }
                                 else { agg += tuple[2](agg, item, ind); }
                                 return agg;
                             },
                             tuple[3], tuple[1]);
-                        // log(tuple[0][0], reducedForCompare);
                         // Check that mapped have equal length
                         return length(tuple[0][1]) === length(tuple[1]) &&
                             // Check aggregated are equal
@@ -1016,7 +1008,6 @@ describe ('#list', function () {
                     // Ensure cases for each use case
                     all(result =>
                         // Ensure correct length of items in returned element
-                        /*!log(result) && */
                         length(expectedResult) === length(result) &&
                             // Ensure elements where matched
                             all((x, ind) => x === expectedResult[ind], result),
@@ -1034,7 +1025,6 @@ describe ('#list', function () {
                 // Ensure cases for each use case
                 all(result =>
                     // Ensure no items returned
-                    /*!log(result) && */
                     length(result) === 0,
                     [takeWhile(pred, word.split('')), takeWhile(pred, word)]
                 ));
@@ -1048,7 +1038,6 @@ describe ('#list', function () {
                 // Ensure cases for each use case
                 all(result =>
                         // Ensure no items returned
-                        /*!log(result) && */
                     length(result) === length(word),
                     [takeWhile(pred, word.split('')), takeWhile(pred, word)]
                 ));
@@ -1067,7 +1056,6 @@ describe ('#list', function () {
                     // Ensure cases for each use case
                     all(result =>
                         // Ensure correct length of items in returned element
-                        /*!log(result, expectedResult) &&*/
                         length(expectedResult) === length(result) &&
                             // Ensure elements where matched
                             all((x, ind) => x === expectedResult[ind], result),
@@ -1085,7 +1073,6 @@ describe ('#list', function () {
                 // Ensure cases for each use case
                 all(result =>
                     // Ensure no items returned
-                    /*!log(result) && */
                     length(result) === 0,
                     [dropWhile(pred, word.split('')), dropWhile(pred, word)]
                 ));
@@ -1099,7 +1086,6 @@ describe ('#list', function () {
                 // Ensure cases for each use case
                 all(result =>
                     // Ensure correct lengths returned
-                    /*!log(result) && */
                     length(result) === length(word) &&
                     // Ensure elements where matched
                     all((x, ind) => x === word[ind], result),
@@ -1120,7 +1106,6 @@ describe ('#list', function () {
                 // Ensure cases for each use case
                 all(result =>
                         // Ensure correct length of items in returned element
-                        // !log(result, expectedResult) &&
                     length(expectedResult) === length(result) &&
                     // Ensure elements where matched
                     all((x, ind) => x === expectedResult[ind], result),
@@ -1139,7 +1124,6 @@ describe ('#list', function () {
                 // Ensure cases for each use case
                 all(result =>
                     // Ensure all items returned
-                    // !log(result) &&
                     length(result) === lenWord,
                     [dropWhileEnd(pred, word.split('')), dropWhileEnd(pred, word)]
                 ));
@@ -1153,7 +1137,6 @@ describe ('#list', function () {
                 // Ensure cases for each use case
                 all(result =>
                         // Ensure correct lengths returned
-                        // /!*!log(result) && *!/
                     length(result) === length(word) &&
                     // Ensure elements where matched
                     all((x, ind) => x === word[ind], result),
@@ -1176,7 +1159,6 @@ describe ('#list', function () {
                 all(tuple =>
                     length(expectedResults) === length(tuple) &&
                     all((tuplePart, ind) =>
-                            // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
                             // Ensure tuple part is of allowed type
                         (isString(tuplePart) || isArray(tuplePart)) &&
                         // Ensure correct length of items in returned element
@@ -1212,7 +1194,6 @@ describe ('#list', function () {
                 all(tuple =>
                     length(expectedResults) === length(tuple) &&
                     all((tuplePart, ind) =>
-                            // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
                             // Ensure tuple part is of allowed type
                         (isString(tuplePart) || isArray(tuplePart)) &&
                         // Ensure correct length of items in returned element
@@ -1291,7 +1272,6 @@ describe ('#list', function () {
             expectTrue(all(
                 (item, ind) => {
                     const headOfLast = head(item);
-                    // log (headOfLast, alphabetString[ind]);//, resultList);
                     return length(item) ? length(item) === limit - ind &&
                        headOfLast === alphabetString[ind] : true
                 },
@@ -1300,7 +1280,6 @@ describe ('#list', function () {
             expectTrue(all(
                 (item, ind) => {
                     const headOfLast = head(item);
-                    //log (headOfLast, alphabetString[ind]);
                     return length(item) ? length(item) === limit - ind &&
                        headOfLast === alphabetArray[ind] : true
                 },
@@ -1322,11 +1301,11 @@ describe ('#list', function () {
         });
         it ('should return `false` when a list is not prefix of second list', function () {
             expectTrue(all(
-                negateP(isPrefixOf('!@#')),
+                negateF2(isPrefixOf('!@#')),
                 splitAt(3, inits(alphabetString))[1]
             ));
             expectTrue(all(
-                negateP(isPrefixOf('!@#'.split(''))),
+                negateF2(isPrefixOf('!@#'.split(''))),
                 splitAt(3, inits(alphabetArray))[1]
             ));
         });
@@ -1335,7 +1314,6 @@ describe ('#list', function () {
     describe ('#isSuffixOf', function () {
         it ('should return `true` when a list is a suffix of another', function () {
             const candidateString = splitAt(length(alphabetString) - 2, tails(alphabetString))[0];
-            // log (candidateString);
             expectTrue(all(
                 isSuffixOf('xyz'),
                 candidateString
@@ -1347,11 +1325,11 @@ describe ('#list', function () {
         });
         it ('should return `false` when a list is not suffix of second list', function () {
             expectTrue(all(
-                negateP(isSuffixOf('!@#')),
+                negateF2(isSuffixOf('!@#')),
                 splitAt(length(alphabetString) - 2, tails(alphabetString))[0]
             ));
             expectTrue(all(
-                negateP(isSuffixOf('!@#'.split(''))),
+                negateF2(isSuffixOf('!@#'.split(''))),
                 splitAt(length(alphabetString) - 2, tails(alphabetArray))[0]
             ));
         });
@@ -1363,13 +1341,12 @@ describe ('#list', function () {
                 isInfixOf(candidate, alphabetString),
                 isInfixOf(candidate, alphabetArray)
             ], ['abc', 'efg', 'xyz']);
-            //log(results);
             expectTrue(and(results));
         });
         it ('should return `false` when a list is not infix of second list', function () {
             expectTrue(and([
-                negateP(isInfixOf('!@#'))(alphabetString),
-                negateP(isInfixOf('!@#'.split(''))(alphabetArray))
+                negateF2(isInfixOf('!@#'))(alphabetString),
+                negateF2(isInfixOf('!@#'.split(''))(alphabetArray))
             ]));
         });
     });
@@ -1418,10 +1395,16 @@ describe ('#list', function () {
         });
         it ('should return `true` when element is not found in given list', function () {
             const word = 'hello world';
-            expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2, arr) => notElem('z', arr), elm),
-                    [word.split(''), word]));
+            expect(
+                all(
+                    (elm, ind) =>
+                        all(
+                            (elm2, ind2, arr) => notElem('z', arr), elm
+                        ),
+                    [word.split(''), word]
+                )
+            )
+                .to.equal(true);
         });
     });
 
@@ -1492,7 +1475,6 @@ describe ('#list', function () {
                 all(tuple =>
                     length(expectedResults) === length(tuple) &&
                     all((tuplePart, ind) =>
-                            // !log(tuple, tuplePart, expectedResults, expectedResults[ind]) &&
                             // Ensure tuple part is of allowed type
                         (isString(tuplePart) || isArray(tuplePart)) &&
                         // Ensure correct length of items in returned element
@@ -1587,7 +1569,6 @@ describe ('#list', function () {
                     .map(xs => !xs.length ? undefined : xs.map(([x]) => x)),
                 results = map(xs => findIndices(indicePred, xs), tokenInits);
 
-            // log(expectedResults);
             expectTrue(
                 results.every((xs, ind) => {
                     const expected = expectedResults[ind];
@@ -1614,7 +1595,6 @@ describe ('#list', function () {
                         agg.push([item, list2[ind]]);
                         return agg;
                     }, [], list1);
-            // log (list1, list2); // two halves of alphabet array
             expectTrue(all(x => 13, [length(list1), length(list2)]));
             expectEqual(length(result), length(expectedResult));
             expectTrue(all((tuple, ind) => tuple[0] === expectedResult[ind][0] &&
@@ -1656,13 +1636,10 @@ describe ('#list', function () {
 
                 zipNResult2 = zipN.apply(null, subj2);
 
-                // log(zipNResult, zipNResult2);
-
                 expectTrue(
                     all( tuple =>
                         all( (list, ind) =>
                             all( (item, ind2) =>
-                                // !log(item, tuple[1][ind2][ind]) &&
                                 item === tuple[1][ind2][ind], list
                             ),
                             tuple[0]
@@ -1708,13 +1685,10 @@ describe ('#list', function () {
 
                 zipWithResult2 = zipWith(tuplize, ...subj2);
 
-                // log(zipWithResult, zipWithResult2);
-
             expectTrue(
                 all( tuple =>
                         all( (list, ind) =>
                                 all( (item, ind2) =>
-                                    // !log(item, tuple[1][ind2][ind]) &&
                                     item === tuple[1][ind2][ind], list
                                 ),
                             tuple[0]
@@ -1760,8 +1734,6 @@ describe ('#list', function () {
             // Ensure both lists in result have the expected length
             expectTrue(all(list => length(list) === lenAlphaArray / 2, result));
 
-            // log (subj, result);
-
             // Ensure resulting lists contain expected items
             expectTrue(all(
                 (list, i) =>
@@ -1781,8 +1753,6 @@ describe ('#list', function () {
                 }, alphabetArray),
                 lenAlphaArray = length(alphabetArray),
                 result = unzipN(subj);
-
-            // log (subj, result);
 
             // First ensure our subject is valid
             // --------------------------------------
@@ -1816,8 +1786,6 @@ describe ('#list', function () {
             const subj = intercalate('\n', alphabetArray),
                 result = lines(subj);
 
-            // log(length(subj), subj, result);
-
             // Ensure subject is valid first:
             // ------------------------------------
             // Expect new line char before every char except the first
@@ -1848,8 +1816,6 @@ describe ('#list', function () {
                 const [subj, expectedLen, shallowEqualsTo] = tuple,
                     result = words(subj);
 
-                // log(expectedLen, subj, result);
-
                 // Check length of result
                 expectLength(expectedLen, result);
 
@@ -1867,8 +1833,6 @@ describe ('#list', function () {
             subjectsAndExpLens.forEach(tuple => {
                 const [subj, expectedLen, shallowEqualsTo] = tuple,
                     result = words(subj);
-
-                // log(expectedLen, subj, result);
 
                 // Check length of result
                 expectLength(expectedLen, result);
@@ -1908,8 +1872,6 @@ describe ('#list', function () {
         it ('should join a list of words with spaces.', function () {
             ['hello world', alphabetString, alphabetArray].forEach(subj => {
                 const result = unwords(subj);
-
-                // console.log('unwords', result);
 
                 // check expected length
                 expectLength(subj.length * 2 - 1, result);
@@ -1953,7 +1915,6 @@ describe ('#list', function () {
             expectEqual(remove('z', alphabetString), init(alphabetString));
             expectShallowEquals(remove('a', alphabetArray), tail(alphabetArray));
             expectShallowEquals(remove('z', alphabetArray), init(alphabetArray));
-            // log(remove('d', alphabetString));
         });
         it ('should return an empty list when receiving an empty list', function () {
             expectEqual(remove('a', ''), '');
@@ -2075,7 +2036,6 @@ describe ('#list', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = union(subj1, subj2);
-                    // log('union', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2090,7 +2050,6 @@ describe ('#list', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = union(subj1, subj2);
-                    // log('union', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2105,7 +2064,6 @@ describe ('#list', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = union(subj1, subj2);
-                    // log('union', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2169,7 +2127,6 @@ describe ('#list', function () {
                 result1 = insert(99, reverse(range0To145)),
                 result2 = insert('x', alphabetArray),
                 result3 = insert('x', reverse(alphabetArray));
-            // log (result1, result, expectedResult);
             expectShallowEquals(result, expectedResult);
             expectShallowEquals(result1, [99].concat(reverse(range0To145)));
             expectShallowEquals(result2, injectValueAtIndex('x', 24, alphabetArray));
@@ -2208,7 +2165,6 @@ describe ('#list', function () {
             expectEqual(removeBy(equal, 'z', alphabetString), init(alphabetString));
             expectShallowEquals(removeBy(equal, 'a', alphabetArray), tail(alphabetArray));
             expectShallowEquals(removeBy(equal, 'z', alphabetArray), init(alphabetArray));
-            // log(removeBy('d', alphabetString));
         });
         it ('should return an empty list when receiving an empty list', function () {
             expectEqual(removeBy(equal, 'a', ''), '');
@@ -2239,10 +2195,7 @@ describe ('#list', function () {
                 rslt = removeFirstsBy(equal, concat(fiveArrays), vowelsArray);
 
             // Expect vowels removed from the same places in both lists
-            expectDeepEquals(
-                peek('removeFirstBy Result', rslt.join('')),
-                peek('removeFirstBy2 Expected', expected.join(''))
-            );
+            expect(rslt.join('')).to.deep.equal(expected.join(''));
         });
         it ('should return copy of original list when no items from second list are found in it.', function () {
             expectEqual(removeFirstsBy(equal, consonants, vowels), consonants);
@@ -2275,7 +2228,6 @@ describe ('#list', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = unionBy(equalityCheck, subj1, subj2);
-                    // log('unionBy', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2290,7 +2242,6 @@ describe ('#list', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = unionBy(equalityCheck, subj1, subj2);
-                    // log('unionBy', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2305,7 +2256,6 @@ describe ('#list', function () {
                 .forEach(testCase => {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = unionBy(equalityCheck, subj1, subj2);
-                    // log('unionBy', result);
                     expectEqual(result.length, expectedLen);
                     expectShallowEquals(result, expectedElms);
                 });
@@ -2397,7 +2347,6 @@ describe ('#list', function () {
                 result1 = genericInsert(99, reverse(range0To145)),
                 result2 = genericInsert('x', alphabetArray),
                 result3 = genericInsert('x', reverse(alphabetArray));
-            // log (result1, result, expectedResult);
             expectShallowEquals(result, expectedResult);
             expectShallowEquals(result1, [99].concat(reverse(range0To145)));
             expectShallowEquals(result2, injectValueAtIndex('x', 24, alphabetArray));
@@ -2434,8 +2383,6 @@ describe ('#list', function () {
                 })
             )
                 .to.equal(true);
-            // log (result);
-            // log(linkedListToList(listToLinkedList(alphabetArray)));
         });
 
         it ('should return an empty list when receiving an empty one', function () {
@@ -2468,8 +2415,6 @@ describe ('#list', function () {
                 })
             )
                 .to.equal(true);
-            // log (result);
-            // log(linkedListToList(listToLinkedList(alphabetArray)));
         });
 
         it ('should return an empty list when receiving an empty one', function () {
@@ -2504,7 +2449,6 @@ describe ('#list', function () {
                 })
             )
                 .to.equal(true);
-            // log(linkedListToList(listToLinkedList(alphabetArray)));
         });
 
         it ('should return an empty list when receiving an empty one', function () {
@@ -2540,8 +2484,6 @@ describe ('#list', function () {
                 })
             )
                 .to.equal(true);
-            // log (result);
-            // log(linkedListToList(listToLinkedList(alphabetArray)));
         });
 
         it ('should return an empty list when receiving an empty one', function () {

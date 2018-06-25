@@ -5,7 +5,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
         value: true
     });
     exports.complement = exports.difference = exports.intersectBy = exports.intersect = undefined;
-    exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
+    exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendN = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
     Object.defineProperty(exports, 'slice', {
         enumerable: true,
         get: function () {
@@ -72,18 +72,18 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
 
     /**
      * Append two or more lists, i.e., same as `append` but for two ore more lists.
-     * @haskellType `appendMany :: List a => a -> [a] -> a
+     * @haskellType `appendN :: List a => a -> [a] -> a
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:list.appendMany
+     * @function module:list.appendN
      * @param args ...{Array} - Lists or lists likes.
      * @returns {Array} - Same type as first list or list like passed in.
      */
-    appendMany = exports.appendMany = (0, _curry.curry2)((...args) => {
+    appendMany = exports.appendN = (0, _curry.curry2)((...args) => {
         if ((0, _object.length)(args)) {
             return (0, _function.apply)(_list.concat, args);
         }
-        throw new Error('`appendMany` requires at least one arg.');
+        throw new Error('`appendN` requires at least one arg.');
     }),
 
 
@@ -588,7 +588,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @returns {Array}
      */
     takeWhile = exports.takeWhile = (0, _curry.curry)((pred, list) => (0, _utils.reduceUntil)((0, _negate.negateP)(pred), // predicate
-    _utils.aggregateArr, // operation
+    _utils.aggregateArr$, // operation
     [], // aggregator
     list)),
 
@@ -972,7 +972,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
             return [];
         }
         const [a1, a2] = (0, _utils.lengthsToSmallest)(arr1, arr2);
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, [item, a2[ind]]), [], a1);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, [item, a2[ind]]), [], a1);
     }),
 
 
@@ -992,7 +992,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
         } else if (lenOfTrimmed === 1) {
             return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, (0, _map2.default)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _map2.default)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
     },
 
 
@@ -1058,7 +1058,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
             return [];
         }
         const [a1, a2] = (0, _utils.lengthsToSmallest)(xs1, xs2);
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, op(item, a2[ind])), [], a1);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, op(item, a2[ind])), [], a1);
     }),
 
 
@@ -1083,7 +1083,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
         } else if (lenOfTrimmed === 1) {
             return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr)(agg, (0, _function.apply)(op, (0, _map2.default)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _function.apply)(op, (0, _map2.default)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
     }),
 
 
@@ -1510,7 +1510,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
                 return concat([parts[0], [x], parts[1]]);
             }
         }
-        return (0, _utils.aggregateArr)((0, _utils.copy)(xs), x);
+        return (0, _utils.aggregateArr$)((0, _utils.copy)(xs), x);
     }),
 
 

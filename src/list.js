@@ -5,7 +5,7 @@
  */
 import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list';
 import {apply}              from './jsPlatform/function';
-import {negateP, negateF}   from './function/negate';
+import {negateF3, negateF2}   from './function/negate';
 import {isTruthy, isFalsy}  from './boolean';
 import {prop, length}       from './object';
 import map                  from './list/map';
@@ -13,7 +13,7 @@ import {curry, curry2} from './function/curry';
 
 import {
     sliceFrom, sliceTo, lengths,
-    lengthsToSmallest, aggregateArr,
+    lengthsToSmallest, aggregateArr$,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, copy, genericAscOrdering
@@ -43,17 +43,18 @@ export const
 
     /**
      * Append two or more lists, i.e., same as `append` but for two ore more lists.
-     * @haskellType `appendMany :: List a => a -> [a] -> a
+     * @haskellType `appendN :: List a => a -> [a] -> a
      * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
      *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:list.appendMany
+     * @function module:list.appendN
      * @param args ...{Array} - Lists or lists likes.
      * @returns {Array} - Same type as first list or list like passed in.
+     * @un-curried
      */
-    appendMany = curry2((...args) => {
-        if (length(args)) { return apply(listAppend, args); }
-        throw new Error('`appendMany` requires at least one arg.');
-    }),
+    appendN = (...args) => {
+        if (length(args) >= 2) { return apply(append, args); }
+        throw new Error(`'\`appendN\` requires at 2 or more arguments.  ${length(args)} args given.`);
+    },
 
     /**
      * Returns head of list (first item of list).
@@ -117,7 +118,7 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    concat = xs => !length(xs) ? copy(xs) : apply(appendMany, xs),
+    concat = xs => !length(xs) ? copy(xs) : apply(appendN, xs),
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -529,8 +530,8 @@ export const
      */
     takeWhile = curry((pred, list) =>
         reduceUntil(
-            negateP(pred),  // predicate
-            aggregateArr,   // operation
+            negateF3(pred),  // predicate
+            aggregateArr$,   // operation
             [],             // aggregator
             list
         )),
@@ -582,7 +583,7 @@ export const
      * @returns {Array} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     span = curry((pred, list) => {
-        const splitPoint = findIndexWhere(negateP(pred), list);
+        const splitPoint = findIndexWhere(negateF3(pred), list);
         return splitPoint === -1 ?
             splitAt(0, list) : splitAt(splitPoint, list);
     }),
@@ -652,7 +653,7 @@ export const
     /**
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
      * do not match the tuple are in second list in the returned tuple.
-     *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+     *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
      * @function module:list.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array}
@@ -661,7 +662,7 @@ export const
     partition = curry((pred, list) =>
         !length(list) ?
             [[], []] :
-                [filter(pred, list), filter(negateP(pred), list)]),
+                [filter(pred, list), filter(negateF3(pred), list)]),
 
     /**
      * Returns a boolean indicating whether an element exists in given structure of elements.
@@ -679,7 +680,7 @@ export const
      * @param xs {Array}
      * @returns {Boolean}
      */
-    notElem = negateF(includes),
+    notElem = negateF2(includes),
 
     /**
      * Same as list.at - Returns property value at key/indice.
@@ -912,7 +913,7 @@ export const
         }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
         return reduce((agg, item, ind) =>
-                aggregateArr(agg, [item, a2[ind]]),
+                aggregateArr$(agg, [item, a2[ind]]),
             [], a1);
     }),
 
@@ -934,7 +935,7 @@ export const
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                aggregateArr(agg, map(xs => xs[ind], trimmedLists)),
+                aggregateArr$(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     },
 
@@ -998,7 +999,7 @@ export const
         }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
         return reduce((agg, item, ind) =>
-                aggregateArr(agg, op(item, a2[ind])),
+                aggregateArr$(agg, op(item, a2[ind])),
             [], a1);
     }),
 
@@ -1025,7 +1026,7 @@ export const
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                aggregateArr(agg, apply(op, map(xs => xs[ind], trimmedLists))),
+                aggregateArr$(agg, apply(op, map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     }),
 
@@ -1431,7 +1432,7 @@ export const
                 return concat([parts[0], [x], parts[1]]);
             }
         }
-        return aggregateArr(copy(xs), x);
+        return aggregateArr$(copy(xs), x);
     }),
 
     /**

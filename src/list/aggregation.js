@@ -1,24 +1,16 @@
-import {typeOf} from '../object';
 
 export const
 
-    aggregateStr = (agg, item) => agg + item,
-
-    aggregateArr = (agg, item) => {
+    /**
+     * Pushes incoming `item` onto array (`agg`) and return array (`agg`).
+     * @private
+     * @param agg {Array}
+     * @param item {*}
+     * @returns {Array}
+     */
+    aggregateArr$ = (agg, item) => {
         agg.push(item);
         return agg;
-    },
+    }
 
-    aggregateObj = (agg, item, ind) => {
-        agg[ind] = item;
-        return agg;
-    },
-
-    aggregatorByType = x => {
-        switch (typeOf(x)) {
-            case 'String': return aggregateStr;
-            case 'Array': return aggregateArr;
-            case 'Object':
-            default: return aggregateObj;
-        }
-    };
+;

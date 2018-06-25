@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.negateFMany = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
+exports.negateFN = exports.negateP = exports.negateF5 = exports.negateF4 = exports.negateF3 = exports.negateF = undefined;
 
 var _function = require('../jsPlatform/function');
 
@@ -83,11 +83,11 @@ negateP = exports.negateP = negateF3,
 /**
  * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
  * The return function is variadic (or accepts one or more arguments (and isn't curried)).
- * @function module:function.negateFMany
+ * @function module:function.negateFN
  * @param fn {Function}
  * @returns {Function}
  */
-negateFMany = exports.negateFMany = function negateFMany(fn) {
+negateFN = exports.negateFN = function negateFN(fn) {
   return function () {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];

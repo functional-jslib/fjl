@@ -16,15 +16,6 @@ export const
     curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`',
 
     /**
-     * Curries a function based on it's defined arity (argument's arrayOps expected length).
-     * @function module:function.curry
-     * @param fn {Function}
-     * @param argsToCurry {...*}
-     * @returns {Function}
-     */
-    curry = (fn, ...argsToCurry) => curryN(fnOrError(curryNotFnErrPrefix, fn).length, fn, ...argsToCurry),
-
-    /**
      * Curries a function up to a given arity.
      * @function module:function.curryN
      * @param executeArity {Number}
@@ -40,6 +31,15 @@ export const
                 fnOrError(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
         };
     },
+
+    /**
+     * Curries a function based on it's defined arity (argument's arrayOps expected length).
+     * @function module:function.curry
+     * @param fn {Function}
+     * @param argsToCurry {...*}
+     * @returns {Function}
+     */
+    curry = (fn, ...argsToCurry) => curryN(fnOrError(curryNotFnErrPrefix, fn).length, fn, ...argsToCurry),
 
     /**
      * Curries a function up to an arity of 2 (won't call function until 2 or more args).
