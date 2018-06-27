@@ -4,8 +4,8 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = exports.intersectBy = exports.intersect = undefined;
-    exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendN = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
+    exports.complement = exports.difference = exports.intersectBy = undefined;
+    exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
     Object.defineProperty(exports, 'slice', {
         enumerable: true,
         get: function () {
@@ -55,36 +55,35 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
     const
 
     /**
-     * Append two lists, i.e.,
-     * ```
-     * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
-     * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
-     * ```
-     * If the first list is not finite, the result is the first list.
-     * @haskellType `append :: List a => a -> a -> a`
+     * Append two, or more, lists, i.e.,
+     * @example
+     * expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString); // true
+     *
+     * // Another example
+     * const result = append(
+     *   alphabetStr.split(''),
+     *   alphabetStr.split('')
+     * ),
+     * expected = repeat(2, alphabetStr).split('');
+     *
+     * shallowEquals(result, expected) === true // `true`
+     *
      * @function module:list.append
-     * @param xs1 {Array} - list or list like.
-     * @param xs2 {Array} - list or list like.
-     * @returns {Array} - Same type as list like passed in.
+     * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
+     * @returns {(Array|String|*)} - Same type as list like passed in.
      */
-    append = exports.append = _list.concat,
-
-
-    /**
-     * Append two or more lists, i.e., same as `append` but for two ore more lists.
-     * @haskellType `appendN :: List a => a -> [a] -> a
-     * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
-     *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:list.appendN
-     * @param args ...{Array} - Lists or lists likes.
-     * @returns {Array} - Same type as first list or list like passed in.
-     */
-    appendMany = exports.appendN = (0, _curry.curry2)((...args) => {
-        if ((0, _object.length)(args)) {
+    append = exports.append = (...args) => {
+        const len = (0, _object.length)(args);
+        if (!len) {
+            return [];
+        } else if (len === 1) {
+            return (0, _utils.sliceCopy)(args[0]);
+        }
+        if (len >= 2) {
             return (0, _function.apply)(_list.concat, args);
         }
-        throw new Error('`appendN` requires at least one arg.');
-    }),
+        throw new Error(`'\`append\` requires at 2 or more arguments.  ${(0, _object.length)(args)} args given.`);
+    },
 
 
     /**
@@ -154,7 +153,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @param xs {Array}
      * @returns {Array}
      */
-    concat = exports.concat = xs => !(0, _object.length)(xs) ? (0, _utils.copy)(xs) : (0, _function.apply)(appendMany, xs),
+    concat = exports.concat = xs => !(0, _object.length)(xs) ? (0, _utils.sliceCopy)(xs) : (0, _function.apply)(append, xs),
 
 
     /**
@@ -288,7 +287,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @returns {Array} - Copy of incoming with swapped values at indices.
      */
     swapped = exports.swapped = (0, _curry.curry)((ind1, ind2, list) => {
-        const out = (0, _utils.copy)(list),
+        const out = (0, _utils.sliceCopy)(list),
               tmp = out[ind1];
         out[ind1] = out[ind2];
         out[ind2] = tmp;
@@ -311,7 +310,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
             return [xs];
         }
 
-        let list = (0, _utils.copy)(xs),
+        let list = (0, _utils.sliceCopy)(xs),
             c = repeat(limit, 0),
             i = 0;
 
@@ -392,7 +391,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @return {Array} - [aggregated, list]
      */
     mapAccumL = exports.mapAccumL = (0, _curry.curry)((op, zero, xs) => {
-        const list = (0, _utils.copy)(xs),
+        const list = (0, _utils.sliceCopy)(xs),
               limit = (0, _object.length)(xs);
         if (!limit) {
             return [zero, list];
@@ -420,7 +419,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @return {Array} - [aggregated, list]
      */
     mapAccumR = exports.mapAccumR = (0, _curry.curry)((op, zero, xs) => {
-        const list = (0, _utils.copy)(xs),
+        const list = (0, _utils.sliceCopy)(xs),
               limit = (0, _object.length)(xs);
         if (!limit) {
             return [zero, list];
@@ -561,7 +560,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
-     * @function module:list.take
+     * @function module:list.drop
      * @param list {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
@@ -587,8 +586,8 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @param list {Array|String}
      * @returns {Array}
      */
-    takeWhile = exports.takeWhile = (0, _curry.curry)((pred, list) => (0, _utils.reduceUntil)((0, _negate.negateP)(pred), // predicate
-    _utils.aggregateArr$$, // operation
+    takeWhile = exports.takeWhile = (0, _curry.curry)((pred, list) => (0, _utils.reduceUntil)((0, _negate.negateF3)(pred), // predicate
+    _utils.aggregateArr$, // operation
     [], // aggregator
     list)),
 
@@ -610,7 +609,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
 
 
     /**
-     * @function module:list.dropWhile
+     * @function module:list.dropWhileEnd
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -634,7 +633,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @returns {Array} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
     span = exports.span = (0, _curry.curry)((pred, list) => {
-        const splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateP)(pred), list);
+        const splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateF3)(pred), list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     }),
 
@@ -707,13 +706,13 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
     /**
      * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
      * do not match the tuple are in second list in the returned tuple.
-     *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+     *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
      * @function module:list.partition
      * @param pred {Function} - Predicate<item, index, originalArrayOrString>
      * @param list {Array}
      * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
      */
-    partition = exports.partition = (0, _curry.curry)((pred, list) => !(0, _object.length)(list) ? [[], []] : [filter(pred, list), filter((0, _negate.negateP)(pred), list)]),
+    partition = exports.partition = (0, _curry.curry)((pred, list) => !(0, _object.length)(list) ? [[], []] : [filter(pred, list), filter((0, _negate.negateF3)(pred), list)]),
 
 
     /**
@@ -733,7 +732,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @param xs {Array}
      * @returns {Boolean}
      */
-    notElem = exports.notElem = (0, _negate.negateF)(_list.includes),
+    notElem = exports.notElem = (0, _negate.negateF2)(_list.includes),
 
 
     /**
@@ -825,7 +824,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
 
     /**
      * Checks if list `xs1` is a sub-sequence of list `xs2`
-     * @function module:list.isPrefixOf
+     * @function module:list.isSubsequenceOf
      * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
      * @returns {boolean}
@@ -876,7 +875,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
     groupBy = exports.groupBy = (0, _curry.curry)((equalityOp, xs) => {
         const limit = (0, _object.length)(xs);
         if (!limit) {
-            return (0, _utils.copy)(xs);
+            return (0, _utils.sliceCopy)(xs);
         }
         let ind = 0,
             prevItem,
@@ -955,7 +954,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @param list {Array|string|*}
      * @returns {Array|*}
      */
-    stripPrefix = exports.stripPrefix = (0, _curry.curry)((prefix, list) => isPrefixOf(prefix, list) ? splitAt((0, _object.length)(prefix), list)[1] : (0, _utils.copy)(list)),
+    stripPrefix = exports.stripPrefix = (0, _curry.curry)((prefix, list) => isPrefixOf(prefix, list) ? splitAt((0, _object.length)(prefix), list)[1] : (0, _utils.sliceCopy)(list)),
 
 
     /**
@@ -972,7 +971,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
             return [];
         }
         const [a1, a2] = (0, _utils.lengthsToSmallest)(arr1, arr2);
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$$)(agg, [item, a2[ind]]), [], a1);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, [item, a2[ind]]), [], a1);
     }),
 
 
@@ -992,7 +991,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
         } else if (lenOfTrimmed === 1) {
             return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$$)(agg, (0, _map2.default)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _map2.default)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
     },
 
 
@@ -1058,7 +1057,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
             return [];
         }
         const [a1, a2] = (0, _utils.lengthsToSmallest)(xs1, xs2);
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$$)(agg, op(item, a2[ind])), [], a1);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, op(item, a2[ind])), [], a1);
     }),
 
 
@@ -1075,7 +1074,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @param lists ...{Array}
      * @returns {Array<Array<*,*>>}
      */
-    zipWithN = exports.zipWithN = (0, _curry.curry)((op, ...lists) => {
+    zipWithN = exports.zipWithN = (op, ...lists) => {
         const trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists),
               lenOfTrimmed = (0, _object.length)(trimmedLists);
         if (!lenOfTrimmed) {
@@ -1083,8 +1082,8 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
         } else if (lenOfTrimmed === 1) {
             return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$$)(agg, (0, _function.apply)(op, (0, _map2.default)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
-    }),
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _function.apply)(op, (0, _map2.default)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
+    },
 
 
     /**
@@ -1154,7 +1153,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * unzip transforms a list of pairs into a list of first components and a list of second components.
      * @sudoHaskellType `unzipN :: [(a, b, ...x)] -> ([a], [b], ...[x])`
      * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
-     * @function module:list.unzip
+     * @function module:list.unzipN
      * @param list {Array|*} - List of tuples (lists).
      * @returns {Array|*}
      */
@@ -1462,7 +1461,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sortBy = exports.sortBy = (0, _curry.curry)((orderingFn, xs) => (0, _utils.copy)(xs).sort(orderingFn || _utils.genericAscOrdering)),
+    sortBy = exports.sortBy = (0, _curry.curry)((orderingFn, xs) => (0, _utils.sliceCopy)(xs).sort(orderingFn || _utils.genericAscOrdering)),
 
 
     /**
@@ -1510,7 +1509,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
                 return concat([parts[0], [x], parts[1]]);
             }
         }
-        return (0, _utils.aggregateArr$$)((0, _utils.copy)(xs), x);
+        return (0, _utils.aggregateArr$)((0, _utils.sliceCopy)(xs), x);
     }),
 
 
@@ -1560,6 +1559,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
     /**
      * The `removeFirstsBy` function takes a predicate and two lists and returns the first list with the first
      * occurrence of each element of the second list removed.
+     * @function module:list.removeFirstBy
      * @param pred {Function}
      * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
@@ -1579,7 +1579,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
     unionBy = exports.unionBy = (0, _curry.curry)((pred, arr1, arr2) => foldl((agg, b) => {
         const alreadyAdded = any(a => pred(a, b), agg);
         return !alreadyAdded ? (agg.push(b), agg) : agg;
-    }, (0, _utils.copy)(arr1), arr2)),
+    }, (0, _utils.sliceCopy)(arr1), arr2)),
 
 
     /**
@@ -1624,7 +1624,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
     difference = exports.difference = (0, _curry.curry)((array1, array2) => {
         // augment this with max length and min length ordering on op
         if (array1 && !array2) {
-            return (0, _utils.copy)(array1);
+            return (0, _utils.sliceCopy)(array1);
         } else if (!array1 && array2 || !array1 && !array2) {
             return [];
         }
@@ -1639,5 +1639,5 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @param arrays {...Array}
      * @returns {Array}
      */
-    complement = exports.complement = (0, _curry.curry)((arr0, ...arrays) => (0, _utils.reduce)((agg, arr) => append(agg, difference(arr, arr0)), [], arrays));
+    complement = exports.complement = (arr0, ...arrays) => (0, _utils.reduce)((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
 });

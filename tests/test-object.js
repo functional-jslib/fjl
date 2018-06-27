@@ -486,9 +486,10 @@ describe ('#object', function () {
             expect(peek).to.be.instanceOf(Function);
         });
         it ('should return last arg passed in when being called with one or more args.', function () {
-            subsequences('abcde').concat([
+            subsequences('abc').concat([
                 [99], [true], [undefined], [null], ['Output tested from `peek`']
             ]).forEach(xs => {
+                log('testing-peek');
                 expect(peek.apply(null, xs)).to.equal(xs.pop());
             });
         });

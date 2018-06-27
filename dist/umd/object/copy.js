@@ -1,7 +1,24 @@
-import {typeOf} from './typeOf';
-import {of} from './of';
+(function (global, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(['module', 'exports', './typeOf', './of'], factory);
+    } else if (typeof exports !== "undefined") {
+        factory(module, exports, require('./typeOf'), require('./of'));
+    } else {
+        var mod = {
+            exports: {}
+        };
+        factory(mod, mod.exports, global.typeOf, global.of);
+        global.copy = mod.exports;
+    }
+})(this, function (module, exports, _typeOf, _of) {
+    'use strict';
 
-const
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+
+    var
 
     /**
      * Make a copy of a value or optionally copy incoming value onto an outgoing value (second parameter).
@@ -12,10 +29,12 @@ const
      * @param [out = undefined] {*} - Optional value to copy on to.  Not required.
      * @returns {*} - Copied thing or optionally outgoing value copied onto.
      */
-    copy = (x, out) => {
+    copy = function copy(x, out) {
         // if `null`, `undefined`, `''`, `0`, `false` return
-        if (!x) { return x; }
-        switch (typeOf(x)) {
+        if (!x) {
+            return x;
+        }
+        switch ((0, _typeOf.typeOf)(x)) {
             case Array.name:
                 return !out ? x.slice(0) : Object.assign(out, x);
 
@@ -39,9 +58,10 @@ const
 
             // Else make copy
             default:
-                return Object.assign(!out ? of(x) : out, x);
+                return Object.assign(!out ? (0, _of.of)(x) : out, x);
         }
-    }
-;
+    };
 
-export default copy;
+    exports.default = copy;
+    module.exports = exports['default'];
+});

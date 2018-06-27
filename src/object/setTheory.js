@@ -21,5 +21,5 @@ export const
         return agg;
     }, {}, keys(obj1))),
 
-    objComplement = curry((obj0, ...objs) => foldl((agg, obj) =>
-        assignDeep(agg, objDifference(obj, obj0)), {}, objs));
+    objComplement = (obj0, ...objs) => foldl((agg, obj) =>
+        assignDeep(agg, objDifference(obj, obj0)), {}, objs);

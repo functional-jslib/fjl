@@ -1,7 +1,12 @@
-import {typeOf} from './typeOf';
-import {of} from './of';
+define(['exports', './typeOf', './of'], function (exports, _typeOf, _of) {
+    'use strict';
 
-const
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+
+    const
 
     /**
      * Make a copy of a value or optionally copy incoming value onto an outgoing value (second parameter).
@@ -14,8 +19,10 @@ const
      */
     copy = (x, out) => {
         // if `null`, `undefined`, `''`, `0`, `false` return
-        if (!x) { return x; }
-        switch (typeOf(x)) {
+        if (!x) {
+            return x;
+        }
+        switch ((0, _typeOf.typeOf)(x)) {
             case Array.name:
                 return !out ? x.slice(0) : Object.assign(out, x);
 
@@ -39,9 +46,9 @@ const
 
             // Else make copy
             default:
-                return Object.assign(!out ? of(x) : out, x);
+                return Object.assign(!out ? (0, _of.of)(x) : out, x);
         }
-    }
-;
+    };
 
-export default copy;
+    exports.default = copy;
+});

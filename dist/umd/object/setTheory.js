@@ -36,7 +36,7 @@
             return agg;
         }, {}, (0, _object.keys)(obj1));
     }),
-        objComplement = exports.objComplement = (0, _curry.curry)(function (obj0) {
+        objComplement = exports.objComplement = function objComplement(obj0) {
         for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             objs[_key - 1] = arguments[_key];
         }
@@ -44,5 +44,5 @@
         return (0, _list.foldl)(function (agg, obj) {
             return (0, _assignDeep.assignDeep)(agg, objDifference(obj, obj0));
         }, {}, objs);
-    });
+    };
 });

@@ -3,13 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.complement = exports.difference = exports.intersectBy = exports.intersect = undefined;
-exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.appendMany = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
+exports.complement = exports.difference = exports.intersectBy = undefined;
+exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * List operations module (un-curried version).
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * @module list
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @private
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           */
 
 
@@ -76,40 +75,39 @@ exports.map = _map2.default;
 var
 
 /**
- * Append two lists, i.e.,
- * ```
- * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
- * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
- * ```
- * If the first list is not finite, the result is the first list.
- * @haskellType `append :: List a => a -> a -> a`
+ * Append two, or more, lists, i.e.,
+ * @example
+ * expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString); // true
+ *
+ * // Another example
+ * const result = append(
+ *   alphabetStr.split(''),
+ *   alphabetStr.split('')
+ * ),
+ * expected = repeat(2, alphabetStr).split('');
+ *
+ * shallowEquals(result, expected) === true // `true`
+ *
  * @function module:list.append
- * @param xs1 {Array} - list or list like.
- * @param xs2 {Array} - list or list like.
- * @returns {Array} - Same type as list like passed in.
+ * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
+ * @returns {(Array|String|*)} - Same type as list like passed in.
  */
-append = exports.append = _list.concat,
-
-
-/**
- * Append two or more lists, i.e., same as `append` but for two ore more lists.
- * @haskellType `appendN :: List a => a -> [a] -> a
- * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
- *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
- * @function module:list.appendN
- * @param args ...{Array} - Lists or lists likes.
- * @returns {Array} - Same type as first list or list like passed in.
- */
-appendMany = exports.appendN = (0, _curry.curry2)(function () {
+append = exports.append = function append() {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
     }
 
-    if ((0, _object.length)(args)) {
+    var len = (0, _object.length)(args);
+    if (!len) {
+        return [];
+    } else if (len === 1) {
+        return (0, _utils.sliceCopy)(args[0]);
+    }
+    if (len >= 2) {
         return (0, _function.apply)(_list.concat, args);
     }
-    throw new Error('`appendN` requires at least one arg.');
-}),
+    throw new Error('\'`append` requires at 2 or more arguments.  ' + (0, _object.length)(args) + ' args given.');
+},
 
 
 /**
@@ -192,7 +190,7 @@ unconsr = exports.unconsr = function unconsr(xs) {
  * @returns {Array}
  */
 concat = exports.concat = function concat(xs) {
-    return !(0, _object.length)(xs) ? (0, _utils.copy)(xs) : (0, _function.apply)(appendMany, xs);
+    return !(0, _object.length)(xs) ? (0, _utils.sliceCopy)(xs) : (0, _function.apply)(append, xs);
 },
 
 
@@ -339,7 +337,7 @@ subsequences = exports.subsequences = function subsequences(xs) {
  * @returns {Array} - Copy of incoming with swapped values at indices.
  */
 swapped = exports.swapped = (0, _curry.curry)(function (ind1, ind2, list) {
-    var out = (0, _utils.copy)(list),
+    var out = (0, _utils.sliceCopy)(list),
         tmp = out[ind1];
     out[ind1] = out[ind2];
     out[ind2] = tmp;
@@ -362,7 +360,7 @@ permutations = exports.permutations = function permutations(xs) {
         return [xs];
     }
 
-    var list = (0, _utils.copy)(xs),
+    var list = (0, _utils.sliceCopy)(xs),
         c = repeat(limit, 0),
         i = 0;
 
@@ -443,7 +441,7 @@ foldr1 = exports.foldr1 = (0, _curry.curry)(function (op, xs) {
  * @return {Array} - [aggregated, list]
  */
 mapAccumL = exports.mapAccumL = (0, _curry.curry)(function (op, zero, xs) {
-    var list = (0, _utils.copy)(xs),
+    var list = (0, _utils.sliceCopy)(xs),
         limit = (0, _object.length)(xs);
     if (!limit) {
         return [zero, list];
@@ -471,7 +469,7 @@ mapAccumL = exports.mapAccumL = (0, _curry.curry)(function (op, zero, xs) {
  * @return {Array} - [aggregated, list]
  */
 mapAccumR = exports.mapAccumR = (0, _curry.curry)(function (op, zero, xs) {
-    var list = (0, _utils.copy)(xs),
+    var list = (0, _utils.sliceCopy)(xs),
         limit = (0, _object.length)(xs);
     if (!limit) {
         return [zero, list];
@@ -622,7 +620,7 @@ take = exports.take = _utils.sliceTo,
 
 /**
  * Drops `n` items from start of list to `count` (exclusive).
- * @function module:list.take
+ * @function module:list.drop
  * @param list {Array|String}
  * @param count {Number}
  * @returns {String|Array} - Passed in type's type
@@ -651,8 +649,8 @@ splitAt = exports.splitAt = function splitAt(ind, list) {
  * @returns {Array}
  */
 takeWhile = exports.takeWhile = (0, _curry.curry)(function (pred, list) {
-    return (0, _utils.reduceUntil)((0, _negate.negateP)(pred), // predicate
-    _utils.aggregateArr$$, // operation
+    return (0, _utils.reduceUntil)((0, _negate.negateF3)(pred), // predicate
+    _utils.aggregateArr$, // operation
     [], // aggregator
     list);
 }),
@@ -677,7 +675,7 @@ dropWhile = exports.dropWhile = (0, _curry.curry)(function (pred, list) {
 
 
 /**
- * @function module:list.dropWhile
+ * @function module:list.dropWhileEnd
  * @param pred {Function} - Predicate<*, index, list|string>
  * @param list {Array|String}
  * @refactor
@@ -703,7 +701,7 @@ dropWhileEnd = exports.dropWhileEnd = (0, _curry.curry)(function (pred, list) {
  * @returns {Array} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
  */
 span = exports.span = (0, _curry.curry)(function (pred, list) {
-    var splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateP)(pred), list);
+    var splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateF3)(pred), list);
     return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
 }),
 
@@ -776,14 +774,14 @@ filter = exports.filter = (0, _curry.curry)(function (pred, xs) {
 /**
  * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
  * do not match the tuple are in second list in the returned tuple.
- *  Essentially `[filter(p, xs), filter(negateP(p), xs)]`.
+ *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
  * @function module:list.partition
  * @param pred {Function} - Predicate<item, index, originalArrayOrString>
  * @param list {Array}
  * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
  */
 partition = exports.partition = (0, _curry.curry)(function (pred, list) {
-    return !(0, _object.length)(list) ? [[], []] : [filter(pred, list), filter((0, _negate.negateP)(pred), list)];
+    return !(0, _object.length)(list) ? [[], []] : [filter(pred, list), filter((0, _negate.negateF3)(pred), list)];
 }),
 
 
@@ -804,7 +802,7 @@ elem = exports.elem = _list.includes,
  * @param xs {Array}
  * @returns {Boolean}
  */
-notElem = exports.notElem = (0, _negate.negateF)(_list.includes),
+notElem = exports.notElem = (0, _negate.negateF2)(_list.includes),
 
 
 /**
@@ -896,7 +894,7 @@ isInfixOf = exports.isInfixOf = (0, _curry.curry)(function (xs1, xs2) {
 
 /**
  * Checks if list `xs1` is a sub-sequence of list `xs2`
- * @function module:list.isPrefixOf
+ * @function module:list.isSubsequenceOf
  * @param xs1 {Array|String|*}
  * @param xs2 {Array|String|*}
  * @returns {boolean}
@@ -952,7 +950,7 @@ group = exports.group = function group(xs) {
 groupBy = exports.groupBy = (0, _curry.curry)(function (equalityOp, xs) {
     var limit = (0, _object.length)(xs);
     if (!limit) {
-        return (0, _utils.copy)(xs);
+        return (0, _utils.sliceCopy)(xs);
     }
     var ind = 0,
         prevItem = void 0,
@@ -1032,7 +1030,7 @@ tails = exports.tails = function tails(xs) {
  * @returns {Array|*}
  */
 stripPrefix = exports.stripPrefix = (0, _curry.curry)(function (prefix, list) {
-    return isPrefixOf(prefix, list) ? splitAt((0, _object.length)(prefix), list)[1] : (0, _utils.copy)(list);
+    return isPrefixOf(prefix, list) ? splitAt((0, _object.length)(prefix), list)[1] : (0, _utils.sliceCopy)(list);
 }),
 
 
@@ -1056,7 +1054,7 @@ zip = exports.zip = (0, _curry.curry)(function (arr1, arr2) {
         a2 = _lengthsToSmallest2[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$$)(agg, [item, a2[ind]]);
+        return (0, _utils.aggregateArr$)(agg, [item, a2[ind]]);
     }, [], a1);
 }),
 
@@ -1082,7 +1080,7 @@ zipN = exports.zipN = function zipN() {
         return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
     }
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$$)(agg, (0, _map2.default)(function (xs) {
+        return (0, _utils.aggregateArr$)(agg, (0, _map2.default)(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1163,7 +1161,7 @@ zipWith = exports.zipWith = (0, _curry.curry)(function (op, xs1, xs2) {
         a2 = _lengthsToSmallest4[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$$)(agg, op(item, a2[ind]));
+        return (0, _utils.aggregateArr$)(agg, op(item, a2[ind]));
     }, [], a1);
 }),
 
@@ -1181,7 +1179,7 @@ zipWith = exports.zipWith = (0, _curry.curry)(function (op, xs1, xs2) {
  * @param lists ...{Array}
  * @returns {Array<Array<*,*>>}
  */
-zipWithN = exports.zipWithN = (0, _curry.curry)(function (op) {
+zipWithN = exports.zipWithN = function zipWithN(op) {
     for (var _len3 = arguments.length, lists = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
         lists[_key3 - 1] = arguments[_key3];
     }
@@ -1194,11 +1192,11 @@ zipWithN = exports.zipWithN = (0, _curry.curry)(function (op) {
         return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
     }
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$$)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
+        return (0, _utils.aggregateArr$)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
-}),
+},
 
 
 /**
@@ -1276,7 +1274,7 @@ unzip = exports.unzip = function unzip(arr) {
  * unzip transforms a list of pairs into a list of first components and a list of second components.
  * @sudoHaskellType `unzipN :: [(a, b, ...x)] -> ([a], [b], ...[x])`
  * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
- * @function module:list.unzip
+ * @function module:list.unzipN
  * @param list {Array|*} - List of tuples (lists).
  * @returns {Array|*}
  */
@@ -1632,7 +1630,7 @@ sortOn = exports.sortOn = (0, _curry.curry)(function (valueFn, xs) {
  * @returns {Array|String|*}
  */
 sortBy = exports.sortBy = (0, _curry.curry)(function (orderingFn, xs) {
-    return (0, _utils.copy)(xs).sort(orderingFn || _utils.genericAscOrdering);
+    return (0, _utils.sliceCopy)(xs).sort(orderingFn || _utils.genericAscOrdering);
 }),
 
 
@@ -1683,7 +1681,7 @@ insertBy = exports.insertBy = (0, _curry.curry)(function (orderingFn, x, xs) {
             return concat([parts[0], [x], parts[1]]);
         }
     }
-    return (0, _utils.aggregateArr$$)((0, _utils.copy)(xs), x);
+    return (0, _utils.aggregateArr$)((0, _utils.sliceCopy)(xs), x);
 }),
 
 
@@ -1737,6 +1735,7 @@ removeBy = exports.removeBy = (0, _curry.curry)(function (pred, x, list) {
 /**
  * The `removeFirstsBy` function takes a predicate and two lists and returns the first list with the first
  * occurrence of each element of the second list removed.
+ * @function module:list.removeFirstBy
  * @param pred {Function}
  * @param xs1 {Array|String|*}
  * @param xs2 {Array|String|*}
@@ -1763,7 +1762,7 @@ unionBy = exports.unionBy = (0, _curry.curry)(function (pred, arr1, arr2) {
             return pred(a, b);
         }, agg);
         return !alreadyAdded ? (agg.push(b), agg) : agg;
-    }, (0, _utils.copy)(arr1), arr2);
+    }, (0, _utils.sliceCopy)(arr1), arr2);
 }),
 
 
@@ -1823,7 +1822,7 @@ intersectBy = exports.intersectBy = (0, _curry.curry)(function (pred, list1, lis
 difference = exports.difference = (0, _curry.curry)(function (array1, array2) {
     // augment this with max length and min length ordering on op
     if (array1 && !array2) {
-        return (0, _utils.copy)(array1);
+        return (0, _utils.sliceCopy)(array1);
     } else if (!array1 && array2 || !array1 && !array2) {
         return [];
     }
@@ -1840,7 +1839,7 @@ difference = exports.difference = (0, _curry.curry)(function (array1, array2) {
  * @param arrays {...Array}
  * @returns {Array}
  */
-complement = exports.complement = (0, _curry.curry)(function (arr0) {
+complement = exports.complement = function complement(arr0) {
     for (var _len4 = arguments.length, arrays = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
         arrays[_key4 - 1] = arguments[_key4];
     }
@@ -1848,4 +1847,4 @@ complement = exports.complement = (0, _curry.curry)(function (arr0) {
     return (0, _utils.reduce)(function (agg, arr) {
         return append(agg, difference(arr, arr0));
     }, [], arrays);
-});
+};

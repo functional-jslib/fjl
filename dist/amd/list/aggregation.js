@@ -1,28 +1,20 @@
-define(['exports', '../object'], function (exports, _object) {
-    'use strict';
+define(["exports"], function (exports) {
+    "use strict";
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.aggregatorByType = exports.aggregateObj = exports.aggregateArr$$ = exports.aggregateStr = undefined;
-    const aggregateStr = exports.aggregateStr = (agg, item) => agg + item,
-          aggregateArr$$ = exports.aggregateArr$$ = (agg, item) => {
+    const
+
+    /**
+     * Pushes incoming `item` onto array (`agg`) and return array (`agg`).
+     * @private
+     * @param agg {Array}
+     * @param item {*}
+     * @returns {Array}
+     */
+    aggregateArr$ = exports.aggregateArr$ = (agg, item) => {
         agg.push(item);
         return agg;
-    },
-          aggregateObj = exports.aggregateObj = (agg, item, ind) => {
-        agg[ind] = item;
-        return agg;
-    },
-          aggregatorByType = exports.aggregatorByType = x => {
-        switch ((0, _object.typeOf)(x)) {
-            case 'String':
-                return aggregateStr;
-            case 'Array':
-                return aggregateArr$$;
-            case 'Object':
-            default:
-                return aggregateObj;
-        }
     };
 });

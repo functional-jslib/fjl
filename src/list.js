@@ -1,7 +1,6 @@
 /**
  * List operations module (un-curried version).
  * @module list
- * @private
  */
 import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list';
 import {apply}              from './jsPlatform/function';
@@ -9,7 +8,7 @@ import {negateF3, negateF2}   from './function/negate';
 import {isTruthy, isFalsy}  from './boolean';
 import {prop, length}       from './object';
 import map                  from './list/map';
-import {curry, curry2} from './function/curry';
+import {curry} from './function/curry';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -27,36 +26,29 @@ export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';
 export const
 
     /**
-     * Append two lists, i.e.,
-     * ```
-     * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
-     * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
-     * ```
-     * If the first list is not finite, the result is the first list.
-     * @haskellType `append :: List a => a -> a -> a`
+     * Append two, or more, lists, i.e.,
+     * @example
+     * expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString); // true
+     *
+     * // Another example
+     * const result = append(
+     *   alphabetStr.split(''),
+     *   alphabetStr.split('')
+     * ),
+     * expected = repeat(2, alphabetStr).split('');
+     *
+     * shallowEquals(result, expected) === true // `true`
+     *
      * @function module:list.append
-     * @param xs1 {Array} - list or list like.
-     * @param xs2 {Array} - list or list like.
-     * @returns {Array} - Same type as list like passed in.
+     * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
+     * @returns {(Array|String|*)} - Same type as list like passed in.
      */
-    append = listAppend,
-
-    /**
-     * Append two or more lists, i.e., same as `append` but for two ore more lists.
-     * @haskellType `appendN :: List a => a -> [a] -> a
-     * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
-     *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:list.appendN
-     * @param args ...{Array} - Lists or lists likes.
-     * @returns {Array} - Same type as first list or list like passed in.
-     * @un-curried
-     */
-    appendN = (...args) => {
+    append = (...args) => {
         const len = length(args);
         if (!len) { return []; }
         else if (len === 1) { return sliceCopy(args[0]); }
-        if (len >= 2) { return apply(append, args); }
-        throw new Error(`'\`appendN\` requires at 2 or more arguments.  ${length(args)} args given.`);
+        if (len >= 2) { return apply(listAppend, args); }
+        throw new Error(`'\`append\` requires at 2 or more arguments.  ${length(args)} args given.`);
     },
 
     /**
@@ -121,7 +113,7 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    concat = xs => !length(xs) ? sliceCopy(xs) : apply(appendN, xs),
+    concat = xs => !length(xs) ? sliceCopy(xs) : apply(append, xs),
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -507,7 +499,7 @@ export const
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).
-     * @function module:list.take
+     * @function module:list.drop
      * @param list {Array|String}
      * @param count {Number}
      * @returns {String|Array} - Passed in type's type
@@ -559,7 +551,7 @@ export const
     }),
 
     /**
-     * @function module:list.dropWhile
+     * @function module:list.dropWhileEnd
      * @param pred {Function} - Predicate<*, index, list|string>
      * @param list {Array|String}
      * @refactor
@@ -770,7 +762,7 @@ export const
 
     /**
      * Checks if list `xs1` is a sub-sequence of list `xs2`
-     * @function module:list.isPrefixOf
+     * @function module:list.isSubsequenceOf
      * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
      * @returns {boolean}
@@ -1019,7 +1011,7 @@ export const
      * @param lists ...{Array}
      * @returns {Array<Array<*,*>>}
      */
-    zipWithN = curry((op, ...lists) => {
+    zipWithN = (op, ...lists) => {
         const trimmedLists = apply(lengthsToSmallest, lists),
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) {
@@ -1031,7 +1023,7 @@ export const
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, apply(op, map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
-    }),
+    },
 
     /**
      * Zips 3 lists with tupling function.
@@ -1097,7 +1089,7 @@ export const
      * unzip transforms a list of pairs into a list of first components and a list of second components.
      * @sudoHaskellType `unzipN :: [(a, b, ...x)] -> ([a], [b], ...[x])`
      * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
-     * @function module:list.unzip
+     * @function module:list.unzipN
      * @param list {Array|*} - List of tuples (lists).
      * @returns {Array|*}
      */
@@ -1481,6 +1473,7 @@ export const
     /**
      * The `removeFirstsBy` function takes a predicate and two lists and returns the first list with the first
      * occurrence of each element of the second list removed.
+     * @function module:list.removeFirstBy
      * @param pred {Function}
      * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
@@ -1566,5 +1559,5 @@ export const
      * @param arrays {...Array}
      * @returns {Array}
      */
-    complement = curry((arr0, ...arrays) =>
-        reduce((agg, arr) => append(agg, difference(arr, arr0)), [], arrays));
+    complement = (arr0, ...arrays) =>
+        reduce((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);

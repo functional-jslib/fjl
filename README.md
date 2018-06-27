@@ -68,23 +68,22 @@ are separated out 'Data.List' (in our lib is './src/list.js') etc..
 
 ### Reasoning for paradigms
 #### Use of while-and-for-loops instead of built-ins:
-- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.).
-- @todo include jsperf links for above here. 
-- @todo map performance of our lib here.
+- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.)
+ (do search for `foreach vs for loop` and/or similiar).
 
 ### Docs
 
 **JSDocs** [https://functional-jslib.github.io/fjl]
 
- The docs are divided into modules though all methods in the library all live on `fjl` or the top level export
- of the library (the docs are written out that way to easier understand the separation and the grouping of
+The docs are divided into modules though all methods in the library all live on `fjl` or the top level export
+ of the library (the docs are written out that way to more easily understand the separation and the grouping of
  methods (will give users a better idea of what methods are for what (without reading to much documentation))).
 
-Modules with a prefixed '_' contain docs for un-curried members.
-Modules without a prefixed '_' contain docs for curried members (one set of docs will be generated per module in
-the future).
 
-The jsdocs link listed above has the modules included on `fjl`, divided by the operation types ported over from the haskell prelude:
+#### A note on currying.
+- All methods that take 2 or more arguments are curried.
+- All methods that take rest params 'only' are not curried;  E.g.,
+- Methods that require one argument and rest params are not curried.
 
 #### `booleanOps`
 ```
@@ -94,7 +93,7 @@ isTruthy, isFalsy, alwaysTrue, alwaysFalse
 #### `list`
 List operations imported from the `Data.List` haskell module.
 ```
-append, appendN, head, last, tail, init, uncons, unconsr, concat, concatMap,
+append, head, last, tail, init, uncons, unconsr, concat, concatMap,
 reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
 permutations, foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
 replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices,

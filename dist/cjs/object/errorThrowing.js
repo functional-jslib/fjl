@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.getErrorIfNotTypesThrower = exports.getErrorIfNotTypeThrower = exports.errorIfNotTypes = exports.errorIfNotType = exports.defaultTypeChecker = exports._errorIfNotTypes = exports._errorIfNotType = exports._getErrorIfNotTypesThrower = exports._getErrorIfNotTypeThrower = exports.defaultErrorMessageCall = exports.multiTypesToString = exports._defaultTypeChecker = exports.getTypeName = exports.errorIfNotCheckableType = exports.isCheckableType = undefined;
 
@@ -21,7 +21,7 @@ var
  * @private
  */
 isCheckableType = exports.isCheckableType = function isCheckableType(type) {
-    return (0, _is.isString)(type) || (0, _is.isFunction)(type);
+  return (0, _is.isString)(type) || (0, _is.isFunction)(type);
 },
 
 
@@ -34,10 +34,10 @@ isCheckableType = exports.isCheckableType = function isCheckableType(type) {
  * @private
  */
 errorIfNotCheckableType = exports.errorIfNotCheckableType = function errorIfNotCheckableType(contextName, type) {
-    if (!isCheckableType(type)) {
-        throw new Error(contextName + ' expects `type` to be of type `String` or `Function`.' + ('  Type received `' + (0, _typeOf.typeOf)(type) + '`.  Value `' + type + '`.'));
-    }
-    return type;
+  if (!isCheckableType(type)) {
+    throw new Error(contextName + ' expects `type` to be of type `String` or `Function`.' + ('  Type received `' + (0, _typeOf.typeOf)(type) + '`.  Value `' + type + '`.'));
+  }
+  return type;
 },
 
 
@@ -49,8 +49,8 @@ errorIfNotCheckableType = exports.errorIfNotCheckableType = function errorIfNotC
  * @private
  */
 getTypeName = exports.getTypeName = function getTypeName(type) {
-    errorIfNotCheckableType('getTypeName', type);
-    return type.name || type;
+  errorIfNotCheckableType('getTypeName', type);
+  return type.name || type;
 },
 
 
@@ -63,7 +63,7 @@ getTypeName = exports.getTypeName = function getTypeName(type) {
  * @private
  */
 _defaultTypeChecker = exports._defaultTypeChecker = function _defaultTypeChecker(Type, value) {
-    return (0, _is.isType)(getTypeName(Type), value) || (0, _is.isFunction)(Type) && (0, _is.isset)(value) && value instanceof Type;
+  return (0, _is.isType)(getTypeName(Type), value) || (0, _is.isFunction)(Type) && (0, _is.isset)(value) && value instanceof Type;
 },
 
 
@@ -76,9 +76,9 @@ _defaultTypeChecker = exports._defaultTypeChecker = function _defaultTypeChecker
  * @private
  */
 multiTypesToString = exports.multiTypesToString = function multiTypesToString(types) {
-    return types.length ? types.map(function (type) {
-        return '`' + getTypeName(type) + '`';
-    }).join(', ') : '';
+  return types.length ? types.map(function (type) {
+    return '`' + getTypeName(type) + '`';
+  }).join(', ') : '';
 },
 
 
@@ -91,17 +91,17 @@ multiTypesToString = exports.multiTypesToString = function multiTypesToString(ty
  * @private
  */
 defaultErrorMessageCall = exports.defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {
-    var contextName = tmplContext.contextName,
-        valueName = tmplContext.valueName,
-        value = tmplContext.value,
-        expectedTypeName = tmplContext.expectedTypeName,
-        foundTypeName = tmplContext.foundTypeName,
-        messageSuffix = tmplContext.messageSuffix,
-        isMultiTypeNames = (0, _is.isArray)(expectedTypeName),
-        typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
-        typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
+  var contextName = tmplContext.contextName,
+      valueName = tmplContext.valueName,
+      value = tmplContext.value,
+      expectedTypeName = tmplContext.expectedTypeName,
+      foundTypeName = tmplContext.foundTypeName,
+      messageSuffix = tmplContext.messageSuffix,
+      isMultiTypeNames = (0, _is.isArray)(expectedTypeName),
+      typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+      typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
 
-    return (contextName ? '`' + contextName + '.' : '`') + (valueName + '` is not ' + typesCopy + ': ' + typesToMatchCopy + '.  ') + ('Type received: ' + foundTypeName + '.  Value: ' + value + ';') + ('' + (messageSuffix ? '  ' + messageSuffix + ';' : ''));
+  return (contextName ? '`' + contextName + '.' : '`') + (valueName + '` is not ' + typesCopy + ': ' + typesToMatchCopy + '.  ') + ('Type received: ' + foundTypeName + '.  Value: ' + value + ';') + ('' + (messageSuffix ? '  ' + messageSuffix + ';' : ''));
 },
 
 
@@ -113,17 +113,17 @@ defaultErrorMessageCall = exports.defaultErrorMessageCall = function defaultErro
  * @returns {Function|ErrorIfNotType}
  */
 _getErrorIfNotTypeThrower = exports._getErrorIfNotTypeThrower = function _getErrorIfNotTypeThrower(errorMessageCall) {
-    var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
-    return function (ValueType, contextName, valueName, value) {
-        var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
+  return function (ValueType, contextName, valueName, value) {
+    var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
 
-        var expectedTypeName = getTypeName(ValueType),
-            foundTypeName = (0, _typeOf.typeOf)(value);
-        if (typeChecker(ValueType, value)) {
-            return value;
-        } // Value matches type
-        throw new Error(errorMessageCall({ contextName: contextName, valueName: valueName, value: value, expectedTypeName: expectedTypeName, foundTypeName: foundTypeName, messageSuffix: messageSuffix }));
-    };
+    var expectedTypeName = getTypeName(ValueType),
+        foundTypeName = (0, _typeOf.typeOf)(value);
+    if (typeChecker(ValueType, value)) {
+      return value;
+    } // Value matches type
+    throw new Error(errorMessageCall({ contextName: contextName, valueName: valueName, value: value, expectedTypeName: expectedTypeName, foundTypeName: foundTypeName, messageSuffix: messageSuffix }));
+  };
 },
 
 
@@ -135,21 +135,21 @@ _getErrorIfNotTypeThrower = exports._getErrorIfNotTypeThrower = function _getErr
  * @returns {Function|ErrorIfNotTypes}
  */
 _getErrorIfNotTypesThrower = exports._getErrorIfNotTypesThrower = function _getErrorIfNotTypesThrower(errorMessageCall) {
-    var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
-    return function (valueTypes, contextName, valueName, value) {
-        var expectedTypeNames = valueTypes.map(getTypeName),
-            matchFound = valueTypes.some(function (ValueType) {
-            return typeChecker(ValueType, value);
-        }),
-            foundTypeName = (0, _typeOf.typeOf)(value);
-        if (matchFound) {
-            return value;
-        }
-        throw new Error(errorMessageCall({
-            contextName: contextName, valueName: valueName, value: value,
-            expectedTypeName: expectedTypeNames, foundTypeName: foundTypeName
-        }));
-    };
+  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _defaultTypeChecker;
+  return function (valueTypes, contextName, valueName, value) {
+    var expectedTypeNames = valueTypes.map(getTypeName),
+        matchFound = valueTypes.some(function (ValueType) {
+      return typeChecker(ValueType, value);
+    }),
+        foundTypeName = (0, _typeOf.typeOf)(value);
+    if (matchFound) {
+      return value;
+    }
+    throw new Error(errorMessageCall({
+      contextName: contextName, valueName: valueName, value: value,
+      expectedTypeName: expectedTypeNames, foundTypeName: foundTypeName
+    }));
+  };
 },
 
 
@@ -235,7 +235,7 @@ errorIfNotTypes = exports.errorIfNotTypes = (0, _curry.curry4)(_errorIfNotTypes)
  * @returns {Function|ErrorIfNotType} - Returns a function with the same signature as `errorIfNotType` though curried.
  */
 getErrorIfNotTypeThrower = exports.getErrorIfNotTypeThrower = function getErrorIfNotTypeThrower(errorMessageCall) {
-    return (0, _curry.curry)(_getErrorIfNotTypeThrower(errorMessageCall));
+  return (0, _curry.curry)(_getErrorIfNotTypeThrower(errorMessageCall));
 },
 
 
@@ -248,7 +248,7 @@ getErrorIfNotTypeThrower = exports.getErrorIfNotTypeThrower = function getErrorI
  * @returns {Function|ErrorIfNotTypes} - Returns a function with the same signature as `errorIfNotTypes` though curried.
  */
 getErrorIfNotTypesThrower = exports.getErrorIfNotTypesThrower = function getErrorIfNotTypesThrower(errorMessageCall) {
-    return (0, _curry.curry4)(_getErrorIfNotTypesThrower(errorMessageCall));
+  return (0, _curry.curry4)(_getErrorIfNotTypesThrower(errorMessageCall));
 };
 
 /**

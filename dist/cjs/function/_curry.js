@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.curry5_ = exports.curry4_ = exports.curry3_ = exports.curry2_ = exports.__ = undefined;
 exports.curry_ = curry_;
@@ -41,7 +41,7 @@ placeHolderInstance = new PlaceHolder();
  */
 
 function isPlaceHolder(instance) {
-    return instance instanceof PlaceHolder;
+  return instance instanceof PlaceHolder;
 }
 
 /**
@@ -53,15 +53,15 @@ function isPlaceHolder(instance) {
  * @returns {Array|*} - Returns passed in `list` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders(array, args) {
-    var out = array.map(function (element) {
-        if (!isPlaceHolder(element)) {
-            return element;
-        } else if (args.length) {
-            return args.shift();
-        }
-        return element;
-    });
-    return args.length ? out.concat(args) : out;
+  var out = array.map(function (element) {
+    if (!isPlaceHolder(element)) {
+      return element;
+    } else if (args.length) {
+      return args.shift();
+    }
+    return element;
+  });
+  return args.length ? out.concat(args) : out;
 }
 
 /**
@@ -72,11 +72,11 @@ function replacePlaceHolders(array, args) {
  * @returns {Function}
  */
 function curry_(fn) {
-    for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        argsToCurry[_key - 1] = arguments[_key];
-    }
+  for (var _len = arguments.length, argsToCurry = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    argsToCurry[_key - 1] = arguments[_key];
+  }
 
-    return curryN_.apply(undefined, [(0, _fnOrError2.default)(notFnErrPrefix, fn).length, fn].concat(argsToCurry));
+  return curryN_.apply(undefined, [(0, _fnOrError2.default)(notFnErrPrefix, fn).length, fn].concat(argsToCurry));
 }
 
 /**
@@ -88,20 +88,20 @@ function curry_(fn) {
  * @returns {Function} - Passed in function wrapped in a function for currying.
  */
 function curryN_(executeArity, fn) {
-    for (var _len2 = arguments.length, curriedArgs = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-        curriedArgs[_key2 - 2] = arguments[_key2];
+  for (var _len2 = arguments.length, curriedArgs = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+    curriedArgs[_key2 - 2] = arguments[_key2];
+  }
+
+  return function () {
+    for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      args[_key3] = arguments[_key3];
     }
 
-    return function () {
-        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-            args[_key3] = arguments[_key3];
-        }
-
-        var concatedArgs = replacePlaceHolders(curriedArgs, args),
-            placeHolders = concatedArgs.filter(isPlaceHolder),
-            canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
-        return !canBeCalled ? curryN_.apply(null, [executeArity, (0, _fnOrError2.default)(notFnErrPrefix, fn)].concat(concatedArgs)) : (0, _fnOrError2.default)(notFnErrPrefix, fn).apply(null, concatedArgs);
-    };
+    var concatedArgs = replacePlaceHolders(curriedArgs, args),
+        placeHolders = concatedArgs.filter(isPlaceHolder),
+        canBeCalled = concatedArgs.length - placeHolders.length >= executeArity || !executeArity;
+    return !canBeCalled ? curryN_.apply(null, [executeArity, (0, _fnOrError2.default)(notFnErrPrefix, fn)].concat(concatedArgs)) : (0, _fnOrError2.default)(notFnErrPrefix, fn).apply(null, concatedArgs);
+  };
 }
 
 /**
@@ -119,7 +119,7 @@ var __ = exports.__ = Object.freeze ? Object.freeze(placeHolderInstance) : place
  * @returns {Function}
  */
 curry2_ = exports.curry2_ = function curry2_(fn) {
-    return curryN_(2, fn);
+  return curryN_(2, fn);
 },
 
 
@@ -130,7 +130,7 @@ curry2_ = exports.curry2_ = function curry2_(fn) {
  * @returns {Function}
  */
 curry3_ = exports.curry3_ = function curry3_(fn) {
-    return curryN_(3, fn);
+  return curryN_(3, fn);
 },
 
 
@@ -141,7 +141,7 @@ curry3_ = exports.curry3_ = function curry3_(fn) {
  * @returns {Function}
  */
 curry4_ = exports.curry4_ = function curry4_(fn) {
-    return curryN_(4, fn);
+  return curryN_(4, fn);
 },
 
 
@@ -152,5 +152,5 @@ curry4_ = exports.curry4_ = function curry4_(fn) {
  * @returns {Function}
  */
 curry5_ = exports.curry5_ = function curry5_(fn) {
-    return curryN_(5, fn);
+  return curryN_(5, fn);
 };

@@ -4,20 +4,31 @@ define(['exports', './is', '../function/curry'], function (exports, _is, _curry)
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.fromNamespace = undefined;
+    exports.searchObj = undefined;
     const
 
     /**
-     * Gives you value at key/namespace-key;  E.g.,
+     * Gives you value at key/namespace-key within `obj`;  E.g.,
+     * searchObj('all.your.base', {all: {your: {base: 99}}}) === 99 // `true`
+     * @note If key is unreachable (undefined) returns `undefined`.
+     *  Useful in cases where we do not want to check each key along the way before getting/checking value;  E.g.,
+     * @example
      * ```
-     *   fromNamespace('all.your.base', {all: {your: {base: 99}}}) === 99
+     * if (obj && obj.all && obj.all.your && obj.all.your.base) {
+     *   // Thing we want to do
+     * }
+     *
+     * // So with our function becomes
+     * if (searchObj('all.your.base', obj)) {
+     *   // Thing we want to do
+     * }
      * ```
-     * @function module:object.fromNamespace
+     * @function module:object.searchObj
      * @param nsString {String}
      * @param obj {*}
      * @returns {*}
      */
-    fromNamespace = exports.fromNamespace = (0, _curry.curry)((nsString, obj) => {
+    searchObj = exports.searchObj = (0, _curry.curry)((nsString, obj) => {
         if (!obj) {
             return obj;
         }

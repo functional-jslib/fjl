@@ -40,6 +40,18 @@ Object.keys(_typeOf).forEach(function (key) {
   });
 });
 
+var _copy = require('./object/copy');
+
+Object.keys(_copy).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _copy[key];
+    }
+  });
+});
+
 var _is = require('./object/is');
 
 Object.keys(_is).forEach(function (key) {
@@ -64,14 +76,14 @@ Object.keys(_of).forEach(function (key) {
   });
 });
 
-var _fromNamespace = require('./object/fromNamespace');
+var _searchObj = require('./object/searchObj');
 
-Object.keys(_fromNamespace).forEach(function (key) {
+Object.keys(_searchObj).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _fromNamespace[key];
+      return _searchObj[key];
     }
   });
 });

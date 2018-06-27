@@ -4,16 +4,27 @@ import {curry} from '../function/curry';
 export const
 
     /**
-     * Gives you value at key/namespace-key;  E.g.,
+     * Gives you value at key/namespace-key within `obj`;  E.g.,
+     * searchObj('all.your.base', {all: {your: {base: 99}}}) === 99 // `true`
+     * @note If key is unreachable (undefined) returns `undefined`.
+     *  Useful in cases where we do not want to check each key along the way before getting/checking value;  E.g.,
+     * @example
      * ```
-     *   fromNamespace('all.your.base', {all: {your: {base: 99}}}) === 99
+     * if (obj && obj.all && obj.all.your && obj.all.your.base) {
+     *   // Thing we want to do
+     * }
+     *
+     * // So with our function becomes
+     * if (searchObj('all.your.base', obj)) {
+     *   // Thing we want to do
+     * }
      * ```
-     * @function module:object.fromNamespace
+     * @function module:object.searchObj
      * @param nsString {String}
      * @param obj {*}
      * @returns {*}
      */
-    fromNamespace = curry((nsString, obj) => {
+    searchObj = curry((nsString, obj) => {
         if (!obj) { return obj; }
         if (nsString.indexOf('.') === -1) {
             return obj[nsString];

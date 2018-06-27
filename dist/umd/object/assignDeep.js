@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './is', '../function/curry', '../jsPlatform/object'], factory);
+        define(['exports', './is', '../jsPlatform/object'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./is'), require('../function/curry'), require('../jsPlatform/object'));
+        factory(exports, require('./is'), require('../jsPlatform/object'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.curry, global.object);
+        factory(mod.exports, global.is, global.object);
         global.assignDeep = mod.exports;
     }
-})(this, function (exports, _is, _curry, _object) {
+})(this, function (exports, _is, _object) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -25,12 +25,12 @@
      * @param [objs] {...{Object}} - One or more objects to merge onto `obj0`.
      * @returns {Object}
      */
-    assignDeep = exports.assignDeep = (0, _curry.curry2)(function (obj0) {
+    assignDeep = exports.assignDeep = function assignDeep(obj0) {
         for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             objs[_key - 1] = arguments[_key];
         }
 
-        return objs.reduce(function (topAgg, obj) {
+        return !obj0 ? obj0 : objs.reduce(function (topAgg, obj) {
             return !obj ? topAgg : (0, _object.keys)(obj).reduce(function (agg, key) {
                 var propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection
@@ -45,5 +45,5 @@
                 return agg;
             }, topAgg);
         }, obj0);
-    });
+    };
 });

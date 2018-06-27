@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
+exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
 
 var _aggregation = require('./aggregation');
 
@@ -62,20 +62,11 @@ sliceTo = exports.sliceTo = (0, _curry.curry)(function (toInd, xs) {
 
 /**
  * Slices a copy of list.
- * @function _listOpUtils.sliceFrom
- * @param xs {Array|String|*}
- * @returns {Array|String|*}
- */
-copy = exports.copy = sliceFrom(0),
-
-
-/**
- * Slices a copy of list.
  * @function _listOpUtils.sliceCopy
  * @param xs {Array|String|*}
  * @returns {Array|String|*}
  */
-sliceCopy = exports.sliceCopy = copy,
+sliceCopy = exports.sliceCopy = sliceFrom(0),
 
 
 /**
@@ -123,7 +114,7 @@ lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
     var listLengths = (0, _function.apply)(lengths, lists),
         smallLen = Math.min.apply(Math, listLengths);
     return (0, _map2.default)(function (list, ind) {
-        return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list);
+        return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list);
     }, lists);
 },
 

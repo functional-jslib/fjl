@@ -13,7 +13,7 @@ import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase}
     from '../src/string';
 import {
-    append, appendN, all, and, or, any, find, findIndex, findIndices,
+    append, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices, lookup,
@@ -74,56 +74,34 @@ describe ('#list', function () {
         };
 
     describe ('#append', function () {
-        it ('should be able to append two lists.', function () {
-            expectShallowEquals(append(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
-            expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
-        });
-        it ('should return the a copy of the original list when appending to an empty list', function () {
-            expectShallowEquals(append(alphabetArray, []), alphabetArray);
-            expectEqual(append(alphabetString, ''), alphabetString);
-        });
-        it ('should return an empty list when appending empty lists', function () {
-            expectEqual(append('', ''), '');
-            expectShallowEquals(append([], []), []);
-        });
-        it ('should throw an error when receiving `2` or more Nothings', function () {
-            // assert.throws(append, Error); // method is curried - cannot call like this
-            assert.throws(() => append(null, null), Error);
-            assert.throws(() => append(undefined, null), Error);
-            assert.throws(() => append(null, []), Error);
-            assert.throws(() => append(undefined, []), Error);
-        });
-    });
-
-    describe ('#appendN', function () {
         const unfoldRBy4 = list => unfoldr(remainder =>
-                    remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
-                , list),
+                remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
+            , list),
             arrayParts= unfoldRBy4(alphabetArray),
             stringParts = unfoldRBy4(alphabetString);
 
         it ('should be able to append two lists.', function () {
-            expectShallowEquals(appendN.apply(null, arrayParts), alphabetArray);
-            expectShallowEquals(appendN.apply(null, stringParts), alphabetString);
-            expectShallowEquals(appendN(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
-            expectEqual(appendN(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
+            expectShallowEquals(append.apply(null, arrayParts), alphabetArray);
+            expectShallowEquals(append.apply(null, stringParts), alphabetString);
+            expectShallowEquals(append(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
+            expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
         });
         it ('should return the copy of the original list when appending to an empty list', function () {
-            expectShallowEquals(appendN(alphabetArray, []), alphabetArray);
-            expectEqual(appendN(alphabetString, ''), alphabetString);
+            expectShallowEquals(append(alphabetArray, []), alphabetArray);
+            expectEqual(append(alphabetString, ''), alphabetString);
         });
         it ('should return an empty list when appending empty lists', function () {
-            expectEqual(appendN('', '', ''), '');
-            expectEqual(appendN('', ''), '');
-            expectShallowEquals(appendN([], [], []), []);
-            expectShallowEquals(appendN([], []), []);
+            expectEqual(append('', '', ''), '');
+            expectEqual(append('', ''), '');
+            expectShallowEquals(append([], [], []), []);
+            expectShallowEquals(append([], []), []);
         });
         it ('should throw an error when receiving Nothing', function () {
-            // assert.throws(appendN, Error);
-            assert.throws(() => appendN(null, null), Error);
-            assert.throws(() => appendN(undefined, undefined), Error);
-            assert.throws(() => appendN(null, []), Error);
-            assert.throws(() => appendN(undefined, []), Error);
+            // assert.throws(append, Error);
+            assert.throws(() => append(null, null), Error);
+            assert.throws(() => append(undefined, undefined), Error);
+            assert.throws(() => append(null, []), Error);
+            assert.throws(() => append(undefined, []), Error);
         });
     });
 

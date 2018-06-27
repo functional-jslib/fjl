@@ -1,4 +1,4 @@
-define(['exports', './jsPlatform/object', './object/prop', './object/typeOf', './object/is', './object/of', './object/fromNamespace', './object/assignDeep', './object/setTheory', './object/console', './object/errorThrowing', './object/jsonClone', './object/toArray', './object/assocList'], function (exports, _object, _prop, _typeOf, _is, _of, _fromNamespace, _assignDeep, _setTheory, _console, _errorThrowing, _jsonClone, _toArray, _assocList) {
+define(['exports', './jsPlatform/object', './object/prop', './object/typeOf', './object/copy', './object/is', './object/of', './object/searchObj', './object/assignDeep', './object/setTheory', './object/console', './object/errorThrowing', './object/jsonClone', './object/toArray', './object/assocList'], function (exports, _object, _prop, _typeOf, _copy, _is, _of, _searchObj, _assignDeep, _setTheory, _console, _errorThrowing, _jsonClone, _toArray, _assocList) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -31,6 +31,15 @@ define(['exports', './jsPlatform/object', './object/prop', './object/typeOf', '.
       }
     });
   });
+  Object.keys(_copy).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _copy[key];
+      }
+    });
+  });
   Object.keys(_is).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
@@ -49,12 +58,12 @@ define(['exports', './jsPlatform/object', './object/prop', './object/typeOf', '.
       }
     });
   });
-  Object.keys(_fromNamespace).forEach(function (key) {
+  Object.keys(_searchObj).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _fromNamespace[key];
+        return _searchObj[key];
       }
     });
   });

@@ -4,7 +4,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.copy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -48,20 +48,11 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Slices a copy of list.
-     * @function _listOpUtils.sliceFrom
-     * @param xs {Array|String|*}
-     * @returns {Array|String|*}
-     */
-    copy = exports.copy = sliceFrom(0),
-
-
-    /**
-     * Slices a copy of list.
      * @function _listOpUtils.sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceCopy = exports.sliceCopy = copy,
+    sliceCopy = exports.sliceCopy = sliceFrom(0),
 
 
     /**
@@ -98,7 +89,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
     lengthsToSmallest = exports.lengthsToSmallest = (...lists) => {
         const listLengths = (0, _function.apply)(lengths, lists),
               smallLen = Math.min.apply(Math, listLengths);
-        return (0, _map2.default)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : copy(list), lists);
+        return (0, _map2.default)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list), lists);
     },
 
 
