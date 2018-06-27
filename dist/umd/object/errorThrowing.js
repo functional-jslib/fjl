@@ -16,30 +16,30 @@
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.getErrorIfNotTypesThrower = exports.getErrorIfNotTypeThrower = exports.errorIfNotTypes = exports.errorIfNotType = exports.defaultTypeChecker = exports._errorIfNotTypes = exports._errorIfNotType = exports._getErrorIfNotTypesThrower = exports._getErrorIfNotTypeThrower = exports.defaultErrorMessageCall = exports.multiTypesToString = exports._defaultTypeChecker = exports.getTypeName = exports.errorIfNotCheckableType = exports.isCheckableType = undefined;
+  exports.getErrorIfNotTypesThrower = exports.getErrorIfNotTypeThrower = exports.errorIfNotTypes = exports.errorIfNotType = exports.defaultTypeChecker = exports._errorIfNotTypes = exports._errorIfNotType = exports._getErrorIfNotTypesThrower = exports._getErrorIfNotTypeThrower = exports.defaultErrorMessageCall = exports.typeRefsToStringOrError = exports._defaultTypeChecker = exports.typeRefNameOrError = exports.typeRefOrError = exports.isTypeRef = undefined;
   var
 
   /**
    * Checks if `type` is a string or a function (constructor or constructor name)
-   * @function module:object.isCheckableType
+   * @function module:object.isTypeRef
    * @param type {TypeRef}
    * @returns {Boolean}
    * @private
    */
-  isCheckableType = exports.isCheckableType = function isCheckableType(type) {
+  isCheckableType = exports.isTypeRef = function isCheckableType(type) {
     return (0, _is.isString)(type) || (0, _is.isFunction)(type);
   },
 
 
   /**
    * Throws an error if `type` is not a checkable type (can't be checked by the `TypeChecker` type)
-   * @function module:object.errorIfNotCheckableType
+   * @function module:object.typeRefOrError
    * @param contextName {String}
    * @param type {TypeRef}
    * @returns {TypeRef} - Type passed in if `type` is checkable
    * @private
    */
-  errorIfNotCheckableType = exports.errorIfNotCheckableType = function errorIfNotCheckableType(contextName, type) {
+  errorIfNotCheckableType = exports.typeRefOrError = function errorIfNotCheckableType(contextName, type) {
     if (!isCheckableType(type)) {
       throw new Error(contextName + ' expects `type` to be of type `String` or `Function`.' + ('  Type received `' + (0, _typeOf.typeOf)(type) + '`.  Value `' + type + '`.'));
     }
@@ -49,13 +49,13 @@
 
   /**
    * Resolves/normalizes a type name from either a string or a constructor.
-   * @function module:object.getTypeName
+   * @function module:object.typeRefNameOrError
    * @param type {Function|String} - String or function representing a type.
    * @returns {String}
    * @private
    */
-  getTypeName = exports.getTypeName = function getTypeName(type) {
-    errorIfNotCheckableType('getTypeName', type);
+  getTypeName = exports.typeRefNameOrError = function getTypeName(type) {
+    errorIfNotCheckableType('typeRefNameOrError', type);
     return type.name || type;
   },
 
@@ -76,12 +76,12 @@
   /**
    * Pretty prints an array of types/type-strings for use by error messages;
    * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
-   * @function module:object.multiTypesToString
+   * @function module:object.typeRefsToStringOrError
    * @param types {Array|TypesArray}
    * @return {String}
    * @private
    */
-  multiTypesToString = exports.multiTypesToString = function multiTypesToString(types) {
+  multiTypesToString = exports.typeRefsToStringOrError = function multiTypesToString(types) {
     return types.length ? types.map(function (type) {
       return '`' + getTypeName(type) + '`';
     }).join(', ') : '';

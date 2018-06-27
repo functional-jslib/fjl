@@ -1,7 +1,7 @@
 import {typeOf} from './typeOf';
 import {of} from './of';
 
-const
+export const
 
     /**
      * Make a copy of a value or optionally copy incoming value onto an outgoing value (second parameter).

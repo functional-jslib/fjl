@@ -315,6 +315,39 @@ var of = function of(x) {
     return undefined;
 };
 
+var copy = function copy(x, out) {
+    // if `null`, `undefined`, `''`, `0`, `false` return
+    if (!x) {
+        return x;
+    }
+    switch (typeOf(x)) {
+        case Array.name:
+            return !out ? x.slice(0) : Object.assign(out, x);
+
+        // If immutable primitive, return it
+        case Symbol.name:
+        case Boolean.name:
+        case String.name:
+        case Number.name:
+        case Promise.name:
+        case Function.name:
+        case 'NaN':
+        case 'Null':
+        case 'Undefined':
+            return x;
+
+        case 'Map':
+        case 'Set':
+        case 'WeakMap':
+        case 'WeakSet':
+            return new x.constructor(Array.from(x));
+
+        // Else make copy
+        default:
+            return Object.assign(!out ? of(x) : out, x);
+    }
+};
+
 var searchObj = curry(function (nsString, obj) {
     if (!obj) {
         return obj;
@@ -1404,7 +1437,7 @@ var errorIfNotCheckableType = function errorIfNotCheckableType(contextName, type
     return type;
 };
 var getTypeName = function getTypeName(type) {
-    errorIfNotCheckableType('getTypeName', type);
+    errorIfNotCheckableType('typeRefNameOrError', type);
     return type.name || type;
 };
 var _defaultTypeChecker = function _defaultTypeChecker(Type, value) {
@@ -1807,6 +1840,7 @@ exports.keys = keys;
 exports.assign = assign;
 exports.prop = prop;
 exports.typeOf = typeOf;
+exports.copy = copy;
 exports.isFunction = isFunction;
 exports.isType = isType;
 exports.isClass = isClass;

@@ -59,23 +59,23 @@ export const
 
     /**
      * Checks if `type` is a string or a function (constructor or constructor name)
-     * @function module:object.isCheckableType
+     * @function module:object.isTypeRef
      * @param type {TypeRef}
      * @returns {Boolean}
      * @private
      */
-    isCheckableType = type => isString(type) || isFunction(type),
+    isTypeRef = type => isString(type) || isFunction(type),
 
     /**
      * Throws an error if `type` is not a checkable type (can't be checked by the `TypeChecker` type)
-     * @function module:object.errorIfNotCheckableType
+     * @function module:object.typeRefOrError
      * @param contextName {String}
      * @param type {TypeRef}
      * @returns {TypeRef} - Type passed in if `type` is checkable
      * @private
      */
-    errorIfNotCheckableType = (contextName, type) => {
-        if (!isCheckableType(type)) {
+    typeRefOrError = (contextName, type) => {
+        if (!isTypeRef(type)) {
             throw new Error (`${contextName} expects \`type\` to be of type \`String\` or \`Function\`.` +
                 `  Type received \`${typeOf(type)}\`.  Value \`${type}\`.`);
         }
@@ -84,13 +84,13 @@ export const
 
     /**
      * Resolves/normalizes a type name from either a string or a constructor.
-     * @function module:object.getTypeName
+     * @function module:object.typeRefNameOrError
      * @param type {Function|String} - String or function representing a type.
      * @returns {String}
      * @private
      */
-    getTypeName = type => {
-        errorIfNotCheckableType('getTypeName', type);
+    typeRefNameOrError = type => {
+        typeRefOrError('typeRefNameOrError', type);
         return type.name || type;
     },
 
@@ -102,19 +102,19 @@ export const
      * @returns {Boolean}
      * @private
      */
-    _defaultTypeChecker = (Type, value) => isType(getTypeName(Type), value) || (
+    _defaultTypeChecker = (Type, value) => isType(typeRefNameOrError(Type), value) || (
         isFunction(Type) &amp;&amp; isset(value) &amp;&amp; value instanceof Type),
 
     /**
      * Pretty prints an array of types/type-strings for use by error messages;
      * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
-     * @function module:object.multiTypesToString
+     * @function module:object.typeRefsToStringOrError
      * @param types {Array|TypesArray}
      * @return {String}
      * @private
      */
-    multiTypesToString = types => types.length ?
-             types.map(type => `\`${getTypeName(type)}\``).join(', ') : '',
+    typeRefsToStringOrError = types => types.length ?
+             types.map(type => `\`${typeRefNameOrError(type)}\``).join(', ') : '',
 
     /**
      * Prints a message from an object.  Object signature:
@@ -131,7 +131,7 @@ export const
         } = tmplContext,
             isMultiTypeNames = isArray(expectedTypeName),
             typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
-            typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
+            typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
         return (contextName ? `\`${contextName}.` : '`') +
             `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` +
             `Type received: ${foundTypeName}.  Value: ${value};` +
@@ -147,7 +147,7 @@ export const
      */
     _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
       (ValueType, contextName, valueName, value, messageSuffix = null) => {
-        const expectedTypeName = getTypeName(ValueType),
+        const expectedTypeName = typeRefNameOrError(ValueType),
             foundTypeName = typeOf(value);
         if (typeChecker(ValueType, value)) { return value; } // Value matches type
         throw new Error(errorMessageCall(
@@ -164,7 +164,7 @@ export const
      */
     _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
       (valueTypes, contextName, valueName, value) => {
-            const expectedTypeNames = valueTypes.map(getTypeName),
+            const expectedTypeNames = valueTypes.map(typeRefNameOrError),
                 matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
                 foundTypeName = typeOf(value);
             if (matchFound) { return value; }

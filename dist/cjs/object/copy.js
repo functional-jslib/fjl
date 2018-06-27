@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.copy = undefined;
 
 var _typeOf = require('./typeOf');
 
@@ -19,7 +20,7 @@ var
  * @param [out = undefined] {*} - Optional value to copy on to.  Not required.
  * @returns {*} - Copied thing or optionally outgoing value copied onto.
  */
-copy = function copy(x, out) {
+copy = exports.copy = function copy(x, out) {
     // if `null`, `undefined`, `''`, `0`, `false` return
     if (!x) {
         return x;
@@ -53,4 +54,3 @@ copy = function copy(x, out) {
 };
 
 exports.default = copy;
-module.exports = exports['default'];

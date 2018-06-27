@@ -1,8 +1,8 @@
 import {expect, assert} from 'chai';
 
 import {
-    getTypeName,
-    multiTypesToString,
+    typeRefNameOrError,
+    typeRefsToStringOrError,
     defaultErrorMessageCall,
     getErrorIfNotTypeThrower,
     getErrorIfNotTypesThrower,
@@ -15,19 +15,19 @@ describe ('#errorThrowing', () => {
     const someValue = 'someValue',
         someValueArray = someValue.split('');
 
-    describe ('#getTypeName', () => {
+    describe ('#typeRefNameOrError', () => {
         it ('should return the type name of the assumed type/type-name passed in', () => {
-            expect(getTypeName(String)).to.equal('String');
-            expect(getTypeName('String')).to.equal('String');
+            expect(typeRefNameOrError(String)).to.equal('String');
+            expect(typeRefNameOrError('String')).to.equal('String');
         });
         it ('should throw an error when receiving anything other than a string or ' +
             'a constructor as it\'s first parameter', () => {
-            assert.throws(getTypeName, Error);
-            assert.throws(_ => getTypeName(null), Error);
+            assert.throws(typeRefNameOrError, Error);
+            assert.throws(_ => typeRefNameOrError(null), Error);
         });
     });
 
-    describe ('#multiTypesToString', () => {
+    describe ('#typeRefsToStringOrError', () => {
         it ('should return all types/type-names in passed in array surrounded by ' +
             'back-tick characters in a string', () => {
             const
@@ -41,9 +41,9 @@ describe ('#errorThrowing', () => {
                 expectedOutput = someTypeCtors.map(x => `\`${x.name}\``).join(', '),
 
                 // Results
-                strFromTypeNames = multiTypesToString(someTypeNames),
-                strFromTypeCtors = multiTypesToString(someTypeCtors),
-                strFromMixed = multiTypesToString(mixedTypeVals);
+                strFromTypeNames = typeRefsToStringOrError(someTypeNames),
+                strFromTypeCtors = typeRefsToStringOrError(someTypeCtors),
+                strFromMixed = typeRefsToStringOrError(mixedTypeVals);
 
             // log(expectedOutput, strFromMixed);
 
@@ -59,7 +59,7 @@ describe ('#errorThrowing', () => {
         });
 
         it ('should return an empty string when receiving an empty array', () => {
-            expect(multiTypesToString([])).to.equal('');
+            expect(typeRefsToStringOrError([])).to.equal('');
         });
     });
 

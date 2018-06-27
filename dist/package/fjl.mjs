@@ -222,6 +222,37 @@ const of = (x, ...args) => {
     return undefined;
 };
 
+const copy = (x, out) => {
+        // if `null`, `undefined`, `''`, `0`, `false` return
+        if (!x) { return x; }
+        switch (typeOf(x)) {
+            case Array.name:
+                return !out ? x.slice(0) : Object.assign(out, x);
+
+            // If immutable primitive, return it
+            case Symbol.name:
+            case Boolean.name:
+            case String.name:
+            case Number.name:
+            case Promise.name:
+            case Function.name:
+            case 'NaN':
+            case 'Null':
+            case 'Undefined':
+                return x;
+
+            case 'Map':
+            case 'Set':
+            case 'WeakMap':
+            case 'WeakSet':
+                return new x.constructor(Array.from(x));
+
+            // Else make copy
+            default:
+                return Object.assign(!out ? of(x) : out, x);
+        }
+    };
+
 const searchObj = curry((nsString, obj) => {
         if (!obj) { return obj; }
         if (nsString.indexOf('.') === -1) {
@@ -1383,4 +1414,4 @@ const classCase = compose(ucaseFirst, camelCase);
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
 
-export { instanceOf, hasOwnProperty, length, keys, assign, prop, typeOf, isFunction, isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, isCheckableType, errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply, call, compose, curryNotFnErrPrefix, curryN, curry, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, map, append, head, last, tail, init, uncons, unconsr, concat$$1 as concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, split, push, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArr$ };
+export { instanceOf, hasOwnProperty, length, keys, assign, prop, typeOf, copy, isFunction, isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, isCheckableType, errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply, call, compose, curryNotFnErrPrefix, curryN, curry, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, map, append, head, last, tail, init, uncons, unconsr, concat$$1 as concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, split, push, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArr$ };

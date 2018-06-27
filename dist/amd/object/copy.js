@@ -4,8 +4,7 @@ define(['exports', './typeOf', './of'], function (exports, _typeOf, _of) {
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-
-
+    exports.copy = undefined;
     const
 
     /**
@@ -17,7 +16,7 @@ define(['exports', './typeOf', './of'], function (exports, _typeOf, _of) {
      * @param [out = undefined] {*} - Optional value to copy on to.  Not required.
      * @returns {*} - Copied thing or optionally outgoing value copied onto.
      */
-    copy = (x, out) => {
+    copy = exports.copy = (x, out) => {
         // if `null`, `undefined`, `''`, `0`, `false` return
         if (!x) {
             return x;

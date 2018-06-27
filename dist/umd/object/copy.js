@@ -1,23 +1,22 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['module', 'exports', './typeOf', './of'], factory);
+        define(['exports', './typeOf', './of'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(module, exports, require('./typeOf'), require('./of'));
+        factory(exports, require('./typeOf'), require('./of'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod, mod.exports, global.typeOf, global.of);
+        factory(mod.exports, global.typeOf, global.of);
         global.copy = mod.exports;
     }
-})(this, function (module, exports, _typeOf, _of) {
+})(this, function (exports, _typeOf, _of) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-
-
+    exports.copy = undefined;
     var
 
     /**
@@ -29,7 +28,7 @@
      * @param [out = undefined] {*} - Optional value to copy on to.  Not required.
      * @returns {*} - Copied thing or optionally outgoing value copied onto.
      */
-    copy = function copy(x, out) {
+    copy = exports.copy = function copy(x, out) {
         // if `null`, `undefined`, `''`, `0`, `false` return
         if (!x) {
             return x;
@@ -63,5 +62,4 @@
     };
 
     exports.default = copy;
-    module.exports = exports['default'];
 });
