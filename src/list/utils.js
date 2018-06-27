@@ -10,7 +10,7 @@ import {alwaysFalse}    from '../boolean';
 import map              from './map';
 import {curry}          from '../function/curry';
 
-
+export * from './aggregation';
 
 export const
 
@@ -34,19 +34,11 @@ export const
 
     /**
      * Slices a copy of list.
-     * @function _listOpUtils.sliceFrom
-     * @param xs {Array|String|*}
-     * @returns {Array|String|*}
-     */
-    copy = sliceFrom(0),
-
-    /**
-     * Slices a copy of list.
      * @function _listOpUtils.sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceCopy = copy,
+    sliceCopy = sliceFrom(0),
 
     /**
      * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
@@ -78,7 +70,7 @@ export const
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
-            sliceTo(smallLen, list) : copy(list), lists);
+            sliceTo(smallLen, list) : sliceCopy(list), lists);
     },
 
     /**

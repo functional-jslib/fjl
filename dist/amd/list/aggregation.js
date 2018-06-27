@@ -4,9 +4,9 @@ define(['exports', '../object'], function (exports, _object) {
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.aggregatorByType = exports.aggregateObj = exports.aggregateArr$ = exports.aggregateStr = undefined;
+    exports.aggregatorByType = exports.aggregateObj = exports.aggregateArr$$ = exports.aggregateStr = undefined;
     const aggregateStr = exports.aggregateStr = (agg, item) => agg + item,
-          aggregateArr$ = exports.aggregateArr$ = (agg, item) => {
+          aggregateArr$$ = exports.aggregateArr$$ = (agg, item) => {
         agg.push(item);
         return agg;
     },
@@ -19,7 +19,7 @@ define(['exports', '../object'], function (exports, _object) {
             case 'String':
                 return aggregateStr;
             case 'Array':
-                return aggregateArr$;
+                return aggregateArr$$;
             case 'Object':
             default:
                 return aggregateObj;

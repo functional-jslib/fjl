@@ -193,7 +193,7 @@ sliceFrom, sliceTo, slice, sliceCopy
 genericAscOrdering, lengths, lengthsToSmallest, 
 reduceUntil, reduceRightUntil, reduce, reduceRight,
 lastIndex, findIndexWhere, findIndicesWhere, findWhere,
-aggregateStr, aggregateArr$, aggregateObj, aggregateByType,
+aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,
 ```
 
 **Note:**

@@ -652,7 +652,7 @@ splitAt = exports.splitAt = function splitAt(ind, list) {
  */
 takeWhile = exports.takeWhile = (0, _curry.curry)(function (pred, list) {
     return (0, _utils.reduceUntil)((0, _negate.negateP)(pred), // predicate
-    _utils.aggregateArr$, // operation
+    _utils.aggregateArr$$, // operation
     [], // aggregator
     list);
 }),
@@ -1056,7 +1056,7 @@ zip = exports.zip = (0, _curry.curry)(function (arr1, arr2) {
         a2 = _lengthsToSmallest2[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$)(agg, [item, a2[ind]]);
+        return (0, _utils.aggregateArr$$)(agg, [item, a2[ind]]);
     }, [], a1);
 }),
 
@@ -1082,7 +1082,7 @@ zipN = exports.zipN = function zipN() {
         return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
     }
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$)(agg, (0, _map2.default)(function (xs) {
+        return (0, _utils.aggregateArr$$)(agg, (0, _map2.default)(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1163,7 +1163,7 @@ zipWith = exports.zipWith = (0, _curry.curry)(function (op, xs1, xs2) {
         a2 = _lengthsToSmallest4[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$)(agg, op(item, a2[ind]));
+        return (0, _utils.aggregateArr$$)(agg, op(item, a2[ind]));
     }, [], a1);
 }),
 
@@ -1194,7 +1194,7 @@ zipWithN = exports.zipWithN = (0, _curry.curry)(function (op) {
         return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
     }
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
+        return (0, _utils.aggregateArr$$)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1683,7 +1683,7 @@ insertBy = exports.insertBy = (0, _curry.curry)(function (orderingFn, x, xs) {
             return concat([parts[0], [x], parts[1]]);
         }
     }
-    return (0, _utils.aggregateArr$)((0, _utils.copy)(xs), x);
+    return (0, _utils.aggregateArr$$)((0, _utils.copy)(xs), x);
 }),
 
 

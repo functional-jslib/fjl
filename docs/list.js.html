@@ -61,7 +61,7 @@ import {curry, curry2} from './function/curry';
 
 import {
     sliceFrom, sliceTo, lengths,
-    lengthsToSmallest, aggregateArr$,
+    lengthsToSmallest, aggregateArr$$,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, copy, genericAscOrdering
@@ -578,7 +578,7 @@ export const
     takeWhile = curry((pred, list) =>
         reduceUntil(
             negateP(pred),  // predicate
-            aggregateArr$,   // operation
+            aggregateArr$$,   // operation
             [],             // aggregator
             list
         )),
@@ -960,7 +960,7 @@ export const
         }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, [item, a2[ind]]),
+                aggregateArr$$(agg, [item, a2[ind]]),
             [], a1);
     }),
 
@@ -982,7 +982,7 @@ export const
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, map(xs => xs[ind], trimmedLists)),
+                aggregateArr$$(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     },
 
@@ -1046,7 +1046,7 @@ export const
         }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, op(item, a2[ind])),
+                aggregateArr$$(agg, op(item, a2[ind])),
             [], a1);
     }),
 
@@ -1073,7 +1073,7 @@ export const
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, apply(op, map(xs => xs[ind], trimmedLists))),
+                aggregateArr$$(agg, apply(op, map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     }),
 
@@ -1479,7 +1479,7 @@ export const
                 return concat([parts[0], [x], parts[1]]);
             }
         }
-        return aggregateArr$(copy(xs), x);
+        return aggregateArr$$(copy(xs), x);
     }),
 
     /**

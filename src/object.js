@@ -5,6 +5,7 @@
 export * from './jsPlatform/object';
 export * from './object/prop';
 export * from './object/typeOf';
+export * from './object/copy';
 export * from './object/is';
 export * from './object/of';
 export * from './object/fromNamespace';

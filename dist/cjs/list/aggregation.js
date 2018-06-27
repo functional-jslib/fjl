@@ -3,14 +3,14 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.aggregatorByType = exports.aggregateObj = exports.aggregateArr$ = exports.aggregateStr = undefined;
+exports.aggregatorByType = exports.aggregateObj = exports.aggregateArr$$ = exports.aggregateStr = undefined;
 
 var _object = require('../object');
 
 var aggregateStr = exports.aggregateStr = function aggregateStr(agg, item) {
     return agg + item;
 },
-    aggregateArr$ = exports.aggregateArr$ = function aggregateArr$(agg, item) {
+    aggregateArr$$ = exports.aggregateArr$$ = function aggregateArr$$(agg, item) {
     agg.push(item);
     return agg;
 },
@@ -23,7 +23,7 @@ var aggregateStr = exports.aggregateStr = function aggregateStr(agg, item) {
         case 'String':
             return aggregateStr;
         case 'Array':
-            return aggregateArr$;
+            return aggregateArr$$;
         case 'Object':
         default:
             return aggregateObj;

@@ -551,7 +551,7 @@ function _map(fn, xs) {
 let aggregateStr = function aggregateStr(agg, item) {
     return agg + item;
 };
-let aggregateArr$ = function aggregateArr$(agg, item) {
+let aggregateArr$$ = function aggregateArr$$(agg, item) {
     agg.push(item);
     return agg;
 };
@@ -564,7 +564,7 @@ let aggregatorByType = function aggregatorByType(x) {
         case 'String':
             return aggregateStr;
         case 'Array':
-            return aggregateArr$;
+            return aggregateArr$$;
         case 'Object':
         default:
             return aggregateObj;
@@ -929,7 +929,7 @@ let _splitAt = function _splitAt(ind, list) {
 };
 let _takeWhile = function _takeWhile(pred, list) {
     return reduceUntil(negateP(pred), // predicate
-    aggregateArr$, // operation
+    aggregateArr$$, // operation
     [], // aggregator
     list);
 };
@@ -1117,7 +1117,7 @@ let _zip = function _zip(arr1, arr2) {
         a2 = _lengthsToSmallest2[1];
 
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr$(agg, [item, a2[ind]]);
+        return aggregateArr$$(agg, [item, a2[ind]]);
     }, [], a1);
 };
 let _zipN = function _zipN() {
@@ -1133,7 +1133,7 @@ let _zipN = function _zipN() {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr$(agg, _map(function (xs) {
+        return aggregateArr$$(agg, _map(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1158,7 +1158,7 @@ let _zipWith = function _zipWith(op, xs1, xs2) {
         a2 = _lengthsToSmallest4[1];
 
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr$(agg, op(item, a2[ind]));
+        return aggregateArr$$(agg, op(item, a2[ind]));
     }, [], a1);
 };
 let _zipWithN = function _zipWithN(op) {
@@ -1174,7 +1174,7 @@ let _zipWithN = function _zipWithN(op) {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr$(agg, apply(op, _map(function (xs) {
+        return aggregateArr$$(agg, apply(op, _map(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1367,7 +1367,7 @@ let _insertBy = function _insertBy(orderingFn, x, xs) {
             return _concat([parts[0], [x], parts[1]]);
         }
     }
-    return aggregateArr$(copy(xs), x);
+    return aggregateArr$$(copy(xs), x);
 };
 let _nubBy = function _nubBy(pred, list) {
     if (!length(list)) {
@@ -2374,6 +2374,6 @@ exports.findIndexWhereRight = findIndexWhereRight;
 exports.findIndicesWhere = findIndicesWhere;
 exports.findWhere = findWhere;
 exports.aggregateStr = aggregateStr;
-exports.aggregateArr$ = aggregateArr$;
+exports.aggregateArr$$ = aggregateArr$$;
 exports.aggregateObj = aggregateObj;
 exports.aggregatorByType = aggregatorByType;

@@ -588,7 +588,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @returns {Array}
      */
     takeWhile = exports.takeWhile = (0, _curry.curry)((pred, list) => (0, _utils.reduceUntil)((0, _negate.negateP)(pred), // predicate
-    _utils.aggregateArr$, // operation
+    _utils.aggregateArr$$, // operation
     [], // aggregator
     list)),
 
@@ -972,7 +972,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
             return [];
         }
         const [a1, a2] = (0, _utils.lengthsToSmallest)(arr1, arr2);
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, [item, a2[ind]]), [], a1);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$$)(agg, [item, a2[ind]]), [], a1);
     }),
 
 
@@ -992,7 +992,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
         } else if (lenOfTrimmed === 1) {
             return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _map2.default)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$$)(agg, (0, _map2.default)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
     },
 
 
@@ -1058,7 +1058,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
             return [];
         }
         const [a1, a2] = (0, _utils.lengthsToSmallest)(xs1, xs2);
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, op(item, a2[ind])), [], a1);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$$)(agg, op(item, a2[ind])), [], a1);
     }),
 
 
@@ -1083,7 +1083,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
         } else if (lenOfTrimmed === 1) {
             return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
         }
-        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _function.apply)(op, (0, _map2.default)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
+        return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$$)(agg, (0, _function.apply)(op, (0, _map2.default)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
     }),
 
 
@@ -1510,7 +1510,7 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
                 return concat([parts[0], [x], parts[1]]);
             }
         }
-        return (0, _utils.aggregateArr$)((0, _utils.copy)(xs), x);
+        return (0, _utils.aggregateArr$$)((0, _utils.copy)(xs), x);
     }),
 
 

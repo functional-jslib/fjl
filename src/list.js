@@ -16,7 +16,7 @@ import {
     lengthsToSmallest, aggregateArr$,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
-    findWhere, copy, genericAscOrdering
+    findWhere, sliceCopy, genericAscOrdering
 }
     from './list/utils';
 
@@ -52,7 +52,10 @@ export const
      * @un-curried
      */
     appendN = (...args) => {
-        if (length(args) >= 2) { return apply(append, args); }
+        const len = length(args);
+        if (!len) { return []; }
+        else if (len === 1) { return sliceCopy(args[0]); }
+        if (len >= 2) { return apply(append, args); }
         throw new Error(`'\`appendN\` requires at 2 or more arguments.  ${length(args)} args given.`);
     },
 
@@ -110,7 +113,7 @@ export const
      * @returns {Array|String|*|undefined}
      */
     unconsr = xs => !xs || length(xs) === 0 ? undefined : [init(xs), last(xs)],
-    
+
     /**
      * Concatenates all the elements of a container of lists.
      * @haskellType `concat :: Foldable t => t [a] -> [a]`
@@ -118,7 +121,7 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    concat = xs => !length(xs) ? copy(xs) : apply(appendN, xs),
+    concat = xs => !length(xs) ? sliceCopy(xs) : apply(appendN, xs),
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -249,7 +252,7 @@ export const
      * @returns {Array} - Copy of incoming with swapped values at indices.
      */
     swapped = curry((ind1, ind2, list) => {
-        const out = copy(list),
+        const out = sliceCopy(list),
             tmp = out[ind1];
         out[ind1] = out[ind2];
         out[ind2] = tmp;
@@ -271,7 +274,7 @@ export const
             return [xs];
         }
 
-        let list = copy(xs),
+        let list = sliceCopy(xs),
             c = repeat(limit, 0),
             i = 0;
 
@@ -347,7 +350,7 @@ export const
      * @return {Array} - [aggregated, list]
      */
     mapAccumL = curry((op, zero, xs) => {
-        const list = copy(xs),
+        const list = sliceCopy(xs),
             limit = length(xs);
         if (!limit) {
             return [zero, list];
@@ -374,7 +377,7 @@ export const
      * @return {Array} - [aggregated, list]
      */
     mapAccumR = curry((op, zero, xs) => {
-        const list = copy(xs),
+        const list = sliceCopy(xs),
             limit = length(xs);
         if (!limit) {
             return [zero, list];
@@ -817,7 +820,7 @@ export const
     groupBy = curry((equalityOp, xs) => {
         const limit = length(xs);
         if (!limit) {
-            return copy(xs);
+            return sliceCopy(xs);
         }
         let ind = 0,
             prevItem,
@@ -896,7 +899,7 @@ export const
     stripPrefix = curry((prefix, list) =>
         isPrefixOf(prefix, list) ?
             splitAt(length(prefix), list)[1] :
-            copy(list)),
+            sliceCopy(list)),
 
     /**
      * zip takes two lists and returns a list of corresponding pairs.
@@ -1385,7 +1388,7 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sortBy = curry((orderingFn, xs) => copy(xs).sort(orderingFn || genericAscOrdering)),
+    sortBy = curry((orderingFn, xs) => sliceCopy(xs).sort(orderingFn || genericAscOrdering)),
 
     /**
      * The insert function takes an element and a list and inserts the element
@@ -1432,7 +1435,7 @@ export const
                 return concat([parts[0], [x], parts[1]]);
             }
         }
-        return aggregateArr$(copy(xs), x);
+        return aggregateArr$(sliceCopy(xs), x);
     }),
 
     /**
@@ -1498,7 +1501,7 @@ export const
         foldl((agg, b) => {
                 const alreadyAdded = any(a => pred(a, b), agg);
                 return !alreadyAdded ? (agg.push(b), agg) : agg;
-            }, copy(arr1), arr2
+            }, sliceCopy(arr1), arr2
         )),
 
     /**
@@ -1546,7 +1549,7 @@ export const
      */
     difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
         if (array1 && !array2) {
-            return copy(array1);
+            return sliceCopy(array1);
         }
         else if (!array1 && array2 || (!array1 && !array2)) {
             return [];
