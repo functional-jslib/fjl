@@ -1,18 +1,17 @@
 /**
- * @module object
+ * @module errorThrowing
  * @description Contains error throwing facilities for when a value doesn't match a type.
- *  In addition gives you curried and uncurried versions of the multi arity functions.
  */
-import {typeOf} from './typeOf';
-import {isArray, toTypeRef, toTypeRefName, isOfType} from './is';
-import {curry, curry4} from '../function/curry';
+import {typeOf} from './object/typeOf';
+import {isArray, toTypeRef, toTypeRefName, isOfType} from './object/is';
+import {curry} from './function/curry';
 
 export const
 
     /**
      * Pretty prints an array of types/type-strings for use by error messages;
      * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
-     * @function module:object.typeRefsToStringOrError
+     * @function module:errorThrowing.typeRefsToStringOrError
      * @param types {Array|TypesArray}
      * @return {String}
      * @private
@@ -23,7 +22,7 @@ export const
     /**
      * Prints a message from an object.  Object signature:
      * {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
-     * @function module:object.defaultErrorMessageCall
+     * @function module:errorThrowing.defaultErrorMessageCall
      * @param tmplContext {Object|TemplateContext} - Object to use in error template.
      * @returns {string}
      * @private
@@ -44,7 +43,7 @@ export const
 
     /**
      * Gets the error message thrower seeded with passed in errorMessage template call.
-     * @function module:object.getErrorIfNotTypeThrower$
+     * @function module:errorThrowing.getErrorIfNotTypeThrower$
      * @param errorMessageCall {Function|ErrorMessageCall}
      * @param typeChecker {Function|TypeChecker} - Function<Type, value>:Boolean
      * @returns {Function|ErrorIfNotType}
@@ -62,14 +61,14 @@ export const
 
     /**
      * Gets the error message thrower seeded with passed in errorMessage template call.
-     * @function module:object.getErrorIfNotTypesThrower$
+     * @function module:errorThrowing.getErrorIfNotTypesThrower$
      * @param errorMessageCall {Function|ErrorMessageCall}
      * @param typeChecker {Function|TypeChecker} - Function<Type, value>:Boolean
      * @returns {Function|ErrorIfNotTypes}
      * @private
      */
     _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = isOfType) =>
-        (valueTypes, contextName, valueName, value) => {
+        (valueTypes, contextName, valueName, value, messageSuffix = null) => {
             const expectedTypeNames = valueTypes.map(toTypeRef),
                 matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
                 foundTypeName = typeOf(value);
@@ -77,7 +76,8 @@ export const
             throw new Error(
                 errorMessageCall({
                     contextName, valueName, value,
-                    expectedTypeName: expectedTypeNames, foundTypeName
+                    expectedTypeName: expectedTypeNames, foundTypeName,
+                    messageSuffix
                 })
             );
         },
@@ -85,14 +85,14 @@ export const
     /**
      * Checks that passed in `value` is of given `type`.  Throws an error if value
      * is not of given `type`.  This is the un-curried version.  For the curried version
-     * see `module:object.errorIfNotType`.
-     * @function module:object.errorIfNotType$
+     * see `module:errorThrowing.errorIfNotType`.
+     * @function module:errorThrowing.errorIfNotType$
      * @param type {String|Function} - Type's name or type itself.
      * @param contextName {String} - Name of context to attribute errors if thrown.
      * @param valueName {String} - String rep of value.
      * @param value {*}
      * @param [messageSuffix=null] {String} - Optional.
-     * @returns {undefined}
+     * @returns {*} - Given `value` if `value` matches passed in type.
      * @private
      */
     _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall),
@@ -100,50 +100,23 @@ export const
     /**
      * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
      *  is not of one of the given `types`.  This is the un-curried version.  For the curried version
-     * see `module:object.errorIfNotTypes`.
-     * @type {Function|module:object.errorIfNotTypes}
-     * @function module:object.errorIfNotTypes$
+     * see `module:errorThrowing.errorIfNotTypes`.
+     * @type {Function|module:errorThrowing.errorIfNotTypes}
+     * @function module:errorThrowing.errorIfNotTypes$
      * @param types {Array} - Array of one or more types or type names themselves.
      * @param contextName {String} - Name of context to attribute errors if thrown.
      * @param valueName {String} - String rep of value.
      * @param value {*}
-     * @returns {undefined}
+     * @returns {*} - Given `value` if `value` matches passed in type.
      * @private
      */
     _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall),
 
     /**
-     * Checks that passed in `value` is of given `type`.  Throws an error if value
-     * is not of given `type`.  Curried.
-     * @function module:object.errorIfNotType
-     * @param type {String|Function} - Type's name or type itself.
-     * @param contextName {String} - Name of context to attribute errors if thrown.
-     * @param valueName {String} - String rep of value.
-     * @param value {*}
-     * @param [messageSuffix=null] {String} - Optional.
-     * @returns {undefined}
-     * @curried
-     */
-    errorIfNotType = curry(_errorIfNotType),
-
-    /**
-     * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
-     *  is not of one of the given `types`.  Curried.
-     * @function module:object.errorIfNotTypes
-     * @param types {Array} - Array of one or more types or type names themselves.
-     * @param contextName {String} - Name of context to attribute errors if thrown.
-     * @param valueName {String} - String rep of value.
-     * @param value {*}
-     * @returns {undefined}
-     * @curried
-     */
-    errorIfNotTypes = curry4(_errorIfNotTypes),
-
-    /**
      * Returns a function that can be used to ensure that values are of a given type.
      *   Also throws informative error messages containing the value types, names, expected type names,
      *   etc.
-     * @function module:object.getErrorIfNotTypeThrower
+     * @function module:errorThrowing.getErrorIfNotTypeThrower
      * @param errorMessageCall {Function|ErrorMessageCall} - Template function (takes an info-object and returns a printed string).
      * @returns {Function|ErrorIfNotType} - Returns a function with the same signature as `errorIfNotType` though curried.
      */
@@ -153,11 +126,38 @@ export const
      * Returns a function that can be used to ensure that a value is of one or more given types.
      *   The returned function is used in cases where informative error messages
      *   containing the value types, names, expected type names, are-required/should-be-used etc.
-     * @function module:object.getErrorIfNotTypesThrower
+     * @function module:errorThrowing.getErrorIfNotTypesThrower
      * @param errorMessageCall {Function|ErrorMessageCall} - Template function (takes an info-object and returns a printed string).
      * @returns {Function|ErrorIfNotTypes} - Returns a function with the same signature as `errorIfNotTypes` though curried.
      */
-    getErrorIfNotTypesThrower = errorMessageCall => curry4(_getErrorIfNotTypesThrower(errorMessageCall))
+    getErrorIfNotTypesThrower = errorMessageCall => curry(_getErrorIfNotTypesThrower(errorMessageCall)),
+
+    /**
+     * Checks that passed in `value` is of given `type`.  Throws an error if value
+     * is not of given `type`.  Curried.
+     * @function module:errorThrowing.errorIfNotType
+     * @param type {String|Function} - Type's name or type itself.
+     * @param contextName {String} - Name of context to attribute errors if thrown.
+     * @param valueName {String} - String rep of value.
+     * @param value {*}
+     * @param [messageSuffix=null] {String} - Optional.
+     * @returns {*} - Given `value` if `value` matches passed in type.
+     * @curried
+     */
+    errorIfNotType = curry(_errorIfNotType),
+
+    /**
+     * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
+     *  is not of one of the given `types`.  Curried.
+     * @function module:errorThrowing.errorIfNotTypes
+     * @param types {Array} - Array of one or more types or type names themselves.
+     * @param contextName {String} - Name of context to attribute errors if thrown.
+     * @param valueName {String} - String rep of value.
+     * @param value {*}
+     * @returns {*} - Given `value` if `value` matches passed in type.
+     * @curried
+     */
+    errorIfNotTypes = curry(_errorIfNotTypes)
 ;
 
 /**

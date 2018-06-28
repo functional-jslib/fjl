@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: boolean | Module: boolean</title>
+    <title>Module: errorThrowing | Module: errorThrowing</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: boolean</a></h1>
+        <h1><a href="index.html" class="link">Module: errorThrowing</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,7 +46,7 @@
 
 <header>
     
-        <h2>boolean</h2>
+        <h2>errorThrowing</h2>
         
             
         
@@ -58,7 +58,7 @@
         <div class="container-overview">
         
             
-                <div class="description">Contains functional version of 'always-true', 'always-false', 'is-truthy', and 'is-falsy'.</div>
+                <div class="description">Contains error throwing facilities for when a value doesn't match a type.</div>
             
 
             
@@ -159,14 +159,14 @@
 
 <dt>
     
-        <h4 class="name" id=".alwaysFalse">
+        <h4 class="name" id=".errorIfNotType">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>alwaysFalse<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>errorIfNotType<span class="signature">(type, contextName, valueName, value, messageSuffix<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {*}</span>
                 
             
             <div class="container-source members">
-                <code><a href="boolean.js.html">boolean.js</a></code>,
-                <code><a href="boolean.js.html#line31">line 31</a></code>
+                <code><a href="object_errorThrowing.js.html">object/errorThrowing.js</a></code>,
+                <code><a href="object_errorThrowing.js.html#line134">line 134</a></code>
             </div>
             
         </h4>
@@ -178,7 +178,7 @@
 
     
     <div class="description">
-        Returns `false`.
+        Checks that passed in `value` is of given `type`.  Throws an error if valueis not of given `type`.  Curried.
     </div>
     
 
@@ -188,6 +188,219 @@
 
     
 
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type"><a href="function.html">function</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Type's name or type itself.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>contextName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Name of context to attribute errors if thrown.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>valueName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">String rep of value.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>messageSuffix</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Optional.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
     
 
     
@@ -208,11 +421,13 @@
 
 
 
-<span class="param-type">Boolean</span>
+<span class="param-type">*</span>
 
 
 
 
+
+- - Given `value` if `value` matches passed in type.
 
 
 
@@ -267,14 +482,14 @@
 
 <dt>
     
-        <h4 class="name" id=".alwaysTrue">
+        <h4 class="name" id=".errorIfNotTypes">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>alwaysTrue<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>errorIfNotTypes<span class="signature">(types, contextName, valueName, value)</span><span class="type-signature"> &rarr; {*}</span>
                 
             
             <div class="container-source members">
-                <code><a href="boolean.js.html">boolean.js</a></code>,
-                <code><a href="boolean.js.html#line24">line 24</a></code>
+                <code><a href="object_errorThrowing.js.html">object/errorThrowing.js</a></code>,
+                <code><a href="object_errorThrowing.js.html#line148">line 148</a></code>
             </div>
             
         </h4>
@@ -286,115 +501,7 @@
 
     
     <div class="description">
-        Returns `true`.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Boolean</span>
-
-
-
-
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".isFalsy">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>isFalsy<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="boolean.js.html">boolean.js</a></code>,
-                <code><a href="boolean.js.html#line16">line 16</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Returns whether `value` is 'falsy' or not
+        Checks that passed in `value` is of one of the given `types`.  Throws an error if value is not of one of the given `types`.  Curried.
     </div>
     
 
@@ -430,10 +537,84 @@
 
         <tr>
             
+                <td class="name"><code>types</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of one or more types or type names themselves.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>contextName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of context to attribute errors if thrown.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>valueName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">String rep of value.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>value</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
             
             </td>
 
@@ -469,11 +650,13 @@
 
 
 
-<span class="param-type">Boolean</span>
+<span class="param-type">*</span>
 
 
 
 
+
+- - Given `value` if `value` matches passed in type.
 
 
 
@@ -528,14 +711,14 @@
 
 <dt>
     
-        <h4 class="name" id=".isTruthy">
+        <h4 class="name" id=".getErrorIfNotTypesThrower">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>isTruthy<span class="signature">(value)</span><span class="type-signature"> &rarr; {Boolean}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>getErrorIfNotTypesThrower<span class="signature">(errorMessageCall)</span><span class="type-signature"> &rarr; {<a href="function.html">function</a>|<a href="global.html#ErrorIfNotTypes">ErrorIfNotTypes</a>}</span>
                 
             
             <div class="container-source members">
-                <code><a href="boolean.js.html">boolean.js</a></code>,
-                <code><a href="boolean.js.html#line8">line 8</a></code>
+                <code><a href="object_errorThrowing.js.html">object/errorThrowing.js</a></code>,
+                <code><a href="object_errorThrowing.js.html#line124">line 124</a></code>
             </div>
             
         </h4>
@@ -547,7 +730,7 @@
 
     
     <div class="description">
-        Returns whether `value` is 'truthy' or not
+        Returns a function that can be used to ensure that a value is of one or more given types.  The returned function is used in cases where informative error messages  containing the value types, names, expected type names, are-required/should-be-used etc.
     </div>
     
 
@@ -583,10 +766,18 @@
 
         <tr>
             
-                <td class="name"><code>value</code></td>
+                <td class="name"><code>errorMessageCall</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type"><a href="function.html">function</a></span>
+|
+
+<span class="param-type"><a href="global.html#ErrorMessageCall">ErrorMessageCall</a></span>
+
+
             
             </td>
 
@@ -594,7 +785,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Template function (takes an info-object and returns a printed string).</td>
         </tr>
 
     
@@ -622,11 +813,182 @@
 
 
 
-<span class="param-type">Boolean</span>
+<span class="param-type"><a href="function.html">function</a></span>
+|
+
+<span class="param-type"><a href="global.html#ErrorIfNotTypes">ErrorIfNotTypes</a></span>
 
 
 
 
+
+- - Returns a function with the same signature as `errorIfNotTypes` though curried.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".getErrorIfNotTypeThrower">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>getErrorIfNotTypeThrower<span class="signature">(errorMessageCall)</span><span class="type-signature"> &rarr; {<a href="function.html">function</a>|<a href="global.html#ErrorIfNotType">ErrorIfNotType</a>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="object_errorThrowing.js.html">object/errorThrowing.js</a></code>,
+                <code><a href="object_errorThrowing.js.html#line114">line 114</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns a function that can be used to ensure that values are of a given type.  Also throws informative error messages containing the value types, names, expected type names,  etc.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>errorMessageCall</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="function.html">function</a></span>
+|
+
+<span class="param-type"><a href="global.html#ErrorMessageCall">ErrorMessageCall</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Template function (takes an info-object and returns a printed string).</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type"><a href="function.html">function</a></span>
+|
+
+<span class="param-type"><a href="global.html#ErrorIfNotType">ErrorIfNotType</a></span>
+
+
+
+
+
+- - Returns a function with the same signature as `errorIfNotType` though curried.
 
 
 
@@ -701,7 +1063,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:boolean_sub'.replace(/"/g, '_');
+        var id = 'module:errorThrowing_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

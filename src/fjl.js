@@ -14,4 +14,5 @@ export * from './function';
 export * from './list';
 export * from './string';
 export * from './utils';
+export * from './errorThrowing';
 export * from './list/utils';

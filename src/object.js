@@ -12,7 +12,6 @@ export * from './object/searchObj';
 export * from './object/assignDeep';
 export * from './object/setTheory';
 export * from './object/console';
-export * from './object/errorThrowing';
 export * from './object/jsonClone';
 export * from './object/toArray';
 export * from './object/assocList';

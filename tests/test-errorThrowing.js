@@ -1,14 +1,13 @@
 import {expect, assert} from 'chai';
 
 import {
-
     typeRefsToStringOrError,
     defaultErrorMessageCall,
     getErrorIfNotTypeThrower,
     getErrorIfNotTypesThrower,
     errorIfNotType,
     errorIfNotTypes
-} from '../src/object/errorThrowing';
+} from '../src/errorThrowing';
 
 describe ('#errorThrowing', () => {
 
@@ -118,43 +117,31 @@ describe ('#errorThrowing', () => {
     });
 
     describe ('#errorIfNotType', () => {
-        it ('should return a function', () => {
-            const result = errorIfNotType(String, 'SomeContext');
-            expect(result).to.be.instanceOf(Function);
-        });
-        it ('It\'s returned function should throw an error when not able to match' +
+        it ('should throw an error when not able to match' +
             'value to passed in type', () => {
-            assert.throws(
-                _ => errorIfNotType(Array, 'SomeContext')(
-                        'someValueName', someValue
-                    ), Error
-            );
+            assert.throws(() =>
+                errorIfNotType(Array, 'SomeContext', 'someValueName', someValue), Error);
         });
-        it ('It\'s returned function should not throw an error when passed in value ' +
+        it ('should not throw an error when passed in value ' +
             'matches passed in type', () => {
-            expect(errorIfNotType(Array, 'SomeContext')(
-                    'someValueName', someValueArray
-                )).to.equal(someValueArray); // should return undefined
+            expect(errorIfNotType(Array, 'SomeContext', 'someValueName', someValueArray))
+                .to.equal(someValueArray);
         });
     });
 
     describe ('#errorIfNotTypes', () => {
-        it ('should return a function', () => {
-            const result = errorIfNotTypes([], 'SomeContext');
-            expect(result).to.be.instanceOf(Function);
+        it ('should throw an error when not able to match value to passed in type', () => {
+            assert.throws(() =>
+                errorIfNotTypes(
+                    [Array, Function, Boolean], 'SomeContext', 'someValueName', someValue
+                ), Error);
         });
-        it ('It\'s returned function should throw an error when not able to match' +
-            'value to passed in type', () => {
-            assert.throws(
-                _ => errorIfNotTypes([Array, Function, Boolean], 'SomeContext')(
-                        'someValueName', someValue
-                    ), Error);
-        });
-        it ('It\'s returned function should not throw an error when passed in value ' +
-            'matches one of passed in types', () => {
-            expect(errorIfNotTypes([Function, Array, Boolean], 'SomeContext',
-                    'someValueName', someValueArray
-                )).to.equal(someValueArray); // should return undefined
+        it ('should not throw an error when passed in value matches one of passed in types', () => {
+            expect(
+                errorIfNotTypes(
+                    [Function, Array, Boolean], 'SomeContext', 'someValueName', someValueArray)
+            )
+                .to.equal(someValueArray);
         });
     });
 

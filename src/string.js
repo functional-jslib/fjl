@@ -8,7 +8,7 @@ import {intercalate, map, filter} from './list';
 import {split} from './jsPlatform/string';
 import {compose} from './function/compose';
 import {join} from './jsPlatform/array';
-import {_errorIfNotType} from './object/errorThrowing';
+import {_errorIfNotType} from './errorThrowing';
 
 export const
 
