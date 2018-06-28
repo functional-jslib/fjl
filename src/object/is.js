@@ -67,13 +67,17 @@ export const
     isFunction = instanceOf(Function),
 
     /**
-     * Type checker.  Note** The `Type` passed in, if a constructor, should
-     * be a named constructor/function-instance;  E.g.,
-     * ```
-     *  function SomeName () {} // or
-     *  var SomeName = function SomeName () {} // or
-     *  class SomeName {}
-     * ```
+     * Strict type checker.  Checks if given value is a direct instance of given type;  E.g.,
+     * @example
+     *   isType(String, 'abcdefg')  === true // true
+     *   isType(String.name, 'abcdefg') === true
+     *   isType(Number, NaN) === false
+     *   isType(Number, 99) === true
+     *   isType('Null', 99) === false // though, for `null` and `undefined` checks
+     *                                // @see `isset`, in this module, instead
+     *   isType('Undefined', undefined) === true // true
+     *
+     * @note Useful where absolute types, or some semblance thereof, are required.
      * @function module:object.isType
      * @param type {Function|ObjectConstructor|String} - Constructor or constructor name
      * @param obj {*}
@@ -81,7 +85,32 @@ export const
      */
     isType = curry((type, obj) => typeOf(obj) === typeRefNameOrError(type)),
 
-    isTypeStrict = curry((type, x) => typeOf(x) === typeRefNameOrError(type)),
+    /**
+     * Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check on
+     * constructor names, else if first check fails and `type` is a constructor, performs an `instanceof` check
+     * on value with constructor.
+     * @note For `null` and `undefined` their class cased names can be used for type checks
+     * `isOfType('Null', null) === true (passes strict type check)` (or better yet `isset` can be used).
+     * @throwsafe - Doesn't throw on `null` or `undefined` `obj` values.
+     * @example
+     * isOfType(Number, 99) === true        // true  (passes strict type check (numbers are not instances of `Number`
+     *                                      //        constructor)
+     * isOfType('Number', 99) === true      // true  (passes strict type check)
+     * isOfType(Number, NaN) === true       // true. (passes instance of check)
+     *                                      //        If you want "true" strict type checking use `isType`
+     * isOfType(Object, []) === true        // true  (passes instance of check)
+     * isOfType(Array, []) === true         // true  (passes instance of check)
+     * isOfType(Object, {}) === true        // true  (passes instance of check)
+     * isOfType(Object.name, {}) === true   // true  (Passes strict type check)
+     * class Abc extends String {}
+     * isOfType(String, new Abc('abcd')) // true (passes instanceof check)
+     *
+     * @function module:is.isOfType
+     * @param type {Function|String} - Type reference (constructor or `constructor.name`).
+     * @param x {*} - Value to check.
+     * @returns {Boolean}
+     */
+    isOfType = curry((type, x) => !isFunction(type) ? isType(type, x) : instanceOf(type, x)),
 
     /**
      * Checks if `value` is an es2015 `class`.

@@ -4,21 +4,43 @@
  *  In addition gives you curried and uncurried versions of the multi arity functions.
  */
 import {typeOf} from './typeOf';
-import {isset, isType, isFunction, isArray, typeRefNameOrError, typeRefOrError} from './is';
+import {isArray, typeRefNameOrError, typeRefOrError, isOfType} from './is';
 import {curry, curry4} from '../function/curry';
 
-const
+export const
 
     /**
-     * Returns a boolean indicating whether given value matches given type.
-     * @function module:object.defaultTypeChecker$
-     * @param Type {String|Function} - Type name, constructor and/or class.
-     * @param value {*}
-     * @returns {Boolean}
+     * Pretty prints an array of types/type-strings for use by error messages;
+     * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
+     * @function module:object.typeRefsToStringOrError
+     * @param types {Array|TypesArray}
+     * @return {String}
      * @private
      */
-    _defaultTypeChecker = (Type, value) => isType(typeRefOrError(Type), value) || (
-        isFunction(Type) && isset(value) && value instanceof Type),
+    typeRefsToStringOrError = types => types.length ?
+        types.map(type => `\`${typeRefOrError(type)}\``).join(', ') : '',
+
+    /**
+     * Prints a message from an object.  Object signature:
+     * {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
+     * @function module:object.defaultErrorMessageCall
+     * @param tmplContext {Object|TemplateContext} - Object to use in error template.
+     * @returns {string}
+     * @private
+     */
+    defaultErrorMessageCall = tmplContext => {
+        const {
+                contextName, valueName, value, expectedTypeName,
+                foundTypeName, messageSuffix
+            } = tmplContext,
+            isMultiTypeNames = isArray(expectedTypeName),
+            typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+            typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
+        return (contextName ? `\`${contextName}.` : '`') +
+            `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` +
+            `Type received: ${foundTypeName}.  Value: ${value};` +
+            `${messageSuffix ?  '  ' + messageSuffix + ';' : ''}`;
+    },
 
     /**
      * Gets the error message thrower seeded with passed in errorMessage template call.
@@ -27,7 +49,7 @@ const
      * @param typeChecker {Function|TypeChecker} - Function<Type, value>:Boolean
      * @returns {Function|ErrorIfNotType}
      */
-    _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
+    _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = isOfType) =>
         (ValueType, contextName, valueName, value, messageSuffix = null) => {
             const expectedTypeName = typeRefNameOrError(ValueType),
                 foundTypeName = typeOf(value);
@@ -44,7 +66,7 @@ const
      * @param typeChecker {Function|TypeChecker} - Function<Type, value>:Boolean
      * @returns {Function|ErrorIfNotTypes}
      */
-    _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
+    _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = isOfType) =>
         (valueTypes, contextName, valueName, value) => {
             const expectedTypeNames = valueTypes.map(typeRefNameOrError),
                 matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
@@ -86,55 +108,7 @@ const
      * @returns {undefined}
      * @uncurried
      */
-    _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall)
-
-;
-
-export const
-
-    /**
-     * Pretty prints an array of types/type-strings for use by error messages;
-     * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
-     * @function module:object.typeRefsToStringOrError
-     * @param types {Array|TypesArray}
-     * @return {String}
-     * @private
-     */
-    typeRefsToStringOrError = types => types.length ?
-        types.map(type => `\`${typeRefOrError(type)}\``).join(', ') : '',
-
-    /**
-     * Prints a message from an object.  Object signature:
-     * {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
-     * @function module:object.defaultErrorMessageCall
-     * @param tmplContext {Object|TemplateContext} - Object to use in error template.
-     * @returns {string}
-     * @private
-     */
-    defaultErrorMessageCall = tmplContext => {
-        const {
-                contextName, valueName, value, expectedTypeName,
-                foundTypeName, messageSuffix
-            } = tmplContext,
-            isMultiTypeNames = isArray(expectedTypeName),
-            typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
-            typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
-        return (contextName ? `\`${contextName}.` : '`') +
-            `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` +
-            `Type received: ${foundTypeName}.  Value: ${value};` +
-            `${messageSuffix ?  '  ' + messageSuffix + ';' : ''}`;
-    },
-
-    /**
-     * Same as `defaultTypeChecker$` except curried:
-     *  "Returns a boolean indicating whether given value matches given type".
-     * @curried
-     * @function module:object.defaultTypeChecker
-     * @param Type {String|Function} - Type name, constructor and/or class.
-     * @param value {*}
-     * @returns {Boolean}
-     */
-    defaultTypeChecker = curry(_defaultTypeChecker),
+    _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall),
 
     /**
      * Checks that passed in `value` is of given `type`.  Throws an error if value
