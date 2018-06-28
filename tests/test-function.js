@@ -154,8 +154,8 @@ describe ('#function', function () {
         });
 
         it ('should return a function when called with one or more "correct" args.', function () {
-            expectFunction(curry(log, 99));
-            expectFunction(curry(log));
+            expect(curry(() => undefined, 99)).to.be.instanceOf(Function);
+            expect(curry(() => undefined)).to.be.instanceOf(Function);
         });
 
         it ('should throw an error when receiving anything other than a function for first param', function () {

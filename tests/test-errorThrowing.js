@@ -1,7 +1,7 @@
 import {expect, assert} from 'chai';
 
 import {
-    typeRefNameOrError,
+
     typeRefsToStringOrError,
     defaultErrorMessageCall,
     getErrorIfNotTypeThrower,
@@ -14,18 +14,6 @@ describe ('#errorThrowing', () => {
 
     const someValue = 'someValue',
         someValueArray = someValue.split('');
-
-    describe ('#typeRefNameOrError', () => {
-        it ('should return the type name of the assumed type/type-name passed in', () => {
-            expect(typeRefNameOrError(String)).to.equal('String');
-            expect(typeRefNameOrError('String')).to.equal('String');
-        });
-        it ('should throw an error when receiving anything other than a string or ' +
-            'a constructor as it\'s first parameter', () => {
-            assert.throws(typeRefNameOrError, Error);
-            assert.throws(_ => typeRefNameOrError(null), Error);
-        });
-    });
 
     describe ('#typeRefsToStringOrError', () => {
         it ('should return all types/type-names in passed in array surrounded by ' +
@@ -44,8 +32,6 @@ describe ('#errorThrowing', () => {
                 strFromTypeNames = typeRefsToStringOrError(someTypeNames),
                 strFromTypeCtors = typeRefsToStringOrError(someTypeCtors),
                 strFromMixed = typeRefsToStringOrError(mixedTypeVals);
-
-            // log(expectedOutput, strFromMixed);
 
             // Ensure outputs are equal
             expect([strFromTypeNames, strFromTypeCtors, strFromMixed]

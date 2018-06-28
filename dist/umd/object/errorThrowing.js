@@ -16,7 +16,7 @@
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.getErrorIfNotTypesThrower = exports.getErrorIfNotTypeThrower = exports.errorIfNotTypes = exports.errorIfNotType = exports.defaultTypeChecker = exports._errorIfNotTypes = exports._errorIfNotType = exports._getErrorIfNotTypesThrower = exports._getErrorIfNotTypeThrower = exports.defaultErrorMessageCall = exports.typeRefsToStringOrError = exports._defaultTypeChecker = exports.typeRefNameOrError = exports.typeRefOrError = exports.isTypeRef = undefined;
+  exports.getErrorIfNotTypesThrower = exports.getErrorIfNotTypeThrower = exports.errorIfNotTypes = exports.errorIfNotType = exports.defaultTypeChecker = exports._errorIfNotTypes = exports._errorIfNotType = exports._getErrorIfNotTypesThrower = exports._getErrorIfNotTypeThrower = exports.defaultErrorMessageCall = exports.typeRefsToStringOrError = exports._defaultTypeChecker = exports.toTypeRef = exports.typeRefOrError = exports.isTypeRef = undefined;
   var
 
   /**
@@ -49,13 +49,13 @@
 
   /**
    * Resolves/normalizes a type name from either a string or a constructor.
-   * @function module:object.typeRefNameOrError
+   * @function module:object.toTypeRef
    * @param type {Function|String} - String or function representing a type.
    * @returns {String}
    * @private
    */
-  getTypeName = exports.typeRefNameOrError = function getTypeName(type) {
-    errorIfNotCheckableType('typeRefNameOrError', type);
+  getTypeName = exports.toTypeRef = function getTypeName(type) {
+    errorIfNotCheckableType('toTypeRef', type);
     return type.name || type;
   },
 

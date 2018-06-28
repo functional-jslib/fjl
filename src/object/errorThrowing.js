@@ -4,7 +4,7 @@
  *  In addition gives you curried and uncurried versions of the multi arity functions.
  */
 import {typeOf} from './typeOf';
-import {isArray, typeRefNameOrError, typeRefOrError, isOfType} from './is';
+import {isArray, toTypeRef, toTypeRefName, isOfType} from './is';
 import {curry, curry4} from '../function/curry';
 
 export const
@@ -18,7 +18,7 @@ export const
      * @private
      */
     typeRefsToStringOrError = types => types.length ?
-        types.map(type => `\`${typeRefOrError(type)}\``).join(', ') : '',
+        types.map(type => `\`${toTypeRefName(type)}\``).join(', ') : '',
 
     /**
      * Prints a message from an object.  Object signature:
@@ -48,10 +48,11 @@ export const
      * @param errorMessageCall {Function|ErrorMessageCall}
      * @param typeChecker {Function|TypeChecker} - Function<Type, value>:Boolean
      * @returns {Function|ErrorIfNotType}
+     * @private
      */
     _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = isOfType) =>
         (ValueType, contextName, valueName, value, messageSuffix = null) => {
-            const expectedTypeName = typeRefNameOrError(ValueType),
+            const expectedTypeName = toTypeRef(ValueType),
                 foundTypeName = typeOf(value);
             if (typeChecker(ValueType, value)) { return value; } // Value matches type
             throw new Error(errorMessageCall(
@@ -65,10 +66,11 @@ export const
      * @param errorMessageCall {Function|ErrorMessageCall}
      * @param typeChecker {Function|TypeChecker} - Function<Type, value>:Boolean
      * @returns {Function|ErrorIfNotTypes}
+     * @private
      */
     _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = isOfType) =>
         (valueTypes, contextName, valueName, value) => {
-            const expectedTypeNames = valueTypes.map(typeRefNameOrError),
+            const expectedTypeNames = valueTypes.map(toTypeRef),
                 matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
                 foundTypeName = typeOf(value);
             if (matchFound) { return value; }
@@ -91,7 +93,7 @@ export const
      * @param value {*}
      * @param [messageSuffix=null] {String} - Optional.
      * @returns {undefined}
-     * @uncurried
+     * @private
      */
     _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall),
 
@@ -106,7 +108,7 @@ export const
      * @param valueName {String} - String rep of value.
      * @param value {*}
      * @returns {undefined}
-     * @uncurried
+     * @private
      */
     _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall),
 

@@ -1635,7 +1635,7 @@ var errorIfNotCheckableType = function errorIfNotCheckableType(contextName, type
   return type;
 };
 var getTypeName = function getTypeName(type) {
-  errorIfNotCheckableType('typeRefNameOrError', type);
+  errorIfNotCheckableType('toTypeRef', type);
   return type.name || type;
 };
 var _defaultTypeChecker = function _defaultTypeChecker(Type, value) {

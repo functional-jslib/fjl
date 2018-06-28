@@ -84,13 +84,13 @@ export const
 
     /**
      * Resolves/normalizes a type name from either a string or a constructor.
-     * @function module:object.typeRefNameOrError
+     * @function module:object.toTypeRef
      * @param type {Function|String} - String or function representing a type.
      * @returns {String}
      * @private
      */
-    typeRefNameOrError = type => {
-        typeRefOrError('typeRefNameOrError', type);
+    toTypeRef = type => {
+        typeRefOrError('toTypeRef', type);
         return type.name || type;
     },
 
@@ -102,7 +102,7 @@ export const
      * @returns {Boolean}
      * @private
      */
-    _defaultTypeChecker = (Type, value) => isType(typeRefNameOrError(Type), value) || (
+    _defaultTypeChecker = (Type, value) => isType(toTypeRef(Type), value) || (
         isFunction(Type) &amp;&amp; isset(value) &amp;&amp; value instanceof Type),
 
     /**
@@ -114,7 +114,7 @@ export const
      * @private
      */
     typeRefsToStringOrError = types => types.length ?
-             types.map(type => `\`${typeRefNameOrError(type)}\``).join(', ') : '',
+             types.map(type => `\`${toTypeRef(type)}\``).join(', ') : '',
 
     /**
      * Prints a message from an object.  Object signature:
@@ -147,7 +147,7 @@ export const
      */
     _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
       (ValueType, contextName, valueName, value, messageSuffix = null) => {
-        const expectedTypeName = typeRefNameOrError(ValueType),
+        const expectedTypeName = toTypeRef(ValueType),
             foundTypeName = typeOf(value);
         if (typeChecker(ValueType, value)) { return value; } // Value matches type
         throw new Error(errorMessageCall(
@@ -164,7 +164,7 @@ export const
      */
     _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
       (valueTypes, contextName, valueName, value) => {
-            const expectedTypeNames = valueTypes.map(typeRefNameOrError),
+            const expectedTypeNames = valueTypes.map(toTypeRef),
                 matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
                 foundTypeName = typeOf(value);
             if (matchFound) { return value; }

@@ -10,7 +10,7 @@ const
      * @returns {Function}
      */
     fnOrError = (symbolName, f) => {
-        if (!f || typeof f !== 'function') {
+        if (!f || !(f instanceof Function)) {
             throw new Error(`${symbolName} should be a function. ` +
                 `Type received: ${typeOf(f)};  Value received: ${f}.`);
         }

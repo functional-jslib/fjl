@@ -24,38 +24,25 @@ let _String = String.name,
 export const
 
     /**
-     * Checks if `type` is a string or a function (constructor or constructor name)
-     * @function module:object.isTypeRef
-     * @param TypeRef {TypeRef}
-     * @returns {Boolean}
-     */
-    isTypeRef = TypeRef => (isString(TypeRef) || isFunction(TypeRef)),
-
-    /**
-     * Throws an error if `type` is not a checkable type (can't be checked by the `TypeChecker` type)
-     * @function module:object.typeRefOrError
-     * @param contextName {String}
-     * @param type {TypeRef}
-     * @returns {TypeRef} - Type passed in if `type` is checkable
-     */
-    typeRefOrError = curry((contextName, type) => {
-        if (!isTypeRef(type)) {
-            throw new Error (`${contextName} expects \`type\` to be of type \`String\` or \`Function\`.` +
-                `  Type received \`${typeOf(type)}\`.  Value \`${type}\`.`);
-        }
-        return type;
-    }),
-
-    /**
      * Resolves/normalizes a type name from either a string or a constructor.
-     * @function module:object.typeRefNameOrError
+     * @function module:object.toTypeRef
      * @param type {Function|String} - String or function representing a type.
      * @returns {String}
      * @private
      */
-    typeRefNameOrError = type => {
-        typeRefOrError('typeRefNameOrError', type);
-        return type.name || type;
+    toTypeRef = type => {
+        if (!type) {
+            return typeOf(type);
+        }
+        else if (type.constructor === String || (type instanceof Function)) {
+            return type;
+        }
+        return typeOf(type);
+    },
+
+    toTypeRefName = Type => {
+        const ref = toTypeRef(Type);
+        return ref instanceof Function ? ref.name : ref;
     },
 
     /**
@@ -83,7 +70,7 @@ export const
      * @param obj {*}
      * @return {Boolean}
      */
-    isType = curry((type, obj) => typeOf(obj) === typeRefNameOrError(type)),
+    isType = curry((type, obj) => typeOf(obj) === toTypeRefName(type)),
 
     /**
      * Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check on
@@ -110,7 +97,7 @@ export const
      * @param x {*} - Value to check.
      * @returns {Boolean}
      */
-    isOfType = curry((type, x) => !isFunction(type) ? isType(type, x) : instanceOf(type, x)),
+    isOfType = curry((type, x) => isType(type, x) || instanceOf(type, x)),
 
     /**
      * Checks if `value` is an es2015 `class`.

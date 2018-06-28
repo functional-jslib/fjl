@@ -43,13 +43,13 @@ errorIfNotCheckableType = exports.typeRefOrError = function errorIfNotCheckableT
 
 /**
  * Resolves/normalizes a type name from either a string or a constructor.
- * @function module:object.typeRefNameOrError
+ * @function module:object.toTypeRef
  * @param type {Function|String} - String or function representing a type.
  * @returns {String}
  * @private
  */
-getTypeName = exports.typeRefNameOrError = function getTypeName(type) {
-  errorIfNotCheckableType('typeRefNameOrError', type);
+getTypeName = exports.toTypeRef = function getTypeName(type) {
+  errorIfNotCheckableType('toTypeRef', type);
   return type.name || type;
 },
 

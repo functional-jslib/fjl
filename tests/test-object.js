@@ -13,7 +13,8 @@ import {
     isUndefined, isNull, isSymbol, isMap, isSet, jsonClone,
     fromAssocList, toAssocList, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign,
-    toAssocListDeep, fromAssocListDeep
+    toAssocListDeep, fromAssocListDeep,
+    toTypeRef, toTypeRefName
 } from '../src/object';
 import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../src/list';
 import {
@@ -73,6 +74,47 @@ describe ('#object', function () {
         });
     });
 
+    describe('#toTypeRef', () => {
+        it ('should return given string when receiving a string.', () => {
+            ['Undefined', 'Null', 'NaN', 'String'].every(xs => {
+                const result = toTypeRef(xs);
+                expect(result.constructor).to.equal(String);
+                expect(result).to.equal(xs);
+            });
+        });
+        it ('should return given function/constructor when receiving a function/constructor.', () => {
+            [String, Function, Promise, Map].every(x => {
+                const result = toTypeRef(x);
+                expect(result).to.equal(x);
+            });
+        });
+        it ('should return a string for all values that are not a string or a function', () => {
+            [null, undefined, NaN, Symbol('abc'), Promise.resolve(), 99, [], {}].forEach(
+                    x => expect((toTypeRef(x)).constructor).to.equal(String)
+                );
+        });
+    });
+
+    describe('#toTypeRefName', () => {
+        it ('should return a string for all values given with expected result', () => {
+            [
+                ['Null', null],
+                ['Undefined', undefined],
+                ['NaN', NaN],
+                ['Symbol', Symbol('abc')],
+                ['Promise', Promise.resolve()],
+                ['Number', 99],
+                ['Array', []],
+                ['Object', {}]
+            ]
+                .concat([Array, Boolean, Function, String, Number].map(Type => [Type.name, Type]))
+                .forEach(([expected, control]) => {
+                    const result = toTypeRefName(control);
+                    expect(result).to.equal(expected);
+                });
+        });
+    });
+
     describe('#isType', function () {
         it ('should be a function', function () {
             expectFunction(isType);
@@ -89,7 +131,9 @@ describe ('#object', function () {
                 ['Null', null],
                 ['Undefined', undefined]
             ]
-                .forEach(tuple => expectTrue(apply(isType, tuple)));
+                .forEach(tuple => {
+                    expect(isType.apply(null, tuple)).to.equal(true);
+                });
         });
         it ('should return `true` when passed in value is of passed in type constructor', function () {
             [
@@ -101,7 +145,7 @@ describe ('#object', function () {
                 [Boolean, true],
                 [Boolean , false]
             ]
-                .forEach(tuple => expectTrue(apply(isType, tuple)));
+                .forEach(tuple => expect(isType.apply(null, tuple)));
         });
         it ('should return `false` when passed in value is not of passed in type name/string', function () {
             [
@@ -127,6 +171,10 @@ describe ('#object', function () {
                 [Array, false]
             ]
                 .forEach(tuple => expectFalse(apply(isType, tuple)));
+        });
+        it ('should be able to match NaN', () => {
+            expect(isType(NaN, 0/0)).to.equal(true);
+            expect(isType(NaN, 99)).to.equal(false);
         });
     });
 
