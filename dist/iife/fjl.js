@@ -278,15 +278,15 @@ var isset = function isset(x) {
  */
 
 /**
- * Returns property value if found; Else `undefined`.
- * @note This method is null/undefined safe (will not throw on `null` or `undefined`).
- * @function module:object.prop
- * @param name {String} - Key to search on `obj`
+ * Looks up property and returns it's value; Else `undefined`.
+ * Method is null safe (will not throw on `null` or `undefined`).
+ * @function module:object.lookup
+ * @param key {String} - Key to search on `obj`
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
  */
-var prop = curry(function (name, obj) {
-  return isset(obj) ? obj[name] : undefined;
+var lookup = curry(function (key, obj) {
+  return isset(obj) ? obj[key] : undefined;
 });
 
 /**
@@ -1106,7 +1106,7 @@ var breakOnList = curry(function (pred, list) {
     var splitPoint = findIndexWhere(pred, list);
     return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
 });
-var at = prop;
+var at = lookup;
 var find = findWhere;
 var filter = curry(function (pred, xs) {
     var ind = 0,
@@ -1127,7 +1127,6 @@ var partition = curry(function (pred, list) {
 });
 var elem = includes;
 var notElem = negateF2(includes);
-var lookup = at;
 var isPrefixOf = curry(function (xs1, xs2) {
     var limit1 = length(xs1),
         limit2 = length(xs2);
@@ -1626,6 +1625,10 @@ var objComplement = function objComplement(obj0) {
     }, {}, objs);
 };
 
+/**
+ * @module console
+ * @description Console exports.
+ */
 var log = console.log.bind(console);
 var error = console.error.bind(console);
 var peek = function peek() {
@@ -1934,7 +1937,7 @@ exports.hasOwnProperty = hasOwnProperty;
 exports.length = length;
 exports.assign = assign;
 exports.keys = keys;
-exports.prop = prop;
+exports.lookup = lookup;
 exports.typeOf = typeOf;
 exports.copy = copy;
 exports.toTypeRef = toTypeRef;
@@ -2046,7 +2049,6 @@ exports.filter = filter;
 exports.partition = partition;
 exports.elem = elem;
 exports.notElem = notElem;
-exports.lookup = lookup;
 exports.isPrefixOf = isPrefixOf;
 exports.isSuffixOf = isSuffixOf;
 exports.isInfixOf = isInfixOf;

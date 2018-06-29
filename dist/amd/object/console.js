@@ -4,11 +4,15 @@ define(["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  /**
+   * @module console
+   * @description Console exports.
+   */
   const
 
   /**
    * `Console.log` method.
-   * @function module:object.log
+   * @function module:console.log
    * @params args {...*}
    * @returns {void}
    */
@@ -17,7 +21,7 @@ define(["exports"], function (exports) {
 
   /**
    * `Console.error` method.
-   * @function module:object.error
+   * @function module:console.error
    * @params args {...*}
    * @returns {void}
    */
@@ -25,10 +29,10 @@ define(["exports"], function (exports) {
 
 
   /**
-   * Peeks at incoming value(s) and returns the last value.
-   * @function module:object.peek
+   * Peeks (console.log) at incoming value(s) and returns the last value.
+   * @function module:console.peek
    * @param args {...*}
-   * @returns {*} - Last given value (if one or more values) else first value.
+   * @returns {*} Last given value (if one or more values) else first value.
    */
   peek = exports.peek = (...args) => (log(...args), args.pop());
 });

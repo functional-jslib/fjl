@@ -1,4 +1,4 @@
-define(['exports', './jsPlatform/object', './object/prop', './object/typeOf', './object/copy', './object/is', './object/of', './object/searchObj', './object/assignDeep', './object/setTheory', './object/console', './object/jsonClone', './object/toArray', './object/assocList'], function (exports, _object, _prop, _typeOf, _copy, _is, _of, _searchObj, _assignDeep, _setTheory, _console, _jsonClone, _toArray, _assocList) {
+define(['exports', './jsPlatform/object', './object/lookup', './object/typeOf', './object/copy', './object/is', './object/of', './object/searchObj', './object/assignDeep', './object/setTheory', './object/console', './object/jsonClone', './object/toArray', './object/assocList'], function (exports, _object, _lookup, _typeOf, _copy, _is, _of, _searchObj, _assignDeep, _setTheory, _console, _jsonClone, _toArray, _assocList) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -13,12 +13,12 @@ define(['exports', './jsPlatform/object', './object/prop', './object/typeOf', '.
       }
     });
   });
-  Object.keys(_prop).forEach(function (key) {
+  Object.keys(_lookup).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _prop[key];
+        return _lookup[key];
       }
     });
   });
