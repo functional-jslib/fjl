@@ -1,7 +1,7 @@
 /**
  * Created by elyde on 12/10/2016.
+ * @todo remove use of 'curry_' from tests and helpers.
  */
-'use strict';
 
 import {compose} from '../src/function';
 import {curry2_, __} from './helpers/curry_';

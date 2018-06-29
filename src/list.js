@@ -6,7 +6,7 @@ import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list'
 import {apply}              from './jsPlatform/function';
 import {negateF3, negateF2}   from './function/negate';
 import {isTruthy, isFalsy}  from './boolean';
-import {prop, length}       from './object';
+import {lookup, length}       from './object';
 import map                  from './list/map';
 import {curry} from './function/curry';
 
@@ -511,8 +511,8 @@ export const
      * given index in second part of returned list)).
      * @function module:list.splitAt
      * @param ind {Number} - Index to split at.
-     * @param list {Array} - functor (list or string) to split.
-     * @returns {Array} - Array of whatever type `x` was when passed in
+     * @param list {Array|String} - functor (list or string) to split.
+     * @returns {Array|String} - List like type passed
      */
     splitAt = (ind, list) => [ sliceTo(ind, list), sliceFrom(ind, list) ],
 
@@ -612,7 +612,7 @@ export const
      * @param xs {Array} - list or list like.
      * @returns {*|undefined} - Item or `undefined`.
      */
-    at = prop,
+    at = lookup,
 
     /**
      * Find an item in structure of elements based on given predicate (`pred`).
@@ -676,13 +676,6 @@ export const
      * @returns {Boolean}
      */
     notElem = negateF2(includes),
-
-    /**
-     * Same as list.at - Returns property value at key/indice.
-     * @function module:object.lookup
-     * @type {module:object.prop}
-     */
-    lookup = at,
 
     /**
      * Checks if list `xs1` is a prefix of list `xs2`
@@ -795,7 +788,7 @@ export const
      *  their own equality test.
      * @haskellType `group :: Eq a => [a] -> [[a]]`
      * @function module:list.group
-     * @param xs {Array}
+     * @param xs {Array|String}
      * @returns {Array<Array|String|*>|*}
      */
     group = xs => groupBy((a, b) => a === b, xs),

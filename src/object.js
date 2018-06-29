@@ -3,7 +3,7 @@
  * @description Object operations/combinators.
  */
 export * from './jsPlatform/object';
-export * from './object/prop';
+export * from './object/lookup';
 export * from './object/typeOf';
 export * from './object/copy';
 export * from './object/is';

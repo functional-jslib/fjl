@@ -14,7 +14,7 @@ import {
     fromAssocList, toAssocList, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign,
     toAssocListDeep, fromAssocListDeep,
-    toTypeRef, toTypeRefName
+    toTypeRef, toTypeRefName, lookup
 } from '../src/object';
 import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../src/list';
 import {
@@ -647,6 +647,31 @@ describe ('#object', function () {
             [null, undefined, 99, true, Symbol('99'), 'hello'].forEach(x =>
                 assert.throws(() => fromAssocListDeep(x), Error)
             );
+        });
+    });
+
+    describe ('#lookup', function () {
+        it ('should return found value when key is set on type instance', function () {
+            const word = 'hello world',
+                obj = word.split('').reduce((agg, item) => {
+                    agg[item] = item + ' value';
+                    return agg;
+                }, {});
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2) => lookup(elm2, obj) === elm2 + ' value', word),
+                    [word.split(''), word]));
+        });
+        it ('should return `undefined` when element is not found in given list', function () {
+            const word = 'hello world',
+                obj = word.split('').reduce((agg, item) => {
+                    agg[item] = item + ' value';
+                    return agg;
+                }, {});
+            expectTrue(
+                all((elm, ind) =>
+                        all((elm2, ind2, arr) => lookup('z', obj) === undefined, elm),
+                    [word.split(''), word]));
         });
     });
 

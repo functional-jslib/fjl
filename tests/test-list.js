@@ -15,10 +15,10 @@ import {
     append, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
-    elem, notElem, elemIndex, elemIndices, lookup,
+    elem, notElem, elemIndex, elemIndices,
     head, last, init, tail, uncons,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
-    iterate, repeat, replicate, cycle,
+    // iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
@@ -196,7 +196,7 @@ describe ('#list', function () {
         it ('should throw an error when receiving something that is list like (doesn\'t have a `length` prop', function () {
             assert.throws(() => isEmptyList(null), Error);
             assert.throws(() => isEmptyList(undefined), Error);
-            assert.throws(() => isEmptyList(), Error);
+            assert.throws(isEmptyList, Error);
         });
     });
 
@@ -204,7 +204,7 @@ describe ('#list', function () {
         it ('is should return the length of any item that has a `length` property', function () {
             expectTrue(
                 all(item => length(item[0]) === item[1],
-                    [[[], 0], ['abc', 3], [(a, b, c) => {}, 3]])
+                    [[[], 0], ['abc', 3], [(a, b, c) => a + b + c, 3]])
             );
         });
         it ('should return `undefined` for items that don\'t have a `length` property', function () {
@@ -230,9 +230,10 @@ describe ('#list', function () {
         it ('should be able to map a function over a object.', function () {
             const word = 'hello',
                 op = char => char + 'a',
-                objReductionOp = (agg, x, ind) => (
-                    agg[ind] = `${ind} bottles of beer on the wall`, agg
-                ),
+                objReductionOp = (agg, x, ind) => {
+                    agg[ind] = `${ind} bottles of beer on the wall`;
+                    return agg;
+                },
                 obj = word.split(' ').reduce(objReductionOp, {}),
                 result = map(op, obj);
 
@@ -505,7 +506,7 @@ describe ('#list', function () {
                 phraseLen = length(phrase),
                 phraseIndCount = phraseLen - 1,
                 getAppendage = ind => ind <= phraseIndCount ? '|' : '',
-                expectedTransform = reverse(map((x, ind, arr) => x + (ind !== 0 ? getAppendage(ind) : ''), split('', phrase)));
+                expectedTransform = reverse(map((x, ind) => x + (ind !== 0 ? getAppendage(ind) : ''), split('', phrase)));
             expectEqual(
                 foldr1((agg, item, ind) => {
                     agg += getAppendage(ind) + item;
@@ -590,7 +591,7 @@ describe ('#list', function () {
         it ('should an error when receiving nothing', function () {
             assert.throws(() => and(undefined), Error);
             assert.throws(() => and(null), Error);
-        })
+        });
     });
 
     describe ('#or', function () {
@@ -660,7 +661,7 @@ describe ('#list', function () {
         it ('should throw an error when receiving nothing (`null` or `undefined`)', function () {
             assert.throws(() => sum(null), Error);
             assert.throws(() => sum(undefined), Error);
-            assert.throws(() => sum(), Error);
+            assert.throws(sum, Error);
         });
     });
 
@@ -688,7 +689,7 @@ describe ('#list', function () {
             assert.throws(() => maximum(null), Error);
             assert.throws(() => maximum(undefined), Error);
             // expectEqual(minimum([]), Infinity);
-            assert.throws(() => maximum(), Error);
+            assert.throws(maximum, Error);
         });
     });
 
@@ -753,7 +754,7 @@ describe ('#list', function () {
                         // Check that mapped have equal length
                         return length(tuple[0][1]) === length(tuple[1]) &&
                             // Check aggregated are equal
-                            shallowCompareOnLeft(tuple[0][0], reducedForCompare)
+                            shallowCompareOnLeft(tuple[0][0], reducedForCompare);
                     },
                     [
                         // Result, list, expected accumulation
@@ -813,7 +814,7 @@ describe ('#list', function () {
                         // Check that mapped have equal length
                         return length(tuple[0][1]) === length(tuple[1]) &&
                             // Check aggregated are equal
-                            shallowCompareOnLeft(tuple[0][0], reducedForCompare)
+                            shallowCompareOnLeft(tuple[0][0], reducedForCompare);
                     },
                     [
                         // Result, list, expected accumulation
@@ -884,10 +885,10 @@ describe ('#list', function () {
                 partsLength = wordParts.length - 1;
 
             // Test `take` on word parts and word (list and string)
-            wordParts.forEach((part, ind, wordParts)=> {
+            wordParts.forEach((part, ind, parts)=> {
                 // Get human index (counting from `1`) and preliminaries
                 const humanInd = ind + 1,
-                    takenFromArray = drop(humanInd, wordParts),
+                    takenFromArray = drop(humanInd, parts),
                     takenFromStr = drop(humanInd, word),
                     expectedWordPart = word.substring(humanInd);
 
@@ -1151,9 +1152,9 @@ describe ('#list', function () {
             expectTrue(
                 all(tuple =>
                     length(tuple) === 2 &&
-                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
+                    all(tuplePart => (isString(tuplePart) || isArray(tuplePart)) &&
                         length(tuplePart) === 0, tuple),
-                    [span(a => a, ""), span(x => x, [])]
+                    [span(a => a, ''), span(x => x, [])]
                 ));
         });
     });
@@ -1186,9 +1187,9 @@ describe ('#list', function () {
             expectTrue(
                 all(tuple =>
                     length(tuple) === 2 &&
-                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
+                    all(tuplePart => (isString(tuplePart) || isArray(tuplePart)) &&
                         length(tuplePart) === 0, tuple),
-                    [breakOnList(a => a, ""), breakOnList(x => x, [])]
+                    [breakOnList(a => a, ''), breakOnList(x => x, [])]
                 ));
         });
     });
@@ -1232,11 +1233,11 @@ describe ('#list', function () {
         it ('should unfold a list into list of all possible ' +
             'non-omitting sequential sets that start with initial item', function () {
             expectTrue(all(
-                    (item, ind, original) => length(item) === ind,
+                    (item, ind) => length(item) === ind,
                     inits(alphabetString)
             ));
             expectTrue(all(
-                    (item, ind, original) => length(item) === ind,
+                    (item, ind) => length(item) === ind,
                     inits(alphabetArray)
                 ));
         });
@@ -1250,7 +1251,7 @@ describe ('#list', function () {
                 (item, ind) => {
                     const headOfLast = head(item);
                     return length(item) ? length(item) === limit - ind &&
-                       headOfLast === alphabetString[ind] : true
+                       headOfLast === alphabetString[ind] : true;
                 },
                 tails(alphabetString)
             ));
@@ -1258,7 +1259,7 @@ describe ('#list', function () {
                 (item, ind) => {
                     const headOfLast = head(item);
                     return length(item) ? length(item) === limit - ind &&
-                       headOfLast === alphabetArray[ind] : true
+                       headOfLast === alphabetArray[ind] : true;
                 },
                 tails(alphabetArray)
             ));
@@ -1349,14 +1350,12 @@ describe ('#list', function () {
         it ('should return `true` when the element is found in given list', function () {
             const word = 'hello world';
             expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2, arr) => !!elem(elm2, arr), word),
-                    [word.split(''), word]));
+                all(() => all((elm2, ind2, arr) => !!elem(elm2, arr), word), [word.split(''), word]));
         });
         it ('should return `false` when element is not found in given list', function () {
             const word = 'hello world';
             expectTrue(
-                all((elm, ind) =>
+                all(elm =>
                         all((elm2, ind2, arr) => !elem('z', arr), elm),
                     [word.split(''), word]));
         });
@@ -1366,15 +1365,13 @@ describe ('#list', function () {
         it ('should return `false` when the element is found in given list', function () {
             const word = 'hello world';
             expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2, arr) => !notElem(elm2, arr), word),
+                all(() => all((elm2, ind2, arr) => !notElem(elm2, arr), word),
                     [word.split(''), word]));
         });
         it ('should return `true` when element is not found in given list', function () {
             const word = 'hello world';
             expect(
-                all(
-                    (elm, ind) =>
+                all(elm =>
                         all(
                             (elm2, ind2, arr) => notElem('z', arr), elm
                         ),
@@ -1382,31 +1379,6 @@ describe ('#list', function () {
                 )
             )
                 .to.equal(true);
-        });
-    });
-
-    describe ('#lookup', function () {
-        it ('should return found value when key is set on type instance', function () {
-            const word = 'hello world',
-                obj = word.split('').reduce((agg, item) => {
-                    agg[item] = item + ' value';
-                    return agg;
-                }, {});
-            expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2) => lookup(elm2, obj) === elm2 + ' value', word),
-                    [word.split(''), word]));
-        });
-        it ('should return `undefined` when element is not found in given list', function () {
-            const word = 'hello world',
-                obj = word.split('').reduce((agg, item) => {
-                    agg[item] = item + ' value';
-                    return agg;
-                }, {});
-            expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2, arr) => lookup('z', obj) === undefined, elm),
-                    [word.split(''), word]));
         });
     });
 
@@ -1467,9 +1439,9 @@ describe ('#list', function () {
             expectTrue(
                 all(tuple =>
                     length(tuple) === 2 &&
-                    all((tuplePart, ind) => (isString(tuplePart) || isArray(tuplePart)) &&
+                    all(tuplePart => (isString(tuplePart) || isArray(tuplePart)) &&
                         length(tuplePart) === 0, tuple),
-                    [partition(a => a, ""), partition(x => x, [])]
+                    [partition(a => a, ''), partition(x => x, [])]
                 ));
         });
     });
@@ -1493,14 +1465,14 @@ describe ('#list', function () {
         it ('should return the index where the element is found', function () {
             const word = 'hello world';
             expectTrue(
-                all((elm, ind) =>
+                all(elm =>
                         all((elm2, ind2, arr) => elemIndex(elm2, arr) === word.indexOf(elm2), elm),
                     [word.split(''), word]));
         });
         it ('should return `undefined` when element is not in list', function () {
             const word = 'hello world';
             expectTrue(
-                all((elm, ind) =>
+                all(elm =>
                         all((elm2, ind2, arr) => elemIndex('z', arr) === undefined, elm),
                     [word.split(''), word]));
         });
@@ -1531,7 +1503,7 @@ describe ('#list', function () {
             expectTrue(
                 word.split('')
                     .every((char, ind, arr) =>
-                        findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind))
+                        findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind));
         });
     });
 
@@ -1541,7 +1513,7 @@ describe ('#list', function () {
                 indicePred = x => x === 'e',
                 expectedResults = tokenInits.map(xs =>
                     xs.map((x, ind) => [ind, x])
-                        .filter(([ind, x]) => indicePred(x))
+                        .filter(([ind, x]) => indicePred(x, ind))
                 )
                     .map(xs => !xs.length ? undefined : xs.map(([x]) => x)),
                 results = map(xs => findIndices(indicePred, xs), tokenInits);
@@ -1572,7 +1544,7 @@ describe ('#list', function () {
                         agg.push([item, list2[ind]]);
                         return agg;
                     }, [], list1);
-            expectTrue(all(x => 13, [length(list1), length(list2)]));
+            expectTrue(all(() => 13, [length(list1), length(list2)]));
             expectEqual(length(result), length(expectedResult));
             expectTrue(all((tuple, ind) => tuple[0] === expectedResult[ind][0] &&
                 tuple[1] === expectedResult[ind][1]
@@ -1601,12 +1573,6 @@ describe ('#list', function () {
                     [],
                     range(13, 21),
                     []
-                ],
-
-                subj3 = [
-                    [],
-                    range(21, 34),
-                    range(34, 55)
                 ],
 
                 zipNResult = zipN.apply(null, subj),
@@ -1650,12 +1616,6 @@ describe ('#list', function () {
                     [],
                     range(13, 21),
                     []
-                ],
-
-                subj3 = [
-                    [],
-                    range(21, 34),
-                    range(34, 55)
                 ],
 
                 zipWithResult = zipWith(tuplize, ...subj),
@@ -2163,7 +2123,7 @@ describe ('#list', function () {
         it ('should remove all first occurrences of all items in second list by passed in ' +
             'equality operation.', function () {
             // Remove from first entry on both
-            const fiveArrays = map(_ => alphabetArray, vowelsArray),
+            const fiveArrays = map(() => alphabetArray, vowelsArray),
                 catedArrays = concat(fiveArrays),
                 expected = foldl((agg, vowel) => {
                         const parts = splitAt(agg.indexOf(vowel), agg);
