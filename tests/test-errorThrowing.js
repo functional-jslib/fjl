@@ -7,7 +7,8 @@ import {
     getErrorIfNotTypesThrower,
     errorIfNotType,
     errorIfNotTypes
-} from '../src/errorThrowing';
+}
+    from '../src/errorThrowing';
 
 describe ('#errorThrowing', () => {
 

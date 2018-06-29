@@ -75,17 +75,15 @@ are separated out 'Data.List' (in our lib is './src/list.js') etc..
 
 **JSDocs** [https://functional-jslib.github.io/fjl]
 
-The docs are divided into modules though all methods in the library all live on `fjl` or the top level export
- of the library (the docs are written out that way to more easily understand the separation and the grouping of
- methods (will give users a better idea of what methods are for what (without reading to much documentation))).
-
+The docs are divided into modules though all methods live on `fjl` (top level export)
+(the docs are written out this way for clarity).
 
 #### A note on currying.
 - All methods that take 2 or more arguments are curried.
 - All methods that take rest params 'only' are not curried;  E.g.,
 - Methods that require one argument and rest params are not curried.
 
-#### `booleanOps`
+#### `boolean`
 ```
 isTruthy, isFalsy, alwaysTrue, alwaysFalse
 ```
@@ -109,43 +107,44 @@ complement
 
 ##### Note: `iterate`, `repeat`, `replicate`, `cycle`
 In javascript we do not have lazy lists (infinite lists) like in haskell so 
-the aforementioned methods take an integer as their first parameter (in our implementation)
-(since we need to know when to their internal loops);  E.g.,
+the aforementioned methods take an integer as their first parameter;  E.g.,
 
-Javascript: `take(3, iterate(a => a * 2), [1..])` 
-Haskell: `take 3 $ iterate (a -> a * 2) [1..]`
+In haskell, we can do the following: `take 3 $ iterate (a -> a * 2) [1..]` (`[1..]` is syntax for infinite list)
+In javascript, we have no choice but to make our function call similar to:
+```
+iterate(3, a => a * 2, range(1, 10))
+```
 
-**Notice** the `[1..]`, this doesn't exist in javascript;  In haskell this is an infinite lazy list 
-
-So our haskell definitions for our methods are 
+So, haskell definitions for our generator like methods:  
 - `iterate :: (a -> a) -> [a]` 
 - `repeat :: a -> [a]`
 - `replicate :: Int -> a -> [a]`
 - `cycle :: [a] -> [a]`
  
-In javascript:
-- `repeat` and `replicate` become the same:
-`repeat :: Int -> a -> [a]`
-`replicate:: Int -> a -> [a]`
-- `cycle` becomes `cycle :: Int -> [a] -> [a]`
-- `iterate` becomes `iterate :: Int -> (a -> a) -> [a]`
+And our haskell signature for our javascript version methods become:
+- `repeat :: Int -> a -> [a]`
+- `replicate:: Int -> a -> [a]`
+- `cycle :: Int -> [a] -> [a]`
+- `iterate :: Int -> (a -> a) -> [a]`
+
+
 
 #### `function`
 The methods that comprise function operations are:
 ```
 apply, call, curry, curry2, curry3, curry4, curry5, curryN,
-until, flip, flip3, flip4, flip5, flipN,
-negateF, negateP, negateF3, negateF4, negateF5, negateFN,
-id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders
+until, flip, flipN,
+negateF, negateF2, negateF3, negateFN,
+id, compose, curry_, curry2_, curry3_, __ // Curry with placeholders
 ```
 
 #### `object`
-These methods are not really from the haskell library but are utilities for making 
+These methods are utilities for making 
 working with javascript objects a little bit easier.
  
 ```
 assignDeep, assign, of, prop, typeOf, isType, instanceOf, 
-isFunction, isClass, isCallable,
+isOfType, isFunction, isClass, isCallable,
 isArray, isObject, isBoolean, isNumber, isString, isMap,
 isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
  isUsableImmutablePrimitive, isEmpty, isset,
@@ -157,7 +156,7 @@ objUnion, objIntersect, objDifference, objComplement,
 #### `string`
 Import from 'Data.List' (in haskell):
 ```
-lines, words, unwords, unlines
+camelCase, classCase, ucaseFirst, lcaseFirst, lines, words, unwords, unlines
 ```
 
 #### `jsPlatform`

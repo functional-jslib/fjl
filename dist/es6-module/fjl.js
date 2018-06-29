@@ -36,7 +36,7 @@ function typeOf (value) {
 }
 
 const fnOrError$1 = (symbolName, f) => {
-        if (!f || typeof f !== 'function') {
+        if (!f || !(f instanceof Function)) {
             throw new Error(`${symbolName} should be a function. ` +
                 `Type received: ${typeOf(f)};  Value received: ${f}.`);
         }
@@ -114,8 +114,22 @@ let _WeakSet = 'WeakSet';
 let _Null$1 = 'Null';
 let _Undefined$1 = 'Undefined';
 
+const toTypeRef = type => {
+        if (!type) {
+            return typeOf(type);
+        }
+        else if (type.constructor === String || (type instanceof Function)) {
+            return type;
+        }
+        return typeOf(type);
+    };
+const toTypeRefName = Type => {
+        const ref = toTypeRef(Type);
+        return ref instanceof Function ? ref.name : ref;
+    };
 const isFunction = instanceOf(Function);
-const isType = curry((type, obj) => typeOf(obj) === (isFunction(type) ? type.name : type));
+const isType = curry((type, obj) => typeOf(obj) === toTypeRefName(type));
+const isOfType = curry((type, x) => isType(type, x) || instanceOf(type, x));
 const isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 const isCallable = x => isFunction(x) && !isClass(x);
 const {isArray} = Array;
@@ -1040,69 +1054,129 @@ const log = console.log.bind(console);
 const error = console.error.bind(console);
 const peek = (...args) => (log(...args), args.pop());
 
+const jsonClone = x => JSON.parse(JSON.stringify(x));
+
+const toAssocList = obj => keys(obj).map(key => [key, obj[key]]);
+const toAssocListDeep = (obj, TypeConstraint = Object) => keys(obj).map(key =>
+        TypeConstraint && isType(TypeConstraint, obj[key]) ?
+            [key, toAssocListDeep(obj[key], TypeConstraint)] :
+            [key, obj[key]]
+    );
+const fromAssocList = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+const fromAssocListDeep = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
+        if (isArray(value) && isArray(value[0]) && value[0].length === 2) {
+            agg[key] = fromAssocListDeep(value, OutType);
+            return agg;
+        }
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+
+const toArray = x => {
+        switch (typeOf(x)) {
+            case 'Null':
+            case 'Undefined':
+                return [];
+            case String.name:
+            case Array.name:
+            case 'WeakMap':
+            case 'WeakSet':
+            case 'Map':
+            case 'Set':
+                return Array.from(x);
+            case Object.name:
+            default:
+                return toAssocList(x);
+        }
+    };
+
 /**
  * @module object
- * @description Contains error throwing facilities for when a value doesn't match a type.
- *  In addition gives you curried and uncurried versions of the multi arity functions.
+ * @description Object operations/combinators.
  */
-const isCheckableType = type => isString(type) || isFunction(type);
-const errorIfNotCheckableType = (contextName, type) => {
-        if (!isCheckableType(type)) {
-            throw new Error (`${contextName} expects \`type\` to be of type \`String\` or \`Function\`.` +
-                `  Type received \`${typeOf(type)}\`.  Value \`${type}\`.`);
+
+const compose = (...args) =>
+        arg0 => reduceRight$1((value, fn) => fn(value), arg0, args);
+
+const flipN = fn => curry2((...args) => apply(fn, reverse$1(args)));
+const flip = fn => curry((b, a) => call(fn, a, b));
+
+/**
+ * @memberOf function
+ */
+
+/**
+ * Returns passed in parameter.
+ * @haskellType `id :: a -> a`
+ * @function module:function.id
+ * @param x {*}
+ * @returns {*}
+ */
+const id = x => x;
+
+const until = curry((predicate, operation, typeInstance) => {
+        let result = typeInstance;
+        while (!predicate(result)) {
+            result = operation(result);
         }
-        return type;
-    };
-const getTypeName = type => {
-        errorIfNotCheckableType('getTypeName', type);
-        return type.name || type;
-    };
-const _defaultTypeChecker = (Type, value) => isType(getTypeName(Type), value) || (
-        isFunction(Type) && isset(value) && value instanceof Type);
-const multiTypesToString = types => types.length ?
-             types.map(type => `\`${getTypeName(type)}\``).join(', ') : '';
+        return result;
+    });
+
+/**
+ * @module function
+ */
+
+/**
+ * @module errorThrowing
+ * @description Contains error throwing facilities for when a value doesn't match a type.
+ */
+const typeRefsToStringOrError = types => types.length ?
+        types.map(type => `\`${toTypeRefName(type)}\``).join(', ') : '';
 const defaultErrorMessageCall = tmplContext => {
         const {
-            contextName, valueName, value, expectedTypeName,
-            foundTypeName, messageSuffix
-        } = tmplContext,
+                contextName, valueName, value, expectedTypeName,
+                foundTypeName, messageSuffix
+            } = tmplContext,
             isMultiTypeNames = isArray(expectedTypeName),
             typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
-            typesToMatchCopy = isMultiTypeNames ? multiTypesToString(expectedTypeName) : expectedTypeName;
+            typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
         return (contextName ? `\`${contextName}.` : '`') +
             `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` +
             `Type received: ${foundTypeName}.  Value: ${value};` +
             `${messageSuffix ?  '  ' + messageSuffix + ';' : ''}`;
     };
-const _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
-      (ValueType, contextName, valueName, value, messageSuffix = null) => {
-        const expectedTypeName = getTypeName(ValueType),
-            foundTypeName = typeOf(value);
-        if (typeChecker(ValueType, value)) { return value; } // Value matches type
-        throw new Error(errorMessageCall(
-            {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
-        ));
-    };
-const _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = _defaultTypeChecker) =>
-      (valueTypes, contextName, valueName, value) => {
-            const expectedTypeNames = valueTypes.map(getTypeName),
+const _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = isOfType) =>
+        (ValueType, contextName, valueName, value, messageSuffix = null) => {
+            const expectedTypeName = toTypeRef(ValueType),
+                foundTypeName = typeOf(value);
+            if (typeChecker(ValueType, value)) { return value; } // Value matches type
+            throw new Error(errorMessageCall(
+                {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
+            ));
+        };
+const _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = isOfType) =>
+        (valueTypes, contextName, valueName, value, messageSuffix = null) => {
+            const expectedTypeNames = valueTypes.map(toTypeRef),
                 matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
                 foundTypeName = typeOf(value);
             if (matchFound) { return value; }
             throw new Error(
                 errorMessageCall({
                     contextName, valueName, value,
-                    expectedTypeName: expectedTypeNames, foundTypeName
+                    expectedTypeName: expectedTypeNames, foundTypeName,
+                    messageSuffix
                 })
             );
         };
 const _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
 const _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall);
-const defaultTypeChecker = curry(_defaultTypeChecker);
-const errorIfNotType = curry(_errorIfNotType);
-const errorIfNotTypes = curry4(_errorIfNotTypes);
 const getErrorIfNotTypeThrower = errorMessageCall => curry(_getErrorIfNotTypeThrower(errorMessageCall));
-const getErrorIfNotTypesThrower = errorMessageCall => curry4(_getErrorIfNotTypesThrower(errorMessageCall));
+const getErrorIfNotTypesThrower = errorMessageCall => curry(_getErrorIfNotTypesThrower(errorMessageCall));
+const errorIfNotType = curry(_errorIfNotType);
+const errorIfNotTypes = curry(_errorIfNotTypes);
 
 /**
  * @typedef {*} Any - Synonym for 'any value'.
@@ -1165,158 +1239,6 @@ const getErrorIfNotTypesThrower = errorMessageCall => curry4(_getErrorIfNotTypes
  * @returns {*} - Whatever value is.
  */
 
-const jsonClone = x => JSON.parse(JSON.stringify(x));
-
-const toAssocList = obj => keys(obj).map(key => [key, obj[key]]);
-const toAssocListDeep = (obj, TypeConstraint = Object) => keys(obj).map(key =>
-        TypeConstraint && isType(TypeConstraint, obj[key]) ?
-            [key, toAssocListDeep(obj[key], TypeConstraint)] :
-            [key, obj[key]]
-    );
-const fromAssocList = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
-        agg[key] = value;
-        return agg;
-    }, new OutType());
-const fromAssocListDeep = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
-        if (isArray(value) && isArray(value[0]) && value[0].length === 2) {
-            agg[key] = fromAssocListDeep(value, OutType);
-            return agg;
-        }
-        agg[key] = value;
-        return agg;
-    }, new OutType());
-
-const toArray = x => {
-        switch (typeOf(x)) {
-            case 'Null':
-            case 'Undefined':
-                return [];
-            case String.name:
-            case Array.name:
-            case 'WeakMap':
-            case 'WeakSet':
-            case 'Map':
-            case 'Set':
-                return Array.from(x);
-            case Object.name:
-            default:
-                return toAssocList(x);
-        }
-    };
-
-/**
- * @module object
- * @description Object operations/combinators.
- */
-
-const compose = (...args) =>
-        arg0 => reduceRight$1((value, fn) => fn(value), arg0, args);
-
-/**
- * @memberOf function
- * @description Curry implementation with place holder concept (`__`).
- */
-
-const PlaceHolder = function PlaceHolder() {};
-const notFnErrPrefix = '`fn` in `curry_(fn, ...args)`';
-const placeHolderInstance = new PlaceHolder();
-
-/**
- * Checks to see if value is a `PlaceHolder`.
- * @param instance {*}
- * @returns {boolean}
- * @private
- */
-function isPlaceHolder (instance) {
-    return instance instanceof PlaceHolder;
-}
-
-/**
- * Replaces `placeholder` values in `list`.
- * @function replacePlaceHolder
- * @private
- * @param array {Array} - Array to replace placeholders in.
- * @param args {Array} - Args from to choose from to replace placeholders.
- * @returns {Array|*} - Returns passed in `list` with placeholders replaced by values in `args`.
- */
-function replacePlaceHolders (array, args) {
-    let out = array.map(element => {
-            if (!isPlaceHolder(element)) { return element; }
-            else if (args.length) { return args.shift(); }
-            return element;
-        });
-    return args.length ? out.concat(args) : out;
-}
-
-/**
- * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @function module:function.curry_
- * @param fn {Function}
- * @param argsToCurry {...*}
- * @returns {Function}
- */
-function curry_ (fn, ...argsToCurry) {
-    return curryN_(fnOrError$1(notFnErrPrefix, fn).length, fn, ...argsToCurry);
-}
-
-/**
- * Curries a function up to given arity also enforces arity via placeholder values (`__`).
- * @function module:function.curryN_
- * @param executeArity {Number}
- * @param fn {Function}
- * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
- * @returns {Function} - Passed in function wrapped in a function for currying.
- */
-function curryN_ (executeArity, fn, ...curriedArgs) {
-    return (...args) => {
-        let concatedArgs = replacePlaceHolders(curriedArgs, args),
-            placeHolders = concatedArgs.filter(isPlaceHolder),
-            canBeCalled = (concatedArgs.length - placeHolders.length >= executeArity) || !executeArity;
-        return !canBeCalled ?
-            curryN_.apply(null, [executeArity, fnOrError$1(notFnErrPrefix, fn)].concat(concatedArgs)) :
-            fnOrError$1(notFnErrPrefix, fn).apply(null, concatedArgs);
-    };
-}
-
-/**
- * Place holder object (frozen) used by curry.
- * @memberOf function
- * @type {PlaceHolder}
- */
-let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance;
-let curry2_ = fn => curryN_(2, fn);
-let curry3_ = fn => curryN_(3, fn);
-let curry4_ = fn => curryN_(4, fn);
-let curry5_ = fn => curryN_(5, fn);
-
-const flipN = fn => curry2((...args) => apply(fn, reverse$1(args)));
-const flip = fn => curry((b, a) => call(fn, a, b));
-
-/**
- * @memberOf function
- */
-
-/**
- * Returns passed in parameter.
- * @haskellType `id :: a -> a`
- * @function module:function.id
- * @param x {*}
- * @returns {*}
- */
-const id = x => x;
-
-const until = curry((predicate, operation, typeInstance) => {
-        let result = typeInstance;
-        while (!predicate(result)) {
-            result = operation(result);
-        }
-        return result;
-    });
-
-/**
- * @module function
- */
-
 /**
  * Contains functions for operating strings.
  * @author elyde
@@ -1354,4 +1276,4 @@ const classCase = compose(ucaseFirst, camelCase);
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
 
-export { instanceOf, hasOwnProperty, length, keys, assign, prop, typeOf, copy, isFunction, isType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, isCheckableType, errorIfNotCheckableType, getTypeName, _defaultTypeChecker, multiTypesToString, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, defaultTypeChecker, errorIfNotType, errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply, call, compose, curryNotFnErrPrefix, curryN, curry, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, map, append, head, last, tail, init, uncons, unconsr, concat$$1 as concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, split, push, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArr$ };
+export { instanceOf, hasOwnProperty, length, keys, assign, prop, typeOf, copy, toTypeRef, toTypeRefName, isFunction, isType, isOfType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply, call, compose, curryNotFnErrPrefix, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, map, append, head, last, tail, init, uncons, unconsr, concat$$1 as concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, split, push, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArr$ };

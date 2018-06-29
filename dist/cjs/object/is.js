@@ -1,9 +1,9 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.isArray = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isCallable = exports.isClass = exports.isType = exports.isFunction = undefined;
+exports.isArray = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isCallable = exports.isClass = exports.isOfType = exports.isType = exports.isFunction = exports.toTypeRefName = exports.toTypeRef = undefined;
 
 var _typeOf = require('./typeOf');
 
@@ -29,20 +29,36 @@ var _String = String.name,
                                */
 
 /**
- * Returns whether a value is a function or not.
- * @function module:object.isFunction
- * @param value {*}
- * @returns {Boolean}
+ * Resolves/normalizes a type name from either a string or a constructor.
+ * @function module:object.toTypeRef
+ * @param type {Function|String} - String or function representing a type.
+ * @returns {String}
+ * @private
  */
-var isFunction = (0, _object.instanceOf)(Function),
+var toTypeRef = function toTypeRef(type) {
+    if (!type) {
+        return (0, _typeOf.typeOf)(type);
+    } else if (type.constructor === String || type instanceof Function) {
+        return type;
+    }
+    return (0, _typeOf.typeOf)(type);
+},
+    toTypeRefName = function toTypeRefName(Type) {
+    var ref = toTypeRef(Type);
+    return ref instanceof Function ? ref.name : ref;
+},
+    isFunction = (0, _object.instanceOf)(Function),
     isType = (0, _curry.curry)(function (type, obj) {
-  return (0, _typeOf.typeOf)(obj) === (isFunction(type) ? type.name : type);
+    return (0, _typeOf.typeOf)(obj) === toTypeRefName(type);
+}),
+    isOfType = (0, _curry.curry)(function (type, x) {
+    return isType(type, x) || (0, _object.instanceOf)(type, x);
 }),
     isClass = function isClass(x) {
-  return x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
+    return x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 },
     isCallable = function isCallable(x) {
-  return isFunction(x) && !isClass(x);
+    return isFunction(x) && !isClass(x);
 },
     isArray = Array.isArray,
     isObject = isType(_Object),
@@ -57,46 +73,49 @@ var isFunction = (0, _object.instanceOf)(Function),
     isNull = isType(_Null),
     isSymbol = isType(_Symbol),
     isUsableImmutablePrimitive = function isUsableImmutablePrimitive(x) {
-  var typeOfX = (0, _typeOf.typeOf)(x);
-  return isset(x) && [_String, _Number, _Boolean, _Symbol].some(function (Type) {
-    return Type === typeOfX;
-  });
+    var typeOfX = (0, _typeOf.typeOf)(x);
+    return isset(x) && [_String, _Number, _Boolean, _Symbol].some(function (Type) {
+        return Type === typeOfX;
+    });
 },
     isEmptyList = function isEmptyList(x) {
-  return !(0, _object.length)(x);
+    return !(0, _object.length)(x);
 },
     isEmptyObject = function isEmptyObject(obj) {
-  return isEmptyList((0, _object.keys)(obj));
+    return isEmptyList((0, _object.keys)(obj));
 },
     isEmptyCollection = function isEmptyCollection(x) {
-  return x.size === 0;
+    return x.size === 0;
 },
     isEmpty = function isEmpty(value) {
-  var retVal = void 0;
-  if (!value) {
-    // if '', 0, `null`, `undefined`, or `false` then is empty
-    retVal = true;
-  }
-  var typeOfValue = (0, _typeOf.typeOf)(value);
-  if (typeOfValue === _Array || typeOfValue === _Function) {
-    retVal = isEmptyList(value);
-  } else if (typeOfValue === _Number) {
-    retVal = false;
-  } else if (typeOfValue === _Object) {
-    retVal = isEmptyObject(value);
-  } else if ((0, _object.hasOwnProperty)('size', value) && isNumber(value.size)) {
-    retVal = isEmptyCollection(value);
-  } else {
-    retVal = !value;
-  }
-  return retVal;
+    var retVal = void 0;
+    if (!value) {
+        // if '', 0, `null`, `undefined`, or `false` then is empty
+        retVal = true;
+    }
+    var typeOfValue = (0, _typeOf.typeOf)(value);
+    if (typeOfValue === _Array || typeOfValue === _Function) {
+        retVal = isEmptyList(value);
+    } else if (typeOfValue === _Number) {
+        retVal = false;
+    } else if (typeOfValue === _Object) {
+        retVal = isEmptyObject(value);
+    } else if ((0, _object.hasOwnProperty)('size', value) && isNumber(value.size)) {
+        retVal = isEmptyCollection(value);
+    } else {
+        retVal = !value;
+    }
+    return retVal;
 },
     isset = function isset(x) {
-  return x !== null && x !== undefined;
+    return x !== null && x !== undefined;
 };
 
+exports.toTypeRef = toTypeRef;
+exports.toTypeRefName = toTypeRefName;
 exports.isFunction = isFunction;
 exports.isType = isType;
+exports.isOfType = isOfType;
 exports.isClass = isClass;
 exports.isCallable = isCallable;
 exports.isObject = isObject;

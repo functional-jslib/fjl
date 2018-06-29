@@ -1,4 +1,4 @@
-define(['exports', './object', './boolean', './function', './list', './string', './utils', './list/utils'], function (exports, _object, _boolean, _function, _list, _string, _utils, _utils2) {
+define(['exports', './object', './boolean', './function', './list', './string', './utils', './errorThrowing', './list/utils'], function (exports, _object, _boolean, _function, _list, _string, _utils, _errorThrowing, _utils2) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -55,6 +55,15 @@ define(['exports', './object', './boolean', './function', './list', './string', 
       enumerable: true,
       get: function () {
         return _utils[key];
+      }
+    });
+  });
+  Object.keys(_errorThrowing).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _errorThrowing[key];
       }
     });
   });

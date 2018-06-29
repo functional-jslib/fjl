@@ -16,7 +16,7 @@ define(['exports', '../object/typeOf'], function (exports, _typeOf) {
      * @returns {Function}
      */
     fnOrError = (symbolName, f) => {
-        if (!f || typeof f !== 'function') {
+        if (!f || !(f instanceof Function)) {
             throw new Error(`${symbolName} should be a function. ` + `Type received: ${(0, _typeOf.typeOf)(f)};  Value received: ${f}.`);
         }
         return f;

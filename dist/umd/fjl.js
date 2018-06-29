@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './object', './boolean', './function', './list', './string', './utils', './list/utils'], factory);
+    define(['exports', './object', './boolean', './function', './list', './string', './utils', './errorThrowing', './list/utils'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./object'), require('./boolean'), require('./function'), require('./list'), require('./string'), require('./utils'), require('./list/utils'));
+    factory(exports, require('./object'), require('./boolean'), require('./function'), require('./list'), require('./string'), require('./utils'), require('./errorThrowing'), require('./list/utils'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.object, global.boolean, global._function, global.list, global.string, global.utils, global.utils);
+    factory(mod.exports, global.object, global.boolean, global._function, global.list, global.string, global.utils, global.errorThrowing, global.utils);
     global.fjl = mod.exports;
   }
-})(this, function (exports, _object, _boolean, _function, _list, _string, _utils, _utils2) {
+})(this, function (exports, _object, _boolean, _function, _list, _string, _utils, _errorThrowing, _utils2) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -67,6 +67,15 @@
       enumerable: true,
       get: function () {
         return _utils[key];
+      }
+    });
+  });
+  Object.keys(_errorThrowing).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _errorThrowing[key];
       }
     });
   });

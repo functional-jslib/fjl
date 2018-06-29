@@ -76,6 +76,18 @@ Object.keys(_utils).forEach(function (key) {
   });
 });
 
+var _errorThrowing = require('./errorThrowing');
+
+Object.keys(_errorThrowing).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _errorThrowing[key];
+    }
+  });
+});
+
 var _utils2 = require('./list/utils');
 
 Object.keys(_utils2).forEach(function (key) {

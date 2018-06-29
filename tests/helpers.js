@@ -3,9 +3,11 @@
  */
 'use strict';
 
-import {curry2_, __, compose} from '../src/function';
-
+import {compose} from '../src/function';
+import {curry2_, __} from './helpers/curry_';
 import {expect} from 'chai';
+
+export * from './helpers/curry_';
 
 export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.instanceOf(instance)),
 

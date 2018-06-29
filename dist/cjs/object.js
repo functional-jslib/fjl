@@ -124,18 +124,6 @@ Object.keys(_console).forEach(function (key) {
   });
 });
 
-var _errorThrowing = require('./object/errorThrowing');
-
-Object.keys(_errorThrowing).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _errorThrowing[key];
-    }
-  });
-});
-
 var _jsonClone = require('./object/jsonClone');
 
 Object.keys(_jsonClone).forEach(function (key) {

@@ -1,4 +1,3 @@
-/* eslint global: describe:true,it:true */
 /**
  * Created by elyde on 12/29/2016.
  * @note ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
@@ -6,7 +5,7 @@
  */
 
 import {assert, expect} from 'chai';
-import {__, compose, negateF2} from '../src/function';
+import {compose, negateF2} from '../src/function';
 import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/object';
 import {isTruthy} from '../src/boolean';
@@ -31,6 +30,7 @@ import {
 } from '../src/list';
 
 import {
+    __,
     range,
     shallowCompareOnLeft,
     expectEqual,
@@ -41,8 +41,7 @@ import {
     expectFalse,
     alphabetArray,
     alphabetCharCodeRange,
-    log, alphabetString,
-    peek
+    alphabetString
 } from './helpers';
 
 describe ('#list', function () {

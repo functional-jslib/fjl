@@ -3,7 +3,7 @@
  * @description Curry implementation with place holder concept (`__`).
  */
 
-import fnOrError from './fnOrError';
+import fnOrError from '../../src/function/fnOrError';
 
 /**
  * PlaceHolder (__) constructor.
@@ -50,6 +50,7 @@ function replacePlaceHolders (array, args) {
 
 /**
  * Curries passed in function up to given arguments length (can enforce arity via placeholder values (`__`)).
+ * @note Usage of the `curry_` variation functions are discouraged as they are less performant
  * @function module:function.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}

@@ -40,18 +40,6 @@ Object.keys(_curry).forEach(function (key) {
   });
 });
 
-var _curry2 = require('./function/_curry');
-
-Object.keys(_curry2).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _curry2[key];
-    }
-  });
-});
-
 var _flip = require('./function/flip');
 
 Object.keys(_flip).forEach(function (key) {

@@ -1,4 +1,4 @@
-define(['exports', './jsPlatform/function', './function/compose', './function/curry', './function/_curry', './function/flip', './function/id', './function/negate', './function/until'], function (exports, _function, _compose, _curry, _curry2, _flip, _id, _negate, _until) {
+define(['exports', './jsPlatform/function', './function/compose', './function/curry', './function/flip', './function/id', './function/negate', './function/until'], function (exports, _function, _compose, _curry, _flip, _id, _negate, _until) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -28,15 +28,6 @@ define(['exports', './jsPlatform/function', './function/compose', './function/cu
       enumerable: true,
       get: function () {
         return _curry[key];
-      }
-    });
-  });
-  Object.keys(_curry2).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-      enumerable: true,
-      get: function () {
-        return _curry2[key];
       }
     });
   });
