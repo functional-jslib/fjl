@@ -124,6 +124,7 @@ export const
      * Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check on
      * constructor names, else if first check fails and `type` is a constructor, performs an `instanceof` check
      * on value with constructor.
+     * @note Use care when checking for `Array` and/or `Object` since the both are considered objects by `instanceof` checker.
      * @note For `null` and `undefined` their class cased names can be used for type checks
      * `isOfType('Null', null) === true (passes strict type check)` (or better yet `isset` can be used).
      * @throwsafe - Doesn't throw on `null` or `undefined` `obj` values.
