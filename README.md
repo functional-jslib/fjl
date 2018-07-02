@@ -60,8 +60,9 @@ const fjl = require('fjl');
 - A functional library that takes advantage of the es6 features of the language
  and is built from the ground up using functional concepts.
 - A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
-- A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `append` (un-curried version)
+- ~~A functional library that has curried and un-curried versions of included operations.  Et. al.
+    `append`, `append` (un-curried version)~~ Managing uncurried and curried methods makes development on 
+    the library unwieldly and is un-functional (anyway :-)), so has been removed from library (as a feature).
 - A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
 are separated out 'Data.List' (in our lib is './src/list.js') etc..
 - Etc. etc..
@@ -75,8 +76,7 @@ are separated out 'Data.List' (in our lib is './src/list.js') etc..
 
 **JSDocs** [https://functional-jslib.github.io/fjl]
 
-The docs are divided into modules though all methods live on `fjl` (top level export)
-(the docs are written out this way for clarity).
+The docs are divided into modules though all methods live on `fjl` (top level export).
 
 #### A note on currying.
 - All methods that take 2 or more arguments are curried.
@@ -89,7 +89,6 @@ isTruthy, isFalsy, alwaysTrue, alwaysFalse
 ```
 
 #### `list`
-List operations imported from the `Data.List` haskell module.
 ```
 append, head, last, tail, init, uncons, unconsr, concat, concatMap,
 reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
@@ -102,7 +101,7 @@ zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN,
 any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, 
 scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy,
 removeBy, removeFirstBy, unionBy, union, intersect, intersectBy, difference,
-complement
+complement, range
 ```
 
 ##### Note: `iterate`, `repeat`, `replicate`, `cycle`
@@ -127,10 +126,7 @@ And our haskell signature for our javascript version methods become:
 - `cycle :: Int -> [a] -> [a]`
 - `iterate :: Int -> (a -> a) -> [a]`
 
-
-
 #### `function`
-The methods that comprise function operations are:
 ```
 apply, call, curry, curry2, curry3, curry4, curry5, curryN,
 until, flip, flipN,
@@ -139,28 +135,23 @@ id, compose, curry_, curry2_, curry3_, __ // Curry with placeholders
 ```
 
 #### `object`
-These methods are utilities for making 
-working with javascript objects a little bit easier.
- 
 ```
-assignDeep, assign, of, prop, typeOf, isType, instanceOf, 
-isOfType, isFunction, isClass, isCallable,
+assignDeep, assign, of, lookup, typeOf, isType, instanceOf, 
+isOfType, isFunction, isClass, isCallable, copy,
 isArray, isObject, isBoolean, isNumber, isString, isMap,
 isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
  isUsableImmutablePrimitive, isEmpty, isset,
 isEmptyList, isEmptyObject, isEmptyCollection,
-hasOwnProperty, length, keys,
+hasOwnProperty, length, keys, 
 objUnion, objIntersect, objDifference, objComplement,
 ```
 
 #### `string`
-Import from 'Data.List' (in haskell):
 ```
 camelCase, classCase, ucaseFirst, lcaseFirst, lines, words, unwords, unlines
 ```
 
 #### `jsPlatform`
-Non-haskell/javascript-specific exports:
 ```
 slice, includes, indexOf, lastIndexOf, split, push
 ```
@@ -169,10 +160,6 @@ slice, includes, indexOf, lastIndexOf, split, push
 - `split` in javascript is for strings.
 
 #### Utilities
-**Note:** Utility functions are generally not curried (minus a few exceptions: 
-    `fPureTakesOne, fPureTakes2, fPureTakesOneOrMore`
-).
-
 ##### Low level utilities
 Turning regular methods into functional ones;  I.e., these 
 take a `name` and return a function that take an-argument/arguments and a type value 
@@ -184,8 +171,6 @@ fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore
 ```
 
 ##### List operation utilities
-**Uncurried**
-
 ```
 sliceFrom, sliceTo, slice, sliceCopy
 genericAscOrdering, lengths, lengthsToSmallest, 

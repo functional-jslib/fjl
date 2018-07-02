@@ -7,6 +7,8 @@ import {compose} from '../src/function';
 import {curry2_, __} from './helpers/curry_';
 import {expect} from 'chai';
 
+import {range} from './../src/list/range';
+
 export * from './helpers/curry_';
 
 export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.instanceOf(instance)),
@@ -72,15 +74,6 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
     expectShallowEqual = expectShallowEquals,
 
     expectDeepEquals = curry2_((a, b) => expectTrue(deepCompareLeft(a, b))),
-
-    range = curry2_((from, to, step = 1) => {
-        let i = from;
-        const out = [];
-        if (step < 0 && i > 0) { for (; i >= to; i += step) { out.push(i); } }
-        else if (step > 0 && i < to) { for (; i <= to; i += step) { out.push(i); } }
-        else { throw new Error ('Invalid range requested'); }
-        return out;
-    }),
 
     log = console.log.bind(console),
 

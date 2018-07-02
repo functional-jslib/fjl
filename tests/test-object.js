@@ -324,7 +324,7 @@ describe ('#object', function () {
         });
         it ('should return false when parameters two is not of type parameter one', function () {
             expectFalse(instanceOf(Function, {}));
-        })
+        });
     });
 
     describe('#assignDeep', function () {
@@ -658,8 +658,8 @@ describe ('#object', function () {
                     return agg;
                 }, {});
             expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2) => lookup(elm2, obj) === elm2 + ' value', word),
+                all(() =>
+                        all(elm2 => lookup(elm2, obj) === elm2 + ' value', word),
                     [word.split(''), word]));
         });
         it ('should return `undefined` when element is not found in given list', function () {
@@ -669,8 +669,8 @@ describe ('#object', function () {
                     return agg;
                 }, {});
             expectTrue(
-                all((elm, ind) =>
-                        all((elm2, ind2, arr) => lookup('z', obj) === undefined, elm),
+                all(elm =>
+                        all(() => lookup('z', obj) === undefined, elm),
                     [word.split(''), word]));
         });
     });

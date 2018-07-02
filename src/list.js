@@ -19,6 +19,8 @@ import {
 }
     from './list/utils';
 
+export * from './list/range';
+
 export {map};
 
 export {slice, includes, indexOf, lastIndexOf, split, push} from './jsPlatform';
