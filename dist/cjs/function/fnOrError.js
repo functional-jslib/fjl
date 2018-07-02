@@ -9,11 +9,12 @@ var _typeOf = require('../object/typeOf');
 var
 
 /**
- * Throws error if `f` is not a function, else returns it (`f`).
- * @private
- * @param symbolName {String}
- * @param f {*} - Expected function.
+ * Returns a function or throws an error if given `f` is not a function.
+ * @function module:function.fnOrError
+ * @param symbolName {String} - Error message prefix.
+ * @param f {Function|*} - Expected function.
  * @returns {Function}
+ * @throws {Error} - Error if `f` is not of `function`
  */
 fnOrError = function fnOrError(symbolName, f) {
     if (!f || !(f instanceof Function)) {

@@ -35,7 +35,7 @@ function typeOf (value) {
     return retVal;
 }
 
-const fnOrError$1 = (symbolName, f) => {
+const fnOrError = (symbolName, f) => {
         if (!f || !(f instanceof Function)) {
             throw new Error(`${symbolName} should be a function. ` +
                 `Type received: ${typeOf(f)};  Value received: ${f}.`);
@@ -48,36 +48,29 @@ const curryN = (executeArity, fn, ...curriedArgs) => {
         return (...args) => {
             let concatedArgs = curriedArgs.concat(args),
                 canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
-            return !canBeCalled ? curryN.apply(null, [executeArity, fnOrError$1(curryNotFnErrPrefix, fn)].concat(concatedArgs)) :
-                fnOrError$1(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
+            return !canBeCalled ? curryN.apply(null, [executeArity, fnOrError(curryNotFnErrPrefix, fn)].concat(concatedArgs)) :
+                fnOrError(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
         };
     };
-const curry = (fn, ...argsToCurry) => curryN(fnOrError$1(curryNotFnErrPrefix, fn).length, fn, ...argsToCurry);
+const curry = (fn, ...argsToCurry) => curryN(fnOrError(curryNotFnErrPrefix, fn).length, fn, ...argsToCurry);
 const curry2 = fn => curryN(2, fn);
 const curry3 = fn => curryN(3, fn);
 const curry4 = fn => curryN(4, fn);
 const curry5 = fn => curryN(5, fn);
 
+/**
+ * @module utils
+ */
 const fPureTakesOne = name => curry((arg, f) => f[name](arg));
 const fPureTakes2 = name => curry((arg1, arg2, f) => f[name](arg1, arg2));
 const fPureTakes3 = name => curry((arg1, arg2, arg3, f) => f[name](arg1, arg2, arg3));
 const fPureTakes4 = name => curry((arg1, arg2, arg3, arg4, f) => f[name](arg1, arg2, arg3, arg4));
 const fPureTakes5 = name => curry((arg1, arg2, arg3, arg4, arg5, f) => f[name](arg1, arg2, arg3, arg4, arg5));
 const fPureTakesOneOrMore = name => curry2((f, ...args) => f[name](...args));
-const fnOrError = (symbolName, f) => {
-        if (!f || typeof f !== 'function') {
-            throw new Error (`${symbolName} should be a function. ` +
-                `Type received: ${typeOf(f)};  Value received: ${f}.`);
-        }
-        return f;
-    };
 
 /**
- * Created by elydelacruz on 9/6/2017.
- * Defines some of the platform methods for objects (the ones used within `fjl`) uncurried for use
- * throughout the library.  @note Doesn't include all methods for objects just the ones used in
- *  the library.
- * @todo change all files named '*UnCurried' to '*_'.
+ * @memberOf object
+ * @description Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 
 const instanceOf = curry((instanceConstructor, instance) =>
@@ -403,6 +396,25 @@ const findWhere = curry((pred, xs) => {
     });
 
 /**
+ * @module object
+ */
+const normalizeStep = (from, to, step) => {
+    if (from > to) {
+        return step > 0 ? -step : step; // make step negative
+    }
+    return step < 0 ? -1 * step : step; // make step positive
+};
+
+const range = curry((from, to, step = 1) => {
+        let i = from;
+        const out = [];
+        step = normalizeStep(from, to, step);
+        if (step === 0 || from === to) { return [from]; }
+        for (; (to - i) * step >= 0; i += step) { out.push(i); }
+        return out;
+    });
+
+/**
  * Created by elyde on 7/20/2017.
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
  * @module _jsPlatform_arrayOps
@@ -433,7 +445,7 @@ const split = fPureTakesOne('split');
  */
 
 /**
- * List operations module (un-curried version).
+ * List operations module.
  * @module list
  */
 const append = (...args) => {
@@ -1033,6 +1045,47 @@ const difference = curry((array1, array2) => { // augment this with max length a
 const complement = (arr0, ...arrays) =>
         reduce((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
 
+/**
+ * Same as `Array.prototype.slice` though is functional version.
+ * @function module:object.slice
+ * @param fromIndex {Number}
+ * @param toIndex {Number}
+ * @param arr {Array}
+ * @returns {Array}
+ */
+
+/**
+ * Same as `Array.prototype.includes` (functional version).
+ * @function module:list.includes
+ * @param value {*} - Value to search for.
+ * @param xs {Array|String}
+ * @returns {Boolean}
+ */
+
+/**
+ * Same as `Array.prototype.indexOf`.
+ * @function module:list.indexOf
+ * @param x {*} - Element to search for.
+ * @param xs {Array|String|*} - list or list like to look in.
+ * @returns {Number} - `-1` if element not found else index at which it is found.
+ */
+
+/**
+ * Same as `Array.prototype.lastIndexOf` (fp version).
+ * @function module:list.lastIndexOf
+ * @param x {*} - Element to search for.
+ * @param xs {Array|String|*} - list or list like to look in.
+ * @returns {Number} - `-1` if element not found else index at which it is found.
+ */
+
+/**
+ * Same as Array.prototype.push (though is functional version).
+ * @function module:list.push
+ * @param item {*}
+ * @param arr {Array}
+ * @returns {Number}
+ */
+
 const objUnion = curry((obj1, obj2) => assignDeep(obj1, obj2));
 const objIntersect = curry((obj1, obj2) => foldl((agg, key) => {
         if (hasOwnProperty(key, obj2)) {
@@ -1100,6 +1153,45 @@ const toArray = x => {
  * @module object
  * @description Object operations/combinators.
  */
+
+
+
+/**
+* Returns whether constructor has derived object.
+* @function module:object.instanceOf
+* @param instanceConstructor {Function} - Constructor.
+* @param instance {*}
+* @returns {Boolean}
+*/
+
+/**
+ * @function module:object.hasOwnProperty
+ * @param propName {*}
+ * @param typeInstance {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @function module:object.length
+ * @param x {*}
+ * @returns {Number}
+ * @throws {Error} - Throws an error if value doesn't have a `length` property (
+ *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
+ */
+
+/**
+ * Gets own enumerable keys of passed in object (`Object.keys`).
+ * @function module:object.keys
+ * @param obj {*}
+ * @returns {Array<String>}
+ */
+
+/**
+ * Defined as `Object.assign` else is the same thing but shimmed.
+ * @function module:object.assign
+ * @param objs {...{*}}
+ * @returns {Object}
+*/
 
 const compose = (...args) =>
         arg0 => reduceRight$1((value, fn) => fn(value), arg0, args);
@@ -1243,10 +1335,8 @@ const errorIfNotTypes = curry(_errorIfNotTypes);
  */
 
 /**
- * Contains functions for operating strings.
- * @author elyde
- * @created 7/9/2017.
  * @module string
+ * @description Contains functions for strings.
  */
 const lines = split(/[\n\r]/gm);
 const words = split(/[\s\t]/gm);
@@ -1269,6 +1359,14 @@ const camelCase = (xs, pattern = /[^a-z\d]/i) => compose(
 const classCase = compose(ucaseFirst, camelCase);
 
 /**
+ * Functional version of `String.prototype.split`.
+ * @function module:string.split
+ * @param separator {String|RegExp}
+ * @param str {String}
+ * @returns {Array}
+ */
+
+/**
  * @module fjl
  * @description Exports all module methods (object, list, string modules etc.).
  * @goal to include everything from haskell's Prelude where it makes sense in order to create
@@ -1279,4 +1377,4 @@ const classCase = compose(ucaseFirst, camelCase);
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
 
-export { instanceOf, hasOwnProperty, length, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefName, isFunction, isType, isOfType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply, call, compose, curryNotFnErrPrefix, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, map, append, head, last, tail, init, uncons, unconsr, concat$$1 as concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, split, push, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArr$ };
+export { instanceOf, hasOwnProperty, length, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefName, isFunction, isType, isOfType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply, call, compose, curryNotFnErrPrefix, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, map, append, head, last, tail, init, uncons, unconsr, concat$$1 as concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArr$ };

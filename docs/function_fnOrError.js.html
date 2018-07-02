@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: fjl | Module: fjl</title>
+    <title>Source: function/fnOrError.js | Source: function/fnOrError.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: fjl</a></h1>
+        <h1><a href="index.html" class="link">Source: function/fnOrError.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,133 +43,35 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>fjl</h2>
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {typeOf} from '../object/typeOf';
 
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description">Exports all module methods (object, list, string modules etc.).</div>
-            
+const
 
-            
-                
+    /**
+     * Returns a function or throws an error if given `f` is not a function.
+     * @function module:function.fnOrError
+     * @param symbolName {String} - Error message prefix.
+     * @param f {Function|*} - Expected function.
+     * @returns {Function}
+     * @throws {Error} - Error if `f` is not of `function`
+     */
+    fnOrError = (symbolName, f) => {
+        if (!f || !(f instanceof Function)) {
+            throw new Error(`${symbolName} should be a function. ` +
+                `Type received: ${typeOf(f)};  Value received: ${f}.`);
+        }
+        return f;
+    }
 
-<dt>
-    
-</dt>
-<dd>
+;
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html">http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html</a></li>
-        
-            <li><a href="http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html">http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+export default fnOrError;
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -184,7 +88,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:fjl_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

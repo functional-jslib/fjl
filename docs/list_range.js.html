@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: fjl | Module: fjl</title>
+    <title>Source: list/range.js | Source: list/range.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: fjl</a></h1>
+        <h1><a href="index.html" class="link">Source: list/range.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,133 +43,54 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>fjl</h2>
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module object
+ */
+import {curry} from '../function/curry';
 
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description">Exports all module methods (object, list, string modules etc.).</div>
-            
+/**
+ * Normalizes step for `from` and `to` combination.
+ * @function module:list.normalizeStep
+ * @param from {Number}
+ * @param to {Number}
+ * @param [step = 1] {Number}
+ * @returns {Number}
+ * @private
+ */
+const normalizeStep = (from, to, step) => {
+    if (from > to) {
+        return step > 0 ? -step : step; // make step negative
+    }
+    return step &lt; 0 ? -1 * step : step; // make step positive
+};
 
-            
-                
+export const
 
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html">http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html</a></li>
-        
-            <li><a href="http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html">http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    /**
+     * @note normalizes `step` to be of valid
+     *  direction (negative if range required is in the negative direction
+     *  and positive otherwise).
+     * @function module:list.range
+     * @param from {Number}
+     * @param to {Number}
+     * @param [step = 1] {Number}
+     * @returns {Array.&lt;Number>}
+     */
+    range = curry((from, to, step = 1) => {
+        let i = from;
+        const out = [];
+        step = normalizeStep(from, to, step);
+        if (step === 0 || from === to) { return [from]; }
+        for (; (to - i) * step >= 0; i += step) { out.push(i); }
+        return out;
+    })
+;
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -184,7 +107,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:fjl_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

@@ -8,3 +8,4 @@ export * from './function/flip';
 export * from './function/id';
 export * from './function/negate';
 export * from './function/until';
+export * from './function/fnOrError';

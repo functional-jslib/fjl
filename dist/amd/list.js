@@ -1,11 +1,20 @@
-define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './function/negate', './boolean', './object', './list/map', './function/curry', './list/utils'], function (exports, _jsPlatform, _list, _function, _negate, _boolean, _object, _map, _curry, _utils) {
+define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './function/negate', './boolean', './object', './list/map', './function/curry', './list/utils', './utils'], function (exports, _range, _jsPlatform, _list, _function, _negate, _boolean, _object, _map, _curry, _utils, _utils2) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = exports.difference = undefined;
-    exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
+    exports.complement = undefined;
+    exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.append = exports.push = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
+    Object.keys(_range).forEach(function (key) {
+        if (key === "default" || key === "__esModule") return;
+        Object.defineProperty(exports, key, {
+            enumerable: true,
+            get: function () {
+                return _range[key];
+            }
+        });
+    });
     Object.defineProperty(exports, 'slice', {
         enumerable: true,
         get: function () {
@@ -28,12 +37,6 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
         enumerable: true,
         get: function () {
             return _jsPlatform.lastIndexOf;
-        }
-    });
-    Object.defineProperty(exports, 'split', {
-        enumerable: true,
-        get: function () {
-            return _jsPlatform.split;
         }
     });
     Object.defineProperty(exports, 'push', {
@@ -1632,4 +1635,45 @@ define(['exports', './jsPlatform', './jsPlatform/list', './jsPlatform/function',
      * @returns {Array}
      */
     complement = exports.complement = (arr0, ...arrays) => (0, _utils.reduce)((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
+
+    /**
+     * Same as `Array.prototype.slice` though is functional version.
+     * @function module:object.slice
+     * @param fromIndex {Number}
+     * @param toIndex {Number}
+     * @param arr {Array}
+     * @returns {Array}
+     */
+
+    /**
+     * Same as `Array.prototype.includes` (functional version).
+     * @function module:list.includes
+     * @param value {*} - Value to search for.
+     * @param xs {Array|String}
+     * @returns {Boolean}
+     */
+
+    /**
+     * Same as `Array.prototype.indexOf`.
+     * @function module:list.indexOf
+     * @param x {*} - Element to search for.
+     * @param xs {Array|String|*} - list or list like to look in.
+     * @returns {Number} - `-1` if element not found else index at which it is found.
+     */
+
+    /**
+     * Same as `Array.prototype.lastIndexOf` (fp version).
+     * @function module:list.lastIndexOf
+     * @param x {*} - Element to search for.
+     * @param xs {Array|String|*} - list or list like to look in.
+     * @returns {Number} - `-1` if element not found else index at which it is found.
+     */
+
+    /**
+     * Same as Array.prototype.push (though is functional version).
+     * @function module:list.push
+     * @param item {*}
+     * @param arr {Array}
+     * @returns {Number}
+     */
 });

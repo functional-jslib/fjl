@@ -6,11 +6,8 @@ define(['exports', '../utils', '../function/curry'], function (exports, _utils, 
     });
     exports.assign = exports.keys = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
     /**
-     * Created by elydelacruz on 9/6/2017.
-     * Defines some of the platform methods for objects (the ones used within `fjl`) uncurried for use
-     * throughout the library.  @note Doesn't include all methods for objects just the ones used in
-     *  the library.
-     * @todo change all files named '*UnCurried' to '*_'.
+     * @memberOf object
+     * @description Defines some of the platform methods for objects (the ones used within `fjl`).
      */
 
     const

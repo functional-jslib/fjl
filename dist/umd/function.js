@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './jsPlatform/function', './function/compose', './function/curry', './function/flip', './function/id', './function/negate', './function/until'], factory);
+    define(['exports', './jsPlatform/function', './function/compose', './function/curry', './function/flip', './function/id', './function/negate', './function/until', './function/fnOrError'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./jsPlatform/function'), require('./function/compose'), require('./function/curry'), require('./function/flip'), require('./function/id'), require('./function/negate'), require('./function/until'));
+    factory(exports, require('./jsPlatform/function'), require('./function/compose'), require('./function/curry'), require('./function/flip'), require('./function/id'), require('./function/negate'), require('./function/until'), require('./function/fnOrError'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global._function, global.compose, global.curry, global.flip, global.id, global.negate, global.until);
+    factory(mod.exports, global._function, global.compose, global.curry, global.flip, global.id, global.negate, global.until, global.fnOrError);
     global._function = mod.exports;
   }
-})(this, function (exports, _function, _compose, _curry, _flip, _id, _negate, _until) {
+})(this, function (exports, _function, _compose, _curry, _flip, _id, _negate, _until, _fnOrError) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -76,6 +76,15 @@
       enumerable: true,
       get: function () {
         return _until[key];
+      }
+    });
+  });
+  Object.keys(_fnOrError).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _fnOrError[key];
       }
     });
   });

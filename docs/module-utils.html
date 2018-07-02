@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: string | Module: string</title>
+    <title>Module: utils | Module: utils</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: string</a></h1>
+        <h1><a href="index.html" class="link">Module: utils</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,9 +46,7 @@
 
 <header>
     
-        <h2>string</h2>
-        
-            
+        <h2>utils</h2>
         
     
 </header>
@@ -58,79 +56,6 @@
         <div class="container-overview">
         
             
-                <div class="description">Contains functions for strings.</div>
-            
-
-            
-                
-
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
 
             
         
@@ -159,14 +84,14 @@
 
 <dt>
     
-        <h4 class="name" id=".camelCase">
+        <h4 class="name" id=".fPureTakes2">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>camelCase<span class="signature">(xs, pattern<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>fPureTakes2<span class="signature">(name)</span><span class="type-signature"> &rarr; {<a href="function.html">function</a>}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line71">line 71</a></code>
+                <code><a href="utils.js.html">utils.js</a></code>,
+                <code><a href="utils.js.html#line17">line 17</a></code>
             </div>
             
         </h4>
@@ -178,7 +103,7 @@
 
     
     <div class="description">
-        Camel cases (class case) a string.
+        Returns a function that takes 2 arguments and an object on which to execute 'method name'with said parameters.
     </div>
     
 
@@ -202,11 +127,7 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -218,7 +139,7 @@
 
         <tr>
             
-                <td class="name"><code>xs</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -231,61 +152,10 @@
             </td>
 
             
-                <td class="attributes">
-                
 
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>pattern</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">RegExp</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    /[^a-z\d/i]/
-                
-                </td>
-            
-
-            <td class="description last">Pattern to split on.  Optional.</td>
         </tr>
 
     
@@ -304,35 +174,6 @@
     
 
     
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        - Throws error if param `xs` is not a string.
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-        
 
     
     <div class="container-returns">
@@ -342,7 +183,7 @@
 
 
 
-<span class="param-type">string</span>
+<span class="param-type"><a href="function.html">function</a></span>
 
 
 
@@ -401,14 +242,14 @@
 
 <dt>
     
-        <h4 class="name" id=".classCase">
+        <h4 class="name" id=".fPureTakes3">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>classCase<span class="signature">(xs)</span><span class="type-signature"> &rarr; {string}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>fPureTakes3<span class="signature">(name)</span><span class="type-signature"> &rarr; {<a href="function.html">function</a>}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line87">line 87</a></code>
+                <code><a href="utils.js.html">utils.js</a></code>,
+                <code><a href="utils.js.html#line26">line 26</a></code>
             </div>
             
         </h4>
@@ -420,7 +261,7 @@
 
     
     <div class="description">
-        Class cases a string.  Uses pattern /[^a-z\d/i]/ to split on.If you require a different pattern use `string.camelCase(str, pattern)`and then upper case first character (`ucaseFirst`).
+        Returns a function that takes 3 arguments and an object on which to execute 'method name'with said parameters.
     </div>
     
 
@@ -456,7 +297,7 @@
 
         <tr>
             
-                <td class="name"><code>xs</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -491,35 +332,6 @@
     
 
     
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        - Throws error if `xs` is not a string (via `camelCase` call).
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-        
 
     
     <div class="container-returns">
@@ -529,7 +341,7 @@
 
 
 
-<span class="param-type">string</span>
+<span class="param-type"><a href="function.html">function</a></span>
 
 
 
@@ -588,14 +400,14 @@
 
 <dt>
     
-        <h4 class="name" id=".lcaseFirst">
+        <h4 class="name" id=".fPureTakes4">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>lcaseFirst<span class="signature">(xs)</span><span class="type-signature"> &rarr; {string}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>fPureTakes4<span class="signature">(name)</span><span class="type-signature"> &rarr; {<a href="function.html">function</a>}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line47">line 47</a></code>
+                <code><a href="utils.js.html">utils.js</a></code>,
+                <code><a href="utils.js.html#line35">line 35</a></code>
             </div>
             
         </h4>
@@ -607,7 +419,7 @@
 
     
     <div class="description">
-        Lower cases first character of a non-empty string.
+        Returns a function that takes 4 arguments and an object on which to execute 'method name'with said parameters.
     </div>
     
 
@@ -643,7 +455,7 @@
 
         <tr>
             
-                <td class="name"><code>xs</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -678,35 +490,6 @@
     
 
     
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        - Throws error if receiving anything that is not a string.
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-        
 
     
     <div class="container-returns">
@@ -716,7 +499,7 @@
 
 
 
-<span class="param-type">string</span>
+<span class="param-type"><a href="function.html">function</a></span>
 
 
 
@@ -775,14 +558,14 @@
 
 <dt>
     
-        <h4 class="name" id=".lines">
+        <h4 class="name" id=".fPureTakes5">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>lines<span class="signature">(str)</span><span class="type-signature"> &rarr; {Array}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>fPureTakes5<span class="signature">(name)</span><span class="type-signature"> &rarr; {<a href="function.html">function</a>}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line15">line 15</a></code>
+                <code><a href="utils.js.html">utils.js</a></code>,
+                <code><a href="utils.js.html#line44">line 44</a></code>
             </div>
             
         </h4>
@@ -794,7 +577,7 @@
 
     
     <div class="description">
-        Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
+        Returns a function that takes 5 arguments and an object on which to execute 'method name'with said parameters.
     </div>
     
 
@@ -830,7 +613,7 @@
 
         <tr>
             
-                <td class="name"><code>str</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -874,7 +657,7 @@
 
 
 
-<span class="param-type">Array</span>
+<span class="param-type"><a href="function.html">function</a></span>
 
 
 
@@ -933,14 +716,14 @@
 
 <dt>
     
-        <h4 class="name" id=".split">
+        <h4 class="name" id=".fPureTakesOne">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>split<span class="signature">(separator, str)</span><span class="type-signature"> &rarr; {Array}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>fPureTakesOne<span class="signature">(name)</span><span class="type-signature"> &rarr; {<a href="function.html">function</a>}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line100">line 100</a></code>
+                <code><a href="utils.js.html">utils.js</a></code>,
+                <code><a href="utils.js.html#line8">line 8</a></code>
             </div>
             
         </h4>
@@ -952,7 +735,7 @@
 
     
     <div class="description">
-        Functional version of `String.prototype.split`.
+        Returns a function that takes an argument and an object on which to execute 'method name'with said parameters.
     </div>
     
 
@@ -988,33 +771,7 @@
 
         <tr>
             
-                <td class="name"><code>separator</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">RegExp</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>str</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -1058,7 +815,7 @@
 
 
 
-<span class="param-type">Array</span>
+<span class="param-type"><a href="function.html">function</a></span>
 
 
 
@@ -1117,14 +874,14 @@
 
 <dt>
     
-        <h4 class="name" id=".ucaseFirst">
+        <h4 class="name" id=".fPureTakesOneOrMore">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>ucaseFirst<span class="signature">(xs)</span><span class="type-signature"> &rarr; {string}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>fPureTakesOneOrMore<span class="signature">(name)</span><span class="type-signature"> &rarr; {<a href="function.html">function</a>}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line59">line 59</a></code>
+                <code><a href="utils.js.html">utils.js</a></code>,
+                <code><a href="utils.js.html#line53">line 53</a></code>
             </div>
             
         </h4>
@@ -1136,7 +893,7 @@
 
     
     <div class="description">
-        Upper cases first character of a non-empty string.
+        Returns a function that takes an object and one or more arguments on which to execute 'method name'with said parameters.
     </div>
     
 
@@ -1172,358 +929,7 @@
 
         <tr>
             
-                <td class="name"><code>xs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        - Throws error if receiving anything that is not a string.
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-        
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">string</span>
-
-
-
-
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".unlines">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>unlines<span class="signature">(list)</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line39">line 39</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Intersperses a '\n' character into a list of strings and then concats it.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>list</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">String</span>
-|
-
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Array</span>
-
-
-
-
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".unwords">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>unwords<span class="signature">(arr)</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line31">line 31</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Intersperse an array of strings with '\s' and then concats them.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arr</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -1567,165 +973,7 @@
 
 
 
-<span class="param-type">Array</span>
-
-
-
-
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".words">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>words<span class="signature">(str)</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line23">line 23</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Splits a string on all '\s' and/or all '\t' characters.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>str</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Array</span>
+<span class="param-type"><a href="function.html">function</a></span>
 
 
 
@@ -1804,7 +1052,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:string_sub'.replace(/"/g, '_');
+        var id = 'module:utils_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

@@ -87,3 +87,15 @@ Object.keys(_until).forEach(function (key) {
     }
   });
 });
+
+var _fnOrError = require('./function/fnOrError');
+
+Object.keys(_fnOrError).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _fnOrError[key];
+    }
+  });
+});

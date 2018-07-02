@@ -18,11 +18,8 @@ var _curry = require('../function/curry');
  * @returns {Boolean}
  */
 /**
- * Created by elydelacruz on 9/6/2017.
- * Defines some of the platform methods for objects (the ones used within `fjl`) uncurried for use
- * throughout the library.  @note Doesn't include all methods for objects just the ones used in
- *  the library.
- * @todo change all files named '*UnCurried' to '*_'.
+ * @memberOf object
+ * @description Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 
 var instanceOf = (0, _curry.curry)(function (instanceConstructor, instance) {

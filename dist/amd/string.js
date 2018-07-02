@@ -4,7 +4,8 @@ define(['exports', './list', './jsPlatform/string', './function/compose', './jsP
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.classCase = exports.camelCase = exports.ucaseFirst = exports.lcaseFirst = exports.unlines = exports.unwords = exports.words = exports.lines = undefined;
+    exports.classCase = exports.camelCase = exports.ucaseFirst = exports.lcaseFirst = exports.unlines = exports.unwords = exports.words = exports.lines = exports.split = undefined;
+    exports.split = _string.split;
     const
 
     /**
@@ -90,10 +91,13 @@ define(['exports', './list', './jsPlatform/string', './function/compose', './jsP
      * @returns {string}
      * @throws {Error} - Throws error if `xs` is not a string (via `camelCase` call).
      */
-    classCase = exports.classCase = (0, _compose.compose)(ucaseFirst, camelCase); /**
-                                                                                   * Contains functions for operating strings.
-                                                                                   * @author elyde
-                                                                                   * @created 7/9/2017.
-                                                                                   * @module string
-                                                                                   */
+    classCase = exports.classCase = (0, _compose.compose)(ucaseFirst, camelCase);
+
+    /**
+     * Functional version of `String.prototype.split`.
+     * @function module:string.split
+     * @param separator {String|RegExp}
+     * @param str {String}
+     * @returns {Array}
+     */
 });

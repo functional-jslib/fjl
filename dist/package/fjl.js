@@ -40,7 +40,7 @@ function typeOf(value) {
     return retVal;
 }
 
-var fnOrError$1 = function fnOrError$1(symbolName, f) {
+var fnOrError = function fnOrError(symbolName, f) {
     if (!f || !(f instanceof Function)) {
         throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + typeOf(f) + ';  Value received: ' + f + '.'));
     }
@@ -67,7 +67,7 @@ var curryN = function curryN(executeArity, fn) {
 
         var concatedArgs = curriedArgs.concat(args),
             canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-        return !canBeCalled ? curryN.apply(null, [executeArity, fnOrError$1(curryNotFnErrPrefix, fn)].concat(concatedArgs)) : fnOrError$1(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
+        return !canBeCalled ? curryN.apply(null, [executeArity, fnOrError(curryNotFnErrPrefix, fn)].concat(concatedArgs)) : fnOrError(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
     };
 };
 var curry = function curry(fn) {
@@ -75,7 +75,7 @@ var curry = function curry(fn) {
         argsToCurry[_key3 - 1] = arguments[_key3];
     }
 
-    return curryN.apply(undefined, [fnOrError$1(curryNotFnErrPrefix, fn).length, fn].concat(argsToCurry));
+    return curryN.apply(undefined, [fnOrError(curryNotFnErrPrefix, fn).length, fn].concat(argsToCurry));
 };
 var curry2 = function curry2(fn) {
     return curryN(2, fn);
@@ -90,6 +90,9 @@ var curry5 = function curry5(fn) {
     return curryN(5, fn);
 };
 
+/**
+ * @module utils
+ */
 var fPureTakesOne = function fPureTakesOne(name) {
     return curry(function (arg, f) {
         return f[name](arg);
@@ -124,19 +127,10 @@ var fPureTakesOneOrMore = function fPureTakesOneOrMore(name) {
         return f[name].apply(f, args);
     });
 };
-var fnOrError = function fnOrError(symbolName, f) {
-    if (!f || typeof f !== 'function') {
-        throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + typeOf(f) + ';  Value received: ' + f + '.'));
-    }
-    return f;
-};
 
 /**
- * Created by elydelacruz on 9/6/2017.
- * Defines some of the platform methods for objects (the ones used within `fjl`) uncurried for use
- * throughout the library.  @note Doesn't include all methods for objects just the ones used in
- *  the library.
- * @todo change all files named '*UnCurried' to '*_'.
+ * @memberOf object
+ * @description Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 
 var instanceOf = curry(function (instanceConstructor, instance) {
@@ -613,6 +607,40 @@ var findWhere = curry(function (pred, xs) {
 });
 
 /**
+ * @module object
+ */
+/**
+ * Normalizes step for `from` and `to` combination.
+ * @function module:list.normalizeStep
+ * @param from {Number}
+ * @param to {Number}
+ * @param [step = 1] {Number}
+ * @returns {Number}
+ * @private
+ */
+var normalizeStep = function normalizeStep(from, to, step) {
+    if (from > to) {
+        return step > 0 ? -step : step; // make step negative
+    }
+    return step < 0 ? -1 * step : step; // make step positive
+};
+
+var range = curry(function (from, to) {
+    var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+
+    var i = from;
+    var out = [];
+    step = normalizeStep(from, to, step);
+    if (step === 0 || from === to) {
+        return [from];
+    }
+    for (; (to - i) * step >= 0; i += step) {
+        out.push(i);
+    }
+    return out;
+});
+
+/**
  * Created by elyde on 7/20/2017.
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
  * @module _jsPlatform_arrayOps
@@ -654,7 +682,7 @@ var split = fPureTakesOne('split');
  */
 
 /**
- * List operations module (un-curried version).
+ * List operations module.
  * @module list
  */
 var append = function append() {
@@ -1397,6 +1425,47 @@ var complement = function complement(arr0) {
     }, [], arrays);
 };
 
+/**
+ * Same as `Array.prototype.slice` though is functional version.
+ * @function module:object.slice
+ * @param fromIndex {Number}
+ * @param toIndex {Number}
+ * @param arr {Array}
+ * @returns {Array}
+ */
+
+/**
+ * Same as `Array.prototype.includes` (functional version).
+ * @function module:list.includes
+ * @param value {*} - Value to search for.
+ * @param xs {Array|String}
+ * @returns {Boolean}
+ */
+
+/**
+ * Same as `Array.prototype.indexOf`.
+ * @function module:list.indexOf
+ * @param x {*} - Element to search for.
+ * @param xs {Array|String|*} - list or list like to look in.
+ * @returns {Number} - `-1` if element not found else index at which it is found.
+ */
+
+/**
+ * Same as `Array.prototype.lastIndexOf` (fp version).
+ * @function module:list.lastIndexOf
+ * @param x {*} - Element to search for.
+ * @param xs {Array|String|*} - list or list like to look in.
+ * @returns {Number} - `-1` if element not found else index at which it is found.
+ */
+
+/**
+ * Same as Array.prototype.push (though is functional version).
+ * @function module:list.push
+ * @param item {*}
+ * @param arr {Array}
+ * @returns {Number}
+ */
+
 var objUnion = curry(function (obj1, obj2) {
     return assignDeep(obj1, obj2);
 });
@@ -1504,6 +1573,43 @@ var toArray = function toArray(x) {
  * @module object
  * @description Object operations/combinators.
  */
+
+/**
+* Returns whether constructor has derived object.
+* @function module:object.instanceOf
+* @param instanceConstructor {Function} - Constructor.
+* @param instance {*}
+* @returns {Boolean}
+*/
+
+/**
+ * @function module:object.hasOwnProperty
+ * @param propName {*}
+ * @param typeInstance {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @function module:object.length
+ * @param x {*}
+ * @returns {Number}
+ * @throws {Error} - Throws an error if value doesn't have a `length` property (
+ *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
+ */
+
+/**
+ * Gets own enumerable keys of passed in object (`Object.keys`).
+ * @function module:object.keys
+ * @param obj {*}
+ * @returns {Array<String>}
+ */
+
+/**
+ * Defined as `Object.assign` else is the same thing but shimmed.
+ * @function module:object.assign
+ * @param objs {...{*}}
+ * @returns {Object}
+*/
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
@@ -1695,10 +1801,8 @@ var errorIfNotTypes = curry(_errorIfNotTypes);
  */
 
 /**
- * Contains functions for operating strings.
- * @author elyde
- * @created 7/9/2017.
  * @module string
+ * @description Contains functions for strings.
  */
 var lines = split(/[\n\r]/gm);
 var words = split(/[\s\t]/gm);
@@ -1721,6 +1825,14 @@ var camelCase = function camelCase(xs) {
     }), split(pattern))(_errorIfNotType(String, 'camelCase', 'xs', xs));
 };
 var classCase = compose(ucaseFirst, camelCase);
+
+/**
+ * Functional version of `String.prototype.split`.
+ * @function module:string.split
+ * @param separator {String|RegExp}
+ * @param str {String}
+ * @returns {Array}
+ */
 
 /**
  * @module fjl
@@ -1904,8 +2016,9 @@ exports.slice = slice;
 exports.includes = includes;
 exports.indexOf = indexOf;
 exports.lastIndexOf = lastIndexOf;
-exports.split = split;
 exports.push = push;
+exports.range = range;
+exports.split = split;
 exports.lines = lines;
 exports.words = words;
 exports.unwords = unwords;
@@ -1920,7 +2033,6 @@ exports.fPureTakes3 = fPureTakes3;
 exports.fPureTakes4 = fPureTakes4;
 exports.fPureTakes5 = fPureTakes5;
 exports.fPureTakesOneOrMore = fPureTakesOneOrMore;
-exports.fnOrError = fnOrError;
 exports.typeRefsToStringOrError = typeRefsToStringOrError;
 exports.defaultErrorMessageCall = defaultErrorMessageCall;
 exports._getErrorIfNotTypeThrower = _getErrorIfNotTypeThrower;

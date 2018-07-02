@@ -1,14 +1,14 @@
 /**
- * Contains functions for operating strings.
- * @author elyde
- * @created 7/9/2017.
  * @module string
+ * @description Contains functions for strings.
  */
 import {intercalate, map, filter} from './list';
 import {split} from './jsPlatform/string';
 import {compose} from './function/compose';
 import {join} from './jsPlatform/array';
 import {_errorIfNotType} from './errorThrowing';
+
+export {split};
 
 export const
 
@@ -96,3 +96,11 @@ export const
     classCase = compose(ucaseFirst, camelCase)
 
 ;
+
+/**
+ * Functional version of `String.prototype.split`.
+ * @function module:string.split
+ * @param separator {String|RegExp}
+ * @param str {String}
+ * @returns {Array}
+ */
