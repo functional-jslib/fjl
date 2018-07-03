@@ -48,11 +48,14 @@
 <a href="http://badge.fury.io/js/fjl"><img src="https://badge.fury.io/js/fjl.svg" alt="NPM version"></a>
 <a href="https://david-dm.org/functional-jslib/fjl"><img src="https://david-dm.org/functional-jslib/fjl.png" alt="Dependencies"></a></p>
 <h1>fjl</h1><p>Functional Javascript Library (inspired by Haskell's Prelude).</p>
+<h2>Note:</h2><p>For the fully functional experience try the 1.x.x beta:</p>
+<pre class="prettyprint source"><code>npm i fjl@beta </code></pre><p>Methods in the upcoming-1.X.X/beta version are curried but do not have un-curried counter-parts exported - 
+makes for a lighter version of the library, and also makes for library sources which also adhere to<br>established functional paradigms (namely haskell's functional paradigm (currying etc.)).</p>
 <h2>Sections in Readme:</h2><ul>
 <li><a href="#getting-started">Getting Started</a></li>
 <li><a href="#requirements">Requirements</a></li>
-<li><a href="#motivation">Motivation</a></li>
 <li><a href="#docs">Docs</a></li>
+<li><a href="#motivation">Motivation</a></li>
 <li><a href="#development">Development</a></li>
 <li><a href="#supported-platforms">Supported Platforms</a></li>
 <li><a href="#license">License</a></li>
@@ -78,24 +81,7 @@
 The './dist/package/fjl<em>' files are for the new setup in ecma262 proposals
 for es6 modules ('</em>.mjs' for es6 module and '*.js' for common-js module) (these are used
  in package.json as the default exports). </p>
-<h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h2>Motivations:</h2><ul>
-<li>Haskell and it's <code>Prelude</code>.</li>
-<li>Lambda Calculus.</li>
-<li>The need for a way to do strongly typed javascript (in actual code (not with typescript)).</li>
-<li>The need to be able to write functional code very quickly and easily.</li>
-<li>A functional library that takes advantage of the es6 features of the language
-and is built from the ground up using functional concepts.</li>
-<li>A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).</li>
-<li>A functional library that has curried and un-curried versions of included operations.  Et. al.
-  <code>append</code>, <code>_append</code> (un-curried version)</li>
-<li>A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' (in our lib is './src/listOps.js') etc..</li>
-<li>Etc. etc..</li>
-</ul>
-<h3>Reasoning for paradigms</h3><h4>Use of while-and-for-loops instead of built-ins:</h4><ul>
-<li>They are faster than iterating with es5 functional array additions (<code>map</code>, <code>forEach</code> etc.).</li>
-</ul>
-<h3>Docs</h3><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
+<h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h3>Docs</h3><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
 <p> The docs are divided into modules though all methods in the library all live on <code>fjl</code> or the top level export
  of the library (the docs are written out that way to easier understand the separation and the grouping of
  methods (will give users a better idea of what methods are for what (without reading to much documentation))).</p>
@@ -103,8 +89,7 @@ are separated out 'Data.List' (in our lib is './src/listOps.js') etc..</li>
 Modules without a prefixed '</em>' contain docs for curried members (one set of docs will be generated per module in
 the future).</p>
 <p>The jsdocs link listed above has the modules included on <code>fjl</code>, divided by the operation types ported over from the haskell prelude:</p>
-<h4><code>booleanOps</code></h4><pre class="prettyprint source"><code>isTruthy, isFalsy, alwaysTrue, alwaysFalse</code></pre><h4><code>listOps</code></h4><p>List operations imported from the <code>Data.List</code> haskell module.</p>
-<pre class="prettyprint source"><code>append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
+<h4><code>booleanOps</code></h4><pre class="prettyprint source"><code>isTruthy, isFalsy, alwaysTrue, alwaysFalse</code></pre><h4><code>listOps</code></h4><pre class="prettyprint source"><code>append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
 reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
 permutations, foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
 replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices,
@@ -136,13 +121,10 @@ Haskell: <code>take 3 $ iterate (a -&gt; a * 2) [1..]</code></p>
 <li><code>cycle</code> becomes <code>cycle :: Int -&gt; [a] -&gt; [a]</code></li>
 <li><code>iterate</code> becomes <code>iterate :: Int -&gt; (a -&gt; a) -&gt; [a]</code></li>
 </ul>
-<h4><code>functionOps</code></h4><p>The methods that comprise function operations are:</p>
-<pre class="prettyprint source"><code>apply, call, curry, curry2, curry3, curry4, curry5, curryN,
+<h4><code>functionOps</code></h4><pre class="prettyprint source"><code>apply, call, curry, curry2, curry3, curry4, curry5, curryN,
 until, flip, flip3, flip4, flip5, flipN,
 negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
-id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders</code></pre><h4><code>objectOps</code></h4><p>These methods are not really from the haskell library but are utilities for making 
-working with javascript objects a little bit easier.</p>
-<pre class="prettyprint source"><code>assignDeep, assign, of, prop, typeOf, isType, instanceOf, 
+id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders</code></pre><h4><code>objectOps</code></h4><pre class="prettyprint source"><code>assignDeep, assign, of, prop, typeOf, isType, instanceOf, 
 isFunction, isClass, isCallable,
 isArray, isObject, isBoolean, isNumber, isString, isMap,
 isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
@@ -150,8 +132,7 @@ isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
 isEmptyList, isEmptyObject, isEmptyCollection,
 hasOwnProperty, length, keys,
 objUnion, objIntersect, objDifference, objComplement,</code></pre><h4><code>stringOps</code></h4><p>Import from 'Data.List' (in haskell):</p>
-<pre class="prettyprint source"><code>lines, words, unwords, unlines</code></pre><h4><code>jsPlatform</code></h4><p>Non-haskell/javascript-specific exports:</p>
-<pre class="prettyprint source"><code>slice, includes, indexOf, lastIndexOf, split, push</code></pre><p><strong>Note for haskell developers:</strong></p>
+<pre class="prettyprint source"><code>lines, words, unwords, unlines</code></pre><h4><code>jsPlatform</code></h4><pre class="prettyprint source"><code>slice, includes, indexOf, lastIndexOf, split, push</code></pre><p><strong>Note for haskell developers:</strong></p>
 <ul>
 <li><code>split</code> in javascript is for strings.</li>
 </ul>
@@ -176,10 +157,28 @@ aggregateStr, aggregateArr, aggregateObj, aggregateByType,</code></pre><p><stron
 </ul>
 <p>Jsdocs here:
 https://functional-jslib.github.io/fjl/</p>
+<h2>Motivations:</h2><ul>
+<li>Haskell and it's <code>Prelude</code>.</li>
+<li>Lambda Calculus.</li>
+<li>The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via <code>fjl.is*</code> methods (<code>fjl.isType</code>, <code>fjl.isset</code>, etc.)).</li>
+<li>The need to be able to write functional code very quickly and easily (all methods in <code>fjl</code> are curried and lib also includes versions of all methods uncurried).</li>
+<li>A functional library that takes advantage of the es6 features of the language
+and is built from the ground up using functional concepts.</li>
+<li>A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).</li>
+<li>A functional library that has curried and un-curried versions of included operations.  Et. al.
+  <code>append</code>, <code>_append</code> (un-curried version)</li>
+<li>A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
+are separated out 'Data.List' (in our lib is './src/listOps.js') etc..</li>
+<li>Etc. etc..</li>
+</ul>
+<h3>Reasoning for paradigms</h3><h4>Use of while-and-for-loops instead of built-ins:</h4><ul>
+<li>They are faster than iterating with es5 functional array additions (<code>map</code>, <code>forEach</code> etc.)
+(do a google search for jsperf map vs for loop and/or similar).</li>
+</ul>
 <h2>Development:</h2><ul>
 <li>Sources are in './src'<ul>
 <li>Sources are divided by un-curried definitions ('./src/uncurried')
-and curried definitions (files in './src/<em>*/</em>' except the ones in './src/uncurried' (of course)).</li>
+and curried definitions (files in './src/*<em>/</em>' except the ones in './src/uncurried' (of course)).</li>
 <li>'./src/jsPlatform' and './src/uncurried/jsPlatform' are native platform specific method versions
 pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (listOps, functionOps etc.).</li>
 <li>About non-conformity to full modularity (one-function-per-file):
@@ -213,7 +212,7 @@ configurations used for building the project.</li>
 <h2>License:</h2><p><a href="http://www.gnu.org/licenses/gpl-2.0.html" title="http://www.gnu.org/licenses/gpl-2.0.html">BSD 3 Clause</a></p>
 <h2>Resource:</h2><ul>
 <li>Docs format: http://usejsdoc.org/</li>
-<li>Haskell docs search engine: https://www.haskell.org/hoogle/</li>
+<li>Haskell docs search engine: https://<a href="http://www.haskell.org/hoogle/">www.haskell.org/hoogle/</a></li>
 <li>Listing of entire Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html</li>
 <li>Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html</li>
 </ul></article>
@@ -227,13 +226,13 @@ configurations used for building the project.</li>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-objectOps.html">objectOps</a></li><li><a href="module-stringOps.html">stringOps</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-booleanOps.html">booleanOps</a></li><li><a href="module-errorThrowing.html">errorThrowing</a></li><li><a href="module-fjl.html">fjl</a></li><li><a href="module-functionOps.html">functionOps</a></li><li><a href="module-listOps.html">listOps</a></li><li><a href="module-objectOps.html">objectOps</a></li><li><a href="module-stringOps.html">stringOps</a></li></ul><h3>Global</h3><ul><li><a href="global.html#toArray">toArray</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Apr 19 2018 20:34:12 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Jul 03 2018 13:07:17 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

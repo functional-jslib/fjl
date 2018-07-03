@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: jsPlatform/list.js</title>
+    <title>JSDoc: Source: uncurried/_objectOps/_jsonClone.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: jsPlatform/list.js</h1>
+    <h1 class="page-title">Source: uncurried/_objectOps/_jsonClone.js</h1>
 
     
 
@@ -26,49 +26,15 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * List operations that overlap (apart from globally overlapping props and functions like `length`)
- * on both strings and arrays.
- * @module jsPlatform_list
- * @private
- */
-
-import {curry} from '../uncurried/_functionOps/_curry';
-
-import {
-    concat as concat_,
-    slice as slice_,
-    includes as includes_,
-    indexOf as indexOf_,
-    lastIndexOf as lastIndexOf_ } from '../uncurried/_jsPlatform/_list';
-
-export const
+            <pre class="prettyprint source linenums"><code>export const
 
     /**
-     * Concats/appends all functors onto the end of first functor.
-     * Note:  functors passed in after the first one must be of the same type.
-     * @function module:jsPlatform_array.concat
-     * @param functor {Array|Object|*}
-     * @param ...functor {Array|Object|*}
-     * @return {*|Array|Object} - The type passed.
-     * @throws {Error} - When passed in object doesn't have an `every` method.
+     * Clones and object or array using `JSON.parse(JSON.stringify(...))` pattern.
+     * @function module:objectOps.jsonClone
+     * @param x {*}
+     * @returns {*}
      */
-    concat = curry(concat_),
-
-    /**
-     * Same as Array.prototype.slice
-     * @function module:jsPlatform_array.slice
-     * @param separator {String|RegExp}
-     * @param arr{Array}
-     * @returns {Array}
-     */
-    slice = curry(slice_),
-
-    includes = curry(includes_),
-
-    indexOf = curry(indexOf_),
-
-    lastIndexOf = curry(lastIndexOf_)
+    jsonClone = x => JSON.parse(JSON.stringify(x))
 
 ;
 </code></pre>

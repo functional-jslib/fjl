@@ -5,11 +5,20 @@
 # fjl
 Functional Javascript Library (inspired by Haskell's Prelude).
 
+## Note: 
+For the fully functional experience try the 1.x.x beta:
+```
+npm i fjl@beta 
+```
+Methods in the upcoming-1.X.X/beta version are curried but do not have un-curried counter-parts exported - 
+makes for a lighter version of the library, and also makes for library sources which also adhere to  
+established functional paradigms (namely haskell's functional paradigm (currying etc.)).
+
 ## Sections in Readme:
 - [Getting Started](#getting-started)
 - [Requirements](#requirements)
-- [Motivation](#motivation)
 - [Docs](#docs)
+- [Motivation](#motivation)
 - [Development](#development)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
@@ -18,7 +27,6 @@ Functional Javascript Library (inspired by Haskell's Prelude).
 - Javascript Ecmascript 5+.
 
 ### Supported Platforms:
-
 #### Browsers
 - IE9+, and all other modern day browsers.
 
@@ -26,7 +34,6 @@ Functional Javascript Library (inspired by Haskell's Prelude).
 - 8+
 
 ## Getting Started:
-
 ### In Browser:
 See desired export type below:
 - './dist/amd/' - Asynchronous module format.
@@ -41,7 +48,6 @@ for es6 modules ('*.mjs' for es6 module and '*.js' for common-js module) (these 
  in package.json as the default exports). 
 
 ### In NodeJs: 
-
 #### Using es2015 modules:
 ```
 import {...} from 'fjl';
@@ -52,28 +58,7 @@ import {...} from 'fjl';
 const fjl = require('fjl');
 ```
 
-## Motivations:
-- Haskell and it's `Prelude`.
-- Lambda Calculus.
-- The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
-- The need to be able to write functional code very quickly and easily (all methods in `fjl` are curried and lib also includes versions of all methods uncurried).
-- A functional library that takes advantage of the es6 features of the language
- and is built from the ground up using functional concepts.
-- A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
-- A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `_append` (un-curried version)
-- A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' (in our lib is './src/listOps.js') etc..
-- Etc. etc..
-
-### Reasoning for paradigms
-#### Use of while-and-for-loops instead of built-ins:
-- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.).
-- @todo include jsperf links for above here. 
-- @todo map performance of our lib here.
-
 ### Docs
-
 **JSDocs** [https://functional-jslib.github.io/fjl]
 
  The docs are divided into modules though all methods in the library all live on `fjl` or the top level export
@@ -92,7 +77,6 @@ isTruthy, isFalsy, alwaysTrue, alwaysFalse
 ```
 
 #### `listOps`
-List operations imported from the `Data.List` haskell module.
 ```
 append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
 reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
@@ -132,7 +116,6 @@ In javascript:
 - `iterate` becomes `iterate :: Int -> (a -> a) -> [a]`
 
 #### `functionOps`
-The methods that comprise function operations are:
 ```
 apply, call, curry, curry2, curry3, curry4, curry5, curryN,
 until, flip, flip3, flip4, flip5, flipN,
@@ -141,9 +124,6 @@ id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeh
 ```
 
 #### `objectOps`
-These methods are not really from the haskell library but are utilities for making 
-working with javascript objects a little bit easier.
- 
 ```
 assignDeep, assign, of, prop, typeOf, isType, instanceOf, 
 isFunction, isClass, isCallable,
@@ -162,7 +142,6 @@ lines, words, unwords, unlines
 ```
 
 #### `jsPlatform`
-Non-haskell/javascript-specific exports:
 ```
 slice, includes, indexOf, lastIndexOf, split, push
 ```
@@ -204,6 +183,25 @@ aggregateStr, aggregateArr, aggregateObj, aggregateByType,
 
 Jsdocs here:
 https://functional-jslib.github.io/fjl/
+
+## Motivations:
+- Haskell and it's `Prelude`.
+- Lambda Calculus.
+- The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
+- The need to be able to write functional code very quickly and easily (all methods in `fjl` are curried and lib also includes versions of all methods uncurried).
+- A functional library that takes advantage of the es6 features of the language
+ and is built from the ground up using functional concepts.
+- A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
+- A functional library that has curried and un-curried versions of included operations.  Et. al.
+    `append`, `_append` (un-curried version)
+- A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
+are separated out 'Data.List' (in our lib is './src/listOps.js') etc..
+- Etc. etc..
+
+### Reasoning for paradigms
+#### Use of while-and-for-loops instead of built-ins:
+- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.)
+(do a google search for jsperf map vs for loop and/or similar).
 
 ## Development:
 - Sources are in './src'
