@@ -63,8 +63,8 @@
 <h2>Sections in Readme:</h2><ul>
 <li><a href="#getting-started">Getting Started</a></li>
 <li><a href="#requirements">Requirements</a></li>
-<li><a href="#motivation">Motivation</a></li>
 <li><a href="#docs">Docs</a></li>
+<li><a href="#motivation">Motivation</a></li>
 <li><a href="#development">Development</a></li>
 <li><a href="#supported-platforms">Supported Platforms</a></li>
 <li><a href="#license">License</a></li>
@@ -90,26 +90,7 @@
 The './dist/package/fjl<em>' files are for the new setup in ecma262 proposals
 for es6 modules ('</em>.mjs' for es6 module and '*.js' for common-js module) (these are used
  in package.json as the default exports). </p>
-<h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h2>Motivations:</h2><ul>
-<li>Haskell and it's <code>Prelude</code>.</li>
-<li>Lambda Calculus.</li>
-<li>The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via <code>fjl.is*</code> methods (<code>fjl.isType</code>, <code>fjl.isset</code>, etc.)).</li>
-<li>The need to be able to write functional code very quickly and easily (all methods in <code>fjl</code> are curried and lib also includes versions of all methods uncurried).</li>
-<li>A functional library that takes advantage of the es6 features of the language
-and is built from the ground up using functional concepts.</li>
-<li>A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).</li>
-<li><del>A functional library that has curried and un-curried versions of included operations.  Et. al.
-  <code>append</code>, <code>append</code> (un-curried version)</del> Managing uncurried and curried methods makes development on 
-  the library unwieldly and is un-functional (anyway :-)), so has been removed from library (as a feature).</li>
-<li>A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' (in our lib is './src/list.js') etc..</li>
-<li>Etc. etc..</li>
-</ul>
-<h3>Reasoning for paradigms</h3><h4>Use of while-and-for-loops instead of built-ins:</h4><ul>
-<li>They are faster than iterating with es5 functional array additions (<code>map</code>, <code>forEach</code> etc.)
-(do search for <code>foreach vs for loop</code> and/or similiar).</li>
-</ul>
-<h3>Docs</h3><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
+<h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h3>Docs</h3><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
 <p>The docs are divided into modules though all methods live on <code>fjl</code> (top level export).</p>
 <h4>A note on currying.</h4><ul>
 <li>All methods that take 2 or more arguments are curried.</li>
@@ -176,6 +157,25 @@ aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,</code></pre><p><str
 </ul>
 <p>Jsdocs here:
 https://functional-jslib.github.io/fjl/</p>
+<h2>Motivations:</h2><ul>
+<li>Haskell and it's <code>Prelude</code>.</li>
+<li>Lambda Calculus.</li>
+<li>The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via <code>fjl.is*</code> methods (<code>fjl.isType</code>, <code>fjl.isset</code>, etc.)).</li>
+<li>The need to be able to write functional code very quickly and easily (all methods in <code>fjl</code> are curried and lib also includes versions of all methods uncurried).</li>
+<li>A functional library that takes advantage of the es6 features of the language
+and is built from the ground up using functional concepts.</li>
+<li>A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).</li>
+<li><del>A functional library that has curried and un-curried versions of included operations.  Et. al.
+  <code>append</code>, <code>append</code> (un-curried version)</del> Managing uncurried and curried methods makes development on 
+  the library unwieldly and is un-functional (anyway :-)), so has been removed from library (as a feature).</li>
+<li>A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
+are separated out 'Data.List' (in our lib is './src/list.js') etc..</li>
+<li>Etc. etc..</li>
+</ul>
+<h3>Reasoning for paradigms</h3><h4>Use of while-and-for-loops instead of built-ins:</h4><ul>
+<li>They are faster than iterating with es5 functional array additions (<code>map</code>, <code>forEach</code> etc.)
+(do search for <code>foreach vs for loop</code> and/or similiar).</li>
+</ul>
 <h2>Development:</h2><ul>
 <li>Sources are in './src'<ul>
 <li>Sources are divided by un-curried definitions ('./src/uncurried')

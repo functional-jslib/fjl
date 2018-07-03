@@ -8,8 +8,8 @@ Functional Javascript Library (inspired by Haskell's Prelude).
 ## Sections in Readme:
 - [Getting Started](#getting-started)
 - [Requirements](#requirements)
-- [Motivation](#motivation)
 - [Docs](#docs)
+- [Motivation](#motivation)
 - [Development](#development)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
@@ -51,26 +51,6 @@ import {...} from 'fjl';
 ```
 const fjl = require('fjl');
 ```
-
-## Motivations:
-- Haskell and it's `Prelude`.
-- Lambda Calculus.
-- The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
-- The need to be able to write functional code very quickly and easily (all methods in `fjl` are curried and lib also includes versions of all methods uncurried).
-- A functional library that takes advantage of the es6 features of the language
- and is built from the ground up using functional concepts.
-- A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
-- ~~A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `append` (un-curried version)~~ Managing uncurried and curried methods makes development on 
-    the library unwieldly and is un-functional (anyway :-)), so has been removed from library (as a feature).
-- A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' (in our lib is './src/list.js') etc..
-- Etc. etc..
-
-### Reasoning for paradigms
-#### Use of while-and-for-loops instead of built-ins:
-- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.)
- (do search for `foreach vs for loop` and/or similiar).
 
 ### Docs
 
@@ -187,6 +167,26 @@ aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,
 
 Jsdocs here:
 https://functional-jslib.github.io/fjl/
+
+## Motivations:
+- Haskell and it's `Prelude`.
+- Lambda Calculus.
+- The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
+- The need to be able to write functional code very quickly and easily (all methods in `fjl` are curried and lib also includes versions of all methods uncurried).
+- A functional library that takes advantage of the es6 features of the language
+ and is built from the ground up using functional concepts.
+- A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
+- ~~A functional library that has curried and un-curried versions of included operations.  Et. al.
+    `append`, `append` (un-curried version)~~ Managing uncurried and curried methods makes development on 
+    the library unwieldly and is un-functional (anyway :-)), so has been removed from library (as a feature).
+- A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
+are separated out 'Data.List' (in our lib is './src/list.js') etc..
+- Etc. etc..
+
+### Reasoning for paradigms
+#### Use of while-and-for-loops instead of built-ins:
+- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.)
+ (do search for `foreach vs for loop` and/or similiar).
 
 ## Development:
 - Sources are in './src'
