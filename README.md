@@ -225,7 +225,9 @@ We are using 'chai' and 'mocha' though we may want to move to 'jest' in the futu
 
 ### Perf Tests:
 - `subsequences`: https://jsperf.com/subsequences/6
-
+- `trampoline`: https://jsperf.com/pure-trampoline/1 (performance difference to pure 
+  recursive call here is negligible).
+  
 ## License:
 [BSD 3 Clause](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html")
 

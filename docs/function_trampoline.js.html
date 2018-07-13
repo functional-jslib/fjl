@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: object/jsonClone.js | Source: object/jsonClone.js</title>
+    <title>Source: function/trampoline.js | Source: function/trampoline.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: object/jsonClone.js</a></h1>
+        <h1><a href="index.html" class="link">Source: function/trampoline.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,17 +46,27 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>export const
+            <pre class="prettyprint source linenums"><code>/**
+ * Trampolines function calls in order to avoid stack overflow errors
+ * on recursive function calls; Tail recursion replacement.
+ * @see https://jsperf.com/pure-trampoline/1
+ * @function module:function.trampoline
+ * @param fn {Function} - Function to trampoline.
+ * @param [fnName=undefined] {String} - Optionally restrict trampolining only to function with specific name.
+ * @returns {*} - Finally returned value.
+ */
+const trampoline = (fn, fnName) => {
+    return (...args) => {
+        let result = fn.apply(null, args);
+        while (result &amp;&amp; typeof result === 'function' &amp;&amp;
+            (!fnName || (result.name === fnName))) {
+            result = result();
+        }
+        return result;
+    };
+};
 
-    /**
-     * Clones and object or array using `JSON.parse(JSON.stringify(...))` pattern.
-     * @function module:object.jsonClone
-     * @param x {*}
-     * @returns {*}
-     */
-    jsonClone = x => JSON.parse(JSON.stringify(x))
-
-;
+export default trampoline;
 </code></pre>
         </article>
     </section>

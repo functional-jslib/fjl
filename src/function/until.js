@@ -3,7 +3,8 @@ import {curry} from './curry';
 export const
 
     /**
-     * Run `operation` until predicate returns `true`.
+     * Run `operation` until predicate returns `true` (like a functional
+     *  version of a while loop).
      * @function module:function.until
      * @param predicate {Function} :: a -> Boolean
      * @param operation {Function} :: a -> a

@@ -301,13 +301,13 @@ var call = function call(fn) {
 
 /**
  * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
- * ```
+ * @example
  * // - If exists `(value).constructor.of` uses this.
  * // - If value is of one String, Boolean, Symbol, or Number types calls it's
  * //      constructor as a function (in cast form;  E.g., `constructor(...args)` )
  * // - Else if constructor is a function, thus far, then calls constructor using
  * //      the `new` keyword (with any passed in args).
- * ```
+
  * @function module:object.of
  * @param x {*} - Value to derive returned value's type from.
  * @param [args] {...*} - Any args to pass in to matched construction strategy.
