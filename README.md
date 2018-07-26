@@ -6,7 +6,7 @@
 Functional Javascript Library (inspired by Haskell's Prelude).
 
 ## Note: 
-For the fully functional experience try the 1.x.x beta:
+For the fully functional experience try the 1.x.x beta (**note** docs for beta version are included in package ('./docs')):
 ```
 npm i fjl@beta 
 ```
