@@ -3,8 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.complement = exports.difference = exports.intersectBy = exports.intersect = undefined;
-exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.appendMany = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.swapped = exports.unconsr = exports.uncons = exports.inits = exports.init = exports.tail = exports.last = exports.head = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.unzipN = exports.unzip = exports.zipN = exports.not = exports.or = exports.and = undefined;
+exports.complement = exports.difference = exports.intersectBy = undefined;
+exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.remove = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.all = exports.any = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zip = exports.stripPrefix = exports.groupBy = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.lookup = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.intercalate = exports.intersperse = exports.map = exports.concatMap = exports.append = exports.push = exports.split = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.swapped = exports.unconsr = exports.uncons = exports.inits = exports.init = exports.tail = exports.last = exports.head = exports.nub = exports.sort = exports.minimum = exports.maximum = exports.product = exports.sum = exports.tails = exports.group = exports.permutations = exports.subsequences = exports.transpose = exports.reverse = exports.concat = exports.unzipN = exports.unzip = exports.zipN = exports.not = exports.or = exports.and = undefined;
 
 var _jsPlatform = require('./jsPlatform');
 
@@ -94,32 +94,18 @@ exports.swapped = _listOps._swapped;
 var
 
 /**
- * Append two lists, i.e.,
+ * Appends two or more lists, i.e.,
  * ```
  * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
  * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
  * ```
- * If the first list is not finite, the result is the first list.
- * @haskellType `append :: List a => a -> a -> a`
+ * @note Only curries at up to 2 elements.
  * @function module:listOps.append
  * @param xs1 {Array|String|*} - list or list like.
  * @param xs2 {Array|String|*} - list or list like.
  * @returns {Array|String|*} - Same type as list like passed in.
  */
-append = exports.append = (0, _functionOps.curry)(_listOps._append),
-
-
-/**
- * Append two or more lists, i.e., same as `append` but for two ore more lists.
- * @haskellType `appendMany :: List a => a -> [a] -> a
- * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
- *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
- * @function module:listOps.appendMany
- * @param x {Array|String|*}
- * @param args ...{Array|String|*} - Lists or lists likes.
- * @returns {Array|String|*} - Same type as first list or list like passed in.
- */
-appendMany = exports.appendMany = (0, _functionOps.curry2)(_listOps._appendMany),
+append = exports.append = (0, _functionOps.curry2)(_listOps._append),
 
 
 /**

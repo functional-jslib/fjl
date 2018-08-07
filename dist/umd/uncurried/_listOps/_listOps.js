@@ -16,7 +16,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports._complement = exports._difference = exports._intersectBy = exports._intersect = exports._union = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._sortBy = exports._sortOn = exports._sort = exports._remove = exports._nub = exports._scanr1 = exports._scanr = exports._scanl1 = exports._scanl = exports._minimum = exports._maximum = exports._product = exports._sum = exports._not = exports._or = exports._and = exports._all = exports._any = exports._unzipN = exports._unzip = exports._zipWith5 = exports._zipWith4 = exports._zipWith3 = exports._zipWithN = exports._zipWith = exports._zip5 = exports._zip4 = exports._zip3 = exports._zipN = exports._zip = exports._stripPrefix = exports._tails = exports._inits = exports._groupBy = exports._group = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._lookup = exports._notElem = exports._elem = exports._partition = exports._filter = exports._find = exports._at = exports._breakOnList = exports._span = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._splitAt = exports._drop = exports._take = exports._elemIndices = exports._elemIndex = exports._findIndices = exports._findIndex = exports._unfoldr = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._mapAccumR = exports._mapAccumL = exports._foldr1 = exports._foldl1 = exports._foldr = exports._foldl = exports._permutations = exports._swapped = exports._subsequences = exports._transpose = exports._intercalate = exports._intersperse = exports._reverse = exports._concatMap = exports._concat = exports._unconsr = exports._uncons = exports._init = exports._tail = exports._last = exports._head = exports._appendMany = exports._append = exports._map = undefined;
+    exports._complement = exports._difference = exports._intersectBy = exports._intersect = exports._union = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._sortBy = exports._sortOn = exports._sort = exports._remove = exports._nub = exports._scanr1 = exports._scanr = exports._scanl1 = exports._scanl = exports._minimum = exports._maximum = exports._product = exports._sum = exports._not = exports._or = exports._and = exports._all = exports._any = exports._unzipN = exports._unzip = exports._zipWith5 = exports._zipWith4 = exports._zipWith3 = exports._zipWithN = exports._zipWith = exports._zip5 = exports._zip4 = exports._zip3 = exports._zipN = exports._zip = exports._stripPrefix = exports._tails = exports._inits = exports._groupBy = exports._group = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._lookup = exports._notElem = exports._elem = exports._partition = exports._filter = exports._find = exports._at = exports._breakOnList = exports._span = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._splitAt = exports._drop = exports._take = exports._elemIndices = exports._elemIndex = exports._findIndices = exports._findIndex = exports._unfoldr = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._mapAccumR = exports._mapAccumL = exports._foldr1 = exports._foldl1 = exports._foldr = exports._foldl = exports._permutations = exports._swapped = exports._subsequences = exports._transpose = exports._intercalate = exports._intersperse = exports._reverse = exports._concatMap = exports._concat = exports._unconsr = exports._uncons = exports._init = exports._tail = exports._last = exports._head = exports._append = exports._map = undefined;
 
     var _map3 = _interopRequireDefault(_map2);
 
@@ -68,12 +68,11 @@
     var
 
     /**
-     * Append two lists, i.e.,
+     * Appends two or more lists, i.e.,
      * ```
      * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
      * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
      * ```
-     * If the first list is not finite, the result is the first list.
      * @haskellType `append :: List a => a -> a -> a`
      * @function module:_listOps._append
      * @param xs1 {Array} - list or list like.
@@ -81,27 +80,6 @@
      * @returns {Array} - Same type as list like passed in.
      */
     _append = exports._append = _list.concat,
-
-
-    /**
-     * Append two or more lists, i.e., same as `_append` but for two ore more lists.
-     * @haskellType `appendMany :: List a => a -> [a] -> a
-     * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
-     *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:_listOps._appendMany
-     * @param args ...{Array} - Lists or lists likes.
-     * @returns {Array} - Same type as first list or list like passed in.
-     */
-    _appendMany = exports._appendMany = function _appendMany() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        if ((0, _objectOps.length)(args)) {
-            return (0, _function.apply)(_list.concat, args);
-        }
-        throw new Error('`_appendMany` requires at least one arg.');
-    },
 
 
     /**
@@ -184,7 +162,7 @@
      * @returns {Array}
      */
     _concat = exports._concat = function _concat(xs) {
-        return !(0, _objectOps.length)(xs) ? (0, _utils.copy)(xs) : (0, _function.apply)(_appendMany, xs);
+        return !(0, _objectOps.length)(xs) ? (0, _utils.copy)(xs) : (0, _function.apply)(_append, xs);
     },
 
 
@@ -953,7 +931,7 @@
         var ind = 0,
             prevItem = void 0,
             item = void 0,
-            predOp = function predOp(x) {
+            pred = function pred(x) {
             if (equalityOp(x, prevItem)) {
                 ind++;
             }
@@ -966,7 +944,7 @@
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(_takeWhile(predOp, (0, _list.slice)(ind, limit, xs)));
+            agg.push(_takeWhile(pred, (0, _list.slice)(ind, limit, xs)));
         }
         return agg;
     },
@@ -1066,8 +1044,8 @@
      * @returns {Array}
      */
     _zipN = exports._zipN = function _zipN() {
-        for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            lists[_key2] = arguments[_key2];
+        for (var _len = arguments.length, lists = Array(_len), _key = 0; _key < _len; _key++) {
+            lists[_key] = arguments[_key];
         }
 
         var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, _filter(_objectOps.length, lists)),
@@ -1178,8 +1156,8 @@
      * @returns {Array<Array<*,*>>}
      */
     _zipWithN = exports._zipWithN = function _zipWithN(op) {
-        for (var _len3 = arguments.length, lists = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-            lists[_key3 - 1] = arguments[_key3];
+        for (var _len2 = arguments.length, lists = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+            lists[_key2 - 1] = arguments[_key2];
         }
 
         var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists),
@@ -1837,8 +1815,8 @@
      * @returns {Array}
      */
     _complement = exports._complement = function _complement(arr0) {
-        for (var _len4 = arguments.length, arrays = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-            arrays[_key4 - 1] = arguments[_key4];
+        for (var _len3 = arguments.length, arrays = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+            arrays[_key3 - 1] = arguments[_key3];
         }
 
         return (0, _utils.reduce)(function (agg, arr) {

@@ -74,6 +74,17 @@ var fPureTakesOneOrMore = function fPureTakesOneOrMore(name) {
         return f[name].apply(f, args);
     };
 };
+var fPureTakesTwoOrMore = function fPureTakesTwoOrMore(name) {
+    return function (f, a, b) {
+        for (var _len2 = arguments.length, args = Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
+            args[_key2 - 3] = arguments[_key2];
+        }
+
+        var _f$name;
+
+        return (_f$name = f[name]).call.apply(_f$name, [null, a, b].concat(args));
+    };
+};
 var fnOrError = function fnOrError(symbolName, f) {
     if (!f || typeof f !== 'function') {
         throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + typeOf(f) + ';  Value received: ' + f + '.'));
@@ -101,14 +112,14 @@ var keys = function keys(obj) {
 };
 var _assign = function () {
     return Object.assign ? function (obj0) {
-        for (var _len2 = arguments.length, objs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-            objs[_key2 - 1] = arguments[_key2];
+        for (var _len3 = arguments.length, objs = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+            objs[_key3 - 1] = arguments[_key3];
         }
 
         return Object.assign.apply(Object, [obj0].concat(objs));
     } : function (obj0) {
-        for (var _len3 = arguments.length, objs = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-            objs[_key3 - 1] = arguments[_key3];
+        for (var _len4 = arguments.length, objs = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+            objs[_key4 - 1] = arguments[_key4];
         }
 
         return objs.reduce(function (topAgg, obj) {
@@ -180,8 +191,8 @@ var apply = function apply(fn, args) {
     return fn.apply(null, args);
 };
 var call = function call(fn) {
-    for (var _len4 = arguments.length, args = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-        args[_key4 - 1] = arguments[_key4];
+    for (var _len5 = arguments.length, args = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+        args[_key5 - 1] = arguments[_key5];
     }
 
     return apply(fn, args);
@@ -201,20 +212,20 @@ var call = function call(fn) {
 var notFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 
 var curry = function curry(fn) {
-    for (var _len5 = arguments.length, argsToCurry = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-        argsToCurry[_key5 - 1] = arguments[_key5];
+    for (var _len6 = arguments.length, argsToCurry = Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
+        argsToCurry[_key6 - 1] = arguments[_key6];
     }
 
     return curryN.apply(undefined, [fnOrError(notFnErrPrefix, fn).length, fn].concat(argsToCurry));
 };
 var curryN = function curryN(executeArity, fn) {
-    for (var _len6 = arguments.length, curriedArgs = Array(_len6 > 2 ? _len6 - 2 : 0), _key6 = 2; _key6 < _len6; _key6++) {
-        curriedArgs[_key6 - 2] = arguments[_key6];
+    for (var _len7 = arguments.length, curriedArgs = Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
+        curriedArgs[_key7 - 2] = arguments[_key7];
     }
 
     return function () {
-        for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-            args[_key7] = arguments[_key7];
+        for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
+            args[_key8] = arguments[_key8];
         }
 
         var concatedArgs = concat(curriedArgs, args),
@@ -386,8 +397,8 @@ function isUsableImmutablePrimitive$1(x) {
  * @returns {*|undefined} - New value of given value's type else `undefined`.
  */
 var of = function of(x) {
-    for (var _len8 = arguments.length, args = Array(_len8 > 1 ? _len8 - 1 : 0), _key8 = 1; _key8 < _len8; _key8++) {
-        args[_key8 - 1] = arguments[_key8];
+    for (var _len9 = arguments.length, args = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
+        args[_key9 - 1] = arguments[_key9];
     }
 
     if (!isset(x)) {
@@ -405,8 +416,8 @@ var of = function of(x) {
 };
 
 var _assignDeep = function _assignDeep(obj0) {
-    for (var _len9 = arguments.length, objs = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
-        objs[_key9 - 1] = arguments[_key9];
+    for (var _len10 = arguments.length, objs = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
+        objs[_key10 - 1] = arguments[_key10];
     }
 
     return objs.reduce(function (topAgg, obj) {
@@ -453,8 +464,8 @@ var negateF5 = function negateF5(fn) {
 var negateP = negateF3;
 var negateFMany = function negateFMany(fn) {
     return function () {
-        for (var _len10 = arguments.length, args = Array(_len10), _key10 = 0; _key10 < _len10; _key10++) {
-            args[_key10] = arguments[_key10];
+        for (var _len11 = arguments.length, args = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
+            args[_key11] = arguments[_key11];
         }
 
         return !apply(fn, args);
@@ -546,15 +557,15 @@ var genericAscOrdering = function genericAscOrdering(a, b) {
     return 0;
 };
 var lengths = function lengths() {
-    for (var _len11 = arguments.length, lists = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
-        lists[_key11] = arguments[_key11];
+    for (var _len12 = arguments.length, lists = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
+        lists[_key12] = arguments[_key12];
     }
 
     return length(lists) ? _map(length, lists) : [];
 };
 var lengthsToSmallest = function lengthsToSmallest() {
-    for (var _len12 = arguments.length, lists = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
-        lists[_key12] = arguments[_key12];
+    for (var _len13 = arguments.length, lists = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
+        lists[_key13] = arguments[_key13];
     }
 
     var listLengths = apply(lengths, lists),
@@ -660,16 +671,6 @@ var findWhere = function findWhere(pred, xs) {
  * @private
  */
 var _append = concat;
-var _appendMany = function _appendMany() {
-    for (var _len13 = arguments.length, args = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
-        args[_key13] = arguments[_key13];
-    }
-
-    if (length(args)) {
-        return apply(concat, args);
-    }
-    throw new Error('`_appendMany` requires at least one arg.');
-};
 var _head = function _head(x) {
     return x[0];
 };
@@ -689,7 +690,7 @@ var _unconsr = function _unconsr(xs) {
     return !xs || length(xs) === 0 ? undefined : [_init(xs), _last(xs)];
 };
 var _concat = function _concat(xs) {
-    return !length(xs) ? copy(xs) : apply(_appendMany, xs);
+    return !length(xs) ? copy(xs) : apply(_append, xs);
 };
 var _concatMap = function _concatMap(fn, foldableOfA) {
     return _concat(_map(fn, foldableOfA));
@@ -1013,7 +1014,7 @@ var _groupBy = function _groupBy(equalityOp, xs) {
     var ind = 0,
         prevItem = void 0,
         item = void 0,
-        predOp = function predOp(x) {
+        pred = function pred(x) {
         if (equalityOp(x, prevItem)) {
             ind++;
         }
@@ -1026,7 +1027,7 @@ var _groupBy = function _groupBy(equalityOp, xs) {
         agg = [];
     for (; ind < limit; ind += 1) {
         item = xs[ind];
-        agg.push(_takeWhile(predOp, slice(ind, limit, xs)));
+        agg.push(_takeWhile(pred, slice(ind, limit, xs)));
     }
     return agg;
 };
@@ -2111,8 +2112,7 @@ var split$1 = curry(split);
  * List operators.
  * @module listOps
  */
-var append = curry(_append);
-var appendMany = curry2(_appendMany);
+var append = curry2(_append);
 var concatMap = curry2(_concatMap);
 var map$1 = curry(_map);
 var intersperse = curry(_intersperse);
@@ -2364,7 +2364,6 @@ exports.uncons = _uncons;
 exports.unconsr = _unconsr;
 exports.swapped = _swapped;
 exports.append = append;
-exports.appendMany = appendMany;
 exports.concatMap = concatMap;
 exports.map = map$1;
 exports.intersperse = intersperse;
@@ -2442,7 +2441,6 @@ exports.split = split$1;
 exports.push = push$1;
 exports._map = _map;
 exports._append = _append;
-exports._appendMany = _appendMany;
 exports._head = _head;
 exports._last = _last;
 exports._tail = _tail;
@@ -2555,6 +2553,7 @@ exports.fPureTakes3 = fPureTakes3;
 exports.fPureTakes4 = fPureTakes4;
 exports.fPureTakes5 = fPureTakes5;
 exports.fPureTakesOneOrMore = fPureTakesOneOrMore;
+exports.fPureTakesTwoOrMore = fPureTakesTwoOrMore;
 exports.fnOrError = fnOrError;
 exports.sliceFrom = sliceFrom;
 exports.sliceTo = sliceTo;

@@ -4,7 +4,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports._complement = exports._difference = exports._intersectBy = exports._intersect = exports._union = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._sortBy = exports._sortOn = exports._sort = exports._remove = exports._nub = exports._scanr1 = exports._scanr = exports._scanl1 = exports._scanl = exports._minimum = exports._maximum = exports._product = exports._sum = exports._not = exports._or = exports._and = exports._all = exports._any = exports._unzipN = exports._unzip = exports._zipWith5 = exports._zipWith4 = exports._zipWith3 = exports._zipWithN = exports._zipWith = exports._zip5 = exports._zip4 = exports._zip3 = exports._zipN = exports._zip = exports._stripPrefix = exports._tails = exports._inits = exports._groupBy = exports._group = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._lookup = exports._notElem = exports._elem = exports._partition = exports._filter = exports._find = exports._at = exports._breakOnList = exports._span = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._splitAt = exports._drop = exports._take = exports._elemIndices = exports._elemIndex = exports._findIndices = exports._findIndex = exports._unfoldr = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._mapAccumR = exports._mapAccumL = exports._foldr1 = exports._foldl1 = exports._foldr = exports._foldl = exports._permutations = exports._swapped = exports._subsequences = exports._transpose = exports._intercalate = exports._intersperse = exports._reverse = exports._concatMap = exports._concat = exports._unconsr = exports._uncons = exports._init = exports._tail = exports._last = exports._head = exports._appendMany = exports._append = exports._map = undefined;
+    exports._complement = exports._difference = exports._intersectBy = exports._intersect = exports._union = exports._unionBy = exports._removeFirstsBy = exports._removeBy = exports._nubBy = exports._insertBy = exports._insert = exports._sortBy = exports._sortOn = exports._sort = exports._remove = exports._nub = exports._scanr1 = exports._scanr = exports._scanl1 = exports._scanl = exports._minimum = exports._maximum = exports._product = exports._sum = exports._not = exports._or = exports._and = exports._all = exports._any = exports._unzipN = exports._unzip = exports._zipWith5 = exports._zipWith4 = exports._zipWith3 = exports._zipWithN = exports._zipWith = exports._zip5 = exports._zip4 = exports._zip3 = exports._zipN = exports._zip = exports._stripPrefix = exports._tails = exports._inits = exports._groupBy = exports._group = exports._isSubsequenceOf = exports._isInfixOf = exports._isSuffixOf = exports._isPrefixOf = exports._lookup = exports._notElem = exports._elem = exports._partition = exports._filter = exports._find = exports._at = exports._breakOnList = exports._span = exports._dropWhileEnd = exports._dropWhile = exports._takeWhile = exports._splitAt = exports._drop = exports._take = exports._elemIndices = exports._elemIndex = exports._findIndices = exports._findIndex = exports._unfoldr = exports._cycle = exports._replicate = exports._repeat = exports._iterate = exports._mapAccumR = exports._mapAccumL = exports._foldr1 = exports._foldl1 = exports._foldr = exports._foldl = exports._permutations = exports._swapped = exports._subsequences = exports._transpose = exports._intercalate = exports._intersperse = exports._reverse = exports._concatMap = exports._concat = exports._unconsr = exports._uncons = exports._init = exports._tail = exports._last = exports._head = exports._append = exports._map = undefined;
 
     var _map3 = _interopRequireDefault(_map2);
 
@@ -18,12 +18,11 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
     const
 
     /**
-     * Append two lists, i.e.,
+     * Appends two or more lists, i.e.,
      * ```
      * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
      * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
      * ```
-     * If the first list is not finite, the result is the first list.
      * @haskellType `append :: List a => a -> a -> a`
      * @function module:_listOps._append
      * @param xs1 {Array} - list or list like.
@@ -31,23 +30,6 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * @returns {Array} - Same type as list like passed in.
      */
     _append = exports._append = _list.concat,
-
-
-    /**
-     * Append two or more lists, i.e., same as `_append` but for two ore more lists.
-     * @haskellType `appendMany :: List a => a -> [a] -> a
-     * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
-     *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:_listOps._appendMany
-     * @param args ...{Array} - Lists or lists likes.
-     * @returns {Array} - Same type as first list or list like passed in.
-     */
-    _appendMany = exports._appendMany = (...args) => {
-        if ((0, _objectOps.length)(args)) {
-            return (0, _function.apply)(_list.concat, args);
-        }
-        throw new Error('`_appendMany` requires at least one arg.');
-    },
 
 
     /**
@@ -117,7 +99,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
      * @param xs {Array}
      * @returns {Array}
      */
-    _concat = exports._concat = xs => !(0, _objectOps.length)(xs) ? (0, _utils.copy)(xs) : (0, _function.apply)(_appendMany, xs),
+    _concat = exports._concat = xs => !(0, _objectOps.length)(xs) ? (0, _utils.copy)(xs) : (0, _function.apply)(_append, xs),
 
 
     /**
@@ -844,7 +826,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
         let ind = 0,
             prevItem,
             item,
-            predOp = x => {
+            pred = x => {
             if (equalityOp(x, prevItem)) {
                 ind++;
             }
@@ -857,7 +839,7 @@ define(['exports', '../_jsPlatform/_list', '../_jsPlatform/_function', '../_func
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(_takeWhile(predOp, (0, _list.slice)(ind, limit, xs)));
+            agg.push(_takeWhile(pred, (0, _list.slice)(ind, limit, xs)));
         }
         return agg;
     },

@@ -2,8 +2,6 @@
  * Created by elyde on 5/1/17.
  */
 
-import {assert, expect} from 'chai';
-
 import {
     apply, call, compose,
     curry, curry2, curryN, __,
@@ -12,7 +10,7 @@ import {
 }
 from '../src/functionOps';
 
-import {log, add, subtract, length, expectFalse, expectTrue, expectEqual, expectFunction} from './helpers';
+import {log, add, subtract, expectError, expectEqual, expectFunction} from './helpers';
 
 describe ('#functionOps', function () {
 
@@ -90,16 +88,14 @@ describe ('#functionOps', function () {
         });
 
         it ('should throw an error when no predicate is passed in', function () {
-            assert.throws(
-                () => until(null, x => { return x + x; }, 1),
-                Error
+            expectError(
+                () => until(null, x => { return x + x; }, 1)
             );
         });
 
         it ('should throw an error when no operation is passed in', function () {
-            assert.throws(
-                () => until(x => x >= 100, null, 1),
-                Error
+            expectError(
+                () => until(x => x >= 100, null, 1)
             );
         });
     });
@@ -117,18 +113,18 @@ describe ('#functionOps', function () {
     describe('#compose', function () {
 
         it ('should be of type function.', function () {
-            expect(compose).to.be.instanceOf(Function);
+            expect(compose).toBeInstanceOf(Function);
         });
 
         it ('should return a function whether or not any parameters were passed in to it.', function () {
-            expect(compose()).to.be.instanceOf(Function);
-            expect(compose(console.log)).to.be.instanceOf(Function);
+            expect(compose()).toBeInstanceOf(Function);
+            expect(compose(log)).toBeInstanceOf(Function);
         });
 
         it ('should return a function that when used returns the passed in value if `compose` ' +
             'itself didn\'t receive any parameters.', function () {
             let result = compose();
-            expect(result(99)).to.equal(99);
+            expect(result(99)).toEqual(99);
         });
 
         it ('should be able to compose an arbitrary numberOps of functions and execute them as expected ' +
@@ -141,7 +137,7 @@ describe ('#functionOps', function () {
                 random = randomNum(0),
                 expectedFor = (num) => min(8, max(5, pow(num, 2)));
             [8,5,3,2,1,0, random(89), random(55), random(34)].forEach(function (num) {
-                expect(composed(num)).to.equal(expectedFor(num));
+                expect(composed(num)).toEqual(expectedFor(num));
             });
         });
 
@@ -160,7 +156,7 @@ describe ('#functionOps', function () {
 
         it ('should throw an error when receiving anything other than a function for first param', function () {
             [99, false, true, null, undefined, [], {}].forEach(x => {
-                assert.throws(() => curry(x), Error);
+                expectError(() => curry(x));
             });
         });
 
@@ -175,15 +171,15 @@ describe ('#functionOps', function () {
             });
 
             // Expect functions work as expected
-            expect(min8(9)).to.equal(8);
-            expect(min8(8)).to.equal(8);
-            expect(min8(7)).to.equal(7);
-            expect(max5(6)).to.equal(6);
-            expect(max5(5)).to.equal(5);
-            expect(max5(4)).to.equal(5);
-            expect(pow2(2)).to.equal(4);
-            expect(pow2(3)).to.equal(8);
-            expect(pow2(4)).to.equal(16);
+            expect(min8(9)).toEqual(8);
+            expect(min8(8)).toEqual(8);
+            expect(min8(7)).toEqual(7);
+            expect(max5(6)).toEqual(6);
+            expect(max5(5)).toEqual(5);
+            expect(max5(4)).toEqual(5);
+            expect(pow2(2)).toEqual(4);
+            expect(pow2(3)).toEqual(8);
+            expect(pow2(4)).toEqual(16);
         });
 
         it ('should be able to correctly curry functions of different arity as long as their arity is met.', function () {
@@ -206,17 +202,14 @@ describe ('#functionOps', function () {
             });
 
             // Expect `curry`ed functions to work as expected
-            expect(isValidTangentLen(8)).to.equal(true);
-            expect(isValidTangentLen(21)).to.equal(false);
+            expect(isValidTangentLen(8)).toEqual(true);
+            expect(isValidTangentLen(21)).toEqual(false);
 
             // Expect `curry`ed functions to work as expected
             [8,5,3,2,1,0, random(89), random(55), random(34)].forEach(function (num) {
                 let composed = compose(min8, max5, pow2);
-                expect(composed(num)).to.equal(expectedFor(num));
+                expect(composed(num)).toEqual(expectedFor(num));
             });
-
-            let add3Items = (a, b, c) => a + b + c,
-                curriedAdd3Items = curry(add3Items);
         });
 
     });
@@ -229,29 +222,29 @@ describe ('#functionOps', function () {
             divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
         it ('should be of type function.', function () {
-            expect(curryN).to.be.instanceOf(Function);
+            expect(curryN).toBeInstanceOf(Function);
         });
 
         it ('should return a function that throws an error when no arguments are passed.', function () {
             let result = curryN();
-            expect(result).to.be.instanceOf(Function);
-            assert.throws(result, Error);
+            expect(result).toBeInstanceOf(Function);
+            expectError(result);
         });
 
         it ('should pass in any values passed the arity when executing the curried function', function () {
             let add3Nums = curryN(3, addRecursive);
 
             // Curry add to add 3 numbers
-            expect(add3Nums()(1, 2, 3)) .to.equal(6);
-            expect(add3Nums(1)(2, 3))   .to.equal(6);
-            expect(add3Nums(1, 2,)(3))  .to.equal(6);
-            expect(add3Nums(1, 2, 3))   .to.equal(6);
+            expect(add3Nums()(1, 2, 3)) .toEqual(6);
+            expect(add3Nums(1)(2, 3))   .toEqual(6);
+            expect(add3Nums(1, 2,)(3))  .toEqual(6);
+            expect(add3Nums(1, 2, 3))   .toEqual(6);
 
             // Curry `add` to add any numbers passed required arity
-            expect(add3Nums()(1, 2, 3, 5, 6))   .to.equal(17);
-            expect(add3Nums(1)(2, 3, 5, 6))     .to.equal(17);
-            expect(add3Nums(1, 2)(3, 5, 6))     .to.equal(17);
-            expect(add3Nums(1, 2, 3, 5, 6))     .to.equal(17);
+            expect(add3Nums()(1, 2, 3, 5, 6))   .toEqual(17);
+            expect(add3Nums(1)(2, 3, 5, 6))     .toEqual(17);
+            expect(add3Nums(1, 2)(3, 5, 6))     .toEqual(17);
+            expect(add3Nums(1, 2, 3, 5, 6))     .toEqual(17);
         });
 
         it ('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
@@ -274,8 +267,8 @@ describe ('#functionOps', function () {
 
             // Curry multiply and pass args in non-linear order
             argsToTest.forEach(function (args, index) {
-                expect(partiallyAppliedResults[index]).to.be.instanceOf(Function);
-                expect(partiallyAppliedResults[index].apply(null, args)).to.equal(multiplyExpectedResult);
+                expect(partiallyAppliedResults[index]).toBeInstanceOf(Function);
+                expect(partiallyAppliedResults[index].apply(null, args)).toEqual(multiplyExpectedResult);
             });
 
         });
@@ -290,12 +283,12 @@ describe ('#functionOps', function () {
             divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
         it ('should be of type function.', function () {
-            expect(curry_).to.be.instanceOf(Function);
+            expect(curry_).toBeInstanceOf(Function);
         });
 
         it ('should throw an error when receiving anything other than a function for first param', function () {
             [99, false, true, null, undefined, [], {}].forEach(x => {
-                assert.throws(() => curry_(x), Error);
+                expectError(() => curry_(x));
             });
         });
 
@@ -306,19 +299,19 @@ describe ('#functionOps', function () {
 
             // Expect functions
             [min8, max5, pow2].forEach(function (func) {
-                expect(func).to.be.instanceOf(Function);
+                expect(func).toBeInstanceOf(Function);
             });
 
             // Expect functions work correctly
-            expect(min8(9)).to.equal(8);
-            expect(min8(8)).to.equal(8);
-            expect(min8(7)).to.equal(7);
-            expect(max5(6)).to.equal(6);
-            expect(max5(5)).to.equal(5);
-            expect(max5(4)).to.equal(5);
-            expect(pow2(2)).to.equal(4);
-            expect(pow2(3)).to.equal(8);
-            expect(pow2(4)).to.equal(16);
+            expect(min8(9)).toEqual(8);
+            expect(min8(8)).toEqual(8);
+            expect(min8(7)).toEqual(7);
+            expect(max5(6)).toEqual(6);
+            expect(max5(5)).toEqual(5);
+            expect(max5(4)).toEqual(5);
+            expect(pow2(2)).toEqual(4);
+            expect(pow2(3)).toEqual(8);
+            expect(pow2(4)).toEqual(16);
         });
 
         it ('should be able to correctly curry functions of different arity as long as their arity is met.', function () {
@@ -333,21 +326,21 @@ describe ('#functionOps', function () {
                 expectedFor = (num) => min(8, max(5, pow(2, num)));
 
             // Expect functions returned for `curry` calls
-            expect(isValidTangentLen).to.be.instanceOf(Function);
+            expect(isValidTangentLen).toBeInstanceOf(Function);
 
             // Expect functions returned for `curry` calls
             [min8, max5, pow2].forEach(function (func) {
-                expect(func).to.be.instanceOf(Function);
+                expect(func).toBeInstanceOf(Function);
             });
 
             // Expect `curry`ed functions to work as expected
-            expect(isValidTangentLen(8)).to.equal(true);
-            expect(isValidTangentLen(21)).to.equal(false);
+            expect(isValidTangentLen(8)).toEqual(true);
+            expect(isValidTangentLen(21)).toEqual(false);
 
             // Expect `curry`ed functions to work as expected
             [8,5,3,2,1,0, random(89), random(55), random(34)].forEach(function (num) {
                 let composed = compose(min8, max5, pow2);
-                expect(composed(num)).to.equal(expectedFor(num));
+                expect(composed(num)).toEqual(expectedFor(num));
             });
         });
 
@@ -357,31 +350,31 @@ describe ('#functionOps', function () {
                 multiplyExpectedResult = Math.pow(5, 5);
 
             // Curry add to add 3 numbers
-            expect(add(__, __, __)(1, 2, 3)).to.equal(6);
-            expect(add(1, __, __)(2, 3)).to.equal(6);
-            expect(add(1, 2, __)(3)).to.equal(6);
-            expect(add(1, 2, 3)).to.equal(6);
+            expect(add(__, __, __)(1, 2, 3)).toEqual(6);
+            expect(add(1, __, __)(2, 3)).toEqual(6);
+            expect(add(1, 2, __)(3)).toEqual(6);
+            expect(add(1, 2, 3)).toEqual(6);
 
             // Curry multiply and pass args in non-linear order
-            expect(multiply(__, __, __, __, __)(5, 5, 5, 5, 5)).to.equal(multiplyExpectedResult);
-            expect(multiply(__, __, 5, __, __)(5, 5, 5, 5)).to.equal(multiplyExpectedResult);
-            expect(multiply(5, __, 5, __, __)(5, 5, 5)).to.equal(multiplyExpectedResult);
-            expect(multiply(5, __, 5, __, 5)(5, 5)).to.equal(multiplyExpectedResult);
-            expect(multiply(5, __, 5, 5, 5)(5)).to.equal(multiplyExpectedResult);
-            expect(multiply(5, 5, 5, 5, 5)).to.equal(multiplyExpectedResult);
+            expect(multiply(__, __, __, __, __)(5, 5, 5, 5, 5)).toEqual(multiplyExpectedResult);
+            expect(multiply(__, __, 5, __, __)(5, 5, 5, 5)).toEqual(multiplyExpectedResult);
+            expect(multiply(5, __, 5, __, __)(5, 5, 5)).toEqual(multiplyExpectedResult);
+            expect(multiply(5, __, 5, __, 5)(5, 5)).toEqual(multiplyExpectedResult);
+            expect(multiply(5, __, 5, 5, 5)(5)).toEqual(multiplyExpectedResult);
+            expect(multiply(5, 5, 5, 5, 5)).toEqual(multiplyExpectedResult);
 
-            expect(add(__, __, __)(1, 2, 3, 5, 6)).to.equal(17);
-            expect(add(__, 1, __)(2, 3, 5, 6)).to.equal(17);
-            expect(add(__, 1, 2)(3, 5, 6)).to.equal(17);
-            expect(add(1, 2, 3, 5, 6)).to.equal(17);
+            expect(add(__, __, __)(1, 2, 3, 5, 6)).toEqual(17);
+            expect(add(__, 1, __)(2, 3, 5, 6)).toEqual(17);
+            expect(add(__, 1, 2)(3, 5, 6)).toEqual(17);
+            expect(add(1, 2, 3, 5, 6)).toEqual(17);
 
         });
 
         it ('should respect argument order and placeholder order.', function () {
             // Curry divideR to divde 3 or more numbers
-            expect(curry_(divideR, 25, 5)).to.be.instanceOf(Function);
-            expect(curry_(divideR, __, 625, __)(3125, 5)).to.equal(1);
-            expect(curry_(divideR, Math.pow(3125, 2), 3125, __)(5)).to.equal(625);
+            expect(curry_(divideR, 25, 5)).toBeInstanceOf(Function);
+            expect(curry_(divideR, __, 625, __)(3125, 5)).toEqual(1);
+            expect(curry_(divideR, Math.pow(3125, 2), 3125, __)(5)).toEqual(625);
         });
 
     });
@@ -394,13 +387,13 @@ describe ('#functionOps', function () {
             divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
         it ('should be of type function.', function () {
-            expect(curryN_).to.be.instanceOf(Function);
+            expect(curryN_).toBeInstanceOf(Function);
         });
 
         it ('should return a function that throws an error when no arguments are passed.', function () {
             let result = curryN_();
-            expect(result).to.be.instanceOf(Function);
-            assert.throws(result, Error);
+            expect(result).toBeInstanceOf(Function);
+            expectError(result);
         });
 
         it ('should enforce `Placeholder` values when currying', function () {
@@ -409,18 +402,18 @@ describe ('#functionOps', function () {
                 multiplyExpectedResult = Math.pow(5, 5);
 
             // Curry add to add 3 numbers
-            expect(add3Nums(__, __, __)(1, 2, 3)).to.equal(6);
-            expect(add3Nums(1, __, __)(2, 3)).to.equal(6);
-            expect(add3Nums(1, 2, __)(3)).to.equal(6);
-            expect(add3Nums(1, 2, 3)).to.equal(6);
+            expect(add3Nums(__, __, __)(1, 2, 3)).toEqual(6);
+            expect(add3Nums(1, __, __)(2, 3)).toEqual(6);
+            expect(add3Nums(1, 2, __)(3)).toEqual(6);
+            expect(add3Nums(1, 2, 3)).toEqual(6);
 
             // Curry multiply and pass args in non-linear order
-            expect(multiply5Nums(__, __, __, __, __)(5, 5, 5, 5, 5)).to.equal(multiplyExpectedResult);
-            expect(multiply5Nums(__, __, 5, __, __)(5, 5, 5, 5)).to.equal(multiplyExpectedResult);
-            expect(multiply5Nums(5, __, 5, __, __)(5, 5, 5)).to.equal(multiplyExpectedResult);
-            expect(multiply5Nums(5, __, 5, __, 5)(5, 5)).to.equal(multiplyExpectedResult);
-            expect(multiply5Nums(5, __, 5, 5, 5)(5)).to.equal(multiplyExpectedResult);
-            expect(multiply5Nums(5, 5, 5, 5, 5)).to.equal(multiplyExpectedResult);
+            expect(multiply5Nums(__, __, __, __, __)(5, 5, 5, 5, 5)).toEqual(multiplyExpectedResult);
+            expect(multiply5Nums(__, __, 5, __, __)(5, 5, 5, 5)).toEqual(multiplyExpectedResult);
+            expect(multiply5Nums(5, __, 5, __, __)(5, 5, 5)).toEqual(multiplyExpectedResult);
+            expect(multiply5Nums(5, __, 5, __, 5)(5, 5)).toEqual(multiplyExpectedResult);
+            expect(multiply5Nums(5, __, 5, 5, 5)(5)).toEqual(multiplyExpectedResult);
+            expect(multiply5Nums(5, 5, 5, 5, 5)).toEqual(multiplyExpectedResult);
 
         });
 
@@ -428,16 +421,16 @@ describe ('#functionOps', function () {
             let add3Nums = curryN_(3, addRecursive);
 
             // Curry add to add 3 numbers
-            expect(add3Nums(__, __, __)(1, 2, 3)).to.equal(6);
-            expect(add3Nums(1, __, __)(2, 3)).to.equal(6);
-            expect(add3Nums(1, 2, __)(3)).to.equal(6);
-            expect(add3Nums(1, 2, 3)).to.equal(6);
+            expect(add3Nums(__, __, __)(1, 2, 3)).toEqual(6);
+            expect(add3Nums(1, __, __)(2, 3)).toEqual(6);
+            expect(add3Nums(1, 2, __)(3)).toEqual(6);
+            expect(add3Nums(1, 2, 3)).toEqual(6);
 
             // Curry `add` to add any numbers passed required arity
-            expect(add3Nums(__, __, __)(1, 2, 3, 5, 6)).to.equal(17);
-            expect(add3Nums(__, 1, __)(2, 3, 5, 6)).to.equal(17);
-            expect(add3Nums(__, 1, 2)(3, 5, 6)).to.equal(17);
-            expect(add3Nums(1, 2, 3, 5, 6)).to.equal(17);
+            expect(add3Nums(__, __, __)(1, 2, 3, 5, 6)).toEqual(17);
+            expect(add3Nums(__, 1, __)(2, 3, 5, 6)).toEqual(17);
+            expect(add3Nums(__, 1, 2)(3, 5, 6)).toEqual(17);
+            expect(add3Nums(1, 2, 3, 5, 6)).toEqual(17);
         });
 
         it ('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
@@ -460,8 +453,8 @@ describe ('#functionOps', function () {
 
             // Curry multiply and pass args in non-linear order
             argsToTest.forEach(function (args, index) {
-                expect(partiallyAppliedResults[index]).to.be.instanceOf(Function);
-                expect(partiallyAppliedResults[index].apply(null, args)).to.equal(multiplyExpectedResult);
+                expect(partiallyAppliedResults[index]).toBeInstanceOf(Function);
+                expect(partiallyAppliedResults[index].apply(null, args)).toEqual(multiplyExpectedResult);
             });
 
         });
@@ -470,9 +463,9 @@ describe ('#functionOps', function () {
             let divideC = curryN_(3, divideR);
 
             // Curry divideR to divde 3 or more numbers
-            expect(divideC(25, 5)).to.be.instanceOf(Function);
-            expect(divideC(__, 625, __)(3125, 5)).to.equal(1);
-            expect(divideC(Math.pow(3125, 2), 3125, __)(5)).to.equal(625);
+            expect(divideC(25, 5)).toBeInstanceOf(Function);
+            expect(divideC(__, 625, __)(3125, 5)).toEqual(1);
+            expect(divideC(Math.pow(3125, 2), 3125, __)(5)).toEqual(625);
         });
 
     });

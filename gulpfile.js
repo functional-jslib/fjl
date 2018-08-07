@@ -1,11 +1,8 @@
 /**
  * Created by elyde on 12/13/2016.
+ * @script gulpfile.js
  */
-
-'use strict';
-
-const fs = require('fs'),
-    path = require('path'),
+const path = require('path'),
     crypto = require('crypto'),
     packageJson = require('./package'),
     gulpConfig = require('./gulpfileConfig'),
@@ -15,13 +12,9 @@ const fs = require('fs'),
     concat =        require('gulp-concat'),
     eslint =        require('gulp-eslint'),
     header =        require('gulp-header'),
-    mocha =         require('gulp-mocha'),
     uglify =        require('gulp-uglify'),
-    // duration = require('gulp-duration'),
-    gulpIf =        require('gulp-if'),
     fncallback =    require('gulp-fncallback'),
     jsdoc =         require('gulp-jsdoc3'),
-    replace =       require('gulp-replace'),
     gulpRollup =    require('gulp-better-rollup'),
     lazyPipe =      require('lazypipe'),
     gulpBabel =     require('gulp-babel'),
@@ -30,9 +23,6 @@ const fs = require('fs'),
     rollup = require('rollup'),
     rollupBabel = require('rollup-plugin-babel'),
     rollupResolve = require('rollup-plugin-node-resolve'),
-
-    // Babel
-    babel = require('babel-core'),
 
     /** Util Modules **/
     chalk = require('chalk'),
@@ -51,19 +41,6 @@ const fs = require('fs'),
     iifeFileName = 'fjl.js',
     iifeModuleName = 'fjl',
     srcsGlob = './src/**/*.js',
-
-    ModuleMemberReadStream = require('./node-scripts/ModuleMemberListReadStream'),
-    VersionNumberReadStream = require('./node-scripts/VersionNumberReadStream'),
-
-    yargs = require('yargs'),
-
-    argv = yargs()
-        .default('dev', false)
-        .default('skipLint', false)
-        .alias('skip-lint', 'skipLint')
-        .argv,
-
-    {skipLint} = argv,
 
     /** Lazy Pipes **/
     eslintPipe = lazyPipe()
@@ -129,7 +106,7 @@ gulp.task('iife', ['eslint'], () =>
                 ],
                 exclude: 'node_modules/**' // only transpile our source code
             })
-        ],
+        ]
     })
     .then(bundle => bundle.write({
         file: buildPath(iifeBuildPath, iifeFileName),
@@ -191,12 +168,6 @@ gulp.task('build-js-for-package', () => {
         .pipe(concat(buildPath('package/fjl.js')))
         .pipe(gulp.dest('./'));
 });
-
-
-gulp.task('tests', ['eslint'], () =>
-    gulp.src(gulpConfig.tests.srcs)
-        .pipe(gulpBabel(gulpConfig.tests.babel))
-        .pipe(mocha(gulpConfig.tests.mocha)));
 
 gulp.task('watch', ['build'], () =>
     gulp.watch([

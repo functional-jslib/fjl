@@ -69,6 +69,17 @@ var fPureTakesOneOrMore = function fPureTakesOneOrMore(name) {
         return f[name].apply(f, args);
     };
 };
+var fPureTakesTwoOrMore = function fPureTakesTwoOrMore(name) {
+    return function (f, a, b) {
+        for (var _len2 = arguments.length, args = Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
+            args[_key2 - 3] = arguments[_key2];
+        }
+
+        var _f$name;
+
+        return (_f$name = f[name]).call.apply(_f$name, [null, a, b].concat(args));
+    };
+};
 var fnOrError = function fnOrError(symbolName, f) {
     if (!f || typeof f !== 'function') {
         throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + typeOf(f) + ';  Value received: ' + f + '.'));
@@ -851,16 +862,6 @@ var slicedToArray = function () {
  * @private
  */
 var _append = concat;
-var _appendMany = function _appendMany() {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-    }
-
-    if (length(args)) {
-        return apply(concat, args);
-    }
-    throw new Error('`_appendMany` requires at least one arg.');
-};
 var _head = function _head(x) {
     return x[0];
 };
@@ -880,7 +881,7 @@ var _unconsr = function _unconsr(xs) {
     return !xs || length(xs) === 0 ? undefined : [_init(xs), _last(xs)];
 };
 var _concat = function _concat(xs) {
-    return !length(xs) ? copy(xs) : apply(_appendMany, xs);
+    return !length(xs) ? copy(xs) : apply(_append, xs);
 };
 var _concatMap = function _concatMap(fn, foldableOfA) {
     return _concat(_map(fn, foldableOfA));
@@ -1204,7 +1205,7 @@ var _groupBy = function _groupBy(equalityOp, xs) {
     var ind = 0,
         prevItem = void 0,
         item = void 0,
-        predOp = function predOp(x) {
+        pred = function pred(x) {
         if (equalityOp(x, prevItem)) {
             ind++;
         }
@@ -1217,7 +1218,7 @@ var _groupBy = function _groupBy(equalityOp, xs) {
         agg = [];
     for (; ind < limit; ind += 1) {
         item = xs[ind];
-        agg.push(_takeWhile(predOp, slice(ind, limit, xs)));
+        agg.push(_takeWhile(pred, slice(ind, limit, xs)));
     }
     return agg;
 };
@@ -1263,8 +1264,8 @@ var _zip = function _zip(arr1, arr2) {
     }, [], a1);
 };
 var _zipN = function _zipN() {
-    for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        lists[_key2] = arguments[_key2];
+    for (var _len = arguments.length, lists = Array(_len), _key = 0; _key < _len; _key++) {
+        lists[_key] = arguments[_key];
     }
 
     var trimmedLists = apply(lengthsToSmallest, _filter(length, lists)),
@@ -1304,8 +1305,8 @@ var _zipWith = function _zipWith(op, xs1, xs2) {
     }, [], a1);
 };
 var _zipWithN = function _zipWithN(op) {
-    for (var _len3 = arguments.length, lists = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-        lists[_key3 - 1] = arguments[_key3];
+    for (var _len2 = arguments.length, lists = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        lists[_key2 - 1] = arguments[_key2];
     }
 
     var trimmedLists = apply(lengthsToSmallest, lists),
@@ -1581,8 +1582,8 @@ var _difference = function _difference(array1, array2) {
     }, [], array1);
 };
 var _complement = function _complement(arr0) {
-    for (var _len4 = arguments.length, arrays = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-        arrays[_key4 - 1] = arguments[_key4];
+    for (var _len3 = arguments.length, arrays = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        arrays[_key3 - 1] = arguments[_key3];
     }
 
     return reduce$1(function (agg, arr) {
@@ -2310,8 +2311,7 @@ var split$1 = curry(split);
  * List operators.
  * @module listOps
  */
-var append = curry(_append);
-var appendMany = curry2(_appendMany);
+var append = curry2(_append);
 var concatMap = curry2(_concatMap);
 var map$1 = curry(_map);
 var intersperse = curry(_intersperse);
@@ -2563,7 +2563,6 @@ exports.uncons = _uncons;
 exports.unconsr = _unconsr;
 exports.swapped = _swapped;
 exports.append = append;
-exports.appendMany = appendMany;
 exports.concatMap = concatMap;
 exports.map = map$1;
 exports.intersperse = intersperse;
@@ -2641,7 +2640,6 @@ exports.split = split$1;
 exports.push = push$1;
 exports._map = _map;
 exports._append = _append;
-exports._appendMany = _appendMany;
 exports._head = _head;
 exports._last = _last;
 exports._tail = _tail;
@@ -2754,6 +2752,7 @@ exports.fPureTakes3 = fPureTakes3;
 exports.fPureTakes4 = fPureTakes4;
 exports.fPureTakes5 = fPureTakes5;
 exports.fPureTakesOneOrMore = fPureTakesOneOrMore;
+exports.fPureTakesTwoOrMore = fPureTakesTwoOrMore;
 exports.fnOrError = fnOrError;
 exports.sliceFrom = sliceFrom;
 exports.sliceTo = sliceTo;

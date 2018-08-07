@@ -249,3 +249,11 @@ We are using 'chai' and 'mocha' though we may want to move to 'jest' in the futu
 - Haskell docs search engine: https://www.haskell.org/hoogle/
 - Listing of entire Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html
 - Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html
+
+## Changelog
+#### 0.26.0
+- `append` correctly curries upto 2 parameters (previously it didn't curry (or curried upto one parameter)).
+- Tests no longer use 'chai' in it's tests.  Tests now use 'jest' `expect` directly (instead).
+- Performed minor cleanup on test helpers and tests: 
+  - Removed functionality already provided by tests runner 
+  from './tests/helpers.js'.

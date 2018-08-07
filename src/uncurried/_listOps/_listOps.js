@@ -29,12 +29,11 @@ export {_map};
 export const
 
     /**
-     * Append two lists, i.e.,
+     * Appends two or more lists, i.e.,
      * ```
      * append([x1, ..., xm], [y1, ..., yn]) // outputs: [x1, ..., xm, y1, ..., yn]
      * append([x1, ..., xm], [y1, ...]) // outputs: [x1, ..., xm, y1, ...]
      * ```
-     * If the first list is not finite, the result is the first list.
      * @haskellType `append :: List a => a -> a -> a`
      * @function module:_listOps._append
      * @param xs1 {Array} - list or list like.
@@ -42,20 +41,6 @@ export const
      * @returns {Array} - Same type as list like passed in.
      */
     _append = listAppend,
-
-    /**
-     * Append two or more lists, i.e., same as `_append` but for two ore more lists.
-     * @haskellType `appendMany :: List a => a -> [a] -> a
-     * @note In `@haskellType` we wrote `[a]` only to keep the haskell type valid though note in javascript
-     *  this is actually different since the function converts the zero ore more parameters into an array containing such for us.
-     * @function module:_listOps._appendMany
-     * @param args ...{Array} - Lists or lists likes.
-     * @returns {Array} - Same type as first list or list like passed in.
-     */
-    _appendMany = (...args) => {
-        if (length(args)) { return apply(listAppend, args); }
-        throw new Error('`_appendMany` requires at least one arg.');
-    },
 
     /**
      * Returns head of list (first item of list).
@@ -119,7 +104,7 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    _concat = xs => !length(xs) ? copy(xs) : apply(_appendMany, xs),
+    _concat = xs => !length(xs) ? copy(xs) : apply(_append, xs),
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -823,7 +808,7 @@ export const
         let ind = 0,
             prevItem,
             item,
-            predOp = x => {
+            pred = x => {
                 if (equalityOp(x, prevItem)) {
                     ind++;
                 }
@@ -836,7 +821,7 @@ export const
             agg = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(_takeWhile(predOp, slice(ind, limit, xs)));
+            agg.push(_takeWhile(pred, slice(ind, limit, xs)));
         }
         return agg;
     },

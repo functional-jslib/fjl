@@ -14,6 +14,8 @@ export const
 
     fPureTakesOneOrMore = name => (f, ...args) => f[name](...args),
 
+    fPureTakesTwoOrMore = name => (f, a, b, ...args) => f[name].call(null, a, b, ...args),
+
     fnOrError = (symbolName, f) => {
         if (!f || typeof f !== 'function') {
             throw new Error (`${symbolName} should be a function. ` +

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.fnOrError = exports.fPureTakesOneOrMore = exports.fPureTakes5 = exports.fPureTakes4 = exports.fPureTakes3 = exports.fPureTakes2 = exports.fPureTakesOne = undefined;
+exports.fnOrError = exports.fPureTakesTwoOrMore = exports.fPureTakesOneOrMore = exports.fPureTakes5 = exports.fPureTakes4 = exports.fPureTakes3 = exports.fPureTakes2 = exports.fPureTakesOne = undefined;
 
 var _typeOf = require('./_typeOf');
 
@@ -39,6 +39,17 @@ var fPureTakesOne = exports.fPureTakesOne = function fPureTakesOne(name) {
         }
 
         return f[name].apply(f, args);
+    };
+},
+    fPureTakesTwoOrMore = exports.fPureTakesTwoOrMore = function fPureTakesTwoOrMore(name) {
+    return function (f, a, b) {
+        for (var _len2 = arguments.length, args = Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
+            args[_key2 - 3] = arguments[_key2];
+        }
+
+        var _f$name;
+
+        return (_f$name = f[name]).call.apply(_f$name, [null, a, b].concat(args));
     };
 },
     fnOrError = exports.fnOrError = function fnOrError(symbolName, f) {

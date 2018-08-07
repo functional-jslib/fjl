@@ -1,27 +1,23 @@
 /**
  * Created by elyde on 12/25/2016.
+ * @file test-objectOps.js
+ * @description Tests for 'objectOps' module.
  */
-/**
- * Created by elyde on 11/25/2016.
- */
-import {assert, expect} from 'chai';
 import {apply} from '../src/functionOps';
 import {
     objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
     isUndefined, isNull, isSymbol, isMap, isSet, jsonClone,
-    fromArrayMap, toArrayMap, toArray, log, peek, error,
+    toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign,
     toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep
 } from '../src/objectOps';
-import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from "../src/uncurried/_listOps/_listOps";
+import {_foldl, _map, _and, _head, _tail, _subsequences, _unfoldr as unfoldr, _all as all} from '../src/uncurried/_listOps/_listOps';
 import {
     expectTrue, expectFalse, expectEqual, expectFunction,
-    deepCompareObjectsLeft, allYourBase, expectDeepEquals
+    allYourBase, expectInstanceOf
 } from './helpers';
-import {inspect} from 'util';
-import exampleNavHashMap from './fixtures/example_nav_hasmap';
 
 describe ('#objectOps', function () {
     const charCodeToCharArrayMap = unfoldr(
@@ -135,7 +131,7 @@ describe ('#objectOps', function () {
     describe('#isFunction', function () {
         it('should return true if value is a function', function () {
             [(() => undefined), function () {}]
-                .forEach(value => expect(value).to.be.instanceOf(Function));
+                .forEach(value => expect(value).toBeInstanceOf(Function));
         });
         it('should return `false` when value is not a function', function () {
             [-1, 0, 1, [], {}, 'abc']
@@ -189,8 +185,8 @@ describe ('#objectOps', function () {
             expectTrue(isString(String('hello')));
         });
         it ('should return `false` when given value is not a stringOps', () => {
-            expect(isString(function () {})).to.equal(false);
-            expect(isString(NaN)).to.equal(false);
+            expect(isString(function () {})).toEqual(false);
+            expect(isString(NaN)).toEqual(false);
         });
     });
 
@@ -278,7 +274,7 @@ describe ('#objectOps', function () {
         });
         it ('should return false when parameters two is not of type parameter one', function () {
             expectFalse(instanceOf(Function, {}));
-        })
+        });
     });
 
     describe('#assignDeep', function () {
@@ -333,7 +329,7 @@ describe ('#objectOps', function () {
         });
 
         it ('should not modify objects other than the first object passed in', function () {
-            expectTrue(deepCompareObjectsLeft(clonedObj, obj));
+            expectEqual(clonedObj, obj);
             // @todo do a more full proof check here
         });
     });
@@ -366,13 +362,12 @@ describe ('#objectOps', function () {
                 .map(word => result1.hasOwnProperty(word) && result1[word])
                 .every(result => result));
 
-            expectTrue(deepCompareObjectsLeft(obj2, result1));
+            expectEqual(Object.assign({}, randomObj, obj2, clonedObj), result1);
 
-            expectTrue(deepCompareObjectsLeft(clonedObj, result1));
         });
 
         it ('should not modify objects other than the first object passed in', function () {
-            expectTrue(deepCompareObjectsLeft(clonedObj, obj));
+            expectEqual(clonedObj, obj);
             // @todo do a more full proof check here
         });
     });
@@ -450,26 +445,26 @@ describe ('#objectOps', function () {
 
     describe ('#jsonClone', function () {
         it ('should be a function', function () {
-            expect(jsonClone).to.be.instanceOf(Function);
+            expectInstanceOf(jsonClone, Function);
         });
         // it ('should return results the same as `JSON.parse(JSON.stringify(...))`', () => {
-            // expect(expectDeepEquals(jsonClone(allYourBase), allYourBase)).to.equal(true);
+            // expect(expectEqual(jsonClone(allYourBase), allYourBase)).toEqual(true);
         // });
     });
 
     describe ('#toArray', function () {
         test ('should be a function', function () {
-            expect(toArray).to.be.instanceOf(Function);
+            expect(toArray).toBeInstanceOf(Function);
         });
         test ('should return an empty array for `null` and/or `undefined`', () => {
-            [null, undefined].forEach(x => expect(toArray(x)).to.be.instanceOf(Array));
+            [null, undefined].forEach(x => expect(toArray(x)).toBeInstanceOf(Array));
         });
         // @todo add more extensive tests here
     });
 
     describe ('#log', function () {
         it ('should be a function', function () {
-            expect(typeof log).to.equal('function');
+            expect(typeof log).toEqual('function');
         });
         // it ('should have more tests');
         // @todo add more extensive tests here
@@ -477,7 +472,7 @@ describe ('#objectOps', function () {
 
     describe ('#error', function () {
         it ('should be a function', function () {
-            expect(typeof error).to.equal('function');
+            expect(typeof error).toEqual('function');
         });
         // it ('should have more tests');
         // @todo add more extensive tests here
@@ -485,31 +480,31 @@ describe ('#objectOps', function () {
 
     describe ('#peek', function () {
         it ('should be a function', function () {
-            expect(peek).to.be.instanceOf(Function);
+            expect(peek).toBeInstanceOf(Function);
         });
         it ('should return last arg passed in when being called with one or more args.', function () {
             _subsequences('abcde').concat([
                 [99], [true], [undefined], [null], ['Output tested from `peek`']
             ]).forEach(xs => {
-                expect(peek.apply(null, xs)).to.equal(xs.pop());
+                expect(peek.apply(null, xs)).toEqual(xs.pop());
             });
         });
     });
 
-    describe ('#toArrayMap, #toAssocList', function () {
+    describe ('#toAssocList, #toAssocList', function () {
         test ('should convert an object to an array map', () => {
             // Ensure map was converted to array map properly
             expect(all(([charCode, char], ind) => {
                     const [charCode1, char1] = charCodeToCharArrayMap[ind];
                     return `${charCode1}` === charCode && char1 === char;
-                }, toArrayMap(charCodeToCharMap)
+                }, toAssocList(charCodeToCharMap)
             ))
-                .to.equal(true);
+                .toEqual(true);
         });
         test ('should return an empty array when receiving `{}`, `null`, or `undefined`', () => {
-            const result = toArrayMap({});
-            expect(result).to.be.instanceOf(Array);
-            expect(result.length).to.equal(0);
+            const result = toAssocList({});
+            expect(result).toBeInstanceOf(Array);
+            expect(result.length).toEqual(0);
         });
     });
 
@@ -534,43 +529,43 @@ describe ('#objectOps', function () {
             verifyResult = (assocList, obj) => {
                 assocList.forEach(([key, value]) => {
                     if (obj[key].constructor === obj.constructor) {
-                        expect(value).to.be.instanceOf(Array);
+                        expect(value).toBeInstanceOf(Array);
                         return verifyResult(value, obj[key]);
                     }
                     switch (obj[key].constructor) {
                         case Array:
                         case Object:
-                            expect(value).to.deep.equal(obj[key]);
+                            expect(value).toEqual(obj[key]);
                             break;
                         default:
-                            expect(value).to.equal(obj[key]);
+                            expect(value).toEqual(obj[key]);
                             break;
                     }
                 });
             };
             verifyResult(result, allYourBase);
-            expect(result).to.be.instanceOf(Array);
-            expect(result).to.deep.equal(expected);
+            expect(result).toBeInstanceOf(Array);
+            expect(result).toEqual(expected);
         });
         it ('should throw an error when receiving `null`, or `undefined`.', () => {
-            [null, undefined].forEach(x => assert.throws(() => toAssocListDeep(x), Error));
+            [null, undefined].forEach(x => expect(() => toAssocListDeep(x)).toThrow());
         });
     });
 
-    describe ('#fromArrayMap, #fromAssocList', function () {
+    describe ('#fromAssocList, #fromAssocList', function () {
         test ('should return an object from an array map', () => {
-            const result = fromArrayMap(charCodeToCharArrayMap);
-            expect(isObject(result)).to.equal(true);
+            const result = fromAssocList(charCodeToCharArrayMap);
+            expect(isObject(result)).toEqual(true);
             expect(
                 all(([charCode, char]) =>
                     result[charCode] === char,
                     charCodeToCharArrayMap
                 )
             )
-                .to.equal(true);
+                .toEqual(true);
         });
         test ('should throw an error when receiving `null`, or `undefined`', () => {
-            [null, undefined].forEach(x => assert.throws(() => fromArrayMap(x), Error));
+            [null, undefined].forEach(x => expect(() => fromAssocList(x)).toThrow());
         });
     });
 
@@ -593,12 +588,12 @@ describe ('#objectOps', function () {
                 ]],
             result = fromAssocListDeep(assocList);
             // log(inspect(result, {depth: 11}));
-            expect(result).to.deep.equal(allYourBase);
+            expect(result).toEqual(allYourBase);
         });
         it ('should throw an error when receiving anything other than an array or reducible', () => {
-            assert.throws(fromAssocListDeep, Error);
+            expect(fromAssocListDeep).toThrow();
             [null, undefined, 99, true, Symbol('99'), 'hello'].forEach(x =>
-                assert.throws(() => fromAssocListDeep(x), Error)
+                expect(() => fromAssocListDeep(x)).toThrow()
             );
         });
     });
