@@ -49,5 +49,5 @@ define(['exports', '../jsPlatform/function', './curry'], function (exports, _fun
    * @param fn {Function}
    * @returns {Function}
    */
-  negateFN = exports.negateFN = fn => (...args) => !(0, _function.apply)(fn, args);
+  negateFN = exports.negateFN = fn => (0, _curry.curry2)((...args) => !(0, _function.apply)(fn, args));
 });

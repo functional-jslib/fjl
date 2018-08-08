@@ -9,6 +9,8 @@ var _is = require('./is');
 
 var _object = require('../jsPlatform/object');
 
+var _curry = require('../function/curry');
+
 var
 /**
  * Merges all objects down into one (takes two or more args).
@@ -17,7 +19,7 @@ var
  * @param [objs] {...{Object}} - One or more objects to merge onto `obj0`.
  * @returns {Object}
  */
-assignDeep = exports.assignDeep = function assignDeep(obj0) {
+assignDeep = exports.assignDeep = (0, _curry.curry2)(function (obj0) {
     for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         objs[_key - 1] = arguments[_key];
     }
@@ -37,4 +39,4 @@ assignDeep = exports.assignDeep = function assignDeep(obj0) {
             return agg;
         }, topAgg);
     }, obj0);
-};
+});

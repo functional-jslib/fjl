@@ -78,7 +78,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
-    lengths = exports.lengths = (...lists) => (0, _object.length)(lists) ? (0, _map2.default)(_object.length, lists) : [],
+    lengths = exports.lengths = (0, _curry.curry2)((...lists) => (0, _map2.default)(_object.length, lists)),
 
 
     /**
@@ -86,11 +86,11 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    lengthsToSmallest = exports.lengthsToSmallest = (...lists) => {
+    lengthsToSmallest = exports.lengthsToSmallest = (0, _curry.curry2)((...lists) => {
         const listLengths = (0, _function.apply)(lengths, lists),
               smallLen = Math.min.apply(Math, listLengths);
         return (0, _map2.default)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list), lists);
-    },
+    }),
 
 
     /**

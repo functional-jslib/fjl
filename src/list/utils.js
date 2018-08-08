@@ -8,7 +8,7 @@ import {slice}          from '../jsPlatform/list';      // un-curried version go
 import {length}         from '../jsPlatform/object';
 import {alwaysFalse}    from '../boolean';
 import map              from './map';
-import {curry}          from '../function/curry';
+import {curry, curry2}  from '../function/curry';
 
 export * from './aggregation';
 
@@ -59,19 +59,19 @@ export const
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
-    lengths = (...lists) => length(lists) ? map(length, lists) : [],
+    lengths = curry2((...lists) => map(length, lists)),
 
     /**
      * @function module:listUtils.lengthsToSmallest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    lengthsToSmallest = (...lists) => {
+    lengthsToSmallest = curry2((...lists) => {
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
             sliceTo(smallLen, list) : sliceCopy(list), lists);
-    },
+    }),
 
     /**
      * Reduces until predicate.

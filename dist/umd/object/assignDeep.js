@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './is', '../jsPlatform/object'], factory);
+        define(['exports', './is', '../jsPlatform/object', '../function/curry'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./is'), require('../jsPlatform/object'));
+        factory(exports, require('./is'), require('../jsPlatform/object'), require('../function/curry'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.is, global.object);
+        factory(mod.exports, global.is, global.object, global.curry);
         global.assignDeep = mod.exports;
     }
-})(this, function (exports, _is, _object) {
+})(this, function (exports, _is, _object, _curry) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -25,7 +25,7 @@
      * @param [objs] {...{Object}} - One or more objects to merge onto `obj0`.
      * @returns {Object}
      */
-    assignDeep = exports.assignDeep = function assignDeep(obj0) {
+    assignDeep = exports.assignDeep = (0, _curry.curry2)(function (obj0) {
         for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             objs[_key - 1] = arguments[_key];
         }
@@ -45,5 +45,5 @@
                 return agg;
             }, topAgg);
         }, obj0);
-    };
+    });
 });

@@ -4,7 +4,6 @@
  * @note ensure expected types (either explicitly or implicitly) are being returned where necessary.
  */
 
-import {assert, expect} from 'chai';
 import {compose, negateF2} from '../src/function';
 import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/object';
@@ -23,6 +22,7 @@ import {
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf,
+    forEach,
     filter, sum, product, maximum, minimum, nub, remove, insert, insertBy,
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, sortBy,
     complement, difference, union, intersect, intersectBy, groupBy,
@@ -33,8 +33,7 @@ import {
     __,
     shallowCompareOnLeft,
     expectEqual,
-    expectShallowEquals,
-    expectDeepEquals,
+    expectError,
     expectLength,
     expectTrue,
     expectFalse,
@@ -43,7 +42,7 @@ import {
     alphabetString
 } from './helpers';
 
-describe ('#list', function () {
+describe ('#list', () => {
 
     const strToArray = split(''),
         generalEqualityCheck = (a, b) => a === b,
@@ -71,158 +70,158 @@ describe ('#list', function () {
             return out;
         };
 
-    describe ('#append', function () {
+    describe ('#append', () => {
         const unfoldRBy4 = list => unfoldr(remainder =>
                 remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
             , list),
             arrayParts= unfoldRBy4(alphabetArray),
             stringParts = unfoldRBy4(alphabetString);
 
-        it ('should be able to append two lists.', function () {
-            expectShallowEquals(append.apply(null, arrayParts), alphabetArray);
-            expectShallowEquals(append.apply(null, stringParts), alphabetString);
-            expectShallowEquals(append(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
+        it ('should be able to append two lists.', () => {
+            expectEqual(append.apply(null, arrayParts), alphabetArray);
+            expectEqual(append.apply(null, stringParts), alphabetString);
+            expectEqual(append(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
             expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
         });
-        it ('should return the copy of the original list when appending to an empty list', function () {
-            expectShallowEquals(append(alphabetArray, []), alphabetArray);
+        it ('should return the copy of the original list when appending to an empty list', () => {
+            expectEqual(append(alphabetArray, []), alphabetArray);
             expectEqual(append(alphabetString, ''), alphabetString);
         });
-        it ('should return an empty list when appending empty lists', function () {
+        it ('should return an empty list when appending empty lists', () => {
             expectEqual(append('', '', ''), '');
             expectEqual(append('', ''), '');
-            expectShallowEquals(append([], [], []), []);
-            expectShallowEquals(append([], []), []);
+            expectEqual(append([], [], []), []);
+            expectEqual(append([], []), []);
         });
-        it ('should throw an error when receiving Nothing', function () {
-            // assert.throws(append, Error);
-            assert.throws(() => append(null, null), Error);
-            assert.throws(() => append(undefined, undefined), Error);
-            assert.throws(() => append(null, []), Error);
-            assert.throws(() => append(undefined, []), Error);
+        it ('should throw an error when receiving Nothing', () => {
+            // expectError(append);
+            expectError(() => append(null, null));
+            expectError(() => append(undefined, undefined));
+            expectError(() => append(null, []));
+            expectError(() => append(undefined, []));
         });
     });
 
-    describe ('#head', function () {
-        it ('should return the first item in an list and/or string.', function () {
+    describe ('#head', () => {
+        it ('should return the first item in an list and/or string.', () => {
             expectEqual(head('Hello'), 'H');
             expectEqual(head(split('', 'Hello')), 'H');
         });
-        it ('should return `undefined` when an empty list and/or string is passed in', function () {
+        it ('should return `undefined` when an empty list and/or string is passed in', () => {
             expectEqual(undefined, head([]));
             expectEqual(undefined, head(''));
         });
-        it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(head, Error);
+        it ('should throw an error when no parameter is passed in', () => {
+            expectError(head);
         });
     });
 
-    describe ('#last', function () {
-        it ('should return the last item in an list and/or string.', function () {
+    describe ('#last', () => {
+        it ('should return the last item in an list and/or string.', () => {
             const word = 'Hello';
             compose(expectEqual('o'), last)(word);
             compose(expectEqual('o'), last, strToArray)(word);
         });
-        it ('should return `undefined` when an empty list is passed in', function () {
+        it ('should return `undefined` when an empty list is passed in', () => {
             expectEqual(undefined, last([]));
             expectEqual(undefined, last(''));
         });
-        it ('should throw an error when no parameters is passed in', function () {
-            assert.throws(last, Error);
+        it ('should throw an error when no parameters is passed in', () => {
+            expectError(last);
         });
     });
 
-    describe ('#init', function () {
-        it ('should return everything except the last item of an list and/or string', function () {
+    describe ('#init', () => {
+        it ('should return everything except the last item of an list and/or string', () => {
             compose(expectEqual('orange'), intercalate(''), init, strToArray)('oranges');
             compose(expectEqual('orange'), init)('oranges');
         });
-        it ('should return an empty list when an empty list and/or string is passed in', function () {
-            compose(expectEqual(0), length, init)([]);
-            compose(expectEqual(0), length, init)('');
+        it ('should return an empty list when an empty list and/or string is passed in', () => {
+            expectEqual(init([]), []);
+            expectEqual(init(''), '');
         });
-        it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(init, Error);
+        it ('should throw an error when no parameter is passed in', () => {
+            expectError(init);
         });
     });
 
-    describe ('#tail', function () {
-        it ('should return everything except the last item of an list', function () {
+    describe ('#tail', () => {
+        it ('should return everything except the last item of an list', () => {
             compose(expectEqual('ello'), intercalate(''), tail, strToArray)('hello');
             compose(expectEqual('ello'), tail)('hello');
         });
-        it ('should return an empty list when receiving an empty list', function () {
-            compose(expectEqual(0), length, tail)([]);
-            compose(expectEqual(0), length, tail)('');
+        it ('should return an empty list when receiving an empty list', () => {
+            expectEqual(tail([]).length, 0);
+            expectEqual(tail('').length, 0);
         });
-        it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(tail, Error);
+        it ('should throw an error when no parameter is passed in', () => {
+            expectError(tail);
         });
     });
 
-    describe ('#uncons', function () {
-        it ('should return the "head" and "tail" of a list in a two item array.', function () {
-            expectShallowEquals(uncons('hello'), ['h', 'ello']);
-            expectDeepEquals(uncons(split('', 'hello')), ['h', split('', 'ello')]);
+    describe ('#uncons', () => {
+        it ('should return the "head" and "tail" of a list in a two item array.', () => {
+            expectEqual(uncons('hello'), ['h', 'ello']);
+            expectEqual(uncons(split('', 'hello')), ['h', split('', 'ello')]);
         });
-        it ('should return an empty tail when there\'s only one item in list.', function () {
-            expectShallowEquals(uncons('a'), ['a', '']);
-            expectDeepEquals(uncons([0]), [0, []]);
+        it ('should return an empty tail when there\'s only one item in list.', () => {
+            expectEqual(uncons('a'), ['a', '']);
+            expectEqual(uncons([0]), [0, []]);
         });
-        it ('should return `undefined` for empty lists.', function () {
+        it ('should return `undefined` for empty lists.', () => {
             expectEqual(uncons(''), undefined);
             expectEqual(uncons([]), undefined);
         });
-        it ('should return `undefined` when no value is passed in or a falsy value is passed in', function () {
+        it ('should return `undefined` when no value is passed in or a falsy value is passed in', () => {
             [null, undefined, 0, false, '']
-                .forEach(x => expect(uncons(x)).to.equal(undefined));
+                .forEach(x => expect(uncons(x)).toEqual(undefined));
         });
     });
 
-    describe ('#isEmpty (a.k.a. #`null`)', function () {
-        it ('should return `true` when a list is empty.', function () {
+    describe ('#isEmpty (a.k.a. #`null`)', () => {
+        it ('should return `true` when a list is empty.', () => {
             expectTrue(isEmptyList([]));
             expectTrue(isEmptyList(''));
         });
-        it ('should return `false` when a list is not empty.', function () {
+        it ('should return `false` when a list is not empty.', () => {
             expectFalse(isEmptyList(['a', 'b', 'c']));
             expectFalse(isEmptyList('abc'));
         });
-        it ('should throw an error when receiving something that is list like (doesn\'t have a `length` prop', function () {
-            assert.throws(() => isEmptyList(null), Error);
-            assert.throws(() => isEmptyList(undefined), Error);
-            assert.throws(isEmptyList, Error);
+        it ('should throw an error when receiving something that is list like (doesn\'t have a `length` prop', () => {
+            expectError(() => isEmptyList(null));
+            expectError(() => isEmptyList(undefined));
+            expectError(isEmptyList);
         });
     });
 
-    describe ('#length', function () {
-        it ('is should return the length of any item that has a `length` property', function () {
+    describe ('#length', () => {
+        it ('is should return the length of any item that has a `length` property', () => {
             expectTrue(
                 all(item => length(item[0]) === item[1],
                     [[[], 0], ['abc', 3], [(a, b, c) => a + b + c, 3]])
             );
         });
-        it ('should return `undefined` for items that don\'t have a `length` property', function () {
+        it ('should return `undefined` for items that don\'t have a `length` property', () => {
             expectEqual(length({}), undefined);
             expectEqual(length(0), undefined);
             expectEqual(length(false), undefined);
             expectEqual(length(true), undefined);
         });
-        it ('should throw an error when `undefined` or `null` is passed in', function () {
-            assert.throws(length, Error);
-            assert.throws(() => length(null), Error);
+        it ('should throw an error when `undefined` or `null` is passed in', () => {
+            expectError(length);
+            expectError(() => length(null));
         });
     });
 
-    describe ('#map', function () {
-        it ('should be able to map a function over a list.', function () {
+    describe ('#map', () => {
+        it ('should be able to map a function over a list.', () => {
             const word = 'hello',
                 op = char => char + 'a';
-            expectShallowEquals(
+            expectEqual(
                 map(op, split('', word)),
                 ['ha', 'ea', 'la', 'la', 'oa'] );
         });
-        it ('should be able to map a function over a object.', function () {
+        it ('should be able to map a function over a object.', () => {
             const word = 'hello',
                 op = char => char + 'a',
                 objReductionOp = (agg, x, ind) => {
@@ -235,63 +234,62 @@ describe ('#list', function () {
             // Ensure values in result end with 'aa' (as dictated by `op`);
             expectTrue(Object.keys(result).every(key => /walla$/.test(result[key])));
         });
-        it ('should return an empty list when receiving an empty list', function () {
-            expectShallowEquals(map(x => x, []), []);
-            expectShallowEquals(map(x => x, ''), '');
+        it ('should return an empty list when receiving an empty list', () => {
+            expectEqual(map(x => x, []), []);
         });
-        it ('should throw an error when incoming value is not a type instance', function () {
-            assert.throws(() => map(x => x, null), Error);
-            assert.throws(() => map(x => x, undefined), Error);
+        it ('should throw an error when incoming value is not a type instance', () => {
+            expectError(() => map(x => x, null));
+            expectError(() => map(x => x, undefined));
         });
     });
 
-    describe ('#reverse', function () {
-        it ('should reverse a list passed in.', function () {
+    describe ('#reverse', () => {
+        it ('should reverse a list passed in.', () => {
             const word = 'hello';
-            expectShallowEquals(reverse(split('', word)), split('', 'olleh'));
+            expectEqual(reverse(split('', word)), split('', 'olleh'));
         });
-        it ('should return an empty list when receiving an empty list', function () {
-            expectShallowEquals(reverse([]), []);
+        it ('should return an empty list when receiving an empty list', () => {
+            expectEqual(reverse([]), []);
         });
-        it ('should throw an error when receiving no value', function () {
-            assert.throws(reverse, Error);
-            assert.throws(() => reverse(undefined), Error);
-            assert.throws(() => reverse(null), Error);
+        it ('should throw an error when receiving no value', () => {
+            expectError(reverse);
+            expectError(() => reverse(undefined));
+            expectError(() => reverse(null));
         });
     });
 
-    describe ('#intersperse', function () {
-        it ('should be able to inject a list (string or array) in-between the items of a list of the same type.', function () {
+    describe ('#intersperse', () => {
+        it ('should be able to inject a list (string or array) in-between the items of a list of the same type.', () => {
             const result1 = intersperse(', ', alphabetArray).join('');
             expectEqual(result1, alphabetArray.join(', '));
         });
-        it ('should return a list with the same item when the list has a length of `1`', function () {
-            expectShallowEquals(intersperse(', ', ['a']), ['a']);
+        it ('should return a list with the same item when the list has a length of `1`', () => {
+            expectEqual(intersperse(', ', ['a']), ['a']);
         });
-        it ('should return an empty list when receiving an empty list', function () {
-            expectShallowEquals(intersperse('', []), []);
+        it ('should return an empty list when receiving an empty list', () => {
+            expectEqual(intersperse('', []), []);
         });
     });
 
-    describe ('#intercalate', function () {
-        it ('should intercalate a list within another list and then perform concat on the result', function () {
+    describe ('#intercalate', () => {
+        it ('should intercalate a list within another list and then perform concat on the result', () => {
             const result1 = intercalate(', ', alphabetArray);
             expectEqual(result1, alphabetArray.join(', '));
         });
-        it ('should return a list with the same item when the list has a length of `1`', function () {
-            expectShallowEquals(intercalate(', ', [['a']]), ['a']); // Ensure list is flattened one level
+        it ('should return a list with the same item when the list has a length of `1`', () => {
+            expectEqual(intercalate(', ', [['a']]), [['a']]); // Ensure list is flattened one level
         });
-        it ('should return an empty list when receiving an empty list', function () {
-            expectShallowEquals(intercalate('', []), []);
-            expectShallowEquals(intercalate('', [[]]), []); // Ensures list is flattened one level
+        it ('should return an empty list when receiving an empty list', () => {
+            expectEqual(intercalate('', []), []);
+            expectEqual(intercalate('', [[]]), [[]]); // Ensures list is flattened one level
         });
     });
 
-    describe ('#transpose', function () {
+    describe ('#transpose', () => {
         const result1 = transpose([[1,2,3],[4,5,6]]),
             result2 = transpose([[10,11],[20],[],[30,31,32]]);
         it ('should transpose a list of lists into a rotated list of lists (from columns and rows to rows and' +
-            ' columns and vice versa).', function () {
+            ' columns and vice versa).', () => {
             expectTrue(all(
                 tuple =>
                     all((list, ind) => all((x, ind2) => x === tuple[1][ind][ind2], list),
@@ -302,18 +300,18 @@ describe ('#list', function () {
                 ]
             ));
         });
-        it ('should ignore empty lists in the transposition process and not add them to the resulting list.', function () {
+        it ('should ignore empty lists in the transposition process and not add them to the resulting list.', () => {
             expectTrue(all(length, result1));
             expectTrue(all(length, result2));
         });
-        it ('should return an empty list when receiving one or when items contained are empty', function () {
-            expectShallowEquals(transpose([[], [], []]), []);
-            expectShallowEquals(transpose([]), []);
+        it ('should return an empty list when receiving one or when items contained are empty', () => {
+            expectEqual(transpose([[], [], []]), []);
+            expectEqual(transpose([]), []);
         });
     });
 
-    describe ('#subsequences', function () {
-        it ('should return all sub-sequences of a sequence', function () {
+    describe ('#subsequences', () => {
+        it ('should return all sub-sequences of a sequence', () => {
             const candidates = ['abc', 'abc'.split('')],
                 results = candidates.map(subsequences),
                 expectedLen = Math.pow(2, candidates[0].length);
@@ -328,11 +326,11 @@ describe ('#list', function () {
             // @see quick reference on subsequence algorithms
             // https://discuss.codechef.com/questions/17235/print-all-possible-subsequences-of-string-using-dynamic-programming
         });
-        it ('should return a list with an empty list when receiving an empty list', function () {
+        it ('should return a list with an empty list when receiving an empty list', () => {
         });
     });
 
-    describe ('#permutations', function () {
+    describe ('#permutations', () => {
 
         const areAllPermutesUnique = permutes => {
                 const xs = permutes,
@@ -361,7 +359,7 @@ describe ('#list', function () {
                 return lastPermutes;
             };
 
-        it ('Should return unique permutations for a given set of items', function () {
+        it ('Should return unique permutations for a given set of items', () => {
             const lists = 'abcd'.split('').reduceRight((agg, item, ind, list) =>
                 agg.concat([list.slice(ind)]), []); // I know laziness lol
             expectLength(4, lists);
@@ -378,8 +376,8 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#foldl', function () {
-        it ('should fold a `Foldable` (list, etc.) into some value', function () {
+    describe ('#foldl', () => {
+        it ('should fold a `Foldable` (list, etc.) into some value', () => {
             const phrase = 'hello world',
                 phraseLen = length(phrase),
                 phraseIndCount = phraseLen - 1,
@@ -400,7 +398,7 @@ describe ('#list', function () {
                 foldl((agg, item) => agg * item, 1, [1, 2, 3, 4, 5]),
                 120
             );
-            expectShallowEquals(
+            expectEqual(
                 foldl((agg, item, ind) => {
                     agg.push(item + getAppendage(ind));
                     return agg;
@@ -409,19 +407,19 @@ describe ('#list', function () {
             );
         });
 
-        it ('should return the zero value when an empty list is passed in', function () {
+        it ('should return the zero value when an empty list is passed in', () => {
             expectEqual(foldl((agg, item) => agg + item, 'a', ''), 'a');
-            expectShallowEquals(foldl((agg, item) => agg + item, [], []), []);
+            expectEqual(foldl((agg, item) => agg + item, [], []), []);
         });
 
-        it ('should throw an error when `null` or `undefined` are passed in as the list', function () {
-            assert.throws(() => foldl((agg, item) => agg + item, 'a', null), Error);
-            assert.throws(() => foldl((agg, item) => agg + item, 'a', undefined), Error);
+        it ('should throw an error when `null` or `undefined` are passed in as the list', () => {
+            expectError(() => foldl((agg, item) => agg + item, 'a', null));
+            expectError(() => foldl((agg, item) => agg + item, 'a', undefined));
         });
     });
 
-    describe ('#foldl1', function () {
-        it ('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', function () {
+    describe ('#foldl1', () => {
+        it ('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', () => {
             const phrase = 'hello world',
                 phraseLen = length(phrase),
                 phraseIndCount = phraseLen - 1,
@@ -442,7 +440,7 @@ describe ('#list', function () {
                 foldl1((agg, item) => agg * item, [1, 2, 3, 4, 5]),
                 120
             );
-            expectShallowEquals(
+            expectEqual(
                 foldl1((agg, item, ind) => {
                     agg += getAppendage(ind) + item;
                     return agg;
@@ -450,13 +448,13 @@ describe ('#list', function () {
                 expectedTransform.join('')
             );
         });
-        it ('should return the zero value when an empty list is passed in', function () {
-            expectShallowEquals(foldl1((agg, item) => agg + item, []), []);
+        it ('should return the zero value when an empty list is passed in', () => {
+            expectEqual(foldl1((agg, item) => agg + item, []), []);
         });
     });
 
-    describe ('#foldr', function () {
-        it ('should fold a `Foldable` (list, etc.) into some value', function () {
+    describe ('#foldr', () => {
+        it ('should fold a `Foldable` (list, etc.) into some value', () => {
             const phrase = 'hello world',
                 phraseLen = length(phrase),
                 phraseIndCount = phraseLen - 1,
@@ -477,7 +475,7 @@ describe ('#list', function () {
                 foldr((agg, item) => agg * item, 1, [1, 2, 3, 4, 5]),
                 120
             );
-            expectShallowEquals(
+            expectEqual(
                 foldr((agg, item, ind) => {
                     agg.push(item + getAppendage(ind));
                     return agg;
@@ -485,18 +483,18 @@ describe ('#list', function () {
                 expectedTransform
             );
         });
-        it ('should return the zero value when an empty list is passed in', function () {
+        it ('should return the zero value when an empty list is passed in', () => {
             expectEqual(foldr((agg, item) => agg + item, 'a', ''), 'a');
-            expectShallowEquals(foldr((agg, item) => agg + item, [], []), []);
+            expectEqual(foldr((agg, item) => agg + item, [], []), []);
         });
-        it ('should throw an error when `null` or `undefined` are passed in as the list', function () {
-            assert.throws(() => foldr((agg, item) => agg + item, 'a', null), Error);
-            assert.throws(() => foldr((agg, item) => agg + item, 'a', undefined), Error);
+        it ('should throw an error when `null` or `undefined` are passed in as the list', () => {
+            expectError(() => foldr((agg, item) => agg + item, 'a', null));
+            expectError(() => foldr((agg, item) => agg + item, 'a', undefined));
         });
     });
 
-    describe ('#foldr1', function () {
-        it ('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', function () {
+    describe ('#foldr1', () => {
+        it ('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', () => {
             const phrase = 'hello world',
                 phraseLen = length(phrase),
                 phraseIndCount = phraseLen - 1,
@@ -517,7 +515,7 @@ describe ('#list', function () {
                 foldr1((agg, item) => agg * item, [1, 2, 3, 4, 5]),
                 120
             );
-            expectShallowEquals(
+            expectEqual(
                 foldr1((agg, item, ind) => {
                     agg += getAppendage(ind) + item;
                     return agg;
@@ -525,182 +523,182 @@ describe ('#list', function () {
                 expectedTransform.join('')
             );
         });
-        it ('should return the zero value when an empty list is passed in', function () {
-            expectShallowEquals(foldr1((agg, item) => agg + item, []), []);
+        it ('should return the zero value when an empty list is passed in', () => {
+            expectEqual(foldr1((agg, item) => agg + item, []), []);
         });
     });
 
-    describe ('#concat', function () {
-        it ('should concatenate a list of lists into a list.', function () {
+    describe ('#concat', () => {
+        it ('should concatenate a list of lists into a list.', () => {
             const  listOfLists = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']],
                 altListOfLists = ['abc', 'def', 'ghi'];
-            expectShallowEquals(concat(listOfLists), listOfLists.reduce((agg, item) => agg.concat(item)));
-            expectShallowEquals(concat(altListOfLists), altListOfLists.reduce((agg, item) => agg + item));
+            expectEqual(concat(listOfLists), listOfLists.reduce((agg, item) => agg.concat(item)));
+            expectEqual(concat(altListOfLists), altListOfLists.reduce((agg, item) => agg + item));
         });
-        it ('should return an empty list when receiving an empty list or a list of empty lists', function () {
-            expectShallowEquals(concat([]), []);
-            expectShallowEquals(concat([[], [], []]), []);
+        it ('should return an empty list when receiving an empty list or a list of empty lists', () => {
+            expectEqual(concat([]), []);
+            expectEqual(concat([[], [], []]), []);
         });
-        it ('should throw an error when receiving nothing', function () {
-            assert.throws(concat, Error);
-            assert.throws(() => concat(null), Error);
-            assert.throws(() => concat(undefined), Error);
+        it ('should throw an error when receiving nothing', () => {
+            expectError(concat);
+            expectError(() => concat(null));
+            expectError(() => concat(undefined));
         });
     });
 
-    describe ('#concatMap', function () {
+    describe ('#concatMap', () => {
         const id = x => x;
-        it ('should map a function on a list and concatenate lists in resulting list into a list.', function () {
+        it ('should map a function on a list and concatenate lists in resulting list into a list.', () => {
             const charCodeToCharOp = charCode => String.fromCharCode(charCode),
                 charCodeRange = alphabetCharCodeRange;
             // @investigate is babel shimming String.fromCharCode;
             //  When passing this function direct to `[].map` it returns a weird result (seems like it's returning
             //  an instance of `String` using `new` and it's constructor)?
-            expectShallowEquals(concatMap(charCodeToCharOp, charCodeRange), alphabetArray.join(''));
-            expectShallowEquals(concatMap(charCode => [String.fromCharCode(charCode)], charCodeRange), alphabetArray);
+            expectEqual(concatMap(charCodeToCharOp, charCodeRange), alphabetArray.join(''));
+            expectEqual(concatMap(charCode => [String.fromCharCode(charCode)], charCodeRange), alphabetArray);
         });
-        it ('should return an empty list when receiving an empty list or a list of empty lists', function () {
-            expectShallowEquals(concatMap(id, []), []);
-            expectShallowEquals(concatMap(id, [[], [], []]), []);
+        it ('should return an empty list when receiving an empty list or a list of empty lists', () => {
+            expectEqual(concatMap(id, []), []);
+            expectEqual(concatMap(id, [[], [], []]), []);
         });
-        it ('should throw an error when receiving `undefined` or `null` in it\'s list position', function () {
-            assert.throws(() => concatMap(id, null), Error);
-            assert.throws(() => concatMap(id, undefined), Error);
+        it ('should throw an error when receiving `undefined` or `null` in it\'s list position', () => {
+            expectError(() => concatMap(id, null));
+            expectError(() => concatMap(id, undefined));
         });
     });
 
-    describe ('#and', function () {
-        it ('should return `true` when all items of a container are "truthy".', function () {
+    describe ('#and', () => {
+        it ('should return `true` when all items of a container are "truthy".', () => {
             expectTrue(and(['a', 1, 99, true, (() => null), {}, []]));
         });
-        it ('should return `false` when not all items of a container are "truthy".', function () {
+        it ('should return `false` when not all items of a container are "truthy".', () => {
             expectFalse(and(['a', 1, 0, true, (() => null), {}, []]));
         });
-        it ('should return `false` when receiving an empty list or nothing.', function () {
+        it ('should return `false` when receiving an empty list or nothing.', () => {
             expectFalse(and(''));
             expectFalse(and(['']));
             expectFalse(and([null]));
             expectFalse(and([undefined]));
             expectFalse(and([false]));
         });
-        it ('should an error when receiving nothing', function () {
-            assert.throws(() => and(undefined), Error);
-            assert.throws(() => and(null), Error);
+        it ('should an error when receiving nothing', () => {
+            expectError(() => and(undefined));
+            expectError(() => and(null));
         });
     });
 
-    describe ('#or', function () {
-        it ('should return `true` when, at least, one of the items is "truthy".', function () {
+    describe ('#or', () => {
+        it ('should return `true` when, at least, one of the items is "truthy".', () => {
             expectTrue(or([0, false, null, 1, undefined]));
         });
-        it ('should return `false` when all of the items are "falsy".', function () {
+        it ('should return `false` when all of the items are "falsy".', () => {
             expectFalse(or([0, false, null, undefined, '']));
         });
-        it ('should return `false` when an empty list is received.', function () {
+        it ('should return `false` when an empty list is received.', () => {
             expectFalse(or([]));
         });
-        it ('should throw an error when receiving nothing (`null` or `undefined`).', function () {
-            assert.throws(() => or(null), Error);
-            assert.throws(() => or(undefined), Error);
+        it ('should throw an error when receiving nothing (`null` or `undefined`).', () => {
+            expectError(() => or(null));
+            expectError(() => or(undefined));
         });
     });
 
-    describe ('#any', function () {
+    describe ('#any', () => {
         const id = x => x;
-        it ('should return `true` when any item matches predicate.', function () {
+        it ('should return `true` when any item matches predicate.', () => {
             expectTrue(any(isTruthy, [0, false, null, 1, undefined]));
             expectTrue(any(isTruthy, ['hello']));
             expectTrue(any(x => x === 'e', 'hello'));
         });
-        it ('should return `false` when no item in received items matches predicate.', function () {
+        it ('should return `false` when no item in received items matches predicate.', () => {
             expectFalse(any(isTruthy, [0, false, null, undefined, '']));
             expectFalse(any(isTruthy, [0]));
             expectFalse(any(x => x === 'e', 'avalon'));
         });
-        it ('should return `false` when an empty list is received.', function () {
+        it ('should return `false` when an empty list is received.', () => {
             expectFalse(any(id, []));
         });
-        it ('should throw an error when receiving nothing (`null` or `undefined`).', function () {
-            assert.throws(() => any(id, null), Error);
-            assert.throws(() => any(id, undefined), Error);
+        it ('should throw an error when receiving nothing (`null` or `undefined`).', () => {
+            expectError(() => any(id, null));
+            expectError(() => any(id, undefined));
         });
     });
 
-    describe ('#all', function () {
-        it ('should return true when predicate returns true for all items in list', function () {
+    describe ('#all', () => {
+        it ('should return true when predicate returns true for all items in list', () => {
             expectTrue(all(item => item, [true, true, true]));
             expectTrue(all(char => char !== 'a', 'bcdefg'));
         });
-        it ('should return `false` when predicate returns `false` for an item', function () {
+        it ('should return `false` when predicate returns `false` for an item', () => {
             expectFalse(all(item => item, [true, false, true]));
             expectFalse(all(item => item !== 'a', 'bcdaefg'));
         });
-        it ('should return `false` when an empty list is passed in', function () {
+        it ('should return `false` when an empty list is passed in', () => {
             expectFalse(all(item => item, []));
             expectFalse(all(item => item, ''));
         });
-        it ('should throw an error when nothing is passed in', function () {
-            assert.throws(() => all(item => item, null), Error);
-            assert.throws(() => all(item => item, undefined), Error);
+        it ('should throw an error when nothing is passed in', () => {
+            expectError(() => all(item => item, null));
+            expectError(() => all(item => item, undefined));
         });
     });
 
-    describe ('#sum', function () {
-        it ('should be able sum up any given list of numbers list of numbers', function () {
+    describe ('#sum', () => {
+        it ('should be able sum up any given list of numbers list of numbers', () => {
             expectEqual(sum(range(1, 5)), 15);
             expectEqual(sum(range(-5, -1)), -15);
         });
-        it ('should return `0` when receiving an empty list', function () {
+        it ('should return `0` when receiving an empty list', () => {
             expectEqual(sum(range()), 0);
         });
-        it ('should throw an error when receiving nothing (`null` or `undefined`)', function () {
-            assert.throws(() => sum(null), Error);
-            assert.throws(() => sum(undefined), Error);
-            assert.throws(sum, Error);
+        it ('should throw an error when receiving nothing (`null` or `undefined`)', () => {
+            expectError(() => sum(null));
+            expectError(() => sum(undefined));
+            expectError(sum);
         });
     });
 
-    describe ('#product', function () {
-        it ('should be able return the product of a given list', function () {
+    describe ('#product', () => {
+        it ('should be able return the product of a given list', () => {
             expectEqual(product(range(1, 5)), 120);
             expectEqual(product(range(-5, -1)), -120);
         });
-        it ('should return `0` when receiving an empty list', function () {
+        it ('should return `0` when receiving an empty list', () => {
             expectEqual(product(range()), 1);
         });
-        it ('should throw an error when receiving nothing (`null` or `undefined`)', function () {
-            assert.throws(() => product(null), Error);
-            assert.throws(() => product(undefined), Error);
+        it ('should throw an error when receiving nothing (`null` or `undefined`)', () => {
+            expectError(() => product(null));
+            expectError(() => product(undefined));
         });
     });
 
-    describe ('#maximum', function () {
-        it ('should be able return the maximum of a given list', function () {
+    describe ('#maximum', () => {
+        it ('should be able return the maximum of a given list', () => {
             expectEqual(maximum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 5);
             expectEqual(maximum(range(-5, -1).concat([-3, -5, -7])), -1);
         });
-        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
-            assert.throws(() => maximum(null), Error);
-            assert.throws(() => maximum(undefined), Error);
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', () => {
+            expectError(() => maximum(null));
+            expectError(() => maximum(undefined));
             // expectEqual(minimum([]), Infinity);
-            assert.throws(maximum, Error);
+            expectError(maximum);
         });
     });
 
-    describe ('#minimum', function () {
-        it ('should be able return the minimum of a given list', function () {
+    describe ('#minimum', () => {
+        it ('should be able return the minimum of a given list', () => {
             expectEqual(minimum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 1);
             expectEqual(minimum(range(-5, -1).concat([-3, -5, -7])), -7);
         });
-        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', function () {
-            assert.throws(() => minimum(null), Error);
-            assert.throws(() => minimum(undefined), Error);
+        it ('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', () => {
+            expectError(() => minimum(null));
+            expectError(() => minimum(undefined));
         });
     });
 
-    describe ('#mapAccumL', function () {
+    describe ('#mapAccumL', () => {
         it ('should map a function/operation on every item of a list and it should return a tuple containing the ' +
-            'accumulated value and the an instance of passed in container with mapped items', function () {
+            'accumulated value and the an instance of passed in container with mapped items', () => {
             let xs1 = [],
                 xs2 = '',
                 xs3 = [];
@@ -758,9 +756,9 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#mapAccumR', function () {
+    describe ('#mapAccumR', () => {
         it ('should map a function/operation on every item of a list and it should return a tuple containing the ' +
-            'accumulated value and the an instance of passed in container with mapped items', function () {
+            'accumulated value and the an instance of passed in container with mapped items', () => {
             let xs1 = [],
                 xs2 = '',
                 xs3 = [];
@@ -818,9 +816,9 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#unfoldr', function () {
-        it ('should be able to unfold any value from right to left.', function () {
-            expectShallowEquals(
+    describe ('#unfoldr', () => {
+        it ('should be able to unfold any value from right to left.', () => {
+            expectEqual(
                 unfoldr(minuend => {
                     let diff = minuend - 1;
                     return diff >= 0 ? [minuend, diff] : undefined;
@@ -830,9 +828,9 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#take', function () {
+    describe ('#take', () => {
         const hello = 'hello';
-        it ('should return taken items from list and/or string until limit', function () {
+        it ('should return taken items from list and/or string until limit', () => {
             const word = hello;
 
             // Test `take` on word parts and word (list and string)
@@ -852,26 +850,27 @@ describe ('#list', function () {
                 expectEqual(expectedWordPart, takenFromStr);
             });
         });
-        it ('should return an empty list and/or string when called with `0` as the first argument', function () {
-            compose(expectEqual(0), length, take(0))(split('', hello));
-            compose(expectEqual(0), length, take(0))(hello);
+        it ('should return an empty list and/or string when called with `0` as the first argument', () => {
+            expectEqual(take(0, alphabetString), '');
+            expectEqual(take(0, alphabetArray), []);
+
         });
-        it ('should return an empty list and/or string when called with with an empty list or string', function () {
+        it ('should return an empty list and/or string when called with with an empty list or string', () => {
             let count = 5;
             while (count) {
-                compose(expectEqual(0), length, take(count))('');
-                compose(expectEqual(0), length, take(count))([]);
+                expectEqual(take(count, ''), '');
+                expectEqual(take(count, []), []);
                 --count;
             }
         });
-        it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(tail, Error);
+        it ('should throw an error when no parameter is passed in', () => {
+            expectError(tail);
         });
     });
 
-    describe ('#drop', function () {
+    describe ('#drop', () => {
         const hello = 'hello';
-        it ('should return a new list/string with dropped items from original until limit', function () {
+        it ('should return a new list/string with dropped items from original until limit', () => {
             const word = hello,
                 wordParts = strToArray(word),
                 partsLength = wordParts.length - 1;
@@ -893,11 +892,11 @@ describe ('#list', function () {
                 expectEqual(expectedWordPart, takenFromStr);
             });
         });
-        it ('should return entire list and/or string when called with `0` as the first argument', function () {
+        it ('should return entire list and/or string when called with `0` as the first argument', () => {
             compose(expectEqual(length(hello)), length, drop(0))(split('', hello));
             compose(expectEqual(length(hello)), length, drop(0))(hello);
         });
-        it ('should return an empty list and/or string when called with with an empty list or string', function () {
+        it ('should return an empty list and/or string when called with with an empty list or string', () => {
             let count = 5;
             while (count) {
                 compose(expectEqual(0), length, drop(count))('');
@@ -905,12 +904,12 @@ describe ('#list', function () {
                 --count;
             }
         });
-        it ('should throw an error when no parameter is passed in', function () {
-            assert.throws(tail, Error);
+        it ('should throw an error when no parameter is passed in', () => {
+            expectError(tail);
         });
     });
 
-    describe ('#splitAt', function () {
+    describe ('#splitAt', () => {
         const word = 'hello',
             phraseAppendage = ' world',
             phrase = `${word}${phraseAppendage}`,
@@ -918,7 +917,7 @@ describe ('#list', function () {
             wordLen = length(word),
             phraseAppendageLen = length(phraseAppendage);
 
-        it ('should split an list and/or string at given index', function () {
+        it ('should split an list and/or string at given index', () => {
             const result = splitAt(wordLen, phrase),
                 result2 = splitAt(wordLen, phrase.split(''));
 
@@ -943,11 +942,11 @@ describe ('#list', function () {
                 expectTrue(str.split('')
                     .every((char, ind2) => result2[ind][ind2] === char)) );
         });
-        it ('should return an list of empty list and/or string when receiving an empty one of either', function () {
+        it ('should return an list of empty list and/or string when receiving an empty one of either', () => {
             splitAt(3, []).concat(splitAt(2, '')).forEach(expectLength(0));
         });
         it ('should return entirely, passed in, list and/or string as second part of ' +
-            'split in return when `0` is passed in as the first param', function () {
+            'split in return when `0` is passed in as the first param', () => {
             const splitPhrase = phrase.split('');
             expectTrue(splitAt(0, phrase)
                 .concat(splitAt(0, splitPhrase))
@@ -967,8 +966,8 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#takeWhile', function () {
-        it ('should take elements while predicate is fulfilled', function () {
+    describe ('#takeWhile', () => {
+        it ('should take elements while predicate is fulfilled', () => {
             const word = 'abcdefg',
                 expectedResult = word.split('e')[0],
                 predicate = x => x !== 'e';
@@ -986,7 +985,7 @@ describe ('#list', function () {
                                 takeWhile(predicate, word)]
                     ));
         });
-        it ('should return an empty type instance if predicate is not matched at all', function () {
+        it ('should return an empty type instance if predicate is not matched at all', () => {
             const word = 'abcdefg',
                 pred = x => x === 'z';
 
@@ -999,7 +998,7 @@ describe ('#list', function () {
                     [takeWhile(pred, word.split('')), takeWhile(pred, word)]
                 ));
         });
-        it ('should return a copy of type instance if predicate is matched all the way through', function () {
+        it ('should return a copy of type instance if predicate is matched all the way through', () => {
             const word = 'abcdefg',
                 pred = x => x !== 'z';
 
@@ -1015,8 +1014,8 @@ describe ('#list', function () {
 
     });
 
-    describe ('#dropWhile', function () {
-        it ('should drop elements while predicate is fulfilled', function () {
+    describe ('#dropWhile', () => {
+        it ('should drop elements while predicate is fulfilled', () => {
             const word = 'abcdefg',
                 expectedResult = word.substring(word.indexOf('e'), length(word)),
                 predicate = x => x !== 'e';
@@ -1034,7 +1033,7 @@ describe ('#list', function () {
                                 dropWhile(predicate, word)]
                     ));
         });
-        it ('should return an empty type instance if predicate is matched all the way through', function () {
+        it ('should return an empty type instance if predicate is matched all the way through', () => {
             const word = 'abcdefg',
                 pred = x => word.indexOf(x) > -1;
 
@@ -1047,7 +1046,7 @@ describe ('#list', function () {
                     [dropWhile(pred, word.split('')), dropWhile(pred, word)]
                 ));
         });
-        it ('should return an a copy of the passed in type instance if predicate doesn\'t match any elements', function () {
+        it ('should return an a copy of the passed in type instance if predicate doesn\'t match any elements', () => {
             const word = 'abcdefg',
                 pred = x => x === 'z' > -1;
 
@@ -1065,8 +1064,8 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#dropWhileEnd', function () {
-        it ('should drop elements while predicate is fulfilled', function () {
+    describe ('#dropWhileEnd', () => {
+        it ('should drop elements while predicate is fulfilled', () => {
             const word = 'abcdefg',
                 expectedResult = word.substring(0, word.indexOf('e')),
                 predicate = x => x !== 'e';
@@ -1084,7 +1083,7 @@ describe ('#list', function () {
                         dropWhileEnd(predicate, word)]
                 ));
         });
-        it ('should return an empty type instance if predicate is matched all the way through', function () {
+        it ('should return an empty type instance if predicate is matched all the way through', () => {
             const word = 'abcdefg',
                 pred = x => word.indexOf(x) > -1,
                 lenWord = length(word);
@@ -1098,7 +1097,7 @@ describe ('#list', function () {
                     [dropWhileEnd(pred, word.split('')), dropWhileEnd(pred, word)]
                 ));
         });
-        it ('should return an a copy of the passed in type instance if predicate doesn\'t match any elements', function () {
+        it ('should return an a copy of the passed in type instance if predicate doesn\'t match any elements', () => {
             const word = 'abcdefg',
                 pred = x => x === 'z' > -1;
 
@@ -1116,9 +1115,9 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#span', function () {
+    describe ('#span', () => {
         it ('should take elements into first list while predicate is fulfilled and elements ' +
-            'that didn\'t match into second list', function () {
+            'that didn\'t match into second list', () => {
             const word = 'abcdefg',
                 expectedResults = [word.substring(0, 4), word.substring(4)],
                 predicate = x => x !== 'e';
@@ -1140,20 +1139,15 @@ describe ('#list', function () {
                     [span(predicate, word.split('')), span(predicate, word)]
                 ));
         });
-        it ('should return an list of empty arrays and/or strings when an empty list is passed in', function () {
-            expectTrue(
-                all(tuple =>
-                    length(tuple) === 2 &&
-                    all(tuplePart => (isString(tuplePart) || isArray(tuplePart)) &&
-                        length(tuplePart) === 0, tuple),
-                    [span(a => a, ''), span(x => x, [])]
-                ));
+        it ('should return an list of empty arrays and/or strings when an empty list is passed in', () => {
+            expectEqual(span(a => !!a, ''), ['', '']);
+            expectEqual(span(a => !!a, []), [[], []]);
         });
     });
 
-    describe ('#breakOnList', function () {
+    describe ('#breakOnList', () => {
         it ('should take elements into first list while !predicate is fulfilled and elements ' +
-            'that didn\'t match into second list', function () {
+            'that didn\'t match into second list', () => {
             const word = 'abcdefg',
                 expectedResults = [word.substring(0, 4), word.substring(4)],
                 predicate = x => x === 'e';
@@ -1175,7 +1169,7 @@ describe ('#list', function () {
                     [breakOnList(predicate, word.split('')), breakOnList(predicate, word)]
                 ));
         });
-        it ('should return an list of empty arrays and/or strings when an empty list is passed in', function () {
+        it ('should return an list of empty arrays and/or strings when an empty list is passed in', () => {
             expectTrue(
                 all(tuple =>
                     length(tuple) === 2 &&
@@ -1186,44 +1180,43 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#stripPrefix', function () {
-        it ('should be able to strip a prefix from a list', function () {
-            expectShallowEquals(
+    describe ('#stripPrefix', () => {
+        it ('should be able to strip a prefix from a list', () => {
+            expectEqual(
                 stripPrefix('abc', alphabetArray.slice(0, 10)),
                 alphabetArray.slice(3, 10));
 
-            expectShallowEquals(
+            expectEqual(
                 stripPrefix('abc', alphabetString.substring(0, 10)),
                 alphabetString.substring(3, 10));
         });
-        it ('should return a copy of the passed in list when prefix is not found', function () {
-            expectShallowEquals(stripPrefix('!*&', alphabetArray), alphabetArray);
+        it ('should return a copy of the passed in list when prefix is not found', () => {
+            expectEqual(stripPrefix('!*&', alphabetArray), alphabetArray);
             expectEqual(stripPrefix('!*&', alphabetString), alphabetString);
             expectEqual(stripPrefix('!*&', ''), '');
-            expectShallowEquals(stripPrefix('!*&', []), []);
+            expectEqual(stripPrefix('!*&', []), []);
         });
-        it ('should throw an error when receiving nothing in either position', function () {
-            assert.throws(() => stripPrefix(null, 'abc'), Error);
-            assert.throws(() => stripPrefix(null, null), Error);
-            assert.throws(() => stripPrefix('abc', null), Error);
+        it ('should throw an error when receiving nothing in either position', () => {
+            expectError(() => stripPrefix(null, 'abc'));
+            expectError(() => stripPrefix(null, null));
+            expectError(() => stripPrefix('abc', null));
         });
     });
 
-    describe ('#group', function () {
-        it ('should return a list of lists which contain the (sequential) matches', function () {
+    describe ('#group', () => {
+        it ('should return a list of lists which contain the (sequential) matches', () => {
             const expectedResultFlattened = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
-            expectDeepEquals(group('Mississippi'), expectedResultFlattened);
-            expectDeepEquals(group('Mississippi'.split('')), expectedResultFlattened);
+            expectEqual(group('Mississippi'), expectedResultFlattened);
+            expectEqual(group('Mississippi'.split('')), expectedResultFlattened);
         });
-        it ('should return a list of lists containing individual ungrouped items', function () {
-            expectDeepEquals(group(alphabetString), alphabetArray);
-            expectDeepEquals(group(alphabetArray), alphabetArray);
+        it ('should return a list of lists containing individual ungrouped items', () => {
+            expectEqual(group(alphabetArray), alphabetArray.map(char => [char]));
         });
     });
 
-    describe ('#inits', function () {
+    describe ('#inits', () => {
         it ('should unfold a list into list of all possible ' +
-            'non-omitting sequential sets that start with initial item', function () {
+            'non-omitting sequential sets that start with initial item', () => {
             expectTrue(all(
                     (item, ind) => length(item) === ind,
                     inits(alphabetString)
@@ -1235,9 +1228,9 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#tails', function () {
+    describe ('#tails', () => {
         it ('should unfold a list into list of all possible ' +
-            'non-omitting sequential sets that start with the last item', function () {
+            'non-omitting sequential sets that start with the last item', () => {
             const limit = length(alphabetString);
             expectTrue(all(
                 (item, ind) => {
@@ -1258,8 +1251,8 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#isPrefixOf', function () {
-        it ('should return `true` when a list is a prefix of another', function () {
+    describe ('#isPrefixOf', () => {
+        it ('should return `true` when a list is a prefix of another', () => {
             expectTrue(all(
                 isPrefixOf('abc'),
                 splitAt(3, inits(alphabetString))[1]
@@ -1269,7 +1262,7 @@ describe ('#list', function () {
                 splitAt(3, inits(alphabetArray))[1]
             ));
         });
-        it ('should return `false` when a list is not prefix of second list', function () {
+        it ('should return `false` when a list is not prefix of second list', () => {
             expectTrue(all(
                 negateF2(isPrefixOf('!@#')),
                 splitAt(3, inits(alphabetString))[1]
@@ -1281,8 +1274,8 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#isSuffixOf', function () {
-        it ('should return `true` when a list is a suffix of another', function () {
+    describe ('#isSuffixOf', () => {
+        it ('should return `true` when a list is a suffix of another', () => {
             const candidateString = splitAt(length(alphabetString) - 2, tails(alphabetString))[0];
             expectTrue(all(
                 isSuffixOf('xyz'),
@@ -1293,7 +1286,7 @@ describe ('#list', function () {
                 splitAt(length(alphabetArray) - 2, tails(alphabetArray))[0]
             ));
         });
-        it ('should return `false` when a list is not suffix of second list', function () {
+        it ('should return `false` when a list is not suffix of second list', () => {
             expectTrue(all(
                 negateF2(isSuffixOf('!@#')),
                 splitAt(length(alphabetString) - 2, tails(alphabetString))[0]
@@ -1305,15 +1298,15 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#isInfixOf', function () {
-        it ('should return `true` when a list is infixed with another', function () {
+    describe ('#isInfixOf', () => {
+        it ('should return `true` when a list is infixed with another', () => {
             const results = concatMap(candidate => [
                 isInfixOf(candidate, alphabetString),
                 isInfixOf(candidate, alphabetArray)
             ], ['abc', 'efg', 'xyz']);
             expectTrue(and(results));
         });
-        it ('should return `false` when a list is not infix of second list', function () {
+        it ('should return `false` when a list is not infix of second list', () => {
             expectTrue(and([
                 negateF2(isInfixOf('!@#'))(alphabetString),
                 negateF2(isInfixOf('!@#'.split(''))(alphabetArray))
@@ -1321,15 +1314,15 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#isSubsequenceOf', function () {
-        it ('should return true a list is sub-sequence of another.', function () {
+    describe ('#isSubsequenceOf', () => {
+        it ('should return true a list is sub-sequence of another.', () => {
             const listToSearchIn = take(6, alphabetString);
             expectTrue(all(
                 listToSearchFor => isSubsequenceOf(listToSearchFor, listToSearchIn),
                 ['bdf', 'ace', 'abc', 'def']
             ));
         });
-        it ('should return false a list is not sub-sequence of another.', function () {
+        it ('should return false a list is not sub-sequence of another.', () => {
             const listToSearchIn = take(6, drop(6, alphabetString));
             expectTrue(all(
                 listToSearchFor => !isSubsequenceOf(listToSearchFor, listToSearchIn),
@@ -1338,13 +1331,13 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#elem', function () {
-        it ('should return `true` when the element is found in given list', function () {
+    describe ('#elem', () => {
+        it ('should return `true` when the element is found in given list', () => {
             const word = 'hello world';
             expectTrue(
                 all(() => all((elm2, ind2, arr) => !!elem(elm2, arr), word), [word.split(''), word]));
         });
-        it ('should return `false` when element is not found in given list', function () {
+        it ('should return `false` when element is not found in given list', () => {
             const word = 'hello world';
             expectTrue(
                 all(elm =>
@@ -1353,14 +1346,14 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#notElem', function () {
-        it ('should return `false` when the element is found in given list', function () {
+    describe ('#notElem', () => {
+        it ('should return `false` when the element is found in given list', () => {
             const word = 'hello world';
             expectTrue(
                 all(() => all((elm2, ind2, arr) => !notElem(elm2, arr), word),
                     [word.split(''), word]));
         });
-        it ('should return `true` when element is not found in given list', function () {
+        it ('should return `true` when element is not found in given list', () => {
             const word = 'hello world';
             expect(
                 all(elm =>
@@ -1370,12 +1363,12 @@ describe ('#list', function () {
                     [word.split(''), word]
                 )
             )
-                .to.equal(true);
+                .toEqual(true);
         });
     });
 
-    describe ('#find', function () {
-        it ('should should find element that matches predicate when element is in given list', function () {
+    describe ('#find', () => {
+        it ('should should find element that matches predicate when element is in given list', () => {
             const word = 'word',
                 pred = x => x === 'o';
             expectEqual(find(pred, word), 'o');
@@ -1384,28 +1377,27 @@ describe ('#list', function () {
         // @todo add more tests
     });
 
-    describe ('#filter', function () {
-        it ('should be able to filter a list by a predicate.', function () {
+    describe ('#filter', () => {
+        it ('should be able to filter a list by a predicate.', () => {
             const pred = (_, ind) => ind % 2 === 0;
-            expectShallowEquals(
+            expectEqual(
                 filter(pred, alphabetString),
                 alphabetString.split('').filter(pred)
             );
-            expectShallowEquals(
+            expectEqual(
                 filter(pred, alphabetArray),
                 alphabetString.split('').filter(pred)
             );
         });
-        it ('should return an empty list when no items match predicate', function () {
+        it ('should return an empty list when no items match predicate', () => {
             const pred = char => char === '#';
-            expectShallowEquals(filter(pred, alphabetString), '');
-            expectShallowEquals(filter(pred, alphabetArray), []);
+            expectEqual(filter(pred, alphabetArray), []);
         });
     });
 
-    describe ('#partition', function () {
+    describe ('#partition', () => {
         it ('should take elements into first list while predicate is fulfilled and elements ' +
-            'that didn\'t match into second list', function () {
+            'that didn\'t match into second list', () => {
             const word = 'abcdefg',
                 expectedResults = ['abcdfg', 'e'],
                 predicate = x => x !== 'e';
@@ -1427,7 +1419,7 @@ describe ('#list', function () {
                     [partition(predicate, word.split('')), partition(predicate, word)]
                 ));
         });
-        it ('should return an list of empty arrays and/or strings when an empty list is passed in', function () {
+        it ('should return an list of empty arrays and/or strings when an empty list is passed in', () => {
             expectTrue(
                 all(tuple =>
                     length(tuple) === 2 &&
@@ -1438,8 +1430,8 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#at', function () {
-        it ('should return an item at a given key/index.', function () {
+    describe ('#at', () => {
+        it ('should return an item at a given key/index.', () => {
             [alphabetString, alphabetArray].forEach(subject => {
                 const subjectLastInd = length(subject) - 1;
                 expectEqual(at(0, subject), subject[0]);
@@ -1447,21 +1439,21 @@ describe ('#list', function () {
                 expectEqual(at(subjectLastInd, subject), subject[subjectLastInd]);
             });
         });
-        it ('should return `undefined` when list has no length.', function () {
+        it ('should return `undefined` when list has no length.', () => {
             expectEqual(at(0, ''), undefined);
             expectEqual(at(0, []), undefined);
         });
     });
 
-    describe ('#elemIndex', function () {
-        it ('should return the index where the element is found', function () {
+    describe ('#elemIndex', () => {
+        it ('should return the index where the element is found', () => {
             const word = 'hello world';
             expectTrue(
                 all(elm =>
                         all((elm2, ind2, arr) => elemIndex(elm2, arr) === word.indexOf(elm2), elm),
                     [word.split(''), word]));
         });
-        it ('should return `undefined` when element is not in list', function () {
+        it ('should return `undefined` when element is not in list', () => {
             const word = 'hello world';
             expectTrue(
                 all(elm =>
@@ -1470,8 +1462,8 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#elemIndices', function () {
-        it ('should return all found element indices in a list', function () {
+    describe ('#elemIndices', () => {
+        it ('should return all found element indices in a list', () => {
             const nums = range(0, 22),
                 word = nums.join(''),
                 predicate = x => x.indexOf('1') > -1,
@@ -1489,9 +1481,9 @@ describe ('#list', function () {
         // @todo add more tests
     });
 
-    describe ('#findIndex', function () {
+    describe ('#findIndex', () => {
         const word = 'abcdefg';
-        it ('should find an index where predicate is satisfied', function () {
+        it ('should find an index where predicate is satisfied', () => {
             expectTrue(
                 word.split('')
                     .every((char, ind, arr) =>
@@ -1499,8 +1491,8 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#findIndices', function () {
-        it ('should return indices for all items that match passed in predicate', function () {
+    describe ('#findIndices', () => {
+        it ('should return indices for all items that match passed in predicate', () => {
             const tokenInits = inits(intersperse('e', alphabetArray)),
                 indicePred = x => x === 'e',
                 expectedResults = tokenInits.map(xs =>
@@ -1521,15 +1513,15 @@ describe ('#list', function () {
             );
         });
 
-        it ('should return `undefined` when doesn\'t find element at indice', function () {
+        it ('should return `undefined` when doesn\'t find element at indice', () => {
             expectEqual(findIndices(x => !!x, undefined), undefined);
             expectEqual(findIndices(x => !!x, null), undefined);
             expectEqual(findIndices(x => !!x, []), undefined);
         });
     });
 
-    describe ('#zip', function () {
-        it ('should be able to zip two lists into a list of tuples (list of two items).', function () {
+    describe ('#zip', () => {
+        it ('should be able to zip two lists into a list of tuples (list of two items).', () => {
             const [list1, list2] = splitAt(length(alphabetArray) / 2, alphabetArray),
                 result = zip(list1, list2),
                 expectedResult = foldl((agg, item, ind) => {
@@ -1542,17 +1534,17 @@ describe ('#list', function () {
                 tuple[1] === expectedResult[ind][1]
                 , result));
         });
-        it ('should return an empty list when empty lists are passed', function () {
-            expectShallowEquals(zip([], []), []);
+        it ('should return an empty list when empty lists are passed', () => {
+            expectEqual(zip([], []), []);
         });
-        it ('should return a copy of the passed in populated list when one of them is not populated.', function () {
-            expectShallowEquals(zip([], alphabetArray), alphabetArray);
-            expectShallowEquals(zip(alphabetArray, []), alphabetArray);
+        it ('should return a copy of the passed in populated list when one of them is not populated.', () => {
+            expectEqual(zip([], alphabetArray), []);
+            expectEqual(zip(alphabetArray, []), []);
         });
     });
 
-    describe ('#zipN', function () {
-        it ('should be able to zip the given number of lists.', function () {
+    describe ('#zipN', () => {
+        it ('should be able to zip the given number of lists.', () => {
             // Unfold alphabet array into an array with arrays of 5 items (as our initial subject).
             const subj = unfoldr (remainder => {
                         return !length(remainder) ?
@@ -1567,35 +1559,33 @@ describe ('#list', function () {
                     []
                 ],
 
-                zipNResult = zipN.apply(null, subj),
+                subj3 = filter(length, subj),
 
-                zipNResult2 = zipN.apply(null, subj2);
+                subj4 = filter(length, subj2),
 
-                expectTrue(
-                    all( tuple =>
-                        all( (list, ind) =>
-                            all( (item, ind2) =>
-                                item === tuple[1][ind2][ind], list
-                            ),
-                            tuple[0]
-                        ),
-                        [[zipNResult, filter(length, subj)],
-                            [zipNResult2, filter(length, subj2)]]
-                    )
-                );
+                testCases = [subj, subj2, subj3, subj4].map(s => [zipN.apply(null, s), s])
+                ;
+
+            testCases.forEach(([results, subjects]) => {
+                results.forEach((list, ind) => {
+                    list.forEach((char, ind2) => {
+                        expectEqual(char, subjects[ind2][ind]);
+                    });
+                });
+            });
         });
-        it ('should return an empty list when empty lists are passed in', function () {
-            expectShallowEquals(zipN([], []), []);
+        it ('should return an empty list when empty lists are passed in', () => {
+            expectEqual(zipN([], []), []);
         });
-        it ('should return a copy of the left or right populated list when the other(s) is/are empty.', function () {
-            expectShallowEquals(zipN([], alphabetArray), alphabetArray);
-            expectShallowEquals(zipN(alphabetArray, []), alphabetArray);
+        it ('should return a copy of the left or right populated list when the other(s) is/are empty.', () => {
+            expectEqual(zipN([], alphabetArray), []);
+            expectEqual(zipN(alphabetArray, []), []);
         });
     });
 
-    describe ('#zipWith', function () {
+    describe ('#zipWith', () => {
         const tuplize = (a, b) => [a, b];
-        it ('should be able to zip the given number of lists.', function () {
+        it ('should be able to zip the given number of lists.', () => {
             // Unfold alphabet array into an array with arrays of 5 items (as our initial subject).
             const subj = unfoldr (remainder => {
                     return !length(remainder) ?
@@ -1627,17 +1617,17 @@ describe ('#list', function () {
                 )
             );
         });
-        it ('should return an empty list when empty lists are passed', function () {
-            expectShallowEquals(zipWith(tuplize, [], []), []);
+        it ('should return an empty list when empty lists are passed', () => {
+            expectEqual(zipWith(tuplize, [], []), []);
         });
-        it ('should return a copy of the passed in populated list when one of them is not populated.', function () {
-            expectShallowEquals(zipWith(tuplize, [], alphabetArray), alphabetArray);
-            expectShallowEquals(zipWith(tuplize, alphabetArray, []), alphabetArray);
+        it ('should return a copy of the passed in populated list when one of them is not populated.', () => {
+            expectEqual(zipWith(tuplize, [], alphabetArray), []);
+            expectEqual(zipWith(tuplize, alphabetArray, []), []);
         });
     });
 
-    describe ('#unzip', function () {
-        it ('should be able to unzip a list of tuples of two.', function () {
+    describe ('#unzip', () => {
+        it ('should be able to unzip a list of tuples of two.', () => {
             const subj = unfoldr (remainder => {
                 return !length(remainder) ?
                     undefined : splitAt(2, remainder);
@@ -1674,8 +1664,8 @@ describe ('#list', function () {
         // @todo Add more tests
     });
 
-    describe ('#unzipN', function () {
-        it ('should be able to unzip a list of tuples of any number.', function () {
+    describe ('#unzipN', () => {
+        it ('should be able to unzip a list of tuples of any number.', () => {
             const subj = unfoldr (remainder => {
                     return !length(remainder) ?
                         undefined : splitAt(2, remainder);
@@ -1710,8 +1700,8 @@ describe ('#list', function () {
         // @todo Add more tests
     });
 
-    describe ('#lines', function () {
-        it ('should split a string on all new line characters.', function () {
+    describe ('#lines', () => {
+        it ('should split a string on all new line characters.', () => {
             const subj = intercalate('\n', alphabetArray),
                 result = lines(subj);
 
@@ -1721,20 +1711,20 @@ describe ('#list', function () {
             expectLength(length(alphabetArray) * 2 - 1, subj);
 
             // Check split string
-            expectShallowEquals(alphabetArray, result);
+            expectEqual(alphabetArray, result);
         });
-        it ('should return original string when no new lines are found in string', function () {
-            expectShallowEquals(lines('hello world'), ['hello world']);
-            expectShallowEquals(lines(''), ['']);
+        it ('should return original string when no new lines are found in string', () => {
+            expectEqual(lines('hello world'), ['hello world']);
+            expectEqual(lines(''), ['']);
         });
-        it ('should throw Errors when receiving nothing', function () {
-            assert.throws(() => lines(null), Error);
-            assert.throws(() => lines(undefined), Error);
+        it ('should throw Errors when receiving nothing', () => {
+            expectError(() => lines(null));
+            expectError(() => lines(undefined));
         });
     });
 
-    describe ('#words', function () {
-        it ('should split a string on all whitespace characters.', function () {
+    describe ('#words', () => {
+        it ('should split a string on all whitespace characters.', () => {
             // subject | expectedLength | shallowEqualsTo
             const subjectsAndExpLens = [
                 [intercalate(' ', alphabetArray), length(alphabetArray), alphabetArray],
@@ -1749,10 +1739,10 @@ describe ('#list', function () {
                 expectLength(expectedLen, result);
 
                 // Check split string
-                expectShallowEquals(shallowEqualsTo, result);
+                expectEqual(shallowEqualsTo, result);
             });
         });
-        it ('should return a copy of original list when no whitespace characters are found.', function () {
+        it ('should return a copy of original list when no whitespace characters are found.', () => {
             // subject | expectedLength | shallowEqualsTo
             const subjectsAndExpLens = [
                 [alphabetString, 1, [alphabetString]],
@@ -1767,104 +1757,96 @@ describe ('#list', function () {
                 expectLength(expectedLen, result);
 
                 // Check split string
-                expectShallowEquals(shallowEqualsTo, result);
+                expectEqual(shallowEqualsTo, result);
             });
         });
-        it ('should throw Errors when receiving nothing', function () {
-            assert.throws(() => words(null), Error);
-            assert.throws(() => words(undefined), Error);
+        it ('should throw Errors when receiving nothing', () => {
+            expectError(() => words(null));
+            expectError(() => words(undefined));
         });
     });
 
-    describe ('#unlines', function () {
-        it ('should join a list with new lines.', function () {
+    describe ('#unlines', () => {
+        it ('should join a list with new lines.', () => {
             ['hello world', alphabetString, alphabetArray].forEach(subj => {
                 const result = unlines(subj);
 
-                // check expected length
-                expectLength(subj.length * 2 - 1, result);
-
                 // Check items in resulted list
-                expectShallowEquals(intersperse('\n', subj), result);
+                expectEqual(intersperse('\n', subj).join(''), Array.isArray(result) ? result.join('') : result);
             });
         });
-        it ('should return empty lists when receiving empty lists', function () {
-            expectShallowEquals(unlines([]), []);
+        it ('should return empty lists when receiving empty lists', () => {
+            expectEqual(unlines([]), []);
         });
-        it ('should throw Errors when receiving nothing', function () {
-            assert.throws(() => unlines(null), Error);
-            assert.throws(() => unlines(undefined), Error);
+        it ('should throw Errors when receiving nothing', () => {
+            expectError(() => unlines(null));
+            expectError(() => unlines(undefined));
         });
     });
 
-    describe ('#unwords', function () {
-        it ('should join a list of words with spaces.', function () {
+    describe ('#unwords', () => {
+        it ('should join a list of words with spaces.', () => {
             ['hello world', alphabetString, alphabetArray].forEach(subj => {
                 const result = unwords(subj);
-
-                // check expected length
-                expectLength(subj.length * 2 - 1, result);
-
-                // Check items in resulted list
-                expectShallowEquals(intersperse(' ', subj), result);
+                expectEqual(intersperse(' ', subj).join(''), result);
             });
         });
-        it ('should return empty lists when receiving empty lists', function () {
-            expectShallowEquals(unwords([]), []);
+        it ('should return empty lists when receiving empty lists', () => {
+            expectEqual(unwords([]), []);
         });
-        it ('should throw Errors when receiving nothing', function () {
-            assert.throws(() => unwords(null), Error);
-            assert.throws(() => unwords(undefined), Error);
+        it ('should throw Errors when receiving nothing', () => {
+            expectError(() => unwords(null));
+            expectError(() => unwords(undefined));
         });
     });
 
-    describe ('#nub', function () {
-        it ('should remove all but first occurrences of repeat items in a list.', function () {
-            expectShallowEquals(nub('conundrum'.split('')), 'conudrm'.split(''));
-            expectShallowEquals(nub(map(char => char + char, alphabetArray).join('').split('')), alphabetArray);
+    describe ('#nub', () => {
+        it ('should remove all but first occurrences of repeat items in a list.', () => {
+            expectEqual(nub('conundrum'.split('')), 'conudrm'.split(''));
+            expectEqual(nub(map(char => char + char, alphabetArray).join('').split('')), alphabetArray);
         });
         it ('should return a copy of the passed in list with items intact if there ' +
-            'aren\'t any repeat items', function () {
-            expectShallowEquals(nub(alphabetArray), alphabetArray);
+            'aren\'t any repeat items', () => {
+            expectEqual(nub(alphabetArray), alphabetArray);
         });
-        it ('should return empty lists when receiving empty lists', function () {
-            expectShallowEquals(nub([]), []);
+        it ('should return empty lists when receiving empty lists', () => {
+            expectEqual(nub([]), []);
         });
-        it ('should throw Errors when receiving nothing', function () {
-            assert.throws(() => nub(null), Error);
-            assert.throws(() => nub(undefined), Error);
+        it ('should throw Errors when receiving nothing', () => {
+            expectError(() => nub(null));
+            expectError(() => nub(undefined));
         });
     });
 
-    describe ('#remove', function () { // same as `delete` (in haskell)
-        it ('should remove the first occurrence of an item in a list.', function () {
+    describe ('#remove', () => { // same as `delete` (in haskell)
+        it ('should remove the first occurrence of an item in a list.', () => {
             expectEqual(remove('l', 'hello world'), 'helo world');
             expectEqual(remove('l', 'hello world'.split('')).join(''), 'helo world');
             expectEqual(remove('a', alphabetString), tail(alphabetString));
             expectEqual(remove('z', alphabetString), init(alphabetString));
-            expectShallowEquals(remove('a', alphabetArray), tail(alphabetArray));
-            expectShallowEquals(remove('z', alphabetArray), init(alphabetArray));
+            expectEqual(remove('a', alphabetArray), tail(alphabetArray));
+            expectEqual(remove('z', alphabetArray), init(alphabetArray));
         });
-        it ('should return an empty list when receiving an empty list', function () {
+        it ('should return an empty list when receiving an empty list', () => {
             expectEqual(remove('a', ''), '');
-            expectShallowEquals(remove('a', []), []);
+            expectEqual(remove('a', []), []);
         });
-        it ('should throw Errors when receiving nothing in the list position', function () {
-            assert.throws(() => remove(null, null), Error);
-            assert.throws(() => remove(undefined, undefined), Error);
-            assert.throws(() => remove(null, null), Error);
-            assert.throws(() => remove(undefined, undefined), Error);
+        it ('should throw Errors when receiving nothing in the list position', () => {
+            expectError(() => remove(null, null));
+            expectError(() => remove(undefined, undefined));
+            expectError(() => remove(null, null));
+            expectError(() => remove(undefined, undefined));
         });
     });
 
-    describe ('#complement', function () {
-        it ('should return an empty list when no parameters are passed in', function () {
+    describe ('#complement', () => {
+        it ('should return an empty list when no parameters are passed in', () => {
             compose(expectEqual(__, 0), length, complement)();
         });
-        it ('should return an empty list if only one list is passed in', function () {
+        it ('should return an empty list if only one list is passed in', () => {
             compose(expectEqual(__, 0), length, complement)([1,2,3]);
         });
-        it ('should return elements not in first list passed to it', function () {
+        it ('should return elements not in first list passed to it', () => {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
                 [[[1, 2, 3], [1, 2, 3, 4, 5]], 2, [4, 5]],
@@ -1882,19 +1864,19 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#difference', function () {
-        it ('should return an empty list when no parameters are passed in', function () {
+    describe ('#difference', () => {
+        it ('should return an empty list when no parameters are passed in', () => {
             compose(expectEqual(__, 0), length, difference)();
         });
-        it ('should return an empty list when first list passed in is empty', function () {
+        it ('should return an empty list when first list passed in is empty', () => {
             compose(expectEqual(__, 0), length)(difference([], alphabetArray));
             compose(expectEqual(__, 0), length)(difference('', alphabetString));
         });
-        it ('should return an empty list when there are no differences between the lists passed in', function () {
+        it ('should return an empty list when there are no differences between the lists passed in', () => {
             compose(expectEqual(__, 0), length)(difference(alphabetArray, alphabetArray));
             compose(expectEqual(__, 0), length)(difference(alphabetString, alphabetString));
         });
-        it ('should return the difference between two arrays passed in', function () {
+        it ('should return the difference between two arrays passed in', () => {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 0, []],
@@ -1912,21 +1894,21 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#intersect', function () {
-        it ('should return an empty list when receiving an empty list as parameter 1', function () {
+    describe ('#intersect', () => {
+        it ('should return an empty list when receiving an empty list as parameter 1', () => {
             compose(expectEqual(__, 0), length, intersect)([]);
             compose(expectEqual(__, 0), length, intersect([]))([1, 2, 3]);
         });
-        it ('should return an empty list when receiving an empty list as parameter 2', function () {
+        it ('should return an empty list when receiving an empty list as parameter 2', () => {
             compose(expectEqual(__, 0), length, intersect([1, 2, 3]))([]);
         });
-        it ('should return an empty list when both arrays passed are empty', function () {
+        it ('should return an empty list when both arrays passed are empty', () => {
             compose(expectEqual(__, 0), length, intersect([]))([]);
         });
-        it ('should return an empty list when no arrays are passed in', function () {
+        it ('should return an empty list when no arrays are passed in', () => {
             compose(expectEqual(__, 0), length, intersect)();
         });
-        it ('should return an intersection of the two arrays passed in', function () {
+        it ('should return an intersection of the two arrays passed in', () => {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 3, [1, 2, 3]],
@@ -1944,7 +1926,7 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#union', function () {
+    describe ('#union', () => {
         const mixedMatchRange = append(range(13, 8, -1), range(1, 3));
             // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
             // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
@@ -1955,7 +1937,7 @@ describe ('#list', function () {
         //     ),
         // [rl1, rl2, rl3, rl4] = ascRanges,
         // [lr1, lr2, lr3, lr4] = descRanges;
-        it ('should return a union on list 1 with list two', function () {
+        it ('should return a union on list 1 with list two', () => {
             [// subj1, subj2, expectResultLen, expectedResultElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],
                 [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 8, [1, 2, 3, 4, 5, 6, 7, 8]],
@@ -1966,10 +1948,10 @@ describe ('#list', function () {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = union(subj1, subj2);
                     expectEqual(result.length, expectedLen);
-                    expectShallowEquals(result, expectedElms);
+                    expectEqual(result, expectedElms);
                 });
         });
-        it ('should return a copy of left-most array when right-most list is empty', function () {
+        it ('should return a copy of left-most array when right-most list is empty', () => {
             [// subj1, subj2, expectResultLen, expectedResultElements
                 [range(1, 5), [], 5, range(1, 5)],
                 [range(1, 8), [], 8, range(1, 8)],
@@ -1980,10 +1962,10 @@ describe ('#list', function () {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = union(subj1, subj2);
                     expectEqual(result.length, expectedLen);
-                    expectShallowEquals(result, expectedElms);
+                    expectEqual(result, expectedElms);
                 });
         });
-        it ('should return a copy of right-most list when left-most list is empty', function () {
+        it ('should return a copy of right-most list when left-most list is empty', () => {
             [// subj1, subj2, expectResultLen, expectedResultElements
                 [range(1, 5), [], 5, range(1, 5)],
                 [range(1, 8), [], 8, range(1, 8)],
@@ -1994,126 +1976,125 @@ describe ('#list', function () {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = union(subj1, subj2);
                     expectEqual(result.length, expectedLen);
-                    expectShallowEquals(result, expectedElms);
+                    expectEqual(result, expectedElms);
                 });
         });
-        it ('should return an empty list when receiving empty lists', function () {
+        it ('should return an empty list when receiving empty lists', () => {
             expectEqual(union('', ''), '');
-            expectShallowEquals(union([], []), []);
+            expectEqual(union([], []), []);
         });
     });
 
-    describe ('#sort', function () {
-        it ('should sort a list in ascending order', function () {
-            expectShallowEquals(sort(range(10, 0, -1)), range(0, 10, 1));
-            expectShallowEquals(sort(range(0, 10)), range(0, 10));
-            compose(expectShallowEquals(__, alphabetArray), sort, reverse)(alphabetArray);
+    describe ('#sort', () => {
+        it ('should sort a list in ascending order', () => {
+            expectEqual(sort(range(10, 0, -1)), range(0, 10, 1));
+            expectEqual(sort(range(0, 10)), range(0, 10));
+            compose(expectEqual(__, alphabetArray), sort, reverse)(alphabetArray);
             compose(/*log,*/ sort, reverse)(alphabetArray);
         });
-        it ('should return a copy of original list when said list is already sorted', function () {
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
-            compose(expectShallowEquals(__, alphabetArray), sort)(alphabetArray);
-            compose(expectShallowEquals(__, range(0, 10)), sort)(range(0, 10));
+        it ('should return a copy of original list when said list is already sorted', () => {
+            compose(expectEqual(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
+            compose(expectEqual(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
+            compose(expectEqual(__, alphabetArray), sort)(alphabetArray);
+            compose(expectEqual(__, range(0, 10)), sort)(range(0, 10));
         });
-        it ('should return an empty list when receiving an empty list', function () {
-            expectShallowEquals(sort([]), []);
+        it ('should return an empty list when receiving an empty list', () => {
+            expectEqual(sort([]), []);
         });
     });
 
-    describe ('#sortOn', function () {
+    describe ('#sortOn', () => {
         const identity = x => x,
             sortOnIdentity = sortOn(identity),
             range0To10 = range(0, 10),
             range10To0 = range(10, 0, -1);
-        it ('should sort a list in ascending order', function () {
-            expectShallowEquals(sortOnIdentity(range10To0), range0To10);
-            expectShallowEquals(sortOnIdentity(range0To10), range0To10);
-            compose(expectShallowEquals(__, alphabetArray), sortOnIdentity, reverse)(alphabetArray);
+        it ('should sort a list in ascending order', () => {
+            expectEqual(sortOnIdentity(range10To0), range0To10);
+            expectEqual(sortOnIdentity(range0To10), range0To10);
+            compose(expectEqual(__, alphabetArray), sortOnIdentity, reverse)(alphabetArray);
             compose(/*log,*/ sortOnIdentity, reverse)(alphabetArray);
         });
-        it ('should return a copy of original list when said list is already sorted', function () {
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), sortOnIdentity, take(3))(alphabetArray);
-            compose(expectShallowEquals(__, alphabetArray), sortOnIdentity)(alphabetArray);
-            compose(expectShallowEquals(__, range0To10), sortOnIdentity)(range0To10);
+        it ('should return a copy of original list when said list is already sorted', () => {
+            compose(expectEqual(__, ['a', 'b', 'c']), sortOnIdentity, take(3))(alphabetArray);
+            compose(expectEqual(__, alphabetArray), sortOnIdentity)(alphabetArray);
+            compose(expectEqual(__, range0To10), sortOnIdentity)(range0To10);
         });
-        it ('should return an empty list when receiving an empty list', function () {
-            expectShallowEquals(sortOnIdentity([]), []);
+        it ('should return an empty list when receiving an empty list', () => {
+            expectEqual(sortOnIdentity([]), []);
         });
     });
 
-    describe ('#insert', function () {
+    describe ('#insert', () => {
         const injectValueAtIndex = (x, ind, list) => {
             if (ind <= 0) { return [x].concat(list); }
             else if (ind > list.length - 1) { return list.concat([x]); }
             return list.slice(0, ind).concat([x], list.slice(ind));
         };
-        it ('Should insert a value directly before the first value that is less than or equal to it', function () {
-            // expectShallowEquals(insert(99, range(0, 144, 5))
+        it ('Should insert a value directly before the first value that is less than or equal to it', () => {
+            // expectEqual(insert(99, range(0, 144, 5))
             const range0To145 = range(0, 145, 5),
                 expectedResult = injectValueAtIndex(99, 20, range0To145),
                 result = insert(99, range0To145),
                 result1 = insert(99, reverse(range0To145)),
                 result2 = insert('x', alphabetArray),
                 result3 = insert('x', reverse(alphabetArray));
-            expectShallowEquals(result, expectedResult);
-            expectShallowEquals(result1, [99].concat(reverse(range0To145)));
-            expectShallowEquals(result2, injectValueAtIndex('x', 24, alphabetArray));
-            expectShallowEquals(result3, ['x'].concat(reverse(alphabetArray)));
+            expectEqual(result, expectedResult);
+            expectEqual(result1, [99].concat(reverse(range0To145)));
+            expectEqual(result2, injectValueAtIndex('x', 24, alphabetArray));
+            expectEqual(result3, ['x'].concat(reverse(alphabetArray)));
         });
-        it ('should insert value even if passed in list is empty', function () {
-            expectShallowEquals(insert(99, []), [99]);
-            expectShallowEquals(insert('a', []), ['a']);
-            expectShallowEquals(insert('a', ''), 'a');
+        it ('should insert value even if passed in list is empty', () => {
+            expectEqual(insert(99, []), [99]);
+            expectEqual(insert('a', []), ['a']);
         });
     });
 
-    describe ('#nubBy', function () {
-        it ('should remove all but first occurrences of repeat items in a list.', function () {
-            expectShallowEquals(nubBy(equal, 'conundrum'.split('')), 'conudrm'.split(''));
-            expectShallowEquals(nubBy(equal, map(char => char + char, alphabetArray).join('').split('')), alphabetArray);
+    describe ('#nubBy', () => {
+        it ('should remove all but first occurrences of repeat items in a list.', () => {
+            expectEqual(nubBy(equal, 'conundrum'.split('')), 'conudrm'.split(''));
+            expectEqual(nubBy(equal, map(char => char + char, alphabetArray).join('').split('')), alphabetArray);
         });
         it ('should return a copy of the passed in list with items intact if there ' +
-            'aren\'t any repeat items', function () {
-            expectShallowEquals(nubBy(equal, alphabetArray), alphabetArray);
+            'aren\'t any repeat items', () => {
+            expectEqual(nubBy(equal, alphabetArray), alphabetArray);
         });
-        it ('should return empty lists when receiving empty lists', function () {
-            expectShallowEquals(nubBy(equal, []), []);
+        it ('should return empty lists when receiving empty lists', () => {
+            expectEqual(nubBy(equal, []), []);
         });
-        it ('should throw Errors when receiving nothing', function () {
-            assert.throws(() => nubBy(equal, null), Error);
-            assert.throws(() => nubBy(equal, undefined), Error);
+        it ('should throw Errors when receiving nothing', () => {
+            expectError(() => nubBy(equal, null));
+            expectError(() => nubBy(equal, undefined));
         });
     });
 
-    describe ('#removeBy', function () {
-        it ('should remove the first occurrence of an item in a list.', function () {
+    describe ('#removeBy', () => {
+        it ('should remove the first occurrence of an item in a list.', () => {
             expectEqual(removeBy(equal, 'l', 'hello world'), 'helo world');
             expectEqual(removeBy(equal, 'l', 'hello world'.split('')).join(''), 'helo world');
             expectEqual(removeBy(equal, 'a', alphabetString), tail(alphabetString));
             expectEqual(removeBy(equal, 'z', alphabetString), init(alphabetString));
-            expectShallowEquals(removeBy(equal, 'a', alphabetArray), tail(alphabetArray));
-            expectShallowEquals(removeBy(equal, 'z', alphabetArray), init(alphabetArray));
+            expectEqual(removeBy(equal, 'a', alphabetArray), tail(alphabetArray));
+            expectEqual(removeBy(equal, 'z', alphabetArray), init(alphabetArray));
         });
-        it ('should return an empty list when receiving an empty list', function () {
+        it ('should return an empty list when receiving an empty list', () => {
             expectEqual(removeBy(equal, 'a', ''), '');
-            expectShallowEquals(removeBy(equal, 'a', []), []);
+            expectEqual(removeBy(equal, 'a', []), []);
         });
-        it ('should throw Errors when receiving nothing in the list position', function () {
-            assert.throws(() => removeBy(equal, null, null), Error);
-            assert.throws(() => removeBy(equal, undefined, undefined), Error);
-            assert.throws(() => removeBy(equal, null, null), Error);
-            assert.throws(() => removeBy(equal, undefined, undefined), Error);
+        it ('should throw Errors when receiving nothing in the list position', () => {
+            expectError(() => removeBy(equal, null, null));
+            expectError(() => removeBy(equal, undefined, undefined));
+            expectError(() => removeBy(equal, null, null));
+            expectError(() => removeBy(equal, undefined, undefined));
         });
     });
 
-    describe ('#removeFirstsBy', function () {
+    describe ('#removeFirstsBy', () => {
         const vowels = 'aeiou',
             vowelsArray = vowels.split(''),
             consonants = removeFirstsBy(equal, alphabetString, vowels),
             consonantsArray = consonants.split('');
         it ('should remove all first occurrences of all items in second list by passed in ' +
-            'equality operation.', function () {
+            'equality operation.', () => {
             // Remove from first entry on both
             const fiveArrays = map(() => alphabetArray, vowelsArray),
                 catedArrays = concat(fiveArrays),
@@ -2124,18 +2105,18 @@ describe ('#list', function () {
                 rslt = removeFirstsBy(equal, concat(fiveArrays), vowelsArray);
 
             // Expect vowels removed from the same places in both lists
-            expect(rslt.join('')).to.deep.equal(expected.join(''));
+            expect(rslt.join('')).toEqual(expected.join(''));
         });
-        it ('should return copy of original list when no items from second list are found in it.', function () {
+        it ('should return copy of original list when no items from second list are found in it.', () => {
             expectEqual(removeFirstsBy(equal, consonants, vowels), consonants);
-            expectShallowEquals(
+            expectEqual(
                 removeFirstsBy(equal, consonantsArray, vowelsArray),
                 consonantsArray
             );
         });
     });
 
-    describe ('#unionBy', function () {
+    describe ('#unionBy', () => {
         const mixedMatchRange = append(range(13, 8, -1), range(1, 3)),
             // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
             // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
@@ -2147,7 +2128,7 @@ describe ('#list', function () {
             //     ),
             // [rl1, rl2, rl3, rl4] = ascRanges,
             // [lr1, lr2, lr3, lr4] = descRanges;
-        it ('should return a union on list 1 with list two', function () {
+        it ('should return a union on list 1 with list two', () => {
             [// subj1, subj2, expectResultLen, expectedResultElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],
                 [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 8, [1, 2, 3, 4, 5, 6, 7, 8]],
@@ -2158,10 +2139,10 @@ describe ('#list', function () {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = unionBy(equalityCheck, subj1, subj2);
                     expectEqual(result.length, expectedLen);
-                    expectShallowEquals(result, expectedElms);
+                    expectEqual(result, expectedElms);
                 });
         });
-        it ('should return a copy of left-most array when right-most list is empty', function () {
+        it ('should return a copy of left-most array when right-most list is empty', () => {
             [// subj1, subj2, expectResultLen, expectedResultElements
                 [range(1, 5), [], 5, range(1, 5)],
                 [range(1, 8), [], 8, range(1, 8)],
@@ -2172,10 +2153,10 @@ describe ('#list', function () {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = unionBy(equalityCheck, subj1, subj2);
                     expectEqual(result.length, expectedLen);
-                    expectShallowEquals(result, expectedElms);
+                    expectEqual(result, expectedElms);
                 });
         });
-        it ('should return a copy of right-most list when left-most list is empty', function () {
+        it ('should return a copy of right-most list when left-most list is empty', () => {
             [// subj1, subj2, expectResultLen, expectedResultElements
                 [range(1, 5), [], 5, range(1, 5)],
                 [range(1, 8), [], 8, range(1, 8)],
@@ -2186,28 +2167,28 @@ describe ('#list', function () {
                     let [subj1, subj2, expectedLen, expectedElms] = testCase,
                         result = unionBy(equalityCheck, subj1, subj2);
                     expectEqual(result.length, expectedLen);
-                    expectShallowEquals(result, expectedElms);
+                    expectEqual(result, expectedElms);
                 });
         });
-        it ('should return an empty list when receiving empty lists', function () {
+        it ('should return an empty list when receiving empty lists', () => {
             expectEqual(unionBy(equalityCheck, '', ''), '');
-            expectShallowEquals(unionBy(equalityCheck, [], []), []);
+            expectEqual(unionBy(equalityCheck, [], []), []);
         });
     });
 
-    describe ('#intersectBy', function () {
+    describe ('#intersectBy', () => {
         const equality = (a, b) => a === b;
         // it ('should have more tests written');
-        it ('should return an empty list when receiving an empty list', function () {
+        it ('should return an empty list when receiving an empty list', () => {
             expectEqual(length(intersectBy(equality, [], [1, 2, 3])), 0);
         });
-        it ('should return an empty list when receiving an empty list as parameter 2', function () {
+        it ('should return an empty list when receiving an empty list as parameter 2', () => {
             expectEqual(length(intersectBy(equality, [1, 2, 3], [])), 0);
         });
-        it ('should return an empty list when both arrays passed are empty', function () {
+        it ('should return an empty list when both arrays passed are empty', () => {
             expectEqual(length(intersectBy(equality, [], [])), 0);
         });
-        it ('should return an intersection of the two arrays on equality function', function () {
+        it ('should return an intersection of the two arrays on equality function', () => {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
                 [[1, 2, 3], [1, 2, 3, 4, 5], 3, [1, 2, 3]],
@@ -2225,73 +2206,71 @@ describe ('#list', function () {
         });
     });
 
-    describe ('#groupBy', function () {
-        it ('should return a list of lists which contain the (sequential) matches on equality function', function () {
+    describe ('#groupBy', () => {
+        it ('should return a list of lists which contain the (sequential) matches on equality function', () => {
             const expectedResult = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
-            expectDeepEquals(groupBy(generalEqualityCheck, 'Mississippi'), expectedResult);
-            expectDeepEquals(
+            expectEqual(groupBy(generalEqualityCheck, 'Mississippi'), expectedResult);
+            expectEqual(
                 groupBy(generalEqualityCheck, 'Mississippi'.split('')),
                 expectedResult
             );
         });
-        it ('should return a list of lists containing individual un-grouped items or items that do not match equality function', function () {
-            expectDeepEquals(groupBy(generalEqualityCheck, alphabetString), alphabetArray);
-            expectDeepEquals(
+        it ('should return a list of lists containing individual un-grouped items or items that do not match equality function', () => {
+            expectEqual(
                 groupBy(generalEqualityCheck, alphabetArray),
-                alphabetArray);
+                alphabetArray.map(char => [char]));
         });
     });
 
-    describe ('#sortBy', function () {
-        it ('should sort a list by ordering function', function () {
-            expectShallowEquals(sortBy(genericOrdering, range(10, 0, -1)), range(0, 10, 1));
-            expectShallowEquals(sortBy(genericOrdering, range(0, 10)), range(0, 10));
-            compose(expectShallowEquals(__, alphabetArray),
+    describe ('#sortBy', () => {
+        it ('should sort a list by ordering function', () => {
+            expectEqual(sortBy(genericOrdering, range(10, 0, -1)), range(0, 10, 1));
+            expectEqual(sortBy(genericOrdering, range(0, 10)), range(0, 10));
+            compose(expectEqual(__, alphabetArray),
                 value => sortBy(genericOrdering, value), reverse)(alphabetArray);
             compose(/*log,*/ value => sortBy(genericOrdering, value), reverse)(alphabetArray);
         });
-        it ('should return a copy of original list when said list is already sorted', function () {
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
-            compose(expectShallowEquals(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
-            compose(expectShallowEquals(__, alphabetArray), xs => sortBy(genericOrdering, xs))(alphabetArray);
-            compose(expectShallowEquals(__, range(0, 10)), xs => sortBy(genericOrdering, xs))(range(0, 10));
+        it ('should return a copy of original list when said list is already sorted', () => {
+            compose(expectEqual(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
+            compose(expectEqual(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
+            compose(expectEqual(__, alphabetArray), xs => sortBy(genericOrdering, xs))(alphabetArray);
+            compose(expectEqual(__, range(0, 10)), xs => sortBy(genericOrdering, xs))(range(0, 10));
         });
-        it ('should return an empty list when receiving an empty list', function () {
-            expectShallowEquals(sortBy(genericOrdering, []), []);
+        it ('should return an empty list when receiving an empty list', () => {
+            expectEqual(sortBy(genericOrdering, []), []);
         });
     });
 
-    describe ('#insertBy', function () {
+    describe ('#insertBy', () => {
         const injectValueAtIndex = (x, ind, list) => {
                 if (ind <= 0) { return [x].concat(list); }
                 else if (ind > list.length - 1) { return list.concat([x]); }
                 return list.slice(0, ind).concat([x], list.slice(ind));
             },
             genericInsert = (x, xs) => insertBy(genericOrdering, x, xs);
-        it ('Should insert a value before value that matches equality check', function () {
-            // expectShallowEquals(genericInsert(99, range(0, 144, 5))
+        it ('Should insert a value before value that matches equality check', () => {
+            // expectEqual(genericInsert(99, range(0, 144, 5))
             const range0To145 = range(0, 145, 5),
                 expectedResult = injectValueAtIndex(99, 20, range0To145),
                 result = genericInsert(99, range0To145),
                 result1 = genericInsert(99, reverse(range0To145)),
                 result2 = genericInsert('x', alphabetArray),
                 result3 = genericInsert('x', reverse(alphabetArray));
-            expectShallowEquals(result, expectedResult);
-            expectShallowEquals(result1, [99].concat(reverse(range0To145)));
-            expectShallowEquals(result2, injectValueAtIndex('x', 24, alphabetArray));
-            expectShallowEquals(result3, ['x'].concat(reverse(alphabetArray)));
+            expectEqual(result, expectedResult);
+            expectEqual(result1, [99].concat(reverse(range0To145)));
+            expectEqual(result2, injectValueAtIndex('x', 24, alphabetArray));
+            expectEqual(result3, ['x'].concat(reverse(alphabetArray)));
         });
-        it ('should insert value even if passed in list is empty', function () {
-            expectShallowEquals(genericInsert(99, []), [99]);
-            expectShallowEquals(genericInsert('a', []), ['a']);
-            expectShallowEquals(genericInsert('a', ''), 'a');
+        it ('should insert value even if passed in list is empty', () => {
+            expectEqual(genericInsert(99, []), [99]);
+            expectEqual(genericInsert('a', []), ['a']);
         });
     });
 
-    describe ('#scanl', function () {
+    describe ('#scanl', () => {
         const unlinkedNodes = alphabetArray.map(char => ({data: char}));
 
-        it ('should return a list of successively reduced values from left to right', function () {
+        it ('should return a list of successively reduced values from left to right', () => {
             // Generate linked-list structure
             const result = scanl((agg, item) => {
                 agg.next = item;
@@ -2311,19 +2290,19 @@ describe ('#list', function () {
                     });
                 })
             )
-                .to.equal(true);
+                .toEqual(true);
         });
 
-        it ('should return an empty list when receiving an empty one', function () {
-            expectShallowEquals(scanl(x => x * 2, 99, []), []);
-            expectShallowEquals(scanl(x => x + 2, '99', ''), []);
+        it ('should return an empty list when receiving an empty one', () => {
+            expectEqual(scanl(x => x * 2, 99, []), []);
+            expectEqual(scanl(x => x + 2, '99', ''), []);
         });
     });
 
-    describe ('#scanl1', function () {
+    describe ('#scanl1', () => {
         const unlinkedNodes = alphabetArray.map(char => ({data: char}));
 
-        it ('should return a list of successively reduced values from left to right', function () {
+        it ('should return a list of successively reduced values from left to right', () => {
             // Generate linked-list structure
             const result = scanl1((agg, item) => {
                 agg.next = item;
@@ -2343,19 +2322,19 @@ describe ('#list', function () {
                     });
                 })
             )
-                .to.equal(true);
+                .toEqual(true);
         });
 
-        it ('should return an empty list when receiving an empty one', function () {
-            expectShallowEquals(scanl1(x => x * 2, []), []);
-            expectShallowEquals(scanl1(x => x + 2, ''), []);
+        it ('should return an empty list when receiving an empty one', () => {
+            expectEqual(scanl1(x => x * 2, []), []);
+            expectEqual(scanl1(x => x + 2, ''), []);
         });
     });
 
-    describe ('#scanr', function () {
+    describe ('#scanr', () => {
         const unlinkedNodes = alphabetArray.map(char => ({data: char}));
 
-        it ('should return a list of successively reduced values from left to right', function () {
+        it ('should return a list of successively reduced values from left to right', () => {
             // Generate linked-list structure
             const result = scanr((agg, item) => {
                 agg.next = item;
@@ -2377,19 +2356,19 @@ describe ('#list', function () {
                         });
                 })
             )
-                .to.equal(true);
+                .toEqual(true);
         });
 
-        it ('should return an empty list when receiving an empty one', function () {
-            expectShallowEquals(scanr(x => x * 2, 99, []), []);
-            expectShallowEquals(scanr(x => x + 2, '99', ''), []);
+        it ('should return an empty list when receiving an empty one', () => {
+            expectEqual(scanr(x => x * 2, 99, []), []);
+            expectEqual(scanr(x => x + 2, '99', ''), []);
         });
     });
 
-    describe ('#scanr1', function () {
+    describe ('#scanr1', () => {
         const unlinkedNodes = alphabetArray.map(char => ({data: char}));
 
-        it ('should return a list of successively reduced values from left to right', function () {
+        it ('should return a list of successively reduced values from left to right', () => {
             // Generate linked-list structure
             const result = scanr1((agg, item) => {
                 agg.next = item;
@@ -2412,41 +2391,41 @@ describe ('#list', function () {
                         });
                 })
             )
-                .to.equal(true);
+                .toEqual(true);
         });
 
-        it ('should return an empty list when receiving an empty one', function () {
-            expectShallowEquals(scanr1(x => x * 2, []), []);
-            expectShallowEquals(scanr1(x => x + 2, ''), []);
+        it ('should return an empty list when receiving an empty one', () => {
+            expectEqual(scanr1(x => x * 2, []), []);
+            expectEqual(scanr1(x => x + 2, ''), []);
         });
     });
 
     describe ('#lcaseFirst', () => {
         it ('should return passed in non-empty string with first alpha char toUpperCase', () => {
-           expect(lcaseFirst('ABC')).to.equal('aBC');
+           expect(lcaseFirst('ABC')).toEqual('aBC');
         });
         it ('should return given non-empty string if it cannot be operated on;  Non-alpha char at index `0` or "empty string"', () => {
-            expect(lcaseFirst('$$ABC')).to.equal('$$ABC');
+            expect(lcaseFirst('$$ABC')).toEqual('$$ABC');
         });
         it ('should throw an error when receiving an empty-string or any value that is not a string', () => {
             [null, undefined, [], {}]
                 .forEach(xs =>
-                    assert.throws(() => lcaseFirst(xs), Error)
+                    expectError(() => lcaseFirst(xs))
                 );
         });
     });
 
     describe ('#ucaseFirst', () => {
         it ('should return passed in non-empty string with first alpha char toUpperCase', () => {
-           expect(ucaseFirst('abc')).to.equal('Abc');
+           expect(ucaseFirst('abc')).toEqual('Abc');
         });
         it ('should return given non-empty string if it cannot be operated on;  Non-alpha char at index `0` or "empty string"', () => {
-            expect(ucaseFirst('$$abc')).to.equal('$$abc');
+            expect(ucaseFirst('$$abc')).toEqual('$$abc');
         });
         it ('should throw an error when receiving an empty-string or any value that is not a string', () => {
             [null, undefined, [], {}]
                 .forEach(xs =>
-                    assert.throws(() => ucaseFirst(xs), Error)
+                    expectError(() => ucaseFirst(xs))
                 );
         });
     });
@@ -2459,13 +2438,13 @@ describe ('#list', function () {
                 ['$$abc', 'Abc']
             ]
                 .forEach(([given, expected]) => {
-                    expect(camelCase(given)).to.equal(expected);
+                    expect(camelCase(given)).toEqual(expected);
                 });
         });
         it ('should throw an error when receiving an empty-string or any value that is not a string', () => {
             [null, undefined, [], {}]
                 .forEach(xs =>
-                    assert.throws(() => camelCase(xs), Error)
+                    expectError(() => camelCase(xs))
                 );
         });
     });
@@ -2478,17 +2457,16 @@ describe ('#list', function () {
                 ['$$abc', 'Abc']
             ]
                 .forEach(([given, expected]) => {
-                    expect(classCase(given)).to.equal(expected);
+                    expect(classCase(given)).toEqual(expected);
                 });
         });
         it ('should throw an error when receiving an empty-string or any value that is not a string', () => {
             [null, undefined, [], {}]
                 .forEach(xs =>
-                    assert.throws(() => classCase(xs), Error)
+                    expectError(() => classCase(xs))
                 );
         });
     });
-
 
     describe ('#range', () => {
         const zeroToNine = '0123456789'.split('').map(x => parseInt(x, 10)),
@@ -2498,8 +2476,8 @@ describe ('#list', function () {
             negativeNineToZero = reverse(zeroToNegativeNine),
             nineToZero = reverse(zeroToNine),
             checkRanges = rangeSets => rangeSets.forEach(([result, expected]) => {
-                expect(result.length).to.equal(expected.length);
-                expect(result).to.deep.equal(expected);
+                expect(result.length).toEqual(expected.length);
+                expect(result).toEqual(expected);
             })
         ;
 
@@ -2526,5 +2504,9 @@ describe ('#list', function () {
                 [range(-9, 0, -1), negativeNineToZero]
             ]);
         });
+    });
+
+    describe ('#forEach', () => {
+        it ('requires more tests');
     });
 });

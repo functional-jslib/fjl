@@ -2,20 +2,17 @@
  * Created by elyde on 12/10/2016.
  * @todo remove use of 'curry_' from tests and helpers.
  */
-
 import {compose} from '../src/function';
 import {curry2_, __} from './helpers/curry_';
-import {expect} from 'chai';
-
 import {range} from './../src/list/range';
 
 export * from './helpers/curry_';
 
-export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.instanceOf(instance)),
+export let  expectInstanceOf = curry2_((value, instance) => expect(value).toBeInstanceOf(instance)),
 
     expectFunction = value => expectInstanceOf(value, Function),
 
-    expectEqual = curry2_((value, value2) => expect(value).to.be.equal(value2)),
+    expectEqual = curry2_((value, value2) => expect(value).toEqual(value2)),
 
     expectFalse = value => expectEqual(value, false),
 
@@ -23,20 +20,14 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
 
     expectLength = curry2_((len, element) => compose(expectEqual(__, len), length)(element)),
 
+    expectError = curry2_(fn => expect(fn).toThrow()),
+
     hasOwnProperty = (instance, key) => Object.prototype.hasOwnProperty.call(instance, key),
 
     length = something => something.length,
 
     add = curry2_((...args) => {
         return args.reduce((agg, num) => num + agg, 0);
-    }),
-
-    multiply = curry2_((...args) => {
-        return args.reduce((agg, num) => num * agg, 1);
-    }),
-
-    divide = curry2_((...args) => {
-        return args.reduce((agg, num) => agg / num, args.shift());
     }),
 
     subtract = curry2_((arg0, ...args) => {
@@ -68,10 +59,6 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).to.be.
                deepCompareLeft(incoming[key], against[key]) :
                 against[key] === incoming[key];
         }),
-
-    expectShallowEquals = curry2_((a, b) => expectTrue(shallowCompareOnLeft(a, b))),
-
-    expectShallowEqual = expectShallowEquals,
 
     expectDeepEquals = curry2_((a, b) => expectTrue(deepCompareLeft(a, b))),
 

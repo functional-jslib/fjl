@@ -4,7 +4,7 @@
  */
 
 import {fPureTakesOne} from '../utils';
-import {curry} from '../function/curry';
+import {curry, curry2} from '../function/curry';
 
 export const
 
@@ -53,10 +53,10 @@ export const
      */
     assign = (() => Object.assign ?
             (obj0, ...objs) => Object.assign(obj0, ...objs) :
-            (obj0, ...objs) => objs.reduce((topAgg, obj) => {
+            curry2((obj0, ...objs) => objs.reduce((topAgg, obj) => {
                 return keys(obj).reduce((agg, key) => {
                     agg[key] = obj[key];
                     return agg;
                 }, topAgg);
-            }, obj0)
+            }, obj0))
         )();

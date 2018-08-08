@@ -4,7 +4,6 @@
 /**
  * Created by elyde on 11/25/2016.
  */
-import {assert, expect} from 'chai';
 import {apply} from '../src/function';
 import {
     objComplement, objDifference, objUnion, objIntersect,
@@ -18,7 +17,7 @@ import {
 } from '../src/object';
 import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../src/list';
 import {
-    expectTrue, expectFalse, expectEqual, expectFunction,
+    expectTrue, expectFalse, expectEqual, expectError, expectFunction,
     deepCompareObjectsLeft, allYourBase
 } from './helpers';
 
@@ -78,19 +77,19 @@ describe ('#object', function () {
         it ('should return given string when receiving a string.', () => {
             ['Undefined', 'Null', 'NaN', 'String'].every(xs => {
                 const result = toTypeRef(xs);
-                expect(result.constructor).to.equal(String);
-                expect(result).to.equal(xs);
+                expect(result.constructor).toEqual(String);
+                expect(result).toEqual(xs);
             });
         });
         it ('should return given function/constructor when receiving a function/constructor.', () => {
             [String, Function, Promise, Map].every(x => {
                 const result = toTypeRef(x);
-                expect(result).to.equal(x);
+                expect(result).toEqual(x);
             });
         });
         it ('should return a string for all values that are not a string or a function', () => {
             [null, undefined, NaN, Symbol('abc'), Promise.resolve(), 99, [], {}].forEach(
-                    x => expect((toTypeRef(x)).constructor).to.equal(String)
+                    x => expect((toTypeRef(x)).constructor).toEqual(String)
                 );
         });
     });
@@ -110,7 +109,7 @@ describe ('#object', function () {
                 .concat([Array, Boolean, Function, String, Number].map(Type => [Type.name, Type]))
                 .forEach(([expected, control]) => {
                     const result = toTypeRefName(control);
-                    expect(result).to.equal(expected);
+                    expect(result).toEqual(expected);
                 });
         });
     });
@@ -132,7 +131,7 @@ describe ('#object', function () {
                 ['Undefined', undefined]
             ]
                 .forEach(tuple => {
-                    expect(isType.apply(null, tuple)).to.equal(true);
+                    expect(isType.apply(null, tuple)).toEqual(true);
                 });
         });
         it ('should return `true` when passed in value is of passed in type constructor', function () {
@@ -173,15 +172,15 @@ describe ('#object', function () {
                 .forEach(tuple => expectFalse(apply(isType, tuple)));
         });
         it ('should be able to match NaN', () => {
-            expect(isType(NaN, 0/0)).to.equal(true);
-            expect(isType(NaN, 99)).to.equal(false);
+            expect(isType(NaN, 0/0)).toEqual(true);
+            expect(isType(NaN, 99)).toEqual(false);
         });
     });
 
     describe('#isFunction', function () {
         it('should return true if value is a function', function () {
             [(() => undefined), function () {}]
-                .forEach(value => expect(value).to.be.instanceOf(Function));
+                .forEach(value => expect(value).toBeInstanceOf(Function));
         });
         it('should return `false` when value is not a function', function () {
             [-1, 0, 1, [], {}, 'abc']
@@ -235,8 +234,8 @@ describe ('#object', function () {
             expectTrue(isString(String('hello')));
         });
         it ('should return `false` when given value is not a string', () => {
-            expect(isString(function () {})).to.equal(false);
-            expect(isString(NaN)).to.equal(false);
+            expect(isString(function () {})).toEqual(false);
+            expect(isString(NaN)).toEqual(false);
         });
     });
 
@@ -496,26 +495,26 @@ describe ('#object', function () {
 
     describe ('#jsonClone', function () {
         it ('should be a function', function () {
-            expect(jsonClone).to.be.instanceOf(Function);
+            expect(jsonClone).toBeInstanceOf(Function);
         });
         // it ('should return results the same as `JSON.parse(JSON.stringify(...))`', () => {
-            // expect(expectDeepEquals(jsonClone(allYourBase), allYourBase)).to.equal(true);
+            // expect(expectDeepEquals(jsonClone(allYourBase), allYourBase)).toEqual(true);
         // });
     });
 
     describe ('#toArray', function () {
         test ('should be a function', function () {
-            expect(toArray).to.be.instanceOf(Function);
+            expect(toArray).toBeInstanceOf(Function);
         });
         test ('should return an empty array for `null` and/or `undefined`', () => {
-            [null, undefined].forEach(x => expect(toArray(x)).to.be.instanceOf(Array));
+            [null, undefined].forEach(x => expect(toArray(x)).toBeInstanceOf(Array));
         });
         // @todo add more extensive tests here
     });
 
     describe ('#log', function () {
         it ('should be a function', function () {
-            expect(typeof log).to.equal('function');
+            expect(typeof log).toEqual('function');
         });
         // it ('should have more tests');
         // @todo add more extensive tests here
@@ -523,7 +522,7 @@ describe ('#object', function () {
 
     describe ('#error', function () {
         it ('should be a function', function () {
-            expect(typeof error).to.equal('function');
+            expect(typeof error).toEqual('function');
         });
         // it ('should have more tests');
         // @todo add more extensive tests here
@@ -531,14 +530,14 @@ describe ('#object', function () {
 
     describe ('#peek', function () {
         it ('should be a function', function () {
-            expect(peek).to.be.instanceOf(Function);
+            expect(peek).toBeInstanceOf(Function);
         });
         it ('should return last arg passed in when being called with one or more args.', function () {
             subsequences('abc').concat([
                 [99], [true], [undefined], [null], ['Output tested from `peek`']
             ]).forEach(xs => {
                 log('testing-peek');
-                expect(peek.apply(null, xs)).to.equal(xs.pop());
+                expect(peek.apply(null, xs)).toEqual(xs.pop());
             });
         });
     });
@@ -551,12 +550,12 @@ describe ('#object', function () {
                     return `${charCode1}` === charCode && char1 === char;
                 }, toAssocList(charCodeToCharMap)
             ))
-                .to.equal(true);
+                .toEqual(true);
         });
         test ('should return an empty array when receiving `{}`, `null`, or `undefined`', () => {
             const result = toAssocList({});
-            expect(result).to.be.instanceOf(Array);
-            expect(result.length).to.equal(0);
+            expect(result).toBeInstanceOf(Array);
+            expect(result.length).toEqual(0);
         });
     });
 
@@ -581,43 +580,43 @@ describe ('#object', function () {
             verifyResult = (assocList, obj) => {
                 assocList.forEach(([key, value]) => {
                     if (obj[key].constructor === obj.constructor) {
-                        expect(value).to.be.instanceOf(Array);
+                        expect(value).toBeInstanceOf(Array);
                         return verifyResult(value, obj[key]);
                     }
                     switch (obj[key].constructor) {
                         case Array:
                         case Object:
-                            expect(value).to.deep.equal(obj[key]);
+                            expect(value).toEqual(obj[key]);
                             break;
                         default:
-                            expect(value).to.equal(obj[key]);
+                            expect(value).toEqual(obj[key]);
                             break;
                     }
                 });
             };
             verifyResult(result, allYourBase);
-            expect(result).to.be.instanceOf(Array);
-            expect(result).to.deep.equal(expected);
+            expect(result).toBeInstanceOf(Array);
+            expect(result).toEqual(expected);
         });
         it ('should throw an error when receiving `null`, or `undefined`.', () => {
-            [null, undefined].forEach(x => assert.throws(() => toAssocListDeep(x), Error));
+            [null, undefined].forEach(x => expectError(() => toAssocListDeep(x)));
         });
     });
 
     describe ('#fromAssocList, #fromAssocList', function () {
         test ('should return an object from an array map', () => {
             const result = fromAssocList(charCodeToCharArrayMap);
-            expect(isObject(result)).to.equal(true);
+            expect(isObject(result)).toEqual(true);
             expect(
                 all(([charCode, char]) =>
                     result[charCode] === char,
                     charCodeToCharArrayMap
                 )
             )
-                .to.equal(true);
+                .toEqual(true);
         });
         test ('should throw an error when receiving `null`, or `undefined`', () => {
-            [null, undefined].forEach(x => assert.throws(() => fromAssocList(x), Error));
+            [null, undefined].forEach(x => expectError(() => fromAssocList(x)));
         });
     });
 
@@ -640,12 +639,12 @@ describe ('#object', function () {
                 ]],
             result = fromAssocListDeep(assocList);
             // log(inspect(result, {depth: 11}));
-            expect(result).to.deep.equal(allYourBase);
+            expect(result).toEqual(allYourBase);
         });
         it ('should throw an error when receiving anything other than an array or reducible', () => {
-            assert.throws(fromAssocListDeep, Error);
+            expectError(fromAssocListDeep);
             [null, undefined, 99, true, Symbol('99'), 'hello'].forEach(x =>
-                assert.throws(() => fromAssocListDeep(x), Error)
+                expectError(() => fromAssocListDeep(x))
             );
         });
     });

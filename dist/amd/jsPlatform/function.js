@@ -31,5 +31,5 @@ define(['exports', '../function/curry'], function (exports, _curry) {
    * @param args {...*}
    * @returns {*}
    */
-  call = exports.call = (fn, ...args) => apply(fn, args);
+  call = exports.call = (0, _curry.curry2)((fn, ...args) => apply(fn, args));
 });

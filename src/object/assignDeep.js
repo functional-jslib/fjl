@@ -1,6 +1,7 @@
 
 import {isObject} from './is';
 import {keys, hasOwnProperty} from '../jsPlatform/object';
+import {curry2} from '../function/curry';
 
 export const
     /**
@@ -10,7 +11,7 @@ export const
      * @param [objs] {...{Object}} - One or more objects to merge onto `obj0`.
      * @returns {Object}
      */
-    assignDeep = (obj0, ...objs) =>
+    assignDeep = curry2((obj0, ...objs) =>
         !obj0 ? obj0 : objs.reduce((topAgg, obj) =>
             !obj ? topAgg : keys(obj).reduce((agg, key) => {
                 let propDescription = Object.getOwnPropertyDescriptor(agg, key);
@@ -26,4 +27,4 @@ export const
                 else { agg[key] = obj[key]; }
                 return agg;
             }, topAgg)
-        , obj0);
+        , obj0));

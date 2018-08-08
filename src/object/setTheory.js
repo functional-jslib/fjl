@@ -1,7 +1,7 @@
 import {assignDeep} from './assignDeep';
 import {hasOwnProperty, keys} from '../jsPlatform/object';
 import {foldl} from '../list';
-import {curry} from '../function/curry';
+import {curry, curry2} from '../function/curry';
 
 export const
 
@@ -21,5 +21,5 @@ export const
         return agg;
     }, {}, keys(obj1))),
 
-    objComplement = (obj0, ...objs) => foldl((agg, obj) =>
-        assignDeep(agg, objDifference(obj, obj0)), {}, objs);
+    objComplement = curry2((obj0, ...objs) => foldl((agg, obj) =>
+        assignDeep(agg, objDifference(obj, obj0)), {}, objs));

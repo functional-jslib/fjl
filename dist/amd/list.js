@@ -4,8 +4,8 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = undefined;
-    exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.append = exports.push = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
+    exports.complement = exports.difference = undefined;
+    exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.notElem = exports.elem = exports.partition = exports.filter = exports.forEach = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.append = exports.push = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
     Object.keys(_range).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -75,18 +75,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
      * @returns {(Array|String|*)} - Same type as list like passed in.
      */
-    append = exports.append = (...args) => {
-        const len = (0, _object.length)(args);
-        if (!len) {
-            return [];
-        } else if (len === 1) {
-            return (0, _utils.sliceCopy)(args[0]);
-        }
-        if (len >= 2) {
-            return (0, _function.apply)(_list.concat, args);
-        }
-        throw new Error(`'\`append\` requires at 2 or more arguments.  ${(0, _object.length)(args)} args given.`);
-    },
+    append = exports.append = (0, _curry.curry2)((...args) => (0, _function.apply)(_list.concat, args)),
 
 
     /**
@@ -156,7 +145,17 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @param xs {Array}
      * @returns {Array}
      */
-    concat = exports.concat = xs => !(0, _object.length)(xs) ? (0, _utils.sliceCopy)(xs) : (0, _function.apply)(append, xs),
+    concat = exports.concat = xs => {
+        switch ((0, _object.length)(xs)) {
+            case undefined:
+            case 0:
+            case 1:
+                return (0, _utils.sliceCopy)(xs);
+            case 2:
+            default:
+                return (0, _function.apply)(append, xs);
+        }
+    },
 
 
     /**
@@ -684,6 +683,22 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
 
 
     /**
+     * @param fn {Function} - Operation
+     * @param xs {(Array|String)}
+     */
+    forEach = exports.forEach = (0, _curry.curry)((fn, list) => {
+        const limit = (0, _object.length)(list);
+        if (!limit) {
+            return;
+        }
+        let ind = 0;
+        for (; ind < limit; ind += 1) {
+            fn(list[ind]);
+        }
+    }),
+
+
+    /**
      * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
      * @function module:list.filter
      * @param pred {Function}
@@ -978,16 +993,10 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @param lists {Array|String} - One ore more lists of the same type.
      * @returns {Array}
      */
-    zipN = exports.zipN = (...lists) => {
-        const trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, filter(_object.length, lists)),
-              lenOfTrimmed = (0, _object.length)(trimmedLists);
-        if (!lenOfTrimmed) {
-            return [];
-        } else if (lenOfTrimmed === 1) {
-            return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
-        }
+    zipN = exports.zipN = (0, _curry.curry2)((...lists) => {
+        const trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists);
         return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _map2.default)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
-    },
+    }),
 
 
     /**
@@ -1069,7 +1078,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @param lists ...{Array}
      * @returns {Array<Array<*,*>>}
      */
-    zipWithN = exports.zipWithN = (op, ...lists) => {
+    zipWithN = exports.zipWithN = (0, _curry.curry3)((op, ...lists) => {
         const trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists),
               lenOfTrimmed = (0, _object.length)(trimmedLists);
         if (!lenOfTrimmed) {
@@ -1078,7 +1087,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
             return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
         }
         return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _function.apply)(op, (0, _map2.default)(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
-    },
+    }),
 
 
     /**
@@ -1197,7 +1206,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
     all = exports.all = (0, _curry.curry)((p, xs) => {
         const limit = (0, _object.length)(xs);
         let ind = 0;
-        if (limit === 0) {
+        if (!limit) {
             return false;
         }
         for (; ind < limit; ind++) {
@@ -1634,7 +1643,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @param arrays {...Array}
      * @returns {Array}
      */
-    complement = exports.complement = (arr0, ...arrays) => (0, _utils.reduce)((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
+    complement = exports.complement = (0, _curry.curry2)((arr0, ...arrays) => (0, _utils.reduce)((agg, arr) => append(agg, difference(arr, arr0)), [], arrays));
 
     /**
      * Same as `Array.prototype.slice` though is functional version.

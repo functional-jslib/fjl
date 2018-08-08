@@ -18,5 +18,5 @@ define(['exports', './assignDeep', '../jsPlatform/object', '../list', '../functi
         }
         return agg;
     }, {}, (0, _object.keys)(obj1))),
-          objComplement = exports.objComplement = (obj0, ...objs) => (0, _list.foldl)((agg, obj) => (0, _assignDeep.assignDeep)(agg, objDifference(obj, obj0)), {}, objs);
+          objComplement = exports.objComplement = (0, _curry.curry2)((obj0, ...objs) => (0, _list.foldl)((agg, obj) => (0, _assignDeep.assignDeep)(agg, objDifference(obj, obj0)), {}, objs));
 });

@@ -5,10 +5,10 @@
 import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list';
 import {apply}              from './jsPlatform/function';
 import {negateF3, negateF2}   from './function/negate';
-import {isTruthy, isFalsy}  from './boolean';
+import {isTruthy, isFalsy, alwaysTrue} from './boolean';
 import {lookup, length}       from './object';
 import map                  from './list/map';
-import {curry} from './function/curry';
+import {curry, curry2, curry3} from './function/curry';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -46,13 +46,7 @@ export const
      * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
      * @returns {(Array|String|*)} - Same type as list like passed in.
      */
-    append = (...args) => {
-        const len = length(args);
-        if (!len) { return []; }
-        else if (len === 1) { return sliceCopy(args[0]); }
-        if (len >= 2) { return apply(listAppend, args); }
-        throw new Error(`'\`append\` requires at 2 or more arguments.  ${length(args)} args given.`);
-    },
+    append = curry2((...args) => apply(listAppend, args)),
 
     /**
      * Returns head of list (first item of list).
@@ -116,7 +110,16 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    concat = xs => !length(xs) ? sliceCopy(xs) : apply(append, xs),
+    concat = xs => {
+        switch (length(xs)) {
+            case undefined:
+            case 0:
+            case 1: return sliceCopy(xs);
+            case 2:
+            default:
+                return apply(append, xs);
+        }
+    },
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -627,6 +630,21 @@ export const
     find = findWhere,
 
     /**
+     * @param fn {Function} - Operation
+     * @param xs {(Array|String)}
+     */
+    forEach = curry((fn, list) => {
+        const limit = length(list);
+        if (!limit) {
+            return;
+        }
+        let ind = 0;
+        for (; ind < limit; ind += 1) {
+            fn(list[ind]);
+        }
+    }),
+
+    /**
      * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
      * @function module:list.filter
      * @param pred {Function}
@@ -916,19 +934,12 @@ export const
      * @param lists {Array|String} - One ore more lists of the same type.
      * @returns {Array}
      */
-    zipN = (...lists) => {
-        const trimmedLists = apply(lengthsToSmallest, filter(length, lists)),
-            lenOfTrimmed = length(trimmedLists);
-        if (!lenOfTrimmed) {
-            return [];
-        }
-        else if (lenOfTrimmed === 1) {
-            return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
-        }
+    zipN = curry2((...lists) => {
+        const trimmedLists = apply(lengthsToSmallest, lists);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
-    },
+    }),
 
     /**
      * @haskellType `zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]`
@@ -1007,7 +1018,7 @@ export const
      * @param lists ...{Array}
      * @returns {Array<Array<*,*>>}
      */
-    zipWithN = (op, ...lists) => {
+    zipWithN = curry3((op, ...lists) => {
         const trimmedLists = apply(lengthsToSmallest, lists),
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) {
@@ -1019,7 +1030,7 @@ export const
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, apply(op, map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
-    },
+    }),
 
     /**
      * Zips 3 lists with tupling function.
@@ -1134,7 +1145,7 @@ export const
     all = curry((p, xs) => {
         const limit = length(xs);
         let ind = 0;
-        if (limit === 0) {
+        if (!limit) {
             return false;
         }
         for (; ind < limit; ind++) {
@@ -1555,8 +1566,8 @@ export const
      * @param arrays {...Array}
      * @returns {Array}
      */
-    complement = (arr0, ...arrays) =>
-        reduce((agg, arr) => append(agg, difference(arr, arr0)), [], arrays);
+    complement = curry2((arr0, ...arrays) =>
+        reduce((agg, arr) => append(agg, difference(arr, arr0)), [], arrays));
 
 /**
  * Same as `Array.prototype.slice` though is functional version.

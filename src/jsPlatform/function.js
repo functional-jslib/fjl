@@ -1,4 +1,4 @@
-import {curry} from '../function/curry';
+import {curry, curry2} from '../function/curry';
 
 /**
  * Created by elydelacruz on 9/7/2017.
@@ -23,4 +23,4 @@ export const
      * @param args {...*}
      * @returns {*}
      */
-    call = (fn, ...args) => apply(fn, args);
+    call = curry2((fn, ...args) => apply(fn, args));

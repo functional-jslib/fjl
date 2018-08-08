@@ -149,7 +149,7 @@ var assign = function () {
         }
 
         return Object.assign.apply(Object, [obj0].concat(objs));
-    } : function (obj0) {
+    } : curry2(function (obj0) {
         for (var _len6 = arguments.length, objs = Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
             objs[_key6 - 1] = arguments[_key6];
         }
@@ -160,7 +160,7 @@ var assign = function () {
                 return agg;
             }, topAgg);
         }, obj0);
-    };
+    });
 }();
 
 /**
@@ -283,13 +283,13 @@ var lookup = curry(function (key, obj) {
 var apply = curry(function (fn, args) {
     return fn.apply(null, args);
 });
-var call = function call(fn) {
+var call = curry2(function (fn) {
     for (var _len7 = arguments.length, args = Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
         args[_key7 - 1] = arguments[_key7];
     }
 
     return apply(fn, args);
-};
+});
 
 /**
  * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
@@ -378,7 +378,7 @@ var searchObj = curry(function (nsString, obj) {
     return parent;
 });
 
-var assignDeep = function assignDeep(obj0) {
+var assignDeep = curry2(function (obj0) {
     for (var _len9 = arguments.length, objs = Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
         objs[_key9 - 1] = arguments[_key9];
     }
@@ -398,7 +398,7 @@ var assignDeep = function assignDeep(obj0) {
             return agg;
         }, topAgg);
     }, obj0);
-};
+});
 
 /**
  *  List operations that overlap (apart from globally overlapping props and functions like `length`)
@@ -435,13 +435,13 @@ var negateF3 = function negateF3(fn) {
     });
 };
 var negateFN = function negateFN(fn) {
-    return function () {
+    return curry2(function () {
         for (var _len10 = arguments.length, args = Array(_len10), _key10 = 0; _key10 < _len10; _key10++) {
             args[_key10] = arguments[_key10];
         }
 
         return !apply(fn, args);
-    };
+    });
 };
 
 /**
@@ -507,14 +507,14 @@ var genericAscOrdering = curry(function (a, b) {
     }
     return 0;
 });
-var lengths = function lengths() {
+var lengths = curry2(function () {
     for (var _len11 = arguments.length, lists = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
         lists[_key11] = arguments[_key11];
     }
 
-    return length(lists) ? map(length, lists) : [];
-};
-var lengthsToSmallest = function lengthsToSmallest() {
+    return map(length, lists);
+});
+var lengthsToSmallest = curry2(function () {
     for (var _len12 = arguments.length, lists = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
         lists[_key12] = arguments[_key12];
     }
@@ -524,7 +524,7 @@ var lengthsToSmallest = function lengthsToSmallest() {
     return map(function (list, ind) {
         return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list);
     }, lists);
-};
+});
 var reduceUntil = curry(function (pred, op, agg, arr) {
     var limit = length(arr);
     if (!limit) {
@@ -685,22 +685,13 @@ var split = fPureTakesOne('split');
  * List operations module.
  * @module list
  */
-var append = function append() {
+var append = curry2(function () {
     for (var _len13 = arguments.length, args = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
         args[_key13] = arguments[_key13];
     }
 
-    var len = length(args);
-    if (!len) {
-        return [];
-    } else if (len === 1) {
-        return sliceCopy(args[0]);
-    }
-    if (len >= 2) {
-        return apply(concat$1, args);
-    }
-    throw new Error('\'`append` requires at 2 or more arguments.  ' + length(args) + ' args given.');
-};
+    return apply(concat$1, args);
+});
 var head = function head(x) {
     return x[0];
 };
@@ -720,7 +711,15 @@ var unconsr = function unconsr(xs) {
     return !xs || length(xs) === 0 ? undefined : [init(xs), last(xs)];
 };
 var concat$$1 = function concat$$1(xs) {
-    return !length(xs) ? sliceCopy(xs) : apply(append, xs);
+    switch (length(xs)) {
+        case undefined:
+        case 0:
+        case 1:
+            return sliceCopy(xs);
+        case 2:
+        default:
+            return apply(append, xs);
+    }
 };
 var concatMap = curry(function (fn, foldableOfA) {
     return concat$$1(map(fn, foldableOfA));
@@ -937,6 +936,16 @@ var breakOnList = curry(function (pred, list) {
 });
 var at = lookup;
 var find = findWhere;
+var forEach = curry(function (fn, list) {
+    var limit = length(list);
+    if (!limit) {
+        return;
+    }
+    var ind = 0;
+    for (; ind < limit; ind += 1) {
+        fn(list[ind]);
+    }
+});
 var filter = curry(function (pred, xs) {
     var ind = 0,
         limit = length(xs),
@@ -1097,24 +1106,18 @@ var zip = curry(function (arr1, arr2) {
         return aggregateArr$(agg, [item, a2[ind]]);
     }, [], a1);
 });
-var zipN = function zipN() {
+var zipN = curry2(function () {
     for (var _len14 = arguments.length, lists = Array(_len14), _key14 = 0; _key14 < _len14; _key14++) {
         lists[_key14] = arguments[_key14];
     }
 
-    var trimmedLists = apply(lengthsToSmallest, filter(length, lists)),
-        lenOfTrimmed = length(trimmedLists);
-    if (!lenOfTrimmed) {
-        return [];
-    } else if (lenOfTrimmed === 1) {
-        return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
-    }
+    var trimmedLists = apply(lengthsToSmallest, lists);
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, map(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
-};
+});
 var zip3 = curry(function (arr1, arr2, arr3) {
     return zipN(arr1, arr2, arr3);
 });
@@ -1138,7 +1141,7 @@ var zipWith = curry(function (op, xs1, xs2) {
         return aggregateArr$(agg, op(item, a2[ind]));
     }, [], a1);
 });
-var zipWithN = function zipWithN(op) {
+var zipWithN = curry3(function (op) {
     for (var _len15 = arguments.length, lists = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
         lists[_key15 - 1] = arguments[_key15];
     }
@@ -1155,7 +1158,7 @@ var zipWithN = function zipWithN(op) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
-};
+});
 var zipWith3 = curry(function (op, xs1, xs2, xs3) {
     return zipWithN(op, xs1, xs2, xs3);
 });
@@ -1203,7 +1206,7 @@ var any = curry(function (p, xs) {
 var all = curry(function (p, xs) {
     var limit = length(xs);
     var ind = 0;
-    if (limit === 0) {
+    if (!limit) {
         return false;
     }
     for (; ind < limit; ind++) {
@@ -1415,7 +1418,7 @@ var difference = curry(function (array1, array2) {
         return !includes(elm, array2) ? (agg.push(elm), agg) : agg;
     }, [], array1);
 });
-var complement = function complement(arr0) {
+var complement = curry2(function (arr0) {
     for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
         arrays[_key16 - 1] = arguments[_key16];
     }
@@ -1423,7 +1426,7 @@ var complement = function complement(arr0) {
     return reduce(function (agg, arr) {
         return append(agg, difference(arr, arr0));
     }, [], arrays);
-};
+});
 
 /**
  * Same as `Array.prototype.slice` though is functional version.
@@ -1485,7 +1488,7 @@ var objDifference = curry(function (obj1, obj2) {
         return agg;
     }, {}, keys(obj1));
 });
-var objComplement = function objComplement(obj0) {
+var objComplement = curry2(function (obj0) {
     for (var _len17 = arguments.length, objs = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
         objs[_key17 - 1] = arguments[_key17];
     }
@@ -1493,7 +1496,7 @@ var objComplement = function objComplement(obj0) {
     return foldl(function (agg, obj) {
         return assignDeep(agg, objDifference(obj, obj0));
     }, {}, objs);
-};
+});
 
 /**
  * @module console
@@ -1958,6 +1961,7 @@ exports.span = span;
 exports.breakOnList = breakOnList;
 exports.at = at;
 exports.find = find;
+exports.forEach = forEach;
 exports.filter = filter;
 exports.partition = partition;
 exports.elem = elem;

@@ -60,8 +60,8 @@ The docs are divided into modules though all methods live on `fjl` (top level ex
 
 #### A note on currying.
 - All methods that take 2 or more arguments are curried.
-- All methods that take rest params 'only' are not curried;  E.g.,
-- Methods that require one argument and rest params are not curried.
+- All methods that take rest params ~~'only' are not curried;~~ only are curried up to 2 parameters.
+- Methods that require one argument and rest params are ~~not~~ are curried at up to 2 parameters.
 
 #### `boolean`
 ```
@@ -171,15 +171,15 @@ https://functional-jslib.github.io/fjl/
 ## Motivations:
 - Haskell and it's `Prelude`.
 - Lambda Calculus.
-- The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
-- The need to be able to write functional code very quickly and easily (all methods in `fjl` are curried and lib also includes versions of all methods uncurried).
+- The need for strongly typed javascript (without typescript (libraries and the such)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
+- The need to be able to write functional code very quickly and easily (all methods in `fjl` ~~are curried and lib also includes versions of all methods uncurried~~).
 - A functional library that takes advantage of the es6 features of the language
  and is built from the ground up using functional concepts.
 - A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
 - ~~A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `append` (un-curried version)~~ Managing uncurried and curried methods makes development on 
-    the library unwieldly and is un-functional (anyway :-)), so has been removed from library (as a feature).
-- A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
+    `append`, `append` (un-curried version) Managing uncurried and curried methods makes development on 
+    the library unwieldly and is un-functional (anyway :-))so has been removed from library (as a feature)~~, .
+- A library that shouldn't be too hard to develop on (methods grouped similarly to the way the haskell modules
 are separated out 'Data.List' (in our lib is './src/list.js') etc..
 - Etc. etc..
 
@@ -187,6 +187,7 @@ are separated out 'Data.List' (in our lib is './src/list.js') etc..
 #### Use of while-and-for-loops instead of built-ins:
 - They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.)
  (do search for `foreach vs for loop` and/or similiar).
+- Native array functional methods are used in some places in the library (due to functional composition and cyclic redundancy of includes).
 
 ## Development:
 - Sources are in './src'
@@ -221,7 +222,7 @@ configurations used for building the project.
 Unit tests are grouped by exported module:
 'tests/test-list.js' - Tests 'list' module etc.
 
-We are using 'chai' and 'mocha' though we may want to move to 'jest' in the future.
+We are using ~~'chai' and 'mocha' though we may want to move to~~ 'jest' for testing ~~in the future~~.
 
 ### Perf Tests:
 - `subsequences`: https://jsperf.com/subsequences/6

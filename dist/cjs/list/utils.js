@@ -92,13 +92,13 @@ genericAscOrdering = exports.genericAscOrdering = (0, _curry.curry)(function (a,
  * @param lists ...{Array|String|*}
  * @returns {Array|String|*}
  */
-lengths = exports.lengths = function lengths() {
+lengths = exports.lengths = (0, _curry.curry2)(function () {
     for (var _len = arguments.length, lists = Array(_len), _key = 0; _key < _len; _key++) {
         lists[_key] = arguments[_key];
     }
 
-    return (0, _object.length)(lists) ? (0, _map2.default)(_object.length, lists) : [];
-},
+    return (0, _map2.default)(_object.length, lists);
+}),
 
 
 /**
@@ -106,7 +106,7 @@ lengths = exports.lengths = function lengths() {
  * @param lists {...(Array|String|*)}
  * @returns {Array|String|*}
  */
-lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
+lengthsToSmallest = exports.lengthsToSmallest = (0, _curry.curry2)(function () {
     for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         lists[_key2] = arguments[_key2];
     }
@@ -116,7 +116,7 @@ lengthsToSmallest = exports.lengthsToSmallest = function lengthsToSmallest() {
     return (0, _map2.default)(function (list, ind) {
         return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list);
     }, lists);
-},
+}),
 
 
 /**

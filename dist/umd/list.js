@@ -16,8 +16,8 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.complement = undefined;
-    exports.difference = exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.notElem = exports.elem = exports.partition = exports.filter = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.append = exports.push = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
+    exports.complement = exports.difference = undefined;
+    exports.intersectBy = exports.intersect = exports.union = exports.unionBy = exports.removeFirstsBy = exports.removeBy = exports.nubBy = exports.insertBy = exports.insert = exports.sortBy = exports.sortOn = exports.sort = exports.remove = exports.nub = exports.scanr1 = exports.scanr = exports.scanl1 = exports.scanl = exports.minimum = exports.maximum = exports.product = exports.sum = exports.not = exports.or = exports.and = exports.all = exports.any = exports.unzipN = exports.unzip = exports.zipWith5 = exports.zipWith4 = exports.zipWith3 = exports.zipWithN = exports.zipWith = exports.zip5 = exports.zip4 = exports.zip3 = exports.zipN = exports.zip = exports.stripPrefix = exports.tails = exports.inits = exports.groupBy = exports.group = exports.isSubsequenceOf = exports.isInfixOf = exports.isSuffixOf = exports.isPrefixOf = exports.notElem = exports.elem = exports.partition = exports.filter = exports.forEach = exports.find = exports.at = exports.breakOnList = exports.span = exports.dropWhileEnd = exports.dropWhile = exports.takeWhile = exports.splitAt = exports.drop = exports.take = exports.elemIndices = exports.elemIndex = exports.findIndices = exports.findIndex = exports.unfoldr = exports.cycle = exports.replicate = exports.repeat = exports.iterate = exports.mapAccumR = exports.mapAccumL = exports.foldr1 = exports.foldl1 = exports.foldr = exports.foldl = exports.permutations = exports.swapped = exports.subsequences = exports.transpose = exports.intercalate = exports.intersperse = exports.reverse = exports.concatMap = exports.concat = exports.unconsr = exports.uncons = exports.init = exports.tail = exports.last = exports.head = exports.append = exports.push = exports.lastIndexOf = exports.indexOf = exports.includes = exports.slice = exports.map = undefined;
     Object.keys(_range).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -125,22 +125,13 @@
      * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
      * @returns {(Array|String|*)} - Same type as list like passed in.
      */
-    append = exports.append = function append() {
+    append = exports.append = (0, _curry.curry2)(function () {
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        var len = (0, _object.length)(args);
-        if (!len) {
-            return [];
-        } else if (len === 1) {
-            return (0, _utils.sliceCopy)(args[0]);
-        }
-        if (len >= 2) {
-            return (0, _function.apply)(_list.concat, args);
-        }
-        throw new Error('\'`append` requires at 2 or more arguments.  ' + (0, _object.length)(args) + ' args given.');
-    },
+        return (0, _function.apply)(_list.concat, args);
+    }),
 
 
     /**
@@ -223,7 +214,15 @@
      * @returns {Array}
      */
     concat = exports.concat = function concat(xs) {
-        return !(0, _object.length)(xs) ? (0, _utils.sliceCopy)(xs) : (0, _function.apply)(append, xs);
+        switch ((0, _object.length)(xs)) {
+            case undefined:
+            case 0:
+            case 1:
+                return (0, _utils.sliceCopy)(xs);
+            case 2:
+            default:
+                return (0, _function.apply)(append, xs);
+        }
     },
 
 
@@ -782,6 +781,22 @@
 
 
     /**
+     * @param fn {Function} - Operation
+     * @param xs {(Array|String)}
+     */
+    forEach = exports.forEach = (0, _curry.curry)(function (fn, list) {
+        var limit = (0, _object.length)(list);
+        if (!limit) {
+            return;
+        }
+        var ind = 0;
+        for (; ind < limit; ind += 1) {
+            fn(list[ind]);
+        }
+    }),
+
+
+    /**
      * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
      * @function module:list.filter
      * @param pred {Function}
@@ -1092,24 +1107,18 @@
      * @param lists {Array|String} - One ore more lists of the same type.
      * @returns {Array}
      */
-    zipN = exports.zipN = function zipN() {
+    zipN = exports.zipN = (0, _curry.curry2)(function () {
         for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             lists[_key2] = arguments[_key2];
         }
 
-        var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, filter(_object.length, lists)),
-            lenOfTrimmed = (0, _object.length)(trimmedLists);
-        if (!lenOfTrimmed) {
-            return [];
-        } else if (lenOfTrimmed === 1) {
-            return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
-        }
+        var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists);
         return (0, _utils.reduce)(function (agg, item, ind) {
             return (0, _utils.aggregateArr$)(agg, (0, _map2.default)(function (xs) {
                 return xs[ind];
             }, trimmedLists));
         }, [], trimmedLists[0]);
-    },
+    }),
 
 
     /**
@@ -1204,7 +1213,7 @@
      * @param lists ...{Array}
      * @returns {Array<Array<*,*>>}
      */
-    zipWithN = exports.zipWithN = function zipWithN(op) {
+    zipWithN = exports.zipWithN = (0, _curry.curry3)(function (op) {
         for (var _len3 = arguments.length, lists = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
             lists[_key3 - 1] = arguments[_key3];
         }
@@ -1221,7 +1230,7 @@
                 return xs[ind];
             }, trimmedLists)));
         }, [], trimmedLists[0]);
-    },
+    }),
 
 
     /**
@@ -1352,7 +1361,7 @@
     all = exports.all = (0, _curry.curry)(function (p, xs) {
         var limit = (0, _object.length)(xs);
         var ind = 0;
-        if (limit === 0) {
+        if (!limit) {
             return false;
         }
         for (; ind < limit; ind++) {
@@ -1864,7 +1873,7 @@
      * @param arrays {...Array}
      * @returns {Array}
      */
-    complement = exports.complement = function complement(arr0) {
+    complement = exports.complement = (0, _curry.curry2)(function (arr0) {
         for (var _len4 = arguments.length, arrays = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
             arrays[_key4 - 1] = arguments[_key4];
         }
@@ -1872,7 +1881,7 @@
         return (0, _utils.reduce)(function (agg, arr) {
             return append(agg, difference(arr, arr0));
         }, [], arrays);
-    };
+    });
 
     /**
      * Same as `Array.prototype.slice` though is functional version.

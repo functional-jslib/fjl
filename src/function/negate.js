@@ -3,7 +3,7 @@
  */
 
 import {apply} from '../jsPlatform/function';
-import {curry} from './curry';
+import {curry, curry2} from './curry';
 
 export const
 
@@ -42,4 +42,4 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    negateFN = fn => (...args) => !apply(fn, args);
+    negateFN = fn => curry2((...args) => !apply(fn, args));

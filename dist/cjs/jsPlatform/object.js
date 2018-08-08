@@ -37,7 +37,7 @@ var instanceOf = (0, _curry.curry)(function (instanceConstructor, instance) {
         }
 
         return Object.assign.apply(Object, [obj0].concat(objs));
-    } : function (obj0) {
+    } : (0, _curry.curry2)(function (obj0) {
         for (var _len2 = arguments.length, objs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
             objs[_key2 - 1] = arguments[_key2];
         }
@@ -48,7 +48,7 @@ var instanceOf = (0, _curry.curry)(function (instanceConstructor, instance) {
                 return agg;
             }, topAgg);
         }, obj0);
-    };
+    });
 }();
 
 exports.instanceOf = instanceOf;

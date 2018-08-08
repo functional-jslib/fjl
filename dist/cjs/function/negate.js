@@ -66,11 +66,11 @@ negateF3 = exports.negateF3 = function negateF3(fn) {
  * @returns {Function}
  */
 negateFN = exports.negateFN = function negateFN(fn) {
-  return function () {
+  return (0, _curry.curry2)(function () {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
     return !(0, _function.apply)(fn, args);
-  };
+  });
 };

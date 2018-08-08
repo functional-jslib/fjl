@@ -2,8 +2,6 @@
  * Created by elyde on 5/1/17.
  */
 
-import {assert, expect} from 'chai';
-
 import {
     apply, call, compose,
     curry, curry2, curryN,
@@ -11,7 +9,7 @@ import {
 }
 from '../src/function';
 
-import {add, subtract, expectEqual, expectFunction} from './helpers';
+import {add, subtract, expectEqual, expectError, expectFunction} from './helpers';
 
 describe ('#function', function () {
 
@@ -89,16 +87,14 @@ describe ('#function', function () {
         });
 
         it ('should throw an error when no predicate is passed in', function () {
-            assert.throws(
-                () => until(null, x => { return x + x; }, 1),
-                Error
+            expectError(
+                () => until(null, x => { return x + x; }, 1)
             );
         });
 
         it ('should throw an error when no operation is passed in', function () {
-            assert.throws(
-                () => until(x => x >= 100, null, 1),
-                Error
+            expectError(
+                () => until(x => x >= 100, null, 1)
             );
         });
     });
@@ -116,18 +112,18 @@ describe ('#function', function () {
     describe('#compose', function () {
 
         it ('should be of type function.', function () {
-            expect(compose).to.be.instanceOf(Function);
+            expect(compose).toBeInstanceOf(Function);
         });
 
         it ('should return a function whether or not any parameters were passed in to it.', function () {
-            expect(compose()).to.be.instanceOf(Function);
-            expect(compose(console.log)).to.be.instanceOf(Function);
+            expect(compose()).toBeInstanceOf(Function);
+            expect(compose(console.log)).toBeInstanceOf(Function);
         });
 
         it ('should return a function that when used returns the passed in value if `compose` ' +
             'itself didn\'t receive any parameters.', function () {
             let result = compose();
-            expect(result(99)).to.equal(99);
+            expect(result(99)).toEqual(99);
         });
 
         it ('should be able to compose an arbitrary numberOps of functions and execute them as expected ' +
@@ -140,7 +136,7 @@ describe ('#function', function () {
                 random = randomNum(0),
                 expectedFor = (num) => min(8, max(5, pow(num, 2)));
             [8,5,3,2,1,0, random(89), random(55), random(34)].forEach(function (num) {
-                expect(composed(num)).to.equal(expectedFor(num));
+                expect(composed(num)).toEqual(expectedFor(num));
             });
         });
 
@@ -153,13 +149,13 @@ describe ('#function', function () {
         });
 
         it ('should return a function when called with one or more "correct" args.', function () {
-            expect(curry(() => undefined, 99)).to.be.instanceOf(Function);
-            expect(curry(() => undefined)).to.be.instanceOf(Function);
+            expect(curry(() => undefined, 99)).toBeInstanceOf(Function);
+            expect(curry(() => undefined)).toBeInstanceOf(Function);
         });
 
         it ('should throw an error when receiving anything other than a function for first param', function () {
             [99, false, true, null, undefined, [], {}].forEach(x => {
-                assert.throws(() => curry(x), Error);
+                expectError(() => curry(x));
             });
         });
 
@@ -174,15 +170,15 @@ describe ('#function', function () {
             });
 
             // Expect functions work as expected
-            expect(min8(9)).to.equal(8);
-            expect(min8(8)).to.equal(8);
-            expect(min8(7)).to.equal(7);
-            expect(max5(6)).to.equal(6);
-            expect(max5(5)).to.equal(5);
-            expect(max5(4)).to.equal(5);
-            expect(pow2(2)).to.equal(4);
-            expect(pow2(3)).to.equal(8);
-            expect(pow2(4)).to.equal(16);
+            expect(min8(9)).toEqual(8);
+            expect(min8(8)).toEqual(8);
+            expect(min8(7)).toEqual(7);
+            expect(max5(6)).toEqual(6);
+            expect(max5(5)).toEqual(5);
+            expect(max5(4)).toEqual(5);
+            expect(pow2(2)).toEqual(4);
+            expect(pow2(3)).toEqual(8);
+            expect(pow2(4)).toEqual(16);
         });
 
         it ('should be able to correctly curry functions of different arity as long as their arity is met.', function () {
@@ -205,13 +201,13 @@ describe ('#function', function () {
             });
 
             // Expect `curry`ed functions to work as expected
-            expect(isValidTangentLen(8)).to.equal(true);
-            expect(isValidTangentLen(21)).to.equal(false);
+            expect(isValidTangentLen(8)).toEqual(true);
+            expect(isValidTangentLen(21)).toEqual(false);
 
             // Expect `curry`ed functions to work as expected
             [8,5,3,2,1,0, random(89), random(55), random(34)].forEach(function (num) {
                 let composed = compose(min8, max5, pow2);
-                expect(composed(num)).to.equal(expectedFor(num));
+                expect(composed(num)).toEqual(expectedFor(num));
             });
 
             let add3Items = (a, b, c) => a + b + c,
@@ -228,29 +224,29 @@ describe ('#function', function () {
             divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
 
         it ('should be of type function.', function () {
-            expect(curryN).to.be.instanceOf(Function);
+            expect(curryN).toBeInstanceOf(Function);
         });
 
         it ('should return a function that throws an error when no arguments are passed.', function () {
             let result = curryN();
-            expect(result).to.be.instanceOf(Function);
-            assert.throws(result, Error);
+            expect(result).toBeInstanceOf(Function);
+            expectError(result);
         });
 
         it ('should pass in any values passed the arity when executing the curried function', function () {
             let add3Nums = curryN(3, addRecursive);
 
             // Curry add to add 3 numbers
-            expect(add3Nums()(1, 2, 3)) .to.equal(6);
-            expect(add3Nums(1)(2, 3))   .to.equal(6);
-            expect(add3Nums(1, 2)(3))  .to.equal(6);
-            expect(add3Nums(1, 2, 3))   .to.equal(6);
+            expect(add3Nums()(1, 2, 3)) .toEqual(6);
+            expect(add3Nums(1)(2, 3))   .toEqual(6);
+            expect(add3Nums(1, 2)(3))  .toEqual(6);
+            expect(add3Nums(1, 2, 3))   .toEqual(6);
 
             // Curry `add` to add any numbers passed required arity
-            expect(add3Nums()(1, 2, 3, 5, 6))   .to.equal(17);
-            expect(add3Nums(1)(2, 3, 5, 6))     .to.equal(17);
-            expect(add3Nums(1, 2)(3, 5, 6))     .to.equal(17);
-            expect(add3Nums(1, 2, 3, 5, 6))     .to.equal(17);
+            expect(add3Nums()(1, 2, 3, 5, 6))   .toEqual(17);
+            expect(add3Nums(1)(2, 3, 5, 6))     .toEqual(17);
+            expect(add3Nums(1, 2)(3, 5, 6))     .toEqual(17);
+            expect(add3Nums(1, 2, 3, 5, 6))     .toEqual(17);
         });
 
         it ('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
@@ -273,8 +269,8 @@ describe ('#function', function () {
 
             // Curry multiply and pass args in non-linear order
             argsToTest.forEach(function (args, index) {
-                expect(partiallyAppliedResults[index]).to.be.instanceOf(Function);
-                expect(partiallyAppliedResults[index].apply(null, args)).to.equal(multiplyExpectedResult);
+                expect(partiallyAppliedResults[index]).toBeInstanceOf(Function);
+                expect(partiallyAppliedResults[index].apply(null, args)).toEqual(multiplyExpectedResult);
             });
 
         });

@@ -1,8 +1,8 @@
 import * as fjl from '../dist/es6-module/fjl';
-import {expect} from 'chai';
+import {expectTrue} from './helpers';
 
 describe ('fjl', function () {
-    it ('should have reached this point with no errors', function () {
-        expect(true, true);
+    it ('imported `fjl` should have be populated', () => {
+        expectTrue((!!fjl && !!Object.keys(fjl).length)); // Bangs are for compilers that get the `&&` statement wrong
     });
 });

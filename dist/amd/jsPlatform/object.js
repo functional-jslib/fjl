@@ -58,11 +58,11 @@ define(['exports', '../utils', '../function/curry'], function (exports, _utils, 
      * @param objs {...{Object}}
      * @returns {Object}
      */
-    assign = exports.assign = (() => Object.assign ? (obj0, ...objs) => Object.assign(obj0, ...objs) : (obj0, ...objs) => objs.reduce((topAgg, obj) => {
+    assign = exports.assign = (() => Object.assign ? (obj0, ...objs) => Object.assign(obj0, ...objs) : (0, _curry.curry2)((obj0, ...objs) => objs.reduce((topAgg, obj) => {
         return keys(obj).reduce((agg, key) => {
             agg[key] = obj[key];
             return agg;
         }, topAgg);
-    }, obj0))();
+    }, obj0)))();
     exports.keys = keys;
 });
