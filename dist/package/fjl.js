@@ -1673,6 +1673,16 @@ var until = curry(function (predicate, operation, typeInstance) {
 });
 
 /**
+ * No-op ('op' as in 'operation') - Performs no operation 'always' (good for places where
+ * a value should always be a function etc.).
+ * @function module:function.noop
+ * @returns {undefined}
+ */
+var noop = function noop() {
+    return undefined;
+};
+
+/**
  * @module function
  */
 
@@ -1919,6 +1929,8 @@ exports.negateF2 = negateF2;
 exports.negateF3 = negateF3;
 exports.negateFN = negateFN;
 exports.until = until;
+exports.fnOrError = fnOrError;
+exports.noop = noop;
 exports.map = map;
 exports.append = append;
 exports.head = head;

@@ -1,4 +1,4 @@
-import fnOrError from './fnOrError';
+import {fnOrError} from './fnOrError';
 
 /**
  * @author elydelacruz

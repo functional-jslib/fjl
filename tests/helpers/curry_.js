@@ -3,7 +3,7 @@
  * @description Curry implementation with place holder concept (`__`).
  */
 
-import fnOrError from '../../src/function/fnOrError';
+import {fnOrError} from '../../src/function/fnOrError';
 
 /**
  * PlaceHolder (__) constructor.

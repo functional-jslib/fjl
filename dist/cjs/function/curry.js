@@ -7,10 +7,6 @@ exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curr
 
 var _fnOrError = require('./fnOrError');
 
-var _fnOrError2 = _interopRequireDefault(_fnOrError);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 /**
  * @author elydelacruz
  * @created 12/6/2016.
@@ -47,7 +43,7 @@ curryN = exports.curryN = function curryN(executeArity, fn) {
 
         var concatedArgs = curriedArgs.concat(args),
             canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-        return !canBeCalled ? curryN.apply(null, [executeArity, (0, _fnOrError2.default)(curryNotFnErrPrefix, fn)].concat(concatedArgs)) : (0, _fnOrError2.default)(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
+        return !canBeCalled ? curryN.apply(null, [executeArity, (0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn)].concat(concatedArgs)) : (0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
     };
 },
 
@@ -64,7 +60,7 @@ curry = exports.curry = function curry(fn) {
         argsToCurry[_key3 - 1] = arguments[_key3];
     }
 
-    return curryN.apply(undefined, [(0, _fnOrError2.default)(curryNotFnErrPrefix, fn).length, fn].concat(argsToCurry));
+    return curryN.apply(undefined, [(0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn).length, fn].concat(argsToCurry));
 },
 
 

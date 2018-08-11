@@ -155,6 +155,16 @@ gulp.task('docs', () =>
                         templates: {
                             useCollapsibles: false
                         }
+                    },
+                    // @todo create logo for `fjl`
+                    "templates": {
+                        "logo": {
+                            "url": "http://nhnent.github.io/tui.component.tree/latest/styles/logo.png",
+                            "width": "150px",
+                            "height": "13px",
+                            "link": "https://github.com/nhnent/tui.jsdoc-template"
+                        },
+                        "footerText": "fjl library - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab"
                     }
                 }))
         )

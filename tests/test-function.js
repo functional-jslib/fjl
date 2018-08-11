@@ -5,7 +5,8 @@
 import {
     apply, call, compose,
     curry, curry2, curryN,
-    flip, flipN, until, id
+    flip, flipN, until, id,
+    noop
 }
 from '../src/function';
 
@@ -275,6 +276,14 @@ describe ('#function', function () {
 
         });
 
+    });
+
+    describe('#noop', function () {
+        it ('should return `undefined` always', () => {
+            [null, false, undefined, 0, {}, [], () => undefined].forEach(x => {
+                expect(noop(x)).toEqual(undefined);
+            });
+        });
     });
 
 });

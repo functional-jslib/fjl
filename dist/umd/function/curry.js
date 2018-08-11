@@ -18,13 +18,6 @@
     });
     exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curry = exports.curryN = exports.curryNotFnErrPrefix = undefined;
 
-    var _fnOrError2 = _interopRequireDefault(_fnOrError);
-
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
-    }
 
     /**
      * @author elydelacruz
@@ -62,7 +55,7 @@
 
             var concatedArgs = curriedArgs.concat(args),
                 canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-            return !canBeCalled ? curryN.apply(null, [executeArity, (0, _fnOrError2.default)(curryNotFnErrPrefix, fn)].concat(concatedArgs)) : (0, _fnOrError2.default)(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
+            return !canBeCalled ? curryN.apply(null, [executeArity, (0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn)].concat(concatedArgs)) : (0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
         };
     },
 
@@ -79,7 +72,7 @@
             argsToCurry[_key3 - 1] = arguments[_key3];
         }
 
-        return curryN.apply(undefined, [(0, _fnOrError2.default)(curryNotFnErrPrefix, fn).length, fn].concat(argsToCurry));
+        return curryN.apply(undefined, [(0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn).length, fn].concat(argsToCurry));
     },
 
 

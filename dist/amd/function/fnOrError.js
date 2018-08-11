@@ -4,8 +4,7 @@ define(['exports', '../object/typeOf'], function (exports, _typeOf) {
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-
-
+    exports.fnOrError = undefined;
     const
 
     /**
@@ -16,12 +15,10 @@ define(['exports', '../object/typeOf'], function (exports, _typeOf) {
      * @returns {Function}
      * @throws {Error} - Error if `f` is not of `function`
      */
-    fnOrError = (symbolName, f) => {
+    fnOrError = exports.fnOrError = (symbolName, f) => {
         if (!f || !(f instanceof Function)) {
             throw new Error(`${symbolName} should be a function. ` + `Type received: ${(0, _typeOf.typeOf)(f)};  Value received: ${f}.`);
         }
         return f;
     };
-
-    exports.default = fnOrError;
 });

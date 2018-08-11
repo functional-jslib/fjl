@@ -99,3 +99,15 @@ Object.keys(_fnOrError).forEach(function (key) {
     }
   });
 });
+
+var _noop = require('./function/noop');
+
+Object.keys(_noop).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _noop[key];
+    }
+  });
+});

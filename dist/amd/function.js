@@ -1,4 +1,4 @@
-define(['exports', './jsPlatform/function', './function/compose', './function/curry', './function/flip', './function/id', './function/negate', './function/until', './function/fnOrError'], function (exports, _function, _compose, _curry, _flip, _id, _negate, _until, _fnOrError) {
+define(['exports', './jsPlatform/function', './function/compose', './function/curry', './function/flip', './function/id', './function/negate', './function/until', './function/fnOrError', './function/noop'], function (exports, _function, _compose, _curry, _flip, _id, _negate, _until, _fnOrError, _noop) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -73,6 +73,15 @@ define(['exports', './jsPlatform/function', './function/compose', './function/cu
       enumerable: true,
       get: function () {
         return _fnOrError[key];
+      }
+    });
+  });
+  Object.keys(_noop).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _noop[key];
       }
     });
   });

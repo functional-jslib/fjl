@@ -1,6 +1,6 @@
 import {typeOf} from '../object/typeOf';
 
-const
+export const
 
     /**
      * Returns a function or throws an error if given `f` is not a function.
@@ -19,5 +19,3 @@ const
     }
 
 ;
-
-export default fnOrError;

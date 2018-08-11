@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.fnOrError = undefined;
 
 var _typeOf = require('../object/typeOf');
 
@@ -16,12 +17,9 @@ var
  * @returns {Function}
  * @throws {Error} - Error if `f` is not of `function`
  */
-fnOrError = function fnOrError(symbolName, f) {
+fnOrError = exports.fnOrError = function fnOrError(symbolName, f) {
     if (!f || !(f instanceof Function)) {
         throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + (0, _typeOf.typeOf)(f) + ';  Value received: ' + f + '.'));
     }
     return f;
 };
-
-exports.default = fnOrError;
-module.exports = exports['default'];

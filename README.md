@@ -13,6 +13,8 @@ Functional Javascript Library (inspired by Haskell's Prelude).
 - [Development](#development)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
+- [Resources](#resources)
+- [Change log](#change-log)
 
 ## Requirements:
 - Javascript Ecmascript 5+.
@@ -229,10 +231,13 @@ We are using ~~'chai' and 'mocha' though we may want to move to~~ 'jest' for tes
 - `trampoline`: https://jsperf.com/pure-trampoline/1 (performance difference to pure 
   recursive call here is negligible).
   
+## Change log:
+- As of version 1.3.0 changelog will also be kept in [Changelog.md](https://github.com/functional-jslib/fjl/tree/next/CHANGELOG.md).
+
 ## License:
 [BSD 3 Clause](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html")
 
-## Resource:
+## Resources:
 - Docs format: http://usejsdoc.org/
 - Haskell docs search engine: https://www.haskell.org/hoogle/
 - Listing of entire Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html

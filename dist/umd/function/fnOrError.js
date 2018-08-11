@@ -1,23 +1,22 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['module', 'exports', '../object/typeOf'], factory);
+        define(['exports', '../object/typeOf'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(module, exports, require('../object/typeOf'));
+        factory(exports, require('../object/typeOf'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod, mod.exports, global.typeOf);
+        factory(mod.exports, global.typeOf);
         global.fnOrError = mod.exports;
     }
-})(this, function (module, exports, _typeOf) {
+})(this, function (exports, _typeOf) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-
-
+    exports.fnOrError = undefined;
     var
 
     /**
@@ -28,13 +27,10 @@
      * @returns {Function}
      * @throws {Error} - Error if `f` is not of `function`
      */
-    fnOrError = function fnOrError(symbolName, f) {
+    fnOrError = exports.fnOrError = function fnOrError(symbolName, f) {
         if (!f || !(f instanceof Function)) {
             throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + (0, _typeOf.typeOf)(f) + ';  Value received: ' + f + '.'));
         }
         return f;
     };
-
-    exports.default = fnOrError;
-    module.exports = exports['default'];
 });
