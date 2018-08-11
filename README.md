@@ -6,13 +6,12 @@
 Functional Javascript Library (inspired by Haskell's Prelude).
 
 ## Note: 
-For the fully functional experience try the 1.x.x beta (**note** docs for beta version are included in package ('./docs')):
+For a more fully functional experience try `fjl@next` (**note** docs for `next` version are included in package ('./docs')):
 ```
-npm i fjl@beta 
+npm i fjl@next
 ```
-Methods in the upcoming-1.X.X/beta version are curried but do not have un-curried counter-parts exported - 
-makes for a lighter version of the library, and also makes for library sources which also adhere to  
-established functional paradigms (namely haskell's functional paradigm (currying etc.)).
+Methods in the 1.X.X-next version are curried but do not have un-curried counter-parts exported - 
+makes for a lighter version of the library, and also makes for library sources which also adhere to a fully functional paradigm (fully curried functions etc.).
 
 ## Sections in Readme:
 - [Getting Started](#getting-started)
@@ -251,6 +250,10 @@ We are using 'chai' and 'mocha' though we may want to move to 'jest' in the futu
 - Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html
 
 ## Changelog
+#### 0.26.1
+- Updated readme with `next` version note.
+- Removed 'gulp-mocha' from dependencies.
+
 #### 0.26.0
 - `append` correctly curries upto 2 parameters (previously it didn't curry (or curried upto one parameter)).
 - Tests no longer use 'chai' in it's tests.  Tests now use 'jest' `expect` directly (instead).

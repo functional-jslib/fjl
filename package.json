@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "0.26.0",
+  "version": "0.26.1",
   "description": "Functional Javascript Library",
   "main": "dist/package/fjl",
   "module": "dist/package/fjl.mjs",
@@ -30,7 +30,6 @@
     "gulp-header": "^1.8.9",
     "gulp-if": "^2.0.2",
     "gulp-jsdoc3": "^1.0.1",
-    "gulp-mocha": "^3.0.1",
     "gulp-replace": "^0.5.4",
     "gulp-uglify": "^2.1.2",
     "jest": "^22.4.3",
