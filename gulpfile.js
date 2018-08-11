@@ -184,12 +184,6 @@ gulp.task('build-js-for-package', () => {
         .pipe(gulp.dest('./'));
 });
 
-
-gulp.task('tests', ['eslint'], () =>
-    gulp.src(gulpConfig.tests.srcs)
-        .pipe(gulpBabel(gulpConfig.tests.babel))
-        .pipe(mocha(gulpConfig.tests.mocha)));
-
 gulp.task('watch', ['build'], () =>
     gulp.watch([
         srcsGlob,
