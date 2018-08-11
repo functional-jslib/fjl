@@ -714,8 +714,9 @@ var concat$$1 = function concat$$1(xs) {
     switch (length(xs)) {
         case undefined:
         case 0:
+            return [];
         case 1:
-            return sliceCopy(xs);
+            return xs[0] && xs[0].slice ? sliceCopy(xs[0]) : xs[0];
         case 2:
         default:
             return apply(append, xs);
@@ -737,7 +738,12 @@ var intersperse = curry(function (between, arr) {
         return out;
     }
     return foldl(function (agg, item, ind) {
-        return ind === lastInd ? agg.push(item) : agg.push(item, between), agg;
+        if (ind === lastInd) {
+            agg.push(item);
+        } else {
+            agg.push(item, between);
+        }
+        return agg;
     }, out, arr);
 });
 var intercalate = curry(function (xs, xss) {

@@ -75,8 +75,6 @@ var _curry = require('./function/curry');
 
 var _utils = require('./list/utils');
 
-var _utils2 = require('./utils');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.map = _map2.default;
@@ -192,8 +190,9 @@ concat = exports.concat = function concat(xs) {
     switch ((0, _object.length)(xs)) {
         case undefined:
         case 0:
+            return [];
         case 1:
-            return (0, _utils.sliceCopy)(xs);
+            return xs[0] && xs[0].slice ? (0, _utils.sliceCopy)(xs[0]) : xs[0];
         case 2:
         default:
             return (0, _function.apply)(append, xs);
@@ -245,7 +244,12 @@ intersperse = exports.intersperse = (0, _curry.curry)(function (between, arr) {
         return out;
     }
     return foldl(function (agg, item, ind) {
-        return ind === lastInd ? agg.push(item) : agg.push(item, between), agg;
+        if (ind === lastInd) {
+            agg.push(item);
+        } else {
+            agg.push(item, between);
+        }
+        return agg;
     }, out, arr);
 }),
 

@@ -5,7 +5,7 @@
 import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list';
 import {apply}              from './jsPlatform/function';
 import {negateF3, negateF2}   from './function/negate';
-import {isTruthy, isFalsy, alwaysTrue} from './boolean';
+import {isTruthy, isFalsy} from './boolean';
 import {lookup, length}       from './object';
 import map                  from './list/map';
 import {curry, curry2, curry3} from './function/curry';
@@ -18,7 +18,6 @@ import {
     findWhere, sliceCopy, genericAscOrdering
 }
     from './list/utils';
-import {fPureTakesOne, fPureTakesOneOrMore} from './utils';
 
 export * from './list/range';
 
@@ -114,7 +113,9 @@ export const
         switch (length(xs)) {
             case undefined:
             case 0:
-            case 1: return sliceCopy(xs);
+                return [];
+            case 1:
+                return xs[0] && xs[0].slice ? sliceCopy(xs[0]) : xs[0];
             case 2:
             default:
                 return apply(append, xs);
@@ -156,12 +157,15 @@ export const
         if (!limit) {
             return out;
         }
-        return foldl((agg, item, ind) => (
-                ind === lastInd ?
-                    agg.push(item) :
-                    agg.push(item, between),
-                agg
-            ), out, arr);
+        return foldl((agg, item, ind) => {
+            if (ind === lastInd) {
+                agg.push(item);
+            }
+            else {
+                agg.push(item, between);
+            }
+            return agg;
+        }, out, arr);
     }),
 
     /**

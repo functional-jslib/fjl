@@ -6,7 +6,7 @@
 
 import {compose, negateF2} from '../src/function';
 import {split} from '../src/jsPlatform';
-import {isEmptyList, isArray, isString, length} from '../src/object';
+import {isEmptyList, isArray, isString, length, peek} from '../src/object';
 import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase}
     from '../src/string';
@@ -277,11 +277,11 @@ describe ('#list', () => {
             expectEqual(result1, alphabetArray.join(', '));
         });
         it ('should return a list with the same item when the list has a length of `1`', () => {
-            expectEqual(intercalate(', ', [['a']]), [['a']]); // Ensure list is flattened one level
+            expect(intercalate(', ', [['a']])).toEqual(['a']); // Ensure list is flattened one level
         });
         it ('should return an empty list when receiving an empty list', () => {
             expectEqual(intercalate('', []), []);
-            expectEqual(intercalate('', [[]]), [[]]); // Ensures list is flattened one level
+            expectEqual(intercalate('', [[]]), []); // Ensures list is flattened one level
         });
     });
 

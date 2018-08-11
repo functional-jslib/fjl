@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './function/negate', './boolean', './object', './list/map', './function/curry', './list/utils', './utils'], factory);
+        define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './function/negate', './boolean', './object', './list/map', './function/curry', './list/utils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./list/range'), require('./jsPlatform'), require('./jsPlatform/list'), require('./jsPlatform/function'), require('./function/negate'), require('./boolean'), require('./object'), require('./list/map'), require('./function/curry'), require('./list/utils'), require('./utils'));
+        factory(exports, require('./list/range'), require('./jsPlatform'), require('./jsPlatform/list'), require('./jsPlatform/function'), require('./function/negate'), require('./boolean'), require('./object'), require('./list/map'), require('./function/curry'), require('./list/utils'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.range, global.jsPlatform, global.list, global._function, global.negate, global.boolean, global.object, global.map, global.curry, global.utils, global.utils);
+        factory(mod.exports, global.range, global.jsPlatform, global.list, global._function, global.negate, global.boolean, global.object, global.map, global.curry, global.utils);
         global.list = mod.exports;
     }
-})(this, function (exports, _range, _jsPlatform, _list, _function, _negate, _boolean, _object, _map, _curry, _utils, _utils2) {
+})(this, function (exports, _range, _jsPlatform, _list, _function, _negate, _boolean, _object, _map, _curry, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -217,8 +217,9 @@
         switch ((0, _object.length)(xs)) {
             case undefined:
             case 0:
+                return [];
             case 1:
-                return (0, _utils.sliceCopy)(xs);
+                return xs[0] && xs[0].slice ? (0, _utils.sliceCopy)(xs[0]) : xs[0];
             case 2:
             default:
                 return (0, _function.apply)(append, xs);
@@ -270,7 +271,12 @@
             return out;
         }
         return foldl(function (agg, item, ind) {
-            return ind === lastInd ? agg.push(item) : agg.push(item, between), agg;
+            if (ind === lastInd) {
+                agg.push(item);
+            } else {
+                agg.push(item, between);
+            }
+            return agg;
         }, out, arr);
     }),
 

@@ -1,4 +1,4 @@
-define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './function/negate', './boolean', './object', './list/map', './function/curry', './list/utils', './utils'], function (exports, _range, _jsPlatform, _list, _function, _negate, _boolean, _object, _map, _curry, _utils, _utils2) {
+define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './function/negate', './boolean', './object', './list/map', './function/curry', './list/utils'], function (exports, _range, _jsPlatform, _list, _function, _negate, _boolean, _object, _map, _curry, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -149,8 +149,9 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
         switch ((0, _object.length)(xs)) {
             case undefined:
             case 0:
+                return [];
             case 1:
-                return (0, _utils.sliceCopy)(xs);
+                return xs[0] && xs[0].slice ? (0, _utils.sliceCopy)(xs[0]) : xs[0];
             case 2:
             default:
                 return (0, _function.apply)(append, xs);
@@ -195,7 +196,14 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
         if (!limit) {
             return out;
         }
-        return foldl((agg, item, ind) => (ind === lastInd ? agg.push(item) : agg.push(item, between), agg), out, arr);
+        return foldl((agg, item, ind) => {
+            if (ind === lastInd) {
+                agg.push(item);
+            } else {
+                agg.push(item, between);
+            }
+            return agg;
+        }, out, arr);
     }),
 
 

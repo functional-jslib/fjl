@@ -460,7 +460,9 @@ const concat$$1 = xs => {
         switch (length(xs)) {
             case undefined:
             case 0:
-            case 1: return sliceCopy(xs);
+                return [];
+            case 1:
+                return xs[0] && xs[0].slice ? sliceCopy(xs[0]) : xs[0];
             case 2:
             default:
                 return apply(append, xs);
@@ -475,12 +477,15 @@ const intersperse = curry((between, arr) => {
         if (!limit) {
             return out;
         }
-        return foldl((agg, item, ind) => (
-                ind === lastInd ?
-                    agg.push(item) :
-                    agg.push(item, between),
-                agg
-            ), out, arr);
+        return foldl((agg, item, ind) => {
+            if (ind === lastInd) {
+                agg.push(item);
+            }
+            else {
+                agg.push(item, between);
+            }
+            return agg;
+        }, out, arr);
     });
 const intercalate = curry((xs, xss) => concat$$1(intersperse(xs, xss)));
 const transpose = xss => {
