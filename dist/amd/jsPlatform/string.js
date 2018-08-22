@@ -1,4 +1,4 @@
-define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform/_string'], function (exports, _curry, _string) {
+define(['exports', '../utils'], function (exports, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -9,17 +9,12 @@ define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform
 
   /**
    * Functional version of `String.prototype.split`.
-   * @curried
-   * @function module:jsPlatform_string.split
+   * @function module:_string.split
    * @param separator {String|RegExp}
    * @param str {String}
    * @returns {Array}
    */
-  /**
-   * Created by elydelacruz on 9/6/2017.
-   * @module jsPlatform_string
-   * @private
-   */
-
-  const split = exports.split = (0, _curry.curry)(_string.split);
+  const split = exports.split = (0, _utils.fPureTakesOne)('split'); /**
+                                                                     * Created by elydelacruz on 9/6/2017.
+                                                                     */
 });

@@ -1,12 +1,14 @@
 /**
  * Created by elyde on 12/10/2016.
+ * @todo remove use of 'curry_' from tests and helpers.
  */
+import {compose} from '../src/function';
+import {curry2_, __} from './helpers/curry_';
+import {range} from './../src/list/range';
 
-import {curry2_, __, compose} from '../src/functionOps';
+export * from './helpers/curry_';
 
-export const
-
-    expectInstanceOf = curry2_((value, instance) => expect(value).toBeInstanceOf(instance)),
+export let  expectInstanceOf = curry2_((value, instance) => expect(value).toBeInstanceOf(instance)),
 
     expectFunction = value => expectInstanceOf(value, Function),
 
@@ -18,7 +20,7 @@ export const
 
     expectLength = curry2_((len, element) => compose(expectEqual(__, len), length)(element)),
 
-    expectError = fn => expect(fn).toThrow(),
+    expectError = curry2_(fn => expect(fn).toThrow()),
 
     hasOwnProperty = (instance, key) => Object.prototype.hasOwnProperty.call(instance, key),
 
@@ -32,14 +34,33 @@ export const
         return args.reduce((agg, num) => agg - num, arg0);
     }),
 
-    range = curry2_((from, to, step = 1) => {
-        let i = from;
-        const out = [];
-        if (step < 0 && i > 0) { for (; i >= to; i += step) { out.push(i); } }
-        else if (step > 0 && i < to) { for (; i <= to; i += step) { out.push(i); } }
-        else { throw new Error ('Invalid range requested'); }
-        return out;
-    }),
+    shallowCompareOnLeft = curry2_((incoming, against) => Array.isArray(incoming) ?
+        shallowCompareArraysLeft(incoming, against) :
+            shallowCompareObjectsLeft(incoming, against) ),
+
+    shallowCompareArraysLeft = curry2_((incoming, against) => !incoming.some((_, ind) => against[ind] !== incoming[ind])),
+
+    shallowCompareObjectsLeft = curry2_((incoming, against, keys) => !(keys || Object.keys(incoming))
+        .some(key => against[key] !== incoming[key]) ),
+
+    deepCompareObjectsLeft = curry2_((incoming, against, keys) =>
+        !(keys || Object.keys(incoming)).map(key =>
+            typeof against[key] === 'object' && typeof incoming[key] === 'object' ?
+                deepCompareObjectsLeft(incoming[key], against[key]) : incoming[key] === against[key]
+        )
+            .some(bln => !bln)
+    ),
+
+    deepCompareLeft = (incoming, against) =>
+        incoming === against || Object.keys(incoming).every(key => {
+            const typeOfValue = typeof incoming[key];
+            // console.log('deepcompare', incoming[key], against[key]);
+            return typeOfValue === 'object' ?
+               deepCompareLeft(incoming[key], against[key]) :
+                against[key] === incoming[key];
+        }),
+
+    expectDeepEquals = curry2_((a, b) => expectTrue(deepCompareLeft(a, b))),
 
     log = console.log.bind(console),
 

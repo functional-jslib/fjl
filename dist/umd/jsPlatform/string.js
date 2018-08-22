@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../uncurried/_functionOps/_curry', '../uncurried/_jsPlatform/_string'], factory);
+    define(['exports', '../utils'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../uncurried/_functionOps/_curry'), require('../uncurried/_jsPlatform/_string'));
+    factory(exports, require('../utils'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global._curry, global._string);
+    factory(mod.exports, global.utils);
     global.string = mod.exports;
   }
-})(this, function (exports, _curry, _string) {
+})(this, function (exports, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -21,17 +21,12 @@
 
   /**
    * Functional version of `String.prototype.split`.
-   * @curried
-   * @function module:jsPlatform_string.split
+   * @function module:_string.split
    * @param separator {String|RegExp}
    * @param str {String}
    * @returns {Array}
    */
-  /**
-   * Created by elydelacruz on 9/6/2017.
-   * @module jsPlatform_string
-   * @private
-   */
-
-  var split = exports.split = (0, _curry.curry)(_string.split);
+  var split = exports.split = (0, _utils.fPureTakesOne)('split'); /**
+                                                                   * Created by elydelacruz on 9/6/2017.
+                                                                   */
 });

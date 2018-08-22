@@ -241,7 +241,7 @@ let curry5 = function curry5(fn) {
 
 /**
  * Returns property value if found; Else `undefined`.
- * @function module:_objectOps.prop
+ * @function module:object.prop
  * @param name {String} - Key to search on `obj`
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
@@ -401,7 +401,7 @@ let negateF5 = function negateF5(fn) {
     };
 };
 let negateP = negateF3;
-let negateFMany = function negateFMany(fn) {
+let negateFN = function negateFN(fn) {
     return function () {
         for (let _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
             args[_key9] = arguments[_key9];
@@ -453,7 +453,7 @@ function isUsableImmutablePrimitive$1(x) {
  * // - Else if constructor is a function, thus far, then calls constructor using
  * //      the `new` keyword (with any passed in args).
  * ```
- * @function module:_objectOps.of
+ * @function module:object.of
  * @param x {*} - Value to derive returned value's type from.
  * @param [args] {...*} - Any args to pass in to matched construction strategy.
  * @returns {*|undefined} - New value of given value's type else `undefined`.
@@ -529,7 +529,7 @@ let toArray = function toArray(x) {
 };
 
 /**
- * @function module:_listOps.map
+ * @function module:list.map
  * @param fn {Function} - Function to map on array.
  * @param xs {Array}
  * @returns {Array}
@@ -551,7 +551,7 @@ function _map(fn, xs) {
 let aggregateStr = function aggregateStr(agg, item) {
     return agg + item;
 };
-let aggregateArr = function aggregateArr(agg, item) {
+let aggregateArr$$ = function aggregateArr$$(agg, item) {
     agg.push(item);
     return agg;
 };
@@ -564,7 +564,7 @@ let aggregatorByType = function aggregatorByType(x) {
         case 'String':
             return aggregateStr;
         case 'Array':
-            return aggregateArr;
+            return aggregateArr$$;
         case 'Object':
         default:
             return aggregateObj;
@@ -717,7 +717,7 @@ let _appendMany = function _appendMany() {
     if (length(args)) {
         return apply(concat, args);
     }
-    throw new Error('`_appendMany` requires at least one arg.');
+    throw new Error('`append` requires at least one arg.');
 };
 let _head = function _head(x) {
     return x[0];
@@ -929,7 +929,7 @@ let _splitAt = function _splitAt(ind, list) {
 };
 let _takeWhile = function _takeWhile(pred, list) {
     return reduceUntil(negateP(pred), // predicate
-    aggregateArr, // operation
+    aggregateArr$$, // operation
     [], // aggregator
     list);
 };
@@ -1117,7 +1117,7 @@ let _zip = function _zip(arr1, arr2) {
         a2 = _lengthsToSmallest2[1];
 
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, [item, a2[ind]]);
+        return aggregateArr$$(agg, [item, a2[ind]]);
     }, [], a1);
 };
 let _zipN = function _zipN() {
@@ -1133,7 +1133,7 @@ let _zipN = function _zipN() {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, _map(function (xs) {
+        return aggregateArr$$(agg, _map(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1158,7 +1158,7 @@ let _zipWith = function _zipWith(op, xs1, xs2) {
         a2 = _lengthsToSmallest4[1];
 
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, op(item, a2[ind]));
+        return aggregateArr$$(agg, op(item, a2[ind]));
     }, [], a1);
 };
 let _zipWithN = function _zipWithN(op) {
@@ -1174,7 +1174,7 @@ let _zipWithN = function _zipWithN(op) {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce$1(function (agg, item, ind) {
-        return aggregateArr(agg, apply(op, _map(function (xs) {
+        return aggregateArr$$(agg, apply(op, _map(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1367,7 +1367,7 @@ let _insertBy = function _insertBy(orderingFn, x, xs) {
             return _concat([parts[0], [x], parts[1]]);
         }
     }
-    return aggregateArr(copy(xs), x);
+    return aggregateArr$$(copy(xs), x);
 };
 let _nubBy = function _nubBy(pred, list) {
     if (!length(list)) {
@@ -1557,12 +1557,12 @@ function isPlaceHolder(instance) {
 }
 
 /**
- * Replaces `placeholder` values in `_listOps`.
+ * Replaces `placeholder` values in `list`.
  * @function replacePlaceHolder
  * @private
  * @param array {Array} - Array to replace placeholders in.
  * @param args {Array} - Args from to choose from to replace placeholders.
- * @returns {Array|*} - Returns passed in `_listOps` with placeholders replaced by values in `args`.
+ * @returns {Array|*} - Returns passed in `list` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders(array, args) {
     let out = map(function (element) {
@@ -1578,7 +1578,7 @@ function replacePlaceHolders(array, args) {
 
 /**
  * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @function module:_functionOps.curry_
+ * @function module:function.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -1592,12 +1592,12 @@ function curry_(fn) {
 }
 
 /**
- * Curries a _functionOps up to given arity also enforces arity via placeholder values (`__`).
- * @function module:_functionOps.curryN_
+ * Curries a function up to given arity also enforces arity via placeholder values (`__`).
+ * @function module:function.curryN_
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
- * @returns {Function} - Passed in _functionOps wrapped in a _functionOps for currying.
+ * @returns {Function} - Passed in function wrapped in a function for currying.
  */
 function curryN_(executeArity, fn) {
     for (let _len21 = arguments.length, curriedArgs = Array(_len21 > 2 ? _len21 - 2 : 0), _key21 = 2; _key21 < _len21; _key21++) {
@@ -1653,7 +1653,7 @@ let id = function id(x) {
 /**
  * Composes all functions passed in from right to left passing each functions return value to
  * the functionOps on the left of itself.
- * @function module:_functionOps.compose
+ * @function module:function.compose
  * @type {Function}
  * @param args {...{Function}}
  * @returns {Function}
@@ -1842,7 +1842,7 @@ let flip5$$1 = function flip5$$1(fn) {
 
 /**
  * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
- * @function module:functionOps.negateFMany
+ * @function module:functionOps.negateFN
  * @param fn {Function}
  * @returns {Function}
  */
@@ -1874,17 +1874,17 @@ let flip5$$1 = function flip5$$1(fn) {
  * @private
  */
 
-let fPureTakesOne_ = function fPureTakesOne_(name) {
+let fPureTakesOne = function fPureTakesOne(name) {
     return curry(function (arg, f) {
         return f[name](arg);
     });
 };
-let fPureTakes2_ = function fPureTakes2_(name) {
+let fPureTakes2 = function fPureTakes2(name) {
     return curry(function (arg1, arg2, f) {
         return f[name](arg1, arg2);
     });
 };
-let fPureTakesOneOrMore_ = function fPureTakesOneOrMore_(name) {
+let fPureTakesOneOrMore = function fPureTakesOneOrMore(name) {
     return curry2(function (f) {
         for (let _len25 = arguments.length, args = Array(_len25 > 1 ? _len25 - 1 : 0), _key25 = 1; _key25 < _len25; _key25++) {
             args[_key25 - 1] = arguments[_key25];
@@ -1901,7 +1901,7 @@ let fPureTakesOneOrMore_ = function fPureTakesOneOrMore_(name) {
  * @private
  */
 
-let push$1 = fPureTakesOneOrMore_('push');
+let push$1 = fPureTakesOneOrMore('push');
 
 /**
  * List operations that overlap (apart from globally overlapping props and functions like `length`)
@@ -2135,7 +2135,7 @@ exports.negateF3 = negateF3;
 exports.negateF4 = negateF4;
 exports.negateF5 = negateF5;
 exports.negateP = negateP;
-exports.negateFMany = negateFMany;
+exports.negateFN = negateFN;
 exports.id = id;
 exports.compose = compose;
 exports.and = _and;
@@ -2347,9 +2347,9 @@ exports.unlines = unlines;
 exports.lcaseFirst = lcaseFirst;
 exports.ucaseFirst = ucaseFirst;
 exports.camelCase = camelCase;
-exports.fPureTakesOne_ = fPureTakesOne_;
-exports.fPureTakes2_ = fPureTakes2_;
-exports.fPureTakesOneOrMore_ = fPureTakesOneOrMore_;
+exports.fPureTakesOne = fPureTakesOne;
+exports.fPureTakes2 = fPureTakes2;
+exports.fPureTakesOneOrMore = fPureTakesOneOrMore;
 exports.fPureTakesOne = fPureTakesOne;
 exports.fPureTakes2 = fPureTakes2;
 exports.fPureTakes3 = fPureTakes3;
@@ -2374,6 +2374,6 @@ exports.findIndexWhereRight = findIndexWhereRight;
 exports.findIndicesWhere = findIndicesWhere;
 exports.findWhere = findWhere;
 exports.aggregateStr = aggregateStr;
-exports.aggregateArr = aggregateArr;
+exports.aggregateArr$$ = aggregateArr$$;
 exports.aggregateObj = aggregateObj;
 exports.aggregatorByType = aggregatorByType;

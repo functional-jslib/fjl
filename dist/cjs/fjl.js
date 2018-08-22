@@ -4,62 +4,62 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _objectOps = require('./objectOps');
+var _object = require('./object');
 
-Object.keys(_objectOps).forEach(function (key) {
+Object.keys(_object).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _objectOps[key];
+      return _object[key];
     }
   });
 });
 
-var _booleanOps = require('./booleanOps');
+var _boolean = require('./boolean');
 
-Object.keys(_booleanOps).forEach(function (key) {
+Object.keys(_boolean).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _booleanOps[key];
+      return _boolean[key];
     }
   });
 });
 
-var _functionOps = require('./functionOps');
+var _function = require('./function');
 
-Object.keys(_functionOps).forEach(function (key) {
+Object.keys(_function).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _functionOps[key];
+      return _function[key];
     }
   });
 });
 
-var _listOps = require('./listOps');
+var _list = require('./list');
 
-Object.keys(_listOps).forEach(function (key) {
+Object.keys(_list).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _listOps[key];
+      return _list[key];
     }
   });
 });
 
-var _stringOps = require('./stringOps');
+var _string = require('./string');
 
-Object.keys(_stringOps).forEach(function (key) {
+Object.keys(_string).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _stringOps[key];
+      return _string[key];
     }
   });
 });
@@ -76,7 +76,19 @@ Object.keys(_utils).forEach(function (key) {
   });
 });
 
-var _utils2 = require('./uncurried/_listOps/_utils');
+var _errorThrowing = require('./errorThrowing');
+
+Object.keys(_errorThrowing).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _errorThrowing[key];
+    }
+  });
+});
+
+var _utils2 = require('./list/utils');
 
 Object.keys(_utils2).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

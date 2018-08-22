@@ -1,63 +1,63 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', './objectOps', './booleanOps', './functionOps', './listOps', './stringOps', './utils', './uncurried/_listOps/_utils'], factory);
+    define(['exports', './object', './boolean', './function', './list', './string', './utils', './errorThrowing', './list/utils'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('./objectOps'), require('./booleanOps'), require('./functionOps'), require('./listOps'), require('./stringOps'), require('./utils'), require('./uncurried/_listOps/_utils'));
+    factory(exports, require('./object'), require('./boolean'), require('./function'), require('./list'), require('./string'), require('./utils'), require('./errorThrowing'), require('./list/utils'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.objectOps, global.booleanOps, global.functionOps, global.listOps, global.stringOps, global.utils, global._utils);
+    factory(mod.exports, global.object, global.boolean, global._function, global.list, global.string, global.utils, global.errorThrowing, global.utils);
     global.fjl = mod.exports;
   }
-})(this, function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps, _utils, _utils2) {
+})(this, function (exports, _object, _boolean, _function, _list, _string, _utils, _errorThrowing, _utils2) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.keys(_objectOps).forEach(function (key) {
+  Object.keys(_object).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _objectOps[key];
+        return _object[key];
       }
     });
   });
-  Object.keys(_booleanOps).forEach(function (key) {
+  Object.keys(_boolean).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _booleanOps[key];
+        return _boolean[key];
       }
     });
   });
-  Object.keys(_functionOps).forEach(function (key) {
+  Object.keys(_function).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _functionOps[key];
+        return _function[key];
       }
     });
   });
-  Object.keys(_listOps).forEach(function (key) {
+  Object.keys(_list).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _listOps[key];
+        return _list[key];
       }
     });
   });
-  Object.keys(_stringOps).forEach(function (key) {
+  Object.keys(_string).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _stringOps[key];
+        return _string[key];
       }
     });
   });
@@ -67,6 +67,15 @@
       enumerable: true,
       get: function () {
         return _utils[key];
+      }
+    });
+  });
+  Object.keys(_errorThrowing).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _errorThrowing[key];
       }
     });
   });

@@ -1,8 +1,17 @@
-define(['exports', './jsPlatform/array', './jsPlatform/list', './jsPlatform/string'], function (exports, _array, _list, _string) {
+define(['exports', './jsPlatform/object', './jsPlatform/array', './jsPlatform/list', './jsPlatform/string', './jsPlatform/function'], function (exports, _object, _array, _list, _string, _function) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
+  });
+  Object.keys(_object).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _object[key];
+      }
+    });
   });
   Object.keys(_array).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -28,6 +37,15 @@ define(['exports', './jsPlatform/array', './jsPlatform/list', './jsPlatform/stri
       enumerable: true,
       get: function () {
         return _string[key];
+      }
+    });
+  });
+  Object.keys(_function).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _function[key];
       }
     });
   });

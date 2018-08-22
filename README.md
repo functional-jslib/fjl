@@ -5,14 +5,6 @@
 # fjl
 Functional Javascript Library (inspired by Haskell's Prelude).
 
-## Note: 
-For a more fully functional experience try `fjl@next` (**note** docs for `next` version are included in package ('./docs')):
-```
-npm i fjl@next
-```
-Methods in the 1.X.X-next version are curried but do not have un-curried counter-parts exported - 
-makes for a lighter version of the library, and also makes for library sources which also adhere to a fully functional paradigm (fully curried functions etc.).
-
 ## Sections in Readme:
 - [Getting Started](#getting-started)
 - [Requirements](#requirements)
@@ -21,11 +13,14 @@ makes for a lighter version of the library, and also makes for library sources w
 - [Development](#development)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
+- [Resources](#resources)
+- [Change log](#change-log)
 
 ## Requirements:
 - Javascript Ecmascript 5+.
 
 ### Supported Platforms:
+
 #### Browsers
 - IE9+, and all other modern day browsers.
 
@@ -33,6 +28,7 @@ makes for a lighter version of the library, and also makes for library sources w
 - 8+
 
 ## Getting Started:
+
 ### In Browser:
 See desired export type below:
 - './dist/amd/' - Asynchronous module format.
@@ -47,6 +43,7 @@ for es6 modules ('*.mjs' for es6 module and '*.js' for common-js module) (these 
  in package.json as the default exports). 
 
 ### In NodeJs: 
+
 #### Using es2015 modules:
 ```
 import {...} from 'fjl';
@@ -58,26 +55,24 @@ const fjl = require('fjl');
 ```
 
 ### Docs
+
 **JSDocs** [https://functional-jslib.github.io/fjl]
 
- The docs are divided into modules though all methods in the library all live on `fjl` or the top level export
- of the library (the docs are written out that way to easier understand the separation and the grouping of
- methods (will give users a better idea of what methods are for what (without reading to much documentation))).
+The docs are divided into modules though all methods live on `fjl` (top level export).
 
-Modules with a prefixed '_' contain docs for un-curried members.
-Modules without a prefixed '_' contain docs for curried members (one set of docs will be generated per module in
-the future).
+#### A note on currying.
+- All methods that take 2 or more arguments are curried.
+- All methods that take rest params ~~'only' are not curried;~~ only are curried up to 2 parameters.
+- Methods that require one argument and rest params are ~~not~~ are curried at up to 2 parameters.
 
-The jsdocs link listed above has the modules included on `fjl`, divided by the operation types ported over from the haskell prelude:
-
-#### `booleanOps`
+#### `boolean`
 ```
 isTruthy, isFalsy, alwaysTrue, alwaysFalse
 ```
 
-#### `listOps`
+#### `list`
 ```
-append, appendMany, head, last, tail, init, uncons, unconsr, concat, concatMap,
+append, head, last, tail, init, uncons, unconsr, concat, concatMap,
 reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
 permutations, foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
 replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices,
@@ -88,56 +83,54 @@ zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN,
 any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, 
 scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy,
 removeBy, removeFirstBy, unionBy, union, intersect, intersectBy, difference,
-complement
+complement, range
 ```
 
 ##### Note: `iterate`, `repeat`, `replicate`, `cycle`
 In javascript we do not have lazy lists (infinite lists) like in haskell so 
-the aforementioned methods take an integer as their first parameter (in our implementation)
-(since we need to know when to their internal loops);  E.g.,
+the aforementioned methods take an integer as their first parameter;  E.g.,
 
-Javascript: `take(3, iterate(a => a * 2), [1..])` 
-Haskell: `take 3 $ iterate (a -> a * 2) [1..]`
+In haskell, we can do the following: `take 3 $ iterate (a -> a * 2) [1..]` (`[1..]` is syntax for infinite list)
+In javascript, we have no choice but to make our function call similar to:
+```
+iterate(3, a => a * 2, range(1, 10))
+```
 
-**Notice** the `[1..]`, this doesn't exist in javascript;  In haskell this is an infinite lazy list 
-
-So our haskell definitions for our methods are 
+So, haskell definitions for our generator like methods:  
 - `iterate :: (a -> a) -> [a]` 
 - `repeat :: a -> [a]`
 - `replicate :: Int -> a -> [a]`
 - `cycle :: [a] -> [a]`
  
-In javascript:
-- `repeat` and `replicate` become the same:
-`repeat :: Int -> a -> [a]`
-`replicate:: Int -> a -> [a]`
-- `cycle` becomes `cycle :: Int -> [a] -> [a]`
-- `iterate` becomes `iterate :: Int -> (a -> a) -> [a]`
+And our haskell signature for our javascript version methods become:
+- `repeat :: Int -> a -> [a]`
+- `replicate:: Int -> a -> [a]`
+- `cycle :: Int -> [a] -> [a]`
+- `iterate :: Int -> (a -> a) -> [a]`
 
-#### `functionOps`
+#### `function`
 ```
 apply, call, curry, curry2, curry3, curry4, curry5, curryN,
-until, flip, flip3, flip4, flip5, flipN,
-negateF, negateP, negateF3, negateF4, negateF5, negateFMany,
-id, compose, curry_, curry2_, curry3_, curry4_, curry5_, __ // Curry with placeholders
+until, flip, flipN,
+negateF, negateF2, negateF3, negateFN,
+id, compose, curry_, curry2_, curry3_, __ // Curry with placeholders
 ```
 
-#### `objectOps`
+#### `object`
 ```
-assignDeep, assign, of, prop, typeOf, isType, instanceOf, 
-isFunction, isClass, isCallable,
+assignDeep, assign, of, lookup, typeOf, isType, instanceOf, 
+isOfType, isFunction, isClass, isCallable, copy,
 isArray, isObject, isBoolean, isNumber, isString, isMap,
 isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
  isUsableImmutablePrimitive, isEmpty, isset,
 isEmptyList, isEmptyObject, isEmptyCollection,
-hasOwnProperty, length, keys,
+hasOwnProperty, length, keys, 
 objUnion, objIntersect, objDifference, objComplement,
 ```
 
-#### `stringOps`
-Import from 'Data.List' (in haskell):
+#### `string`
 ```
-lines, words, unwords, unlines
+camelCase, classCase, ucaseFirst, lcaseFirst, lines, words, unwords, unlines
 ```
 
 #### `jsPlatform`
@@ -149,10 +142,6 @@ slice, includes, indexOf, lastIndexOf, split, push
 - `split` in javascript is for strings.
 
 #### Utilities
-**Note:** Utility functions are generally not curried (minus a few exceptions: 
-    `fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_`
-).
-
 ##### Low level utilities
 Turning regular methods into functional ones;  I.e., these 
 take a `name` and return a function that take an-argument/arguments and a type value 
@@ -160,18 +149,16 @@ that has a method of `name` on it.
 The function returned takes arguments first and functor/member last.
 ```
 fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
-fPureTakesOneOrMore, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_
+fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore
 ```
 
 ##### List operation utilities
-**Uncurried**
-
 ```
 sliceFrom, sliceTo, slice, sliceCopy
 genericAscOrdering, lengths, lengthsToSmallest, 
 reduceUntil, reduceRightUntil, reduce, reduceRight,
 lastIndex, findIndexWhere, findIndicesWhere, findWhere,
-aggregateStr, aggregateArr, aggregateObj, aggregateByType,
+aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,
 ```
 
 **Note:**
@@ -186,28 +173,30 @@ https://functional-jslib.github.io/fjl/
 ## Motivations:
 - Haskell and it's `Prelude`.
 - Lambda Calculus.
-- The need for a way to do strongly typed javascript (in actual code (not with typescript)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
-- The need to be able to write functional code very quickly and easily (all methods in `fjl` are curried and lib also includes versions of all methods uncurried).
+- The need for strongly typed javascript (without typescript (libraries and the such)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
+- The need to be able to write functional code very quickly and easily (all methods in `fjl` ~~are curried and lib also includes versions of all methods uncurried~~).
 - A functional library that takes advantage of the es6 features of the language
  and is built from the ground up using functional concepts.
 - A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
-- A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `_append` (un-curried version)
-- A library that shouldn't be to hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' (in our lib is './src/listOps.js') etc..
+- ~~A functional library that has curried and un-curried versions of included operations.  Et. al.
+    `append`, `append` (un-curried version) Managing uncurried and curried methods makes development on 
+    the library unwieldly and is un-functional (anyway :-))so has been removed from library (as a feature)~~, .
+- A library that shouldn't be too hard to develop on (methods grouped similarly to the way the haskell modules
+are separated out 'Data.List' (in our lib is './src/list.js') etc..
 - Etc. etc..
 
 ### Reasoning for paradigms
 #### Use of while-and-for-loops instead of built-ins:
 - They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.)
-(do a google search for jsperf map vs for loop and/or similar).
+ (do search for `foreach vs for loop` and/or similiar).
+- Native array functional methods are used in some places in the library (due to functional composition and cyclic redundancy of includes).
 
 ## Development:
 - Sources are in './src'
     - Sources are divided by un-curried definitions ('./src/uncurried')
     and curried definitions (files in './src/**/*' except the ones in './src/uncurried' (of course)).
     - './src/jsPlatform' and './src/uncurried/jsPlatform' are native platform specific method versions
-     pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (listOps, functionOps etc.).
+     pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (list, function etc.).
     - About non-conformity to full modularity (one-function-per-file):
       The library could have been written this way initially but wasn't, specifically to make development on the library easier
       (though it can be argued that development is actually more difficult this way,
@@ -233,30 +222,23 @@ configurations used for building the project.
 
 ### Unit testing:
 Unit tests are grouped by exported module:
-'tests/test-listOps.js' - Tests 'listOps' module etc.
+'tests/test-list.js' - Tests 'list' module etc.
 
-We are using 'chai' and 'mocha' though we may want to move to 'jest' in the future.
+We are using ~~'chai' and 'mocha' though we may want to move to~~ 'jest' for testing ~~in the future~~.
 
 ### Perf Tests:
 - `subsequences`: https://jsperf.com/subsequences/6
+- `trampoline`: https://jsperf.com/pure-trampoline/1 (performance difference to pure 
+  recursive call here is negligible).
+  
+## Change log:
+- As of version 1.3.0 changelog will also be kept in [Changelog.md](https://github.com/functional-jslib/fjl/tree/next/CHANGELOG.md).
 
 ## License:
 [BSD 3 Clause](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html")
 
-## Resource:
+## Resources:
 - Docs format: http://usejsdoc.org/
 - Haskell docs search engine: https://www.haskell.org/hoogle/
 - Listing of entire Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html
 - Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html
-
-## Changelog
-#### 0.26.1
-- Updated readme with `next` version note.
-- Removed 'gulp-mocha' from dependencies.
-
-#### 0.26.0
-- `append` correctly curries upto 2 parameters (previously it didn't curry (or curried upto one parameter)).
-- Tests no longer use 'chai' in it's tests.  Tests now use 'jest' `expect` directly (instead).
-- Performed minor cleanup on test helpers and tests: 
-  - Removed functionality already provided by tests runner 
-  from './tests/helpers.js'.

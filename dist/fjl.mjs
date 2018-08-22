@@ -158,7 +158,7 @@ const curry5 = fn => curryN(5, fn);
 
 /**
  * Returns property value if found; Else `undefined`.
- * @function module:_objectOps.prop
+ * @function module:object.prop
  * @param name {String} - Key to search on `obj`
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
@@ -261,7 +261,7 @@ const negateF3 = fn => (a, b, c) => !fn(a, b, c);
 const negateF4 = fn => (a, b, c, d) => !fn(a, b, c, d);
 const negateF5 = fn => (a, b, c, d, e) => !fn(a, b, c, d, e);
 const negateP = negateF3;
-const negateFMany = fn => (...args) => !apply(fn, args);
+const negateFN = fn => (...args) => !apply(fn, args);
 
 /**
  * Created by elyde on 7/15/2017.
@@ -297,7 +297,7 @@ function isUsableImmutablePrimitive$1 (x) {
  * // - Else if constructor is a function, thus far, then calls constructor using
  * //      the `new` keyword (with any passed in args).
  * ```
- * @function module:_objectOps.of
+ * @function module:object.of
  * @param x {*} - Value to derive returned value's type from.
  * @param [args] {...*} - Any args to pass in to matched construction strategy.
  * @returns {*|undefined} - New value of given value's type else `undefined`.
@@ -351,7 +351,7 @@ const toArray = x => {
     };
 
 /**
- * @function module:_listOps.map
+ * @function module:list.map
  * @param fn {Function} - Function to map on array.
  * @param xs {Array}
  * @returns {Array}
@@ -369,7 +369,7 @@ function _map (fn, xs) {
 }
 
 const aggregateStr = (agg, item) => agg + item;
-const aggregateArr = (agg, item) => {
+const aggregateArr$$ = (agg, item) => {
         agg.push(item);
         return agg;
     };
@@ -380,7 +380,7 @@ const aggregateObj = (agg, item, ind) => {
 const aggregatorByType = x => {
         switch (typeOf(x)) {
             case 'String': return aggregateStr;
-            case 'Array': return aggregateArr;
+            case 'Array': return aggregateArr$$;
             case 'Object':
             default: return aggregateObj;
         }
@@ -488,7 +488,7 @@ const findWhere = (pred, xs) => {
 const _append = concat;
 const _appendMany = (...args) => {
         if (length(args)) { return apply(concat, args); }
-        throw new Error('`_appendMany` requires at least one arg.');
+        throw new Error('`append` requires at least one arg.');
     };
 const _head = x => x[0];
 const _last = xs => xs[lastIndex(xs)];
@@ -664,7 +664,7 @@ const _splitAt = (ind, list) => [ sliceTo(ind, list), sliceFrom(ind, list) ];
 const _takeWhile = (pred, list) =>
         reduceUntil(
             negateP(pred),  // predicate
-            aggregateArr,   // operation
+            aggregateArr$$,   // operation
             [],             // aggregator
             list
         );
@@ -851,7 +851,7 @@ const _zip = (arr1, arr2) => {
         }
         const [a1, a2] = lengthsToSmallest(arr1, arr2);
         return reduce$1((agg, item, ind) =>
-                aggregateArr(agg, [item, a2[ind]]),
+                aggregateArr$$(agg, [item, a2[ind]]),
             [], a1);
     };
 const _zipN = (...lists) => {
@@ -864,7 +864,7 @@ const _zipN = (...lists) => {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce$1((agg, item, ind) =>
-                aggregateArr(agg, _map(xs => xs[ind], trimmedLists)),
+                aggregateArr$$(agg, _map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     };
 const _zip3 = (arr1, arr2, arr3) => _zipN(arr1, arr2, arr3);
@@ -876,7 +876,7 @@ const _zipWith = (op, xs1, xs2) => {
         }
         const [a1, a2] = lengthsToSmallest(xs1, xs2);
         return reduce$1((agg, item, ind) =>
-                aggregateArr(agg, op(item, a2[ind])),
+                aggregateArr$$(agg, op(item, a2[ind])),
             [], a1);
     };
 const _zipWithN = (op, ...lists) => {
@@ -889,7 +889,7 @@ const _zipWithN = (op, ...lists) => {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce$1((agg, item, ind) =>
-                aggregateArr(agg, apply(op, _map(xs => xs[ind], trimmedLists))),
+                aggregateArr$$(agg, apply(op, _map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     };
 const _zipWith3 = (op, xs1, xs2, xs3) => _zipWithN(op, xs1, xs2, xs3);
@@ -1023,7 +1023,7 @@ const _insertBy = (orderingFn, x, xs) => {
                 return _concat([parts[0], [x], parts[1]]);
             }
         }
-        return aggregateArr(copy(xs), x);
+        return aggregateArr$$(copy(xs), x);
     };
 const _nubBy = (pred, list) => {
         if (!length(list)) {
@@ -1152,12 +1152,12 @@ function isPlaceHolder (instance) {
 }
 
 /**
- * Replaces `placeholder` values in `_listOps`.
+ * Replaces `placeholder` values in `list`.
  * @function replacePlaceHolder
  * @private
  * @param array {Array} - Array to replace placeholders in.
  * @param args {Array} - Args from to choose from to replace placeholders.
- * @returns {Array|*} - Returns passed in `_listOps` with placeholders replaced by values in `args`.
+ * @returns {Array|*} - Returns passed in `list` with placeholders replaced by values in `args`.
  */
 function replacePlaceHolders (array, args) {
     let out = map(element => {
@@ -1170,7 +1170,7 @@ function replacePlaceHolders (array, args) {
 
 /**
  * Curries passed in functionOps up to given arguments length (can enforce arity via placeholder values (`__`)).
- * @function module:_functionOps.curry_
+ * @function module:function.curry_
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
@@ -1180,12 +1180,12 @@ function curry_ (fn, ...argsToCurry) {
 }
 
 /**
- * Curries a _functionOps up to given arity also enforces arity via placeholder values (`__`).
- * @function module:_functionOps.curryN_
+ * Curries a function up to given arity also enforces arity via placeholder values (`__`).
+ * @function module:function.curryN_
  * @param executeArity {Number}
  * @param fn {Function}
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
- * @returns {Function} - Passed in _functionOps wrapped in a _functionOps for currying.
+ * @returns {Function} - Passed in function wrapped in a function for currying.
  */
 function curryN_ (executeArity, fn, ...curriedArgs) {
     return (...args) => {
@@ -1225,7 +1225,7 @@ const id = x => x;
 /**
  * Composes all functions passed in from right to left passing each functions return value to
  * the functionOps on the left of itself.
- * @function module:_functionOps.compose
+ * @function module:function.compose
  * @type {Function}
  * @param args {...{Function}}
  * @returns {Function}
@@ -1389,7 +1389,7 @@ const flip5$$1 = fn => curry(flip5$1(fn));
 
     /**
      * Returns a new function which is the dual of `fn` (or the negated version of `fn`).
-     * @function module:functionOps.negateFMany
+     * @function module:functionOps.negateFN
      * @param fn {Function}
      * @returns {Function}
      */
@@ -1421,9 +1421,9 @@ const flip5$$1 = fn => curry(flip5$1(fn));
  * @private
  */
 
-const fPureTakesOne_ = name => curry((arg, f) => f[name](arg));
-const fPureTakes2_ = name => curry((arg1, arg2, f) => f[name](arg1, arg2));
-const fPureTakesOneOrMore_ = name => curry2((f, ...args) => f[name](...args));
+const fPureTakesOne = name => curry((arg, f) => f[name](arg));
+const fPureTakes2 = name => curry((arg1, arg2, f) => f[name](arg1, arg2));
+const fPureTakesOneOrMore = name => curry2((f, ...args) => f[name](...args));
 
 /**
  * Created by elyde on 7/20/2017.
@@ -1432,7 +1432,7 @@ const fPureTakesOneOrMore_ = name => curry2((f, ...args) => f[name](...args));
  * @private
  */
 
-const push$1 = fPureTakesOneOrMore_('push');
+const push$1 = fPureTakesOneOrMore('push');
 
 /**
  * List operations that overlap (apart from globally overlapping props and functions like `length`)
@@ -1570,4 +1570,4 @@ const camelCase = (xs, pattern) => _map(ucaseFirst, _splitAt(pattern || /[^a-z\d
  * @module fjl
  */
 
-export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, jsonClone, fromArrayMap, toArrayMap, toArray, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, log, error, peek, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFMany, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, fPureTakesOne_, fPureTakes2_, fPureTakesOneOrMore_, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr, aggregateObj, aggregatorByType };
+export { instanceOf$1 as _instanceOf, isType$1 as _isType, hasOwnProperty$1 as _hasOwnProperty, assign$1 as _assign, prop$1 as _prop, assignDeep$1 as _assignDeep, objUnion$1 as _objUnion, objComplement$1 as _objComplement, objIntersect$1 as _objIntersect, objDifference$1 as _objDifference, prop$$1 as prop, instanceOf$$1 as instanceOf, hasOwnProperty$$1 as hasOwnProperty, assign$$1 as assign, assignDeep$$1 as assignDeep, objUnion$$1 as objUnion, objIntersect$$1 as objIntersect, objDifference$$1 as objDifference, objComplement$$1 as objComplement, isType$$1 as isType, jsonClone, fromArrayMap, toArrayMap, toArray, length, keys, isFunction, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, typeOf, of, log, error, peek, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply as _apply, call as _call, until$1 as _until, flip$1 as _flip, flip3$1 as _flip3, flip4$1 as _flip4, flip5$1 as _flip5, flipN$1 as _flipN, apply$1 as apply, call$1 as call, until$$1 as until, flipN$$1 as flipN, flip$$1 as flip, flip3$$1 as flip3, flip4$$1 as flip4, flip5$$1 as flip5, curry, curryN, curry2, curry3, curry4, curry5, curry_, curryN_, __, curry2_, curry3_, curry4_, curry5_, negateF, negateF3, negateF4, negateF5, negateP, negateFN, id, compose, _and as and, _or as or, _not as not, _zipN as zipN, _unzip as unzip, _unzipN as unzipN, _concat as concat, _reverse as reverse, _transpose as transpose, _subsequences as subsequences, _permutations as permutations, _group as group, _tails as tails, _sum as sum, _product as product, _maximum as maximum, _minimum as minimum, _sort as sort, _nub as nub, _head as head, _last as last, _tail as tail, _init as init, _inits as inits, _uncons as uncons, _unconsr as unconsr, _swapped as swapped, append, appendMany, concatMap, map$1 as map, intersperse, intercalate, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, filter$1 as filter, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, groupBy, stripPrefix, zip, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, any, all, scanl, scanl1, scanr, scanr1, remove, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice$1 as slice, includes$1 as includes, indexOf$1 as indexOf, lastIndexOf$1 as lastIndexOf, split$1 as split, push$1 as push, _map, _append, _appendMany, _head, _last, _tail, _init, _uncons, _unconsr, _concat, _concatMap, _reverse, _intersperse, _intercalate, _transpose, _subsequences, _swapped, _permutations, _foldl, _foldr, _foldl1, _foldr1, _mapAccumL, _mapAccumR, _iterate, _repeat, _replicate, _cycle, _unfoldr, _findIndex, _findIndices, _elemIndex, _elemIndices, _take, _drop, _splitAt, _takeWhile, _dropWhile, _dropWhileEnd, _span, _breakOnList, _at, _find, _filter, _partition, _elem, _notElem, _lookup, _isPrefixOf, _isSuffixOf, _isInfixOf, _isSubsequenceOf, _group, _groupBy, _inits, _tails, _stripPrefix, _zip, _zipN, _zip3, _zip4, _zip5, _zipWith, _zipWithN, _zipWith3, _zipWith4, _zipWith5, _unzip, _unzipN, _any, _all, _and, _or, _not, _sum, _product, _maximum, _minimum, _scanl, _scanl1, _scanr, _scanr1, _nub, _remove, _sort, _sortOn, _sortBy, _insert, _insertBy, _nubBy, _removeBy, _removeFirstsBy, _unionBy, _union, _intersect, _intersectBy, _difference, _complement, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, fnOrError, sliceFrom, sliceTo, copy, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateStr, aggregateArr$$, aggregateObj, aggregatorByType };

@@ -1,7 +1,9 @@
 /**
  * Created by elyde on 12/13/2016.
- * @script gulpfile.js
  */
+
+'use strict';
+
 const path = require('path'),
     crypto = require('crypto'),
     packageJson = require('./package'),
@@ -146,10 +148,23 @@ gulp.task('docs', () =>
             gulp.src(['README.md', './src/**/*.js'], {read: false})
                 .pipe(jsdoc({
                     opts: {
-                        'template': 'templates/default',  // same as -t templates/default
-                        'encoding': 'utf8',               // same as -e utf8
-                        'destination': './docs/',       // same as -d ./out/
-                        'recurse': true
+                        template: 'node_modules/tui-jsdoc-template',  // same as -t templates/default
+                        encoding: 'utf8',               // same as -e utf8
+                        destination: './docs/',       // same as -d ./out/
+                        recurse: true,
+                        templates: {
+                            useCollapsibles: false
+                        }
+                    },
+                    // @todo create logo for `fjl`
+                    "templates": {
+                        "logo": {
+                            "url": "http://elycruz.com/fjl-logo-v2.svg",
+                            "width": "144px",
+                            "height": "55px",
+                            "link": "https://github.com/functional-jslib/fjl"
+                        },
+                        "footerText": "fjl library - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab"
                     }
                 }))
         )

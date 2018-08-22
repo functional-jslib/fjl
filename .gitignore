@@ -1,5 +1,11 @@
 .DS_Store/
-.idea/
+
+# IDEs and editors
+.idea/*.iml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/encodings.xml
+
 node_modules/
 yarn-error.log
 npm-debug.log

@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: errorThrowing.js | Source: errorThrowing.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 144px; height: 55px">
+        
+            <a href="https://github.com/functional-jslib/fjl" rel="noopener noreferrer" target="_blank">
+                <img src="http://elycruz.com/fjl-logo-v2.svg" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Source: errorThrowing.js</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-boolean.html">boolean</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:boolean_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-boolean.html#.alwaysFalse">alwaysFalse</a></li><li><a href="module-boolean.html#.alwaysTrue">alwaysTrue</a></li><li><a href="module-boolean.html#.isFalsy">isFalsy</a></li><li><a href="module-boolean.html#.isTruthy">isTruthy</a></li></ul></div></li><li><a href="module-console.html">console</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:console_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-console.html#.error">error</a></li><li><a href="module-console.html#.log">log</a></li><li><a href="module-console.html#.peek">peek</a></li></ul></div></li><li><a href="module-errorThrowing.html">errorThrowing</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:errorThrowing_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-errorThrowing.html#.errorIfNotType">errorIfNotType</a></li><li><a href="module-errorThrowing.html#.errorIfNotTypes">errorIfNotTypes</a></li><li><a href="module-errorThrowing.html#.getErrorIfNotTypesThrower">getErrorIfNotTypesThrower</a></li><li><a href="module-errorThrowing.html#.getErrorIfNotTypeThrower">getErrorIfNotTypeThrower</a></li></ul></div></li><li><a href="module-fjl.html">fjl</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:fjl_sub"></div></li><li><a href="module-function.html">function</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:function_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-function.html#.compose">compose</a></li><li><a href="module-function.html#.curry">curry</a></li><li><a href="module-function.html#.curry2">curry2</a></li><li><a href="module-function.html#.curry3">curry3</a></li><li><a href="module-function.html#.curry4">curry4</a></li><li><a href="module-function.html#.curry5">curry5</a></li><li><a href="module-function.html#.curryN">curryN</a></li><li><a href="module-function.html#.flip">flip</a></li><li><a href="module-function.html#.flipN">flipN</a></li><li><a href="module-function.html#.fnOrError">fnOrError</a></li><li><a href="module-function.html#.id">id</a></li><li><a href="module-function.html#.negateF">negateF</a></li><li><a href="module-function.html#.negateFN">negateFN</a></li><li><a href="module-function.html#.noop">noop</a></li><li><a href="module-function.html#.trampoline">trampoline</a></li><li><a href="module-function.html#.until">until</a></li></ul></div></li><li><a href="module-list.html">list</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:list_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-list.html#~forEach">forEach</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-list.html#.all">all</a></li><li><a href="module-list.html#.and">and</a></li><li><a href="module-list.html#.any">any</a></li><li><a href="module-list.html#.append">append</a></li><li><a href="module-list.html#.at">at</a></li><li><a href="module-list.html#.breakOnList">breakOnList</a></li><li><a href="module-list.html#.complement">complement</a></li><li><a href="module-list.html#.concat">concat</a></li><li><a href="module-list.html#.concatMap">concatMap</a></li><li><a href="module-list.html#.cycle">cycle</a></li><li><a href="module-list.html#.difference">difference</a></li><li><a href="module-list.html#.drop">drop</a></li><li><a href="module-list.html#.dropWhile">dropWhile</a></li><li><a href="module-list.html#.dropWhileEnd">dropWhileEnd</a></li><li><a href="module-list.html#.elem">elem</a></li><li><a href="module-list.html#.elemIndex">elemIndex</a></li><li><a href="module-list.html#.elemIndices">elemIndices</a></li><li><a href="module-list.html#.filter">filter</a></li><li><a href="module-list.html#.find">find</a></li><li><a href="module-list.html#.findIndex">findIndex</a></li><li><a href="module-list.html#.findIndices">findIndices</a></li><li><a href="module-list.html#.foldl">foldl</a></li><li><a href="module-list.html#.foldl1">foldl1</a></li><li><a href="module-list.html#.foldr">foldr</a></li><li><a href="module-list.html#.foldr1">foldr1</a></li><li><a href="module-list.html#.group">group</a></li><li><a href="module-list.html#.groupBy">groupBy</a></li><li><a href="module-list.html#.head">head</a></li><li><a href="module-list.html#.includes">includes</a></li><li><a href="module-list.html#.indexOf">indexOf</a></li><li><a href="module-list.html#.init">init</a></li><li><a href="module-list.html#.inits">inits</a></li><li><a href="module-list.html#.insert">insert</a></li><li><a href="module-list.html#.insertBy">insertBy</a></li><li><a href="module-list.html#.intercalate">intercalate</a></li><li><a href="module-list.html#.intersect">intersect</a></li><li><a href="module-list.html#.intersectBy">intersectBy</a></li><li><a href="module-list.html#.intersperse">intersperse</a></li><li><a href="module-list.html#.isInfixOf">isInfixOf</a></li><li><a href="module-list.html#.isPrefixOf">isPrefixOf</a></li><li><a href="module-list.html#.isSubsequenceOf">isSubsequenceOf</a></li><li><a href="module-list.html#.isSuffixOf">isSuffixOf</a></li><li><a href="module-list.html#.iterate">iterate</a></li><li><a href="module-list.html#.last">last</a></li><li><a href="module-list.html#.lastIndexOf">lastIndexOf</a></li><li><a href="module-list.html#.map">map</a></li><li><a href="module-list.html#.mapAccumL">mapAccumL</a></li><li><a href="module-list.html#.mapAccumR">mapAccumR</a></li><li><a href="module-list.html#.maximum">maximum</a></li><li><a href="module-list.html#.minimum">minimum</a></li><li><a href="module-list.html#.not">not</a></li><li><a href="module-list.html#.notElem">notElem</a></li><li><a href="module-list.html#.nub">nub</a></li><li><a href="module-list.html#.nubBy">nubBy</a></li><li><a href="module-list.html#.or">or</a></li><li><a href="module-list.html#.partition">partition</a></li><li><a href="module-list.html#.permutations">permutations</a></li><li><a href="module-list.html#.product">product</a></li><li><a href="module-list.html#.push">push</a></li><li><a href="module-list.html#.range">range</a></li><li><a href="module-list.html#.remove">remove</a></li><li><a href="module-list.html#.removeBy">removeBy</a></li><li><a href="module-list.html#.removeFirstBy">removeFirstBy</a></li><li><a href="module-list.html#.repeat">repeat</a></li><li><a href="module-list.html#.replicate">replicate</a></li><li><a href="module-list.html#.reverse">reverse</a></li><li><a href="module-list.html#.scanl">scanl</a></li><li><a href="module-list.html#.scanl1">scanl1</a></li><li><a href="module-list.html#.scanr">scanr</a></li><li><a href="module-list.html#.scanr1">scanr1</a></li><li><a href="module-list.html#.sort">sort</a></li><li><a href="module-list.html#.sortBy">sortBy</a></li><li><a href="module-list.html#.sortOn">sortOn</a></li><li><a href="module-list.html#.span">span</a></li><li><a href="module-list.html#.splitAt">splitAt</a></li><li><a href="module-list.html#.stripPrefix">stripPrefix</a></li><li><a href="module-list.html#.subsequences">subsequences</a></li><li><a href="module-list.html#.sum">sum</a></li><li><a href="module-list.html#.swapped">swapped</a></li><li><a href="module-list.html#.tail">tail</a></li><li><a href="module-list.html#.tails">tails</a></li><li><a href="module-list.html#.take">take</a></li><li><a href="module-list.html#.takeWhile">takeWhile</a></li><li><a href="module-list.html#.transpose">transpose</a></li><li><a href="module-list.html#.uncons">uncons</a></li><li><a href="module-list.html#.unconsr">unconsr</a></li><li><a href="module-list.html#.unfoldr">unfoldr</a></li><li><a href="module-list.html#.union">union</a></li><li><a href="module-list.html#.unionBy">unionBy</a></li><li><a href="module-list.html#.unzip">unzip</a></li><li><a href="module-list.html#.unzipN">unzipN</a></li><li><a href="module-list.html#.zip">zip</a></li><li><a href="module-list.html#.zip3">zip3</a></li><li><a href="module-list.html#.zip4">zip4</a></li><li><a href="module-list.html#.zip5">zip5</a></li><li><a href="module-list.html#.zipN">zipN</a></li><li><a href="module-list.html#.zipWith">zipWith</a></li><li><a href="module-list.html#.zipWith3">zipWith3</a></li><li><a href="module-list.html#.zipWith4">zipWith4</a></li><li><a href="module-list.html#.zipWith5">zipWith5</a></li><li><a href="module-list.html#.zipWithN">zipWithN</a></li></ul></div></li><li><a href="module-object.html">object</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:object_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-object.html#.assign">assign</a></li><li><a href="module-object.html#.assignDeep">assignDeep</a></li><li><a href="module-object.html#.copy">copy</a></li><li><a href="module-object.html#.fromAssocList">fromAssocList</a></li><li><a href="module-object.html#.fromAssocListDeep">fromAssocListDeep</a></li><li><a href="module-object.html#.hasOwnProperty">hasOwnProperty</a></li><li><a href="module-object.html#.instanceOf">instanceOf</a></li><li><a href="module-object.html#.isArray">isArray</a></li><li><a href="module-object.html#.isBoolean">isBoolean</a></li><li><a href="module-object.html#.isCallable">isCallable</a></li><li><a href="module-object.html#.isClass">isClass</a></li><li><a href="module-object.html#.isEmpty">isEmpty</a></li><li><a href="module-object.html#.isEmptyCollection">isEmptyCollection</a></li><li><a href="module-object.html#.isEmptyList">isEmptyList</a></li><li><a href="module-object.html#.isEmptyObject">isEmptyObject</a></li><li><a href="module-object.html#.isFunction">isFunction</a></li><li><a href="module-object.html#.isMap">isMap</a></li><li><a href="module-object.html#.isNull">isNull</a></li><li><a href="module-object.html#.isNumber">isNumber</a></li><li><a href="module-object.html#.isObject">isObject</a></li><li><a href="module-object.html#.isSet">isSet</a></li><li><a href="module-object.html#.isset">isset</a></li><li><a href="module-object.html#.isString">isString</a></li><li><a href="module-object.html#.isSymbol">isSymbol</a></li><li><a href="module-object.html#.isType">isType</a></li><li><a href="module-object.html#.isUndefined">isUndefined</a></li><li><a href="module-object.html#.isUsableImmutablePrimitive">isUsableImmutablePrimitive</a></li><li><a href="module-object.html#.isWeakMap">isWeakMap</a></li><li><a href="module-object.html#.isWeakSet">isWeakSet</a></li><li><a href="module-object.html#.jsonClone">jsonClone</a></li><li><a href="module-object.html#.keys">keys</a></li><li><a href="module-object.html#.length">length</a></li><li><a href="module-object.html#.lookup">lookup</a></li><li><a href="module-object.html#.of">of</a></li><li><a href="module-object.html#.searchObj">searchObj</a></li><li><a href="module-object.html#.slice">slice</a></li><li><a href="module-object.html#.toArray">toArray</a></li><li><a href="module-object.html#.toAssocList">toAssocList</a></li><li><a href="module-object.html#.toAssocListDeep">toAssocListDeep</a></li><li><a href="module-object.html#.typeOf">typeOf</a></li></ul></div></li><li><a href="module-string.html">string</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:string_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-string.html#.camelCase">camelCase</a></li><li><a href="module-string.html#.classCase">classCase</a></li><li><a href="module-string.html#.lcaseFirst">lcaseFirst</a></li><li><a href="module-string.html#.lines">lines</a></li><li><a href="module-string.html#.split">split</a></li><li><a href="module-string.html#.ucaseFirst">ucaseFirst</a></li><li><a href="module-string.html#.unlines">unlines</a></li><li><a href="module-string.html#.unwords">unwords</a></li><li><a href="module-string.html#.words">words</a></li></ul></div></li><li><a href="module-utils.html">utils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:utils_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-utils.html#.fPureTakes2">fPureTakes2</a></li><li><a href="module-utils.html#.fPureTakes3">fPureTakes3</a></li><li><a href="module-utils.html#.fPureTakes4">fPureTakes4</a></li><li><a href="module-utils.html#.fPureTakes5">fPureTakes5</a></li><li><a href="module-utils.html#.fPureTakesOne">fPureTakesOne</a></li><li><a href="module-utils.html#.fPureTakesOneOrMore">fPureTakesOneOrMore</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3><a href="global.html">Global</a></h3></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module errorThrowing
+ * @description Contains error throwing facilities for when a value doesn't match a type.
+ */
+import {typeOf} from './object/typeOf';
+import {isArray, toTypeRef, toTypeRefName, isOfType} from './object/is';
+import {curry} from './function/curry';
+
+export const
+
+    /**
+     * Pretty prints an array of types/type-strings for use by error messages;
+     * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
+     * @function module:errorThrowing.typeRefsToStringOrError
+     * @param types {Array|TypesArray}
+     * @return {String}
+     * @private
+     */
+    typeRefsToStringOrError = types => types.length ?
+        types.map(type => `\`${toTypeRefName(type)}\``).join(', ') : '',
+
+    /**
+     * Prints a message from an object.  Object signature:
+     * {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
+     * @function module:errorThrowing.defaultErrorMessageCall
+     * @param tmplContext {Object|TemplateContext} - Object to use in error template.
+     * @returns {string}
+     * @private
+     */
+    defaultErrorMessageCall = tmplContext => {
+        const {
+                contextName, valueName, value, expectedTypeName,
+                foundTypeName, messageSuffix
+            } = tmplContext,
+            isMultiTypeNames = isArray(expectedTypeName),
+            typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+            typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
+        return (contextName ? `\`${contextName}.` : '`') +
+            `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` +
+            `Type received: ${foundTypeName}.  Value: ${value};` +
+            `${messageSuffix ?  '  ' + messageSuffix + ';' : ''}`;
+    },
+
+    /**
+     * Gets the error message thrower seeded with passed in errorMessage template call.
+     * @function module:errorThrowing.getErrorIfNotTypeThrower$
+     * @param errorMessageCall {Function|ErrorMessageCall}
+     * @param typeChecker {Function|TypeChecker} - Function&lt;Type, value>:Boolean
+     * @returns {Function|ErrorIfNotType}
+     * @private
+     */
+    _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = isOfType) =>
+        (ValueType, contextName, valueName, value, messageSuffix = null) => {
+            const expectedTypeName = toTypeRef(ValueType),
+                foundTypeName = typeOf(value);
+            if (typeChecker(ValueType, value)) { return value; } // Value matches type
+            throw new Error(errorMessageCall(
+                {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
+            ));
+        },
+
+    /**
+     * Gets the error message thrower seeded with passed in errorMessage template call.
+     * @function module:errorThrowing.getErrorIfNotTypesThrower$
+     * @param errorMessageCall {Function|ErrorMessageCall}
+     * @param typeChecker {Function|TypeChecker} - Function&lt;Type, value>:Boolean
+     * @returns {Function|ErrorIfNotTypes}
+     * @private
+     */
+    _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = isOfType) =>
+        (valueTypes, contextName, valueName, value, messageSuffix = null) => {
+            const expectedTypeNames = valueTypes.map(toTypeRef),
+                matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
+                foundTypeName = typeOf(value);
+            if (matchFound) { return value; }
+            throw new Error(
+                errorMessageCall({
+                    contextName, valueName, value,
+                    expectedTypeName: expectedTypeNames, foundTypeName,
+                    messageSuffix
+                })
+            );
+        },
+
+    /**
+     * Checks that passed in `value` is of given `type`.  Throws an error if value
+     * is not of given `type`.  This is the un-curried version.  For the curried version
+     * see `module:errorThrowing.errorIfNotType`.
+     * @function module:errorThrowing.errorIfNotType$
+     * @param type {String|Function} - Type's name or type itself.
+     * @param contextName {String} - Name of context to attribute errors if thrown.
+     * @param valueName {String} - String rep of value.
+     * @param value {*}
+     * @param [messageSuffix=null] {String} - Optional.
+     * @returns {*} - Given `value` if `value` matches passed in type.
+     * @private
+     */
+    _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall),
+
+    /**
+     * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
+     *  is not of one of the given `types`.  This is the un-curried version.  For the curried version
+     * see `module:errorThrowing.errorIfNotTypes`.
+     * @type {Function|module:errorThrowing.errorIfNotTypes}
+     * @function module:errorThrowing.errorIfNotTypes$
+     * @param types {Array} - Array of one or more types or type names themselves.
+     * @param contextName {String} - Name of context to attribute errors if thrown.
+     * @param valueName {String} - String rep of value.
+     * @param value {*}
+     * @returns {*} - Given `value` if `value` matches passed in type.
+     * @private
+     */
+    _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall),
+
+    /**
+     * Returns a function that can be used to ensure that values are of a given type.
+     *   Also throws informative error messages containing the value types, names, expected type names,
+     *   etc.
+     * @function module:errorThrowing.getErrorIfNotTypeThrower
+     * @param errorMessageCall {Function|ErrorMessageCall} - Template function (takes an info-object and returns a printed string).
+     * @returns {Function|ErrorIfNotType} - Returns a function with the same signature as `errorIfNotType` though curried.
+     */
+    getErrorIfNotTypeThrower = errorMessageCall => curry(_getErrorIfNotTypeThrower(errorMessageCall)),
+
+    /**
+     * Returns a function that can be used to ensure that a value is of one or more given types.
+     *   The returned function is used in cases where informative error messages
+     *   containing the value types, names, expected type names, are-required/should-be-used etc.
+     * @function module:errorThrowing.getErrorIfNotTypesThrower
+     * @param errorMessageCall {Function|ErrorMessageCall} - Template function (takes an info-object and returns a printed string).
+     * @returns {Function|ErrorIfNotTypes} - Returns a function with the same signature as `errorIfNotTypes` though curried.
+     */
+    getErrorIfNotTypesThrower = errorMessageCall => curry(_getErrorIfNotTypesThrower(errorMessageCall)),
+
+    /**
+     * Checks that passed in `value` is of given `type`.  Throws an error if value
+     * is not of given `type`.  Curried.
+     * @function module:errorThrowing.errorIfNotType
+     * @param type {String|Function} - Type's name or type itself.
+     * @param contextName {String} - Name of context to attribute errors if thrown.
+     * @param valueName {String} - String rep of value.
+     * @param value {*}
+     * @param [messageSuffix=null] {String} - Optional.
+     * @returns {*} - Given `value` if `value` matches passed in type.
+     * @curried
+     */
+    errorIfNotType = curry(_errorIfNotType),
+
+    /**
+     * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
+     *  is not of one of the given `types`.  Curried.
+     * @function module:errorThrowing.errorIfNotTypes
+     * @param types {Array} - Array of one or more types or type names themselves.
+     * @param contextName {String} - Name of context to attribute errors if thrown.
+     * @param valueName {String} - String rep of value.
+     * @param value {*}
+     * @returns {*} - Given `value` if `value` matches passed in type.
+     * @curried
+     */
+    errorIfNotTypes = curry(_errorIfNotTypes)
+;
+
+/**
+ * @typedef {*} Any - Synonym for 'any value'.
+ */
+
+/**
+ * @typedef {String|Function} TypeRef
+ * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
+ */
+
+/**
+ * @typedef {Object&lt;value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
+ * @description Template context used for error message renderers (functions that take a context obj and return a string).
+ * @property value {*}
+ * @property valueName {String}
+ * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
+ * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
+ * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
+ *  directing user to fix where his/her error has occurred).  Optional.
+ */
+
+/**
+ * @typedef {Array&lt;(String|Function)>} TypesArray
+ */
+
+/**
+ * @typedef {Function} TypeChecker
+ * @description Checks whether a value is of given type.
+ * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @typedef {Function} ErrorMessageCall
+ * @description Error message template function.
+ * @param tmplContext {TemplateContext}
+ * @returns {String}
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotType
+ * @description Used to ensure value matches passed in type.
+ * @param type {TypeRef} - Constructor name or constructor.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - What ever value is.
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotTypes
+ * @description Used to ensure a value matches one of one or more types passed in.
+ * @param valueTypes {TypesArray} - Array of constructor names or constructors.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - Whatever value is.
+ */
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="http://elycruz.com/fjl-logo-v2.svg" style="width: 144px; height: 55px">
+    <div class="footer-text">fjl library - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

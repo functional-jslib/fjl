@@ -1,12 +1,15 @@
+/**
+ * @description Tests for 'errorThrowing' module.
+ */
 import {
-    getTypeName,
-    multiTypesToString,
+    typeRefsToStringOrError,
     defaultErrorMessageCall,
     getErrorIfNotTypeThrower,
     getErrorIfNotTypesThrower,
     errorIfNotType,
     errorIfNotTypes
-} from '../src/uncurried/_objectOps/_errorThrowing';
+}
+    from '../src/errorThrowing';
 
 import {expectError} from './helpers';
 
@@ -15,19 +18,7 @@ describe ('#errorThrowing', () => {
     const someValue = 'someValue',
         someValueArray = someValue.split('');
 
-    describe ('#getTypeName', () => {
-        it ('should return the type name of the assumed type/type-name passed in', () => {
-            expect(getTypeName(String)).toEqual('String');
-            expect(getTypeName('String')).toEqual('String');
-        });
-        it ('should throw an error when receiving anything other than a string or ' +
-            'a constructor as it\'s first parameter', () => {
-            expectError(getTypeName);
-            expectError(_ => getTypeName(null));
-        });
-    });
-
-    describe ('#multiTypesToString', () => {
+    describe ('#typeRefsToStringOrError', () => {
         it ('should return all types/type-names in passed in array surrounded by ' +
             'back-tick characters in a string', () => {
             const
@@ -41,11 +32,9 @@ describe ('#errorThrowing', () => {
                 expectedOutput = someTypeCtors.map(x => `\`${x.name}\``).join(', '),
 
                 // Results
-                strFromTypeNames = multiTypesToString(someTypeNames),
-                strFromTypeCtors = multiTypesToString(someTypeCtors),
-                strFromMixed = multiTypesToString(mixedTypeVals);
-
-            // log(expectedOutput, strFromMixed);
+                strFromTypeNames = typeRefsToStringOrError(someTypeNames),
+                strFromTypeCtors = typeRefsToStringOrError(someTypeCtors),
+                strFromMixed = typeRefsToStringOrError(mixedTypeVals);
 
             // Ensure outputs are equal
             expect([strFromTypeNames, strFromTypeCtors, strFromMixed]
@@ -59,7 +48,7 @@ describe ('#errorThrowing', () => {
         });
 
         it ('should return an empty string when receiving an empty array', () => {
-            expect(multiTypesToString([])).toEqual('');
+            expect(typeRefsToStringOrError([])).toEqual('');
         });
     });
 
@@ -132,43 +121,31 @@ describe ('#errorThrowing', () => {
     });
 
     describe ('#errorIfNotType', () => {
-        it ('should return a function', () => {
-            const result = errorIfNotType(String, 'SomeContext');
-            expect(result).toBeInstanceOf(Function);
-        });
-        it ('It\'s returned function should throw an error when not able to match' +
+        it ('should throw an error when not able to match' +
             'value to passed in type', () => {
-            expectError(
-                _ => errorIfNotType(Array, 'SomeContext')(
-                        'someValueName', someValue
-                    )
-            );
+            expectError(() =>
+                errorIfNotType(Array, 'SomeContext', 'someValueName', someValue));
         });
-        it ('It\'s returned function should not throw an error when passed in value ' +
+        it ('should not throw an error when passed in value ' +
             'matches passed in type', () => {
-            expect(errorIfNotType(Array, 'SomeContext')(
-                    'someValueName', someValueArray
-                )).toEqual(someValueArray); // should return undefined
+            expect(errorIfNotType(Array, 'SomeContext', 'someValueName', someValueArray))
+                .toEqual(someValueArray);
         });
     });
 
     describe ('#errorIfNotTypes', () => {
-        it ('should return a function', () => {
-            const result = errorIfNotTypes([], 'SomeContext');
-            expect(result).toBeInstanceOf(Function);
+        it ('should throw an error when not able to match value to passed in type', () => {
+            expectError(() =>
+                errorIfNotTypes(
+                    [Array, Function, Boolean], 'SomeContext', 'someValueName', someValue
+                ));
         });
-        it ('It\'s returned function should throw an error when not able to match' +
-            'value to passed in type', () => {
-            expectError(
-                _ => errorIfNotTypes([Array, Function, Boolean], 'SomeContext')(
-                        'someValueName', someValue
-                    ));
-        });
-        it ('It\'s returned function should not throw an error when passed in value ' +
-            'matches one of passed in types', () => {
-            expect(errorIfNotTypes([Function, Array, Boolean], 'SomeContext',
-                    'someValueName', someValueArray
-                )).toEqual(someValueArray); // should return undefined
+        it ('should not throw an error when passed in value matches one of passed in types', () => {
+            expect(
+                errorIfNotTypes(
+                    [Function, Array, Boolean], 'SomeContext', 'someValueName', someValueArray)
+            )
+                .toEqual(someValueArray);
         });
     });
 

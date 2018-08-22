@@ -1,51 +1,51 @@
-define(['exports', './objectOps', './booleanOps', './functionOps', './listOps', './stringOps', './utils', './uncurried/_listOps/_utils'], function (exports, _objectOps, _booleanOps, _functionOps, _listOps, _stringOps, _utils, _utils2) {
+define(['exports', './object', './boolean', './function', './list', './string', './utils', './errorThrowing', './list/utils'], function (exports, _object, _boolean, _function, _list, _string, _utils, _errorThrowing, _utils2) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.keys(_objectOps).forEach(function (key) {
+  Object.keys(_object).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _objectOps[key];
+        return _object[key];
       }
     });
   });
-  Object.keys(_booleanOps).forEach(function (key) {
+  Object.keys(_boolean).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _booleanOps[key];
+        return _boolean[key];
       }
     });
   });
-  Object.keys(_functionOps).forEach(function (key) {
+  Object.keys(_function).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _functionOps[key];
+        return _function[key];
       }
     });
   });
-  Object.keys(_listOps).forEach(function (key) {
+  Object.keys(_list).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _listOps[key];
+        return _list[key];
       }
     });
   });
-  Object.keys(_stringOps).forEach(function (key) {
+  Object.keys(_string).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
-        return _stringOps[key];
+        return _string[key];
       }
     });
   });
@@ -55,6 +55,15 @@ define(['exports', './objectOps', './booleanOps', './functionOps', './listOps', 
       enumerable: true,
       get: function () {
         return _utils[key];
+      }
+    });
+  });
+  Object.keys(_errorThrowing).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function () {
+        return _errorThrowing[key];
       }
     });
   });
