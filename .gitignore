@@ -5,6 +5,7 @@
 .idea/modules.xml
 .idea/workspace.xml
 .idea/encodings.xml
+.idea/inspectionProfiles/*.xml
 
 node_modules/
 yarn-error.log
