@@ -634,8 +634,11 @@ export const
     find = findWhere,
 
     /**
-     * @param fn {Function} - Operation
+     * For each function (same as `[].forEach` except in functional format).
+     * @function module:list.forEach
+     * @param fn {Function} - Operation (`(element, index, list) => {...}`, etc.)
      * @param xs {(Array|String)}
+     * @returns {void}
      */
     forEach = curry((fn, list) => {
         const limit = length(list);
@@ -644,7 +647,7 @@ export const
         }
         let ind = 0;
         for (; ind < limit; ind += 1) {
-            fn(list[ind]);
+            fn(list[ind], ind, list);
         }
     }),
 

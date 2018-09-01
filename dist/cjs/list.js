@@ -760,8 +760,11 @@ find = exports.find = _utils.findWhere,
 
 
 /**
- * @param fn {Function} - Operation
+ * For each function (same as `[].forEach` except in functional format).
+ * @function module:list.forEach
+ * @param fn {Function} - Operation (`(element, index, list) => {...}`, etc.)
  * @param xs {(Array|String)}
+ * @returns {void}
  */
 forEach = exports.forEach = (0, _curry.curry)(function (fn, list) {
     var limit = (0, _object.length)(list);
@@ -770,7 +773,7 @@ forEach = exports.forEach = (0, _curry.curry)(function (fn, list) {
     }
     var ind = 0;
     for (; ind < limit; ind += 1) {
-        fn(list[ind]);
+        fn(list[ind], ind, list);
     }
 }),
 

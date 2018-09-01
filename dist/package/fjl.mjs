@@ -113,6 +113,7 @@ let _WeakMap = 'WeakMap';
 let _WeakSet = 'WeakSet';
 let _Null$1 = 'Null';
 let _Undefined$1 = 'Undefined';
+let _NaN$1 = 'NaN';
 
 const toTypeRef = type => {
         if (!type) {
@@ -154,27 +155,27 @@ const isEmptyList = x => !length(x);
 const isEmptyObject = obj => isEmptyList(keys(obj));
 const isEmptyCollection = x => x.size === 0;
 const isEmpty = value => {
-        let retVal;
         if (!value) { // if '', 0, `null`, `undefined`, or `false` then is empty
-            retVal = true;
+            return true;
         }
-        const typeOfValue = typeOf(value);
-        if (typeOfValue === _Array || typeOfValue === _Function) {
-            retVal = isEmptyList(value);
+        switch (typeOf(value)) {
+            case _Array:
+            case _Function:
+                return !value.length;
+            case _Number$1: // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
+                return false;
+            case _Object:
+                return !keys(value).length;
+            case _Map:
+            case _Set:
+            case _WeakSet:
+            case _WeakMap:
+                return !value.size;
+            case _NaN$1:
+                return true;
+            default:
+                return !value;
         }
-        else if (typeOfValue === _Number$1) {
-            retVal = false;
-        }
-        else if (typeOfValue === _Object) {
-            retVal = isEmptyObject(value);
-        }
-        else if (hasOwnProperty('size', value) && isNumber(value.size)) {
-            retVal = isEmptyCollection(value);
-        }
-        else {
-            retVal = !value;
-        }
-        return retVal;
     };
 const isset = x => x !== null && x !== undefined;
 
@@ -736,7 +737,7 @@ const forEach = curry((fn, list) => {
         }
         let ind = 0;
         for (; ind < limit; ind += 1) {
-            fn(list[ind]);
+            fn(list[ind], ind, list);
         }
     });
 const filter = curry((pred, xs) => {
