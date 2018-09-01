@@ -1154,7 +1154,7 @@ var forEach = curry(function (fn, list) {
     }
     var ind = 0;
     for (; ind < limit; ind += 1) {
-        fn(list[ind]);
+        fn(list[ind], ind, list);
     }
 });
 var filter = curry(function (pred, xs) {

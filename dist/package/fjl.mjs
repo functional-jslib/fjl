@@ -737,7 +737,7 @@ const forEach = curry((fn, list) => {
         }
         let ind = 0;
         for (; ind < limit; ind += 1) {
-            fn(list[ind]);
+            fn(list[ind], ind, list);
         }
     });
 const filter = curry((pred, xs) => {
