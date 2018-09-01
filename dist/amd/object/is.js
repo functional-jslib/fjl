@@ -19,10 +19,11 @@ define(['exports', './typeOf', '../jsPlatform/object', '../function/curry'], fun
         _WeakMap = 'WeakMap',
         _WeakSet = 'WeakSet',
         _Null = 'Null',
-        _Undefined = 'Undefined'; /**
-                                   * Created by elyde on 12/18/2016.
-                                   * @memberOf object
-                                   */
+        _Undefined = 'Undefined',
+        _NaN = 'NaN'; /**
+                       * Created by elyde on 12/18/2016.
+                       * @memberOf object
+                       */
 
     const
 
@@ -282,24 +283,29 @@ define(['exports', './typeOf', '../jsPlatform/object', '../function/curry'], fun
      * @returns {Boolean}
      */
     isEmpty = exports.isEmpty = value => {
-        let retVal;
         if (!value) {
             // if '', 0, `null`, `undefined`, or `false` then is empty
-            retVal = true;
+            return true;
         }
-        const typeOfValue = (0, _typeOf.typeOf)(value);
-        if (typeOfValue === _Array || typeOfValue === _Function) {
-            retVal = isEmptyList(value);
-        } else if (typeOfValue === _Number) {
-            retVal = false;
-        } else if (typeOfValue === _Object) {
-            retVal = isEmptyObject(value);
-        } else if ((0, _object.hasOwnProperty)('size', value) && isNumber(value.size)) {
-            retVal = isEmptyCollection(value);
-        } else {
-            retVal = !value;
+        switch ((0, _typeOf.typeOf)(value)) {
+            case _Array:
+            case _Function:
+                return !value.length;
+            case _Number:
+                // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
+                return false;
+            case _Object:
+                return !(0, _object.keys)(value).length;
+            case _Map:
+            case _Set:
+            case _WeakSet:
+            case _WeakMap:
+                return !value.size;
+            case _NaN:
+                return true;
+            default:
+                return !value;
         }
-        return retVal;
     },
 
 

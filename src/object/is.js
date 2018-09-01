@@ -4,7 +4,7 @@
  */
 
 import {typeOf} from './typeOf';
-import {instanceOf, length, keys, hasOwnProperty} from '../jsPlatform/object';
+import {instanceOf, length, keys} from '../jsPlatform/object';
 import {curry} from '../function/curry';
 
 let _String = String.name,
@@ -19,7 +19,8 @@ let _String = String.name,
     _WeakMap = 'WeakMap',
     _WeakSet = 'WeakSet',
     _Null = 'Null',
-    _Undefined = 'Undefined';
+    _Undefined = 'Undefined',
+    _NaN = 'NaN';
 
 export const
 
@@ -261,27 +262,27 @@ export const
      * @returns {Boolean}
      */
     isEmpty = value => {
-        let retVal;
         if (!value) { // if '', 0, `null`, `undefined`, or `false` then is empty
-            retVal = true;
+            return true;
         }
-        const typeOfValue = typeOf(value);
-        if (typeOfValue === _Array || typeOfValue === _Function) {
-            retVal = isEmptyList(value);
+        switch (typeOf(value)) {
+            case _Array:
+            case _Function:
+                return !value.length;
+            case _Number: // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
+                return false;
+            case _Object:
+                return !keys(value).length;
+            case _Map:
+            case _Set:
+            case _WeakSet:
+            case _WeakMap:
+                return !value.size;
+            case _NaN:
+                return true;
+            default:
+                return !value;
         }
-        else if (typeOfValue === _Number) {
-            retVal = false;
-        }
-        else if (typeOfValue === _Object) {
-            retVal = isEmptyObject(value);
-        }
-        else if (hasOwnProperty('size', value) && isNumber(value.size)) {
-            retVal = isEmptyCollection(value);
-        }
-        else {
-            retVal = !value;
-        }
-        return retVal;
     },
 
     /**

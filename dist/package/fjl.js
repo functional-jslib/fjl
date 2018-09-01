@@ -181,6 +181,7 @@ var _WeakMap = 'WeakMap';
 var _WeakSet = 'WeakSet';
 var _Null$1 = 'Null';
 var _Undefined$1 = 'Undefined';
+var _NaN$1 = 'NaN';
 
 var toTypeRef = function toTypeRef(type) {
     if (!type) {
@@ -236,24 +237,29 @@ var isEmptyCollection = function isEmptyCollection(x) {
     return x.size === 0;
 };
 var isEmpty = function isEmpty(value) {
-    var retVal = void 0;
     if (!value) {
         // if '', 0, `null`, `undefined`, or `false` then is empty
-        retVal = true;
+        return true;
     }
-    var typeOfValue = typeOf(value);
-    if (typeOfValue === _Array || typeOfValue === _Function) {
-        retVal = isEmptyList(value);
-    } else if (typeOfValue === _Number$1) {
-        retVal = false;
-    } else if (typeOfValue === _Object) {
-        retVal = isEmptyObject(value);
-    } else if (hasOwnProperty('size', value) && isNumber(value.size)) {
-        retVal = isEmptyCollection(value);
-    } else {
-        retVal = !value;
+    switch (typeOf(value)) {
+        case _Array:
+        case _Function:
+            return !value.length;
+        case _Number$1:
+            // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
+            return false;
+        case _Object:
+            return !keys(value).length;
+        case _Map:
+        case _Set:
+        case _WeakSet:
+        case _WeakMap:
+            return !value.size;
+        case _NaN$1:
+            return true;
+        default:
+            return !value;
     }
-    return retVal;
 };
 var isset = function isset(x) {
     return x !== null && x !== undefined;

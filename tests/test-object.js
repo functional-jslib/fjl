@@ -9,7 +9,7 @@ import {
     objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
     isType, isNumber, isFunction, isArray, isBoolean, isObject, isString,
-    isUndefined, isNull, isSymbol, isMap, isSet, jsonClone,
+    isUndefined, isNull, isSymbol, isMap, isSet, isEmpty, isset, jsonClone,
     fromAssocList, toAssocList, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign,
     toAssocListDeep, fromAssocListDeep,
@@ -314,6 +314,32 @@ describe ('#object', function () {
         it ('should return `false` when given value is not a symbol', function () {
             expectFalse(isSymbol(function () {}));
             expectFalse(isSymbol(NaN));
+        });
+    });
+
+    describe('#isEmpty', () => {
+        it ('should return `true` if value is falsy, or empty [object, array, Map, or Set]', () => {
+            ['', null, undefined, 0, {}, [], new Map(), new Set(), new WeakMap(), new WeakSet()].forEach(x => {
+                expect(isEmpty(x)).toEqual(true);
+            });
+        });
+        it ('should return `false` if value is truthy and not an empty [object, array, Map, or Set]', () => {
+            ['hello', -1, 1, {a: 'b'}, [1], new Map([['a', 'b']]), new Set([1])].forEach(x => {
+                expect(isEmpty(x)).toEqual(false);
+            });
+        });
+    });
+
+    describe('#isset', () => {
+        it ('should return `true` if value is set (I.e., if value is not `null` or `undefined`).', () => {
+            ['', 0, false, {}, [], new Map()].forEach(x => {
+                expect(isset(x)).toEqual(true);
+            });
+        });
+        it ('should return `false` if value is not set (I.e., if value is `null` or `undefined`).', () => {
+            ['', 0, false, {}, [], new Map()].forEach(x => {
+                expect(isset(x)).toEqual(true);
+            });
         });
     });
 
