@@ -2,8 +2,6 @@
  * Created by elyde on 12/13/2016.
  */
 
-'use strict';
-
 const path = require('path'),
     crypto = require('crypto'),
     packageJson = require('./package'),
