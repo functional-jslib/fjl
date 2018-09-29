@@ -420,7 +420,6 @@ const range = curry((from, to, step = 1) => {
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
  * @module _jsPlatform_arrayOps
  * @private
- * @todo updated doc blocks to list correct/updated module name.
  */
 
 const defineReverse = () =>
@@ -871,12 +870,11 @@ const zipWithN = curry3((op, ...lists) => {
 const zipWith3 = curry((op, xs1, xs2, xs3) => zipWithN(op, xs1, xs2, xs3));
 const zipWith4 = curry((op, xs1, xs2, xs3, xs4) => zipWithN(op, xs1, xs2, xs3, xs4));
 const zipWith5 = curry((op, xs1, xs2, xs3, xs4, xs5) => zipWithN(op, xs1, xs2, xs3, xs4, xs5));
-const unzip = arr =>
-        foldl((agg, item) => {
+const unzip = foldl((agg, item) => {
             agg[0].push(item[0]);
             agg[1].push(item[1]);
             return agg;
-        }, [[], []], arr);
+        }, [[], []]);
 const unzipN = list => {
         if (!length(list)) {
             return [];

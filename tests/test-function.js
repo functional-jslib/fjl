@@ -14,7 +14,6 @@ import {add, subtract, expectEqual, expectError, expectFunction} from './helpers
 
 describe ('#function', function () {
 
-    // @todo implement more extensive tests later
     describe ('#call', function () {
         it ('should be a function', function () {
             expectFunction(call);
@@ -27,9 +26,12 @@ describe ('#function', function () {
         it ('should call a function passed into it along with passed in arguments', function () {
             expectEqual(call(add, 1, 2, 3, 4, 5), 15);
         });
+        it ('should fail when argument `1` is not a function', () => {
+            expect(() => call(99, null)).toThrow(Error)
+            expect(() => call(undefined, undefined)).toThrow(Error)
+        });
     });
 
-    // @todo implement more extensive tests later
     describe ('#apply', function () {
         it ('should be a function', function () {
             expectFunction(apply);
@@ -41,6 +43,10 @@ describe ('#function', function () {
         });
         it ('should call a function passed into it with args list passed in as second parameter', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
+        });
+        it ('should fail when argument `1` is not a function', () => {
+            expect(() => apply(99, null)).toThrow(Error)
+            expect(() => apply(undefined, undefined)).toThrow(Error)
         });
     });
 

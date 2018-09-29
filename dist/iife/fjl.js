@@ -659,7 +659,6 @@ var range = curry(function (from, to) {
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
  * @module _jsPlatform_arrayOps
  * @private
- * @todo updated doc blocks to list correct/updated module name.
  */
 
 var defineReverse = function defineReverse() {
@@ -1379,13 +1378,11 @@ var zipWith4 = curry(function (op, xs1, xs2, xs3, xs4) {
 var zipWith5 = curry(function (op, xs1, xs2, xs3, xs4, xs5) {
     return zipWithN(op, xs1, xs2, xs3, xs4, xs5);
 });
-var unzip = function unzip(arr) {
-    return foldl(function (agg, item) {
-        agg[0].push(item[0]);
-        agg[1].push(item[1]);
-        return agg;
-    }, [[], []], arr);
-};
+var unzip = foldl(function (agg, item) {
+    agg[0].push(item[0]);
+    agg[1].push(item[1]);
+    return agg;
+}, [[], []]);
 var unzipN = function unzipN(list) {
     if (!length(list)) {
         return [];

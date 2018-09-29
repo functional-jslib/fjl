@@ -136,6 +136,5 @@
                                                 * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
                                                 * @module _jsPlatform_arrayOps
                                                 * @private
-                                                * @todo updated doc blocks to list correct/updated module name.
                                                 */
 });

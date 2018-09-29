@@ -119,7 +119,7 @@
     "no-throw-literal":       2,  // - restrict what can be thrown as an exception (off by default)
     "no-unused-expressions":  0,  // - disallow usage of expressions in statement position ** Note ** Chai's functional style triggers this error.  Off for now.
     "no-void":                2,  // - disallow use of void operator (off by default)
-    "no-warning-comments":    0,  // - disallow usage of configurable warning terms in comments - e.g. TODO or FIXME (off by default)
+    "no-warning-comments":    0,  // - disallow usage of configurable warning terms in comments.
     "no-with":                2,  // - disallow use of the with statement
     "radix":                  2,  // - require use of the second argument for parseInt() (off by default)
     "vars-on-top":            0,  // - requires to declare all vars on top of their containing scope (off by default)
