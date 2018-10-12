@@ -66,7 +66,8 @@ describe ('#object', function () {
                 ['Boolean', false],
                 ['Null', null],
                 ['Undefined', undefined],
-                ['Symbol', Symbol('hello')]
+                ['Symbol', Symbol('hello')],
+                ['Promise', Promise.resolve('hello')]
             ]
                 .forEach(tuple => expectEqual(apply(typeOf, tuple)));
         });

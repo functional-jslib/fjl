@@ -495,7 +495,7 @@ var aggregateArr$ = function aggregateArr$(agg, item) {
 
 /**
  * List operator utils module.
- * @module _listOpUtils
+ * @module _listOpUtils.
  * @private
  */
 var sliceFrom = curry(function (startInd, arr) {

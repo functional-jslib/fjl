@@ -388,7 +388,7 @@ const aggregatorByType = x => {
 
 /**
  * List operator utils module.
- * @module _listOpUtils
+ * @module _listOpUtils.
  * @private
  */
 const sliceFrom = (startInd, arr) => slice(startInd, undefined, arr);

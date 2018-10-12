@@ -27,7 +27,9 @@ export const
         return (...args) => {
             let concatedArgs = curriedArgs.concat(args),
                 canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
-            return !canBeCalled ? curryN.apply(null, [executeArity, fnOrError(curryNotFnErrPrefix, fn)].concat(concatedArgs)) :
+            return !canBeCalled ?
+                curryN.apply(null, [executeArity, fnOrError(curryNotFnErrPrefix, fn)]
+                    .concat(concatedArgs)) :
                 fnOrError(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
         };
     },

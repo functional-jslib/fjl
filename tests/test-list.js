@@ -1501,6 +1501,14 @@ describe ('#list', () => {
                     .every((char, ind, arr) =>
                         findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind));
         });
+        it ('should return `-1` when item is not found in populated list', () => {
+            const nonAlphaList = '!@#$%^&*()_+'.split(''),
+                vowels = 'aeiou'.split('');
+            vowels.every(char => {
+                const result = findIndex(x => x === char, nonAlphaList);
+                expect(result).toEqual(-1);
+            });
+        });
     });
 
     describe ('#findIndices', () => {

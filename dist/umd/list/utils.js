@@ -64,7 +64,7 @@
 
     /**
      * Slices a copy of list.
-     * @function _listOpUtils.sliceCopy
+     * @function _listOpUtils..sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
@@ -175,7 +175,7 @@
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOpUtilslastIndex
+     * @function module:listOpUtils.lastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -186,7 +186,7 @@
 
     /**
      * Finds index in string or list.
-     * @function module:listOpUtilsfindIndexWhere
+     * @function module:listOpUtils.findIndexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -204,7 +204,7 @@
 
     /**
      * Finds index in list from right to left.
-     * @function module:listOpUtilsfindIndexWhereRight
+     * @function module:listOpUtils.findIndexWhereRight
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -242,7 +242,7 @@
 
 
     /**
-     * @function module:listOpUtilsfind
+     * @function module:listOpUtils.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -262,7 +262,7 @@
     }); // un-curried version good for both strings and arrays
     /**
      * List operator utils module.
-     * @module _listOpUtils
+     * @module _listOpUtils.
      * @private
      */
 });

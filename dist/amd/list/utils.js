@@ -48,7 +48,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Slices a copy of list.
-     * @function _listOpUtils.sliceCopy
+     * @function _listOpUtils..sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
@@ -147,7 +147,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOpUtilslastIndex
+     * @function module:listOpUtils.lastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -158,7 +158,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Finds index in string or list.
-     * @function module:listOpUtilsfindIndexWhere
+     * @function module:listOpUtils.findIndexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -176,7 +176,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Finds index in list from right to left.
-     * @function module:listOpUtilsfindIndexWhereRight
+     * @function module:listOpUtils.findIndexWhereRight
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -214,7 +214,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
 
     /**
-     * @function module:listOpUtilsfind
+     * @function module:listOpUtils.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -234,7 +234,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
     }); // un-curried version good for both strings and arrays
     /**
      * List operator utils module.
-     * @module _listOpUtils
+     * @module _listOpUtils.
      * @private
      */
 });

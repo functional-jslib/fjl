@@ -573,7 +573,7 @@ let aggregatorByType = function aggregatorByType(x) {
 
 /**
  * List operator utils module.
- * @module _listOpUtils
+ * @module _listOpUtils.
  * @private
  */
 let sliceFrom = function sliceFrom(startInd, arr) {

@@ -2,6 +2,7 @@
  * @module boolean
  * @description Contains functional version of 'always-true', 'always-false', 'is-truthy', and 'is-falsy'.
  */
+import {curry, curry2} from './function/curry';
 
 export const
 
@@ -33,4 +34,24 @@ export const
      * @function module:boolean.alwaysFalse
      * @returns {Boolean}
      */
-    alwaysFalse = () => false;
+    alwaysFalse = () => false,
+
+    /**
+     * Equality operator.
+     * @function module:boolean.equal
+     * @param a {*}
+     * @param b {*}
+     * @returns {boolean}
+     */
+    equal = curry((a, b) => a === b),
+
+    /**
+     * Equality operator for all.
+     * @function module:boolean.equalAll
+     * @param a {*} - Item `0`.
+     * @param args {...*} - Others
+     * @returns {boolean}
+     */
+    equalAll = curry2((a, ...args) => args.every(b => equal(a, b)))
+
+;
