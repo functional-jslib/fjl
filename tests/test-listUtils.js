@@ -1,5 +1,6 @@
 
-import {sliceCopy, sliceFrom, sliceTo, genericAscOrdering, lengths}
+import {sliceCopy, sliceFrom, sliceTo, genericAscOrdering, lengths,
+    listsToShortest}
 from '../src/list/utils';
 
 import {
@@ -12,8 +13,10 @@ import {
     expectFalse,
     alphabetString,
     alphabetArray,
+    alphabetLen,
     vowelsString,
     vowelsArray,
+    vowelsLen,
     alphabetCharCodeRange,
 } from './helpers';
 
@@ -53,19 +56,17 @@ describe ('#listUtils', () => {
     });
     describe('#sliceTo', () => {
         it ('should create a slice of an array "from" given index.', () => {
-            const alphabetArrayLen = alphabetArray.length;
             alphabetArray.forEach((_, ind, list) => {
-                const result = sliceTo(alphabetArrayLen - ind, list);
+                const result = sliceTo(alphabetLen - ind, list);
 
                 // Compare slices
-                expect(result).toEqual(list.slice(0, alphabetArrayLen - ind)); // deep equal
+                expect(result).toEqual(list.slice(0, alphabetLen - ind)); // deep equal
 
                 // Compare lengths (calculated)
-                expect(alphabetArrayLen - ind).toEqual(result.length);
+                expect(alphabetLen - ind).toEqual(result.length);
             });
         });
         it ('should be curried', () => {
-            const vowelsLen = vowelsArray.length;
             vowelsArray
                 .map((_, ind) => sliceTo(vowelsLen - ind))
                 .forEach((fn, ind) => {
@@ -174,14 +175,49 @@ describe ('#listUtils', () => {
             const fn = lengths(alphabetArray),
 
                 // Execute curried function
-                [alphabetArrayLen, vowelsArrayLen] = fn(vowelsArray);
+                [alphabetLen, vowelsLen] = fn(vowelsArray);
 
             // Check was curried
             expect(fn).toBeInstanceOf(Function);
 
             // Check results
-            expect(alphabetArrayLen).toEqual(alphabetArray.length);
-            expect(vowelsArrayLen).toEqual(vowelsArray.length);
+            expect(alphabetLen).toEqual(alphabetArray.length);
+            expect(vowelsLen).toEqual(vowelsArray.length);
         });
     });
+    describe('#listsToShortest', () => {
+        it('should return a list of lists trimmed to the smallest', () => {
+            [
+                [vowelsArray, alphabetArray, vowelsLen],
+                [vowelsString, alphabetString, vowelsLen],
+                ['', [], 0]
+            ]
+                .forEach(([xs1, xs2, expectedLen]) => {
+                    const lists = [xs1, xs2],
+                        result = listsToShortest(...lists);
+                    result.forEach((sliced, ind) => {
+                        expect(sliced.length).toEqual(expectedLen);
+                        expect(sliced).toEqual(lists[ind].slice(0, sliced.length));
+                    });
+                });
+        });
+        it('should be curried up to 2 parameters', () => {
+            [
+                [vowelsArray, alphabetArray, vowelsLen],
+                [vowelsString, alphabetString, vowelsLen],
+                ['', [], 0]
+            ]
+                .forEach(([xs1, xs2, expectedLen]) => {
+                    const lists = [xs1, xs2],
+                        fn = listsToShortest(xs1),
+                        result = fn(xs2);
+                    expect(fn).toBeInstanceOf(Function);
+                    result.forEach((sliced, ind) => {
+                        expect(sliced.length).toEqual(expectedLen);
+                        expect(sliced).toEqual(lists[ind].slice(0, sliced.length));
+                    });
+                });
+        });
+    });
+
 });

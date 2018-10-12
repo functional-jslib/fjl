@@ -16,7 +16,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.listsToShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -104,11 +104,11 @@
 
 
     /**
-     * @function module:listUtils.lengthsToSmallest
+     * @function module:listUtils.listsToShortest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    lengthsToSmallest = exports.lengthsToSmallest = (0, _curry.curry2)(function () {
+    lengthsToSmallest = exports.listsToShortest = (0, _curry.curry2)(function () {
         for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             lists[_key2] = arguments[_key2];
         }

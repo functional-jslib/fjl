@@ -12,7 +12,7 @@ import {curry, curry2, curry3} from './function/curry';
 
 import {
     sliceFrom, sliceTo, lengths,
-    lengthsToSmallest, aggregateArr$,
+    listsToShortest, aggregateArr$,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, sliceCopy, genericAscOrdering
@@ -927,7 +927,7 @@ export const
         if (!length(arr1) || !length(arr2)) {
             return [];
         }
-        const [a1, a2] = lengthsToSmallest(arr1, arr2);
+        const [a1, a2] = listsToShortest(arr1, arr2);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, [item, a2[ind]]),
             [], a1);
@@ -942,7 +942,7 @@ export const
      * @returns {Array}
      */
     zipN = curry2((...lists) => {
-        const trimmedLists = apply(lengthsToSmallest, lists);
+        const trimmedLists = apply(listsToShortest, lists);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
@@ -1006,7 +1006,7 @@ export const
         if (!length(xs1) || !length(xs2)) {
             return [];
         }
-        const [a1, a2] = lengthsToSmallest(xs1, xs2);
+        const [a1, a2] = listsToShortest(xs1, xs2);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, op(item, a2[ind])),
             [], a1);
@@ -1026,7 +1026,7 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zipWithN = curry3((op, ...lists) => {
-        const trimmedLists = apply(lengthsToSmallest, lists),
+        const trimmedLists = apply(listsToShortest, lists),
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) {
             return [];

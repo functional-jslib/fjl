@@ -155,7 +155,7 @@ fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore
 ##### List operation utilities
 ```
 sliceFrom, sliceTo, slice, sliceCopy
-genericAscOrdering, lengths, lengthsToSmallest, 
+genericAscOrdering, lengths, listsToShortest, 
 reduceUntil, reduceRightUntil, reduce, reduceRight,
 lastIndex, findIndexWhere, findIndicesWhere, findWhere,
 aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,

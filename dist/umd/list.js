@@ -1097,7 +1097,7 @@
             return [];
         }
 
-        var _lengthsToSmallest = (0, _utils.lengthsToSmallest)(arr1, arr2),
+        var _lengthsToSmallest = (0, _utils.listsToShortest)(arr1, arr2),
             _lengthsToSmallest2 = _slicedToArray(_lengthsToSmallest, 2),
             a1 = _lengthsToSmallest2[0],
             a2 = _lengthsToSmallest2[1];
@@ -1121,7 +1121,7 @@
             lists[_key2] = arguments[_key2];
         }
 
-        var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists);
+        var trimmedLists = (0, _function.apply)(_utils.listsToShortest, lists);
         return (0, _utils.reduce)(function (agg, item, ind) {
             return (0, _utils.aggregateArr$)(agg, (0, _map2.default)(function (xs) {
                 return xs[ind];
@@ -1198,7 +1198,7 @@
             return [];
         }
 
-        var _lengthsToSmallest3 = (0, _utils.lengthsToSmallest)(xs1, xs2),
+        var _lengthsToSmallest3 = (0, _utils.listsToShortest)(xs1, xs2),
             _lengthsToSmallest4 = _slicedToArray(_lengthsToSmallest3, 2),
             a1 = _lengthsToSmallest4[0],
             a2 = _lengthsToSmallest4[1];
@@ -1227,7 +1227,7 @@
             lists[_key3 - 1] = arguments[_key3];
         }
 
-        var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists),
+        var trimmedLists = (0, _function.apply)(_utils.listsToShortest, lists),
             lenOfTrimmed = (0, _object.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];

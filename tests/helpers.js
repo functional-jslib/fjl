@@ -73,7 +73,11 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).toBeIn
 
     alphabetString = alphabetArray.join(''),
 
+    alphabetLen = alphabetArray.length,
+
     vowelsString = 'aeiou',
+
+    vowelsLen = vowelsString.length,
 
     vowelsArray = vowelsString.split(''),
 
