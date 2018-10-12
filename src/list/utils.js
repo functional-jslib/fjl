@@ -103,7 +103,7 @@ export const
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = curry((pred, op, agg, arr) => {
+    reduceUntilRight = curry((pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
         let ind = limit - 1,
@@ -117,7 +117,7 @@ export const
 
     reduce = reduceUntil(alwaysFalse),
 
-    reduceRight = reduceRightUntil(alwaysFalse),
+    reduceRight = reduceUntilRight(alwaysFalse),
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
@@ -138,7 +138,7 @@ export const
         let ind = 0;
         const limit = length(arr);
         for (; ind < limit; ind += 1) {
-            const predicateFulfilled = !!pred(arr[ind], ind++, arr);
+            const predicateFulfilled = !!pred(arr[ind], ind, arr);
             if (predicateFulfilled) {
                 return ind;
             }
@@ -154,13 +154,14 @@ export const
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhereRight = curry((pred, arr) => {
-        const limit = length(arr);
-        let ind = limit,
-            predicateFulfilled = false;
-        for (; ind >= 0 && !predicateFulfilled; --ind) {
-            predicateFulfilled = pred(arr[ind], ind, arr);
+        let ind = length(arr);
+        for (; ind >= 0; ind -= 1) {
+            const predicateFulfilled = !!pred(arr[ind], ind, arr);
+            if (predicateFulfilled) {
+                return ind;
+            }
         }
-        return ind;
+        return -1;
     }),
 
     /**
@@ -169,7 +170,6 @@ export const
      * @returns {Array|undefined}
      */
     findIndicesWhere = curry((pred, xs) => {
-        if (!xs || !xs.length) { return undefined; }
         const limit = length(xs);
         let ind = 0,
             out = [];

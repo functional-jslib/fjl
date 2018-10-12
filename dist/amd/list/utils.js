@@ -4,7 +4,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.listsToShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceUntilRight = exports.reduceUntil = exports.listsToShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -126,7 +126,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = exports.reduceRightUntil = (0, _curry.curry)((pred, op, agg, arr) => {
+    reduceRightUntil = exports.reduceUntilRight = (0, _curry.curry)((pred, op, agg, arr) => {
         const limit = (0, _object.length)(arr);
         if (!limit) {
             return agg;

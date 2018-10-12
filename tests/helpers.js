@@ -75,11 +75,17 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).toBeIn
 
     alphabetLen = alphabetArray.length,
 
+    alphabetIndices = range(0, alphabetLen - 1),
+
     vowelsString = 'aeiou',
 
     vowelsLen = vowelsString.length,
 
     vowelsArray = vowelsString.split(''),
+
+    vowelCharCodes = vowelsArray.map(x => x.charCodeAt(0)),
+
+    vowelIndices = alphabetIndices.filter(x => vowelsString.indexOf(alphabetString[x]) > -1),
 
     jsonClone = x => JSON.parse(JSON.stringify(x)),
 

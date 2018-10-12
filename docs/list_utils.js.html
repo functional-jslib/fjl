@@ -151,7 +151,7 @@ export const
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = curry((pred, op, agg, arr) => {
+    reduceUntilRight = curry((pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
         let ind = limit - 1,
@@ -165,7 +165,7 @@ export const
 
     reduce = reduceUntil(alwaysFalse),
 
-    reduceRight = reduceRightUntil(alwaysFalse),
+    reduceRight = reduceUntilRight(alwaysFalse),
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).

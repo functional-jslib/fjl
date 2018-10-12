@@ -156,7 +156,7 @@ fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore
 ```
 sliceFrom, sliceTo, slice, sliceCopy
 genericAscOrdering, lengths, listsToShortest, 
-reduceUntil, reduceRightUntil, reduce, reduceRight,
+reduceUntil, reduceUntilRight, reduce, reduceRight,
 lastIndex, findIndexWhere, findIndicesWhere, findWhere,
 aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,
 ```
