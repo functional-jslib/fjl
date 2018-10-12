@@ -1,5 +1,6 @@
 
-import {sliceCopy, sliceFrom, sliceTo} from '../src/list/utils';
+import {sliceCopy, sliceFrom, sliceTo, genericAscOrdering, lengths}
+from '../src/list/utils';
 
 import {
     __,
@@ -108,5 +109,79 @@ describe ('#listUtils', () => {
             });
         });
 
+    });
+    describe('#genericAscOrdering', () => {
+        it('should return `-1` when ordering of `a` should be less than ordering of `b`', () => {
+            vowelsArray.reduceRight((next, curr) => {
+                if (!next) {
+                    return curr;
+                }
+                expect(genericAscOrdering(curr, next)).toEqual(-1);
+                return curr;
+            });
+
+        });
+        it('should return `1` when ordering of `a` should be greater than ordering of `b`', () => {
+            vowelsArray.reduce((prev, curr) => {
+                if (!prev) {
+                    return curr;
+                }
+                expect(genericAscOrdering(curr, prev)).toEqual(1);
+                return curr;
+            });
+        });
+        it('should return `0` when ordering of both `a` and `b` are equal', () => {
+            vowelsArray.reduce((out, curr) => {
+                out.push([curr, curr]);
+                return out;
+            }, [])
+                .forEach(([a, b]) => {
+                    expect(genericAscOrdering(a, b)).toEqual(0);
+                });
+        });
+        it ('should be curried', () => {
+            vowelsArray.reduce((prev, curr) => {
+                if (!prev) {
+                    return curr;
+                }
+                const fn = genericAscOrdering(curr);
+                expect(fn).toBeInstanceOf(Function);
+                expect(fn(prev)).toEqual(1);
+                return curr;
+            });
+        });
+    });
+    describe('#lengths', () => {
+        const lists = [
+                vowelsArray, vowelsString,
+                alphabetArray, alphabetString,
+                [], ''
+            ],
+            result = lengths(...lists);
+        it('should return an array containing same number of items given', () => {
+            expect(result.length).toEqual(lists.length);
+        });
+        it('should return the lengths of all given lists', () => {
+            result.forEach((rslt, index) => {
+                expect(rslt).toEqual(lists[index].length);
+            });
+        });
+        it('should throw an error when receiving non-list value', () => {
+            expect(() => lengths(null, undefined, {})).toThrow(Error);
+        });
+        it('should be curried up to 2 parameters.', () => {
+            // Get curried function
+            const fn = lengths(alphabetArray),
+
+                // Execute curried function
+                [alphabetArrayLen, vowelsArrayLen] = fn(vowelsArray);
+
+            // Check was curried
+            expect(fn).toBeInstanceOf(Function);
+
+            // Check results
+            expect(alphabetArrayLen).toEqual(alphabetArray.length);
+            expect(vowelsArrayLen).toEqual(vowelsArray.length);
+        });
     });
 });
