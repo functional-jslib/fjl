@@ -355,7 +355,7 @@ const aggregateArr$ = (agg, item) => {
 
 /**
  * List operator utils module.
- * @module _listOpUtils
+ * @module _listOpUtils.
  * @private
  */
 const sliceFrom = curry((startInd, arr) => slice(startInd, undefined, arr));

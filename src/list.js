@@ -5,14 +5,14 @@
 import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list';
 import {apply}              from './jsPlatform/function';
 import {negateF3, negateF2}   from './function/negate';
-import {isTruthy, isFalsy} from './boolean';
-import {lookup, length}       from './object';
-import map                  from './list/map';
 import {curry, curry2, curry3} from './function/curry';
+import {isTruthy, isFalsy} from './boolean';
+import {lookup, length, of, isString}       from './object';
+import map                  from './list/map';
 
 import {
     sliceFrom, sliceTo, lengths,
-    lengthsToSmallest, aggregateArr$,
+    listsToShortest, aggregateArr$,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, sliceCopy, genericAscOrdering
@@ -552,11 +552,13 @@ export const
     dropWhile = curry((pred, list) => {
         const limit = length(list),
             splitPoint =
-                findIndexWhere((item, ind, list2) =>
-                    !pred(list[ind], ind, list2), list);
+                findIndexWhere(
+                    (x, i, xs) => !pred(x, i, xs),
+                    list
+                );
 
         return splitPoint === -1 ?
-            sliceTo(limit, list) :
+            sliceFrom(limit, list) :
             slice(splitPoint, limit, list);
     }),
 
@@ -568,25 +570,23 @@ export const
      * @returns {Array|String}
      */
     dropWhileEnd = curry((pred, list) => {
-        const limit = length(list),
-            splitPoint =
-                findIndexWhereRight((item, ind, list2) =>
-                    !pred(list[ind], ind, list2), list);
+        const splitPoint =
+                findIndexWhereRight(
+                    (x, i, xs) => !pred(x, i, xs),
+                    list
+                );
 
-        return splitPoint === -1 ?
-            sliceTo(limit, list) :
-            sliceTo(splitPoint + 1, list);
+        if (splitPoint === -1) {
+            return of(list);
+        }
+
+        const out = reverse(list);
+        return sliceTo(
+            splitPoint + 1,
+            isString(list) ? out.join('') : out
+        );
     }),
 
-    /**
-     * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
-     * the second list in the tuple is a list of the remaining elements in the given list.
-     * **@Note: Not the same as `partition`.  Read descriptions closely!!!
-     * @function module:list.span
-     * @param pred {Function} - Predicate<item, index, originalArrayOrString>
-     * @param list {Array} - Predicate<item, index, originalArrayOrString>
-     * @returns {Array} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
-     */
     span = curry((pred, list) => {
         const splitPoint = findIndexWhere(negateF3(pred), list);
         return splitPoint === -1 ?
@@ -927,7 +927,7 @@ export const
         if (!length(arr1) || !length(arr2)) {
             return [];
         }
-        const [a1, a2] = lengthsToSmallest(arr1, arr2);
+        const [a1, a2] = listsToShortest(arr1, arr2);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, [item, a2[ind]]),
             [], a1);
@@ -942,7 +942,7 @@ export const
      * @returns {Array}
      */
     zipN = curry2((...lists) => {
-        const trimmedLists = apply(lengthsToSmallest, lists);
+        const trimmedLists = apply(listsToShortest, lists);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
@@ -1006,7 +1006,7 @@ export const
         if (!length(xs1) || !length(xs2)) {
             return [];
         }
-        const [a1, a2] = lengthsToSmallest(xs1, xs2);
+        const [a1, a2] = listsToShortest(xs1, xs2);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, op(item, a2[ind])),
             [], a1);
@@ -1026,7 +1026,7 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zipWithN = curry3((op, ...lists) => {
-        const trimmedLists = apply(lengthsToSmallest, lists),
+        const trimmedLists = apply(listsToShortest, lists),
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
@@ -1470,7 +1470,7 @@ export const
     /**
      * Behaves the same as `remove`, but takes a user-supplied equality predicate.
      * @function module:list.removeBy
-     * @param pred {Function}
+     * @param pred {Function} - Equality predicate `(a, b) => bool`
      * @param x {*}
      * @param list {Array|String|*}
      * @returns {Array}
@@ -1478,7 +1478,7 @@ export const
     removeBy = curry((pred, x, list) => { // @todo optimize this implementation
         const foundIndex = findIndex(item => pred(x, item), list),
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-        return append(parts[0], tail(parts[1]));
+        return foundIndex > -1 ? append(parts[0], tail(parts[1])) : sliceCopy(list);
     }),
 
     /**
@@ -1491,7 +1491,7 @@ export const
      * @returns {Array}
      */
     removeFirstsBy = curry((pred, xs1, xs2) =>
-        foldl((agg, x2) => removeBy(pred, x2, agg), xs1, xs2)),
+        foldl((agg, x) => removeBy(pred, x, agg), xs1, xs2)),
 
     /**
      * Returns the union on elements matching boolean check passed in.

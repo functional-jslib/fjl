@@ -60,8 +60,6 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).toBeIn
                 against[key] === incoming[key];
         }),
 
-    expectDeepEquals = curry2_((a, b) => expectTrue(deepCompareLeft(a, b))),
-
     log = console.log.bind(console),
 
     peek = (...args) => (log(...args), args.pop()),
@@ -75,6 +73,32 @@ export let  expectInstanceOf = curry2_((value, instance) => expect(value).toBeIn
 
     alphabetString = alphabetArray.join(''),
 
-    jsonClone = x => JSON.parse(JSON.stringify(x))
+    alphabetLen = alphabetArray.length,
+
+    alphabetIndices = range(0, alphabetLen - 1),
+
+    revAlphabetArray = alphabetArray.slice(0).reverse(),
+
+    revAlphabetStr = revAlphabetArray.join(''),
+
+    vowelsString = 'aeiou',
+
+    vowelsLen = vowelsString.length,
+
+    vowelsArray = vowelsString.split(''),
+
+    vowelCharCodes = vowelsArray.map(x => x.charCodeAt(0)),
+
+    vowelIndices = alphabetIndices.filter(x => vowelsString.indexOf(alphabetString[x]) > -1),
+
+    revVowelsArray = vowelsArray.slice(0).reverse(),
+
+    revVowelsStr = revVowelsArray.join(''),
+
+    jsonClone = x => JSON.parse(JSON.stringify(x)),
+
+    falsyList = [undefined, null, false, 0, ''],
+
+    truthyList = [-1, 1, true, 'true', () => undefined, function () {}, {}, []]
 
     ;

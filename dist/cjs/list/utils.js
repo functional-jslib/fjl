@@ -62,7 +62,7 @@ sliceTo = exports.sliceTo = (0, _curry.curry)(function (toInd, xs) {
 
 /**
  * Slices a copy of list.
- * @function _listOpUtils.sliceCopy
+ * @function _listOpUtils..sliceCopy
  * @param xs {Array|String|*}
  * @returns {Array|String|*}
  */
@@ -102,11 +102,11 @@ lengths = exports.lengths = (0, _curry.curry2)(function () {
 
 
 /**
- * @function module:listUtils.lengthsToSmallest
+ * @function module:listUtils.listsToShortest
  * @param lists {...(Array|String|*)}
  * @returns {Array|String|*}
  */
-lengthsToSmallest = exports.lengthsToSmallest = (0, _curry.curry2)(function () {
+lengthsToSmallest = exports.listsToShortest = (0, _curry.curry2)(function () {
     for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         lists[_key2] = arguments[_key2];
     }
@@ -173,7 +173,7 @@ reduceRightUntil = exports.reduceRightUntil = (0, _curry.curry)(function (pred, 
 
 /**
  * Gets last index of a list/list-like (Array|String|Function etc.).
- * @function module:listOpUtilslastIndex
+ * @function module:listOpUtils.lastIndex
  * @param x {Array|String|*} - list like or list.
  * @returns {Number} - `-1` if no element found.
  */
@@ -184,7 +184,7 @@ lastIndex = exports.lastIndex = function lastIndex(x) {
 
 /**
  * Finds index in string or list.
- * @function module:listOpUtilsfindIndexWhere
+ * @function module:listOpUtils.findIndexWhere
  * @param pred {Function} - Predicate<element, index, arr>.
  * @param arr {Array|String}
  * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -202,7 +202,7 @@ findIndexWhere = exports.findIndexWhere = (0, _curry.curry)(function (pred, arr)
 
 /**
  * Finds index in list from right to left.
- * @function module:listOpUtilsfindIndexWhereRight
+ * @function module:listOpUtils.findIndexWhereRight
  * @param pred {Function} - Predicate<element, index, arr>.
  * @param arr {Array|String}
  * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -240,7 +240,7 @@ findIndicesWhere = exports.findIndicesWhere = (0, _curry.curry)(function (pred, 
 
 
 /**
- * @function module:listOpUtilsfind
+ * @function module:listOpUtils.find
  * @param pred {Function}
  * @param xs {Array|String|*} - list or list like.
  * @returns {*}
@@ -260,6 +260,6 @@ findWhere = exports.findWhere = (0, _curry.curry)(function (pred, xs) {
 }); // un-curried version good for both strings and arrays
 /**
  * List operator utils module.
- * @module _listOpUtils
+ * @module _listOpUtils.
  * @private
  */

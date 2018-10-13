@@ -4,7 +4,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceUntilRight = exports.reduceUntil = exports.listsToShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -48,7 +48,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Slices a copy of list.
-     * @function _listOpUtils.sliceCopy
+     * @function _listOpUtils..sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
@@ -82,11 +82,11 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
 
     /**
-     * @function module:listUtils.lengthsToSmallest
+     * @function module:listUtils.listsToShortest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    lengthsToSmallest = exports.lengthsToSmallest = (0, _curry.curry2)((...lists) => {
+    lengthsToSmallest = exports.listsToShortest = (0, _curry.curry2)((...lists) => {
         const listLengths = (0, _function.apply)(lengths, lists),
               smallLen = Math.min.apply(Math, listLengths);
         return (0, _map2.default)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list), lists);
@@ -126,7 +126,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = exports.reduceRightUntil = (0, _curry.curry)((pred, op, agg, arr) => {
+    reduceRightUntil = exports.reduceUntilRight = (0, _curry.curry)((pred, op, agg, arr) => {
         const limit = (0, _object.length)(arr);
         if (!limit) {
             return agg;
@@ -147,7 +147,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOpUtilslastIndex
+     * @function module:listOpUtils.lastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -158,7 +158,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Finds index in string or list.
-     * @function module:listOpUtilsfindIndexWhere
+     * @function module:listOpUtils.findIndexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -176,7 +176,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Finds index in list from right to left.
-     * @function module:listOpUtilsfindIndexWhereRight
+     * @function module:listOpUtils.findIndexWhereRight
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -214,7 +214,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
 
     /**
-     * @function module:listOpUtilsfind
+     * @function module:listOpUtils.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -234,7 +234,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
     }); // un-curried version good for both strings and arrays
     /**
      * List operator utils module.
-     * @module _listOpUtils
+     * @module _listOpUtils.
      * @private
      */
 });

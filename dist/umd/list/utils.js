@@ -16,7 +16,7 @@
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceUntilRight = exports.reduceUntil = exports.listsToShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -64,7 +64,7 @@
 
     /**
      * Slices a copy of list.
-     * @function _listOpUtils.sliceCopy
+     * @function _listOpUtils..sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
@@ -104,11 +104,11 @@
 
 
     /**
-     * @function module:listUtils.lengthsToSmallest
+     * @function module:listUtils.listsToShortest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    lengthsToSmallest = exports.lengthsToSmallest = (0, _curry.curry2)(function () {
+    lengthsToSmallest = exports.listsToShortest = (0, _curry.curry2)(function () {
         for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             lists[_key2] = arguments[_key2];
         }
@@ -154,7 +154,7 @@
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = exports.reduceRightUntil = (0, _curry.curry)(function (pred, op, agg, arr) {
+    reduceRightUntil = exports.reduceUntilRight = (0, _curry.curry)(function (pred, op, agg, arr) {
         var limit = (0, _object.length)(arr);
         if (!limit) {
             return agg;
@@ -175,7 +175,7 @@
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOpUtilslastIndex
+     * @function module:listOpUtils.lastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -186,7 +186,7 @@
 
     /**
      * Finds index in string or list.
-     * @function module:listOpUtilsfindIndexWhere
+     * @function module:listOpUtils.findIndexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -204,7 +204,7 @@
 
     /**
      * Finds index in list from right to left.
-     * @function module:listOpUtilsfindIndexWhereRight
+     * @function module:listOpUtils.findIndexWhereRight
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -242,7 +242,7 @@
 
 
     /**
-     * @function module:listOpUtilsfind
+     * @function module:listOpUtils.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
@@ -262,7 +262,7 @@
     }); // un-curried version good for both strings and arrays
     /**
      * List operator utils module.
-     * @module _listOpUtils
+     * @module _listOpUtils.
      * @private
      */
 });

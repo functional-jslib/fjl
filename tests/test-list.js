@@ -2,6 +2,7 @@
  * Created by elyde on 12/29/2016.
  * @note ensure we are checking lengths in our operation results (to ensure accuracy of our tests).
  * @note ensure expected types (either explicitly or implicitly) are being returned where necessary.
+ * @todo Remove extreme functional programming style (in favor of better readability and testabilty).
  */
 
 import {compose, negateF2} from '../src/function';
@@ -39,7 +40,14 @@ import {
     expectFalse,
     alphabetArray,
     alphabetCharCodeRange,
-    alphabetString
+    alphabetIndices,
+    alphabetString,
+    vowelsArray,
+    vowelsString,
+    revVowelsArray,
+    revVowelsStr,
+    revAlphabetArray,
+    revAlphabetStr
 } from './helpers';
 
 describe ('#list', () => {
@@ -1016,35 +1024,35 @@ describe ('#list', () => {
 
     describe ('#dropWhile', () => {
         it ('should drop elements while predicate is fulfilled', () => {
-            const word = 'abcdefg',
-                expectedResult = word.substring(word.indexOf('e'), length(word)),
-                predicate = x => x !== 'e';
-
-                // Expect matched length and matched elements
-                expectTrue(
-                    // Ensure cases for each use case
-                    all(result =>
-                        // Ensure correct length of items in returned element
-                        length(expectedResult) === length(result) &&
-                            // Ensure elements where matched
-                            all((x, ind) => x === expectedResult[ind], result),
-                            // Use cases (one with string other with list)
-                            [dropWhile(predicate, word.split('')),
-                                dropWhile(predicate, word)]
-                    ));
+            const alnumRegex = /^[a-z]$/i,
+                alnumPred = x => alnumRegex.test(x),
+                nonAlnumPred = x => !alnumPred(x),
+                alphaMiddleCharCode = 'a'.charCodeAt(0) + Math.round(alphabetCharCodeRange.length / 2) - 1,
+                alphaMiddleCharCodeInd = alphabetCharCodeRange.indexOf(alphaMiddleCharCode),
+                charCodeLessThan = x => (x + '').charCodeAt(0) < alphaMiddleCharCode
+                ;
+            [
+                [alphabetArray, alnumPred, []],
+                [vowelsArray, alnumPred, []],
+                [alphabetString, alnumPred, ''],
+                [vowelsString, alnumPred, ''],
+                [alphabetArray, nonAlnumPred, alphabetArray],
+                [alphabetArray, charCodeLessThan, alphabetArray.slice(alphaMiddleCharCodeInd)],
+                [vowelsArray, nonAlnumPred, vowelsArray],
+                [alphabetString, nonAlnumPred, alphabetString],
+                [vowelsString, nonAlnumPred, vowelsString],
+            ]
+                .forEach(([subj, pred, expected]) => {
+                    const result = dropWhile(pred, subj);
+                    expectEqual(result, expected);
+                });
         });
-        it ('should return an empty type instance if predicate is matched all the way through', () => {
-            const word = 'abcdefg',
-                pred = x => word.indexOf(x) > -1;
-
-            // Expect empty type instance
-            expectTrue(
-                // Ensure cases for each use case
-                all(result =>
-                    // Ensure no items returned
-                    length(result) === 0,
-                    [dropWhile(pred, word.split('')), dropWhile(pred, word)]
-                ));
+        it ('should return an empty list if predicate is matched all the way through', () => {
+            const pred = (x, _, list) => list.indexOf(x) > -1;
+            [vowelsString, vowelsArray].forEach(xs => {
+                const result = dropWhile(pred, xs);
+                expectEqual(result.length, 0);
+            });
         });
         it ('should return an a copy of the passed in type instance if predicate doesn\'t match any elements', () => {
             const word = 'abcdefg',
@@ -1066,52 +1074,32 @@ describe ('#list', () => {
 
     describe ('#dropWhileEnd', () => {
         it ('should drop elements while predicate is fulfilled', () => {
-            const word = 'abcdefg',
-                expectedResult = word.substring(0, word.indexOf('e')),
-                predicate = x => x !== 'e';
-
-            // Expect matched length and matched elements
-            expectTrue(
-                // Ensure cases for each use case
-                all(result =>
-                        // Ensure correct length of items in returned element
-                    length(expectedResult) === length(result) &&
-                    // Ensure elements where matched
-                    all((x, ind) => x === expectedResult[ind], result),
-                    // Use cases (one with string other with list)
-                    [dropWhileEnd(predicate, word.split('')),
-                        dropWhileEnd(predicate, word)]
-                ));
-        });
-        it ('should return an empty type instance if predicate is matched all the way through', () => {
-            const word = 'abcdefg',
-                pred = x => word.indexOf(x) > -1,
-                lenWord = length(word);
-
-            // Expect empty type instance
-            expectTrue(
-                // Ensure cases for each use case
-                all(result =>
-                    // Ensure all items returned
-                    length(result) === lenWord,
-                    [dropWhileEnd(pred, word.split('')), dropWhileEnd(pred, word)]
-                ));
-        });
-        it ('should return an a copy of the passed in type instance if predicate doesn\'t match any elements', () => {
-            const word = 'abcdefg',
-                pred = x => x === 'z' > -1;
-
-            // Expect empty type instance
-            expectTrue(
-                // Ensure cases for each use case
-                all(result =>
-                        // Ensure correct lengths returned
-                    length(result) === length(word) &&
-                    // Ensure elements where matched
-                    all((x, ind) => x === word[ind], result),
-                    // Use cases
-                    [dropWhileEnd(pred, word.split('')), dropWhileEnd(pred, word)]
-                ));
+            const alnumRegex = /^[a-z]$/i,
+                alnumPred = x => alnumRegex.test(x),
+                nonAlnumPred = x => !alnumPred(x),
+                alphaMiddleCharCode = 'a'.charCodeAt(0) + Math.floor(alphabetCharCodeRange.length / 2) - 1,
+                alphaMiddleCharCodeInd = alphabetCharCodeRange.indexOf(alphaMiddleCharCode),
+                charCodeLessThan = x => (x + '').charCodeAt(0) < alphaMiddleCharCode,
+                charCodeGreaterThan = x => (x + '').charCodeAt(0) >= alphaMiddleCharCode,
+                inList = (x, _, list) => list.indexOf(x) > -1,
+                testTable = [
+                    [alphabetArray, alnumPred, []],
+                    [vowelsArray,   alnumPred, []],
+                    [alphabetString, alnumPred, ''],
+                    [vowelsString,  alnumPred, ''],
+                    [vowelsString,  inList, ''],
+                    [vowelsArray,   inList, []],
+                    [alphabetArray, nonAlnumPred, revAlphabetArray],
+                    [alphabetArray, charCodeLessThan, revAlphabetArray],
+                    [alphabetArray, charCodeGreaterThan, revAlphabetArray.slice(0, alphaMiddleCharCodeInd)],
+                    [vowelsArray,   nonAlnumPred, revVowelsArray],
+                    [alphabetString, nonAlnumPred, revAlphabetStr],
+                    [vowelsString,  nonAlnumPred, revVowelsStr],
+                ];
+                testTable.forEach(([subj, pred, expected]) => {
+                    const result = dropWhileEnd(pred, subj);
+                    expectEqual(result, expected);
+                });
         });
     });
 
@@ -1469,27 +1457,23 @@ describe ('#list', () => {
 
     describe ('#elemIndices', () => {
         it ('should return all found element indices in a list', () => {
-            const nums = range(0, 22),
-                word = nums.join(''),
-                predicate = x => x.indexOf('1') > -1,
-                indices = word.split('').reduce((agg, item, ind) => {
-                    if (predicate(item)) { agg.push(ind); }
-                    return agg;
-                }, []);
-
-            expectTrue(
-                // Ensure cases for each use case
-                all(list => all((item, ind) => list[ind] === item, indices),
-                    [elemIndices('1', word), elemIndices('1', word.split(''))]
-                ));
+            [
+                [vowelsString, 'i', [2]],
+                [alphabetArray, 'b', [1]],
+                [
+                    alphabetArray.concat(alphabetArray, alphabetArray, alphabetArray), 'b', [1, 27, 53, 79]
+                ],
+            ]
+                .forEach(([subj, search, expected]) => {
+                    const result = elemIndices(search, subj);
+                    expectEqual(result, expected);
+                });
         });
         it ('should return `undefined` when element is not found in list', () => {
             expectEqual(elemIndices(99, range(0, 10)), undefined)
         });
-        it ('should return `undefined` when second arg is not a list.', () => {
-            expectEqual(elemIndices(99, undefined), undefined)
-            expectEqual(elemIndices(99, null), undefined)
-            expectEqual(elemIndices(99, 99), undefined)
+        it ('should throw an error when second arg is not a list.', () => {
+            [undefined, null, {}].forEach(x => expectError(() => elemIndices(99, x)));
         });
     });
 
@@ -1500,6 +1484,14 @@ describe ('#list', () => {
                 word.split('')
                     .every((char, ind, arr) =>
                         findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind));
+        });
+        it ('should return `-1` when item is not found in populated list', () => {
+            const nonAlphaList = '!@#$%^&*()_+'.split(''),
+                vowels = 'aeiou'.split('');
+            vowels.every(char => {
+                const result = findIndex(x => x === char, nonAlphaList);
+                expect(result).toEqual(-1);
+            });
         });
     });
 
@@ -1526,9 +1518,7 @@ describe ('#list', () => {
         });
 
         it ('should return `undefined` when doesn\'t find element at indice', () => {
-            expectEqual(findIndices(x => !!x, undefined), undefined);
-            expectEqual(findIndices(x => !!x, null), undefined);
-            expectEqual(findIndices(x => !!x, []), undefined);
+            [undefined, null, {}].forEach(x => expectError(() => findIndices(99, x)));
         });
     });
 
@@ -2107,30 +2097,37 @@ describe ('#list', () => {
     });
 
     describe ('#removeFirstsBy', () => {
-        const vowels = 'aeiou',
-            vowelsArray = vowels.split(''),
-            consonants = removeFirstsBy(equal, alphabetString, vowels),
-            consonantsArray = consonants.split('');
-        it ('should remove all first occurrences of all items in second list by passed in ' +
-            'equality operation.', () => {
+        const
+            consonants = removeFirstsBy(equal, alphabetString, vowelsString),
+            consonantsArray = consonants.split('')
+        ;
+        it ('should remove all first occurrences of items in second list matching predicate.', () => {
             // Remove from first entry on both
-            const fiveArrays = map(() => alphabetArray, vowelsArray),
-                catedArrays = concat(fiveArrays),
-                expected = foldl((agg, vowel) => {
-                        const parts = splitAt(agg.indexOf(vowel), agg);
-                        return concat([parts[0], tail(parts[1])]);
-                    }, catedArrays, vowelsArray),
+            const
+                fiveArrays = vowelsArray.map(() => alphabetArray),
+                catedArrays = [].concat(...fiveArrays),
+
+                // Expected concated arrays
+                expected = vowelsArray.reduce((agg, vowel) => {
+                    // Pluck item out of array
+                    // ----
+                    // Split at concated array at `vowel` index
+                    const parts = splitAt(agg.indexOf(vowel), agg);
+
+                    // Put split parts back together again
+                    return [].concat(parts[0], parts[1].slice(1));
+
+                }, catedArrays),
+
+                // Remove all first occurrences of `vowels`
                 rslt = removeFirstsBy(equal, concat(fiveArrays), vowelsArray);
 
-            // Expect vowels removed from the same places in both lists
-            expect(rslt.join('')).toEqual(expected.join(''));
+            // Check results
+            expectEqual(rslt, expected);
         });
         it ('should return copy of original list when no items from second list are found in it.', () => {
-            expectEqual(removeFirstsBy(equal, consonants, vowels), consonants);
-            expectEqual(
-                removeFirstsBy(equal, consonantsArray, vowelsArray),
-                consonantsArray
-            );
+            expectEqual(removeFirstsBy(equal, consonants, vowelsString), consonants);
+            expectEqual(removeFirstsBy(equal, consonantsArray, vowelsArray), consonantsArray);
         });
     });
 

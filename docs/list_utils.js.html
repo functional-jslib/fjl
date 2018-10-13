@@ -50,7 +50,7 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * List operator utils module.
- * @module _listOpUtils
+ * @module _listOpUtils.
  * @private
  */
 import {apply}          from '../jsPlatform/function';  // un-curried version
@@ -84,7 +84,7 @@ export const
 
     /**
      * Slices a copy of list.
-     * @function _listOpUtils.sliceCopy
+     * @function _listOpUtils..sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
@@ -112,11 +112,11 @@ export const
     lengths = curry2((...lists) => map(length, lists)),
 
     /**
-     * @function module:listUtils.lengthsToSmallest
+     * @function module:listUtils.listsToShortest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    lengthsToSmallest = curry2((...lists) => {
+    listsToShortest = curry2((...lists) => {
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
@@ -151,7 +151,7 @@ export const
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = curry((pred, op, agg, arr) => {
+    reduceUntilRight = curry((pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
         let ind = limit - 1,
@@ -165,11 +165,11 @@ export const
 
     reduce = reduceUntil(alwaysFalse),
 
-    reduceRight = reduceRightUntil(alwaysFalse),
+    reduceRight = reduceUntilRight(alwaysFalse),
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOpUtilslastIndex
+     * @function module:listOpUtils.lastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -177,7 +177,7 @@ export const
 
     /**
      * Finds index in string or list.
-     * @function module:listOpUtilsfindIndexWhere
+     * @function module:listOpUtils.findIndexWhere
      * @param pred {Function} - Predicate&lt;element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -194,7 +194,7 @@ export const
 
     /**
      * Finds index in list from right to left.
-     * @function module:listOpUtilsfindIndexWhereRight
+     * @function module:listOpUtils.findIndexWhereRight
      * @param pred {Function} - Predicate&lt;element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
@@ -226,7 +226,7 @@ export const
     }),
 
     /**
-     * @function module:listOpUtilsfind
+     * @function module:listOpUtils.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}

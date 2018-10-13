@@ -1,6 +1,6 @@
 /**
  * List operator utils module.
- * @module _listOpUtils
+ * @module _listOpUtils.
  * @private
  */
 import {apply}          from '../jsPlatform/function';  // un-curried version
@@ -62,11 +62,13 @@ export const
     lengths = curry2((...lists) => map(length, lists)),
 
     /**
-     * @function module:listUtils.lengthsToSmallest
+     * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
+     *  'slice to smallest' functionality.
+     * @function module:listUtils.listsToShortest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    lengthsToSmallest = curry2((...lists) => {
+    listsToShortest = curry2((...lists) => {
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
@@ -101,7 +103,7 @@ export const
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = curry((pred, op, agg, arr) => {
+    reduceUntilRight = curry((pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
         let ind = limit - 1,
@@ -115,11 +117,11 @@ export const
 
     reduce = reduceUntil(alwaysFalse),
 
-    reduceRight = reduceRightUntil(alwaysFalse),
+    reduceRight = reduceUntilRight(alwaysFalse),
 
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
-     * @function module:listOpUtilslastIndex
+     * @function module:listOpUtils.lastIndex
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
@@ -127,36 +129,39 @@ export const
 
     /**
      * Finds index in string or list.
-     * @function module:listOpUtilsfindIndexWhere
+     * @function module:listOpUtils.findIndexWhere
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhere = curry((pred, arr) => {
-        let ind = -1,
-            predicateFulfilled = false;
+        let ind = 0;
         const limit = length(arr);
-        while (ind < limit && !predicateFulfilled) {
-            predicateFulfilled = pred(arr[++ind], ind, arr);
+        for (; ind < limit; ind += 1) {
+            const predicateFulfilled = !!pred(arr[ind], ind, arr);
+            if (predicateFulfilled) {
+                return ind;
+            }
         }
-        return ind;
+        return -1;
     }),
 
     /**
      * Finds index in list from right to left.
-     * @function module:listOpUtilsfindIndexWhereRight
+     * @function module:listOpUtils.findIndexWhereRight
      * @param pred {Function} - Predicate<element, index, arr>.
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhereRight = curry((pred, arr) => {
-        const limit = length(arr);
-        let ind = limit,
-            predicateFulfilled = false;
-        for (; ind >= 0 && !predicateFulfilled; --ind) {
-            predicateFulfilled = pred(arr[ind], ind, arr);
+        let ind = length(arr) - 1;
+        for (; ind >= 0; ind -= 1) {
+            const predicateFulfilled = !!pred(arr[ind], ind, arr);
+            if (predicateFulfilled) {
+                return ind;
+            }
         }
-        return ind;
+        return -1;
     }),
 
     /**
@@ -165,7 +170,6 @@ export const
      * @returns {Array|undefined}
      */
     findIndicesWhere = curry((pred, xs) => {
-        if (!xs || !xs.length) { return undefined; }
         const limit = length(xs);
         let ind = 0,
             out = [];
@@ -176,7 +180,7 @@ export const
     }),
 
     /**
-     * @function module:listOpUtilsfind
+     * @function module:listOpUtils.find
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}
