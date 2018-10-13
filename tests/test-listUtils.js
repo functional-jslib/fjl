@@ -1,3 +1,7 @@
+/**
+ * @todo Make sure we've written tests for both strings and arrays (and arrays of each (where required)).
+ */
+
 import {
     sliceCopy, sliceFrom, sliceTo, genericAscOrdering, lengths,
     listsToShortest, reduceUntil, reduceUntilRight, reduce, reduceRight,

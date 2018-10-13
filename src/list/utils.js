@@ -154,7 +154,7 @@ export const
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhereRight = curry((pred, arr) => {
-        let ind = length(arr);
+        let ind = length(arr) - 1;
         for (; ind >= 0; ind -= 1) {
             const predicateFulfilled = !!pred(arr[ind], ind, arr);
             if (predicateFulfilled) {
