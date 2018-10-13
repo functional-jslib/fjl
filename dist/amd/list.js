@@ -1152,22 +1152,20 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
     /**
      * unzip transforms a list of pairs into a list of first components and a list of second components.
      * @haskellType `unzip :: [(a, b)] -> ([a], [b])`
-     * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
      * @function module:list.unzip
      * @param arr {Array|*}
      * @returns {Array|*}
      */
-    unzip = exports.unzip = arr => foldl((agg, item) => {
+    unzip = exports.unzip = foldl((agg, item) => {
         agg[0].push(item[0]);
         agg[1].push(item[1]);
         return agg;
-    }, [[], []], arr),
+    }, [[], []]),
 
 
     /**
      * unzip transforms a list of pairs into a list of first components and a list of second components.
      * @sudoHaskellType `unzipN :: [(a, b, ...x)] -> ([a], [b], ...[x])`
-     * @todo Should support other list types (should not have `push` hard coded instead should use `mappend` (if available)).
      * @function module:list.unzipN
      * @param list {Array|*} - List of tuples (lists).
      * @returns {Array|*}

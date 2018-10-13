@@ -156,7 +156,6 @@ gulp.task('docs', () =>
                             useCollapsibles: false
                         }
                     },
-                    // @todo create logo for `fjl`
                     "templates": {
                         "logo": {
                             "url": "http://elycruz.com/fjl-logo-v2.svg",

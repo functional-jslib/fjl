@@ -1374,7 +1374,12 @@ describe ('#list', () => {
             expectEqual(find(pred, word), 'o');
             expectEqual(find(pred, word.split('')), 'o');
         });
-        // @todo add more tests
+        it ('should return `undefined` when predicate doesn\'t match any elements.', () => {
+            const word = 'word',
+                pred = x => x === 'a';
+            expectEqual(find(pred, word), undefined);
+            expectEqual(find(pred, word.split('')), undefined);
+        });
     });
 
     describe ('#filter', () => {
@@ -1478,7 +1483,14 @@ describe ('#list', () => {
                     [elemIndices('1', word), elemIndices('1', word.split(''))]
                 ));
         });
-        // @todo add more tests
+        it ('should return `undefined` when element is not found in list', () => {
+            expectEqual(elemIndices(99, range(0, 10)), undefined)
+        });
+        it ('should return `undefined` when second arg is not a list.', () => {
+            expectEqual(elemIndices(99, undefined), undefined)
+            expectEqual(elemIndices(99, null), undefined)
+            expectEqual(elemIndices(99, 99), undefined)
+        });
     });
 
     describe ('#findIndex', () => {
@@ -1661,7 +1673,10 @@ describe ('#list', () => {
             ));
 
         });
-        // @todo Add more tests
+        it ('should throw an error when passed in arg is `null` or `undefined`', () => {
+            expect(() => unzip(undefined)).toThrow(Error);
+            expect(() => unzip(null)).toThrow(Error);
+        });
     });
 
     describe ('#unzipN', () => {
@@ -1697,7 +1712,10 @@ describe ('#list', () => {
             ));
 
         });
-        // @todo Add more tests
+        it ('should throw an error when passed in arg is `null` or `undefined`', () => {
+            expect(() => unzipN(undefined)).toThrow(Error);
+            expect(() => unzipN(null)).toThrow(Error);
+        });
     });
 
     describe ('#lines', () => {

@@ -17,8 +17,7 @@ import {
 } from '../src/object';
 import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../src/list';
 import {
-    expectTrue, expectFalse, expectEqual, expectError, expectFunction,
-    deepCompareObjectsLeft, allYourBase
+    expectTrue, expectFalse, expectEqual, expectError, expectFunction, allYourBase, alphabetString, alphabetArray
 } from './helpers';
 
 describe ('#object', function () {
@@ -371,10 +370,14 @@ describe ('#object', function () {
 
             clonedObj = jsonClone(obj),
 
-            // expectTrue(words.map())
+            originalObjects = {
+                obj2: jsonClone(obj2),
+                clonedObj: jsonClone(clonedObj)
+            },
+
             result1 = assignDeep(randomObj, obj2, clonedObj);
 
-        it ('should assign all props from one object to another recursively', function () {
+        it ('should assign all props from one object to another recursively', () => {
             // Check all top level properties
             expectTrue(words
                 .map(word => result1.hasOwnProperty(word) && result1[word])
@@ -403,9 +406,9 @@ describe ('#object', function () {
             expectTrue(and(map(x => !Object.keys(x).length, tail(check1))));
         });
 
-        it ('should not modify objects other than the first object passed in', function () {
-            expectTrue(deepCompareObjectsLeft(clonedObj, obj));
-            // @todo do a more full proof check here
+        it ('should not modify objects other than the first object passed in', () => {
+            expect(clonedObj).toEqual(originalObjects.clonedObj);
+            expect(obj2).toEqual(originalObjects.obj2);
         });
     });
 
@@ -428,23 +431,27 @@ describe ('#object', function () {
 
             clonedObj = jsonClone(obj),
 
-            // expectTrue(words.map())
+            originalObjects = {
+                obj2: jsonClone(obj2),
+                clonedObj: jsonClone(clonedObj)
+            },
+
             result1 = assign(randomObj, obj2, clonedObj);
 
-        it ('should assign all props from one object to another recursively', function () {
+        it ('should assign all props from one object to another recursively', () => {
             // Check all top level properties
             expectTrue(words
                 .map(word => result1.hasOwnProperty(word) && result1[word])
                 .every(result => result));
 
-            expectTrue(deepCompareObjectsLeft(obj2, result1));
+            expect(obj2).toEqual({hair: result1.hair}); // jest does deep check
 
-            expectTrue(deepCompareObjectsLeft(clonedObj, result1));
+            expect(clonedObj).toEqual({all: result1.all});
         });
 
-        it ('should not modify objects other than the first object passed in', function () {
-            expectTrue(deepCompareObjectsLeft(clonedObj, obj));
-            // @todo do a more full proof check here
+        it ('should not modify objects other than the first object passed in', () => {
+            expect(clonedObj).toEqual(originalObjects.clonedObj);
+            expect(obj2).toEqual(originalObjects.obj2);
         });
     });
 
@@ -523,9 +530,9 @@ describe ('#object', function () {
         it ('should be a function', function () {
             expect(jsonClone).toBeInstanceOf(Function);
         });
-        // it ('should return results the same as `JSON.parse(JSON.stringify(...))`', () => {
-            // expect(expectDeepEquals(jsonClone(allYourBase), allYourBase)).toEqual(true);
-        // });
+        it ('should clone a an object to a json object (no functions just primitives)', () => {
+            expect(jsonClone(allYourBase)).toEqual(allYourBase);
+        });
     });
 
     describe ('#toArray', function () {
@@ -535,23 +542,30 @@ describe ('#object', function () {
         test ('should return an empty array for `null` and/or `undefined`', () => {
             [null, undefined].forEach(x => expect(toArray(x)).toBeInstanceOf(Array));
         });
-        // @todo add more extensive tests here
+        test ('should return an array for values that can be converted to an array', () => {
+            [
+                [null, []],
+                [undefined, []],
+                [alphabetString, alphabetArray],
+                [new Set(alphabetArray), alphabetArray],
+                [new Map(toArray(allYourBase)), toArray(allYourBase)], // map and object test
+            ]
+                .forEach(([given, expected]) =>
+                    expect(toArray(given)).toEqual(expected)
+                );
+        });
     });
 
     describe ('#log', function () {
         it ('should be a function', function () {
             expect(typeof log).toEqual('function');
         });
-        // it ('should have more tests');
-        // @todo add more extensive tests here
     });
 
     describe ('#error', function () {
         it ('should be a function', function () {
             expect(typeof error).toEqual('function');
         });
-        // it ('should have more tests');
-        // @todo add more extensive tests here
     });
 
     describe ('#peek', function () {
