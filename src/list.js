@@ -1478,7 +1478,7 @@ export const
     removeBy = curry((pred, x, list) => { // @todo optimize this implementation
         const foundIndex = findIndex(item => pred(x, item), list),
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-        return append(parts[0], tail(parts[1]));
+        return foundIndex > -1 ? append(parts[0], tail(parts[1])) : sliceCopy(list);
     }),
 
     /**
@@ -1491,7 +1491,7 @@ export const
      * @returns {Array}
      */
     removeFirstsBy = curry((pred, xs1, xs2) =>
-        foldl((agg, x2) => removeBy(pred, x2, agg), xs1, xs2)),
+        foldl((agg, x) => removeBy(pred, x, agg), xs1, xs2)),
 
     /**
      * Returns the union on elements matching boolean check passed in.
