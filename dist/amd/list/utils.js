@@ -4,7 +4,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceUntilRight = exports.reduceUntil = exports.listsToShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
+    exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceUntilRight = exports.reduceUntil = exports.toShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
     Object.keys(_aggregation).forEach(function (key) {
         if (key === "default" || key === "__esModule") return;
         Object.defineProperty(exports, key, {
@@ -84,11 +84,11 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
     /**
      * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
      *  'slice to smallest' functionality.
-     * @function module:listUtils.listsToShortest
+     * @function module:listUtils.toShortest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    listsToShortest = exports.listsToShortest = (0, _curry.curry2)((...lists) => {
+    listsToShortest = exports.toShortest = (0, _curry.curry2)((...lists) => {
         const listLengths = (0, _function.apply)(lengths, lists),
               smallLen = Math.min.apply(Math, listLengths);
         return (0, _map2.default)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list), lists);

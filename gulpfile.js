@@ -10,7 +10,6 @@ const path = require('path'),
     uglify =        require('gulp-uglify'),
     jsdoc =         require('gulp-jsdoc3'),
     gulpRollup =    require('gulp-better-rollup'),
-    lazyPipe =      require('lazypipe'),
     gulpBabel =     require('gulp-babel'),
 
     // Rollup plugins
@@ -19,7 +18,6 @@ const path = require('path'),
     rollupResolve = require('rollup-plugin-node-resolve'),
 
     /** Util Modules **/
-    chalk = require('chalk'),
     del = require('del'),
 
     /** Paths **/
@@ -36,13 +34,6 @@ const path = require('path'),
     iifeModuleName = 'fjl',
     srcsGlob = './src/**/*.js',
 
-    /** Lazy Pipes **/
-    eslintPipe = lazyPipe()
-        .pipe(eslint)
-        .pipe(eslint.format)
-        .pipe(eslint.failOnError),
-
-    // Log func
     log = console.log.bind(console),
 
     {series, dest, src, parallel} = gulp,
@@ -51,10 +42,10 @@ const path = require('path'),
         del(pathsToDelete)
             .then(deletedPaths => {
                 if (deletedPaths.length) {
-                    log(chalk.dim('\nThe following paths have been deleted: \n - ' + deletedPaths.join('\n - ') + '\n'));
+                    log('\nThe following paths have been deleted: \n - ' + deletedPaths.join('\n - \n'));
                     return;
                 }
-                log(chalk.dim(' - No paths to clean.') + '\n', '--mandatory');
+                log(' - No paths to clean.\n', '--mandatory');
             })
             .catch(log),
 
@@ -64,7 +55,11 @@ const path = require('path'),
         return deleteFilePaths(pathsToDelete);
     },
 
-    eslintTask = () => src(['./src/**/*.js', '!node_modules/**']).pipe(eslintPipe()),
+    eslintTask = () =>
+        src(['./src/**/*.js', '!node_modules/**'])
+            .pipe(eslint())
+            .pipe(eslint.format())
+            .pipe(eslint.failOnError()),
 
     umdTask = () =>
         src(srcsGlob)

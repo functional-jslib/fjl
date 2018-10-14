@@ -76,11 +76,18 @@
   "readme": [
     "./markdown-fragments/readme-header.md",
     "./markdown-fragments/sections/sections.md",
+    "./markdown-fragments/sections/requirements.md",
     "./markdown-fragments/sections/getting-started.md",
+    "./markdown-fragments/sections/docs.md",
     "./markdown-fragments/sections/member-list.md",
-    "./markdown-fragments/generated/member-list.md",
-    "./markdown-fragments/generated/member-list-content.md",
-    "./markdown-fragments/sections/unit-tests.md",
+    "./markdown-fragments-generated/member-list.md",
+    "./markdown-fragments-generated/member-list-content.md",
+    "./markdown-fragments/sections/development.md",
+    "./markdown-fragments/sections/supported-platforms.md",
+    "./markdown-fragments/sections/license.md",
+    "./markdown-fragments/sections/resources.md",
+    "./markdown-fragments/sections/changelog.md",
+    "./markdown-fragments/sections/changelog.md",
     "./markdown-fragments/readme-footer.md"
   ]
 }

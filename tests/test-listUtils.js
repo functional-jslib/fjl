@@ -4,7 +4,7 @@
 
 import {
     sliceCopy, sliceFrom, sliceTo, genericAscOrdering, lengths,
-    listsToShortest, reduceUntil, reduceUntilRight, reduce, reduceRight,
+    toShortest, reduceUntil, reduceUntilRight, reduce, reduceRight,
     lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere
 }
 from '../src/list/utils';
@@ -189,7 +189,7 @@ describe ('#listUtils', () => {
             expect(vowelsLen).toEqual(vowelsArray.length);
         });
     });
-    describe('#listsToShortest', () => {
+    describe('#toShortest', () => {
         it('should return a list of lists trimmed to the smallest', () => {
             [
                 [vowelsArray, alphabetArray, vowelsLen],
@@ -198,7 +198,7 @@ describe ('#listUtils', () => {
             ]
                 .forEach(([xs1, xs2, expectedLen]) => {
                     const lists = [xs1, xs2],
-                        result = listsToShortest(...lists);
+                        result = toShortest(...lists);
                     result.forEach((sliced, ind) => {
                         expect(sliced.length).toEqual(expectedLen);
                         expect(sliced).toEqual(lists[ind].slice(0, sliced.length));
@@ -213,7 +213,7 @@ describe ('#listUtils', () => {
             ]
                 .forEach(([xs1, xs2, expectedLen]) => {
                     const lists = [xs1, xs2],
-                        fn = listsToShortest(xs1),
+                        fn = toShortest(xs1),
                         result = fn(xs2);
                     expectFunction(fn);
                     result.forEach((sliced, ind) => {

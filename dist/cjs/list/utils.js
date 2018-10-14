@@ -104,11 +104,11 @@ lengths = exports.lengths = (0, _curry.curry2)(function () {
 /**
  * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
  *  'slice to smallest' functionality.
- * @function module:listUtils.listsToShortest
+ * @function module:listUtils.toShortest
  * @param lists {...(Array|String|*)}
  * @returns {Array|String|*}
  */
-listsToShortest = exports.listsToShortest = (0, _curry.curry2)(function () {
+listsToShortest = exports.toShortest = (0, _curry.curry2)(function () {
     for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         lists[_key2] = arguments[_key2];
     }

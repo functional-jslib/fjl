@@ -64,11 +64,11 @@ export const
     /**
      * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
      *  'slice to smallest' functionality.
-     * @function module:listUtils.listsToShortest
+     * @function module:listUtils.toShortest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    listsToShortest = curry2((...lists) => {
+    toShortest = curry2((...lists) => {
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
