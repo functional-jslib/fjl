@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceRightUntil = exports.reduceUntil = exports.lengthsToSmallest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
+exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceUntilRight = exports.reduceUntil = exports.listsToShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
 
 var _aggregation = require('./aggregation');
 
@@ -62,7 +62,7 @@ sliceTo = exports.sliceTo = (0, _curry.curry)(function (toInd, xs) {
 
 /**
  * Slices a copy of list.
- * @function _listOpUtils..sliceCopy
+ * @function _listOpUtils.sliceCopy
  * @param xs {Array|String|*}
  * @returns {Array|String|*}
  */
@@ -102,11 +102,13 @@ lengths = exports.lengths = (0, _curry.curry2)(function () {
 
 
 /**
+ * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
+ *  'slice to smallest' functionality.
  * @function module:listUtils.listsToShortest
  * @param lists {...(Array|String|*)}
  * @returns {Array|String|*}
  */
-lengthsToSmallest = exports.listsToShortest = (0, _curry.curry2)(function () {
+listsToShortest = exports.listsToShortest = (0, _curry.curry2)(function () {
     for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         lists[_key2] = arguments[_key2];
     }
@@ -152,7 +154,7 @@ reduceUntil = exports.reduceUntil = (0, _curry.curry)(function (pred, op, agg, a
  * @param arr
  * @returns {*}
  */
-reduceRightUntil = exports.reduceRightUntil = (0, _curry.curry)(function (pred, op, agg, arr) {
+reduceUntilRight = exports.reduceUntilRight = (0, _curry.curry)(function (pred, op, agg, arr) {
     var limit = (0, _object.length)(arr);
     if (!limit) {
         return agg;
@@ -168,7 +170,7 @@ reduceRightUntil = exports.reduceRightUntil = (0, _curry.curry)(function (pred, 
     return result;
 }),
     reduce = exports.reduce = reduceUntil(_boolean.alwaysFalse),
-    reduceRight = exports.reduceRight = reduceRightUntil(_boolean.alwaysFalse),
+    reduceRight = exports.reduceRight = reduceUntilRight(_boolean.alwaysFalse),
 
 
 /**
@@ -190,13 +192,15 @@ lastIndex = exports.lastIndex = function lastIndex(x) {
  * @returns {Number} - `-1` if predicate not matched else `index` found
  */
 findIndexWhere = exports.findIndexWhere = (0, _curry.curry)(function (pred, arr) {
-    var ind = -1,
-        predicateFulfilled = false;
+    var ind = 0;
     var limit = (0, _object.length)(arr);
-    while (ind < limit && !predicateFulfilled) {
-        predicateFulfilled = pred(arr[++ind], ind, arr);
+    for (; ind < limit; ind += 1) {
+        var predicateFulfilled = !!pred(arr[ind], ind, arr);
+        if (predicateFulfilled) {
+            return ind;
+        }
     }
-    return ind;
+    return -1;
 }),
 
 
@@ -208,13 +212,14 @@ findIndexWhere = exports.findIndexWhere = (0, _curry.curry)(function (pred, arr)
  * @returns {Number} - `-1` if predicate not matched else `index` found
  */
 findIndexWhereRight = exports.findIndexWhereRight = (0, _curry.curry)(function (pred, arr) {
-    var limit = (0, _object.length)(arr);
-    var ind = limit,
-        predicateFulfilled = false;
-    for (; ind >= 0 && !predicateFulfilled; --ind) {
-        predicateFulfilled = pred(arr[ind], ind, arr);
+    var ind = (0, _object.length)(arr) - 1;
+    for (; ind >= 0; ind -= 1) {
+        var predicateFulfilled = !!pred(arr[ind], ind, arr);
+        if (predicateFulfilled) {
+            return ind;
+        }
     }
-    return ind;
+    return -1;
 }),
 
 
@@ -224,9 +229,6 @@ findIndexWhereRight = exports.findIndexWhereRight = (0, _curry.curry)(function (
  * @returns {Array|undefined}
  */
 findIndicesWhere = exports.findIndicesWhere = (0, _curry.curry)(function (pred, xs) {
-    if (!xs || !xs.length) {
-        return undefined;
-    }
     var limit = (0, _object.length)(xs);
     var ind = 0,
         out = [];

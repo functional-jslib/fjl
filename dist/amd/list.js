@@ -1,4 +1,4 @@
-define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './function/negate', './boolean', './object', './list/map', './function/curry', './list/utils'], function (exports, _range, _jsPlatform, _list, _function, _negate, _boolean, _object, _map, _curry, _utils) {
+define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './function/negate', './function/curry', './boolean', './object', './list/map', './list/utils'], function (exports, _range, _jsPlatform, _list, _function, _negate, _curry, _boolean, _object, _map, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -612,9 +612,9 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      */
     dropWhile = exports.dropWhile = (0, _curry.curry)((pred, list) => {
         const limit = (0, _object.length)(list),
-              splitPoint = (0, _utils.findIndexWhere)((item, ind, list2) => !pred(list[ind], ind, list2), list);
+              splitPoint = (0, _utils.findIndexWhere)((x, i, xs) => !pred(x, i, xs), list);
 
-        return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _list.slice)(splitPoint, limit, list);
+        return splitPoint === -1 ? (0, _utils.sliceFrom)(limit, list) : (0, _list.slice)(splitPoint, limit, list);
     }),
 
 
@@ -626,23 +626,16 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @returns {Array|String}
      */
     dropWhileEnd = exports.dropWhileEnd = (0, _curry.curry)((pred, list) => {
-        const limit = (0, _object.length)(list),
-              splitPoint = (0, _utils.findIndexWhereRight)((item, ind, list2) => !pred(list[ind], ind, list2), list);
+        const splitPoint = (0, _utils.findIndexWhereRight)((x, i, xs) => !pred(x, i, xs), list);
 
-        return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _utils.sliceTo)(splitPoint + 1, list);
+        if (splitPoint === -1) {
+            return (0, _object.of)(list);
+        }
+
+        const out = reverse(list);
+        return (0, _utils.sliceTo)(splitPoint + 1, (0, _object.isString)(list) ? out.join('') : out);
     }),
-
-
-    /**
-     * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
-     * the second list in the tuple is a list of the remaining elements in the given list.
-     * **@Note: Not the same as `partition`.  Read descriptions closely!!!
-     * @function module:list.span
-     * @param pred {Function} - Predicate<item, index, originalArrayOrString>
-     * @param list {Array} - Predicate<item, index, originalArrayOrString>
-     * @returns {Array} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
-     */
-    span = exports.span = (0, _curry.curry)((pred, list) => {
+          span = exports.span = (0, _curry.curry)((pred, list) => {
         const splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateF3)(pred), list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     }),
@@ -991,7 +984,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
         if (!(0, _object.length)(arr1) || !(0, _object.length)(arr2)) {
             return [];
         }
-        const [a1, a2] = (0, _utils.lengthsToSmallest)(arr1, arr2);
+        const [a1, a2] = (0, _utils.listsToShortest)(arr1, arr2);
         return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, [item, a2[ind]]), [], a1);
     }),
 
@@ -1005,7 +998,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @returns {Array}
      */
     zipN = exports.zipN = (0, _curry.curry2)((...lists) => {
-        const trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists);
+        const trimmedLists = (0, _function.apply)(_utils.listsToShortest, lists);
         return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _map2.default)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
     }),
 
@@ -1071,7 +1064,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
         if (!(0, _object.length)(xs1) || !(0, _object.length)(xs2)) {
             return [];
         }
-        const [a1, a2] = (0, _utils.lengthsToSmallest)(xs1, xs2);
+        const [a1, a2] = (0, _utils.listsToShortest)(xs1, xs2);
         return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, op(item, a2[ind])), [], a1);
     }),
 
@@ -1090,7 +1083,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @returns {Array<Array<*,*>>}
      */
     zipWithN = exports.zipWithN = (0, _curry.curry3)((op, ...lists) => {
-        const trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists),
+        const trimmedLists = (0, _function.apply)(_utils.listsToShortest, lists),
               lenOfTrimmed = (0, _object.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
@@ -1556,7 +1549,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
     /**
      * Behaves the same as `remove`, but takes a user-supplied equality predicate.
      * @function module:list.removeBy
-     * @param pred {Function}
+     * @param pred {Function} - Equality predicate `(a, b) => bool`
      * @param x {*}
      * @param list {Array|String|*}
      * @returns {Array}
@@ -1565,7 +1558,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
         // @todo optimize this implementation
         const foundIndex = findIndex(item => pred(x, item), list),
               parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-        return append(parts[0], tail(parts[1]));
+        return foundIndex > -1 ? append(parts[0], tail(parts[1])) : (0, _utils.sliceCopy)(list);
     }),
 
 
@@ -1578,7 +1571,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @param xs2 {Array|String|*}
      * @returns {Array}
      */
-    removeFirstsBy = exports.removeFirstsBy = (0, _curry.curry)((pred, xs1, xs2) => foldl((agg, x2) => removeBy(pred, x2, agg), xs1, xs2)),
+    removeFirstsBy = exports.removeFirstsBy = (0, _curry.curry)((pred, xs1, xs2) => foldl((agg, x) => removeBy(pred, x, agg), xs1, xs2)),
 
 
     /**

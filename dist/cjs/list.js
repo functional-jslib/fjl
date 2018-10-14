@@ -63,6 +63,8 @@ var _function = require('./jsPlatform/function');
 
 var _negate = require('./function/negate');
 
+var _curry = require('./function/curry');
+
 var _boolean = require('./boolean');
 
 var _object = require('./object');
@@ -70,8 +72,6 @@ var _object = require('./object');
 var _map = require('./list/map');
 
 var _map2 = _interopRequireDefault(_map);
-
-var _curry = require('./function/curry');
 
 var _utils = require('./list/utils');
 
@@ -677,11 +677,11 @@ takeWhile = exports.takeWhile = (0, _curry.curry)(function (pred, list) {
  */
 dropWhile = exports.dropWhile = (0, _curry.curry)(function (pred, list) {
     var limit = (0, _object.length)(list),
-        splitPoint = (0, _utils.findIndexWhere)(function (item, ind, list2) {
-        return !pred(list[ind], ind, list2);
+        splitPoint = (0, _utils.findIndexWhere)(function (x, i, xs) {
+        return !pred(x, i, xs);
     }, list);
 
-    return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _list.slice)(splitPoint, limit, list);
+    return splitPoint === -1 ? (0, _utils.sliceFrom)(limit, list) : (0, _list.slice)(splitPoint, limit, list);
 }),
 
 
@@ -693,25 +693,18 @@ dropWhile = exports.dropWhile = (0, _curry.curry)(function (pred, list) {
  * @returns {Array|String}
  */
 dropWhileEnd = exports.dropWhileEnd = (0, _curry.curry)(function (pred, list) {
-    var limit = (0, _object.length)(list),
-        splitPoint = (0, _utils.findIndexWhereRight)(function (item, ind, list2) {
-        return !pred(list[ind], ind, list2);
+    var splitPoint = (0, _utils.findIndexWhereRight)(function (x, i, xs) {
+        return !pred(x, i, xs);
     }, list);
 
-    return splitPoint === -1 ? (0, _utils.sliceTo)(limit, list) : (0, _utils.sliceTo)(splitPoint + 1, list);
+    if (splitPoint === -1) {
+        return (0, _object.of)(list);
+    }
+
+    var out = reverse(list);
+    return (0, _utils.sliceTo)(splitPoint + 1, (0, _object.isString)(list) ? out.join('') : out);
 }),
-
-
-/**
- * Gives a span such that the first list (in returned tuple) is the span of items matching upto `not predicate` and
- * the second list in the tuple is a list of the remaining elements in the given list.
- * **@Note: Not the same as `partition`.  Read descriptions closely!!!
- * @function module:list.span
- * @param pred {Function} - Predicate<item, index, originalArrayOrString>
- * @param list {Array} - Predicate<item, index, originalArrayOrString>
- * @returns {Array} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
- */
-span = exports.span = (0, _curry.curry)(function (pred, list) {
+    span = exports.span = (0, _curry.curry)(function (pred, list) {
     var splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateF3)(pred), list);
     return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
 }),
@@ -1070,10 +1063,10 @@ zip = exports.zip = (0, _curry.curry)(function (arr1, arr2) {
         return [];
     }
 
-    var _lengthsToSmallest = (0, _utils.lengthsToSmallest)(arr1, arr2),
-        _lengthsToSmallest2 = _slicedToArray(_lengthsToSmallest, 2),
-        a1 = _lengthsToSmallest2[0],
-        a2 = _lengthsToSmallest2[1];
+    var _listsToShortest = (0, _utils.listsToShortest)(arr1, arr2),
+        _listsToShortest2 = _slicedToArray(_listsToShortest, 2),
+        a1 = _listsToShortest2[0],
+        a2 = _listsToShortest2[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
         return (0, _utils.aggregateArr$)(agg, [item, a2[ind]]);
@@ -1094,7 +1087,7 @@ zipN = exports.zipN = (0, _curry.curry2)(function () {
         lists[_key2] = arguments[_key2];
     }
 
-    var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists);
+    var trimmedLists = (0, _function.apply)(_utils.listsToShortest, lists);
     return (0, _utils.reduce)(function (agg, item, ind) {
         return (0, _utils.aggregateArr$)(agg, (0, _map2.default)(function (xs) {
             return xs[ind];
@@ -1171,10 +1164,10 @@ zipWith = exports.zipWith = (0, _curry.curry)(function (op, xs1, xs2) {
         return [];
     }
 
-    var _lengthsToSmallest3 = (0, _utils.lengthsToSmallest)(xs1, xs2),
-        _lengthsToSmallest4 = _slicedToArray(_lengthsToSmallest3, 2),
-        a1 = _lengthsToSmallest4[0],
-        a2 = _lengthsToSmallest4[1];
+    var _listsToShortest3 = (0, _utils.listsToShortest)(xs1, xs2),
+        _listsToShortest4 = _slicedToArray(_listsToShortest3, 2),
+        a1 = _listsToShortest4[0],
+        a2 = _listsToShortest4[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
         return (0, _utils.aggregateArr$)(agg, op(item, a2[ind]));
@@ -1200,7 +1193,7 @@ zipWithN = exports.zipWithN = (0, _curry.curry3)(function (op) {
         lists[_key3 - 1] = arguments[_key3];
     }
 
-    var trimmedLists = (0, _function.apply)(_utils.lengthsToSmallest, lists),
+    var trimmedLists = (0, _function.apply)(_utils.listsToShortest, lists),
         lenOfTrimmed = (0, _object.length)(trimmedLists);
     if (!lenOfTrimmed) {
         return [];
@@ -1729,7 +1722,7 @@ nubBy = exports.nubBy = (0, _curry.curry)(function (pred, list) {
 /**
  * Behaves the same as `remove`, but takes a user-supplied equality predicate.
  * @function module:list.removeBy
- * @param pred {Function}
+ * @param pred {Function} - Equality predicate `(a, b) => bool`
  * @param x {*}
  * @param list {Array|String|*}
  * @returns {Array}
@@ -1740,7 +1733,7 @@ removeBy = exports.removeBy = (0, _curry.curry)(function (pred, x, list) {
         return pred(x, item);
     }, list),
         parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-    return append(parts[0], tail(parts[1]));
+    return foundIndex > -1 ? append(parts[0], tail(parts[1])) : (0, _utils.sliceCopy)(list);
 }),
 
 
@@ -1754,8 +1747,8 @@ removeBy = exports.removeBy = (0, _curry.curry)(function (pred, x, list) {
  * @returns {Array}
  */
 removeFirstsBy = exports.removeFirstsBy = (0, _curry.curry)(function (pred, xs1, xs2) {
-    return foldl(function (agg, x2) {
-        return removeBy(pred, x2, agg);
+    return foldl(function (agg, x) {
+        return removeBy(pred, x, agg);
     }, xs1, xs2);
 }),
 

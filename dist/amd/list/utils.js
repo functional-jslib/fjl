@@ -48,7 +48,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
     /**
      * Slices a copy of list.
-     * @function _listOpUtils..sliceCopy
+     * @function _listOpUtils.sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
@@ -82,11 +82,13 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
 
 
     /**
+     * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
+     *  'slice to smallest' functionality.
      * @function module:listUtils.listsToShortest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    lengthsToSmallest = exports.listsToShortest = (0, _curry.curry2)((...lists) => {
+    listsToShortest = exports.listsToShortest = (0, _curry.curry2)((...lists) => {
         const listLengths = (0, _function.apply)(lengths, lists),
               smallLen = Math.min.apply(Math, listLengths);
         return (0, _map2.default)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list), lists);
@@ -126,7 +128,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = exports.reduceUntilRight = (0, _curry.curry)((pred, op, agg, arr) => {
+    reduceUntilRight = exports.reduceUntilRight = (0, _curry.curry)((pred, op, agg, arr) => {
         const limit = (0, _object.length)(arr);
         if (!limit) {
             return agg;
@@ -142,7 +144,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
         return result;
     }),
           reduce = exports.reduce = reduceUntil(_boolean.alwaysFalse),
-          reduceRight = exports.reduceRight = reduceRightUntil(_boolean.alwaysFalse),
+          reduceRight = exports.reduceRight = reduceUntilRight(_boolean.alwaysFalse),
 
 
     /**
@@ -164,13 +166,15 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhere = exports.findIndexWhere = (0, _curry.curry)((pred, arr) => {
-        let ind = -1,
-            predicateFulfilled = false;
+        let ind = 0;
         const limit = (0, _object.length)(arr);
-        while (ind < limit && !predicateFulfilled) {
-            predicateFulfilled = pred(arr[++ind], ind, arr);
+        for (; ind < limit; ind += 1) {
+            const predicateFulfilled = !!pred(arr[ind], ind, arr);
+            if (predicateFulfilled) {
+                return ind;
+            }
         }
-        return ind;
+        return -1;
     }),
 
 
@@ -182,13 +186,14 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhereRight = exports.findIndexWhereRight = (0, _curry.curry)((pred, arr) => {
-        const limit = (0, _object.length)(arr);
-        let ind = limit,
-            predicateFulfilled = false;
-        for (; ind >= 0 && !predicateFulfilled; --ind) {
-            predicateFulfilled = pred(arr[ind], ind, arr);
+        let ind = (0, _object.length)(arr) - 1;
+        for (; ind >= 0; ind -= 1) {
+            const predicateFulfilled = !!pred(arr[ind], ind, arr);
+            if (predicateFulfilled) {
+                return ind;
+            }
         }
-        return ind;
+        return -1;
     }),
 
 
@@ -198,9 +203,6 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
      * @returns {Array|undefined}
      */
     findIndicesWhere = exports.findIndicesWhere = (0, _curry.curry)((pred, xs) => {
-        if (!xs || !xs.length) {
-            return undefined;
-        }
         const limit = (0, _object.length)(xs);
         let ind = 0,
             out = [];

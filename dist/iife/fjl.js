@@ -462,7 +462,6 @@ var negateFN = function negateFN(fn) {
  * @module boolean
  * @description Contains functional version of 'always-true', 'always-false', 'is-truthy', and 'is-falsy'.
  */
-
 var isTruthy = function isTruthy(value) {
   return !!value;
 };
@@ -475,6 +474,18 @@ var alwaysTrue = function alwaysTrue() {
 var alwaysFalse = function alwaysFalse() {
   return false;
 };
+var equal = curry(function (a, b) {
+  return a === b;
+});
+var equalAll = curry2(function (a) {
+  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+
+  return args.every(function (b) {
+    return equal(a, b);
+  });
+});
 
 /**
  * @function module:list.map
@@ -528,7 +539,7 @@ var lengths = curry2(function () {
 
     return map(length, lists);
 });
-var lengthsToSmallest = curry2(function () {
+var listsToShortest = curry2(function () {
     for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         lists[_key2] = arguments[_key2];
     }
@@ -554,7 +565,7 @@ var reduceUntil = curry(function (pred, op, agg, arr) {
     }
     return result;
 });
-var reduceRightUntil = curry(function (pred, op, agg, arr) {
+var reduceUntilRight = curry(function (pred, op, agg, arr) {
     var limit = length(arr);
     if (!limit) {
         return agg;
@@ -570,32 +581,32 @@ var reduceRightUntil = curry(function (pred, op, agg, arr) {
     return result;
 });
 var reduce = reduceUntil(alwaysFalse);
-var reduceRight = reduceRightUntil(alwaysFalse);
+var reduceRight = reduceUntilRight(alwaysFalse);
 var lastIndex = function lastIndex(x) {
     var len = length(x);return len ? len - 1 : 0;
 };
 var findIndexWhere = curry(function (pred, arr) {
-    var ind = -1,
-        predicateFulfilled = false;
+    var ind = 0;
     var limit = length(arr);
-    while (ind < limit && !predicateFulfilled) {
-        predicateFulfilled = pred(arr[++ind], ind, arr);
+    for (; ind < limit; ind += 1) {
+        var predicateFulfilled = !!pred(arr[ind], ind, arr);
+        if (predicateFulfilled) {
+            return ind;
+        }
     }
-    return ind;
+    return -1;
 });
 var findIndexWhereRight = curry(function (pred, arr) {
-    var limit = length(arr);
-    var ind = limit,
-        predicateFulfilled = false;
-    for (; ind >= 0 && !predicateFulfilled; --ind) {
-        predicateFulfilled = pred(arr[ind], ind, arr);
+    var ind = length(arr) - 1;
+    for (; ind >= 0; ind -= 1) {
+        var predicateFulfilled = !!pred(arr[ind], ind, arr);
+        if (predicateFulfilled) {
+            return ind;
+        }
     }
-    return ind;
+    return -1;
 });
 var findIndicesWhere = curry(function (pred, xs) {
-    if (!xs || !xs.length) {
-        return undefined;
-    }
     var limit = length(xs);
     var ind = 0,
         out = [];
@@ -1122,19 +1133,23 @@ var takeWhile = curry(function (pred, list) {
 });
 var dropWhile = curry(function (pred, list) {
     var limit = length(list),
-        splitPoint = findIndexWhere(function (item, ind, list2) {
-        return !pred(list[ind], ind, list2);
+        splitPoint = findIndexWhere(function (x, i, xs) {
+        return !pred(x, i, xs);
     }, list);
 
-    return splitPoint === -1 ? sliceTo(limit, list) : slice(splitPoint, limit, list);
+    return splitPoint === -1 ? sliceFrom(limit, list) : slice(splitPoint, limit, list);
 });
 var dropWhileEnd = curry(function (pred, list) {
-    var limit = length(list),
-        splitPoint = findIndexWhereRight(function (item, ind, list2) {
-        return !pred(list[ind], ind, list2);
+    var splitPoint = findIndexWhereRight(function (x, i, xs) {
+        return !pred(x, i, xs);
     }, list);
 
-    return splitPoint === -1 ? sliceTo(limit, list) : sliceTo(splitPoint + 1, list);
+    if (splitPoint === -1) {
+        return of(list);
+    }
+
+    var out = reverse(list);
+    return sliceTo(splitPoint + 1, isString(list) ? out.join('') : out);
 });
 var span = curry(function (pred, list) {
     var splitPoint = findIndexWhere(negateF3(pred), list);
@@ -1307,10 +1322,10 @@ var zip = curry(function (arr1, arr2) {
         return [];
     }
 
-    var _lengthsToSmallest = lengthsToSmallest(arr1, arr2),
-        _lengthsToSmallest2 = slicedToArray(_lengthsToSmallest, 2),
-        a1 = _lengthsToSmallest2[0],
-        a2 = _lengthsToSmallest2[1];
+    var _listsToShortest = listsToShortest(arr1, arr2),
+        _listsToShortest2 = slicedToArray(_listsToShortest, 2),
+        a1 = _listsToShortest2[0],
+        a2 = _listsToShortest2[1];
 
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, [item, a2[ind]]);
@@ -1321,7 +1336,7 @@ var zipN = curry2(function () {
         lists[_key2] = arguments[_key2];
     }
 
-    var trimmedLists = apply(lengthsToSmallest, lists);
+    var trimmedLists = apply(listsToShortest, lists);
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, map(function (xs) {
             return xs[ind];
@@ -1342,10 +1357,10 @@ var zipWith = curry(function (op, xs1, xs2) {
         return [];
     }
 
-    var _lengthsToSmallest3 = lengthsToSmallest(xs1, xs2),
-        _lengthsToSmallest4 = slicedToArray(_lengthsToSmallest3, 2),
-        a1 = _lengthsToSmallest4[0],
-        a2 = _lengthsToSmallest4[1];
+    var _listsToShortest3 = listsToShortest(xs1, xs2),
+        _listsToShortest4 = slicedToArray(_listsToShortest3, 2),
+        a1 = _listsToShortest4[0],
+        a2 = _listsToShortest4[1];
 
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, op(item, a2[ind]));
@@ -1356,7 +1371,7 @@ var zipWithN = curry3(function (op) {
         lists[_key3 - 1] = arguments[_key3];
     }
 
-    var trimmedLists = apply(lengthsToSmallest, lists),
+    var trimmedLists = apply(listsToShortest, lists),
         lenOfTrimmed = length(trimmedLists);
     if (!lenOfTrimmed) {
         return [];
@@ -1583,11 +1598,11 @@ var removeBy = curry(function (pred, x, list) {
         return pred(x, item);
     }, list),
         parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-    return append(parts[0], tail(parts[1]));
+    return foundIndex > -1 ? append(parts[0], tail(parts[1])) : sliceCopy(list);
 });
 var removeFirstsBy = curry(function (pred, xs1, xs2) {
-    return foldl(function (agg, x2) {
-        return removeBy(pred, x2, agg);
+    return foldl(function (agg, x) {
+        return removeBy(pred, x, agg);
     }, xs1, xs2);
 });
 var unionBy = curry(function (pred, arr1, arr2) {
@@ -2121,6 +2136,8 @@ exports.isTruthy = isTruthy;
 exports.isFalsy = isFalsy;
 exports.alwaysTrue = alwaysTrue;
 exports.alwaysFalse = alwaysFalse;
+exports.equal = equal;
+exports.equalAll = equalAll;
 exports.apply = apply;
 exports.call = call;
 exports.compose = compose;
@@ -2274,9 +2291,9 @@ exports.sliceTo = sliceTo;
 exports.sliceCopy = sliceCopy;
 exports.genericAscOrdering = genericAscOrdering;
 exports.lengths = lengths;
-exports.lengthsToSmallest = lengthsToSmallest;
+exports.listsToShortest = listsToShortest;
 exports.reduceUntil = reduceUntil;
-exports.reduceRightUntil = reduceRightUntil;
+exports.reduceUntilRight = reduceUntilRight;
 exports.reduce = reduce;
 exports.reduceRight = reduceRight;
 exports.lastIndex = lastIndex;

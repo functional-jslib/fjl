@@ -64,7 +64,7 @@
 
     /**
      * Slices a copy of list.
-     * @function _listOpUtils..sliceCopy
+     * @function _listOpUtils.sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
@@ -104,11 +104,13 @@
 
 
     /**
+     * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
+     *  'slice to smallest' functionality.
      * @function module:listUtils.listsToShortest
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    lengthsToSmallest = exports.listsToShortest = (0, _curry.curry2)(function () {
+    listsToShortest = exports.listsToShortest = (0, _curry.curry2)(function () {
         for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             lists[_key2] = arguments[_key2];
         }
@@ -154,7 +156,7 @@
      * @param arr
      * @returns {*}
      */
-    reduceRightUntil = exports.reduceUntilRight = (0, _curry.curry)(function (pred, op, agg, arr) {
+    reduceUntilRight = exports.reduceUntilRight = (0, _curry.curry)(function (pred, op, agg, arr) {
         var limit = (0, _object.length)(arr);
         if (!limit) {
             return agg;
@@ -170,7 +172,7 @@
         return result;
     }),
         reduce = exports.reduce = reduceUntil(_boolean.alwaysFalse),
-        reduceRight = exports.reduceRight = reduceRightUntil(_boolean.alwaysFalse),
+        reduceRight = exports.reduceRight = reduceUntilRight(_boolean.alwaysFalse),
 
 
     /**
@@ -192,13 +194,15 @@
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhere = exports.findIndexWhere = (0, _curry.curry)(function (pred, arr) {
-        var ind = -1,
-            predicateFulfilled = false;
+        var ind = 0;
         var limit = (0, _object.length)(arr);
-        while (ind < limit && !predicateFulfilled) {
-            predicateFulfilled = pred(arr[++ind], ind, arr);
+        for (; ind < limit; ind += 1) {
+            var predicateFulfilled = !!pred(arr[ind], ind, arr);
+            if (predicateFulfilled) {
+                return ind;
+            }
         }
-        return ind;
+        return -1;
     }),
 
 
@@ -210,13 +214,14 @@
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
     findIndexWhereRight = exports.findIndexWhereRight = (0, _curry.curry)(function (pred, arr) {
-        var limit = (0, _object.length)(arr);
-        var ind = limit,
-            predicateFulfilled = false;
-        for (; ind >= 0 && !predicateFulfilled; --ind) {
-            predicateFulfilled = pred(arr[ind], ind, arr);
+        var ind = (0, _object.length)(arr) - 1;
+        for (; ind >= 0; ind -= 1) {
+            var predicateFulfilled = !!pred(arr[ind], ind, arr);
+            if (predicateFulfilled) {
+                return ind;
+            }
         }
-        return ind;
+        return -1;
     }),
 
 
@@ -226,9 +231,6 @@
      * @returns {Array|undefined}
      */
     findIndicesWhere = exports.findIndicesWhere = (0, _curry.curry)(function (pred, xs) {
-        if (!xs || !xs.length) {
-            return undefined;
-        }
         var limit = (0, _object.length)(xs);
         var ind = 0,
             out = [];

@@ -43,19 +43,14 @@ const fnOrError = (symbolName, f) => {
         return f;
     };
 
-/**
- * @author elydelacruz
- * @created 12/6/2016.
- * @memberOf function
- * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
- */
-
 const curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 const curryN = (executeArity, fn, ...curriedArgs) => {
         return (...args) => {
             let concatedArgs = curriedArgs.concat(args),
                 canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
-            return !canBeCalled ? curryN.apply(null, [executeArity, fnOrError(curryNotFnErrPrefix, fn)].concat(concatedArgs)) :
+            return !canBeCalled ?
+                curryN.apply(null, [executeArity, fnOrError(curryNotFnErrPrefix, fn)]
+                    .concat(concatedArgs)) :
                 fnOrError(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
         };
     };
@@ -183,38 +178,11 @@ const isset = x => x !== null && x !== undefined;
  * @memberOf object
  */
 
-/**
- * Looks up property and returns it's value; Else `undefined`.
- * Method is null safe (will not throw on `null` or `undefined`).
- * @function module:object.lookup
- * @param key {String} - Key to search on `obj`
- * @param obj {Object} - Object to search `name` on.
- * @returns {*}
- */
 const lookup = curry((key, obj) => isset(obj) ? obj[key] : undefined);
 
-/**
- * Created by elydelacruz on 9/7/2017.
- * @module _jsPlatform_function
- * @private
- */
 const apply = curry((fn, args) => fn.apply(null, args));
 const call = curry2((fn, ...args) => apply(fn, args));
 
-/**
- * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
- * @example
- * // - If exists `(value).constructor.of` uses this.
- * // - If value is of one String, Boolean, Symbol, or Number types calls it's
- * //      constructor as a function (in cast form;  E.g., `constructor(...args)` )
- * // - Else if constructor is a function, thus far, then calls constructor using
- * //      the `new` keyword (with any passed in args).
-
- * @function module:object.of
- * @param x {*} - Value to derive returned value's type from.
- * @param [args] {...*} - Any args to pass in to matched construction strategy.
- * @returns {*|undefined} - New value of given value's type else `undefined`.
- */
 const of = (x, ...args) => {
     if (!isset(x)) { return undefined; }
     const constructor = x.constructor;
@@ -324,18 +292,13 @@ const negateFN = fn => curry2((...args) => !apply(fn, args));
  * @module boolean
  * @description Contains functional version of 'always-true', 'always-false', 'is-truthy', and 'is-falsy'.
  */
-
 const isTruthy = value => !!value;
 const isFalsy = value => !value;
 const alwaysTrue = () => true;
 const alwaysFalse = () => false;
+const equal = curry((a, b) => a === b);
+const equalAll = curry2((a, ...args) => args.every(b => equal(a, b)));
 
-/**
- * @function module:list.map
- * @param fn {Function} - Function to map on array.
- * @param xs {Array}
- * @returns {Array}
- */
 const map = curry((fn, xs) =>  {
     let ind = 0,
         limit = length(xs),
@@ -367,7 +330,7 @@ const genericAscOrdering = curry((a, b) => {
         return 0;
     });
 const lengths = curry2((...lists) => map(length, lists));
-const lengthsToSmallest = curry2((...lists) => {
+const listsToShortest = curry2((...lists) => {
         const listLengths = apply(lengths, lists),
             smallLen = Math.min.apply(Math, listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
@@ -384,7 +347,7 @@ const reduceUntil = curry((pred, op, agg, arr) => {
         }
         return result;
     });
-const reduceRightUntil = curry((pred, op, agg, arr) => {
+const reduceUntilRight = curry((pred, op, agg, arr) => {
         const limit = length(arr);
         if (!limit) { return agg; }
         let ind = limit - 1,
@@ -396,28 +359,30 @@ const reduceRightUntil = curry((pred, op, agg, arr) => {
         return result;
     });
 const reduce = reduceUntil(alwaysFalse);
-const reduceRight = reduceRightUntil(alwaysFalse);
+const reduceRight = reduceUntilRight(alwaysFalse);
 const lastIndex = x => { const len = length(x); return len ? len - 1 : 0; };
 const findIndexWhere = curry((pred, arr) => {
-        let ind = -1,
-            predicateFulfilled = false;
+        let ind = 0;
         const limit = length(arr);
-        while (ind < limit && !predicateFulfilled) {
-            predicateFulfilled = pred(arr[++ind], ind, arr);
+        for (; ind < limit; ind += 1) {
+            const predicateFulfilled = !!pred(arr[ind], ind, arr);
+            if (predicateFulfilled) {
+                return ind;
+            }
         }
-        return ind;
+        return -1;
     });
 const findIndexWhereRight = curry((pred, arr) => {
-        const limit = length(arr);
-        let ind = limit,
-            predicateFulfilled = false;
-        for (; ind >= 0 && !predicateFulfilled; --ind) {
-            predicateFulfilled = pred(arr[ind], ind, arr);
+        let ind = length(arr) - 1;
+        for (; ind >= 0; ind -= 1) {
+            const predicateFulfilled = !!pred(arr[ind], ind, arr);
+            if (predicateFulfilled) {
+                return ind;
+            }
         }
-        return ind;
+        return -1;
     });
 const findIndicesWhere = curry((pred, xs) => {
-        if (!xs || !xs.length) { return undefined; }
         const limit = length(xs);
         let ind = 0,
             out = [];
@@ -438,15 +403,6 @@ const findWhere = curry((pred, xs) => {
 
 /**
  * @module object
- */
-/**
- * Normalizes step for `from` and `to` combination.
- * @function module:list.normalizeStep
- * @param from {Number}
- * @param to {Number}
- * @param [step = 1] {Number}
- * @returns {Number}
- * @private
  */
 const normalizeStep = (from, to, step) => {
     if (from > to) {
@@ -486,13 +442,6 @@ const reverse$1 = defineReverse();
  * Created by elydelacruz on 9/6/2017.
  */
 
-/**
- * Functional version of `String.prototype.split`.
- * @function module:_string.split
- * @param separator {String|RegExp}
- * @param str {String}
- * @returns {Array}
- */
 const split = fPureTakesOne('split');
 
 /**
@@ -700,22 +649,31 @@ const takeWhile = curry((pred, list) =>
 const dropWhile = curry((pred, list) => {
         const limit = length(list),
             splitPoint =
-                findIndexWhere((item, ind, list2) =>
-                    !pred(list[ind], ind, list2), list);
+                findIndexWhere(
+                    (x, i, xs) => !pred(x, i, xs),
+                    list
+                );
 
         return splitPoint === -1 ?
-            sliceTo(limit, list) :
+            sliceFrom(limit, list) :
             slice(splitPoint, limit, list);
     });
 const dropWhileEnd = curry((pred, list) => {
-        const limit = length(list),
-            splitPoint =
-                findIndexWhereRight((item, ind, list2) =>
-                    !pred(list[ind], ind, list2), list);
+        const splitPoint =
+                findIndexWhereRight(
+                    (x, i, xs) => !pred(x, i, xs),
+                    list
+                );
 
-        return splitPoint === -1 ?
-            sliceTo(limit, list) :
-            sliceTo(splitPoint + 1, list);
+        if (splitPoint === -1) {
+            return of(list);
+        }
+
+        const out = reverse(list);
+        return sliceTo(
+            splitPoint + 1,
+            isString(list) ? out.join('') : out
+        );
     });
 const span = curry((pred, list) => {
         const splitPoint = findIndexWhere(negateF3(pred), list);
@@ -887,13 +845,13 @@ const zip = curry((arr1, arr2) => {
         if (!length(arr1) || !length(arr2)) {
             return [];
         }
-        const [a1, a2] = lengthsToSmallest(arr1, arr2);
+        const [a1, a2] = listsToShortest(arr1, arr2);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, [item, a2[ind]]),
             [], a1);
     });
 const zipN = curry2((...lists) => {
-        const trimmedLists = apply(lengthsToSmallest, lists);
+        const trimmedLists = apply(listsToShortest, lists);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
@@ -905,13 +863,13 @@ const zipWith = curry((op, xs1, xs2) => {
         if (!length(xs1) || !length(xs2)) {
             return [];
         }
-        const [a1, a2] = lengthsToSmallest(xs1, xs2);
+        const [a1, a2] = listsToShortest(xs1, xs2);
         return reduce((agg, item, ind) =>
                 aggregateArr$(agg, op(item, a2[ind])),
             [], a1);
     });
 const zipWithN = curry3((op, ...lists) => {
-        const trimmedLists = apply(lengthsToSmallest, lists),
+        const trimmedLists = apply(listsToShortest, lists),
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
@@ -1077,10 +1035,10 @@ const nubBy = curry((pred, list) => {
 const removeBy = curry((pred, x, list) => { // @todo optimize this implementation
         const foundIndex = findIndex(item => pred(x, item), list),
             parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-        return append(parts[0], tail(parts[1]));
+        return foundIndex > -1 ? append(parts[0], tail(parts[1])) : sliceCopy(list);
     });
 const removeFirstsBy = curry((pred, xs1, xs2) =>
-        foldl((agg, x2) => removeBy(pred, x2, agg), xs1, xs2));
+        foldl((agg, x) => removeBy(pred, x, agg), xs1, xs2));
 const unionBy = curry((pred, arr1, arr2) =>
         foldl((agg, b) => {
                 const alreadyAdded = any(a => pred(a, b), agg);
@@ -1259,14 +1217,6 @@ const toArray = x => {
  * @returns {Object}
 */
 
-/**
- * Composes all functions passed in from right to left passing each functions return value to
- * the function on the left of itself.
- * @function module:function.compose
- * @type {Function}
- * @param args {...{Function}}
- * @returns {Function}
- */
 const compose = (...args) =>
         arg0 => reduceRight$1((value, fn) => fn(value), arg0, args);
 
@@ -1459,4 +1409,4 @@ const classCase = compose(ucaseFirst, camelCase);
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
 
-export { instanceOf, hasOwnProperty, length, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefName, isFunction, isType, isOfType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, apply, call, compose, curryNotFnErrPrefix, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, map, append, head, last, tail, init, uncons, unconsr, concat$$1 as concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach, filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, lengthsToSmallest, reduceUntil, reduceRightUntil, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArr$ };
+export { instanceOf, hasOwnProperty, length, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefName, isFunction, isType, isOfType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll, apply, call, compose, curryNotFnErrPrefix, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, map, append, head, last, tail, init, uncons, unconsr, concat$$1 as concat, concatMap, reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach, filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, listsToShortest, reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArr$ };

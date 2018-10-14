@@ -47,13 +47,6 @@ var fnOrError = function fnOrError(symbolName, f) {
     return f;
 };
 
-/**
- * @author elydelacruz
- * @created 12/6/2016.
- * @memberOf function
- * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
- */
-
 var curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 var curryN = function curryN(executeArity, fn) {
     for (var _len = arguments.length, curriedArgs = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
@@ -269,23 +262,10 @@ var isset = function isset(x) {
  * @memberOf object
  */
 
-/**
- * Looks up property and returns it's value; Else `undefined`.
- * Method is null safe (will not throw on `null` or `undefined`).
- * @function module:object.lookup
- * @param key {String} - Key to search on `obj`
- * @param obj {Object} - Object to search `name` on.
- * @returns {*}
- */
 var lookup = curry(function (key, obj) {
     return isset(obj) ? obj[key] : undefined;
 });
 
-/**
- * Created by elydelacruz on 9/7/2017.
- * @module _jsPlatform_function
- * @private
- */
 var apply = curry(function (fn, args) {
     return fn.apply(null, args);
 });
@@ -297,20 +277,6 @@ var call = curry2(function (fn) {
     return apply(fn, args);
 });
 
-/**
- * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
- * @example
- * // - If exists `(value).constructor.of` uses this.
- * // - If value is of one String, Boolean, Symbol, or Number types calls it's
- * //      constructor as a function (in cast form;  E.g., `constructor(...args)` )
- * // - Else if constructor is a function, thus far, then calls constructor using
- * //      the `new` keyword (with any passed in args).
-
- * @function module:object.of
- * @param x {*} - Value to derive returned value's type from.
- * @param [args] {...*} - Any args to pass in to matched construction strategy.
- * @returns {*|undefined} - New value of given value's type else `undefined`.
- */
 var of = function of(x) {
     for (var _len8 = arguments.length, args = Array(_len8 > 1 ? _len8 - 1 : 0), _key8 = 1; _key8 < _len8; _key8++) {
         args[_key8 - 1] = arguments[_key8];
@@ -454,7 +420,6 @@ var negateFN = function negateFN(fn) {
  * @module boolean
  * @description Contains functional version of 'always-true', 'always-false', 'is-truthy', and 'is-falsy'.
  */
-
 var isTruthy = function isTruthy(value) {
     return !!value;
 };
@@ -467,13 +432,19 @@ var alwaysTrue = function alwaysTrue() {
 var alwaysFalse = function alwaysFalse() {
     return false;
 };
+var equal = curry(function (a, b) {
+    return a === b;
+});
+var equalAll = curry2(function (a) {
+    for (var _len11 = arguments.length, args = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
+        args[_key11 - 1] = arguments[_key11];
+    }
 
-/**
- * @function module:list.map
- * @param fn {Function} - Function to map on array.
- * @param xs {Array}
- * @returns {Array}
- */
+    return args.every(function (b) {
+        return equal(a, b);
+    });
+});
+
 var map = curry(function (fn, xs) {
     var ind = 0,
         limit = length(xs),
@@ -514,15 +485,15 @@ var genericAscOrdering = curry(function (a, b) {
     return 0;
 });
 var lengths = curry2(function () {
-    for (var _len11 = arguments.length, lists = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
-        lists[_key11] = arguments[_key11];
+    for (var _len12 = arguments.length, lists = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
+        lists[_key12] = arguments[_key12];
     }
 
     return map(length, lists);
 });
-var lengthsToSmallest = curry2(function () {
-    for (var _len12 = arguments.length, lists = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
-        lists[_key12] = arguments[_key12];
+var listsToShortest = curry2(function () {
+    for (var _len13 = arguments.length, lists = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
+        lists[_key13] = arguments[_key13];
     }
 
     var listLengths = apply(lengths, lists),
@@ -546,7 +517,7 @@ var reduceUntil = curry(function (pred, op, agg, arr) {
     }
     return result;
 });
-var reduceRightUntil = curry(function (pred, op, agg, arr) {
+var reduceUntilRight = curry(function (pred, op, agg, arr) {
     var limit = length(arr);
     if (!limit) {
         return agg;
@@ -562,32 +533,32 @@ var reduceRightUntil = curry(function (pred, op, agg, arr) {
     return result;
 });
 var reduce = reduceUntil(alwaysFalse);
-var reduceRight = reduceRightUntil(alwaysFalse);
+var reduceRight = reduceUntilRight(alwaysFalse);
 var lastIndex = function lastIndex(x) {
     var len = length(x);return len ? len - 1 : 0;
 };
 var findIndexWhere = curry(function (pred, arr) {
-    var ind = -1,
-        predicateFulfilled = false;
+    var ind = 0;
     var limit = length(arr);
-    while (ind < limit && !predicateFulfilled) {
-        predicateFulfilled = pred(arr[++ind], ind, arr);
+    for (; ind < limit; ind += 1) {
+        var predicateFulfilled = !!pred(arr[ind], ind, arr);
+        if (predicateFulfilled) {
+            return ind;
+        }
     }
-    return ind;
+    return -1;
 });
 var findIndexWhereRight = curry(function (pred, arr) {
-    var limit = length(arr);
-    var ind = limit,
-        predicateFulfilled = false;
-    for (; ind >= 0 && !predicateFulfilled; --ind) {
-        predicateFulfilled = pred(arr[ind], ind, arr);
+    var ind = length(arr) - 1;
+    for (; ind >= 0; ind -= 1) {
+        var predicateFulfilled = !!pred(arr[ind], ind, arr);
+        if (predicateFulfilled) {
+            return ind;
+        }
     }
-    return ind;
+    return -1;
 });
 var findIndicesWhere = curry(function (pred, xs) {
-    if (!xs || !xs.length) {
-        return undefined;
-    }
     var limit = length(xs);
     var ind = 0,
         out = [];
@@ -614,15 +585,6 @@ var findWhere = curry(function (pred, xs) {
 
 /**
  * @module object
- */
-/**
- * Normalizes step for `from` and `to` combination.
- * @function module:list.normalizeStep
- * @param from {Number}
- * @param to {Number}
- * @param [step = 1] {Number}
- * @returns {Number}
- * @private
  */
 var normalizeStep = function normalizeStep(from, to, step) {
     if (from > to) {
@@ -672,13 +634,6 @@ var reverse$1 = defineReverse();
  * Created by elydelacruz on 9/6/2017.
  */
 
-/**
- * Functional version of `String.prototype.split`.
- * @function module:_string.split
- * @param separator {String|RegExp}
- * @param str {String}
- * @returns {Array}
- */
 var split = fPureTakesOne('split');
 
 /**
@@ -691,8 +646,8 @@ var split = fPureTakesOne('split');
  * @module list
  */
 var append = curry2(function () {
-    for (var _len13 = arguments.length, args = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
-        args[_key13] = arguments[_key13];
+    for (var _len14 = arguments.length, args = Array(_len14), _key14 = 0; _key14 < _len14; _key14++) {
+        args[_key14] = arguments[_key14];
     }
 
     return apply(concat$1, args);
@@ -923,19 +878,23 @@ var takeWhile = curry(function (pred, list) {
 });
 var dropWhile = curry(function (pred, list) {
     var limit = length(list),
-        splitPoint = findIndexWhere(function (item, ind, list2) {
-        return !pred(list[ind], ind, list2);
+        splitPoint = findIndexWhere(function (x, i, xs) {
+        return !pred(x, i, xs);
     }, list);
 
-    return splitPoint === -1 ? sliceTo(limit, list) : slice(splitPoint, limit, list);
+    return splitPoint === -1 ? sliceFrom(limit, list) : slice(splitPoint, limit, list);
 });
 var dropWhileEnd = curry(function (pred, list) {
-    var limit = length(list),
-        splitPoint = findIndexWhereRight(function (item, ind, list2) {
-        return !pred(list[ind], ind, list2);
+    var splitPoint = findIndexWhereRight(function (x, i, xs) {
+        return !pred(x, i, xs);
     }, list);
 
-    return splitPoint === -1 ? sliceTo(limit, list) : sliceTo(splitPoint + 1, list);
+    if (splitPoint === -1) {
+        return of(list);
+    }
+
+    var out = reverse(list);
+    return sliceTo(splitPoint + 1, isString(list) ? out.join('') : out);
 });
 var span = curry(function (pred, list) {
     var splitPoint = findIndexWhere(negateF3(pred), list);
@@ -1108,21 +1067,21 @@ var zip = curry(function (arr1, arr2) {
         return [];
     }
 
-    var _lengthsToSmallest = lengthsToSmallest(arr1, arr2),
-        _lengthsToSmallest2 = _slicedToArray(_lengthsToSmallest, 2),
-        a1 = _lengthsToSmallest2[0],
-        a2 = _lengthsToSmallest2[1];
+    var _listsToShortest = listsToShortest(arr1, arr2),
+        _listsToShortest2 = _slicedToArray(_listsToShortest, 2),
+        a1 = _listsToShortest2[0],
+        a2 = _listsToShortest2[1];
 
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, [item, a2[ind]]);
     }, [], a1);
 });
 var zipN = curry2(function () {
-    for (var _len14 = arguments.length, lists = Array(_len14), _key14 = 0; _key14 < _len14; _key14++) {
-        lists[_key14] = arguments[_key14];
+    for (var _len15 = arguments.length, lists = Array(_len15), _key15 = 0; _key15 < _len15; _key15++) {
+        lists[_key15] = arguments[_key15];
     }
 
-    var trimmedLists = apply(lengthsToSmallest, lists);
+    var trimmedLists = apply(listsToShortest, lists);
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, map(function (xs) {
             return xs[ind];
@@ -1143,21 +1102,21 @@ var zipWith = curry(function (op, xs1, xs2) {
         return [];
     }
 
-    var _lengthsToSmallest3 = lengthsToSmallest(xs1, xs2),
-        _lengthsToSmallest4 = _slicedToArray(_lengthsToSmallest3, 2),
-        a1 = _lengthsToSmallest4[0],
-        a2 = _lengthsToSmallest4[1];
+    var _listsToShortest3 = listsToShortest(xs1, xs2),
+        _listsToShortest4 = _slicedToArray(_listsToShortest3, 2),
+        a1 = _listsToShortest4[0],
+        a2 = _listsToShortest4[1];
 
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, op(item, a2[ind]));
     }, [], a1);
 });
 var zipWithN = curry3(function (op) {
-    for (var _len15 = arguments.length, lists = Array(_len15 > 1 ? _len15 - 1 : 0), _key15 = 1; _key15 < _len15; _key15++) {
-        lists[_key15 - 1] = arguments[_key15];
+    for (var _len16 = arguments.length, lists = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
+        lists[_key16 - 1] = arguments[_key16];
     }
 
-    var trimmedLists = apply(lengthsToSmallest, lists),
+    var trimmedLists = apply(listsToShortest, lists),
         lenOfTrimmed = length(trimmedLists);
     if (!lenOfTrimmed) {
         return [];
@@ -1384,11 +1343,11 @@ var removeBy = curry(function (pred, x, list) {
         return pred(x, item);
     }, list),
         parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-    return append(parts[0], tail(parts[1]));
+    return foundIndex > -1 ? append(parts[0], tail(parts[1])) : sliceCopy(list);
 });
 var removeFirstsBy = curry(function (pred, xs1, xs2) {
-    return foldl(function (agg, x2) {
-        return removeBy(pred, x2, agg);
+    return foldl(function (agg, x) {
+        return removeBy(pred, x, agg);
     }, xs1, xs2);
 });
 var unionBy = curry(function (pred, arr1, arr2) {
@@ -1428,8 +1387,8 @@ var difference = curry(function (array1, array2) {
     }, [], array1);
 });
 var complement = curry2(function (arr0) {
-    for (var _len16 = arguments.length, arrays = Array(_len16 > 1 ? _len16 - 1 : 0), _key16 = 1; _key16 < _len16; _key16++) {
-        arrays[_key16 - 1] = arguments[_key16];
+    for (var _len17 = arguments.length, arrays = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
+        arrays[_key17 - 1] = arguments[_key17];
     }
 
     return reduce(function (agg, arr) {
@@ -1498,8 +1457,8 @@ var objDifference = curry(function (obj1, obj2) {
     }, {}, keys(obj1));
 });
 var objComplement = curry2(function (obj0) {
-    for (var _len17 = arguments.length, objs = Array(_len17 > 1 ? _len17 - 1 : 0), _key17 = 1; _key17 < _len17; _key17++) {
-        objs[_key17 - 1] = arguments[_key17];
+    for (var _len18 = arguments.length, objs = Array(_len18 > 1 ? _len18 - 1 : 0), _key18 = 1; _key18 < _len18; _key18++) {
+        objs[_key18 - 1] = arguments[_key18];
     }
 
     return foldl(function (agg, obj) {
@@ -1514,8 +1473,8 @@ var objComplement = curry2(function (obj0) {
 var log = console.log.bind(console);
 var error = console.error.bind(console);
 var peek = function peek() {
-    for (var _len18 = arguments.length, args = Array(_len18), _key18 = 0; _key18 < _len18; _key18++) {
-        args[_key18] = arguments[_key18];
+    for (var _len19 = arguments.length, args = Array(_len19), _key19 = 0; _key19 < _len19; _key19++) {
+        args[_key19] = arguments[_key19];
     }
 
     return log.apply(undefined, args), args.pop();
@@ -1623,17 +1582,9 @@ var toArray = function toArray(x) {
  * @returns {Object}
 */
 
-/**
- * Composes all functions passed in from right to left passing each functions return value to
- * the function on the left of itself.
- * @function module:function.compose
- * @type {Function}
- * @param args {...{Function}}
- * @returns {Function}
- */
 var compose = function compose() {
-    for (var _len19 = arguments.length, args = Array(_len19), _key19 = 0; _key19 < _len19; _key19++) {
-        args[_key19] = arguments[_key19];
+    for (var _len20 = arguments.length, args = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {
+        args[_key20] = arguments[_key20];
     }
 
     return function (arg0) {
@@ -1645,8 +1596,8 @@ var compose = function compose() {
 
 var flipN = function flipN(fn) {
     return curry2(function () {
-        for (var _len20 = arguments.length, args = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {
-            args[_key20] = arguments[_key20];
+        for (var _len21 = arguments.length, args = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {
+            args[_key21] = arguments[_key21];
         }
 
         return apply(fn, reverse$1(args));
@@ -1920,6 +1871,8 @@ exports.isTruthy = isTruthy;
 exports.isFalsy = isFalsy;
 exports.alwaysTrue = alwaysTrue;
 exports.alwaysFalse = alwaysFalse;
+exports.equal = equal;
+exports.equalAll = equalAll;
 exports.apply = apply;
 exports.call = call;
 exports.compose = compose;
@@ -2073,9 +2026,9 @@ exports.sliceTo = sliceTo;
 exports.sliceCopy = sliceCopy;
 exports.genericAscOrdering = genericAscOrdering;
 exports.lengths = lengths;
-exports.lengthsToSmallest = lengthsToSmallest;
+exports.listsToShortest = listsToShortest;
 exports.reduceUntil = reduceUntil;
-exports.reduceRightUntil = reduceRightUntil;
+exports.reduceUntilRight = reduceUntilRight;
 exports.reduce = reduce;
 exports.reduceRight = reduceRight;
 exports.lastIndex = lastIndex;
