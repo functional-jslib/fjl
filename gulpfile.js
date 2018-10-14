@@ -42,7 +42,7 @@ const path = require('path'),
         del(pathsToDelete)
             .then(deletedPaths => {
                 if (deletedPaths.length) {
-                    log('\nThe following paths have been deleted: \n - ' + deletedPaths.join('\n - \n'));
+                    log('\nThe following paths have been deleted: \n - ' + deletedPaths.join('\n -'));
                     return;
                 }
                 log(' - No paths to clean.\n', '--mandatory');

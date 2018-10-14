@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 /**
  * Created by elyde on 12/18/2016.
  * @memberOf object
@@ -48,19 +50,23 @@ var fnOrError = function fnOrError(symbolName, f) {
 };
 
 var curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
+
 var curryN = function curryN(executeArity, fn) {
-    for (var _len = arguments.length, curriedArgs = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        curriedArgs[_key - 2] = arguments[_key];
+    for (var _len = arguments.length, argsToCurry = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        argsToCurry[_key - 2] = arguments[_key];
     }
 
+    if (!fn || !(fn instanceof Function)) {
+        throw new Error(curryNotFnErrPrefix + ' should be a function. ' + ('Type received: ' + typeOf(fn) + ';  Value received: ' + fn + '.'));
+    }
     return function () {
         for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             args[_key2] = arguments[_key2];
         }
 
-        var concatedArgs = curriedArgs.concat(args),
+        var concatedArgs = argsToCurry.concat(args),
             canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-        return !canBeCalled ? curryN.apply(null, [executeArity, fnOrError(curryNotFnErrPrefix, fn)].concat(concatedArgs)) : fnOrError(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
+        return !canBeCalled ? curryN.apply(undefined, [executeArity, fn].concat(_toConsumableArray(concatedArgs))) : fn.apply(undefined, _toConsumableArray(concatedArgs));
     };
 };
 var curry = function curry(fn) {
@@ -491,7 +497,7 @@ var lengths = curry2(function () {
 
     return map(length, lists);
 });
-var listsToShortest = curry2(function () {
+var toShortest = curry2(function () {
     for (var _len13 = arguments.length, lists = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
         lists[_key13] = arguments[_key13];
     }
@@ -625,7 +631,13 @@ var defineReverse = function defineReverse() {
         }, []);
     };
 };
+var map$2 = fPureTakesOne('map');
+var filter$1 = fPureTakesOne('filter');
+var reduce$1 = fPureTakes2('reduce');
 var reduceRight$1 = fPureTakes2('reduceRight');
+var forEach$1 = fPureTakesOne('forEach');
+var some = fPureTakesOne('some');
+var every = fPureTakesOne('every');
 var join = fPureTakesOne('join');
 var push = fPureTakesOneOrMore('push');
 var reverse$1 = defineReverse();
@@ -1067,10 +1079,10 @@ var zip = curry(function (arr1, arr2) {
         return [];
     }
 
-    var _listsToShortest = listsToShortest(arr1, arr2),
-        _listsToShortest2 = _slicedToArray(_listsToShortest, 2),
-        a1 = _listsToShortest2[0],
-        a2 = _listsToShortest2[1];
+    var _toShortest = toShortest(arr1, arr2),
+        _toShortest2 = _slicedToArray(_toShortest, 2),
+        a1 = _toShortest2[0],
+        a2 = _toShortest2[1];
 
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, [item, a2[ind]]);
@@ -1081,7 +1093,7 @@ var zipN = curry2(function () {
         lists[_key15] = arguments[_key15];
     }
 
-    var trimmedLists = apply(listsToShortest, lists);
+    var trimmedLists = apply(toShortest, lists);
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, map(function (xs) {
             return xs[ind];
@@ -1102,10 +1114,10 @@ var zipWith = curry(function (op, xs1, xs2) {
         return [];
     }
 
-    var _listsToShortest3 = listsToShortest(xs1, xs2),
-        _listsToShortest4 = _slicedToArray(_listsToShortest3, 2),
-        a1 = _listsToShortest4[0],
-        a2 = _listsToShortest4[1];
+    var _toShortest3 = toShortest(xs1, xs2),
+        _toShortest4 = _slicedToArray(_toShortest3, 2),
+        a1 = _toShortest4[0],
+        a2 = _toShortest4[1];
 
     return reduce(function (agg, item, ind) {
         return aggregateArr$(agg, op(item, a2[ind]));
@@ -1116,7 +1128,7 @@ var zipWithN = curry3(function (op) {
         lists[_key16 - 1] = arguments[_key16];
     }
 
-    var trimmedLists = apply(listsToShortest, lists),
+    var trimmedLists = apply(toShortest, lists),
         lenOfTrimmed = length(trimmedLists);
     if (!lenOfTrimmed) {
         return [];
@@ -1876,7 +1888,6 @@ exports.equalAll = equalAll;
 exports.apply = apply;
 exports.call = call;
 exports.compose = compose;
-exports.curryNotFnErrPrefix = curryNotFnErrPrefix;
 exports.curryN = curryN;
 exports.curry = curry;
 exports.curry2 = curry2;
@@ -2026,7 +2037,7 @@ exports.sliceTo = sliceTo;
 exports.sliceCopy = sliceCopy;
 exports.genericAscOrdering = genericAscOrdering;
 exports.lengths = lengths;
-exports.listsToShortest = listsToShortest;
+exports.toShortest = toShortest;
 exports.reduceUntil = reduceUntil;
 exports.reduceUntilRight = reduceUntilRight;
 exports.reduce = reduce;

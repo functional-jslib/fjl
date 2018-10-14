@@ -27,8 +27,8 @@ describe ('#function', function () {
             expectEqual(call(add, 1, 2, 3, 4, 5), 15);
         });
         it ('should fail when argument `1` is not a function', () => {
-            expect(() => call(99, null)).toThrow(Error)
-            expect(() => call(undefined, undefined)).toThrow(Error)
+            expect(() => call(99, null)).toThrow(Error);
+            expect(() => call(undefined, undefined)).toThrow(Error);
         });
     });
 
@@ -45,8 +45,8 @@ describe ('#function', function () {
             expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
         });
         it ('should fail when argument `1` is not a function', () => {
-            expect(() => apply(99, null)).toThrow(Error)
-            expect(() => apply(undefined, undefined)).toThrow(Error)
+            expect(() => apply(99, null)).toThrow(Error);
+            expect(() => apply(undefined, undefined)).toThrow(Error);
         });
     });
 
@@ -155,12 +155,12 @@ describe ('#function', function () {
             expectFunction(curry);
         });
 
-        it ('should return a function when called with one or more "correct" args.', function () {
-            expect(curry(() => undefined, 99)).toBeInstanceOf(Function);
-            expect(curry(() => undefined)).toBeInstanceOf(Function);
+        it ('should return a function when receiving a function.', function () {
+            expectFunction(curry(() => undefined));
+            expectFunction(curry(function () {}));
         });
 
-        it ('should throw an error when receiving anything other than a function for first param', function () {
+        it ('should throw an error when receiving anything other than a function (for first param)', function () {
             [99, false, true, null, undefined, [], {}].forEach(x => {
                 expectError(() => curry(x));
             });
@@ -234,10 +234,8 @@ describe ('#function', function () {
             expect(curryN).toBeInstanceOf(Function);
         });
 
-        it ('should return a function that throws an error when no arguments are passed.', function () {
-            let result = curryN();
-            expect(result).toBeInstanceOf(Function);
-            expectError(result);
+        it ('should throw an error when not receiving an argument at param `0`.', function () {
+            expectError(curryN);
         });
 
         it ('should pass in any values passed the arity when executing the curried function', function () {

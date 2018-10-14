@@ -110,7 +110,7 @@
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    listsToShortest = exports.toShortest = (0, _curry.curry2)(function () {
+    toShortest = exports.toShortest = (0, _curry.curry2)(function () {
         for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             lists[_key2] = arguments[_key2];
         }

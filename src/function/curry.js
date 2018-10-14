@@ -1,3 +1,4 @@
+import {typeOf} from '../object/typeOf';
 import {fnOrError} from './fnOrError';
 
 /**
@@ -7,35 +8,69 @@ import {fnOrError} from './fnOrError';
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 
-export const
+/**
+ * @private
+ * @type {string}
+ */
+const
 
-    /**
-     * @private
-     * @type {string}
-     */
+    slice = (x, start, end) => [].slice.call(x, start, end),
+
     curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`',
+
+    performCurry = (fn, curryFn, executeArity, args, argsToCurry) => {
+        let concatedArgs = argsToCurry.concat(args),
+            canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
+        return !canBeCalled ?
+            curryFn(executeArity, fn, ...concatedArgs) :
+            fn(...concatedArgs);
+    }
+;
+
+export const
 
     /**
      * Curries a function up to a given arity.
      * @function module:function.curryN
      * @param executeArity {Number}
      * @param fn {Function}
-     * @param curriedArgs {...*}
+     * @param argsToCurry {...*}
      * @returns {Function}
      */
-    curryN = (executeArity, fn, ...curriedArgs) => {
-        return (...args) => {
-            let concatedArgs = curriedArgs.concat(args),
-                canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
-            return !canBeCalled ?
-                curryN.apply(null, [executeArity, fnOrError(curryNotFnErrPrefix, fn)]
-                    .concat(concatedArgs)) :
-                fnOrError(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
-        };
+    curryN = (executeArity, fn, ...argsToCurry) => {
+        if (!fn || !(fn instanceof Function)) {
+            throw new Error(`${curryNotFnErrPrefix} should be a function. ` +
+                `Type received: ${typeOf(fn)};  Value received: ${fn}.`);
+        }
+        switch (executeArity) {
+            case 1:
+                return function func(x) {
+                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
+                };
+            case 2:
+                return function func(a, b) {
+                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
+                };
+            case 3:
+                return function func(a, b, c) {
+                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
+                };
+            case 4:
+                return function func(a, b, c, d) {
+                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
+                };
+            case 5:
+                return function func(a, b, c, d, e) {
+                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
+                };
+            default:
+                return (...args) => performCurry(fn, curryN, executeArity, args, argsToCurry);
+        }
+
     },
 
     /**
-     * Curries a function based on it's defined arity (argument's arrayOps expected length).
+     * Curries a function based on it's defined arity (note: rest args param (`...rest`) are not counted in arity).
      * @function module:function.curry
      * @param fn {Function}
      * @param argsToCurry {...*}

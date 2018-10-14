@@ -3,9 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curry = exports.curryN = exports.curryNotFnErrPrefix = undefined;
+exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curry = exports.curryN = undefined;
+
+var _typeOf = require('../object/typeOf');
 
 var _fnOrError = require('./fnOrError');
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
  * @author elydelacruz
@@ -14,42 +18,44 @@ var _fnOrError = require('./fnOrError');
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 
-var
-
 /**
- * @private
- * @type {string}
- */
-curryNotFnErrPrefix = exports.curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`',
+     * @private
+     * @type {string}
+     */
+var curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 
+var
 
 /**
  * Curries a function up to a given arity.
  * @function module:function.curryN
  * @param executeArity {Number}
  * @param fn {Function}
- * @param curriedArgs {...*}
+ * @param argsToCurry {...*}
  * @returns {Function}
  */
 curryN = exports.curryN = function curryN(executeArity, fn) {
-    for (var _len = arguments.length, curriedArgs = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        curriedArgs[_key - 2] = arguments[_key];
+    for (var _len = arguments.length, argsToCurry = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        argsToCurry[_key - 2] = arguments[_key];
     }
 
+    if (!fn || !(fn instanceof Function)) {
+        throw new Error(curryNotFnErrPrefix + ' should be a function. ' + ('Type received: ' + (0, _typeOf.typeOf)(fn) + ';  Value received: ' + fn + '.'));
+    }
     return function () {
         for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             args[_key2] = arguments[_key2];
         }
 
-        var concatedArgs = curriedArgs.concat(args),
+        var concatedArgs = argsToCurry.concat(args),
             canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-        return !canBeCalled ? curryN.apply(null, [executeArity, (0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn)].concat(concatedArgs)) : (0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
+        return !canBeCalled ? curryN.apply(undefined, [executeArity, fn].concat(_toConsumableArray(concatedArgs))) : fn.apply(undefined, _toConsumableArray(concatedArgs));
     };
 },
 
 
 /**
- * Curries a function based on it's defined arity (argument's arrayOps expected length).
+ * Curries a function based on it's defined arity (note: rest args param (`...rest`) are not counted in arity).
  * @function module:function.curry
  * @param fn {Function}
  * @param argsToCurry {...*}

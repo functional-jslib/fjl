@@ -65,6 +65,7 @@ The docs are divided into modules though, note, all methods live on `fjl` (top l
 - All methods that take rest params "only" are curried up to 2 parameters.
 - Methods that require one argument and rest params are curried at up to 2 parameters.
 - Methods that accept rest params "only" are not curried.
+- All curried functions will have an, arity, `length` of `0` (due to the way currying is currently defined in the libray (will be updated later)).
 
 #### `boolean`
 ```

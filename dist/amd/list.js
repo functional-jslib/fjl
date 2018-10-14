@@ -984,7 +984,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
         if (!(0, _object.length)(arr1) || !(0, _object.length)(arr2)) {
             return [];
         }
-        const [a1, a2] = (0, _utils.listsToShortest)(arr1, arr2);
+        const [a1, a2] = (0, _utils.toShortest)(arr1, arr2);
         return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, [item, a2[ind]]), [], a1);
     }),
 
@@ -998,7 +998,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @returns {Array}
      */
     zipN = exports.zipN = (0, _curry.curry2)((...lists) => {
-        const trimmedLists = (0, _function.apply)(_utils.listsToShortest, lists);
+        const trimmedLists = (0, _function.apply)(_utils.toShortest, lists);
         return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, (0, _map2.default)(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
     }),
 
@@ -1064,7 +1064,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
         if (!(0, _object.length)(xs1) || !(0, _object.length)(xs2)) {
             return [];
         }
-        const [a1, a2] = (0, _utils.listsToShortest)(xs1, xs2);
+        const [a1, a2] = (0, _utils.toShortest)(xs1, xs2);
         return (0, _utils.reduce)((agg, item, ind) => (0, _utils.aggregateArr$)(agg, op(item, a2[ind])), [], a1);
     }),
 
@@ -1083,7 +1083,7 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
      * @returns {Array<Array<*,*>>}
      */
     zipWithN = exports.zipWithN = (0, _curry.curry3)((op, ...lists) => {
-        const trimmedLists = (0, _function.apply)(_utils.listsToShortest, lists),
+        const trimmedLists = (0, _function.apply)(_utils.toShortest, lists),
               lenOfTrimmed = (0, _object.length)(trimmedLists);
         if (!lenOfTrimmed) {
             return [];

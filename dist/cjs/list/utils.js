@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceUntilRight = exports.reduceUntil = exports.listsToShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
+exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exports.findIndexWhere = exports.lastIndex = exports.reduceRight = exports.reduce = exports.reduceUntilRight = exports.reduceUntil = exports.toShortest = exports.lengths = exports.genericAscOrdering = exports.sliceCopy = exports.sliceTo = exports.sliceFrom = undefined;
 
 var _aggregation = require('./aggregation');
 
@@ -108,7 +108,7 @@ lengths = exports.lengths = (0, _curry.curry2)(function () {
  * @param lists {...(Array|String|*)}
  * @returns {Array|String|*}
  */
-listsToShortest = exports.toShortest = (0, _curry.curry2)(function () {
+toShortest = exports.toShortest = (0, _curry.curry2)(function () {
     for (var _len2 = arguments.length, lists = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         lists[_key2] = arguments[_key2];
     }

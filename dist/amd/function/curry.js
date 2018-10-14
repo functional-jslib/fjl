@@ -1,10 +1,10 @@
-define(['exports', './fnOrError'], function (exports, _fnOrError) {
+define(['exports', '../object/typeOf', './fnOrError'], function (exports, _typeOf, _fnOrError) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curry = exports.curryN = exports.curryNotFnErrPrefix = undefined;
+    exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curry = exports.curryN = undefined;
 
 
     /**
@@ -14,34 +14,36 @@ define(['exports', './fnOrError'], function (exports, _fnOrError) {
      * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
      */
 
-    const
-
     /**
-     * @private
-     * @type {string}
-     */
-    curryNotFnErrPrefix = exports.curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`',
+         * @private
+         * @type {string}
+         */
+    const curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
 
+    const
 
     /**
      * Curries a function up to a given arity.
      * @function module:function.curryN
      * @param executeArity {Number}
      * @param fn {Function}
-     * @param curriedArgs {...*}
+     * @param argsToCurry {...*}
      * @returns {Function}
      */
-    curryN = exports.curryN = (executeArity, fn, ...curriedArgs) => {
+    curryN = exports.curryN = (executeArity, fn, ...argsToCurry) => {
+        if (!fn || !(fn instanceof Function)) {
+            throw new Error(`${curryNotFnErrPrefix} should be a function. ` + `Type received: ${(0, _typeOf.typeOf)(fn)};  Value received: ${fn}.`);
+        }
         return (...args) => {
-            let concatedArgs = curriedArgs.concat(args),
+            let concatedArgs = argsToCurry.concat(args),
                 canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-            return !canBeCalled ? curryN.apply(null, [executeArity, (0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn)].concat(concatedArgs)) : (0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn).apply(null, concatedArgs);
+            return !canBeCalled ? curryN(executeArity, fn, ...concatedArgs) : fn(...concatedArgs);
         };
     },
 
 
     /**
-     * Curries a function based on it's defined arity (argument's arrayOps expected length).
+     * Curries a function based on it's defined arity (note: rest args param (`...rest`) are not counted in arity).
      * @function module:function.curry
      * @param fn {Function}
      * @param argsToCurry {...*}

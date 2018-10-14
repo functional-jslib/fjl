@@ -88,7 +88,7 @@ define(['exports', './aggregation', '../jsPlatform/function', '../jsPlatform/lis
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    listsToShortest = exports.toShortest = (0, _curry.curry2)((...lists) => {
+    toShortest = exports.toShortest = (0, _curry.curry2)((...lists) => {
         const listLengths = (0, _function.apply)(lengths, lists),
               smallLen = Math.min.apply(Math, listLengths);
         return (0, _map2.default)((list, ind) => listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list), lists);

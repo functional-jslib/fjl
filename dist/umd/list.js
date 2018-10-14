@@ -1090,10 +1090,10 @@
             return [];
         }
 
-        var _listsToShortest = (0, _utils.toShortest)(arr1, arr2),
-            _listsToShortest2 = _slicedToArray(_listsToShortest, 2),
-            a1 = _listsToShortest2[0],
-            a2 = _listsToShortest2[1];
+        var _toShortest = (0, _utils.toShortest)(arr1, arr2),
+            _toShortest2 = _slicedToArray(_toShortest, 2),
+            a1 = _toShortest2[0],
+            a2 = _toShortest2[1];
 
         return (0, _utils.reduce)(function (agg, item, ind) {
             return (0, _utils.aggregateArr$)(agg, [item, a2[ind]]);
@@ -1191,10 +1191,10 @@
             return [];
         }
 
-        var _listsToShortest3 = (0, _utils.toShortest)(xs1, xs2),
-            _listsToShortest4 = _slicedToArray(_listsToShortest3, 2),
-            a1 = _listsToShortest4[0],
-            a2 = _listsToShortest4[1];
+        var _toShortest3 = (0, _utils.toShortest)(xs1, xs2),
+            _toShortest4 = _slicedToArray(_toShortest3, 2),
+            a1 = _toShortest4[0],
+            a2 = _toShortest4[1];
 
         return (0, _utils.reduce)(function (agg, item, ind) {
             return (0, _utils.aggregateArr$)(agg, op(item, a2[ind]));
