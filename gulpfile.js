@@ -143,7 +143,7 @@ const path = require('path'),
 
     docTask = () =>
         deleteFilePaths(['./docs/**/*'])
-            .then(_ =>
+            .then(() =>
                 src(['README.md', './src/**/*.js'], {read: false})
                     .pipe(jsdoc({
                         opts: {
@@ -167,8 +167,9 @@ const path = require('path'),
                     }))
             ),
 
-    watchTask = series(buildTask, () =>
-        gulp.watch([srcsGlob, './node_modules/**'], buildJsTask)
+    watchTask = series(buildTask, function watchTask () {
+            return gulp.watch([srcsGlob, './node_modules/**'], buildJsTask);
+        }
     );
 
     gulp.task('eslint', eslintTask);

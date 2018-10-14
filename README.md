@@ -3,13 +3,13 @@
 [![NPM version](https://badge.fury.io/js/fjl.svg)](http://badge.fury.io/js/fjl)
 [![Dependencies](https://david-dm.org/functional-jslib/fjl.png)](https://david-dm.org/functional-jslib/fjl)
 # fjl
-Functional Javascript Library (v1.3.3)(inspired by Haskell's Prelude).
+Functional Javascript Library (inspired by Haskell's Prelude).
 
 ## Sections in Readme:
-- [Getting Started](#getting-started)
 - [Requirements](#requirements)
+- [Getting Started](#getting-started)
 - [Docs](#docs)
-- [Motivation](#motivation)
+- [Motivation](#motivations)
 - [Development](#development)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
@@ -58,12 +58,13 @@ const fjl = require('fjl');
 
 **JSDocs** [https://functional-jslib.github.io/fjl]
 
-The docs are divided into modules though all methods live on `fjl` (top level export).
+The docs are divided into modules though, note, all methods live on `fjl` (top level export).
 
-#### A note on currying.
+#### About library's usage of currying.
 - All methods that take 2 or more arguments are curried.
-- All methods that take rest params ~~'only' are not curried;~~ only are curried up to 2 parameters.
-- Methods that require one argument and rest params are ~~not~~ are curried at up to 2 parameters.
+- All methods that take rest params "only" are curried up to 2 parameters.
+- Methods that require one argument and rest params are curried at up to 2 parameters.
+- Methods that accept rest params "only" are not curried.
 
 #### `boolean`
 ```
@@ -171,74 +172,72 @@ Jsdocs here:
 https://functional-jslib.github.io/fjl/
 
 ## Motivations:
-- Haskell and it's `Prelude`.
+- Haskell and it's `Prelude` (Functional programming).
 - Lambda Calculus.
-- The need for strongly typed javascript (without typescript (libraries and the such)) (possible via `fjl.is*` methods (`fjl.isType`, `fjl.isset`, etc.)).
-- The need to be able to write functional code very quickly and easily (all methods in `fjl` ~~are curried and lib also includes versions of all methods uncurried~~).
-- A functional library that takes advantage of the es6 features of the language
- and is built from the ground up using functional concepts.
-- A functional library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
-- ~~A functional library that has curried and un-curried versions of included operations.  Et. al.
-    `append`, `append` (un-curried version) Managing uncurried and curried methods makes development on 
-    the library unwieldly and is un-functional (anyway :-))so has been removed from library (as a feature)~~, .
-- A library that shouldn't be too hard to develop on (methods grouped similarly to the way the haskell modules
-are separated out 'Data.List' (in our lib is './src/list.js') etc..
-- Etc. etc..
+- The need for: 
+    - functional 'combinators' in javascript (without requiring typescript) (index.d.ts being developed for typescript users).
+    - the ability to write functional code quickly and easily (using the likes of `curry`, `isset`, `compose` etc.).
+    - a library written from the ground up using es6 and functional concepts.
+    - a library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
+    - a library that should be easy to update by functional programmers.
+    - Et. al..
 
-### Reasoning for paradigms
+### Reasoning for library design choices
 #### Use of while-and-for-loops instead of built-ins:
 - They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.)
- (do search for `foreach vs for loop` and/or similiar).
-- Native array functional methods are used in some places in the library (due to functional composition and cyclic redundancy of includes).
+ (do search for `foreach vs for loop` and/or similar on the web).
+- Native array functional methods are used in some places in the library (due to functional composition and cyclic redundancy of includes (which could be partially mitigated by separating every function into it's own file *but more on that later).
+
+#### Currying
+In order to make library easier to use for functional code/programmers the library's
+methods are curried with the exception/rules listed in the section further above 
+["About library's usage of currying."](#about-librarys-usage-of-currying)
 
 ## Development:
 - Sources are in './src'
-    - Sources are divided by un-curried definitions ('./src/uncurried')
-    and curried definitions (files in './src/**/*' except the ones in './src/uncurried' (of course)).
-    - './src/jsPlatform' and './src/uncurried/jsPlatform' are native platform specific method versions
-     pulled out for use (functionally) in some places where we didn't want to intermingle definition collections (list, function etc.).
-    - About non-conformity to full modularity (one-function-per-file):
-      The library could have been written this way initially but wasn't, specifically to make development on the library easier
-      (though it can be argued that development is actually more difficult this way,
-      the trade-off of being able to think of functions in groups/modules and their relations is easier than having to think about
-      functions as a smattering (of-them) numbering in the 100's of them (remember we export the curried and un-curried versions of prelude functions).
+    - './src/jsPlatform' are native platform specific method versions
+     pulled out for use (functionally), in some places, where we didn't want to
+     intermingle library methods with native ones.
 - Distributions are in './dist'
 - Docs are generated via jsdoc to './docs' dir.
 - Docs are written inline, in source using [jsdoc](http://usejsdoc.com) format.
- and are generated out (to the './docs' folder) in html format (which get pulled by github onto
- [https://functional-jslib.github.io/fjl] (via the repo's settings).
-
-### For development tasks:
-See `scripts` field in `package.json`.
-
-**Note about 'pre-publish' script task:** 'pre-publish' wasn't confused with default 'prepublish' task.  'pre-publish'
-task is just for getting conceptual pre-publish functionality locally (on dev-machine) without npm's default 'prepublish' side-effects/functionality (our
-'pre-publish' doesn't get triggered by 'travis-ci' and the like since it isn't formally used for pre-publish on these
-platforms, etc..).
+- About non-conformity to full modularity (one-function-per-file):
+    The library could have been written this way initially but was'nt, specifically 
+    to make development on the library easier/faster (though it can 
+    be argued that development is actually more difficult this way,
+    the trade-off of being able to think of functions in groups/modules 
+    and along with their relationships is easier than having to think 
+    about functions as a big list of files numbering in the 10s to 100s.
+      
+### Package scripts:
+- `build` - Builds docs and distribution ('./dist'). 
+- `test-builds` - Tests' './dist'
+- `test` - Runs unit tests.
 
 ### Dev notes:
 - './.babelrc' is used only for tests.  Babel configurations found in './gulpfileConfig.json' are the
 configurations used for building the project.
 
 ### Unit testing:
-Unit tests are grouped by exported module:
-'tests/test-list.js' - Tests 'list' module etc.
+We are using 'jest' for testing.
 
-We are using ~~'chai' and 'mocha' though we may want to move to~~ 'jest' for testing ~~in the future~~.
+Unit tests are grouped by exported module:
+- 'tests/test-list.js' - Tests 'list' module.
+- 'tests/test-object.js' - Tests 'object' module.
+- 'tests/test-function.js' - Tests 'function' module.
+- Et. al.
 
 ### Perf Tests:
-- `subsequences`: https://jsperf.com/subsequences/6
-- `trampoline`: https://jsperf.com/pure-trampoline/1 (performance difference to pure 
-  recursive call here is negligible).
+Some performance tests were hosted at jsperf.com though that site currently broken so performance-tests/benchmarks will be added to repo at a later date (@todo).
   
-## Change log:
-- As of version 1.3.0 changelog will also be kept in [Changelog.md](https://github.com/functional-jslib/fjl/tree/next/CHANGELOG.md).
-
 ## License:
-[BSD 3 Clause](http://www.gnu.org/licenses/gpl-2.0.html "http://www.gnu.org/licenses/gpl-2.0.html")
+BSD 3 Clause - Included in sources.
 
 ## Resources:
-- Docs format: http://usejsdoc.org/
 - Haskell docs search engine: https://www.haskell.org/hoogle/
 - Listing of entire Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html
 - Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html
+- Docs format: http://usejsdoc.org/
+
+## Change log:
+@todo Append changelog here.
