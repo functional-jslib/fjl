@@ -4,13 +4,14 @@
 
 import {
     apply, call, compose,
-    curry, curry2, curryN,
+    curry, curry2, curry3, curry4, curry5, curryN,
     flip, flipN, until, id,
     noop
 }
 from '../src/function';
 
-import {add, subtract, expectEqual, expectError, expectFunction} from './helpers';
+import {add, subtract, expectEqual, expectError,
+    expectFunction, expectTrue, alphabetArray} from './helpers';
 
 describe ('#function', function () {
 
@@ -280,6 +281,49 @@ describe ('#function', function () {
 
         });
 
+    });
+
+    describe('#curry2, #curry3, #curry4, #curry5', () => {
+        it ('should returned a curried function which curries 2 parameters', () => {
+            const
+                min = curry2(Math.min),
+                max = curry2(Math.max),
+                onlyEvens = (...args) => args.filter(x => x % 2 === 0),
+                onlyEvens3 = curry3(onlyEvens),
+                onlyEvens4 = curry4(onlyEvens),
+                onlyEvens5 = curry5(onlyEvens),
+                someNums = alphabetArray.map((_, i) => i),
+                evenSomeNums = onlyEvens(...someNums)
+                ;
+
+            // Test test cases' subject data
+            // ----
+            // Alphabet array
+            expectEqual(alphabetArray.length, 26);
+
+            // Test even numbers
+            expectTrue(evenSomeNums.every(x => x % 2 === 0));
+
+            // Tests table
+            //  [fn, args, expected]
+            [
+                [min, [0, 1], 0],
+                [max, [0, 1], 1],
+                [max, [0, 1, 3, 5, 3, 1], 5],
+                [min, [0, 1, 3, 2, 1], 0],
+                [onlyEvens3, someNums, evenSomeNums],
+                [onlyEvens4, someNums, evenSomeNums],
+                [onlyEvens5, someNums, evenSomeNums]
+            ]
+                .forEach(([fn, args, expected]) => {
+                    expectFunction(fn);
+                    const
+                        newArgs = args.slice(0),
+                        newFn = fn(newArgs.shift());
+                    expectFunction(newFn);
+                    expectEqual(newFn(...newArgs), expected);
+                });
+        });
     });
 
     describe('#noop', function () {

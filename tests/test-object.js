@@ -549,7 +549,7 @@ describe ('#object', function () {
                 [undefined, []],
                 [alphabetString, alphabetArray],
                 [new Set(alphabetArray), alphabetArray],
-                [new Map(toArray(allYourBase)), toArray(allYourBase)], // map and object test
+                [new Map(toArray(allYourBase)), toArray(allYourBase)] // map and object test
             ]
                 .forEach(([given, expected]) =>
                     expect(toArray(given)).toEqual(expected)
