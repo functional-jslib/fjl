@@ -38,6 +38,7 @@ import {
     expectLength,
     expectTrue,
     expectFalse,
+    expectFunction,
     alphabetArray,
     alphabetCharCodeRange,
     alphabetIndices,
@@ -657,7 +658,7 @@ describe ('#list', () => {
             expectEqual(sum(range(-5, -1)), -15);
         });
         it ('should return `0` when receiving an empty list', () => {
-            expectEqual(sum(range()), 0);
+            expectEqual(sum([]), 0);
         });
         it ('should throw an error when receiving nothing (`null` or `undefined`)', () => {
             expectError(() => sum(null));
@@ -672,7 +673,7 @@ describe ('#list', () => {
             expectEqual(product(range(-5, -1)), -120);
         });
         it ('should return `0` when receiving an empty list', () => {
-            expectEqual(product(range()), 1);
+            expectEqual(product([]), 1);
         });
         it ('should throw an error when receiving nothing (`null` or `undefined`)', () => {
             expectError(() => product(null));
@@ -1848,12 +1849,29 @@ describe ('#list', () => {
     });
 
     describe ('#complement', () => {
-        it ('should return an empty list when no parameters are passed in', () => {
-            compose(expectEqual(__, 0), length, complement)();
+        it ('should be a function', () => { 
+	    expectFunction(complement); 
+	});
+        it ('should be curriable', () => {
+            const awaitingRest = complement([1,2,3]);
+            expectFunction(awaitingRest);
+            expectEqual(awaitingRest([3,4,5]), [4,5]);
         });
-        it ('should return an empty list if only one list is passed in', () => {
-            compose(expectEqual(__, 0), length, complement)([1,2,3]);
-        });
+	it ('should return an empty list when receiving 2 or more values consisting of ' + 
+		'`null`, `undefined` and/or empty list (`\'\'`, `[]`).', () => {
+		[
+			[undefined, undefined], 
+			[null, null, '', null], 
+			[[], null, undefined], 
+			[undefined, null, []],
+			[[], [], []],
+			[[], []],
+			['', ''],
+			['', undefined, ''],
+			[undefined, '', [], null]
+		]
+			.forEach(args => expectEqual(complement(...args), []));
+	});
         it ('should return elements not in first list passed to it', () => {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
@@ -1873,16 +1891,16 @@ describe ('#list', () => {
     });
 
     describe ('#difference', () => {
-        it ('should return an empty list when no parameters are passed in', () => {
-            compose(expectEqual(__, 0), length, difference)();
-        });
-        it ('should return an empty list when first list passed in is empty', () => {
-            compose(expectEqual(__, 0), length)(difference([], alphabetArray));
-            compose(expectEqual(__, 0), length)(difference('', alphabetString));
-        });
-        it ('should return an empty list when there are no differences between the lists passed in', () => {
-            compose(expectEqual(__, 0), length)(difference(alphabetArray, alphabetArray));
-            compose(expectEqual(__, 0), length)(difference(alphabetString, alphabetString));
+        it ('should return an empty list when first list passed in is empty, ' +
+		' there are no differences between passed in lists, ', () => {
+			[
+			[[[], []], []],
+			[['', ''], []],
+			[[null, undefined], []]
+			]
+			.forEach(([args, expected]) => {
+				expectEqual(difference(...args), expected);
+			});
         });
         it ('should return the difference between two arrays passed in', () => {
             let testCases = [
@@ -1903,19 +1921,22 @@ describe ('#list', () => {
     });
 
     describe ('#intersect', () => {
-        it ('should return an empty list when receiving an empty list as parameter 1', () => {
-            compose(expectEqual(__, 0), length, intersect)([]);
-            compose(expectEqual(__, 0), length, intersect([]))([1, 2, 3]);
+        it ('should return an empty list when either of the first, second ' +
+		'or both params passed in are empty arrays, or falsy values', () => {
+			[
+				[[[], [1,2,3]], []],
+				[[null, null], []],
+				[[undefined, undefined], []],
+				[['', ''], []],
+				[['abc', ''], []],
+				[['abc', null], []],
+				[[null, 'abc'], []]
+			]
+			.forEach(([args, expected]) => {
+				expectEqual(intersect(...args), expected);
+			});
         });
-        it ('should return an empty list when receiving an empty list as parameter 2', () => {
-            compose(expectEqual(__, 0), length, intersect([1, 2, 3]))([]);
-        });
-        it ('should return an empty list when both arrays passed are empty', () => {
-            compose(expectEqual(__, 0), length, intersect([]))([]);
-        });
-        it ('should return an empty list when no arrays are passed in', () => {
-            compose(expectEqual(__, 0), length, intersect)();
-        });
+
         it ('should return an intersection of the two arrays passed in', () => {
             let testCases = [
                 // subj1, subj2, expectLen, expectedElements
@@ -2463,7 +2484,7 @@ describe ('#list', () => {
                 );
         });
     });
-    
+
     describe ('#classCase', () => {
         it ('should return a "camel-cased" version of passed in non-empty string', () => {
             [
