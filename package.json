@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Functional Javascript Library",
   "main": "dist/package/fjl",
   "module": "dist/package/fjl.mjs",

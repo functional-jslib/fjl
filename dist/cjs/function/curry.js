@@ -1,13 +1,8 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curry = exports.curryN = undefined;
-
-var _typeOf = require('../object/typeOf');
-
-var _fnOrError = require('./fnOrError');
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -19,10 +14,47 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  */
 
 /**
-     * @private
-     * @type {string}
-     */
-var curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
+ * @private
+ * @type {string}
+ */
+var returnCurried = function returnCurried(executeArity, unmetArityNum, fn, argsToCurry) {
+    switch (unmetArityNum) {
+        case 1:
+            return function func(x) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        case 2:
+            return function func(a, b) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        case 3:
+            return function func(a, b, c) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        case 4:
+            return function func(a, b, c, d) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        case 5:
+            return function func(a, b, c, d, e) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        default:
+            return function () {
+                for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                    args[_key] = arguments[_key];
+                }
+
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, args, argsToCurry);
+            };
+    }
+},
+    executeAsCurriedFunc = function executeAsCurriedFunc(fn, executeArity, unmetArity, args, argsToCurry) {
+    var concatedArgs = argsToCurry.concat(args),
+        canBeCalled = concatedArgs.length >= executeArity || !executeArity,
+        newExpectedArity = executeArity - concatedArgs.length;
+    return !canBeCalled ? returnCurried(executeArity, newExpectedArity, fn, concatedArgs) : fn.apply(undefined, _toConsumableArray(concatedArgs));
+};
 
 var
 
@@ -33,24 +65,17 @@ var
  * @param fn {Function}
  * @param argsToCurry {...*}
  * @returns {Function}
+ * @throws {Error} - When `fn` is not a function.
  */
 curryN = exports.curryN = function curryN(executeArity, fn) {
-    for (var _len = arguments.length, argsToCurry = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        argsToCurry[_key - 2] = arguments[_key];
+    for (var _len2 = arguments.length, argsToCurry = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        argsToCurry[_key2 - 2] = arguments[_key2];
     }
 
     if (!fn || !(fn instanceof Function)) {
-        throw new Error(curryNotFnErrPrefix + ' should be a function. ' + ('Type received: ' + (0, _typeOf.typeOf)(fn) + ';  Value received: ' + fn + '.'));
+        throw new Error("`curry*` functions expect first parameter to be of type `Function` though received " + fn + "?");
     }
-    return function () {
-        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            args[_key2] = arguments[_key2];
-        }
-
-        var concatedArgs = argsToCurry.concat(args),
-            canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-        return !canBeCalled ? curryN.apply(undefined, [executeArity, fn].concat(_toConsumableArray(concatedArgs))) : fn.apply(undefined, _toConsumableArray(concatedArgs));
-    };
+    return returnCurried(executeArity, executeArity - argsToCurry.length, fn, argsToCurry);
 },
 
 
@@ -66,7 +91,7 @@ curry = exports.curry = function curry(fn) {
         argsToCurry[_key3 - 1] = arguments[_key3];
     }
 
-    return curryN.apply(undefined, [(0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn).length, fn].concat(argsToCurry));
+    return curryN.apply(undefined, [(fn || {}).length, fn].concat(argsToCurry));
 },
 
 

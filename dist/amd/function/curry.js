@@ -1,12 +1,9 @@
-define(['exports', '../object/typeOf', './fnOrError'], function (exports, _typeOf, _fnOrError) {
-    'use strict';
+define(["exports"], function (exports) {
+    "use strict";
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.curry5 = exports.curry4 = exports.curry3 = exports.curry2 = exports.curry = exports.curryN = undefined;
-
-
     /**
      * @author elydelacruz
      * @created 12/6/2016.
@@ -15,10 +12,41 @@ define(['exports', '../object/typeOf', './fnOrError'], function (exports, _typeO
      */
 
     /**
-         * @private
-         * @type {string}
-         */
-    const curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
+     * @private
+     * @type {string}
+     */
+    const returnCurried = (executeArity, unmetArityNum, fn, argsToCurry) => {
+        switch (unmetArityNum) {
+            case 1:
+                return function func(x) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 2:
+                return function func(a, b) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 3:
+                return function func(a, b, c) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 4:
+                return function func(a, b, c, d) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 5:
+                return function func(a, b, c, d, e) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            default:
+                return (...args) => executeAsCurriedFunc(fn, executeArity, unmetArityNum, args, argsToCurry);
+        }
+    },
+          executeAsCurriedFunc = (fn, executeArity, unmetArity, args, argsToCurry) => {
+        let concatedArgs = argsToCurry.concat(args),
+            canBeCalled = concatedArgs.length >= executeArity || !executeArity,
+            newExpectedArity = executeArity - concatedArgs.length;
+        return !canBeCalled ? returnCurried(executeArity, newExpectedArity, fn, concatedArgs) : fn(...concatedArgs);
+    };
 
     const
 
@@ -29,16 +57,13 @@ define(['exports', '../object/typeOf', './fnOrError'], function (exports, _typeO
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
+     * @throws {Error} - When `fn` is not a function.
      */
     curryN = exports.curryN = (executeArity, fn, ...argsToCurry) => {
         if (!fn || !(fn instanceof Function)) {
-            throw new Error(`${curryNotFnErrPrefix} should be a function. ` + `Type received: ${(0, _typeOf.typeOf)(fn)};  Value received: ${fn}.`);
+            throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\` though received ${fn}?`);
         }
-        return (...args) => {
-            let concatedArgs = argsToCurry.concat(args),
-                canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-            return !canBeCalled ? curryN(executeArity, fn, ...concatedArgs) : fn(...concatedArgs);
-        };
+        return returnCurried(executeArity, executeArity - argsToCurry.length, fn, argsToCurry);
     },
 
 
@@ -49,7 +74,7 @@ define(['exports', '../object/typeOf', './fnOrError'], function (exports, _typeO
      * @param argsToCurry {...*}
      * @returns {Function}
      */
-    curry = exports.curry = (fn, ...argsToCurry) => curryN((0, _fnOrError.fnOrError)(curryNotFnErrPrefix, fn).length, fn, ...argsToCurry),
+    curry = exports.curry = (fn, ...argsToCurry) => curryN((fn || {}).length, fn, ...argsToCurry),
 
 
     /**

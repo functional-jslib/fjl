@@ -9,72 +9,71 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
- * Created by elyde on 12/18/2016.
- * @memberOf object
+ * @author elydelacruz
+ * @created 12/6/2016.
+ * @memberOf function
+ * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
-var _Number = Number.name;
-var _NaN = 'NaN';
-var _Null = 'Null';
-var _Undefined = 'Undefined';
 
 /**
- * Returns the constructor/class/type name of a value.
- * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
- * @note Returns 'Undefined' if value is `undefined`
- * @note Returns 'Null' if value is `null`
- * For values that have no concrete constructors and/or casters
- * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
- * @function module:object.typeOf
- * @param value {*}
- * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
- *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
+ * @private
+ * @type {string}
  */
-function typeOf(value) {
-    var retVal = void 0;
-    if (value === undefined) {
-        retVal = _Undefined;
-    } else if (value === null) {
-        retVal = _Null;
-    } else {
-        var constructorName = value.constructor.name;
-        retVal = constructorName === _Number && isNaN(value) ? _NaN : constructorName;
-    }
-    return retVal;
-}
+var returnCurried = function returnCurried(executeArity, unmetArityNum, fn, argsToCurry) {
+    switch (unmetArityNum) {
+        case 1:
+            return function func(x) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        case 2:
+            return function func(a, b) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        case 3:
+            return function func(a, b, c) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        case 4:
+            return function func(a, b, c, d) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        case 5:
+            return function func(a, b, c, d, e) {
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+            };
+        default:
+            return function () {
+                for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                    args[_key] = arguments[_key];
+                }
 
-var fnOrError = function fnOrError(symbolName, f) {
-    if (!f || !(f instanceof Function)) {
-        throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + typeOf(f) + ';  Value received: ' + f + '.'));
+                return executeAsCurriedFunc(fn, executeArity, unmetArityNum, args, argsToCurry);
+            };
     }
-    return f;
+};
+var executeAsCurriedFunc = function executeAsCurriedFunc(fn, executeArity, unmetArity, args, argsToCurry) {
+    var concatedArgs = argsToCurry.concat(args),
+        canBeCalled = concatedArgs.length >= executeArity || !executeArity,
+        newExpectedArity = executeArity - concatedArgs.length;
+    return !canBeCalled ? returnCurried(executeArity, newExpectedArity, fn, concatedArgs) : fn.apply(undefined, _toConsumableArray(concatedArgs));
 };
 
-var curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
-
 var curryN = function curryN(executeArity, fn) {
-    for (var _len = arguments.length, argsToCurry = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        argsToCurry[_key - 2] = arguments[_key];
+    for (var _len2 = arguments.length, argsToCurry = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        argsToCurry[_key2 - 2] = arguments[_key2];
     }
 
     if (!fn || !(fn instanceof Function)) {
-        throw new Error(curryNotFnErrPrefix + ' should be a function. ' + ('Type received: ' + typeOf(fn) + ';  Value received: ' + fn + '.'));
+        throw new Error('`curry*` functions expect first parameter to be of type `Function` though received ' + fn + '?');
     }
-    return function () {
-        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            args[_key2] = arguments[_key2];
-        }
-
-        var concatedArgs = argsToCurry.concat(args),
-            canBeCalled = concatedArgs.length >= executeArity || !executeArity;
-        return !canBeCalled ? curryN.apply(undefined, [executeArity, fn].concat(_toConsumableArray(concatedArgs))) : fn.apply(undefined, _toConsumableArray(concatedArgs));
-    };
+    return returnCurried(executeArity, executeArity - argsToCurry.length, fn, argsToCurry);
 };
 var curry = function curry(fn) {
     for (var _len3 = arguments.length, argsToCurry = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
         argsToCurry[_key3 - 1] = arguments[_key3];
     }
 
-    return curryN.apply(undefined, [fnOrError(curryNotFnErrPrefix, fn).length, fn].concat(argsToCurry));
+    return curryN.apply(undefined, [(fn || {}).length, fn].concat(argsToCurry));
 };
 var curry2 = function curry2(fn) {
     return curryN(2, fn);
@@ -166,9 +165,43 @@ var assign = function () {
  * Created by elyde on 12/18/2016.
  * @memberOf object
  */
+var _Number$1 = Number.name;
+var _NaN$1 = 'NaN';
+var _Null$1 = 'Null';
+var _Undefined$1 = 'Undefined';
+
+/**
+ * Returns the constructor/class/type name of a value.
+ * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
+ * @note Returns 'Undefined' if value is `undefined`
+ * @note Returns 'Null' if value is `null`
+ * For values that have no concrete constructors and/or casters
+ * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
+ * @function module:object.typeOf
+ * @param value {*}
+ * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
+ */
+function typeOf(value) {
+    var retVal = void 0;
+    if (value === undefined) {
+        retVal = _Undefined$1;
+    } else if (value === null) {
+        retVal = _Null$1;
+    } else {
+        var constructorName = value.constructor.name;
+        retVal = constructorName === _Number$1 && isNaN(value) ? _NaN$1 : constructorName;
+    }
+    return retVal;
+}
+
+/**
+ * Created by elyde on 12/18/2016.
+ * @memberOf object
+ */
 
 var _String = String.name;
-var _Number$1 = Number.name;
+var _Number = Number.name;
 var _Object = Object.name;
 var _Boolean = Boolean.name;
 var _Function = Function.name;
@@ -178,9 +211,9 @@ var _Map = 'Map';
 var _Set = 'Set';
 var _WeakMap = 'WeakMap';
 var _WeakSet = 'WeakSet';
-var _Null$1 = 'Null';
-var _Undefined$1 = 'Undefined';
-var _NaN$1 = 'NaN';
+var _Null = 'Null';
+var _Undefined = 'Undefined';
+var _NaN = 'NaN';
 
 var toTypeRef = function toTypeRef(type) {
     if (!type) {
@@ -211,18 +244,18 @@ var isArray = Array.isArray;
 
 var isObject = isType(_Object);
 var isBoolean = isType(_Boolean);
-var isNumber = isType(_Number$1);
+var isNumber = isType(_Number);
 var isString = isType(_String);
 var isMap = isType(_Map);
 var isSet = isType(_Set);
 var isWeakMap = isType(_WeakMap);
 var isWeakSet = isType(_WeakSet);
-var isUndefined = isType(_Undefined$1);
-var isNull = isType(_Null$1);
+var isUndefined = isType(_Undefined);
+var isNull = isType(_Null);
 var isSymbol = isType(_Symbol);
 var isUsableImmutablePrimitive = function isUsableImmutablePrimitive(x) {
     var typeOfX = typeOf(x);
-    return isset(x) && [_String, _Number$1, _Boolean, _Symbol].some(function (Type) {
+    return isset(x) && [_String, _Number, _Boolean, _Symbol].some(function (Type) {
         return Type === typeOfX;
     });
 };
@@ -244,7 +277,7 @@ var isEmpty = function isEmpty(value) {
         case _Array:
         case _Function:
             return !value.length;
-        case _Number$1:
+        case _Number:
             // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
             return false;
         case _Object:
@@ -254,7 +287,7 @@ var isEmpty = function isEmpty(value) {
         case _WeakSet:
         case _WeakMap:
             return !value.size;
-        case _NaN$1:
+        case _NaN:
             return true;
         default:
             return !value;
@@ -742,7 +775,7 @@ var transpose = function transpose(xss) {
         outLists.push(outList);
     }
     return filter(function (x) {
-        return length(x);
+        return length(x) > 0;
     }, outLists);
 };
 var subsequences = function subsequences(xs) {
@@ -1350,12 +1383,14 @@ var nubBy = curry(function (pred, list) {
     return out;
 });
 var removeBy = curry(function (pred, x, list) {
-    // @todo optimize this implementation
     var foundIndex = findIndex(function (item) {
         return pred(x, item);
-    }, list),
-        parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-    return foundIndex > -1 ? append(parts[0], tail(parts[1])) : sliceCopy(list);
+    }, list);
+    if (foundIndex > -1) {
+        var parts = splitAt(foundIndex, list);
+        return append(parts[0], tail(parts[1]));
+    }
+    return sliceCopy(list);
 });
 var removeFirstsBy = curry(function (pred, xs1, xs2) {
     return foldl(function (agg, x) {
@@ -1643,6 +1678,13 @@ var until = curry(function (predicate, operation, typeInstance) {
     }
     return result;
 });
+
+var fnOrError = function fnOrError(symbolName, f) {
+    if (!f || !(f instanceof Function)) {
+        throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + typeOf(f) + ';  Value received: ' + f + '.'));
+    }
+    return f;
+};
 
 /**
  * No-op ('op' as in 'operation') - Performs no operation 'always' (good for places where

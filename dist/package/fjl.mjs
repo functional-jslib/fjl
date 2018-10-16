@@ -1,64 +1,56 @@
 /**
- * Created by elyde on 12/18/2016.
- * @memberOf object
+ * @author elydelacruz
+ * @created 12/6/2016.
+ * @memberOf function
+ * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
-const _Number = Number.name;
-const _NaN = 'NaN';
-const _Null = 'Null';
-const _Undefined = 'Undefined';
 
 /**
- * Returns the constructor/class/type name of a value.
- * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
- * @note Returns 'Undefined' if value is `undefined`
- * @note Returns 'Null' if value is `null`
- * For values that have no concrete constructors and/or casters
- * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
- * @function module:object.typeOf
- * @param value {*}
- * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
- *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
+ * @private
+ * @type {string}
  */
-function typeOf (value) {
-    let retVal;
-    if (value === undefined) {
-        retVal = _Undefined;
-    }
-    else if (value === null) {
-        retVal = _Null;
-    }
-    else {
-        let constructorName = (value).constructor.name;
-        retVal = constructorName === _Number && isNaN(value) ?
-            _NaN : constructorName;
-    }
-    return retVal;
-}
-
-const fnOrError = (symbolName, f) => {
-        if (!f || !(f instanceof Function)) {
-            throw new Error(`${symbolName} should be a function. ` +
-                `Type received: ${typeOf(f)};  Value received: ${f}.`);
+const returnCurried = (executeArity, unmetArityNum, fn, argsToCurry) => {
+        switch (unmetArityNum) {
+            case 1:
+                return function func(x) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 2:
+                return function func(a, b) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 3:
+                return function func(a, b, c) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 4:
+                return function func(a, b, c, d) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 5:
+                return function func(a, b, c, d, e) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            default:
+                return (...args) => executeAsCurriedFunc(fn, executeArity, unmetArityNum, args, argsToCurry);
         }
-        return f;
     };
-
-const curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`';
+const executeAsCurriedFunc = (fn, executeArity, unmetArity, args, argsToCurry) => {
+        let concatedArgs = argsToCurry.concat(args),
+            canBeCalled = (concatedArgs.length >= executeArity) || !executeArity,
+            newExpectedArity = executeArity - concatedArgs.length;
+        return !canBeCalled ?
+            returnCurried(executeArity, newExpectedArity, fn, concatedArgs) :
+            fn(...concatedArgs);
+    };
 
 const curryN = (executeArity, fn, ...argsToCurry) => {
         if (!fn || !(fn instanceof Function)) {
-            throw new Error(`${curryNotFnErrPrefix} should be a function. ` +
-                `Type received: ${typeOf(fn)};  Value received: ${fn}.`);
+            throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\` though received ${fn}?`);
         }
-        return (...args) => {
-            let concatedArgs = argsToCurry.concat(args),
-                canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
-            return !canBeCalled ?
-                curryN(executeArity, fn, ...concatedArgs) :
-                fn(...concatedArgs);
-        };
+        return returnCurried(executeArity, executeArity - argsToCurry.length, fn, argsToCurry);
     };
-const curry = (fn, ...argsToCurry) => curryN(fnOrError(curryNotFnErrPrefix, fn).length, fn, ...argsToCurry);
+const curry = (fn, ...argsToCurry) => curryN((fn || {}).length, fn, ...argsToCurry);
 const curry2 = fn => curryN(2, fn);
 const curry3 = fn => curryN(3, fn);
 const curry4 = fn => curryN(4, fn);
@@ -98,9 +90,46 @@ const assign = (() => Object.assign ?
  * Created by elyde on 12/18/2016.
  * @memberOf object
  */
+const _Number$1 = Number.name;
+const _NaN$1 = 'NaN';
+const _Null$1 = 'Null';
+const _Undefined$1 = 'Undefined';
+
+/**
+ * Returns the constructor/class/type name of a value.
+ * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
+ * @note Returns 'Undefined' if value is `undefined`
+ * @note Returns 'Null' if value is `null`
+ * For values that have no concrete constructors and/or casters
+ * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
+ * @function module:object.typeOf
+ * @param value {*}
+ * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
+ */
+function typeOf (value) {
+    let retVal;
+    if (value === undefined) {
+        retVal = _Undefined$1;
+    }
+    else if (value === null) {
+        retVal = _Null$1;
+    }
+    else {
+        let constructorName = (value).constructor.name;
+        retVal = constructorName === _Number$1 && isNaN(value) ?
+            _NaN$1 : constructorName;
+    }
+    return retVal;
+}
+
+/**
+ * Created by elyde on 12/18/2016.
+ * @memberOf object
+ */
 
 let _String = String.name;
-let _Number$1 = Number.name;
+let _Number = Number.name;
 let _Object = Object.name;
 let _Boolean = Boolean.name;
 let _Function = Function.name;
@@ -110,9 +139,9 @@ let _Map = 'Map';
 let _Set = 'Set';
 let _WeakMap = 'WeakMap';
 let _WeakSet = 'WeakSet';
-let _Null$1 = 'Null';
-let _Undefined$1 = 'Undefined';
-let _NaN$1 = 'NaN';
+let _Null = 'Null';
+let _Undefined = 'Undefined';
+let _NaN = 'NaN';
 
 const toTypeRef = type => {
         if (!type) {
@@ -135,19 +164,19 @@ const isCallable = x => isFunction(x) && !isClass(x);
 const {isArray} = Array;
 const isObject = isType(_Object);
 const isBoolean = isType(_Boolean);
-const isNumber = isType(_Number$1);
+const isNumber = isType(_Number);
 const isString = isType(_String);
 const isMap = isType(_Map);
 const isSet = isType(_Set);
 const isWeakMap =isType(_WeakMap);
 const isWeakSet = isType(_WeakSet);
-const isUndefined = isType(_Undefined$1);
-const isNull = isType(_Null$1);
+const isUndefined = isType(_Undefined);
+const isNull = isType(_Null);
 const isSymbol = isType(_Symbol);
 const isUsableImmutablePrimitive = x => {
         const typeOfX = typeOf(x);
         return isset(x) &&
-            [_String, _Number$1, _Boolean, _Symbol]
+            [_String, _Number, _Boolean, _Symbol]
                 .some(Type => Type === typeOfX);
     };
 const isEmptyList = x => !length(x);
@@ -161,7 +190,7 @@ const isEmpty = value => {
             case _Array:
             case _Function:
                 return !value.length;
-            case _Number$1: // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
+            case _Number: // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
                 return false;
             case _Object:
                 return !keys(value).length;
@@ -170,7 +199,7 @@ const isEmpty = value => {
             case _WeakSet:
             case _WeakMap:
                 return !value.size;
-            case _NaN$1:
+            case _NaN:
                 return true;
             default:
                 return !value;
@@ -522,7 +551,7 @@ const transpose = xss => {
             }
             outLists.push(outList);
         }
-        return filter(x => length(x), outLists);
+        return filter(x => length(x) > 0, outLists);
     };
 const subsequences = xs => {
         const listLen = length(xs),
@@ -1042,10 +1071,13 @@ const nubBy = curry((pred, list) => {
         }
         return out;
     });
-const removeBy = curry((pred, x, list) => { // @todo optimize this implementation
-        const foundIndex = findIndex(item => pred(x, item), list),
-            parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-        return foundIndex > -1 ? append(parts[0], tail(parts[1])) : sliceCopy(list);
+const removeBy = curry((pred, x, list) => {
+        const foundIndex = findIndex(item => pred(x, item), list);
+        if (foundIndex > -1) {
+            const parts = splitAt(foundIndex, list);
+            return append(parts[0], tail(parts[1]));
+        }
+        return sliceCopy(list);
     });
 const removeFirstsBy = curry((pred, xs1, xs2) =>
         foldl((agg, x) => removeBy(pred, x, agg), xs1, xs2));
@@ -1253,6 +1285,14 @@ const until = curry((predicate, operation, typeInstance) => {
         }
         return result;
     });
+
+const fnOrError = (symbolName, f) => {
+        if (!f || !(f instanceof Function)) {
+            throw new Error(`${symbolName} should be a function. ` +
+                `Type received: ${typeOf(f)};  Value received: ${f}.`);
+        }
+        return f;
+    };
 
 /**
  * No-op ('op' as in 'operation') - Performs no operation 'always' (good for places where

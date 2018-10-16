@@ -278,7 +278,6 @@ intercalate = exports.intercalate = (0, _curry.curry)(function (xs, xss) {
  * ```
  * @note from columns to rows.
  * @note Empty lists are ignored.
- * @todo upgrade this function to support lists of strings.
  * @haskellType `transpose :: [[a]] -> [[a]]`
  * @function module:list.transpose
  * @param xss {Array}
@@ -305,7 +304,7 @@ transpose = exports.transpose = function transpose(xss) {
         outLists.push(outList);
     }
     return filter(function (x) {
-        return (0, _object.length)(x);
+        return (0, _object.length)(x) > 0;
     }, outLists);
 },
 
@@ -1666,8 +1665,7 @@ insert = exports.insert = (0, _curry.curry)(function (x, xs) {
  * item;  Before/at, or after
  * @function module:list.insertBy
  * @haskellType `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
- * @note `Ordering` === // something that is order-able
- * @todo Optimize and work the logic of this function;  Think about the types that will be
+ * @note `Ordering` means 'something that is order-able'
  *  operated on by this functions logic.
  * @param orderingFn {Function} - A function that returns `-1`, `0`, or 1`.
  * @param x {*} - Value to insert.
@@ -1728,12 +1726,14 @@ nubBy = exports.nubBy = (0, _curry.curry)(function (pred, list) {
  * @returns {Array}
  */
 removeBy = exports.removeBy = (0, _curry.curry)(function (pred, x, list) {
-    // @todo optimize this implementation
     var foundIndex = findIndex(function (item) {
         return pred(x, item);
-    }, list),
-        parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-    return foundIndex > -1 ? append(parts[0], tail(parts[1])) : (0, _utils.sliceCopy)(list);
+    }, list);
+    if (foundIndex > -1) {
+        var parts = splitAt(foundIndex, list);
+        return append(parts[0], tail(parts[1]));
+    }
+    return (0, _utils.sliceCopy)(list);
 }),
 
 
