@@ -1,5 +1,6 @@
 /**
  * Created by elyde on 5/1/17.
+ * @todo Upgrade tests to use test-tables where possible.
  */
 
 import {
@@ -150,6 +151,65 @@ describe ('#function', function () {
 
     });
 
+    describe('#curryN', function () {
+
+        // Set curry here to use below
+        let multiplyRecursive = (...args) => args.reduce((agg, num) => num * agg, 1),
+            addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
+            divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
+
+        it ('should be of type function.', function () {
+            expect(curryN).toBeInstanceOf(Function);
+        });
+
+        it ('should throw an error when not receiving an argument at param `0`.', function () {
+            expectError(curryN);
+        });
+
+        it ('should pass in any values passed in after the arity when executing the curried function', function () {
+            let add3Nums = curryN(3, addRecursive);
+
+            // Curry add to add 3 numbers
+            expect(add3Nums()(1, 2, 3)) .toEqual(6);
+            expect(add3Nums(1)(2, 3))   .toEqual(6);
+            expect(add3Nums(1, 2)(3))  .toEqual(6);
+            expect(add3Nums(1, 2, 3))   .toEqual(6);
+
+            // Curry `add` to add any numbers passed required arity
+            expect(add3Nums()(1, 2, 3, 5, 6))   .toEqual(17);
+            expect(add3Nums(1)(2, 3, 5, 6))     .toEqual(17);
+            expect(add3Nums(1, 2)(3, 5, 6))     .toEqual(17);
+            expect(add3Nums(1, 2, 3, 5, 6))     .toEqual(17);
+        });
+
+        it ('should return a function that will not execute until the passed in "executeArity" is met.', function () {
+            let multiply5Nums = curryN(5, multiplyRecursive),
+                multiplyExpectedResult = Math.pow(5, 5),
+                argsToTest = [
+                    [5, 5, 5, 5, 5],
+                    [5, 5, 5, 5],
+                    [5, 5, 5],
+                    [5, 5],
+                    [5]
+                ],
+                partiallyAppliedResults = [
+                    multiply5Nums(),
+                    multiply5Nums(5),
+                    multiply5Nums(5, 5),
+                    multiply5Nums(5, 5, 5),
+                    multiply5Nums(5, 5, 5, 5)
+                ];
+
+            // Curry multiply and pass args in non-linear order
+            argsToTest.forEach(function (args, index) {
+                expect(partiallyAppliedResults[index]).toBeInstanceOf(Function);
+                expect(partiallyAppliedResults[index].apply(null, args)).toEqual(multiplyExpectedResult);
+            });
+
+        });
+
+    });
+
     describe('#curry', function () {
 
         it ('should be of type function.', function () {
@@ -224,65 +284,6 @@ describe ('#function', function () {
 
     });
 
-    describe('#curryN', function () {
-
-        // Set curry here to use below
-        let multiplyRecursive = (...args) => args.reduce((agg, num) => num * agg, 1),
-            addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
-            divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
-
-        it ('should be of type function.', function () {
-            expect(curryN).toBeInstanceOf(Function);
-        });
-
-        it ('should throw an error when not receiving an argument at param `0`.', function () {
-            expectError(curryN);
-        });
-
-        it ('should pass in any values passed the arity when executing the curried function', function () {
-            let add3Nums = curryN(3, addRecursive);
-
-            // Curry add to add 3 numbers
-            expect(add3Nums()(1, 2, 3)) .toEqual(6);
-            expect(add3Nums(1)(2, 3))   .toEqual(6);
-            expect(add3Nums(1, 2)(3))  .toEqual(6);
-            expect(add3Nums(1, 2, 3))   .toEqual(6);
-
-            // Curry `add` to add any numbers passed required arity
-            expect(add3Nums()(1, 2, 3, 5, 6))   .toEqual(17);
-            expect(add3Nums(1)(2, 3, 5, 6))     .toEqual(17);
-            expect(add3Nums(1, 2)(3, 5, 6))     .toEqual(17);
-            expect(add3Nums(1, 2, 3, 5, 6))     .toEqual(17);
-        });
-
-        it ('should respect the passed in "executeArity" (shouldn\'t be called to passed in arity length is reached', function () {
-            let multiply5Nums = curryN(5, multiplyRecursive),
-                multiplyExpectedResult = Math.pow(5, 5),
-                argsToTest = [
-                    [5, 5, 5, 5, 5],
-                    [5, 5, 5, 5],
-                    [5, 5, 5],
-                    [5, 5],
-                    [5]
-                ],
-                partiallyAppliedResults = [
-                    multiply5Nums(),
-                    multiply5Nums(5),
-                    multiply5Nums(5, 5),
-                    multiply5Nums(5, 5, 5),
-                    multiply5Nums(5, 5, 5, 5)
-                ];
-
-            // Curry multiply and pass args in non-linear order
-            argsToTest.forEach(function (args, index) {
-                expect(partiallyAppliedResults[index]).toBeInstanceOf(Function);
-                expect(partiallyAppliedResults[index].apply(null, args)).toEqual(multiplyExpectedResult);
-            });
-
-        });
-
-    });
-
     describe('#curry2, #curry3, #curry4, #curry5', () => {
         it ('should returned a curried function which curries 2 parameters', () => {
             const
@@ -305,22 +306,23 @@ describe ('#function', function () {
             expectTrue(evenSomeNums.every(x => x % 2 === 0));
 
             // Tests table
-            //  [fn, args, expected]
+            //  [fn, args, expected, expectedArityAfterFirstFnParam]
             [
-                [min, [0, 1], 0],
-                [max, [0, 1], 1],
-                [max, [0, 1, 3, 5, 3, 1], 5],
-                [min, [0, 1, 3, 2, 1], 0],
-                [onlyEvens3, someNums, evenSomeNums],
-                [onlyEvens4, someNums, evenSomeNums],
-                [onlyEvens5, someNums, evenSomeNums]
+                [min, [0, 1], 0, 1],
+                [max, [0, 1], 1, 1],
+                [max, [0, 1, 3, 5, 3, 1], 5, 1],
+                [min, [0, 1, 3, 2, 1], 0, 1],
+                [onlyEvens3, someNums, evenSomeNums, 2],
+                [onlyEvens4, someNums, evenSomeNums, 3],
+                [onlyEvens5, someNums, evenSomeNums, 4]
             ]
-                .forEach(([fn, args, expected]) => {
+                .forEach(([fn, args, expected, expectedArityAfterFirstParam]) => {
                     expectFunction(fn);
                     const
                         newArgs = args.slice(0),
                         newFn = fn(newArgs.shift());
                     expectFunction(newFn);
+                    expectEqual(newFn.length, expectedArityAfterFirstParam);
                     expectEqual(newFn(...newArgs), expected);
                 });
         });

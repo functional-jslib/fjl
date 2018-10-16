@@ -189,7 +189,6 @@ export const
      * ```
      * @note from columns to rows.
      * @note Empty lists are ignored.
-     * @todo upgrade this function to support lists of strings.
      * @haskellType `transpose :: [[a]] -> [[a]]`
      * @function module:list.transpose
      * @param xss {Array}
@@ -214,7 +213,7 @@ export const
             }
             outLists.push(outList);
         }
-        return filter(x => length(x), outLists);
+        return filter(x => length(x) > 0, outLists);
     },
 
     /**
@@ -1418,8 +1417,7 @@ export const
      * item;  Before/at, or after
      * @function module:list.insertBy
      * @haskellType `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
-     * @note `Ordering` === // something that is order-able
-     * @todo Optimize and work the logic of this function;  Think about the types that will be
+     * @note `Ordering` means 'something that is order-able'
      *  operated on by this functions logic.
      * @param orderingFn {Function} - A function that returns `-1`, `0`, or 1`.
      * @param x {*} - Value to insert.
@@ -1475,10 +1473,13 @@ export const
      * @param list {Array|String|*}
      * @returns {Array}
      */
-    removeBy = curry((pred, x, list) => { // @todo optimize this implementation
-        const foundIndex = findIndex(item => pred(x, item), list),
-            parts = splitAt(foundIndex > -1 ? foundIndex : 0, list); // @todo correct this implementation
-        return foundIndex > -1 ? append(parts[0], tail(parts[1])) : sliceCopy(list);
+    removeBy = curry((pred, x, list) => {
+        const foundIndex = findIndex(item => pred(x, item), list);
+        if (foundIndex > -1) {
+            const parts = splitAt(foundIndex, list);
+            return append(parts[0], tail(parts[1]));
+        }
+        return sliceCopy(list);
     }),
 
     /**

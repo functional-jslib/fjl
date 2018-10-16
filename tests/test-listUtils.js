@@ -20,7 +20,7 @@ import {
     vowelsArray,
     vowelsLen,
     vowelIndices,
-    falsyList,
+    falsyList
 }
 from './helpers';
 
@@ -56,7 +56,7 @@ describe ('#listUtils', () => {
             [null, undefined, {}, false, 0].forEach(x => {
                 expect(() => sliceFrom(99, x)).toThrow(Error);
             });
-        })
+        });
     });
     describe('#sliceTo', () => {
         it ('should create a slice of an array "from" given index.', () => {
@@ -90,7 +90,7 @@ describe ('#listUtils', () => {
             [null, undefined, {}, false, 0].forEach(x => {
                 expect(() => sliceTo(99, x)).toThrow(Error);
             });
-        })
+        });
     });
     describe('#sliceCopy', () => {
         it('should return a copy of given slice', () => {
@@ -179,14 +179,14 @@ describe ('#listUtils', () => {
             const fn = lengths(alphabetArray),
 
                 // Execute curried function
-                [alphabetLen, vowelsLen] = fn(vowelsArray);
+                [alphabetLenResult, vowelsLenResult] = fn(vowelsArray);
 
             // Check was curried
             expectFunction(fn);
 
             // Check results
-            expect(alphabetLen).toEqual(alphabetArray.length);
-            expect(vowelsLen).toEqual(vowelsArray.length);
+            expect(alphabetLenResult).toEqual(alphabetArray.length);
+            expect(vowelsLenResult).toEqual(vowelsArray.length);
         });
     });
     describe('#toShortest', () => {
@@ -239,7 +239,7 @@ describe ('#listUtils', () => {
 
             // Check results
             charCodes.forEach((x, ind) => {
-                expect(String.fromCharCode(x)).toEqual(alphabetArray[ind])
+                expect(String.fromCharCode(x)).toEqual(alphabetArray[ind]);
             });
         });
         it('should reduce list up until given predicate holds for all items in list', () => {
@@ -377,7 +377,7 @@ describe ('#listUtils', () => {
 
             // Check results
             charCodes.forEach((x, ind) => {
-                expect(String.fromCharCode(x)).toEqual(alphabetArray[ind])
+                expect(String.fromCharCode(x)).toEqual(alphabetArray[ind]);
             });
         });
         it('should be able to reduce any kind of list (string, or array, etc.)', () => {
@@ -427,7 +427,7 @@ describe ('#listUtils', () => {
             const op = (agg, item) => agg + item;
             [[], ''].forEach(list => {
                 falsyList.forEach(x => {
-                    expect(reduce(op, x, list)).toEqual(x)
+                    expect(reduce(op, x, list)).toEqual(x);
                 });
             });
         });
@@ -498,7 +498,7 @@ describe ('#listUtils', () => {
             const op = (agg, item) => agg + item;
             [[], ''].forEach(list => {
                 falsyList.forEach(x => {
-                    expect(reduceRight(op, x, list)).toEqual(x)
+                    expect(reduceRight(op, x, list)).toEqual(x);
                 });
             });
         });

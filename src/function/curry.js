@@ -1,6 +1,3 @@
-import {typeOf} from '../object/typeOf';
-import {fnOrError} from './fnOrError';
-
 /**
  * @author elydelacruz
  * @created 12/6/2016.
@@ -14,15 +11,38 @@ import {fnOrError} from './fnOrError';
  */
 const
 
-    slice = (x, start, end) => [].slice.call(x, start, end),
-
-    curryNotFnErrPrefix = '`fn` in `curry(fn, ...args)`',
-
-    performCurry = (fn, curryFn, executeArity, args, argsToCurry) => {
+    returnCurried = (executeArity, unmetArityNum, fn, argsToCurry) => {
+        switch (unmetArityNum) {
+            case 1:
+                return function func(x) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 2:
+                return function func(a, b) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 3:
+                return function func(a, b, c) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 4:
+                return function func(a, b, c, d) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            case 5:
+                return function func(a, b, c, d, e) {
+                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
+                };
+            default:
+                return (...args) => executeAsCurriedFunc(fn, executeArity, unmetArityNum, args, argsToCurry);
+        }
+    },
+    executeAsCurriedFunc = (fn, executeArity, unmetArity, args, argsToCurry) => {
         let concatedArgs = argsToCurry.concat(args),
-            canBeCalled = (concatedArgs.length >= executeArity) || !executeArity;
+            canBeCalled = (concatedArgs.length >= executeArity) || !executeArity,
+            newExpectedArity = executeArity - concatedArgs.length;
         return !canBeCalled ?
-            curryFn(executeArity, fn, ...concatedArgs) :
+            returnCurried(executeArity, newExpectedArity, fn, concatedArgs) :
             fn(...concatedArgs);
     }
 ;
@@ -36,37 +56,13 @@ export const
      * @param fn {Function}
      * @param argsToCurry {...*}
      * @returns {Function}
+     * @throws {Error} - When `fn` is not a function.
      */
     curryN = (executeArity, fn, ...argsToCurry) => {
         if (!fn || !(fn instanceof Function)) {
-            throw new Error(`${curryNotFnErrPrefix} should be a function. ` +
-                `Type received: ${typeOf(fn)};  Value received: ${fn}.`);
+            throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\` though received ${fn}?`);
         }
-        switch (executeArity) {
-            case 1:
-                return function func(x) {
-                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
-                };
-            case 2:
-                return function func(a, b) {
-                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
-                };
-            case 3:
-                return function func(a, b, c) {
-                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
-                };
-            case 4:
-                return function func(a, b, c, d) {
-                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
-                };
-            case 5:
-                return function func(a, b, c, d, e) {
-                    return performCurry(fn, curryN, executeArity, slice(arguments), argsToCurry);
-                };
-            default:
-                return (...args) => performCurry(fn, curryN, executeArity, args, argsToCurry);
-        }
-
+        return returnCurried(executeArity, executeArity - argsToCurry.length, fn, argsToCurry);
     },
 
     /**
@@ -76,7 +72,7 @@ export const
      * @param argsToCurry {...*}
      * @returns {Function}
      */
-    curry = (fn, ...argsToCurry) => curryN(fnOrError(curryNotFnErrPrefix, fn).length, fn, ...argsToCurry),
+    curry = (fn, ...argsToCurry) => curryN((fn || {}).length, fn, ...argsToCurry),
 
     /**
      * Curries a function up to an arity of 2 (won't call function until 2 or more args).
