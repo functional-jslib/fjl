@@ -173,10 +173,6 @@ aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,
 Jsdocs here:
 https://functional-jslib.github.io/fjl/
 
-## Members list
-
-
-
 ## Development:
 - Sources are in './src'
     - './src/jsPlatform' are native platform specific method versions

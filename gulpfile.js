@@ -1,4 +1,5 @@
 const path = require('path'),
+    fs = require('fs'),
     packageJson = require('./package'),
     gulpConfig = require('./gulpfileConfig'),
 
@@ -19,6 +20,7 @@ const path = require('path'),
 
     /** Util Modules **/
     del = require('del'),
+    ModuleMemberListReadStream = require('./node-scripts/ModuleMemberListReadStream'),
 
     /** Paths **/
     {
@@ -136,13 +138,24 @@ const path = require('path'),
 
     buildTask = series(cleanTask, buildJsTask),
 
-    readmeTask = () =>
-        gulp.src(gulpConfig.readme)
-            .pipe(concat('./README.md'))
-            .pipe(gulp.dest('./')),
+    moduleMdMemberList = () => {
+        const writeStream = fs.createWriteStream('./markdown-fragments-generated/member-list.md')
+        return new ModuleMemberListReadStream(
+            require('./dist/package/fjl'),
+            'fjl',
+            './markdown-fragments-generated'
+        )
+            .pipe(writeStream);
+    },
 
-    docTask = series(readmeTask, () =>
-        deleteFilePaths(['./docs/**/*'])
+    readmeTask = series(moduleMdMemberList, function readmeTask () {
+        return gulp.src(gulpConfig.readme)
+            .pipe(concat('./README.md'))
+            .pipe(gulp.dest('./'));
+    }),
+
+    docTask = series(readmeTask, function docTask () {
+        return deleteFilePaths(['./docs/**/*'])
             .then(() =>
                 src(['README.md', './src/**/*.js'], {read: false})
                     .pipe(jsdoc({
@@ -165,7 +178,8 @@ const path = require('path'),
                             'footerText': 'fjl library - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab'
                         }
                     }))
-            )),
+            );
+    }),
 
     watchTask = series(buildTask, function watchTask () {
             return gulp.watch([srcsGlob, './node_modules/**'], buildJsTask);

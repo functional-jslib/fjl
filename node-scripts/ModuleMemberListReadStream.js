@@ -73,10 +73,10 @@ function renderMdLi(innerText, padLeft) {
     return padLeft + '- ' + innerText + '\n';
 }
 
-function ModuleMemberListReadStream (moduleToUse, moduleToUseName, docsPath, options) {
+function ModuleMemberListReadStream (moduleToUse, moduleToUseName, mdFragmentsPath, options) {
     this._moduleToUse = moduleToUse;
     this._moduleToUseName = moduleToUseName;
-    this._docsPath = docsPath;
+    this._docsPath = mdFragmentsPath;
     Readable.call(this, Object.assign({
         encoding: 'utf8',
         objectMode: false,
