@@ -50,6 +50,6 @@ export * from './object/assocList';
 /**
  * Defined as `Object.assign` else is the same thing but shimmed.
  * @function module:object.assign
- * @param objs {...{*}}
+ * @param objs {...*}
  * @returns {Object}
 */
