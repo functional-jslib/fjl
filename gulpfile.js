@@ -136,7 +136,12 @@ const path = require('path'),
 
     buildTask = series(cleanTask, buildJsTask),
 
-    docTask = () =>
+    readmeTask = () =>
+        gulp.src(gulpConfig.readme)
+            .pipe(concat('./README.md'))
+            .pipe(gulp.dest('./')),
+
+    docTask = series(readmeTask, () =>
         deleteFilePaths(['./docs/**/*'])
             .then(() =>
                 src(['README.md', './src/**/*.js'], {read: false})
@@ -160,7 +165,7 @@ const path = require('path'),
                             'footerText': 'fjl library - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab'
                         }
                     }))
-            ),
+            )),
 
     watchTask = series(buildTask, function watchTask () {
             return gulp.watch([srcsGlob, './node_modules/**'], buildJsTask);
@@ -170,6 +175,8 @@ const path = require('path'),
     gulp.task('eslint', eslintTask);
 
     gulp.task('build', buildTask);
+
+    gulp.task('readme', readmeTask);
 
     gulp.task('docs', docTask);
 

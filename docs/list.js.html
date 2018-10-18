@@ -636,6 +636,16 @@ export const
         );
     }),
 
+    /**
+     * Gives you the `span` of items matching predicate
+     * and items not matching predicate;  E.g., Gives an
+     * array of arrays;  E.g., [[matching-items], [non-matching-items]]
+     * @function list.span
+     * @param pred {Function} - List predicate (`(x, i, list) => bool`)
+     * @param list {Array|String}
+     * @returns {(Array&lt;Array&lt;*>>|Array&lt;String>)}
+     * @type {Function}
+     */
     span = curry((pred, list) => {
         const splitPoint = findIndexWhere(negateF3(pred), list);
         return splitPoint === -1 ?

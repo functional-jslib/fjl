@@ -163,28 +163,7 @@ aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,</code></pre><p><str
 </ul>
 <p>Jsdocs here:
 https://functional-jslib.github.io/fjl/</p>
-<h2>Motivations:</h2><ul>
-<li>Haskell and it's <code>Prelude</code> (Functional programming).</li>
-<li>Lambda Calculus.</li>
-<li>The need for: <ul>
-<li>functional 'combinators' in javascript (without requiring typescript) (index.d.ts being developed for typescript users).</li>
-<li>the ability to write functional code quickly and easily (using the likes of <code>curry</code>, <code>isset</code>, <code>compose</code> etc.).</li>
-<li>a library written from the ground up using es6 and functional concepts.</li>
-<li>a library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).</li>
-<li>a library that should be easy to update by functional programmers.</li>
-<li>Et. al..</li>
-</ul>
-</li>
-</ul>
-<h3>Reasoning for library design choices</h3><h4>Use of while-and-for-loops instead of built-ins:</h4><ul>
-<li>They are faster than iterating with es5 functional array additions (<code>map</code>, <code>forEach</code> etc.)
-(do search for <code>foreach vs for loop</code> and/or similar on the web).</li>
-<li>Native array functional methods are used in some places in the library (due to functional composition and cyclic redundancy of includes (which could be partially mitigated by separating every function into it's own file *but more on that later).</li>
-</ul>
-<h4>Currying</h4><p>In order to make library easier to use for functional code/programmers the library's
-methods are curried with the exception/rules listed in the section further above 
-<a href="#about-librarys-usage-of-currying">&quot;About library's usage of currying.&quot;</a></p>
-<h2>Development:</h2><ul>
+<h2>Members list</h2><h2>Development:</h2><ul>
 <li>Sources are in './src'<ul>
 <li>'./src/jsPlatform' are native platform specific method versions
 pulled out for use (functionally), in some places, where we didn't want to
@@ -227,7 +206,35 @@ configurations used for building the project.</li>
 <li>Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html</li>
 <li>Docs format: http://usejsdoc.org/</li>
 </ul>
-<h2>Change log:</h2><p>@todo Append changelog here.</p></article>
+<h2>Change log</h2><h3>1.5.1, 1.5.2</h3><ul>
+<li>Added './types/index.d.ts' file.</li>
+</ul>
+<h3>1.5.0</h3><h4>Breaking changes</h4><ul>
+<li><code>reduceRightUntil</code> changed to <code>reduceUntilRight</code>.</li>
+<li><code>lengthsToSmallest</code> changed to <code>toShortest</code>.</li>
+</ul>
+<h5>Changes that affect development of the library:</h5><ul>
+<li>package.json.scripts - Removed unnecessary commands (cleaned up scripts section).</li>
+<li>Updated gulp to version 4.</li>
+<li>Updated gulpfile to use new <code>gulp 4</code> api.</li>
+<li>Removed unnecessary dev dependencies:<ul>
+<li>random-js</li>
+<li>lazypipe</li>
+<li>requirejs</li>
+<li>gulp-fncallback</li>
+</ul>
+</li>
+</ul>
+<h4>Other changes</h4><ul>
+<li>Cleaned up README.md to reflect latest changes.</li>
+<li>Curried functions (functions curried via <code>curry*</code> functions) now retain their arity property value (<code>length</code> value).</li>
+</ul>
+<h3>1.3.0</h3><ul>
+<li>Added <code>noop</code> (no-op (op as in operation)) method (useful as a placeholder for variables/properties that should always contain a function).</li>
+<li>Added test for <code>noop</code> addition.</li>
+<li>Updated './docs'.</li>
+<li>Added entry in 'docs' config to take into account upcoming logo for 'fjl'.</li>
+</ul></article>
     </section>
 
 

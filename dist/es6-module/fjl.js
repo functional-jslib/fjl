@@ -1304,7 +1304,7 @@ const toArray = x => {
 /**
  * Defined as `Object.assign` else is the same thing but shimmed.
  * @function module:object.assign
- * @param objs {...{*}}
+ * @param objs {...*}
  * @returns {Object}
 */
 

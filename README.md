@@ -54,6 +54,7 @@ import {...} from 'fjl';
 const fjl = require('fjl');
 ```
 
+
 ### Docs
 
 **JSDocs** [https://functional-jslib.github.io/fjl]
@@ -172,27 +173,9 @@ aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,
 Jsdocs here:
 https://functional-jslib.github.io/fjl/
 
-## Motivations:
-- Haskell and it's `Prelude` (Functional programming).
-- Lambda Calculus.
-- The need for: 
-    - functional 'combinators' in javascript (without requiring typescript) (index.d.ts being developed for typescript users).
-    - the ability to write functional code quickly and easily (using the likes of `curry`, `isset`, `compose` etc.).
-    - a library written from the ground up using es6 and functional concepts.
-    - a library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
-    - a library that should be easy to update by functional programmers.
-    - Et. al..
+## Members list
 
-### Reasoning for library design choices
-#### Use of while-and-for-loops instead of built-ins:
-- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.)
- (do search for `foreach vs for loop` and/or similar on the web).
-- Native array functional methods are used in some places in the library (due to functional composition and cyclic redundancy of includes (which could be partially mitigated by separating every function into it's own file *but more on that later).
 
-#### Currying
-In order to make library easier to use for functional code/programmers the library's
-methods are curried with the exception/rules listed in the section further above 
-["About library's usage of currying."](#about-librarys-usage-of-currying)
 
 ## Development:
 - Sources are in './src'
@@ -230,7 +213,7 @@ Unit tests are grouped by exported module:
 
 ### Perf Tests:
 Some performance tests were hosted at jsperf.com though that site currently broken so performance-tests/benchmarks will be added to repo at a later date (@todo).
-  
+
 ## License:
 BSD 3 Clause - Included in sources.
 
@@ -240,5 +223,33 @@ BSD 3 Clause - Included in sources.
 - Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html
 - Docs format: http://usejsdoc.org/
 
-## Change log:
-@todo Append changelog here.
+## Change log
+
+### 1.5.1, 1.5.2
+- Added './types/index.d.ts' file.
+
+### 1.5.0
+#### Breaking changes
+- `reduceRightUntil` changed to `reduceUntilRight`.
+- `lengthsToSmallest` changed to `toShortest`.
+
+##### Changes that affect development of the library:
+- package.json.scripts - Removed unnecessary commands (cleaned up scripts section).
+- Updated gulp to version 4.
+- Updated gulpfile to use new `gulp 4` api.
+- Removed unnecessary dev dependencies:
+    - random-js
+    - lazypipe
+    - requirejs
+    - gulp-fncallback
+
+#### Other changes
+- Cleaned up README.md to reflect latest changes.
+- Curried functions (functions curried via `curry*` functions) now retain their arity property value (`length` value).
+
+### 1.3.0
+- Added `noop` (no-op (op as in operation)) method (useful as a placeholder for variables/properties that should always contain a function).
+- Added test for `noop` addition.
+- Updated './docs'.
+- Added entry in 'docs' config to take into account upcoming logo for 'fjl'.
+

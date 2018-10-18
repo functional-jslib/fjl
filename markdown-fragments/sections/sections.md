@@ -1,0 +1,10 @@
+## Sections in Readme:
+- [Requirements](#requirements)
+- [Getting Started](#getting-started)
+- [Docs](#docs)
+- [Motivation](#motivations)
+- [Development](#development)
+- [Supported Platforms](#supported-platforms)
+- [License](#license)
+- [Resources](#resources)
+- [Change log](#change-log)

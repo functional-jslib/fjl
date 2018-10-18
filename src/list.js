@@ -593,7 +593,7 @@ export const
      * @function list.span
      * @param pred {Function} - List predicate (`(x, i, list) => bool`)
      * @param list {Array|String}
-     * @returns {Array<any[]>|Array<String>>}
+     * @returns {(Array<Array<*>>|Array<String>)}
      * @type {Function}
      */
     span = curry((pred, list) => {

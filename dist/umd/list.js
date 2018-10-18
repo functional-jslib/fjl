@@ -730,7 +730,19 @@
         var out = reverse(list);
         return (0, _utils.sliceTo)(splitPoint + 1, (0, _object.isString)(list) ? out.join('') : out);
     }),
-        span = exports.span = (0, _curry.curry)(function (pred, list) {
+
+
+    /**
+     * Gives you the `span` of items matching predicate
+     * and items not matching predicate;  E.g., Gives an
+     * array of arrays;  E.g., [[matching-items], [non-matching-items]]
+     * @function list.span
+     * @param pred {Function} - List predicate (`(x, i, list) => bool`)
+     * @param list {Array|String}
+     * @returns {(Array<Array<*>>|Array<String>)}
+     * @type {Function}
+     */
+    span = exports.span = (0, _curry.curry)(function (pred, list) {
         var splitPoint = (0, _utils.findIndexWhere)((0, _negate.negateF3)(pred), list);
         return splitPoint === -1 ? splitAt(0, list) : splitAt(splitPoint, list);
     }),
