@@ -1,8 +1,7 @@
 /**
  * Created by elydelacruz on 4/28/16.
+ * Refactored 09/28/2018
  */
-
-'use strict';
 
 const fs = require('fs'),
     path = require('path'),
