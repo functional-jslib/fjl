@@ -20,7 +20,7 @@ const path = require('path'),
 
     /** Util Modules **/
     del = require('del'),
-    ModuleMemberListReadStream = require('./node-scripts/ModuleMemberListReadStream'),
+    moduleMemberListsReadStream = require('./node-scripts/writeModuleAndMemberLists'),
 
     /** Paths **/
     {
@@ -138,21 +138,20 @@ const path = require('path'),
 
     buildTask = series(cleanTask, buildJsTask),
 
-    moduleMdMemberList = () => {
-        const writeStream = fs.createWriteStream('./markdown-fragments-generated/member-list.md')
-        return new ModuleMemberListReadStream(
-            require('./dist/package/fjl'),
-            'fjl',
-            './markdown-fragments-generated'
-        )
-            .pipe(writeStream);
+    readmeTask = function readmeTask () {
+        const moduleMemberListOutputPath = './markdown-fragments-generated/module-and-member-list.md';
+        return deleteFilePaths([
+            './markdown-fragments-generated/*.md',
+            './README.md'
+        ])
+            .then(() => moduleMemberListsReadStream()
+                .pipe(fs.createWriteStream(moduleMemberListOutputPath))
+            )
+            .then(() => gulp.src(gulpConfig.readme)
+                .pipe(concat('./README.md'))
+                .pipe(gulp.dest('./'))
+            );
     },
-
-    readmeTask = series(moduleMdMemberList, function readmeTask () {
-        return gulp.src(gulpConfig.readme)
-            .pipe(concat('./README.md'))
-            .pipe(gulp.dest('./'));
-    }),
 
     docTask = series(readmeTask, function docTask () {
         return deleteFilePaths(['./docs/**/*'])

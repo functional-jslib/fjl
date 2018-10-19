@@ -55,41 +55,84 @@ const fjl = require('fjl');
 ```
 
 
-### Docs
+## Docs
 
 **JSDocs** [https://functional-jslib.github.io/fjl]
 
 The docs are divided into modules though, note, all methods live on `fjl` (top level export).
 
-#### About library's usage of currying.
+### About library's usage of currying.
 - All methods that take 2 or more arguments are curried.
-- All methods that take rest params "only" are curried up to 2 parameters.
+- Methods that take rest params "only" are curried in some cases and not curried in others (see: `compose`, `peek` et. al.).
 - Methods that require one argument and rest params are curried at up to 2 parameters.
-- Methods that accept rest params "only" are not curried.
-- All curried functions will have an, arity, `length` of `0` (due to the way currying is currently defined in the libray (will be updated later)).
 
-#### `boolean`
+**Note**: As a side-effect of the way currying was defined in the library curried functions retain their arity/remaining-arity lengths.
+
+### list
+ ```
+difference, complement, map, slice, includes, indexOf, lastIndexOf,
+push, append, head, last, tail, init, uncons, unconsr, concat,
+concatMap, reverse, intersperse, intercalate, transpose, subsequences,
+swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL,
+mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex,
+findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile,
+dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach, filter,
+partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf,
+isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN,
+zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5,
+unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum,
+scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert,
+insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect,
+intersectBy, range
 ```
-isTruthy, isFalsy, alwaysTrue, alwaysFalse
+### listUtils
+ ```
+sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
+reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
+findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
+aggregateArr$
+```
+### object
+ ```
+instanceOf, hasOwnProperty, length, assign, keys, lookup, typeOf, copy,
+toTypeRef, toTypeRefName, isFunction, isType, isOfType, isClass,
+isCallable, isObject, isBoolean, isNumber, isString, isMap, isSet,
+isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
+isUsableImmutablePrimitive, isEmptyList, isEmptyObject,
+isEmptyCollection, isEmpty, isset, isArray, of, searchObj, assignDeep,
+objUnion, objIntersect, objDifference, objComplement, log, error, peek,
+jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList,
+fromAssocListDeep
+```
+### function
+ ```
+apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5,
+flipN, flip, id, negateF, negateF2, negateF3, negateFN, until,
+fnOrError, noop
+```
+### boolean
+ ```
+isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll
+```
+### errorThrowing
+ ```
+typeRefsToStringOrError, defaultErrorMessageCall,
+getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType,
+errorIfNotTypes
+```
+### string
+ ```
+split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst,
+camelCase, classCase
+```
+### utils
+ ```
+fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
+fPureTakesOneOrMore
 ```
 
-#### `list`
-```
-append, head, last, tail, init, uncons, unconsr, concat, concatMap,
-reverse, intersperse, intercalate, transpose, subsequences, subsequences1, 
-permutations, foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR, iterate, repeat,
-replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices,
-take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at,
-find, filter, map, partition, elem, notElem, lookup, isPrefixOf, isSuffixOf, isInfixOf,
-isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3,
-zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, 
-any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, 
-scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy,
-removeBy, removeFirstBy, unionBy, union, intersect, intersectBy, difference,
-complement, range
-```
-
-##### Note: `iterate`, `repeat`, `replicate`, `cycle`
+### Notes/method-requisites:
+#### Note: `iterate`, `repeat`, `replicate`, `cycle`
 In javascript we do not have lazy lists (infinite lists) like in haskell so 
 the aforementioned methods take an integer as their first parameter;  E.g.,
 
@@ -111,41 +154,11 @@ And our haskell signature for our javascript version methods become:
 - `cycle :: Int -> [a] -> [a]`
 - `iterate :: Int -> (a -> a) -> [a]`
 
-#### `function`
-```
-apply, call, curry, curry2, curry3, curry4, curry5, curryN,
-until, flip, flipN,
-negateF, negateF2, negateF3, negateFN,
-id, compose, curry_, curry2_, curry3_, __ // Curry with placeholders
-```
-
-#### `object`
-```
-assignDeep, assign, of, lookup, typeOf, isType, instanceOf, 
-isOfType, isFunction, isClass, isCallable, copy,
-isArray, isObject, isBoolean, isNumber, isString, isMap,
-isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
- isUsableImmutablePrimitive, isEmpty, isset,
-isEmptyList, isEmptyObject, isEmptyCollection,
-hasOwnProperty, length, keys, 
-objUnion, objIntersect, objDifference, objComplement,
-```
-
-#### `string`
-```
-camelCase, classCase, ucaseFirst, lcaseFirst, lines, words, unwords, unlines
-```
-
-#### `jsPlatform`
-```
-slice, includes, indexOf, lastIndexOf, split, push
-```
-
 **Note for haskell developers:**
 - `split` in javascript is for strings.
 
-#### Utilities
-##### Low level utilities
+### Utilities
+#### Low level utilities
 Turning regular methods into functional ones;  I.e., these 
 take a `name` and return a function that take an-argument/arguments and a type value 
 that has a method of `name` on it.  
@@ -153,15 +166,6 @@ The function returned takes arguments first and functor/member last.
 ```
 fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
 fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore
-```
-
-##### List operation utilities
-```
-sliceFrom, sliceTo, slice, sliceCopy
-genericAscOrdering, lengths, toShortest, 
-reduceUntil, reduceUntilRight, reduce, reduceRight,
-lastIndex, findIndexWhere, findIndicesWhere, findWhere,
-aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,
 ```
 
 **Note:**
@@ -172,6 +176,28 @@ aggregateStr, aggregateArr$$, aggregateObj, aggregateByType,
 
 Jsdocs here:
 https://functional-jslib.github.io/fjl/
+
+## Motivations:
+- Haskell and it's `Prelude` (Functional programming).
+- Lambda Calculus.
+- The need for: 
+    - functional 'combinators' in javascript (without requiring typescript) (index.d.ts being developed for typescript users).
+    - the ability to write functional code quickly and easily (using the likes of `curry`, `isset`, `compose` etc.).
+    - a library written from the ground up using es6 and functional concepts.
+    - a library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).
+    - a library that should be easy to update by functional programmers.
+    - Et. al..
+
+### Reasoning for library design choices
+#### Use of while-and-for-loops instead of built-ins:
+- They are faster than iterating with es5 functional array additions (`map`, `forEach` etc.)
+ (do search for `foreach vs for loop` and/or similar on the web).
+- Native array functional methods are used in some places in the library (due to functional composition and cyclic redundancy of includes (which could be partially mitigated by separating every function into it's own file *but more on that later).
+
+#### Currying
+In order to make library easier to use for functional code/programmers the library's
+methods are curried with the exception/rules listed in the section further above 
+["About library's usage of currying."](#about-librarys-usage-of-currying)
 
 ## Development:
 - Sources are in './src'
