@@ -7,7 +7,7 @@
 
 import {compose, negateF2} from '../src/function';
 import {split} from '../src/jsPlatform';
-import {isEmptyList, isArray, isString, length, peek} from '../src/object';
+import {isEmptyList, isArray, isString, length} from '../src/object';
 import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase}
     from '../src/string';
@@ -80,63 +80,77 @@ describe ('#list', () => {
         };
 
     describe ('#append', () => {
-        const unfoldRBy4 = list => unfoldr(remainder =>
-                remainder.length ? [take(4, remainder), drop(4, remainder)] : undefined
-            , list),
-            arrayParts= unfoldRBy4(alphabetArray),
-            stringParts = unfoldRBy4(alphabetString);
-
-        it ('should be able to append two lists.', () => {
-            expectEqual(append.apply(null, arrayParts), alphabetArray);
-            expectEqual(append.apply(null, stringParts), alphabetString);
-            expectEqual(append(take(13, alphabetArray), drop(13, alphabetArray)), alphabetArray);
-            expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString);
-        });
-        it ('should return the copy of the original list when appending to an empty list', () => {
-            expectEqual(append(alphabetArray, []), alphabetArray);
-            expectEqual(append(alphabetString, ''), alphabetString);
-        });
-        it ('should return an empty list when appending empty lists', () => {
-            expectEqual(append('', '', ''), '');
-            expectEqual(append('', ''), '');
-            expectEqual(append([], [], []), []);
-            expectEqual(append([], []), []);
+        it('should be able to append 2 or more lists (strings or arrays) of any given length', () => {
+            [
+                [[vowelsArray, vowelsArray, vowelsArray],
+                    vowelsArray.concat(vowelsArray, vowelsArray)],
+                [[vowelsString, vowelsString, vowelsString],
+                    vowelsString + vowelsString + vowelsString],
+                [[vowelsString, vowelsString], vowelsString + vowelsString],
+                [vowelsArray, vowelsArray.join('')],
+                [[[], vowelsArray], vowelsArray],
+                [[vowelsArray, []], vowelsArray],
+                [[vowelsString, ''], vowelsString],
+                [['', vowelsString], vowelsString],
+                [[[], []], []],
+                [['', ''], '']
+            ]
+            .forEach(([args, expected]) => {
+                const result = append(...args);
+                expectEqual(result, expected);
+            });
         });
         it ('should throw an error when receiving Nothing', () => {
-            // expectError(append);
-            expectError(() => append(null, null));
-            expectError(() => append(undefined, undefined));
-            expectError(() => append(null, []));
-            expectError(() => append(undefined, []));
+            [   [null, null],
+                [undefined, undefined],
+                [null, []],
+                [null, ''],
+                [undefined, []],
+                [undefined, ''],
+                [[], null],
+                ['', null],
+                [[], undefined],
+                ['', undefined]
+            ]
+                .forEach(args => {
+                    expectError(() => append(...args));
+                });
         });
     });
 
     describe ('#head', () => {
-        it ('should return the first item in an list and/or string.', () => {
-            expectEqual(head('Hello'), 'H');
-            expectEqual(head(split('', 'Hello')), 'H');
-        });
-        it ('should return `undefined` when an empty list and/or string is passed in', () => {
-            expectEqual(undefined, head([]));
-            expectEqual(undefined, head(''));
+        it ('should return the first item in a list or `undefined` if list is empty.', () => {
+            [
+                [vowelsString, vowelsString[0]],
+                [vowelsArray, vowelsArray[0]],
+                [[], undefined],
+                ['', undefined]
+            ]
+                .forEach(([arg, expected]) => {
+                    expectEqual(head(arg), expected);
+                });
         });
         it ('should throw an error when no parameter is passed in', () => {
             expectError(head);
+            expectError(() => head(null));
         });
     });
 
     describe ('#last', () => {
-        it ('should return the last item in an list and/or string.', () => {
-            const word = 'Hello';
-            compose(expectEqual('o'), last)(word);
-            compose(expectEqual('o'), last, strToArray)(word);
+        it ('should return the last item in a list or `undefined` if list is empty.', () => {
+            [
+                [vowelsString, vowelsString[vowelsString.length - 1]],
+                [vowelsArray, vowelsArray[vowelsArray.length - 1]],
+                [[], undefined],
+                ['', undefined]
+            ]
+                .forEach(([arg, expected]) => {
+                    expectEqual(last(arg), expected);
+                });
         });
-        it ('should return `undefined` when an empty list is passed in', () => {
-            expectEqual(undefined, last([]));
-            expectEqual(undefined, last(''));
-        });
-        it ('should throw an error when no parameters is passed in', () => {
+        it ('should throw an error when no parameter is passed in', () => {
             expectError(last);
+            expectError(() => last(null));
         });
     });
 
