@@ -42,7 +42,8 @@
     "babel": {
       "babelrc": false,
       "presets": [
-        ["env",
+        [
+          "env",
           {
             "modules": false
           }
@@ -58,7 +59,9 @@
       "./tests/for-server/**/test-*.js"
     ],
     "babel": {
-      "presets": ["latest"],
+      "presets": [
+        "latest"
+      ],
       "plugins": [
         "transform-es2015-modules-commonjs"
       ]
@@ -86,5 +89,25 @@
     "./markdown-fragments/sections/license.md",
     "./markdown-fragments/sections/resources.md",
     "./markdown-fragments/sections/changelog.md"
-  ]
+  ],
+  "jsdoc": {
+    "opts": {
+      "template": "node_modules/tui-jsdoc-template",
+      "encoding": "utf8",
+      "destination": "./docs/",
+      "recurse": true,
+      "templates": {
+        "useCollapsibles": false
+      }
+    },
+    "templates": {
+      "logo": {
+        "url": "http://elycruz.com/fjl-logo-v2.svg",
+        "width": "144px",
+        "height": "55px",
+        "link": "https://github.com/functional-jslib/fjl"
+      },
+      "footerText": "fjl library - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab"
+    }
+  }
 }

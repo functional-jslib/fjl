@@ -95,26 +95,14 @@ const
                 .join(',\n')
         ;
         return `### ${moduleName}\n \`\`\`\n${methodNamesMd}\n\`\`\`\n`;
-    },
-
-    writeModuleAndMemberLists = outputFilePath => new Promise((resolve, reject) => {
-        const topMeta = populateMeta(newTopLevelMeta()),
-            markdown = Object
-                .keys(topMeta.moduleMetas)
-                .reduce((agg, key) =>
-                    agg + methodNamesMdTmpl(key, topMeta.moduleMetas[key])
-                , '')
-        ;
-        fs.writeFile(outputFilePath, markdown, null, err => {
-            if (err) {
-                reject(err);
-            }
-            log(`\nModule member list markdown written to "${outputFilePath}".\n`);
-            resolve(markdown);
-        });
-    })
+    }
 ;
 
+/**
+ * Readstream for pumping out the contents of the "expected" markdown file.
+ * @class ModuleMemberListsReadStream
+ * @extends stream.Readable
+ */
 class ModuleMemberListsReadStream extends Readable {
     constructor(options) {
         super(Object.assign({
@@ -126,19 +114,21 @@ class ModuleMemberListsReadStream extends Readable {
         this.moduleMetaNames = Object.keys(this.topMeta.moduleMetas);
         this.currIndex = 0;
     }
-    _next () {
+    _nextKey () {
         return this.moduleMetaNames[this.currIndex++];
     }
     _read () {
-        const next = this._next();
+        const nextKey = this._nextKey();
         this.push(
-            next ?
-            methodNamesMdTmpl(next, this.topMeta.moduleMetas[next]) :
+            nextKey ?
+            methodNamesMdTmpl(nextKey, this.topMeta.moduleMetas[nextKey]) :
             null
         );
     }
 }
 
-// util.inherits(ModuleMemberListsReadStream, Readable);
-
+/**
+ *
+ * @returns {ModuleMemberListsReadStream}
+ */
 module.exports = () => new ModuleMemberListsReadStream();
