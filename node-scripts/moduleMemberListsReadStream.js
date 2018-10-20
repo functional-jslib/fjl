@@ -94,7 +94,7 @@ const
                 .map(([_, line]) => line.join(', '))
                 .join(',\n')
         ;
-        return `### ${moduleName}\n \`\`\`\n${methodNamesMd}\n\`\`\`\n`;
+        return `### \`${moduleName}\` methods\n \`\`\`\n${methodNamesMd}\n\`\`\`\n`;
     }
 ;
 
