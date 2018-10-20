@@ -1,4 +1,10 @@
-const path = require('path'),
+/**
+ * @todo Consolidate use of hard-coded path strings in this file into './gulpfileConfig.json'.
+ */
+const
+
+    /** System and config includes **/
+    path = require('path'),
     fs = require('fs'),
     packageJson = require('./package'),
     gulpConfig = require('./gulpfileConfig'),
@@ -13,14 +19,15 @@ const path = require('path'),
     gulpRollup =    require('gulp-better-rollup'),
     gulpBabel =     require('gulp-babel'),
 
-    // Rollup plugins
+    /** Rollup plugins **/
     rollup = require('rollup'),
     rollupBabel = require('rollup-plugin-babel'),
     rollupResolve = require('rollup-plugin-node-resolve'),
 
     /** Util Modules **/
     del = require('del'),
-    moduleMemberListsReadStream = require('./node-scripts/writeModuleAndMemberLists'),
+    moduleMemberListsReadStream = require('./node-scripts/moduleMemberListsReadStream'),
+    getReadStreamFinish = (resolve, reject) => err => err ? reject(err) : resolve(),
 
     /** Paths **/
     {
@@ -138,46 +145,31 @@ const path = require('path'),
 
     buildTask = series(cleanTask, buildJsTask),
 
-    readmeTask = function readmeTask () {
+    readmeTask = () => {
         const moduleMemberListOutputPath = './markdown-fragments-generated/module-and-member-list.md';
+
         return deleteFilePaths([
             './markdown-fragments-generated/*.md',
             './README.md'
         ])
-            .then(() => moduleMemberListsReadStream()
+            .then(() => new Promise((resolve, reject) => moduleMemberListsReadStream()
                 .pipe(fs.createWriteStream(moduleMemberListOutputPath))
-            )
-            .then(() => gulp.src(gulpConfig.readme)
+                .on('finish', getReadStreamFinish(resolve, reject))
+            ))
+            .then(() => new Promise((resolve, reject) => gulp.src(gulpConfig.readme)
                 .pipe(concat('./README.md'))
                 .pipe(gulp.dest('./'))
-            );
+                .on('finish', getReadStreamFinish(resolve, reject))
+            ));
     },
 
     docTask = series(readmeTask, function docTask () {
         return deleteFilePaths(['./docs/**/*'])
-            .then(() =>
-                src(['README.md', './src/**/*.js'], {read: false})
-                    .pipe(jsdoc({
-                        opts: {
-                            template: 'node_modules/tui-jsdoc-template',  // same as -t templates/default
-                            encoding: 'utf8',               // same as -e utf8
-                            destination: './docs/',       // same as -d ./out/
-                            recurse: true,
-                            templates: {
-                                useCollapsibles: false
-                            }
-                        },
-                        'templates': {
-                            'logo': {
-                                'url': 'http://elycruz.com/fjl-logo-v2.svg',
-                                'width': '144px',
-                                'height': '55px',
-                                'link': 'https://github.com/functional-jslib/fjl'
-                            },
-                            'footerText': 'fjl library - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab'
-                        }
-                    }))
-            );
+            .then(() => new Promise((resolve, reject) =>
+                src(['README.md', './src/**/*.js'])
+                    .on('finish', getReadStreamFinish(resolve, reject))
+                    .pipe(jsdoc(gulpConfig.jsdoc))
+            ));
     }),
 
     watchTask = series(buildTask, function watchTask () {

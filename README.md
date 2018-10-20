@@ -68,7 +68,9 @@ The docs are divided into modules though, note, all methods live on `fjl` (top l
 
 **Note**: As a side-effect of the way currying was defined in the library curried functions retain their arity/remaining-arity lengths.
 
-### list
+### Library methods:
+
+### `list` methods
  ```
 difference, complement, map, slice, includes, indexOf, lastIndexOf,
 push, append, head, last, tail, init, uncons, unconsr, concat,
@@ -85,14 +87,14 @@ scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert,
 insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect,
 intersectBy, range
 ```
-### listUtils
+### `listUtils` methods
  ```
 sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
 reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
 findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
 aggregateArr$
 ```
-### object
+### `object` methods
  ```
 instanceOf, hasOwnProperty, length, assign, keys, lookup, typeOf, copy,
 toTypeRef, toTypeRefName, isFunction, isType, isOfType, isClass,
@@ -104,28 +106,28 @@ objUnion, objIntersect, objDifference, objComplement, log, error, peek,
 jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList,
 fromAssocListDeep
 ```
-### function
+### `function` methods
  ```
 apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5,
 flipN, flip, id, negateF, negateF2, negateF3, negateFN, until,
 fnOrError, noop
 ```
-### boolean
+### `boolean` methods
  ```
 isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll
 ```
-### errorThrowing
+### `errorThrowing` methods
  ```
 typeRefsToStringOrError, defaultErrorMessageCall,
 getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType,
 errorIfNotTypes
 ```
-### string
+### `string` methods
  ```
 split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst,
 camelCase, classCase
 ```
-### utils
+### `utils` methods
  ```
 fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
 fPureTakesOneOrMore
