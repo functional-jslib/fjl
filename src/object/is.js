@@ -29,7 +29,7 @@ export const
      * @function module:object.toTypeRef
      * @param type {Function|String} - String or function representing a type.
      * @returns {String}
-     * @private
+     * @todo write tests for this function.
      */
     toTypeRef = type => {
         if (!type) {
@@ -42,16 +42,21 @@ export const
     },
 
     /**
-     *
-     * @param types
-     * @returns {any[]}
+     * Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values into
+     * type refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
+     * @function module:object.toTypeRefs
+     * @param types {...(TypeRef|*)}
+     * @returns {Array<TypeRef>}
+     * @todo Ensure tests are written for this function.
      */
     toTypeRefs = (...types) => types.map(toTypeRef),
 
     /**
-     *
-     * @param Type
+     * Returns possible Type's TypeRef name.
+     * @function module:object.toTypeRefName
+     * @param Type {(TypeRef|*)}
      * @returns {String}
+     * @todo Ensure tests are written for this function.
      */
     toTypeRefName = Type => {
         const ref = toTypeRef(Type);
@@ -59,9 +64,11 @@ export const
     },
 
     /**
-     *
-     * @param types
+     * Returns possible Types' TypeRef names.
+     * @function module:object.toTypeRefNames
+     * @param types {...(TypeRef|*)}
      * @returns {String[]}
+     * @todo Ensure tests are written for this function.
      */
     toTypeRefNames = (...types) => types.map(toTypeRefName),
 
@@ -313,10 +320,12 @@ export const
     isset = x => x !== null && x !== undefined,
 
     /**
-     *
-     * @param x
-     * @param types
+     * Checks to see if `x` is of one of the given type refs.
+     * @function object.isOneOf
+     * @param x {*}
+     * @param types {...(TypeRef|*)}
      * @returns {boolean}
+     * @todo write tests for this function.
      */
     isOneOf = (x, ...types) => {
         const typeName = typeOf(x);
