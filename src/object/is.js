@@ -41,10 +41,29 @@ export const
         return typeOf(type);
     },
 
+    /**
+     *
+     * @param types
+     * @returns {any[]}
+     */
+    toTypeRefs = (...types) => types.map(toTypeRef),
+
+    /**
+     *
+     * @param Type
+     * @returns {String}
+     */
     toTypeRefName = Type => {
         const ref = toTypeRef(Type);
         return ref instanceof Function ? ref.name : ref;
     },
+
+    /**
+     *
+     * @param types
+     * @returns {String[]}
+     */
+    toTypeRefNames = (...types) => types.map(toTypeRefName),
 
     /**
      * Returns whether a value is a function or not.
@@ -291,4 +310,16 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isset = x => x !== null && x !== undefined;
+    isset = x => x !== null && x !== undefined,
+
+    /**
+     *
+     * @param x
+     * @param types
+     * @returns {boolean}
+     */
+    isOneOf = (x, ...types) => {
+        const typeName = typeOf(x);
+        return toTypeRefNames(types).some(name => typeName === name);
+    }
+;
