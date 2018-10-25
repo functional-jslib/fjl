@@ -8,9 +8,9 @@ import {range} from './../src/list/range';
 
 export * from './helpers/curry_';
 
-export let  expectInstanceOf = curry2_((value, instance) => expect(value).toBeInstanceOf(instance)),
+export let  expectInstanceOf = curry2_((instance, value) => expect(value).toBeInstanceOf(instance)),
 
-    expectFunction = value => expectInstanceOf(value, Function),
+    expectFunction = value => expectInstanceOf(Function, value),
 
     expectEqual = curry2_((value, value2) => expect(value).toEqual(value2)),
 

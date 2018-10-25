@@ -1,22 +1,43 @@
 import {length} from '../jsPlatform/object';
 import {curry} from '../function/curry';
+import {typeOf, of, isFunctor, isset} from '../object';
 
 /**
+ * Maps a function onto a List (string or array) or a functor (value containing a map method).
  * @function module:list.map
- * @param fn {Function} - Function to map on array.
- * @param xs {Array}
- * @returns {Array}
+ * @param fn {Function} - Function to map on given value.
+ * @param xs {Array|String|*}
+ * @returns {Array|String|*}
  */
 const map = curry((fn, xs) =>  {
-    let ind = 0,
-        limit = length(xs),
-        out = [];
-    if (!limit) { return out; }
-    while (ind < limit) {
-        out.push(fn(xs[ind], ind, xs));
-        ind += 1;
+    if (!isset(xs)) { return xs; }
+    let out = of(xs),
+        limit,
+        i = 0;
+    switch (typeOf(xs)) {
+        case 'Array':
+            limit = length(xs);
+            if (!limit) { return out; }
+            for (; i < limit; i += 1) {
+                out.push(fn(xs[i], i, xs));
+            }
+            return out;
+        case 'String':
+            limit = length(xs);
+            if (!xs) { return out; }
+            for (; i < limit; i += 1) {
+                out += fn(xs[i], i, xs);
+            }
+            return out;
+        default:
+            if (isFunctor(xs)) { return xs.map(fn); }
+
+            // Other objects
+            return Object.keys(xs).reduce((agg, key) => {
+                out[key] = fn(xs[key], key, xs);
+                return out;
+            }, out);
     }
-    return out;
 });
 
 export default map;

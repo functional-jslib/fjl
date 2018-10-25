@@ -3,12 +3,12 @@
  * @module list
  */
 import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list';
-import {apply}              from './jsPlatform/function';
-import {negateF3, negateF2}   from './function/negate';
+import {apply} from './jsPlatform/function';
+import {negateF3, negateF2} from './function/negate';
 import {curry, curry2, curry3} from './function/curry';
 import {isTruthy, isFalsy} from './boolean';
-import {lookup, length, of, isString}       from './object';
-import map                  from './list/map';
+import {lookup, length, of, isset, typeOf, isString} from './object';
+import map from './list/map';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -69,8 +69,8 @@ export const
      * Returns tail part of list (everything after the first item as new list).
      * @haskelType `tail :: [a] -> [a]`
      * @function module:list.tail
-     * @param xs {Array}
-     * @returns {Array}
+     * @param xs {Array|String}
+     * @returns {Array|String}
      */
     tail = xs => sliceFrom(1, xs),
 
@@ -136,47 +136,76 @@ export const
      * Returns a copy of the passed in list reverses.
      * @haskellType `reverse :: [a] -> [a]`
      * @function module:list.reverse
-     * @param x {Array}
-     * @returns {Array}
+     * @param xs {Array|String}
+     * @returns {Array|String}
      */
-    reverse = x => foldr((agg, item) => (agg.push(item), agg), [], x),
+    reverse = xs => {
+        if (!isset(xs) || !xs.length) {
+            return xs;
+        }
+        let out = of(xs),
+            i = xs.length - 1;
+        switch (typeOf(xs)) {
+            case 'String':
+                for (; i >= 0; i -= 1) {
+                    out += xs[i];
+                }
+                return out;
+            default:
+                for (; i >= 0; i -= 1) {
+                    out.push(xs[i]);
+                }
+                return out;
+        }
+    },
 
     /**
-     * Takes an element and a list and `intersperses' that element between the elements of the list. For example
+     * Takes an element and a list and `intersperses' that element between the
+     *  elements of the list.
      * @function module:list.intersperse
-     * @note In our version of the function javascript is loosely typed so, so is our function (to much overhead to make
-     *  it typed) so `between` can be any value.
+     * @note In our version of the function javascript is loosely typed so,
+     *  so is our function (to much overhead to make it typed) so `between` can be any value.
      * @param between {*} - Should be of the same type of elements contained in list.
-     * @param arr {Array} - List.
-     * @returns {Array}
+     * @param arr {Array|String} - List.
+     * @returns {Array|String}
      */
-    intersperse = curry((between, arr) => {
-        const limit = length(arr),
-            lastInd = limit - 1,
-            out = [];
-        if (!limit) {
+    intersperse = curry((between, xs) => {
+        if (!xs || !xs.length) { return xs; }
+        const limit = xs.length,
+            lastInd = limit - 1;
+        let out = of(xs),
+            i = 0;
+        if (isString(xs)) {
+            for (; i < limit; i += 1) {
+                out += i === lastInd ?
+                    xs[i] : xs[i] + between;
+            }
             return out;
         }
-        return foldl((agg, item, ind) => {
-            if (ind === lastInd) {
-                agg.push(item);
+        for (; i < limit; i += 1) {
+            if (i === lastInd) {
+                out.push(xs[i]);
+            } else {
+                out.push(xs[i], between);
             }
-            else {
-                agg.push(item, between);
-            }
-            return agg;
-        }, out, arr);
+        }
+        return out;
     }),
 
     /**
      * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
      * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
      * @function module:list.intercalate
-     * @param xs {Array}
-     * @param xss {Array}
-     * @returns {Array}
+     * @param xs {Array|String}
+     * @param xss {Array|String}
+     * @returns {Array|String}
      */
-    intercalate = curry((xs, xss) => concat(intersperse(xs, xss))),
+    intercalate = curry((xs, xss) => {
+        if (isString(xss)) {
+            return intersperse(xs, xss);
+        }
+        return concat(intersperse(xs, xss));
+    }),
 
     /**
      * Transposes rows and columns into lists by index;  E.g.,
@@ -523,7 +552,7 @@ export const
      * @param list {Array|String} - functor (list or string) to split.
      * @returns {Array|String} - List like type passed
      */
-    splitAt = (ind, list) => [ sliceTo(ind, list), sliceFrom(ind, list) ],
+    splitAt = (ind, list) => [sliceTo(ind, list), sliceFrom(ind, list)],
 
     /**
      * Gives an list with passed elements while predicate was true.
@@ -570,20 +599,14 @@ export const
      */
     dropWhileEnd = curry((pred, list) => {
         const splitPoint =
-                findIndexWhereRight(
-                    (x, i, xs) => !pred(x, i, xs),
-                    list
-                );
-
+            findIndexWhereRight(
+                (x, i, xs) => !pred(x, i, xs),
+                list
+            );
         if (splitPoint === -1) {
             return of(list);
         }
-
-        const out = reverse(list);
-        return sliceTo(
-            splitPoint + 1,
-            isString(list) ? out.join('') : out
-        );
+        return sliceTo(splitPoint + 1, reverse(list));
     }),
 
     /**
@@ -694,7 +717,7 @@ export const
     partition = curry((pred, list) =>
         !length(list) ?
             [[], []] :
-                [filter(pred, list), filter(negateF3(pred), list)]),
+            [filter(pred, list), filter(negateF3(pred), list)]),
 
     /**
      * Returns a boolean indicating whether an element exists in given structure of elements.
@@ -1101,10 +1124,10 @@ export const
      * @returns {Array|*}
      */
     unzip = foldl((agg, item) => {
-            agg[0].push(item[0]);
-            agg[1].push(item[1]);
-            return agg;
-        }, [[], []]),
+        agg[0].push(item[0]);
+        agg[1].push(item[1]);
+        return agg;
+    }, [[], []]),
 
     /**
      * unzip transforms a list of pairs into a list of first components and a list of second components.
@@ -1276,7 +1299,9 @@ export const
      * @returns {Array|*}
      */
     scanl1 = curry((fn, xs) => {
-        if (!xs || !xs.length) { return []; }
+        if (!xs || !xs.length) {
+            return [];
+        }
         return scanl(fn, head(xs), tail(xs));
     }),
 
@@ -1314,7 +1339,9 @@ export const
      * @returns {Array|*}
      */
     scanr1 = curry((fn, xs) => {
-        if (!xs || !xs.length) { return []; }
+        if (!xs || !xs.length) {
+            return [];
+        }
         return scanr(fn, last(xs), init(xs));
     }),
 
@@ -1414,12 +1441,12 @@ export const
      * @returns {Array}
      */
     insert = curry((x, xs) => {
-        if (!length(xs)) {
-            return [x];
+        if (!xs.length) {
+            return of(xs, x);
         }
         const foundIndex = findIndex(item => x <= item, xs);
-        return foundIndex === -1 ? [x] :
-            concat(intersperse([x], splitAt(foundIndex, xs)));
+        return foundIndex === -1 ? concat([xs, of(xs, x)]) :
+            concat(intersperse(of(xs, x), splitAt(foundIndex, xs)));
     }),
 
     /**

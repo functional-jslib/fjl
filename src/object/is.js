@@ -330,5 +330,8 @@ export const
     isOneOf = (x, ...types) => {
         const typeName = typeOf(x);
         return toTypeRefNames(types).some(name => typeName === name);
-    }
+    },
+
+    isFunctor = x => x && x.map && instanceOf(Function, x.map)
+
 ;
