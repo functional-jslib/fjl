@@ -43,9 +43,14 @@ import {
     vowelsArray,
     vowelsString,
     revVowelsArray,
-    revVowelsStr,
+    revVowelsString,
     revAlphabetArray,
-    revAlphabetStr, expectInstanceOf, vowelsLen
+    revAlphabetStr,
+    nums1To10,
+    expectInstanceOf,
+    vowelsLen,
+    nonAlphaNums,
+    nonAlphaNumsArray,
 } from './helpers';
 
 describe('#list', () => {
@@ -1011,100 +1016,51 @@ describe('#list', () => {
     });
 
     describe('#takeWhile', () => {
-        it('should take elements while predicate is fulfilled', () => {
-            const word = 'abcdefg',
-                expectedResult = word.split('e')[0],
-                predicate = x => x !== 'e';
-
-            // Expect matched length and matched elements
-            expectTrue(
-                // Ensure cases for each use case
-                all(result =>
-                        // Ensure correct length of items in returned element
-                    length(expectedResult) === length(result) &&
-                    // Ensure elements where matched
-                    all((x, ind) => x === expectedResult[ind], result),
-                    // Use cases (one with string other with list)
-                    [takeWhile(predicate, word.split('')),
-                        takeWhile(predicate, word)]
-                ));
+        it('should take elements while predicate is fulfilled and vice-versa', () => {
+            const isVowel = x => vowelsString.indexOf(x) > -1;
+            [
+                [[isVowel, vowelsString], vowelsString],
+                [[isVowel, vowelsArray], vowelsArray],
+                [[isVowel, alphabetString], 'a'],
+                [[isVowel, alphabetArray], ['a']],
+                [[isVowel, range(0, 5)], []],
+                [[isVowel, nonAlphaNums], ''],
+                [[isVowel, nonAlphaNumsArray], []],
+                [[isVowel, ''], ''],
+                [[isVowel, []], []],
+            ]
+                .forEach(([args, expected]) => {
+                    expectEqual(takeWhile(...args), expected);
+                });
         });
-        it('should return an empty type instance if predicate is not matched at all', () => {
-            const word = 'abcdefg',
-                pred = x => x === 'z';
-
-            // Expect empty type instance
-            expectTrue(
-                // Ensure cases for each use case
-                all(result =>
-                        // Ensure no items returned
-                    length(result) === 0,
-                    [takeWhile(pred, word.split('')), takeWhile(pred, word)]
-                ));
-        });
-        it('should return a copy of type instance if predicate is matched all the way through', () => {
-            const word = 'abcdefg',
-                pred = x => x !== 'z';
-
-            // Expect empty type instance
-            expectTrue(
-                // Ensure cases for each use case
-                all(result =>
-                        // Ensure no items returned
-                    length(result) === length(word),
-                    [takeWhile(pred, word.split('')), takeWhile(pred, word)]
-                ));
-        });
-
+        // @todo add failing case(s) here
     });
 
     describe('#dropWhile', () => {
-        it('should drop elements while predicate is fulfilled', () => {
+        it('should drop elements while predicate is fulfilled and vice-versa', () => {
             const alnumRegex = /^[a-z]$/i,
                 alnumPred = x => alnumRegex.test(x),
                 nonAlnumPred = x => !alnumPred(x),
-                alphaMiddleCharCode = 'a'.charCodeAt(0) + Math.round(alphabetCharCodeRange.length / 2) - 1,
-                alphaMiddleCharCodeInd = alphabetCharCodeRange.indexOf(alphaMiddleCharCode),
-                charCodeLessThan = x => (x + '').charCodeAt(0) < alphaMiddleCharCode
+                getCharCodeLessThan = lessThanCharCode => x => (x + '').charCodeAt(0) < lessThanCharCode
             ;
             [
-                [alphabetArray, alnumPred, []],
                 [vowelsArray, alnumPred, []],
-                [alphabetString, alnumPred, ''],
                 [vowelsString, alnumPred, ''],
-                [alphabetArray, nonAlnumPred, alphabetArray],
-                [alphabetArray, charCodeLessThan, alphabetArray.slice(alphaMiddleCharCodeInd)],
                 [vowelsArray, nonAlnumPred, vowelsArray],
-                [alphabetString, nonAlnumPred, alphabetString],
-                [vowelsString, nonAlnumPred, vowelsString]
+                [vowelsString, nonAlnumPred, vowelsString],
             ]
+                .concat(
+                    vowelsArray.map((c, ind) =>
+                        [vowelsArray, getCharCodeLessThan(c.charCodeAt(0)), vowelsArray.slice(ind)]
+                    ),
+                    vowelsString.split('').map((c, ind) =>
+                        [vowelsString, getCharCodeLessThan(c.charCodeAt(0)), vowelsString.slice(ind)]
+                    )
+                )
                 .forEach(([subj, pred, expected]) => {
                     const result = dropWhile(pred, subj);
                     expectEqual(result, expected);
                 });
-        });
-        it('should return an empty list if predicate is matched all the way through', () => {
-            const pred = (x, _, list) => list.indexOf(x) > -1;
-            [vowelsString, vowelsArray].forEach(xs => {
-                const result = dropWhile(pred, xs);
-                expectEqual(result.length, 0);
-            });
-        });
-        it('should return an a copy of the passed in type instance if predicate doesn\'t match any elements', () => {
-            const word = 'abcdefg',
-                pred = x => x === 'z' > -1;
-
-            // Expect empty type instance
-            expectTrue(
-                // Ensure cases for each use case
-                all(result =>
-                        // Ensure correct lengths returned
-                    length(result) === length(word) &&
-                    // Ensure elements where matched
-                    all((x, ind) => x === word[ind], result),
-                    // Use cases
-                    [dropWhile(pred, word.split('')), dropWhile(pred, word)]
-                ));
         });
     });
 
@@ -1113,29 +1069,36 @@ describe('#list', () => {
             const alnumRegex = /^[a-z]$/i,
                 alnumPred = x => alnumRegex.test(x),
                 nonAlnumPred = x => !alnumPred(x),
-                alphaMiddleCharCode = 'a'.charCodeAt(0) + Math.floor(alphabetCharCodeRange.length / 2) - 1,
-                alphaMiddleCharCodeInd = alphabetCharCodeRange.indexOf(alphaMiddleCharCode),
-                charCodeLessThan = x => (x + '').charCodeAt(0) < alphaMiddleCharCode,
-                charCodeGreaterThan = x => (x + '').charCodeAt(0) >= alphaMiddleCharCode,
-                inList = (x, _, list) => list.indexOf(x) > -1,
-                testTable = [
-                    [alphabetArray, alnumPred, []],
-                    [vowelsArray, alnumPred, []],
-                    [alphabetString, alnumPred, ''],
-                    [vowelsString, alnumPred, ''],
-                    [vowelsString, inList, ''],
-                    [vowelsArray, inList, []],
-                    [alphabetArray, nonAlnumPred, revAlphabetArray],
-                    [alphabetArray, charCodeLessThan, revAlphabetArray],
-                    [alphabetArray, charCodeGreaterThan, revAlphabetArray.slice(0, alphaMiddleCharCodeInd)],
-                    [vowelsArray, nonAlnumPred, revVowelsArray],
-                    [alphabetString, nonAlnumPred, revAlphabetStr],
-                    [vowelsString, nonAlnumPred, revVowelsStr]
-                ];
-            testTable.forEach(([subj, pred, expected]) => {
-                const result = dropWhileEnd(pred, subj);
-                expectEqual(result, expected);
-            });
+                getCharCodeGreaterThan = greaterThanCharCode => x => x.charCodeAt(0) > greaterThanCharCode,
+                nonAlnumsAndVowelsArray = nonAlphaNumsArray.concat(vowelsArray),
+                nonAlnumsAndVowels = nonAlnumsAndVowelsArray.join(''),
+                vowelsAndNonAlnumsArray = vowelsArray.concat(nonAlphaNumsArray),
+                vowelsAndNonAlnums = vowelsAndNonAlnumsArray.slice(0).join('')
+            ;
+            [
+                [[x => x, []], []],
+                [[x => x, ''], ''],
+                [[alnumPred, vowelsArray], []],
+                [[alnumPred, vowelsString], ''],
+                [[nonAlnumPred, vowelsArray], vowelsArray],
+                [[nonAlnumPred, vowelsString], vowelsString],
+                [[nonAlnumPred, nonAlnumsAndVowels], nonAlnumsAndVowels],
+                [[nonAlnumPred, nonAlnumsAndVowelsArray], nonAlnumsAndVowelsArray],
+                [[nonAlnumPred, vowelsAndNonAlnumsArray], vowelsArray],
+                [[nonAlnumPred, vowelsAndNonAlnums], vowelsString],
+            ]
+                .concat(
+                    vowelsArray.map((c, ind) =>
+                        [[getCharCodeGreaterThan(c.charCodeAt(0)), vowelsArray], vowelsArray.slice(0, ind + 1)]
+                    ),
+                    vowelsString.split('').map((c, ind) =>
+                        [[getCharCodeGreaterThan(c.charCodeAt(0)), vowelsString], vowelsString.slice(0, ind + 1)]
+                    )
+                )
+                .forEach(([args, expected]) => {
+                    const result = dropWhileEnd(...args);
+                    expectEqual(result, expected);
+                });
         });
     });
 
@@ -1230,7 +1193,7 @@ describe('#list', () => {
     describe('#group', () => {
         it('should return a list of lists which contain the (sequential) matches', () => {
             const expectedResultFlattened = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
-            expectEqual(group('Mississippi'), expectedResultFlattened);
+            expectEqual(group('Mississippi'), expectedResultFlattened.map(xs => xs.join('')));
             expectEqual(group('Mississippi'.split('')), expectedResultFlattened);
         });
         it('should return a list of lists containing individual ungrouped items', () => {
@@ -2305,7 +2268,7 @@ describe('#list', () => {
     describe('#groupBy', () => {
         it('should return a list of lists which contain the (sequential) matches on equality function', () => {
             const expectedResult = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
-            expectEqual(groupBy(generalEqualityCheck, 'Mississippi'), expectedResult);
+            expectEqual(groupBy(generalEqualityCheck, 'Mississippi'), expectedResult.map(xs => xs.join('')));
             expectEqual(
                 groupBy(generalEqualityCheck, 'Mississippi'.split('')),
                 expectedResult

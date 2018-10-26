@@ -1,5 +1,9 @@
 ## Change log
 
+### 1.6.2
+- String support for `takeWhile`, `group`, and `groupBy`, `dropWhileEnd`.
+- Tablelized tests for `takeWhile`, `dropWhileEnd`, and `dropWhileEnd`.
+
 ### 1.6.0
 - A few more functions now support strings:
     - `map`, `intersperse`, `append`, `reverse`, and `concat`.

@@ -621,9 +621,11 @@ export const
      */
     takeWhile = curry((pred, list) =>
         reduceUntil(
-            negateF3(pred),  // predicate
-            aggregateArray,   // operation
-            [],             // aggregator
+            negateF3(pred),     // predicate
+            isString(list) ?
+                (agg, x) => agg + x :
+                aggregateArray, // operation
+            of(list),           // aggregate
             list
         )),
 
@@ -664,7 +666,7 @@ export const
         if (splitPoint === -1) {
             return of(list);
         }
-        return sliceTo(splitPoint + 1, reverse(list));
+        return sliceTo(splitPoint + 1, list);
     }),
 
     /**

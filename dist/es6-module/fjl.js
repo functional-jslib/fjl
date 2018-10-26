@@ -957,9 +957,11 @@ const drop = sliceFrom;
 const splitAt = (ind, list) => [sliceTo(ind, list), sliceFrom(ind, list)];
 const takeWhile = curry((pred, list) =>
         reduceUntil(
-            negateF3(pred),  // predicate
-            aggregateArray,   // operation
-            [],             // aggregator
+            negateF3(pred),     // predicate
+            isString(list) ?
+                (agg, x) => agg + x :
+                aggregateArray, // operation
+            of(list),           // aggregate
             list
         ));
 const dropWhile = curry((pred, list) => {
@@ -983,7 +985,7 @@ const dropWhileEnd = curry((pred, list) => {
         if (splitPoint === -1) {
             return of(list);
         }
-        return sliceTo(splitPoint + 1, reverse$1(list));
+        return sliceTo(splitPoint + 1, list);
     });
 const span = curry((pred, list) => {
         const splitPoint = findIndexWhere(negateF3(pred), list);

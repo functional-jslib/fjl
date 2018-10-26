@@ -703,8 +703,10 @@ splitAt = exports.splitAt = function splitAt(ind, list) {
  */
 takeWhile = exports.takeWhile = (0, _curry.curry)(function (pred, list) {
     return (0, _utils.reduceUntil)((0, _negate.negateF3)(pred), // predicate
-    _utils.aggregateArray, // operation
-    [], // aggregator
+    (0, _is.isString)(list) ? function (agg, x) {
+        return agg + x;
+    } : _utils.aggregateArray, // operation
+    (0, _of.of)(list), // aggregate
     list);
 }),
 
@@ -741,7 +743,7 @@ dropWhileEnd = exports.dropWhileEnd = (0, _curry.curry)(function (pred, list) {
     if (splitPoint === -1) {
         return (0, _of.of)(list);
     }
-    return (0, _utils.sliceTo)(splitPoint + 1, reverse(list));
+    return (0, _utils.sliceTo)(splitPoint + 1, list);
 }),
 
 

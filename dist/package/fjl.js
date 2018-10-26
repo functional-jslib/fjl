@@ -1218,8 +1218,10 @@ var splitAt = function splitAt(ind, list) {
 };
 var takeWhile = curry(function (pred, list) {
     return reduceUntil(negateF3(pred), // predicate
-    aggregateArray, // operation
-    [], // aggregator
+    isString(list) ? function (agg, x) {
+        return agg + x;
+    } : aggregateArray, // operation
+    of(list), // aggregate
     list);
 });
 var dropWhile = curry(function (pred, list) {
@@ -1237,7 +1239,7 @@ var dropWhileEnd = curry(function (pred, list) {
     if (splitPoint === -1) {
         return of(list);
     }
-    return sliceTo(splitPoint + 1, reverse$1(list));
+    return sliceTo(splitPoint + 1, list);
 });
 var span = curry(function (pred, list) {
     var splitPoint = findIndexWhere(negateF3(pred), list);

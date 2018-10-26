@@ -93,7 +93,17 @@ export let  expectInstanceOf = curry2_((instance, value) => expect(value).toBeIn
 
     revVowelsArray = vowelsArray.slice(0).reverse(),
 
-    revVowelsStr = revVowelsArray.join(''),
+    revVowelsString = revVowelsArray.join(''),
+
+    nums1To10 = range(1, 10),
+
+    nonAlphaNums = '!@#$%^&*()_+|}{:"?><,./;[]\\\'',
+
+    nonAlphaNumsArray = nonAlphaNums.split(''),
+
+    revNonAlphaNumsArray = nonAlphaNumsArray.slice(0).reverse(),
+
+    revNonAlphaNums = revNonAlphaNumsArray.slice(0).reverse().join(''),
 
     jsonClone = x => JSON.parse(JSON.stringify(x)),
 
