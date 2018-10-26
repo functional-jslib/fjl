@@ -6,7 +6,6 @@
  * @todo Remove library functions from tests where they are not being tested (use native functions).
  */
 import {compose, negateF2} from '../src/function';
-import {split} from '../src/jsPlatform';
 import {isEmptyList, isArray, isString, length} from '../src/object';
 import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase} from '../src/string';
@@ -32,7 +31,6 @@ import {
 
 import {
     __,
-    shallowCompareOnLeft,
     expectEqual,
     expectError,
     expectLength,
@@ -52,8 +50,7 @@ import {
 
 describe('#list', () => {
 
-    const strToArray = split(''),
-        generalEqualityCheck = (a, b) => a === b,
+    const generalEqualityCheck = (a, b) => a === b,
         genericOrdering = (a, b) => {
             if (a > b) {
                 return 1;
@@ -589,6 +586,8 @@ describe('#list', () => {
                 arg2 = ['abc', 'def', 'ghi'],
                 arg3 = [vowelsArray, vowelsArray, vowelsArray];
             [
+                [[], []],
+                [[[], [], []], []],
                 [arg1, [].concat.apply([], arg1)],
                 [arg2, ''.concat.apply('', arg2)],
                 [arg3, [].concat.apply([], arg3)]
@@ -596,10 +595,6 @@ describe('#list', () => {
                 .forEach(([arg, expected]) => {
                     expectEqual(concat(arg), expected);
                 });
-        });
-        it('should return an empty list when receiving an empty list or a list of empty lists', () => {
-            expectEqual(concat([]), []);
-            expectEqual(concat([[], [], []]), []);
         });
         it('should throw an error when receiving nothing', () => {
             expectError(concat);
@@ -970,59 +965,48 @@ describe('#list', () => {
     });
 
     describe('#splitAt', () => {
-        const word = 'hello',
-            phraseAppendage = ' world',
-            phrase = `${word}${phraseAppendage}`,
-            phraseLen = length(phrase),
-            wordLen = length(word),
-            phraseAppendageLen = length(phraseAppendage);
-
         it('should split an list and/or string at given index', () => {
-            const result = splitAt(wordLen, phrase),
-                result2 = splitAt(wordLen, phrase.split(''));
-
-            // Ensure returned type for string case is correct
-            expectTrue(typeof result[0] === 'string');
-            expectTrue(typeof result[1] === 'string');
-
-            // Expect returned string parts are equal
-            expectEqual(result[0], word);
-            expectEqual(result[1], phraseAppendage);
-
-            // Ensure returned type for list use case is correct
-            expectTrue(Array.isArray(result2[0]));
-            expectTrue(Array.isArray(result2[1]));
-
-            // Ensure returned list parts are equal
-            expectEqual(length(result2[0]), wordLen);
-            expectEqual(length(result2[1]), phraseAppendageLen);
-
-            // Check each char/element in returned parts for list use case
-            [word, phraseAppendage].forEach((str, ind) =>
-                expectTrue(str.split('')
-                    .every((char, ind2) => result2[ind][ind2] === char)));
+            [
+                [[0, []], [[], []]],
+                [[0, ''], ['', '']],
+                [[1, []], [[], []]],
+                [[1, ''], ['', '']]
+            ].concat(
+                vowelsArray
+                    .map((_, ind) => [
+                        [ind, vowelsArray],
+                        [vowelsArray.slice(0, ind),
+                        vowelsArray.slice(ind)]
+                    ]),
+                vowelsString.split('')
+                    .map((_, ind) => [
+                        [ind, vowelsString],
+                        [vowelsString.slice(0, ind),
+                        vowelsString.slice(ind)]
+                    ])
+            )
+                .forEach(([args, expected]) => {
+                    expectEqual(splitAt(...args), expected);
+                });
         });
-        it('should return an list of empty list and/or string when receiving an empty one of either', () => {
-            splitAt(3, []).concat(splitAt(2, '')).forEach(expectLength(0));
-        });
-        it('should return entirely, passed in, list and/or string as second part of ' +
-            'split in return when `0` is passed in as the first param', () => {
-            const splitPhrase = phrase.split('');
-            expectTrue(splitAt(0, phrase)
-                .concat(splitAt(0, splitPhrase))
-                .every((retVal, ind) =>
-                    // Only check even indices (due to concat above empty side of split is an
-                    //  `odd` numberOps index)
-                    (ind + 1) % 2 === 0 ?
-
-                        // Length of left hand side split result
-                        length(retVal) === phraseLen &&
-
-                        // Left hand side split result
-                        // Log results and do
-                        // "Else is empty right hand side split result" (empty result)
-                        splitPhrase.every((char, ind2) => retVal[ind2] === char)/* && !log(ind, retVal) */ : true
-                ));
+        it('should throw an error on error cases (empty as second arg) (non-numeral as first arg), etc.', () => {
+            [
+            [null, null],
+            [undefined, undefined],
+            [undefined, null],
+            [null, undefined],
+            [0, undefined],
+            [1, undefined],
+            [1, null],
+            [1, null],
+            [null, []],
+            [undefined, []],
+            [null, ''],
+            [undefined, ''],
+            ]
+            .forEach(([args]) => {
+                expectError(() => splitAt(...args));
+            });
         });
     });
 
