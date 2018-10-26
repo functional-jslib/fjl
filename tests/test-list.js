@@ -47,7 +47,7 @@ import {
     revVowelsArray,
     revVowelsStr,
     revAlphabetArray,
-    revAlphabetStr, expectInstanceOf
+    revAlphabetStr, expectInstanceOf, vowelsLen
 } from './helpers';
 
 describe('#list', () => {
@@ -64,14 +64,6 @@ describe('#list', () => {
             return 0;
         },
         equal = (a, b) => a === b,
-        // const listToLinkedList = list => {
-        //     const unlinkedNodes = list.map(char => ({data: char})),
-        //         lastNode = unlinkedNodes.pop();
-        //         return unlinkedNodes.reduceRight((agg, item) => {
-        //             item.next = agg;
-        //             return item;
-        //         }, (lastNode.next = null, lastNode));
-        // },
         linkedListToList = linkedList => {
             const out = [];
             let node = linkedList;
@@ -339,27 +331,35 @@ describe('#list', () => {
     });
 
     describe('#transpose', () => {
-        const result1 = transpose([[1, 2, 3], [4, 5, 6]]),
-            result2 = transpose([[10, 11], [20], [], [30, 31, 32]]);
         it('should transpose a list of lists into a rotated list of lists (from columns and rows to rows and' +
             ' columns and vice versa).', () => {
-            expectTrue(all(
-                tuple =>
-                    all((list, ind) => all((x, ind2) => x === tuple[1][ind][ind2], list),
-                        tuple[0]),
+            // [subj, expected]
+            // @todo add test cases for strings
+            [
                 [
-                    [result1, ([[1, 4], [2, 5], [3, 6]])],
-                    [result2, ([[10, 20, 30], [11, 31], [32]])]
+                    [[1, 2, 3], [4, 5, 6]],
+                    [[1, 4], [2, 5], [3, 6]]
+                ],
+                [
+                    [[10, 11], [20], [], [30, 31, 32]],
+                    [[10, 20, 30], [11, 31], [32]]
+                ],
+                [
+                    [[], [], []], []
+                ],
+                [
+                    [], []
                 ]
-            ));
-        });
-        it('should ignore empty lists in the transposition process and not add them to the resulting list.', () => {
-            expectTrue(all(length, result1));
-            expectTrue(all(length, result2));
-        });
-        it('should return an empty list when receiving one or when items contained are empty', () => {
-            expectEqual(transpose([[], [], []]), []);
-            expectEqual(transpose([]), []);
+            ]
+                .forEach(([subj, expected]) => {
+                    const result = transpose(subj);
+                    expectEqual(result, expected);
+
+                    // Ensure empty lists are not generated in `result`
+                    if (result.length) {
+                        expectTrue(result.every(xs => xs.length > 0));
+                    }
+                });
         });
     });
 
@@ -368,7 +368,11 @@ describe('#list', () => {
             const candidates = ['abc', 'abc'.split('')],
                 results = candidates.map(subsequences),
                 expectedLen = Math.pow(2, candidates[0].length);
+
+            // Check expected result lengths
             expectTrue(results.every(result => result.length === expectedLen));
+
+            // Ensure generated subsequences are unique in their sets
             expectTrue(results.every(result =>
                     !result.filter((subSeq, ind) =>
                         result.indexOf(subSeq) !== ind ||
@@ -380,11 +384,12 @@ describe('#list', () => {
             // https://discuss.codechef.com/questions/17235/print-all-possible-subsequences-of-string-using-dynamic-programming
         });
         it('should return a list with an empty list when receiving an empty list', () => {
+            expectEqual(subsequences([]), [[]]);
+            expectEqual(subsequences(''), [[]]);
         });
     });
 
     describe('#permutations', () => {
-
         const areAllPermutesUnique = permutes => {
                 const xs = permutes,
                     limit = xs.length;
@@ -435,7 +440,7 @@ describe('#list', () => {
                 phraseLen = length(phrase),
                 phraseIndCount = phraseLen - 1,
                 getAppendage = ind => parseInt(ind, 10) !== phraseIndCount ? '|' : '',
-                expectedTransform = map((x, ind) => x + getAppendage(ind), split('', phrase));
+                expectedTransform = phrase.split('').map((x, ind) => x + getAppendage(ind));
             expectEqual(
                 foldl((agg, item, ind) => {
                     agg += item + getAppendage(ind);
@@ -455,7 +460,7 @@ describe('#list', () => {
                 foldl((agg, item, ind) => {
                     agg.push(item + getAppendage(ind));
                     return agg;
-                }, [], split('', phrase)),
+                }, [], phrase.split('')),
                 expectedTransform
             );
         });
@@ -477,7 +482,7 @@ describe('#list', () => {
                 phraseLen = length(phrase),
                 phraseIndCount = phraseLen - 1,
                 getAppendage = ind => parseInt(ind, 10) < phraseIndCount ? '|' : '',
-                expectedTransform = map((x, ind) => x + getAppendage(ind), split('', phrase));
+                expectedTransform = phrase.split('').map((x, ind) => x + getAppendage(ind));
             expectEqual(
                 foldl1((agg, item, ind) => {
                     agg += getAppendage(ind) + item;
@@ -497,7 +502,7 @@ describe('#list', () => {
                 foldl1((agg, item, ind) => {
                     agg += getAppendage(ind) + item;
                     return agg;
-                }, split('', phrase)),
+                }, phrase.split('')),
                 expectedTransform.join('')
             );
         });
@@ -508,16 +513,14 @@ describe('#list', () => {
 
     describe('#foldr', () => {
         it('should fold a `Foldable` (list, etc.) into some value', () => {
-            const phrase = 'hello world',
-                phraseLen = length(phrase),
-                phraseIndCount = phraseLen - 1,
-                getAppendage = ind => parseInt(ind, 10) !== phraseIndCount ? '|' : '',
-                expectedTransform = reverse(map((x, ind) => x + getAppendage(ind), split('', phrase)));
+            const vowelsStringIndCount = vowelsLen - 1,
+                getAppendage = ind => parseInt(ind, 10) !== vowelsStringIndCount ? '|' : '',
+                expectedTransform = reverse(vowelsArray.map((x, ind) => x + getAppendage(ind)));
             expectEqual(
                 foldr((agg, item, ind) => {
                     agg += item + getAppendage(ind);
                     return agg;
-                }, '', phrase),
+                }, '', vowelsString),
                 expectedTransform.join('')
             );
             expectEqual(
@@ -532,7 +535,7 @@ describe('#list', () => {
                 foldr((agg, item, ind) => {
                     agg.push(item + getAppendage(ind));
                     return agg;
-                }, [], split('', phrase)),
+                }, [], vowelsArray),
                 expectedTransform
             );
         });
@@ -548,16 +551,14 @@ describe('#list', () => {
 
     describe('#foldr1', () => {
         it('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', () => {
-            const phrase = 'hello world',
-                phraseLen = length(phrase),
-                phraseIndCount = phraseLen - 1,
-                getAppendage = ind => ind <= phraseIndCount ? '|' : '',
-                expectedTransform = reverse(map((x, ind) => x + (ind !== 0 ? getAppendage(ind) : ''), split('', phrase)));
+            const vowelsStringIndCount = vowelsLen - 1,
+                getAppendage = ind => parseInt(ind, 10) !== vowelsStringIndCount ? '|' : '',
+                expectedTransform = reverse(vowelsArray.map((x, ind) => x + getAppendage(ind)));
             expectEqual(
                 foldr1((agg, item, ind) => {
-                    agg += getAppendage(ind) + item;
+                    agg += item + getAppendage(ind);
                     return agg;
-                }, phrase),
+                }, vowelsString),
                 expectedTransform.join('')
             );
             expectEqual(
@@ -570,10 +571,10 @@ describe('#list', () => {
             );
             expectEqual(
                 foldr1((agg, item, ind) => {
-                    agg += getAppendage(ind) + item;
+                    agg.push(item + getAppendage(ind));
                     return agg;
-                }, split('', phrase)),
-                expectedTransform.join('')
+                }, vowelsArray.concat([[]])),
+                expectedTransform
             );
         });
         it('should return the zero value when an empty list is passed in', () => {
@@ -637,6 +638,7 @@ describe('#list', () => {
         });
         it('should return `false` when receiving an empty list or nothing.', () => {
             expectFalse(and(''));
+            expectFalse(and([]));
             expectFalse(and(['']));
             expectFalse(and([null]));
             expectFalse(and([undefined]));
@@ -678,6 +680,7 @@ describe('#list', () => {
         });
         it('should return `false` when an empty list is received.', () => {
             expectFalse(any(id, []));
+            expectFalse(any(id, ''));
         });
         it('should throw an error when receiving nothing (`null` or `undefined`).', () => {
             expectError(() => any(id, null));
@@ -794,30 +797,34 @@ describe('#list', () => {
                     return [agg, xs3];
                 }, [], list1);
 
-            expectTrue(
-                all(tuple => {
-                        const reducedForCompare = foldl((agg, item, ind) => {
-                                if (Array.isArray(agg)) {
-                                    agg.push(tuple[2](agg, item, ind));
-                                }
-                                else {
-                                    agg += tuple[2](agg, item, ind);
-                                }
-                                return agg;
-                            },
-                            tuple[3], tuple[1]);
-                        // Check that mapped have equal length
-                        return length(tuple[0][1]) === length(tuple[1]) &&
-                            // Check aggregated are equal
-                            shallowCompareOnLeft(tuple[0][0], reducedForCompare);
-                    },
-                    [
-                        // Result, list, expected accumulation
-                        [result0, list0, numberOp, 0],
-                        [result1, list1, stringOp, ''],
-                        [result2, list2, stringOp, []]
-                    ])
-            );
+            [
+                // Result, list, expected accumulation
+                [result0, list0, numberOp, 0],
+                [result1, list1, stringOp, ''],
+                [result2, list2, stringOp, []]
+            ]
+                .forEach(tuple => {
+                    const reducedForCompare = (
+                        typeof tuple[1] === 'string' ?
+                            tuple[1].split('') :
+                            tuple[1]
+                    )
+                        .reduce((agg, item, ind) => {
+                            if (Array.isArray(agg)) {
+                                agg.push(tuple[2](agg, item, ind));
+                            }
+                            else {
+                                agg += tuple[2](agg, item, ind);
+                            }
+                            return agg;
+                        }, tuple[3]);
+
+                    // Check that mapped results have equal length
+                    expectEqual(tuple[0][1].length, tuple[1].length);
+
+                    // Check aggregated results are equal
+                    expectEqual(tuple[0][0], reducedForCompare);
+                });
         });
     });
 
@@ -858,30 +865,35 @@ describe('#list', () => {
                     return [agg, xs3];
                 }, [], list1);
 
-            expectTrue(
-                all(tuple => {
-                        const reducedForCompare = foldr((agg, item, ind) => {
-                                if (Array.isArray(agg)) {
-                                    agg.push(tuple[2](agg, item, ind));
-                                }
-                                else {
-                                    agg += tuple[2](agg, item, ind);
-                                }
-                                return agg;
-                            },
-                            tuple[3], tuple[1]);
-                        // Check that mapped have equal length
-                        return length(tuple[0][1]) === length(tuple[1]) &&
-                            // Check aggregated are equal
-                            shallowCompareOnLeft(tuple[0][0], reducedForCompare);
-                    },
-                    [
-                        // Result, list, expected accumulation
-                        [result0, list0, numberOp, 0],
-                        [result1, list1, stringOp, ''],
-                        [result2, list2, stringOp, []]
-                    ])
-            );
+            [
+                // Result, list, expected accumulation
+                [result0, list0, numberOp, 0],
+                [result1, list1, stringOp, ''],
+                [result2, list2, stringOp, []]
+            ]
+                .forEach(tuple => {
+                    const reducedForCompare = (
+                        typeof tuple[1] === 'string' ?
+                            tuple[1].split('') :
+                            tuple[1]
+                    )
+                        .reduceRight((agg, item, ind) => {
+                            if (Array.isArray(agg)) {
+                                agg.push(tuple[2](agg, item, ind));
+                            }
+                            else {
+                                agg += tuple[2](agg, item, ind);
+                            }
+                            return agg;
+                        },
+                        tuple[3]);
+
+                    // Check that mapped results have equal length
+                    expectEqual(tuple[0][1].length, tuple[1].length);
+
+                    // Check aggregated results are equal
+                    expectEqual(tuple[0][0], reducedForCompare);
+                });
         });
     });
 
@@ -892,89 +904,68 @@ describe('#list', () => {
                     let diff = minuend - 1;
                     return diff >= 0 ? [minuend, diff] : undefined;
                 }, 10),
-                reverse(range(1, 10))
+                range(1, 10).reverse()
             );
         });
     });
 
     describe('#take', () => {
-        const hello = 'hello';
         it('should return taken items from list and/or string until limit', () => {
-            const word = hello;
-
-            // Test `take` on word parts and word (list and string)
-            strToArray(word).forEach((part, ind, wordParts) => {
-                // Get human index (counting from `1`) and preliminaries
-                const humanInd = ind + 1,
-                    takenFromArray = take(humanInd, wordParts),
-                    takenFromStr = take(humanInd, word),
-                    expectedWordPart = word.substring(0, humanInd);
-
-                // Ensure expected length was taken
-                compose(expectEqual(humanInd), length)(takenFromArray);
-                compose(expectEqual(humanInd), length)(takenFromStr);
-
-                // Ensure correct items at said indices were taken
-                expectEqual(expectedWordPart, takenFromArray.join(''));
-                expectEqual(expectedWordPart, takenFromStr);
-            });
-        });
-        it('should return an empty list and/or string when called with `0` as the first argument', () => {
-            expectEqual(take(0, alphabetString), '');
-            expectEqual(take(0, alphabetArray), []);
-
-        });
-        it('should return an empty list and/or string when called with with an empty list or string', () => {
-            let count = 5;
-            while (count) {
-                expectEqual(take(count, ''), '');
-                expectEqual(take(count, []), []);
-                --count;
-            }
+            [
+                [[0, ''], ''],
+                [[0, []], []],
+                [[1, ''], ''],
+                [[1, []], []],
+            ].concat(
+                vowelsArray
+                    .map((_, ind) => [
+                        [ind, vowelsArray],
+                        vowelsArray.slice(0, ind)
+                    ]),
+                vowelsString.split('')
+                    .map((_, ind) => [
+                        [ind, vowelsString],
+                        vowelsString.slice(0, ind)
+                    ])
+            )
+                .forEach(([args, expected]) => {
+                    expectEqual(take(...args), expected);
+                });
         });
         it('should throw an error when no parameter is passed in', () => {
-            expectError(tail);
+            [null, undefined, 0, {}].forEach(x =>
+                expectError(() => take(3, x))
+            );
         });
     });
 
     describe('#drop', () => {
-        const hello = 'hello';
         it('should return a new list/string with dropped items from original until limit', () => {
-            const word = hello,
-                wordParts = strToArray(word),
-                partsLength = wordParts.length - 1;
-
-            // Test `take` on word parts and word (list and string)
-            wordParts.forEach((part, ind, parts) => {
-                // Get human index (counting from `1`) and preliminaries
-                const humanInd = ind + 1,
-                    takenFromArray = drop(humanInd, parts),
-                    takenFromStr = drop(humanInd, word),
-                    expectedWordPart = word.substring(humanInd);
-
-                // Ensure expected length was taken
-                compose(expectEqual(partsLength - ind), length)(takenFromArray);
-                compose(expectEqual(partsLength - ind), length)(takenFromStr);
-
-                // Ensure correct items at said indices were taken
-                expectEqual(expectedWordPart, takenFromArray.join(''));
-                expectEqual(expectedWordPart, takenFromStr);
-            });
-        });
-        it('should return entire list and/or string when called with `0` as the first argument', () => {
-            compose(expectEqual(length(hello)), length, drop(0))(split('', hello));
-            compose(expectEqual(length(hello)), length, drop(0))(hello);
-        });
-        it('should return an empty list and/or string when called with with an empty list or string', () => {
-            let count = 5;
-            while (count) {
-                compose(expectEqual(0), length, drop(count))('');
-                compose(expectEqual(0), length, drop(count))([]);
-                --count;
-            }
+            [
+                [[0, ''], ''],
+                [[0, []], []],
+                [[1, ''], ''],
+                [[1, []], []],
+            ].concat(
+                vowelsArray
+                    .map((_, ind) => [
+                        [ind, vowelsArray],
+                        vowelsArray.slice(ind)
+                    ]),
+                vowelsString.split('')
+                    .map((_, ind) => [
+                        [ind, vowelsString],
+                        vowelsString.slice(ind)
+                    ])
+            )
+                .forEach(([args, expected]) => {
+                    expectEqual(drop(...args), expected);
+                });
         });
         it('should throw an error when no parameter is passed in', () => {
-            expectError(tail);
+            [null, undefined, 0, {}].forEach(x =>
+                expectError(() => drop(3, x))
+            );
         });
     });
 
