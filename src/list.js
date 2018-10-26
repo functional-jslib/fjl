@@ -4,10 +4,14 @@
  */
 import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list';
 import {apply} from './jsPlatform/function';
+import {length} from './jsPlatform/object';
 import {negateF3, negateF2} from './function/negate';
 import {curry, curry2, curry3} from './function/curry';
 import {isTruthy, isFalsy} from './boolean';
-import {lookup, length, of, isset, typeOf, isString} from './object';
+import {lookup} from './object/lookup';
+import {of} from './object/of';
+import {isset, isString} from './object/is';
+import {typeOf} from './object/typeOf';
 import map from './list/map';
 
 import {
@@ -170,7 +174,9 @@ export const
      * @returns {Array|String}
      */
     intersperse = curry((between, xs) => {
-        if (!xs || !xs.length) { return xs; }
+        if (!xs || !xs.length) {
+            return xs;
+        }
         const limit = xs.length,
             lastInd = limit - 1;
         let out = of(xs),
@@ -1306,7 +1312,7 @@ export const
     }),
 
     /**
-     * Same as `scanl` but from the right (similiar to `foldr`'s relationship to `foldl`).
+     * Same as `scanl` but from the right (similiar to `foldr`'s relationship to 'foldl').
      * Note also `scanr`'s relationship ot `foldr`:
      * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
      * @function module:list.scanr

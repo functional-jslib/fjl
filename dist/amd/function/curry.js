@@ -15,33 +15,67 @@ define(["exports"], function (exports) {
      * @private
      * @type {string}
      */
-    const returnCurried = (executeArity, unmetArityNum, fn, argsToCurry) => {
+    const
+
+    /**
+     * Returns curried function.
+     * @private
+     * @param executeArity {Number}
+     * @param unmetArityNum {Number}
+     * @param fn {Function}
+     * @param argsToCurry {...*}
+     * @returns {Function} - Curried function.
+     */
+    returnCurried = (executeArity, unmetArityNum, fn, argsToCurry) => {
         switch (unmetArityNum) {
             case 1:
+                /* eslint-disable */
                 return function func(x) {
+                    /* eslint-enable */
                     return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
                 };
             case 2:
+                /* eslint-disable */
                 return function func(a, b) {
+                    /* eslint-enable */
                     return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
                 };
             case 3:
+                /* eslint-disable */
                 return function func(a, b, c) {
+                    /* eslint-enable */
                     return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
                 };
             case 4:
+                /* eslint-disable */
                 return function func(a, b, c, d) {
+                    /* eslint-enable */
                     return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
                 };
             case 5:
+                /* eslint-disable */
                 return function func(a, b, c, d, e) {
+                    /* eslint-enable */
                     return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
                 };
             default:
                 return (...args) => executeAsCurriedFunc(fn, executeArity, unmetArityNum, args, argsToCurry);
         }
     },
-          executeAsCurriedFunc = (fn, executeArity, unmetArity, args, argsToCurry) => {
+
+
+    /**
+     * Returns curried function if unmetArity is not met else returns result of executing
+     * final function.
+     * @private
+     * @param fn {Function}
+     * @param executeArity {Number}
+     * @param unmetArity {Number}
+     * @param args {Array<*>}
+     * @param argsToCurry {Array<*>}
+     * @returns {Function|*} - Curried function or result of 'finally' executed function.
+     */
+    executeAsCurriedFunc = (fn, executeArity, unmetArity, args, argsToCurry) => {
         let concatedArgs = argsToCurry.concat(args),
             canBeCalled = concatedArgs.length >= executeArity || !executeArity,
             newExpectedArity = executeArity - concatedArgs.length;

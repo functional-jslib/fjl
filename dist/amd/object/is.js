@@ -4,7 +4,7 @@ define(['exports', './typeOf', '../jsPlatform/object', '../function/curry'], fun
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
-    exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isOfType = exports.isType = exports.isFunction = exports.toTypeRefName = exports.toTypeRef = undefined;
+    exports.isFunctor = exports.isOneOf = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isArray = exports.isCallable = exports.isClass = exports.isOfType = exports.isType = exports.isFunction = exports.toTypeRefNames = exports.toTypeRefName = exports.toTypeRefs = exports.toTypeRef = undefined;
 
 
     let _String = String.name,
@@ -32,7 +32,7 @@ define(['exports', './typeOf', '../jsPlatform/object', '../function/curry'], fun
      * @function module:object.toTypeRef
      * @param type {Function|String} - String or function representing a type.
      * @returns {String}
-     * @private
+     * @todo write tests for this function.
      */
     toTypeRef = exports.toTypeRef = type => {
         if (!type) {
@@ -42,10 +42,40 @@ define(['exports', './typeOf', '../jsPlatform/object', '../function/curry'], fun
         }
         return (0, _typeOf.typeOf)(type);
     },
-          toTypeRefName = exports.toTypeRefName = Type => {
+
+
+    /**
+     * Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values into
+     * type refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
+     * @function module:object.toTypeRefs
+     * @param types {...(TypeRef|*)}
+     * @returns {Array<TypeRef>}
+     * @todo Ensure tests are written for this function.
+     */
+    toTypeRefs = exports.toTypeRefs = (...types) => types.map(toTypeRef),
+
+
+    /**
+     * Returns possible Type's TypeRef name.
+     * @function module:object.toTypeRefName
+     * @param Type {(TypeRef|*)}
+     * @returns {String}
+     * @todo Ensure tests are written for this function.
+     */
+    toTypeRefName = exports.toTypeRefName = Type => {
         const ref = toTypeRef(Type);
         return ref instanceof Function ? ref.name : ref;
     },
+
+
+    /**
+     * Returns possible Types' TypeRef names.
+     * @function module:object.toTypeRefNames
+     * @param types {...(TypeRef|*)}
+     * @returns {String[]}
+     * @todo Ensure tests are written for this function.
+     */
+    toTypeRefNames = exports.toTypeRefNames = (...types) => types.map(toTypeRefName),
 
 
     /**
@@ -315,6 +345,21 @@ define(['exports', './typeOf', '../jsPlatform/object', '../function/curry'], fun
      * @param x {*}
      * @returns {Boolean}
      */
-    isset = exports.isset = x => x !== null && x !== undefined;
+    isset = exports.isset = x => x !== null && x !== undefined,
+
+
+    /**
+     * Checks to see if `x` is of one of the given type refs.
+     * @function object.isOneOf
+     * @param x {*}
+     * @param types {...(TypeRef|*)}
+     * @returns {boolean}
+     * @todo write tests for this function.
+     */
+    isOneOf = exports.isOneOf = (x, ...types) => {
+        const typeName = (0, _typeOf.typeOf)(x);
+        return toTypeRefNames(types).some(name => typeName === name);
+    },
+          isFunctor = exports.isFunctor = x => x && x.map && (0, _object.instanceOf)(Function, x.map);
     exports.isArray = isArray;
 });

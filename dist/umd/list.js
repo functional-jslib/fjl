@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './function/negate', './function/curry', './boolean', './object', './list/map', './list/utils'], factory);
+        define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './jsPlatform/object', './function/negate', './function/curry', './boolean', './object/lookup', './object/of', './object/is', './object/typeOf', './list/map', './list/utils'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./list/range'), require('./jsPlatform'), require('./jsPlatform/list'), require('./jsPlatform/function'), require('./function/negate'), require('./function/curry'), require('./boolean'), require('./object'), require('./list/map'), require('./list/utils'));
+        factory(exports, require('./list/range'), require('./jsPlatform'), require('./jsPlatform/list'), require('./jsPlatform/function'), require('./jsPlatform/object'), require('./function/negate'), require('./function/curry'), require('./boolean'), require('./object/lookup'), require('./object/of'), require('./object/is'), require('./object/typeOf'), require('./list/map'), require('./list/utils'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.range, global.jsPlatform, global.list, global._function, global.negate, global.curry, global.boolean, global.object, global.map, global.utils);
+        factory(mod.exports, global.range, global.jsPlatform, global.list, global._function, global.object, global.negate, global.curry, global.boolean, global.lookup, global.of, global.is, global.typeOf, global.map, global.utils);
         global.list = mod.exports;
     }
-})(this, function (exports, _range, _jsPlatform, _list, _function, _negate, _curry, _boolean, _object, _map, _utils) {
+})(this, function (exports, _range, _jsPlatform, _list, _function, _object, _negate, _curry, _boolean, _lookup, _of, _is, _typeOf, _map, _utils) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -162,8 +162,8 @@
      * Returns tail part of list (everything after the first item as new list).
      * @haskelType `tail :: [a] -> [a]`
      * @function module:list.tail
-     * @param xs {Array}
-     * @returns {Array}
+     * @param xs {Array|String}
+     * @returns {Array|String}
      */
     tail = exports.tail = function tail(xs) {
         return (0, _utils.sliceFrom)(1, xs);
@@ -244,40 +244,62 @@
      * Returns a copy of the passed in list reverses.
      * @haskellType `reverse :: [a] -> [a]`
      * @function module:list.reverse
-     * @param x {Array}
-     * @returns {Array}
+     * @param xs {Array|String}
+     * @returns {Array|String}
      */
-    reverse = exports.reverse = function reverse(x) {
-        return foldr(function (agg, item) {
-            return agg.push(item), agg;
-        }, [], x);
+    reverse = exports.reverse = function reverse(xs) {
+        if (!(0, _is.isset)(xs) || !xs.length) {
+            return xs;
+        }
+        var out = (0, _of.of)(xs),
+            i = xs.length - 1;
+        switch ((0, _typeOf.typeOf)(xs)) {
+            case 'String':
+                for (; i >= 0; i -= 1) {
+                    out += xs[i];
+                }
+                return out;
+            default:
+                for (; i >= 0; i -= 1) {
+                    out.push(xs[i]);
+                }
+                return out;
+        }
     },
 
 
     /**
-     * Takes an element and a list and `intersperses' that element between the elements of the list. For example
+     * Takes an element and a list and `intersperses' that element between the
+     *  elements of the list.
      * @function module:list.intersperse
-     * @note In our version of the function javascript is loosely typed so, so is our function (to much overhead to make
-     *  it typed) so `between` can be any value.
+     * @note In our version of the function javascript is loosely typed so,
+     *  so is our function (to much overhead to make it typed) so `between` can be any value.
      * @param between {*} - Should be of the same type of elements contained in list.
-     * @param arr {Array} - List.
-     * @returns {Array}
+     * @param arr {Array|String} - List.
+     * @returns {Array|String}
      */
-    intersperse = exports.intersperse = (0, _curry.curry)(function (between, arr) {
-        var limit = (0, _object.length)(arr),
-            lastInd = limit - 1,
-            out = [];
-        if (!limit) {
+    intersperse = exports.intersperse = (0, _curry.curry)(function (between, xs) {
+        if (!xs || !xs.length) {
+            return xs;
+        }
+        var limit = xs.length,
+            lastInd = limit - 1;
+        var out = (0, _of.of)(xs),
+            i = 0;
+        if ((0, _is.isString)(xs)) {
+            for (; i < limit; i += 1) {
+                out += i === lastInd ? xs[i] : xs[i] + between;
+            }
             return out;
         }
-        return foldl(function (agg, item, ind) {
-            if (ind === lastInd) {
-                agg.push(item);
+        for (; i < limit; i += 1) {
+            if (i === lastInd) {
+                out.push(xs[i]);
             } else {
-                agg.push(item, between);
+                out.push(xs[i], between);
             }
-            return agg;
-        }, out, arr);
+        }
+        return out;
     }),
 
 
@@ -285,11 +307,14 @@
      * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
      * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
      * @function module:list.intercalate
-     * @param xs {Array}
-     * @param xss {Array}
-     * @returns {Array}
+     * @param xs {Array|String}
+     * @param xss {Array|String}
+     * @returns {Array|String}
      */
     intercalate = exports.intercalate = (0, _curry.curry)(function (xs, xss) {
+        if ((0, _is.isString)(xss)) {
+            return intersperse(xs, xss);
+        }
         return concat(intersperse(xs, xss));
     }),
 
@@ -722,13 +747,10 @@
         var splitPoint = (0, _utils.findIndexWhereRight)(function (x, i, xs) {
             return !pred(x, i, xs);
         }, list);
-
         if (splitPoint === -1) {
-            return (0, _object.of)(list);
+            return (0, _of.of)(list);
         }
-
-        var out = reverse(list);
-        return (0, _utils.sliceTo)(splitPoint + 1, (0, _object.isString)(list) ? out.join('') : out);
+        return (0, _utils.sliceTo)(splitPoint + 1, reverse(list));
     }),
 
 
@@ -777,7 +799,7 @@
      * @param xs {Array} - list or list like.
      * @returns {*|undefined} - Item or `undefined`.
      */
-    at = exports.at = _object.lookup,
+    at = exports.at = _lookup.lookup,
 
 
     /**
@@ -1523,7 +1545,7 @@
 
 
     /**
-     * Same as `scanl` but from the right (similiar to `foldr`'s relationship to `foldl`).
+     * Same as `scanl` but from the right (similiar to `foldr`'s relationship to 'foldl').
      * Note also `scanr`'s relationship ot `foldr`:
      * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
      * @function module:list.scanr
@@ -1689,13 +1711,13 @@
      * @returns {Array}
      */
     insert = exports.insert = (0, _curry.curry)(function (x, xs) {
-        if (!(0, _object.length)(xs)) {
-            return [x];
+        if (!xs.length) {
+            return (0, _of.of)(xs, x);
         }
         var foundIndex = findIndex(function (item) {
             return x <= item;
         }, xs);
-        return foundIndex === -1 ? [x] : concat(intersperse([x], splitAt(foundIndex, xs)));
+        return foundIndex === -1 ? concat([xs, (0, _of.of)(xs, x)]) : concat(intersperse((0, _of.of)(xs, x), splitAt(foundIndex, xs)));
     }),
 
 

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.isArray = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isCallable = exports.isClass = exports.isOfType = exports.isType = exports.isFunction = exports.toTypeRefName = exports.toTypeRef = undefined;
+exports.isArray = exports.isFunctor = exports.isOneOf = exports.isset = exports.isEmpty = exports.isEmptyCollection = exports.isEmptyObject = exports.isEmptyList = exports.isUsableImmutablePrimitive = exports.isSymbol = exports.isNull = exports.isUndefined = exports.isWeakSet = exports.isWeakMap = exports.isSet = exports.isMap = exports.isString = exports.isNumber = exports.isBoolean = exports.isObject = exports.isCallable = exports.isClass = exports.isOfType = exports.isType = exports.isFunction = exports.toTypeRefNames = exports.toTypeRefName = exports.toTypeRefs = exports.toTypeRef = undefined;
 
 var _typeOf = require('./typeOf');
 
@@ -34,7 +34,7 @@ var _String = String.name,
  * @function module:object.toTypeRef
  * @param type {Function|String} - String or function representing a type.
  * @returns {String}
- * @private
+ * @todo write tests for this function.
  */
 var toTypeRef = function toTypeRef(type) {
     if (!type) {
@@ -44,9 +44,23 @@ var toTypeRef = function toTypeRef(type) {
     }
     return (0, _typeOf.typeOf)(type);
 },
+    toTypeRefs = function toTypeRefs() {
+    for (var _len = arguments.length, types = Array(_len), _key = 0; _key < _len; _key++) {
+        types[_key] = arguments[_key];
+    }
+
+    return types.map(toTypeRef);
+},
     toTypeRefName = function toTypeRefName(Type) {
     var ref = toTypeRef(Type);
     return ref instanceof Function ? ref.name : ref;
+},
+    toTypeRefNames = function toTypeRefNames() {
+    for (var _len2 = arguments.length, types = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        types[_key2] = arguments[_key2];
+    }
+
+    return types.map(toTypeRefName);
 },
     isFunction = (0, _object.instanceOf)(Function),
     isType = (0, _curry.curry)(function (type, obj) {
@@ -115,10 +129,25 @@ var toTypeRef = function toTypeRef(type) {
 },
     isset = function isset(x) {
     return x !== null && x !== undefined;
+},
+    isOneOf = function isOneOf(x) {
+    for (var _len3 = arguments.length, types = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        types[_key3 - 1] = arguments[_key3];
+    }
+
+    var typeName = (0, _typeOf.typeOf)(x);
+    return toTypeRefNames(types).some(function (name) {
+        return typeName === name;
+    });
+},
+    isFunctor = function isFunctor(x) {
+    return x && x.map && (0, _object.instanceOf)(Function, x.map);
 };
 
 exports.toTypeRef = toTypeRef;
+exports.toTypeRefs = toTypeRefs;
 exports.toTypeRefName = toTypeRefName;
+exports.toTypeRefNames = toTypeRefNames;
 exports.isFunction = isFunction;
 exports.isType = isType;
 exports.isOfType = isOfType;
@@ -141,4 +170,6 @@ exports.isEmptyObject = isEmptyObject;
 exports.isEmptyCollection = isEmptyCollection;
 exports.isEmpty = isEmpty;
 exports.isset = isset;
+exports.isOneOf = isOneOf;
+exports.isFunctor = isFunctor;
 exports.isArray = isArray;

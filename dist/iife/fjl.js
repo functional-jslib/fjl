@@ -222,23 +222,33 @@ var toConsumableArray = function (arr) {
 var returnCurried = function returnCurried(executeArity, unmetArityNum, fn, argsToCurry) {
     switch (unmetArityNum) {
         case 1:
+            /* eslint-disable */
             return function func(x) {
+                /* eslint-enable */
                 return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
             };
         case 2:
+            /* eslint-disable */
             return function func(a, b) {
+                /* eslint-enable */
                 return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
             };
         case 3:
+            /* eslint-disable */
             return function func(a, b, c) {
+                /* eslint-enable */
                 return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
             };
         case 4:
+            /* eslint-disable */
             return function func(a, b, c, d) {
+                /* eslint-enable */
                 return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
             };
         case 5:
+            /* eslint-disable */
             return function func(a, b, c, d, e) {
+                /* eslint-enable */
                 return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
             };
         default:
@@ -427,7 +437,7 @@ var _NaN = 'NaN';
  * @function module:object.toTypeRef
  * @param type {Function|String} - String or function representing a type.
  * @returns {String}
- * @private
+ * @todo write tests for this function.
  */
 var toTypeRef = function toTypeRef(type) {
     if (!type) {
@@ -437,9 +447,23 @@ var toTypeRef = function toTypeRef(type) {
     }
     return typeOf(type);
 };
+var toTypeRefs = function toTypeRefs() {
+    for (var _len = arguments.length, types = Array(_len), _key = 0; _key < _len; _key++) {
+        types[_key] = arguments[_key];
+    }
+
+    return types.map(toTypeRef);
+};
 var toTypeRefName = function toTypeRefName(Type) {
     var ref = toTypeRef(Type);
     return ref instanceof Function ? ref.name : ref;
+};
+var toTypeRefNames = function toTypeRefNames() {
+    for (var _len2 = arguments.length, types = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        types[_key2] = arguments[_key2];
+    }
+
+    return types.map(toTypeRefName);
 };
 var isFunction = instanceOf(Function);
 var isType = curry(function (type, obj) {
@@ -508,6 +532,19 @@ var isEmpty = function isEmpty(value) {
 };
 var isset = function isset(x) {
     return x !== null && x !== undefined;
+};
+var isOneOf = function isOneOf(x) {
+    for (var _len3 = arguments.length, types = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        types[_key3 - 1] = arguments[_key3];
+    }
+
+    var typeName = typeOf(x);
+    return toTypeRefNames(types).some(function (name) {
+        return typeName === name;
+    });
+};
+var isFunctor = function isFunctor(x) {
+    return x && x.map && instanceOf(Function, x.map);
 };
 
 /**
@@ -656,7 +693,7 @@ var assignDeep = curry2(function (obj0) {
  *      on both strings and arrays.
  */
 
-var concat$1 = fPureTakesOneOrMore('concat');
+var concat = fPureTakesOneOrMore('concat');
 var slice = fPureTakes2('slice');
 var includes = function () {
   return 'includes' in Array.prototype ? fPureTakesOne('includes') : function (value, xs) {
@@ -665,35 +702,6 @@ var includes = function () {
 }();
 var indexOf = fPureTakesOne('indexOf');
 var lastIndexOf = fPureTakesOne('lastIndexOf');
-
-/**
- * @memberOf function
- */
-
-var negateF = function negateF(fn) {
-  return function (x) {
-    return !fn(x);
-  };
-};
-var negateF2 = function negateF2(fn) {
-  return curry(function (a, b) {
-    return !fn(a, b);
-  });
-};
-var negateF3 = function negateF3(fn) {
-  return curry(function (a, b, c) {
-    return !fn(a, b, c);
-  });
-};
-var negateFN = function negateFN(fn) {
-  return curry2(function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return !apply(fn, args);
-  });
-};
 
 /**
  * @module boolean
@@ -725,23 +733,49 @@ var equalAll = curry2(function (a) {
 });
 
 /**
+ * Maps a function onto a List (string or array) or a functor (value containing a map method).
  * @function module:list.map
- * @param fn {Function} - Function to map on array.
- * @param xs {Array}
- * @returns {Array}
+ * @param fn {Function} - Function to map on given value.
+ * @param xs {Array|String|*}
+ * @returns {Array|String|*}
  */
 var map = curry(function (fn, xs) {
-    var ind = 0,
-        limit = length(xs),
-        out = [];
-    if (!limit) {
-        return out;
+    if (!isset(xs)) {
+        return xs;
     }
-    while (ind < limit) {
-        out.push(fn(xs[ind], ind, xs));
-        ind += 1;
+    var out = of(xs),
+        limit = void 0,
+        i = 0;
+    switch (typeOf(xs)) {
+        case 'Array':
+            limit = length(xs);
+            if (!limit) {
+                return out;
+            }
+            for (; i < limit; i += 1) {
+                out.push(fn(xs[i], i, xs));
+            }
+            return out;
+        case 'String':
+            limit = length(xs);
+            if (!xs) {
+                return out;
+            }
+            for (; i < limit; i += 1) {
+                out += fn(xs[i], i, xs);
+            }
+            return out;
+        default:
+            if (isFunctor(xs)) {
+                return xs.map(fn);
+            }
+
+            // Other objects
+            return Object.keys(xs).reduce(function (agg, key) {
+                out[key] = fn(xs[key], key, xs);
+                return out;
+            }, out);
     }
-    return out;
 });
 
 var aggregateArr$ = function aggregateArr$(agg, item) {
@@ -868,6 +902,289 @@ var findWhere = curry(function (pred, xs) {
     }
 });
 
+var objUnion = curry(function (obj1, obj2) {
+    return assignDeep(obj1, obj2);
+});
+var objIntersect = curry(function (obj1, obj2) {
+    return reduce(function (agg, key) {
+        if (hasOwnProperty(key, obj2)) {
+            agg[key] = obj2[key];
+        }
+        return agg;
+    }, {}, keys(obj1));
+});
+var objDifference = curry(function (obj1, obj2) {
+    return reduce(function (agg, key) {
+        if (!hasOwnProperty(key, obj2)) {
+            agg[key] = obj1[key];
+        }
+        return agg;
+    }, {}, keys(obj1));
+});
+var objComplement = curry2(function (obj0) {
+    for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        objs[_key - 1] = arguments[_key];
+    }
+
+    return reduce(function (agg, obj) {
+        return assignDeep(agg, objDifference(obj, obj0));
+    }, {}, objs);
+});
+
+/**
+ * @module console
+ * @description Console exports.
+ */
+var log = console.log.bind(console);
+var error = console.error.bind(console);
+var peek = function peek() {
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return log.apply(undefined, args), args.pop();
+};
+
+var jsonClone = function jsonClone(x) {
+  return JSON.parse(JSON.stringify(x));
+};
+
+var toAssocList = function toAssocList(obj) {
+    return keys(obj).map(function (key) {
+        return [key, obj[key]];
+    });
+};
+var toAssocListDeep = function toAssocListDeep(obj) {
+    var TypeConstraint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
+    return keys(obj).map(function (key) {
+        return TypeConstraint && isType(TypeConstraint, obj[key]) ? [key, toAssocListDeep(obj[key], TypeConstraint)] : [key, obj[key]];
+    });
+};
+var fromAssocList = function fromAssocList(xs) {
+    var OutType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
+    return xs.reduce(function (agg, _ref) {
+        var _ref2 = slicedToArray(_ref, 2),
+            key = _ref2[0],
+            value = _ref2[1];
+
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+};
+var fromAssocListDeep = function fromAssocListDeep(xs) {
+    var OutType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
+    return xs.reduce(function (agg, _ref3) {
+        var _ref4 = slicedToArray(_ref3, 2),
+            key = _ref4[0],
+            value = _ref4[1];
+
+        if (isArray(value) && isArray(value[0]) && value[0].length === 2) {
+            agg[key] = fromAssocListDeep(value, OutType);
+            return agg;
+        }
+        agg[key] = value;
+        return agg;
+    }, new OutType());
+};
+
+var toArray$1 = function toArray(x) {
+    switch (typeOf(x)) {
+        case 'Null':
+        case 'Undefined':
+            return [];
+        case String.name:
+        case Array.name:
+        case 'WeakMap':
+        case 'WeakSet':
+        case 'Map':
+        case 'Set':
+            return Array.from(x);
+        case Object.name:
+        default:
+            return toAssocList(x);
+    }
+};
+
+/**
+ * @module object
+ * @description Object operations/combinators.
+ */
+
+
+
+/**
+* Returns whether constructor has derived object.
+* @function module:object.instanceOf
+* @param instanceConstructor {Function} - Constructor.
+* @param instance {*}
+* @returns {Boolean}
+*/
+
+/**
+ * @function module:object.hasOwnProperty
+ * @param propName {*}
+ * @param typeInstance {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @function module:object.length
+ * @param x {*}
+ * @returns {Number}
+ * @throws {Error} - Throws an error if value doesn't have a `length` property (
+ *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
+ */
+
+/**
+ * Gets own enumerable keys of passed in object (`Object.keys`).
+ * @function module:object.keys
+ * @param obj {*}
+ * @returns {Array<String>}
+ */
+
+/**
+ * Defined as `Object.assign` else is the same thing but shimmed.
+ * @function module:object.assign
+ * @param objs {...*}
+ * @returns {Object}
+*/
+
+/**
+ * Created by elyde on 7/20/2017.
+ * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
+ * @module _jsPlatform_arrayOps
+ * @private
+ */
+
+var defineReverse = function defineReverse() {
+  return Array.prototype.reverse ? function (x) {
+    return x.reverse();
+  } : function (x) {
+    return x.reduceRight(function (agg, item) {
+      agg.push(item);
+      return agg;
+    }, []);
+  };
+};
+var map$2 = fPureTakesOne('map');
+var filter = fPureTakesOne('filter');
+var reduce$1 = fPureTakes2('reduce');
+var reduceRight$1 = fPureTakes2('reduceRight');
+var forEach = fPureTakesOne('forEach');
+var some = fPureTakesOne('some');
+var every = fPureTakesOne('every');
+var join = fPureTakesOne('join');
+var push = fPureTakesOneOrMore('push');
+var reverse = defineReverse();
+
+/**
+ * Composes all functions passed in from right to left passing each functions return value to
+ * the function on the left of itself.
+ * @function module:function.compose
+ * @type {Function}
+ * @param args {...{Function}}
+ * @returns {Function}
+ */
+var compose = function compose() {
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return function (arg0) {
+    return reduceRight$1(function (value, fn) {
+      return fn(value);
+    }, arg0, args);
+  };
+};
+
+var flipN = function flipN(fn) {
+  return curry2(function () {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return apply(fn, reverse(args));
+  });
+};
+var flip = function flip(fn) {
+  return curry(function (b, a) {
+    return call(fn, a, b);
+  });
+};
+
+/**
+ * @memberOf function
+ */
+
+/**
+ * Returns passed in parameter.
+ * @haskellType `id :: a -> a`
+ * @function module:function.id
+ * @param x {*}
+ * @returns {*}
+ */
+var id = function id(x) {
+  return x;
+};
+
+/**
+ * @memberOf function
+ */
+
+var negateF = function negateF(fn) {
+  return function (x) {
+    return !fn(x);
+  };
+};
+var negateF2 = function negateF2(fn) {
+  return curry(function (a, b) {
+    return !fn(a, b);
+  });
+};
+var negateF3 = function negateF3(fn) {
+  return curry(function (a, b, c) {
+    return !fn(a, b, c);
+  });
+};
+var negateFN = function negateFN(fn) {
+  return curry2(function () {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return !apply(fn, args);
+  });
+};
+
+var until = curry(function (predicate, operation, typeInstance) {
+    var result = typeInstance;
+    while (!predicate(result)) {
+        result = operation(result);
+    }
+    return result;
+});
+
+var fnOrError = function fnOrError(symbolName, f) {
+    if (!f || !(f instanceof Function)) {
+        throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + typeOf(f) + ';  Value received: ' + f + '.'));
+    }
+    return f;
+};
+
+/**
+ * No-op ('op' as in 'operation') - Performs no operation 'always' (good for places where
+ * a value should always be a function etc.).
+ * @function module:function.noop
+ * @returns {undefined}
+ */
+var noop = function noop() {
+  return undefined;
+};
+
+/**
+ * @module function
+ */
+
 /**
  * @module object
  */
@@ -903,34 +1220,6 @@ var range = curry(function (from, to) {
 });
 
 /**
- * Created by elyde on 7/20/2017.
- * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
- */
-
-var defineReverse = function defineReverse() {
-  return Array.prototype.reverse ? function (x) {
-    return x.reverse();
-  } : function (x) {
-    return x.reduceRight(function (agg, item) {
-      agg.push(item);
-      return agg;
-    }, []);
-  };
-};
-var map$2 = fPureTakesOne('map');
-var filter$1 = fPureTakesOne('filter');
-var reduce$1 = fPureTakes2('reduce');
-var reduceRight$1 = fPureTakes2('reduceRight');
-var forEach$1 = fPureTakesOne('forEach');
-var some = fPureTakesOne('some');
-var every = fPureTakesOne('every');
-var join = fPureTakesOne('join');
-var push = fPureTakesOneOrMore('push');
-var reverse$1 = defineReverse();
-
-/**
  * Created by elydelacruz on 9/6/2017.
  */
 
@@ -957,7 +1246,7 @@ var append = curry2(function () {
         args[_key] = arguments[_key];
     }
 
-    return apply(concat$1, args);
+    return apply(concat, args);
 });
 var head = function head(x) {
     return x[0];
@@ -977,7 +1266,7 @@ var uncons = function uncons(xs) {
 var unconsr = function unconsr(xs) {
     return !xs || length(xs) === 0 ? undefined : [init(xs), last(xs)];
 };
-var concat$$1 = function concat$$1(xs) {
+var concat$1 = function concat$$1(xs) {
     switch (length(xs)) {
         case undefined:
         case 0:
@@ -990,31 +1279,55 @@ var concat$$1 = function concat$$1(xs) {
     }
 };
 var concatMap = curry(function (fn, foldableOfA) {
-    return concat$$1(map(fn, foldableOfA));
+    return concat$1(map(fn, foldableOfA));
 });
-var reverse = function reverse(x) {
-    return foldr(function (agg, item) {
-        return agg.push(item), agg;
-    }, [], x);
+var reverse$1 = function reverse(xs) {
+    if (!isset(xs) || !xs.length) {
+        return xs;
+    }
+    var out = of(xs),
+        i = xs.length - 1;
+    switch (typeOf(xs)) {
+        case 'String':
+            for (; i >= 0; i -= 1) {
+                out += xs[i];
+            }
+            return out;
+        default:
+            for (; i >= 0; i -= 1) {
+                out.push(xs[i]);
+            }
+            return out;
+    }
 };
-var intersperse = curry(function (between, arr) {
-    var limit = length(arr),
-        lastInd = limit - 1,
-        out = [];
-    if (!limit) {
+var intersperse = curry(function (between, xs) {
+    if (!xs || !xs.length) {
+        return xs;
+    }
+    var limit = xs.length,
+        lastInd = limit - 1;
+    var out = of(xs),
+        i = 0;
+    if (isString(xs)) {
+        for (; i < limit; i += 1) {
+            out += i === lastInd ? xs[i] : xs[i] + between;
+        }
         return out;
     }
-    return foldl(function (agg, item, ind) {
-        if (ind === lastInd) {
-            agg.push(item);
+    for (; i < limit; i += 1) {
+        if (i === lastInd) {
+            out.push(xs[i]);
         } else {
-            agg.push(item, between);
+            out.push(xs[i], between);
         }
-        return agg;
-    }, out, arr);
+    }
+    return out;
 });
 var intercalate = curry(function (xs, xss) {
-    return concat$$1(intersperse(xs, xss));
+    if (isString(xss)) {
+        return intersperse(xs, xss);
+    }
+    return concat$1(intersperse(xs, xss));
 });
 var transpose = function transpose(xss) {
     var numLists = length(xss),
@@ -1036,7 +1349,7 @@ var transpose = function transpose(xss) {
         }
         outLists.push(outList);
     }
-    return filter(function (x) {
+    return filter$1(function (x) {
         return length(x) > 0;
     }, outLists);
 };
@@ -1149,7 +1462,7 @@ var repeat = curry(function (limit, x) {
 });
 var replicate = repeat;
 var cycle = curry(function (limit, xs) {
-    return concat$$1(replicate(limit, xs));
+    return concat$1(replicate(limit, xs));
 });
 var unfoldr = curry(function (op, x) {
     var ind = 0,
@@ -1195,13 +1508,10 @@ var dropWhileEnd = curry(function (pred, list) {
     var splitPoint = findIndexWhereRight(function (x, i, xs) {
         return !pred(x, i, xs);
     }, list);
-
     if (splitPoint === -1) {
         return of(list);
     }
-
-    var out = reverse(list);
-    return sliceTo(splitPoint + 1, isString(list) ? out.join('') : out);
+    return sliceTo(splitPoint + 1, reverse$1(list));
 });
 var span = curry(function (pred, list) {
     var splitPoint = findIndexWhere(negateF3(pred), list);
@@ -1213,7 +1523,7 @@ var breakOnList = curry(function (pred, list) {
 });
 var at = lookup;
 var find = findWhere;
-var forEach = curry(function (fn, list) {
+var forEach$1 = curry(function (fn, list) {
     var limit = length(list);
     if (!limit) {
         return;
@@ -1223,7 +1533,7 @@ var forEach = curry(function (fn, list) {
         fn(list[ind], ind, list);
     }
 });
-var filter = curry(function (pred, xs) {
+var filter$1 = curry(function (pred, xs) {
     var ind = 0,
         limit = length(xs),
         out = [];
@@ -1238,7 +1548,7 @@ var filter = curry(function (pred, xs) {
     return out;
 });
 var partition = curry(function (pred, list) {
-    return !length(list) ? [[], []] : [filter(pred, list), filter(negateF3(pred), list)];
+    return !length(list) ? [[], []] : [filter$1(pred, list), filter$1(negateF3(pred), list)];
 });
 var elem = includes;
 var notElem = negateF2(includes);
@@ -1602,13 +1912,13 @@ var sortBy = curry(function (orderingFn, xs) {
     return sliceCopy(xs).sort(orderingFn || genericAscOrdering);
 });
 var insert = curry(function (x, xs) {
-    if (!length(xs)) {
-        return [x];
+    if (!xs.length) {
+        return of(xs, x);
     }
     var foundIndex = findIndex(function (item) {
         return x <= item;
     }, xs);
-    return foundIndex === -1 ? [x] : concat$$1(intersperse([x], splitAt(foundIndex, xs)));
+    return foundIndex === -1 ? concat$1([xs, of(xs, x)]) : concat$1(intersperse(of(xs, x), splitAt(foundIndex, xs)));
 });
 var insertBy = curry(function (orderingFn, x, xs) {
     var limit = length(xs);
@@ -1619,7 +1929,7 @@ var insertBy = curry(function (orderingFn, x, xs) {
     for (; ind < limit; ind += 1) {
         if (orderingFn(x, xs[ind]) <= 0) {
             var parts = splitAt(ind, xs);
-            return concat$$1([parts[0], [x], parts[1]]);
+            return concat$1([parts[0], [x], parts[1]]);
         }
     }
     return aggregateArr$(sliceCopy(xs), x);
@@ -1668,12 +1978,12 @@ var unionBy = curry(function (pred, arr1, arr2) {
     }, sliceCopy(arr1), arr2);
 });
 var union = curry(function (arr1, arr2) {
-    return append(arr1, filter(function (elm) {
+    return append(arr1, filter$1(function (elm) {
         return !includes(elm, arr1);
     }, arr2));
 });
 var intersect = curry(function (arr1, arr2) {
-    return !arr1 || !arr2 || !arr1 && !arr2 ? [] : filter(function (elm) {
+    return !arr1 || !arr2 || !arr1 && !arr2 ? [] : filter$1(function (elm) {
         return includes(elm, arr2);
     }, arr1);
 });
@@ -1744,232 +2054,6 @@ var complement = curry2(function (arr0) {
  * @param item {*}
  * @param arr {Array}
  * @returns {Number}
- */
-
-var objUnion = curry(function (obj1, obj2) {
-    return assignDeep(obj1, obj2);
-});
-var objIntersect = curry(function (obj1, obj2) {
-    return foldl(function (agg, key) {
-        if (hasOwnProperty(key, obj2)) {
-            agg[key] = obj2[key];
-        }
-        return agg;
-    }, {}, keys(obj1));
-});
-var objDifference = curry(function (obj1, obj2) {
-    return foldl(function (agg, key) {
-        if (!hasOwnProperty(key, obj2)) {
-            agg[key] = obj1[key];
-        }
-        return agg;
-    }, {}, keys(obj1));
-});
-var objComplement = curry2(function (obj0) {
-    for (var _len = arguments.length, objs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        objs[_key - 1] = arguments[_key];
-    }
-
-    return foldl(function (agg, obj) {
-        return assignDeep(agg, objDifference(obj, obj0));
-    }, {}, objs);
-});
-
-/**
- * @module console
- * @description Console exports.
- */
-var log = console.log.bind(console);
-var error = console.error.bind(console);
-var peek = function peek() {
-  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
-
-  return log.apply(undefined, args), args.pop();
-};
-
-var jsonClone = function jsonClone(x) {
-  return JSON.parse(JSON.stringify(x));
-};
-
-var toAssocList = function toAssocList(obj) {
-    return keys(obj).map(function (key) {
-        return [key, obj[key]];
-    });
-};
-var toAssocListDeep = function toAssocListDeep(obj) {
-    var TypeConstraint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
-    return keys(obj).map(function (key) {
-        return TypeConstraint && isType(TypeConstraint, obj[key]) ? [key, toAssocListDeep(obj[key], TypeConstraint)] : [key, obj[key]];
-    });
-};
-var fromAssocList = function fromAssocList(xs) {
-    var OutType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
-    return xs.reduce(function (agg, _ref) {
-        var _ref2 = slicedToArray(_ref, 2),
-            key = _ref2[0],
-            value = _ref2[1];
-
-        agg[key] = value;
-        return agg;
-    }, new OutType());
-};
-var fromAssocListDeep = function fromAssocListDeep(xs) {
-    var OutType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object;
-    return xs.reduce(function (agg, _ref3) {
-        var _ref4 = slicedToArray(_ref3, 2),
-            key = _ref4[0],
-            value = _ref4[1];
-
-        if (isArray(value) && isArray(value[0]) && value[0].length === 2) {
-            agg[key] = fromAssocListDeep(value, OutType);
-            return agg;
-        }
-        agg[key] = value;
-        return agg;
-    }, new OutType());
-};
-
-var toArray$1 = function toArray(x) {
-    switch (typeOf(x)) {
-        case 'Null':
-        case 'Undefined':
-            return [];
-        case String.name:
-        case Array.name:
-        case 'WeakMap':
-        case 'WeakSet':
-        case 'Map':
-        case 'Set':
-            return Array.from(x);
-        case Object.name:
-        default:
-            return toAssocList(x);
-    }
-};
-
-/**
- * @module object
- * @description Object operations/combinators.
- */
-
-
-
-/**
-* Returns whether constructor has derived object.
-* @function module:object.instanceOf
-* @param instanceConstructor {Function} - Constructor.
-* @param instance {*}
-* @returns {Boolean}
-*/
-
-/**
- * @function module:object.hasOwnProperty
- * @param propName {*}
- * @param typeInstance {*}
- * @returns {Boolean}
- */
-
-/**
- * @function module:object.length
- * @param x {*}
- * @returns {Number}
- * @throws {Error} - Throws an error if value doesn't have a `length` property (
- *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
- */
-
-/**
- * Gets own enumerable keys of passed in object (`Object.keys`).
- * @function module:object.keys
- * @param obj {*}
- * @returns {Array<String>}
- */
-
-/**
- * Defined as `Object.assign` else is the same thing but shimmed.
- * @function module:object.assign
- * @param objs {...*}
- * @returns {Object}
-*/
-
-/**
- * Composes all functions passed in from right to left passing each functions return value to
- * the function on the left of itself.
- * @function module:function.compose
- * @type {Function}
- * @param args {...{Function}}
- * @returns {Function}
- */
-var compose = function compose() {
-  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
-
-  return function (arg0) {
-    return reduceRight$1(function (value, fn) {
-      return fn(value);
-    }, arg0, args);
-  };
-};
-
-var flipN = function flipN(fn) {
-  return curry2(function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return apply(fn, reverse$1(args));
-  });
-};
-var flip = function flip(fn) {
-  return curry(function (b, a) {
-    return call(fn, a, b);
-  });
-};
-
-/**
- * @memberOf function
- */
-
-/**
- * Returns passed in parameter.
- * @haskellType `id :: a -> a`
- * @function module:function.id
- * @param x {*}
- * @returns {*}
- */
-var id = function id(x) {
-  return x;
-};
-
-var until = curry(function (predicate, operation, typeInstance) {
-    var result = typeInstance;
-    while (!predicate(result)) {
-        result = operation(result);
-    }
-    return result;
-});
-
-var fnOrError = function fnOrError(symbolName, f) {
-    if (!f || !(f instanceof Function)) {
-        throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + typeOf(f) + ';  Value received: ' + f + '.'));
-    }
-    return f;
-};
-
-/**
- * No-op ('op' as in 'operation') - Performs no operation 'always' (good for places where
- * a value should always be a function etc.).
- * @function module:function.noop
- * @returns {undefined}
- */
-var noop = function noop() {
-  return undefined;
-};
-
-/**
- * @module function
  */
 
 /**
@@ -2119,7 +2203,7 @@ var camelCase = function camelCase(xs) {
     var pattern = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : /[^a-z\d]/i;
     return compose(join(''), map(function (str) {
         return ucaseFirst(str.toLowerCase());
-    }), filter(function (x) {
+    }), filter$1(function (x) {
         return !!x;
     }), split(pattern))(_errorIfNotType(String, 'camelCase', 'xs', xs));
 };
@@ -2153,7 +2237,9 @@ exports.lookup = lookup;
 exports.typeOf = typeOf;
 exports.copy = copy;
 exports.toTypeRef = toTypeRef;
+exports.toTypeRefs = toTypeRefs;
 exports.toTypeRefName = toTypeRefName;
+exports.toTypeRefNames = toTypeRefNames;
 exports.isFunction = isFunction;
 exports.isType = isType;
 exports.isOfType = isOfType;
@@ -2176,6 +2262,8 @@ exports.isEmptyObject = isEmptyObject;
 exports.isEmptyCollection = isEmptyCollection;
 exports.isEmpty = isEmpty;
 exports.isset = isset;
+exports.isOneOf = isOneOf;
+exports.isFunctor = isFunctor;
 exports.isArray = isArray;
 exports.of = of;
 exports.searchObj = searchObj;
@@ -2226,9 +2314,9 @@ exports.tail = tail;
 exports.init = init;
 exports.uncons = uncons;
 exports.unconsr = unconsr;
-exports.concat = concat$$1;
+exports.concat = concat$1;
 exports.concatMap = concatMap;
-exports.reverse = reverse;
+exports.reverse = reverse$1;
 exports.intersperse = intersperse;
 exports.intercalate = intercalate;
 exports.transpose = transpose;
@@ -2260,8 +2348,8 @@ exports.span = span;
 exports.breakOnList = breakOnList;
 exports.at = at;
 exports.find = find;
-exports.forEach = forEach;
-exports.filter = filter;
+exports.forEach = forEach$1;
+exports.filter = filter$1;
 exports.partition = partition;
 exports.elem = elem;
 exports.notElem = notElem;

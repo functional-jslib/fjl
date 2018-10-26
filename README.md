@@ -97,14 +97,14 @@ aggregateArr$
 ### `object` methods
  ```
 instanceOf, hasOwnProperty, length, assign, keys, lookup, typeOf, copy,
-toTypeRef, toTypeRefName, isFunction, isType, isOfType, isClass,
-isCallable, isObject, isBoolean, isNumber, isString, isMap, isSet,
-isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
-isUsableImmutablePrimitive, isEmptyList, isEmptyObject,
-isEmptyCollection, isEmpty, isset, isArray, of, searchObj, assignDeep,
-objUnion, objIntersect, objDifference, objComplement, log, error, peek,
-jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList,
-fromAssocListDeep
+toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames, isFunction,
+isType, isOfType, isClass, isCallable, isObject, isBoolean, isNumber,
+isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull,
+isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject,
+isEmptyCollection, isEmpty, isset, isOneOf, isFunctor, isArray, of,
+searchObj, assignDeep, objUnion, objIntersect, objDifference,
+objComplement, log, error, peek, jsonClone, toArray, toAssocList,
+toAssocListDeep, fromAssocList, fromAssocListDeep
 ```
 ### `function` methods
  ```

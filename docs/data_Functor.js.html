@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: function/trampoline.js | Source: function/trampoline.js</title>
+    <title>Source: data/Functor.js | Source: data/Functor.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -28,7 +28,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: function/trampoline.js</a></h1>
+        <h1><a href="index.html" class="link">Source: data/Functor.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -49,42 +49,22 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Trampolines function calls in order to avoid stack overflow errors
- * on recursive function calls; Tail recursion replacement.
- * @example
- * // Instead of ... (which is prone to stack-overflow in
- * //   non-tail-call optimized environments (es5-es3))
- * const factorial = n => n ? n * factorial(n - 1) : 1;
- *
- * // We do
- * const
- *
- *  factorialProcess = (n, agg = 1) => {
- *      n ? () => factorialProcess(n - 1, agg * n) : agg,
- *  },
- *
- *  factorial = n => trampoline(factorialProcess)(n);
- *
- *  ;
- *
- * @performance https://jsperf.com/pure-trampoline/1
- * @function module:function.trampoline
- * @param fn {Function} - Function to trampoline.
- * @param [fnName=undefined] {String} - Optionally restrict trampolining only to function with specific name.
- * @returns {*} - Finally returned value.
+ * Created by edlc on 12/9/16.
  */
-const trampoline = (fn, fnName) => {
-    return (...args) => {
-        let result = fn.apply(null, args);
-        while (result &amp;&amp; typeof result === 'function' &amp;&amp;
-            (!fnName || (result.name === fnName))) {
-            result = result();
-        }
-        return result;
-    };
-};
-
-export default trampoline;
+export default class Functor {
+    constructor(value) {
+        this.value = value;
+    }
+    valueOf() {
+        return this.value;
+    }
+    map(fn) {
+        return new this.constructor(fn(this.valueOf()));
+    }
+    fmap (fn) {
+        return this.map(fn);
+    }
+}
 </code></pre>
         </article>
     </section>

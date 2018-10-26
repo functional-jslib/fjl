@@ -8,24 +8,52 @@ var _object = require('../jsPlatform/object');
 
 var _curry = require('../function/curry');
 
+var _object2 = require('../object');
+
 /**
+ * Maps a function onto a List (string or array) or a functor (value containing a map method).
  * @function module:list.map
- * @param fn {Function} - Function to map on array.
- * @param xs {Array}
- * @returns {Array}
+ * @param fn {Function} - Function to map on given value.
+ * @param xs {Array|String|*}
+ * @returns {Array|String|*}
  */
 var map = (0, _curry.curry)(function (fn, xs) {
-    var ind = 0,
-        limit = (0, _object.length)(xs),
-        out = [];
-    if (!limit) {
-        return out;
+    if (!(0, _object2.isset)(xs)) {
+        return xs;
     }
-    while (ind < limit) {
-        out.push(fn(xs[ind], ind, xs));
-        ind += 1;
+    var out = (0, _object2.of)(xs),
+        limit = void 0,
+        i = 0;
+    switch ((0, _object2.typeOf)(xs)) {
+        case 'Array':
+            limit = (0, _object.length)(xs);
+            if (!limit) {
+                return out;
+            }
+            for (; i < limit; i += 1) {
+                out.push(fn(xs[i], i, xs));
+            }
+            return out;
+        case 'String':
+            limit = (0, _object.length)(xs);
+            if (!xs) {
+                return out;
+            }
+            for (; i < limit; i += 1) {
+                out += fn(xs[i], i, xs);
+            }
+            return out;
+        default:
+            if ((0, _object2.isFunctor)(xs)) {
+                return xs.map(fn);
+            }
+
+            // Other objects
+            return Object.keys(xs).reduce(function (agg, key) {
+                out[key] = fn(xs[key], key, xs);
+                return out;
+            }, out);
     }
-    return out;
 });
 
 exports.default = map;
