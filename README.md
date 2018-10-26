@@ -85,14 +85,17 @@ zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5,
 unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum,
 scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert,
 insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect,
-intersectBy, range
+intersectBy, range, sliceFrom, sliceTo, sliceCopy, genericAscOrdering,
+lengths, toShortest, reduceUntil, reduceUntilRight, reduce, reduceRight,
+lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere,
+findWhere, aggregateArray
 ```
 ### `listUtils` methods
  ```
 sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
 reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
 findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
-aggregateArr$
+aggregateArray
 ```
 ### `object` methods
  ```
@@ -248,6 +251,18 @@ BSD 3 Clause - Included in sources.
 - Docs format: http://usejsdoc.org/
 
 ## Change log
+
+### 1.6.0
+- A few more functions now support strings:
+    - `map`, `intersperse`, `append`, `reverse`, and `concat`.
+- `range` function doc-block updated.
+- `listUtil` functions updated and their docs unblocked from jsdocs.
+- `listUtil` methods are now exported from 'src/list'.
+- Tests overhaul stage 1 progress.  
+    - Converted some tests to table format (where implementations were touched and 
+        where the functional programming style was too extreme).
+    - Removed some library functions from tests where said functions were not being tested (use native functions for tests only (no-library functions intermingle (in tests))).
+- Cleaned up imports in some places to protect from cyclic dependency issues.
 
 ### 1.5.1, 1.5.2
 - Added './types/index.d.ts' file.

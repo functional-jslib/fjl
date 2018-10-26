@@ -40,11 +40,11 @@ var
  * Returns a slice of the given list from `startInd` to the end of the list.
  * @function module:listUtils.sliceFrom
  * @param startInd {Number}
- * @param arr {Array|String|*}
+ * @param xs {Array|String|*}
  * @returns {Array|String|*}
  */
-sliceFrom = exports.sliceFrom = (0, _curry.curry)(function (startInd, arr) {
-    return (0, _list.slice)(startInd, undefined, arr);
+sliceFrom = exports.sliceFrom = (0, _curry.curry)(function (startInd, xs) {
+    return (0, _list.slice)(startInd, undefined, xs);
 }),
 
 
@@ -123,35 +123,37 @@ toShortest = exports.toShortest = (0, _curry.curry2)(function () {
 
 /**
  * Reduces until predicate.
- * @param pred
- * @param op
- * @param agg
- * @param arr
+ * @function module:listUtils.reduceUntil
+ * @param pred {Function} - `(item, index, list) => Boolean(...)`
+ * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+ * @param agg {*} - Zero value.
+ * @param xs {Array|String|*} - List.
  * @returns {*}
  */
-reduceUntil = exports.reduceUntil = (0, _curry.curry)(function (pred, op, agg, arr) {
-    var limit = (0, _object.length)(arr);
+reduceUntil = exports.reduceUntil = (0, _curry.curry)(function (pred, op, agg, xs) {
+    var limit = (0, _object.length)(xs);
     if (!limit) {
         return agg;
     }
     var ind = 0,
         result = agg;
     for (; ind < limit; ind++) {
-        if (pred(arr[ind], ind, arr)) {
+        if (pred(xs[ind], ind, xs)) {
             break;
         }
-        result = op(result, arr[ind], ind, arr);
+        result = op(result, xs[ind], ind, xs);
     }
     return result;
 }),
 
 
 /**
- * Reduces until predicate (from the right).
- * @param pred
- * @param op
- * @param agg
- * @param arr
+ * Reduces until predicate (from right to left).
+ * @function module:listUtils.reduceUntilRight
+ * @param pred {Function} - `(item, index, list) => Boolean(...)`
+ * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+ * @param agg {*} - Zero value.
+ * @param xs {Array|String|*} - List.
  * @returns {*}
  */
 reduceUntilRight = exports.reduceUntilRight = (0, _curry.curry)(function (pred, op, agg, arr) {
@@ -169,8 +171,28 @@ reduceUntilRight = exports.reduceUntilRight = (0, _curry.curry)(function (pred, 
     }
     return result;
 }),
-    reduce = exports.reduce = reduceUntil(_boolean.alwaysFalse),
-    reduceRight = exports.reduceRight = reduceUntilRight(_boolean.alwaysFalse),
+
+
+/**
+ * Reduces a list with given operation (`op`) function.
+ * @function module:listUtils.reduce
+ * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+ * @param agg {*} - Zero value.
+ * @param xs {Array|String|*} - List.
+ * @returns {*}
+ */
+reduce = exports.reduce = reduceUntil(_boolean.alwaysFalse),
+
+
+/**
+ * Reduces a list with given operation (`op`) function (from right-to-left).
+ * @function module:listUtils.reduceRight
+ * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+ * @param agg {*} - Zero value.
+ * @param xs {Array|String|*} - List.
+ * @returns {*}
+ */
+reduceRight = exports.reduceRight = reduceUntilRight(_boolean.alwaysFalse),
 
 
 /**
@@ -224,6 +246,7 @@ findIndexWhereRight = exports.findIndexWhereRight = (0, _curry.curry)(function (
 
 
 /**
+ * @function module:listUtils.findIndicesWhere
  * @param pred {Function}
  * @param xs {Array|String|*} - list or list like.
  * @returns {Array|undefined}
@@ -242,7 +265,7 @@ findIndicesWhere = exports.findIndicesWhere = (0, _curry.curry)(function (pred, 
 
 
 /**
- * @function module:listUtils.find
+ * @function module:listUtils.findWhere
  * @param pred {Function}
  * @param xs {Array|String|*} - list or list like.
  * @returns {*}
@@ -262,5 +285,5 @@ findWhere = exports.findWhere = (0, _curry.curry)(function (pred, xs) {
 }); // un-curried version good for both strings and arrays
 /**
  * List operator utils module.
- * @module listUtils.
+ * @module listUtils
  */

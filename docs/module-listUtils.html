@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: string | Module: string</title>
+    <title>Module: listUtils | Module: listUtils</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: string</a></h1>
+        <h1><a href="index.html" class="link">Module: listUtils</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -48,7 +48,7 @@
 
 <header>
     
-        <h2>string</h2>
+        <h2>listUtils</h2>
         
             
         
@@ -60,7 +60,7 @@
         <div class="container-overview">
         
             
-                <div class="description">Contains functions for strings.</div>
+                <div class="description">List operator utils module.</div>
             
 
             
@@ -161,14 +161,14 @@
 
 <dt>
     
-        <h4 class="name" id=".camelCase">
+        <h4 class="name" id=".findIndexWhere">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>camelCase<span class="signature">(xs, pattern<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>findIndexWhere<span class="signature">(pred, arr)</span><span class="type-signature"> &rarr; {Number}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line71">line 71</a></code>
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line147">line 147</a></code>
             </div>
             
         </h4>
@@ -180,249 +180,7 @@
 
     
     <div class="description">
-        Camel cases (class case) a string.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>xs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>pattern</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">RegExp</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    /[^a-z\d/i]/
-                
-                </td>
-            
-
-            <td class="description last">Pattern to split on.  Optional.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        - Throws error if param `xs` is not a string.
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-        
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">string</span>
-
-
-
-
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".classCase">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>classCase<span class="signature">(xs)</span><span class="type-signature"> &rarr; {string}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line87">line 87</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Class cases a string.  Uses pattern /[^a-z\d/i]/ to split on.If you require a different pattern use `string.camelCase(str, pattern)`and then upper case first character (`ucaseFirst`).
+        Finds index in string or list.
     </div>
     
 
@@ -458,13 +216,13 @@
 
         <tr>
             
-                <td class="name"><code>xs</code></td>
+                <td class="name"><code>pred</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">function</span>
 
 
             
@@ -474,413 +232,67 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Predicate<element, index, arr>.</td>
         </tr>
 
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        - Throws error if `xs` is not a string (via `camelCase` call).
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-        
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">string</span>
-
-
-
-
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".lcaseFirst">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>lcaseFirst<span class="signature">(xs)</span><span class="type-signature"> &rarr; {string}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line47">line 47</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Lower cases first character of a non-empty string.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>xs</code></td>
+                <td class="name"><code>arr</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        - Throws error if receiving anything that is not a string.
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-        
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">string</span>
-
-
-
-
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".lines">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>lines<span class="signature">(str)</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line15">line 15</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>str</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
 <span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Number</span>
 
 
 
 
+
+- - `-1` if predicate not matched else `index` found
 
 
 
@@ -935,14 +347,14 @@
 
 <dt>
     
-        <h4 class="name" id=".split">
+        <h4 class="name" id=".findIndexWhereRight">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>split<span class="signature">(separator, str)</span><span class="type-signature"> &rarr; {Array}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>findIndexWhereRight<span class="signature">(pred, arr)</span><span class="type-signature"> &rarr; {Number}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line100">line 100</a></code>
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line166">line 166</a></code>
             </div>
             
         </h4>
@@ -954,7 +366,7 @@
 
     
     <div class="description">
-        Functional version of `String.prototype.split`.
+        Finds index in list from right to left.
     </div>
     
 
@@ -990,16 +402,224 @@
 
         <tr>
             
-                <td class="name"><code>separator</code></td>
+                <td class="name"><code>pred</code></td>
             
 
             <td class="type">
             
                 
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Predicate<element, index, arr>.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>arr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Number</span>
+
+
+
+
+
+- - `-1` if predicate not matched else `index` found
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".findIndicesWhere">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>findIndicesWhere<span class="signature">(pred, xs)</span><span class="type-signature"> &rarr; {Array|undefined}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line184">line 184</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pred</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
 <span class="param-type">String</span>
 |
 
-<span class="param-type">RegExp</span>
+<span class="param-type">*</span>
 
 
             
@@ -1009,30 +629,7 @@
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>str</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last">list or list like.</td>
         </tr>
 
     
@@ -1061,6 +658,9 @@
 
 
 <span class="param-type">Array</span>
+|
+
+<span class="param-type">undefined</span>
 
 
 
@@ -1119,14 +719,197 @@
 
 <dt>
     
-        <h4 class="name" id=".ucaseFirst">
+        <h4 class="name" id=".findWhere">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>ucaseFirst<span class="signature">(xs)</span><span class="type-signature"> &rarr; {string}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>findWhere<span class="signature">(pred, xs)</span><span class="type-signature"> &rarr; {*}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line59">line 59</a></code>
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line200">line 200</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pred</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">list or list like.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">*</span>
+
+
+
+
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".genericAscOrdering">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>genericAscOrdering<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {number}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line42">line 42</a></code>
             </div>
             
         </h4>
@@ -1138,7 +921,7 @@
 
     
     <div class="description">
-        Upper cases first character of a non-empty string.
+        Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
     </div>
     
 
@@ -1174,13 +957,36 @@
 
         <tr>
             
-                <td class="name"><code>xs</code></td>
+                <td class="name"><code>a</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>b</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
 
 
             
@@ -1209,35 +1015,6 @@
     
 
     
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        - Throws error if receiving anything that is not a string.
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-        
 
     
     <div class="container-returns">
@@ -1247,7 +1024,7 @@
 
 
 
-<span class="param-type">string</span>
+<span class="param-type">number</span>
 
 
 
@@ -1306,14 +1083,14 @@
 
 <dt>
     
-        <h4 class="name" id=".unlines">
+        <h4 class="name" id=".lastIndex">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>unlines<span class="signature">(list)</span><span class="type-signature"> &rarr; {Array}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>lastIndex<span class="signature">(x)</span><span class="type-signature"> &rarr; {Number}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line39">line 39</a></code>
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line139">line 139</a></code>
             </div>
             
         </h4>
@@ -1325,7 +1102,7 @@
 
     
     <div class="description">
-        Intersperses a '\n' character into a list of strings and then concats it.
+        Gets last index of a list/list-like (Array|String|Function etc.).
     </div>
     
 
@@ -1361,7 +1138,1252 @@
 
         <tr>
             
-                <td class="name"><code>list</code></td>
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">list like or list.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Number</span>
+
+
+
+
+
+- - `-1` if no element found.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".lengths">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>lengths<span class="signature">(lists)</span><span class="type-signature"> &rarr; {Array|String|*}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line55">line 55</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns length of all passed lists in list.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lists</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">...</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+
+
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".reduce">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>reduce<span class="signature">(op, agg, xs)</span><span class="type-signature"> &rarr; {*}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line119">line 119</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Reduces a list with given operation (`op`) function.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>op</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Operation - `(agg, item, index, list) => agg`</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>agg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Zero value.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">*</span>
+
+
+
+
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".reduceRight">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>reduceRight<span class="signature">(op, agg, xs)</span><span class="type-signature"> &rarr; {*}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line129">line 129</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Reduces a list with given operation (`op`) function (from right-to-left).
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>op</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Operation - `(agg, item, index, list) => agg`</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>agg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Zero value.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">*</span>
+
+
+
+
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".reduceUntil">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>reduceUntil<span class="signature">(pred, op, agg, xs)</span><span class="type-signature"> &rarr; {*}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line77">line 77</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Reduces until predicate.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pred</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">`(item, index, list) => Boolean(...)`</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>op</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Operation - `(agg, item, index, list) => agg`</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>agg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Zero value.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">*</span>
+
+
+
+
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".reduceUntilRight">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>reduceUntilRight<span class="signature">(pred, op, agg, xs)</span><span class="type-signature"> &rarr; {*}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line98">line 98</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Reduces until predicate (from right to left).
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pred</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">`(item, index, list) => Boolean(...)`</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>op</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Operation - `(agg, item, index, list) => agg`</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>agg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Zero value.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">*</span>
+
+
+
+
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".sliceFrom">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>sliceFrom<span class="signature">(startInd, xs)</span><span class="type-signature"> &rarr; {Array|String|*}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line16">line 16</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns a slice of the given list from `startInd` to the end of the list.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>startInd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xs</code></td>
             
 
             <td class="type">
@@ -1412,6 +2434,12 @@
 
 
 <span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
 
 
 
@@ -1470,14 +2498,14 @@
 
 <dt>
     
-        <h4 class="name" id=".unwords">
+        <h4 class="name" id=".sliceTo">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>unwords<span class="signature">(arr)</span><span class="type-signature"> &rarr; {Array}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>sliceTo<span class="signature">(toInd, xs)</span><span class="type-signature"> &rarr; {Array|String|*}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line31">line 31</a></code>
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line25">line 25</a></code>
             </div>
             
         </h4>
@@ -1489,7 +2517,7 @@
 
     
     <div class="description">
-        Intersperse an array of strings with '\s' and then concats them.
+        Slices from index `0` to given index.
     </div>
     
 
@@ -1525,13 +2553,42 @@
 
         <tr>
             
-                <td class="name"><code>arr</code></td>
+                <td class="name"><code>toInd</code></td>
             
 
             <td class="type">
             
                 
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
 <span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
 
 
             
@@ -1570,6 +2627,12 @@
 
 
 <span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
 
 
 
@@ -1628,14 +2691,14 @@
 
 <dt>
     
-        <h4 class="name" id=".words">
+        <h4 class="name" id=".toShortest">
             
-                <span class="type-signature"><span class="icon green">static</span> </span>words<span class="signature">(str)</span><span class="type-signature"> &rarr; {Array}</span>
+                <span class="type-signature"><span class="icon green">static</span> </span>toShortest<span class="signature">(&hellip;lists)</span><span class="type-signature"> &rarr; {Array|String|*}</span>
                 
             
             <div class="container-source members">
-                <code><a href="string.js.html">string.js</a></code>,
-                <code><a href="string.js.html#line23">line 23</a></code>
+                <code><a href="list_utils.js.html">list/utils.js</a></code>,
+                <code><a href="list_utils.js.html#line63">line 63</a></code>
             </div>
             
         </h4>
@@ -1647,7 +2710,7 @@
 
     
     <div class="description">
-        Splits a string on all '\s' and/or all '\t' characters.
+        Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their 'slice to smallest' functionality.
     </div>
     
 
@@ -1671,6 +2734,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -1683,18 +2748,34 @@
 
         <tr>
             
-                <td class="name"><code>str</code></td>
+                <td class="name"><code>lists</code></td>
             
 
             <td class="type">
             
                 
+<span class="param-type">Array</span>
+|
+
 <span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
 
 
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
             
 
             
@@ -1728,6 +2809,12 @@
 
 
 <span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">*</span>
 
 
 
@@ -1806,7 +2893,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:string_sub'.replace(/"/g, '_');
+        var id = 'module:listUtils_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

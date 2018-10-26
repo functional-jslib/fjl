@@ -1,6 +1,6 @@
 /**
  * List operator utils module.
- * @module listUtils.
+ * @module listUtils
  */
 import {apply}          from '../jsPlatform/function';  // un-curried version
 import {slice}          from '../jsPlatform/list';      // un-curried version good for both strings and arrays
@@ -17,10 +17,10 @@ export const
      * Returns a slice of the given list from `startInd` to the end of the list.
      * @function module:listUtils.sliceFrom
      * @param startInd {Number}
-     * @param arr {Array|String|*}
+     * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFrom = curry((startInd, arr) => slice(startInd, undefined, arr)),
+    sliceFrom = curry((startInd, xs) => slice(startInd, undefined, xs)),
 
     /**
      * Slices from index `0` to given index.
@@ -76,30 +76,32 @@ export const
 
     /**
      * Reduces until predicate.
-     * @param pred
-     * @param op
-     * @param agg
-     * @param arr
+     * @function module:listUtils.reduceUntil
+     * @param pred {Function} - `(item, index, list) => Boolean(...)`
+     * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+     * @param agg {*} - Zero value.
+     * @param xs {Array|String|*} - List.
      * @returns {*}
      */
-    reduceUntil = curry((pred, op, agg, arr) => {
-        const limit = length(arr);
+    reduceUntil = curry((pred, op, agg, xs) => {
+        const limit = length(xs);
         if (!limit) { return agg; }
         let ind = 0,
             result = agg;
         for (; ind < limit; ind++) {
-            if (pred(arr[ind], ind, arr)) { break; }
-            result = op(result, arr[ind], ind, arr);
+            if (pred(xs[ind], ind, xs)) { break; }
+            result = op(result, xs[ind], ind, xs);
         }
         return result;
     }),
 
     /**
-     * Reduces until predicate (from the right).
-     * @param pred
-     * @param op
-     * @param agg
-     * @param arr
+     * Reduces until predicate (from right to left).
+     * @function module:listUtils.reduceUntilRight
+     * @param pred {Function} - `(item, index, list) => Boolean(...)`
+     * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+     * @param agg {*} - Zero value.
+     * @param xs {Array|String|*} - List.
      * @returns {*}
      */
     reduceUntilRight = curry((pred, op, agg, arr) => {
@@ -114,8 +116,24 @@ export const
         return result;
     }),
 
+    /**
+     * Reduces a list with given operation (`op`) function.
+     * @function module:listUtils.reduce
+     * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+     * @param agg {*} - Zero value.
+     * @param xs {Array|String|*} - List.
+     * @returns {*}
+     */
     reduce = reduceUntil(alwaysFalse),
 
+    /**
+     * Reduces a list with given operation (`op`) function (from right-to-left).
+     * @function module:listUtils.reduceRight
+     * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+     * @param agg {*} - Zero value.
+     * @param xs {Array|String|*} - List.
+     * @returns {*}
+     */
     reduceRight = reduceUntilRight(alwaysFalse),
 
     /**
@@ -164,6 +182,7 @@ export const
     }),
 
     /**
+     * @function module:listUtils.findIndicesWhere
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
@@ -179,7 +198,7 @@ export const
     }),
 
     /**
-     * @function module:listUtils.find
+     * @function module:listUtils.findWhere
      * @param pred {Function}
      * @param xs {Array|String|*} - list or list like.
      * @returns {*}

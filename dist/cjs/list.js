@@ -24,6 +24,18 @@ Object.keys(_range).forEach(function (key) {
     });
 });
 
+var _utils = require('./list/utils');
+
+Object.keys(_utils).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+            return _utils[key];
+        }
+    });
+});
+
 var _jsPlatform = require('./jsPlatform');
 
 Object.defineProperty(exports, 'slice', {
@@ -80,8 +92,6 @@ var _typeOf = require('./object/typeOf');
 var _map = require('./list/map');
 
 var _map2 = _interopRequireDefault(_map);
-
-var _utils = require('./list/utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

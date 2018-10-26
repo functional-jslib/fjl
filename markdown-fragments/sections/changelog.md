@@ -1,5 +1,17 @@
 ## Change log
 
+### 1.6.0
+- A few more functions now support strings:
+    - `map`, `intersperse`, `append`, `reverse`, and `concat`.
+- `range` function doc-block updated.
+- `listUtil` functions updated and their docs unblocked from jsdocs.
+- `listUtil` methods are now exported from 'src/list'.
+- Tests overhaul stage 1 progress.  
+    - Converted some tests to table format (where implementations were touched and 
+        where the functional programming style was too extreme).
+    - Removed some library functions from tests where said functions were not being tested (use native functions for tests only (no-library functions intermingle (in tests))).
+- Cleaned up imports in some places to protect from cyclic dependency issues.
+
 ### 1.5.1, 1.5.2
 - Added './types/index.d.ts' file.
 

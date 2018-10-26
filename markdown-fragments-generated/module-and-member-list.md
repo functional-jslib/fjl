@@ -13,14 +13,17 @@ zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5,
 unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum,
 scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert,
 insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect,
-intersectBy, range
+intersectBy, range, sliceFrom, sliceTo, sliceCopy, genericAscOrdering,
+lengths, toShortest, reduceUntil, reduceUntilRight, reduce, reduceRight,
+lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere,
+findWhere, aggregateArray
 ```
 ### `listUtils` methods
  ```
 sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
 reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
 findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
-aggregateArr$
+aggregateArray
 ```
 ### `object` methods
  ```

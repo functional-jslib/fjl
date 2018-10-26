@@ -22,9 +22,10 @@ const normalizeStep = (from, to, step) => {
 export const
 
     /**
-     * @note normalizes `step` to be of valid
-     *  direction (negative if range required is in the negative direction
-     *  and positive otherwise).
+     * Range function - gives you an array contain numbers in given range.
+     * @note normalizes `step` to be valid if range numbers given are invalid
+     *  (forces `step` to be negative if range required is in the negative direction
+     *  and forces `step` to be positive if range required is in the other direction).
      * @function module:list.range
      * @param from {Number}
      * @param to {Number}

@@ -785,10 +785,10 @@ var aggregateArray = function aggregateArray(agg, item) {
 
 /**
  * List operator utils module.
- * @module listUtils.
+ * @module listUtils
  */
-var sliceFrom = curry(function (startInd, arr) {
-    return slice(startInd, undefined, arr);
+var sliceFrom = curry(function (startInd, xs) {
+    return slice(startInd, undefined, xs);
 });
 var sliceTo = curry(function (toInd, xs) {
     return slice(0, toInd, xs);
@@ -820,18 +820,18 @@ var toShortest = curry2(function () {
         return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list);
     }, lists);
 });
-var reduceUntil = curry(function (pred, op, agg, arr) {
-    var limit = length(arr);
+var reduceUntil = curry(function (pred, op, agg, xs) {
+    var limit = length(xs);
     if (!limit) {
         return agg;
     }
     var ind = 0,
         result = agg;
     for (; ind < limit; ind++) {
-        if (pred(arr[ind], ind, arr)) {
+        if (pred(xs[ind], ind, xs)) {
             break;
         }
-        result = op(result, arr[ind], ind, arr);
+        result = op(result, xs[ind], ind, xs);
     }
     return result;
 });
@@ -2408,6 +2408,22 @@ exports.indexOf = indexOf;
 exports.lastIndexOf = lastIndexOf;
 exports.push = push;
 exports.range = range;
+exports.sliceFrom = sliceFrom;
+exports.sliceTo = sliceTo;
+exports.sliceCopy = sliceCopy;
+exports.genericAscOrdering = genericAscOrdering;
+exports.lengths = lengths;
+exports.toShortest = toShortest;
+exports.reduceUntil = reduceUntil;
+exports.reduceUntilRight = reduceUntilRight;
+exports.reduce = reduce;
+exports.reduceRight = reduceRight;
+exports.lastIndex = lastIndex;
+exports.findIndexWhere = findIndexWhere;
+exports.findIndexWhereRight = findIndexWhereRight;
+exports.findIndicesWhere = findIndicesWhere;
+exports.findWhere = findWhere;
+exports.aggregateArray = aggregateArray;
 exports.split = split;
 exports.lines = lines;
 exports.words = words;
@@ -2433,22 +2449,6 @@ exports.getErrorIfNotTypeThrower = getErrorIfNotTypeThrower;
 exports.getErrorIfNotTypesThrower = getErrorIfNotTypesThrower;
 exports.errorIfNotType = errorIfNotType;
 exports.errorIfNotTypes = errorIfNotTypes;
-exports.sliceFrom = sliceFrom;
-exports.sliceTo = sliceTo;
-exports.sliceCopy = sliceCopy;
-exports.genericAscOrdering = genericAscOrdering;
-exports.lengths = lengths;
-exports.toShortest = toShortest;
-exports.reduceUntil = reduceUntil;
-exports.reduceUntilRight = reduceUntilRight;
-exports.reduce = reduce;
-exports.reduceRight = reduceRight;
-exports.lastIndex = lastIndex;
-exports.findIndexWhere = findIndexWhere;
-exports.findIndexWhereRight = findIndexWhereRight;
-exports.findIndicesWhere = findIndicesWhere;
-exports.findWhere = findWhere;
-exports.aggregateArray = aggregateArray;
 
 return exports;
 

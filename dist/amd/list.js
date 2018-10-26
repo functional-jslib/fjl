@@ -1,4 +1,4 @@
-define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './jsPlatform/object', './function/negate', './function/curry', './boolean', './object/lookup', './object/of', './object/is', './object/typeOf', './list/map', './list/utils'], function (exports, _range, _jsPlatform, _list, _function, _object, _negate, _curry, _boolean, _lookup, _of, _is, _typeOf, _map, _utils) {
+define(['exports', './list/range', './list/utils', './jsPlatform', './jsPlatform/list', './jsPlatform/function', './jsPlatform/object', './function/negate', './function/curry', './boolean', './object/lookup', './object/of', './object/is', './object/typeOf', './list/map'], function (exports, _range, _utils, _jsPlatform, _list, _function, _object, _negate, _curry, _boolean, _lookup, _of, _is, _typeOf, _map) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -12,6 +12,15 @@ define(['exports', './list/range', './jsPlatform', './jsPlatform/list', './jsPla
             enumerable: true,
             get: function () {
                 return _range[key];
+            }
+        });
+    });
+    Object.keys(_utils).forEach(function (key) {
+        if (key === "default" || key === "__esModule") return;
+        Object.defineProperty(exports, key, {
+            enumerable: true,
+            get: function () {
+                return _utils[key];
             }
         });
     });
