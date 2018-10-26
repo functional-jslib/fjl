@@ -531,15 +531,14 @@ var map = curry(function (fn, xs) {
     }
 });
 
-var aggregateArr$ = function aggregateArr$(agg, item) {
+var aggregateArray = function aggregateArray(agg, item) {
     agg.push(item);
     return agg;
 };
 
 /**
  * List operator utils module.
- * @module _listOpUtils.
- * @private
+ * @module listUtils.
  */
 var sliceFrom = curry(function (startInd, arr) {
     return slice(startInd, undefined, arr);
@@ -1219,7 +1218,7 @@ var splitAt = function splitAt(ind, list) {
 };
 var takeWhile = curry(function (pred, list) {
     return reduceUntil(negateF3(pred), // predicate
-    aggregateArr$, // operation
+    aggregateArray, // operation
     [], // aggregator
     list);
 });
@@ -1417,7 +1416,7 @@ var zip = curry(function (arr1, arr2) {
         a2 = _toShortest2[1];
 
     return reduce(function (agg, item, ind) {
-        return aggregateArr$(agg, [item, a2[ind]]);
+        return aggregateArray(agg, [item, a2[ind]]);
     }, [], a1);
 });
 var zipN = curry2(function () {
@@ -1427,7 +1426,7 @@ var zipN = curry2(function () {
 
     var trimmedLists = apply(toShortest, lists);
     return reduce(function (agg, item, ind) {
-        return aggregateArr$(agg, map(function (xs) {
+        return aggregateArray(agg, map(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1452,7 +1451,7 @@ var zipWith = curry(function (op, xs1, xs2) {
         a2 = _toShortest4[1];
 
     return reduce(function (agg, item, ind) {
-        return aggregateArr$(agg, op(item, a2[ind]));
+        return aggregateArray(agg, op(item, a2[ind]));
     }, [], a1);
 });
 var zipWithN = curry3(function (op) {
@@ -1468,7 +1467,7 @@ var zipWithN = curry3(function (op) {
         return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
     return reduce(function (agg, item, ind) {
-        return aggregateArr$(agg, apply(op, map(function (xs) {
+        return aggregateArray(agg, apply(op, map(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1659,7 +1658,7 @@ var insertBy = curry(function (orderingFn, x, xs) {
             return concat$1([parts[0], [x], parts[1]]);
         }
     }
-    return aggregateArr$(sliceCopy(xs), x);
+    return aggregateArray(sliceCopy(xs), x);
 });
 var nubBy = curry(function (pred, list) {
     if (!length(list)) {
@@ -2176,4 +2175,4 @@ exports.findIndexWhere = findIndexWhere;
 exports.findIndexWhereRight = findIndexWhereRight;
 exports.findIndicesWhere = findIndicesWhere;
 exports.findWhere = findWhere;
-exports.aggregateArr$ = aggregateArr$;
+exports.aggregateArray = aggregateArray;

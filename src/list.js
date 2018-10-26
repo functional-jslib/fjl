@@ -16,7 +16,7 @@ import map from './list/map';
 
 import {
     sliceFrom, sliceTo, lengths,
-    toShortest, aggregateArr$,
+    toShortest, aggregateArray,
     reduceUntil, reduce, reduceRight, lastIndex,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, sliceCopy, genericAscOrdering
@@ -381,7 +381,7 @@ export const
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
      * @function module:list.mapAccumL
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
-     * @param zero {*} - An instance of the passed in list type used to aggregate on.
+     * @param zero {*} - An instance of the passed in list type used to aggregateArray on.
      * @param xs {Array} - list type.
      * @return {Array} - [aggregated, list]
      */
@@ -408,7 +408,7 @@ export const
      * containing the aggregated value and the result of mapping the passed in function on passed in list.
      * @function module:list.mapAccumR
      * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
-     * @param zero {*} - An instance of the passed in list type used to aggregate on.
+     * @param zero {*} - An instance of the passed in list type used to aggregateArray on.
      * @param xs {Array} - list type.
      * @return {Array} - [aggregated, list]
      */
@@ -481,7 +481,7 @@ export const
      * Unfolds a value into a list of somethings.
      * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
      * @function module:list.unfoldr
-     * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregate and item to unfold in next iteration).
+     * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregateArray and item to unfold in next iteration).
      * @param x {*} - Starting parameter to unfold from.
      * @returns {Array} - An array of whatever you return from `op` yielded.
      */
@@ -570,7 +570,7 @@ export const
     takeWhile = curry((pred, list) =>
         reduceUntil(
             negateF3(pred),  // predicate
-            aggregateArr$,   // operation
+            aggregateArray,   // operation
             [],             // aggregator
             list
         )),
@@ -967,7 +967,7 @@ export const
         }
         const [a1, a2] = toShortest(arr1, arr2);
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, [item, a2[ind]]),
+                aggregateArray(agg, [item, a2[ind]]),
             [], a1);
     }),
 
@@ -982,7 +982,7 @@ export const
     zipN = curry2((...lists) => {
         const trimmedLists = apply(toShortest, lists);
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, map(xs => xs[ind], trimmedLists)),
+                aggregateArray(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     }),
 
@@ -1046,7 +1046,7 @@ export const
         }
         const [a1, a2] = toShortest(xs1, xs2);
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, op(item, a2[ind])),
+                aggregateArray(agg, op(item, a2[ind])),
             [], a1);
     }),
 
@@ -1073,7 +1073,7 @@ export const
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, apply(op, map(xs => xs[ind], trimmedLists))),
+                aggregateArray(agg, apply(op, map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     }),
 
@@ -1479,7 +1479,7 @@ export const
                 return concat([parts[0], [x], parts[1]]);
             }
         }
-        return aggregateArr$(sliceCopy(xs), x);
+        return aggregateArray(sliceCopy(xs), x);
     }),
 
     /**

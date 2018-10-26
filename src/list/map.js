@@ -1,6 +1,8 @@
 import {length} from '../jsPlatform/object';
 import {curry} from '../function/curry';
-import {typeOf, of, isFunctor, isset} from '../object';
+import {typeOf} from '../object/typeOf';
+import {of} from '../object/of';
+import {isFunctor, isset} from '../object/is';
 
 /**
  * Maps a function onto a List (string or array) or a functor (value containing a map method).

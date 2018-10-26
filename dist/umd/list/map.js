@@ -1,16 +1,16 @@
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['module', 'exports', '../jsPlatform/object', '../function/curry', '../object'], factory);
+        define(['module', 'exports', '../jsPlatform/object', '../function/curry', '../object/typeOf', '../object/of', '../object/is'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(module, exports, require('../jsPlatform/object'), require('../function/curry'), require('../object'));
+        factory(module, exports, require('../jsPlatform/object'), require('../function/curry'), require('../object/typeOf'), require('../object/of'), require('../object/is'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod, mod.exports, global.object, global.curry, global.object);
+        factory(mod, mod.exports, global.object, global.curry, global.typeOf, global.of, global.is);
         global.map = mod.exports;
     }
-})(this, function (module, exports, _object, _curry, _object2) {
+})(this, function (module, exports, _object, _curry, _typeOf, _of, _is) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -26,13 +26,13 @@
      * @returns {Array|String|*}
      */
     var map = (0, _curry.curry)(function (fn, xs) {
-        if (!(0, _object2.isset)(xs)) {
+        if (!(0, _is.isset)(xs)) {
             return xs;
         }
-        var out = (0, _object2.of)(xs),
+        var out = (0, _of.of)(xs),
             limit = void 0,
             i = 0;
-        switch ((0, _object2.typeOf)(xs)) {
+        switch ((0, _typeOf.typeOf)(xs)) {
             case 'Array':
                 limit = (0, _object.length)(xs);
                 if (!limit) {
@@ -52,7 +52,7 @@
                 }
                 return out;
             default:
-                if ((0, _object2.isFunctor)(xs)) {
+                if ((0, _is.isFunctor)(xs)) {
                     return xs.map(fn);
                 }
 

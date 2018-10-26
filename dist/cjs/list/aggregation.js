@@ -6,13 +6,13 @@ Object.defineProperty(exports, "__esModule", {
 var
 
 /**
- * Pushes incoming `item` onto array (`agg`) and return array (`agg`).
+ * Pushes incoming `item` onto given array and returns said array.
  * @private
  * @param agg {Array}
  * @param item {*}
  * @returns {Array}
  */
-aggregateArr$ = exports.aggregateArr$ = function aggregateArr$(agg, item) {
+aggregateArray = exports.aggregateArray = function aggregateArray(agg, item) {
     agg.push(item);
     return agg;
 };

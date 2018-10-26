@@ -8,7 +8,11 @@ var _object = require('../jsPlatform/object');
 
 var _curry = require('../function/curry');
 
-var _object2 = require('../object');
+var _typeOf = require('../object/typeOf');
+
+var _of = require('../object/of');
+
+var _is = require('../object/is');
 
 /**
  * Maps a function onto a List (string or array) or a functor (value containing a map method).
@@ -18,13 +22,13 @@ var _object2 = require('../object');
  * @returns {Array|String|*}
  */
 var map = (0, _curry.curry)(function (fn, xs) {
-    if (!(0, _object2.isset)(xs)) {
+    if (!(0, _is.isset)(xs)) {
         return xs;
     }
-    var out = (0, _object2.of)(xs),
+    var out = (0, _of.of)(xs),
         limit = void 0,
         i = 0;
-    switch ((0, _object2.typeOf)(xs)) {
+    switch ((0, _typeOf.typeOf)(xs)) {
         case 'Array':
             limit = (0, _object.length)(xs);
             if (!limit) {
@@ -44,7 +48,7 @@ var map = (0, _curry.curry)(function (fn, xs) {
             }
             return out;
         default:
-            if ((0, _object2.isFunctor)(xs)) {
+            if ((0, _is.isFunctor)(xs)) {
                 return xs.map(fn);
             }
 

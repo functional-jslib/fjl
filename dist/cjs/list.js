@@ -479,7 +479,7 @@ foldr1 = exports.foldr1 = (0, _curry.curry)(function (op, xs) {
  * containing the aggregated value and the result of mapping the passed in function on passed in list.
  * @function module:list.mapAccumL
  * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
- * @param zero {*} - An instance of the passed in list type used to aggregate on.
+ * @param zero {*} - An instance of the passed in list type used to aggregateArray on.
  * @param xs {Array} - list type.
  * @return {Array} - [aggregated, list]
  */
@@ -507,7 +507,7 @@ mapAccumL = exports.mapAccumL = (0, _curry.curry)(function (op, zero, xs) {
  * containing the aggregated value and the result of mapping the passed in function on passed in list.
  * @function module:list.mapAccumR
  * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
- * @param zero {*} - An instance of the passed in list type used to aggregate on.
+ * @param zero {*} - An instance of the passed in list type used to aggregateArray on.
  * @param xs {Array} - list type.
  * @return {Array} - [aggregated, list]
  */
@@ -591,7 +591,7 @@ cycle = exports.cycle = (0, _curry.curry)(function (limit, xs) {
  * Unfolds a value into a list of somethings.
  * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
  * @function module:list.unfoldr
- * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregate and item to unfold in next iteration).
+ * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregateArray and item to unfold in next iteration).
  * @param x {*} - Starting parameter to unfold from.
  * @returns {Array} - An array of whatever you return from `op` yielded.
  */
@@ -693,7 +693,7 @@ splitAt = exports.splitAt = function splitAt(ind, list) {
  */
 takeWhile = exports.takeWhile = (0, _curry.curry)(function (pred, list) {
     return (0, _utils.reduceUntil)((0, _negate.negateF3)(pred), // predicate
-    _utils.aggregateArr$, // operation
+    _utils.aggregateArray, // operation
     [], // aggregator
     list);
 }),
@@ -1110,7 +1110,7 @@ zip = exports.zip = (0, _curry.curry)(function (arr1, arr2) {
         a2 = _toShortest2[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$)(agg, [item, a2[ind]]);
+        return (0, _utils.aggregateArray)(agg, [item, a2[ind]]);
     }, [], a1);
 }),
 
@@ -1130,7 +1130,7 @@ zipN = exports.zipN = (0, _curry.curry2)(function () {
 
     var trimmedLists = (0, _function.apply)(_utils.toShortest, lists);
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$)(agg, (0, _map2.default)(function (xs) {
+        return (0, _utils.aggregateArray)(agg, (0, _map2.default)(function (xs) {
             return xs[ind];
         }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1211,7 +1211,7 @@ zipWith = exports.zipWith = (0, _curry.curry)(function (op, xs1, xs2) {
         a2 = _toShortest4[1];
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$)(agg, op(item, a2[ind]));
+        return (0, _utils.aggregateArray)(agg, op(item, a2[ind]));
     }, [], a1);
 }),
 
@@ -1242,7 +1242,7 @@ zipWithN = exports.zipWithN = (0, _curry.curry3)(function (op) {
         return (0, _utils.sliceTo)((0, _object.length)(trimmedLists[0]), trimmedLists[0]);
     }
     return (0, _utils.reduce)(function (agg, item, ind) {
-        return (0, _utils.aggregateArr$)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
+        return (0, _utils.aggregateArray)(agg, (0, _function.apply)(op, (0, _map2.default)(function (xs) {
             return xs[ind];
         }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1726,7 +1726,7 @@ insertBy = exports.insertBy = (0, _curry.curry)(function (orderingFn, x, xs) {
             return concat([parts[0], [x], parts[1]]);
         }
     }
-    return (0, _utils.aggregateArr$)((0, _utils.sliceCopy)(xs), x);
+    return (0, _utils.aggregateArray)((0, _utils.sliceCopy)(xs), x);
 }),
 
 

@@ -1,4 +1,4 @@
-define(['exports', '../jsPlatform/object', '../function/curry', '../object'], function (exports, _object, _curry, _object2) {
+define(['exports', '../jsPlatform/object', '../function/curry', '../object/typeOf', '../object/of', '../object/is'], function (exports, _object, _curry, _typeOf, _of, _is) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -14,13 +14,13 @@ define(['exports', '../jsPlatform/object', '../function/curry', '../object'], fu
      * @returns {Array|String|*}
      */
     const map = (0, _curry.curry)((fn, xs) => {
-        if (!(0, _object2.isset)(xs)) {
+        if (!(0, _is.isset)(xs)) {
             return xs;
         }
-        let out = (0, _object2.of)(xs),
+        let out = (0, _of.of)(xs),
             limit,
             i = 0;
-        switch ((0, _object2.typeOf)(xs)) {
+        switch ((0, _typeOf.typeOf)(xs)) {
             case 'Array':
                 limit = (0, _object.length)(xs);
                 if (!limit) {
@@ -40,7 +40,7 @@ define(['exports', '../jsPlatform/object', '../function/curry', '../object'], fu
                 }
                 return out;
             default:
-                if ((0, _object2.isFunctor)(xs)) {
+                if ((0, _is.isFunctor)(xs)) {
                     return xs.map(fn);
                 }
 

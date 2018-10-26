@@ -2,13 +2,13 @@
 export const
 
     /**
-     * Pushes incoming `item` onto array (`agg`) and return array (`agg`).
+     * Pushes incoming `item` onto given array and returns said array.
      * @private
      * @param agg {Array}
      * @param item {*}
      * @returns {Array}
      */
-    aggregateArr$ = (agg, item) => {
+    aggregateArray = (agg, item) => {
         agg.push(item);
         return agg;
     }

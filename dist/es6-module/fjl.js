@@ -405,15 +405,14 @@ const map = curry((fn, xs) =>  {
     }
 });
 
-const aggregateArr$ = (agg, item) => {
+const aggregateArray = (agg, item) => {
         agg.push(item);
         return agg;
     };
 
 /**
  * List operator utils module.
- * @module _listOpUtils.
- * @private
+ * @module listUtils.
  */
 const sliceFrom = curry((startInd, arr) => slice(startInd, undefined, arr));
 const sliceTo = curry((toInd, xs) => slice(0, toInd, xs));
@@ -959,7 +958,7 @@ const splitAt = (ind, list) => [sliceTo(ind, list), sliceFrom(ind, list)];
 const takeWhile = curry((pred, list) =>
         reduceUntil(
             negateF3(pred),  // predicate
-            aggregateArr$,   // operation
+            aggregateArray,   // operation
             [],             // aggregator
             list
         ));
@@ -1158,13 +1157,13 @@ const zip = curry((arr1, arr2) => {
         }
         const [a1, a2] = toShortest(arr1, arr2);
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, [item, a2[ind]]),
+                aggregateArray(agg, [item, a2[ind]]),
             [], a1);
     });
 const zipN = curry2((...lists) => {
         const trimmedLists = apply(toShortest, lists);
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, map(xs => xs[ind], trimmedLists)),
+                aggregateArray(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     });
 const zip3 = curry((arr1, arr2, arr3) => zipN(arr1, arr2, arr3));
@@ -1176,7 +1175,7 @@ const zipWith = curry((op, xs1, xs2) => {
         }
         const [a1, a2] = toShortest(xs1, xs2);
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, op(item, a2[ind])),
+                aggregateArray(agg, op(item, a2[ind])),
             [], a1);
     });
 const zipWithN = curry3((op, ...lists) => {
@@ -1189,7 +1188,7 @@ const zipWithN = curry3((op, ...lists) => {
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                aggregateArr$(agg, apply(op, map(xs => xs[ind], trimmedLists))),
+                aggregateArray(agg, apply(op, map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     });
 const zipWith3 = curry((op, xs1, xs2, xs3) => zipWithN(op, xs1, xs2, xs3));
@@ -1327,7 +1326,7 @@ const insertBy = curry((orderingFn, x, xs) => {
                 return concat$1([parts[0], [x], parts[1]]);
             }
         }
-        return aggregateArr$(sliceCopy(xs), x);
+        return aggregateArray(sliceCopy(xs), x);
     });
 const nubBy = curry((pred, list) => {
         if (!length(list)) {
@@ -1581,4 +1580,4 @@ const classCase = compose(ucaseFirst, camelCase);
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
 
-export { instanceOf, hasOwnProperty, length, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames, isFunction, isType, isOfType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, isOneOf, isFunctor, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll, apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, map, append, head, last, tail, init, uncons, unconsr, concat$1 as concat, concatMap, reverse$1 as reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach$1 as forEach, filter$1 as filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest, reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArr$ };
+export { instanceOf, hasOwnProperty, length, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames, isFunction, isType, isOfType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, isOneOf, isFunctor, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll, apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, map, append, head, last, tail, init, uncons, unconsr, concat$1 as concat, concatMap, reverse$1 as reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach$1 as forEach, filter$1 as filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest, reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArray };
