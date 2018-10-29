@@ -156,17 +156,19 @@ describe('#list', () => {
         it('should return everything except the last item of an list and/or string', () => {
             [
                 [vowelsString, vowelsString.slice(0, vowelsString.length - 1)],
-                [vowelsArray, vowelsArray.slice(0, vowelsString.length - 1)]
+                [vowelsArray, vowelsArray.slice(0, vowelsString.length - 1)],
+                [[], []],
+                ['', ''],
             ]
                 .forEach(([given, expected]) => {
                     expectEqual(init(given), expected);
                 });
         });
-        it('should return an empty list when an empty list and/or string is passed in', () => {
-            expectEqual(init([]), []);
-            expectEqual(init(''), '');
-        });
         it('should throw an error when no parameter is passed in', () => {
+            [undefined, null, 0, {}]
+                .forEach(x =>
+                    expect((xs => () => init(xs))(x)).toThrow(Error)
+                );
             expectError(init);
         });
     });
@@ -175,37 +177,40 @@ describe('#list', () => {
         it('should return everything except the last item of an list', () => {
             [
                 [vowelsString, vowelsString.slice(1)],
-                [vowelsArray, vowelsArray.slice(1)]
+                [vowelsArray, vowelsArray.slice(1)],
+                [[], []],
+                ['', ''],
             ]
                 .forEach(([given, expected]) => {
                     expectEqual(tail(given), expected);
                 });
         });
-        it('should return an empty list when receiving an empty list', () => {
-            expectEqual(tail([]).length, 0);
-            expectEqual(tail('').length, 0);
-        });
         it('should throw an error when no parameter is passed in', () => {
+            [undefined, null, 0, {}]
+                .forEach(x =>
+                    expect((xs => () => tail(xs))(x)).toThrow(Error)
+                );
             expectError(tail);
         });
     });
 
     describe('#uncons', () => {
         it('should return the "head" and "tail" of a list in a two item array.', () => {
-            expectEqual(uncons('hello'), ['h', 'ello']);
-            expectEqual(uncons('hello'.split('')), ['h', 'ello'.split('')]);
-        });
-        it('should return an empty tail when there\'s only one item in list.', () => {
-            expectEqual(uncons('a'), ['a', '']);
-            expectEqual(uncons([0]), [0, []]);
-        });
-        it('should return `undefined` for empty lists.', () => {
-            expectEqual(uncons(''), undefined);
-            expectEqual(uncons([]), undefined);
-        });
-        it('should return `undefined` when no value is passed in or a falsy value is passed in', () => {
-            [null, undefined, 0, false, '']
-                .forEach(x => expect(uncons(x)).toEqual(undefined));
+            [
+                [[], undefined],
+                [null, undefined],
+                [undefined, undefined],
+                [false, undefined],
+                [0, undefined],
+                ['', undefined],
+                ['a', ['a', '']],
+                [['a'], ['a', []]],
+                [vowelsString, [vowelsString[0], vowelsString.slice(1)]],
+                [vowelsArray, [vowelsArray[0], vowelsArray.slice(1)]],
+            ]
+                .forEach(([arg, expected]) => {
+                    expectEqual(uncons(arg), expected);
+                });
         });
     });
 

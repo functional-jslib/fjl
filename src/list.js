@@ -96,8 +96,7 @@ export const
      * @param xs {Array|String}
      * @returns {Array|undefined}
      */
-    uncons = xs =>
-        !xs || length(xs) === 0 ? undefined : [head(xs), tail(xs)],
+    uncons = xs => !xs || length(xs) === 0 ? undefined : [head(xs), tail(xs)],
 
     /**
      * Returns `tail` and `head` of passed in list/string in a tuple.
@@ -121,7 +120,8 @@ export const
             case 0:
                 return [];
             case 1:
-                return xs[0] && xs[0].slice ? sliceCopy(xs[0]) : xs[0];
+                const item0 = xs[0];
+                return item0 && item0.slice ? sliceCopy(item0) : item0;
             case 2:
             default:
                 return apply(append, xs);
