@@ -47,6 +47,7 @@ import {
     revAlphabetArray,
     revAlphabetStr,
     nums1To10,
+    isVowel,
     expectInstanceOf,
     vowelsLen,
     nonAlphaNums,
@@ -1017,7 +1018,6 @@ describe('#list', () => {
 
     describe('#takeWhile', () => {
         it('should take elements while predicate is fulfilled and vice-versa', () => {
-            const isVowel = x => vowelsString.indexOf(x) > -1;
             [
                 [[isVowel, vowelsString], vowelsString],
                 [[isVowel, vowelsArray], vowelsArray],
@@ -1103,67 +1103,38 @@ describe('#list', () => {
     });
 
     describe('#span', () => {
-        it('should take elements into first list while predicate is fulfilled and elements ' +
-            'that didn\'t match into second list', () => {
-            const word = 'abcdefg',
-                expectedResults = [word.substring(0, 4), word.substring(4)],
-                predicate = x => x !== 'e';
-
-            // Expect matched length and matched elements
-            expectTrue(
-                // Ensure cases for each use case
-                all(tuple =>
-                    length(expectedResults) === length(tuple) &&
-                    all((tuplePart, ind) =>
-                            // Ensure tuple part is of allowed type
-                        (isString(tuplePart) || isArray(tuplePart)) &&
-                        // Ensure correct length of items in returned element
-                        length(expectedResults[ind]) === length(tuplePart) &&
-                        // Ensure elements where matched
-                        all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
-                        tuple),
-                    // Use cases (one with string other with list)
-                    [span(predicate, word.split('')), span(predicate, word)]
-                ));
-        });
-        it('should return an list of empty arrays and/or strings when an empty list is passed in', () => {
-            expectEqual(span(a => !!a, ''), ['', '']);
-            expectEqual(span(a => !!a, []), [[], []]);
+        it('should give the span of elements matching predicate and elements not matching predicate.', () => {
+            [
+                [[isVowel, ''], ['', '']],
+                [[isVowel, []], [[], []]],
+                [[isVowel, nonAlphaNums], ['', nonAlphaNums]],
+                [[isVowel, nonAlphaNumsArray], [[], nonAlphaNumsArray]],
+                [[x => !isVowel(x), nonAlphaNums], [nonAlphaNums, '']],
+                [[x => !isVowel(x), nonAlphaNumsArray], [nonAlphaNumsArray, []]],
+                [[isVowel, alphabetString], ['a', alphabetString.slice(1)]],
+                [[isVowel, alphabetArray], [['a'], alphabetArray.slice(1)]],
+            ].forEach(([args, expected]) => {
+                expectEqual(span(...args), expected);
+            });
         });
     });
 
     describe('#breakOnList', () => {
         it('should take elements into first list while !predicate is fulfilled and elements ' +
             'that didn\'t match into second list', () => {
-            const word = 'abcdefg',
-                expectedResults = [word.substring(0, 4), word.substring(4)],
-                predicate = x => x === 'e';
-
-            // Expect matched length and matched elements
-            expectTrue(
-                // Ensure cases for each use case
-                all(tuple =>
-                    length(expectedResults) === length(tuple) &&
-                    all((tuplePart, ind) =>
-                            // Ensure tuple part is of allowed type
-                        (isString(tuplePart) || isArray(tuplePart)) &&
-                        // Ensure correct length of items in returned element
-                        length(expectedResults[ind]) === length(tuplePart) &&
-                        // Ensure elements where matched
-                        all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
-                        tuple),
-                    // Use cases (one with string other with list)
-                    [breakOnList(predicate, word.split('')), breakOnList(predicate, word)]
-                ));
-        });
-        it('should return an list of empty arrays and/or strings when an empty list is passed in', () => {
-            expectTrue(
-                all(tuple =>
-                    length(tuple) === 2 &&
-                    all(tuplePart => (isString(tuplePart) || isArray(tuplePart)) &&
-                        length(tuplePart) === 0, tuple),
-                    [breakOnList(a => a, ''), breakOnList(x => x, [])]
-                ));
+            const notIsVowel = x => !isVowel(x);
+            [
+                [[isVowel, ''], ['', '']],
+                [[isVowel, []], [[], []]],
+                [[isVowel, nonAlphaNums], [nonAlphaNums, '']],
+                [[isVowel, nonAlphaNumsArray], [nonAlphaNumsArray, []]],
+                [[notIsVowel, nonAlphaNums], ['', nonAlphaNums]],
+                [[notIsVowel, nonAlphaNumsArray], [[], nonAlphaNumsArray]],
+                [[isVowel, alphabetString], [alphabetString.slice(1), 'a']],
+                [[isVowel, alphabetArray], [alphabetArray.slice(1), ['a']]],
+            ].forEach(([args, expected]) => {
+                expectEqual(breakOnList(...args), expected);
+            });
         });
     });
 

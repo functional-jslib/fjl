@@ -632,7 +632,8 @@ export const
     span = curry((pred, list) => {
         const splitPoint = findIndexWhere(negateF3(pred), list);
         return splitPoint === -1 ?
-            splitAt(0, list) : splitAt(splitPoint, list);
+            [sliceFrom(0, list), of(list)] :
+            splitAt(splitPoint, list);
     }),
 
     /**
@@ -642,9 +643,9 @@ export const
      * @haskellExample
      * Replace `break` with `breakOnList` for our version.
      * ```
-     * break (> 3) [1,2,3,4,1,2,3,4] == ([1,2,3],[4,1,2,3,4])
-     * break (< 9) [1,2,3] == ([],[1,2,3])
-     * break (> 9) [1,2,3] == ([1,2,3],[])
+     * breakOnList (> 3) [1,2,3,4,1,2,3,4] == ([1,2,3],[4,1,2,3,4])
+     * breakOnList (< 9) [1,2,3] == ([],[1,2,3])
+     * breakOnList (> 9) [1,2,3] == ([1,2,3],[])
      * ```
      * @function module:list.breakOnList
      * @param pred {Function}
@@ -652,9 +653,9 @@ export const
      * @returns {Array}
      */
     breakOnList = curry((pred, list) => {
-        const splitPoint = findIndexWhere(pred, list);
+        const splitPoint = findIndexWhere(negateF3(pred), list);
         return splitPoint === -1 ?
-            splitAt(0, list) : splitAt(splitPoint, list);
+            [of(list), sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
     }),
 
     /**

@@ -105,6 +105,8 @@ export let  expectInstanceOf = curry2_((instance, value) => expect(value).toBeIn
 
     revNonAlphaNums = revNonAlphaNumsArray.slice(0).reverse().join(''),
 
+    isVowel = x => vowelsString.indexOf(x) > -1,
+
     jsonClone = x => JSON.parse(JSON.stringify(x)),
 
     falsyList = [undefined, null, false, 0, ''],
