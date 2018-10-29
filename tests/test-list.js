@@ -195,7 +195,7 @@ describe('#list', () => {
     });
 
     describe('#uncons', () => {
-        it('should return the "head" and "tail" of a list in a two item array.', () => {
+        it('should return a list containing the "head" and "tail" of a given list else `undefined`.', () => {
             [
                 [[], undefined],
                 [null, undefined],
@@ -215,16 +215,15 @@ describe('#list', () => {
     });
 
     describe('#isEmpty (a.k.a. #`null`)', () => {
-        it('should return `true` when a list is empty.', () => {
-            expectTrue(isEmptyList([]));
-            expectTrue(isEmptyList(''));
+        it ('should return a boolean indicating whether given list is empty or not', () => {
+            [[vowelsString, false],[vowelsArray, false], ['', true, [], true]]
+                .forEach(([subj, expected]) => {
+                    expectEqual(isEmptyList(subj), expected);
+                });
         });
-        it('should return `false` when a list is not empty.', () => {
-            expectFalse(isEmptyList(['a', 'b', 'c']));
-            expectFalse(isEmptyList('abc'));
-        });
-        it('should throw an error when receiving something that is list like (doesn\'t have a `length` prop', () => {
-            expectError(() => isEmptyList(null));
+        it('should throw an error when receiving non list-like (doesn\'t have a `length` prop)', () => {
+            [{}, null, undefined, false]
+                .forEach(x => expectError((_x => () => isEmptyList(_x))(x)));
             expectError(isEmptyList);
         });
     });
@@ -233,19 +232,21 @@ describe('#list', () => {
         it('is should return the length of any item that has a `length` property', () => {
             [
                 [[], 0],
-                ['abc', 3],
-                [(a, b, c) => a + b + c, 3]
+                [vowelsString, vowelsString.length],
+                [vowelsArray, vowelsArray.length],
+                [(a, b, c) => a + b + c, 3],
+                [function (a, b, c) { return a + b + c; }, 3],
+                [{}, undefined],
+                [0, undefined],
+                [false, undefined]
             ]
-                .forEach(([item, expectendLen]) =>
-                    expectEqual(length(item), expectendLen)
+                .forEach(([item, expected]) =>
+                    expectEqual(length(item), expected)
                 );
-        });
-        it('should return `undefined` for items that don\'t have a `length` property', () => {
-            [{}, 0, false, true].forEach(x =>
-                expectEqual(length(x), undefined));
         });
         it('should throw an error when `undefined` or `null` is passed in', () => {
             expectError(length);
+            expectError(() => length(undefined));
             expectError(() => length(null));
         });
     });
@@ -264,9 +265,12 @@ describe('#list', () => {
             ;
             [
                 [addCharA, vowelsArray, vowelsArray.map(addCharA)],
-                [addCharA, vowelsString, vowelsString.split('')
-                    .map(addCharA).join('')],
-                [addCharA, vowelsObj, augmentedVowelsObj]
+                [addCharA, vowelsString, vowelsString.split('').map(addCharA).join('')],
+                [addCharA, vowelsObj, augmentedVowelsObj],
+                [x => x, [], []],
+                [x => x, '', ''],
+                [x => x, {}, {}],
+                [x => x, new Functor(), new Functor()]
             ]
                 .forEach(([fn, list, expected]) => {
                     expect(map(fn, list)).toEqual(expected);
@@ -281,13 +285,7 @@ describe('#list', () => {
             expectInstanceOf(Functor, rslt);
             expectEqual(rslt.value, expectedFunctor.value);
         });
-        it('should return an empty list when receiving an empty list', () => {
-            expectEqual(map(x => x, []), []);
-            expectEqual(map(x => x, ''), '');
-            expectEqual(map(x => x, {}), {});
-            expectEqual(map(x => x, new Functor()), new Functor());
-        });
-        it('should throw an error when incoming value is not a type instance', () => {
+        it('should throw an error when incoming value is not a functor instance', () => {
             expectError(() => map(x => x, null));
             expectError(() => map(x => x, undefined)); // curried so requires second parameter (even if undefined).
         });
