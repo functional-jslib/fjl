@@ -53,9 +53,9 @@
  * @description Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 
-import {fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4} from '../utils';
+import {fPureTakesOne} from '../utils';
 import {curry, curry2} from '../function/curry';
-import {flip} from '../function/flip';
+import {flip, flip3, flip4, flip5} from '../function/flip';
 
 export const
 
@@ -102,18 +102,19 @@ export const
         if (typeof Object[key] !== 'function') {
             return agg;
         }
-        switch (Object[key].length) {
+        const operation = Object[key];
+        switch (operation.length) {
             case 2:
-                agg[key] = flip(fPureTakesOne(key));
+                agg[key] = flip(operation);
                 break;
             case 3:
-                agg[key] = flip(fPureTakes2(key));
+                agg[key] = flip3(operation);
                 break;
             case 4:
-                agg[key] = flip(fPureTakes3(key));
+                agg[key] = flip4(operation);
                 break;
             case 5:
-                agg[key] = flip(fPureTakes4(key));
+                agg[key] = flip5(operation);
                 break;
             default:
                 agg[key] = Object[key];

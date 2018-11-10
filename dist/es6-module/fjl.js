@@ -127,21 +127,23 @@ const native = Object.getOwnPropertyNames(Object).reduce((agg, key) => {
     return agg;
   }
 
-  switch (Object[key].length) {
+  const operation = Object[key];
+
+  switch (operation.length) {
     case 2:
-      agg[key] = flip(fPureTakesOne(key));
+      agg[key] = flip(operation);
       break;
 
     case 3:
-      agg[key] = flip(fPureTakes2(key));
+      agg[key] = flip3(operation);
       break;
 
     case 4:
-      agg[key] = flip(fPureTakes3(key));
+      agg[key] = flip4(operation);
       break;
 
     case 5:
-      agg[key] = flip(fPureTakes4(key));
+      agg[key] = flip5(operation);
       break;
 
     default:

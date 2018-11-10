@@ -43,21 +43,23 @@
       return agg;
     }
 
-    switch (Object[key].length) {
+    var operation = Object[key];
+
+    switch (operation.length) {
       case 2:
-        agg[key] = (0, _flip.flip)((0, _utils.fPureTakesOne)(key));
+        agg[key] = (0, _flip.flip)(operation);
         break;
 
       case 3:
-        agg[key] = (0, _flip.flip)((0, _utils.fPureTakes2)(key));
+        agg[key] = (0, _flip.flip3)(operation);
         break;
 
       case 4:
-        agg[key] = (0, _flip.flip)((0, _utils.fPureTakes3)(key));
+        agg[key] = (0, _flip.flip4)(operation);
         break;
 
       case 5:
-        agg[key] = (0, _flip.flip)((0, _utils.fPureTakes4)(key));
+        agg[key] = (0, _flip.flip5)(operation);
         break;
 
       default:

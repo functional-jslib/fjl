@@ -13,7 +13,7 @@ import {
     fromAssocList, toAssocList, toArray, log, peek, error,
     isWeakMap, isWeakSet, assignDeep, assign,
     toAssocListDeep, fromAssocListDeep,
-    toTypeRef, toTypeRefName, lookup
+    toTypeRef, toTypeRefName, lookup, native
 } from '../src/object';
 import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../src/list';
 import {
@@ -712,6 +712,22 @@ describe ('#object', function () {
                 all(elm =>
                         all(() => lookup('z', obj) === undefined, elm),
                     [word.split(''), word]));
+        });
+    });
+
+    describe ('#native', () => {
+        describe ('#functions-on-native', () => {
+            Object.getOwnPropertyNames(Object).forEach(key => {
+                const foundOnNative = native[key],
+                    foundOnObj = Object[key];
+                if (typeof foundOnNative !== 'function') { return; }
+                it(`should have a "${key}" property whose value is of same type as \`Object[key]\``, () => {
+                    expect(typeof foundOnNative).toEqual(typeof foundOnObj);
+                });
+                it(`\`native.${key}\` should have same arity as \`Object[key]\``, () => {
+                    expect(foundOnNative.length).toEqual(foundOnObj.length);
+                });
+            });
         });
     });
 

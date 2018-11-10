@@ -214,22 +214,21 @@ configurations used for building the project.</li>
 <li>Docs format: http://usejsdoc.org/</li>
 </ul>
 <h2>Change log</h2><h3>1.7.0</h3><h4>Deprecations</h4><ul>
-<li><p>Marked <code>hasOwnProperty</code> as deprecated (as property
+<li>Marked <code>hasOwnProperty</code> as deprecated (as property
 is not really in the haskell prelude and is a bit
-of an oddity when it comes to the functional mindset).</p>
-<h4>New additions</h4></li>
+of an oddity when it comes to the functional mindset).</li>
+</ul>
+<h4>New additions</h4><ul>
 <li>Re-instantiated <code>flip3</code>, <code>flip4</code>, <code>flip5</code> - Turns out there was a use for these after-all (<code>fjl.native</code>).</li>
 <li>Added <code>native</code> which includes all the 
 static methods that live on <code>Object</code> though
 flipped and curried.</li>
 </ul>
-<h4>Non-breaking changes.</h4><ul>
+<h4>Development changes.</h4><ul>
 <li>Updated  'dev-deps' to use latest babel.</li>
 <li>Updated gulp version</li>
-</ul>
-<h4>Other changes</h4><ul>
 <li>Updated .travis* file.</li>
-<li>Moved gulpfile.js to gulpfile.babel.js  in order to easily use es6 imports.</li>
+<li>Moved './gulpfile.js' to 'gulpfile.babel.js'  in order to easily use es6 imports.</li>
 </ul>
 <h3>1.6.2</h3><ul>
 <li>String support for <code>takeWhile</code>, <code>group</code>, and <code>groupBy</code>, <code>dropWhileEnd</code>.</li>

@@ -84,6 +84,54 @@ describe ('#function', function () {
         });
     });
 
+    describe ('#flip3', function () {
+        it ('should be a function', function () {
+            expectFunction(flip3);
+        });
+        it ('should return a function', function () {
+            expectFunction(flip3());
+            expectFunction(flip3(subtract));
+        });
+        it ('should return a function which executes its params in reverse.', function () {
+            const subtractor = flip3(subtract);
+            expectFunction(subtractor);
+            expectEqual(subtract(3, 2, 1), subtractor(1, 2, 3));
+            expectEqual(subtract(1, 2, 3), subtractor(3, 2, 1));
+        });
+    });
+
+    describe ('#flip4', function () {
+        it ('should be a function', function () {
+            expectFunction(flip4);
+        });
+        it ('should return a function', function () {
+            expectFunction(flip4());
+            expectFunction(flip4(subtract));
+        });
+        it ('should return a function which executes its params in reverse.', function () {
+            const subtractor = flip4(subtract);
+            expectFunction(subtractor);
+            expectEqual(subtract(4, 3, 2, 1), subtractor(1, 2, 3, 4));
+            expectEqual(subtract(1, 2, 3, 4), subtractor(4, 3, 2, 1));
+        });
+    });
+
+    describe ('#flip5', function () {
+        it ('should be a function', function () {
+            expectFunction(flip5);
+        });
+        it ('should return a function', function () {
+            expectFunction(flip5());
+            expectFunction(flip5(subtract));
+        });
+        it ('should return a function which executes its params in reverse.', function () {
+            const subtractor = flip5(subtract);
+            expectFunction(subtractor);
+            expectEqual(subtract(5, 4, 3, 2, 1), subtractor(1, 2, 3, 4, 5));
+            expectEqual(subtract(1, 2, 3, 4, 5), subtractor(5, 4, 3, 2, 1));
+        });
+    });
+
     describe ('#until', function () {
         it ('should be a function', function () {
             expectFunction(until);
