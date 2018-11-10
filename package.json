@@ -2,8 +2,8 @@
   "name": "fjl",
   "version": "1.7.0",
   "description": "Functional Javascript Library",
-  "main": "dist/package/fjl",
-  "module": "dist/package/fjl.mjs",
+  "main": "dist/cjs/fjl",
+  "module": "dist/es6-module/fjl.mjs",
   "scripts": {
     "build": "gulp docs build && npm run test-builds",
     "test-builds": "jest --testMatch **/tests/*-test-*.js",

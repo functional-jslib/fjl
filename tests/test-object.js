@@ -720,7 +720,12 @@ describe ('#object', function () {
             Object.getOwnPropertyNames(Object).forEach(key => {
                 const foundOnNative = native[key],
                     foundOnObj = Object[key];
-                if (typeof foundOnNative !== 'function') { return; }
+
+                // Test functions only
+                if (typeof foundOnNative !== 'function') {
+                    return;
+                }
+
                 it(`should have a "${key}" property whose value is of same type as \`Object[key]\``, () => {
                     expect(typeof foundOnNative).toEqual(typeof foundOnObj);
                 });

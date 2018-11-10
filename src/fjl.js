@@ -15,3 +15,9 @@ export * from './list';
 export * from './string';
 export * from './utils';
 export * from './errorThrowing';
+
+/**
+ * @typedef {String|Function|ArrayBufferConstructor|ArrayConstructor|BooleanConstructor|MapConstructor|NumberConstructor|SetConstructor|WeakMapConstructor|WeakSetConstructor} TypeRef
+ * @description Type reference.  Either actual type or type's name;  E.g., `Type.name`
+ * Also note: Class cased names are use for values that do not have `name` properties;  Namely: 'Null', 'NaN' and 'Undefined' (for their respective values respectively).
+ */

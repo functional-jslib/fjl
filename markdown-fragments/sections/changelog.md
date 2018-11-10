@@ -10,6 +10,8 @@
 - Added `native` which includes all the 
 static methods that live on `Object` though
 flipped and curried.
+- Added 'fjl-mutable' as part of source.  All methods of 'fjl-mutable' now
+live directly on 'fjl' and are defined in 'fjl/objects/defineProp' (or more directly in src at './src/objects/defineProp').
 
 #### Development changes.
 - Updated  'dev-deps' to use latest babel.

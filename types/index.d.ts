@@ -1,3 +1,5 @@
+export as namespace fjl;
+
 import './base-types';
 import './utils';
 import './function';
