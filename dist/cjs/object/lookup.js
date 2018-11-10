@@ -1,13 +1,17 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.lookup = undefined;
+exports.lookup = void 0;
 
-var _is = require('./is');
+var _is = require("./is");
 
-var _curry = require('../function/curry');
+var _curry = require("../function/curry");
+
+/**
+ * @memberOf object
+ */
 
 /**
  * Looks up property and returns it's value; Else `undefined`.
@@ -17,10 +21,7 @@ var _curry = require('../function/curry');
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
  */
-/**
- * @memberOf object
- */
-
-var lookup = exports.lookup = (0, _curry.curry)(function (key, obj) {
+var lookup = (0, _curry.curry)(function (key, obj) {
   return (0, _is.isset)(obj) ? obj[key] : undefined;
 });
+exports.lookup = lookup;

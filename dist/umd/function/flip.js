@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../jsPlatform/array', '../jsPlatform/function', './curry'], factory);
+    define(["exports", "../jsPlatform/array", "../jsPlatform/function", "./curry"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../jsPlatform/array'), require('../jsPlatform/function'), require('./curry'));
+    factory(exports, require("../jsPlatform/array"), require("../jsPlatform/function"), require("./curry"));
   } else {
     var mod = {
       exports: {}
@@ -10,15 +10,15 @@
     factory(mod.exports, global.array, global._function, global.curry);
     global.flip = mod.exports;
   }
-})(this, function (exports, _array, _function, _curry) {
-  'use strict';
+})(this, function (_exports, _array, _function, _curry) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.flip = exports.flipN = undefined;
-  var
+  _exports.flip5 = _exports.flip4 = _exports.flip3 = _exports.flip = _exports.flipN = void 0;
 
+  var
   /**
    * Returns a curried function requiring given functions arguments in reverse
    * (returned function expects 2 or more variables (curried at 2 or more args)).
@@ -27,9 +27,9 @@
    * @returns {Function}
    * @curried
    */
-  flipN = exports.flipN = function flipN(fn) {
+  flipN = function flipN(fn) {
     return (0, _curry.curry2)(function () {
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
@@ -37,16 +37,57 @@
     });
   },
 
-
   /**
    * Flips a function's first and second arguments and and returns a new function requiring said arguments in reverse.
    * @function module:function.flip
    * @param fn {Function}
    * @returns {Function}
    */
-  flip = exports.flip = function flip(fn) {
+  flip = function flip(fn) {
     return (0, _curry.curry)(function (b, a) {
       return (0, _function.call)(fn, a, b);
     });
+  },
+
+  /**
+   * Same as `flip` except returns a flipped function of arity 3.
+   * @function module:function.flip3
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  flip3 = function flip3(fn) {
+    return (0, _curry.curry)(function (c, b, a) {
+      return (0, _function.call)(fn, a, b, c);
+    });
+  },
+
+  /**
+   * Same as `flip` except returns a flipped function of arity 4.
+   * @function module:function.flip4
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  flip4 = function flip4(fn) {
+    return (0, _curry.curry)(function (d, c, b, a) {
+      return (0, _function.call)(fn, a, b, c, d);
+    });
+  },
+
+  /**
+   * Same as `flip` except returns a flipped function of arity 5.
+   * @function module:function.flip5
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  flip5 = function flip5(fn) {
+    return (0, _curry.curry)(function (e, d, c, b, a) {
+      return (0, _function.call)(fn, a, b, c, d, e);
+    });
   };
+
+  _exports.flip5 = flip5;
+  _exports.flip4 = flip4;
+  _exports.flip3 = flip3;
+  _exports.flip = flip;
+  _exports.flipN = flipN;
 });

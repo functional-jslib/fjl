@@ -1,14 +1,13 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.fnOrError = undefined;
+exports.fnOrError = void 0;
 
-var _typeOf = require('../object/typeOf');
+var _typeOf = require("../object/typeOf");
 
 var
-
 /**
  * Returns a function or throws an error if given `f` is not a function.
  * @function module:function.fnOrError
@@ -17,9 +16,12 @@ var
  * @returns {Function}
  * @throws {Error} - Error if `f` is not of `function`
  */
-fnOrError = exports.fnOrError = function fnOrError(symbolName, f) {
-    if (!f || !(f instanceof Function)) {
-        throw new Error(symbolName + ' should be a function. ' + ('Type received: ' + (0, _typeOf.typeOf)(f) + ';  Value received: ' + f + '.'));
-    }
-    return f;
+fnOrError = function fnOrError(symbolName, f) {
+  if (!f || !(f instanceof Function)) {
+    throw new Error("".concat(symbolName, " should be a function. ") + "Type received: ".concat((0, _typeOf.typeOf)(f), ";  Value received: ").concat(f, "."));
+  }
+
+  return f;
 };
+
+exports.fnOrError = fnOrError;

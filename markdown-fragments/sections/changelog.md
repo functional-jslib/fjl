@@ -1,4 +1,21 @@
 ## Change log
+### 1.7.0
+#### Deprecations
+- Marked `hasOwnProperty` as deprecated (as property
+ is not really in the haskell prelude and is a bit
+ of an oddity when it comes to the functional mindset).
+ 
+#### New additions
+- Re-instantiated `flip3`, `flip4`, `flip5` - Turns out there was a use for these after-all (`fjl.native`).
+- Added `native` which includes all the 
+static methods that live on `Object` though
+flipped and curried.
+
+#### Development changes.
+- Updated  'dev-deps' to use latest babel.
+- Updated gulp version
+- Updated .travis* file.
+- Moved './gulpfile.js' to 'gulpfile.babel.js'  in order to easily use es6 imports.
 
 ### 1.6.2
 - String support for `takeWhile`, `group`, and `groupBy`, `dropWhileEnd`.

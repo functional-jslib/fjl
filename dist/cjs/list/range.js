@@ -1,11 +1,15 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.range = undefined;
+exports.range = void 0;
 
-var _curry = require('../function/curry');
+var _curry = require("../function/curry");
+
+/**
+ * @module object
+ */
 
 /**
  * Normalizes step for `from` and `to` combination.
@@ -17,15 +21,14 @@ var _curry = require('../function/curry');
  * @private
  */
 var normalizeStep = function normalizeStep(from, to, step) {
-    if (from > to) {
-        return step > 0 ? -step : step; // make step negative
-    }
-    return step < 0 ? -1 * step : step; // make step positive
-}; /**
-    * @module object
-    */
-var
+  if (from > to) {
+    return step > 0 ? -step : step; // make step negative
+  }
 
+  return step < 0 ? -1 * step : step; // make step positive
+};
+
+var
 /**
  * Range function - gives you an array contain numbers in given range.
  * @note normalizes `step` to be valid if range numbers given are invalid
@@ -37,17 +40,20 @@ var
  * @param [step = 1] {Number}
  * @returns {Array.<Number>}
  */
-range = exports.range = (0, _curry.curry)(function (from, to) {
-    var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+range = (0, _curry.curry)(function (from, to) {
+  var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var i = from;
+  var out = [];
+  step = normalizeStep(from, to, step);
 
-    var i = from;
-    var out = [];
-    step = normalizeStep(from, to, step);
-    if (step === 0 || from === to) {
-        return [from];
-    }
-    for (; (to - i) * step >= 0; i += step) {
-        out.push(i);
-    }
-    return out;
+  if (step === 0 || from === to) {
+    return [from];
+  }
+
+  for (; (to - i) * step >= 0; i += step) {
+    out.push(i);
+  }
+
+  return out;
 });
+exports.range = range;

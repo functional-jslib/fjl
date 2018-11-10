@@ -4,31 +4,18 @@
  */
 
 const
+
     fs = require('fs'),
+
     {Readable} = require('stream'),
-    _List = require('../dist/cjs/list'),
-    _ListUtils = require('../dist/cjs/list/utils'),
-    _Object = require('../dist/cjs/object'),
-    _Function = require('../dist/cjs/function'),
-    _Boolean = require('../dist/cjs/boolean'),
-    _ErrorThrowing = require('../dist/cjs/errorThrowing'),
-    _String = require('../dist/cjs/string'),
-    _Utils = require('../dist/cjs/utils'),
-    {log} = _Object,
 
     newModuleMeta = _module => ({module: _module, methodNames: [], methodNamesByArity: {}}),
 
-    newTopLevelMeta = () => ({
-        moduleMetas: {
-            'list': newModuleMeta(_List),
-            'listUtils': newModuleMeta(_ListUtils),
-            'object': newModuleMeta(_Object),
-            'function': newModuleMeta(_Function),
-            'boolean': newModuleMeta(_Boolean),
-            'errorThrowing': newModuleMeta(_ErrorThrowing),
-            'string': newModuleMeta(_String),
-            'utils': newModuleMeta(_Utils)
-        },
+    newTopLevelMeta = modulesHashMap => ({
+        moduleMetas: Object.keys(modulesHashMap).reduce((agg, key) => {
+            agg[key] = newModuleMeta(modulesHashMap[key]);
+            return agg;
+        }, {}),
         methodNamesByArity: {}
     }),
 
@@ -47,6 +34,9 @@ const
     updateMethodByArity = (moduleMeta, methodName, topLevelNamesByArity) => {
         const arity = moduleMeta.module[methodName].length,
             {methodNamesByArity} = moduleMeta;
+        if (arity === undefined) { // not a function, bail
+            return;
+        }
         if (!methodNamesByArity[arity]) {
             methodNamesByArity[arity] = [];
         }
@@ -57,7 +47,7 @@ const
     populateMeta = meta => {
         const {moduleMetas, methodNamesByArity} = meta;
         // Set empty array for 'method names by arity'
-        [0,1,2,3,4,5].forEach(x => { methodNamesByArity[x] = []; });
+        [0,1,2,3,4,5,6,7,8].forEach(x => { methodNamesByArity[x] = []; });
 
         // Loop through module metas and populate 'methodNames' and
         //  'methodsByArity' properties
@@ -104,13 +94,13 @@ const
  * @extends stream.Readable
  */
 class ModuleMemberListsReadStream extends Readable {
-    constructor(options) {
+    constructor(options, modNamesAndModMap) {
         super(Object.assign({
             encoding: 'utf8',
             objectMode: false,
             highWaterMark: 100000
         }, options));
-        this.topMeta = populateMeta(newTopLevelMeta());
+        this.topMeta = populateMeta(newTopLevelMeta(modNamesAndModMap));
         this.moduleMetaNames = Object.keys(this.topMeta.moduleMetas);
         this.currIndex = 0;
     }
@@ -128,7 +118,6 @@ class ModuleMemberListsReadStream extends Readable {
 }
 
 /**
- *
  * @returns {ModuleMemberListsReadStream}
  */
-module.exports = () => new ModuleMemberListsReadStream();
+export default moduleNameAndModuleHashMap => new ModuleMemberListsReadStream({}, moduleNameAndModuleHashMap);

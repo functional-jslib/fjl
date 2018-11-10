@@ -1,24 +1,26 @@
-define(['exports', '../jsPlatform/function', './curry'], function (exports, _function, _curry) {
-  'use strict';
+define(["exports", "../jsPlatform/function", "./curry"], function (_exports, _function, _curry) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.negateFN = exports.negateF3 = exports.negateF2 = exports.negateF = undefined;
+  _exports.negateFN = _exports.negateF3 = _exports.negateF2 = _exports.negateF = void 0;
+
   /**
    * @memberOf function
    */
-
-  const
-
+  var
   /**
    * Negates a function that takes one/no argument.
    * @function module:function.negateF
    * @param fn {Function}
    * @returns {function(*=): boolean}
    */
-  negateF = exports.negateF = fn => x => !fn(x),
-
+  negateF = function negateF(fn) {
+    return function (x) {
+      return !fn(x);
+    };
+  },
 
   /**
    * Takes a function that takes two parameters and returns a negated version of given
@@ -27,8 +29,11 @@ define(['exports', '../jsPlatform/function', './curry'], function (exports, _fun
    * @param fn {Function}
    * @returns {Function}
    */
-  negateF2 = exports.negateF2 = fn => (0, _curry.curry)((a, b) => !fn(a, b)),
-
+  negateF2 = function negateF2(fn) {
+    return (0, _curry.curry)(function (a, b) {
+      return !fn(a, b);
+    });
+  },
 
   /**
    * Takes a function that takes three parameters and returns a
@@ -37,8 +42,11 @@ define(['exports', '../jsPlatform/function', './curry'], function (exports, _fun
    * @param fn {Function}
    * @returns {Function}
    */
-  negateF3 = exports.negateF3 = fn => (0, _curry.curry)((a, b, c) => !fn(a, b, c)),
-
+  negateF3 = function negateF3(fn) {
+    return (0, _curry.curry)(function (a, b, c) {
+      return !fn(a, b, c);
+    });
+  },
 
   /**
    * Returns a negated version of given function.
@@ -49,5 +57,18 @@ define(['exports', '../jsPlatform/function', './curry'], function (exports, _fun
    * @param fn {Function}
    * @returns {Function}
    */
-  negateFN = exports.negateFN = fn => (0, _curry.curry2)((...args) => !(0, _function.apply)(fn, args));
+  negateFN = function negateFN(fn) {
+    return (0, _curry.curry2)(function () {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return !(0, _function.apply)(fn, args);
+    });
+  };
+
+  _exports.negateFN = negateFN;
+  _exports.negateF3 = negateF3;
+  _exports.negateF2 = negateF2;
+  _exports.negateF = negateF;
 });

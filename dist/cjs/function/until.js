@@ -1,14 +1,13 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.until = undefined;
+exports.until = void 0;
 
-var _curry = require('./curry');
+var _curry = require("./curry");
 
 var
-
 /**
  * Run `operation` until predicate returns `true` (like a functional
  *  version of a while loop).
@@ -18,10 +17,13 @@ var
  * @param typeInstance {*} :: * - A monoidal zero or some starting point.
  * @returns {*} - What ever type `typeInstance` is
  */
-until = exports.until = (0, _curry.curry)(function (predicate, operation, typeInstance) {
-    var result = typeInstance;
-    while (!predicate(result)) {
-        result = operation(result);
-    }
-    return result;
+until = (0, _curry.curry)(function (predicate, operation, typeInstance) {
+  var result = typeInstance;
+
+  while (!predicate(result)) {
+    result = operation(result);
+  }
+
+  return result;
 });
+exports.until = until;

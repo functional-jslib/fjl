@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.typeOf = typeOf;
+
 /**
  * Created by elyde on 12/18/2016.
  * @memberOf object
@@ -12,7 +13,6 @@ var _Number = Number.name,
     _NaN = 'NaN',
     _Null = 'Null',
     _Undefined = 'Undefined';
-
 /**
  * Returns the constructor/class/type name of a value.
  * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
@@ -25,15 +25,18 @@ var _Number = Number.name,
  * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
  *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
  */
+
 function typeOf(value) {
-    var retVal = void 0;
-    if (value === undefined) {
-        retVal = _Undefined;
-    } else if (value === null) {
-        retVal = _Null;
-    } else {
-        var constructorName = value.constructor.name;
-        retVal = constructorName === _Number && isNaN(value) ? _NaN : constructorName;
-    }
-    return retVal;
+  var retVal;
+
+  if (value === undefined) {
+    retVal = _Undefined;
+  } else if (value === null) {
+    retVal = _Null;
+  } else {
+    var constructorName = value.constructor.name;
+    retVal = constructorName === _Number && isNaN(value) ? _NaN : constructorName;
+  }
+
+  return retVal;
 }

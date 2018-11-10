@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _function = require('./jsPlatform/function');
+var _function = require("./jsPlatform/function");
 
 Object.keys(_function).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -16,7 +16,7 @@ Object.keys(_function).forEach(function (key) {
   });
 });
 
-var _compose = require('./function/compose');
+var _compose = require("./function/compose");
 
 Object.keys(_compose).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -28,7 +28,7 @@ Object.keys(_compose).forEach(function (key) {
   });
 });
 
-var _curry = require('./function/curry');
+var _curry = require("./function/curry");
 
 Object.keys(_curry).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -40,7 +40,7 @@ Object.keys(_curry).forEach(function (key) {
   });
 });
 
-var _flip = require('./function/flip');
+var _flip = require("./function/flip");
 
 Object.keys(_flip).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -52,7 +52,7 @@ Object.keys(_flip).forEach(function (key) {
   });
 });
 
-var _id = require('./function/id');
+var _id = require("./function/id");
 
 Object.keys(_id).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -64,7 +64,7 @@ Object.keys(_id).forEach(function (key) {
   });
 });
 
-var _negate = require('./function/negate');
+var _negate = require("./function/negate");
 
 Object.keys(_negate).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -76,7 +76,7 @@ Object.keys(_negate).forEach(function (key) {
   });
 });
 
-var _until = require('./function/until');
+var _until = require("./function/until");
 
 Object.keys(_until).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -88,7 +88,7 @@ Object.keys(_until).forEach(function (key) {
   });
 });
 
-var _fnOrError = require('./function/fnOrError');
+var _fnOrError = require("./function/fnOrError");
 
 Object.keys(_fnOrError).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -100,7 +100,7 @@ Object.keys(_fnOrError).forEach(function (key) {
   });
 });
 
-var _noop = require('./function/noop');
+var _noop = require("./function/noop");
 
 Object.keys(_noop).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

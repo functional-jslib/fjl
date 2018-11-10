@@ -1,20 +1,25 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.reverse = exports.push = exports.join = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.defineReverse = undefined;
+exports.reverse = exports.push = exports.join = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.defineReverse = void 0;
 
-var _utils = require('../utils');
+var _utils = require("../utils");
 
+/**
+ * Created by elyde on 7/20/2017.
+ * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
+ * @module _jsPlatform_arrayOps
+ * @private
+ */
 var
-
 /**
  * Array.prototype.reverse generator (generates a function that calls the prototype version or a
  * shimmed version if it doesn't exist).
  * @returns {Function}
  */
-defineReverse = exports.defineReverse = function defineReverse() {
+defineReverse = function defineReverse() {
   return Array.prototype.reverse ? function (x) {
     return x.reverse();
   } : function (x) {
@@ -25,7 +30,6 @@ defineReverse = exports.defineReverse = function defineReverse() {
   };
 },
 
-
 /**
  * Maps a function to functor (list etc.).
  * @function module:_jsPlatform_array.map
@@ -33,8 +37,7 @@ defineReverse = exports.defineReverse = function defineReverse() {
  * @param functor {Array|{map: {Function}}}
  * @returns {Array|{map: {Function}}}
  */
-map = exports.map = (0, _utils.fPureTakesOne)('map'),
-
+map = (0, _utils.fPureTakesOne)('map'),
 
 /**
  * Filters a functor (list etc.) with passed in function.
@@ -43,8 +46,7 @@ map = exports.map = (0, _utils.fPureTakesOne)('map'),
  * @param functor {Array|{filter: {Function}}}
  * @returns {Array|{filter: {Function}}}
  */
-filter = exports.filter = (0, _utils.fPureTakesOne)('filter'),
-
+filter = (0, _utils.fPureTakesOne)('filter'),
 
 /**
  * Reduces a foldable (list etc.) with passed in function.
@@ -53,8 +55,7 @@ filter = exports.filter = (0, _utils.fPureTakesOne)('filter'),
  * @param functor {Array|{reduce: {Function}}}
  * @returns {Array|{reduce: {Function}}}
  */
-reduce = exports.reduce = (0, _utils.fPureTakes2)('reduce'),
-
+reduce = (0, _utils.fPureTakes2)('reduce'),
 
 /**
  * Reduces a foldable (list etc.) from the right with passed in function.
@@ -63,8 +64,7 @@ reduce = exports.reduce = (0, _utils.fPureTakes2)('reduce'),
  * @param functor {Array|{reduceRight: {Function}}}
  * @returns {Array|{reduceRight: {Function}}}
  */
-reduceRight = exports.reduceRight = (0, _utils.fPureTakes2)('reduceRight'),
-
+reduceRight = (0, _utils.fPureTakes2)('reduceRight'),
 
 /**
  * For each on functor (Array|Object|etc.).
@@ -73,8 +73,7 @@ reduceRight = exports.reduceRight = (0, _utils.fPureTakes2)('reduceRight'),
  * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
  * @throws {Error} - When passed in functor doesn't have a `forEach` method.
  */
-forEach = exports.forEach = (0, _utils.fPureTakesOne)('forEach'),
-
+forEach = (0, _utils.fPureTakesOne)('forEach'),
 
 /**
  * Returns `true` if `fn` (predicate) returns true for at least one item
@@ -84,8 +83,7 @@ forEach = exports.forEach = (0, _utils.fPureTakesOne)('forEach'),
  * @return {*|Array|Object} - The type passed.
  * @throws {Error} - When passed in object doesn't have a `some` method.
  */
-some = exports.some = (0, _utils.fPureTakesOne)('some'),
-
+some = (0, _utils.fPureTakesOne)('some'),
 
 /**
  * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
@@ -94,8 +92,7 @@ some = exports.some = (0, _utils.fPureTakesOne)('some'),
  * @return {*|Array|Object} - The type passed.
  * @throws {Error} - When passed in object doesn't have an `every` method.
  */
-every = exports.every = (0, _utils.fPureTakesOne)('every'),
-
+every = (0, _utils.fPureTakesOne)('every'),
 
 /**
  * Array.prototype.join
@@ -104,8 +101,7 @@ every = exports.every = (0, _utils.fPureTakesOne)('every'),
  * @param arr {Array}
  * @returns {String}
  */
-join = exports.join = (0, _utils.fPureTakesOne)('join'),
-
+join = (0, _utils.fPureTakesOne)('join'),
 
 /**
  * Same as Array.prototype.push
@@ -113,17 +109,23 @@ join = exports.join = (0, _utils.fPureTakesOne)('join'),
  * @param arr {Array}
  * @returns {Number}
  */
-push = exports.push = (0, _utils.fPureTakesOneOrMore)('push'),
-
+push = (0, _utils.fPureTakesOneOrMore)('push'),
 
 /**
  * Reverses an list (shimmed if not exists).
  * @function module:listPrelude.reverse
  * @return {Array}
  */
-reverse = exports.reverse = defineReverse(); /**
-                                              * Created by elyde on 7/20/2017.
-                                              * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
-                                              * @module _jsPlatform_arrayOps
-                                              * @private
-                                              */
+reverse = defineReverse();
+
+exports.reverse = reverse;
+exports.push = push;
+exports.join = join;
+exports.every = every;
+exports.some = some;
+exports.forEach = forEach;
+exports.reduceRight = reduceRight;
+exports.reduce = reduce;
+exports.filter = filter;
+exports.map = map;
+exports.defineReverse = defineReverse;

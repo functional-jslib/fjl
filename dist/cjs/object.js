@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _object = require('./jsPlatform/object');
+var _object = require("./jsPlatform/object");
 
 Object.keys(_object).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -16,7 +16,7 @@ Object.keys(_object).forEach(function (key) {
   });
 });
 
-var _lookup = require('./object/lookup');
+var _lookup = require("./object/lookup");
 
 Object.keys(_lookup).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -28,7 +28,7 @@ Object.keys(_lookup).forEach(function (key) {
   });
 });
 
-var _typeOf = require('./object/typeOf');
+var _typeOf = require("./object/typeOf");
 
 Object.keys(_typeOf).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -40,7 +40,7 @@ Object.keys(_typeOf).forEach(function (key) {
   });
 });
 
-var _copy = require('./object/copy');
+var _copy = require("./object/copy");
 
 Object.keys(_copy).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -52,7 +52,7 @@ Object.keys(_copy).forEach(function (key) {
   });
 });
 
-var _is = require('./object/is');
+var _is = require("./object/is");
 
 Object.keys(_is).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -64,7 +64,7 @@ Object.keys(_is).forEach(function (key) {
   });
 });
 
-var _of = require('./object/of');
+var _of = require("./object/of");
 
 Object.keys(_of).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -76,7 +76,7 @@ Object.keys(_of).forEach(function (key) {
   });
 });
 
-var _searchObj = require('./object/searchObj');
+var _searchObj = require("./object/searchObj");
 
 Object.keys(_searchObj).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -88,7 +88,7 @@ Object.keys(_searchObj).forEach(function (key) {
   });
 });
 
-var _assignDeep = require('./object/assignDeep');
+var _assignDeep = require("./object/assignDeep");
 
 Object.keys(_assignDeep).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -100,7 +100,7 @@ Object.keys(_assignDeep).forEach(function (key) {
   });
 });
 
-var _setTheory = require('./object/setTheory');
+var _setTheory = require("./object/setTheory");
 
 Object.keys(_setTheory).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -112,7 +112,7 @@ Object.keys(_setTheory).forEach(function (key) {
   });
 });
 
-var _console = require('./object/console');
+var _console = require("./object/console");
 
 Object.keys(_console).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -124,7 +124,7 @@ Object.keys(_console).forEach(function (key) {
   });
 });
 
-var _jsonClone = require('./object/jsonClone');
+var _jsonClone = require("./object/jsonClone");
 
 Object.keys(_jsonClone).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -136,7 +136,7 @@ Object.keys(_jsonClone).forEach(function (key) {
   });
 });
 
-var _toArray = require('./object/toArray');
+var _toArray = require("./object/toArray");
 
 Object.keys(_toArray).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -148,7 +148,7 @@ Object.keys(_toArray).forEach(function (key) {
   });
 });
 
-var _assocList = require('./object/assocList');
+var _assocList = require("./object/assocList");
 
 Object.keys(_assocList).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

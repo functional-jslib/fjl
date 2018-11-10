@@ -1,68 +1,86 @@
-define(['exports', '../utils', '../function/curry'], function (exports, _utils, _curry) {
-    'use strict';
+define(["exports", "../utils", "../function/curry", "../function/flip"], function (_exports, _utils, _curry, _flip) {
+  "use strict";
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.assign = exports.keys = exports.length = exports.hasOwnProperty = exports.instanceOf = undefined;
-    /**
-     * @memberOf object
-     * @description Defines some of the platform methods for objects (the ones used within `fjl`).
-     */
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.keys = _exports.assign = _exports.native = _exports.length = _exports.hasOwnProperty = _exports.instanceOf = void 0;
 
-    const
+  /**
+   * @memberOf object
+   * @description Defines some of the platform methods for objects (the ones used within `fjl`).
+   */
 
-    /**
-     * Returns whether constructor has derived object.
-     * @function module:_jsPlatformobject.instanceOf
-     * @param instanceConstructor {Function} - Constructor.
-     * @param instance {*}
-     * @instance {*}
-     * @returns {Boolean}
-     */
-    instanceOf = exports.instanceOf = (0, _curry.curry)((instanceConstructor, instance) => instance instanceof instanceConstructor),
+  /**
+   * Returns whether constructor has derived object.
+   * @function module:object.instanceOf
+   * @param instanceConstructor {Function} - Constructor.
+   * @param instance {*}
+   * @instance {*}
+   * @returns {Boolean}
+   */
+  var instanceOf = (0, _curry.curry)(function (instanceConstructor, instance) {
+    return instance instanceof instanceConstructor;
+  }),
+      hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
+      length = function length(x) {
+    return x.length;
+  },
+      native = Object.getOwnPropertyNames(Object).reduce(function (agg, key) {
+    if (typeof Object[key] !== 'function') {
+      return agg;
+    }
 
+    switch (Object[key].length) {
+      case 2:
+        agg[key] = (0, _flip.flip)((0, _utils.fPureTakesOne)(key));
+        break;
 
-    /**
-     * @function module:_jsPlatformobject.hasOwnProperty
-     * @param propName {*}
-     * @param typeInstance {*}
-     * @returns {Boolean}
-     */
-    hasOwnProperty = exports.hasOwnProperty = (0, _utils.fPureTakesOne)('hasOwnProperty'),
+      case 3:
+        agg[key] = (0, _flip.flip)((0, _utils.fPureTakes2)(key));
+        break;
 
+      case 4:
+        agg[key] = (0, _flip.flip)((0, _utils.fPureTakes3)(key));
+        break;
 
-    /**
-     * @function module:_jsPlatformobject.length
-     * @param x {*}
-     * @returns {Number}
-     * @throws {Error} - Throws an error if value doesn't have a `length` property (
-     *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
-     */
-    length = exports.length = x => x.length,
+      case 5:
+        agg[key] = (0, _flip.flip)((0, _utils.fPureTakes4)(key));
+        break;
 
+      default:
+        agg[key] = Object[key];
+        break;
+    }
 
-    /**
-     * Gets own enumerable keys of passed in object (`Object.keys`).
-     * @function module:_jsPlatformobject.keys
-     * @param obj {*}
-     * @returns {Array<String>}
-     */
-    { keys } = Object,
+    return agg;
+  }, {}),
+      keys = native.keys,
+      assign = function () {
+    return Object.assign ? function (obj0) {
+      for (var _len = arguments.length, objs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        objs[_key - 1] = arguments[_key];
+      }
 
+      return Object.assign.apply(Object, [obj0].concat(objs));
+    } : (0, _curry.curry2)(function (obj0) {
+      for (var _len2 = arguments.length, objs = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        objs[_key2 - 1] = arguments[_key2];
+      }
 
-    /**
-     * Defined as `Object.assign` else is the same thing but shimmed.
-     * @function module:_jsPlatformobject.assign
-     * @param obj0 {Object}
-     * @param objs {...{Object}}
-     * @returns {Object}
-     */
-    assign = exports.assign = (() => Object.assign ? (obj0, ...objs) => Object.assign(obj0, ...objs) : (0, _curry.curry2)((obj0, ...objs) => objs.reduce((topAgg, obj) => {
-        return keys(obj).reduce((agg, key) => {
-            agg[key] = obj[key];
-            return agg;
+      return objs.reduce(function (topAgg, obj) {
+        return Object.keys(obj).reduce(function (agg, key) {
+          agg[key] = obj[key];
+          return agg;
         }, topAgg);
-    }, obj0)))();
-    exports.keys = keys;
+      }, obj0);
+    });
+  }();
+
+  _exports.assign = assign;
+  _exports.keys = keys;
+  _exports.native = native;
+  _exports.length = length;
+  _exports.hasOwnProperty = hasOwnProperty;
+  _exports.instanceOf = instanceOf;
 });

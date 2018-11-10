@@ -1,6 +1,7 @@
 /**
  *  List operations that overlap (apart from globally overlapping props and functions like `length`)
  *      on both strings and arrays.
+ *      @memberOf list
  */
 
 import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils';
@@ -10,7 +11,7 @@ export const
     /**
      * Concats/appends all functors onto the end of first functor.
      * Note:  functors passed in after the first one must be of the same type.
-     * @function module:_jsPlatform_list.concat
+     * @function module:list.concat
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -20,7 +21,7 @@ export const
 
     /**
      * Same as Array.prototype.slice
-     * @function module:_jsPlatform_list.slice
+     * @function module:list.slice
      * @param separator {String|RegExp}
      * @param arr{Array}
      * @returns {Array}
@@ -29,7 +30,7 @@ export const
 
     /**
      * `Array.prototype.includes` or shim.
-     * @function module:_jsPlatform_list.includes
+     * @function module:list.includes
      * @param value {*}
      * @param xs {Array|String}
      * @returns {Boolean}
@@ -40,7 +41,7 @@ export const
 
     /**
      * Searches list/list-like for given element `x`.
-     * @function module:_jsPlatform_list.indexOf
+     * @function module:list.indexOf
      * @param x {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like to look in.
      * @returns {Number} - `-1` if element not found else index at which it is found.
@@ -49,7 +50,7 @@ export const
 
     /**
      * Last index of (`Array.prototype.lastIndexOf`).
-     * @function module:_jsPlatform_list.lastIndexOf
+     * @function module:list.lastIndexOf
      * @param x {*} - Element to search for.
      * @param xs {Array|String|*} - list or list like to look in.
      * @returns {Number} - `-1` if element not found else index at which it is found.

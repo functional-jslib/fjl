@@ -1,16 +1,15 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.searchObj = undefined;
+exports.searchObj = void 0;
 
-var _is = require('./is');
+var _is = require("./is");
 
-var _curry = require('../function/curry');
+var _curry = require("../function/curry");
 
 var
-
 /**
  * Gives you value at key/namespace-key within `obj`;  E.g.,
  * searchObj('all.your.base', {all: {your: {base: 99}}}) === 99 // `true`
@@ -32,23 +31,30 @@ var
  * @param obj {*}
  * @returns {*}
  */
-searchObj = exports.searchObj = (0, _curry.curry)(function (nsString, obj) {
-    if (!obj) {
-        return obj;
+searchObj = (0, _curry.curry)(function (nsString, obj) {
+  if (!obj) {
+    return obj;
+  }
+
+  if (nsString.indexOf('.') === -1) {
+    return obj[nsString];
+  }
+
+  var parts = nsString.split('.'),
+      limit = parts.length;
+  var ind = 0,
+      parent = obj;
+
+  for (; ind < limit; ind += 1) {
+    var node = parent[parts[ind]];
+
+    if (!(0, _is.isset)(node)) {
+      return node;
     }
-    if (nsString.indexOf('.') === -1) {
-        return obj[nsString];
-    }
-    var parts = nsString.split('.'),
-        limit = parts.length;
-    var ind = 0,
-        parent = obj;
-    for (; ind < limit; ind += 1) {
-        var node = parent[parts[ind]];
-        if (!(0, _is.isset)(node)) {
-            return node;
-        }
-        parent = node;
-    }
-    return parent;
+
+    parent = node;
+  }
+
+  return parent;
 });
+exports.searchObj = searchObj;

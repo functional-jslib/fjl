@@ -120,7 +120,7 @@ export const
      * class Abc extends String {}
      * isOfType(String, new Abc('abcd')) // true (passes instanceof check)
      *
-     * @function module:is.isOfType
+     * @function module:object.isOfType
      * @param type {Function|String} - Type reference (constructor or `constructor.name`).
      * @param x {*} - Value to check.
      * @returns {Boolean}

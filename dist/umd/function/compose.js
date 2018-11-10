@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', '../jsPlatform/array'], factory);
+    define(["exports", "../jsPlatform/array"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('../jsPlatform/array'));
+    factory(exports, require("../jsPlatform/array"));
   } else {
     var mod = {
       exports: {}
@@ -10,14 +10,13 @@
     factory(mod.exports, global.array);
     global.compose = mod.exports;
   }
-})(this, function (exports, _array) {
-  'use strict';
+})(this, function (_exports, _array) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.compose = undefined;
-
+  _exports.compose = void 0;
 
   /**
    * Composes all functions passed in from right to left passing each functions return value to
@@ -27,8 +26,8 @@
    * @param args {...{Function}}
    * @returns {Function}
    */
-  var compose = exports.compose = function compose() {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+  var compose = function compose() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
@@ -38,4 +37,6 @@
       }, arg0, args);
     };
   };
+
+  _exports.compose = compose;
 });

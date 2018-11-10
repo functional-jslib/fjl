@@ -2,14 +2,13 @@ import {curry, curry2} from '../function/curry';
 
 /**
  * Created by elydelacruz on 9/7/2017.
- * @module _jsPlatform_function
- * @private
+ * @memberOf function
  */
 export const
 
     /**
      * Functional `apply` function (takes no context).
-     * @function module:_jsPlatform_function.apply
+     * @function module:function.apply
      * @param fn {Function}
      * @param args {Array|*}
      * @returns {*}
@@ -18,9 +17,9 @@ export const
 
     /**
      * Functional `call` function (takes no context).
-     * @function module:_jsPlatform_function.call
+     * @function module:function.call
      * @param fn {Function}
      * @param args {...*}
      * @returns {*}
      */
-    call = curry2((fn, ...args) => apply(fn, args));
+    call = curry2((fn, ...args) => fn.call(null, ...args));

@@ -1,18 +1,21 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.errorIfNotTypes = exports.errorIfNotType = exports.getErrorIfNotTypesThrower = exports.getErrorIfNotTypeThrower = exports._errorIfNotTypes = exports._errorIfNotType = exports._getErrorIfNotTypesThrower = exports._getErrorIfNotTypeThrower = exports.defaultErrorMessageCall = exports.typeRefsToStringOrError = undefined;
+exports.errorIfNotTypes = exports.errorIfNotType = exports.getErrorIfNotTypesThrower = exports.getErrorIfNotTypeThrower = exports._errorIfNotTypes = exports._errorIfNotType = exports._getErrorIfNotTypesThrower = exports._getErrorIfNotTypeThrower = exports.defaultErrorMessageCall = exports.typeRefsToStringOrError = void 0;
 
-var _typeOf = require('./object/typeOf');
+var _typeOf = require("./object/typeOf");
 
-var _is = require('./object/is');
+var _is = require("./object/is");
 
-var _curry = require('./function/curry');
+var _curry = require("./function/curry");
 
+/**
+ * @module errorThrowing
+ * @description Contains error throwing facilities for when a value doesn't match a type.
+ */
 var
-
 /**
  * Pretty prints an array of types/type-strings for use by error messages;
  * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
@@ -21,12 +24,11 @@ var
  * @return {String}
  * @private
  */
-typeRefsToStringOrError = exports.typeRefsToStringOrError = function typeRefsToStringOrError(types) {
-    return types.length ? types.map(function (type) {
-        return '`' + (0, _is.toTypeRefName)(type) + '`';
-    }).join(', ') : '';
+typeRefsToStringOrError = function typeRefsToStringOrError(types) {
+  return types.length ? types.map(function (type) {
+    return "`".concat((0, _is.toTypeRefName)(type), "`");
+  }).join(', ') : '';
 },
-
 
 /**
  * Prints a message from an object.  Object signature:
@@ -36,20 +38,18 @@ typeRefsToStringOrError = exports.typeRefsToStringOrError = function typeRefsToS
  * @returns {string}
  * @private
  */
-defaultErrorMessageCall = exports.defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {
-    var contextName = tmplContext.contextName,
-        valueName = tmplContext.valueName,
-        value = tmplContext.value,
-        expectedTypeName = tmplContext.expectedTypeName,
-        foundTypeName = tmplContext.foundTypeName,
-        messageSuffix = tmplContext.messageSuffix,
-        isMultiTypeNames = (0, _is.isArray)(expectedTypeName),
-        typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
-        typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
-
-    return (contextName ? '`' + contextName + '.' : '`') + (valueName + '` is not ' + typesCopy + ': ' + typesToMatchCopy + '.  ') + ('Type received: ' + foundTypeName + '.  Value: ' + value + ';') + ('' + (messageSuffix ? '  ' + messageSuffix + ';' : ''));
+defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {
+  var contextName = tmplContext.contextName,
+      valueName = tmplContext.valueName,
+      value = tmplContext.value,
+      expectedTypeName = tmplContext.expectedTypeName,
+      foundTypeName = tmplContext.foundTypeName,
+      messageSuffix = tmplContext.messageSuffix,
+      isMultiTypeNames = (0, _is.isArray)(expectedTypeName),
+      typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+      typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
+  return (contextName ? "`".concat(contextName, ".") : '`') + "".concat(valueName, "` is not ").concat(typesCopy, ": ").concat(typesToMatchCopy, ".  ") + "Type received: ".concat(foundTypeName, ".  Value: ").concat(value, ";") + "".concat(messageSuffix ? '  ' + messageSuffix + ';' : '');
 },
-
 
 /**
  * Gets the error message thrower seeded with passed in errorMessage template call.
@@ -59,20 +59,28 @@ defaultErrorMessageCall = exports.defaultErrorMessageCall = function defaultErro
  * @returns {Function|ErrorIfNotType}
  * @private
  */
-_getErrorIfNotTypeThrower = exports._getErrorIfNotTypeThrower = function _getErrorIfNotTypeThrower(errorMessageCall) {
-    var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _is.isOfType;
-    return function (ValueType, contextName, valueName, value) {
-        var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+_getErrorIfNotTypeThrower = function _getErrorIfNotTypeThrower(errorMessageCall) {
+  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _is.isOfType;
+  return function (ValueType, contextName, valueName, value) {
+    var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+    var expectedTypeName = (0, _is.toTypeRef)(ValueType),
+        foundTypeName = (0, _typeOf.typeOf)(value);
 
-        var expectedTypeName = (0, _is.toTypeRef)(ValueType),
-            foundTypeName = (0, _typeOf.typeOf)(value);
-        if (typeChecker(ValueType, value)) {
-            return value;
-        } // Value matches type
-        throw new Error(errorMessageCall({ contextName: contextName, valueName: valueName, value: value, expectedTypeName: expectedTypeName, foundTypeName: foundTypeName, messageSuffix: messageSuffix }));
-    };
+    if (typeChecker(ValueType, value)) {
+      return value;
+    } // Value matches type
+
+
+    throw new Error(errorMessageCall({
+      contextName: contextName,
+      valueName: valueName,
+      value: value,
+      expectedTypeName: expectedTypeName,
+      foundTypeName: foundTypeName,
+      messageSuffix: messageSuffix
+    }));
+  };
 },
-
 
 /**
  * Gets the error message thrower seeded with passed in errorMessage template call.
@@ -82,27 +90,30 @@ _getErrorIfNotTypeThrower = exports._getErrorIfNotTypeThrower = function _getErr
  * @returns {Function|ErrorIfNotTypes}
  * @private
  */
-_getErrorIfNotTypesThrower = exports._getErrorIfNotTypesThrower = function _getErrorIfNotTypesThrower(errorMessageCall) {
-    var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _is.isOfType;
-    return function (valueTypes, contextName, valueName, value) {
-        var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+_getErrorIfNotTypesThrower = function _getErrorIfNotTypesThrower(errorMessageCall) {
+  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _is.isOfType;
+  return function (valueTypes, contextName, valueName, value) {
+    var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+    var expectedTypeNames = valueTypes.map(_is.toTypeRef),
+        matchFound = valueTypes.some(function (ValueType) {
+      return typeChecker(ValueType, value);
+    }),
+        foundTypeName = (0, _typeOf.typeOf)(value);
 
-        var expectedTypeNames = valueTypes.map(_is.toTypeRef),
-            matchFound = valueTypes.some(function (ValueType) {
-            return typeChecker(ValueType, value);
-        }),
-            foundTypeName = (0, _typeOf.typeOf)(value);
-        if (matchFound) {
-            return value;
-        }
-        throw new Error(errorMessageCall({
-            contextName: contextName, valueName: valueName, value: value,
-            expectedTypeName: expectedTypeNames, foundTypeName: foundTypeName,
-            messageSuffix: messageSuffix
-        }));
-    };
+    if (matchFound) {
+      return value;
+    }
+
+    throw new Error(errorMessageCall({
+      contextName: contextName,
+      valueName: valueName,
+      value: value,
+      expectedTypeName: expectedTypeNames,
+      foundTypeName: foundTypeName,
+      messageSuffix: messageSuffix
+    }));
+  };
 },
-
 
 /**
  * Checks that passed in `value` is of given `type`.  Throws an error if value
@@ -117,8 +128,7 @@ _getErrorIfNotTypesThrower = exports._getErrorIfNotTypesThrower = function _getE
  * @returns {*} - Given `value` if `value` matches passed in type.
  * @private
  */
-_errorIfNotType = exports._errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall),
-
+_errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall),
 
 /**
  * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
@@ -133,8 +143,7 @@ _errorIfNotType = exports._errorIfNotType = _getErrorIfNotTypeThrower(defaultErr
  * @returns {*} - Given `value` if `value` matches passed in type.
  * @private
  */
-_errorIfNotTypes = exports._errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall),
-
+_errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall),
 
 /**
  * Returns a function that can be used to ensure that values are of a given type.
@@ -144,10 +153,9 @@ _errorIfNotTypes = exports._errorIfNotTypes = _getErrorIfNotTypesThrower(default
  * @param errorMessageCall {Function|ErrorMessageCall} - Template function (takes an info-object and returns a printed string).
  * @returns {Function|ErrorIfNotType} - Returns a function with the same signature as `errorIfNotType` though curried.
  */
-getErrorIfNotTypeThrower = exports.getErrorIfNotTypeThrower = function getErrorIfNotTypeThrower(errorMessageCall) {
-    return (0, _curry.curry)(_getErrorIfNotTypeThrower(errorMessageCall));
+getErrorIfNotTypeThrower = function getErrorIfNotTypeThrower(errorMessageCall) {
+  return (0, _curry.curry)(_getErrorIfNotTypeThrower(errorMessageCall));
 },
-
 
 /**
  * Returns a function that can be used to ensure that a value is of one or more given types.
@@ -157,10 +165,9 @@ getErrorIfNotTypeThrower = exports.getErrorIfNotTypeThrower = function getErrorI
  * @param errorMessageCall {Function|ErrorMessageCall} - Template function (takes an info-object and returns a printed string).
  * @returns {Function|ErrorIfNotTypes} - Returns a function with the same signature as `errorIfNotTypes` though curried.
  */
-getErrorIfNotTypesThrower = exports.getErrorIfNotTypesThrower = function getErrorIfNotTypesThrower(errorMessageCall) {
-    return (0, _curry.curry)(_getErrorIfNotTypesThrower(errorMessageCall));
+getErrorIfNotTypesThrower = function getErrorIfNotTypesThrower(errorMessageCall) {
+  return (0, _curry.curry)(_getErrorIfNotTypesThrower(errorMessageCall));
 },
-
 
 /**
  * Checks that passed in `value` is of given `type`.  Throws an error if value
@@ -174,8 +181,7 @@ getErrorIfNotTypesThrower = exports.getErrorIfNotTypesThrower = function getErro
  * @returns {*} - Given `value` if `value` matches passed in type.
  * @curried
  */
-errorIfNotType = exports.errorIfNotType = (0, _curry.curry)(_errorIfNotType),
-
+errorIfNotType = (0, _curry.curry)(_errorIfNotType),
 
 /**
  * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
@@ -188,8 +194,7 @@ errorIfNotType = exports.errorIfNotType = (0, _curry.curry)(_errorIfNotType),
  * @returns {*} - Given `value` if `value` matches passed in type.
  * @curried
  */
-errorIfNotTypes = exports.errorIfNotTypes = (0, _curry.curry)(_errorIfNotTypes);
-
+errorIfNotTypes = (0, _curry.curry)(_errorIfNotTypes);
 /**
  * @typedef {*} Any - Synonym for 'any value'.
  */
@@ -250,7 +255,15 @@ errorIfNotTypes = exports.errorIfNotTypes = (0, _curry.curry)(_errorIfNotTypes);
  * @throws {Error} - If value doesn't match type.
  * @returns {*} - Whatever value is.
  */
-/**
- * @module errorThrowing
- * @description Contains error throwing facilities for when a value doesn't match a type.
- */
+
+
+exports.errorIfNotTypes = errorIfNotTypes;
+exports.errorIfNotType = errorIfNotType;
+exports.getErrorIfNotTypesThrower = getErrorIfNotTypesThrower;
+exports.getErrorIfNotTypeThrower = getErrorIfNotTypeThrower;
+exports._errorIfNotTypes = _errorIfNotTypes;
+exports._errorIfNotType = _errorIfNotType;
+exports._getErrorIfNotTypesThrower = _getErrorIfNotTypesThrower;
+exports._getErrorIfNotTypeThrower = _getErrorIfNotTypeThrower;
+exports.defaultErrorMessageCall = defaultErrorMessageCall;
+exports.typeRefsToStringOrError = typeRefsToStringOrError;

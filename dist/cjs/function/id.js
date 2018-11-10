@@ -3,6 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.id = void 0;
+
 /**
  * @memberOf function
  */
@@ -14,6 +16,8 @@ Object.defineProperty(exports, "__esModule", {
  * @param x {*}
  * @returns {*}
  */
-var id = exports.id = function id(x) {
+var id = function id(x) {
   return x;
 };
+
+exports.id = id;

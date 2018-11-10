@@ -1,5 +1,4 @@
 import {isFunction, isset, isUsableImmutablePrimitive} from './is';
-import {hasOwnProperty} from '../jsPlatform/object';
 import {apply} from '../jsPlatform/function';
 
 /**
@@ -19,7 +18,7 @@ import {apply} from '../jsPlatform/function';
 export const of = (x, ...args) => {
     if (!isset(x)) { return undefined; }
     const constructor = x.constructor;
-    if (hasOwnProperty('of', constructor)) {
+    if (constructor.hasOwnProperty('of')) {
         return apply(constructor.of, args);
     }
     else if (isUsableImmutablePrimitive(x)) {

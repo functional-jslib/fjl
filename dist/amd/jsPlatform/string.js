@@ -1,11 +1,14 @@
-define(['exports', '../utils'], function (exports, _utils) {
-  'use strict';
+define(["exports", "../utils"], function (_exports, _utils) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.split = undefined;
+  _exports.split = void 0;
 
+  /**
+   * Created by elydelacruz on 9/6/2017.
+   */
 
   /**
    * Functional version of `String.prototype.split`.
@@ -14,7 +17,6 @@ define(['exports', '../utils'], function (exports, _utils) {
    * @param str {String}
    * @returns {Array}
    */
-  const split = exports.split = (0, _utils.fPureTakesOne)('split'); /**
-                                                                     * Created by elydelacruz on 9/6/2017.
-                                                                     */
+  var split = (0, _utils.fPureTakesOne)('split');
+  _exports.split = split;
 });

@@ -10,12 +10,14 @@
     factory(mod.exports);
     global.id = mod.exports;
   }
-})(this, function (exports) {
+})(this, function (_exports) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.id = void 0;
+
   /**
    * @memberOf function
    */
@@ -27,7 +29,9 @@
    * @param x {*}
    * @returns {*}
    */
-  var id = exports.id = function id(x) {
+  var id = function id(x) {
     return x;
   };
+
+  _exports.id = id;
 });

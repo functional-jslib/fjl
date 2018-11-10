@@ -1,6 +1,6 @@
 
 import {isObject} from './is';
-import {keys, hasOwnProperty} from '../jsPlatform/object';
+import {keys} from '../jsPlatform/object';
 import {curry2} from '../function/curry';
 
 export const
@@ -16,7 +16,7 @@ export const
             !obj ? topAgg : keys(obj).reduce((agg, key) => {
                 let propDescription = Object.getOwnPropertyDescriptor(agg, key);
                 // If property is not writable move to next item in collection
-                if (hasOwnProperty(key, agg) && propDescription &&
+                if (agg.hasOwnProperty(key) && propDescription &&
                     !(propDescription.get && propDescription.set) &&
                     !propDescription.writable) {
                     return agg;

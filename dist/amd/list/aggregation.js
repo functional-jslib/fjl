@@ -1,20 +1,23 @@
-define(["exports"], function (exports) {
-    "use strict";
+define(["exports"], function (_exports) {
+  "use strict";
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    const
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.aggregateArray = void 0;
 
-    /**
-     * Pushes incoming `item` onto given array and returns said array.
-     * @private
-     * @param agg {Array}
-     * @param item {*}
-     * @returns {Array}
-     */
-    aggregateArray = exports.aggregateArray = (agg, item) => {
-        agg.push(item);
-        return agg;
-    };
+  var
+  /**
+   * Pushes incoming `item` onto given array and returns said array.
+   * @private
+   * @param agg {Array}
+   * @param item {*}
+   * @returns {Array}
+   */
+  aggregateArray = function aggregateArray(agg, item) {
+    agg.push(item);
+    return agg;
+  };
+
+  _exports.aggregateArray = aggregateArray;
 });

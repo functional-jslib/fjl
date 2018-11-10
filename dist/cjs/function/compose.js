@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.compose = undefined;
+exports.compose = void 0;
 
-var _array = require('../jsPlatform/array');
+var _array = require("../jsPlatform/array");
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to
@@ -15,8 +15,8 @@ var _array = require('../jsPlatform/array');
  * @param args {...{Function}}
  * @returns {Function}
  */
-var compose = exports.compose = function compose() {
-  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+var compose = function compose() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
     args[_key] = arguments[_key];
   }
 
@@ -26,3 +26,5 @@ var compose = exports.compose = function compose() {
     }, arg0, args);
   };
 };
+
+exports.compose = compose;

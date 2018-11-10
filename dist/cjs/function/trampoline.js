@@ -1,8 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+exports.default = void 0;
+
 /**
  * Trampolines function calls in order to avoid stack overflow errors
  * on recursive function calls; Tail recursion replacement.
@@ -29,18 +31,20 @@ Object.defineProperty(exports, "__esModule", {
  * @returns {*} - Finally returned value.
  */
 var trampoline = function trampoline(fn, fnName) {
-    return function () {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+  return function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-        var result = fn.apply(null, args);
-        while (result && typeof result === 'function' && (!fnName || result.name === fnName)) {
-            result = result();
-        }
-        return result;
-    };
+    var result = fn.apply(null, args);
+
+    while (result && typeof result === 'function' && (!fnName || result.name === fnName)) {
+      result = result();
+    }
+
+    return result;
+  };
 };
 
-exports.default = trampoline;
-module.exports = exports['default'];
+var _default = trampoline;
+exports.default = _default;

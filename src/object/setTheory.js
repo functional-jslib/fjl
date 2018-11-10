@@ -1,5 +1,5 @@
 import {assignDeep} from './assignDeep';
-import {hasOwnProperty, keys} from '../jsPlatform/object';
+import {keys} from '../jsPlatform/object';
 import {reduce} from '../list/utils';
 import {curry, curry2} from '../function/curry';
 
@@ -8,14 +8,14 @@ export const
     objUnion = curry((obj1, obj2) => assignDeep(obj1, obj2)),
 
     objIntersect = curry((obj1, obj2) => reduce((agg, key) => {
-        if (hasOwnProperty(key, obj2)) {
+        if (obj2.hasOwnProperty(key)) {
             agg[key] = obj2[key];
         }
         return agg;
     }, {}, keys(obj1))),
 
     objDifference = curry((obj1, obj2) => reduce((agg, key) => {
-        if (!hasOwnProperty(key, obj2)) {
+        if (!obj2.hasOwnProperty(key)) {
             agg[key] = obj1[key];
         }
         return agg;

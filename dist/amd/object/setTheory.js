@@ -1,22 +1,42 @@
-define(['exports', './assignDeep', '../jsPlatform/object', '../list/utils', '../function/curry'], function (exports, _assignDeep, _object, _utils, _curry) {
-    'use strict';
+define(["exports", "./assignDeep", "../jsPlatform/object", "../list/utils", "../function/curry"], function (_exports, _assignDeep, _object, _utils, _curry) {
+  "use strict";
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.objComplement = exports.objDifference = exports.objIntersect = exports.objUnion = undefined;
-    const objUnion = exports.objUnion = (0, _curry.curry)((obj1, obj2) => (0, _assignDeep.assignDeep)(obj1, obj2)),
-          objIntersect = exports.objIntersect = (0, _curry.curry)((obj1, obj2) => (0, _utils.reduce)((agg, key) => {
-        if ((0, _object.hasOwnProperty)(key, obj2)) {
-            agg[key] = obj2[key];
-        }
-        return agg;
-    }, {}, (0, _object.keys)(obj1))),
-          objDifference = exports.objDifference = (0, _curry.curry)((obj1, obj2) => (0, _utils.reduce)((agg, key) => {
-        if (!(0, _object.hasOwnProperty)(key, obj2)) {
-            agg[key] = obj1[key];
-        }
-        return agg;
-    }, {}, (0, _object.keys)(obj1))),
-          objComplement = exports.objComplement = (0, _curry.curry2)((obj0, ...objs) => (0, _utils.reduce)((agg, obj) => (0, _assignDeep.assignDeep)(agg, objDifference(obj, obj0)), {}, objs));
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.objComplement = _exports.objDifference = _exports.objIntersect = _exports.objUnion = void 0;
+  var objUnion = (0, _curry.curry)(function (obj1, obj2) {
+    return (0, _assignDeep.assignDeep)(obj1, obj2);
+  }),
+      objIntersect = (0, _curry.curry)(function (obj1, obj2) {
+    return (0, _utils.reduce)(function (agg, key) {
+      if (obj2.hasOwnProperty(key)) {
+        agg[key] = obj2[key];
+      }
+
+      return agg;
+    }, {}, (0, _object.keys)(obj1));
+  }),
+      objDifference = (0, _curry.curry)(function (obj1, obj2) {
+    return (0, _utils.reduce)(function (agg, key) {
+      if (!obj2.hasOwnProperty(key)) {
+        agg[key] = obj1[key];
+      }
+
+      return agg;
+    }, {}, (0, _object.keys)(obj1));
+  }),
+      objComplement = (0, _curry.curry2)(function (obj0) {
+    for (var _len = arguments.length, objs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      objs[_key - 1] = arguments[_key];
+    }
+
+    return (0, _utils.reduce)(function (agg, obj) {
+      return (0, _assignDeep.assignDeep)(agg, objDifference(obj, obj0));
+    }, {}, objs);
+  });
+  _exports.objComplement = objComplement;
+  _exports.objDifference = objDifference;
+  _exports.objIntersect = objIntersect;
+  _exports.objUnion = objUnion;
 });

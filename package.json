@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "Functional Javascript Library",
   "main": "dist/package/fjl",
   "module": "dist/package/fjl.mjs",
@@ -18,20 +18,24 @@
     "doc": "README.md"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-external-helpers": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-syntax-object-rest-spread": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "@types/jest": "^23.3.7",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-jest": "^22.4.3",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
     "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-register": "^6.26.0",
     "del": "^2.2.2",
+    "eslint": "^5.9.0",
     "gulp": "4.0.0",
-    "gulp-babel": "^7.0.0",
-    "gulp-better-rollup": "^1.1.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-better-rollup": "^3.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-duration": "0.0.0",
     "gulp-eslint": "^3.0.1",
@@ -42,7 +46,7 @@
     "gulp-uglify": "^2.1.2",
     "jest": "^22.4.3",
     "rollup": "^0.50.0",
-    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-babel": "^4.0.1",
     "rollup-plugin-node-resolve": "^3.0.0",
     "tui-jsdoc-template": "^1.2.2"
   },
@@ -71,5 +75,130 @@
     "url": "https://github.com/functional-jslib/fjl/issues"
   },
   "homepage": "https://github.com/functional-jslib/fjl#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "buildConfig": {
+    "inputModuleName": "fjl",
+    "inputFilePath": "./src/fjl.js",
+    "outputFileName": "fjl.js",
+    "outputFileNameMjs": "fjl.mjs",
+    "outputFileNameMin": "fjl.min.js",
+    "srcsGlob": "./src/**/*.js",
+    "paths": {
+      "dist": "./dist",
+      "docs": "./docs"
+    },
+    "folderNames": {
+      "amd": "amd",
+      "cjs": "cjs",
+      "iife": "iife",
+      "umd": "umd",
+      "es6Module": "es6-module",
+      "package": "package"
+    },
+    "es6ModuleRollup": {
+      "config": {
+        "input": "./src/fjl.js",
+        "external": []
+      },
+      "write": {
+        "file": "./dist/es6-module/fjl.js",
+        "format": "es",
+        "sourcemap": true
+      }
+    },
+    "buildAmdOptions": {
+      "babel": {
+        "babelrc": false,
+        "presets": [
+          "@babel/preset-env"
+        ],
+        "plugins": [
+          "@babel/plugin-transform-modules-amd"
+        ],
+        "exclude": [
+          "node_modules/**/*"
+        ]
+      }
+    },
+    "buildCjsOptions": {
+      "babel": {
+        "babelrc": false,
+        "presets": [
+          "@babel/preset-env"
+        ],
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs"
+        ],
+        "exclude": [
+          "node_modules/**/*"
+        ]
+      }
+    },
+    "buildUmdOptions": {
+      "babel": {
+        "babelrc": false,
+        "presets": [
+          "@babel/preset-env"
+        ],
+        "plugins": [
+          "@babel/plugin-transform-modules-umd"
+        ],
+        "exclude": [
+          "node_modules/**/*"
+        ]
+      }
+    },
+    "buildIifeOptions": {
+      "babel": {
+        "babelrc": false,
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "modules": false
+            }
+          ]
+        ],
+        "exclude": [
+          "node_modules/**/*"
+        ]
+      }
+    },
+    "uglifyOptions": {},
+    "readme": {
+      "files": [
+        "./markdown-fragments/readme-header.md",
+        "./markdown-fragments/sections/sections.md",
+        "./markdown-fragments/sections/requirements.md",
+        "./markdown-fragments/sections/getting-started.md",
+        "./markdown-fragments/sections/docs.md",
+        "./markdown-fragments-generated/module-and-member-list.md",
+        "./markdown-fragments/sections/docs/docs-footer.md",
+        "./markdown-fragments/sections/development.md",
+        "./markdown-fragments/sections/license.md",
+        "./markdown-fragments/sections/resources.md",
+        "./markdown-fragments/sections/changelog.md"
+      ]
+    },
+    "jsdoc": {
+      "opts": {
+        "template": "node_modules/tui-jsdoc-template",
+        "encoding": "utf8",
+        "destination": "./docs/",
+        "recurse": true,
+        "templates": {
+          "useCollapsibles": false
+        }
+      },
+      "templates": {
+        "logo": {
+          "url": "http://elycruz.com/fjl-logo-v2.svg",
+          "width": "144px",
+          "height": "55px",
+          "link": "https://github.com/functional-jslib/fjl"
+        },
+        "footerText": "functional-jslib - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab"
+      }
+    }
+  }
 }

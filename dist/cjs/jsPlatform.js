@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _object = require('./jsPlatform/object');
+var _object = require("./jsPlatform/object");
 
 Object.keys(_object).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -16,7 +16,7 @@ Object.keys(_object).forEach(function (key) {
   });
 });
 
-var _array = require('./jsPlatform/array');
+var _array = require("./jsPlatform/array");
 
 Object.keys(_array).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -28,7 +28,7 @@ Object.keys(_array).forEach(function (key) {
   });
 });
 
-var _list = require('./jsPlatform/list');
+var _list = require("./jsPlatform/list");
 
 Object.keys(_list).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -40,7 +40,7 @@ Object.keys(_list).forEach(function (key) {
   });
 });
 
-var _string = require('./jsPlatform/string');
+var _string = require("./jsPlatform/string");
 
 Object.keys(_string).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -52,7 +52,7 @@ Object.keys(_string).forEach(function (key) {
   });
 });
 
-var _function = require('./jsPlatform/function');
+var _function = require("./jsPlatform/function");
 
 Object.keys(_function).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

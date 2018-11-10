@@ -1,10 +1,11 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-var
+exports.aggregateArray = void 0;
 
+var
 /**
  * Pushes incoming `item` onto given array and returns said array.
  * @private
@@ -12,7 +13,9 @@ var
  * @param item {*}
  * @returns {Array}
  */
-aggregateArray = exports.aggregateArray = function aggregateArray(agg, item) {
-    agg.push(item);
-    return agg;
+aggregateArray = function aggregateArray(agg, item) {
+  agg.push(item);
+  return agg;
 };
+
+exports.aggregateArray = aggregateArray;

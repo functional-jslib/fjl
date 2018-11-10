@@ -6,7 +6,7 @@
 import {
     apply, call, compose,
     curry, curry2, curry3, curry4, curry5, curryN,
-    flip, flipN, until, id,
+    flip, flip3, flip4, flip5, flipN, until, id,
     noop
 }
 from '../src/function';

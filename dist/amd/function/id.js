@@ -1,9 +1,11 @@
-define(["exports"], function (exports) {
+define(["exports"], function (_exports) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.id = void 0;
+
   /**
    * @memberOf function
    */
@@ -15,5 +17,9 @@ define(["exports"], function (exports) {
    * @param x {*}
    * @returns {*}
    */
-  const id = exports.id = x => x;
+  var id = function id(x) {
+    return x;
+  };
+
+  _exports.id = id;
 });

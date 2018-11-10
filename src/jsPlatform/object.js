@@ -3,14 +3,15 @@
  * @description Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 
-import {fPureTakesOne} from '../utils';
+import {fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4} from '../utils';
 import {curry, curry2} from '../function/curry';
+import {flip} from '../function/flip';
 
 export const
 
     /**
      * Returns whether constructor has derived object.
-     * @function module:_jsPlatformobject.instanceOf
+     * @function module:object.instanceOf
      * @param instanceConstructor {Function} - Constructor.
      * @param instance {*}
      * @instance {*}
@@ -20,15 +21,16 @@ export const
         instance instanceof instanceConstructor),
 
     /**
-     * @function module:_jsPlatformobject.hasOwnProperty
+     * @function module:object.hasOwnProperty
      * @param propName {*}
      * @param typeInstance {*}
      * @returns {Boolean}
+     * @deprecated - Use property directly instead.
      */
     hasOwnProperty = fPureTakesOne('hasOwnProperty'),
 
     /**
-     * @function module:_jsPlatformobject.length
+     * @function module:object.length
      * @param x {*}
      * @returns {Number}
      * @throws {Error} - Throws an error if value doesn't have a `length` property (
@@ -37,16 +39,50 @@ export const
     length = x => x.length,
 
     /**
-     * Gets own enumerable keys of passed in object (`Object.keys`).
-     * @function module:_jsPlatformobject.keys
+     * Contains all the static functions from `Object` but curried and flipped;
+     * @example
+     * // E.g., `Object.defineProperties(obj, descriptor)` can now be used like
+     * import {defineProperties} from 'fjl'
+     * defineProperties(descriptor, someObj),
+     * // Et. al.
+     * @memberOf module:object
+     * @type {{...Object}}
+     */
+    native = Object.getOwnPropertyNames(Object).reduce((agg, key) => {
+        if (typeof Object[key] !== 'function') {
+            return agg;
+        }
+        switch (Object[key].length) {
+            case 2:
+                agg[key] = flip(fPureTakesOne(key));
+                break;
+            case 3:
+                agg[key] = flip(fPureTakes2(key));
+                break;
+            case 4:
+                agg[key] = flip(fPureTakes3(key));
+                break;
+            case 5:
+                agg[key] = flip(fPureTakes4(key));
+                break;
+            default:
+                agg[key] = Object[key];
+                break;
+        }
+        return agg;
+    }, {}),
+
+    /**
+     * Gets passed in object's own enumerable keys (same as `Object.keys`).
+     * @function module:object.keys
      * @param obj {*}
      * @returns {Array<String>}
      */
-    {keys} = Object,
+    {keys} = native,
 
     /**
      * Defined as `Object.assign` else is the same thing but shimmed.
-     * @function module:_jsPlatformobject.assign
+     * @function module:object.assign
      * @param obj0 {Object}
      * @param objs {...{Object}}
      * @returns {Object}
@@ -54,7 +90,7 @@ export const
     assign = (() => Object.assign ?
             (obj0, ...objs) => Object.assign(obj0, ...objs) :
             curry2((obj0, ...objs) => objs.reduce((topAgg, obj) => {
-                return keys(obj).reduce((agg, key) => {
+                return Object.keys(obj).reduce((agg, key) => {
                     agg[key] = obj[key];
                     return agg;
                 }, topAgg);

@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _object = require('./object');
+var _object = require("./object");
 
 Object.keys(_object).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -16,7 +16,7 @@ Object.keys(_object).forEach(function (key) {
   });
 });
 
-var _boolean = require('./boolean');
+var _boolean = require("./boolean");
 
 Object.keys(_boolean).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -28,7 +28,7 @@ Object.keys(_boolean).forEach(function (key) {
   });
 });
 
-var _function = require('./function');
+var _function = require("./function");
 
 Object.keys(_function).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -40,7 +40,7 @@ Object.keys(_function).forEach(function (key) {
   });
 });
 
-var _list = require('./list');
+var _list = require("./list");
 
 Object.keys(_list).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -52,7 +52,7 @@ Object.keys(_list).forEach(function (key) {
   });
 });
 
-var _string = require('./string');
+var _string = require("./string");
 
 Object.keys(_string).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -64,7 +64,7 @@ Object.keys(_string).forEach(function (key) {
   });
 });
 
-var _utils = require('./utils');
+var _utils = require("./utils");
 
 Object.keys(_utils).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -76,7 +76,7 @@ Object.keys(_utils).forEach(function (key) {
   });
 });
 
-var _errorThrowing = require('./errorThrowing');
+var _errorThrowing = require("./errorThrowing");
 
 Object.keys(_errorThrowing).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

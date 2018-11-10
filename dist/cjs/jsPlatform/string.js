@@ -1,11 +1,15 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.split = undefined;
+exports.split = void 0;
 
-var _utils = require('../utils');
+var _utils = require("../utils");
+
+/**
+ * Created by elydelacruz on 9/6/2017.
+ */
 
 /**
  * Functional version of `String.prototype.split`.
@@ -14,6 +18,5 @@ var _utils = require('../utils');
  * @param str {String}
  * @returns {Array}
  */
-var split = exports.split = (0, _utils.fPureTakesOne)('split'); /**
-                                                                 * Created by elydelacruz on 9/6/2017.
-                                                                 */
+var split = (0, _utils.fPureTakesOne)('split');
+exports.split = split;

@@ -1,11 +1,14 @@
-define(['exports', './is', '../function/curry'], function (exports, _is, _curry) {
-  'use strict';
+define(["exports", "./is", "../function/curry"], function (_exports, _is, _curry) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.lookup = undefined;
+  _exports.lookup = void 0;
 
+  /**
+   * @memberOf object
+   */
 
   /**
    * Looks up property and returns it's value; Else `undefined`.
@@ -15,9 +18,8 @@ define(['exports', './is', '../function/curry'], function (exports, _is, _curry)
    * @param obj {Object} - Object to search `name` on.
    * @returns {*}
    */
-  /**
-   * @memberOf object
-   */
-
-  const lookup = exports.lookup = (0, _curry.curry)((key, obj) => (0, _is.isset)(obj) ? obj[key] : undefined);
+  var lookup = (0, _curry.curry)(function (key, obj) {
+    return (0, _is.isset)(obj) ? obj[key] : undefined;
+  });
+  _exports.lookup = lookup;
 });
