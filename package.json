@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl",
   "module": "dist/es6-module/fjl.mjs",
@@ -192,7 +192,7 @@
       },
       "templates": {
         "logo": {
-          "url": "http://elycruz.com/fjl-logo-v2.svg",
+          "url": "http://elycruz.com/fjl-logo.svg",
           "width": "144px",
           "height": "55px",
           "link": "https://github.com/functional-jslib/fjl"
