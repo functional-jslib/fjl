@@ -17,13 +17,13 @@
  *
  *  ;
  *
- * @performance https://jsperf.com/pure-trampoline/1
+ * @untested
  * @function module:function.trampoline
  * @param fn {Function} - Function to trampoline.
  * @param [fnName=undefined] {String} - Optionally restrict trampolining only to function with specific name.
  * @returns {*} - Finally returned value.
  */
-const trampoline = (fn, fnName) => {
+export const trampoline = (fn, fnName) => {
     return (...args) => {
         let result = fn.apply(null, args);
         while (result && typeof result === 'function' &&
@@ -32,6 +32,13 @@ const trampoline = (fn, fnName) => {
         }
         return result;
     };
-};
-
-export default trampoline;
+},
+    fnTrampoline = (fn, breaker) => {
+        return (...args) => {
+            let result = fn.apply(null, args);
+            while (result && breaker(result, ...args)) {
+                result = result();
+            }
+            return result;
+        };
+    };

@@ -10,3 +10,4 @@ export * from './function/negate';
 export * from './function/until';
 export * from './function/fnOrError';
 export * from './function/noop';
+export * from './function/trampoline';

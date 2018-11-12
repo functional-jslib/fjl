@@ -7,9 +7,11 @@ import {
     apply, call, compose,
     curry, curry2, curry3, curry4, curry5, curryN,
     flip, flip3, flip4, flip5, flipN, until, id,
-    noop
+    trampoline, fnTrampoline, noop
 }
 from '../src/function';
+
+import {range} from '../src/list/range';
 
 import {add, subtract, expectEqual, expectError,
     expectFunction, expectTrue, alphabetArray} from './helpers';
@@ -203,8 +205,7 @@ describe ('#function', function () {
 
         // Set curry here to use below
         let multiplyRecursive = (...args) => args.reduce((agg, num) => num * agg, 1),
-            addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0),
-            divideR = (...args) => args.reduce((agg, num) => agg / num, args.shift());
+            addRecursive = (...args) => args.reduce((agg, num) => num + agg, 0);
 
         it ('should be of type function.', function () {
             expect(curryN).toBeInstanceOf(Function);
@@ -325,9 +326,6 @@ describe ('#function', function () {
                 let composed = compose(min8, max5, pow2);
                 expect(composed(num)).toEqual(expectedFor(num));
             });
-
-            let add3Items = (a, b, c) => a + b + c,
-                curriedAdd3Items = curry(add3Items);
         });
 
     });
@@ -377,11 +375,37 @@ describe ('#function', function () {
     });
 
     describe('#noop', function () {
-        it ('should return `undefined` always', () => {
-            [null, false, undefined, 0, {}, [], () => undefined].forEach(x => {
-                expect(noop(x)).toEqual(undefined);
-            });
+        it ('should return `undefined`', () => {
+            expect(noop()).toEqual(undefined);
         });
     });
 
+    describe('#trampoline', () => {
+        it ('should be able to trampoline a function no matter how many recursive calls are made', () => {
+            // Basic factorial implementation
+            const factorialThunk = n => n <= 1 ? 1 : () => n * factorialThunk(n - 1),
+                trampolined = trampoline(factorialThunk, factorialThunk.name)
+            ;
+            [
+                [0, 1],
+                [1, 1],
+                [2, 2],
+                [3, 6],
+                [4, 24],
+                [5, 120],
+                [6, 720],
+                [7, 7 * 720],
+                [8, 8 * 7 * 720],
+                [9, 9 * 8 * 7 * 720],
+                // [32768, 0]
+            ]
+                .forEach(([arg, expected]) => {
+                    expect(trampolined(arg)).toEqual(expected);
+                });
+        });
+    });
 });
+
+/*
+trampoline (function, loopBreaker)
+ */
