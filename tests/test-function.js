@@ -382,9 +382,10 @@ describe ('#function', function () {
 
     describe('#trampoline', () => {
         it ('should be able to trampoline a function no matter how many recursive calls are made', () => {
-            // Basic factorial implementation
-            const factorialThunk = n => n <= 1 ? 1 : () => n * factorialThunk(n - 1),
-                trampolined = trampoline(factorialThunk, factorialThunk.name)
+            const factorialThunk = (agg, n) => n <= 1 ?
+                        agg : () => factorialThunk(agg * n, n - 1),
+                trampolined = trampoline(factorialThunk)
+                // trampolinedUntil = until(x => typeof x !== 'function', fn => fn())
             ;
             [
                 [0, 1],
@@ -397,10 +398,12 @@ describe ('#function', function () {
                 [7, 7 * 720],
                 [8, 8 * 7 * 720],
                 [9, 9 * 8 * 7 * 720],
-                // [32768, 0]
+                [10, 10 * 9 * 8 * 7 * 720],
+                [32768, Infinity], // normally breaks the stack (not with trampoline)
             ]
                 .forEach(([arg, expected]) => {
-                    expect(trampolined(arg)).toEqual(expected);
+                    expect(trampolined(1, arg)).toEqual(expected);
+                    // expect(trampolinedUntil(factorialThunk(1, arg))).toEqual(expected);
                 });
         });
     });

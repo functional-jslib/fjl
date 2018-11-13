@@ -291,6 +291,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
+"@babel/plugin-syntax-bigint@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-bigint/-/plugin-syntax-bigint-7.0.0.tgz#eeafc11df663f2bd78eb0b5880a8abd5fc370776"
+  integrity sha512-eX2s1Q79SVllGsJ0Rl267MHtBhD6872qbMmE0hxk5RLzC/DHE0tGJ0ADbOQXhw3G+chEJZlYBKriddvAE/hDJQ==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+
 "@babel/plugin-syntax-json-strings@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-json-strings/-/plugin-syntax-json-strings-7.0.0.tgz#0d259a68090e15b383ce3710e01d5b23f3770cbd"
