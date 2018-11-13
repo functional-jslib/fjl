@@ -123,7 +123,7 @@ errorIfNotTypes
  ```
 apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5,
 flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3,
-negateFN, until, fnOrError, noop
+negateFN, until, fnOrError, noop, trampoline
 ```
 ### `string` methods
  ```

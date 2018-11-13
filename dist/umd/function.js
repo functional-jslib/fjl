@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(["exports", "./jsPlatform/function", "./function/compose", "./function/curry", "./function/flip", "./function/id", "./function/negate", "./function/until", "./function/fnOrError", "./function/noop"], factory);
+    define(["exports", "./jsPlatform/function", "./function/compose", "./function/curry", "./function/flip", "./function/id", "./function/negate", "./function/until", "./function/fnOrError", "./function/noop", "./function/trampoline"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require("./jsPlatform/function"), require("./function/compose"), require("./function/curry"), require("./function/flip"), require("./function/id"), require("./function/negate"), require("./function/until"), require("./function/fnOrError"), require("./function/noop"));
+    factory(exports, require("./jsPlatform/function"), require("./function/compose"), require("./function/curry"), require("./function/flip"), require("./function/id"), require("./function/negate"), require("./function/until"), require("./function/fnOrError"), require("./function/noop"), require("./function/trampoline"));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global._function, global.compose, global.curry, global.flip, global.id, global.negate, global.until, global.fnOrError, global.noop);
+    factory(mod.exports, global._function, global.compose, global.curry, global.flip, global.id, global.negate, global.until, global.fnOrError, global.noop, global.trampoline);
     global._function = mod.exports;
   }
-})(this, function (_exports, _function, _compose, _curry, _flip, _id, _negate, _until, _fnOrError, _noop) {
+})(this, function (_exports, _function, _compose, _curry, _flip, _id, _negate, _until, _fnOrError, _noop, _trampoline) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -94,6 +94,15 @@
       enumerable: true,
       get: function get() {
         return _noop[key];
+      }
+    });
+  });
+  Object.keys(_trampoline).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(_exports, key, {
+      enumerable: true,
+      get: function get() {
+        return _trampoline[key];
       }
     });
   });

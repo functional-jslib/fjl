@@ -111,3 +111,15 @@ Object.keys(_noop).forEach(function (key) {
     }
   });
 });
+
+var _trampoline = require("./function/trampoline");
+
+Object.keys(_trampoline).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _trampoline[key];
+    }
+  });
+});
