@@ -1,4 +1,10 @@
 ## Change log
+### 1.9.0
+- Added `toFunction` (for functional composition of values that must pass as functions).
+
+### 1.8.0 
+- Added `trampoline` method (for tail call elimination).
+
 ### 1.7.0
 #### Deprecations
 - Marked `hasOwnProperty` as deprecated (as property

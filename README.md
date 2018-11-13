@@ -123,7 +123,7 @@ errorIfNotTypes
  ```
 apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5,
 flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3,
-negateFN, until, fnOrError, noop, trampoline
+negateFN, until, fnOrError, noop, trampoline, toFunction
 ```
 ### `string` methods
  ```
@@ -229,6 +229,12 @@ BSD 3 Clause - Included in sources.
 - Docs format: http://usejsdoc.org/
 
 ## Change log
+### 1.9.0
+- Added `toFunction` (for functional composition of values that must pass as functions).
+
+### 1.8.0 
+- Added `trampoline` method (for tail call elimination).
+
 ### 1.7.0
 #### Deprecations
 - Marked `hasOwnProperty` as deprecated (as property

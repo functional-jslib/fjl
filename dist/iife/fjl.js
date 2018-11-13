@@ -1290,6 +1290,12 @@ var trampoline = function trampoline(fn, fnName) {
   };
 };
 
+var toFunction = function toFunction(x) {
+  return isFunction(x) ? x : function () {
+    return x;
+  };
+};
+
 /**
  * @module function
  */
@@ -2501,6 +2507,7 @@ exports.until = until;
 exports.fnOrError = fnOrError;
 exports.noop = noop;
 exports.trampoline = trampoline;
+exports.toFunction = toFunction;
 exports.map = map$1;
 exports.append = append;
 exports.head = head;

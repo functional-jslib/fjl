@@ -7,14 +7,16 @@ import {
     apply, call, compose,
     curry, curry2, curry3, curry4, curry5, curryN,
     flip, flip3, flip4, flip5, flipN, until, id,
-    trampoline, fnTrampoline, noop
+    trampoline, noop, toFunction
 }
-from '../src/function';
+    from '../src/function';
 
-import {range} from '../src/list/range';
 
-import {add, subtract, expectEqual, expectError,
-    expectFunction, expectTrue, alphabetArray} from './helpers';
+import {
+    add, subtract, expectEqual, expectError,
+    expectFunction, expectTrue, alphabetArray, falsyList,
+    truthyList
+} from './helpers';
 
 describe ('#function', function () {
 
@@ -405,6 +407,17 @@ describe ('#function', function () {
                     expect(trampolined(1, arg)).toEqual(expected);
                     // expect(trampolinedUntil(factorialThunk(1, arg))).toEqual(expected);
                 });
+        });
+    });
+
+    describe('#toFunction', () => {
+        it('should always return a function', () => {
+           falsyList.map(x => [x, Function])
+               .concat(truthyList.map(x => [x, Function]))
+               .forEach(([arg, expectedType]) => {
+                   expect(toFunction(arg)).toBeInstanceOf(expectedType);
+               });
+           expect(toFunction()).toBeInstanceOf(Function);
         });
     });
 });

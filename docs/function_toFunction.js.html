@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: list/map.js | Source: list/map.js</title>
+    <title>Source: function/toFunction.js | Source: function/toFunction.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -28,7 +28,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: list/map.js</a></h1>
+        <h1><a href="index.html" class="link">Source: function/toFunction.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -48,51 +48,18 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import {length} from '../jsPlatform/object';
-import {curry} from '../function/curry';
-import {typeOf} from '../object/typeOf';
-import {of} from '../object/of';
-import {isFunctor, isset} from '../object/is';
+            <pre class="prettyprint source linenums"><code>import {isFunction} from '../object/is';
 
-/**
- * Maps a function onto a List (string or array) or a functor (value containing a map method).
- * @function module:list.map
- * @param fn {Function} - Function to map on given value.
- * @param xs {Array|String|*}
- * @returns {Array|String|*}
- */
-const map = curry((fn, xs) =>  {
-    if (!isset(xs)) { return xs; }
-    let out = of(xs),
-        limit,
-        i = 0;
-    switch (typeOf(xs)) {
-        case 'Array':
-            limit = length(xs);
-            if (!limit) { return out; }
-            for (; i &lt; limit; i += 1) {
-                out.push(fn(xs[i], i, xs));
-            }
-            return out;
-        case 'String':
-            limit = length(xs);
-            if (!xs) { return out; }
-            for (; i &lt; limit; i += 1) {
-                out += fn(xs[i], i, xs);
-            }
-            return out;
-        default:
-            if (isFunctor(xs)) { return xs.map(fn); }
+export const
 
-            // Other objects
-            return Object.keys(xs).reduce((agg, key) => {
-                out[key] = fn(xs[key], key, xs);
-                return out;
-            }, out);
-    }
-});
-
-export default map;
+    /**
+     * If given value is not a function, wraps it an 'identity' function (function that returns given value untouched) else returns given value. (useful in
+     * functional composition).
+     * @function module:function.toFunction
+     * @param x {Function|any}
+     * @returns {function(): any}
+     */
+    toFunction = x => isFunction(x) ? x : () => x;
 </code></pre>
         </article>
     </section>

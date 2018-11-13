@@ -123,3 +123,15 @@ Object.keys(_trampoline).forEach(function (key) {
     }
   });
 });
+
+var _toFunction = require("./function/toFunction");
+
+Object.keys(_toFunction).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _toFunction[key];
+    }
+  });
+});
