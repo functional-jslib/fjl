@@ -31,8 +31,6 @@ describe ('#object', function () {
             return agg;
         }, {});
 
-    // log (charCodeToCharArrayMap, charCodeToCharMap);
-
     describe('#hasOwnProperty', function () {
         it ('should be a function', function () {
             expectFunction(hasOwnProperty);
@@ -49,18 +47,13 @@ describe ('#object', function () {
     });
 
     describe('#typeOf', function () {
-        it ('should be a function', function () {
-            expectFunction(typeOf);
-        });
-        it ('should return a function when no value is passed in (is curried)', function () {
-            expectEqual(typeOf(), 'Undefined');
-        });
-        it ('should return the passed type\'s name', function () {
+        it ('should return the passed in type\'s name', function () {
             [
                 ['Array', []],
                 ['Object', {}],
                 ['String', ''],
                 ['Function', function () {}],
+                ['Function', () => undefined],
                 ['Number', 99],
                 ['Boolean', true],
                 ['Boolean', false],
@@ -69,7 +62,7 @@ describe ('#object', function () {
                 ['Symbol', Symbol('hello')],
                 ['Promise', Promise.resolve('hello')]
             ]
-                .forEach(tuple => expectEqual(apply(typeOf, tuple)));
+                .forEach(([expectedName, arg]) => expect(typeOf(arg)).toEqual(expectedName));
         });
     });
 
@@ -95,7 +88,7 @@ describe ('#object', function () {
     });
 
     describe('#toTypeRefName', () => {
-        it ('should return a string for all values given with expected result', () => {
+        it ('should return a string for all values given', () => {
             [
                 ['Null', null],
                 ['Undefined', undefined],
@@ -115,61 +108,43 @@ describe ('#object', function () {
     });
 
     describe('#isType', function () {
-        it ('should be a function', function () {
-            expectFunction(isType);
-        });
-        it ('should return `true` when passed in value is of passed in type name/string', function () {
+        it ('should return expected result for given values', function () {
+            const truthySetWithCtors = [
+                    [Array, [], true],
+                    [Object, {}, true],
+                    [String, '', true],
+                    [Function, function () {}, true],
+                    [Number, 99, true],
+                    [Boolean, true, true],
+                    [Boolean, false, true],
+                ],
+                truthySet = truthySetWithCtors.concat(
+                    truthySetWithCtors.map(
+                        ([Ctor, arg, exp]) => [Ctor.name, arg, exp])
+                ),
+                falsySetWithCtors = [
+                    [Object, [], false],
+                    [Array, {}, false],
+                    [NaN, '', false],
+                    [Number, function () {}, false],
+                    [Function, 99, false],
+                    [NaN, true, false],
+                    [Number, undefined, false],
+                    [Array, false, false]
+                ],
+                falsySet = falsySetWithCtors.concat(
+                    falsySetWithCtors.map(([Ctor, arg, exp]) => [Ctor.name, arg, exp])
+                )
+            ;
             [
-                ['Array', []],
-                ['Object', {}],
-                ['String', ''],
-                ['Function', function () {}],
-                ['Number', 99],
-                ['Boolean', true],
-                ['Boolean', false],
-                ['Null', null],
-                ['Undefined', undefined]
+                ['Undefined', undefined, true],
+                ['Null', null, true],
             ]
-                .forEach(tuple => {
-                    expect(isType.apply(null, tuple)).toEqual(true);
-                });
-        });
-        it ('should return `true` when passed in value is of passed in type constructor', function () {
-            [
-                [Array, []],
-                [Object, {}],
-                [String, ''],
-                [Function, function () {}],
-                [Number, 99],
-                [Boolean, true],
-                [Boolean , false]
-            ]
-                .forEach(tuple => expect(isType.apply(null, tuple)));
-        });
-        it ('should return `false` when passed in value is not of passed in type name/string', function () {
-            [
-                ['Object', []],
-                ['Array', {}],
-                ['NaN', ''],
-                ['Number', function () {}],
-                ['Function', 99],
-                ['NaN', true],
-                ['Number', false]
-            ]
-                .forEach(tuple => expectFalse(apply(isType, tuple)));
-        });
-        it ('should return `false` when passed in value is not of passed in type constructor', function () {
-            [
-                [Object, []],
-                [Array, {}],
-                [NaN, ''],
-                [Number, function () {}],
-                [Function, 99],
-                [NaN, true],
-                [Number, undefined],
-                [Array, false]
-            ]
-                .forEach(tuple => expectFalse(apply(isType, tuple)));
+            .concat(truthySet, falsySet)
+            .forEach(([typeName, arg, expected]) => {
+                console.log(typeName);
+                expect(isType(typeName, arg)).toEqual(expected);
+            });
         });
         it ('should be able to match NaN', () => {
             expect(isType(NaN, 0/0)).toEqual(true);
