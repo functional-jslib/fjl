@@ -4,7 +4,10 @@
   - `isLoosely` for `isOfType`
   - `isStrictly` for `isType`
   - `isStrictlyOneOf` for `isOneOf`
-#### New additions:  
+- Cleaned up, tablelized, and optimized some tests ('./tests/test-object').
+- Optimized some implementations (`src/object/is`)
+
+#### New addition:  
   - `isLooselyOneOf` - For type checking with mix-match
   type refs (constructor names and constructors):
   ```javascript
