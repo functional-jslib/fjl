@@ -168,7 +168,7 @@ const assign = (() => Object.assign ? (obj0, ...objs) => Object.assign(obj0, ...
  * @memberOf object
  */
 const _Number$1 = Number.name;
-const _NaN$1 = 'NaN';
+const _NaN = 'NaN';
 const _Null$1 = 'Null';
 const _Undefined$1 = 'Undefined';
 /**
@@ -193,7 +193,7 @@ function typeOf(value) {
     retVal = _Null$1;
   } else {
     let constructorName = value.constructor.name;
-    retVal = constructorName === _Number$1 && isNaN(value) ? _NaN$1 : constructorName;
+    retVal = constructorName === _Number$1 && isNaN(value) ? _NaN : constructorName;
   }
 
   return retVal;
@@ -207,8 +207,6 @@ let _String = String.name;
 let _Number = Number.name;
 let _Object = Object.name;
 let _Boolean = Boolean.name;
-let _Function = Function.name;
-let _Array = Array.name;
 let _Symbol = 'Symbol';
 let _Map = 'Map';
 let _Set = 'Set';
@@ -216,7 +214,6 @@ let _WeakMap = 'WeakMap';
 let _WeakSet = 'WeakSet';
 let _Null = 'Null';
 let _Undefined = 'Undefined';
-let _NaN = 'NaN';
 const toTypeRef = type => {
   if (!type) {
     return typeOf(type);
@@ -234,7 +231,9 @@ const toTypeRefName = Type => {
 const toTypeRefNames = (...types) => types.map(toTypeRefName);
 const isFunction = instanceOf(Function);
 const isType = curry((type, obj) => typeOf(obj) === toTypeRefName(type));
+const isStrictly = isType;
 const isOfType = curry((type, x) => isType(type, x) || instanceOf(type, x));
+const isLoosely = isOfType;
 const isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 const isCallable = x => isFunction(x) && !isClass(x);
 const {
@@ -258,42 +257,39 @@ const isUsableImmutablePrimitive = x => {
 const isEmptyList = x => !length(x);
 const isEmptyObject = obj => isEmptyList(keys(obj));
 const isEmptyCollection = x => x.size === 0;
-const isEmpty = value => {
-  if (!value) {
-    // if '', 0, `null`, `undefined`, or `false` then is empty
+const isEmpty = x => {
+  if (!x) {
+    // if '', 0, `null`, `undefined`, `NaN`, or `false` then is empty
     return true;
   }
 
-  switch (typeOf(value)) {
-    case _Array:
-    case _Function:
-      return !value.length;
-
-    case _Number:
-      // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
-      return false;
-
-    case _Object:
-      return !keys(value).length;
-
-    case _Map:
-    case _Set:
-    case _WeakSet:
-    case _WeakMap:
-      return !value.size;
-
-    case _NaN:
-      return true;
-
-    default:
-      return !value;
+  if (isNumber(x) || isFunction(x)) {
+    return false;
   }
+
+  if (isArray(x)) {
+    // takes care of 'instances of Array'
+    return !x.length;
+  }
+
+  if (x.size !== undefined && !instanceOf(Function, x.size)) {
+    return !x.size;
+  }
+
+  if (isObject(x)) {
+    return !keys(x).length;
+  }
+
+  return false;
 };
 const isset = x => x !== null && x !== undefined;
 const isOneOf = (x, ...types) => {
   const typeName = typeOf(x);
   return toTypeRefNames(types).some(name => typeName === name);
 };
+const isStrictlyOneOf = isOneOf;
+const isLooselyOneOf = (x, ...types) => types.some(type => isType(type, x) || instanceOf(x, type));
+const instanceOfOne = (x, ...types) => types.some(instanceOf(x));
 const isFunctor = x => x && x.map && instanceOf(Function, x.map);
 
 /**
@@ -1724,5 +1720,5 @@ const classCase = compose(ucaseFirst, camelCase);
  * Also note: Class cased names are use for values that do not have `name` properties;  Namely: 'Null', 'NaN' and 'Undefined' (for their respective values respectively).
  */
 
-export { instanceOf, hasOwnProperty, length, native, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames, isFunction, isType, isOfType, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, isOneOf, isFunctor, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll, apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, trampoline, toFunction, map$1 as map, append, head, last, tail, init, uncons, unconsr, concat$1 as concat, concatMap, reverse$1 as reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach$1 as forEach, filter$1 as filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest, reduceUntil, reduceUntilRight, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArray, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes };
+export { instanceOf, hasOwnProperty, length, native, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames, isFunction, isType, isStrictly, isOfType, isLoosely, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf, isLooselyOneOf, instanceOfOne, isFunctor, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll, apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, trampoline, toFunction, map$1 as map, append, head, last, tail, init, uncons, unconsr, concat$1 as concat, concatMap, reverse$1 as reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach$1 as forEach, filter$1 as filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest, reduceUntil, reduceUntilRight, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArray, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes };
 //# sourceMappingURL=fjl.mjs.map

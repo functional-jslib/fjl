@@ -1,10 +1,8 @@
 /**
- * Created by elyde on 12/25/2016.
- */
-/**
+ * Tests for '../src/object'.
  * Created by elyde on 11/25/2016.
+ * @todo Continue tests refactor (from `isEmpty` tests downward).
  */
-import {apply} from '../src/function';
 import {
     objComplement, objDifference, objUnion, objIntersect,
     typeOf, instanceOf, hasOwnProperty, keys,
@@ -17,7 +15,15 @@ import {
 } from '../src/object';
 import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../src/list';
 import {
-    expectTrue, expectFalse, expectEqual, expectError, expectFunction, allYourBase, alphabetString, alphabetArray
+    expectTrue,
+    expectFalse,
+    expectEqual,
+    expectError,
+    expectFunction,
+    allYourBase,
+    alphabetString,
+    alphabetArray,
+    vowelsString, vowelsArray
 } from './helpers';
 
 describe ('#object', function () {
@@ -109,6 +115,7 @@ describe ('#object', function () {
 
     describe('#isType', function () {
         it ('should return expected result for given values', function () {
+            // [`TypeRef`, `arg`, `expected`]
             const truthySetWithCtors = [
                     [Array, [], true],
                     [Object, {}, true],
@@ -141,9 +148,9 @@ describe ('#object', function () {
                 ['Null', null, true],
             ]
             .concat(truthySet, falsySet)
-            .forEach(([typeName, arg, expected]) => {
-                console.log(typeName);
-                expect(isType(typeName, arg)).toEqual(expected);
+            .forEach(([type, arg, expected]) => {
+                console.log(type);
+                expect(isType(type, arg)).toEqual(expected);
             });
         });
         it ('should be able to match NaN', () => {
@@ -153,155 +160,282 @@ describe ('#object', function () {
     });
 
     describe('#isFunction', function () {
-        it('should return true if value is a function', function () {
-            [(() => undefined), function () {}]
-                .forEach(value => expect(value).toBeInstanceOf(Function));
-        });
-        it('should return `false` when value is not a function', function () {
-            [-1, 0, 1, [], {}, 'abc']
-                .forEach(value => expectFalse(isFunction(value)));
+        it('should return expected result for given value', function () {
+            // [`arg`, `expected`]
+            [
+                [() => undefined, true],
+                [function () {}, true],
+                [-1, false],
+                [0, false],
+                [1, false],
+                [true, false],
+                [false, false],
+                [undefined, false],
+                [null, false],
+                [[], false],
+                [{}, false],
+            ]
+                .forEach(([x, expected]) => expect(isFunction(x)).toEqual(expected));
         });
     });
 
     describe('#isArray', function () {
-        it ('should return `true` when given value is an list', function () {
-            expectTrue(isArray([]));
-        });
-        it ('should return `false` when given value is not an list', function () {
-            expectFalse(isArray(function () {}));
+        it ('should return expected result for given value', function () {
+            // [`arg`, `expected`]
+            [
+                [[], true],
+                [() => undefined, false],
+                [0, false],
+                [true, false],
+                [false, false],
+                [undefined, false],
+                [null, false],
+            ]
+                .forEach(([arg, expected]) => expect(isArray(arg)).toEqual(expected));
         });
     });
 
     describe('#isObject', function () {
-        it ('should return `true` when given value is a direct instance of `Object`', function () {
-            expectTrue(isObject({}));
-        });
-        it ('should return `false` when given value is not a direct instance of `Object`', function () {
-            expectFalse(isObject(function () {}));
+        it ('should return expected result for given value', function () {
+            class A {}
+            // [`arg`, `expected`]
+            [
+                [[], false],
+                [{}, true],
+                [() => undefined, false],
+                [new A(), false],
+                [true, false],
+                [false, false],
+                [0, false],
+                [undefined, false],
+                [null, false],
+            ]
+                .forEach(([arg, expected]) => expect(isObject(arg)).toEqual(expected));
         });
     });
 
     describe('#isBoolean', function () {
-        it ('should return `true` when given value is a boolean', function () {
-            expectTrue(isBoolean(true));
-            expectTrue(isBoolean(false));
-        });
-        it ('should return `false` when given value is not a boolean', function () {
-            expectFalse(isBoolean(function () {}));
+        it ('should return expected result for given value', function () {
+            [
+                [[], false],
+                [{}, false],
+                [() => undefined, false],
+                [true, true],
+                [false, true],
+                [undefined, false],
+                [null, false],
+            ]
+                .forEach(([arg, expected]) => expect(isBoolean(arg)).toEqual(expected));
         });
     });
 
     describe('#isNumber', function () {
-        it ('should return `true` when given value is a numberOps', function () {
-            expectTrue(isNumber(99));
-            expectTrue(isNumber(-1.0));
-            expectTrue(isNumber(Number('1e-3')));
-        });
-        it ('should return `false` when given value is not a numberOps', function () {
-            expectFalse(isNumber(function () {}));
-            expectFalse(isNumber(NaN));
+
+        it ('should return expected result for given value', function () {
+            // [`arg`, `expected`]
+            [
+                [99, true],
+                [-1.0, true],
+                [Number('1e-3'), true],
+                [0/0, false],
+                [() => undefined, false],
+                [true, false],
+                [false, false],
+                [undefined, false],
+                [null, false],
+            ]
+                .forEach(([arg, expected]) => expect(isNumber(arg)).toEqual(expected));
         });
     });
 
     describe('#isString', function () {
-        it ('should return `true` when given value is a string', () => {
-            expectTrue(isString('hello'));
-            expectTrue(isString(String('hello')));
-        });
-        it ('should return `false` when given value is not a string', () => {
-            expect(isString(function () {})).toEqual(false);
-            expect(isString(NaN)).toEqual(false);
+        it ('should return expected result for given value', function () {
+            // [`arg`, `expected`]
+            [
+                [alphabetString, true],
+                [vowelsString, true],
+                [0/0, false],
+                [() => undefined, false],
+                [true, false],
+                [false, false],
+                [0, false],
+                [undefined, false],
+                [null, false],
+            ]
+                .forEach(([arg, expected]) => expect(isString(arg)).toEqual(expected));
         });
     });
 
     if (typeof Map !== 'undefined') {
         describe('#isMap', function () {
-            it ('should return `true` when given value is a map', function () {
-                expectTrue(isMap(new Map()));
-            });
-            it ('should return `false` when given value is not a map', function () {
-                expectFalse(isMap(function () {}));
-                expectFalse(isMap(NaN));
+            it ('should return expected result for given value', function () {
+                // [`arg`, `expected`]
+                [
+                    ['', false],
+                    [vowelsString, false],
+                    [0/0, false],
+                    [() => undefined, false],
+                    [new Map(), true],
+                    [new Map(vowelsArray.map(c => [c, c.charCodeAt(0)])), true],
+                    [false, false],
+                    [0, false],
+                    [undefined, false],
+                    [null, false],
+                ]
+                    .forEach(([arg, expected]) => expect(isMap(arg)).toEqual(expected));
             });
         });
     }
 
     if (typeof Set !== 'undefined') {
         describe('#isSet', function () {
-            it ('should return `true` when given value is a set', function () {
-                expectTrue(isSet(new Set()));
-            });
-            it ('should return `false` when given value is not a set', function () {
-                expectFalse(isSet(function () {}));
-                expectFalse(isSet(NaN));
+            it ('should return expected result for given value', function () {
+                // [`arg`, `expected`]
+                [
+                    ['', false],
+                    [vowelsString, false],
+                    [0/0, false],
+                    [() => undefined, false],
+                    [new Set(), true],
+                    [new Set(vowelsArray), true],
+                    [false, false],
+                    [0, false],
+                    [undefined, false],
+                    [null, false],
+                ]
+                    .forEach(([arg, expected]) => expect(isSet(arg)).toEqual(expected));
             });
         });
     }
 
     if (typeof WeakMap !== 'undefined') {
         describe('#isWeakMap', function () {
-            it ('should return `true` when given value is a weak map', function () {
-                expectTrue(isWeakMap(new WeakMap()));
-            });
-            it ('should return `false` when given value is not a weak map', function () {
-                expectFalse(isWeakMap(function () {}));
-                expectFalse(isWeakMap(NaN));
+            it ('should return expected result for given value', function () {
+                // [`arg`, `expected`]
+                [
+                    ['', false],
+                    [vowelsString, false],
+                    [0/0, false],
+                    [() => undefined, false],
+                    [new WeakMap(), true],
+                    [false, false],
+                    [0, false],
+                    [undefined, false],
+                    [null, false],
+                ]
+                    .forEach(([arg, expected]) => expect(isWeakMap(arg)).toEqual(expected));
             });
         });
     }
 
     if (typeof WeakSet !== 'undefined') {
         describe('#isWeakSet', function () {
-            it ('should return `true` when given value is a weak set', function () {
-                expectTrue(isWeakSet(new WeakSet()));
-            });
-            it ('should return `false` when given value is not a weak set', function () {
-                expectFalse(isWeakSet(function () {}));
-                expectFalse(isWeakSet(NaN));
+            it ('should return expected result for given value', function () {
+                // [`arg`, `expected`]
+                [
+                    ['', false],
+                    [vowelsString, false],
+                    [0/0, false],
+                    [() => undefined, false],
+                    [new WeakSet(), true],
+                    [false, false],
+                    [0, false],
+                    [undefined, false],
+                    [null, false],
+                ]
+                    .forEach(([arg, expected]) => expect(isWeakSet(arg)).toEqual(expected));
             });
         });
     }
 
     describe('#isUndefined', function () {
-        it ('should return `true` when given value is a undefined', function () {
-            expectTrue(isUndefined(undefined));
-        });
-        it ('should return `false` when given value is not a undefined', function () {
-            expectFalse(isUndefined(function () {}));
-            expectFalse(isUndefined(NaN));
+        it ('should return expected result for given value', function () {
+            // [`arg`, `expected`]
+            [
+                ['', false],
+                [undefined, true],
+                [vowelsString, false],
+                [0/0, false],
+                [() => undefined, false],
+                [false, false],
+                [0, false],
+                [null, false],
+            ]
+                .forEach(([arg, expected]) => expect(isUndefined(arg)).toEqual(expected));
         });
     });
 
     describe('#isNull', function () {
-        it ('should return `true` when given value is a null', function () {
-            expectTrue(isNull(null));
-        });
-        it ('should return `false` when given value is not a null', function () {
-            expectFalse(isNull(function () {}));
-            expectFalse(isNull(NaN));
+        it ('should return expected result for given value', function () {
+            // [`arg`, `expected`]
+            [
+                ['', false],
+                [null, true],
+                [undefined, false],
+                [vowelsString, false],
+                [0/0, false],
+                [() => undefined, false],
+                [false, false],
+                [0, false],
+            ]
+                .forEach(([arg, expected]) => expect(isNull(arg)).toEqual(expected));
         });
     });
 
     describe('#isSymbol', function () {
-        it ('should return `true` when given value is a symbol', function () {
-            expectTrue(isSymbol(Symbol('hello123')));
-        });
-        it ('should return `false` when given value is not a symbol', function () {
-            expectFalse(isSymbol(function () {}));
-            expectFalse(isSymbol(NaN));
+        it ('should return expected result for given value', function () {
+            // [`arg`, `expected`]
+            [
+                ['', false],
+                [Symbol(vowelsString), true],
+                [Symbol(99), true],
+                [Symbol(), true],
+                [null, false],
+                [undefined, false],
+                [vowelsString, false],
+                [{}, false],
+                [[], false],
+                [0/0, false],
+                [() => undefined, false],
+                [false, false],
+                [0, false],
+            ]
+                .forEach(([arg, expected]) => expect(isSymbol(arg)).toEqual(expected));
         });
     });
 
     describe('#isEmpty', () => {
-        it ('should return `true` if value is falsy, or empty [object, array, Map, or Set]', () => {
-            ['', null, undefined, 0, {}, [], new Map(), new Set(), new WeakMap(), new WeakSet()].forEach(x => {
-                expect(isEmpty(x)).toEqual(true);
-            });
-        });
-        it ('should return `false` if value is truthy and not an empty [object, array, Map, or Set]', () => {
-            ['hello', -1, 1, {a: 'b'}, [1], new Map([['a', 'b']]), new Set([1])].forEach(x => {
-                expect(isEmpty(x)).toEqual(false);
-            });
+        it ('should return expected result for given value', function () {
+            // [`arg`, `expected`]
+            [
+                // Empties
+                [null, true],
+                [undefined, true],
+                ['', true],
+                [0, true],
+                [0/0, true],
+                [false, true],
+                [[], true],
+                [{}, true],
+                [new Map(), true],
+                [new Set(), true],
+
+                // Non-empties
+                [() => undefined, false],
+                [vowelsString, false],
+                [vowelsArray, false],
+                [new Set(vowelsArray), false],
+                [new Map(vowelsArray.map(c => [c, c.charCodeAt(0)])), false],
+                [Object.defineProperties, false],
+                [Object, false],
+                [Symbol(), false],
+                [true, false],
+                [-1, false],
+                [1, false],
+            ]
+                .forEach(([arg, expected]) => {
+                    expect(isEmpty(arg)).toEqual(expected);
+                });
         });
     });
 
@@ -312,8 +446,8 @@ describe ('#object', function () {
             });
         });
         it ('should return `false` if value is not set (I.e., if value is `null` or `undefined`).', () => {
-            ['', 0, false, {}, [], new Map()].forEach(x => {
-                expect(isset(x)).toEqual(true);
+            [null, undefined].forEach(x => {
+                expect(isset(x)).toEqual(false);
             });
         });
     });

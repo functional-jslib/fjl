@@ -11,16 +11,13 @@ let _String = String.name,
     _Number = Number.name,
     _Object = Object.name,
     _Boolean = Boolean.name,
-    _Function = Function.name,
-    _Array = Array.name,
     _Symbol = 'Symbol',
     _Map = 'Map',
     _Set = 'Set',
     _WeakMap = 'WeakMap',
     _WeakSet = 'WeakSet',
     _Null = 'Null',
-    _Undefined = 'Undefined',
-    _NaN = 'NaN';
+    _Undefined = 'Undefined';
 
 export const
 
@@ -100,12 +97,21 @@ export const
     isType = curry((type, obj) => typeOf(obj) === toTypeRefName(type)),
 
     /**
+     * Synonym for `isType` (or just a more accurate name for `isType`).
+     * @function module:object.isStrictly
+     * @param type {Function|ObjectConstructor|String} - Constructor or constructor name
+     * @param obj {*}
+     * @return {Boolean}
+     */
+    isStrictly = isType,
+
+    /**
      * Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check on
      * constructor names, else if first check fails and `type` is a constructor, performs an `instanceof` check
      * on value with constructor.
-     * @note Use care when checking for `Array` and/or `Object` since the both are considered objects by `instanceof` checker.
+     * @note Use care when checking for `Array` since it is an `instanceof` Object.
      * @note For `null` and `undefined` their class cased names can be used for type checks
-     * `isOfType('Null', null) === true (passes strict type check)` (or better yet `isset` can be used).
+     * `isOfType('Null', null) === true (passes strict type check)` (or better yet @link `module:object.isset` can be used).
      * @throwsafe - Doesn't throw on `null` or `undefined` `obj` values.
      * @example
      * isOfType(Number, 99) === true        // true  (passes strict type check (numbers are not instances of `Number`
@@ -126,6 +132,15 @@ export const
      * @returns {Boolean}
      */
     isOfType = curry((type, x) => isType(type, x) || instanceOf(type, x)),
+
+    /**
+     * Synonym for `isOfType` (or just a more accurate name).
+     * @function module:object.isLoosely
+     * @param type {Function|String} - Type reference (constructor or `constructor.name`).
+     * @param x {*} - Value to check.
+     * @returns {Boolean}
+     */
+    isLoosely = isOfType,
 
     /**
      * Checks if `value` is an es2015 `class`.
@@ -281,34 +296,29 @@ export const
 
     /**
      * Checks to see if passed in value is empty;  I.e.,
-     *  check for one of '', 0, `null`, `undefined`, `false`, empty array, empty object, empty function (zero arity),
-     *  or empty collection (es6 Map, Set, WeakMap, or WeakSet etc. (`!value.size`);
+     *  check for one of '', 0, `null`, `undefined`, `NaN`, `false`, empty array, empty object, ~~empty function (zero arity)~~,
+     *  or empty collection (es6 collection: Map, Set, WeakMap, or WeakSet etc.) (`!value.size`).
      * @function module:object.isEmpty
-     * @param value {*} - Value to check.
+     * @param x {*} - Value to check.
      * @returns {Boolean}
      */
-    isEmpty = value => {
-        if (!value) { // if '', 0, `null`, `undefined`, or `false` then is empty
+    isEmpty = x => {
+        if (!x) { // if '', 0, `null`, `undefined`, `NaN`, or `false` then is empty
             return true;
         }
-        switch (typeOf(value)) {
-            case _Array:
-            case _Function:
-                return !value.length;
-            case _Number: // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
-                return false;
-            case _Object:
-                return !keys(value).length;
-            case _Map:
-            case _Set:
-            case _WeakSet:
-            case _WeakMap:
-                return !value.size;
-            case _NaN:
-                return true;
-            default:
-                return !value;
+        if (isNumber(x) || isFunction(x)) {
+            return false;
         }
+        if (isArray(x)) { // takes care of 'instances of Array'
+            return !x.length;
+        }
+        if (x.size !== undefined && !instanceOf(Function, x.size)) {
+            return !x.size;
+        }
+        if (isObject(x)) {
+            return !keys(x).length;
+        }
+        return false;
     },
 
     /**
@@ -320,11 +330,12 @@ export const
     isset = x => x !== null && x !== undefined,
 
     /**
-     * Checks to see if `x` is of one of the given type refs.
+     * Checks to see if `x` is of one of the given type refs;  Strict type check (not-instanceof check).
      * @function object.isOneOf
      * @param x {*}
      * @param types {...(TypeRef|*)}
      * @returns {boolean}
+     * @deprecated - Instead use @link module:isStrictlyOneOf
      * @todo write tests for this function.
      */
     isOneOf = (x, ...types) => {
@@ -332,6 +343,41 @@ export const
         return toTypeRefNames(types).some(name => typeName === name);
     },
 
+    /**
+     * Checks if given value is strictly one of given types.
+     * @function module:object.isStrictlyOneOf
+     * @param x {*}
+     * @param types {...TypeRef}
+     * @returns {boolean}
+     */
+    isStrictlyOneOf = isOneOf,
+
+    /**
+     * Checks if given value is either strictly one of given types or is
+     * an `instanceof` one of given types.
+     * @function module:object.isLooselyOneOf
+     * @param x {*}
+     * @param types {...TypeRef}
+     * @returns {boolean}
+     */
+    isLooselyOneOf = (x, ...types) =>
+        types.some(type => isType(type, x) || instanceOf(x, type)),
+
+    /**
+     * Checks if given value is instance of one of the types given.
+     * @function module:object.instanceOfOne
+     * @param x {*}
+     * @param types {...TypeRef}
+     * @returns {boolean}
+     */
+    instanceOfOne = (x, ...types) => types.some(instanceOf(x)),
+
+    /**
+     * Checks if value qualifies (has `map` method) as a functor.
+     * @function module:object.isFunctor
+     * @param x {*}
+     * @returns {bool}
+     */
     isFunctor = x => x && x.map && instanceOf(Function, x.map)
 
 ;

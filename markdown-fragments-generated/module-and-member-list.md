@@ -29,13 +29,15 @@ aggregateArray
  ```
 instanceOf, hasOwnProperty, length, native, assign, keys, lookup,
 typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames,
-isFunction, isType, isOfType, isClass, isCallable, isObject, isBoolean,
-isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined,
-isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList,
-isEmptyObject, isEmptyCollection, isEmpty, isset, isOneOf, isFunctor,
-isArray, of, searchObj, assignDeep, objUnion, objIntersect,
-objDifference, objComplement, log, error, peek, jsonClone, toArray,
-toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep
+isFunction, isType, isStrictly, isOfType, isLoosely, isClass,
+isCallable, isObject, isBoolean, isNumber, isString, isMap, isSet,
+isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
+isUsableImmutablePrimitive, isEmptyList, isEmptyObject,
+isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf,
+isLooselyOneOf, instanceOfOne, isFunctor, isArray, of, searchObj,
+assignDeep, objUnion, objIntersect, objDifference, objComplement, log,
+error, peek, jsonClone, toArray, toAssocList, toAssocListDeep,
+fromAssocList, fromAssocListDeep
 ```
 ### `boolean` methods
  ```

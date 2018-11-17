@@ -1,4 +1,30 @@
 ## Change log
+### 1.10.0
+- Added some synonyms:
+  - `isLoosely` for `isOfType`
+  - `isStrictly` for `isType`
+  - `isStrictlyOneOf` for `isOneOf`
+#### New additions:  
+  - `isLooselyOneOf` - For type checking with mix-match
+  type refs (constructor names and constructors):
+  ```javascript
+  const someValue = 'someValue';
+  isLooselyOneOf(someValue, 'Undefined', Function, 'Map'); 
+  // `false` - Doesn't match any type.
+  
+  isLooselyOneOf(someValue, 'Undefined', String, 'Map'); 
+  // `true` - Matches `String`
+  
+  isLooselyOneOf(someValue, 'Undefined', 'String', 'Map'); 
+  // `true` - Matches 'String'
+  ```
+  - `instanceOfOne` - `instanceOf` for one or more types:
+  ```javascript
+  const someValue = 'hello';
+  instanceOfOne(someValue, Function, String, Array)
+  // `true` matches - String
+  ```
+  
 ### 1.9.0
 - Added `toFunction` (for functional composition of values that must pass as functions).
 

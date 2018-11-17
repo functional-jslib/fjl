@@ -483,7 +483,7 @@ var assign = function () {
  * @memberOf object
  */
 var _Number$1 = Number.name;
-var _NaN$1 = 'NaN';
+var _NaN = 'NaN';
 var _Null$1 = 'Null';
 var _Undefined$1 = 'Undefined';
 /**
@@ -508,7 +508,7 @@ function typeOf(value) {
     retVal = _Null$1;
   } else {
     var constructorName = value.constructor.name;
-    retVal = constructorName === _Number$1 && isNaN(value) ? _NaN$1 : constructorName;
+    retVal = constructorName === _Number$1 && isNaN(value) ? _NaN : constructorName;
   }
 
   return retVal;
@@ -522,8 +522,6 @@ var _String = String.name;
 var _Number = Number.name;
 var _Object = Object.name;
 var _Boolean = Boolean.name;
-var _Function = Function.name;
-var _Array = Array.name;
 var _Symbol = 'Symbol';
 var _Map = 'Map';
 var _Set = 'Set';
@@ -531,7 +529,6 @@ var _WeakMap = 'WeakMap';
 var _WeakSet = 'WeakSet';
 var _Null = 'Null';
 var _Undefined = 'Undefined';
-var _NaN = 'NaN';
 
 /**
  * Resolves/normalizes a type name from either a string or a constructor.
@@ -571,9 +568,11 @@ var isFunction = instanceOf(Function);
 var isType = curry(function (type, obj) {
   return typeOf(obj) === toTypeRefName(type);
 });
+var isStrictly = isType;
 var isOfType = curry(function (type, x) {
   return isType(type, x) || instanceOf(type, x);
 });
+var isLoosely = isOfType;
 var isClass = function isClass(x) {
   return x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10));
 };
@@ -607,36 +606,30 @@ var isEmptyObject = function isEmptyObject(obj) {
 var isEmptyCollection = function isEmptyCollection(x) {
   return x.size === 0;
 };
-var isEmpty = function isEmpty(value) {
-  if (!value) {
-    // if '', 0, `null`, `undefined`, or `false` then is empty
+var isEmpty = function isEmpty(x) {
+  if (!x) {
+    // if '', 0, `null`, `undefined`, `NaN`, or `false` then is empty
     return true;
   }
 
-  switch (typeOf(value)) {
-    case _Array:
-    case _Function:
-      return !value.length;
-
-    case _Number:
-      // zero and NaN checks happened above so `if number` then it's 'not-an-empty-number' (lol)
-      return false;
-
-    case _Object:
-      return !keys(value).length;
-
-    case _Map:
-    case _Set:
-    case _WeakSet:
-    case _WeakMap:
-      return !value.size;
-
-    case _NaN:
-      return true;
-
-    default:
-      return !value;
+  if (isNumber(x) || isFunction(x)) {
+    return false;
   }
+
+  if (isArray(x)) {
+    // takes care of 'instances of Array'
+    return !x.length;
+  }
+
+  if (x.size !== undefined && !instanceOf(Function, x.size)) {
+    return !x.size;
+  }
+
+  if (isObject(x)) {
+    return !keys(x).length;
+  }
+
+  return false;
 };
 var isset = function isset(x) {
   return x !== null && x !== undefined;
@@ -651,6 +644,23 @@ var isOneOf = function isOneOf(x) {
   return toTypeRefNames(types).some(function (name) {
     return typeName === name;
   });
+};
+var isStrictlyOneOf = isOneOf;
+var isLooselyOneOf = function isLooselyOneOf(x) {
+  for (var _len4 = arguments.length, types = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+    types[_key4 - 1] = arguments[_key4];
+  }
+
+  return types.some(function (type) {
+    return isType(type, x) || instanceOf(x, type);
+  });
+};
+var instanceOfOne = function instanceOfOne(x) {
+  for (var _len5 = arguments.length, types = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+    types[_key5 - 1] = arguments[_key5];
+  }
+
+  return types.some(instanceOf(x));
 };
 var isFunctor = function isFunctor(x) {
   return x && x.map && instanceOf(Function, x.map);
@@ -2439,7 +2449,9 @@ exports.toTypeRefName = toTypeRefName;
 exports.toTypeRefNames = toTypeRefNames;
 exports.isFunction = isFunction;
 exports.isType = isType;
+exports.isStrictly = isStrictly;
 exports.isOfType = isOfType;
+exports.isLoosely = isLoosely;
 exports.isClass = isClass;
 exports.isCallable = isCallable;
 exports.isObject = isObject;
@@ -2460,6 +2472,9 @@ exports.isEmptyCollection = isEmptyCollection;
 exports.isEmpty = isEmpty;
 exports.isset = isset;
 exports.isOneOf = isOneOf;
+exports.isStrictlyOneOf = isStrictlyOneOf;
+exports.isLooselyOneOf = isLooselyOneOf;
+exports.instanceOfOne = instanceOfOne;
 exports.isFunctor = isFunctor;
 exports.isArray = isArray;
 exports.of = of;
