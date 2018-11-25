@@ -16,3 +16,4 @@ export * from './object/console';
 export * from './object/jsonClone';
 export * from './object/toArray';
 export * from './object/assocList';
+export * from './object/defineProp';

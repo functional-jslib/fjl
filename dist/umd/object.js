@@ -1,16 +1,16 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(["exports", "./jsPlatform/object", "./object/lookup", "./object/typeOf", "./object/copy", "./object/is", "./object/of", "./object/searchObj", "./object/assignDeep", "./object/setTheory", "./object/console", "./object/jsonClone", "./object/toArray", "./object/assocList"], factory);
+    define(["exports", "./jsPlatform/object", "./object/lookup", "./object/typeOf", "./object/copy", "./object/is", "./object/of", "./object/searchObj", "./object/assignDeep", "./object/setTheory", "./object/console", "./object/jsonClone", "./object/toArray", "./object/assocList", "./object/defineProp"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require("./jsPlatform/object"), require("./object/lookup"), require("./object/typeOf"), require("./object/copy"), require("./object/is"), require("./object/of"), require("./object/searchObj"), require("./object/assignDeep"), require("./object/setTheory"), require("./object/console"), require("./object/jsonClone"), require("./object/toArray"), require("./object/assocList"));
+    factory(exports, require("./jsPlatform/object"), require("./object/lookup"), require("./object/typeOf"), require("./object/copy"), require("./object/is"), require("./object/of"), require("./object/searchObj"), require("./object/assignDeep"), require("./object/setTheory"), require("./object/console"), require("./object/jsonClone"), require("./object/toArray"), require("./object/assocList"), require("./object/defineProp"));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.object, global.lookup, global.typeOf, global.copy, global.is, global.of, global.searchObj, global.assignDeep, global.setTheory, global.console, global.jsonClone, global.toArray, global.assocList);
+    factory(mod.exports, global.object, global.lookup, global.typeOf, global.copy, global.is, global.of, global.searchObj, global.assignDeep, global.setTheory, global.console, global.jsonClone, global.toArray, global.assocList, global.defineProp);
     global.object = mod.exports;
   }
-})(this, function (_exports, _object, _lookup, _typeOf, _copy, _is, _of, _searchObj, _assignDeep, _setTheory, _console, _jsonClone, _toArray, _assocList) {
+})(this, function (_exports, _object, _lookup, _typeOf, _copy, _is, _of, _searchObj, _assignDeep, _setTheory, _console, _jsonClone, _toArray, _assocList, _defineProp) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -130,6 +130,15 @@
       enumerable: true,
       get: function get() {
         return _assocList[key];
+      }
+    });
+  });
+  Object.keys(_defineProp).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(_exports, key, {
+      enumerable: true,
+      get: function get() {
+        return _defineProp[key];
       }
     });
   });

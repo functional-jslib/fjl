@@ -37,7 +37,9 @@ isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf,
 isLooselyOneOf, instanceOfOne, isFunctor, isArray, of, searchObj,
 assignDeep, objUnion, objIntersect, objDifference, objComplement, log,
 error, peek, jsonClone, toArray, toAssocList, toAssocListDeep,
-fromAssocList, fromAssocListDeep
+fromAssocList, fromAssocListDeep, createTypedDescriptor,
+toEnumerableDescriptor, toTargetDescriptorTuple, defineProp,
+defineEnumProp, defineEnumProps, defineProps
 ```
 ### `boolean` methods
  ```

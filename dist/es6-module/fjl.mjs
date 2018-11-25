@@ -689,6 +689,229 @@ const toArray = x => {
 };
 
 /**
+ * @module errorThrowing
+ * @description Contains error throwing facilities for when a value doesn't match a type.
+ */
+const typeRefsToStringOrError = types => types.length ? types.map(type => `\`${toTypeRefName(type)}\``).join(', ') : '';
+const defaultErrorMessageCall = tmplContext => {
+  const {
+    contextName,
+    valueName,
+    value,
+    expectedTypeName,
+    foundTypeName,
+    messageSuffix
+  } = tmplContext,
+        isMultiTypeNames = isArray(expectedTypeName),
+        typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+        typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
+  return (contextName ? `\`${contextName}.` : '`') + `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` + `Type received: ${foundTypeName}.  Value: ${value};` + `${messageSuffix ? '  ' + messageSuffix + ';' : ''}`;
+};
+const _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = isOfType) => (ValueType, contextName, valueName, value, messageSuffix = null) => {
+  const expectedTypeName = toTypeRef(ValueType),
+        foundTypeName = typeOf(value);
+
+  if (typeChecker(ValueType, value)) {
+    return value;
+  } // Value matches type
+
+
+  throw new Error(errorMessageCall({
+    contextName,
+    valueName,
+    value,
+    expectedTypeName,
+    foundTypeName,
+    messageSuffix
+  }));
+};
+const _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = isOfType) => (valueTypes, contextName, valueName, value, messageSuffix = null) => {
+  const expectedTypeNames = valueTypes.map(toTypeRef),
+        matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
+        foundTypeName = typeOf(value);
+
+  if (matchFound) {
+    return value;
+  }
+
+  throw new Error(errorMessageCall({
+    contextName,
+    valueName,
+    value,
+    expectedTypeName: expectedTypeNames,
+    foundTypeName,
+    messageSuffix
+  }));
+};
+const _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
+const _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall);
+const getErrorIfNotTypeThrower = errorMessageCall => curry(_getErrorIfNotTypeThrower(errorMessageCall));
+const getErrorIfNotTypesThrower = errorMessageCall => curry(_getErrorIfNotTypesThrower(errorMessageCall));
+const errorIfNotType = curry(_errorIfNotType);
+const errorIfNotTypes = curry(_errorIfNotTypes);
+/**
+ * @typedef {*} Any - Synonym for 'any value'.
+ */
+
+/**
+ * @typedef {String|Function} TypeRef
+ * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
+ */
+
+/**
+ * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
+ * @description Template context used for error message renderers (functions that take a context obj and return a string).
+ * @property value {*}
+ * @property valueName {String}
+ * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
+ * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
+ * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
+ *  directing user to fix where his/her error has occurred).  Optional.
+ */
+
+/**
+ * @typedef {Array<(String|Function)>} TypesArray
+ */
+
+/**
+ * @typedef {Function} TypeChecker
+ * @description Checks whether a value is of given type.
+ * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @typedef {Function} ErrorMessageCall
+ * @description Error message template function.
+ * @param tmplContext {TemplateContext}
+ * @returns {String}
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotType
+ * @description Used to ensure value matches passed in type.
+ * @param type {TypeRef} - Constructor name or constructor.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - What ever value is.
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotTypes
+ * @description Used to ensure a value matches one of one or more types passed in.
+ * @param valueTypes {TypesArray} - Array of constructor names or constructors.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - Whatever value is.
+ */
+
+/**
+ * @module object
+ * @note Custom jsdoc type definitions defined toward end of file.
+ */
+/**
+ * Creates `defineProps` and `defineEnumProps` methods based on `{enumerable}` param.
+ * @param {{enumerable: Boolean}}
+ * @returns {function(*, *)|PropsDefinerCall}
+ * @private
+ */
+
+function createDefinePropsMethod({
+  enumerable
+}) {
+  const operation = enumerable ? defineEnumProp : defineProp;
+  return (argTuples, target) => {
+    argTuples.forEach(argTuple => {
+      const [TypeRef, propName, defaultValue] = argTuple;
+      apply(operation, [TypeRef, target, propName, defaultValue]);
+    });
+    return target;
+  };
+}
+
+const createTypedDescriptor = (Type, target, propName) => {
+  let _value;
+
+  return {
+    get: function () {
+      return _value;
+    },
+    set: function (value) {
+      _value = errorIfNotType(Type, propName, target, value);
+    }
+  };
+};
+const toEnumerableDescriptor = ([target, descriptor]) => {
+  descriptor.enumerable = true;
+  return [target, descriptor];
+};
+const toTargetDescriptorTuple = targetOrTargetDescriptorTuple => isType('Array', targetOrTargetDescriptorTuple) ? // Strict type check for array
+targetOrTargetDescriptorTuple : [targetOrTargetDescriptorTuple];
+const defineProp = (Type, target, propName, defaultValue = undefined) => {
+  const [_target, _descriptor] = toTargetDescriptorTuple(target),
+        descriptor = _descriptor || createTypedDescriptor(Type, _target, propName);
+
+  Object.defineProperty(_target, propName, descriptor);
+
+  if (!isUndefined(defaultValue)) {
+    _target[propName] = defaultValue;
+  }
+
+  return [_target, descriptor];
+};
+const defineEnumProp = (Type, target, propName, defaultValue = undefined) => {
+  const [_target, _descriptor] = toTargetDescriptorTuple(target),
+        descriptor = _descriptor || createTypedDescriptor(Type, _target, propName);
+
+  return defineProp(Type, toEnumerableDescriptor([_target, descriptor]), propName, defaultValue);
+};
+const defineEnumProps = curry(createDefinePropsMethod({
+  enumerable: true
+}));
+const defineProps = curry(createDefinePropsMethod({
+  enumerable: false
+}));
+/** ============================================================= */
+
+/** Type definitions:                                             */
+
+/** ============================================================= */
+
+/**
+ * @typedef {*} Target
+ */
+
+/**
+ * @typedef {Object} Descriptor
+ */
+
+/**
+ * @typedef {Array<Target, Descriptor>} TargetDescriptorTuple
+ */
+
+/**
+ * @typedef {Array.<TypeRef, TargetDescriptorTuple, String, *>}  DefinePropArgsTuple
+ * @description Arguments list for `defineProp` and/or `defineEnumProp` (note: some
+ *  parts of array/tuple are options (namely the last two args));  E.g.,
+ *  ```
+ *  [String, [someTarget], 'somePropName', 'someDefaultValue] // ...
+ *  ```
+ */
+
+/**
+ * @typedef {Function} PropsDefinerCall
+ * @description Same type as `defineProp` and `defineEnumProp`
+ * @param argsTuple {DefinePropArgsTuple}
+ * @param target {Target}
+ * @returns {Array.<TargetDescriptorTuple>}
+ */
+
+/**
  * @module object
  * @description Object operations/combinators.
  */
@@ -1554,128 +1777,6 @@ const difference = curry((array1, array2) => {
 const complement = curry2((arr0, ...arrays) => reduce$1((agg, arr) => append(agg, difference(arr, arr0)), [], arrays));
 
 /**
- * @module errorThrowing
- * @description Contains error throwing facilities for when a value doesn't match a type.
- */
-const typeRefsToStringOrError = types => types.length ? types.map(type => `\`${toTypeRefName(type)}\``).join(', ') : '';
-const defaultErrorMessageCall = tmplContext => {
-  const {
-    contextName,
-    valueName,
-    value,
-    expectedTypeName,
-    foundTypeName,
-    messageSuffix
-  } = tmplContext,
-        isMultiTypeNames = isArray(expectedTypeName),
-        typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
-        typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
-  return (contextName ? `\`${contextName}.` : '`') + `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` + `Type received: ${foundTypeName}.  Value: ${value};` + `${messageSuffix ? '  ' + messageSuffix + ';' : ''}`;
-};
-const _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = isOfType) => (ValueType, contextName, valueName, value, messageSuffix = null) => {
-  const expectedTypeName = toTypeRef(ValueType),
-        foundTypeName = typeOf(value);
-
-  if (typeChecker(ValueType, value)) {
-    return value;
-  } // Value matches type
-
-
-  throw new Error(errorMessageCall({
-    contextName,
-    valueName,
-    value,
-    expectedTypeName,
-    foundTypeName,
-    messageSuffix
-  }));
-};
-const _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = isOfType) => (valueTypes, contextName, valueName, value, messageSuffix = null) => {
-  const expectedTypeNames = valueTypes.map(toTypeRef),
-        matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
-        foundTypeName = typeOf(value);
-
-  if (matchFound) {
-    return value;
-  }
-
-  throw new Error(errorMessageCall({
-    contextName,
-    valueName,
-    value,
-    expectedTypeName: expectedTypeNames,
-    foundTypeName,
-    messageSuffix
-  }));
-};
-const _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
-const _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall);
-const getErrorIfNotTypeThrower = errorMessageCall => curry(_getErrorIfNotTypeThrower(errorMessageCall));
-const getErrorIfNotTypesThrower = errorMessageCall => curry(_getErrorIfNotTypesThrower(errorMessageCall));
-const errorIfNotType = curry(_errorIfNotType);
-const errorIfNotTypes = curry(_errorIfNotTypes);
-/**
- * @typedef {*} Any - Synonym for 'any value'.
- */
-
-/**
- * @typedef {String|Function} TypeRef
- * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
- */
-
-/**
- * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
- * @description Template context used for error message renderers (functions that take a context obj and return a string).
- * @property value {*}
- * @property valueName {String}
- * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
- * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
- * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
- *  directing user to fix where his/her error has occurred).  Optional.
- */
-
-/**
- * @typedef {Array<(String|Function)>} TypesArray
- */
-
-/**
- * @typedef {Function} TypeChecker
- * @description Checks whether a value is of given type.
- * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * @typedef {Function} ErrorMessageCall
- * @description Error message template function.
- * @param tmplContext {TemplateContext}
- * @returns {String}
- */
-
-/**
- * @typedef {Function} ErrorIfNotType
- * @description Used to ensure value matches passed in type.
- * @param type {TypeRef} - Constructor name or constructor.
- * @param contextName {String}
- * @param valueName {String}
- * @param value {*}
- * @throws {Error} - If value doesn't match type.
- * @returns {*} - What ever value is.
- */
-
-/**
- * @typedef {Function} ErrorIfNotTypes
- * @description Used to ensure a value matches one of one or more types passed in.
- * @param valueTypes {TypesArray} - Array of constructor names or constructors.
- * @param contextName {String}
- * @param valueName {String}
- * @param value {*}
- * @throws {Error} - If value doesn't match type.
- * @returns {*} - Whatever value is.
- */
-
-/**
  * @module string
  * @description Contains functions for strings.
  */
@@ -1720,5 +1821,5 @@ const classCase = compose(ucaseFirst, camelCase);
  * Also note: Class cased names are use for values that do not have `name` properties;  Namely: 'Null', 'NaN' and 'Undefined' (for their respective values respectively).
  */
 
-export { instanceOf, hasOwnProperty, length, native, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames, isFunction, isType, isStrictly, isOfType, isLoosely, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf, isLooselyOneOf, instanceOfOne, isFunctor, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll, apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, trampoline, toFunction, map$1 as map, append, head, last, tail, init, uncons, unconsr, concat$1 as concat, concatMap, reverse$1 as reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach$1 as forEach, filter$1 as filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest, reduceUntil, reduceUntilRight, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArray, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes };
+export { instanceOf, hasOwnProperty, length, native, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames, isFunction, isType, isStrictly, isOfType, isLoosely, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf, isLooselyOneOf, instanceOfOne, isFunctor, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, createTypedDescriptor, toEnumerableDescriptor, toTargetDescriptorTuple, defineProp, defineEnumProp, defineEnumProps, defineProps, isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll, apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, trampoline, toFunction, map$1 as map, append, head, last, tail, init, uncons, unconsr, concat$1 as concat, concatMap, reverse$1 as reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach$1 as forEach, filter$1 as filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest, reduceUntil, reduceUntilRight, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArray, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes };
 //# sourceMappingURL=fjl.mjs.map

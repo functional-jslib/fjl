@@ -1160,6 +1160,264 @@ var toArray = function toArray(x) {
 };
 
 /**
+ * @module errorThrowing
+ * @description Contains error throwing facilities for when a value doesn't match a type.
+ */
+var typeRefsToStringOrError = function typeRefsToStringOrError(types) {
+  return types.length ? types.map(function (type) {
+    return "`".concat(toTypeRefName(type), "`");
+  }).join(', ') : '';
+};
+var defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {
+  var contextName = tmplContext.contextName,
+      valueName = tmplContext.valueName,
+      value = tmplContext.value,
+      expectedTypeName = tmplContext.expectedTypeName,
+      foundTypeName = tmplContext.foundTypeName,
+      messageSuffix = tmplContext.messageSuffix,
+      isMultiTypeNames = isArray(expectedTypeName),
+      typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
+      typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
+  return (contextName ? "`".concat(contextName, ".") : '`') + "".concat(valueName, "` is not ").concat(typesCopy, ": ").concat(typesToMatchCopy, ".  ") + "Type received: ".concat(foundTypeName, ".  Value: ").concat(value, ";") + "".concat(messageSuffix ? '  ' + messageSuffix + ';' : '');
+};
+var _getErrorIfNotTypeThrower = function _getErrorIfNotTypeThrower(errorMessageCall) {
+  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : isOfType;
+  return function (ValueType, contextName, valueName, value) {
+    var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+    var expectedTypeName = toTypeRef(ValueType),
+        foundTypeName = typeOf(value);
+
+    if (typeChecker(ValueType, value)) {
+      return value;
+    } // Value matches type
+
+
+    throw new Error(errorMessageCall({
+      contextName: contextName,
+      valueName: valueName,
+      value: value,
+      expectedTypeName: expectedTypeName,
+      foundTypeName: foundTypeName,
+      messageSuffix: messageSuffix
+    }));
+  };
+};
+var _getErrorIfNotTypesThrower = function _getErrorIfNotTypesThrower(errorMessageCall) {
+  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : isOfType;
+  return function (valueTypes, contextName, valueName, value) {
+    var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+    var expectedTypeNames = valueTypes.map(toTypeRef),
+        matchFound = valueTypes.some(function (ValueType) {
+      return typeChecker(ValueType, value);
+    }),
+        foundTypeName = typeOf(value);
+
+    if (matchFound) {
+      return value;
+    }
+
+    throw new Error(errorMessageCall({
+      contextName: contextName,
+      valueName: valueName,
+      value: value,
+      expectedTypeName: expectedTypeNames,
+      foundTypeName: foundTypeName,
+      messageSuffix: messageSuffix
+    }));
+  };
+};
+var _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
+var _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall);
+var getErrorIfNotTypeThrower = function getErrorIfNotTypeThrower(errorMessageCall) {
+  return curry(_getErrorIfNotTypeThrower(errorMessageCall));
+};
+var getErrorIfNotTypesThrower = function getErrorIfNotTypesThrower(errorMessageCall) {
+  return curry(_getErrorIfNotTypesThrower(errorMessageCall));
+};
+var errorIfNotType = curry(_errorIfNotType);
+var errorIfNotTypes = curry(_errorIfNotTypes);
+/**
+ * @typedef {*} Any - Synonym for 'any value'.
+ */
+
+/**
+ * @typedef {String|Function} TypeRef
+ * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
+ */
+
+/**
+ * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
+ * @description Template context used for error message renderers (functions that take a context obj and return a string).
+ * @property value {*}
+ * @property valueName {String}
+ * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
+ * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
+ * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
+ *  directing user to fix where his/her error has occurred).  Optional.
+ */
+
+/**
+ * @typedef {Array<(String|Function)>} TypesArray
+ */
+
+/**
+ * @typedef {Function} TypeChecker
+ * @description Checks whether a value is of given type.
+ * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
+ * @param value {*}
+ * @returns {Boolean}
+ */
+
+/**
+ * @typedef {Function} ErrorMessageCall
+ * @description Error message template function.
+ * @param tmplContext {TemplateContext}
+ * @returns {String}
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotType
+ * @description Used to ensure value matches passed in type.
+ * @param type {TypeRef} - Constructor name or constructor.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - What ever value is.
+ */
+
+/**
+ * @typedef {Function} ErrorIfNotTypes
+ * @description Used to ensure a value matches one of one or more types passed in.
+ * @param valueTypes {TypesArray} - Array of constructor names or constructors.
+ * @param contextName {String}
+ * @param valueName {String}
+ * @param value {*}
+ * @throws {Error} - If value doesn't match type.
+ * @returns {*} - Whatever value is.
+ */
+
+/**
+ * @module object
+ * @note Custom jsdoc type definitions defined toward end of file.
+ */
+/**
+ * Creates `defineProps` and `defineEnumProps` methods based on `{enumerable}` param.
+ * @param {{enumerable: Boolean}}
+ * @returns {function(*, *)|PropsDefinerCall}
+ * @private
+ */
+
+function createDefinePropsMethod(_ref) {
+  var enumerable = _ref.enumerable;
+  var operation = enumerable ? defineEnumProp : defineProp;
+  return function (argTuples, target) {
+    argTuples.forEach(function (argTuple) {
+      var _argTuple = _slicedToArray(argTuple, 3),
+          TypeRef = _argTuple[0],
+          propName = _argTuple[1],
+          defaultValue = _argTuple[2];
+
+      apply(operation, [TypeRef, target, propName, defaultValue]);
+    });
+    return target;
+  };
+}
+
+var createTypedDescriptor = function createTypedDescriptor(Type, target, propName) {
+  var _value;
+
+  return {
+    get: function get() {
+      return _value;
+    },
+    set: function set(value) {
+      _value = errorIfNotType(Type, propName, target, value);
+    }
+  };
+};
+var toEnumerableDescriptor = function toEnumerableDescriptor(_ref2) {
+  var _ref3 = _slicedToArray(_ref2, 2),
+      target = _ref3[0],
+      descriptor = _ref3[1];
+
+  descriptor.enumerable = true;
+  return [target, descriptor];
+};
+var toTargetDescriptorTuple = function toTargetDescriptorTuple(targetOrTargetDescriptorTuple) {
+  return isType('Array', targetOrTargetDescriptorTuple) ? // Strict type check for array
+  targetOrTargetDescriptorTuple : [targetOrTargetDescriptorTuple];
+};
+var defineProp = function defineProp(Type, target, propName) {
+  var defaultValue = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+
+  var _toTargetDescriptorTu = toTargetDescriptorTuple(target),
+      _toTargetDescriptorTu2 = _slicedToArray(_toTargetDescriptorTu, 2),
+      _target = _toTargetDescriptorTu2[0],
+      _descriptor = _toTargetDescriptorTu2[1],
+      descriptor = _descriptor || createTypedDescriptor(Type, _target, propName);
+
+  Object.defineProperty(_target, propName, descriptor);
+
+  if (!isUndefined(defaultValue)) {
+    _target[propName] = defaultValue;
+  }
+
+  return [_target, descriptor];
+};
+var defineEnumProp = function defineEnumProp(Type, target, propName) {
+  var defaultValue = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+
+  var _toTargetDescriptorTu3 = toTargetDescriptorTuple(target),
+      _toTargetDescriptorTu4 = _slicedToArray(_toTargetDescriptorTu3, 2),
+      _target = _toTargetDescriptorTu4[0],
+      _descriptor = _toTargetDescriptorTu4[1],
+      descriptor = _descriptor || createTypedDescriptor(Type, _target, propName);
+
+  return defineProp(Type, toEnumerableDescriptor([_target, descriptor]), propName, defaultValue);
+};
+var defineEnumProps = curry(createDefinePropsMethod({
+  enumerable: true
+}));
+var defineProps = curry(createDefinePropsMethod({
+  enumerable: false
+}));
+/** ============================================================= */
+
+/** Type definitions:                                             */
+
+/** ============================================================= */
+
+/**
+ * @typedef {*} Target
+ */
+
+/**
+ * @typedef {Object} Descriptor
+ */
+
+/**
+ * @typedef {Array<Target, Descriptor>} TargetDescriptorTuple
+ */
+
+/**
+ * @typedef {Array.<TypeRef, TargetDescriptorTuple, String, *>}  DefinePropArgsTuple
+ * @description Arguments list for `defineProp` and/or `defineEnumProp` (note: some
+ *  parts of array/tuple are options (namely the last two args));  E.g.,
+ *  ```
+ *  [String, [someTarget], 'somePropName', 'someDefaultValue] // ...
+ *  ```
+ */
+
+/**
+ * @typedef {Function} PropsDefinerCall
+ * @description Same type as `defineProp` and `defineEnumProp`
+ * @param argsTuple {DefinePropArgsTuple}
+ * @param target {Target}
+ * @returns {Array.<TargetDescriptorTuple>}
+ */
+
+/**
  * @module object
  * @description Object operations/combinators.
  */
@@ -2245,144 +2503,6 @@ var complement = curry2(function (arr0) {
 });
 
 /**
- * @module errorThrowing
- * @description Contains error throwing facilities for when a value doesn't match a type.
- */
-var typeRefsToStringOrError = function typeRefsToStringOrError(types) {
-  return types.length ? types.map(function (type) {
-    return "`".concat(toTypeRefName(type), "`");
-  }).join(', ') : '';
-};
-var defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {
-  var contextName = tmplContext.contextName,
-      valueName = tmplContext.valueName,
-      value = tmplContext.value,
-      expectedTypeName = tmplContext.expectedTypeName,
-      foundTypeName = tmplContext.foundTypeName,
-      messageSuffix = tmplContext.messageSuffix,
-      isMultiTypeNames = isArray(expectedTypeName),
-      typesCopy = isMultiTypeNames ? 'of type' : 'of one of the types',
-      typesToMatchCopy = isMultiTypeNames ? typeRefsToStringOrError(expectedTypeName) : expectedTypeName;
-  return (contextName ? "`".concat(contextName, ".") : '`') + "".concat(valueName, "` is not ").concat(typesCopy, ": ").concat(typesToMatchCopy, ".  ") + "Type received: ".concat(foundTypeName, ".  Value: ").concat(value, ";") + "".concat(messageSuffix ? '  ' + messageSuffix + ';' : '');
-};
-var _getErrorIfNotTypeThrower = function _getErrorIfNotTypeThrower(errorMessageCall) {
-  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : isOfType;
-  return function (ValueType, contextName, valueName, value) {
-    var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-    var expectedTypeName = toTypeRef(ValueType),
-        foundTypeName = typeOf(value);
-
-    if (typeChecker(ValueType, value)) {
-      return value;
-    } // Value matches type
-
-
-    throw new Error(errorMessageCall({
-      contextName: contextName,
-      valueName: valueName,
-      value: value,
-      expectedTypeName: expectedTypeName,
-      foundTypeName: foundTypeName,
-      messageSuffix: messageSuffix
-    }));
-  };
-};
-var _getErrorIfNotTypesThrower = function _getErrorIfNotTypesThrower(errorMessageCall) {
-  var typeChecker = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : isOfType;
-  return function (valueTypes, contextName, valueName, value) {
-    var messageSuffix = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-    var expectedTypeNames = valueTypes.map(toTypeRef),
-        matchFound = valueTypes.some(function (ValueType) {
-      return typeChecker(ValueType, value);
-    }),
-        foundTypeName = typeOf(value);
-
-    if (matchFound) {
-      return value;
-    }
-
-    throw new Error(errorMessageCall({
-      contextName: contextName,
-      valueName: valueName,
-      value: value,
-      expectedTypeName: expectedTypeNames,
-      foundTypeName: foundTypeName,
-      messageSuffix: messageSuffix
-    }));
-  };
-};
-var _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall);
-var _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall);
-var getErrorIfNotTypeThrower = function getErrorIfNotTypeThrower(errorMessageCall) {
-  return curry(_getErrorIfNotTypeThrower(errorMessageCall));
-};
-var getErrorIfNotTypesThrower = function getErrorIfNotTypesThrower(errorMessageCall) {
-  return curry(_getErrorIfNotTypesThrower(errorMessageCall));
-};
-var errorIfNotType = curry(_errorIfNotType);
-var errorIfNotTypes = curry(_errorIfNotTypes);
-/**
- * @typedef {*} Any - Synonym for 'any value'.
- */
-
-/**
- * @typedef {String|Function} TypeRef
- * @description Type reference.  Type itself or Type's name;  E.g., `Type.name`;
- */
-
-/**
- * @typedef {Object<value, valueName, expectedTypeName, foundTypeName, messageSuffix>} TemplateContext
- * @description Template context used for error message renderers (functions that take a context obj and return a string).
- * @property value {*}
- * @property valueName {String}
- * @property expectedTypeName {String} - Expected name of constructor of `value`;  E.g., usually `SomeConstructor.name`;
- * @property foundTypeName {String} - Found types name;  E.g., `FoundConstructor.name`;
- * @property [messageSuffix=null] {*} - Message suffix (sometimes an extra hint or instructions for
- *  directing user to fix where his/her error has occurred).  Optional.
- */
-
-/**
- * @typedef {Array<(String|Function)>} TypesArray
- */
-
-/**
- * @typedef {Function} TypeChecker
- * @description Checks whether a value is of given type.
- * @param Type {TypeRef} - a Type or it's name;  E.g., `Type.name`.
- * @param value {*}
- * @returns {Boolean}
- */
-
-/**
- * @typedef {Function} ErrorMessageCall
- * @description Error message template function.
- * @param tmplContext {TemplateContext}
- * @returns {String}
- */
-
-/**
- * @typedef {Function} ErrorIfNotType
- * @description Used to ensure value matches passed in type.
- * @param type {TypeRef} - Constructor name or constructor.
- * @param contextName {String}
- * @param valueName {String}
- * @param value {*}
- * @throws {Error} - If value doesn't match type.
- * @returns {*} - What ever value is.
- */
-
-/**
- * @typedef {Function} ErrorIfNotTypes
- * @description Used to ensure a value matches one of one or more types passed in.
- * @param valueTypes {TypesArray} - Array of constructor names or constructors.
- * @param contextName {String}
- * @param valueName {String}
- * @param value {*}
- * @throws {Error} - If value doesn't match type.
- * @returns {*} - Whatever value is.
- */
-
-/**
  * @module string
  * @description Contains functions for strings.
  */
@@ -2493,6 +2613,13 @@ exports.toAssocList = toAssocList;
 exports.toAssocListDeep = toAssocListDeep;
 exports.fromAssocList = fromAssocList;
 exports.fromAssocListDeep = fromAssocListDeep;
+exports.createTypedDescriptor = createTypedDescriptor;
+exports.toEnumerableDescriptor = toEnumerableDescriptor;
+exports.toTargetDescriptorTuple = toTargetDescriptorTuple;
+exports.defineProp = defineProp;
+exports.defineEnumProp = defineEnumProp;
+exports.defineEnumProps = defineEnumProps;
+exports.defineProps = defineProps;
 exports.isTruthy = isTruthy;
 exports.isFalsy = isFalsy;
 exports.alwaysTrue = alwaysTrue;

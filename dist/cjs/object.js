@@ -159,3 +159,15 @@ Object.keys(_assocList).forEach(function (key) {
     }
   });
 });
+
+var _defineProp = require("./object/defineProp");
+
+Object.keys(_defineProp).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _defineProp[key];
+    }
+  });
+});

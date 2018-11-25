@@ -9,7 +9,7 @@ import {
     defineEnumProp,
     defineEnumProps
 }
-    from '../src/object/defineProp';
+    from '../src/object';
 
 describe ('#fjlMutable', function () {
 
