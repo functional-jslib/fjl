@@ -36,7 +36,7 @@ isUsableImmutablePrimitive, isEmptyList, isEmptyObject,
 isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf,
 isLooselyOneOf, instanceOfOne, isFunctor, isArray, of, searchObj,
 assignDeep, objUnion, objIntersect, objDifference, objComplement, log,
-error, peek, jsonClone, toArray, toAssocList, toAssocListDeep,
+error, peek, warn, jsonClone, toArray, toAssocList, toAssocListDeep,
 fromAssocList, fromAssocListDeep
 ```
 ### `boolean` methods

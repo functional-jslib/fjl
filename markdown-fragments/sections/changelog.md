@@ -1,4 +1,14 @@
 ## Change log
+### 1.10.3
+- Added './types' dir for typescript type files (added in earlier commits though formerly announcing here).
+- Added types file to package.json (at 'types' property).
+- Refactored type definitions, a bit, (from what they were before - they were committed in earlier commits though their 
+format wasn't finalized yet).
+- Updated readme with note on typescript types file.
+- Fixed typo in 'filter' type in list.d.ts - It's return value was marked as `void` updated to `any[]`.
+- Added `warn` function to console module and to library.
+- Regenerated docs, readme etc..
+
 ### 1.10.0
 - Added some synonyms:
   - `isLoosely` for `isOfType`

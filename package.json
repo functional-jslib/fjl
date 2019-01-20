@@ -1,9 +1,10 @@
 {
   "name": "fjl",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl",
   "module": "dist/es6-module/fjl.mjs",
+  "types": "./types/index.d.ts",
   "scripts": {
     "build": "gulp docs build && npm run test-builds",
     "test-builds": "jest --testMatch **/tests/*-test-*.js",
@@ -13,9 +14,10 @@
     "docs": "gulp docs"
   },
   "directories": {
+    "dist":  "dist",
+    "doc": "README.md",
     "test": "tests",
-    "lib": "src",
-    "doc": "README.md"
+    "lib": "src"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

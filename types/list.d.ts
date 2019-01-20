@@ -9,9 +9,9 @@ declare type ListForEachOperation = (agg: any, item: any, index: number, list: (
 declare type OrderingFunction = (a: any, b: any) => number;
 
 declare interface List {
-    concat(...fs: Array<any>[]): Array<any>;
+    concat(...fs: Array<Array<any> | string>): Array<any> | string;
 
-    slice(startInd: number, endInd: number, list: Array<any>): Array<any>;
+    slice(startInd: number, endInd: number, list: Array<any> | string): Array<any> | string;
 
     includes(x: any, xs: (any[] | string | any)): boolean;
 
@@ -20,33 +20,35 @@ declare interface List {
     lastIndexOf(x: any, xs: (any[] | string | any)): number;
 }
 
-declare function append(...args: any[]): any[];
+declare function append(...args: Array<any[] | string>): any[] | string;
 
-declare function head(list: any[]): any | undefined;
+declare function head(list: any[] | string): any | string | undefined;
 
-declare function tail(list: any[]): any[];
+declare function tail(list: any[] | string): any[] | string | undefined;
 
-declare function init(list: any[]): any[];
+declare function init(list: any[] | string): any[] | string | undefined;
 
-declare function uncons(list: any[]): any[] | undefined;
+declare function uncons(list: any[] | string): any[] | string | undefined;
 
-declare function unconsr(list: any[]): any[] | undefined;
+declare function unconsr(list: any[] | string): any[] | string | undefined;
 
-declare function concat(list: any[]): any[];
+declare function concat(list: any[] | string[]): any[] | string;
 
-declare function concatMap(fn: ListPredicate, list: any[]): any[];
+declare function concatMap(fn: ListPredicate, list: any[] | string[]): any[] | string;
 
-declare function reverse(list: any[]): any[];
+declare function reverse(list: any[] | string): any[] | string;
 
-declare function intersperse(between: any[], arr: any[]): any[];
+declare function intersperse<T>(between: T, arr: T[] | T): T[] | T;
 
-declare function intercalate(xs: any[], xss: any[]): any[];
+declare function intercalate<T>(xs: T[] | T, xss: T[] | T): T[] | T;
 
-declare function transpose(xss: Array<(Array<any> | string)>): any[];
+declare function transpose(xss: Array<any[] | string>): any[] | string[];
 
-declare function subsequences(xs: Array<any> | string): any[];
+declare function subsequences(xs: Array<any> | string): any[] | string[];
 
-declare function permutations(xs: Array<any> | string): any[];
+declare function permutations(xs: Array<any> | string): any[] | string[];
+
+// @todo Continue types review here.
 
 declare function foldl(fn: ListFoldOperation, zero: any, xs: any [] | string): any;
 
@@ -96,7 +98,7 @@ declare function map(fn: ListMapOperation, list: any[]): any[];
 
 declare function forEach(fn: ListForEachOperation, xs: any[]): void;
 
-declare function filter(fn: ListPredicate, xs: any[]): void;
+declare function filter(fn: ListPredicate, xs: any[]): any[];
 
 declare function partition(fn: ListPredicate, xs: any[]): Array<any[]>;
 

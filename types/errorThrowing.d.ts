@@ -1,4 +1,4 @@
-import {TypeRef} from "./index";
+import './base-types';
 
 declare interface ErrorTemplateCtx {
     value: any,

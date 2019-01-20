@@ -12,7 +12,7 @@ declare function lcaseFirst(str: string): string;
 
 declare function ucaseFirst(str: string): string;
 
-declare function camelCase(str: string, pattern: RegExp): string;
+declare function camelCase(str: string, pattern?: RegExp): string;
 
-declare function classCase(str: string, pattern: RegExp): string;
+declare function classCase(str: string, pattern?: RegExp): string;
 

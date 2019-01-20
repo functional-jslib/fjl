@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.peek = exports.error = exports.log = void 0;
+exports.warn = exports.peek = exports.error = exports.log = void 0;
 
 /**
  * @module console
@@ -38,8 +38,17 @@ peek = function peek() {
   }
 
   return log.apply(void 0, args), args.pop();
-};
+},
 
+/**
+ * `Console.warn`.
+ * @function module:console.warn
+ * @param args {...*}
+ * @returns {void}
+ */
+warn = console.warn.bind(console);
+
+exports.warn = warn;
 exports.peek = peek;
 exports.error = error;
 exports.log = log;

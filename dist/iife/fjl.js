@@ -1095,6 +1095,7 @@ var peek = function peek() {
 
   return log.apply(void 0, args), args.pop();
 };
+var warn = console.warn.bind(console);
 
 var jsonClone = function jsonClone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -2487,6 +2488,7 @@ exports.objComplement = objComplement;
 exports.log = log;
 exports.error = error;
 exports.peek = peek;
+exports.warn = warn;
 exports.jsonClone = jsonClone;
 exports.toArray = toArray;
 exports.toAssocList = toAssocList;

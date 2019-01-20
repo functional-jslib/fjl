@@ -26,6 +26,14 @@ export const
      * @param args {...*}
      * @returns {*} Last given value (if one or more values) else first value.
      */
-    peek = (...args) => (log(...args), args.pop())
+    peek = (...args) => (log(...args), args.pop()),
+
+    /**
+     * `Console.warn`.
+     * @function module:console.warn
+     * @param args {...*}
+     * @returns {void}
+     */
+    warn = console.warn.bind(console)
 
 ;
