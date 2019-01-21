@@ -1,4 +1,6 @@
-declare function alwaysTrue (x: any): boolean;
-declare function alwaysFalse (x: any): boolean;
-declare function isTruthy (x: any): boolean;
-declare function isFalsy (x: any): boolean;
+declare namespace fjl {
+    export function alwaysTrue(x: any): boolean;
+    export function alwaysFalse(x: any): boolean;
+    export function isTruthy(x: any): boolean;
+    export function isFalsy(x: any): boolean;
+}

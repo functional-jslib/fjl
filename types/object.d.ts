@@ -1,7 +1,11 @@
-declare function instanceOf(Constructor: Function, obj: any): boolean;
+declare namespace fjl {
 
-declare function hasOwnProperty(property: string, obj: any): boolean;
+    export function instanceOf(Constructor: Function, obj: any): boolean;
 
-declare function keys(obj: any): string[];
+    export function hasOwnProperty(property: string, obj: any): boolean;
 
-declare function assign(obj0: any, ...objs: any[]): string[];
+    export function keys(obj: any): string[];
+
+    export function assign(obj0: any, ...objs: any[]): string[];
+
+}

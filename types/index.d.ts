@@ -1,6 +1,5 @@
-export as namespace fjl;
+declare namespace fjl {}
 
-import './base-types';
 import './utils';
 import './function';
 import './errorThrowing';
