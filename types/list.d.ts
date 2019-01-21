@@ -22,11 +22,21 @@ declare namespace fjl {
         lastIndexOf(x: any, xs: (any[] | string | any)): number;
     }
 
+    export function slice(startInd: number, endInd: number, list: Array<any> | string): Array<any> | string;
+
+    export function includes(x: any, xs: (any[] | string | any)): boolean;
+
+    export function indexOf(x: any, xs: (any[] | string | any)): number;
+
+    export function lastIndexOf(x: any, xs: (any[] | string | any)): number;
+
     export function append(...args: Array<any[] | string>): any[] | string;
 
     export function head(list: any[] | string): any | string | undefined;
 
     export function tail(list: any[] | string): any[] | string | undefined;
+
+    export function last(list: any[] | string): any | string | undefined;
 
     export function init(list: any[] | string): any[] | string | undefined;
 
@@ -50,8 +60,6 @@ declare namespace fjl {
 
     export function permutations(xs: Array<any> | string): any[] | string[];
 
-// @todo Continue types review here.
-
     export function foldl(fn: ListFoldOperation, zero: any, xs: any [] | string): any;
 
     export function foldl1(fn: ListFoldOperation, xs: any [] | string): any;
@@ -64,7 +72,7 @@ declare namespace fjl {
 
     export function mapAccumR(fn: ListFoldOperation, zero: any, xs: any [] | string): any;
 
-    export function iterate(limit: number, op: ListMapOperation, zero: any): any;
+    export function iterate(limit: number, op: ListMapOperation, zero: any): any[];
 
     export function cycle(limit: number, xs: any[]): any[];
 
@@ -203,5 +211,37 @@ declare namespace fjl {
     export function difference(xs1: any[], xs2: any[]): any[];
 
     export function complement(xs1: any[], ...xs2: any[]): any[];
+
+    export function range(min: number, max: number, step?: number): number[];
+
+    export function sliceFrom(startInd: number, xs: List): List;
+
+    export function sliceTo(endInd: number, xs: List): List;
+
+    export function sliceCopy(xs: List): List;
+
+    export function genericAscOrdering(a: any, b: any): number;
+
+    export function lengths(...xs: Array<any[]>): Array<number>;
+
+    export function toShortest(...xs: Array<any[]>): Array<any[]>;
+
+    export function reduceUntil(pred: ListPredicate, op: ListFoldOperation, agg: any, xs: Array<any> | string | any): any;
+
+    export function reduceUntilRight(pred: ListPredicate, op: ListFoldOperation, agg: any, xs: Array<any> | string | any): any;
+
+    export function reduce(pred: ListPredicate, op: ListFoldOperation, agg: any, xs: Array<any> | string | any): any;
+
+    export function reduceRight(pred: ListPredicate, op: ListFoldOperation, agg: any, xs: Array<any> | string | any): any;
+
+    export function lastIndex(x: any): number;
+
+    export function findIndexWhere(pred: ListPredicate, xs: Array<any> | string): number;
+
+    export function findIndexWhereRight(pred: ListPredicate, xs: Array<any> | string): number;
+
+    export function findIndicesWhere(pred: ListPredicate, xs: Array<any> | string): Array<number> | undefined;
+
+    export function findWhere(pred: ListPredicate, xs: Array<any> | string): any | undefined;
 
 }
