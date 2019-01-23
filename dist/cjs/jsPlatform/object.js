@@ -12,7 +12,6 @@ var _curry = require("../function/curry");
 var _flip = require("../function/flip");
 
 /**
- * @memberOf object
  * @description Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 

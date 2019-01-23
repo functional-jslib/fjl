@@ -20,7 +20,6 @@
 
   /**
    * Created by elydelacruz on 9/7/2017.
-   * @memberOf function
    */
   var
   /**

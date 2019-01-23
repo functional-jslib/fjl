@@ -16,6 +16,10 @@ export * from './string';
 export * from './utils';
 export * from './errorThrowing';
 
+import * as _jsPlatform from './jsPlatform';
+
+export const jsPlatform = _jsPlatform;
+
 /**
  * @typedef {String|Function|ArrayBufferConstructor|ArrayConstructor|BooleanConstructor|MapConstructor|NumberConstructor|SetConstructor|WeakMapConstructor|WeakSetConstructor} TypeRef
  * @description Type reference.  Either actual type or type's name;  E.g., `Type.name`

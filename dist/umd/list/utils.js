@@ -310,6 +310,8 @@
         return elm;
       }
     }
+
+    return undefined;
   });
 
   _exports.findWhere = findWhere;

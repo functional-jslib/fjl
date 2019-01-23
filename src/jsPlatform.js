@@ -1,6 +1,5 @@
 /**
- * @module jsPlatform_
- * @private
+ * @module jsPlatform
  */
 export * from './jsPlatform/object';
 export * from './jsPlatform/array';

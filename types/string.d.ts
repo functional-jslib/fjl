@@ -1,4 +1,4 @@
-declare namespace fjl {
+declare module fjl {
 
     export function lines(str: string): string[];
 

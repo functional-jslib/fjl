@@ -1,14 +1,11 @@
 /**
  * Created by elyde on 7/20/2017.
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
  */
 
 import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils';
 
-export const
-
+const
     /**
      * Array.prototype.reverse generator (generates a function that calls the prototype version or a
      * shimmed version if it doesn't exist).
@@ -19,11 +16,14 @@ export const
             x => x.reduceRight((agg, item) => {
                 agg.push(item);
                 return agg;
-            }, []),
+            }, [])
+;
+
+export const
 
     /**
      * Maps a function to functor (list etc.).
-     * @function module:_jsPlatform_array.map
+     * @function module:jsPlatform.map
      * @param fn {Function}
      * @param functor {Array|{map: {Function}}}
      * @returns {Array|{map: {Function}}}
@@ -32,7 +32,7 @@ export const
 
     /**
      * Filters a functor (list etc.) with passed in function.
-     * @function module:_jsPlatform_array.filter
+     * @function module:jsPlatform.filter
      * @param fn {Function}
      * @param functor {Array|{filter: {Function}}}
      * @returns {Array|{filter: {Function}}}
@@ -41,7 +41,7 @@ export const
 
     /**
      * Reduces a foldable (list etc.) with passed in function.
-     * @function module:_jsPlatform_array.reduce
+     * @function module:jsPlatform.reduce
      * @param fn {Function}
      * @param functor {Array|{reduce: {Function}}}
      * @returns {Array|{reduce: {Function}}}
@@ -50,7 +50,7 @@ export const
 
     /**
      * Reduces a foldable (list etc.) from the right with passed in function.
-     * @function module:_jsPlatform_array.reduceRight
+     * @function module:jsPlatform.reduceRight
      * @param fn {Function}
      * @param functor {Array|{reduceRight: {Function}}}
      * @returns {Array|{reduceRight: {Function}}}
@@ -59,6 +59,7 @@ export const
 
     /**
      * For each on functor (Array|Object|etc.).
+     * @function module:jsPlatform.forEach
      * @param fn {Function}
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
@@ -78,6 +79,7 @@ export const
 
     /**
      * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
+     * @function module:jsPlatform.every
      * @param fn {Function} - Predicate.
      * @param functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.
@@ -87,7 +89,7 @@ export const
 
     /**
      * Array.prototype.join
-     * @function module:listPrelude.join
+     * @function module:jsPlatform.join
      * @param separator {String|RegExp}
      * @param arr {Array}
      * @returns {String}
@@ -96,6 +98,7 @@ export const
 
     /**
      * Same as Array.prototype.push
+     * @function module:jsPlatform.push
      * @param item {*}
      * @param arr {Array}
      * @returns {Number}
@@ -104,7 +107,8 @@ export const
 
     /**
      * Reverses an list (shimmed if not exists).
-     * @function module:listPrelude.reverse
+     * @function module:jsPlatform.reverse
+     * @param x {Array<any>}
      * @return {Array}
      */
     reverse = defineReverse();

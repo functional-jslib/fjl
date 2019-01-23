@@ -8,7 +8,6 @@ define(["exports", "../function/curry"], function (_exports, _curry) {
 
   /**
    * Created by elydelacruz on 9/7/2017.
-   * @memberOf function
    */
   var
   /**

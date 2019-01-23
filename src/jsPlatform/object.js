@@ -1,5 +1,4 @@
 /**
- * @memberOf object
  * @description Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 

@@ -83,13 +83,12 @@ const fPureTakesOneOrMore = name => curry2((f, ...args) => f[name](...args));
 /**
  * Created by elyde on 7/20/2017.
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
  */
 const defineReverse = () => Array.prototype.reverse ? x => x.reverse() : x => x.reduceRight((agg, item) => {
   agg.push(item);
   return agg;
 }, []);
+
 const map = fPureTakesOne('map');
 const filter = fPureTakesOne('filter');
 const reduce = fPureTakes2('reduce');
@@ -103,7 +102,6 @@ const reverse = defineReverse();
 
 /**
  * Created by elydelacruz on 9/7/2017.
- * @memberOf function
  */
 
 const apply = curry((fn, args) => fn.apply(null, args));
@@ -116,7 +114,6 @@ const flip4 = fn => curry((d, c, b, a) => call(fn, a, b, c, d));
 const flip5 = fn => curry((e, d, c, b, a) => call(fn, a, b, c, d, e));
 
 /**
- * @memberOf object
  * @description Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 const instanceOf = curry((instanceConstructor, instance) => instance instanceof instanceConstructor);
@@ -419,7 +416,6 @@ const assignDeep = curry2((obj0, ...objs) => !obj0 ? obj0 : objs.reduce((topAgg,
 /**
  *  List operations that overlap (apart from globally overlapping props and functions like `length`)
  *      on both strings and arrays.
- *      @memberOf list
  */
 const concat = fPureTakesOneOrMore('concat');
 const slice = fPureTakes2('slice');
@@ -623,6 +619,8 @@ const findWhere = curry((pred, xs) => {
       return elm;
     }
   }
+
+  return undefined;
 });
 
 const objUnion = curry((obj1, obj2) => assignDeep(obj1, obj2));
@@ -840,7 +838,7 @@ const range = curry((from, to, step = 1) => {
  */
 /**
  * Functional version of `String.prototype.split`.
- * @function module:_string.split
+ * @function module:jsPlatform.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}
@@ -849,9 +847,36 @@ const range = curry((from, to, step = 1) => {
 const split = fPureTakesOne('split');
 
 /**
- * @module jsPlatform_
- * @private
+ * @module jsPlatform
  */
+
+
+var _jsPlatform = Object.freeze({
+	instanceOf: instanceOf,
+	hasOwnProperty: hasOwnProperty,
+	length: length,
+	native: native,
+	keys: keys,
+	assign: assign,
+	map: map,
+	filter: filter,
+	reduce: reduce,
+	reduceRight: reduceRight,
+	forEach: forEach,
+	some: some,
+	every: every,
+	join: join,
+	push: push,
+	reverse: reverse,
+	concat: concat,
+	slice: slice,
+	includes: includes,
+	indexOf: indexOf,
+	lastIndexOf: lastIndexOf,
+	split: split,
+	apply: apply,
+	call: call
+});
 
 /**
  * List operations module.
@@ -1714,12 +1739,12 @@ const classCase = compose(ucaseFirst, camelCase);
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
-
+const jsPlatform = _jsPlatform;
 /**
  * @typedef {String|Function|ArrayBufferConstructor|ArrayConstructor|BooleanConstructor|MapConstructor|NumberConstructor|SetConstructor|WeakMapConstructor|WeakSetConstructor} TypeRef
  * @description Type reference.  Either actual type or type's name;  E.g., `Type.name`
  * Also note: Class cased names are use for values that do not have `name` properties;  Namely: 'Null', 'NaN' and 'Undefined' (for their respective values respectively).
  */
 
-export { instanceOf, hasOwnProperty, length, native, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames, isFunction, isType, isStrictly, isOfType, isLoosely, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf, isLooselyOneOf, instanceOfOne, isFunctor, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, warn, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll, apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, trampoline, toFunction, map$1 as map, append, head, last, tail, init, uncons, unconsr, concat$1 as concat, concatMap, reverse$1 as reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach$1 as forEach, filter$1 as filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest, reduceUntil, reduceUntilRight, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArray, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes };
+export { jsPlatform, instanceOf, hasOwnProperty, length, native, keys, assign, lookup, typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames, isFunction, isType, isStrictly, isOfType, isLoosely, isClass, isCallable, isArray, isObject, isBoolean, isNumber, isString, isMap, isSet, isWeakMap, isWeakSet, isUndefined, isNull, isSymbol, isUsableImmutablePrimitive, isEmptyList, isEmptyObject, isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf, isLooselyOneOf, instanceOfOne, isFunctor, of, searchObj, assignDeep, objUnion, objIntersect, objDifference, objComplement, log, error, peek, warn, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList, fromAssocListDeep, isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll, apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5, flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3, negateFN, until, fnOrError, noop, trampoline, toFunction, map$1 as map, append, head, last, tail, init, uncons, unconsr, concat$1 as concat, concatMap, reverse$1 as reverse, intersperse, intercalate, transpose, subsequences, swapped, permutations, foldl, foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate, cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take, drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList, at, find, forEach$1 as forEach, filter$1 as filter, partition, elem, notElem, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product, maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union, intersect, intersectBy, difference, complement, slice, includes, indexOf, lastIndexOf, push, range, sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest, reduceUntil, reduceUntilRight, reduce$1 as reduce, reduceRight$1 as reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, aggregateArray, split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst, camelCase, classCase, fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOneOrMore, typeRefsToStringOrError, defaultErrorMessageCall, _getErrorIfNotTypeThrower, _getErrorIfNotTypesThrower, _errorIfNotType, _errorIfNotTypes, getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType, errorIfNotTypes };
 //# sourceMappingURL=fjl.js.map

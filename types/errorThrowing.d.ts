@@ -1,4 +1,4 @@
-declare namespace fjl {
+declare module fjl {
     export type TypeRef =
         string | Function | ArrayBufferConstructor | ArrayConstructor |
         BooleanConstructor | StringConstructor |

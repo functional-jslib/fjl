@@ -311,6 +311,8 @@ findWhere = (0, _curry.curry)(function (pred, xs) {
       return elm;
     }
   }
+
+  return undefined;
 });
 
 exports.findWhere = findWhere;

@@ -9,7 +9,6 @@ var _curry = require("../function/curry");
 
 /**
  * Created by elydelacruz on 9/7/2017.
- * @memberOf function
  */
 var
 /**

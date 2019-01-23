@@ -1,4 +1,4 @@
-declare namespace fjl {
+declare module fjl {
     export type Predicate = (a: any) => boolean;
 
     export function compose(...fn: Function[]): Function;

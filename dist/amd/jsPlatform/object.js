@@ -7,7 +7,6 @@ define(["exports", "../utils", "../function/curry", "../function/flip"], functio
   _exports.keys = _exports.assign = _exports.native = _exports.length = _exports.hasOwnProperty = _exports.instanceOf = void 0;
 
   /**
-   * @memberOf object
    * @description Defines some of the platform methods for objects (the ones used within `fjl`).
    */
 

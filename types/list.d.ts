@@ -1,4 +1,4 @@
-declare namespace fjl {
+declare module fjl {
 
     export type ListPredicate = (x: any, index: number, list: (any[] | string)) => boolean;
 
