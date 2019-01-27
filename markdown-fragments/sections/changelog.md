@@ -1,4 +1,7 @@
 ## Change log
+### 1.10.7
+- Consolidated typescript type files into one types file.
+
 ### 1.10.6
 - Made 'jsPlatform' module public.
 - Added typescript types for all previously defined "public" modules."
