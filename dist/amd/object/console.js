@@ -4,7 +4,7 @@ define(["exports"], function (_exports) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.peek = _exports.error = _exports.log = void 0;
+  _exports.warn = _exports.peek = _exports.error = _exports.log = void 0;
 
   /**
    * @module console
@@ -39,8 +39,17 @@ define(["exports"], function (_exports) {
     }
 
     return log.apply(void 0, args), args.pop();
-  };
+  },
 
+  /**
+   * `Console.warn`.
+   * @function module:console.warn
+   * @param args {...*}
+   * @returns {void}
+   */
+  warn = console.warn.bind(console);
+
+  _exports.warn = warn;
   _exports.peek = peek;
   _exports.error = error;
   _exports.log = log;

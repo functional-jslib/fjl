@@ -211,6 +211,7 @@ export const
             let elm = xs[ind];
             if (pred(elm, ind, xs)) { return elm; }
         }
+        return undefined;
     })
 
 ;

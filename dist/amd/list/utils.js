@@ -298,6 +298,8 @@ define(["exports", "../jsPlatform/function", "../jsPlatform/list", "../jsPlatfor
         return elm;
       }
     }
+
+    return undefined;
   });
 
   _exports.findWhere = findWhere;

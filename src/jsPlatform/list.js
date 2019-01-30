@@ -1,7 +1,6 @@
 /**
  *  List operations that overlap (apart from globally overlapping props and functions like `length`)
  *      on both strings and arrays.
- *      @memberOf list
  */
 
 import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils';
@@ -11,7 +10,7 @@ export const
     /**
      * Concats/appends all functors onto the end of first functor.
      * Note:  functors passed in after the first one must be of the same type.
-     * @function module:list.concat
+     * @function module:jsPlatform.concat
      * @param functor {Array|Object|*}
      * @param ...functor {Array|Object|*}
      * @return {*|Array|Object} - The type passed.

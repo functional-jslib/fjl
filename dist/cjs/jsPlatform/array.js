@@ -3,15 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.reverse = exports.push = exports.join = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = exports.defineReverse = void 0;
+exports.reverse = exports.push = exports.join = exports.every = exports.some = exports.forEach = exports.reduceRight = exports.reduce = exports.filter = exports.map = void 0;
 
 var _utils = require("../utils");
 
 /**
  * Created by elyde on 7/20/2017.
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
  */
 var
 /**
@@ -28,11 +26,12 @@ defineReverse = function defineReverse() {
       return agg;
     }, []);
   };
-},
+};
 
+var
 /**
  * Maps a function to functor (list etc.).
- * @function module:_jsPlatform_array.map
+ * @function module:jsPlatform.map
  * @param fn {Function}
  * @param functor {Array|{map: {Function}}}
  * @returns {Array|{map: {Function}}}
@@ -41,7 +40,7 @@ map = (0, _utils.fPureTakesOne)('map'),
 
 /**
  * Filters a functor (list etc.) with passed in function.
- * @function module:_jsPlatform_array.filter
+ * @function module:jsPlatform.filter
  * @param fn {Function}
  * @param functor {Array|{filter: {Function}}}
  * @returns {Array|{filter: {Function}}}
@@ -50,7 +49,7 @@ filter = (0, _utils.fPureTakesOne)('filter'),
 
 /**
  * Reduces a foldable (list etc.) with passed in function.
- * @function module:_jsPlatform_array.reduce
+ * @function module:jsPlatform.reduce
  * @param fn {Function}
  * @param functor {Array|{reduce: {Function}}}
  * @returns {Array|{reduce: {Function}}}
@@ -59,7 +58,7 @@ reduce = (0, _utils.fPureTakes2)('reduce'),
 
 /**
  * Reduces a foldable (list etc.) from the right with passed in function.
- * @function module:_jsPlatform_array.reduceRight
+ * @function module:jsPlatform.reduceRight
  * @param fn {Function}
  * @param functor {Array|{reduceRight: {Function}}}
  * @returns {Array|{reduceRight: {Function}}}
@@ -68,6 +67,7 @@ reduceRight = (0, _utils.fPureTakes2)('reduceRight'),
 
 /**
  * For each on functor (Array|Object|etc.).
+ * @function module:jsPlatform.forEach
  * @param fn {Function}
  * @param functor {Array|Object|*}
  * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
@@ -87,6 +87,7 @@ some = (0, _utils.fPureTakesOne)('some'),
 
 /**
  * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
+ * @function module:jsPlatform.every
  * @param fn {Function} - Predicate.
  * @param functor {Array|Object|*}
  * @return {*|Array|Object} - The type passed.
@@ -96,7 +97,7 @@ every = (0, _utils.fPureTakesOne)('every'),
 
 /**
  * Array.prototype.join
- * @function module:listPrelude.join
+ * @function module:jsPlatform.join
  * @param separator {String|RegExp}
  * @param arr {Array}
  * @returns {String}
@@ -105,6 +106,7 @@ join = (0, _utils.fPureTakesOne)('join'),
 
 /**
  * Same as Array.prototype.push
+ * @function module:jsPlatform.push
  * @param item {*}
  * @param arr {Array}
  * @returns {Number}
@@ -113,11 +115,11 @@ push = (0, _utils.fPureTakesOneOrMore)('push'),
 
 /**
  * Reverses an list (shimmed if not exists).
- * @function module:listPrelude.reverse
+ * @function module:jsPlatform.reverse
+ * @param x {Array<any>}
  * @return {Array}
  */
 reverse = defineReverse();
-
 exports.reverse = reverse;
 exports.push = push;
 exports.join = join;
@@ -128,4 +130,3 @@ exports.reduceRight = reduceRight;
 exports.reduce = reduce;
 exports.filter = filter;
 exports.map = map;
-exports.defineReverse = defineReverse;

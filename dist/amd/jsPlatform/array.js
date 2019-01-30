@@ -4,13 +4,11 @@ define(["exports", "../utils"], function (_exports, _utils) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.reverse = _exports.push = _exports.join = _exports.every = _exports.some = _exports.forEach = _exports.reduceRight = _exports.reduce = _exports.filter = _exports.map = _exports.defineReverse = void 0;
+  _exports.reverse = _exports.push = _exports.join = _exports.every = _exports.some = _exports.forEach = _exports.reduceRight = _exports.reduce = _exports.filter = _exports.map = void 0;
 
   /**
    * Created by elyde on 7/20/2017.
    * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
-   * @module _jsPlatform_arrayOps
-   * @private
    */
   var
   /**
@@ -27,11 +25,12 @@ define(["exports", "../utils"], function (_exports, _utils) {
         return agg;
       }, []);
     };
-  },
+  };
 
+  var
   /**
    * Maps a function to functor (list etc.).
-   * @function module:_jsPlatform_array.map
+   * @function module:jsPlatform.map
    * @param fn {Function}
    * @param functor {Array|{map: {Function}}}
    * @returns {Array|{map: {Function}}}
@@ -40,7 +39,7 @@ define(["exports", "../utils"], function (_exports, _utils) {
 
   /**
    * Filters a functor (list etc.) with passed in function.
-   * @function module:_jsPlatform_array.filter
+   * @function module:jsPlatform.filter
    * @param fn {Function}
    * @param functor {Array|{filter: {Function}}}
    * @returns {Array|{filter: {Function}}}
@@ -49,7 +48,7 @@ define(["exports", "../utils"], function (_exports, _utils) {
 
   /**
    * Reduces a foldable (list etc.) with passed in function.
-   * @function module:_jsPlatform_array.reduce
+   * @function module:jsPlatform.reduce
    * @param fn {Function}
    * @param functor {Array|{reduce: {Function}}}
    * @returns {Array|{reduce: {Function}}}
@@ -58,7 +57,7 @@ define(["exports", "../utils"], function (_exports, _utils) {
 
   /**
    * Reduces a foldable (list etc.) from the right with passed in function.
-   * @function module:_jsPlatform_array.reduceRight
+   * @function module:jsPlatform.reduceRight
    * @param fn {Function}
    * @param functor {Array|{reduceRight: {Function}}}
    * @returns {Array|{reduceRight: {Function}}}
@@ -67,6 +66,7 @@ define(["exports", "../utils"], function (_exports, _utils) {
 
   /**
    * For each on functor (Array|Object|etc.).
+   * @function module:jsPlatform.forEach
    * @param fn {Function}
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
@@ -86,6 +86,7 @@ define(["exports", "../utils"], function (_exports, _utils) {
 
   /**
    * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
+   * @function module:jsPlatform.every
    * @param fn {Function} - Predicate.
    * @param functor {Array|Object|*}
    * @return {*|Array|Object} - The type passed.
@@ -95,7 +96,7 @@ define(["exports", "../utils"], function (_exports, _utils) {
 
   /**
    * Array.prototype.join
-   * @function module:listPrelude.join
+   * @function module:jsPlatform.join
    * @param separator {String|RegExp}
    * @param arr {Array}
    * @returns {String}
@@ -104,6 +105,7 @@ define(["exports", "../utils"], function (_exports, _utils) {
 
   /**
    * Same as Array.prototype.push
+   * @function module:jsPlatform.push
    * @param item {*}
    * @param arr {Array}
    * @returns {Number}
@@ -112,11 +114,11 @@ define(["exports", "../utils"], function (_exports, _utils) {
 
   /**
    * Reverses an list (shimmed if not exists).
-   * @function module:listPrelude.reverse
+   * @function module:jsPlatform.reverse
+   * @param x {Array<any>}
    * @return {Array}
    */
   reverse = defineReverse();
-
   _exports.reverse = reverse;
   _exports.push = push;
   _exports.join = join;
@@ -127,5 +129,4 @@ define(["exports", "../utils"], function (_exports, _utils) {
   _exports.reduce = reduce;
   _exports.filter = filter;
   _exports.map = map;
-  _exports.defineReverse = defineReverse;
 });

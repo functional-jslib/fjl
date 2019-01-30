@@ -336,8 +336,6 @@ var fPureTakesOneOrMore = function fPureTakesOneOrMore(name) {
 /**
  * Created by elyde on 7/20/2017.
  * Functional versions of common array methods (`map`, `filter`, etc.) (un-curried);
- * @module _jsPlatform_arrayOps
- * @private
  */
 var defineReverse = function defineReverse() {
   return Array.prototype.reverse ? function (x) {
@@ -349,6 +347,7 @@ var defineReverse = function defineReverse() {
     }, []);
   };
 };
+
 var map = fPureTakesOne('map');
 var filter = fPureTakesOne('filter');
 var reduce = fPureTakes2('reduce');
@@ -362,7 +361,6 @@ var reverse = defineReverse();
 
 /**
  * Created by elydelacruz on 9/7/2017.
- * @memberOf function
  */
 
 var apply = curry(function (fn, args) {
@@ -407,7 +405,6 @@ var flip5 = function flip5(fn) {
 };
 
 /**
- * @memberOf object
  * @description Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 /**
@@ -807,7 +804,6 @@ var assignDeep = curry2(function (obj0) {
 /**
  *  List operations that overlap (apart from globally overlapping props and functions like `length`)
  *      on both strings and arrays.
- *      @memberOf list
  */
 var concat = fPureTakesOneOrMore('concat');
 var slice = fPureTakes2('slice');
@@ -1049,6 +1045,8 @@ var findWhere = curry(function (pred, xs) {
       return elm;
     }
   }
+
+  return undefined;
 });
 
 var objUnion = curry(function (obj1, obj2) {
@@ -1095,6 +1093,7 @@ var peek = function peek() {
 
   return log.apply(void 0, args), args.pop();
 };
+var warn = console.warn.bind(console);
 
 var jsonClone = function jsonClone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -1611,7 +1610,7 @@ var range = curry(function (from, to) {
  */
 /**
  * Functional version of `String.prototype.split`.
- * @function module:_string.split
+ * @function module:jsPlatform.split
  * @param separator {String|RegExp}
  * @param str {String}
  * @returns {Array}
@@ -1620,9 +1619,36 @@ var range = curry(function (from, to) {
 var split = fPureTakesOne('split');
 
 /**
- * @module jsPlatform_
- * @private
+ * @module jsPlatform
  */
+
+
+var _jsPlatform = Object.freeze({
+	instanceOf: instanceOf,
+	hasOwnProperty: hasOwnProperty,
+	length: length,
+	native: native,
+	assign: assign,
+	keys: keys,
+	map: map,
+	filter: filter,
+	reduce: reduce,
+	reduceRight: reduceRight,
+	forEach: forEach,
+	some: some,
+	every: every,
+	join: join,
+	push: push,
+	reverse: reverse,
+	concat: concat,
+	slice: slice,
+	includes: includes,
+	indexOf: indexOf,
+	lastIndexOf: lastIndexOf,
+	split: split,
+	apply: apply,
+	call: call
+});
 
 /**
  * List operations module.
@@ -2547,13 +2573,14 @@ var classCase = compose(ucaseFirst, camelCase);
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
-
+var jsPlatform = _jsPlatform;
 /**
  * @typedef {String|Function|ArrayBufferConstructor|ArrayConstructor|BooleanConstructor|MapConstructor|NumberConstructor|SetConstructor|WeakMapConstructor|WeakSetConstructor} TypeRef
  * @description Type reference.  Either actual type or type's name;  E.g., `Type.name`
  * Also note: Class cased names are use for values that do not have `name` properties;  Namely: 'Null', 'NaN' and 'Undefined' (for their respective values respectively).
  */
 
+exports.jsPlatform = jsPlatform;
 exports.instanceOf = instanceOf;
 exports.hasOwnProperty = hasOwnProperty;
 exports.length = length;
@@ -2607,6 +2634,7 @@ exports.objComplement = objComplement;
 exports.log = log;
 exports.error = error;
 exports.peek = peek;
+exports.warn = warn;
 exports.jsonClone = jsonClone;
 exports.toArray = toArray;
 exports.toAssocList = toAssocList;
