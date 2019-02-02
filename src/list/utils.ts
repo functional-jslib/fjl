@@ -192,7 +192,7 @@ export const
     findIndicesWhere = curry((pred, xs) => {
         const limit = length(xs);
         let ind = 0,
-            out = [];
+            out: any[] = [];
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) { out.push(ind); }
         }

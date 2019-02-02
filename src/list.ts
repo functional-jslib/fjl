@@ -231,7 +231,7 @@ export const
      * @param xss {Array}
      * @returns {Array}
      */
-    transpose = <T>(xss: [T[]] | []): [T[]] | [] => {
+    transpose = (xss: [any[]] | []): [any[]] | [] => {
         let numLists = length(xss),
             ind = 0, ind2;
         if (!numLists) {
@@ -239,9 +239,9 @@ export const
         }
         const listLengths = apply(lengths, xss),
             longestListLen = maximum(listLengths),
-            outLists = [];
+            outLists: [any[]] | any[] = [];
         for (; ind < longestListLen; ind += 1) {
-            const outList: [] | [T[]] = [];
+            const outList: any[] = [];
             for (ind2 = 0; ind2 < numLists; ind2 += 1) {
                 if (listLengths[ind2] < ind + 1) {
                     continue;
@@ -268,9 +268,9 @@ export const
     subsequences = xs => {
         const listLen = length(xs),
             len = Math.pow(2, listLen),
-            out = [];
+            out: any[] = [];
         for (let i = 0; i < len; i += 1) {
-            let entry = [];
+            let entry: any[] = [];
             for (let j = 0; j < listLen; j += 1) {
                 if (i & (1 << j)) {
                     entry.push(xs[j]);
@@ -443,7 +443,7 @@ export const
      */
     iterate = curry((limit, op, x) => {
         let ind = 0,
-            out = [],
+            out: any[] = [],
             lastX = x;
         for (; ind < limit; ind += 1) {
             out.push(lastX);
@@ -489,7 +489,7 @@ export const
      */
     unfoldr = curry((op, x) => {
         let ind = 0,
-            out = [],
+            out: any[] = [],
             resultTuple = op(x, ind, out);
         while (resultTuple) {
             out.push(resultTuple[0]);
@@ -704,7 +704,7 @@ export const
     filter = curry((pred, xs) => {
         let ind = 0,
             limit = length(xs),
-            out = [];
+            out: any[] = [];
         if (!limit) {
             return out;
         }
@@ -891,7 +891,7 @@ export const
                 }
                 return false;
             },
-            agg = [];
+            agg: [any[]] | any[] = [];
         for (; ind < limit; ind += 1) {
             item = xs[ind];
             agg.push(takeWhile(predOp, slice(ind, limit, xs)));
@@ -912,7 +912,7 @@ export const
     inits = xs => {
         let limit = length(xs),
             ind = 0,
-            agg = [];
+            agg: [any[]] | any[] = [];
         if (!limit) {
             return [];
         }
@@ -935,7 +935,7 @@ export const
     tails = xs => {
         let limit = length(xs),
             ind = 0,
-            agg = [];
+            agg: [any[]] | any[] = [];
         if (!limit) {
             return [];
         }
@@ -1292,7 +1292,7 @@ export const
         const limit = length(xs);
         let ind = 0,
             result = zero,
-            out = [];
+            out: any[] = [];
         while (ind < limit) {
             result = fn(result, xs[ind], ind, xs);
             out.push(result);
@@ -1333,7 +1333,7 @@ export const
         const limit = length(xs);
         let ind = limit - 1,
             result = xs[0],
-            out = [];
+            out: any[] = [];
         while (ind > -1) {
             result = fn(result, xs[ind], ind, xs);
             out.push(result);
@@ -1501,7 +1501,7 @@ export const
         const limit = length(list);
         let ind = 0,
             currItem,
-            out = [],
+            out: any[] = [],
             anyOp = storedItem => pred(currItem, storedItem);
         for (; ind < limit; ind += 1) {
             currItem = list[ind];
