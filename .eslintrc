@@ -9,10 +9,11 @@
  * Environemnt Types:
  * --------------------------------------------------------------------------------------------------------------------- **/
 {
-
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
+    "project": "./tsconfig.json",
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true
     }

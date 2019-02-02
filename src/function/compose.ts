@@ -8,5 +8,5 @@ import {reduceRight} from '../jsPlatform/array';
  * @param args {...{Function}}
  * @returns {Function}
  */
-export const compose = (...args) =>
+export const compose = (...args: Function[]): Function =>
         arg0 => reduceRight((value, fn) => fn(value), arg0, args);

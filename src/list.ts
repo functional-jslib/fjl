@@ -231,7 +231,7 @@ export const
      * @param xss {Array}
      * @returns {Array}
      */
-    transpose = xss => {
+    transpose = <T>(xss: [T[]] | []): [T[]] | [] => {
         let numLists = length(xss),
             ind = 0, ind2;
         if (!numLists) {
@@ -241,7 +241,7 @@ export const
             longestListLen = maximum(listLengths),
             outLists = [];
         for (; ind < longestListLen; ind += 1) {
-            const outList = [];
+            const outList: [] | [T[]] = [];
             for (ind2 = 0; ind2 < numLists; ind2 += 1) {
                 if (listLengths[ind2] < ind + 1) {
                     continue;

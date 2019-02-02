@@ -20,7 +20,7 @@ const
      * @param argsToCurry {...*}
      * @returns {Function} - Curried function.
      */
-    returnCurried = (executeArity, unmetArityNum, fn, argsToCurry) => {
+    returnCurried = (executeArity: number, unmetArityNum: number, fn, argsToCurry: any[]): Function => {
         switch (unmetArityNum) {
             case 1:
                 /* eslint-disable */

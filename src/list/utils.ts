@@ -9,6 +9,8 @@ import {alwaysFalse}    from '../boolean';
 import map              from './map';
 import {curry, curry2}  from '../function/curry';
 
+import List = fjl.List;
+
 export * from './aggregation';
 
 export const
@@ -20,7 +22,7 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFrom = curry((startInd, xs) => slice(startInd, undefined, xs)),
+    sliceFrom = curry((startInd: number, xs: List): List => slice(startInd, undefined, xs)),
 
     /**
      * Slices from index `0` to given index.
