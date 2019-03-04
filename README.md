@@ -234,6 +234,9 @@ BSD 3 Clause - Included in sources.
 - Docs format: http://usejsdoc.org/
 
 ## Change log
+### 1.10.8 - 1.10.10
+- Readme file updates, dev-dependencies update.
+
 ### 1.10.7
 - Consolidated typescript type files into one types file.
 
