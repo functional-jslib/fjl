@@ -62,14 +62,7 @@ const fjl = require('fjl');
 
 **JSDocs** [https://functional-jslib.github.io/fjl]
 
-The docs are divided into modules though, note, all methods live on `fjl` (top level export).
-
-### About library's usage of currying.
-- All methods that take 2 or more arguments are curried.
-- Methods that take rest params "only" are curried in some cases and not curried in others (see: `compose`, `peek` et. al.).
-- Methods that require one argument and rest params are curried at up to 2 parameters.
-
-**Note**: As a side-effect of the way currying was defined in the library curried functions retain their arity/remaining-arity lengths.
+**Note:** Docs are divided by internal module names though, note, all methods live on top level `fjl` export.
 
 ### Library methods:
 
@@ -141,7 +134,14 @@ fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
 fPureTakesOneOrMore
 ```
 
-### Notes/method-requisites:
+### Notes/Caveats/Method-Requisites:
+
+#### About library's usage of currying.
+- All methods that take 2 or more arguments are curried.
+- Methods that take rest params "only" are not curried (except in some cases - see: [`compose`](https://functional-jslib.github.io/fjl/module-function.html#.compose)  and [`peek`](https://functional-jslib.github.io/fjl/module-console.html#.peek) for examples of uncurried functions and [`append`](https://functional-jslib.github.io/fjl/module-list.html#.append) for a curried one).
+- Methods that require one argument and rest params are curried at up to 2 parameters.
+
+
 #### Note: `iterate`, `repeat`, `replicate`, `cycle`
 In javascript we do not have lazy lists (infinite lists) like in haskell so 
 the aforementioned methods take an integer as their first parameter;  E.g.,

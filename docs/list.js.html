@@ -100,6 +100,7 @@ export const
      * @function module:list.append
      * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
      * @returns {(Array|String|*)} - Same type as list like passed in.
+     * @curried - Curried at upto 2 arguments.
      */
     append = curry2((...args) => apply(listAppend, args)),
 

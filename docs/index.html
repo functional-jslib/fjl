@@ -96,13 +96,7 @@ The './dist/package/fjl<em>' files are for the new setup in ecma262 proposals
 for es6 modules ('</em>.mjs' for es6 module and '*.js' for common-js module) (these are used
  in package.json as the default exports). </p>
 <h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h2>Docs</h2><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
-<p>The docs are divided into modules though, note, all methods live on <code>fjl</code> (top level export).</p>
-<h3>About library's usage of currying.</h3><ul>
-<li>All methods that take 2 or more arguments are curried.</li>
-<li>Methods that take rest params &quot;only&quot; are curried in some cases and not curried in others (see: <code>compose</code>, <code>peek</code> et. al.).</li>
-<li>Methods that require one argument and rest params are curried at up to 2 parameters.</li>
-</ul>
-<p><strong>Note</strong>: As a side-effect of the way currying was defined in the library curried functions retain their arity/remaining-arity lengths.</p>
+<p><strong>Note:</strong> Docs are divided by internal module names though, note, all methods live on top level <code>fjl</code> export.</p>
 <h3>Library methods:</h3><h3><code>list</code> methods</h3><pre class="prettyprint source"><code>map, slice, includes, indexOf, lastIndexOf, push, append, head, last,
 tail, init, uncons, unconsr, concat, concatMap, reverse, intersperse,
 intercalate, transpose, subsequences, swapped, permutations, foldl,
@@ -138,7 +132,12 @@ errorIfNotTypes</code></pre><h3><code>function</code> methods</h3><pre class="pr
 flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3,
 negateFN, until, fnOrError, noop, trampoline, toFunction</code></pre><h3><code>string</code> methods</h3><pre class="prettyprint source"><code>split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst,
 camelCase, classCase</code></pre><h3><code>utils</code> methods</h3><pre class="prettyprint source"><code>fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
-fPureTakesOneOrMore</code></pre><h3>Notes/method-requisites:</h3><h4>Note: <code>iterate</code>, <code>repeat</code>, <code>replicate</code>, <code>cycle</code></h4><p>In javascript we do not have lazy lists (infinite lists) like in haskell so 
+fPureTakesOneOrMore</code></pre><h3>Notes/Caveats/Method-Requisites:</h3><h4>About library's usage of currying.</h4><ul>
+<li>All methods that take 2 or more arguments are curried.</li>
+<li>Methods that take rest params &quot;only&quot; are not curried (except in some cases - see: <a href="https://functional-jslib.github.io/fjl/module-function.html#.compose"><code>compose</code></a>  and <a href="https://functional-jslib.github.io/fjl/module-console.html#.peek"><code>peek</code></a> for examples of uncurried functions and <a href="https://functional-jslib.github.io/fjl/module-list.html#.append"><code>append</code></a> for a curried one).</li>
+<li>Methods that require one argument and rest params are curried at up to 2 parameters.</li>
+</ul>
+<h4>Note: <code>iterate</code>, <code>repeat</code>, <code>replicate</code>, <code>cycle</code></h4><p>In javascript we do not have lazy lists (infinite lists) like in haskell so 
 the aforementioned methods take an integer as their first parameter;  E.g.,</p>
 <p>In haskell, we can do the following: <code>take 3 $ iterate (a -&gt; a * 2) [1..]</code> (<code>[1..]</code> is syntax for infinite list)
 In javascript, we have no choice but to make our function call similar to:</p>
