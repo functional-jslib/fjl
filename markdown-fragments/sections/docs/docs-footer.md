@@ -1,4 +1,11 @@
-### Notes/method-requisites:
+### Notes/Caveats/Method-Requisites:
+
+#### About library's usage of currying.
+- All methods that take 2 or more arguments are curried.
+- Methods that take rest params "only" are not curried (except in some cases - see: [`compose`](https://functional-jslib.github.io/fjl/module-function.html#.compose)  and [`peek`](https://functional-jslib.github.io/fjl/module-console.html#.peek) for examples of uncurried functions and [`append`](https://functional-jslib.github.io/fjl/module-list.html#.append) for a curried one).
+- Methods that require one argument and rest params are curried at up to 2 parameters.
+
+
 #### Note: `iterate`, `repeat`, `replicate`, `cycle`
 In javascript we do not have lazy lists (infinite lists) like in haskell so 
 the aforementioned methods take an integer as their first parameter;  E.g.,
