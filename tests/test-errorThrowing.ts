@@ -24,8 +24,8 @@ describe ('#errorThrowing', () => {
             const
                 // Test subjects
                 someTypeCtors = [Array, String, Function, Object, Boolean],
-                someTypeNames = someTypeCtors.map(x => x.name),
-                mixedTypeVals = someTypeCtors.concat(someTypeNames),
+                someTypeNames: any[] = someTypeCtors.map(x => x.name),
+                mixedTypeVals: any[] = someTypeCtors.concat(someTypeNames),
                 mixedTypeNames = someTypeNames.concat(someTypeNames),
 
                 // Expected
@@ -72,7 +72,7 @@ describe ('#errorThrowing', () => {
         });
         it ('should throw an error when receiving `null` or `undefined`', () => {
             expectError(defaultErrorMessageCall);
-            expectError(_ => defaultErrorMessageCall(null));
+            expectError(() => defaultErrorMessageCall(null));
         });
     });
 
@@ -84,7 +84,7 @@ describe ('#errorThrowing', () => {
         it ('It\'s returned function should throw an error when not able to match' +
             'value to passed in type', () => {
             expectError(
-                _ => getErrorIfNotTypeThrower(defaultErrorMessageCall)(
+                () => getErrorIfNotTypeThrower(defaultErrorMessageCall)(
                     Array, 'SomeContext')(
                         'someValueName', someValue
                     )
@@ -106,7 +106,7 @@ describe ('#errorThrowing', () => {
         it ('It\'s returned function should throw an error when not able to match' +
             'value to passed in type', () => {
             expectError(
-                _ => getErrorIfNotTypesThrower(defaultErrorMessageCall)(
+                () => getErrorIfNotTypesThrower(defaultErrorMessageCall)(
                     [Array, Function, Boolean], 'SomeContext')(
                         'someValueName', someValue
                     ));

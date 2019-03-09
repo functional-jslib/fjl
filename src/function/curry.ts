@@ -68,7 +68,7 @@ const
      * @param argsToCurry {Array<*>}
      * @returns {Function|*} - Curried function or result of 'finally' executed function.
      */
-    executeAsCurriedFunc = (fn, executeArity, unmetArity, args, argsToCurry) => {
+    executeAsCurriedFunc = (fn, executeArity, unmetArity, args, argsToCurry): Function | any => {
         let concatedArgs = argsToCurry.concat(args),
             canBeCalled = (concatedArgs.length >= executeArity) || !executeArity,
             newExpectedArity = executeArity - concatedArgs.length;
