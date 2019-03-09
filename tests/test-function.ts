@@ -61,6 +61,7 @@ describe ('#function', function () {
             expectFunction(flip);
         });
         it ('should return a function', function () {
+            // @ts-ignore
             expectFunction(flip());
             expectFunction(flip(subtract));
         });
@@ -77,6 +78,7 @@ describe ('#function', function () {
             expectFunction(flipN);
         });
         it ('should return a function', function () {
+            // @ts-ignore
             expectFunction(flipN());
             expectFunction(flipN(subtract));
         });
@@ -93,6 +95,7 @@ describe ('#function', function () {
             expectFunction(flip3);
         });
         it ('should return a function', function () {
+            // @ts-ignore
             expectFunction(flip3());
             expectFunction(flip3(subtract));
         });
@@ -109,6 +112,7 @@ describe ('#function', function () {
             expectFunction(flip4);
         });
         it ('should return a function', function () {
+            // @ts-ignore
             expectFunction(flip4());
             expectFunction(flip4(subtract));
         });
@@ -125,6 +129,7 @@ describe ('#function', function () {
             expectFunction(flip5);
         });
         it ('should return a function', function () {
+            // @ts-ignore
             expectFunction(flip5());
             expectFunction(flip5(subtract));
         });
@@ -412,7 +417,7 @@ describe ('#function', function () {
 
     describe('#toFunction', () => {
         it('should always return a function', () => {
-           falsyList.map(x => [x, Function])
+           falsyList.map(x => (<Array<any>>[x, Function]))
                .concat(truthyList.map(x => [x, Function]))
                .forEach(([arg, expectedType]) => {
                    expect(toFunction(arg)).toBeInstanceOf(expectedType);
