@@ -1,10 +1,10 @@
 /**
- * @todo Consolidate use of hard-coded path strings in this file into './gulpfileConfig.json'.
+ * @todo Consolidate use of hard-coded path strings in this file into './package.json[buildConfig]'.
  */
 import * as path from 'path';
 import * as fs from 'fs';
 
-import * as packageJson from './package';
+import * as packageJson from './package.json';
 
 import gulp from 'gulp';
 import concat from 'gulp-concat';
@@ -176,7 +176,9 @@ const
             .pipe(dest('./'));
     },
 
-    buildJsTask = parallel(series(iifeTask, uglifyTask), cjsTask, amdTask, umdTask, es6ModuleTask),
+    typescriptTask = () => Promise.resolve(),
+
+    buildJsTask = parallel(series(typescriptTask, iifeTask, uglifyTask), cjsTask, amdTask, umdTask, es6ModuleTask),
 
     buildTask = series(cleanTask, buildJsTask),
 

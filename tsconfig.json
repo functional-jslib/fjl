@@ -1,24 +1,19 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ESNext",
     "lib": ["esnext"],
     "target": "ESNext",
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "resolveJsonModule": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "outDir": "./dist/es"
   },
   "files": [
-    "src/**/*.ts",
-    "types/index.d.ts"
+    "src/fjl.ts"
   ],
   "include": [
     "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
   ],
   "types": [
     "types/index.d.ts"

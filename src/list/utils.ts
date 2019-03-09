@@ -9,7 +9,7 @@ import {alwaysFalse}    from '../boolean';
 import map              from './map';
 import {curry, curry2}  from '../function/curry';
 
-import List = fjl.List;
+import {List} from './types';
 
 export * from './aggregation';
 

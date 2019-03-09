@@ -32,9 +32,9 @@ export const
      * @param [step = 1] {Number}
      * @returns {Array.<Number>}
      */
-    range = curry((from, to, step = 1) => {
+    range = curry((from: number, to: number, step: number = 1): number[] => {
         let i = from;
-        const out = [];
+        const out: number[] = [];
         step = normalizeStep(from, to, step);
         if (step === 0 || from === to) { return [from]; }
         for (; (to - i) * step >= 0; i += step) { out.push(i); }

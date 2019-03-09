@@ -70,7 +70,7 @@ export const
                 break;
         }
         return agg;
-    }, {}),
+    }, {keys: (x: any) : string[] => []}),
 
     /**
      * Gets passed in object's own enumerable keys (same as `Object.keys`).
