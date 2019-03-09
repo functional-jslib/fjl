@@ -231,7 +231,7 @@ export const
      * @param xss {Array}
      * @returns {Array}
      */
-    transpose = (xss: [any[]] | []): [any[]] | [] => {
+    transpose = (xss: Array<any[]> | []): Array<any[]> | [] => {
         let numLists = length(xss),
             ind = 0, ind2;
         if (!numLists) {

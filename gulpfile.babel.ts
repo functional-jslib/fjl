@@ -3,6 +3,7 @@
  */
 import * as path from 'path';
 import * as fs from 'fs';
+import {exec} from 'child_process';
 
 import * as packageJson from './package.json';
 
@@ -112,7 +113,7 @@ const
 
     iifeTask = () =>
         rollup.rollup({
-            input: `src/${inputModuleName}.js`,
+            input: `dist/es/${inputModuleName}.js`,
             external: buildConfig.es6ModuleRollup.config.external,
             plugins: [
                 rollupResolve(),
@@ -139,7 +140,7 @@ const
 
     es6ModuleTask = () =>
         rollup.rollup({
-            input: `src/${inputModuleName}.js`,
+            input: `dist/es/${inputModuleName}.js`,
             external: buildConfig.es6ModuleRollup.config.external,
             plugins: [
                 rollupResolve(),
@@ -176,7 +177,18 @@ const
             .pipe(dest('./'));
     },
 
-    typescriptTask = () => Promise.resolve(),
+    typescriptTask = () => new Promise((resolve, reject) => {
+        exec('yarn tsc --build ./tsconfig.json', (err, stdout, stderr) => {
+            if (err) {
+                reject(err);
+            }
+            if (stderr) {
+                console.warn(stderr);
+            }
+            console.log(stdout);
+            resolve(stdout);
+        });
+    }),
 
     buildJsTask = parallel(series(typescriptTask, iifeTask, uglifyTask), cjsTask, amdTask, umdTask, es6ModuleTask),
 

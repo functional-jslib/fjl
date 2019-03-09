@@ -1,16 +1,23 @@
 {
   "compilerOptions": {
     "module": "ESNext",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "target": "ESNext",
-    "removeComments": true,
+    "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": true,
     "strictNullChecks": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "outDir": "./dist/es"
   },
   "files": [
     "src/fjl.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ],
   "include": [
     "src/**/*.ts"

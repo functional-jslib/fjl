@@ -1,20 +1,19 @@
-"use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(require("./jsPlatform/object"));
-__export(require("./object/lookup"));
-__export(require("./object/typeOf"));
-__export(require("./object/copy"));
-__export(require("./object/is"));
-__export(require("./object/of"));
-__export(require("./object/searchObj"));
-__export(require("./object/assignDeep"));
-__export(require("./object/setTheory"));
-__export(require("./object/console"));
-__export(require("./object/jsonClone"));
-__export(require("./object/toArray"));
-__export(require("./object/assocList"));
-__export(require("./object/defineProp"));
+/**
+ * @module object
+ * @description Object operations/combinators.
+ */
+export * from './jsPlatform/object';
+export * from './object/lookup';
+export * from './object/typeOf';
+export * from './object/copy';
+export * from './object/is';
+export * from './object/of';
+export * from './object/searchObj';
+export * from './object/assignDeep';
+export * from './object/setTheory';
+export * from './object/console';
+export * from './object/jsonClone';
+export * from './object/toArray';
+export * from './object/assocList';
+export * from './object/defineProp';
 //# sourceMappingURL=object.js.map

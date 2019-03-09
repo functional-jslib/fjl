@@ -1,18 +1,23 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const object_1 = require("../jsPlatform/object");
-const curry_1 = require("../function/curry");
-const typeOf_1 = require("../object/typeOf");
-const of_1 = require("../object/of");
-const is_1 = require("../object/is");
-const map = curry_1.curry((fn, xs) => {
-    if (!is_1.isset(xs)) {
+import { length } from '../jsPlatform/object';
+import { curry } from '../function/curry';
+import { typeOf } from '../object/typeOf';
+import { of } from '../object/of';
+import { isFunctor, isset } from '../object/is';
+/**
+ * Maps a function onto a List (string or array) or a functor (value containing a map method).
+ * @function module:list.map
+ * @param fn {Function} - Function to map on given value.
+ * @param xs {Array|String|*}
+ * @returns {Array|String|*}
+ */
+const map = curry((fn, xs) => {
+    if (!isset(xs)) {
         return xs;
     }
-    let out = of_1.of(xs), limit, i = 0;
-    switch (typeOf_1.typeOf(xs)) {
+    let out = of(xs), limit, i = 0;
+    switch (typeOf(xs)) {
         case 'Array':
-            limit = object_1.length(xs);
+            limit = length(xs);
             if (!limit) {
                 return out;
             }
@@ -21,7 +26,7 @@ const map = curry_1.curry((fn, xs) => {
             }
             return out;
         case 'String':
-            limit = object_1.length(xs);
+            limit = length(xs);
             if (!xs) {
                 return out;
             }
@@ -30,14 +35,15 @@ const map = curry_1.curry((fn, xs) => {
             }
             return out;
         default:
-            if (is_1.isFunctor(xs)) {
+            if (isFunctor(xs)) {
                 return xs.map(fn);
             }
+            // Other objects
             return Object.keys(xs).reduce((agg, key) => {
                 out[key] = fn(xs[key], key, xs);
                 return out;
             }, out);
     }
 });
-exports.default = map;
+export default map;
 //# sourceMappingURL=map.js.map

@@ -1,6 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Functor {
+/**
+ * Created by edlc on 12/9/16.
+ */
+export default class Functor {
     constructor(value) {
         this.value = value;
     }
@@ -14,5 +15,4 @@ class Functor {
         return this.map(fn);
     }
 }
-exports.default = Functor;
 //# sourceMappingURL=Functor.js.map

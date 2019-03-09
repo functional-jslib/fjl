@@ -1,47 +1,133 @@
-"use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-const list_1 = require("./jsPlatform/list");
-const function_1 = require("./jsPlatform/function");
-const object_1 = require("./jsPlatform/object");
-const negate_1 = require("./function/negate");
-const curry_1 = require("./function/curry");
-const boolean_1 = require("./boolean");
-const lookup_1 = require("./object/lookup");
-const of_1 = require("./object/of");
-const is_1 = require("./object/is");
-const typeOf_1 = require("./object/typeOf");
-const map_1 = require("./list/map");
-exports.map = map_1.default;
-const utils_1 = require("./list/utils");
-__export(require("./list/range"));
-__export(require("./list/utils"));
-var jsPlatform_1 = require("./jsPlatform");
-exports.slice = jsPlatform_1.slice;
-exports.includes = jsPlatform_1.includes;
-exports.indexOf = jsPlatform_1.indexOf;
-exports.lastIndexOf = jsPlatform_1.lastIndexOf;
-exports.push = jsPlatform_1.push;
-exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, args)), exports.head = x => x[0], exports.last = xs => xs[utils_1.lastIndex(xs)], exports.tail = xs => utils_1.sliceFrom(1, xs), exports.init = xs => utils_1.sliceTo(utils_1.lastIndex(xs), xs), exports.uncons = xs => !xs || object_1.length(xs) === 0 ? undefined : [exports.head(xs), exports.tail(xs)], exports.unconsr = xs => !xs || object_1.length(xs) === 0 ? undefined : [exports.init(xs), exports.last(xs)], exports.concat = xs => {
-    switch (object_1.length(xs)) {
+/**
+ * List operations module.
+ * @module list
+ */
+import { concat as listAppend, indexOf, slice, includes } from './jsPlatform/list';
+import { apply } from './jsPlatform/function';
+import { length } from './jsPlatform/object';
+import { negateF3, negateF2 } from './function/negate';
+import { curry, curry2, curry3 } from './function/curry';
+import { isTruthy, isFalsy } from './boolean';
+import { lookup } from './object/lookup';
+import { of } from './object/of';
+import { isset, isString } from './object/is';
+import { typeOf } from './object/typeOf';
+import map from './list/map';
+import { sliceFrom, sliceTo, lengths, toShortest, aggregateArray, reduceUntil, reduce, reduceRight, lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere, sliceCopy, genericAscOrdering } from './list/utils';
+export * from './list/range';
+export * from './list/utils';
+export { map };
+export { slice, includes, indexOf, lastIndexOf, push } from './jsPlatform';
+export const 
+/**
+ * Append two, or more, lists, i.e.,
+ * @example
+ * expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString); // true
+ *
+ * // Another example
+ * const result = append(
+ *   alphabetStr.split(''),
+ *   alphabetStr.split('')
+ * ),
+ * expected = repeat(2, alphabetStr).split('');
+ *
+ * shallowEquals(result, expected) === true // `true`
+ *
+ * @function module:list.append
+ * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
+ * @returns {(Array|String|*)} - Same type as list like passed in.
+ */
+append = curry2((...args) => apply(listAppend, args)), 
+/**
+ * Returns head of list (first item of list).
+ * @haskellType `head :: [a] -> a`
+ * @function module:list.head
+ * @param x {Array|String}
+ * @returns {*} - First item from list
+ */
+head = x => x[0], 
+/**
+ * Returns last item of list.
+ * @haskellType `last :: [a] -> a`
+ * @function module:list.last
+ * @param xs {Array|String}
+ * @returns {*}
+ */
+last = xs => xs[lastIndex(xs)], 
+/**
+ * Returns tail part of list (everything after the first item as new list).
+ * @haskelType `tail :: [a] -> [a]`
+ * @function module:list.tail
+ * @param xs {Array|String}
+ * @returns {Array|String}
+ */
+tail = xs => sliceFrom(1, xs), 
+/**
+ * Returns everything except last item of list as new list.
+ * @haskellType `init :: [a] -> [a]`
+ * @function module:list.init
+ * @param xs {Array|String}
+ * @returns {Array|String}
+ */
+init = xs => sliceTo(lastIndex(xs), xs), 
+/**
+ * Returns `head` and `tail` of passed in list/string in a tuple.
+ * @haskellType `uncons :: [a] -> Maybe (a, [a])`
+ * @function module:list.uncons
+ * @param xs {Array|String}
+ * @returns {Array|undefined}
+ */
+uncons = xs => !xs || length(xs) === 0 ? undefined : [head(xs), tail(xs)], 
+/**
+ * Returns `tail` and `head` of passed in list/string in a tuple.
+ * @haskellType `unconsr :: [a] -> Maybe ([a], a)`
+ * @function module:list.unconsr
+ * @param xs {Array|String}
+ * @returns {Array|String|*|undefined}
+ */
+unconsr = xs => !xs || length(xs) === 0 ? undefined : [init(xs), last(xs)], 
+/**
+ * Concatenates all the elements of a container of lists.
+ * @haskellType `concat :: Foldable t => t [a] -> [a]`
+ * @function module:list.concat
+ * @param xs {Array}
+ * @returns {Array}
+ */
+concat = xs => {
+    switch (length(xs)) {
         case undefined:
         case 0:
             return [];
         case 1:
             const item0 = xs[0];
-            return item0 && item0.slice ? utils_1.sliceCopy(item0) : item0;
+            return item0 && item0.slice ? sliceCopy(item0) : item0;
         case 2:
         default:
-            return function_1.apply(exports.append, xs);
+            return apply(append, xs);
     }
-}, exports.concatMap = curry_1.curry((fn, foldableOfA) => exports.concat(map_1.default(fn, foldableOfA))), exports.reverse = xs => {
-    if (!is_1.isset(xs) || !xs.length) {
+}, 
+/**
+ * Map a function over all the elements of a container and concatenate the resulting lists.
+ * @haskellType `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
+ * @function module:list.concatMap
+ * @param fn {Function}
+ * @param foldableOfA {Array}
+ * @returns {Array}
+ */
+concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))), 
+/**
+ * Returns a copy of the passed in list reverses.
+ * @haskellType `reverse :: [a] -> [a]`
+ * @function module:list.reverse
+ * @param xs {Array|String}
+ * @returns {Array|String}
+ */
+reverse = xs => {
+    if (!isset(xs) || !xs.length) {
         return xs;
     }
-    let out = of_1.of(xs), i = xs.length - 1;
-    switch (typeOf_1.typeOf(xs)) {
+    let out = of(xs), i = xs.length - 1;
+    switch (typeOf(xs)) {
         case 'String':
             for (; i >= 0; i -= 1) {
                 out += xs[i];
@@ -53,13 +139,24 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
             }
             return out;
     }
-}, exports.intersperse = curry_1.curry((between, xs) => {
+}, 
+/**
+ * Takes an element and a list and `intersperses' that element between the
+ *  elements of the list.
+ * @function module:list.intersperse
+ * @note In our version of the function javascript is loosely typed so,
+ *  so is our function (to much overhead to make it typed) so `between` can be any value.
+ * @param between {*} - Should be of the same type of elements contained in list.
+ * @param arr {Array|String} - List.
+ * @returns {Array|String}
+ */
+intersperse = curry((between, xs) => {
     if (!xs || !xs.length) {
         return xs;
     }
     const limit = xs.length, lastInd = limit - 1;
-    let out = of_1.of(xs), i = 0;
-    if (is_1.isString(xs)) {
+    let out = of(xs), i = 0;
+    if (isString(xs)) {
         for (; i < limit; i += 1) {
             out += i === lastInd ?
                 xs[i] : xs[i] + between;
@@ -75,17 +172,43 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         }
     }
     return out;
-}), exports.intercalate = curry_1.curry((xs, xss) => {
-    if (is_1.isString(xss)) {
-        return exports.intersperse(xs, xss);
+}), 
+/**
+ * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
+ * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
+ * @function module:list.intercalate
+ * @param xs {Array|String}
+ * @param xss {Array|String}
+ * @returns {Array|String}
+ */
+intercalate = curry((xs, xss) => {
+    if (isString(xss)) {
+        return intersperse(xs, xss);
     }
-    return exports.concat(exports.intersperse(xs, xss));
-}), exports.transpose = (xss) => {
-    let numLists = object_1.length(xss), ind = 0, ind2;
+    return concat(intersperse(xs, xss));
+}), 
+/**
+ * Transposes rows and columns into lists by index;  E.g.,
+ * Haskell example:
+ * ```
+ *  transpose [[1,2,3],[4,5,6]] == [[1,4],[2,5],[3,6]]
+ *
+ *  -- Notice the shorter arrays are ignored after their last index is copied over:
+ *  transpose [[10,11],[20],[],[30,31,32]] == [[10,20,30],[11,31],[32]]
+ * ```
+ * @note from columns to rows.
+ * @note Empty lists are ignored.
+ * @haskellType `transpose :: [[a]] -> [[a]]`
+ * @function module:list.transpose
+ * @param xss {Array}
+ * @returns {Array}
+ */
+transpose = (xss) => {
+    let numLists = length(xss), ind = 0, ind2;
     if (!numLists) {
         return [];
     }
-    const listLengths = function_1.apply(utils_1.lengths, xss), longestListLen = exports.maximum(listLengths), outLists = [];
+    const listLengths = apply(lengths, xss), longestListLen = maximum(listLengths), outLists = [];
     for (; ind < longestListLen; ind += 1) {
         const outList = [];
         for (ind2 = 0; ind2 < numLists; ind2 += 1) {
@@ -96,9 +219,22 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         }
         outLists.push(outList);
     }
-    return exports.filter(x => object_1.length(x) > 0, outLists);
-}, exports.subsequences = xs => {
-    const listLen = object_1.length(xs), len = Math.pow(2, listLen), out = [];
+    return filter(x => length(x) > 0, outLists);
+}, 
+/**
+ * Generates 2^n sub-sequences for passed in sequence (string/list) (`n` is
+ * the length of the passed in sequence so: 2^length(xs)).
+ * Note: The return value doubles per index/character passed in so use with caution!
+ *  Also note that for 2^16 (or for a sequence of 16 characters) this algorithm
+ *  will generate 65536 sub-sequences!  So caution should be taken to not
+ *  use this with sequences above a certain length on certain platform (the browser thread in specific).
+ * @function module:list.subsequences
+ * @jsperftest https://jsperf.com/subsequences
+ * @param xs {Array|String}
+ * @returns {Array.<Array>}
+ */
+subsequences = xs => {
+    const listLen = length(xs), len = Math.pow(2, listLen), out = [];
     for (let i = 0; i < len; i += 1) {
         let entry = [];
         for (let j = 0; j < listLen; j += 1) {
@@ -109,21 +245,39 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         out.push(entry);
     }
     return out;
-}, exports.swapped = curry_1.curry((ind1, ind2, list) => {
-    const out = utils_1.sliceCopy(list), tmp = out[ind1];
+}, 
+/**
+ * Returns an array with the given indices swapped.
+ * @function module:list.swapped
+ * @param ind1 {Number}
+ * @param ind2 {Number}
+ * @param list {Array}
+ * @returns {Array} - Copy of incoming with swapped values at indices.
+ */
+swapped = curry((ind1, ind2, list) => {
+    const out = sliceCopy(list), tmp = out[ind1];
     out[ind1] = out[ind2];
     out[ind2] = tmp;
     return out;
-}), exports.permutations = xs => {
-    const limit = object_1.length(xs);
+}), 
+/**
+ * Returns a list of permutations for passed in list.
+ *  Use caution with lists above a length of 15 (will take long due to nature of
+ *  algorithm).
+ * @function module:list.permutations
+ * @param xs {Array} - List.
+ * @returns {Array<Array|String|*>} - Array of permutations.
+ */
+permutations = xs => {
+    const limit = length(xs);
     if (!limit || limit === 1) {
         return [xs];
     }
-    let list = utils_1.sliceCopy(xs), c = exports.repeat(limit, 0), i = 0;
+    let list = sliceCopy(xs), c = repeat(limit, 0), i = 0;
     const out = [list];
     for (; i < limit; i++) {
         if (c[i] < i) {
-            list = exports.swapped(i % 2 === 0 ? 0 : c[i], i, list);
+            list = swapped(i % 2 === 0 ? 0 : c[i], i, list);
             out.push(list);
             c[i] += 1;
             i = 0;
@@ -132,14 +286,60 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         c[i] = 0;
     }
     return out;
-}, exports.foldl = utils_1.reduce, exports.foldr = utils_1.reduceRight, exports.foldl1 = curry_1.curry((op, xs) => {
-    const parts = exports.uncons(xs);
-    return !parts ? [] : utils_1.reduce(op, parts[0], parts[1]);
-}), exports.foldr1 = curry_1.curry((op, xs) => {
-    const parts = exports.unconsr(xs);
-    return !parts ? [] : utils_1.reduceRight(op, parts[1], parts[0]);
-}), exports.mapAccumL = curry_1.curry((op, zero, xs) => {
-    const list = utils_1.sliceCopy(xs), limit = object_1.length(xs);
+}, 
+/**
+ * Left associative fold.  Reduces a container of elements down by the given operation (same as [].reduce).
+ * @function module:list.foldl
+ * @param fn {Function}
+ * @param zero {*} - Aggregator.
+ * @param functor {Array}
+ * @returns {*} - Whatever type is lastly returned from `fn`.
+ */
+foldl = reduce, 
+/**
+ * Right associative fold.  Reduces a container of elements down by the given operation (same as [].reduceRight).
+ * @function module:list.foldr
+ * @param fn {Function}
+ * @param zero {*} - Aggregator.
+ * @param functor {Array}
+ * @returns {*} - Whatever type is lastly returned from `fn`.
+ */
+foldr = reduceRight, 
+/**
+ * A variant of `foldl` except that this one doesn't require the starting point.  The starting point/value will be pulled
+ * out from a copy of the container.
+ * @function module:list.foldl1
+ * @param op {Function}
+ * @param xs {Array}
+ * @returns {*} - Whatever type is lastly returned from `op`.
+ */
+foldl1 = curry((op, xs) => {
+    const parts = uncons(xs);
+    return !parts ? [] : reduce(op, parts[0], parts[1]);
+}), 
+/**
+ * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
+ * out from a copy of the container.
+ * @function module:list.foldr1
+ * @param op {Function}
+ * @param xs {Array}
+ * @returns {*} - Whatever type is lastly returned from `op`.
+ */
+foldr1 = curry((op, xs) => {
+    const parts = unconsr(xs);
+    return !parts ? [] : reduceRight(op, parts[1], parts[0]);
+}), 
+/**
+ * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
+ * containing the aggregated value and the result of mapping the passed in function on passed in list.
+ * @function module:list.mapAccumL
+ * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
+ * @param zero {*} - An instance of the passed in list type used to aggregateArray on.
+ * @param xs {Array} - list type.
+ * @return {Array} - [aggregated, list]
+ */
+mapAccumL = curry((op, zero, xs) => {
+    const list = sliceCopy(xs), limit = length(xs);
     if (!limit) {
         return [zero, list];
     }
@@ -150,8 +350,18 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         mapped = tuple[1];
     }
     return [agg, mapped];
-}), exports.mapAccumR = curry_1.curry((op, zero, xs) => {
-    const list = utils_1.sliceCopy(xs), limit = object_1.length(xs);
+}), 
+/**
+ * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
+ * containing the aggregated value and the result of mapping the passed in function on passed in list.
+ * @function module:list.mapAccumR
+ * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
+ * @param zero {*} - An instance of the passed in list type used to aggregateArray on.
+ * @param xs {Array} - list type.
+ * @return {Array} - [aggregated, list]
+ */
+mapAccumR = curry((op, zero, xs) => {
+    const list = sliceCopy(xs), limit = length(xs);
     if (!limit) {
         return [zero, list];
     }
@@ -162,47 +372,224 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         mapped = tuple[1];
     }
     return [agg, mapped];
-}), exports.iterate = curry_1.curry((limit, op, x) => {
+}), 
+/**
+ * iterate f x returns an infinite list of repeated applications of f to x.
+ * @function module:list.iterate
+ * @example `iterate(5, f, x) == [x, f(x), f(f(x)), ...]`
+ * @param limit {Number}
+ * @param op {Function} - Operation.
+ * @param x {*} - Starting point.
+ * @returns {*}
+ */
+iterate = curry((limit, op, x) => {
     let ind = 0, out = [], lastX = x;
     for (; ind < limit; ind += 1) {
         out.push(lastX);
         lastX = op(lastX, ind);
     }
     return out;
-}), exports.repeat = curry_1.curry((limit, x) => exports.iterate(limit, a => a, x)), exports.replicate = exports.repeat, exports.cycle = curry_1.curry((limit, xs) => exports.concat(exports.replicate(limit, xs))), exports.unfoldr = curry_1.curry((op, x) => {
+}), 
+/**
+ * Repeats `x` `limit` number of times.
+ * @function module:list.repeat
+ * @param limit {Number}
+ * @param x {*}
+ * @return {Array}
+ */
+repeat = curry((limit, x) => iterate(limit, a => a, x)), 
+/**
+ * Same as `repeat` due to the nature of javascript (see haskell version for usage).
+ * @function module:list.replicate
+ * @param limit {Number}
+ * @param x {*}
+ * @return {Array}
+ */
+replicate = repeat, 
+/**
+ * Replicates a list `limit` number of times and appends the results (concat)
+ * @function module:list.cycle
+ * @param limit {Number}
+ * @param xs {Array}
+ * @returns {Array}
+ */
+cycle = curry((limit, xs) => concat(replicate(limit, xs))), 
+/**
+ * Unfolds a value into a list of somethings.
+ * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
+ * @function module:list.unfoldr
+ * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregateArray and item to unfold in next iteration).
+ * @param x {*} - Starting parameter to unfold from.
+ * @returns {Array} - An array of whatever you return from `op` yielded.
+ */
+unfoldr = curry((op, x) => {
     let ind = 0, out = [], resultTuple = op(x, ind, out);
     while (resultTuple) {
         out.push(resultTuple[0]);
         resultTuple = op(resultTuple[1], ++ind, out);
     }
     return out;
-}), exports.findIndex = utils_1.findIndexWhere, exports.findIndices = utils_1.findIndicesWhere, exports.elemIndex = curry_1.curry((x, xs) => {
-    const foundInd = list_1.indexOf(x, xs);
+}), 
+/**
+ * Finds index in string or list (alias for `findIndex`).
+ * @function module:list.findIndex
+ * @param pred {Function} - Predicate<element, index, arr>.
+ * @param arr {Array|String}
+ * @returns {Number} - `-1` if predicate not matched else `index` found
+ */
+findIndex = findIndexWhere, 
+/**
+ * @function module:list.findIndices
+ * @param pred {Function}
+ * @param xs {Array} - list or list like.
+ * @returns {Array|undefined}
+ */
+findIndices = findIndicesWhere, 
+/**
+ * @function module:list.elemIndex
+ * @param x {*} - Element to search for.
+ * @param xs {Array} - list or list like.
+ * @returns {*}
+ */
+elemIndex = curry((x, xs) => {
+    const foundInd = indexOf(x, xs);
     return foundInd !== -1 ? foundInd : undefined;
-}), exports.elemIndices = curry_1.curry((value, xs) => exports.findIndices(x => x === value, xs)), exports.take = utils_1.sliceTo, exports.drop = utils_1.sliceFrom, exports.splitAt = (ind, list) => [utils_1.sliceTo(ind, list), utils_1.sliceFrom(ind, list)], exports.takeWhile = curry_1.curry((pred, list) => utils_1.reduceUntil(negate_1.negateF3(pred), is_1.isString(list) ?
+}), 
+/**
+ * @function module:list.elemIndices
+ * @param value {*} - Element to search for.
+ * @param xs {Array} - list or list like.
+ * @returns {*}
+ */
+elemIndices = curry((value, xs) => findIndices(x => x === value, xs)), 
+/**
+ * Takes `n` items from start of list to `limit` (exclusive).
+ * @function module:list.take
+ * @param list {Array|String}
+ * @param limit {Number}
+ * @returns {String|Array} - Passed in type's type
+ */
+take = sliceTo, 
+/**
+ * Drops `n` items from start of list to `count` (exclusive).
+ * @function module:list.drop
+ * @param list {Array|String}
+ * @param count {Number}
+ * @returns {String|Array} - Passed in type's type
+ */
+drop = sliceFrom, 
+/**
+ * Splits `x` in two at given `index` (exclusive (includes element/character at
+ * given index in second part of returned list)).
+ * @function module:list.splitAt
+ * @param ind {Number} - Index to split at.
+ * @param list {Array|String} - functor (list or string) to split.
+ * @returns {Array|String} - List like type passed
+ */
+splitAt = (ind, list) => [sliceTo(ind, list), sliceFrom(ind, list)], 
+/**
+ * Gives an list with passed elements while predicate was true.
+ * @function module:list.takeWhile
+ * @param pred {Function} - Predicate<*, index, list|string>
+ * @param list {Array|String}
+ * @returns {Array}
+ */
+takeWhile = curry((pred, list) => reduceUntil(negateF3(pred), // predicate
+isString(list) ?
     (agg, x) => agg + x :
-    utils_1.aggregateArray, of_1.of(list), list)), exports.dropWhile = curry_1.curry((pred, list) => {
-    const limit = object_1.length(list), splitPoint = utils_1.findIndexWhere((x, i, xs) => !pred(x, i, xs), list);
+    aggregateArray, // operation
+of(list), // aggregate
+list)), 
+/**
+ * Returns an list without elements that match predicate.
+ * @function module:list.dropWhile
+ * @param pred {Function} - Predicate<*, index, list|string>
+ * @param list {Array|String}
+ * @refactor
+ * @returns {Array|String}
+ */
+dropWhile = curry((pred, list) => {
+    const limit = length(list), splitPoint = findIndexWhere((x, i, xs) => !pred(x, i, xs), list);
     return splitPoint === -1 ?
-        utils_1.sliceFrom(limit, list) :
-        list_1.slice(splitPoint, limit, list);
-}), exports.dropWhileEnd = curry_1.curry((pred, list) => {
-    const splitPoint = utils_1.findIndexWhereRight((x, i, xs) => !pred(x, i, xs), list);
+        sliceFrom(limit, list) :
+        slice(splitPoint, limit, list);
+}), 
+/**
+ * @function module:list.dropWhileEnd
+ * @param pred {Function} - Predicate<*, index, list|string>
+ * @param list {Array|String}
+ * @refactor
+ * @returns {Array|String}
+ */
+dropWhileEnd = curry((pred, list) => {
+    const splitPoint = findIndexWhereRight((x, i, xs) => !pred(x, i, xs), list);
     if (splitPoint === -1) {
-        return of_1.of(list);
+        return of(list);
     }
-    return utils_1.sliceTo(splitPoint + 1, list);
-}), exports.span = curry_1.curry((pred, list) => {
-    const splitPoint = utils_1.findIndexWhere(negate_1.negateF3(pred), list);
+    return sliceTo(splitPoint + 1, list);
+}), 
+/**
+ * Gives you the `span` of items matching predicate
+ * and items not matching predicate;  E.g., Gives an
+ * array of arrays;  E.g., [[matching-items], [non-matching-items]]
+ * @function list.span
+ * @param pred {Function} - List predicate (`(x, i, list) => bool`)
+ * @param list {Array|String}
+ * @returns {(Array<Array<*>>|Array<String>)}
+ * @type {Function}
+ */
+span = curry((pred, list) => {
+    const splitPoint = findIndexWhere(negateF3(pred), list);
     return splitPoint === -1 ?
-        [utils_1.sliceFrom(0, list), of_1.of(list)] :
-        exports.splitAt(splitPoint, list);
-}), exports.breakOnList = curry_1.curry((pred, list) => {
-    const splitPoint = utils_1.findIndexWhere(negate_1.negateF3(pred), list);
+        [sliceFrom(0, list), of(list)] :
+        splitAt(splitPoint, list);
+}), 
+/**
+ * breakOnList, applied to a predicate p and a list xs, returns a tuple
+ * where first element is longest prefix (possibly empty) of xs of elements
+ * that do not satisfy p and second element is the remainder of the list:
+ * @haskellExample
+ * Replace `break` with `breakOnList` for our version.
+ * ```
+ * breakOnList (> 3) [1,2,3,4,1,2,3,4] == ([1,2,3],[4,1,2,3,4])
+ * breakOnList (< 9) [1,2,3] == ([],[1,2,3])
+ * breakOnList (> 9) [1,2,3] == ([1,2,3],[])
+ * ```
+ * @function module:list.breakOnList
+ * @param pred {Function}
+ * @param list {Array|String|*}
+ * @returns {Array}
+ */
+breakOnList = curry((pred, list) => {
+    const splitPoint = findIndexWhere(negateF3(pred), list);
     return splitPoint === -1 ?
-        [of_1.of(list), utils_1.sliceFrom(0, list)] : exports.reverse(exports.splitAt(splitPoint, list));
-}), exports.at = lookup_1.lookup, exports.find = utils_1.findWhere, exports.forEach = curry_1.curry((fn, list) => {
-    const limit = object_1.length(list);
+        [of(list), sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
+}), 
+/**
+ * Gets item at index.
+ * @function module:list.at
+ * @param ind {Number} - Index.
+ * @param xs {Array} - list or list like.
+ * @returns {*|undefined} - Item or `undefined`.
+ */
+at = lookup, 
+/**
+ * Find an item in structure of elements based on given predicate (`pred`).
+ * @function module:list.find
+ * @param pred {Function}
+ * @param xs {Array} - list or list like.
+ * @returns {*} - Found item.
+ */
+find = findWhere, 
+/**
+ * For each function (same as `[].forEach` except in functional format).
+ * @function module:list.forEach
+ * @param fn {Function} - Operation (`(element, index, list) => {...}`, etc.)
+ * @param xs {(Array|String)}
+ * @returns {void}
+ */
+forEach = curry((fn, list) => {
+    const limit = length(list);
     if (!limit) {
         return;
     }
@@ -210,8 +597,16 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
     for (; ind < limit; ind += 1) {
         fn(list[ind], ind, list);
     }
-}), exports.filter = curry_1.curry((pred, xs) => {
-    let ind = 0, limit = object_1.length(xs), out = [];
+}), 
+/**
+ * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
+ * @function module:list.filter
+ * @param pred {Function}
+ * @param xs {Array} - list or list like.
+ * @returns {Array} - Structure of filtered elements.
+ */
+filter = curry((pred, xs) => {
+    let ind = 0, limit = length(xs), out = [];
     if (!limit) {
         return out;
     }
@@ -221,11 +616,45 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         }
     }
     return out;
-}), exports.partition = curry_1.curry((pred, list) => !object_1.length(list) ?
+}), 
+/**
+ * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
+ * do not match the tuple are in second list in the returned tuple.
+ *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
+ * @function module:list.partition
+ * @param pred {Function} - Predicate<item, index, originalArrayOrString>
+ * @param list {Array}
+ * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
+ */
+partition = curry((pred, list) => !length(list) ?
     [[], []] :
-    [exports.filter(pred, list), exports.filter(negate_1.negateF3(pred), list)]), exports.elem = list_1.includes, exports.notElem = negate_1.negateF2(list_1.includes), exports.isPrefixOf = curry_1.curry((xs1, xs2) => {
-    const limit1 = object_1.length(xs1), limit2 = object_1.length(xs2);
-    if (limit2 < limit1 || !limit1 || !limit2 || list_1.indexOf(xs1[0], xs2) === -1) {
+    [filter(pred, list), filter(negateF3(pred), list)]), 
+/**
+ * Returns a boolean indicating whether an element exists in given structure of elements.
+ * @function module:list.elem
+ * @param element {*}
+ * @param xs {Array}
+ * @returns {Boolean}
+ */
+elem = includes, 
+/**
+ * The opposite of `elem` - Returns a boolean indicating whether an element exists in given list.
+ * @function module:list.notElem
+ * @param element {*}
+ * @param xs {Array}
+ * @returns {Boolean}
+ */
+notElem = negateF2(includes), 
+/**
+ * Checks if list `xs1` is a prefix of list `xs2`
+ * @function module:list.isPrefixOf
+ * @param xs1 {Array|String|*}
+ * @param xs2 {Array|String|*}
+ * @returns {boolean}
+ */
+isPrefixOf = curry((xs1, xs2) => {
+    const limit1 = length(xs1), limit2 = length(xs2);
+    if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
         return false;
     }
     let ind = 0;
@@ -235,9 +664,17 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         }
     }
     return true;
-}), exports.isSuffixOf = curry_1.curry((xs1, xs2) => {
-    const limit1 = object_1.length(xs1), limit2 = object_1.length(xs2);
-    if (limit2 < limit1 || !limit1 || !limit2 || list_1.indexOf(xs1[0], xs2) === -1) {
+}), 
+/**
+ * Checks if list `xs1` is a suffix of list `xs2`
+ * @function module:list.isSuffixOf
+ * @param xs1 {Array|String|*}
+ * @param xs2 {Array|String|*}
+ * @returns {boolean}
+ */
+isSuffixOf = curry((xs1, xs2) => {
+    const limit1 = length(xs1), limit2 = length(xs2);
+    if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
         return false;
     }
     let ind1 = limit1 - 1, ind2 = limit2 - 1;
@@ -248,8 +685,16 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         ind2 -= 1;
     }
     return true;
-}), exports.isInfixOf = curry_1.curry((xs1, xs2) => {
-    const limit1 = object_1.length(xs1), limit2 = object_1.length(xs2);
+}), 
+/**
+ * Checks if list `xs1` is an infix of list `xs2`
+ * @function module:list.isInfixOf
+ * @param xs1 {Array|String|*}
+ * @param xs2 {Array|String|*}
+ * @returns {boolean}
+ */
+isInfixOf = curry((xs1, xs2) => {
+    const limit1 = length(xs1), limit2 = length(xs2);
     if (limit2 < limit1 || !limit1 || !limit2) {
         return false;
     }
@@ -266,13 +711,21 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         }
     }
     return false;
-}), exports.isSubsequenceOf = curry_1.curry((xs1, xs2) => {
-    const len = Math.pow(2, object_1.length(xs2)), lenXs1 = object_1.length(xs1);
+}), 
+/**
+ * Checks if list `xs1` is a sub-sequence of list `xs2`
+ * @function module:list.isSubsequenceOf
+ * @param xs1 {Array|String|*}
+ * @param xs2 {Array|String|*}
+ * @returns {boolean}
+ */
+isSubsequenceOf = curry((xs1, xs2) => {
+    const len = Math.pow(2, length(xs2)), lenXs1 = length(xs1);
     let foundLen, i;
     for (i = 0; i < len; i += 1) {
         foundLen = 0;
         for (let j = 0; j < len; j += 1) {
-            if (i & (1 << j) && list_1.indexOf(xs2[j], xs1) > -1) {
+            if (i & (1 << j) && indexOf(xs2[j], xs1) > -1) {
                 foundLen += 1;
             }
             if (foundLen === lenXs1) {
@@ -281,10 +734,33 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         }
     }
     return false;
-}), exports.group = xs => exports.groupBy((a, b) => a === b, xs), exports.groupBy = curry_1.curry((equalityOp, xs) => {
-    const limit = object_1.length(xs);
+}), 
+/**
+ * The group function takes a list and returns a list of lists such that
+ *  the concatenation of the result is equal to the argument. Moreover, each
+ *  sublist in the result contains only equal elements. For example,
+ * `group "Mississippi" = ["M","i","ss","i","ss","i","pp","i"]`
+ * It is a special case of groupBy, which allows the programmer to supply
+ *  their own equality test.
+ * @haskellType `group :: Eq a => [a] -> [[a]]`
+ * @function module:list.group
+ * @param xs {Array|String}
+ * @returns {Array<Array|String|*>|*}
+ */
+group = xs => groupBy((a, b) => a === b, xs), 
+/**
+ * Allows you to group items in a list based on your supplied equality check.
+ * @note Sames `group` but allows you to specify equality operation.
+ * @haskellType `groupBy :: (a -> a -> Bool) -> [a] -> [[a]]`
+ * @function module:list.groupBy
+ * @param equalityOp {Function}
+ * @param xs {Array}
+ * @returns {*}
+ */
+groupBy = curry((equalityOp, xs) => {
+    const limit = length(xs);
     if (!limit) {
-        return utils_1.sliceCopy(xs);
+        return sliceCopy(xs);
     }
     let ind = 0, prevItem, item, predOp = x => {
         if (equalityOp(x, prevItem)) {
@@ -298,71 +774,252 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
     }, agg = [];
     for (; ind < limit; ind += 1) {
         item = xs[ind];
-        agg.push(exports.takeWhile(predOp, list_1.slice(ind, limit, xs)));
+        agg.push(takeWhile(predOp, slice(ind, limit, xs)));
     }
     return agg;
-}), exports.inits = xs => {
-    let limit = object_1.length(xs), ind = 0, agg = [];
+}), 
+/**
+ * The inits function returns all initial segments of the argument, shortest first. For example,
+ * ```
+ * shallowEquals(inits('abc'), ['','a','ab','abc'])
+ * ```
+ * @function module:list.inits
+ * @haskellType `inits :: [a] -> [[a]]`
+ * @param xs {Array}
+ * @returns {Array}
+ */
+inits = xs => {
+    let limit = length(xs), ind = 0, agg = [];
     if (!limit) {
         return [];
     }
     for (; ind <= limit; ind += 1) {
-        agg.push(utils_1.sliceTo(ind, xs));
+        agg.push(sliceTo(ind, xs));
     }
     return agg;
-}, exports.tails = xs => {
-    let limit = object_1.length(xs), ind = 0, agg = [];
+}, //map(list => init(list), xs),
+/**
+ * The inits function returns all initial segments of the argument, shortest first. For example,
+ * ```
+ * shallowEquals(tails('abc'), ['abc', 'bc', 'c',''])
+ * ```
+ * @function module:list.tails
+ * @haskellType `tails :: [a] -> [[a]]`
+ * @param xs {Array}
+ * @returns {Array}
+ */
+tails = xs => {
+    let limit = length(xs), ind = 0, agg = [];
     if (!limit) {
         return [];
     }
     for (; ind <= limit; ind += 1) {
-        agg.push(list_1.slice(ind, limit, xs));
+        agg.push(slice(ind, limit, xs));
     }
     return agg;
-}, exports.stripPrefix = curry_1.curry((prefix, list) => exports.isPrefixOf(prefix, list) ?
-    exports.splitAt(object_1.length(prefix), list)[1] :
-    utils_1.sliceCopy(list)), exports.zip = curry_1.curry((arr1, arr2) => {
-    if (!object_1.length(arr1) || !object_1.length(arr2)) {
+}, //map(list => tail(list), xs),
+/**
+ * Strips prefix list from given list
+ * @function module:list.stripPrefix
+ * @param prefix {Array|String|*}
+ * @param list {Array|string|*}
+ * @returns {Array|*}
+ */
+stripPrefix = curry((prefix, list) => isPrefixOf(prefix, list) ?
+    splitAt(length(prefix), list)[1] :
+    sliceCopy(list)), 
+/**
+ * zip takes two lists and returns a list of corresponding pairs.
+ * If one input list is short, excess elements of the longer list are discarded.
+ * @haskellType `zip :: [a] -> [b] -> [(a, b)]`
+ * @function module:list.zip
+ * @param arr1 {Array}
+ * @param arr2 {Array}
+ * @returns {Array<Array<*,*>>}
+ */
+zip = curry((arr1, arr2) => {
+    if (!length(arr1) || !length(arr2)) {
         return [];
     }
-    const [a1, a2] = utils_1.toShortest(arr1, arr2);
-    return utils_1.reduce((agg, item, ind) => utils_1.aggregateArray(agg, [item, a2[ind]]), [], a1);
-}), exports.zipN = curry_1.curry2((...lists) => {
-    const trimmedLists = function_1.apply(utils_1.toShortest, lists);
-    return utils_1.reduce((agg, item, ind) => utils_1.aggregateArray(agg, map_1.default(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
-}), exports.zip3 = curry_1.curry((arr1, arr2, arr3) => exports.zipN(arr1, arr2, arr3)), exports.zip4 = curry_1.curry((arr1, arr2, arr3, arr4) => exports.zipN(arr1, arr2, arr3, arr4)), exports.zip5 = curry_1.curry((arr1, arr2, arr3, arr4, arr5) => exports.zipN(arr1, arr2, arr3, arr4, arr5)), exports.zipWith = curry_1.curry((op, xs1, xs2) => {
-    if (!object_1.length(xs1) || !object_1.length(xs2)) {
+    const [a1, a2] = toShortest(arr1, arr2);
+    return reduce((agg, item, ind) => aggregateArray(agg, [item, a2[ind]]), [], a1);
+}), 
+/**
+ * zipN takes one or more lists and returns a list containing lists of all indices
+ * at a given index, index by index.
+ * If one input list is short, excess elements of the longer list are discarded.
+ * @function module:list.zipN
+ * @param lists {Array|String} - One ore more lists of the same type.
+ * @returns {Array}
+ */
+zipN = curry2((...lists) => {
+    const trimmedLists = apply(toShortest, lists);
+    return reduce((agg, item, ind) => aggregateArray(agg, map(xs => xs[ind], trimmedLists)), [], trimmedLists[0]);
+}), 
+/**
+ * @haskellType `zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]`
+ * @function module:list.zip3
+ * @param arr1 {Array}
+ * @param arr2 {Array}
+ * @param arr3 {Array}
+ * @returns {Array<Array<*,*>>}
+ */
+zip3 = curry((arr1, arr2, arr3) => zipN(arr1, arr2, arr3)), 
+/**
+ * @haskellType `zip4 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
+ * @function module:list.zip4
+ * @param arr1 {Array}
+ * @param arr2 {Array}
+ * @param arr3 {Array}
+ * @param arr4 {Array}
+ * @returns {Array<Array<*,*>>}
+ */
+zip4 = curry((arr1, arr2, arr3, arr4) => zipN(arr1, arr2, arr3, arr4)), 
+/**
+ * @haskellType `zip5 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
+ * @function module:list.zip5
+ * @param arr1 {Array}
+ * @param arr2 {Array}
+ * @param arr3 {Array}
+ * @param arr4 {Array}
+ * @param arr5 {Array}
+ * @returns {Array<Array<*,*>>}
+ */
+zip5 = curry((arr1, arr2, arr3, arr4, arr5) => zipN(arr1, arr2, arr3, arr4, arr5)), 
+/**
+ * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+ * zipWith generalises zip by zipping with the function given as the
+ * first argument, instead of a function tupling function (function that returns a tuple). For example,
+ * zipWith (+) is applied to two lists to produce the list of corresponding sums.
+ * @note `_|_` means bottom or perpetual (@see
+ *  - https://wiki.haskell.org/Bottom
+ *  - https://stackoverflow.com/questions/19794681/what-does-this-syntax-mean-in-haskell-or
+ *  )
+ * @example
+ * ```
+ * zipWith f [] _|_ = []
+ * ```
+ * @haskellType `zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]`
+ * @function module:list.zipWith
+ * @param op {Function} - Takes two parts of a tuple and returns a tuple.
+ *  E.g., ` op :: a -> b -> (a, b)`
+ * @param xs1 {Array}
+ * @param xs2 {Array}
+ * @returns {Array<Array<*,*>>}
+ */
+zipWith = curry((op, xs1, xs2) => {
+    if (!length(xs1) || !length(xs2)) {
         return [];
     }
-    const [a1, a2] = utils_1.toShortest(xs1, xs2);
-    return utils_1.reduce((agg, item, ind) => utils_1.aggregateArray(agg, op(item, a2[ind])), [], a1);
-}), exports.zipWithN = curry_1.curry3((op, ...lists) => {
-    const trimmedLists = function_1.apply(utils_1.toShortest, lists), lenOfTrimmed = object_1.length(trimmedLists);
+    const [a1, a2] = toShortest(xs1, xs2);
+    return reduce((agg, item, ind) => aggregateArray(agg, op(item, a2[ind])), [], a1);
+}), 
+/**
+ * Zips all given lists with tupling function. Note: Haskell types do not have
+ *  a way (that I know of) to show one or more for params in a function so `@haskellType` below
+ *  is left there for general purpose not for exactness as is told by aforementioned.
+ * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
+ *  of lists to zip.
+ * @function module:list.zipWithN
+ * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
+ *  of said parts:
+ *  E.g., ` op :: a -> b -> c -> (a, b, c)`
+ * @param lists ...{Array}
+ * @returns {Array<Array<*,*>>}
+ */
+zipWithN = curry3((op, ...lists) => {
+    const trimmedLists = apply(toShortest, lists), lenOfTrimmed = length(trimmedLists);
     if (!lenOfTrimmed) {
         return [];
     }
     else if (lenOfTrimmed === 1) {
-        return utils_1.sliceTo(object_1.length(trimmedLists[0]), trimmedLists[0]);
+        return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
     }
-    return utils_1.reduce((agg, item, ind) => utils_1.aggregateArray(agg, function_1.apply(op, map_1.default(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
-}), exports.zipWith3 = curry_1.curry((op, xs1, xs2, xs3) => exports.zipWithN(op, xs1, xs2, xs3)), exports.zipWith4 = curry_1.curry((op, xs1, xs2, xs3, xs4) => exports.zipWithN(op, xs1, xs2, xs3, xs4)), exports.zipWith5 = curry_1.curry((op, xs1, xs2, xs3, xs4, xs5) => exports.zipWithN(op, xs1, xs2, xs3, xs4, xs5)), exports.unzip = exports.foldl((agg, item) => {
+    return reduce((agg, item, ind) => aggregateArray(agg, apply(op, map(xs => xs[ind], trimmedLists))), [], trimmedLists[0]);
+}), 
+/**
+ * Zips 3 lists with tupling function.
+ * @haskellType `zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]`
+ * @function module:list.zipWith3
+ * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
+ *  of said parts:
+ *  E.g., ` op :: a -> b -> c -> (a, b, c)`
+ * @param xs1 {Array}
+ * @param xs2 {Array}
+ * @param xs3 {Array}
+ * @returns {Array<Array<*,*>>}
+ */
+zipWith3 = curry((op, xs1, xs2, xs3) => zipWithN(op, xs1, xs2, xs3)), 
+/**
+ * Zips 4 lists with tupling function.
+ * @haskellType `zipWith4 :: (a -> b -> c -> d -> e) -> [a] -> [b] -> [c]  -> [d] -> [e]`
+ * @function module:list.zipWith4
+ * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
+ *  of said parts:
+ *  E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`
+ * @param xs1 {Array}
+ * @param xs2 {Array}
+ * @param xs3 {Array}
+ * @param xs4 {Array}
+ * @returns {Array<Array<*,*>>}
+ */
+zipWith4 = curry((op, xs1, xs2, xs3, xs4) => zipWithN(op, xs1, xs2, xs3, xs4)), 
+/**
+ * Zips 5 lists.
+ * @haskellType `zipWith5 :: (a -> b -> c -> d -> e -> f) -> [a] -> [b] -> [c]  -> [d] -> [e] -> [f]`
+ * @function module:list.zipWith5
+ * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
+ *  of said parts:
+ *  E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`
+ * @param xs1 {Array}
+ * @param xs2 {Array}
+ * @param xs3 {Array}
+ * @param xs4 {Array}
+ * @param xs5 {Array}
+ * @returns {Array<Array<*,*>>}
+ */
+zipWith5 = curry((op, xs1, xs2, xs3, xs4, xs5) => zipWithN(op, xs1, xs2, xs3, xs4, xs5)), 
+/**
+ * unzip transforms a list of pairs into a list of first components and a list of second components.
+ * @haskellType `unzip :: [(a, b)] -> ([a], [b])`
+ * @function module:list.unzip
+ * @param arr {Array|*}
+ * @returns {Array|*}
+ */
+unzip = foldl((agg, item) => {
     agg[0].push(item[0]);
     agg[1].push(item[1]);
     return agg;
-}, [[], []]), exports.unzipN = list => {
-    if (!object_1.length(list)) {
+}, [[], []]), 
+/**
+ * unzip transforms a list of pairs into a list of first components and a list of second components.
+ * @sudoHaskellType `unzipN :: [(a, b, ...x)] -> ([a], [b], ...[x])`
+ * @function module:list.unzipN
+ * @param list {Array|*} - List of tuples (lists).
+ * @returns {Array|*}
+ */
+unzipN = list => {
+    if (!length(list)) {
         return [];
     }
-    const lenItem0 = object_1.length(list[0]);
+    const lenItem0 = length(list[0]);
     let zero = lenItem0 ?
-        exports.unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
+        unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
         [];
-    return exports.foldl((agg, item) => {
+    return foldl((agg, item) => {
         agg.forEach((outList, ind) => outList.push(item[ind]));
         return agg;
     }, zero, list);
-}, exports.any = curry_1.curry((p, xs) => {
-    let ind = 0, limit = object_1.length(xs);
+}, 
+/**
+ * Returns true if any item in container passes predicate `p`.
+ * @function module:list.any
+ * @param p {Function} - Predicate.
+ * @param xs {Array|String}
+ * @returns {Boolean}
+ */
+any = curry((p, xs) => {
+    let ind = 0, limit = length(xs);
     if (!limit) {
         return false;
     }
@@ -372,8 +1029,16 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         }
     }
     return false;
-}), exports.all = curry_1.curry((p, xs) => {
-    const limit = object_1.length(xs);
+}), 
+/**
+ * Returns true if all items in container pass predicate `p`.
+ * @function module:list.all
+ * @param p {Function} - Predicate.
+ * @param xs {Array|String}
+ * @returns {Boolean}
+ */
+all = curry((p, xs) => {
+    const limit = length(xs);
     let ind = 0;
     if (!limit) {
         return false;
@@ -384,11 +1049,87 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         }
     }
     return true;
-}), exports.and = xs => exports.all(boolean_1.isTruthy, xs), exports.or = xs => exports.any(boolean_1.isTruthy, xs), exports.not = xs => exports.all(boolean_1.isFalsy, xs), exports.sum = list => exports.foldl((agg, x) => agg + x, 0, list), exports.product = list => exports.foldl((agg, x) => agg * x, 1, list), exports.maximum = list => exports.last(exports.sortBy(utils_1.genericAscOrdering, list)), exports.minimum = list => exports.head(exports.sortBy(utils_1.genericAscOrdering, list)), exports.scanl = curry_1.curry((fn, zero, xs) => {
-    if (!xs || !object_1.length(xs)) {
+}), 
+/**
+ * Conjuction of container of bools (or truthy and/or falsy values);  Returns
+ * `true` if all in container are 'truthy' else returns `false`
+ * @function module:list.and
+ * @param xs {Array|String}
+ * @returns {Boolean}
+ */
+and = xs => all(isTruthy, xs), 
+/**
+ * Returns a boolean indicating whether any item in container is 'truthy' or not.
+ * **Note** The haskell type for this function only takes two items, but here
+ * we allow the passing of more than one item (may change later to adhere to the haskell type).
+ * @function module:list.or
+ * @haskellType `or :: Bool -> Bool -> Bool`
+ * @param xs {Array|String}
+ * @returns {Boolean}
+ */
+or = xs => any(isTruthy, xs), 
+/**
+ * Returns a boolean indicating whether all items in container are 'falsy' or not.
+ * **Note** The haskell type for this function only takes two items, but here
+ * we allow the passing of more than one item (may change later to adhere to the haskell type).
+ * @function module:list.not
+ * @haskellType `not :: Bool -> Bool`
+ * @param xs {Array|String}
+ * @returns {Boolean}
+ */
+not = xs => all(isFalsy, xs), 
+/**
+ * Computes the sum of the numbers of a structure.
+ * @function module:list.sum
+ * @haskellType `sum :: (List t, Num a) => t a -> a`
+ * @param list {Array|String}
+ * @returns {Number}
+ */
+sum = list => foldl((agg, x) => agg + x, 0, list), 
+/**
+ * Computes the product of the numbers of a structure.
+ * @function module:list.product
+ * @haskellType `product :: (List t, Num a) => t a -> a`
+ * @param list {Array|String}
+ * @returns {Number}
+ */
+product = list => foldl((agg, x) => agg * x, 1, list), 
+/**
+ * Returns the largest element in a non-empty structure of elements.
+ * @function module:list.maximum
+ * @haskellType `maximum :: forall a . Ord a => t a -> a`
+ * @param list {Array|String}
+ * @returns {*} - Whatever type the array is made of (if any).
+ */
+maximum = list => last(sortBy(genericAscOrdering, list)), 
+/**
+ * Returns the smallest element in a non-empty structure of elements.
+ * @function module:list.minimum
+ * @haskellType `minimum :: forall a . Ord a => t a -> a`
+ * @param list {Array|String}
+ * @returns {*} - Whatever type the array is made of (if any).
+ */
+minimum = list => head(sortBy(genericAscOrdering, list)), 
+/**
+ * scanl is similar to foldl, but returns a list of successive reduced values from the left:
+ * ```
+ * scanl f z [x1, x2, ...] == [z, z `f` x1, (z `f` x1) `f` x2, ...]
+ * ```
+ * Also note that:
+ * ```
+ * last (scanl f z xs) == foldl f z xs.
+ * ```
+ * @function module:list.scanl
+ * @param fn {Function}
+ * @param zero {*}
+ * @param xs {Array}
+ * @returns {Array|*}
+ */
+scanl = curry((fn, zero, xs) => {
+    if (!xs || !length(xs)) {
         return [];
     }
-    const limit = object_1.length(xs);
+    const limit = length(xs);
     let ind = 0, result = zero, out = [];
     while (ind < limit) {
         result = fn(result, xs[ind], ind, xs);
@@ -396,16 +1137,36 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         ind++;
     }
     return out;
-}), exports.scanl1 = curry_1.curry((fn, xs) => {
+}), 
+/**
+ * `scanl1` is a variant of `scanl` that has no starting value argument:
+ * `shallowCompare(scanl1(fn, [x1, x2, ...]), [x1, fn(x1, x2), ...]) // true`
+ * @function module:list.scanl1
+ * @param fn {Function}
+ * @param xs {Array}
+ * @returns {Array|*}
+ */
+scanl1 = curry((fn, xs) => {
     if (!xs || !xs.length) {
         return [];
     }
-    return exports.scanl(fn, exports.head(xs), exports.tail(xs));
-}), exports.scanr = curry_1.curry((fn, zero, xs) => {
-    if (!xs || !object_1.length(xs)) {
+    return scanl(fn, head(xs), tail(xs));
+}), 
+/**
+ * Same as `scanl` but from the right (similiar to `foldr`'s relationship to 'foldl').
+ * Note also `scanr`'s relationship ot `foldr`:
+ * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
+ * @function module:list.scanr
+ * @param fn {Function}
+ * @param zero {*}
+ * @param xs {Array}
+ * @returns {Array|*}
+ */
+scanr = curry((fn, zero, xs) => {
+    if (!xs || !length(xs)) {
         return [];
     }
-    const limit = object_1.length(xs);
+    const limit = length(xs);
     let ind = limit - 1, result = xs[0], out = [];
     while (ind > -1) {
         result = fn(result, xs[ind], ind, xs);
@@ -413,63 +1174,247 @@ exports.append = curry_1.curry2((...args) => function_1.apply(list_1.concat, arg
         ind--;
     }
     return out;
-}), exports.scanr1 = curry_1.curry((fn, xs) => {
+}), 
+/**
+ * Same as `scanr` but takes no zero/accumulator value.
+ * @function module:list.scanr1
+ * @param fn {Function}
+ * @param xs {Array}
+ * @returns {Array|*}
+ */
+scanr1 = curry((fn, xs) => {
     if (!xs || !xs.length) {
         return [];
     }
-    return exports.scanr(fn, exports.last(xs), exports.init(xs));
-}), exports.nub = list => exports.nubBy((a, b) => a === b, list), exports.remove = curry_1.curry((x, list) => exports.removeBy((a, b) => a === b, x, list)), exports.sort = xs => exports.sortBy(utils_1.genericAscOrdering, xs), exports.sortOn = curry_1.curry((valueFn, xs) => map_1.default(decorated => decorated[1], exports.sortBy(([a0], [b0]) => utils_1.genericAscOrdering(a0, b0), map_1.default(item => [valueFn(item), item], xs)))), exports.sortBy = curry_1.curry((orderingFn, xs) => utils_1.sliceCopy(xs).sort(orderingFn || utils_1.genericAscOrdering)), exports.insert = curry_1.curry((x, xs) => {
+    return scanr(fn, last(xs), init(xs));
+}), 
+/**
+ * The nub function removes duplicate elements from a list.
+ * In particular, it keeps only the first occurrence of each element.
+ * (The name nub means `essence'.) It is a special case of nubBy, which
+ * allows the programmer to supply their own equality test.
+ * ```shallowCompare( nub ([1,2,3,4,3,2,1,2,4,3,5]), [1,2,3,4,5] )```
+ * @function module:list.nub
+ * @param list {Array|String|*}
+ * @returns {Array}
+ */
+nub = list => nubBy((a, b) => a === b, list), 
+/**
+ * `remove(x, xs)` removes the first occurrence of `x` from `xs`.
+ * For example, `remove('a', 'banana') === 'bnana';`
+ * @function module:list.remove
+ * @param x {*}
+ * @param list {Array|String|*}
+ * @returns {Array}
+ */
+remove = curry((x, list) => removeBy((a, b) => a === b, x, list)), 
+/**
+ * The sort function implements a stable sorting algorithm.
+ * It is a special case of sortBy, which allows the programmer
+ * to supply their own comparison function.
+ * ```shallowCompare(sort ([1,6,4,3,2,5]), [1,2,3,4,5,6]) // true```
+ * @function module:list.sort
+ * @param xs {Array|String|*}
+ * @returns {Array}
+ */
+sort = xs => sortBy(genericAscOrdering, xs), 
+/**
+ * Sort a list by comparing the results of a key function applied to each
+ * element. sortOn f is equivalent to sortBy (comparing f), but has the
+ * performance advantage of only evaluating f once for each element in the
+ * input list. This is called the decorate-sort-undecorate paradigm, or
+ * Schwartzian transform.
+ *
+ * Elements are arranged from from lowest to highest, keeping duplicates
+ * in the order they appeared in the input.
+ *
+ * Ex:
+ * ```
+ * shallowEquals(
+ *  sortOn (head, [[2, "world"], [4, "!"], [1, "Hello"]]),
+ *  [[1,"Hello"],[2,"world"],[4,"!"]]
+ * ) // true
+ * ```
+ * @function module:list.sortOn
+ * @param valueFn {Function}
+ * @param xs {Array|String|*}
+ * @returns {Array}
+ */
+sortOn = curry((valueFn, xs) => 
+// Un-decorate
+map(decorated => decorated[1], 
+// Decorate and sort
+sortBy(
+// Ordering
+([a0], [b0]) => genericAscOrdering(a0, b0), 
+// Decorate
+map(item => [valueFn(item), item], xs)))), 
+/**
+ * The sortBy function is the non-overloaded (in haskell terms) version of sort.
+ * @haskellExample ```
+ *  >>> sortBy (\(a,_) (b,_) -> compare a b) [(2, "world"), (4, "!"), (1, "Hello")]
+ *  [(1,"Hello"),(2,"world"),(4,"!")]
+ * ```
+ * @function module:list.sortBy
+ * @param orderingFn {Function}
+ * @param xs {Array|String|*}
+ * @returns {Array|String|*}
+ */
+sortBy = curry((orderingFn, xs) => sliceCopy(xs).sort(orderingFn || genericAscOrdering)), 
+/**
+ * The insert function takes an element and a list and inserts the element
+ * into the list at the first position where it is less than or equal to the
+ * next element. In particular, if the list is sorted before the call, the
+ * result will also be sorted. It is a special case of insertBy, which allows
+ * the programmer to supply their own comparison function.
+ * @function module:list.insert
+ * @param x {*}
+ * @param xs {Array|*}
+ * @returns {Array}
+ */
+insert = curry((x, xs) => {
     if (!xs.length) {
-        return of_1.of(xs, x);
+        return of(xs, x);
     }
-    const foundIndex = exports.findIndex(item => x <= item, xs);
-    return foundIndex === -1 ? exports.concat([xs, of_1.of(xs, x)]) :
-        exports.concat(exports.intersperse(of_1.of(xs, x), exports.splitAt(foundIndex, xs)));
-}), exports.insertBy = curry_1.curry((orderingFn, x, xs) => {
-    const limit = object_1.length(xs);
+    const foundIndex = findIndex(item => x <= item, xs);
+    return foundIndex === -1 ? concat([xs, of(xs, x)]) :
+        concat(intersperse(of(xs, x), splitAt(foundIndex, xs)));
+}), 
+/**
+ * A version of `insert` that allows you to specify the ordering of the inserted
+ * item;  Before/at, or after
+ * @function module:list.insertBy
+ * @haskellType `insertBy :: (a -> a -> Ordering) -> a -> [a] -> [a]`
+ * @note `Ordering` means 'something that is order-able'
+ *  operated on by this functions logic.
+ * @param orderingFn {Function} - A function that returns `-1`, `0`, or 1`.
+ * @param x {*} - Value to insert.
+ * @param xs {Array} - List to insert into (note new list is returned)
+ * @returns {Array} - New list.
+ */
+insertBy = curry((orderingFn, x, xs) => {
+    const limit = length(xs);
     if (!limit) {
         return [x];
     }
     let ind = 0;
     for (; ind < limit; ind += 1) {
         if (orderingFn(x, xs[ind]) <= 0) {
-            const parts = exports.splitAt(ind, xs);
-            return exports.concat([parts[0], [x], parts[1]]);
+            const parts = splitAt(ind, xs);
+            return concat([parts[0], [x], parts[1]]);
         }
     }
-    return utils_1.aggregateArray(utils_1.sliceCopy(xs), x);
-}), exports.nubBy = curry_1.curry((pred, list) => {
-    if (!object_1.length(list)) {
+    return aggregateArray(sliceCopy(xs), x);
+}), 
+/**
+ * The nubBy function behaves just like nub, except it uses a user-supplied equality predicate.
+ * @function module:list.nubBy
+ * @param pred {Function}
+ * @param list {Array|String|*}
+ * @returns {Array}
+ */
+nubBy = curry((pred, list) => {
+    if (!length(list)) {
         return [];
     }
-    const limit = object_1.length(list);
+    const limit = length(list);
     let ind = 0, currItem, out = [], anyOp = storedItem => pred(currItem, storedItem);
     for (; ind < limit; ind += 1) {
         currItem = list[ind];
-        if (exports.any(anyOp, out)) {
+        if (any(anyOp, out)) {
             continue;
         }
         out.push(currItem);
     }
     return out;
-}), exports.removeBy = curry_1.curry((pred, x, list) => {
-    const foundIndex = exports.findIndex(item => pred(x, item), list);
+}), 
+/**
+ * Behaves the same as `remove`, but takes a user-supplied equality predicate.
+ * @function module:list.removeBy
+ * @param pred {Function} - Equality predicate `(a, b) => bool`
+ * @param x {*}
+ * @param list {Array|String|*}
+ * @returns {Array}
+ */
+removeBy = curry((pred, x, list) => {
+    const foundIndex = findIndex(item => pred(x, item), list);
     if (foundIndex > -1) {
-        const parts = exports.splitAt(foundIndex, list);
-        return exports.append(parts[0], exports.tail(parts[1]));
+        const parts = splitAt(foundIndex, list);
+        return append(parts[0], tail(parts[1]));
     }
-    return utils_1.sliceCopy(list);
-}), exports.removeFirstsBy = curry_1.curry((pred, xs1, xs2) => exports.foldl((agg, x) => exports.removeBy(pred, x, agg), xs1, xs2)), exports.unionBy = curry_1.curry((pred, arr1, arr2) => exports.foldl((agg, b) => {
-    const alreadyAdded = exports.any(a => pred(a, b), agg);
+    return sliceCopy(list);
+}), 
+/**
+ * The `removeFirstsBy` function takes a predicate and two lists and returns the first list with the first
+ * occurrence of each element of the second list removed.
+ * @function module:list.removeFirstBy
+ * @param pred {Function}
+ * @param xs1 {Array|String|*}
+ * @param xs2 {Array|String|*}
+ * @returns {Array}
+ */
+removeFirstsBy = curry((pred, xs1, xs2) => foldl((agg, x) => removeBy(pred, x, agg), xs1, xs2)), 
+/**
+ * Returns the union on elements matching boolean check passed in.
+ * @function module:list.unionBy
+ * @param pred {Function} - `pred :: a -> a -> Bool`
+ * @param arr1 {Array}
+ * @param arr2 {Array}
+ * @returns {Array}
+ */
+unionBy = curry((pred, arr1, arr2) => foldl((agg, b) => {
+    const alreadyAdded = any(a => pred(a, b), agg);
     return !alreadyAdded ? (agg.push(b), agg) : agg;
-}, utils_1.sliceCopy(arr1), arr2)), exports.union = curry_1.curry((arr1, arr2) => exports.append(arr1, exports.filter(elm => !list_1.includes(elm, arr1), arr2))), exports.intersect = curry_1.curry((arr1, arr2) => !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
-    exports.filter(elm => list_1.includes(elm, arr2), arr1)), exports.intersectBy = curry_1.curry((pred, list1, list2) => exports.foldl((agg, a) => exports.any(b => pred(a, b), list2) ? (agg.push(a), agg) : agg, [], list1)), exports.difference = curry_1.curry((array1, array2) => {
+}, sliceCopy(arr1), arr2)), 
+/**
+ * Creates a union on matching elements from array1.
+ * @function module:list.union
+ * @param arr1 {Array}
+ * @param arr2 {Array}
+ * @returns {Array}
+ */
+union = curry((arr1, arr2) => append(arr1, filter(elm => !includes(elm, arr1), arr2))), 
+/**
+ * Performs an intersection on list 1 with  elements from list 2.
+ * @function module:list.intersect
+ * @param arr1 {Array}
+ * @param arr2 {Array}
+ * @returns {Array}
+ */
+intersect = curry((arr1, arr2) => !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
+    filter(elm => includes(elm, arr2), arr1)), 
+/**
+ * Returns an intersection by predicate.
+ * @function module:list.intersectBy
+ * @param pred {Function} - `pred :: a -> b -> Bool`
+ * @param list1 {Array}
+ * @param list2 {Array}
+ * @return {Array}
+ */
+intersectBy = curry((pred, list1, list2) => foldl((agg, a) => any(b => pred(a, b), list2) ? (agg.push(a), agg) : agg, [], list1)), 
+/**
+ * Returns the difference of list 1 from list 2.
+ * @note The `difference` operation here is non-associative;  E.g., `a - b` is not equal to `b - a`;
+ * @function module:list.difference
+ * @param array1 {Array}
+ * @param array2 {Array}
+ * @returns {Array}
+ */
+difference = curry((array1, array2) => {
     if (array1 && !array2) {
-        return utils_1.sliceCopy(array1);
+        return sliceCopy(array1);
     }
     else if (!array1 && array2 || (!array1 && !array2)) {
         return [];
     }
-    return utils_1.reduce((agg, elm) => !list_1.includes(elm, array2) ? (agg.push(elm), agg) : agg, [], array1);
-}), exports.complement = curry_1.curry2((arr0, ...arrays) => utils_1.reduce((agg, arr) => exports.append(agg, exports.difference(arr, arr0)), [], arrays));
+    return reduce((agg, elm) => !includes(elm, array2) ? (agg.push(elm), agg) : agg, [], array1);
+}), 
+/**
+ * Returns the complement of list 0 and the reset of the passed in arrays.
+ * @function module:list.complement
+ * @param arr0 {Array}
+ * @param arrays {...Array}
+ * @returns {Array}
+ */
+complement = curry2((arr0, ...arrays) => reduce((agg, arr) => append(agg, difference(arr, arr0)), [], arrays));
 //# sourceMappingURL=list.js.map

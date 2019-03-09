@@ -1,18 +1,16 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const assignDeep_1 = require("./assignDeep");
-const object_1 = require("../jsPlatform/object");
-const utils_1 = require("../list/utils");
-const curry_1 = require("../function/curry");
-exports.objUnion = curry_1.curry((obj1, obj2) => assignDeep_1.assignDeep(obj1, obj2)), exports.objIntersect = curry_1.curry((obj1, obj2) => utils_1.reduce((agg, key) => {
+import { assignDeep } from './assignDeep';
+import { keys } from '../jsPlatform/object';
+import { reduce } from '../list/utils';
+import { curry, curry2 } from '../function/curry';
+export const objUnion = curry((obj1, obj2) => assignDeep(obj1, obj2)), objIntersect = curry((obj1, obj2) => reduce((agg, key) => {
     if (obj2.hasOwnProperty(key)) {
         agg[key] = obj2[key];
     }
     return agg;
-}, {}, object_1.keys(obj1))), exports.objDifference = curry_1.curry((obj1, obj2) => utils_1.reduce((agg, key) => {
+}, {}, keys(obj1))), objDifference = curry((obj1, obj2) => reduce((agg, key) => {
     if (!obj2.hasOwnProperty(key)) {
         agg[key] = obj1[key];
     }
     return agg;
-}, {}, object_1.keys(obj1))), exports.objComplement = curry_1.curry2((obj0, ...objs) => utils_1.reduce((agg, obj) => assignDeep_1.assignDeep(agg, exports.objDifference(obj, obj0)), {}, objs));
+}, {}, keys(obj1))), objComplement = curry2((obj0, ...objs) => reduce((agg, obj) => assignDeep(agg, objDifference(obj, obj0)), {}, objs));
 //# sourceMappingURL=setTheory.js.map

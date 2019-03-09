@@ -1,16 +1,46 @@
-"use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-const function_1 = require("../jsPlatform/function");
-const list_1 = require("../jsPlatform/list");
-const object_1 = require("../jsPlatform/object");
-const boolean_1 = require("../boolean");
-const map_1 = require("./map");
-const curry_1 = require("../function/curry");
-__export(require("./aggregation"));
-exports.sliceFrom = curry_1.curry((startInd, xs) => list_1.slice(startInd, undefined, xs)), exports.sliceTo = curry_1.curry((toInd, xs) => list_1.slice(0, toInd, xs)), exports.sliceCopy = exports.sliceFrom(0), exports.genericAscOrdering = curry_1.curry((a, b) => {
+/**
+ * List operator utils module.
+ * @module listUtils
+ */
+import { apply } from '../jsPlatform/function'; // un-curried version
+import { slice } from '../jsPlatform/list'; // un-curried version good for both strings and arrays
+import { length } from '../jsPlatform/object';
+import { alwaysFalse } from '../boolean';
+import map from './map';
+import { curry, curry2 } from '../function/curry';
+export * from './aggregation';
+export const 
+/**
+ * Returns a slice of the given list from `startInd` to the end of the list.
+ * @function module:listUtils.sliceFrom
+ * @param startInd {Number}
+ * @param xs {Array|String|*}
+ * @returns {Array|String|*}
+ */
+sliceFrom = curry((startInd, xs) => slice(startInd, undefined, xs)), 
+/**
+ * Slices from index `0` to given index.
+ * @function module:listUtils.sliceTo
+ * @param toInd {Number}
+ * @param xs {Array|String|*}
+ * @returns {Array|String|*}
+ */
+sliceTo = curry((toInd, xs) => slice(0, toInd, xs)), 
+/**
+ * Slices a copy of list.
+ * @function listUtils.sliceCopy
+ * @param xs {Array|String|*}
+ * @returns {Array|String|*}
+ */
+sliceCopy = sliceFrom(0), 
+/**
+ * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
+ * @function module:listUtils.genericAscOrdering
+ * @param a {*}
+ * @param b {*}
+ * @returns {number}
+ */
+genericAscOrdering = curry((a, b) => {
     if (a > b) {
         return 1;
     }
@@ -18,12 +48,37 @@ exports.sliceFrom = curry_1.curry((startInd, xs) => list_1.slice(startInd, undef
         return -1;
     }
     return 0;
-}), exports.lengths = curry_1.curry2((...lists) => map_1.default(object_1.length, lists)), exports.toShortest = curry_1.curry2((...lists) => {
-    const listLengths = function_1.apply(exports.lengths, lists), smallLen = Math.min.apply(Math, listLengths);
-    return map_1.default((list, ind) => listLengths[ind] > smallLen ?
-        exports.sliceTo(smallLen, list) : exports.sliceCopy(list), lists);
-}), exports.reduceUntil = curry_1.curry((pred, op, agg, xs) => {
-    const limit = object_1.length(xs);
+}), 
+/**
+ * Returns length of all passed lists in list.
+ * @function module:listUtils.lengths
+ * @param lists ...{Array|String|*}
+ * @returns {Array|String|*}
+ */
+lengths = curry2((...lists) => map(length, lists)), 
+/**
+ * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
+ *  'slice to smallest' functionality.
+ * @function module:listUtils.toShortest
+ * @param lists {...(Array|String|*)}
+ * @returns {Array|String|*}
+ */
+toShortest = curry2((...lists) => {
+    const listLengths = apply(lengths, lists), smallLen = Math.min.apply(Math, listLengths);
+    return map((list, ind) => listLengths[ind] > smallLen ?
+        sliceTo(smallLen, list) : sliceCopy(list), lists);
+}), 
+/**
+ * Reduces until predicate.
+ * @function module:listUtils.reduceUntil
+ * @param pred {Function} - `(item, index, list) => Boolean(...)`
+ * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+ * @param agg {*} - Zero value.
+ * @param xs {Array|String|*} - List.
+ * @returns {*}
+ */
+reduceUntil = curry((pred, op, agg, xs) => {
+    const limit = length(xs);
     if (!limit) {
         return agg;
     }
@@ -35,8 +90,18 @@ exports.sliceFrom = curry_1.curry((startInd, xs) => list_1.slice(startInd, undef
         result = op(result, xs[ind], ind, xs);
     }
     return result;
-}), exports.reduceUntilRight = curry_1.curry((pred, op, agg, arr) => {
-    const limit = object_1.length(arr);
+}), 
+/**
+ * Reduces until predicate (from right to left).
+ * @function module:listUtils.reduceUntilRight
+ * @param pred {Function} - `(item, index, list) => Boolean(...)`
+ * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+ * @param agg {*} - Zero value.
+ * @param xs {Array|String|*} - List.
+ * @returns {*}
+ */
+reduceUntilRight = curry((pred, op, agg, arr) => {
+    const limit = length(arr);
     if (!limit) {
         return agg;
     }
@@ -48,9 +113,42 @@ exports.sliceFrom = curry_1.curry((startInd, xs) => list_1.slice(startInd, undef
         result = op(result, arr[ind], ind, arr);
     }
     return result;
-}), exports.reduce = exports.reduceUntil(boolean_1.alwaysFalse), exports.reduceRight = exports.reduceUntilRight(boolean_1.alwaysFalse), exports.lastIndex = x => { const len = object_1.length(x); return len ? len - 1 : 0; }, exports.findIndexWhere = curry_1.curry((pred, arr) => {
+}), 
+/**
+ * Reduces a list with given operation (`op`) function.
+ * @function module:listUtils.reduce
+ * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+ * @param agg {*} - Zero value.
+ * @param xs {Array|String|*} - List.
+ * @returns {*}
+ */
+reduce = reduceUntil(alwaysFalse), 
+/**
+ * Reduces a list with given operation (`op`) function (from right-to-left).
+ * @function module:listUtils.reduceRight
+ * @param op {Function} - Operation - `(agg, item, index, list) => agg`
+ * @param agg {*} - Zero value.
+ * @param xs {Array|String|*} - List.
+ * @returns {*}
+ */
+reduceRight = reduceUntilRight(alwaysFalse), 
+/**
+ * Gets last index of a list/list-like (Array|String|Function etc.).
+ * @function module:listUtils.lastIndex
+ * @param x {Array|String|*} - list like or list.
+ * @returns {Number} - `-1` if no element found.
+ */
+lastIndex = x => { const len = length(x); return len ? len - 1 : 0; }, 
+/**
+ * Finds index in string or list.
+ * @function module:listUtils.findIndexWhere
+ * @param pred {Function} - Predicate<element, index, arr>.
+ * @param arr {Array|String}
+ * @returns {Number} - `-1` if predicate not matched else `index` found
+ */
+findIndexWhere = curry((pred, arr) => {
     let ind = 0;
-    const limit = object_1.length(arr);
+    const limit = length(arr);
     for (; ind < limit; ind += 1) {
         const predicateFulfilled = !!pred(arr[ind], ind, arr);
         if (predicateFulfilled) {
@@ -58,8 +156,16 @@ exports.sliceFrom = curry_1.curry((startInd, xs) => list_1.slice(startInd, undef
         }
     }
     return -1;
-}), exports.findIndexWhereRight = curry_1.curry((pred, arr) => {
-    let ind = object_1.length(arr) - 1;
+}), 
+/**
+ * Finds index in list from right to left.
+ * @function module:listUtils.findIndexWhereRight
+ * @param pred {Function} - Predicate<element, index, arr>.
+ * @param arr {Array|String}
+ * @returns {Number} - `-1` if predicate not matched else `index` found
+ */
+findIndexWhereRight = curry((pred, arr) => {
+    let ind = length(arr) - 1;
     for (; ind >= 0; ind -= 1) {
         const predicateFulfilled = !!pred(arr[ind], ind, arr);
         if (predicateFulfilled) {
@@ -67,8 +173,15 @@ exports.sliceFrom = curry_1.curry((startInd, xs) => list_1.slice(startInd, undef
         }
     }
     return -1;
-}), exports.findIndicesWhere = curry_1.curry((pred, xs) => {
-    const limit = object_1.length(xs);
+}), 
+/**
+ * @function module:listUtils.findIndicesWhere
+ * @param pred {Function}
+ * @param xs {Array|String|*} - list or list like.
+ * @returns {Array|undefined}
+ */
+findIndicesWhere = curry((pred, xs) => {
+    const limit = length(xs);
     let ind = 0, out = [];
     for (; ind < limit; ind++) {
         if (pred(xs[ind], ind, xs)) {
@@ -76,8 +189,15 @@ exports.sliceFrom = curry_1.curry((startInd, xs) => list_1.slice(startInd, undef
         }
     }
     return out.length ? out : undefined;
-}), exports.findWhere = curry_1.curry((pred, xs) => {
-    let ind = 0, limit = object_1.length(xs);
+}), 
+/**
+ * @function module:listUtils.findWhere
+ * @param pred {Function}
+ * @param xs {Array|String|*} - list or list like.
+ * @returns {*}
+ */
+findWhere = curry((pred, xs) => {
+    let ind = 0, limit = length(xs);
     if (!limit) {
         return;
     }

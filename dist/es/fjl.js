@@ -1,15 +1,25 @@
-"use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(require("./object"));
-__export(require("./boolean"));
-__export(require("./function"));
-__export(require("./list"));
-__export(require("./string"));
-__export(require("./utils"));
-__export(require("./errorThrowing"));
-const _jsPlatform = require("./jsPlatform");
-exports.jsPlatform = _jsPlatform;
+/**
+ * @module fjl
+ * @description Exports all module methods (object, list, string modules etc.).
+ * @goal to include everything from haskell's Prelude where it makes sense in order to create
+ *  a subset of functions which can make the javascript developer more efficient and make his/her
+ *  code more concise (and functional).
+ * @motivation preludejs, lodash/fp, RamdaJs, Haskell.
+ * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
+ * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
+ */
+export * from './object';
+export * from './boolean';
+export * from './function';
+export * from './list';
+export * from './string';
+export * from './utils';
+export * from './errorThrowing';
+import * as _jsPlatform from './jsPlatform';
+export const jsPlatform = _jsPlatform;
+/**
+ * @typedef {String|Function|ArrayBufferConstructor|ArrayConstructor|BooleanConstructor|MapConstructor|NumberConstructor|SetConstructor|WeakMapConstructor|WeakSetConstructor} TypeRef
+ * @description Type reference.  Either actual type or type's name;  E.g., `Type.name`
+ * Also note: Class cased names are use for values that do not have `name` properties;  Namely: 'Null', 'NaN' and 'Undefined' (for their respective values respectively).
+ */
 //# sourceMappingURL=fjl.js.map

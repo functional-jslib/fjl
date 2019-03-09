@@ -1,7 +1,42 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const array_1 = require("../jsPlatform/array");
-const function_1 = require("../jsPlatform/function");
-const curry_1 = require("./curry");
-exports.flipN = fn => curry_1.curry2((...args) => function_1.apply(fn, array_1.reverse(args))), exports.flip = fn => curry_1.curry((b, a) => function_1.call(fn, a, b)), exports.flip3 = fn => curry_1.curry((c, b, a) => function_1.call(fn, a, b, c)), exports.flip4 = fn => curry_1.curry((d, c, b, a) => function_1.call(fn, a, b, c, d)), exports.flip5 = fn => curry_1.curry((e, d, c, b, a) => function_1.call(fn, a, b, c, d, e));
+import { reverse } from '../jsPlatform/array';
+import { apply, call } from '../jsPlatform/function';
+import { curry, curry2 } from './curry';
+export const 
+/**
+ * Returns a curried function requiring given functions arguments in reverse
+ * (returned function expects 2 or more variables (curried at 2 or more args)).
+ * @function module:function.flipN
+ * @param fn {Function}
+ * @returns {Function}
+ * @curried
+ */
+flipN = fn => curry2((...args) => apply(fn, reverse(args))), 
+/**
+ * Flips a function's first and second arguments and and returns a new function requiring said arguments in reverse.
+ * @function module:function.flip
+ * @param fn {Function}
+ * @returns {Function}
+ */
+flip = fn => curry((b, a) => call(fn, a, b)), 
+/**
+ * Same as `flip` except returns a flipped function of arity 3.
+ * @function module:function.flip3
+ * @param fn {Function}
+ * @returns {Function}
+ */
+flip3 = fn => curry((c, b, a) => call(fn, a, b, c)), 
+/**
+ * Same as `flip` except returns a flipped function of arity 4.
+ * @function module:function.flip4
+ * @param fn {Function}
+ * @returns {Function}
+ */
+flip4 = fn => curry((d, c, b, a) => call(fn, a, b, c, d)), 
+/**
+ * Same as `flip` except returns a flipped function of arity 5.
+ * @function module:function.flip5
+ * @param fn {Function}
+ * @returns {Function}
+ */
+flip5 = fn => curry((e, d, c, b, a) => call(fn, a, b, c, d, e));
 //# sourceMappingURL=flip.js.map

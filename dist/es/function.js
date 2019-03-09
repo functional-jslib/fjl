@@ -1,17 +1,15 @@
-"use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(require("./jsPlatform/function"));
-__export(require("./function/compose"));
-__export(require("./function/curry"));
-__export(require("./function/flip"));
-__export(require("./function/id"));
-__export(require("./function/negate"));
-__export(require("./function/until"));
-__export(require("./function/fnOrError"));
-__export(require("./function/noop"));
-__export(require("./function/trampoline"));
-__export(require("./function/toFunction"));
+/**
+ * @module function
+ */
+export * from './jsPlatform/function';
+export * from './function/compose';
+export * from './function/curry';
+export * from './function/flip';
+export * from './function/id';
+export * from './function/negate';
+export * from './function/until';
+export * from './function/fnOrError';
+export * from './function/noop';
+export * from './function/trampoline';
+export * from './function/toFunction';
 //# sourceMappingURL=function.js.map

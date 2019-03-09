@@ -1,9 +1,17 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const typeOf_1 = require("./typeOf");
-const assocList_1 = require("./assocList");
-exports.toArray = x => {
-    switch (typeOf_1.typeOf(x)) {
+import { typeOf } from './typeOf';
+import { toAssocList } from './assocList';
+export const 
+/**
+ * Converts incoming value to an array.
+ * @note For `WeakMap`, `WeakSet`, `Map` and `Set` result is the same as calling `Array.from` on such.
+ * @note For `null`, `undefined`, `NaN`, `Number{}`, `Symbol{}`, `Boolean{}` returns an empty array.
+ * @note Method does a shallow conversion;
+ * @function module:object.toArray
+ * @param x {*} - Thing to convert from.
+ * @returns {Array}
+ */
+toArray = x => {
+    switch (typeOf(x)) {
         case 'Null':
         case 'Undefined':
             return [];
@@ -16,7 +24,7 @@ exports.toArray = x => {
             return Array.from(x);
         case Object.name:
         default:
-            return assocList_1.toAssocList(x);
+            return toAssocList(x);
     }
 };
 //# sourceMappingURL=toArray.js.map

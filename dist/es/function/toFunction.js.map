@@ -1,1 +1,1 @@
-{"version":3,"file":"toFunction.js","sourceRoot":"","sources":["../../../src/function/toFunction.ts"],"names":[],"mappings":";;AAAA,qCAAwC;AAWpC,QAAA,UAAU,GAAG,CAAC,CAAC,EAAE,CAAC,eAAU,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,EAAE,CAAC,CAAC,CAAC"}
+{"version":3,"file":"toFunction.js","sourceRoot":"","sources":["../../../src/function/toFunction.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,UAAU,EAAC,MAAM,cAAc,CAAC;AAExC,MAAM,CAAC;AAEH;;;;;;GAMG;AACH,UAAU,GAAG,CAAC,CAAC,EAAE,CAAC,UAAU,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,EAAE,CAAC,CAAC,CAAC"}

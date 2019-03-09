@@ -1,13 +1,35 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const curry_1 = require("../function/curry");
+/**
+ * @module object
+ */
+import { curry } from '../function/curry';
+/**
+ * Normalizes step for `from` and `to` combination.
+ * @function module:list.normalizeStep
+ * @param from {Number}
+ * @param to {Number}
+ * @param [step = 1] {Number}
+ * @returns {Number}
+ * @private
+ */
 const normalizeStep = (from, to, step) => {
     if (from > to) {
-        return step > 0 ? -step : step;
+        return step > 0 ? -step : step; // make step negative
     }
-    return step < 0 ? -1 * step : step;
+    return step < 0 ? -1 * step : step; // make step positive
 };
-exports.range = curry_1.curry((from, to, step = 1) => {
+export const 
+/**
+ * Range function - gives you an array contain numbers in given range.
+ * @note normalizes `step` to be valid if range numbers given are invalid
+ *  (forces `step` to be negative if range required is in the negative direction
+ *  and forces `step` to be positive if range required is in the other direction).
+ * @function module:list.range
+ * @param from {Number}
+ * @param to {Number}
+ * @param [step = 1] {Number}
+ * @returns {Array.<Number>}
+ */
+range = curry((from, to, step = 1) => {
     let i = from;
     const out = [];
     step = normalizeStep(from, to, step);

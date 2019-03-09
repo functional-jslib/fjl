@@ -31,11 +31,11 @@
     "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "^7.0.0",
     "@babel/types": "^7.3.4",
-    "@types/jest": "^24.0.10",
+    "@types/jest": "^24.0.11",
     "@types/node": "^11.11.0",
     "@typescript-eslint/parser": "^1.4.2",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.4.2",
+    "babel-jest": "^24.3.1",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "del": "^4.0.0",
@@ -89,11 +89,11 @@
   "dependencies": {},
   "buildConfig": {
     "inputModuleName": "fjl",
-    "inputFilePath": "./src/fjl.js",
+    "inputFilePath": "./dist/es/fjl.js",
     "outputFileName": "fjl.js",
     "outputFileNameMjs": "fjl.mjs",
     "outputFileNameMin": "fjl.min.js",
-    "srcsGlob": "./src/**/*.js",
+    "srcsGlob": "./dist/es/**/*.js",
     "paths": {
       "dist": "./dist",
       "docs": "./docs"
@@ -108,7 +108,7 @@
     },
     "es6ModuleRollup": {
       "config": {
-        "input": "./src/fjl.js",
+        "input": "./dist/es/fjl.js",
         "external": []
       },
       "write": {

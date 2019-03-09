@@ -1,5 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const is_1 = require("../object/is");
-exports.toFunction = x => is_1.isFunction(x) ? x : () => x;
+import { isFunction } from '../object/is';
+export const 
+/**
+ * If given value is not a function, wraps it an 'identity' function (function that returns given value untouched) else returns given value. (useful in
+ * functional composition).
+ * @function module:function.toFunction
+ * @param x {Function|any}
+ * @returns {function(): any}
+ */
+toFunction = x => isFunction(x) ? x : () => x;
 //# sourceMappingURL=toFunction.js.map
