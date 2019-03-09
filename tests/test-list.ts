@@ -10,6 +10,13 @@ import {isEmptyList, isArray, isString, length} from '../src/object';
 import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase} from '../src/string';
 import Functor from '../src/data/Functor';
+
+import {List} from '../src/list/types';
+
+type ListLike = string | any[];
+
+interface LinkedListNode {data: string, next?: LinkedListNode}
+
 import {
     append, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
@@ -63,7 +70,7 @@ describe('#list', () => {
         },
         equal = (a, b) => a === b,
         linkedListToList = linkedList => {
-            const out = [];
+            const out: LinkedListNode[] = [];
             let node = linkedList;
             while (node.next) {
                 out.push({data: node.data});
@@ -265,7 +272,7 @@ describe('#list', () => {
                 [x => x, [], []],
                 [x => x, '', ''],
                 [x => x, {}, {}],
-                [x => x, new Functor(), new Functor()]
+                [x => x, new Functor(undefined), new Functor(undefined)]
             ]
                 .forEach(([fn, list, expected]) => {
                     expect(map(fn, list)).toEqual(expected);
@@ -278,7 +285,7 @@ describe('#list', () => {
                 expectedFunctor = newSomeFunctor(addCharA('a'))
             ;
             expectInstanceOf(Functor, rslt);
-            expectEqual(rslt.value, expectedFunctor.value);
+            expectEqual(rslt.value, expectedFunctor.valueOf());
         });
         it('should throw an error when incoming value is not a functor instance', () => {
             expectError(() => map(x => x, null));
@@ -419,8 +426,11 @@ describe('#list', () => {
             };
 
         it('Should return unique permutations for a given set of items', () => {
-            const lists = 'abcd'.split('').reduceRight((agg, item, ind, list) =>
-                agg.concat([list.slice(ind)]), []); // I know laziness lol
+            const lists: string[] =
+                'abcd'.split('').reduceRight((agg, item, ind, list) =>
+                        agg.concat([list.slice(ind)]),
+                    (<any[]>[])
+                ); // I know laziness lol
             expectLength(4, lists);
             expectTrue(lists.every(
                 (xs, ind) => xs.length === ind + 1
@@ -571,10 +581,11 @@ describe('#list', () => {
                 120
             );
             expectEqual(
-                foldr1((agg, item, ind) => {
-                    agg.push(item + getAppendage(ind));
-                    return agg;
-                }, vowelsArray.concat([[]])),
+                foldr1((agg, item, ind) => (
+                        agg.push(item + getAppendage(ind)),
+                        agg
+                    ), vowelsArray.concat((<any[]>[[]]))
+                ),
                 expectedTransform
             );
         });
@@ -762,9 +773,9 @@ describe('#list', () => {
     describe('#mapAccumL', () => {
         it('should map a function/operation on every item of a list and it should return a tuple containing the ' +
             'accumulated value and the an instance of passed in container with mapped items', () => {
-            let xs1 = [],
+            let xs1: any[] = [],
                 xs2 = '',
-                xs3 = [];
+                xs3: any[] = [];
 
             const
 
@@ -830,9 +841,9 @@ describe('#list', () => {
     describe('#mapAccumR', () => {
         it('should map a function/operation on every item of a list and it should return a tuple containing the ' +
             'accumulated value and the an instance of passed in container with mapped items', () => {
-            let xs1 = [],
+            let xs1: any[] = [],
                 xs2 = '',
-                xs3 = [];
+                xs3: any[] = [];
 
             const
 
@@ -910,22 +921,22 @@ describe('#list', () => {
 
     describe('#take', () => {
         it('should return taken items from list and/or string until limit', () => {
-            [
+            (<Array<[[number, string | any[]], string | any[]]>>[
                 [[0, ''], ''],
                 [[0, []], []],
                 [[1, ''], ''],
                 [[1, []], []],
-            ].concat(
-                vowelsArray
+            ]).concat(
+                (<[[number, string | any[]], string | any[]]>vowelsArray
                     .map((_, ind) => [
                         [ind, vowelsArray],
                         vowelsArray.slice(0, ind)
-                    ]),
-                vowelsString.split('')
+                    ])),
+                (<[[number, string | any[]], string | any[]]>vowelsString.split('')
                     .map((_, ind) => [
                         [ind, vowelsString],
                         vowelsString.slice(0, ind)
-                    ])
+                    ]))
             )
                 .forEach(([args, expected]) => {
                     expectEqual(take(...args), expected);
@@ -940,22 +951,22 @@ describe('#list', () => {
 
     describe('#drop', () => {
         it('should return a new list/string with dropped items from original until limit', () => {
-            [
+            (<Array<[[number, string | any[]], string | any[]]>>[
                 [[0, ''], ''],
                 [[0, []], []],
                 [[1, ''], ''],
                 [[1, []], []],
-            ].concat(
-                vowelsArray
+            ]).concat(
+                (<[[number, string | any[]], string | any[]]>vowelsArray
                     .map((_, ind) => [
                         [ind, vowelsArray],
                         vowelsArray.slice(ind)
-                    ]),
-                vowelsString.split('')
+                    ])),
+                (<[[number, string | any[]], string | any[]]>vowelsString.split('')
                     .map((_, ind) => [
                         [ind, vowelsString],
                         vowelsString.slice(ind)
-                    ])
+                    ]))
             )
                 .forEach(([args, expected]) => {
                     expectEqual(drop(...args), expected);
@@ -970,24 +981,24 @@ describe('#list', () => {
 
     describe('#splitAt', () => {
         it('should split an list and/or string at given index', () => {
-            [
+            (<Array<[[number, string | any[]], [string | any[], string | any[]]]>>[
                 [[0, []], [[], []]],
                 [[0, ''], ['', '']],
                 [[1, []], [[], []]],
                 [[1, ''], ['', '']]
-            ].concat(
-                vowelsArray
+            ]).concat(
+                (<[[number, string | any[]], [string | any[], string | any[]]]>vowelsArray
                     .map((_, ind) => [
                         [ind, vowelsArray],
                         [vowelsArray.slice(0, ind),
-                        vowelsArray.slice(ind)]
-                    ]),
-                vowelsString.split('')
+                            vowelsArray.slice(ind)]
+                    ])),
+                (<[[number, string | any[]], [string | any[], string | any[]]]>vowelsString.split('')
                     .map((_, ind) => [
                         [ind, vowelsString],
                         [vowelsString.slice(0, ind),
-                        vowelsString.slice(ind)]
-                    ])
+                            vowelsString.slice(ind)]
+                    ]))
             )
                 .forEach(([args, expected]) => {
                     expectEqual(splitAt(...args), expected);
@@ -1008,8 +1019,8 @@ describe('#list', () => {
             [null, ''],
             [undefined, ''],
             ]
-            .forEach(([args]) => {
-                expectError(() => splitAt(...args));
+            .forEach(([ind, list]) => {
+                expectError(() => splitAt(ind, list));
             });
         });
     });
@@ -1456,7 +1467,7 @@ describe('#list', () => {
         it('should return `-1` when item is not found in populated list', () => {
             const nonAlphaList = '!@#$%^&*()_+'.split(''),
                 vowels = 'aeiou'.split('');
-            vowels.every(char => {
+            vowels.forEach(char => {
                 const result = findIndex(x => x === char, nonAlphaList);
                 expect(result).toEqual(-1);
             });
@@ -1466,10 +1477,10 @@ describe('#list', () => {
     describe('#findIndices', () => {
         it('should return indices for all items that match passed in predicate', () => {
             const tokenInits = inits(intersperse('e', alphabetArray)),
-                indicePred = x => x === 'e',
+                indicePred = (x: string) => x === 'e',
                 expectedResults = tokenInits.map(xs =>
                     xs.map((x, ind) => [ind, x])
-                        .filter(([ind, x]) => indicePred(x, ind))
+                        .filter(([ind, x]) => indicePred(x))
                 )
                     .map(xs => !xs.length ? undefined : xs.map(([x]) => x)),
                 results = map(xs => findIndices(indicePred, xs), tokenInits);
@@ -2118,7 +2129,7 @@ describe('#list', () => {
             // Remove from first entry on both
             const
                 fiveArrays = vowelsArray.map(() => alphabetArray),
-                catedArrays = [].concat(...fiveArrays),
+                catedArrays: string[] = [].concat(...fiveArrays),
 
                 // Expected concated arrays
                 expected = vowelsArray.reduce((agg, vowel) => {
@@ -2300,20 +2311,20 @@ describe('#list', () => {
     });
 
     describe('#scanl', () => {
-        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+        const unlinkedNodes: Array<{data: string}> = alphabetArray.map(char => ({data: char}));
 
         it('should return a list of successively reduced values from left to right', () => {
             // Generate linked-list structure
-            const result = scanl((agg, item) => {
+            const result: LinkedListNode[] = scanl((agg, item) => {
                 agg.next = item;
                 item.next = null;
                 return item;
-            }, {}, unlinkedNodes);
+            }, {data: '', next: null}, unlinkedNodes);
 
             // Expect every item in result to be a linked list with remaining items linked to said item
             expect(
                 result.every(node => {
-                    const nodesList = linkedListToList(node);
+                    const nodesList: LinkedListNode[] = linkedListToList(node);
                     return alphabetArray.slice(alphabetArray.indexOf(node.data)).every((char, ind1) => {
                         const charCodeToTest = char.charCodeAt(0);
                         return nodesList.slice(ind1).every((data, ind2) =>

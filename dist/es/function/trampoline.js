@@ -26,7 +26,7 @@
  * @param [fnName=undefined] {String} - Optionally restrict trampolining only to function with specific name.
  * @returns {*} - Finally returned value.
  */
-export const trampoline = (fn, fnName) => {
+export const trampoline = (fn, fnName = undefined) => {
     return (...args) => {
         let result = fn.apply(null, args);
         while (typeof result === 'function' &&
