@@ -1,5 +1,5 @@
 /**
- * List operations module.
+ * ListLike operations module.
  * @module list
  */
 import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list';
@@ -172,7 +172,7 @@ export const
      * @note In our version of the function javascript is loosely typed so,
      *  so is our function (to much overhead to make it typed) so `between` can be any value.
      * @param between {*} - Should be of the same type of elements contained in list.
-     * @param arr {Array|String} - List.
+     * @param arr {Array|String} - ListLike.
      * @returns {Array|String}
      */
     intersperse = curry((between, xs) => {
@@ -302,7 +302,7 @@ export const
      *  Use caution with lists above a length of 15 (will take long due to nature of
      *  algorithm).
      * @function module:list.permutations
-     * @param xs {Array} - List.
+     * @param xs {Array} - ListLike.
      * @returns {Array<Array|String|*>} - Array of permutations.
      */
     permutations = xs => {
@@ -558,7 +558,7 @@ export const
      * @function module:list.splitAt
      * @param ind {Number} - Index to split at.
      * @param list {Array|String} - functor (list or string) to split.
-     * @returns {Array|String} - List like type passed
+     * @returns {Array|String} - ListLike like type passed
      */
     splitAt = (ind, list) => [sliceTo(ind, list), sliceFrom(ind, list)],
 
@@ -624,7 +624,7 @@ export const
      * and items not matching predicate;  E.g., Gives an
      * array of arrays;  E.g., [[matching-items], [non-matching-items]]
      * @function list.span
-     * @param pred {Function} - List predicate (`(x, i, list) => bool`)
+     * @param pred {Function} - ListLike predicate (`(x, i, list) => bool`)
      * @param list {Array|String}
      * @returns {(Array<Array<*>>|Array<String>)}
      * @type {Function}
@@ -1144,7 +1144,7 @@ export const
      * unzip transforms a list of pairs into a list of first components and a list of second components.
      * @sudoHaskellType `unzipN :: [(a, b, ...x)] -> ([a], [b], ...[x])`
      * @function module:list.unzipN
-     * @param list {Array|*} - List of tuples (lists).
+     * @param list {Array|*} - ListLike of tuples (lists).
      * @returns {Array|*}
      */
     unzipN = list => {
@@ -1237,7 +1237,7 @@ export const
     /**
      * Computes the sum of the numbers of a structure.
      * @function module:list.sum
-     * @haskellType `sum :: (List t, Num a) => t a -> a`
+     * @haskellType `sum :: (ListLike t, Num a) => t a -> a`
      * @param list {Array|String}
      * @returns {Number}
      */
@@ -1246,7 +1246,7 @@ export const
     /**
      * Computes the product of the numbers of a structure.
      * @function module:list.product
-     * @haskellType `product :: (List t, Num a) => t a -> a`
+     * @haskellType `product :: (ListLike t, Num a) => t a -> a`
      * @param list {Array|String}
      * @returns {Number}
      */
@@ -1469,7 +1469,7 @@ export const
      *  operated on by this functions logic.
      * @param orderingFn {Function} - A function that returns `-1`, `0`, or 1`.
      * @param x {*} - Value to insert.
-     * @param xs {Array} - List to insert into (note new list is returned)
+     * @param xs {Array} - ListLike to insert into (note new list is returned)
      * @returns {Array} - New list.
      */
     insertBy = curry((orderingFn, x, xs) => {

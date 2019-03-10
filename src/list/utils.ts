@@ -1,5 +1,5 @@
 /**
- * List operator utils module.
+ * ListLike operator utils module.
  * @module listUtils
  */
 import {apply}          from '../jsPlatform/function';  // un-curried version
@@ -82,7 +82,7 @@ export const
      * @param pred {Function} - `(item, index, list) => Boolean(...)`
      * @param op {Function} - Operation - `(agg, item, index, list) => agg`
      * @param agg {*} - Zero value.
-     * @param xs {Array|String|*} - List.
+     * @param xs {Array|String|*} - ListLike.
      * @returns {*}
      */
     reduceUntil = curry((pred, op, agg, xs) => {
@@ -103,7 +103,7 @@ export const
      * @param pred {Function} - `(item, index, list) => Boolean(...)`
      * @param op {Function} - Operation - `(agg, item, index, list) => agg`
      * @param agg {*} - Zero value.
-     * @param xs {Array|String|*} - List.
+     * @param xs {Array|String|*} - ListLike.
      * @returns {*}
      */
     reduceUntilRight = curry((pred, op, agg, arr) => {
@@ -123,7 +123,7 @@ export const
      * @function module:listUtils.reduce
      * @param op {Function} - Operation - `(agg, item, index, list) => agg`
      * @param agg {*} - Zero value.
-     * @param xs {Array|String|*} - List.
+     * @param xs {Array|String|*} - ListLike.
      * @returns {*}
      */
     reduce = reduceUntil(alwaysFalse),
@@ -133,7 +133,7 @@ export const
      * @function module:listUtils.reduceRight
      * @param op {Function} - Operation - `(agg, item, index, list) => agg`
      * @param agg {*} - Zero value.
-     * @param xs {Array|String|*} - List.
+     * @param xs {Array|String|*} - ListLike.
      * @returns {*}
      */
     reduceRight = reduceUntilRight(alwaysFalse),
