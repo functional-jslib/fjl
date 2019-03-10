@@ -1,5 +1,5 @@
 /**
- *  List operations that overlap (apart from globally overlapping props and functions like `length`)
+ *  ListLike operations that overlap (apart from globally overlapping props and functions like `length`)
  *      on both strings and arrays.
  */
 

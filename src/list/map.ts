@@ -5,7 +5,7 @@ import {of} from '../object/of';
 import {isFunctor, isset} from '../object/is';
 
 /**
- * Maps a function onto a List (string or array) or a functor (value containing a map method).
+ * Maps a function onto a ListLike (string or array) or a functor (value containing a map method).
  * @function module:list.map
  * @param fn {Function} - Function to map on given value.
  * @param xs {Array|String|*}

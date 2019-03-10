@@ -31,7 +31,7 @@ export const
 
     /**
      * @function module:object.length
-     * @param x {*}
+     * @param x {{length: number}}
      * @returns {Number}
      * @throws {Error} - Throws an error if value doesn't have a `length` property (
      *  `null`, `undefined`, {Boolean}, Symbol, et. al.).

@@ -52,7 +52,7 @@ describe ('#listUtils', () => {
         it ('should return an empty slice when given an empty slice', () => {
            expect(sliceFrom(99, [])).toEqual([]);
         });
-        it ('should throw an error when not receiving a `List` (a sliceable, an array, and/or string).', () => {
+        it ('should throw an error when not receiving a `ListLike` (a sliceable, an array, and/or string).', () => {
             [null, undefined, {}, false, 0].forEach(x => {
                 expect(() => sliceFrom(99, x)).toThrow(Error);
             });
@@ -86,7 +86,7 @@ describe ('#listUtils', () => {
         it ('should return an empty slice when given an empty slice', () => {
             expect(sliceTo(99, [])).toEqual([]);
         });
-        it ('should throw an error when not receiving a `List` (a sliceable, an array, and/or string).', () => {
+        it ('should throw an error when not receiving a `ListLike` (a sliceable, an array, and/or string).', () => {
             [null, undefined, {}, false, 0].forEach(x => {
                 expect(() => sliceTo(99, x)).toThrow(Error);
             });
@@ -108,7 +108,7 @@ describe ('#listUtils', () => {
                     expect(result).toEqual(original);
                 });
         });
-        it ('should throw an error when receiving non `List` value (non-(string|array|slicable))', () => {
+        it ('should throw an error when receiving non `ListLike` value (non-(string|array|slicable))', () => {
             [null, undefined, {}, () => undefined].forEach(x => {
                 expect(() => sliceCopy(x)).toThrow(Error);
             });
@@ -515,7 +515,7 @@ describe ('#listUtils', () => {
         it('should return `0` for empty lists', () => {
             ['', []].forEach(x => expectEqual(lastIndex(x), 0));
         });
-        it('should throw an error when item is not a `List`', () => {
+        it('should throw an error when item is not a `ListLike`', () => {
             [null, undefined, {}].forEach(x => expectError(() => lastIndex(x)));
         });
     });
@@ -538,7 +538,7 @@ describe ('#listUtils', () => {
                 expectEqual(findIndexWhere(x => !!x, xs), -1);
             });
         });
-        it('should throw an error when operating on non-List items.', () => {
+        it('should throw an error when operating on non-ListLike items.', () => {
             [null, undefined, {}].forEach(xs => {
                 expectError(() => findIndexWhere(x => !!x, xs));
             });
@@ -563,7 +563,7 @@ describe ('#listUtils', () => {
                 expectEqual(findIndexWhereRight(x => !!x, xs), -1);
             });
         });
-        it('should throw an error when operating on non-List items.', () => {
+        it('should throw an error when operating on non-ListLike items.', () => {
             [null, undefined, {}].forEach(xs => {
                 expectError(() => findIndexWhereRight(x => !!x, xs));
             });
@@ -588,7 +588,7 @@ describe ('#listUtils', () => {
                 expectEqual(findIndicesWhere(x => !!x, xs), undefined);
             });
         });
-        it('should throw an error when operating on non-List items.', () => {
+        it('should throw an error when operating on non-ListLike items.', () => {
             [null, undefined, {}].forEach(xs => {
                 expectError(() => findIndicesWhere(x => !!x, xs));
             });
@@ -613,7 +613,7 @@ describe ('#listUtils', () => {
                 expectEqual(findWhere(x => !!x, xs), undefined);
             });
         });
-        it('should throw an error when operating on non-List items.', () => {
+        it('should throw an error when operating on non-ListLike items.', () => {
             [null, undefined, {}].forEach(xs => {
                 expectError(() => findWhere(x => !!x, xs));
             });
