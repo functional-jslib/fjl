@@ -8,13 +8,15 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "outDir": "./dist/es"
   },
   "files": [
-    "src/fjl.ts"
+    "src/fjl.ts",
+    "index.d.ts"
   ],
   "exclude": [
     "node_modules"
@@ -23,6 +25,6 @@
     "src/**/*.ts"
   ],
   "types": [
-    "types/index.d.ts"
+    "index.d.ts"
   ]
 }
