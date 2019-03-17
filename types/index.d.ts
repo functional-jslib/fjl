@@ -2,6 +2,10 @@ export interface Lengthable {
     length: number
 }
 
+export interface Nameable {
+    readonly name: string
+}
+
 export interface ListLike extends Lengthable {
     concat(...fs: Array<Array<any> | string>): Array<any> | string;
 

@@ -11,12 +11,6 @@ import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase} from '../src/string';
 import Functor from '../src/data/Functor';
 
-import {List} from '../src/list/types';
-
-type ListLike = string | any[];
-
-interface LinkedListNode {data: string, next?: LinkedListNode}
-
 import {
     append, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
@@ -55,6 +49,8 @@ import {
     nonAlphaNums,
     nonAlphaNumsArray,
 } from './helpers';
+
+interface LinkedListNode {data: string, next?: LinkedListNode}
 
 describe('#list', () => {
 

@@ -60,7 +60,7 @@ export const
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
-    lengths = curry2((...lists) => map(length, lists)),
+    lengths = (...lists) => map(length, lists),
 
     /**
      * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their

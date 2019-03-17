@@ -26,6 +26,8 @@ import {
     vowelsString, vowelsArray
 } from './helpers';
 
+import {Nameable} from '../types';
+
 describe ('#object', function () {
     const charCodeToCharArrayMap = unfoldr(
         (charCode, ind) => ind === 26 ? undefined :
@@ -74,14 +76,14 @@ describe ('#object', function () {
 
     describe('#toTypeRef', () => {
         it ('should return given string when receiving a string.', () => {
-            ['Undefined', 'Null', 'NaN', 'String'].every(xs => {
+            ['Undefined', 'Null', 'NaN', 'String'].forEach(xs => {
                 const result = toTypeRef(xs);
                 expect(result.constructor).toEqual(String);
                 expect(result).toEqual(xs);
             });
         });
         it ('should return given function/constructor when receiving a function/constructor.', () => {
-            [String, Function, Promise, Map].every(x => {
+            [String, Function, Promise, Map].forEach(x => {
                 const result = toTypeRef(x);
                 expect(result).toEqual(x);
             });
@@ -115,8 +117,12 @@ describe ('#object', function () {
 
     describe('#isType', function () {
         it ('should return expected result for given values', function () {
+            type ConstructorTestCase = [Nameable, any, boolean];
+            type NameTestCase = [string, any, boolean];
+            type ConstructorOrNameTestCase = [string | Nameable | Number, any, boolean];
+
             // [`TypeRef`, `arg`, `expected`]
-            const truthySetWithCtors = [
+            const truthySetWithCtors: Array<ConstructorTestCase> = [
                     [Array, [], true],
                     [Object, {}, true],
                     [String, '', true],
@@ -125,23 +131,28 @@ describe ('#object', function () {
                     [Boolean, true, true],
                     [Boolean, false, true],
                 ],
-                truthySet = truthySetWithCtors.concat(
-                    truthySetWithCtors.map(
-                        ([Ctor, arg, exp]) => [Ctor.name, arg, exp])
-                ),
-                falsySetWithCtors = [
+                truthySet: Array<ConstructorOrNameTestCase> =
+                    truthySetWithCtors.concat(
+                        (<NameTestCase>truthySetWithCtors.map(
+                            ([Ctor, arg, exp]) => [Ctor.name, arg, exp]
+                        ))
+                    ),
+                falsySetWithCtors: Array<ConstructorOrNameTestCase> = [
                     [Object, [], false],
                     [Array, {}, false],
-                    [NaN, '', false],
                     [Number, function () {}, false],
                     [Function, 99, false],
+                    [NaN, '', false],
                     [NaN, true, false],
                     [Number, undefined, false],
                     [Array, false, false]
                 ],
-                falsySet = falsySetWithCtors.concat(
-                    falsySetWithCtors.map(([Ctor, arg, exp]) => [Ctor.name, arg, exp])
-                )
+                falsySet: Array<ConstructorOrNameTestCase> =
+                    falsySetWithCtors.concat(
+                        (<Array<ConstructorOrNameTestCase>>falsySetWithCtors.map(
+                            ([Ctor, arg, exp]) => [Ctor.name, arg, exp]
+                        ))
+                    )
             ;
             [
                 ['Undefined', undefined, true],
@@ -425,7 +436,8 @@ describe ('#object', function () {
                 [vowelsString, false],
                 [vowelsArray, false],
                 [new Set(vowelsArray), false],
-                [new Map(vowelsArray.map(c => [c, c.charCodeAt(0)])), false],
+                // @ts-ignore
+                [new Map((<ReadonlyArray<[string, string]>>vowelsArray.map(c => [c, c.charCodeAt(0)]))), false],
                 [Object.defineProperties, false],
                 [Object, false],
                 [Symbol(), false],

@@ -12,7 +12,8 @@
     "strictFunctionTypes": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "outDir": "./dist/es"
+    "outDir": "./dist/es",
+    "esModuleInterop": true
   },
   "files": [
     "src/fjl.ts",

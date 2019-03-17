@@ -50,7 +50,7 @@ export type ListForEachOperation = (agg: any, item: any, index: number, list: (a
 export type OrderingFunction = (a: any, b: any) => number;
 
 export interface Lengthable {
-    length?: number
+    length: number
 }
 
 export interface List extends Lengthable {
@@ -70,3 +70,4 @@ export function intersectBy(pred: ListPredicate, xs1: List, xs2: List): List;
 export function takeWhile(pred: ListPredicate, xs: List): List;
 
 export function append(...xs: List[]): List;
+export function defineEnumProps(): List;

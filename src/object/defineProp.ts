@@ -7,25 +7,7 @@ import {apply} from '../jsPlatform/function';
 import {errorIfNotType} from '../errorThrowing';
 import {isUndefined, isType} from './is';
 
-/**
- * Creates `defineProps` and `defineEnumProps` methods based on `{enumerable}` param.
- * @param {{enumerable: Boolean}}
- * @returns {function(*, *)|PropsDefinerCall}
- * @private
- */
-function createDefinePropsMethod ({enumerable}) {
-    const operation = enumerable ? defineEnumProp : defineProp;
-    return (argTuples, target) => {
-        argTuples.forEach(argTuple => {
-            const [TypeRef, propName, defaultValue] = argTuple;
-            apply(operation, [TypeRef, target, propName, defaultValue]);
-        });
-        return target;
-    };
-}
-
 export const
-
     /**
      * Creates a descriptor for a property which is settable but throws
      * errors when the `Type` is disobeyed.
@@ -128,6 +110,23 @@ export const
     defineProps = curry(createDefinePropsMethod({enumerable: false}))
 
 ;
+
+/**
+ * Creates `defineProps` and `defineEnumProps` methods based on `{enumerable}` param.
+ * @param {{enumerable: Boolean}}
+ * @returns {function(*, *)|PropsDefinerCall}
+ * @private
+ */
+function createDefinePropsMethod ({enumerable}) {
+    const operation = enumerable ? defineEnumProp : defineProp;
+    return (argTuples, target) => {
+        argTuples.forEach(argTuple => {
+            const [TypeRef, propName, defaultValue] = argTuple;
+            apply(operation, [TypeRef, target, propName, defaultValue]);
+        });
+        return target;
+    };
+}
 
 /** ============================================================= */
 /** Type definitions:                                             */

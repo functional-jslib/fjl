@@ -16,12 +16,14 @@ export * from './string';
 export * from './utils';
 export * from './errorThrowing';
 
-import * as _jsPlatform from './jsPlatform';
+import * as jsPlatform from './jsPlatform';
 
-export const jsPlatform = _jsPlatform;
+export {jsPlatform};
 
 /**
  * @typedef {String|Function|ArrayBufferConstructor|ArrayConstructor|BooleanConstructor|MapConstructor|NumberConstructor|SetConstructor|WeakMapConstructor|WeakSetConstructor} TypeRef
  * @description Type reference.  Either actual type or type's name;  E.g., `Type.name`
- * Also note: Class cased names are use for values that do not have `name` properties;  Namely: 'Null', 'NaN' and 'Undefined' (for their respective values respectively).
+ * Also note: Class cased names are used for values that do not have `name`
+ * properties;  Namely: for `null`, `NaN` and `undefined` the values
+ * 'Null', 'NaN' and 'Undefined' are used, respectively.
  */
