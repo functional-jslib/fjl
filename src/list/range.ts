@@ -19,7 +19,7 @@ const normalizeStep = (from, to, step) => {
     return step < 0 ? -1 * step : step; // make step positive
 };
 
-export const
+const
 
     /**
      * Range function - gives you an array contain numbers in given range.
@@ -41,3 +41,5 @@ export const
         return out;
     })
 ;
+
+export {range};

@@ -1,5 +1,5 @@
-import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
-import {append} from "../../src/list";
+import {expectEqual, expectError, vowelsArray, vowelsString} from '../helpers';
+import {append} from '../../src/list';
 
 describe('#list.append', () => {
     (<Array<[string, string | string[], string | string[]]>>[

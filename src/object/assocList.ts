@@ -1,5 +1,6 @@
 import {isArray, isType} from './is';
 import {keys} from '../jsPlatform/object';
+import {TypeConstructor} from "../../types";
 
 export const
 
@@ -20,7 +21,7 @@ export const
      * @param [TypeConstraint = Object] {(Constructor|Function)} - Type constraint to convert on.
      * @returns {*}
      */
-    toAssocListDeep = (obj, TypeConstraint = Object) => keys(obj).map(key =>
+    toAssocListDeep = (obj, TypeConstraint: TypeConstructor = Object) => keys(obj).map(key =>
         TypeConstraint && isType(TypeConstraint, obj[key]) ?
             [key, toAssocListDeep(obj[key], TypeConstraint)] :
             [key, obj[key]]

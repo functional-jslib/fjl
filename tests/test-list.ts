@@ -917,18 +917,20 @@ describe('#list', () => {
 
     describe('#take', () => {
         it('should return taken items from list and/or string until limit', () => {
-            (<Array<[[number, string | any[]], string | any[]]>>[
+            type TakeTest = [[number, string | any[]], string | any[]];
+            type TakeTestCases = Array<TakeTest>;
+            (<TakeTestCases>[
                 [[0, ''], ''],
                 [[0, []], []],
                 [[1, ''], ''],
                 [[1, []], []],
             ]).concat(
-                (<[[number, string | any[]], string | any[]]>vowelsArray
+                (<TakeTestCases>vowelsArray
                     .map((_, ind) => [
                         [ind, vowelsArray],
                         vowelsArray.slice(0, ind)
                     ])),
-                (<[[number, string | any[]], string | any[]]>vowelsString.split('')
+                (<TakeTestCases>vowelsString.split('')
                     .map((_, ind) => [
                         [ind, vowelsString],
                         vowelsString.slice(0, ind)
@@ -947,18 +949,20 @@ describe('#list', () => {
 
     describe('#drop', () => {
         it('should return a new list/string with dropped items from original until limit', () => {
+            type DropTest = [[number, string | any[]], string | any[]];
+            type DropTestCases = Array<DropTest>;
             (<Array<[[number, string | any[]], string | any[]]>>[
                 [[0, ''], ''],
                 [[0, []], []],
                 [[1, ''], ''],
                 [[1, []], []],
             ]).concat(
-                (<[[number, string | any[]], string | any[]]>vowelsArray
+                (<DropTestCases>vowelsArray
                     .map((_, ind) => [
                         [ind, vowelsArray],
                         vowelsArray.slice(ind)
                     ])),
-                (<[[number, string | any[]], string | any[]]>vowelsString.split('')
+                (<DropTestCases>vowelsString.split('')
                     .map((_, ind) => [
                         [ind, vowelsString],
                         vowelsString.slice(ind)

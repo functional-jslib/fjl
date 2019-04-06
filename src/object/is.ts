@@ -6,6 +6,9 @@
 import {typeOf} from './typeOf';
 import {instanceOf, length, keys} from '../jsPlatform/object';
 import {curry} from '../function/curry';
+import {isset} from './isset';
+
+export {isset};
 
 let _String = String.name,
     _Number = Number.name,
@@ -322,14 +325,6 @@ export const
     },
 
     /**
-     * Returns whether passed in values is defined and not null or not.
-     * @function module:object.isset
-     * @param x {*}
-     * @returns {Boolean}
-     */
-    isset = x => x !== null && x !== undefined,
-
-    /**
      * Checks to see if `x` is of one of the given type refs;  Strict type check (not-instanceof check).
      * @function object.isOneOf
      * @param x {*}
@@ -376,7 +371,7 @@ export const
      * Checks if value qualifies (has `map` method) as a functor.
      * @function module:object.isFunctor
      * @param x {*}
-     * @returns {bool}
+     * @returns {boolean}
      */
     isFunctor = x => x && x.map && instanceOf(Function, x.map)
 

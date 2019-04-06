@@ -7,7 +7,7 @@ import {
     toShortest, reduceUntil, reduceUntilRight, reduce, reduceRight,
     lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere
 }
-from '../src/list/utils';
+from '../../src/list/utils';
 
 import {
     expectEqual,
@@ -22,7 +22,7 @@ import {
     vowelIndices,
     falsyList
 }
-from './helpers';
+from '../helpers';
 
 describe ('#listUtils', () => {
     describe('#sliceFrom', () => {
@@ -160,7 +160,7 @@ describe ('#listUtils', () => {
         const lists = [
                 vowelsArray, vowelsString,
                 alphabetArray, alphabetString,
-                [], ''
+                [], '',
             ],
             result = lengths(...lists);
         it('should return an array containing same number of items given', () => {
@@ -171,22 +171,8 @@ describe ('#listUtils', () => {
                 expect(rslt).toEqual(lists[index].length);
             });
         });
-        it('should throw an error when receiving non-list value', () => {
-            expect(() => lengths(null, undefined, {})).toThrow(Error);
-        });
-        it('should be curried up to 2 parameters.', () => {
-            // Get curried function
-            const fn = lengths(alphabetArray),
-
-                // Execute curried function
-                [alphabetLenResult, vowelsLenResult] = fn(vowelsArray);
-
-            // Check was curried
-            expectFunction(fn);
-
-            // Check results
-            expect(alphabetLenResult).toEqual(alphabetArray.length);
-            expect(vowelsLenResult).toEqual(vowelsArray.length);
+        it('should return `undefined` for items that do not have a length', () => {
+            expect(() => lengths(null, undefined, {}));
         });
     });
     describe('#toShortest', () => {

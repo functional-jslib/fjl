@@ -38,6 +38,15 @@ export type TypeRef =
     WeakSetConstructor | PromiseConstructorLike
     ;
 
+export type TypeConstructor =
+    Function | ArrayBufferConstructor | ArrayConstructor |
+    BooleanConstructor | StringConstructor |
+    NumberConstructor | MapConstructor |
+    SetConstructor | WeakMapConstructor |
+    WeakSetConstructor | PromiseConstructorLike |
+    ObjectConstructor
+    ;
+
 export interface ErrorTemplateCtx {
     value: any,
     valueName: string,

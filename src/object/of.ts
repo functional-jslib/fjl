@@ -1,4 +1,5 @@
-import {isFunction, isset, isUsableImmutablePrimitive} from './is';
+import {isFunction, isUsableImmutablePrimitive} from './is';
+import {isset} from './isset';
 import {apply} from '../jsPlatform/function';
 
 /**

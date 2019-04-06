@@ -50,7 +50,7 @@ export type ListForEachOperation = (agg: any, item: any, index: number, list: (a
 export type OrderingFunction = (a: any, b: any) => number;
 
 export interface Lengthable {
-    length: number
+    length?: number
 }
 
 export interface List extends Lengthable {

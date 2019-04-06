@@ -205,7 +205,7 @@
     "operator-assignment":        0,  // - require assignment operator shorthand where possible or prohibit it entirely (off by default)
     "padded-blocks":              0,  // - enforce padding within blocks (off by default)
     "quote-props":                0,  // - require quotes around object literal property names (off by default)
-    "quotes":                     [2, "single", "avoid-escape"],  // - specify whether double or single quotes should be used
+    "quotes":                     [1, "single", "avoid-escape"],  // - specify whether double or single quotes should be used
     "semi":                       2,  // - require or disallow use of semicolons instead of ASI
     "semi-spacing":               2,  // - enforce spacing before and after semicolons
     "sort-vars":                  0,  // - sort variables within the same declaration block (off by default)

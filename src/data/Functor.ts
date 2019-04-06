@@ -2,7 +2,8 @@
  * Created by edlc on 12/9/16.
  */
 export default class Functor<T> {
-    constructor(private value: T) {}
+    readonly value?:T;
+    constructor(value?: T) {this.value = value;}
     valueOf(): T {
         return this.value;
     }

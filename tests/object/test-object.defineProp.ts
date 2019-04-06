@@ -9,12 +9,13 @@ import {
     defineEnumProp,
     defineEnumProps
 }
-    from '../../src/object';
+    from '../../src/object/defineProp';
 
 describe ('#object.createTypedDescriptor', function () {
     const someTarget = {},
         exampleNumberDescriptor = createTypedDescriptor(Number, someTarget, 'someNum'),
         result = exampleNumberDescriptor;
+
     it ('should return a descriptor with a setter and a getter', function () {
         const ks = keys(result);
         expect(ks.length).toEqual(2);

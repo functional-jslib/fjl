@@ -6,6 +6,7 @@ import {fPureTakesOne} from '../utils';
 import {curry, curry2} from '../function/curry';
 import {flip, flip3, flip4, flip5} from '../function/flip';
 import {Lengthable} from "../../index";
+import {isset} from '../object/isset';
 
 export const
 
@@ -36,7 +37,7 @@ export const
      * @throws {Error} - Throws an error if value doesn't have a `length` property (
      *  `null`, `undefined`, {Boolean}, Symbol, et. al.).
      */
-    length = (x?: Lengthable): number | undefined => x ? x.length : undefined,
+    length = (x?: Lengthable): number | undefined => isset(x) ? x.length : undefined,
 
     /**
      * Contains all the static functions from `Object` but curried and flipped;

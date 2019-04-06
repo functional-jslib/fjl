@@ -131,36 +131,36 @@ describe ('#object', function () {
                     [Boolean, true, true],
                     [Boolean, false, true],
                 ],
-                truthySet: Array<ConstructorOrNameTestCase> =
+
+                truthySet: Array<ConstructorTestCase> =
                     truthySetWithCtors.concat(
-                        (<NameTestCase>truthySetWithCtors.map(
+                        (<ConstructorTestCase>truthySetWithCtors.map(
                             ([Ctor, arg, exp]) => [Ctor.name, arg, exp]
                         ))
                     ),
-                falsySetWithCtors: Array<ConstructorOrNameTestCase> = [
+
+                falsySetWithCtors: Array<ConstructorTestCase> = [
                     [Object, [], false],
                     [Array, {}, false],
                     [Number, function () {}, false],
                     [Function, 99, false],
-                    [NaN, '', false],
-                    [NaN, true, false],
                     [Number, undefined, false],
                     [Array, false, false]
                 ],
                 falsySet: Array<ConstructorOrNameTestCase> =
-                    falsySetWithCtors.concat(
-                        (<Array<ConstructorOrNameTestCase>>falsySetWithCtors.map(
+                    (falsySetWithCtors as Array<ConstructorOrNameTestCase>).concat(
+                        (<Array<NameTestCase>>falsySetWithCtors.map(
                             ([Ctor, arg, exp]) => [Ctor.name, arg, exp]
                         ))
                     )
             ;
-            [
+            [   [NaN, '', false],
+                [NaN, true, false],
                 ['Undefined', undefined, true],
                 ['Null', null, true],
             ]
             .concat(truthySet, falsySet)
             .forEach(([type, arg, expected]) => {
-                console.log(type);
                 expect(isType(type, arg)).toEqual(expected);
             });
         });
@@ -670,7 +670,7 @@ describe ('#object', function () {
                 [undefined, []],
                 [alphabetString, alphabetArray],
                 [new Set(alphabetArray), alphabetArray],
-                [new Map(toArray(allYourBase)), toArray(allYourBase)] // map and object test
+                [new Map(toArray(allYourBase) as Array<[any, any]>), toArray(allYourBase)] // map and object test
             ]
                 .forEach(([given, expected]) =>
                     expect(toArray(given)).toEqual(expected)
