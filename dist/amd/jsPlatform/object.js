@@ -4,7 +4,7 @@ define(["exports", "../utils", "../function/curry", "../function/flip"], functio
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.keys = _exports.assign = _exports.native = _exports.length = _exports.hasOwnProperty = _exports.instanceOf = void 0;
+  _exports.keys = _exports.assign = _exports["native"] = _exports.length = _exports.hasOwnProperty = _exports.instanceOf = void 0;
 
   /**
    * @description Defines some of the platform methods for objects (the ones used within `fjl`).
@@ -25,7 +25,7 @@ define(["exports", "../utils", "../function/curry", "../function/flip"], functio
       length = function length(x) {
     return x.length;
   },
-      native = Object.getOwnPropertyNames(Object).reduce(function (agg, key) {
+      _native = Object.getOwnPropertyNames(Object).reduce(function (agg, key) {
     if (typeof Object[key] !== 'function') {
       return agg;
     }
@@ -56,7 +56,7 @@ define(["exports", "../utils", "../function/curry", "../function/flip"], functio
 
     return agg;
   }, {}),
-      keys = native.keys,
+      keys = _native.keys,
       assign = function () {
     return Object.assign ? function (obj0) {
       for (var _len = arguments.length, objs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -80,7 +80,7 @@ define(["exports", "../utils", "../function/curry", "../function/flip"], functio
 
   _exports.assign = assign;
   _exports.keys = keys;
-  _exports.native = native;
+  _exports["native"] = _native;
   _exports.length = length;
   _exports.hasOwnProperty = hasOwnProperty;
   _exports.instanceOf = instanceOf;

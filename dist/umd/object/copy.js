@@ -16,7 +16,7 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = _exports.copy = void 0;
+  _exports["default"] = _exports.copy = void 0;
 
   var
   /**
@@ -64,5 +64,5 @@
 
   _exports.copy = copy;
   var _default = copy;
-  _exports.default = _default;
+  _exports["default"] = _default;
 });

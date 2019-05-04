@@ -7,7 +7,7 @@
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.list, global._function, global.object, global.negate, global.curry, global.boolean, global.lookup, global.of, global.is, global.typeOf, global.map, global.utils, global.range, global.jsPlatform);
+    factory(mod.exports, global.list, global._function, global.object, global.negate, global.curry, global["boolean"], global.lookup, global.of, global.is, global.typeOf, global.map, global.utils, global.range, global.jsPlatform);
     global.list = mod.exports;
   }
 })(this, function (_exports, _list, _function, _object, _negate, _curry, _boolean, _lookup, _of, _is, _typeOf, _map, _utils, _range, _jsPlatform) {
@@ -123,7 +123,7 @@
   Object.defineProperty(_exports, "map", {
     enumerable: true,
     get: function get() {
-      return _map.default;
+      return _map["default"];
     }
   });
   Object.defineProperty(_exports, "slice", {
@@ -179,7 +179,7 @@
     });
   });
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
   function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -207,6 +207,7 @@
    * @function module:list.append
    * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
    * @returns {(Array|String|*)} - Same type as list like passed in.
+   * @curried - Curried at upto 2 arguments.
    */
   append = (0, _curry.curry2)(function () {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -314,7 +315,7 @@
    * @returns {Array}
    */
   concatMap = (0, _curry.curry)(function (fn, foldableOfA) {
-    return concat((0, _map.default)(fn, foldableOfA));
+    return concat((0, _map["default"])(fn, foldableOfA));
   }),
 
   /**
@@ -1254,7 +1255,7 @@
 
     var trimmedLists = (0, _function.apply)(_utils.toShortest, lists);
     return (0, _utils.reduce)(function (agg, item, ind) {
-      return (0, _utils.aggregateArray)(agg, (0, _map.default)(function (xs) {
+      return (0, _utils.aggregateArray)(agg, (0, _map["default"])(function (xs) {
         return xs[ind];
       }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1363,7 +1364,7 @@
     }
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-      return (0, _utils.aggregateArray)(agg, (0, _function.apply)(op, (0, _map.default)(function (xs) {
+      return (0, _utils.aggregateArray)(agg, (0, _function.apply)(op, (0, _map["default"])(function (xs) {
         return xs[ind];
       }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1751,7 +1752,7 @@
    */
   sortOn = (0, _curry.curry)(function (valueFn, xs) {
     return (// Un-decorate
-      (0, _map.default)(function (decorated) {
+      (0, _map["default"])(function (decorated) {
         return decorated[1];
       }, // Decorate and sort
       sortBy( // Ordering
@@ -1764,7 +1765,7 @@
 
         return (0, _utils.genericAscOrdering)(a0, b0);
       }, // Decorate
-      (0, _map.default)(function (item) {
+      (0, _map["default"])(function (item) {
         return [valueFn(item), item];
       }, xs)))
     );

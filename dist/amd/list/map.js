@@ -4,7 +4,7 @@ define(["exports", "../jsPlatform/object", "../function/curry", "../object/typeO
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
+  _exports["default"] = void 0;
 
   /**
    * Maps a function onto a List (string or array) or a functor (value containing a map method).
@@ -62,5 +62,5 @@ define(["exports", "../jsPlatform/object", "../function/curry", "../object/typeO
     }
   });
   var _default = map;
-  _exports.default = _default;
+  _exports["default"] = _default;
 });

@@ -4,7 +4,7 @@ define(["exports", "./typeOf", "./of"], function (_exports, _typeOf, _of) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = _exports.copy = void 0;
+  _exports["default"] = _exports.copy = void 0;
 
   var
   /**
@@ -52,5 +52,5 @@ define(["exports", "./typeOf", "./of"], function (_exports, _typeOf, _of) {
 
   _exports.copy = copy;
   var _default = copy;
-  _exports.default = _default;
+  _exports["default"] = _default;
 });

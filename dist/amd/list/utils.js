@@ -34,7 +34,7 @@ define(["exports", "../jsPlatform/function", "../jsPlatform/list", "../jsPlatfor
     });
   });
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
   /**
    * List operator utils module.
@@ -101,7 +101,7 @@ define(["exports", "../jsPlatform/function", "../jsPlatform/list", "../jsPlatfor
       lists[_key] = arguments[_key];
     }
 
-    return (0, _map.default)(_object.length, lists);
+    return (0, _map["default"])(_object.length, lists);
   }),
 
   /**
@@ -118,7 +118,7 @@ define(["exports", "../jsPlatform/function", "../jsPlatform/list", "../jsPlatfor
 
     var listLengths = (0, _function.apply)(lengths, lists),
         smallLen = Math.min.apply(Math, listLengths);
-    return (0, _map.default)(function (list, ind) {
+    return (0, _map["default"])(function (list, ind) {
       return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list);
     }, lists);
   }),

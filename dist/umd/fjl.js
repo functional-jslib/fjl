@@ -7,7 +7,7 @@
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.object, global.boolean, global._function, global.list, global.string, global.utils, global.errorThrowing, global.jsPlatform);
+    factory(mod.exports, global.object, global["boolean"], global._function, global.list, global.string, global.utils, global.errorThrowing, global.jsPlatform);
     global.fjl = mod.exports;
   }
 })(this, function (_exports, _object, _boolean, _function, _list, _string, _utils, _errorThrowing, _jsPlatform) {
@@ -92,7 +92,7 @@
   });
   _jsPlatform = _interopRequireWildcard(_jsPlatform);
 
-  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
   /**
    * @module fjl

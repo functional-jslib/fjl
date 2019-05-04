@@ -7,7 +7,7 @@
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global._function, global.list, global.object, global.boolean, global.map, global.curry, global.aggregation);
+    factory(mod.exports, global._function, global.list, global.object, global["boolean"], global.map, global.curry, global.aggregation);
     global.utils = mod.exports;
   }
 })(this, function (_exports, _function, _list, _object, _boolean, _map, _curry, _aggregation) {
@@ -46,7 +46,7 @@
     });
   });
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
   /**
    * List operator utils module.
@@ -113,7 +113,7 @@
       lists[_key] = arguments[_key];
     }
 
-    return (0, _map.default)(_object.length, lists);
+    return (0, _map["default"])(_object.length, lists);
   }),
 
   /**
@@ -130,7 +130,7 @@
 
     var listLengths = (0, _function.apply)(lengths, lists),
         smallLen = Math.min.apply(Math, listLengths);
-    return (0, _map.default)(function (list, ind) {
+    return (0, _map["default"])(function (list, ind) {
       return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list);
     }, lists);
   }),

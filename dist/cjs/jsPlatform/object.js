@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.keys = exports.assign = exports.native = exports.length = exports.hasOwnProperty = exports.instanceOf = void 0;
+exports.keys = exports.assign = exports["native"] = exports.length = exports.hasOwnProperty = exports.instanceOf = void 0;
 
 var _utils = require("../utils");
 
@@ -30,7 +30,7 @@ var instanceOf = (0, _curry.curry)(function (instanceConstructor, instance) {
     length = function length(x) {
   return x.length;
 },
-    native = Object.getOwnPropertyNames(Object).reduce(function (agg, key) {
+    _native = Object.getOwnPropertyNames(Object).reduce(function (agg, key) {
   if (typeof Object[key] !== 'function') {
     return agg;
   }
@@ -61,7 +61,7 @@ var instanceOf = (0, _curry.curry)(function (instanceConstructor, instance) {
 
   return agg;
 }, {}),
-    keys = native.keys,
+    keys = _native.keys,
     assign = function () {
   return Object.assign ? function (obj0) {
     for (var _len = arguments.length, objs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -85,7 +85,7 @@ var instanceOf = (0, _curry.curry)(function (instanceConstructor, instance) {
 
 exports.assign = assign;
 exports.keys = keys;
-exports.native = native;
+exports["native"] = _native;
 exports.length = length;
 exports.hasOwnProperty = hasOwnProperty;
 exports.instanceOf = instanceOf;

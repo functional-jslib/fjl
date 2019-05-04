@@ -124,9 +124,11 @@ isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
 isUsableImmutablePrimitive, isEmptyList, isEmptyObject,
 isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf,
 isLooselyOneOf, instanceOfOne, isFunctor, isArray, of, searchObj,
-assignDeep, objUnion, objIntersect, objDifference, objComplement, log,
-error, peek, warn, jsonClone, toArray, toAssocList, toAssocListDeep,
-fromAssocList, fromAssocListDeep</code></pre><h3><code>boolean</code> methods</h3><pre class="prettyprint source"><code>isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll</code></pre><h3><code>errorThrowing</code> methods</h3><pre class="prettyprint source"><code>typeRefsToStringOrError, defaultErrorMessageCall,
+createTypedDescriptor, toEnumerableDescriptor, toTargetDescriptorTuple,
+defineProp, defineEnumProp, defineEnumProps, defineProps, assignDeep,
+objUnion, objIntersect, objDifference, objComplement, log, error, peek,
+warn, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList,
+fromAssocListDeep</code></pre><h3><code>boolean</code> methods</h3><pre class="prettyprint source"><code>isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll</code></pre><h3><code>errorThrowing</code> methods</h3><pre class="prettyprint source"><code>typeRefsToStringOrError, defaultErrorMessageCall,
 getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType,
 errorIfNotTypes</code></pre><h3><code>function</code> methods</h3><pre class="prettyprint source"><code>apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5,
 flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3,
@@ -215,7 +217,13 @@ configurations used for building the project.</li>
 <li>Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html</li>
 <li>Docs format: http://usejsdoc.org/</li>
 </ul>
-<h2>Change log</h2><h3>1.10.8 - 1.10.10</h3><ul>
+<h2>Change log</h2><h3>1.11.0</h3><ul>
+<li>Added <code>defineEnumProp</code>, <code>defineEnumProps</code>, 
+<code>defineProp</code>, <code>defineProps</code> methods (easier idomatic way to 
+define &quot;typed&quot; properties (in plain vanilla js (mostly useful for libraries et. al.))).</li>
+<li>dev-dependencies update.</li>
+</ul>
+<h3>1.10.8 - 1.10.10</h3><ul>
 <li>Readme file updates, dev-dependencies update.</li>
 </ul>
 <h3>1.10.7</h3><ul>

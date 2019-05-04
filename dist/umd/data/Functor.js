@@ -16,7 +16,7 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
+  _exports["default"] = void 0;
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -56,5 +56,5 @@
     return Functor;
   }();
 
-  _exports.default = Functor;
+  _exports["default"] = Functor;
 });

@@ -103,9 +103,11 @@ isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
 isUsableImmutablePrimitive, isEmptyList, isEmptyObject,
 isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf,
 isLooselyOneOf, instanceOfOne, isFunctor, isArray, of, searchObj,
-assignDeep, objUnion, objIntersect, objDifference, objComplement, log,
-error, peek, warn, jsonClone, toArray, toAssocList, toAssocListDeep,
-fromAssocList, fromAssocListDeep
+createTypedDescriptor, toEnumerableDescriptor, toTargetDescriptorTuple,
+defineProp, defineEnumProp, defineEnumProps, defineProps, assignDeep,
+objUnion, objIntersect, objDifference, objComplement, log, error, peek,
+warn, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList,
+fromAssocListDeep
 ```
 ### `boolean` methods
  ```
@@ -234,6 +236,12 @@ BSD 3 Clause - Included in sources.
 - Docs format: http://usejsdoc.org/
 
 ## Change log
+### 1.11.0
+- Added `defineEnumProp`, `defineEnumProps`, 
+`defineProp`, `defineProps` methods (easier idomatic way to 
+define "typed" properties (in plain vanilla js (mostly useful for libraries et. al.))).
+- dev-dependencies update.
+
 ### 1.10.8 - 1.10.10
 - Readme file updates, dev-dependencies update.
 

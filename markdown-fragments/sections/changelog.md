@@ -1,4 +1,10 @@
 ## Change log
+### 1.11.0
+- Added `defineEnumProp`, `defineEnumProps`, 
+`defineProp`, `defineProps` methods (easier idomatic way to 
+define "typed" properties (in plain vanilla js (mostly useful for libraries et. al.))).
+- dev-dependencies update.
+
 ### 1.10.8 - 1.10.10
 - Readme file updates, dev-dependencies update.
 

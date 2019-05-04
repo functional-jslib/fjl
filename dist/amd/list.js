@@ -111,7 +111,7 @@ define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/o
   Object.defineProperty(_exports, "map", {
     enumerable: true,
     get: function get() {
-      return _map.default;
+      return _map["default"];
     }
   });
   Object.defineProperty(_exports, "slice", {
@@ -167,7 +167,7 @@ define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/o
     });
   });
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
   function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -195,6 +195,7 @@ define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/o
    * @function module:list.append
    * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
    * @returns {(Array|String|*)} - Same type as list like passed in.
+   * @curried - Curried at upto 2 arguments.
    */
   append = (0, _curry.curry2)(function () {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -302,7 +303,7 @@ define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/o
    * @returns {Array}
    */
   concatMap = (0, _curry.curry)(function (fn, foldableOfA) {
-    return concat((0, _map.default)(fn, foldableOfA));
+    return concat((0, _map["default"])(fn, foldableOfA));
   }),
 
   /**
@@ -1242,7 +1243,7 @@ define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/o
 
     var trimmedLists = (0, _function.apply)(_utils.toShortest, lists);
     return (0, _utils.reduce)(function (agg, item, ind) {
-      return (0, _utils.aggregateArray)(agg, (0, _map.default)(function (xs) {
+      return (0, _utils.aggregateArray)(agg, (0, _map["default"])(function (xs) {
         return xs[ind];
       }, trimmedLists));
     }, [], trimmedLists[0]);
@@ -1351,7 +1352,7 @@ define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/o
     }
 
     return (0, _utils.reduce)(function (agg, item, ind) {
-      return (0, _utils.aggregateArray)(agg, (0, _function.apply)(op, (0, _map.default)(function (xs) {
+      return (0, _utils.aggregateArray)(agg, (0, _function.apply)(op, (0, _map["default"])(function (xs) {
         return xs[ind];
       }, trimmedLists)));
     }, [], trimmedLists[0]);
@@ -1739,7 +1740,7 @@ define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/o
    */
   sortOn = (0, _curry.curry)(function (valueFn, xs) {
     return (// Un-decorate
-      (0, _map.default)(function (decorated) {
+      (0, _map["default"])(function (decorated) {
         return decorated[1];
       }, // Decorate and sort
       sortBy( // Ordering
@@ -1752,7 +1753,7 @@ define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/o
 
         return (0, _utils.genericAscOrdering)(a0, b0);
       }, // Decorate
-      (0, _map.default)(function (item) {
+      (0, _map["default"])(function (item) {
         return [valueFn(item), item];
       }, xs)))
     );

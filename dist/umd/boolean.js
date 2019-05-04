@@ -8,7 +8,7 @@
       exports: {}
     };
     factory(mod.exports, global.curry);
-    global.boolean = mod.exports;
+    global["boolean"] = mod.exports;
   }
 })(this, function (_exports, _curry) {
   "use strict";

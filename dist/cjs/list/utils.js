@@ -47,7 +47,7 @@ Object.keys(_aggregation).forEach(function (key) {
   });
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 /**
  * List operator utils module.
@@ -114,7 +114,7 @@ lengths = (0, _curry.curry2)(function () {
     lists[_key] = arguments[_key];
   }
 
-  return (0, _map.default)(_object.length, lists);
+  return (0, _map["default"])(_object.length, lists);
 }),
 
 /**
@@ -131,7 +131,7 @@ toShortest = (0, _curry.curry2)(function () {
 
   var listLengths = (0, _function.apply)(lengths, lists),
       smallLen = Math.min.apply(Math, listLengths);
-  return (0, _map.default)(function (list, ind) {
+  return (0, _map["default"])(function (list, ind) {
     return listLengths[ind] > smallLen ? sliceTo(smallLen, list) : sliceCopy(list);
   }, lists);
 }),

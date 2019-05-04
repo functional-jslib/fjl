@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.copy = void 0;
+exports["default"] = exports.copy = void 0;
 
 var _typeOf = require("./typeOf");
 
@@ -55,4 +55,4 @@ copy = function copy(x, out) {
 
 exports.copy = copy;
 var _default = copy;
-exports.default = _default;
+exports["default"] = _default;
