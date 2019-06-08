@@ -61,8 +61,10 @@
 <a href="http://badge.fury.io/gh/functional-jslib%2Ffjl"><img src="https://badge.fury.io/gh/functional-jslib%2Ffjl.svg" alt="GitHub version"></a>
 <a href="http://badge.fury.io/js/fjl"><img src="https://badge.fury.io/js/fjl.svg" alt="NPM version"></a>
 <a href="https://david-dm.org/functional-jslib/fjl"><img src="https://david-dm.org/functional-jslib/fjl.png" alt="Dependencies"></a></p>
-<h1>fjl</h1><p>Functional Javascript Library (inspired by Haskell's Prelude).</p>
-<h2>Sections in Readme:</h2><ul>
+<h1>fjl</h1>
+<p>Functional Javascript Library (inspired by Haskell's Prelude).</p>
+<h2>Sections in Readme:</h2>
+<ul>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#getting-started">Getting Started</a></li>
 <li><a href="#docs">Docs</a></li>
@@ -73,17 +75,24 @@
 <li><a href="#resources">Resources</a></li>
 <li><a href="#change-log">Change log</a></li>
 </ul>
-<h2>Requirements:</h2><ul>
+<h2>Requirements:</h2>
+<ul>
 <li>Javascript Ecmascript 5+.</li>
 </ul>
-<h3>Supported Platforms:</h3><h4>Browsers</h4><ul>
+<h3>Supported Platforms:</h3>
+<h4>Browsers</h4>
+<ul>
 <li>IE9+, and all other modern day browsers.</li>
 </ul>
-<h4>NodeJs</h4><ul>
+<h4>NodeJs</h4>
+<ul>
 <li>8+</li>
 </ul>
-<h2>Getting Started:</h2><h4>Note on typescript:</h4><p>If you are using typescript, and want to manually include fjl's types file, it is located at <code>'fjl/types/index.d.ts'</code>.</p>
-<h3>In Browser:</h3><p>See desired export type below:</p>
+<h2>Getting Started:</h2>
+<h4>Note on typescript:</h4>
+<p>If you are using typescript, and want to manually include fjl's types file, it is located at <code>'fjl/types/index.d.ts'</code>.</p>
+<h3>In Browser:</h3>
+<p>See desired export type below:</p>
 <ul>
 <li>'./dist/amd/' - Asynchronous module format.</li>
 <li>'./dist/cjs/' - CommonJs module format.</li>
@@ -91,13 +100,23 @@
 <li>'./dist/iife/' - Immediately Invoked Function Execution - (exports <code>fjl</code> as a global).</li>
 <li>'./dist/es6-module/' - Ecmascript 6 module format.</li>
 </ul>
-<p><strong>Note:</strong> 
-The './dist/package/fjl<em>' files are for the new setup in ecma262 proposals
-for es6 modules ('</em>.mjs' for es6 module and '*.js' for common-js module) (these are used
- in package.json as the default exports). </p>
-<h3>In NodeJs:</h3><h4>Using es2015 modules:</h4><pre class="prettyprint source"><code>import {...} from 'fjl';</code></pre><h4>Using CommonJs modules:</h4><pre class="prettyprint source"><code>const fjl = require('fjl');</code></pre><h2>Docs</h2><p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
+<p><strong>Note:</strong>
+The './dist/package/fjl*' files are for the new setup in ecma262 proposals
+for es6 modules ('<em>.mjs' for es6 module and '</em>.js' for common-js module) (these are used
+in package.json as the default exports).</p>
+<h3>In NodeJs:</h3>
+<h4>Using es2015 modules:</h4>
+<pre class="prettyprint source"><code>import {...} from 'fjl';
+</code></pre>
+<h4>Using CommonJs modules:</h4>
+<pre class="prettyprint source"><code>const fjl = require('fjl');
+</code></pre>
+<h2>Docs</h2>
+<p><strong>JSDocs</strong> [https://functional-jslib.github.io/fjl]</p>
 <p><strong>Note:</strong> Docs are divided by internal module names though, note, all methods live on top level <code>fjl</code> export.</p>
-<h3>Library methods:</h3><h3><code>list</code> methods</h3><pre class="prettyprint source"><code>map, slice, includes, indexOf, lastIndexOf, push, append, head, last,
+<h3>Library methods:</h3>
+<h3><code>list</code> methods</h3>
+<pre class="prettyprint source"><code>map, slice, includes, indexOf, lastIndexOf, push, append, head, last,
 tail, init, uncons, unconsr, concat, concatMap, reverse, intersperse,
 intercalate, transpose, subsequences, swapped, permutations, foldl,
 foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate,
@@ -113,10 +132,16 @@ unionBy, union, intersect, intersectBy, difference, complement,
 sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
 reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
 findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
-aggregateArray, range</code></pre><h3><code>listUtils</code> methods</h3><pre class="prettyprint source"><code>sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
+aggregateArray, range
+</code></pre>
+<h3><code>listUtils</code> methods</h3>
+<pre class="prettyprint source"><code>sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
 reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
 findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
-aggregateArray</code></pre><h3><code>object</code> methods</h3><pre class="prettyprint source"><code>instanceOf, hasOwnProperty, length, native, assign, keys, lookup,
+aggregateArray
+</code></pre>
+<h3><code>object</code> methods</h3>
+<pre class="prettyprint source"><code>instanceOf, hasOwnProperty, length, native, assign, keys, lookup,
 typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames,
 isFunction, isType, isStrictly, isOfType, isLoosely, isClass,
 isCallable, isObject, isBoolean, isNumber, isString, isMap, isSet,
@@ -128,24 +153,46 @@ createTypedDescriptor, toEnumerableDescriptor, toTargetDescriptorTuple,
 defineProp, defineEnumProp, defineEnumProps, defineProps, assignDeep,
 objUnion, objIntersect, objDifference, objComplement, log, error, peek,
 warn, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList,
-fromAssocListDeep</code></pre><h3><code>boolean</code> methods</h3><pre class="prettyprint source"><code>isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll</code></pre><h3><code>errorThrowing</code> methods</h3><pre class="prettyprint source"><code>typeRefsToStringOrError, defaultErrorMessageCall,
+fromAssocListDeep
+</code></pre>
+<h3><code>boolean</code> methods</h3>
+<pre class="prettyprint source"><code>isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll
+</code></pre>
+<h3><code>errorThrowing</code> methods</h3>
+<pre class="prettyprint source"><code>typeRefsToStringOrError, defaultErrorMessageCall,
 getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType,
-errorIfNotTypes</code></pre><h3><code>function</code> methods</h3><pre class="prettyprint source"><code>apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5,
+errorIfNotTypes
+</code></pre>
+<h3><code>function</code> methods</h3>
+<pre class="prettyprint source"><code>apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5,
 flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3,
-negateFN, until, fnOrError, noop, trampoline, toFunction</code></pre><h3><code>string</code> methods</h3><pre class="prettyprint source"><code>split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst,
-camelCase, classCase</code></pre><h3><code>utils</code> methods</h3><pre class="prettyprint source"><code>fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
-fPureTakesOneOrMore</code></pre><h3>Notes/Caveats/Method-Requisites:</h3><h4>About library's usage of currying.</h4><ul>
+negateFN, until, fnOrError, noop, trampoline, toFunction
+</code></pre>
+<h3><code>string</code> methods</h3>
+<pre class="prettyprint source"><code>split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst,
+camelCase, classCase
+</code></pre>
+<h3><code>utils</code> methods</h3>
+<pre class="prettyprint source"><code>fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
+fPureTakesOneOrMore
+</code></pre>
+<h3>Notes/Caveats/Method-Requisites:</h3>
+<h4>About library's usage of currying.</h4>
+<ul>
 <li>All methods that take 2 or more arguments are curried.</li>
 <li>Methods that take rest params &quot;only&quot; are not curried (except in some cases - see: <a href="https://functional-jslib.github.io/fjl/module-function.html#.compose"><code>compose</code></a>  and <a href="https://functional-jslib.github.io/fjl/module-console.html#.peek"><code>peek</code></a> for examples of uncurried functions and <a href="https://functional-jslib.github.io/fjl/module-list.html#.append"><code>append</code></a> for a curried one).</li>
 <li>Methods that require one argument and rest params are curried at up to 2 parameters.</li>
 </ul>
-<h4>Note: <code>iterate</code>, <code>repeat</code>, <code>replicate</code>, <code>cycle</code></h4><p>In javascript we do not have lazy lists (infinite lists) like in haskell so 
+<h4>Note: <code>iterate</code>, <code>repeat</code>, <code>replicate</code>, <code>cycle</code></h4>
+<p>In javascript we do not have lazy lists (infinite lists) like in haskell so
 the aforementioned methods take an integer as their first parameter;  E.g.,</p>
 <p>In haskell, we can do the following: <code>take 3 $ iterate (a -&gt; a * 2) [1..]</code> (<code>[1..]</code> is syntax for infinite list)
 In javascript, we have no choice but to make our function call similar to:</p>
-<pre class="prettyprint source"><code>iterate(3, a => a * 2, range(1, 10))</code></pre><p>So, haskell definitions for our generator like methods:  </p>
+<pre class="prettyprint source"><code>iterate(3, a => a * 2, range(1, 10))
+</code></pre>
+<p>So, haskell definitions for our generator like methods:</p>
 <ul>
-<li><code>iterate :: (a -&gt; a) -&gt; [a]</code> </li>
+<li><code>iterate :: (a -&gt; a) -&gt; [a]</code></li>
 <li><code>repeat :: a -&gt; [a]</code></li>
 <li><code>replicate :: Int -&gt; a -&gt; [a]</code></li>
 <li><code>cycle :: [a] -&gt; [a]</code></li>
@@ -161,21 +208,29 @@ In javascript, we have no choice but to make our function call similar to:</p>
 <ul>
 <li><code>split</code> in javascript is for strings.</li>
 </ul>
-<h3>Utilities</h3><h4>Low level utilities</h4><p>Turning regular methods into functional ones;  I.e., these 
-take a <code>name</code> and return a function that take an-argument/arguments and a type value 
-that has a method of <code>name</code> on it.<br>The function returned takes arguments first and functor/member last.</p>
+<h3>Utilities</h3>
+<h4>Low level utilities</h4>
+<p>Turning regular methods into functional ones;  I.e., these
+take a <code>name</code> and return a function that take an-argument/arguments and a type value
+that has a method of <code>name</code> on it.<br>
+The function returned takes arguments first and functor/member last.</p>
 <pre class="prettyprint source"><code>fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
-fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore</code></pre><p><strong>Note:</strong></p>
+fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore
+</code></pre>
+<p><strong>Note:</strong></p>
 <ul>
 <li><code>lastIndex</code> gives you the last index of a list.</li>
 </ul>
-<h3>Notable methods not added from the haskell prelude:</h3><ul>
+<h3>Notable methods not added from the haskell prelude:</h3>
+<ul>
 <li>Math/Integral/Num/etc. methods</li>
 </ul>
 <p>Jsdocs here:
 https://functional-jslib.github.io/fjl/</p>
-<h2>Development:</h2><ul>
-<li>Sources are in './src'<ul>
+<h2>Development:</h2>
+<ul>
+<li>Sources are in './src'
+<ul>
 <li>'./src/jsPlatform' are native platform specific method versions
 pulled out for use (functionally), in some places, where we didn't want to
 intermingle library methods with native ones.</li>
@@ -185,23 +240,26 @@ intermingle library methods with native ones.</li>
 <li>Docs are generated via jsdoc to './docs' dir.</li>
 <li>Docs are written inline, in source using <a href="http://usejsdoc.com">jsdoc</a> format.</li>
 <li>About non-conformity to full modularity (one-function-per-file):
-  The library could have been written this way initially but was'nt, specifically 
-  to make development on the library easier/faster (though it can 
-  be argued that development is actually more difficult this way,
-  the trade-off of being able to think of functions in groups/modules 
-  and along with their relationships is easier than having to think 
-  about functions as a big list of files numbering in the 10s to 100s.</li>
+The library could have been written this way initially but was'nt, specifically
+to make development on the library easier/faster (though it can
+be argued that development is actually more difficult this way,
+the trade-off of being able to think of functions in groups/modules
+and along with their relationships is easier than having to think
+about functions as a big list of files numbering in the 10s to 100s.</li>
 </ul>
-<h3>Package scripts:</h3><ul>
-<li><code>build</code> - Builds docs and distribution ('./dist'). </li>
+<h3>Package scripts:</h3>
+<ul>
+<li><code>build</code> - Builds docs and distribution ('./dist').</li>
 <li><code>test-builds</code> - Tests' './dist'</li>
 <li><code>test</code> - Runs unit tests.</li>
 </ul>
-<h3>Dev notes:</h3><ul>
+<h3>Dev notes:</h3>
+<ul>
 <li>'./.babelrc' is used only for tests.  Babel configurations found in './gulpfileConfig.json' are the
 configurations used for building the project.</li>
 </ul>
-<h3>Unit testing:</h3><p>We are using 'jest' for testing.</p>
+<h3>Unit testing:</h3>
+<p>We are using 'jest' for testing.</p>
 <p>Unit tests are grouped by exported module:</p>
 <ul>
 <li>'tests/test-list.js' - Tests 'list' module.</li>
@@ -209,42 +267,53 @@ configurations used for building the project.</li>
 <li>'tests/test-function.js' - Tests 'function' module.</li>
 <li>Et. al.</li>
 </ul>
-<h3>Perf Tests:</h3><p>Some performance tests were hosted at jsperf.com though that site currently broken so performance-tests/benchmarks will be added to repo at a later date (@todo).</p>
-<h2>License:</h2><p>BSD 3 Clause - Included in sources.</p>
-<h2>Resources:</h2><ul>
-<li>Haskell docs search engine: https://<a href="http://www.haskell.org/hoogle/">www.haskell.org/hoogle/</a></li>
+<h3>Perf Tests:</h3>
+<p>Some performance tests were hosted at jsperf.com though that site currently broken so performance-tests/benchmarks will be added to repo at a later date (@todo).</p>
+<h2>License:</h2>
+<p>BSD 3 Clause - Included in sources.</p>
+<h2>Resources:</h2>
+<ul>
+<li>Haskell docs search engine: https://www.haskell.org/hoogle/</li>
 <li>Listing of entire Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html</li>
 <li>Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html</li>
 <li>Docs format: http://usejsdoc.org/</li>
 </ul>
-<h2>Change log</h2><h3>1.11.0</h3><ul>
-<li>Added <code>defineEnumProp</code>, <code>defineEnumProps</code>, 
-<code>defineProp</code>, <code>defineProps</code> methods (easier idomatic way to 
+<h2>Change log</h2>
+<h3>1.11.0</h3>
+<ul>
+<li>Added <code>defineEnumProp</code>, <code>defineEnumProps</code>,
+<code>defineProp</code>, <code>defineProps</code> methods (easier idomatic way to
 define &quot;typed&quot; properties (in plain vanilla js (mostly useful for libraries et. al.))).</li>
 <li>dev-dependencies update.</li>
 </ul>
-<h3>1.10.8 - 1.10.10</h3><ul>
+<h3>1.10.8 - 1.10.10</h3>
+<ul>
 <li>Readme file updates, dev-dependencies update.</li>
 </ul>
-<h3>1.10.7</h3><ul>
+<h3>1.10.7</h3>
+<ul>
 <li>Consolidated typescript type files into one types file.</li>
 </ul>
-<h3>1.10.6</h3><ul>
+<h3>1.10.6</h3>
+<ul>
 <li>Made 'jsPlatform' module public.</li>
 <li>Added typescript types for all previously defined &quot;public&quot; modules.&quot;</li>
 </ul>
-<h3>1.10.3</h3><ul>
+<h3>1.10.3</h3>
+<ul>
 <li>Added './types' dir for typescript type files (added in earlier commits though formerly announcing here).</li>
 <li>Added types file to package.json (at 'types' property).</li>
-<li>Refactored type definitions, a bit, (from what they were before - they were committed in earlier commits though their 
+<li>Refactored type definitions, a bit, (from what they were before - they were committed in earlier commits though their
 format wasn't finalized yet).</li>
 <li>Updated readme with note on typescript types file.</li>
 <li>Fixed typo in 'filter' type in list.d.ts - It's return value was marked as <code>void</code> updated to <code>any[]</code>.</li>
 <li>Added <code>warn</code> function to console module and to library.</li>
 <li>Regenerated docs, readme etc..</li>
 </ul>
-<h3>1.10.0</h3><ul>
-<li>Added some synonyms:<ul>
+<h3>1.10.0</h3>
+<ul>
+<li>Added some synonyms:
+<ul>
 <li><code>isLoosely</code> for <code>isOfType</code></li>
 <li><code>isStrictly</code> for <code>isType</code></li>
 <li><code>isStrictlyOneOf</code> for <code>isOneOf</code></li>
@@ -253,9 +322,11 @@ format wasn't finalized yet).</li>
 <li>Cleaned up, tablelized, and optimized some tests ('./tests/test-object').</li>
 <li>Optimized some implementations (<code>src/object/is</code>)</li>
 </ul>
-<h4>New addition:</h4><ul>
-<li><p><code>isLooselyOneOf</code> - For type checking with mix-match
-type refs (constructor names and constructors):</p>
+<h4>New addition:</h4>
+<ul>
+<li><code>isLooselyOneOf</code> - For type checking with mix-match
+type refs (constructor names and constructors):</li>
+</ul>
 <pre class="prettyprint source lang-javascript"><code>const someValue = 'someValue';
 isLooselyOneOf(someValue, 'Undefined', Function, 'Map'); 
 // `false` - Doesn't match any type.
@@ -264,68 +335,87 @@ isLooselyOneOf(someValue, 'Undefined', String, 'Map');
 // `true` - Matches `String`
 
 isLooselyOneOf(someValue, 'Undefined', 'String', 'Map'); 
-// `true` - Matches 'String'</code></pre></li>
-<li><code>instanceOfOne</code> - <code>instanceOf</code> for one or more types:<pre class="prettyprint source lang-javascript"><code>const someValue = 'hello';
-instanceOfOne(someValue, Function, String, Array)
-// `true` matches - String</code></pre></li>
+// `true` - Matches 'String'
+</code></pre>
+<ul>
+<li><code>instanceOfOne</code> - <code>instanceOf</code> for one or more types:</li>
 </ul>
-<h3>1.9.0</h3><ul>
+<pre class="prettyprint source lang-javascript"><code>const someValue = 'hello';
+instanceOfOne(someValue, Function, String, Array)
+// `true` matches - String
+</code></pre>
+<h3>1.9.0</h3>
+<ul>
 <li>Added <code>toFunction</code> (for functional composition of values that must pass as functions).</li>
 </ul>
-<h3>1.8.0</h3><ul>
+<h3>1.8.0</h3>
+<ul>
 <li>Added <code>trampoline</code> method (for tail call elimination).</li>
 </ul>
-<h3>1.7.0</h3><h4>Deprecations</h4><ul>
+<h3>1.7.0</h3>
+<h4>Deprecations</h4>
+<ul>
 <li>Marked <code>hasOwnProperty</code> as deprecated (as property
 is not really in the haskell prelude and is a bit
 of an oddity when it comes to the functional mindset).</li>
 </ul>
-<h4>New additions</h4><ul>
+<h4>New additions</h4>
+<ul>
 <li>Re-instantiated <code>flip3</code>, <code>flip4</code>, <code>flip5</code> - Turns out there was a use for these after-all (<code>fjl.native</code>).</li>
-<li>Added <code>native</code> which includes all the 
+<li>Added <code>native</code> which includes all the
 static methods that live on <code>Object</code> though
 flipped and curried.</li>
 <li>Added 'fjl-mutable' as part of source.  All methods of 'fjl-mutable' now
 live directly on 'fjl' and are defined in 'fjl/objects/defineProp' (or more directly in src at './src/objects/defineProp').</li>
 </ul>
-<h4>Development changes.</h4><ul>
+<h4>Development changes.</h4>
+<ul>
 <li>Updated  'dev-deps' to use latest babel.</li>
 <li>Updated gulp version</li>
 <li>Updated .travis* file.</li>
 <li>Moved './gulpfile.js' to 'gulpfile.babel.js'  in order to easily use es6 imports.</li>
 </ul>
-<h3>1.6.2</h3><ul>
+<h3>1.6.2</h3>
+<ul>
 <li>String support for <code>takeWhile</code>, <code>group</code>, and <code>groupBy</code>, <code>dropWhileEnd</code>.</li>
 <li>Tablelized tests for <code>takeWhile</code>, <code>dropWhileEnd</code>, and <code>dropWhileEnd</code>.</li>
 </ul>
-<h3>1.6.0</h3><ul>
-<li>A few more functions now support strings:<ul>
+<h3>1.6.0</h3>
+<ul>
+<li>A few more functions now support strings:
+<ul>
 <li><code>map</code>, <code>intersperse</code>, <code>append</code>, <code>reverse</code>, and <code>concat</code>.</li>
 </ul>
 </li>
 <li><code>range</code> function doc-block updated.</li>
 <li><code>listUtil</code> functions updated and their docs unblocked from jsdocs.</li>
 <li><code>listUtil</code> methods are now exported from 'src/list'.</li>
-<li>Tests overhaul stage 1 progress.  <ul>
-<li>Converted some tests to table format (where implementations were touched and 
-  where the functional programming style was too extreme).</li>
+<li>Tests overhaul stage 1 progress.
+<ul>
+<li>Converted some tests to table format (where implementations were touched and
+where the functional programming style was too extreme).</li>
 <li>Removed some library functions from tests where said functions were not being tested (use native functions for tests only (no-library functions intermingle (in tests))).</li>
 </ul>
 </li>
 <li>Cleaned up imports in some places to protect from cyclic dependency issues.</li>
 </ul>
-<h3>1.5.1, 1.5.2</h3><ul>
+<h3>1.5.1, 1.5.2</h3>
+<ul>
 <li>Added './types/index.d.ts' file.</li>
 </ul>
-<h3>1.5.0</h3><h4>Breaking changes</h4><ul>
+<h3>1.5.0</h3>
+<h4>Breaking changes</h4>
+<ul>
 <li><code>reduceRightUntil</code> changed to <code>reduceUntilRight</code>.</li>
 <li><code>lengthsToSmallest</code> changed to <code>toShortest</code>.</li>
 </ul>
-<h5>Changes that affect development of the library:</h5><ul>
+<h5>Changes that affect development of the library:</h5>
+<ul>
 <li>package.json.scripts - Removed unnecessary commands (cleaned up scripts section).</li>
 <li>Updated gulp to version 4.</li>
 <li>Updated gulpfile to use new <code>gulp 4</code> api.</li>
-<li>Removed unnecessary dev dependencies:<ul>
+<li>Removed unnecessary dev dependencies:
+<ul>
 <li>random-js</li>
 <li>lazypipe</li>
 <li>requirejs</li>
@@ -333,11 +423,13 @@ live directly on 'fjl' and are defined in 'fjl/objects/defineProp' (or more dire
 </ul>
 </li>
 </ul>
-<h4>Other changes</h4><ul>
+<h4>Other changes</h4>
+<ul>
 <li>Cleaned up README.md to reflect latest changes.</li>
 <li>Curried functions (functions curried via <code>curry*</code> functions) now retain their arity property value (<code>length</code> value).</li>
 </ul>
-<h3>1.3.0</h3><ul>
+<h3>1.3.0</h3>
+<ul>
 <li>Added <code>noop</code> (no-op (op as in operation)) method (useful as a placeholder for variables/properties that should always contain a function).</li>
 <li>Added test for <code>noop</code> addition.</li>
 <li>Updated './docs'.</li>
