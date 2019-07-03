@@ -2072,11 +2072,6 @@ var fjl = (function (exports) {
   };
 
   /**
-   * @module object
-   * @description Object operations/combinators.
-   */
-
-  /**
    * Composes all functions passed in from right to left passing each functions return value to
    * the function on the left of itself.
    * @function module:function.compose
@@ -2277,10 +2272,6 @@ var fjl = (function (exports) {
       return x;
     };
   };
-
-  /**
-   * @module function
-   */
 
   /**
    * @module object
