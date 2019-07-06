@@ -1,6 +1,7 @@
-/**
- * Created by edlc on 12/9/16.
- */
+import {isset} from '../object/isset';
+
+export const toFunctor = x => !isset(x) || !x.map ? new Functor(x) : x;
+
 export default class Functor<T> {
     readonly value?:T;
     constructor(value?: T) {this.value = value;}
