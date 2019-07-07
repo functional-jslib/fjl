@@ -30,6 +30,12 @@ export namespace native {
 
 export type Predicate = (a: any) => boolean;
 
+export type Predicate2 = (a: any, b: any) => boolean;
+
+export type Predicate3 = (a: any, b: any, c: any) => boolean;
+
+export type Predicate4 = (a: any, b: any, c: any, d: any) => boolean;
+
 export type TypeRef =
     string | Function | ArrayBufferConstructor | ArrayConstructor |
     BooleanConstructor | StringConstructor |
