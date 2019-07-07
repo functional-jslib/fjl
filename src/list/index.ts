@@ -14,6 +14,7 @@ import {isset, isString} from '../object/is';
 import {typeOf} from '../object/typeOf';
 import map from './map';
 import {append} from './append';
+import {head} from './head';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -28,20 +29,11 @@ export * from './range';
 
 export * from './utils';
 
-export {append, map};
+export {append, head, map};
 
 export {slice, includes, indexOf, lastIndexOf, push} from '../jsPlatform';
 
 export const
-
-    /**
-     * Returns head of list (first item of list).
-     * @haskellType `head :: [a] -> a`
-     * @function module:list.head
-     * @param x {Array|String}
-     * @returns {*} - First item from list
-     */
-    head = x => x[0],
 
     /**
      * Returns last item of list.

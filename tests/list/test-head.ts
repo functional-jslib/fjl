@@ -1,5 +1,5 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from '../helpers';
-import {head} from '../../src/list';
+import {head} from '../../src/list/head';
 
 describe('#head', () => {
     it('should return the first item in a list or `undefined` if list is empty.', () => {
