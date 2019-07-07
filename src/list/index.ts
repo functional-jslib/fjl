@@ -15,6 +15,7 @@ import {typeOf} from '../object/typeOf';
 import map from './map';
 import {append} from './append';
 import {head} from './head';
+import {last} from './last';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -29,20 +30,11 @@ export * from './range';
 
 export * from './utils';
 
-export {append, head, map};
+export {append, head, last, map};
 
 export {slice, includes, indexOf, lastIndexOf, push} from '../jsPlatform';
 
 export const
-
-    /**
-     * Returns last item of list.
-     * @haskellType `last :: [a] -> a`
-     * @function module:list.last
-     * @param xs {Array|String}
-     * @returns {*}
-     */
-    last = xs => xs[lastIndex(xs)],
 
     /**
      * Returns tail part of list (everything after the first item as new list).
