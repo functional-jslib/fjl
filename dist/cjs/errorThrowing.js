@@ -35,7 +35,7 @@ typeRefsToStringOrError = function typeRefsToStringOrError(types) {
  * {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
  * @function module:errorThrowing.defaultErrorMessageCall
  * @param tmplContext {Object|TemplateContext} - Object to use in error template.
- * @returns {string}
+ * @returns {index.ts}
  * @private
  */
 defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {

@@ -5,7 +5,7 @@
 import { typeOf } from './object/typeOf';
 import { isArray, toTypeRef, toTypeRefName, isOfType } from './object/is';
 import { curry } from './function/curry';
-export const 
+export const
 /**
  * Pretty prints an array of types/type-strings for use by error messages;
  * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
@@ -15,13 +15,13 @@ export const
  * @private
  */
 typeRefsToStringOrError = types => types.length ?
-    types.map(type => `\`${toTypeRefName(type)}\``).join(', ') : '', 
+    types.map(type => `\`${toTypeRefName(type)}\``).join(', ') : '',
 /**
  * Prints a message from an object.  Object signature:
  * {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
  * @function module:errorThrowing.defaultErrorMessageCall
  * @param tmplContext {Object|TemplateContext} - Object to use in error template.
- * @returns {string}
+ * @returns {index.ts}
  * @private
  */
 defaultErrorMessageCall = tmplContext => {
@@ -30,7 +30,7 @@ defaultErrorMessageCall = tmplContext => {
         `${valueName}\` is not ${typesCopy}: ${typesToMatchCopy}.  ` +
         `Type received: ${foundTypeName}.  Value: ${value};` +
         `${messageSuffix ? '  ' + messageSuffix + ';' : ''}`;
-}, 
+},
 /**
  * Gets the error message thrower seeded with passed in errorMessage template call.
  * @function module:errorThrowing.getErrorIfNotTypeThrower$
@@ -45,7 +45,7 @@ _getErrorIfNotTypeThrower = (errorMessageCall, typeChecker = isOfType) => (Value
         return value;
     } // Value matches type
     throw new Error(errorMessageCall({ contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix }));
-}, 
+},
 /**
  * Gets the error message thrower seeded with passed in errorMessage template call.
  * @function module:errorThrowing.getErrorIfNotTypesThrower$
@@ -64,7 +64,7 @@ _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = isOfType) => (valu
         expectedTypeName: expectedTypeNames, foundTypeName,
         messageSuffix
     }));
-}, 
+},
 /**
  * Checks that passed in `value` is of given `type`.  Throws an error if value
  * is not of given `type`.  This is the un-curried version.  For the curried version
@@ -78,7 +78,7 @@ _getErrorIfNotTypesThrower = (errorMessageCall, typeChecker = isOfType) => (valu
  * @returns {*} - Given `value` if `value` matches passed in type.
  * @private
  */
-_errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall), 
+_errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall),
 /**
  * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
  *  is not of one of the given `types`.  This is the un-curried version.  For the curried version
@@ -92,7 +92,7 @@ _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall),
  * @returns {*} - Given `value` if `value` matches passed in type.
  * @private
  */
-_errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall), 
+_errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall),
 /**
  * Returns a function that can be used to ensure that values are of a given type.
  *   Also throws informative error messages containing the value types, names, expected type names,
@@ -101,7 +101,7 @@ _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall),
  * @param errorMessageCall {Function|ErrorMessageCall} - Template function (takes an info-object and returns a printed string).
  * @returns {Function|ErrorIfNotType} - Returns a function with the same signature as `errorIfNotType` though curried.
  */
-getErrorIfNotTypeThrower = errorMessageCall => curry(_getErrorIfNotTypeThrower(errorMessageCall)), 
+getErrorIfNotTypeThrower = errorMessageCall => curry(_getErrorIfNotTypeThrower(errorMessageCall)),
 /**
  * Returns a function that can be used to ensure that a value is of one or more given types.
  *   The returned function is used in cases where informative error messages
@@ -110,7 +110,7 @@ getErrorIfNotTypeThrower = errorMessageCall => curry(_getErrorIfNotTypeThrower(e
  * @param errorMessageCall {Function|ErrorMessageCall} - Template function (takes an info-object and returns a printed string).
  * @returns {Function|ErrorIfNotTypes} - Returns a function with the same signature as `errorIfNotTypes` though curried.
  */
-getErrorIfNotTypesThrower = errorMessageCall => curry(_getErrorIfNotTypesThrower(errorMessageCall)), 
+getErrorIfNotTypesThrower = errorMessageCall => curry(_getErrorIfNotTypesThrower(errorMessageCall)),
 /**
  * Checks that passed in `value` is of given `type`.  Throws an error if value
  * is not of given `type`.  Curried.
@@ -123,7 +123,7 @@ getErrorIfNotTypesThrower = errorMessageCall => curry(_getErrorIfNotTypesThrower
  * @returns {*} - Given `value` if `value` matches passed in type.
  * @curried
  */
-errorIfNotType = curry(_errorIfNotType), 
+errorIfNotType = curry(_errorIfNotType),
 /**
  * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
  *  is not of one of the given `types`.  Curried.

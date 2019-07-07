@@ -30,7 +30,7 @@ define(["exports", "./object/typeOf", "./object/is", "./function/curry"], functi
    * {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
    * @function module:errorThrowing.defaultErrorMessageCall
    * @param tmplContext {Object|TemplateContext} - Object to use in error template.
-   * @returns {string}
+   * @returns {index.ts}
    * @private
    */
   defaultErrorMessageCall = function defaultErrorMessageCall(tmplContext) {

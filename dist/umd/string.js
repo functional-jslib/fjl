@@ -65,7 +65,7 @@
    * Lower cases first character of a non-empty string.
    * @function module:string.lcaseFirst
    * @param xs {String}
-   * @returns {string}
+   * @returns {index.ts}
    * @throws {Error} - Throws error if receiving anything that is not a string.
    */
   lcaseFirst = function lcaseFirst(xs) {
@@ -77,7 +77,7 @@
    * Upper cases first character of a non-empty string.
    * @function module:string.ucaseFirst
    * @param xs {String}
-   * @returns {string}
+   * @returns {index.ts}
    * @throws {Error} - Throws error if receiving anything that is not a string.
    */
   ucaseFirst = function ucaseFirst(xs) {
@@ -91,7 +91,7 @@
    * @param xs {String}
    * @param [pattern=/[^a-z\d/i]/] {RegExp} - Pattern to split on.  Optional.
    * @throws {Error} - Throws error if param `xs` is not a string.
-   * @returns {string}
+   * @returns {index.ts}
    * @curried
    */
   camelCase = function camelCase(xs) {
@@ -109,7 +109,7 @@
    * and then upper case first character (`ucaseFirst`).
    * @function module:string.classCase
    * @param xs {String}
-   * @returns {string}
+   * @returns {index.ts}
    * @throws {Error} - Throws error if `xs` is not a string (via `camelCase` call).
    */
   classCase = (0, _compose.compose)(ucaseFirst, camelCase);

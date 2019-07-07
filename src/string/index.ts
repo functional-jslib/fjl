@@ -2,11 +2,11 @@
  * @module string
  * @description Contains functions for strings.
  */
-import {intercalate, map, filter} from './list';
-import {split} from './jsPlatform/string';
-import {compose} from './function/compose';
-import {join} from './jsPlatform/array';
-import {_errorIfNotType} from './errorThrowing';
+import {intercalate, map, filter} from '../list';
+import {split} from '../jsPlatform/string';
+import {compose} from '../function/compose';
+import {join} from '../jsPlatform/array';
+import {_errorIfNotType} from '../errorThrowing';
 
 export {split};
 
@@ -48,7 +48,7 @@ export const
      * Lower cases first character of a non-empty string.
      * @function module:string.lcaseFirst
      * @param xs {String}
-     * @returns {string}
+     * @returns {index.ts}
      * @throws {Error} - Throws error if receiving anything that is not a string.
      */
     lcaseFirst = xs => {
@@ -60,7 +60,7 @@ export const
      * Upper cases first character of a non-empty string.
      * @function module:string.ucaseFirst
      * @param xs {String}
-     * @returns {string}
+     * @returns {index.ts}
      * @throws {Error} - Throws error if receiving anything that is not a string.
      */
     ucaseFirst = xs => {
@@ -74,7 +74,7 @@ export const
      * @param xs {String}
      * @param [pattern=/[^a-z\d/i]/] {RegExp} - Pattern to split on.  Optional.
      * @throws {Error} - Throws error if param `xs` is not a string.
-     * @returns {string}
+     * @returns {index.ts}
      * @curried
      */
     camelCase = (xs, pattern = /[^a-z\d]/i) => compose(
@@ -90,7 +90,7 @@ export const
      * and then upper case first character (`ucaseFirst`).
      * @function module:string.classCase
      * @param xs {String}
-     * @returns {string}
+     * @returns {index.ts}
      * @throws {Error} - Throws error if `xs` is not a string (via `camelCase` call).
      */
     classCase = compose(ucaseFirst, camelCase)

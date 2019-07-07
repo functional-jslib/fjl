@@ -1,5 +1,5 @@
 /**
- * @memberOf function
+ * @memberOf index.ts
  * @description Curry implementation with place holder concept (`__`).
  */
 
@@ -81,7 +81,7 @@ export function curryN_ (executeArity, fn, ...curriedArgs) {
 
 /**
  * Place holder object (frozen) used by curry.
- * @memberOf function
+ * @memberOf index.ts
  * @type {PlaceHolder}
  */
 export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance,

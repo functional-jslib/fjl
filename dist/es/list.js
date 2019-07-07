@@ -822,7 +822,7 @@ tails = xs => {
  * Strips prefix list from given list
  * @function module:list.stripPrefix
  * @param prefix {Array|String|*}
- * @param list {Array|string|*}
+ * @param list {Array|index.ts|*}
  * @returns {Array|*}
  */
 stripPrefix = curry((prefix, list) => isPrefixOf(prefix, list) ?

@@ -16,13 +16,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 /**
  * @author elydelacruz
  * @created 12/6/2016.
- * @memberOf function
+ * @memberOf index.ts
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 
 /**
  * @private
- * @type {string}
+ * @type {index.ts}
  */
 var
 /**

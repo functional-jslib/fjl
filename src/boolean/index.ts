@@ -2,7 +2,7 @@
  * @module boolean
  * @description Contains functional version of 'always-true', 'always-false', 'is-truthy', and 'is-falsy'.
  */
-import {curry, curry2} from './function/curry';
+import {curry, curry2} from '../function/curry';
 
 export const
 

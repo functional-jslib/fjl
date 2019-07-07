@@ -7,7 +7,7 @@ define(["exports"], function (_exports) {
   _exports.id = void 0;
 
   /**
-   * @memberOf function
+   * @memberOf index.ts
    */
 
   /**

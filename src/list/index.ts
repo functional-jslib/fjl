@@ -2,17 +2,17 @@
  * ListLike operations module.
  * @module list
  */
-import {concat as listAppend, indexOf, slice, includes} from './jsPlatform/list';
-import {apply} from './jsPlatform/function';
-import {length} from './jsPlatform/object';
-import {negateF3, negateF2} from './function/negate';
-import {curry, curry2, curry3} from './function/curry';
-import {isTruthy, isFalsy} from './boolean';
-import {lookup} from './object/lookup';
-import {of} from './object/of';
-import {isset, isString} from './object/is';
-import {typeOf} from './object/typeOf';
-import map from './list/map';
+import {concat as listAppend, indexOf, slice, includes} from '../jsPlatform/list';
+import {apply} from '../jsPlatform/function';
+import {length} from '../jsPlatform/object';
+import {negateF3, negateF2} from '../function/negate';
+import {curry, curry2, curry3} from '../function/curry';
+import {isTruthy, isFalsy} from '../boolean';
+import {lookup} from '../object/lookup';
+import {of} from '../object/of';
+import {isset, isString} from '../object/is';
+import {typeOf} from '../object/typeOf';
+import map from './map';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -21,15 +21,15 @@ import {
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, sliceCopy, genericAscOrdering
 }
-    from './list/utils';
+    from './utils';
 
-export * from './list/range';
+export * from './range';
 
-export * from './list/utils';
+export * from './utils';
 
 export {map};
 
-export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
+export {slice, includes, indexOf, lastIndexOf, push} from '../jsPlatform';
 
 export const
 
@@ -949,7 +949,7 @@ export const
      * Strips prefix list from given list
      * @function module:list.stripPrefix
      * @param prefix {Array|String|*}
-     * @param list {Array|string|*}
+     * @param list {Array|index.ts|*}
      * @returns {Array|*}
      */
     stripPrefix = curry((prefix, list) =>

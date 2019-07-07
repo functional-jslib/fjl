@@ -2,9 +2,9 @@
  * @module errorThrowing
  * @description Contains error throwing facilities for when a value doesn't match a type.
  */
-import {typeOf} from './object/typeOf';
-import {isArray, toTypeRef, toTypeRefName, isOfType} from './object/is';
-import {curry} from './function/curry';
+import {typeOf} from '../object/typeOf';
+import {isArray, toTypeRef, toTypeRefName, isOfType} from '../object/is';
+import {curry} from '../function/curry';
 
 export const
 
@@ -24,7 +24,7 @@ export const
      * {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
      * @function module:errorThrowing.defaultErrorMessageCall
      * @param tmplContext {Object|TemplateContext} - Object to use in error template.
-     * @returns {string}
+     * @returns {index.ts}
      * @private
      */
     defaultErrorMessageCall = tmplContext => {

@@ -7,7 +7,7 @@ define(["exports", "../jsPlatform/function", "./curry"], function (_exports, _fu
   _exports.negateFN = _exports.negateF3 = _exports.negateF2 = _exports.negateF = void 0;
 
   /**
-   * @memberOf function
+   * @memberOf index.ts
    */
   var
   /**

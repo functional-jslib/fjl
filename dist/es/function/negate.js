@@ -1,5 +1,5 @@
 /**
- * @memberOf function
+ * @memberOf index.ts
  */
 import { apply } from '../jsPlatform/function';
 import { curry, curry2 } from './curry';

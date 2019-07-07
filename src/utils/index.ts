@@ -1,7 +1,7 @@
 /**
  * @module utils
  */
-import {curry, curry2} from './function/curry';
+import {curry, curry2} from '../function/curry';
 
 export const
 

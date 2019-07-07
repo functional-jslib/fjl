@@ -1,13 +1,13 @@
 /**
  * @author elydelacruz
  * @created 12/6/2016.
- * @memberOf function
+ * @memberOf index.ts
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 
 /**
  * @private
- * @type {string}
+ * @type {index.ts}
  */
 const returnCurried = (executeArity, unmetArityNum, fn, argsToCurry) => {
   switch (unmetArityNum) {
@@ -177,7 +177,7 @@ const _Undefined$1 = 'Undefined';
  * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
  * @function module:object.typeOf
  * @param value {*}
- * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ * @returns {index.ts} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
  *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
  */
 
@@ -704,7 +704,7 @@ const toArray = x => {
 const compose = (...args) => arg0 => reduceRight((value, fn) => fn(value), arg0, args);
 
 /**
- * @memberOf function
+ * @memberOf index.ts
  */
 
 /**
@@ -717,7 +717,7 @@ const compose = (...args) => arg0 => reduceRight((value, fn) => fn(value), arg0,
 const id = x => x;
 
 /**
- * @memberOf function
+ * @memberOf index.ts
  */
 const negateF = fn => x => !fn(x);
 const negateF2 = fn => curry((a, b) => !fn(a, b));

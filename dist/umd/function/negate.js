@@ -19,7 +19,7 @@
   _exports.negateFN = _exports.negateF3 = _exports.negateF2 = _exports.negateF = void 0;
 
   /**
-   * @memberOf function
+   * @memberOf index.ts
    */
   var
   /**

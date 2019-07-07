@@ -17,13 +17,13 @@ define(["exports"], function (_exports) {
   /**
    * @author elydelacruz
    * @created 12/6/2016.
-   * @memberOf function
+   * @memberOf index.ts
    * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
    */
 
   /**
    * @private
-   * @type {string}
+   * @type {index.ts}
    */
   var
   /**

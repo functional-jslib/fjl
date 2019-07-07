@@ -10,7 +10,7 @@ var _function = require("../jsPlatform/function");
 var _curry = require("./curry");
 
 /**
- * @memberOf function
+ * @memberOf index.ts
  */
 var
 /**

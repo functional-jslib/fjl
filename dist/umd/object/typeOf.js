@@ -35,7 +35,7 @@
    * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
    * @function module:object.typeOf
    * @param value {*}
-   * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+   * @returns {index.ts} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
    *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
    */
 

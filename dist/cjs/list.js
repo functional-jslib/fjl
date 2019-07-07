@@ -1224,7 +1224,7 @@ tails = function tails(xs) {
  * Strips prefix list from given list
  * @function module:list.stripPrefix
  * @param prefix {Array|String|*}
- * @param list {Array|string|*}
+ * @param list {Array|index.ts|*}
  * @returns {Array|*}
  */
 stripPrefix = (0, _curry.curry)(function (prefix, list) {

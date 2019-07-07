@@ -1,5 +1,5 @@
 /**
- * @memberOf function
+ * @memberOf index.ts
  */
 
 /**
