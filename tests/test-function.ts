@@ -79,16 +79,6 @@ describe ('#function', function () {
         });
     });
 
-    describe ('#id', function () {
-        it ('should be a function', function () {
-            expectFunction(id);
-        });
-        it ('should return whatever you give it', function () {
-            expectEqual(id(1), 1);
-            expectEqual(id(undefined), undefined);
-        });
-    });
-
     describe('#noop', function () {
         it ('should return `undefined`', () => {
             expect(noop()).toEqual(undefined);
