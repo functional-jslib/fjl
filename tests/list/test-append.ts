@@ -1,7 +1,7 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from '../helpers';
 import {append} from '../../src/list';
 
-describe('#list.append', () => {
+describe('#append', () => {
     (<Array<[string, string | string[], string | string[]]>>[
         [`append [vowelsArray, vowelsArray, vowelsArray] ` +
         `shallowEquals vowelsArray.concat(vowelsArray, vowelsArray)`,
