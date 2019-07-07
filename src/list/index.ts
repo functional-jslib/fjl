@@ -2,7 +2,7 @@
  * ListLike operations module.
  * @module list
  */
-import {concat as listAppend, indexOf, slice, includes} from '../jsPlatform/list';
+import {indexOf, slice, includes} from '../jsPlatform/list';
 import {apply} from '../jsPlatform/function';
 import {length} from '../jsPlatform/object';
 import {negateF3, negateF2} from '../function/negate';
@@ -13,6 +13,7 @@ import {of} from '../object/of';
 import {isset, isString} from '../object/is';
 import {typeOf} from '../object/typeOf';
 import map from './map';
+import {append} from './append';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -27,31 +28,11 @@ export * from './range';
 
 export * from './utils';
 
-export {map};
+export {append, map};
 
 export {slice, includes, indexOf, lastIndexOf, push} from '../jsPlatform';
 
 export const
-
-    /**
-     * Append two, or more, lists, i.e.,
-     * @example
-     * expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString); // true
-     *
-     * // Another example
-     * const result = append(
-     *   alphabetStr.split(''),
-     *   alphabetStr.split('')
-     * ),
-     * expected = repeat(2, alphabetStr).split('');
-     *
-     * shallowEquals(result, expected) === true // `true`
-     *
-     * @function module:list.append
-     * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
-     * @returns {(Array|String|*)} - Same type as list like passed in.
-     */
-    append = curry2((...args) => apply(listAppend, args)),
 
     /**
      * Returns head of list (first item of list).

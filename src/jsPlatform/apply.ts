@@ -1,4 +1,4 @@
-import {curry} from '../function/curry';
+import {curry2} from '../function/curry';
 
 export const
 
@@ -9,5 +9,5 @@ export const
      * @param args {Array|*}
      * @returns {*}
      */
-    apply = curry((fn, args) => fn.apply(null, args))
+    apply = curry2((fn, args) => fn.apply(null, args))
 ;

@@ -75,62 +75,6 @@ describe('#list', () => {
             return out;
         };
 
-    describe('#append', () => {
-        it('should be able to append 2 or more lists (strings or arrays) of any given length', () => {
-            [
-                [[vowelsArray, vowelsArray, vowelsArray],
-                    vowelsArray.concat(vowelsArray, vowelsArray)],
-                [[vowelsString, vowelsString, vowelsString],
-                    vowelsString + vowelsString + vowelsString],
-                [[vowelsString, vowelsString], vowelsString + vowelsString],
-                [vowelsArray, vowelsArray.join('')],
-                [[[], vowelsArray], vowelsArray],
-                [[vowelsArray, []], vowelsArray],
-                [[vowelsString, ''], vowelsString],
-                [['', vowelsString], vowelsString],
-                [[[], []], []],
-                [['', ''], '']
-            ]
-                .forEach(([args, expected]) => {
-                    const result = append.apply(null, args);
-                    expectEqual(result, expected);
-                });
-        });
-        it('should throw an error when receiving Nothing', () => {
-            [[null, null],
-                [undefined, undefined],
-                [null, []],
-                [null, ''],
-                [undefined, []],
-                [undefined, ''],
-                [[], null],
-                ['', null],
-                [[], undefined],
-                ['', undefined]
-            ]
-                .forEach(args => {
-                    expectError(() => append(...args));
-                });
-        });
-    });
-
-    describe('#head', () => {
-        it('should return the first item in a list or `undefined` if list is empty.', () => {
-            [
-                [vowelsString, vowelsString[0]],
-                [vowelsArray, vowelsArray[0]],
-                [[], undefined],
-                ['', undefined]
-            ]
-                .forEach(([arg, expected]) => {
-                    expectEqual(head(arg), expected);
-                });
-        });
-        it('should throw an error when no parameter is passed in', () => {
-            expectError(head);
-            expectError(() => head(null));
-        });
-    });
 
     describe('#last', () => {
         it('should return the last item in a list or `undefined` if list is empty.', () => {
