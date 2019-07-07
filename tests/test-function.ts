@@ -4,56 +4,18 @@
  */
 
 import {
-    apply, call,
-    flip, flip3, flip4, flip5, flipN, until, id,
-    trampoline, noop, toFunction
+    apply, call, until, trampoline, toFunction
 }
     from '../src/function';
 
 
 import {
-    add, subtract, expectEqual, expectError,
+    add, expectEqual, expectError,
     expectFunction, falsyList,
     truthyList
 } from './helpers';
 
 describe ('#function', function () {
-
-    describe ('#call', function () {
-        it ('should be a function', function () {
-            expectFunction(call);
-        });
-        it ('should be curried', function () {
-            const adder = call(add);
-            expectFunction(adder());
-            expectEqual(adder(1, 2, 3, 4, 5), 15);
-        });
-        it ('should call a function passed into it along with passed in arguments', function () {
-            expectEqual(call(add, 1, 2, 3, 4, 5), 15);
-        });
-        it ('should fail when argument `1` is not a function', () => {
-            expect(() => call(99, null)).toThrow(Error);
-            expect(() => call(undefined, undefined)).toThrow(Error);
-        });
-    });
-
-    describe ('#apply', function () {
-        it ('should be a function', function () {
-            expectFunction(apply);
-        });
-        it ('should be curried', function () {
-            const addAllInArray = apply(add);
-            expectFunction (addAllInArray);
-            expectEqual(addAllInArray([1, 2, 3, 4, 5]), 15);
-        });
-        it ('should call a function passed into it with args list passed in as second parameter', function () {
-            expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
-        });
-        it ('should fail when argument `1` is not a function', () => {
-            expect(() => apply(99, null)).toThrow(Error);
-            expect(() => apply(undefined, undefined)).toThrow(Error);
-        });
-    });
 
     describe ('#until', function () {
         it ('should be a function', function () {
