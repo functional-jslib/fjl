@@ -16,7 +16,7 @@ import {
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices,
-    head, last, init, tail, uncons,
+    head, init, tail,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
     // iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
@@ -74,26 +74,6 @@ describe('#list', () => {
             }
             return out;
         };
-
-    describe('#uncons', () => {
-        it('should return a list containing the "head" and "tail" of a given list else `undefined`.', () => {
-            [
-                [[], undefined],
-                [null, undefined],
-                [undefined, undefined],
-                [false, undefined],
-                [0, undefined],
-                ['', undefined],
-                ['a', ['a', '']],
-                [['a'], ['a', []]],
-                [vowelsString, [vowelsString[0], vowelsString.slice(1)]],
-                [vowelsArray, [vowelsArray[0], vowelsArray.slice(1)]],
-            ]
-                .forEach(([arg, expected]) => {
-                    expectEqual(uncons(arg), expected);
-                });
-        });
-    });
 
     describe('#isEmpty (a.k.a. #`null`)', () => {
         it ('should return a boolean indicating whether given list is empty or not', () => {

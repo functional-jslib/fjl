@@ -2,22 +2,24 @@
  * ListLike operations module.
  * @module list
  */
-import {indexOf, slice, includes} from '../jsPlatform/list';
-import {apply} from '../jsPlatform/function';
-import {length} from '../jsPlatform/object';
-import {negateF3, negateF2} from '../function/negate';
-import {curry, curry2, curry3} from '../function/curry';
-import {isTruthy, isFalsy} from '../boolean';
-import {lookup} from '../object/lookup';
-import {of} from '../object/of';
-import {isset, isString} from '../object/is';
-import {typeOf} from '../object/typeOf';
-import map from './map';
-import {append} from './append';
-import {head} from './head';
-import {last} from './last';
-import {tail} from './tail';
-import {init} from './init';
+import {indexOf, slice, includes} from './jsPlatform/list';
+import {apply} from './jsPlatform/function';
+import {length} from './jsPlatform/object';
+import {negateF3, negateF2} from './function/negate';
+import {curry, curry2, curry3} from './function/curry';
+import {isTruthy, isFalsy} from './boolean';
+import {lookup} from './object/lookup';
+import {of} from './object/of';
+import {isset, isString} from './object/is';
+import {typeOf} from './object/typeOf';
+
+import map from './list/map';
+import {append} from './list/append';
+import {head} from './list/head';
+import {last} from './list/last';
+import {tail} from './list/tail';
+import {init} from './list/init';
+import {uncons} from './list/uncons';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -26,23 +28,14 @@ import {
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, sliceCopy, genericAscOrdering
 }
-    from './utils';
+    from './list/utils';
 
-export {append, head, last, tail, init, map};
-export {slice, includes, indexOf, lastIndexOf, push} from '../jsPlatform';
-export * from './range';
-export * from './utils';
+export {append, head, last, tail, init, uncons, map};
+export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
+export * from './list/range';
+export * from './list/utils';
 
 export const
-
-    /**
-     * Returns `head` and `tail` of passed in list/string in a tuple.
-     * @haskellType `uncons :: [a] -> Maybe (a, [a])`
-     * @function module:list.uncons
-     * @param xs {Array|String}
-     * @returns {Array|undefined}
-     */
-    uncons = xs => !xs || length(xs) === 0 ? undefined : [head(xs), tail(xs)],
 
     /**
      * Returns `tail` and `head` of passed in list/string in a tuple.
