@@ -17,31 +17,23 @@ import {append} from './append';
 import {head} from './head';
 import {last} from './last';
 import {tail} from './tail';
+import {init} from './init';
 
 import {
     sliceFrom, sliceTo, lengths,
     toShortest, aggregateArray,
-    reduceUntil, reduce, reduceRight, lastIndex,
+    reduceUntil, reduce, reduceRight,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, sliceCopy, genericAscOrdering
 }
     from './utils';
 
-export {append, head, last, tail, map};
+export {append, head, last, tail, init, map};
 export {slice, includes, indexOf, lastIndexOf, push} from '../jsPlatform';
 export * from './range';
 export * from './utils';
 
 export const
-
-    /**
-     * Returns everything except last item of list as new list.
-     * @haskellType `init :: [a] -> [a]`
-     * @function module:list.init
-     * @param xs {Array|String}
-     * @returns {Array|String}
-     */
-    init = xs => sliceTo(lastIndex(xs), xs),
 
     /**
      * Returns `head` and `tail` of passed in list/string in a tuple.
