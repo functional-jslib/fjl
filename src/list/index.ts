@@ -16,6 +16,7 @@ import map from './map';
 import {append} from './append';
 import {head} from './head';
 import {last} from './last';
+import {tail} from './tail';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -26,24 +27,12 @@ import {
 }
     from './utils';
 
+export {append, head, last, tail, map};
+export {slice, includes, indexOf, lastIndexOf, push} from '../jsPlatform';
 export * from './range';
-
 export * from './utils';
 
-export {append, head, last, map};
-
-export {slice, includes, indexOf, lastIndexOf, push} from '../jsPlatform';
-
 export const
-
-    /**
-     * Returns tail part of list (everything after the first item as new list).
-     * @haskelType `tail :: [a] -> [a]`
-     * @function module:list.tail
-     * @param xs {Array|String}
-     * @returns {Array|String}
-     */
-    tail = xs => sliceFrom(1, xs),
 
     /**
      * Returns everything except last item of list as new list.
