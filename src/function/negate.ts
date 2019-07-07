@@ -1,8 +1,4 @@
-/**
- * @memberOf index.ts
- */
-
-import {apply} from '../jsPlatform/function';
+import {apply} from './apply';
 import {curry, curry2} from './curry';
 
 export const
@@ -35,11 +31,9 @@ export const
 
     /**
      * Returns a negated version of given function.
-     * Returned function is variadiac (takes one or more arguments).
-     * @note function returned is uncurried.
-     * @uncurried
+     * Returned function is variadic and un-curried.
      * @function module:function.negateFN
      * @param fn {Function}
      * @returns {Function}
      */
-    negateFN = fn => curry2((...args) => !apply(fn, args));
+    negateFN = fn => (...args) => !apply(fn, args);
