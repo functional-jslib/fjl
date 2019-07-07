@@ -79,12 +79,6 @@ describe ('#function', function () {
         });
     });
 
-    describe('#noop', function () {
-        it ('should return `undefined`', () => {
-            expect(noop()).toEqual(undefined);
-        });
-    });
-
     describe('#trampoline', () => {
         it ('should be able to trampoline a function no matter how many recursive calls are made', () => {
             const factorialThunk = (agg, n) => n <= 1 ?
