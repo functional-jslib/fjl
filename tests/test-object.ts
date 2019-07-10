@@ -13,7 +13,9 @@ import {
     toAssocListDeep, fromAssocListDeep,
     toTypeRef, toTypeRefName, lookup, native
 } from '../src/object';
+
 import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../src/list';
+
 import {
     expectTrue,
     expectFalse,

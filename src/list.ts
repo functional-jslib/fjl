@@ -21,6 +21,7 @@ import {tail} from './list/tail';
 import {init} from './list/init';
 import {uncons} from './list/uncons';
 import {unconsr} from './list/unconsr';
+import {concat} from './list/concat';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -32,7 +33,8 @@ import {
     from './list/utils';
 
 export {
-    append, head, last, tail, init, uncons, unconsr, map,
+    append, head, last, tail, init, uncons, unconsr,
+    concat, length, map,
 };
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
 export * from './list/range';
@@ -40,26 +42,6 @@ export * from './list/utils';
 
 export const
 
-    /**
-     * Concatenates all the elements of a container of lists.
-     * @haskellType `concat :: Foldable t => t [a] -> [a]`
-     * @function module:list.concat
-     * @param xs {Array}
-     * @returns {Array}
-     */
-    concat = xs => {
-        switch (length(xs)) {
-            case undefined:
-            case 0:
-                return [];
-            case 1:
-                const item0 = xs[0];
-                return item0 && item0.slice ? sliceCopy(item0) : item0;
-            case 2:
-            default:
-                return apply(append, xs);
-        }
-    },
 
     /**
      * Map a function over all the elements of a container and concatenate the resulting lists.
@@ -1067,11 +1049,16 @@ export const
      * @param arr {Array|*}
      * @returns {Array|*}
      */
-    unzip = foldl((agg, item) => {
-        agg[0].push(item[0]);
-        agg[1].push(item[1]);
-        return agg;
-    }, [[], []]),
+    unzip = arr => {
+        if (!arr) {
+            throw new Error(`\`unzip\` expects a value.  Received ${JSON.stringify(arr)}`);
+        }
+        return foldl((agg, item) => {
+            agg[0].push(item[0]);
+            agg[1].push(item[1]);
+            return agg;
+        }, [[], []], arr);
+    },
 
     /**
      * unzip transforms a list of pairs into a list of first components and a list of second components.
@@ -1081,6 +1068,9 @@ export const
      * @returns {Array|*}
      */
     unzipN = list => {
+        if (!list) {
+            throw new Error(`\`unzipN\` expects a value.  Received ${JSON.stringify(list)}`);
+        }
         if (!length(list)) {
             return [];
         }

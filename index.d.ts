@@ -70,4 +70,5 @@ export function intersectBy(pred: ListPredicate, xs1: List, xs2: List): List;
 export function takeWhile(pred: ListPredicate, xs: List): List;
 
 export function append(...xs: List[]): List;
+
 export function defineEnumProps(): List;

@@ -6,17 +6,18 @@
  * @todo Remove library functions from tests where they are not being tested (use native functions).
  */
 import {compose, negateF2} from '../src/function';
-import {isEmptyList, isArray, isString, length} from '../src/object';
+import {isEmptyList, isArray, isString} from '../src/object/is';
 import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase} from '../src/string';
 import Functor from '../src/data/Functor';
+import {Lengthable} from "../types";
 
 import {
     append, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
     map, mapAccumL, mapAccumR,
     elem, notElem, elemIndex, elemIndices,
-    head, init, tail,
+    head, init, tail, length,
     reverse, intersperse, intercalate, transpose, subsequences, permutations,
     // iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, foldl1, foldr, foldr1, unfoldr,
@@ -60,7 +61,7 @@ describe('#list', () => {
 
     describe('#isEmpty (a.k.a. #`null`)', () => {
         it ('should return a boolean indicating whether given list is empty or not', () => {
-            [[vowelsString, false],[vowelsArray, false], ['', true, [], true]]
+            [[vowelsString, false], [vowelsArray, false], ['', true], [[], true]]
                 .forEach(([subj, expected]) => {
                     expectEqual(isEmptyList(subj), expected);
                 });
@@ -85,7 +86,7 @@ describe('#list', () => {
                 [false, undefined]
             ]
                 .forEach(([item, expected]) =>
-                    expectEqual(length(item), expected)
+                    expectEqual(length(item as Lengthable), expected)
                 );
         });
         it('should throw an error when `undefined` or `null` is passed in', () => {
@@ -433,30 +434,6 @@ describe('#list', () => {
         });
         it('should return the zero value when an empty list is passed in', () => {
             expectEqual(foldr1((agg, item) => agg + item, []), []);
-        });
-    });
-
-    describe('#concat', () => {
-        it('should concatenate a list of lists into a list.', () => {
-            const
-                arg1 = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']],
-                arg2 = ['abc', 'def', 'ghi'],
-                arg3 = [vowelsArray, vowelsArray, vowelsArray];
-            [
-                [[], []],
-                [[[], [], []], []],
-                [arg1, [].concat.apply([], arg1)],
-                [arg2, ''.concat.apply('', arg2)],
-                [arg3, [].concat.apply([], arg3)]
-            ]
-                .forEach(([arg, expected]) => {
-                    expectEqual(concat(arg), expected);
-                });
-        });
-        it('should throw an error when receiving nothing', () => {
-            expectError(concat);
-            expectError(() => concat(null));
-            expectError(() => concat(undefined));
         });
     });
 
