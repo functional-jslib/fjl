@@ -20,6 +20,7 @@ import {last} from './list/last';
 import {tail} from './list/tail';
 import {init} from './list/init';
 import {uncons} from './list/uncons';
+import {unconsr} from './list/unconsr';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -30,21 +31,14 @@ import {
 }
     from './list/utils';
 
-export {append, head, last, tail, init, uncons, map};
+export {
+    append, head, last, tail, init, uncons, unconsr, map,
+};
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
 export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Returns `tail` and `head` of passed in list/string in a tuple.
-     * @haskellType `unconsr :: [a] -> Maybe ([a], a)`
-     * @function module:list.unconsr
-     * @param xs {Array|String}
-     * @returns {Array|String|*|undefined}
-     */
-    unconsr = xs => !xs || length(xs) === 0 ? undefined : [init(xs), last(xs)],
 
     /**
      * Concatenates all the elements of a container of lists.

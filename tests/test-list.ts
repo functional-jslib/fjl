@@ -48,32 +48,15 @@ import {
     vowelsLen,
     nonAlphaNums,
     nonAlphaNumsArray,
+    equal,
+    linkedListToList,
+    LinkedListNode,
+    genericOrdering,
+    generalEqualityCheck
+
 } from './helpers';
 
-interface LinkedListNode {data: string, next?: LinkedListNode}
-
 describe('#list', () => {
-
-    const generalEqualityCheck = (a, b) => a === b,
-        genericOrdering = (a, b) => {
-            if (a > b) {
-                return 1;
-            }
-            else if (a < b) {
-                return -1;
-            }
-            return 0;
-        },
-        equal = (a, b) => a === b,
-        linkedListToList = linkedList => {
-            const out: LinkedListNode[] = [];
-            let node = linkedList;
-            while (node.next) {
-                out.push({data: node.data});
-                node = node.next;
-            }
-            return out;
-        };
 
     describe('#isEmpty (a.k.a. #`null`)', () => {
         it ('should return a boolean indicating whether given list is empty or not', () => {

@@ -6,6 +6,8 @@ import {compose} from '../src/function';
 import {curry2_, __} from './helpers/curry_';
 import {range} from './../src/list/range';
 
+export interface LinkedListNode {data: string, next?: LinkedListNode}
+
 export * from './helpers/curry_';
 
 export let  expectInstanceOf = curry2_((instance, value) => expect(value).toBeInstanceOf(instance)),
@@ -111,6 +113,30 @@ export let  expectInstanceOf = curry2_((instance, value) => expect(value).toBeIn
 
     falsyList = [undefined, null, false, 0, ''],
 
-    truthyList = [-1, 1, true, 'true', () => undefined, function () {}, {}, []]
+    truthyList = [-1, 1, true, 'true', () => undefined, function () {}, {}, []],
 
-    ;
+
+    generalEqualityCheck = (a, b) => a === b,
+
+    genericOrdering = (a, b) => {
+        if (a > b) {
+            return 1;
+        } else if (a < b) {
+            return -1;
+        }
+        return 0;
+    },
+
+    equal = (a, b) => a === b,
+
+    linkedListToList = linkedList => {
+        const out: LinkedListNode[] = [];
+        let node = linkedList;
+        while (node.next) {
+            out.push({data: node.data});
+            node = node.next;
+        }
+        return out;
+    }
+
+;
