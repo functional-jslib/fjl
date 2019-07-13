@@ -22,6 +22,7 @@ import {init} from './list/init';
 import {uncons} from './list/uncons';
 import {unconsr} from './list/unconsr';
 import {concat} from './list/concat';
+import {concatMap} from './list/concatMap';
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -34,24 +35,13 @@ import {
 
 export {
     append, head, last, tail, init, uncons, unconsr,
-    concat, length, map,
+    concat, concatMap, length, map,
 };
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
 export * from './list/range';
 export * from './list/utils';
 
 export const
-
-
-    /**
-     * Map a function over all the elements of a container and concatenate the resulting lists.
-     * @haskellType `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
-     * @function module:list.concatMap
-     * @param fn {Function}
-     * @param foldableOfA {Array}
-     * @returns {Array}
-     */
-    concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))),
 
     /**
      * Returns a copy of the passed in list reverses.
@@ -66,18 +56,16 @@ export const
         }
         let out = of(xs),
             i = xs.length - 1;
-        switch (typeOf(xs)) {
-            case 'String':
-                for (; i >= 0; i -= 1) {
-                    out += xs[i];
-                }
-                return out;
-            default:
-                for (; i >= 0; i -= 1) {
-                    out.push(xs[i]);
-                }
-                return out;
+        if (typeOf(xs) === 'String') {
+            for (; i >= 0; i -= 1) {
+                out += xs[i];
+            }
+            return out;
         }
+        for (; i >= 0; i -= 1) {
+            out.push(xs[i]);
+        }
+        return out;
     },
 
     /**
