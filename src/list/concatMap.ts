@@ -1,6 +1,6 @@
 import {curry} from "../function/curry";
 import {concat} from "./concat";
-import map from "./map";
+import {map} from "./map";
 
 export const
     /**

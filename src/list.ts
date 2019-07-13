@@ -12,7 +12,9 @@ import {lookup} from './object/lookup';
 import {of} from './object/of';
 import {isString} from './object/is';
 
-import map from './list/map';
+// List methods
+// ----
+import {map} from './list/map';
 import {append} from './list/append';
 import {head} from './list/head';
 import {last} from './list/last';
@@ -31,8 +33,11 @@ import {filter} from "./list/filter";
 import {maximum} from "./list/maximum";
 import {sortBy} from "./list/sortBy";
 import {subsequences} from "./list/subsequence";
+
+// List method helpers
+// ----
 import {
-    sliceFrom, sliceTo, lengths,
+    sliceFrom, sliceTo,
     toShortest, aggregateArray,
     reduceUntil, reduce, reduceRight,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
@@ -40,6 +45,8 @@ import {
 }
     from './list/utils';
 
+// List method exports
+// ----
 export {
     append, head, last, tail, init, uncons, unconsr,
     concat, concatMap, length, map, reverse, intersperse,

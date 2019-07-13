@@ -12,7 +12,7 @@ import {isset} from '../object/isset';
  * @param xs {Array|String|*}
  * @returns {Array|String|*}
  */
-const map = curry((fn, xs) =>  {
+export const map = curry((fn, xs) =>  {
     if (!isset(xs)) { return xs; }
     let out = of(xs),
         limit,

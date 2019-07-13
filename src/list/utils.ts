@@ -6,7 +6,7 @@ import {apply}          from '../jsPlatform/function';  // un-curried version
 import {slice}          from '../jsPlatform/list';      // un-curried version good for both strings and arrays
 import {length}         from '../jsPlatform/object';
 import {alwaysFalse}    from '../boolean';
-import map              from './map';
+import {map}              from './map';
 import {curry, curry2}  from '../function/curry';
 
 import {List} from './types';
