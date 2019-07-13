@@ -8,7 +8,6 @@ import {length}         from '../jsPlatform/object';
 import {alwaysFalse}    from '../boolean';
 import {map}              from './map';
 import {curry, curry2}  from '../function/curry';
-
 import {List} from './types';
 
 export * from './aggregation';
@@ -214,6 +213,21 @@ export const
             if (pred(elm, ind, xs)) { return elm; }
         }
         return undefined;
-    })
+    }),
 
+    /**
+     * Returns an array with the given indices swapped.
+     * @function module:list.swapped
+     * @param ind1 {Number}
+     * @param ind2 {Number}
+     * @param list {Array}
+     * @returns {Array} - Copy of incoming with swapped values at indices.
+     */
+    swapped = curry((ind1, ind2, list) => {
+        const out = sliceCopy(list),
+            tmp = out[ind1];
+        out[ind1] = out[ind2];
+        out[ind2] = tmp;
+        return out;
+    })
 ;

@@ -1,6 +1,7 @@
 /**
  * ListLike operations module.
  * @module list
+ * @todo add tests for 'iterate' and 'repeat'
  */
 import {indexOf, slice, includes} from './jsPlatform/list';
 import {apply} from './jsPlatform/function';
@@ -33,6 +34,10 @@ import {filter} from "./list/filter";
 import {maximum} from "./list/maximum";
 import {sortBy} from "./list/sortBy";
 import {subsequences} from "./list/subsequence";
+import {permutations} from "./list/permutations";
+import {iterate} from "./list/iterate";
+import {repeat} from "./list/repeat";
+import {foldl} from "./list/foldl";
 
 // List method helpers
 // ----
@@ -51,7 +56,7 @@ export {
     append, head, last, tail, init, uncons, unconsr,
     concat, concatMap, length, map, reverse, intersperse,
     intercalate, transpose, filter, maximum, sortBy, take,
-    subsequences
+    subsequences, permutations, foldl, iterate, repeat
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -59,67 +64,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Returns an array with the given indices swapped.
-     * @function module:list.swapped
-     * @param ind1 {Number}
-     * @param ind2 {Number}
-     * @param list {Array}
-     * @returns {Array} - Copy of incoming with swapped values at indices.
-     */
-    swapped = curry((ind1, ind2, list) => {
-        const out = sliceCopy(list),
-            tmp = out[ind1];
-        out[ind1] = out[ind2];
-        out[ind2] = tmp;
-        return out;
-    }),
-
-    /**
-     * Returns a list of permutations for passed in list.
-     *  Use caution with lists above a length of 15 (will take long due to nature of
-     *  algorithm).
-     * @function module:list.permutations
-     * @param xs {Array} - ListLike.
-     * @returns {Array<Array|String|*>} - Array of permutations.
-     */
-    permutations = xs => {
-        const limit = length(xs);
-
-        if (!limit || limit === 1) {
-            return [xs];
-        }
-
-        let list = sliceCopy(xs),
-            c = repeat(limit, 0),
-            i = 0;
-
-        const out = [list];
-
-        for (; i < limit; i++) {
-            if (c[i] < i) {
-                list = swapped(i % 2 === 0 ? 0 : c[i], i, list);
-                out.push(list);
-                c[i] += 1;
-                i = 0;
-                continue;
-            }
-            c[i] = 0;
-        }
-
-        return out;
-    },
-
-    /**
-     * Left associative fold.  Reduces a container of elements down by the given operation (same as [].reduce).
-     * @function module:list.foldl
-     * @param fn {Function}
-     * @param zero {*} - Aggregator.
-     * @param functor {Array}
-     * @returns {*} - Whatever type is lastly returned from `fn`.
-     */
-    foldl = reduce,
 
     /**
      * Right associative fold.  Reduces a container of elements down by the given operation (same as [].reduceRight).
@@ -210,35 +154,6 @@ export const
         }
         return [agg, mapped];
     }),
-
-    /**
-     * iterate f x returns an infinite list of repeated applications of f to x.
-     * @function module:list.iterate
-     * @example `iterate(5, f, x) == [x, f(x), f(f(x)), ...]`
-     * @param limit {Number}
-     * @param op {Function} - Operation.
-     * @param x {*} - Starting point.
-     * @returns {*}
-     */
-    iterate = curry((limit, op, x) => {
-        let ind = 0,
-            out: any[] = [],
-            lastX = x;
-        for (; ind < limit; ind += 1) {
-            out.push(lastX);
-            lastX = op(lastX, ind);
-        }
-        return out;
-    }),
-
-    /**
-     * Repeats `x` `limit` number of times.
-     * @function module:list.repeat
-     * @param limit {Number}
-     * @param x {*}
-     * @return {Array}
-     */
-    repeat = curry((limit, x) => iterate(limit, a => a, x)),
 
     /**
      * Same as `repeat` due to the nature of javascript (see haskell version for usage).
