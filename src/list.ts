@@ -43,6 +43,8 @@ import {foldr} from "./list/foldr";
 import {foldr1} from "./list/foldr1";
 import {mapAccumL} from "./list/mapAccumL";
 import {mapAccumR} from "./list/mapAccumR";
+import {replicate} from "./list/replicate";
+import {cycle} from "./list/cycle";
 
 // List method helpers
 // ----
@@ -62,9 +64,8 @@ export {
     concat, concatMap, length, map, reverse, intersperse,
     intercalate, transpose, filter, maximum, sortBy, take,
     subsequences, permutations, foldl, foldl1, foldr, foldr1,
-    mapAccumL, mapAccumR,
+    mapAccumL, mapAccumR, iterate, repeat, replicate, cycle,
 
-    iterate, repeat,
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -72,25 +73,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-
-    /**
-     * Same as `repeat` due to the nature of javascript (see haskell version for usage).
-     * @function module:list.replicate
-     * @param limit {Number}
-     * @param x {*}
-     * @return {Array}
-     */
-    replicate = repeat,
-
-    /**
-     * Replicates a list `limit` number of times and appends the results (concat)
-     * @function module:list.cycle
-     * @param limit {Number}
-     * @param xs {Array}
-     * @returns {Array}
-     */
-    cycle = curry((limit, xs) => concat(replicate(limit, xs))),
 
     /**
      * Unfolds a value into a list of somethings.

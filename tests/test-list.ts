@@ -16,7 +16,6 @@ import {
     elem, notElem, elemIndex, elemIndices,
     head, init, tail, length,
     reverse, intersperse, intercalate,
-    // iterate, repeat, replicate, cycle,
     take, drop, splitAt, foldl, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
