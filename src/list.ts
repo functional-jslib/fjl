@@ -39,6 +39,8 @@ import {iterate} from "./list/iterate";
 import {repeat} from "./list/repeat";
 import {foldl} from "./list/foldl";
 import {foldl1} from "./list/foldl1";
+import {foldr} from "./list/foldr";
+import {foldr1} from "./list/foldr1";
 
 // List method helpers
 // ----
@@ -57,7 +59,10 @@ export {
     append, head, last, tail, init, uncons, unconsr,
     concat, concatMap, length, map, reverse, intersperse,
     intercalate, transpose, filter, maximum, sortBy, take,
-    subsequences, permutations, foldl, foldl1, iterate, repeat
+    subsequences, permutations, foldl, foldl1, foldr, foldr1,
+
+    iterate, repeat,
+
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -65,29 +70,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Right associative fold.  Reduces a container of elements down by the given operation (same as [].reduceRight).
-     * @function module:list.foldr
-     * @param fn {Function}
-     * @param zero {*} - Aggregator.
-     * @param functor {Array}
-     * @returns {*} - Whatever type is lastly returned from `fn`.
-     */
-    foldr = reduceRight,
-
-    /**
-     * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
-     * out from a copy of the container.
-     * @function module:list.foldr1
-     * @param op {Function}
-     * @param xs {Array}
-     * @returns {*} - Whatever type is lastly returned from `op`.
-     */
-    foldr1 = curry((op, xs) => {
-        const parts = unconsr(xs);
-        return !parts ? [] : reduceRight(op, parts[1], parts[0]);
-    }),
 
     /**
      * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
