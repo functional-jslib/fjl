@@ -16,7 +16,7 @@
     "esModuleInterop": true
   },
   "files": [
-    "src/index.ts",
+    "src/fjl.ts",
     "index.d.ts"
   ],
   "exclude": [

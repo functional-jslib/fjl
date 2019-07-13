@@ -10,8 +10,7 @@ import {curry, curry2, curry3} from './function/curry';
 import {isTruthy, isFalsy} from './boolean';
 import {lookup} from './object/lookup';
 import {of} from './object/of';
-import {isset, isString} from './object/is';
-import {typeOf} from './object/typeOf';
+import {isString} from './object/is';
 
 import map from './list/map';
 import {append} from './list/append';
@@ -23,6 +22,7 @@ import {uncons} from './list/uncons';
 import {unconsr} from './list/unconsr';
 import {concat} from './list/concat';
 import {concatMap} from './list/concatMap';
+import {reverse} from "./list/reverse";
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -35,38 +35,13 @@ import {
 
 export {
     append, head, last, tail, init, uncons, unconsr,
-    concat, concatMap, length, map,
+    concat, concatMap, length, map, reverse
 };
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
 export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Returns a copy of the passed in list reverses.
-     * @haskellType `reverse :: [a] -> [a]`
-     * @function module:list.reverse
-     * @param xs {Array|String}
-     * @returns {Array|String}
-     */
-    reverse = xs => {
-        if (!isset(xs) || !xs.length) {
-            return xs;
-        }
-        let out = of(xs),
-            i = xs.length - 1;
-        if (typeOf(xs) === 'String') {
-            for (; i >= 0; i -= 1) {
-                out += xs[i];
-            }
-            return out;
-        }
-        for (; i >= 0; i -= 1) {
-            out.push(xs[i]);
-        }
-        return out;
-    },
 
     /**
      * Takes an element and a list and `intersperses' that element between the
@@ -852,7 +827,7 @@ export const
      * Strips prefix list from given list
      * @function module:list.stripPrefix
      * @param prefix {Array|String|*}
-     * @param list {Array|index.ts|*}
+     * @param list {Array|fjl.ts.ts|*}
      * @returns {Array|*}
      */
     stripPrefix = curry((prefix, list) =>
