@@ -38,6 +38,7 @@ import {permutations} from "./list/permutations";
 import {iterate} from "./list/iterate";
 import {repeat} from "./list/repeat";
 import {foldl} from "./list/foldl";
+import {foldl1} from "./list/foldl1";
 
 // List method helpers
 // ----
@@ -56,7 +57,7 @@ export {
     append, head, last, tail, init, uncons, unconsr,
     concat, concatMap, length, map, reverse, intersperse,
     intercalate, transpose, filter, maximum, sortBy, take,
-    subsequences, permutations, foldl, iterate, repeat
+    subsequences, permutations, foldl, foldl1, iterate, repeat
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -74,19 +75,6 @@ export const
      * @returns {*} - Whatever type is lastly returned from `fn`.
      */
     foldr = reduceRight,
-
-    /**
-     * A variant of `foldl` except that this one doesn't require the starting point.  The starting point/value will be pulled
-     * out from a copy of the container.
-     * @function module:list.foldl1
-     * @param op {Function}
-     * @param xs {Array}
-     * @returns {*} - Whatever type is lastly returned from `op`.
-     */
-    foldl1 = curry((op, xs) => {
-        const parts = uncons(xs);
-        return !parts ? [] : reduce(op, parts[0], parts[1]);
-    }),
 
     /**
      * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
