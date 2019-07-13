@@ -41,13 +41,15 @@ import {foldl} from "./list/foldl";
 import {foldl1} from "./list/foldl1";
 import {foldr} from "./list/foldr";
 import {foldr1} from "./list/foldr1";
+import {mapAccumL} from "./list/mapAccumL";
+import {mapAccumR} from "./list/mapAccumR";
 
 // List method helpers
 // ----
 import {
     sliceFrom, sliceTo,
     toShortest, aggregateArray,
-    reduceUntil, reduce, reduceRight,
+    reduceUntil, reduce,
     findIndexWhere, findIndexWhereRight, findIndicesWhere,
     findWhere, sliceCopy, genericAscOrdering
 }
@@ -60,9 +62,9 @@ export {
     concat, concatMap, length, map, reverse, intersperse,
     intercalate, transpose, filter, maximum, sortBy, take,
     subsequences, permutations, foldl, foldl1, foldr, foldr1,
+    mapAccumL, mapAccumR,
 
     iterate, repeat,
-
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -71,59 +73,6 @@ export * from './list/utils';
 
 export const
 
-    /**
-     * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
-     * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:list.mapAccumL
-     * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
-     * @param zero {*} - An instance of the passed in list type used to aggregateArray on.
-     * @param xs {Array} - list type.
-     * @return {Array} - [aggregated, list]
-     */
-    mapAccumL = curry((op, zero, xs) => {
-        const list = sliceCopy(xs),
-            limit = length(xs);
-        if (!limit) {
-            return [zero, list];
-        }
-        let ind = 0,
-            agg = zero,
-            mapped = [],
-            tuple;
-        for (; ind < limit; ind++) {
-            tuple = op(agg, list[ind], ind);
-            agg = tuple[0];
-            mapped = tuple[1];
-        }
-        return [agg, mapped];
-    }),
-
-    /**
-     * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
-     * containing the aggregated value and the result of mapping the passed in function on passed in list.
-     * @function module:list.mapAccumR
-     * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
-     * @param zero {*} - An instance of the passed in list type used to aggregateArray on.
-     * @param xs {Array} - list type.
-     * @return {Array} - [aggregated, list]
-     */
-    mapAccumR = curry((op, zero, xs) => {
-        const list = sliceCopy(xs),
-            limit = length(xs);
-        if (!limit) {
-            return [zero, list];
-        }
-        let ind = limit - 1,
-            agg = zero,
-            mapped = [],
-            tuple;
-        for (; ind >= 0; ind--) {
-            tuple = op(agg, list[ind], ind);
-            agg = tuple[0];
-            mapped = tuple[1];
-        }
-        return [agg, mapped];
-    }),
 
     /**
      * Same as `repeat` due to the nature of javascript (see haskell version for usage).
