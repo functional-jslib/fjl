@@ -136,40 +136,6 @@ describe('#list', () => {
         });
     });
 
-
-    describe('#transpose', () => {
-        it('should transpose a list of lists into a rotated list of lists (from columns and rows to rows and' +
-            ' columns and vice versa).', () => {
-            // [subj, expected]
-            // @todo add test cases for strings
-            [
-                [
-                    [[1, 2, 3], [4, 5, 6]],
-                    [[1, 4], [2, 5], [3, 6]]
-                ],
-                [
-                    [[10, 11], [20], [], [30, 31, 32]],
-                    [[10, 20, 30], [11, 31], [32]]
-                ],
-                [
-                    [[], [], []], []
-                ],
-                [
-                    [], []
-                ]
-            ]
-                .forEach(([subj, expected]) => {
-                    const result = transpose(subj);
-                    expectEqual(result, expected);
-
-                    // Ensure empty lists are not generated in `result`
-                    if (result.length) {
-                        expectTrue(result.every(xs => xs.length > 0));
-                    }
-                });
-        });
-    });
-
     describe('#subsequences', () => {
         it('should return all sub-sequences of a sequence', () => {
             const candidates = ['abc', 'abc'.split('')],
@@ -500,18 +466,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#maximum', () => {
-        it('should be able return the maximum of a given list', () => {
-            expectEqual(maximum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 5);
-            expectEqual(maximum(range(-5, -1).concat([-3, -5, -7])), -1);
-        });
-        it('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', () => {
-            expectError(() => maximum(null));
-            expectError(() => maximum(undefined));
-            // expectEqual(minimum([]), Infinity);
-            expectError(maximum);
-        });
-    });
 
     describe('#minimum', () => {
         it('should be able return the minimum of a given list', () => {
@@ -669,38 +623,6 @@ describe('#list', () => {
                     return diff >= 0 ? [minuend, diff] : undefined;
                 }, 10),
                 range(1, 10).reverse()
-            );
-        });
-    });
-
-    describe('#take', () => {
-        it('should return taken items from list and/or string until limit', () => {
-            type TakeTest = [[number, string | any[]], string | any[]];
-            type TakeTestCases = Array<TakeTest>;
-            (<TakeTestCases>[
-                [[0, ''], ''],
-                [[0, []], []],
-                [[1, ''], ''],
-                [[1, []], []],
-            ]).concat(
-                (<TakeTestCases>vowelsArray
-                    .map((_, ind) => [
-                        [ind, vowelsArray],
-                        vowelsArray.slice(0, ind)
-                    ])),
-                (<TakeTestCases>vowelsString.split('')
-                    .map((_, ind) => [
-                        [ind, vowelsString],
-                        vowelsString.slice(0, ind)
-                    ]))
-            )
-                .forEach(([args, expected]) => {
-                    expectEqual(take(...args), expected);
-                });
-        });
-        it('should throw an error when no parameter is passed in', () => {
-            [null, undefined, 0, {}].forEach(x =>
-                expectError(() => take(3, x))
             );
         });
     });
@@ -1107,23 +1029,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#filter', () => {
-        it('should be able to filter a list by a predicate.', () => {
-            const pred = (_, ind) => ind % 2 === 0;
-            expectEqual(
-                filter(pred, alphabetString),
-                alphabetString.split('').filter(pred)
-            );
-            expectEqual(
-                filter(pred, alphabetArray),
-                alphabetString.split('').filter(pred)
-            );
-        });
-        it('should return an empty list when no items match predicate', () => {
-            const pred = char => char === '#';
-            expectEqual(filter(pred, alphabetArray), []);
-        });
-    });
 
     describe('#partition', () => {
         it('should take elements into first list while predicate is fulfilled and elements ' +
@@ -2019,24 +1924,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#sortBy', () => {
-        it('should sort a list by ordering function', () => {
-            expectEqual(sortBy(genericOrdering, range(10, 0, -1)), range(0, 10, 1));
-            expectEqual(sortBy(genericOrdering, range(0, 10)), range(0, 10));
-            compose(expectEqual(__, alphabetArray),
-                value => sortBy(genericOrdering, value), reverse)(alphabetArray);
-            compose(/*log,*/ value => sortBy(genericOrdering, value), reverse)(alphabetArray);
-        });
-        it('should return a copy of original list when said list is already sorted', () => {
-            compose(expectEqual(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
-            compose(expectEqual(__, ['a', 'b', 'c']), xs => sortBy(genericOrdering, xs))(take(3, alphabetArray));
-            compose(expectEqual(__, alphabetArray), xs => sortBy(genericOrdering, xs))(alphabetArray);
-            compose(expectEqual(__, range(0, 10)), xs => sortBy(genericOrdering, xs))(range(0, 10));
-        });
-        it('should return an empty list when receiving an empty list', () => {
-            expectEqual(sortBy(genericOrdering, []), []);
-        });
-    });
 
     describe('#insertBy', () => {
         const injectValueAtIndex = (x, ind, list) => {

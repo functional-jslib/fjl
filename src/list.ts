@@ -25,6 +25,11 @@ import {concatMap} from './list/concatMap';
 import {reverse} from "./list/reverse";
 import {intersperse} from "./list/intersperse";
 import {intercalate} from "./list/intercalate";
+import {transpose} from "./list/transpose";
+import {take} from "./list/take";
+import {filter} from "./list/filter";
+import {maximum} from "./list/maximum";
+import {sortBy} from "./list/sortBy";
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -38,7 +43,7 @@ import {
 export {
     append, head, last, tail, init, uncons, unconsr,
     concat, concatMap, length, map, reverse, intersperse,
-    intercalate
+    intercalate, transpose, filter, maximum, sortBy, take
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -46,44 +51,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Transposes rows and columns into lists by index;  E.g.,
-     * Haskell example:
-     * ```
-     *  transpose [[1,2,3],[4,5,6]] == [[1,4],[2,5],[3,6]]
-     *
-     *  -- Notice the shorter arrays are ignored after their last index is copied over:
-     *  transpose [[10,11],[20],[],[30,31,32]] == [[10,20,30],[11,31],[32]]
-     * ```
-     * @note from columns to rows.
-     * @note Empty lists are ignored.
-     * @haskellType `transpose :: [[a]] -> [[a]]`
-     * @function module:list.transpose
-     * @param xss {Array}
-     * @returns {Array}
-     */
-    transpose = (xss: Array<any[]> | []): Array<any[]> | [] => {
-        let numLists = length(xss),
-            ind = 0, ind2;
-        if (!numLists) {
-            return [];
-        }
-        const listLengths = apply(lengths, xss),
-            longestListLen = maximum(listLengths),
-            outLists: [any[]] | any[] = [];
-        for (; ind < longestListLen; ind += 1) {
-            const outList: any[] = [];
-            for (ind2 = 0; ind2 < numLists; ind2 += 1) {
-                if (listLengths[ind2] < ind + 1) {
-                    continue;
-                }
-                outList.push(xss[ind2][ind]);
-            }
-            outLists.push(outList);
-        }
-        return filter(x => length(x) > 0, outLists);
-    },
 
     /**
      * Generates 2^n sub-sequences for passed in sequence (string/list) (`n` is
@@ -367,15 +334,6 @@ export const
     elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
 
     /**
-     * Takes `n` items from start of list to `limit` (exclusive).
-     * @function module:list.take
-     * @param list {Array|String}
-     * @param limit {Number}
-     * @returns {String|Array} - Passed in type's type
-     */
-    take = sliceTo,
-
-    /**
      * Drops `n` items from start of list to `count` (exclusive).
      * @function module:list.drop
      * @param list {Array|String}
@@ -524,28 +482,6 @@ export const
         for (; ind < limit; ind += 1) {
             fn(list[ind], ind, list);
         }
-    }),
-
-    /**
-     * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
-     * @function module:list.filter
-     * @param pred {Function}
-     * @param xs {Array} - list or list like.
-     * @returns {Array} - Structure of filtered elements.
-     */
-    filter = curry((pred, xs) => {
-        let ind = 0,
-            limit = length(xs),
-            out: any[] = [];
-        if (!limit) {
-            return out;
-        }
-        for (; ind < limit; ind++) {
-            if (pred(xs[ind], ind, xs)) {
-                out.push(xs[ind]);
-            }
-        }
-        return out;
     }),
 
     /**
@@ -1093,15 +1029,6 @@ export const
     product = list => foldl((agg, x) => agg * x, 1, list),
 
     /**
-     * Returns the largest element in a non-empty structure of elements.
-     * @function module:list.maximum
-     * @haskellType `maximum :: forall a . Ord a => t a -> a`
-     * @param list {Array|String}
-     * @returns {*} - Whatever type the array is made of (if any).
-     */
-    maximum = list => last(sortBy(genericAscOrdering, list)),
-
-    /**
      * Returns the smallest element in a non-empty structure of elements.
      * @function module:list.minimum
      * @haskellType `minimum :: forall a . Ord a => t a -> a`
@@ -1266,19 +1193,6 @@ export const
             )
         )
     ),
-
-    /**
-     * The sortBy function is the non-overloaded (in haskell terms) version of sort.
-     * @haskellExample ```
-     *  >>> sortBy (\(a,_) (b,_) -> compare a b) [(2, "world"), (4, "!"), (1, "Hello")]
-     *  [(1,"Hello"),(2,"world"),(4,"!")]
-     * ```
-     * @function module:list.sortBy
-     * @param orderingFn {Function}
-     * @param xs {Array|String|*}
-     * @returns {Array|String|*}
-     */
-    sortBy = curry((orderingFn, xs) => sliceCopy(xs).sort(orderingFn || genericAscOrdering)),
 
     /**
      * The insert function takes an element and a list and inserts the element
