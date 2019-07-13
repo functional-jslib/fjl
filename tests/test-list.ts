@@ -136,34 +136,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#intersperse', () => {
-        it('should be able to inject a list (string or array) in-between the items of a list of the same type.', () => {
-            expectEqual(intersperse(',', alphabetString), alphabetArray.join(','));
-            expectEqual(intersperse(',', alphabetArray), alphabetArray.join(',').split(''));
-        });
-        it('should return a list with the same item when the list has a length of `1`', () => {
-            expectEqual(intersperse(', ', ['a']), ['a']);
-            expectEqual(intersperse(', ', 'a'), 'a');
-        });
-        it('should return an empty list when receiving an empty list', () => {
-            expectEqual(intersperse('', []), []);
-            expectEqual(intersperse('', ''), '');
-        });
-    });
-
-    describe('#intercalate', () => {
-        it('should intercalate a list within another list and then perform concat on the result', () => {
-            const result1 = intercalate(', ', alphabetArray);
-            expectEqual(result1, alphabetArray.join(', '));
-        });
-        it('should return a list with the same item when the list has a length of `1`', () => {
-            expect(intercalate(', ', [['a']])).toEqual(['a']); // Ensure list is flattened one level
-        });
-        it('should return an empty list when receiving an empty list', () => {
-            expectEqual(intercalate('', []), []);
-            expectEqual(intercalate('', [[]]), []); // Ensures list is flattened one level
-        });
-    });
 
     describe('#transpose', () => {
         it('should transpose a list of lists into a rotated list of lists (from columns and rows to rows and' +

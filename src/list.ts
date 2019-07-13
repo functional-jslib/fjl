@@ -23,6 +23,8 @@ import {unconsr} from './list/unconsr';
 import {concat} from './list/concat';
 import {concatMap} from './list/concatMap';
 import {reverse} from "./list/reverse";
+import {intersperse} from "./list/intersperse";
+import {intercalate} from "./list/intercalate";
 
 import {
     sliceFrom, sliceTo, lengths,
@@ -35,63 +37,15 @@ import {
 
 export {
     append, head, last, tail, init, uncons, unconsr,
-    concat, concatMap, length, map, reverse
+    concat, concatMap, length, map, reverse, intersperse,
+    intercalate
 };
+
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
 export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Takes an element and a list and `intersperses' that element between the
-     *  elements of the list.
-     * @function module:list.intersperse
-     * @note In our version of the function javascript is loosely typed so,
-     *  so is our function (to much overhead to make it typed) so `between` can be any value.
-     * @param between {*} - Should be of the same type of elements contained in list.
-     * @param arr {Array|String} - ListLike.
-     * @returns {Array|String}
-     */
-    intersperse = curry((between, xs) => {
-        if (!xs || !xs.length) {
-            return xs;
-        }
-        const limit = xs.length,
-            lastInd = limit - 1;
-        let out = of(xs),
-            i = 0;
-        if (isString(xs)) {
-            for (; i < limit; i += 1) {
-                out += i === lastInd ?
-                    xs[i] : xs[i] + between;
-            }
-            return out;
-        }
-        for (; i < limit; i += 1) {
-            if (i === lastInd) {
-                out.push(xs[i]);
-            } else {
-                out.push(xs[i], between);
-            }
-        }
-        return out;
-    }),
-
-    /**
-     * `intercalate xs xss` is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
-     * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
-     * @function module:list.intercalate
-     * @param xs {Array|String}
-     * @param xss {Array|String}
-     * @returns {Array|String}
-     */
-    intercalate = curry((xs, xss) => {
-        if (isString(xss)) {
-            return intersperse(xs, xss);
-        }
-        return concat(intersperse(xs, xss));
-    }),
 
     /**
      * Transposes rows and columns into lists by index;  E.g.,
