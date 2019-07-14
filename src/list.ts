@@ -46,6 +46,10 @@ import {mapAccumR} from "./list/mapAccumR";
 import {replicate} from "./list/replicate";
 import {cycle} from "./list/cycle";
 import {unfoldr} from "./list/unfoldr";
+import {findIndex} from "./list/findIndex";
+import {findIndices} from "./list/findIndices";
+import {elemIndex} from "./list/elemIndex";
+import {elemIndices} from "./list/elemIndices";
 
 // List method helpers
 // ----
@@ -66,7 +70,8 @@ export {
     intercalate, transpose, filter, maximum, sortBy, take,
     subsequences, permutations, foldl, foldl1, foldr, foldr1,
     mapAccumL, mapAccumR, iterate, repeat, replicate, cycle,
-    unfoldr,
+    unfoldr, findIndex, findIndices, elemIndex, elemIndices,
+
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -74,42 +79,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Finds index in string or list (alias for `findIndex`).
-     * @function module:list.findIndex
-     * @param pred {Function} - Predicate<element, index, arr>.
-     * @param arr {Array|String}
-     * @returns {Number} - `-1` if predicate not matched else `index` found
-     */
-    findIndex = findIndexWhere,
-
-    /**
-     * @function module:list.findIndices
-     * @param pred {Function}
-     * @param xs {Array} - list or list like.
-     * @returns {Array|undefined}
-     */
-    findIndices = findIndicesWhere,
-
-    /**
-     * @function module:list.elemIndex
-     * @param x {*} - Element to search for.
-     * @param xs {Array} - list or list like.
-     * @returns {*}
-     */
-    elemIndex = curry((x, xs) => {
-        const foundInd = indexOf(x, xs);
-        return foundInd !== -1 ? foundInd : undefined;
-    }),
-
-    /**
-     * @function module:list.elemIndices
-     * @param value {*} - Element to search for.
-     * @param xs {Array} - list or list like.
-     * @returns {*}
-     */
-    elemIndices = curry((value, xs) => findIndices(x => x === value, xs)),
 
     /**
      * Drops `n` items from start of list to `count` (exclusive).

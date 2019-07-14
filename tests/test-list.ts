@@ -11,12 +11,10 @@ import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase} from '../src/string';
 
 import {
-    append, all, and, or, any, find, findIndex, findIndices,
+    append, all, and, or, any, find,
     zip, zipN, zipWith, unzip, unzipN, map,
-    elem, notElem, elemIndex, elemIndices,
-    head, init, tail, length,
-    reverse, intersperse, intercalate,
-    take, drop, splitAt, foldl, unfoldr,
+    elem, notElem, head, init, tail, length,
+    reverse, intercalate, take, drop, splitAt, foldl, unfoldr,
     concat, concatMap, takeWhile, dropWhile, dropWhileEnd, partition,
     at, span, breakOnList, stripPrefix, group, inits, tails,
     isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, forEach,
@@ -571,7 +569,6 @@ describe('#list', () => {
         });
     });
 
-
     describe('#partition', () => {
         it('should take elements into first list while predicate is fulfilled and elements ' +
             'that didn\'t match into second list', () => {
@@ -619,90 +616,6 @@ describe('#list', () => {
         it('should return `undefined` when list has no length.', () => {
             expectEqual(at(0, ''), undefined);
             expectEqual(at(0, []), undefined);
-        });
-    });
-
-    describe('#elemIndex', () => {
-        it('should return the index where the element is found', () => {
-            const word = 'hello world';
-            expectTrue(
-                all(elm =>
-                        all((elm2, ind2, arr) => elemIndex(elm2, arr) === word.indexOf(elm2), elm),
-                    [word.split(''), word]));
-        });
-        it('should return `undefined` when element is not in list', () => {
-            const word = 'hello world';
-            expectTrue(
-                all(elm =>
-                        all((elm2, ind2, arr) => elemIndex('z', arr) === undefined, elm),
-                    [word.split(''), word]));
-        });
-    });
-
-    describe('#elemIndices', () => {
-        it('should return all found element indices in a list', () => {
-            [
-                [vowelsString, 'i', [2]],
-                [alphabetArray, 'b', [1]],
-                [
-                    alphabetArray.concat(alphabetArray, alphabetArray, alphabetArray), 'b', [1, 27, 53, 79]
-                ],
-            ]
-                .forEach(([subj, search, expected]) => {
-                    const result = elemIndices(search, subj);
-                    expectEqual(result, expected);
-                });
-        });
-        it('should return `undefined` when element is not found in list', () => {
-            expectEqual(elemIndices(99, range(0, 10)), undefined);
-        });
-        it('should throw an error when second arg is not a list.', () => {
-            [undefined, null, {}].forEach(x => expectError(() => elemIndices(99, x)));
-        });
-    });
-
-    describe('#findIndex', () => {
-        const word = 'abcdefg';
-        it('should find an index where predicate is satisfied', () => {
-            expectTrue(
-                word.split('')
-                    .every((char, ind, arr) =>
-                        findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind));
-        });
-        it('should return `-1` when item is not found in populated list', () => {
-            const nonAlphaList = '!@#$%^&*()_+'.split(''),
-                vowels = 'aeiou'.split('');
-            vowels.forEach(char => {
-                const result = findIndex(x => x === char, nonAlphaList);
-                expect(result).toEqual(-1);
-            });
-        });
-    });
-
-    describe('#findIndices', () => {
-        it('should return indices for all items that match passed in predicate', () => {
-            const tokenInits = inits(intersperse('e', alphabetArray)),
-                indicePred = (x: string) => x === 'e',
-                expectedResults = tokenInits.map(xs =>
-                    xs.map((x, ind) => [ind, x])
-                        .filter(([ind, x]) => indicePred(x))
-                )
-                    .map(xs => !xs.length ? undefined : xs.map(([x]) => x)),
-                results = map(xs => findIndices(indicePred, xs), tokenInits);
-
-            expectTrue(
-                results.every((xs, ind) => {
-                    const expected = expectedResults[ind];
-                    return xs === expected || ( // match undefined
-                        xs.every((x, ind2) => x === expected[ind2]) &&
-                        xs.length === expected.length
-                    );
-                })
-            );
-        });
-
-        it('should return `undefined` when doesn\'t find element at indice', () => {
-            [undefined, null, {}].forEach(x => expectError(() => findIndices(99, x)));
         });
     });
 
