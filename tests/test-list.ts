@@ -167,42 +167,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#span', () => {
-        it('should give the span of elements matching predicate and elements not matching predicate.', () => {
-            [
-                [[isVowel, ''], ['', '']],
-                [[isVowel, []], [[], []]],
-                [[isVowel, nonAlphaNums], ['', nonAlphaNums]],
-                [[isVowel, nonAlphaNumsArray], [[], nonAlphaNumsArray]],
-                [[x => !isVowel(x), nonAlphaNums], [nonAlphaNums, '']],
-                [[x => !isVowel(x), nonAlphaNumsArray], [nonAlphaNumsArray, []]],
-                [[isVowel, alphabetString], ['a', alphabetString.slice(1)]],
-                [[isVowel, alphabetArray], [['a'], alphabetArray.slice(1)]],
-            ].forEach(([args, expected]) => {
-                expectEqual(span(...args), expected);
-            });
-        });
-    });
-
-    describe('#breakOnList', () => {
-        it('should take elements into first list while !predicate is fulfilled and elements ' +
-            'that didn\'t match into second list', () => {
-            const notIsVowel = x => !isVowel(x);
-            [
-                [[isVowel, ''], ['', '']],
-                [[isVowel, []], [[], []]],
-                [[isVowel, nonAlphaNums], [nonAlphaNums, '']],
-                [[isVowel, nonAlphaNumsArray], [nonAlphaNumsArray, []]],
-                [[notIsVowel, nonAlphaNums], ['', nonAlphaNums]],
-                [[notIsVowel, nonAlphaNumsArray], [[], nonAlphaNumsArray]],
-                [[isVowel, alphabetString], [alphabetString.slice(1), 'a']],
-                [[isVowel, alphabetArray], [alphabetArray.slice(1), ['a']]],
-            ].forEach(([args, expected]) => {
-                expectEqual(breakOnList(...args), expected);
-            });
-        });
-    });
-
     describe('#stripPrefix', () => {
         it('should be able to strip a prefix from a list', () => {
             expectEqual(

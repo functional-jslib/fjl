@@ -11,7 +11,6 @@ import {curry, curry2, curry3} from './function/curry';
 import {isTruthy, isFalsy} from './boolean';
 import {lookup} from './object/lookup';
 import {of} from './object/of';
-import {isString} from './object/is';
 
 // List methods
 // ----
@@ -25,46 +24,45 @@ import {uncons} from './list/uncons';
 import {unconsr} from './list/unconsr';
 import {concat} from './list/concat';
 import {concatMap} from './list/concatMap';
-import {reverse} from "./list/reverse";
-import {intersperse} from "./list/intersperse";
-import {intercalate} from "./list/intercalate";
-import {transpose} from "./list/transpose";
-import {take} from "./list/take";
-import {filter} from "./list/filter";
-import {maximum} from "./list/maximum";
-import {sortBy} from "./list/sortBy";
-import {subsequences} from "./list/subsequence";
-import {permutations} from "./list/permutations";
-import {iterate} from "./list/iterate";
-import {repeat} from "./list/repeat";
-import {foldl} from "./list/foldl";
-import {foldl1} from "./list/foldl1";
-import {foldr} from "./list/foldr";
-import {foldr1} from "./list/foldr1";
-import {mapAccumL} from "./list/mapAccumL";
-import {mapAccumR} from "./list/mapAccumR";
-import {replicate} from "./list/replicate";
-import {cycle} from "./list/cycle";
-import {unfoldr} from "./list/unfoldr";
-import {findIndex} from "./list/findIndex";
-import {findIndices} from "./list/findIndices";
-import {elemIndex} from "./list/elemIndex";
-import {elemIndices} from "./list/elemIndices";
-import {drop} from "./list/drop";
-import {splitAt} from "./list/splitAt";
-import {takeWhile} from "./list/takeWhile";
-import {dropWhile} from "./list/dropWhile";
-import {dropWhileEnd} from "./list/dropWhileEnd";
-import {push} from "./list/push";
-import {pushMany} from "./list/pushMany";
+import {reverse} from './list/reverse';
+import {intersperse} from './list/intersperse';
+import {intercalate} from './list/intercalate';
+import {transpose} from './list/transpose';
+import {take} from './list/take';
+import {filter} from './list/filter';
+import {maximum} from './list/maximum';
+import {sortBy} from './list/sortBy';
+import {subsequences} from './list/subsequence';
+import {permutations} from './list/permutations';
+import {iterate} from './list/iterate';
+import {repeat} from './list/repeat';
+import {foldl} from './list/foldl';
+import {foldl1} from './list/foldl1';
+import {foldr} from './list/foldr';
+import {foldr1} from './list/foldr1';
+import {mapAccumL} from './list/mapAccumL';
+import {mapAccumR} from './list/mapAccumR';
+import {replicate} from './list/replicate';
+import {cycle} from './list/cycle';
+import {unfoldr} from './list/unfoldr';
+import {findIndex} from './list/findIndex';
+import {findIndices} from './list/findIndices';
+import {elemIndex} from './list/elemIndex';
+import {elemIndices} from './list/elemIndices';
+import {drop} from './list/drop';
+import {splitAt} from './list/splitAt';
+import {takeWhile} from './list/takeWhile';
+import {dropWhile} from './list/dropWhile';
+import {dropWhileEnd} from './list/dropWhileEnd';
+import {push} from './list/push';
+import {pushMany} from './list/pushMany';
+import {span} from './list/span';
+import {breakOnList} from './list/breakOnList';
 
 // List method helpers
 // ----
 import {
-    sliceFrom, sliceTo,
-    toShortest, aggregateArray,
-    reduce, findIndexWhere,
-    findWhere, sliceCopy, genericAscOrdering
+    sliceTo, toShortest, reduce, findWhere, sliceCopy, genericAscOrdering
 }
     from './list/utils';
 
@@ -72,13 +70,14 @@ import {
 // ----
 export {
     append, head, last, tail, init, uncons, unconsr,
-    concat, concatMap, length, map, reverse, intersperse,
-    intercalate, transpose, filter, maximum, sortBy, take,
-    subsequences, permutations, foldl, foldl1, foldr, foldr1,
-    mapAccumL, mapAccumR, iterate, repeat, replicate, cycle,
-    unfoldr, findIndex, findIndices, elemIndex, elemIndices,
-    drop, splitAt, takeWhile, dropWhile, dropWhileEnd, push,
-    pushMany,
+    push, pushMany, concat, concatMap, length, map,
+    reverse, intersperse, intercalate, transpose, filter,
+    maximum, sortBy, take, subsequences, permutations,
+    foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR,
+    iterate, repeat, replicate, cycle, unfoldr,
+    findIndex, findIndices, elemIndex, elemIndices,
+    drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span,
+    breakOnList,
 };
 
 export {slice, includes, indexOf, lastIndexOf} from './jsPlatform';
@@ -86,45 +85,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Gives you the `span` of items matching predicate
-     * and items not matching predicate;  E.g., Gives an
-     * array of arrays;  E.g., [[matching-items], [non-matching-items]]
-     * @function list.span
-     * @param pred {Function} - ListLike predicate (`(x, i, list) => bool`)
-     * @param list {Array|String}
-     * @returns {(Array<Array<*>>|Array<String>)}
-     * @type {Function}
-     */
-    span = curry((pred, list) => {
-        const splitPoint = findIndexWhere(negateF3(pred), list);
-        return splitPoint === -1 ?
-            [sliceFrom(0, list), of(list)] :
-            splitAt(splitPoint, list);
-    }),
-
-    /**
-     * breakOnList, applied to a predicate p and a list xs, returns a tuple
-     * where first element is longest prefix (possibly empty) of xs of elements
-     * that do not satisfy p and second element is the remainder of the list:
-     * @haskellExample
-     * Replace `break` with `breakOnList` for our version.
-     * ```
-     * breakOnList (> 3) [1,2,3,4,1,2,3,4] == ([1,2,3],[4,1,2,3,4])
-     * breakOnList (< 9) [1,2,3] == ([],[1,2,3])
-     * breakOnList (> 9) [1,2,3] == ([1,2,3],[])
-     * ```
-     * @function module:list.breakOnList
-     * @param pred {Function}
-     * @param list {Array|String|*}
-     * @returns {Array}
-     */
-    breakOnList = curry((pred, list) => {
-        const splitPoint = findIndexWhere(negateF3(pred), list);
-        return splitPoint === -1 ?
-            [of(list), sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
-    }),
 
     /**
      * Gets item at index.
@@ -417,8 +377,7 @@ export const
             return [];
         }
         const [a1, a2] = toShortest(arr1, arr2);
-        return reduce((agg, item, ind) =>
-                aggregateArray(agg, [item, a2[ind]]),
+        return reduce((agg, item, ind) => push(agg, [item, a2[ind]]),
             [], a1);
     }),
 
@@ -433,7 +392,7 @@ export const
     zipN = curry2((...lists) => {
         const trimmedLists = apply(toShortest, lists);
         return reduce((agg, item, ind) =>
-                aggregateArray(agg, map(xs => xs[ind], trimmedLists)),
+                push(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);
     }),
 
@@ -497,7 +456,7 @@ export const
         }
         const [a1, a2] = toShortest(xs1, xs2);
         return reduce((agg, item, ind) =>
-                aggregateArray(agg, op(item, a2[ind])),
+                push(agg, op(item, a2[ind])),
             [], a1);
     }),
 
@@ -524,7 +483,7 @@ export const
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                aggregateArray(agg, apply(op, map(xs => xs[ind], trimmedLists))),
+                push(agg, apply(op, map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     }),
 
@@ -916,7 +875,7 @@ export const
                 return concat([parts[0], [x], parts[1]]);
             }
         }
-        return aggregateArray(sliceCopy(xs), x);
+        return push(sliceCopy(xs), x);
     }),
 
     /**
