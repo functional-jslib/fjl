@@ -4,11 +4,6 @@ const {ioFileExists, ioWriteFile} = require('./utils/ioUtils'),
 
     {log, error} = console,
 
-    peek = (...args) => {
-        log(...args);
-        return args.pop();
-    },
-
     listMethods = [
         'map', 'slice', 'includes', 'indexOf', 'lastIndexOf', 'push', 'append', 'head', 'last',
         'tail', 'init', 'uncons', 'unconsr', 'concat', 'concatMap', 'reverse', 'intersperse',

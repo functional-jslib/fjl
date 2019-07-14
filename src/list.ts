@@ -52,14 +52,16 @@ import {elemIndex} from "./list/elemIndex";
 import {elemIndices} from "./list/elemIndices";
 import {drop} from "./list/drop";
 import {splitAt} from "./list/splitAt";
+import {takeWhile} from "./list/takeWhile";
+import {dropWhile} from "./list/dropWhile";
+import {dropWhileEnd} from "./list/dropWhileEnd";
 
 // List method helpers
 // ----
 import {
     sliceFrom, sliceTo,
     toShortest, aggregateArray,
-    reduceUntil, reduce,
-    findIndexWhere, findIndexWhereRight, findIndicesWhere,
+    reduce, findIndexWhere, findIndexWhereRight,
     findWhere, sliceCopy, genericAscOrdering
 }
     from './list/utils';
@@ -73,7 +75,7 @@ export {
     subsequences, permutations, foldl, foldl1, foldr, foldr1,
     mapAccumL, mapAccumR, iterate, repeat, replicate, cycle,
     unfoldr, findIndex, findIndices, elemIndex, elemIndices,
-    drop, splitAt,
+    drop, splitAt, takeWhile, dropWhile, dropWhileEnd,
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -81,63 +83,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Gives an list with passed elements while predicate was true.
-     * @function module:list.takeWhile
-     * @param pred {Function} - Predicate<*, index, list|string>
-     * @param list {Array|String}
-     * @returns {Array}
-     */
-    takeWhile = curry((pred, list) =>
-        reduceUntil(
-            negateF3(pred),     // predicate
-            isString(list) ?
-                (agg, x) => agg + x :
-                aggregateArray, // operation
-            of(list),           // aggregate
-            list
-        )),
-
-    /**
-     * Returns an list without elements that match predicate.
-     * @function module:list.dropWhile
-     * @param pred {Function} - Predicate<*, index, list|string>
-     * @param list {Array|String}
-     * @refactor
-     * @returns {Array|String}
-     */
-    dropWhile = curry((pred, list) => {
-        const limit = length(list),
-            splitPoint =
-                findIndexWhere(
-                    (x, i, xs) => !pred(x, i, xs),
-                    list
-                );
-
-        return splitPoint === -1 ?
-            sliceFrom(limit, list) :
-            slice(splitPoint, limit, list);
-    }),
-
-    /**
-     * @function module:list.dropWhileEnd
-     * @param pred {Function} - Predicate<*, index, list|string>
-     * @param list {Array|String}
-     * @refactor
-     * @returns {Array|String}
-     */
-    dropWhileEnd = curry((pred, list) => {
-        const splitPoint =
-            findIndexWhereRight(
-                (x, i, xs) => !pred(x, i, xs),
-                list
-            );
-        if (splitPoint === -1) {
-            return of(list);
-        }
-        return sliceTo(splitPoint + 1, list);
-    }),
 
     /**
      * Gives you the `span` of items matching predicate
