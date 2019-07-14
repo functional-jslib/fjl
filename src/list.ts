@@ -55,13 +55,15 @@ import {splitAt} from "./list/splitAt";
 import {takeWhile} from "./list/takeWhile";
 import {dropWhile} from "./list/dropWhile";
 import {dropWhileEnd} from "./list/dropWhileEnd";
+import {push} from "./list/push";
+import {pushMany} from "./list/pushMany";
 
 // List method helpers
 // ----
 import {
     sliceFrom, sliceTo,
     toShortest, aggregateArray,
-    reduce, findIndexWhere, findIndexWhereRight,
+    reduce, findIndexWhere,
     findWhere, sliceCopy, genericAscOrdering
 }
     from './list/utils';
@@ -75,10 +77,11 @@ export {
     subsequences, permutations, foldl, foldl1, foldr, foldr1,
     mapAccumL, mapAccumR, iterate, repeat, replicate, cycle,
     unfoldr, findIndex, findIndices, elemIndex, elemIndices,
-    drop, splitAt, takeWhile, dropWhile, dropWhileEnd,
+    drop, splitAt, takeWhile, dropWhile, dropWhileEnd, push,
+    pushMany,
 };
 
-export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
+export {slice, includes, indexOf, lastIndexOf} from './jsPlatform';
 export * from './list/range';
 export * from './list/utils';
 
