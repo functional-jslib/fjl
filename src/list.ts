@@ -6,10 +6,9 @@
 import {indexOf, slice, includes} from './jsPlatform/list';
 import {apply} from './jsPlatform/function';
 import {length} from './jsPlatform/object';
-import {negateF3, negateF2} from './function/negate';
+import {negateF2} from './function/negate';
 import {curry, curry2, curry3} from './function/curry';
 import {isTruthy, isFalsy} from './boolean';
-import {lookup} from './object/lookup';
 import {of} from './object/of';
 
 // List methods
@@ -58,11 +57,16 @@ import {push} from './list/push';
 import {pushMany} from './list/pushMany';
 import {span} from './list/span';
 import {breakOnList} from './list/breakOnList';
+import {at} from "./list/at";
+import {find} from "./list/find";
+import {forEach} from "./list/forEach";
+import {partition} from "./list/partition";
+import {elem} from "./list/elem";
 
 // List method helpers
 // ----
 import {
-    sliceTo, toShortest, reduce, findWhere, sliceCopy, genericAscOrdering
+    sliceTo, toShortest, reduce, sliceCopy, genericAscOrdering
 }
     from './list/utils';
 
@@ -77,7 +81,7 @@ export {
     iterate, repeat, replicate, cycle, unfoldr,
     findIndex, findIndices, elemIndex, elemIndices,
     drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span,
-    breakOnList,
+    breakOnList, at, find, forEach, partition, elem,
 };
 
 export {slice, includes, indexOf, lastIndexOf} from './jsPlatform';
@@ -85,65 +89,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Gets item at index.
-     * @function module:list.at
-     * @param ind {Number} - Index.
-     * @param xs {Array} - list or list like.
-     * @returns {*|undefined} - Item or `undefined`.
-     */
-    at = lookup,
-
-    /**
-     * Find an item in structure of elements based on given predicate (`pred`).
-     * @function module:list.find
-     * @param pred {Function}
-     * @param xs {Array} - list or list like.
-     * @returns {*} - Found item.
-     */
-    find = findWhere,
-
-    /**
-     * For each function (same as `[].forEach` except in functional format).
-     * @function module:list.forEach
-     * @param fn {Function} - Operation (`(element, index, list) => {...}`, etc.)
-     * @param xs {(Array|String)}
-     * @returns {void}
-     */
-    forEach = curry((fn, list) => {
-        const limit = length(list);
-        if (!limit) {
-            return;
-        }
-        let ind = 0;
-        for (; ind < limit; ind += 1) {
-            fn(list[ind], ind, list);
-        }
-    }),
-
-    /**
-     * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
-     * do not match the tuple are in second list in the returned tuple.
-     *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
-     * @function module:list.partition
-     * @param pred {Function} - Predicate<item, index, originalArrayOrString>
-     * @param list {Array}
-     * @returns {Array|String} - Tuple of arrays or strings (depends on incoming list (of type list or string)).
-     */
-    partition = curry((pred, list) =>
-        !length(list) ?
-            [[], []] :
-            [filter(pred, list), filter(negateF3(pred), list)]),
-
-    /**
-     * Returns a boolean indicating whether an element exists in given structure of elements.
-     * @function module:list.elem
-     * @param element {*}
-     * @param xs {Array}
-     * @returns {Boolean}
-     */
-    elem = includes,
 
     /**
      * The opposite of `elem` - Returns a boolean indicating whether an element exists in given list.

@@ -318,21 +318,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#elem', () => {
-        it('should return `true` when the element is found in given list', () => {
-            const word = 'hello world';
-            expectTrue(
-                all(() => all((elm2, ind2, arr) => !!elem(elm2, arr), word), [word.split(''), word]));
-        });
-        it('should return `false` when element is not found in given list', () => {
-            const word = 'hello world';
-            expectTrue(
-                all(elm =>
-                        all((elm2, ind2, arr) => !elem('z', arr), elm),
-                    [word.split(''), word]));
-        });
-    });
-
     describe('#notElem', () => {
         it('should return `false` when the element is found in given list', () => {
             const word = 'hello world';
@@ -351,71 +336,6 @@ describe('#list', () => {
                 )
             )
                 .toEqual(true);
-        });
-    });
-
-    describe('#find', () => {
-        it('should should find element that matches predicate when element is in given list', () => {
-            const word = 'word',
-                pred = x => x === 'o';
-            expectEqual(find(pred, word), 'o');
-            expectEqual(find(pred, word.split('')), 'o');
-        });
-        it('should return `undefined` when predicate doesn\'t match any elements.', () => {
-            const word = 'word',
-                pred = x => x === 'a';
-            expectEqual(find(pred, word), undefined);
-            expectEqual(find(pred, word.split('')), undefined);
-        });
-    });
-
-    describe('#partition', () => {
-        it('should take elements into first list while predicate is fulfilled and elements ' +
-            'that didn\'t match into second list', () => {
-            const word = 'abcdefg',
-                expectedResults = ['abcdfg', 'e'],
-                predicate = x => x !== 'e';
-
-            // Expect matched length and matched elements
-            expectTrue(
-                // Ensure cases for each use case
-                all(tuple =>
-                    length(expectedResults) === length(tuple) &&
-                    all((tuplePart, ind) =>
-                            // Ensure tuple part is of allowed type
-                        (isString(tuplePart) || isArray(tuplePart)) &&
-                        // Ensure correct length of items in returned element
-                        length(expectedResults[ind]) === length(tuplePart) &&
-                        // Ensure elements where matched
-                        all((x, ind2) => x === expectedResults[ind][ind2], tuplePart),
-                        tuple),
-                    // Use cases (one with string other with list)
-                    [partition(predicate, word.split('')), partition(predicate, word)]
-                ));
-        });
-        it('should return an list of empty arrays and/or strings when an empty list is passed in', () => {
-            expectTrue(
-                all(tuple =>
-                    length(tuple) === 2 &&
-                    all(tuplePart => (isString(tuplePart) || isArray(tuplePart)) &&
-                        length(tuplePart) === 0, tuple),
-                    [partition(a => a, ''), partition(x => x, [])]
-                ));
-        });
-    });
-
-    describe('#at', () => {
-        it('should return an item at a given key/index.', () => {
-            [alphabetString, alphabetArray].forEach(subject => {
-                const subjectLastInd = length(subject) - 1;
-                expectEqual(at(0, subject), subject[0]);
-                expectEqual(at(5, subject), subject[5]);
-                expectEqual(at(subjectLastInd, subject), subject[subjectLastInd]);
-            });
-        });
-        it('should return `undefined` when list has no length.', () => {
-            expectEqual(at(0, ''), undefined);
-            expectEqual(at(0, []), undefined);
         });
     });
 
@@ -1179,7 +1099,6 @@ describe('#list', () => {
         });
     });
 
-
     describe('#insertBy', () => {
         const injectValueAtIndex = (x, ind, list) => {
                 if (ind <= 0) {
@@ -1449,19 +1368,4 @@ describe('#list', () => {
         });
     });
 
-    describe('#forEach', () => {
-        it('should execute passed in function for every item in passed in list (array)\n ' +
-            '(all incoming params should validate also;  I.e., `(element, index, array) => ...`', () => {
-            forEach((x, index, list) => {
-                expect(list).toEqual(alphabetArray);
-                expect(x).toEqual(alphabetArray[index]);
-            }, alphabetArray);
-        });
-        it('should throw an error when receiving a non-function value as first param and a non-empty list', () => {
-            expect(() => forEach(null, [1])).toThrow(Error);
-        });
-        // it('should throw an error when receiving a non-lengthable value as second param', () => {
-        //     expect(() => forEach(() => undefined, null)).toThrow(Error);
-        // });
-    });
 });
