@@ -169,18 +169,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#unfoldr', () => {
-        it('should be able to unfold any value from right to left.', () => {
-            expectEqual(
-                unfoldr(minuend => {
-                    let diff = minuend - 1;
-                    return diff >= 0 ? [minuend, diff] : undefined;
-                }, 10),
-                range(1, 10).reverse()
-            );
-        });
-    });
-
     describe('#drop', () => {
         it('should return a new list/string with dropped items from original until limit', () => {
             type DropTest = [[number, string | any[]], string | any[]];

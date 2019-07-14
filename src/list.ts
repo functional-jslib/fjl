@@ -45,6 +45,7 @@ import {mapAccumL} from "./list/mapAccumL";
 import {mapAccumR} from "./list/mapAccumR";
 import {replicate} from "./list/replicate";
 import {cycle} from "./list/cycle";
+import {unfoldr} from "./list/unfoldr";
 
 // List method helpers
 // ----
@@ -65,7 +66,7 @@ export {
     intercalate, transpose, filter, maximum, sortBy, take,
     subsequences, permutations, foldl, foldl1, foldr, foldr1,
     mapAccumL, mapAccumR, iterate, repeat, replicate, cycle,
-
+    unfoldr,
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -73,25 +74,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Unfolds a value into a list of somethings.
-     * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]`
-     * @function module:list.unfoldr
-     * @param op {Function} - Operation to perform (should return a two component tuple (item to aggregateArray and item to unfold in next iteration).
-     * @param x {*} - Starting parameter to unfold from.
-     * @returns {Array} - An array of whatever you return from `op` yielded.
-     */
-    unfoldr = curry((op, x) => {
-        let ind = 0,
-            out: any[] = [],
-            resultTuple = op(x, ind, out);
-        while (resultTuple) {
-            out.push(resultTuple[0]);
-            resultTuple = op(resultTuple[1], ++ind, out);
-        }
-        return out;
-    }),
 
     /**
      * Finds index in string or list (alias for `findIndex`).
