@@ -50,6 +50,8 @@ import {findIndex} from "./list/findIndex";
 import {findIndices} from "./list/findIndices";
 import {elemIndex} from "./list/elemIndex";
 import {elemIndices} from "./list/elemIndices";
+import {drop} from "./list/drop";
+import {splitAt} from "./list/splitAt";
 
 // List method helpers
 // ----
@@ -71,7 +73,7 @@ export {
     subsequences, permutations, foldl, foldl1, foldr, foldr1,
     mapAccumL, mapAccumR, iterate, repeat, replicate, cycle,
     unfoldr, findIndex, findIndices, elemIndex, elemIndices,
-
+    drop, splitAt,
 };
 
 export {slice, includes, indexOf, lastIndexOf, push} from './jsPlatform';
@@ -79,25 +81,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * Drops `n` items from start of list to `count` (exclusive).
-     * @function module:list.drop
-     * @param list {Array|String}
-     * @param count {Number}
-     * @returns {String|Array} - Passed in type's type
-     */
-    drop = sliceFrom,
-
-    /**
-     * Splits `x` in two at given `index` (exclusive (includes element/character at
-     * given index in second part of returned list)).
-     * @function module:list.splitAt
-     * @param ind {Number} - Index to split at.
-     * @param list {Array|String} - functor (list or string) to split.
-     * @returns {Array|String} - ListLike like type passed
-     */
-    splitAt = (ind, list) => [sliceTo(ind, list), sliceFrom(ind, list)],
 
     /**
      * Gives an list with passed elements while predicate was true.
