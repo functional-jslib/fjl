@@ -57,16 +57,36 @@ import {push} from './list/push';
 import {pushMany} from './list/pushMany';
 import {span} from './list/span';
 import {breakOnList} from './list/breakOnList';
-import {at} from "./list/at";
-import {find} from "./list/find";
-import {forEach} from "./list/forEach";
-import {partition} from "./list/partition";
-import {elem} from "./list/elem";
+import {at} from './list/at';
+import {find} from './list/find';
+import {forEach} from './list/forEach';
+import {partition} from './list/partition';
+import {elem} from './list/elem';
+import {notElem} from './list/notElem';
+import {isPrefixOf} from './list/isPrefixOf';
+import {isSuffixOf} from './list/isSuffixOf';
+import {isInfixOf} from './list/isInfixOf';
+import {isSubsequenceOf} from './list/isSubsequenceOf';
+import {group} from './list/group';
+import {groupBy} from './list/groupBy';
+import {inits} from './list/inits';
+import {tails} from './list/tails';
+import {stripPrefix} from './list/stripPrefix';
+import {zip} from './list/zip';
+import {zipN} from './list/zipN';
+import {zip3} from "./list/zip3";
+import {zip4} from "./list/zip4";
+import {zip5} from "./list/zip5";
+import {zipWith} from "./list/zipWith";
+import {zipWithN} from "./list/zipWithN";
+import {zipWith3} from "./list/zipWith3";
+import {zipWith4} from "./list/zipWith4";
+import {zipWith5} from "./list/zipWith5";
 
 // List method helpers
 // ----
 import {
-    sliceTo, toShortest, reduce, sliceCopy, genericAscOrdering
+    reduce, sliceCopy, genericAscOrdering
 }
     from './list/utils';
 
@@ -81,7 +101,11 @@ export {
     iterate, repeat, replicate, cycle, unfoldr,
     findIndex, findIndices, elemIndex, elemIndices,
     drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span,
-    breakOnList, at, find, forEach, partition, elem,
+    breakOnList, at, find, forEach, partition, elem, notElem,
+    isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group,
+    groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4,
+    zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5,
+
 };
 
 export {slice, includes, indexOf, lastIndexOf} from './jsPlatform';
@@ -89,393 +113,6 @@ export * from './list/range';
 export * from './list/utils';
 
 export const
-
-    /**
-     * The opposite of `elem` - Returns a boolean indicating whether an element exists in given list.
-     * @function module:list.notElem
-     * @param element {*}
-     * @param xs {Array}
-     * @returns {Boolean}
-     */
-    notElem = negateF2(includes),
-
-    /**
-     * Checks if list `xs1` is a prefix of list `xs2`
-     * @function module:list.isPrefixOf
-     * @param xs1 {Array|String|*}
-     * @param xs2 {Array|String|*}
-     * @returns {boolean}
-     */
-    isPrefixOf = curry((xs1, xs2) => {
-        const limit1 = length(xs1),
-            limit2 = length(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
-            return false;
-        }
-        let ind = 0;
-        for (; ind < limit1; ind++) {
-            if (xs1[ind] !== xs2[ind]) {
-                return false;
-            }
-        }
-        return true;
-    }),
-
-    /**
-     * Checks if list `xs1` is a suffix of list `xs2`
-     * @function module:list.isSuffixOf
-     * @param xs1 {Array|String|*}
-     * @param xs2 {Array|String|*}
-     * @returns {boolean}
-     */
-    isSuffixOf = curry((xs1, xs2) => {
-        const limit1 = length(xs1),
-            limit2 = length(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
-            return false;
-        }
-        let ind1 = limit1 - 1,
-            ind2 = limit2 - 1;
-        for (; ind1 >= 0; ind1--) {
-            if (xs1[ind1] !== xs2[ind2]) {
-                return false;
-            }
-            ind2 -= 1;
-        }
-        return true;
-    }),
-
-    /**
-     * Checks if list `xs1` is an infix of list `xs2`
-     * @function module:list.isInfixOf
-     * @param xs1 {Array|String|*}
-     * @param xs2 {Array|String|*}
-     * @returns {boolean}
-     */
-    isInfixOf = curry((xs1, xs2) => {
-        const limit1 = length(xs1),
-            limit2 = length(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2) {
-            return false;
-        }
-        let ind1,
-            foundLen,
-            ind = 0;
-        for (; ind < limit2; ind += 1) {
-            foundLen = 0;
-            for (ind1 = 0; ind1 < limit1; ind1 += 1) {
-                if (xs2[ind1 + ind] === xs1[ind1]) {
-                    foundLen += 1;
-                }
-                if (foundLen === limit1) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }),
-
-    /**
-     * Checks if list `xs1` is a sub-sequence of list `xs2`
-     * @function module:list.isSubsequenceOf
-     * @param xs1 {Array|String|*}
-     * @param xs2 {Array|String|*}
-     * @returns {boolean}
-     */
-    isSubsequenceOf = curry((xs1, xs2) => {
-        const len = Math.pow(2, length(xs2)),
-            lenXs1 = length(xs1);
-        let foundLen,
-            i;
-        for (i = 0; i < len; i += 1) {
-            foundLen = 0;
-            for (let j = 0; j < len; j += 1) {
-                if (i & (1 << j) && indexOf(xs2[j], xs1) > -1) {
-                    foundLen += 1;
-                }
-                if (foundLen === lenXs1) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }),
-
-    /**
-     * The group function takes a list and returns a list of lists such that
-     *  the concatenation of the result is equal to the argument. Moreover, each
-     *  sublist in the result contains only equal elements. For example,
-     * `group "Mississippi" = ["M","i","ss","i","ss","i","pp","i"]`
-     * It is a special case of groupBy, which allows the programmer to supply
-     *  their own equality test.
-     * @haskellType `group :: Eq a => [a] -> [[a]]`
-     * @function module:list.group
-     * @param xs {Array|String}
-     * @returns {Array<Array|String|*>|*}
-     */
-    group = xs => groupBy((a, b) => a === b, xs),
-
-    /**
-     * Allows you to group items in a list based on your supplied equality check.
-     * @note Sames `group` but allows you to specify equality operation.
-     * @haskellType `groupBy :: (a -> a -> Bool) -> [a] -> [[a]]`
-     * @function module:list.groupBy
-     * @param equalityOp {Function}
-     * @param xs {Array}
-     * @returns {*}
-     */
-    groupBy = curry((equalityOp, xs) => {
-        const limit = length(xs);
-        if (!limit) {
-            return sliceCopy(xs);
-        }
-        let ind = 0,
-            prevItem,
-            item,
-            predOp = x => {
-                if (equalityOp(x, prevItem)) {
-                    ind++;
-                }
-                if (equalityOp(x, item)) {
-                    prevItem = x;
-                    return true;
-                }
-                return false;
-            },
-            agg: [any[]] | any[] = [];
-        for (; ind < limit; ind += 1) {
-            item = xs[ind];
-            agg.push(takeWhile(predOp, slice(ind, limit, xs)));
-        }
-        return agg;
-    }),
-
-    /**
-     * The inits function returns all initial segments of the argument, shortest first. For example,
-     * ```
-     * shallowEquals(inits('abc'), ['','a','ab','abc'])
-     * ```
-     * @function module:list.inits
-     * @haskellType `inits :: [a] -> [[a]]`
-     * @param xs {Array}
-     * @returns {Array}
-     */
-    inits = xs => {
-        let limit = length(xs),
-            ind = 0,
-            agg: [any[]] | any[] = [];
-        if (!limit) {
-            return [];
-        }
-        for (; ind <= limit; ind += 1) {
-            agg.push(sliceTo(ind, xs));
-        }
-        return agg;
-    }, //map(list => init(list), xs),
-
-    /**
-     * The inits function returns all initial segments of the argument, shortest first. For example,
-     * ```
-     * shallowEquals(tails('abc'), ['abc', 'bc', 'c',''])
-     * ```
-     * @function module:list.tails
-     * @haskellType `tails :: [a] -> [[a]]`
-     * @param xs {Array}
-     * @returns {Array}
-     */
-    tails = xs => {
-        let limit = length(xs),
-            ind = 0,
-            agg: [any[]] | any[] = [];
-        if (!limit) {
-            return [];
-        }
-        for (; ind <= limit; ind += 1) {
-            agg.push(slice(ind, limit, xs));
-        }
-        return agg;
-    }, //map(list => tail(list), xs),
-
-    /**
-     * Strips prefix list from given list
-     * @function module:list.stripPrefix
-     * @param prefix {Array|String|*}
-     * @param list {Array|fjl.ts.ts|*}
-     * @returns {Array|*}
-     */
-    stripPrefix = curry((prefix, list) =>
-        isPrefixOf(prefix, list) ?
-            splitAt(length(prefix), list)[1] :
-            sliceCopy(list)),
-
-    /**
-     * zip takes two lists and returns a list of corresponding pairs.
-     * If one input list is short, excess elements of the longer list are discarded.
-     * @haskellType `zip :: [a] -> [b] -> [(a, b)]`
-     * @function module:list.zip
-     * @param arr1 {Array}
-     * @param arr2 {Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zip = curry((arr1, arr2) => {
-        if (!length(arr1) || !length(arr2)) {
-            return [];
-        }
-        const [a1, a2] = toShortest(arr1, arr2);
-        return reduce((agg, item, ind) => push(agg, [item, a2[ind]]),
-            [], a1);
-    }),
-
-    /**
-     * zipN takes one or more lists and returns a list containing lists of all indices
-     * at a given index, index by index.
-     * If one input list is short, excess elements of the longer list are discarded.
-     * @function module:list.zipN
-     * @param lists {Array|String} - One ore more lists of the same type.
-     * @returns {Array}
-     */
-    zipN = curry2((...lists) => {
-        const trimmedLists = apply(toShortest, lists);
-        return reduce((agg, item, ind) =>
-                push(agg, map(xs => xs[ind], trimmedLists)),
-            [], trimmedLists[0]);
-    }),
-
-    /**
-     * @haskellType `zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]`
-     * @function module:list.zip3
-     * @param arr1 {Array}
-     * @param arr2 {Array}
-     * @param arr3 {Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zip3 = curry((arr1, arr2, arr3) => zipN(arr1, arr2, arr3)),
-
-    /**
-     * @haskellType `zip4 :: [a] -> [b] -> [c] -> [d] -> [(a, b, c, d)]`
-     * @function module:list.zip4
-     * @param arr1 {Array}
-     * @param arr2 {Array}
-     * @param arr3 {Array}
-     * @param arr4 {Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zip4 = curry((arr1, arr2, arr3, arr4) => zipN(arr1, arr2, arr3, arr4)),
-
-    /**
-     * @haskellType `zip5 :: [a] -> [b] -> [c] -> [d] -> [e] -> [(a, b, c, d, e)]`
-     * @function module:list.zip5
-     * @param arr1 {Array}
-     * @param arr2 {Array}
-     * @param arr3 {Array}
-     * @param arr4 {Array}
-     * @param arr5 {Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zip5 = curry((arr1, arr2, arr3, arr4, arr5) => zipN(arr1, arr2, arr3, arr4, arr5)),
-
-    /**
-     * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
-     * zipWith generalises zip by zipping with the function given as the
-     * first argument, instead of a function tupling function (function that returns a tuple). For example,
-     * zipWith (+) is applied to two lists to produce the list of corresponding sums.
-     * @note `_|_` means bottom or perpetual (@see
-     *  - https://wiki.haskell.org/Bottom
-     *  - https://stackoverflow.com/questions/19794681/what-does-this-syntax-mean-in-haskell-or
-     *  )
-     * @example
-     * ```
-     * zipWith f [] _|_ = []
-     * ```
-     * @haskellType `zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]`
-     * @function module:list.zipWith
-     * @param op {Function} - Takes two parts of a tuple and returns a tuple.
-     *  E.g., ` op :: a -> b -> (a, b)`
-     * @param xs1 {Array}
-     * @param xs2 {Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zipWith = curry((op, xs1, xs2) => {
-        if (!length(xs1) || !length(xs2)) {
-            return [];
-        }
-        const [a1, a2] = toShortest(xs1, xs2);
-        return reduce((agg, item, ind) =>
-                push(agg, op(item, a2[ind])),
-            [], a1);
-    }),
-
-    /**
-     * Zips all given lists with tupling function. Note: Haskell types do not have
-     *  a way (that I know of) to show one or more for params in a function so `@haskellType` below
-     *  is left there for general purpose not for exactness as is told by aforementioned.
-     * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
-     *  of lists to zip.
-     * @function module:list.zipWithN
-     * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
-     *  of said parts:
-     *  E.g., ` op :: a -> b -> c -> (a, b, c)`
-     * @param lists ...{Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zipWithN = curry3((op, ...lists) => {
-        const trimmedLists = apply(toShortest, lists),
-            lenOfTrimmed = length(trimmedLists);
-        if (!lenOfTrimmed) {
-            return [];
-        }
-        else if (lenOfTrimmed === 1) {
-            return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
-        }
-        return reduce((agg, item, ind) =>
-                push(agg, apply(op, map(xs => xs[ind], trimmedLists))),
-            [], trimmedLists[0]);
-    }),
-
-    /**
-     * Zips 3 lists with tupling function.
-     * @haskellType `zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]`
-     * @function module:list.zipWith3
-     * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
-     *  of said parts:
-     *  E.g., ` op :: a -> b -> c -> (a, b, c)`
-     * @param xs1 {Array}
-     * @param xs2 {Array}
-     * @param xs3 {Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zipWith3 = curry((op, xs1, xs2, xs3) => zipWithN(op, xs1, xs2, xs3)),
-
-    /**
-     * Zips 4 lists with tupling function.
-     * @haskellType `zipWith4 :: (a -> b -> c -> d -> e) -> [a] -> [b] -> [c]  -> [d] -> [e]`
-     * @function module:list.zipWith4
-     * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
-     *  of said parts:
-     *  E.g., ` op :: a -> b -> c -> d -> (a, b, c, d)`
-     * @param xs1 {Array}
-     * @param xs2 {Array}
-     * @param xs3 {Array}
-     * @param xs4 {Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zipWith4 = curry((op, xs1, xs2, xs3, xs4) => zipWithN(op, xs1, xs2, xs3, xs4)),
-
-    /**
-     * Zips 5 lists.
-     * @haskellType `zipWith5 :: (a -> b -> c -> d -> e -> f) -> [a] -> [b] -> [c]  -> [d] -> [e] -> [f]`
-     * @function module:list.zipWith5
-     * @param op {Function} - Takes expected number of parts for tuple and returns a tuple
-     *  of said parts:
-     *  E.g., ` op :: a -> b -> c -> d -> e -> (a, b, c, d, e)`
-     * @param xs1 {Array}
-     * @param xs2 {Array}
-     * @param xs3 {Array}
-     * @param xs4 {Array}
-     * @param xs5 {Array}
-     * @returns {Array<Array<*,*>>}
-     */
-    zipWith5 = curry((op, xs1, xs2, xs3, xs4, xs5) => zipWithN(op, xs1, xs2, xs3, xs4, xs5)),
 
     /**
      * unzip transforms a list of pairs into a list of first components and a list of second components.
