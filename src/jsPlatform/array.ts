@@ -5,6 +5,8 @@
 
 import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils';
 
+export {map} from './map';
+
 const
     /**
      * Array.prototype.reverse generator (generates a function that calls the prototype version or a
@@ -21,14 +23,6 @@ const
 
 export const
 
-    /**
-     * Maps a function to functor (list etc.).
-     * @function module:jsPlatform.map
-     * @param fn {Function}
-     * @param functor {Array|{map: {Function}}}
-     * @returns {Array|{map: {Function}}}
-     */
-    map = fPureTakesOne('map'),
 
     /**
      * Filters a functor (list etc.) with passed in function.
@@ -112,3 +106,4 @@ export const
      * @return {Array}
      */
     reverse = defineReverse();
+
