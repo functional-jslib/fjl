@@ -10,8 +10,6 @@ import {map}              from './map';
 import {curry, curry2}  from '../function/curry';
 import {List} from './types';
 
-export * from './aggregation';
-
 export const
 
     /**

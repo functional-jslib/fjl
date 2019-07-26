@@ -1,12 +1,16 @@
 export interface Lengthable {
-    length: number
+    readonly length: number
 }
 
 export interface Nameable {
     readonly name: string
 }
 
+export type Num = number;
+
 export interface ListLike extends Lengthable {
+    [index: number]: any;
+
     concat(...fs: Array<Array<any> | string>): Array<any> | string;
 
     slice(startInd: number, endInd: number, list: Array<any> | string): Array<any> | string;
