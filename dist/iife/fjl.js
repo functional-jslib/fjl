@@ -65,6 +65,10 @@ var fjl = (function (exports) {
   }
 
   function _iterableToArrayLimit(arr, i) {
+    if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+      return;
+    }
+
     var _arr = [];
     var _n = true;
     var _d = false;
@@ -2072,11 +2076,6 @@ var fjl = (function (exports) {
   };
 
   /**
-   * @module object
-   * @description Object operations/combinators.
-   */
-
-  /**
    * Composes all functions passed in from right to left passing each functions return value to
    * the function on the left of itself.
    * @function module:function.compose
@@ -2277,10 +2276,6 @@ var fjl = (function (exports) {
       return x;
     };
   };
-
-  /**
-   * @module function
-   */
 
   /**
    * @module object
