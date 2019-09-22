@@ -1,13 +1,11 @@
 /**
- * @author elydelacruz
- * @created 12/6/2016.
- * @memberOf index.ts
+ * @author edlc
+ * @memberOf function
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 
 /**
  * @private
- * @type {index.ts}
  */
 const
 

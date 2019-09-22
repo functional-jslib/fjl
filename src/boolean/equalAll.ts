@@ -1,5 +1,5 @@
-import {curry2} from "../function/curry";
-import {equal} from "./equal";
+import {curry2} from '../function/curry';
+import {equal} from './equal';
 
 export const
     /**

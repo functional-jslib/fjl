@@ -1,5 +1,5 @@
 import {apply} from './apply';
-import {curry, curry2} from './curry';
+import {curry} from './curry';
 
 export const
 
