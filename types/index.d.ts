@@ -1,5 +1,74 @@
 export as namespace fjl;
 
+
+// generic-ops.d.ts
+export type Unary<T> = (x: T) => T;
+
+export type Binary<T> = (a: T, b: T) => T;
+
+export type Ternary<T> = (a: T, b: T, c: T) => T;
+
+export type Nary<T> = (...x: T[]) => T;
+
+export type Polyadic<T> = (a: T, b: T, ...c: T[]) => T;
+
+export type Poly<T> = Polyadic<T>;
+
+export type UnaryOf<T, Ret> = (x: T) => Ret;
+
+export type BinaryOf<A, B, Ret> = (a: A, b: B) => Ret;
+
+export type TernaryOf<A, B, C, Ret> = (a: A, b: B, c: C) => Ret;
+
+export type QuaternaryOf<A, B, C, D, Ret> = (a: A, b: B, c: C, d: D) => Ret;
+
+export type QuinaryOf<A, B, C, D, E, Ret> = (a: A, b: B, c: C, d: D, e: E) => Ret;
+
+export type NaryOf<T, Ret> = (...xs: T[]) => Ret;
+
+export type PolyadicOf<A, B, C, Ret> = (a: A, b: B, ...c: C[]) => Ret;
+
+export type PolyOf<A, B, C, Ret> = PolyadicOf<A, B, C, Ret>;
+
+export type UnaryPred<T> = (x: T) => boolean;
+
+export type BinaryPred<T> = (a: T, b: T) => boolean;
+
+export type TernaryPred<T> = (a: T, b: T, c: T) => boolean;
+
+export type NaryPred<T> = (...x: T[]) => boolean;
+
+export type PolyadicPred<A, B, C> = (a: A, b: B, ...c: C[]) => boolean;
+
+export type PolyPred<A, B, C> = PolyadicPred<A, B, C>;
+
+export type BinaryPredOf<A, B> = (a: A, b: B) => boolean;
+
+export type TernaryPredOf<A, B, C> = (a: A, b: B, c: C) => boolean;
+
+export type PolyadicPredOf<A, B, C> = (a: A, b: B, ...c: C[]) => boolean;
+
+
+// data.d.ts
+export type MapFunc<T, Ftr> = TernaryOf<T, number, Ftr, Ftr>;
+
+export type FilterFunc<T, Ftr> = TernaryOf<T, number, Ftr, boolean>;
+
+export interface Functor<T> {
+    value?: T;
+
+    valueOf(): T;
+
+    map(f: MapFunc<T, Functor<T>>): Functor<T>;
+
+    constructor(T): Functor<T>;
+}
+
+export interface Lengthable {
+    length?: number;
+}
+
+
 // boolean.d.ts
 export function alwaysTrue(x: any): boolean;
 
@@ -150,7 +219,11 @@ export function fromAssocListDeep<T>(xs: Array<any[]>, OutType: Function): T;
 // function.d.ts
 export type Predicate = (a: any) => boolean;
 
-export function compose(...fn: Function[]): Function;
+export function apply(fn: Nary<any>, args: any[]): any;
+
+export function call(fn: Nary<any>, ...args: any[]): any;
+
+export function compose(...fn: Unary<any>[]): Unary<any>;
 
 export function curry(fn: Function, ...prelimArgs: any[]): Function;
 
@@ -164,16 +237,35 @@ export function curry5(fn: Function): Function;
 
 export function curryN(executeArity: number, fn: Function): Function;
 
-export function flip(fn: Function): Function;      // flips fn of `2`
-export function flipN(fn: Function): Function;     // flips fn of `2` or more (returns a variadic function (`(...rest) => ...`))
-export function fnOrError(fn: Function): Function; // Throws error if value is not a function
-export function id(x: any): any;                   // Identity function
-export function negateF(fn: Function): Function;   // Negate function of arity 1
-export function negateFN(fn: Function): Function;  // Negate function of variable arity
-export function noop(): void;                      // "No operation" function
-export function trampoline(fn: Function, fnNameRestrict?: string): any;
+export function flip<A, B, Ret>(f: BinaryOf<A, B, Ret>): BinaryOf<B, A, Ret>;
 
-export function until(fn: Predicate, operation: Function, startingPoint: any): any;
+export function flip3<A, B, C, Ret>(f: TernaryOf<A, B, C, Ret>): TernaryOf<C, B, A, Ret>;
+
+export function flip4<A, B, C, D, Ret>(f: QuaternaryOf<A, B, C, D, Ret>): QuaternaryOf<D, C, B, A, Ret>;
+
+export function flip5<A, B, C, D, E, Ret>(f: QuinaryOf<A, B, C, D, E, Ret>): QuinaryOf<E, D, C, B, A, Ret>;
+
+export function flipN<T>(fn: Nary<T>): Nary<T>;
+
+export function fnOrError(fn: Function): Function;
+
+export function id(x: any): any;
+
+export function negateF(fn: Function): Function;
+
+export function negateF2<A, B, Ret>(fn: BinaryOf<A, B, Ret>): BinaryOf<A, B, Ret>;
+
+export function negateF3<A, B, C, Ret>(fn: TernaryOf<A, B, C, Ret>): TernaryOf<A, B, C, Ret>;
+
+export function negateFN(fn: Nary<any>): Nary<any>;
+
+export function noop(): void;
+
+export function toFunction<T>(x: any): Unary<T> | Function
+
+export function trampoline(fn: Nary<any>, fnNameRestrict?: string): Nary<any>;
+
+export function until<T>(fn: UnaryPred<T>, operation: Unary<any>, startingPoint: T): T;
 
 
 // errorThrowing.d.ts
@@ -252,7 +344,7 @@ export type ListForEachOperation = (agg: any, item: any, index: number, list: (a
 
 export type OrderingFunction = (a: any, b: any) => number;
 
-export interface List {
+export interface List extends Lengthable {
     concat(...fs: Array<Array<any> | string>): Array<any> | string;
 
     slice(startInd: number, endInd: number, list: Array<any> | string): Array<any> | string;
@@ -279,6 +371,8 @@ export function head(list: any[] | string): any | string | undefined;
 export function tail(list: any[] | string): any[] | string | undefined;
 
 export function last(list: any[] | string): any | string | undefined;
+
+export function length(x: any): number;
 
 export function init(list: any[] | string): any[] | string | undefined;
 
@@ -485,4 +579,3 @@ export function findIndexWhereRight(pred: ListPredicate, xs: Array<any> | string
 export function findIndicesWhere(pred: ListPredicate, xs: Array<any> | string): Array<number> | undefined;
 
 export function findWhere(pred: ListPredicate, xs: Array<any> | string): any | undefined;
-
