@@ -2235,6 +2235,7 @@ const split = fPureTakesOne('split');
  */
 
 var _jsPlatform = /*#__PURE__*/Object.freeze({
+    __proto__: null,
     instanceOf: instanceOf,
     hasOwnProperty: hasOwnProperty,
     length: length,
