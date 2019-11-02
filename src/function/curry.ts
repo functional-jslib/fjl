@@ -4,77 +4,8 @@
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 
-/**
- * @private
- */
-const
-
-    /**
-     * Returns curried function.
-     * @private
-     * @param executeArity {Number}
-     * @param unmetArityNum {Number}
-     * @param fn {Function}
-     * @param argsToCurry {...*}
-     * @returns {Function} - Curried function.
-     */
-    returnCurried = (executeArity: number, unmetArityNum: number, fn, argsToCurry: any[]): Function => {
-        switch (unmetArityNum) {
-            case 1:
-                /* eslint-disable */
-                return function func(x) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            case 2:
-                /* eslint-disable */
-                return function func(a, b) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            case 3:
-                /* eslint-disable */
-                return function func(a, b, c) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            case 4:
-                /* eslint-disable */
-                return function func(a, b, c, d) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            case 5:
-                /* eslint-disable */
-                return function func(a, b, c, d, e) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            default:
-                return (...args) => executeAsCurriedFunc(fn, executeArity, unmetArityNum, args, argsToCurry);
-        }
-    },
-
-    /**
-     * Returns curried function if unmetArity is not met else returns result of executing
-     * final function.
-     * @private
-     * @param fn {Function}
-     * @param executeArity {Number}
-     * @param unmetArity {Number}
-     * @param args {Array<*>}
-     * @param argsToCurry {Array<*>}
-     * @returns {Function|*} - Curried function or result of 'finally' executed function.
-     */
-    executeAsCurriedFunc = (fn, executeArity, unmetArity, args, argsToCurry): Function | any => {
-        let concatedArgs = argsToCurry.concat(args),
-            canBeCalled = (concatedArgs.length >= executeArity) || !executeArity,
-            newExpectedArity = executeArity - concatedArgs.length;
-        return !canBeCalled ?
-            returnCurried(executeArity, newExpectedArity, fn, concatedArgs) :
-            fn(...concatedArgs);
-    }
-;
+import {NaryOf} from '../types';
+import {noop} from './noop';
 
 export const
 
@@ -82,16 +13,28 @@ export const
      * Curries a function up to a given arity.
      * @function module:function.curryN
      * @param executeArity {Number}
-     * @param fn {Function}
+     * @param fn {Nary<any>}
      * @param argsToCurry {...*}
-     * @returns {Function}
+     * @returns {Nary<any>}
      * @throws {Error} - When `fn` is not a function.
      */
-    curryN = (executeArity, fn, ...argsToCurry) => {
+    curryN = <FnRetType extends unknown>(
+        executeArity: number,
+        fn: NaryOf<any, FnRetType>,
+        ...argsToCurry: any[]
+    ): NaryOf<any, FnRetType> | any => {
+        // Throw error if `fn` is not function
         if (!fn || !(fn instanceof Function)) {
-            throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\` though received ${fn}?`);
+            throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\`;  Received ${fn};`);
         }
-        return returnCurried(executeArity, executeArity - argsToCurry.length, fn, argsToCurry);
+        // Return curried `fn`
+        return (...args: any[]): FnRetType => {
+            const catedArgs = argsToCurry.concat(args),
+                canBeCalled = (catedArgs.length >= executeArity) || executeArity <= 0;
+            return !canBeCalled ?
+                curryN(executeArity - catedArgs.length, fn, ...catedArgs) :
+                fn(...catedArgs);
+        };
     },
 
     /**
@@ -101,7 +44,7 @@ export const
      * @param argsToCurry {...*}
      * @returns {Function}
      */
-    curry = (fn, ...argsToCurry) => curryN((fn || {}).length, fn, ...argsToCurry),
+    curry = (fn, ...argsToCurry) => curryN((fn || noop).length, fn, ...argsToCurry),
 
     /**
      * Curries a function up to an arity of 2 (won't call function until 2 or more args).

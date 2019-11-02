@@ -28,7 +28,7 @@ import {
     vowelsString, vowelsArray
 } from './helpers';
 
-import {Nameable} from '../types';
+import {Nameable} from '../src/types';
 
 describe ('#object', function () {
     const charCodeToCharArrayMap = unfoldr(

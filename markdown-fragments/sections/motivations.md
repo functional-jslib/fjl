@@ -2,7 +2,7 @@
 - Haskell and it's `Prelude` (Functional programming).
 - Lambda Calculus.
 - The need for: 
-    - functional 'combinators' in javascript (without requiring typescript) (index.d.ts being developed for typescript users).
+    - functional 'combinators' in javascript (without requiring typescript) (index.ts being developed for typescript users).
     - the ability to write functional code quickly and easily (using the likes of `curry`, `isset`, `compose` etc.).
     - a library written from the ground up using es6 and functional concepts.
     - a library that is exported to multiple formats (umd, amd, commonjs, es6-modules, and iife).

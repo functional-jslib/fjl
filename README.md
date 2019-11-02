@@ -30,7 +30,7 @@ Functional Javascript Library (inspired by Haskell's Prelude).
 ## Getting Started:
 
 #### Note on typescript:
-If you are using typescript, and want to manually include fjl's types file, it is located at `'fjl/types/index.d.ts'`.
+If you are using typescript, and want to manually include fjl's types file, it is located at `'fjl/types/index.ts'`.
 
 ### In Browser:
 See desired export type below:
@@ -326,7 +326,7 @@ live directly on 'fjl' and are defined in 'fjl/objects/defineProp' (or more dire
 - Cleaned up imports in some places to protect from cyclic dependency issues.
 
 ### 1.5.1, 1.5.2
-- Added './types/index.d.ts' file.
+- Added './types/index.ts' file.
 
 ### 1.5.0
 #### Breaking changes

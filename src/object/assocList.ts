@@ -1,6 +1,6 @@
 import {isArray, isType} from './is';
 import {keys} from '../jsPlatform/object';
-import {TypeConstructor} from "../../types";
+import {TypeConstructor} from "../types";
 
 export const
 

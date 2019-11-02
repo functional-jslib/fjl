@@ -1,7 +1,7 @@
 ## Getting Started:
 
 #### Note on typescript:
-If you are using typescript, and want to manually include fjl's types file, it is located at `'fjl/types/index.d.ts'`.
+If you are using typescript, and want to manually include fjl's types file, it is located at `'fjl/types/index.ts'`.
 
 ### In Browser:
 See desired export type below:
