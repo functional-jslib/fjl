@@ -1,1 +1,1 @@
-export * from '../jsPlatform/apply';
+export * from '../jsPlatform/function/apply';

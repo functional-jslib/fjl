@@ -1,2 +1,2 @@
-export * from './call';
-export * from './apply';
+export * from './function/call';
+export * from './function/apply';

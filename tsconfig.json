@@ -13,20 +13,16 @@
     "strictFunctionTypes": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "outDir": "./dist/es",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "outDir": "./dist/es"
   },
   "files": [
-    "src/fjl.ts",
-    "index.d.ts"
+    "src/index.ts"
   ],
   "exclude": [
     "node_modules"
   ],
   "include": [
     "src/**/*.ts"
-  ],
-  "types": [
-    "index.d.ts"
   ]
 }

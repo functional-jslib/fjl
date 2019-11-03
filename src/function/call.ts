@@ -1,1 +1,1 @@
-export * from '../jsPlatform/call';
+export * from '../jsPlatform/function/call';

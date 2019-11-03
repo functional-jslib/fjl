@@ -1,5 +1,5 @@
 import {length} from "../jsPlatform/object";
-import {apply} from "../jsPlatform/apply";
+import {apply} from "../jsPlatform/function/apply";
 import {lengths} from "./utils";
 import {filter} from "../list/filter";
 import {maximum} from "../list/maximum";

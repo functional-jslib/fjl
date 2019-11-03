@@ -1,5 +1,5 @@
 import {curry3} from "../function/curry";
-import {apply} from "../jsPlatform/apply";
+import {apply} from "../jsPlatform/function/apply";
 import {sliceTo} from "./utils";
 import {length} from "../jsPlatform/object";
 import {reduce, toShortest} from "./utils";

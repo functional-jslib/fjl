@@ -1,4 +1,4 @@
-import {fPureTakesOne} from "../utils";
+import {fPureTakesOne} from "../../utils";
 
 export const
 

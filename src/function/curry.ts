@@ -20,7 +20,10 @@ export type Curry4<T> = (a?: T, b?: T, c?: T, d?: T, ...e: T[]) =>
 export type Curry5<T> = (a?: T, b?: T, c?: T, d?: T, e?: T, ...f: T[]) =>
     Curry5<T> | Curry4<T> | Curry3<T> | Curry2<T> | Curry1<T> | T;
 
-export type Curry<T> = Curry1<T> | Curry2<T> | Curry3<T> | Curry4<T> | Curry5<T>;
+export type Curry6<T> = (a?: T, b?: T, c?: T, d?: T, e?: T, f?: T, ...g: T[]) =>
+    Curry6<T> | Curry5<T> | Curry4<T> | Curry3<T> | Curry2<T> | Curry1<T> | T;
+
+export type Curry<T> = Curry1<T> | Curry2<T> | Curry3<T> | Curry4<T> | Curry5<T> | Curry6<T>;
 
 export type CurryX<T> = Curry<T>;
 
@@ -39,8 +42,12 @@ export type Curry5Of<T, T2, T3, T4, T5, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, e
     Curry5Of<T, T2, T3, T4, T5, Ret> | Curry4Of<T2, T3, T4, T5, Ret> | Curry3Of<T3, T4, T5, Ret> |
     Curry2Of<T4, T5, Ret> | Curry1Of<T5, Ret> | Ret;
 
+export type Curry6Of<T, T2, T3, T4, T5, T6, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, e?: T5, f?: T6, ...g: T5[]) =>
+    Curry6Of<T, T2, T3, T4, T5, T6, Ret> | Curry5Of<T, T2, T3, T4, T5, Ret> | Curry4Of<T2, T3, T4, T5, Ret> |
+    Curry3Of<T3, T4, T5, Ret> | Curry2Of<T4, T5, Ret> | Curry1Of<T5, Ret> | Ret;
+
 export type CurryOf<T, Ret> = Curry1Of<T, Ret> | Curry2Of<T, T, Ret> | Curry3Of<T, T, T, Ret> |
-    Curry4Of<T, T, T, T, Ret> | Curry5Of<T, T, T, T, T, Ret>;
+    Curry4Of<T, T, T, T, Ret> | Curry5Of<T, T, T, T, T, Ret> | Curry6Of<T, T, T, T, T, T, Ret>;
 
 export type CurryXOf<T, Ret> = CurryOf<T, Ret>;
 

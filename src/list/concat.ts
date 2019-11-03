@@ -1,4 +1,4 @@
-import {apply} from '../jsPlatform/apply';
+import {apply} from '../jsPlatform/function/apply';
 import {length} from '../jsPlatform/object';
 import {append} from './append';
 import {sliceCopy} from './utils';

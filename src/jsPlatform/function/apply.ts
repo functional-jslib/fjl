@@ -1,4 +1,5 @@
-import {curry2} from '../function/curry';
+import {curry2} from '../../function/curry';
+import {NaryOf} from "../../types";
 
 export const
 
@@ -9,5 +10,5 @@ export const
      * @param args {Array|*}
      * @returns {*}
      */
-    apply = curry2((fn, args) => fn.apply(null, args))
+    apply = curry2((fn: NaryOf<any, unknown>, args) => fn(...args))
 ;
