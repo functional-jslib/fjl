@@ -14,6 +14,7 @@ describe('#call', () => {
         expect(call(add, 1, 2, 3, 4, 5)).toEqual(15);
     });
     it('should fail when argument `1` is not a function', () => {
+        // @ts-ignore
         expect(() => call(99, null)).toThrow(Error);
         expect(() => call(undefined, undefined)).toThrow(Error);
     });

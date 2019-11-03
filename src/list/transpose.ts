@@ -1,5 +1,4 @@
 import {length} from "../jsPlatform/object";
-import {apply} from "../jsPlatform/function/apply";
 import {lengths} from "./utils";
 import {filter} from "../list/filter";
 import {maximum} from "../list/maximum";
@@ -26,7 +25,7 @@ export const transpose = (xss: Array<any[]> | []): Array<any[]> | [] => {
     if (!numLists) {
         return [];
     }
-    const listLengths = apply(lengths, xss),
+    const listLengths = lengths(...xss),
         longestListLen = maximum(listLengths),
         outLists: [any[]] | any[] = [];
     for (; ind < longestListLen; ind += 1) {

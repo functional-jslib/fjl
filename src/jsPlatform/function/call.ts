@@ -1,5 +1,7 @@
-import {curry2} from '../../function/curry';
+import {curry2, CurryOf2} from '../../function/curry';
 import {NaryOf} from "../../types";
+
+export type CallType = CurryOf2<NaryOf<any, unknown>, any[], unknown>;
 
 /**
  * Functional `call` function (takes no context).
@@ -8,4 +10,8 @@ import {NaryOf} from "../../types";
  * @param args {...*}
  * @returns {*}
  */
-export const call = curry2((fn: NaryOf<any, unknown>, ...args) => fn(...args));
+const call: (fn: NaryOf<any, unknown>, ...args: any[]) => any | CallType =
+    curry2((fn: NaryOf<any, unknown>, ...args) => fn(...args)) as CallType
+;
+
+export default call;

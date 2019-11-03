@@ -1,6 +1,6 @@
 import {curry} from "../function/curry";
 import {filter} from "./filter";
-import {includes} from "../jsPlatform/list";
+import {includes} from "../jsPlatform/slice";
 
 export const
     /**

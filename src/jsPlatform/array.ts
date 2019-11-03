@@ -5,7 +5,7 @@
 
 import {fPureTakesOne, fPureTakes2, fPureTakesOneOrMore} from '../utils';
 
-export {map} from './array/map';
+export * from './array/map';
 
 const
     /**

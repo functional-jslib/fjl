@@ -19,7 +19,7 @@ const _Number = Number.name,
  * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
  *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
  */
-export function typeOf (value) {
+export function typeOf (value: any): string {
     let retVal;
     if (value === undefined) {
         retVal = _Undefined;
@@ -28,7 +28,7 @@ export function typeOf (value) {
         retVal = _Null;
     }
     else {
-        let constructorName = (value).constructor.name;
+        const {name: constructorName} = (value).constructor;
         retVal = constructorName === _Number && isNaN(value) ?
             _NaN : constructorName;
     }

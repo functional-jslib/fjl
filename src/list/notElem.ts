@@ -1,5 +1,5 @@
 import {negateF2} from "../function/negate";
-import {includes} from "../jsPlatform/list";
+import {includes} from "../jsPlatform/slice";
 
 export const
     /**

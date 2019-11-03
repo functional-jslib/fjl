@@ -1,1 +1,3 @@
-export * from '../jsPlatform/function/apply';
+import apply from '../jsPlatform/function/apply';
+
+export default apply;

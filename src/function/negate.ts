@@ -1,4 +1,3 @@
-import {apply} from './apply';
 import {curry} from './curry';
 
 export const
@@ -36,4 +35,4 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    negateFN = fn => (...args) => !apply(fn, args);
+    negateFN = fn => (...args) => !fn(...args);

@@ -1,5 +1,5 @@
 import {length} from "../jsPlatform/object";
-import {slice} from "../jsPlatform/list";
+import {slice} from "../jsPlatform/slice";
 
 /**
  * The inits function returns all initial segments of the argument, shortest first. For example,

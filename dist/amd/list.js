@@ -1,4 +1,4 @@
-define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/object", "./function/negate", "./function/curry", "./boolean", "./object/lookup", "./object/of", "./object/is", "./object/typeOf", "./list/map", "./list/utils", "./list/range", "./jsPlatform"], function (_exports, _list, _function, _object, _negate, _curry, _boolean, _lookup, _of, _is, _typeOf, _map, _utils, _range, _jsPlatform) {
+define(["exports", "./jsPlatform/slice", "./jsPlatform/function", "./jsPlatform/object", "./function/negate", "./function/curry", "./boolean", "./object/lookup", "./object/of", "./object/is", "./object/typeOf", "./list/map", "./list/utils", "./list/range", "./jsPlatform"], function (_exports, _list, _function, _object, _negate, _curry, _boolean, _lookup, _of, _is, _typeOf, _map, _utils, _range, _jsPlatform) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

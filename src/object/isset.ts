@@ -6,6 +6,6 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isset = x => x !== null && x !== undefined
+    isset = (x: any): boolean => x !== null && x !== undefined
 
 ;

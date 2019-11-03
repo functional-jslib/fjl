@@ -68,7 +68,7 @@ export let  expectInstanceOf = curry2_((instance, value) => expect(value).toBeIn
 
     allYourBase = {all: {your: {base: {are: {belong: {to: {us: 0}}}}}}},
 
-    alphabetCharCodeRange = range('a'.charCodeAt(0), 'z'.charCodeAt(0)),
+    alphabetCharCodeRange: number[] = range('a'.charCodeAt(0), 'z'.charCodeAt(0)) as number[],
 
     alphabetArray = alphabetCharCodeRange
         .map(charCode => String.fromCharCode(charCode)),
@@ -77,7 +77,7 @@ export let  expectInstanceOf = curry2_((instance, value) => expect(value).toBeIn
 
     alphabetLen = alphabetArray.length,
 
-    alphabetIndices = range(0, alphabetLen - 1),
+    alphabetIndices = range(0, alphabetLen - 1) as number[],
 
     revAlphabetArray = alphabetArray.slice(0).reverse(),
 

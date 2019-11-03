@@ -3,9 +3,9 @@
  */
 
 import {fPureTakesOne} from '../utils';
-import {curry, curry2} from '../function/curry';
+import {curry, curry2, CurryOf2} from '../function/curry';
 import {flip, flip3, flip4, flip5} from '../function/flip';
-import {Lengthable} from "../types";
+import {Lengthable, TypeConstructor} from "../types";
 import {isset} from '../object/isset';
 
 export const
@@ -18,8 +18,8 @@ export const
      * @instance {*}
      * @returns {Boolean}
      */
-    instanceOf = curry((instanceConstructor, instance) =>
-        instance instanceof instanceConstructor),
+    instanceOf: (constructor: Function, instance?: any) => boolean | CurryOf2<Function, any, boolean> =
+        curry((constructor, instance) => instance instanceof constructor) as CurryOf2<Function, any, boolean>,
 
     /**
      * @function module:object.hasOwnProperty
@@ -72,15 +72,15 @@ export const
                 break;
         }
         return agg;
-    }, {keys: (x: any) : string[] => []}),
+    }, {keys: Object.keys}),
 
     /**
      * Gets passed in object's own enumerable keys (same as `Object.keys`).
      * @function module:object.keys
-     * @param obj {*}
+     * @param x {*}
      * @returns {Array<String>}
      */
-    {keys} = native,
+    keys = (x: any): string[] => !x ? [] : Object.keys(x),
 
     /**
      * Defined as `Object.assign` else is the same thing but shimmed.

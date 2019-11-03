@@ -1,4 +1,3 @@
-import {apply} from '../jsPlatform/function/apply';
 import {length} from '../jsPlatform/object';
 import {append} from './append';
 import {sliceCopy} from './utils';
@@ -12,16 +11,17 @@ export const
      * @returns {Array}
      */
     concat = xs => {
+        let item0;
         switch (length(xs)) {
             case undefined:
             case 0:
                 return [];
             case 1:
-                const item0 = xs[0];
+                item0 = xs[0];
                 return item0 && item0.slice ? sliceCopy(item0) : item0;
             case 2:
             default:
-                return apply(append, xs);
+                return append(...xs);
         }
     }
 ;

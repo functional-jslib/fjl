@@ -1,5 +1,5 @@
 import {curry} from "../function/curry";
-import {indexOf} from "../jsPlatform/list";
+import {indexOf} from "../jsPlatform/slice";
 
 export const
     /**

@@ -1,1 +1,3 @@
-export * from '../jsPlatform/function/call';
+import call from '../jsPlatform/function/call';
+
+export {call}

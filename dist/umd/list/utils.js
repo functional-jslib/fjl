@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(["exports", "../jsPlatform/function", "../jsPlatform/list", "../jsPlatform/object", "../boolean", "./map", "../function/curry", "./aggregation"], factory);
+    define(["exports", "../jsPlatform/function", "../jsPlatform/slice", "../jsPlatform/object", "../boolean", "./map", "../function/curry", "./aggregation"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require("../jsPlatform/function"), require("../jsPlatform/list"), require("../jsPlatform/object"), require("../boolean"), require("./map"), require("../function/curry"), require("./aggregation"));
+    factory(exports, require("../jsPlatform/function"), require("../jsPlatform/slice"), require("../jsPlatform/object"), require("../boolean"), require("./map"), require("../function/curry"), require("./aggregation"));
   } else {
     var mod = {
       exports: {}

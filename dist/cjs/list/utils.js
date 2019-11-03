@@ -24,7 +24,7 @@ exports.findWhere = exports.findIndicesWhere = exports.findIndexWhereRight = exp
 
 var _function = require("../jsPlatform/function");
 
-var _list = require("../jsPlatform/list");
+var _list = require("../jsPlatform/slice");
 
 var _object = require("../jsPlatform/object");
 

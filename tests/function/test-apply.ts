@@ -1,5 +1,5 @@
 import {add, expectEqual, expectFunction} from "../helpers";
-import {apply} from '../../src/function/apply';
+import apply from '../../src/function/apply';
 
 describe ('#apply', function () {
     it ('should be a function', function () {
@@ -14,6 +14,7 @@ describe ('#apply', function () {
         expectEqual(apply(add, [1, 2, 3, 4, 5]), 15);
     });
     it ('should fail when argument `1` is not a function', () => {
+        // @ts-ignore
         expect(() => apply(99, null)).toThrow(Error);
         expect(() => apply(undefined, undefined)).toThrow(Error);
     });

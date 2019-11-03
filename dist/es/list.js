@@ -2,7 +2,7 @@
  * List operations module.
  * @module list
  */
-import { concat as listAppend, indexOf, slice, includes } from './jsPlatform/list';
+import { concat as listAppend, indexOf, slice, includes } from './jsPlatform/slice';
 import { apply } from './jsPlatform/function';
 import { length } from './jsPlatform/object';
 import { negateF3, negateF2 } from './function/negate';

@@ -1,7 +1,7 @@
 import {curry} from "../function/curry";
 import {length} from "../jsPlatform/object";
 import {findIndexWhere, sliceFrom} from "./utils";
-import {slice} from "../jsPlatform/list";
+import {slice} from "../jsPlatform/slice";
 
 export const
     /**

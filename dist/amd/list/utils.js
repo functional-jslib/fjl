@@ -1,4 +1,4 @@
-define(["exports", "../jsPlatform/function", "../jsPlatform/list", "../jsPlatform/object", "../boolean", "./map", "../function/curry", "./aggregation"], function (_exports, _function, _list, _object, _boolean, _map, _curry, _aggregation) {
+define(["exports", "../jsPlatform/function", "../jsPlatform/slice", "../jsPlatform/object", "../boolean", "./map", "../function/curry", "./aggregation"], function (_exports, _function, _list, _object, _boolean, _map, _curry, _aggregation) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

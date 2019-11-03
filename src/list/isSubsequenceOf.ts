@@ -1,6 +1,6 @@
 import {curry} from "../function/curry";
 import {length} from "../jsPlatform/object";
-import {indexOf} from "../jsPlatform/list";
+import {indexOf} from "../jsPlatform/slice";
 
 export const
     /**

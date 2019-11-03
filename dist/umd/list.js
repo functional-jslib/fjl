@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(["exports", "./jsPlatform/list", "./jsPlatform/function", "./jsPlatform/object", "./function/negate", "./function/curry", "./boolean", "./object/lookup", "./object/of", "./object/is", "./object/typeOf", "./list/map", "./list/utils", "./list/range", "./jsPlatform"], factory);
+    define(["exports", "./jsPlatform/slice", "./jsPlatform/function", "./jsPlatform/object", "./function/negate", "./function/curry", "./boolean", "./object/lookup", "./object/of", "./object/is", "./object/typeOf", "./list/map", "./list/utils", "./list/range", "./jsPlatform"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require("./jsPlatform/list"), require("./jsPlatform/function"), require("./jsPlatform/object"), require("./function/negate"), require("./function/curry"), require("./boolean"), require("./object/lookup"), require("./object/of"), require("./object/is"), require("./object/typeOf"), require("./list/map"), require("./list/utils"), require("./list/range"), require("./jsPlatform"));
+    factory(exports, require("./jsPlatform/slice"), require("./jsPlatform/function"), require("./jsPlatform/object"), require("./function/negate"), require("./function/curry"), require("./boolean"), require("./object/lookup"), require("./object/of"), require("./object/is"), require("./object/typeOf"), require("./list/map"), require("./list/utils"), require("./list/range"), require("./jsPlatform"));
   } else {
     var mod = {
       exports: {}

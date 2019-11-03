@@ -25,31 +25,29 @@ export type Curry6<T> = (a?: T, b?: T, c?: T, d?: T, e?: T, f?: T, ...g: T[]) =>
 
 export type Curry<T> = Curry1<T> | Curry2<T> | Curry3<T> | Curry4<T> | Curry5<T> | Curry6<T>;
 
-export type CurryX<T> = Curry<T>;
+export type CurryOf1<T, Ret> = (a?: T, ...b: T[]) => CurryOf1<T, Ret> | Ret;
 
-export type Curry1Of<T, Ret> = (a?: T, ...b: T[]) => Curry1Of<T, Ret> | Ret;
+export type CurryOf2<T, T2, Ret> = (a?: T, b?: T2, ...c: T2[]) =>
+    CurryOf2<T, T2, Ret> | CurryOf1<T, Ret> | Ret;
 
-export type Curry2Of<T, T2, Ret> = (a?: T, b?: T2, ...c: T2[]) =>
-    Curry2Of<T, T2, Ret> | Curry1Of<T, Ret> | Ret;
+export type CurryOf3<T, T2, T3, Ret> = (a?: T, b?: T2, c?: T3, ...d: T3[]) =>
+    CurryOf3<T, T2, T3, Ret> | CurryOf2<T2, T3, Ret> | CurryOf1<T3, Ret> | Ret;
 
-export type Curry3Of<T, T2, T3, Ret> = (a?: T, b?: T2, c?: T3, ...d: T3[]) =>
-    Curry3Of<T, T2, T3, Ret> | Curry2Of<T2, T3, Ret> | Curry1Of<T3, Ret> | Ret;
+export type CurryOf4<T, T2, T3, T4, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, ...e: T4[]) =>
+    CurryOf4<T, T2, T3, T4, Ret> | CurryOf3<T2, T3, T4, Ret> | CurryOf2<T3, T4, Ret> | CurryOf1<T4, Ret> | Ret;
 
-export type Curry4Of<T, T2, T3, T4, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, ...e: T4[]) =>
-    Curry4Of<T, T2, T3, T4, Ret> | Curry3Of<T2, T3, T4, Ret> | Curry2Of<T3, T4, Ret> | Curry1Of<T4, Ret> | Ret;
+export type CurryOf5<T, T2, T3, T4, T5, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, e?: T5, ...f: T5[]) =>
+    CurryOf5<T, T2, T3, T4, T5, Ret> | CurryOf4<T2, T3, T4, T5, Ret> | CurryOf3<T3, T4, T5, Ret> |
+    CurryOf2<T4, T5, Ret> | CurryOf1<T5, Ret> | Ret;
 
-export type Curry5Of<T, T2, T3, T4, T5, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, e?: T5, ...f: T5[]) =>
-    Curry5Of<T, T2, T3, T4, T5, Ret> | Curry4Of<T2, T3, T4, T5, Ret> | Curry3Of<T3, T4, T5, Ret> |
-    Curry2Of<T4, T5, Ret> | Curry1Of<T5, Ret> | Ret;
+export type CurryOf6<T, T2, T3, T4, T5, T6, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, e?: T5, f?: T6, ...g: T5[]) =>
+    CurryOf6<T, T2, T3, T4, T5, T6, Ret> | CurryOf5<T, T2, T3, T4, T5, Ret> | CurryOf4<T2, T3, T4, T5, Ret> |
+    CurryOf3<T3, T4, T5, Ret> | CurryOf2<T4, T5, Ret> | CurryOf1<T5, Ret> | Ret;
 
-export type Curry6Of<T, T2, T3, T4, T5, T6, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, e?: T5, f?: T6, ...g: T5[]) =>
-    Curry6Of<T, T2, T3, T4, T5, T6, Ret> | Curry5Of<T, T2, T3, T4, T5, Ret> | Curry4Of<T2, T3, T4, T5, Ret> |
-    Curry3Of<T3, T4, T5, Ret> | Curry2Of<T4, T5, Ret> | Curry1Of<T5, Ret> | Ret;
+export type CurryOf<T, Ret> = CurryOf1<T, Ret> | CurryOf2<T, T, Ret> | CurryOf3<T, T, T, Ret> |
+    CurryOf4<T, T, T, T, Ret> | CurryOf5<T, T, T, T, T, Ret> | CurryOf6<T, T, T, T, T, T, Ret>;
 
-export type CurryOf<T, Ret> = Curry1Of<T, Ret> | Curry2Of<T, T, Ret> | Curry3Of<T, T, T, Ret> |
-    Curry4Of<T, T, T, T, Ret> | Curry5Of<T, T, T, T, T, Ret> | Curry6Of<T, T, T, T, T, T, Ret>;
-
-export type CurryXOf<T, Ret> = CurryOf<T, Ret>;
+export type CurryOfX<T, Ret> = CurryOf<T, Ret>;
 
 export const
 
@@ -59,7 +57,7 @@ export const
      * @param executeArity {Number}
      * @param fn {NaryOf<any, any>} - Any function that may take one or more `any`s and return `any`.
      * @param argsToCurry {...*}
-     * @returns {CurryXOf<any, any>} - One of the `CurryXOf<T, Ret>` types.
+     * @returns {CurryOfX<any, any>} - One of the `CurryXOf<T, Ret>` types.
      * @throws {Error} - When `fn` is not a function.
      */
     curryN = (
@@ -67,11 +65,11 @@ export const
         fn: NaryOf<any, unknown>,
         ...argsToCurry: any[]
     ):
-        Curry1Of<any, unknown> |
-        Curry2Of<any, any, unknown> |
-        Curry3Of<any, any, any, unknown> |
-        Curry4Of<any, any, any, any, unknown> |
-        Curry5Of<any, any, any, any, any, unknown> => {
+        CurryOf1<any, unknown> |
+        CurryOf2<any, any, unknown> |
+        CurryOf3<any, any, any, unknown> |
+        CurryOf4<any, any, any, any, unknown> |
+        CurryOf5<any, any, any, any, any, unknown> => {
         if (!fn || !(fn instanceof Function)) {
             throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\`;  Received ${fn};`);
         }
@@ -97,16 +95,16 @@ export const
      * @function module:function.curry
      * @param fn {NaryOf<any, any>}
      * @param argsToCurry {...*}
-     * @returns {Curry1Of<any, any> | Curry2Of<any, any, any> |
-     *  Curry3Of<any, any, any, any> | Curry4Of<any, any, any, any, any> |
-     *  Curry5Of<any, any, any, any, any, any}
+     * @returns {CurryOf1<any, any> | CurryOf2<any, any, any> |
+     *  CurryOf3<any, any, any, any> | CurryOf4<any, any, any, any, any> |
+     *  CurryOf5<any, any, any, any, any, any}
      */
     curry = (fn: NaryOf<any, unknown>, ...argsToCurry):
-        Curry1Of<any, unknown> |
-        Curry2Of<any, any, unknown> |
-        Curry3Of<any, any, any, unknown> |
-        Curry4Of<any, any, any, any, unknown> |
-        Curry5Of<any, any, any, any, any, unknown> => curryN((fn || noop).length, fn, ...argsToCurry),
+        CurryOf1<any, unknown> |
+        CurryOf2<any, any, unknown> |
+        CurryOf3<any, any, any, unknown> |
+        CurryOf4<any, any, any, any, unknown> |
+        CurryOf5<any, any, any, any, any, unknown> => curryN((fn || noop).length, fn, ...argsToCurry),
 
     /**
      * Curries a function up to an arity of 2 (won't call function until 2 or more args).
@@ -114,7 +112,7 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry2 = (fn: NaryOf<any, unknown>): Curry2Of<any, any, unknown> =>
+    curry2 = (fn: NaryOf<any, unknown>): CurryOf2<any, any, unknown> =>
         curryN(2, fn),
 
     /**
@@ -123,7 +121,7 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry3 = (fn: NaryOf<any, unknown>): Curry3Of<any, any, any, unknown> =>
+    curry3 = (fn: NaryOf<any, unknown>): CurryOf3<any, any, any, unknown> =>
         curryN(3, fn),
 
     /**
@@ -132,7 +130,7 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry4 = (fn: NaryOf<any, unknown>): Curry4Of<any, any, any, any, unknown> =>
+    curry4 = (fn: NaryOf<any, unknown>): CurryOf4<any, any, any, any, unknown> =>
         curryN(4, fn),
 
     /**
@@ -141,5 +139,5 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry5 = (fn: NaryOf<any, unknown>): Curry5Of<any, any, any, any, any, unknown> =>
+    curry5 = (fn: NaryOf<any, unknown>): CurryOf5<any, any, any, any, any, unknown> =>
         curryN(5, fn);

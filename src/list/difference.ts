@@ -1,6 +1,6 @@
 import {curry} from "../function/curry";
 import {reduce, sliceCopy} from "./utils";
-import {includes} from "../jsPlatform/list";
+import {includes} from "../jsPlatform/slice";
 
 export const
 

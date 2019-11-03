@@ -1,5 +1,4 @@
 import {curry3} from "../function/curry";
-import {apply} from "../jsPlatform/function/apply";
 import {sliceTo} from "./utils";
 import {length} from "../jsPlatform/object";
 import {reduce, toShortest} from "./utils";
@@ -21,7 +20,7 @@ export const
      * @returns {Array<Array<*,*>>}
      */
     zipWithN = curry3((op, ...lists) => {
-        const trimmedLists = apply(toShortest, lists),
+        const trimmedLists = toShortest(...lists),
             lenOfTrimmed = length(trimmedLists);
         if (!lenOfTrimmed) {
             return [];
@@ -29,7 +28,7 @@ export const
             return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
-                push(agg, apply(op, map(xs => xs[ind], trimmedLists))),
+                push(agg, op(map(xs => xs[ind], trimmedLists))),
             [], trimmedLists[0]);
     });
 

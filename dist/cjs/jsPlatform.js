@@ -28,7 +28,7 @@ Object.keys(_array).forEach(function (key) {
   });
 });
 
-var _list = require("./jsPlatform/list");
+var _list = require("./jsPlatform/slice");
 
 Object.keys(_list).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;

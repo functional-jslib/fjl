@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(["exports", "./jsPlatform/object", "./jsPlatform/array", "./jsPlatform/list", "./jsPlatform/string", "./jsPlatform/function"], factory);
+    define(["exports", "./jsPlatform/object", "./jsPlatform/array", "./jsPlatform/slice", "./jsPlatform/string", "./jsPlatform/function"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require("./jsPlatform/object"), require("./jsPlatform/array"), require("./jsPlatform/list"), require("./jsPlatform/string"), require("./jsPlatform/function"));
+    factory(exports, require("./jsPlatform/object"), require("./jsPlatform/array"), require("./jsPlatform/slice"), require("./jsPlatform/string"), require("./jsPlatform/function"));
   } else {
     var mod = {
       exports: {}

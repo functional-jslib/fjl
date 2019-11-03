@@ -5,12 +5,14 @@
 
 import {typeOf} from './typeOf';
 import {instanceOf, length, keys} from '../jsPlatform/object';
-import {curry} from '../function/curry';
+import {curry, CurryOf1, CurryOf2} from '../function/curry';
 import {isset} from './isset';
+import {TypeRef} from "../types";
 
 export {isset};
 
-let _String = String.name,
+const
+    _String = String.name,
     _Number = Number.name,
     _Object = Object.name,
     _Boolean = Boolean.name,
@@ -20,7 +22,8 @@ let _String = String.name,
     _WeakMap = 'WeakMap',
     _WeakSet = 'WeakSet',
     _Null = 'Null',
-    _Undefined = 'Undefined';
+    _Undefined = 'Undefined'
+;
 
 export const
 
@@ -31,7 +34,7 @@ export const
      * @returns {String}
      * @todo write tests for this function.
      */
-    toTypeRef = type => {
+    toTypeRef = (type: TypeRef | any): TypeRef => {
         if (!type) {
             return typeOf(type);
         }
@@ -49,17 +52,17 @@ export const
      * @returns {Array<TypeRef>}
      * @todo Ensure tests are written for this function.
      */
-    toTypeRefs = (...types) => types.map(toTypeRef),
+    toTypeRefs = (...types: any[]): TypeRef[] => types.map(toTypeRef),
 
     /**
      * Returns possible Type's TypeRef name.
      * @function module:object.toTypeRefName
-     * @param Type {(TypeRef|*)}
+     * @param type {(TypeRef|*)}
      * @returns {String}
      * @todo Ensure tests are written for this function.
      */
-    toTypeRefName = Type => {
-        const ref = toTypeRef(Type);
+    toTypeRefName = (type: any): TypeRef => {
+        const ref = toTypeRef(type);
         return ref instanceof Function ? ref.name : ref;
     },
 
@@ -70,7 +73,7 @@ export const
      * @returns {String[]}
      * @todo Ensure tests are written for this function.
      */
-    toTypeRefNames = (...types) => types.map(toTypeRefName),
+    toTypeRefNames = (...types: any): string[] => types.map(toTypeRefName),
 
     /**
      * Returns whether a value is a function or not.
@@ -78,7 +81,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isFunction = instanceOf(Function),
+    isFunction = instanceOf(Function) as CurryOf1<any, boolean>,
 
     /**
      * Strict type checker.  Checks if given value is a direct instance of given type;  E.g.,
@@ -97,7 +100,7 @@ export const
      * @param obj {*}
      * @return {Boolean}
      */
-    isType = curry((type, obj) => typeOf(obj) === toTypeRefName(type)),
+    isType = curry((type, obj) => typeOf(obj) === toTypeRefName(type)) as CurryOf2<any, any, boolean>,
 
     /**
      * Synonym for `isType` (or just a more accurate name for `isType`).
@@ -134,7 +137,7 @@ export const
      * @param x {*} - Value to check.
      * @returns {Boolean}
      */
-    isOfType = curry((type, x) => isType(type, x) || instanceOf(type, x)),
+    isOfType = curry((type, x) => isType(type, x) || instanceOf(type, x)) as CurryOf2<any, any, boolean>,
 
     /**
      * Synonym for `isOfType` (or just a more accurate name).
@@ -151,7 +154,7 @@ export const
      * @param x {*}
      * @returns {boolean}
      */
-    isClass = x => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10)),
+    isClass = (x: any): boolean => x && /^\s{0,3}class\s{1,3}/.test((x + '').substr(0, 10)),
 
     /**
      * Returns a boolean depicting whether a value is callable or not.
@@ -160,7 +163,7 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isCallable = x => isFunction(x) && !isClass(x),
+    isCallable = (x: any): boolean => isFunction(x) && !isClass(x),
 
     /**
      * Checks if value is an array (same as `Array.isArray`).
@@ -176,7 +179,7 @@ export const
      * @param value
      * @returns {Boolean}
      */
-    isObject = isType(_Object),
+    isObject = isType(_Object) as CurryOf1<any, boolean>,
 
     /**
      * Checks if value is a boolean.
@@ -184,7 +187,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isBoolean = isType(_Boolean),
+    isBoolean = isType(_Boolean) as CurryOf1<any, boolean>,
 
     /**
      * Checks if value is a valid number (also checks if isNaN so that you don't have to).
@@ -192,7 +195,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNumber = isType(_Number),
+    isNumber = isType(_Number) as CurryOf1<any, boolean>,
 
     /**
      * Checks whether value is a string or not.
@@ -200,7 +203,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isString = isType(_String),
+    isString = isType(_String) as CurryOf1<any, boolean>,
 
     /**
      * Checks whether value is of `Map` or not.
@@ -208,7 +211,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isMap = isType(_Map),
+    isMap = isType(_Map) as CurryOf1<any, boolean>,
 
     /**
      * Checks whether value is of `Set` or not.
@@ -216,7 +219,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSet = isType(_Set),
+    isSet = isType(_Set) as CurryOf1<any, boolean>,
 
     /**
      * Checks whether value is of `WeakMap` or not.
@@ -224,7 +227,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakMap =isType(_WeakMap),
+    isWeakMap =isType(_WeakMap) as CurryOf1<any, boolean>,
 
     /**
      * Checks whether value is of `WeakSet` or not.
@@ -232,7 +235,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakSet = isType(_WeakSet),
+    isWeakSet = isType(_WeakSet) as CurryOf1<any, boolean>,
 
     /**
      * Checks if value is undefined.
@@ -240,7 +243,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isUndefined = isType(_Undefined),
+    isUndefined = isType(_Undefined) as CurryOf1<any, boolean>,
 
     /**
      * Checks if value is null.
@@ -248,7 +251,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isNull = isType(_Null),
+    isNull = isType(_Null) as CurryOf1<any, boolean>,
 
     /**
      * Checks if value is a `Symbol`.
@@ -256,7 +259,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isSymbol = isType(_Symbol),
+    isSymbol = isType(_Symbol) as CurryOf1<any, boolean>,
 
     /**
      * Checks if given `x` is set and of one of
@@ -266,11 +269,11 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isUsableImmutablePrimitive = x => {
+    isUsableImmutablePrimitive = (x: any) => {
         const typeOfX = typeOf(x);
         return isset(x) &&
             [_String, _Number, _Boolean, _Symbol]
-                .some(Type => Type === typeOfX);
+                .some(type => type === typeOfX);
     },
 
     /**
@@ -279,7 +282,7 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isEmptyList = x => !length(x),
+    isEmptyList = (x: any): boolean => !length(x),
 
     /**
      * Checks if object has own properties/enumerable-props or not.
@@ -287,7 +290,7 @@ export const
      * @param obj {*}
      * @returns {Boolean}
      */
-    isEmptyObject = obj => isEmptyList(keys(obj)),
+    isEmptyObject = (obj: any) => isEmptyList(keys(obj)),
 
     /**
      * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
@@ -295,7 +298,7 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isEmptyCollection = x => x.size === 0,
+    isEmptyCollection = (x: any): boolean => x.size === 0,
 
     /**
      * Checks to see if passed in value is empty;  I.e.,
@@ -305,7 +308,7 @@ export const
      * @param x {*} - Value to check.
      * @returns {Boolean}
      */
-    isEmpty = x => {
+    isEmpty = (x: any): boolean => {
         if (!x) { // if '', 0, `null`, `undefined`, `NaN`, or `false` then is empty
             return true;
         }
@@ -333,7 +336,7 @@ export const
      * @deprecated - Instead use @link module:isStrictlyOneOf
      * @todo write tests for this function.
      */
-    isOneOf = (x, ...types) => {
+    isOneOf = (x: any, ...types: any): boolean => {
         const typeName = typeOf(x);
         return toTypeRefNames(types).some(name => typeName === name);
     },
@@ -355,7 +358,7 @@ export const
      * @param types {...TypeRef}
      * @returns {boolean}
      */
-    isLooselyOneOf = (x, ...types) =>
+    isLooselyOneOf = (x: any, ...types: any): boolean =>
         types.some(type => isType(type, x) || instanceOf(x, type)),
 
     /**
@@ -365,7 +368,7 @@ export const
      * @param types {...TypeRef}
      * @returns {boolean}
      */
-    instanceOfOne = (x, ...types) => types.some(instanceOf(x)),
+    instanceOfOne = (x: any, ...types): boolean => types.some(instanceOf(x) as CurryOf2<Function, any, boolean>),
 
     /**
      * Checks if value qualifies (has `map` method) as a functor.
@@ -373,6 +376,6 @@ export const
      * @param x {*}
      * @returns {boolean}
      */
-    isFunctor = x => x && x.map && instanceOf(Function, x.map)
+    isFunctor = (x: any): boolean => x && x.map && (instanceOf(Function, x.map) as boolean)
 
 ;
