@@ -90,18 +90,18 @@ export type Nameable = Name;
 
 export type Num = number;
 
-export interface SliceLike extends Lengthable {
+export interface Slice extends Lengthable {
     [index: number]: any;
 
-    concat(...fs: Array<Array<any> | string>): Array<any> | string;
+    concat(...slices: Slice[]): Slice;
 
-    slice(startInd: number, endInd: number, list: Array<any> | string): Array<any> | string;
+    slice(startIndex: number, endIndex?: number): Slice;
 
-    includes(x: any, xs: (any[] | string | any)): boolean;
+    includes(searchValue: any, fromIndex?: number): boolean;
 
-    indexOf(x: any, xs: (any[] | string | any)): number;
+    indexOf(searchValue: any, fromIndex?: number): number;
 
-    lastIndexOf(x: any, xs: (any[] | string | any)): number;
+    lastIndexOf(searchValue: any, fromIndex?: number): number;
 }
 
 export type TypeRef =
