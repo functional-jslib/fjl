@@ -8,4 +8,5 @@ export const
      * @param xs {Array|String}
      * @returns {Array|undefined}
      */
-    uncons = xs => !xs || xs.length === 0 ? undefined : [head(xs), tail(xs)];
+    uncons = <T>(xs: T[]): [T, T[]] | undefined =>
+        !xs || xs.length === 0 ? undefined : [head(xs), tail(xs)];
