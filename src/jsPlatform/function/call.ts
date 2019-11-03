@@ -5,6 +5,7 @@ export type CallType = CurryOf2<NaryOf<any, unknown>, any[], unknown>;
 
 /**
  * Functional `call` function (takes no context).
+ * @deprecated
  * @function module:function.call
  * @param fn {Function}
  * @param args {...*}

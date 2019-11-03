@@ -1,6 +1,6 @@
-import {Curry, curry, Curry1, Curry2, curry2, Curry3, curry3, curry4, Curry5, curry5, curryN} from '../../src/function';
+import {Curry, curry, Curry1, Curry2, curry2, Curry3, curry3, curry4, Curry5, curry5, curryN, CurryOf2} from '../../src/function';
 import {alphabetArray} from '../helpers';
-import {Binary, Unary} from "../../src/types";
+import {Binary, Nary, NaryOf, Unary} from "../../src/types";
 
 describe('#curryN', () => {
     // Some funcs to use in tests
@@ -150,8 +150,8 @@ describe('#curry2, #curry3, #curry4, #curry5', () => {
             onlyEvens3 = curry3(onlyEvens),
             onlyEvens4 = curry4(onlyEvens),
             onlyEvens5 = curry5(onlyEvens),
-            someNums = alphabetArray.map((_, i) => i),
-            evenSomeNums = onlyEvens(...someNums)
+            someNums = alphabetArray.map((_, i) => i) as number[],
+            evenSomeNums = onlyEvens(...someNums) as number[]
         ;
 
         // Test test cases' subject data
@@ -164,20 +164,20 @@ describe('#curry2, #curry3, #curry4, #curry5', () => {
 
         // Tests table
         //  [fn, args, expected]
-        [
-            [min, [0, 1], 0],
+        (<Array<[Curry2<number>, number[], number | number[]]>>[
+            [min as Curry2<number>, [0, 1], 0],
             [max, [0, 1], 1],
             [max, [0, 1, 3, 5, 3, 1], 5],
             [min, [0, 1, 3, 2, 1], 0],
             [onlyEvens3, someNums, evenSomeNums],
             [onlyEvens4, someNums, evenSomeNums],
             [onlyEvens5, someNums, evenSomeNums]
-        ]
+        ])
             .forEach(([fn, args, expected]) => {
                 expect(fn).toBeInstanceOf(Function);
                 const
                     newArgs = args.slice(0),
-                    newFn = fn(newArgs.shift());
+                    newFn = fn(newArgs.shift()) as Nary<number>;
                 expect(newFn).toBeInstanceOf(Function);
                 expect(newFn(...newArgs)).toEqual(expected);
             });

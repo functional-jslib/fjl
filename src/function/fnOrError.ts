@@ -4,6 +4,7 @@ export const
 
     /**
      * Returns a function or throws an error if given `f` is not a function.
+     * @deprecated Check for your error in place instead.
      * @function module:function.fnOrError
      * @param symbolName {String} - Error message prefix.
      * @param f {Function|*} - Expected function.

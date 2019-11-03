@@ -1,4 +1,4 @@
-import {reverse} from '../jsPlatform/array';
+import reverse from '../jsPlatform/array/reverse';
 import {curry, curry2} from './curry';
 
 export const

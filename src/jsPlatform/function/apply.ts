@@ -9,6 +9,7 @@ const
      * Functional `apply` function (takes no context).
      * @curried - Function is applied when all expected args are present
      *  else a curried function is returned.
+     * @deprecated
      * @function module:function.apply
      * @param fn {Function}
      * @param args {Array|*}

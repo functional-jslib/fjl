@@ -2,7 +2,7 @@ import {toCurried2Method} from "../../utils";
 
 /**
  * Maps a function onto functor (list etc.).
- * @function module:jsPlatform.map
+ * @function module:jsPlatform/array.map
  * @param fn {Function}
  * @param functor {Array|{map: {Function}}}
  * @returns {Array|{map: {Function}}}
