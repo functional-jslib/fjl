@@ -1,4 +1,6 @@
 // generic-ops.d.ts
+export type Nullary<T> = () => T;
+
 export type Unary<T> = (x: T) => T;
 
 export type Binary<T> = (a: T, b: T) => T;
@@ -35,11 +37,9 @@ export type TernaryPred<T> = (a: T, b: T, c: T) => boolean;
 
 export type NaryPred<T> = (...x: T[]) => boolean;
 
-export type MultiaryPred<T> = (...x: T[]) => boolean;
+export type PolyadicPred<T> = (a: T, b: T, ...c: T[]) => boolean;
 
-export type PolyadicPred<A, B, C> = (a: A, b: B, ...c: C[]) => boolean;
-
-export type PolyPred<A, B, C> = PolyadicPred<A, B, C>;
+export type PolyPred<T> = PolyadicPred<T>;
 
 export type BinaryPredOf<A, B> = (a: A, b: B) => boolean;
 
@@ -48,11 +48,11 @@ export type TernaryPredOf<A, B, C> = (a: A, b: B, c: C) => boolean;
 export type PolyadicPredOf<A, B, C> = (a: A, b: B, ...c: C[]) => boolean;
 
 // data.d.ts
-export type MapFunc<T, Ftr> = TernaryOf<T, number, Ftr, Ftr>;
+export type MapFunc<T, Ftr> = TernaryOf<T, number, Ftr, any>;
 
 export type FilterFunc<T, Ftr> = TernaryOf<T, number, Ftr, boolean>;
 
-export type ReductionFunc<T, Ftr> = QuaternaryOf<T, T, number, Ftr, Ftr>;
+export type ReduceFunc<T, Ftr> = QuaternaryOf<T, T, number, Ftr, T>;
 
 export type PredicateFunc<T, Ftr> = TernaryPredOf<T, number, Ftr>;
 
@@ -61,9 +61,7 @@ export interface Functor<T> {
 
     valueOf(): T;
 
-    map(f: MapFunc<T, Functor<T>>): Functor<T>;
-
-    // constructor(T): Functor<T>;
+    map(f: MapFunc<T, Functor<T>>): Functor<any>;
 }
 
 export interface Length {
@@ -72,14 +70,6 @@ export interface Length {
 
 export interface Size {
     readonly size: number;
-}
-
-export interface Show {
-    toString(): string;
-}
-
-export interface Read {
-    fromString(s: string): void;
 }
 
 export interface Name {
@@ -92,7 +82,7 @@ export type Nameable = Name;
 
 export type Num = number;
 
-export interface ListLike extends Lengthable {
+export interface SliceLike extends Lengthable {
     [index: number]: any;
 
     concat(...fs: Array<Array<any> | string>): Array<any> | string;
@@ -105,14 +95,6 @@ export interface ListLike extends Lengthable {
 
     lastIndexOf(x: any, xs: (any[] | string | any)): number;
 }
-
-export type Pred = (a: any) => boolean;
-
-export type Pred2 = (a: any, b: any) => boolean;
-
-export type Pred3 = (a: any, b: any, c: any) => boolean;
-
-export type Pred4 = (a: any, b: any, c: any, d: any) => boolean;
 
 export type TypeRef =
     string | Function | ArrayBufferConstructor | ArrayConstructor |
@@ -138,8 +120,6 @@ export interface ErrorTemplateCtx {
     foundTypeName: string;
     messageSuffix?: string;
 }
-
-export type TypeCheckFunc = (typeRef: TypeRef, x: any) => boolean;
 
 export type ErrorIfNotTypeThrower = (
     type: TypeRef, contextName: string,

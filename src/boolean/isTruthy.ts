@@ -1,3 +1,5 @@
+import {UnaryPred} from "../types";
+
 export const
 
     /**
@@ -6,4 +8,4 @@ export const
      * @param value
      * @returns {Boolean}
      */
-    isTruthy = value => !!value;
+    isTruthy: UnaryPred<any> = value => !!value;
