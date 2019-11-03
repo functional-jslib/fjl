@@ -5,6 +5,7 @@
 import {typeOf} from '../object/typeOf';
 import {isArray, toTypeRef, toTypeRefName, isOfType} from '../object/is';
 import {curry} from '../function/curry';
+import {TypeRef} from "../types";
 
 export const
 
@@ -12,18 +13,18 @@ export const
      * Pretty prints an array of types/type-strings for use by error messages;
      * Outputs "`SomeTypeName`, ..." from [SomeType, 'SomeTypeName', etc...]
      * @function module:errorThrowing.typeRefsToStringOrError
-     * @param types {Array|TypesArray}
+     * @param types {Array<TypeRef>}
      * @return {String}
      * @private
      */
-    typeRefsToStringOrError = types => types.length ?
+    typeRefsToStringOrError = (types: TypeRef[]): string => types.length ?
         types.map(type => `\`${toTypeRefName(type)}\``).join(', ') : '',
 
     /**
      * Prints a message from an object.  Object signature:
      * {contextName, valueName, value, expectedTypeName, foundTypeName, messageSuffix}
      * @function module:errorThrowing.defaultErrorMessageCall
-     * @param tmplContext {Object|TemplateContext} - Object to use in error template.
+     * @param tmplContext {Object|ErrorTemplateContext} - Object to use in error template.
      * @returns {index.ts}
      * @private
      */
