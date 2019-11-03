@@ -14,10 +14,6 @@ describe('#negateF', () => {
                 expect(negated(arg)).toEqual(expected);
             });
     });
-    it('should always return a function with an arity of `1` when receiving one or more values', () => {
-        expect(negateF(() => undefined).length).toEqual(1);
-        expect(negateF(undefined).length).toEqual(1);
-    });
 });
 
 describe('#negateF2', () => {
@@ -32,10 +28,6 @@ describe('#negateF2', () => {
                 expect(negated(a, b)).toEqual(expected);
             });
     });
-    it('should always return a function with an arity of `2` when receiving one or more values', () => {
-        expect(negateF2(() => undefined).length).toEqual(2);
-        expect(negateF2(undefined).length).toEqual(2);
-    });
 });
 
 describe('#negateF3', () => {
@@ -49,10 +41,6 @@ describe('#negateF3', () => {
                 const negated = negateF3(fn);
                 expect(negated(a, b, c)).toEqual(expected);
             });
-    });
-    it('should always return a function with an arity of `3` when receiving one or more values', () => {
-        expect(negateF3(() => undefined).length).toEqual(3);
-        expect(negateF3(undefined).length).toEqual(3);
     });
 });
 

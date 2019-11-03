@@ -4,77 +4,45 @@
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 
-/**
- * @private
- */
-const
+import {NaryOf} from '../types';
+import {noop} from './noop';
 
-    /**
-     * Returns curried function.
-     * @private
-     * @param executeArity {Number}
-     * @param unmetArityNum {Number}
-     * @param fn {Function}
-     * @param argsToCurry {...*}
-     * @returns {Function} - Curried function.
-     */
-    returnCurried = (executeArity: number, unmetArityNum: number, fn, argsToCurry: any[]): Function => {
-        switch (unmetArityNum) {
-            case 1:
-                /* eslint-disable */
-                return function func(x) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            case 2:
-                /* eslint-disable */
-                return function func(a, b) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            case 3:
-                /* eslint-disable */
-                return function func(a, b, c) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            case 4:
-                /* eslint-disable */
-                return function func(a, b, c, d) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            case 5:
-                /* eslint-disable */
-                return function func(a, b, c, d, e) {
-                /* eslint-enable */
-                    return executeAsCurriedFunc(fn, executeArity, unmetArityNum, Array.from(arguments), argsToCurry);
-                };
-            default:
-                return (...args) => executeAsCurriedFunc(fn, executeArity, unmetArityNum, args, argsToCurry);
-        }
-    },
+export type Curry1<T> = (a?: T, ...b: T[]) => Curry1<T> | T;
 
-    /**
-     * Returns curried function if unmetArity is not met else returns result of executing
-     * final function.
-     * @private
-     * @param fn {Function}
-     * @param executeArity {Number}
-     * @param unmetArity {Number}
-     * @param args {Array<*>}
-     * @param argsToCurry {Array<*>}
-     * @returns {Function|*} - Curried function or result of 'finally' executed function.
-     */
-    executeAsCurriedFunc = (fn, executeArity, unmetArity, args, argsToCurry): Function | any => {
-        let concatedArgs = argsToCurry.concat(args),
-            canBeCalled = (concatedArgs.length >= executeArity) || !executeArity,
-            newExpectedArity = executeArity - concatedArgs.length;
-        return !canBeCalled ?
-            returnCurried(executeArity, newExpectedArity, fn, concatedArgs) :
-            fn(...concatedArgs);
-    }
-;
+export type Curry2<T> = (a?: T, b?: T, ...c: T[]) => Curry2<T> | Curry1<T> | T;
+
+export type Curry3<T> = (a?: T, b?: T, c?: T, ...d: T[]) =>
+    Curry3<T> | Curry2<T> | Curry1<T> | T;
+
+export type Curry4<T> = (a?: T, b?: T, c?: T, d?: T, ...e: T[]) =>
+    Curry4<T> | Curry3<T> | Curry2<T> | Curry1<T> | T;
+
+export type Curry5<T> = (a?: T, b?: T, c?: T, d?: T, e?: T, ...f: T[]) =>
+    Curry5<T> | Curry4<T> | Curry3<T> | Curry2<T> | Curry1<T> | T;
+
+export type Curry<T> = Curry1<T> | Curry2<T> | Curry3<T> | Curry4<T> | Curry5<T>;
+
+export type CurryX<T> = Curry<T>;
+
+export type Curry1Of<T, Ret> = (a?: T, ...b: T[]) => Curry1Of<T, Ret> | Ret;
+
+export type Curry2Of<T, T2, Ret> = (a?: T, b?: T2, ...c: T2[]) =>
+    Curry2Of<T, T2, Ret> | Curry1Of<T, Ret> | Ret;
+
+export type Curry3Of<T, T2, T3, Ret> = (a?: T, b?: T2, c?: T3, ...d: T3[]) =>
+    Curry3Of<T, T2, T3, Ret> | Curry2Of<T2, T3, Ret> | Curry1Of<T3, Ret> | Ret;
+
+export type Curry4Of<T, T2, T3, T4, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, ...e: T4[]) =>
+    Curry4Of<T, T2, T3, T4, Ret> | Curry3Of<T2, T3, T4, Ret> | Curry2Of<T3, T4, Ret> | Curry1Of<T4, Ret> | Ret;
+
+export type Curry5Of<T, T2, T3, T4, T5, Ret> = (a?: T, b?: T2, c?: T3, d?: T4, e?: T5, ...f: T5[]) =>
+    Curry5Of<T, T2, T3, T4, T5, Ret> | Curry4Of<T2, T3, T4, T5, Ret> | Curry3Of<T3, T4, T5, Ret> |
+    Curry2Of<T4, T5, Ret> | Curry1Of<T5, Ret> | Ret;
+
+export type CurryOf<T, Ret> = Curry1Of<T, Ret> | Curry2Of<T, T, Ret> | Curry3Of<T, T, T, Ret> |
+    Curry4Of<T, T, T, T, Ret> | Curry5Of<T, T, T, T, T, Ret>;
+
+export type CurryXOf<T, Ret> = CurryOf<T, Ret>;
 
 export const
 
@@ -82,26 +50,56 @@ export const
      * Curries a function up to a given arity.
      * @function module:function.curryN
      * @param executeArity {Number}
-     * @param fn {Function}
+     * @param fn {NaryOf<any, any>} - Any function that may take one or more `any`s and return `any`.
      * @param argsToCurry {...*}
-     * @returns {Function}
+     * @returns {CurryXOf<any, any>} - One of the `CurryXOf<T, Ret>` types.
      * @throws {Error} - When `fn` is not a function.
      */
-    curryN = (executeArity, fn, ...argsToCurry) => {
+    curryN = (
+        executeArity: number,
+        fn: NaryOf<any, unknown>,
+        ...argsToCurry: any[]
+    ):
+        Curry1Of<any, unknown> |
+        Curry2Of<any, any, unknown> |
+        Curry3Of<any, any, any, unknown> |
+        Curry4Of<any, any, any, any, unknown> |
+        Curry5Of<any, any, any, any, any, unknown> => {
         if (!fn || !(fn instanceof Function)) {
-            throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\` though received ${fn}?`);
+            throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\`;  Received ${fn};`);
         }
-        return returnCurried(executeArity, executeArity - argsToCurry.length, fn, argsToCurry);
+        const out = (...args: any[]): unknown => {
+            const catedArgs = argsToCurry.concat(args),
+                canBeCalled = (catedArgs.length >= executeArity) || executeArity <= 0;
+            return canBeCalled ?
+                fn(...catedArgs) :
+                curryN(executeArity - catedArgs.length, fn, ...catedArgs)
+                ;
+        };
+        // Set our function's `length` since it is "disguised" as a non-variadic function (since `curryN` currys up to
+        // a given arity).
+        return Object.defineProperty(out, 'length', {
+            get() {
+                return executeArity;
+            }
+        });
     },
 
     /**
      * Curries a function based on it's defined arity (note: rest args param (`...rest`) are not counted in arity).
      * @function module:function.curry
-     * @param fn {Function}
+     * @param fn {NaryOf<any, any>}
      * @param argsToCurry {...*}
-     * @returns {Function}
+     * @returns {Curry1Of<any, any> | Curry2Of<any, any, any> |
+     *  Curry3Of<any, any, any, any> | Curry4Of<any, any, any, any, any> |
+     *  Curry5Of<any, any, any, any, any, any}
      */
-    curry = (fn, ...argsToCurry) => curryN((fn || {}).length, fn, ...argsToCurry),
+    curry = (fn: NaryOf<any, unknown>, ...argsToCurry):
+        Curry1Of<any, unknown> |
+        Curry2Of<any, any, unknown> |
+        Curry3Of<any, any, any, unknown> |
+        Curry4Of<any, any, any, any, unknown> |
+        Curry5Of<any, any, any, any, any, unknown> => curryN((fn || noop).length, fn, ...argsToCurry),
 
     /**
      * Curries a function up to an arity of 2 (won't call function until 2 or more args).
@@ -109,7 +107,8 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry2 = fn => curryN(2, fn),
+    curry2 = (fn: NaryOf<any, unknown>): Curry2Of<any, any, unknown> =>
+        curryN(2, fn),
 
     /**
      * Curries a function up to an arity of 3 (won't call function until 3 or more args).
@@ -117,7 +116,8 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry3 = fn => curryN(3, fn),
+    curry3 = (fn: NaryOf<any, unknown>): Curry3Of<any, any, any, unknown> =>
+        curryN(3, fn),
 
     /**
      * Curries a function up to an arity of 4 (won't call function until 4 or more args).
@@ -125,7 +125,8 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry4 = fn => curryN(4, fn),
+    curry4 = (fn: NaryOf<any, unknown>): Curry4Of<any, any, any, any, unknown> =>
+        curryN(4, fn),
 
     /**
      * Curries a function up to an arity of 5 (won't call function until 5 or more args).
@@ -133,4 +134,5 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry5 = fn => curryN(5, fn);
+    curry5 = (fn: NaryOf<any, unknown>): Curry5Of<any, any, any, any, any, unknown> =>
+        curryN(5, fn);

@@ -5,7 +5,7 @@
 import {fPureTakesOne} from '../utils';
 import {curry, curry2} from '../function/curry';
 import {flip, flip3, flip4, flip5} from '../function/flip';
-import {Lengthable} from "../../types/index.d";
+import {Lengthable} from "../types";
 import {isset} from '../object/isset';
 
 export const

@@ -91,7 +91,7 @@ live directly on 'fjl' and are defined in 'fjl/objects/defineProp' (or more dire
 - Cleaned up imports in some places to protect from cyclic dependency issues.
 
 ### 1.5.1, 1.5.2
-- Added './types/index.d.ts' file.
+- Added './types/index.ts' file.
 
 ### 1.5.0
 #### Breaking changes

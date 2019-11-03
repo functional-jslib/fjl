@@ -4,6 +4,7 @@
     "lib": [
       "esnext"
     ],
+    "noImplicitAny": false,
     "target": "ESNext",
     "removeComments": false,
     "preserveConstEnums": true,
