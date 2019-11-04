@@ -8,6 +8,6 @@ import {Slice} from "../../types";
  * @param ss {...(Array|String|Slice|*)} - One or more slices.
  * @return {Array|String|*} - Same type as passed in value.
  */
-const concat: (s: Slice, ...ss: Slice[]) => Slice = toCurriedOneOrMoreMethod('concat');
+const concat: (s?: Slice, ...ss: Slice[]) => Slice = toCurriedOneOrMoreMethod('concat');
 
 export default concat;

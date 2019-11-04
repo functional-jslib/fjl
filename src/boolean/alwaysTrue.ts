@@ -1,8 +1,8 @@
-export const
+/**
+ * Returns `true`.
+ * @function module:boolean.alwaysTrue
+ * @returns {Boolean}
+ */
+const alwaysTrue = () => true;
 
-    /**
-     * Returns `true`.
-     * @function module:boolean.alwaysTrue
-     * @returns {Boolean}
-     */
-    alwaysTrue = () => true;
+export default alwaysTrue;

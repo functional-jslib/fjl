@@ -56,7 +56,7 @@ export type TernaryPredOf<A, B, C> = (a: A, b: B, c: C) => boolean;
 export type PolyadicPredOf<A, B, C> = (a: A, b: B, ...c: C[]) => boolean;
 
 // data.d.ts
-export type MapFunc<T, Ftr> = TernaryOf<T, number, Ftr, any>;
+export type MapFunc<T, Ftr, RetT> = (x?: T, i?: number, xs?: Ftr) => RetT;
 
 export type FilterFunc<T, Ftr> = TernaryOf<T, number, Ftr, boolean>;
 
@@ -69,7 +69,7 @@ export interface Functor<T> {
 
     valueOf(): T;
 
-    map(f: MapFunc<T, Functor<T>>): Functor<any>;
+    map<T2>(f: MapFunc<T, Functor<T>, T2>): Functor<T2>;
 }
 
 export interface Length {
@@ -102,6 +102,10 @@ export interface Slice extends Lengthable {
     indexOf(searchValue: any, fromIndex?: number): number;
 
     lastIndexOf(searchValue: any, fromIndex?: number): number;
+}
+
+export interface Mappable<T, Ftr> extends Lengthable {
+    map<T2>(fn: MapFunc<T, Ftr, T2>): Mappable<T2, Ftr>;
 }
 
 export type TypeRef =

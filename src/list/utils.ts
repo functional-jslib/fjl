@@ -7,8 +7,9 @@ import {slice}          from '../jsPlatform/slice';      // un-curried version g
 import {length}         from '../jsPlatform/object';
 import {alwaysFalse}    from '../boolean';
 import {map}              from './map';
-import {curry, curry2}  from '../function/curry';
+import {curry, curry2, CurryOf, CurryOf2} from '../function/curry';
 import {List} from './types';
+import {Slice} from "../types";
 
 export const
 
@@ -19,7 +20,9 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFrom = curry((startInd: number, xs: List): List => slice(startInd, undefined, xs)),
+    sliceFrom: CurryOf2<number, Slice, Slice> = curry(
+        (startInd: number, xs: Slice): Slice => slice(startInd, undefined, xs)
+    ) as CurryOf2<number, Slice, Slice>,
 
     /**
      * Slices from index `0` to given index.
@@ -57,7 +60,7 @@ export const
      * @param lists ...{Array|String|*}
      * @returns {Array|String|*}
      */
-    lengths = (...lists) => map(length, lists),
+    lengths = (...lists: string[] | [any[]] | any): number[] => map(length, lists),
 
     /**
      * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
@@ -66,9 +69,9 @@ export const
      * @param lists {...(Array|String|*)}
      * @returns {Array|String|*}
      */
-    toShortest = curry2((...lists) => {
-        const listLengths = apply(lengths, lists),
-            smallLen = Math.min.apply(Math, listLengths);
+    toShortest = curry2((...lists): [any[]] => {
+        const listLengths = lengths(...lists),
+            smallLen = Math.min(...listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
             sliceTo(smallLen, list) : sliceCopy(list), lists);
     }),

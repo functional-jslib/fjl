@@ -15,7 +15,7 @@ const
      * @param args {Array|*}
      * @returns {*}
      */
-    apply: (fn: NaryOf<any, unknown>, args?: any[]) => any | ApplyType =
+    apply: (fn?: NaryOf<any, unknown>, args?: any[]) => any | ApplyType =
         curry2((fn: NaryOf<any, unknown>, args: any[]) =>
             fn(...args)) as ApplyType
 ;

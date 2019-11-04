@@ -14,11 +14,11 @@ export default class Functor<T> {
         return this.value;
     }
 
-    map(fn: MapFunc<T, Functor<T>>): Functor<T> {
+    map<MapFuncRet>(fn: MapFunc<T, Functor<T>, MapFuncRet>): Functor<MapFuncRet> {
         return new Functor(fn(this.valueOf(), 0, this));
     }
 
-    fmap(fn: MapFunc<T, Functor<T>>): Functor<T> {
+    fmap<MapFuncRet>(fn: MapFunc<T, Functor<T>, MapFuncRet>): Functor<MapFuncRet> {
         return this.map(fn);
     }
 }

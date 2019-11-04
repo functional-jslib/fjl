@@ -28,7 +28,7 @@
  */
 export const trampoline = (fn, fnName = undefined) => {
     return (...args) => {
-        let result = fn.apply(null, args);
+        let result = fn(...args);
         while (typeof result === 'function' &&
             (!fnName || (result.name === fnName))) {
             result = result();

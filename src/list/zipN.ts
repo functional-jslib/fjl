@@ -13,7 +13,7 @@ export const
      * @returns {Array}
      */
     zipN = curry2((...lists) => {
-        const trimmedLists = apply(toShortest, lists);
+        const trimmedLists = toShortest(...lists);
         return reduce((agg, item, ind) =>
                 push(agg, map(xs => xs[ind], trimmedLists)),
             [], trimmedLists[0]);

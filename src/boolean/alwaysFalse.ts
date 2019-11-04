@@ -1,8 +1,8 @@
-export const
+/**
+ * Returns `false`.
+ * @function module:boolean.alwaysFalse
+ * @returns {Boolean}
+ */
+const alwaysFalse = () => false;
 
-    /**
-     * Returns `false`.
-     * @function module:boolean.alwaysFalse
-     * @returns {Boolean}
-     */
-    alwaysFalse = () => false;
+export default alwaysFalse;
