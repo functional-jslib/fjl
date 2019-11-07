@@ -1,7 +1,6 @@
-import {curry2, CurryOf2} from '../../function/curry';
-import {Nary, NaryOf} from "../../types";
-
-export type ApplyType = CurryOf2<Nary<any>, any[], unknown>;
+import {curry2} from '../../function/curry';
+import {NaryOf} from "../../types";
+import {ApplyFunc} from "./types";
 
 const
 
@@ -14,9 +13,9 @@ const
      * @param args {Array|*}
      * @returns {*}
      */
-    apply: (fn?: NaryOf<any, unknown>, args?: any[]) => any | ApplyType =
+    apply: ApplyFunc =
         curry2((fn: NaryOf<any, unknown>, args: any[]) =>
-            fn(...args)) as ApplyType
+            fn(...args)) as ApplyFunc
 ;
 
 export default apply;

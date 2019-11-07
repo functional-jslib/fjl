@@ -26,4 +26,3 @@ export type Some<T, Ftr> = CurryOf2<PredicateOp<T, Ftr>, Ftr, boolean>
 export type PredicateOp<T, Ftr> = (x?: T, i?: number, xs?: Ftr) => boolean;
 
 export type Push<T, Ftr> = CurryOf2<T, Ftr, number>;
-
