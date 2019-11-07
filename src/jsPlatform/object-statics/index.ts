@@ -6,6 +6,8 @@ import {flip, flip3, flip4, flip5} from '../../function/flip';
 import {ObjectStatics} from "./types";
 import {curry, CurryOf2, CurryOf3, CurryOf4, CurryOf5} from "../../function";
 
+export * from './types';
+
 /**
  * Contains all the static functions from `Object` but curried and flipped;
  * @example
@@ -20,7 +22,7 @@ const objectStatics: ObjectStatics = Object.getOwnPropertyNames(Object).reduce((
     if (typeof Object[key] !== 'function') {
         return agg;
     }
-    if (key === 'is') { // should flip `is` method
+    if (key === 'is') { // should not flip `is` method (as it just compares `a` and `b`).
         agg[key] = curry(Object[key]);
         return agg;
     }

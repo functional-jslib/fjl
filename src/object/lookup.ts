@@ -13,4 +13,7 @@ import {curry} from '../function/curry';
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
  */
-export const lookup = curry((key, obj) => isset(obj) ? obj[key] : undefined);
+export const lookup = curry(
+    <T, K extends keyof T>(key: K, obj: T): any =>
+        isset(obj) ? obj[key] : undefined
+);

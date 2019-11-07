@@ -1,4 +1,5 @@
-import {curry2} from '../function/curry';
+import {curry2, CurryOf2} from '../function/curry';
+import {SliceOf} from "../jsPlatform/slice";
 
 export const
     /**
@@ -19,6 +20,7 @@ export const
      * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
      * @returns {(Array|String|*)} - Same type as list like passed in.
      */
-    append = curry2((...args) => args.shift().concat(...args))
+    append = curry2((...args: SliceOf<any>[]) => args.shift().concat(...args)) as
+        CurryOf2<SliceOf<any>, SliceOf<any>, SliceOf<any>>
 
 ;

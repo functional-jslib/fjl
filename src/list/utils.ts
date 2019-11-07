@@ -2,14 +2,12 @@
  * ListLike operator utils module.
  * @module listUtils
  */
-import {apply}          from '../jsPlatform/function';  // un-curried version
 import {slice}          from '../jsPlatform/slice';      // un-curried version good for both strings and arrays
 import {length}         from '../jsPlatform/object';
 import {alwaysFalse}    from '../boolean';
 import {map}              from './map';
-import {curry, curry2, CurryOf, CurryOf2} from '../function/curry';
-import {List} from './types';
-import {Slice} from "../types";
+import {curry, curry2, CurryOf2} from '../function/curry';
+import {Slice} from "../jsPlatform/slice/types";
 
 export const
 

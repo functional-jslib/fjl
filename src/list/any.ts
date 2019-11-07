@@ -1,5 +1,7 @@
 import {curry} from "../function/curry";
 import {length} from "../jsPlatform/object";
+import {Predicate} from "../jsPlatform/array";
+import {SliceOf} from "../jsPlatform/slice";
 
 export const
     /**
@@ -9,16 +11,17 @@ export const
      * @param xs {Array|String}
      * @returns {Boolean}
      */
-        any = curry((p, xs) => {
-        let ind = 0,
-            limit = length(xs);
-        if (!limit) {
-            return false;
-        }
-        for (; ind < limit; ind += 1) {
-            if (p(xs[ind])) {
-                return true;
+        any = curry(
+        <T>(p: Predicate<T, SliceOf<T>>, xs: SliceOf<T>): boolean => {
+            let ind = 0;
+            const limit = length(xs);
+            if (!limit) {
+                return false;
             }
-        }
-        return false;
-    });
+            for (; ind < limit; ind += 1) {
+                if (p(xs[ind])) {
+                    return true;
+                }
+            }
+            return false;
+        });

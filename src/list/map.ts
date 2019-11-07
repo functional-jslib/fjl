@@ -4,7 +4,7 @@ import {typeOf} from '../object/typeOf';
 import {of} from '../object/of';
 import {isFunctor} from '../object/is';
 import {isset} from '../object/isset';
-import {Lengthable, Slice} from "../types";
+import {Lengthable} from "../types";
 
 export type MapFunc<T, Ftr, RetT> = (x?: T, i?: number, xs?: Ftr) => RetT;
 

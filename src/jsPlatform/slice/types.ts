@@ -24,3 +24,7 @@ export interface Slice extends Lengthable {
 
     lastIndexOf(searchValue: any, fromIndex?: number): number;
 }
+
+export interface SliceOf<T> extends Slice {
+    [index: number]: T;
+}
