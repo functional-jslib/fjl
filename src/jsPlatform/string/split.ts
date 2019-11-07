@@ -2,7 +2,8 @@
  * Created by elydelacruz on 9/6/2017.
  */
 
-import {fPureTakesOne} from '../utils';
+import {fPureTakesOne} from '../../utils';
+import {SplitFunc} from "./types";
 
 /**
  * Functional version of `String.prototype.split`.
@@ -11,4 +12,6 @@ import {fPureTakesOne} from '../utils';
  * @param str {String}
  * @returns {Array}
  */
-export const split = fPureTakesOne('split');
+const split = fPureTakesOne('split') as SplitFunc;
+
+export default split;

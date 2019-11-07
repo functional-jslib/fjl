@@ -1,4 +1,5 @@
-import {CurryOf1, CurryOf2, CurryOf3} from "../../function";
+import {CurryOf2, CurryOf3} from "../../function";
+import {Unary} from "../../types";
 
 export type ForEach<T, Ftr> = CurryOf2<ForEachOp<T, Ftr>, Ftr, void | any>
 
@@ -18,7 +19,7 @@ export type Reduce<T, Ftr, ZeroT> = CurryOf3<ReduceOp<T, Ftr, ZeroT>, ZeroT, Ftr
 
 export type ReduceOp<T, Ftr, ZeroT> = (agg?: ZeroT, x?: T, i?: number, xs?: Ftr) => ZeroT;
 
-export type Reverse<Ftr> = CurryOf1<Ftr, Ftr>;
+export type Reverse<Ftr> = Unary<Ftr>;
 
 export type Some<T, Ftr> = CurryOf2<PredicateOp<T, Ftr>, Ftr, boolean>
 
