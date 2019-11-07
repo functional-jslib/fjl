@@ -1,4 +1,5 @@
-import {fPureTakes2} from "../../utils";
+import {toCurried3Method} from "../../utils";
+import {Reduce} from "./types";
 
 /**
  * Reduces a foldable (list etc.) from the right with passed in function.
@@ -7,6 +8,6 @@ import {fPureTakes2} from "../../utils";
  * @param functor {Array|{reduceRight: {Function}}}
  * @returns {Array|{reduceRight: {Function}}}
  */
-const reduceRight = fPureTakes2('reduceRight');
+const reduceRight = toCurried3Method('reduceRight') as Reduce<any, any[], any>;
 
 export default reduceRight;

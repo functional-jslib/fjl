@@ -4,8 +4,10 @@
  * @param xs {any[]}
  * @return {any[]}
  */
-const reverse: (xs: any[]) => any[] = (
-    (): (xs: any[]) => any[] =>
+import {Reverse} from "./types";
+
+const reverse: Reverse<any[]> = (
+    (): Reverse<any[]> =>
         Array.prototype.reverse ?
             (xs: any[]): any[] => xs.reverse() :
             (xs: any[]): any[] => xs.reduceRight((agg, item) => {

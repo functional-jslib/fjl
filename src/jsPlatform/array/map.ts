@@ -1,4 +1,5 @@
 import {toCurried2Method} from "../../utils";
+import {MapType} from "./types";
 
 /**
  * Maps a function onto functor (list etc.).
@@ -7,6 +8,6 @@ import {toCurried2Method} from "../../utils";
  * @param functor {Array|{map: {Function}}}
  * @returns {Array|{map: {Function}}}
  */
-const map = toCurried2Method('map');
+const map = toCurried2Method('map') as MapType<any, any[], any, any[]>;
 
 export default map;

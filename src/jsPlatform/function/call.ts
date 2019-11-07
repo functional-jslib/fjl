@@ -11,7 +11,7 @@ export type CallType = CurryOf2<NaryOf<any, unknown>, any[], unknown>;
  * @param args {...*}
  * @returns {*}
  */
-const call: (fn: NaryOf<any, unknown>, ...args: any[]) => any | CallType =
+const call: (fn?: NaryOf<any, unknown>, ...args: any[]) => any | CallType =
     curry2((fn: NaryOf<any, unknown>, ...args) => fn(...args)) as CallType
 ;
 

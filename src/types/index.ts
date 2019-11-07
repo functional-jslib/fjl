@@ -58,12 +58,6 @@ export type PolyadicPredOf<A, B, C> = (a: A, b: B, ...c: C[]) => boolean;
 // data.d.ts
 export type MapFunc<T, Ftr, RetT> = (x?: T, i?: number, xs?: Ftr) => RetT;
 
-export type FilterFunc<T, Ftr> = TernaryOf<T, number, Ftr, boolean>;
-
-export type ReduceFunc<T, Ftr> = QuaternaryOf<T, T, number, Ftr, T>;
-
-export type PredicateFunc<T, Ftr> = TernaryPredOf<T, number, Ftr>;
-
 export interface Functor<T> {
     value?: T;
 

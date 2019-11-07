@@ -1,13 +1,15 @@
-import {fPureTakesOne} from "../../utils";
+import {toCurried2Method} from "../../utils";
+import {Every} from "./types";
 
 /**
- * Returns `true` if `fn` (predicate) returns true for all items in functor else returns `false`.
+ * Functional every method. Returns true if predicate is true for every item
+ *  in given array and false otherwise.
  * @function module:jsPlatform.every
- * @param fn {Function} - Predicate.
+ * @param fn {PredicateFunc<any, any[]>} - Predicate;  `(x, i, xs) => boolean`.
  * @param functor {Array|Object|*}
  * @return {*|Array|Object} - The type passed.
  * @throws {Error} - When passed in object doesn't have an `every` method.
  */
-const every = fPureTakesOne('every');
+const every = toCurried2Method('every') as Every<any, any[]>;
 
 export default every;

@@ -11,6 +11,8 @@ import reduceRight from './reduceRight';
 import reverse from './reverse';
 import some from './some';
 
+export * from './types';
+
 export {
     filter, forEach, join, map, push, reduce,
     reduceRight, reverse, some

@@ -1,4 +1,5 @@
-import {fPureTakesOneOrMore} from "../../utils";
+import {toCurried2Method} from "../../utils";
+import {Push} from "./types";
 
 /**
  * Same as Array.prototype.push
@@ -7,6 +8,6 @@ import {fPureTakesOneOrMore} from "../../utils";
  * @param arr {Array}
  * @returns {Number}
  */
-const push = fPureTakesOneOrMore('push');
+const push = toCurried2Method('push') as Push<any, any[]>;
 
 export default push;
