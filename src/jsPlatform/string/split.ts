@@ -2,7 +2,7 @@
  * Created by elydelacruz on 9/6/2017.
  */
 
-import {fPureTakesOne} from '../../utils';
+import {toCurried2Method} from '../../utils';
 import {SplitFunc} from "./types";
 
 /**
@@ -12,6 +12,6 @@ import {SplitFunc} from "./types";
  * @param str {String}
  * @returns {Array}
  */
-const split = fPureTakesOne('split') as SplitFunc;
+const split = toCurried2Method('split') as SplitFunc;
 
 export default split;

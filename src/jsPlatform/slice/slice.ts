@@ -1,5 +1,5 @@
 import {toCurried3Method} from "../../utils/fnl-method-proxies";
-import {Slice} from "../../types";
+import {SliceFunc} from "./types";
 
 /**
  * Same as Array.prototype.slice
@@ -9,7 +9,6 @@ import {Slice} from "../../types";
  * @param slice {Slice|*}
  * @returns {Slice|*}
  */
-const slice: (startIndex: number, endIndex: number, s: Slice) => Slice =
-    toCurried3Method('slice');
+const slice: SliceFunc = toCurried3Method('slice') as SliceFunc;
 
 export default slice;

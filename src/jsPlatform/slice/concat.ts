@@ -1,5 +1,5 @@
 import {toCurriedOneOrMoreMethod} from "../../utils/fnl-method-proxies";
-import {Slice} from "../../types";
+import {ConcatFunc} from "./types";
 
 /**
  * Concatenates all passed slice likes onto the end of the first one.
@@ -8,6 +8,7 @@ import {Slice} from "../../types";
  * @param ss {...(Array|String|Slice|*)} - One or more slices.
  * @return {Array|String|*} - Same type as passed in value.
  */
-const concat: (s?: Slice, ...ss: Slice[]) => Slice = toCurriedOneOrMoreMethod('concat');
+const concat: ConcatFunc =
+    toCurriedOneOrMoreMethod('concat') as ConcatFunc;
 
 export default concat;
