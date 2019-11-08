@@ -1,6 +1,6 @@
 import {all} from "./all";
 import {isTruthy} from "../boolean";
-import {SliceOf} from "../jsPlatform/slice";
+import {Indexable} from "../types";
 
 export const
     /**
@@ -10,5 +10,5 @@ export const
      * @param xs {Array|String}
      * @returns {Boolean}
      */
-    and = <T>(xs: SliceOf<T>): boolean => all(isTruthy, xs) as boolean
+    and = <T>(xs: Indexable<T>): boolean => all(isTruthy, xs) as boolean
 ;

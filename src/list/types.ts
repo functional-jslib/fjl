@@ -1,3 +1,6 @@
+import {PredicateOf3} from "../jsPlatform/array";
+import {Indexable} from "../types";
+
 export interface List {
     concat(...fs: Array<Array<any> | string>): Array<any> | string;
 
@@ -9,3 +12,5 @@ export interface List {
 
     lastIndexOf(x: any, xs: (any[] | string | any)): number;
 }
+
+export type PredForIndexableOf<T> = PredicateOf3<T, number, Indexable<T>>;

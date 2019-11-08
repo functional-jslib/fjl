@@ -66,21 +66,31 @@ export interface Functor<T> {
     map<T2>(f: MapFunc<T, Functor<T>, T2>): Functor<T2>;
 }
 
-export interface Length {
+export interface Lengthable {
     readonly length: number;
 }
 
-export interface Size {
+export interface Sizeable {
     readonly size: number;
 }
 
-export interface Name {
+export interface Nameable {
     readonly name: string;
 }
 
-export type Lengthable = Length;
+export interface Mappable<T, Ftr> extends Lengthable {
+    map<T2>(fn: MapFunc<T, Ftr, T2>): Mappable<T2, Ftr>;
+}
 
-export type Nameable = Name;
+export interface StringIndexable<T> {
+    [index: string]: T;
+}
+
+export interface NumberIndexable<T> {
+    [index: string]: T;
+}
+
+export type Indexable<T> = StringIndexable<T> | NumberIndexable<T>;
 
 export type Num = number;
 
@@ -96,10 +106,6 @@ export interface Slice extends Lengthable {
     indexOf(searchValue: any, fromIndex?: number): number;
 
     lastIndexOf(searchValue: any, fromIndex?: number): number;
-}
-
-export interface Mappable<T, Ftr> extends Lengthable {
-    map<T2>(fn: MapFunc<T, Ftr, T2>): Mappable<T2, Ftr>;
 }
 
 export type TypeRef =

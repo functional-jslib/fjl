@@ -5,9 +5,9 @@ export type ForEach<T, Ftr> = CurryOf2<ForEachOp<T, Ftr>, Ftr, void | any>
 
 export type ForEachOp<T, Ftr> = (x?: T, i?: number, xs?: Ftr) => void | any;
 
-export type Every<T, Ftr> = CurryOf2<Predicate<T, Ftr>, Ftr, boolean>
+export type Every<T, Ftr> = CurryOf2<PredicateOf3<T, number, Ftr>, Ftr, boolean>
 
-export type Filter<T, Ftr> = CurryOf2<Predicate<T, Ftr>, Ftr, Ftr>;
+export type Filter<T, Ftr> = CurryOf2<PredicateOf3<T, number, Ftr>, Ftr, Ftr>;
 
 export type Join<Separator, Ftr, RetT> = CurryOf2<Separator, Ftr, RetT>;
 
@@ -21,8 +21,10 @@ export type ReduceOp<T, Ftr, ZeroT> = (agg?: ZeroT, x?: T, i?: number, xs?: Ftr)
 
 export type Reverse<Ftr> = Unary<Ftr>;
 
-export type Some<T, Ftr> = CurryOf2<Predicate<T, Ftr>, Ftr, boolean>
+export type Some<T, Ftr> = CurryOf2<PredicateOf3<T, number, Ftr>, Ftr, boolean>
 
 export type Predicate<T, Ftr> = (x?: T, i?: number | T, xs?: Ftr) => boolean;
+
+export type PredicateOf3<Tx, Ti, Txs> = (x?: Tx, i?: Ti, xs?: Txs) => boolean;
 
 export type Push<T, Ftr> = CurryOf2<T, Ftr, number>;
