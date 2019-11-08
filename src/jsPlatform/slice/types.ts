@@ -1,22 +1,22 @@
 import {Lengthable} from "../../types";
 import {CurryOf1, CurryOf2, CurryOf3} from "../../function";
 
-export type IncludesFunc = CurryOf2<string, Slice, boolean>;
+export type IncludesFunc = CurryOf2<string, SliceOf<any>, boolean>;
 
-export type SliceFunc = CurryOf3<number, number, Slice, Slice>;
+export type SliceFunc = CurryOf3<number, number, SliceOf<any>, SliceOf<any>>;
 
-export type IndexOfFunc = CurryOf2<any, Slice, number>;
+export type IndexOfFunc = CurryOf2<any, SliceOf<any>, number>;
 
-export type LastIndexOfFunc = CurryOf2<any, Slice, number>;
+export type LastIndexOfFunc = CurryOf2<any, SliceOf<any>, number>;
 
-export type ConcatFunc = CurryOf1<Slice, Slice>;
+export type ConcatFunc = CurryOf1<SliceOf<any>, SliceOf<any>>;
 
 export interface Slice extends Lengthable {
     [index: number]: any;
 
-    concat(...slices: Slice[]): Slice;
+    concat(...slices: ConcatArray<any>[]): SliceOf<any>;
 
-    slice(startIndex: number, endIndex?: number): Slice;
+    slice(startIndex: number, endIndex?: number): SliceOf<any>;
 
     includes(searchValue: any, fromIndex?: number): boolean;
 
@@ -28,3 +28,5 @@ export interface Slice extends Lengthable {
 export interface SliceOf<T> extends Slice {
     [index: number]: T;
 }
+
+export type SliceOfAny = SliceOf<any>;

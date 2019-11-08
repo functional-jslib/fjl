@@ -1,4 +1,5 @@
 import {PredicateOf3} from "../jsPlatform/array";
+import {SliceOf} from "../jsPlatform/slice";
 import {Indexable} from "../types";
 
 export interface List {
@@ -14,3 +15,5 @@ export interface List {
 }
 
 export type PredForIndexableOf<T> = PredicateOf3<T, number, Indexable<T>>;
+
+export type PredForSliceOf<T> = PredicateOf3<T, number, SliceOf<T>>;

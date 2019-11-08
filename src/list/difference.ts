@@ -1,6 +1,8 @@
-import {curry} from "../function/curry";
+import {curry, CurryOf2} from "../function/curry";
 import {reduce, sliceCopy} from "./utils";
-import {includes} from "../jsPlatform/slice";
+import {includes, SliceOf} from "../jsPlatform/slice";
+
+export type Difference<Functor> = CurryOf2<Functor, Functor, Functor>
 
 export const
 
@@ -12,7 +14,7 @@ export const
      * @param array2 {Array}
      * @returns {Array}
      */
-    difference = curry((array1, array2) => { // augment this with max length and min length ordering on op
+    difference: Difference<SliceOf<any>> = curry((array1, array2) => { // augment this with max length and min length ordering on op
         if (array1 && !array2) {
             return sliceCopy(array1);
         }
@@ -22,4 +24,4 @@ export const
         return reduce((agg, elm) =>
                 !includes(elm, array2) ? (agg.push(elm), agg) : agg
             , [], array1);
-    });
+    }) as Difference<SliceOf<any>>;

@@ -27,8 +27,7 @@ export type Curry<T> = Curry1<T> | Curry2<T> | Curry3<T> | Curry4<T> | Curry5<T>
 
 export type CurryOf1<T, Ret> = (a?: T, ...b: T[]) => CurryOf1<T, Ret> | Ret;
 
-export type CurryOf2<T, T2, Ret> = (a?: T, b?: T2, ...c: T2[]) =>
-    CurryOf2<T, T2, Ret> | CurryOf1<T, Ret> | Ret;
+export type CurryOf2<T, T2, Ret> = (a?: T, b?: T2, ...c: T2[]) => CurryOf2<T, T2, Ret> | CurryOf1<T, Ret> | Ret;
 
 export type CurryOf3<T, T2, T3, Ret> = (a?: T, b?: T2, c?: T3, ...d: T3[]) =>
     CurryOf3<T, T2, T3, Ret> | CurryOf2<T2, T3, Ret> | CurryOf1<T3, Ret> | Ret;

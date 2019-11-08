@@ -2,8 +2,9 @@
  * @memberOf object
  */
 
-import {isset} from './is';
-import {curry} from '../function/curry';
+import {curry, CurryOf2} from '../function/curry';
+
+export type Lookup<T> = CurryOf2<string | number | symbol, any, any>;
 
 /**
  * Looks up property and returns it's value; Else `undefined`.
@@ -13,7 +14,7 @@ import {curry} from '../function/curry';
  * @param obj {Object} - Object to search `name` on.
  * @returns {*}
  */
-export const lookup = curry(
+export const lookup: Lookup<any> = curry(
     <T, K extends keyof T>(key: K, obj: T): any =>
-        isset(obj) ? obj[key] : undefined
-);
+        !obj ? undefined : obj[key]
+) as Lookup<any>;

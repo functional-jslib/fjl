@@ -1,6 +1,7 @@
 import {length} from '../jsPlatform/object';
 import {append} from './append';
 import {sliceCopy} from './utils';
+import {SliceOf} from "../jsPlatform/slice";
 
 export const
     /**
@@ -10,18 +11,19 @@ export const
      * @param xs {Array}
      * @returns {Array}
      */
-    concat = xs => {
+    concat = (xs: SliceOf<any>[]): SliceOf<any> => {
         let item0;
+        const defaultOut: SliceOf<any> = [];
         switch (length(xs)) {
             case undefined:
             case 0:
-                return [];
+                return defaultOut;
             case 1:
                 item0 = xs[0];
                 return item0 && item0.slice ? sliceCopy(item0) : item0;
             case 2:
             default:
-                return append(...xs);
+                return append(...xs) as SliceOf<any>;
         }
     }
 ;

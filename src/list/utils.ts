@@ -2,12 +2,17 @@
  * ListLike operator utils module.
  * @module listUtils
  */
-import {slice}          from '../jsPlatform/slice';      // un-curried version good for both strings and arrays
-import {length}         from '../jsPlatform/object';
-import {alwaysFalse}    from '../boolean';
-import {map}              from './map';
-import {curry, curry2, CurryOf2} from '../function/curry';
-import {Slice} from "../jsPlatform/slice/types";
+import {slice, SliceOf, SliceOfAny} from '../jsPlatform/slice';      // un-curried version good for both strings and arrays
+import {length} from '../jsPlatform/object';
+import {alwaysFalse} from '../boolean';
+import {map} from './map';
+import {curry, curry2, CurryOf2, CurryOf4} from '../function/curry';
+import {PredForSliceOf} from "./types";
+import {ReduceOp} from "../jsPlatform/array";
+
+export type ReduceUntil = CurryOf4<PredForSliceOf<any>,
+    ReduceOp<any, SliceOfAny, any>, any,
+    SliceOf<any>, any>;
 
 export const
 
@@ -18,9 +23,9 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceFrom: CurryOf2<number, Slice, Slice> = curry(
-        (startInd: number, xs: Slice): Slice => slice(startInd, undefined, xs)
-    ) as CurryOf2<number, Slice, Slice>,
+    sliceFrom = curry(
+        (startInd, xs) => slice(startInd, undefined, xs)
+    ) as CurryOf2<number, SliceOf<any>, SliceOf<any>>,
 
     /**
      * Slices from index `0` to given index.
@@ -36,8 +41,10 @@ export const
      * @function listUtils.sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
+     * @todo Investigate bug with CurryOf2 type used here (ts reporting ->
+     *   "Type Curry1Of<...> is not compatible with `CurryOf2<...>`
      */
-    sliceCopy = sliceFrom(0),
+    sliceCopy = sliceFrom(0) as CurryOf2<number, SliceOf<any>, SliceOfAny>,
 
     /**
      * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
@@ -47,8 +54,11 @@ export const
      * @returns {number}
      */
     genericAscOrdering = curry((a, b) => {
-        if (a > b) { return 1; }
-        else if (a < b) { return -1; }
+        if (a > b) {
+            return 1;
+        } else if (a < b) {
+            return -1;
+        }
         return 0;
     }),
 
@@ -85,15 +95,19 @@ export const
      */
     reduceUntil = curry((pred, op, agg, xs) => {
         const limit = length(xs);
-        if (!limit) { return agg; }
+        if (!limit) {
+            return agg;
+        }
         let ind = 0,
             result = agg;
         for (; ind < limit; ind++) {
-            if (pred(xs[ind], ind, xs)) { break; }
+            if (pred(xs[ind], ind, xs)) {
+                break;
+            }
             result = op(result, xs[ind], ind, xs);
         }
         return result;
-    }),
+    }) as ReduceUntil,
 
     /**
      * Reduces until predicate (from right to left).
@@ -106,11 +120,15 @@ export const
      */
     reduceUntilRight = curry((pred, op, agg, arr) => {
         const limit = length(arr);
-        if (!limit) { return agg; }
+        if (!limit) {
+            return agg;
+        }
         let ind = limit - 1,
             result = agg;
         for (; ind >= 0; ind--) {
-            if (pred(arr[ind], ind, arr)) { break; }
+            if (pred(arr[ind], ind, arr)) {
+                break;
+            }
             result = op(result, arr[ind], ind, arr);
         }
         return result;
@@ -142,7 +160,10 @@ export const
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
-    lastIndex = x => { const len = length(x); return len ? len - 1 : 0; },
+    lastIndex = x => {
+        const len = length(x);
+        return len ? len - 1 : 0;
+    },
 
     /**
      * Finds index in string or list.
@@ -192,7 +213,9 @@ export const
         let ind = 0,
             out: any[] = [];
         for (; ind < limit; ind++) {
-            if (pred(xs[ind], ind, xs)) { out.push(ind); }
+            if (pred(xs[ind], ind, xs)) {
+                out.push(ind);
+            }
         }
         return out.length ? out : undefined;
     }),
@@ -206,10 +229,14 @@ export const
     findWhere = curry((pred, xs) => {
         let ind = 0,
             limit = length(xs);
-        if (!limit) { return; }
+        if (!limit) {
+            return;
+        }
         for (; ind < limit; ind++) {
             let elm = xs[ind];
-            if (pred(elm, ind, xs)) { return elm; }
+            if (pred(elm, ind, xs)) {
+                return elm;
+            }
         }
         return undefined;
     }),

@@ -1,6 +1,8 @@
-import {curry} from "../function/curry";
+import {curry, CurryOf2} from "../function/curry";
 import {concat} from "./concat";
 import {map} from "./map";
+import {MapOp} from "../jsPlatform/array";
+import {SliceOf} from "../jsPlatform/slice/types";
 
 export const
     /**
@@ -11,4 +13,5 @@ export const
      * @param foldableOfA {Array}
      * @returns {Array}
      */
-    concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA)));
+    concatMap = curry((fn, foldableOfA) => concat(map(fn, foldableOfA))) as
+        CurryOf2<MapOp<any, SliceOf<any>, any>, SliceOf<any>[], SliceOf<any>>;
