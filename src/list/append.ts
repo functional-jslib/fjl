@@ -21,7 +21,9 @@ export type Append<Functor> = CurryOf2<Functor, Functor, Functor>;
  * @param [args] {...(Array|String|*)} - One or more lists or list likes (strings etc.).
  * @returns {(Array|String|*)} - Same type as list like passed in.
  */
-export const append: Append<SliceOf<any>> = curry2((...args: SliceOf<any>[]): SliceOf<any> =>
-        args.shift().concat(...args)
-    ) as Append<SliceOf<any>>
+export const append = curry2(<T>(...args: SliceOf<T>[]): SliceOf<T> => {
+        const arg0 = args.shift();
+        // eslint-disable-next-line prefer-spread
+        return arg0.concat.apply(arg0, args);
+    }) as Append<SliceOf<any>>
 ;

@@ -8,6 +8,6 @@ import {Filter} from "./types";
  * @param functor {Array|{filter: {Function}}}
  * @returns {Array|{filter: {Function}}}
  */
-const filter: Filter<any, any[]> = toCurried2Method('filter') as Filter<any, any[]>;
+const filter = toCurried2Method('filter') as Filter<any, any[]>;
 
 export default filter;

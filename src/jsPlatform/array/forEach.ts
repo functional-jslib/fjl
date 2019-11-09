@@ -9,6 +9,6 @@ import {ForEach} from "./types";
  * @return {*|Array|Object} - The type of object you pass in unless it doesn't have a `forEach` method.
  * @throws {Error} - When passed in functor doesn't have a `forEach` method.
  */
-const forEach: ForEach<any, any[]> = toCurried2Method('forEach') as ForEach<any, any[]>;
+const forEach = toCurried2Method('forEach') as ForEach<any, any[]>;
 
 export default forEach;

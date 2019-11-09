@@ -15,6 +15,6 @@ export const
      * @param arrays {...Array}
      * @returns {Array}
      */
-    complement: Complement<SliceOf<any>> = curry2((arr0: SliceOf<any>, ...arrays: SliceOf<any>[]): any =>
+    complement = curry2((arr0: SliceOf<any>, ...arrays: SliceOf<any>[]): any =>
         reduce((agg, arr) => append(agg, difference(arr, arr0) as SliceOf<any>), [], arrays)
     ) as Complement<SliceOf<any>>;

@@ -4,17 +4,10 @@ import {typeOf} from '../object/typeOf';
 import {of} from '../object/of';
 import {isFunctor} from '../object/is';
 import {isset} from '../object/isset';
-import {Lengthable} from "../types";
+import {Indexable, MapOp, Mappable} from "../types";
 
-export type MapFunc<T, Ftr, RetT> = (x?: T, i?: number, xs?: Ftr) => RetT;
-
-// export type MapFuncRetT
-
-export interface Mappable<T> extends Lengthable {
-    [index: number]: T;
-
-    map?<RetT>(x: T, i?: number, xs?: Mappable<T>): Mappable<RetT>;
-}
+export type MapType<T1, T2, Functor1, RetFunctor> =
+    CurryOf2<MapOp<T1, number | string, Functor1, T2>, Functor1, RetFunctor>
 
 /**
  * Maps a function onto a ListLike (string or array) or a functor (value containing a map method).
@@ -23,8 +16,10 @@ export interface Mappable<T> extends Lengthable {
  * @param xs {Array|String|*}
  * @returns {Array|String|*}
  */
-export const map = curry(<T, RetT>(fn: MapFunc<T, Mappable<T>, RetT>, xs: Mappable<T>): Mappable<RetT> | undefined | null => {
-    if (!isset(xs)) return xs;
+export const map = curry(<T, RetT>(
+    fn: MapOp<T, number | string, Mappable<T> | Indexable<T>, RetT>,
+    xs: Mappable<T> | Indexable<T>): Mappable<RetT> | Indexable<RetT> | unknown => {
+    if (!isset(xs)) return of(xs);
     let out = of(xs),
         limit,
         i = 0;
@@ -44,12 +39,12 @@ export const map = curry(<T, RetT>(fn: MapFunc<T, Mappable<T>, RetT>, xs: Mappab
             }
             return out;
         default:
-            if (isFunctor(xs)) return xs.map(fn);
+            if (isFunctor(xs)) return (xs as Mappable<T>).map(fn);
             return Object.keys(xs).reduce((agg, key) => {
                 out[key] = fn(xs[key], key, xs);
                 return out;
             }, out);
     }
-});
+}) as MapType<any, any, any, any>;
 
 export default map;

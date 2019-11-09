@@ -11,7 +11,7 @@ export type LastIndexOfFunc = CurryOf2<any, SliceOf<any>, number>;
 
 export type ConcatFunc = CurryOf1<SliceOf<any>, SliceOf<any>>;
 
-export interface Slice extends Lengthable {
+export interface Slice extends Lengthable, Object {
     [index: number]: any;
 
     concat(...slices: ConcatArray<any>[]): SliceOf<any>;
@@ -27,6 +27,7 @@ export interface Slice extends Lengthable {
 
 export interface SliceOf<T> extends Slice {
     [index: number]: T;
+    [Symbol.iterator](): T;
 }
 
 export type SliceOfAny = SliceOf<any>;

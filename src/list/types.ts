@@ -14,6 +14,6 @@ export interface List {
     lastIndexOf(x: any, xs: (any[] | string | any)): number;
 }
 
-export type PredForIndexableOf<T> = PredicateOf3<T, number, Indexable<T>>;
+export type PredForIndexable<T> = PredicateOf3<T, number | string, Indexable<T>>;
 
-export type PredForSliceOf<T> = PredicateOf3<T, number, SliceOf<T>>;
+export type PredForSliceOf<T> = PredicateOf3<T, number | string, SliceOf<T>>;

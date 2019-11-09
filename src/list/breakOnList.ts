@@ -7,8 +7,7 @@ import {splitAt} from "./splitAt";
 import {SliceOf} from "../jsPlatform/slice";
 import {PredForSliceOf} from "./types";
 
-export type BreakOnList =
-    CurryOf2<PredForSliceOf<any>, SliceOf<any>, [SliceOf<any>, SliceOf<any>]>;
+export type BreakOnList<Pred, Functor> = CurryOf2<Pred, Functor, [Functor, Functor]>;
 
 /**
  * breakOnList, applied to a predicate p and a list xs, returns a tuple
@@ -26,8 +25,11 @@ export type BreakOnList =
  * @param list {Array|String|*}
  * @returns {Array}
  */
-export const breakOnList: BreakOnList = curry(<T>(pred: PredForSliceOf<T>, list: SliceOf<T>) => {
-    const splitPoint = findIndexWhere(negateF3(pred), list);
-    return splitPoint === -1 ?
-        [of(list), sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
-}) as BreakOnList;
+export const breakOnList = curry(
+    <T>(pred: PredForSliceOf<T>, list: SliceOf<T>): [SliceOf<T>, SliceOf<T>] => {
+        const splitPoint = findIndexWhere(negateF3(pred), list);
+        return splitPoint === -1 ?
+            [of(list), sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
+    }) as
+    BreakOnList<PredForSliceOf<any>, SliceOf<any>>
+;
