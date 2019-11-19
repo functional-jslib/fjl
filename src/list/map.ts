@@ -4,10 +4,10 @@ import {typeOf} from '../object/typeOf';
 import {of} from '../object/of';
 import {isFunctor} from '../object/is';
 import {isset} from '../object/isset';
-import {Indexable, MapOp, Mappable} from "../types";
+import {Indexable, MapFunc, Mappable} from "../types";
 
 export type MapType<T1, T2, Functor1, RetFunctor> =
-    CurryOf2<MapOp<T1, number | string, Functor1, T2>, Functor1, RetFunctor>
+    CurryOf2<MapFunc<T1, number | string, Functor1, T2>, Functor1, RetFunctor>
 
 /**
  * Maps a function onto a ListLike (string or array) or a functor (value containing a map method).
@@ -17,7 +17,7 @@ export type MapType<T1, T2, Functor1, RetFunctor> =
  * @returns {Array|String|*}
  */
 export const map = curry(<T, RetT>(
-    fn: MapOp<T, number | string, Mappable<T> | Indexable<T>, RetT>,
+    fn: MapFunc<T, number | string, Mappable<T> | Indexable<T>, RetT>,
     xs: Mappable<T> | Indexable<T>): Mappable<RetT> | Indexable<RetT> | unknown => {
     if (!isset(xs)) return of(xs);
     let out = of(xs),

@@ -1,12 +1,12 @@
-import {curry, CurryOf2} from "../function/curry";
+import {curry, CurryOf2} from "../function";
 import {concat} from "./concat";
 import {map} from "./map";
 import {MapOp} from "../jsPlatform/array";
-import {SliceOf} from "../jsPlatform/slice/types";
-import {Mappable, Foldable} from "../types";
+import {SliceOf} from "../jsPlatform/slice";
+import {Foldable} from "../types";
 
-export type ConcatMap<T, RetT, Mapper, FunctorList, RetFunctor> =
-    CurryOf2<Mapper, FunctorList, RetT>
+export type ConcatMap<T, RetT, Mapper, Functor, RetFunctor> =
+    CurryOf2<Mapper, Functor, RetT>
 
 export const
     /**
@@ -20,7 +20,7 @@ export const
     concatMap = curry(<T, RetT>(
         fn: MapOp<T, Foldable<T>, RetT>,
         foldable: Foldable<T>): Foldable<T> =>
-        concat(map(fn, foldable))) as
-        ConcatMap<any, any, MapOp<any, SliceOf<any>, any>, any[], any>
+        concat(map(fn, foldable)) as Foldable<T>
+    ) as ConcatMap<any, any, MapOp<any, SliceOf<any>, any>, any[], any>
 
 ;

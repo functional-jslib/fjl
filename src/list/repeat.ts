@@ -8,4 +8,7 @@ import {iterate} from "../list/iterate";
  * @param x {*}
  * @return {Array}
  */
-export const repeat = curry((limit, x) => iterate(limit, a => a, x));
+export const repeat = curry(
+    <T>(n: number, x: T): T[] =>
+        iterate(n, a => a, x) as T[]
+);
