@@ -1,5 +1,5 @@
-import {TypeConstructor} from "../src/types";
-import instanceOf from "../src/jsPlatform/object/instanceOf";
+import {TypeConstructor} from "../../../src/types";
+import instanceOf from "../../../src/jsPlatform/object/instanceOf";
 
 describe('#instanceOf', () => {
     it('should have more tests', () => {
