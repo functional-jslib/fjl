@@ -1,6 +1,7 @@
-import {curry} from "../function/curry";
+import {curry, CurryOf2} from "../function/curry";
 import {iterate} from "../list/iterate";
 
+type Repeat<T> = CurryOf2<number, T, T[]>;
 /**
  * Repeats `x` `limit` number of times.
  * @function module:list.repeat
@@ -11,4 +12,4 @@ import {iterate} from "../list/iterate";
 export const repeat = curry(
     <T>(n: number, x: T): T[] =>
         iterate(n, a => a, x) as T[]
-);
+) as Repeat<any>;

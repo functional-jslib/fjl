@@ -1,5 +1,5 @@
 import {curry, CurryOf3} from "../function";
-import {BinaryOf} from "../types";
+import {BinaryOf, UnaryOf} from "../types";
 
 export const
     /**
@@ -11,14 +11,14 @@ export const
      * @param x {*} - Starting point.
      * @returns {*}`
      */
-    iterate = curry(<T>(n: number, op: BinaryOf<T, number, any>, x: T): T[] => {
-        const out: T[] = [];
+    iterate = curry(<T>(n: number, op: UnaryOf<T, T>, x: T): T[] => {
         let ind = 0,
             lastX: T = x;
-        for (; ind < n; ind += 1) {
+        const out: T[] = [lastX];
+        for (; ind < n - 1; ind += 1) {
+            lastX = op(lastX);
             out.push(lastX);
-            lastX = op(lastX, ind);
         }
         return out;
-    }) as CurryOf3<number, BinaryOf<any, number, any>, any, any[]>;
+    }) as CurryOf3<number, UnaryOf<any, any>, any, any[]>;
 

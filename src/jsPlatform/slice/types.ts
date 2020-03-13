@@ -27,7 +27,7 @@ export interface Slice extends Lengthable, Object {
 
 export interface SliceOf<T> extends Slice {
     [index: number]: T;
-    [Symbol.iterator](): T;
+    [Symbol.iterator](): IterableIterator<T>;
 }
 
 export type SliceOfAny = SliceOf<any>;
