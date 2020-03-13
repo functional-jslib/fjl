@@ -1,5 +1,5 @@
 import {isset} from '../object/isset';
-import {MapOp} from "../types";
+import {MapOp} from "../jsPlatform/array";
 
 export const toFunctor = (x: any): Functor<any> => !isset(x) || !x.map ? new Functor(x) : x;
 
