@@ -9,6 +9,7 @@ import {map} from './map';
 import {curry, curry2, CurryOf2, CurryOf4} from '../function/curry';
 import {PredForSliceOf} from "./types";
 import {ReduceOp} from "../jsPlatform/array";
+import {ListPredicate} from "../types";
 
 export type ReduceUntil = CurryOf4<PredForSliceOf<any>,
     ReduceOp<any, SliceOf<any>, any>, any,
@@ -172,7 +173,7 @@ export const
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndexWhere = curry((pred, arr) => {
+    findIndexWhere = curry(<T>(pred, arr: SliceOf<T>): number => {
         let ind = 0;
         const limit = length(arr);
         for (; ind < limit; ind += 1) {
@@ -182,7 +183,7 @@ export const
             }
         }
         return -1;
-    }),
+    }) as CurryOf2<PredForSliceOf<unknown>, SliceOf<unknown>, number>,
 
     /**
      * Finds index in list from right to left.

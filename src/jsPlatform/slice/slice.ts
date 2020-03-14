@@ -6,7 +6,7 @@ import {SliceFunc} from "./types";
  * @function module:list.slice
  * @param startIndex {number}
  * @param endIndex {number}
- * @param slice {Slice<any>|*}
+ * @param slice {SliceOf<any>|*}
  * @returns {SliceOf<any>>|*}
  */
 const slice: SliceFunc<unknown> =
