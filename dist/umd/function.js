@@ -10,7 +10,7 @@
     factory(mod.exports, global._function, global.compose, global.curry, global.flip, global.id, global.negate, global.until, global.fnOrError, global.noop, global.trampoline, global.toFunction);
     global._function = mod.exports;
   }
-})(this, function (_exports, _function, _compose, _curry, _flip, _id, _negate, _until, _fnOrError, _noop, _trampoline, _toFunction) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _function, _compose, _curry, _flip, _id, _negate, _until, _fnOrError, _noop, _trampoline, _toFunction) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

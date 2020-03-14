@@ -14,9 +14,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /**
  * Created by edlc on 12/9/16.
  */
-var Functor =
-/*#__PURE__*/
-function () {
+var Functor = /*#__PURE__*/function () {
   function Functor(value) {
     _classCallCheck(this, Functor);
 

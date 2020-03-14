@@ -10,7 +10,7 @@
     factory(mod.exports, global.object, global.lookup, global.typeOf, global.copy, global.is, global.of, global.searchObj, global.defineProp, global.assignDeep, global.setTheory, global.console, global.jsonClone, global.toArray, global.assocList);
     global.object = mod.exports;
   }
-})(this, function (_exports, _object, _lookup, _typeOf, _copy, _is, _of, _searchObj, _defineProp, _assignDeep, _setTheory, _console, _jsonClone, _toArray, _assocList) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _object, _lookup, _typeOf, _copy, _is, _of, _searchObj, _defineProp, _assignDeep, _setTheory, _console, _jsonClone, _toArray, _assocList) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

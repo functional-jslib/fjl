@@ -10,7 +10,7 @@
     factory(mod.exports, global.list, global._function, global.object, global.negate, global.curry, global["boolean"], global.lookup, global.of, global.is, global.typeOf, global.map, global.utils, global.range, global.jsPlatform);
     global.list = mod.exports;
   }
-})(this, function (_exports, _list, _function, _object, _negate, _curry, _boolean, _lookup, _of, _is, _typeOf, _map, _utils, _range, _jsPlatform) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _list, _function, _object, _negate, _curry, _boolean, _lookup, _of, _is, _typeOf, _map, _utils, _range, _jsPlatform) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

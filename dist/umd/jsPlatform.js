@@ -10,7 +10,7 @@
     factory(mod.exports, global.object, global.array, global.list, global.string, global._function);
     global.jsPlatform = mod.exports;
   }
-})(this, function (_exports, _object, _array, _list, _string, _function) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _object, _array, _list, _string, _function) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

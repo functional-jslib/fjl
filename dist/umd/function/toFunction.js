@@ -10,7 +10,7 @@
     factory(mod.exports, global.is);
     global.toFunction = mod.exports;
   }
-})(this, function (_exports, _is) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _is) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

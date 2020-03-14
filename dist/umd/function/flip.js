@@ -10,7 +10,7 @@
     factory(mod.exports, global.array, global._function, global.curry);
     global.flip = mod.exports;
   }
-})(this, function (_exports, _array, _function, _curry) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _array, _function, _curry) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

@@ -10,7 +10,7 @@
     factory(mod.exports, global.typeOf);
     global.fnOrError = mod.exports;
   }
-})(this, function (_exports, _typeOf) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _typeOf) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

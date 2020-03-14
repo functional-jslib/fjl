@@ -10,7 +10,7 @@
     factory(mod.exports, global.array);
     global.compose = mod.exports;
   }
-})(this, function (_exports, _array) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _array) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

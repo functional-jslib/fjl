@@ -10,7 +10,7 @@
     factory(mod.exports, global.is, global.object);
     global.assocList = mod.exports;
   }
-})(this, function (_exports, _is, _object) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _is, _object) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

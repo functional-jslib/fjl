@@ -10,7 +10,7 @@
     factory(mod.exports, global._function, global.list, global.object, global["boolean"], global.map, global.curry, global.aggregation);
     global.utils = mod.exports;
   }
-})(this, function (_exports, _function, _list, _object, _boolean, _map, _curry, _aggregation) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _function, _list, _object, _boolean, _map, _curry, _aggregation) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

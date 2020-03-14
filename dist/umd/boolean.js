@@ -10,7 +10,7 @@
     factory(mod.exports, global.curry);
     global["boolean"] = mod.exports;
   }
-})(this, function (_exports, _curry) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _curry) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

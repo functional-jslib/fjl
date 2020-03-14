@@ -10,7 +10,7 @@
     factory(mod.exports, global.typeOf, global.of);
     global.copy = mod.exports;
   }
-})(this, function (_exports, _typeOf, _of) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _typeOf, _of) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

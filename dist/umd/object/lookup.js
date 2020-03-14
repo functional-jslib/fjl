@@ -10,7 +10,7 @@
     factory(mod.exports, global.is, global.curry);
     global.lookup = mod.exports;
   }
-})(this, function (_exports, _is, _curry) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _is, _curry) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

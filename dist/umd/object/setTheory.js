@@ -10,7 +10,7 @@
     factory(mod.exports, global.assignDeep, global.object, global.utils, global.curry);
     global.setTheory = mod.exports;
   }
-})(this, function (_exports, _assignDeep, _object, _utils, _curry) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _assignDeep, _object, _utils, _curry) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

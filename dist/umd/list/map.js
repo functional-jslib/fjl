@@ -10,7 +10,7 @@
     factory(mod.exports, global.object, global.curry, global.typeOf, global.of, global.is);
     global.map = mod.exports;
   }
-})(this, function (_exports, _object, _curry, _typeOf, _of, _is) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _object, _curry, _typeOf, _of, _is) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {

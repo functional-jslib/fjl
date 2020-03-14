@@ -10,7 +10,7 @@
     factory(mod.exports, global.typeOf, global.assocList);
     global.toArray = mod.exports;
   }
-})(this, function (_exports, _typeOf, _assocList) {
+})(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : this, function (_exports, _typeOf, _assocList) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
