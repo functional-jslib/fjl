@@ -1,6 +1,6 @@
 import {toCurried2Method} from "../../utils/fnl-method-proxies";
 import {curry2} from "../../function";
-import {IncludesFunc, Slice} from "./types";
+import {IncludesFunc, SliceOf} from "./types";
 
 /**
  * Functional `includes` method (same as `(#Array|#String).includes`
@@ -14,8 +14,8 @@ import {IncludesFunc, Slice} from "./types";
 const includes: IncludesFunc = ((): IncludesFunc => (
         'includes' in Array.prototype ?
             toCurried2Method('includes') :
-            curry2((searchStr: string, slice: Slice, fromIndex = 0): boolean =>
-                slice.indexOf(searchStr, fromIndex) > -1)
+            curry2(<T>(searchValue: T, slice: SliceOf<T>, fromIndex = 0): boolean =>
+                slice.indexOf(searchValue, fromIndex) > -1)
     ) as IncludesFunc
 )();
 

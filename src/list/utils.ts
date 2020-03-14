@@ -2,7 +2,7 @@
  * ListLike operator utils module.
  * @module listUtils
  */
-import {slice, SliceOf, SliceOfAny} from '../jsPlatform/slice';      // un-curried version good for both strings and arrays
+import {slice, SliceOf} from '../jsPlatform/slice';      // un-curried version good for both strings and arrays
 import {length} from '../jsPlatform/object';
 import {alwaysFalse} from '../boolean';
 import {map} from './map';
@@ -11,7 +11,7 @@ import {PredForSliceOf} from "./types";
 import {ReduceOp} from "../jsPlatform/array";
 
 export type ReduceUntil = CurryOf4<PredForSliceOf<any>,
-    ReduceOp<any, SliceOfAny, any>, any,
+    ReduceOp<any, SliceOf<any>, any>, any,
     SliceOf<any>, any>;
 
 export const
@@ -44,7 +44,7 @@ export const
      * @todo Investigate bug with CurryOf2 type used here (ts reporting ->
      *   "Type Curry1Of<...> is not compatible with `CurryOf2<...>`
      */
-    sliceCopy = sliceFrom(0) as CurryOf2<number, SliceOf<any>, SliceOfAny>,
+    sliceCopy = sliceFrom(0) as CurryOf2<number, SliceOf<any>, SliceOf<any>>,
 
     /**
      * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
