@@ -9,7 +9,6 @@ import {map} from './map';
 import {curry, curry2, CurryOf2, CurryOf4} from '../function/curry';
 import {PredForSliceOf} from "./types";
 import {ReduceOp} from "../jsPlatform/array";
-import {ListPredicate} from "../types";
 
 export type ReduceUntil = CurryOf4<PredForSliceOf<any>,
     ReduceOp<any, SliceOf<any>, any>, any,
