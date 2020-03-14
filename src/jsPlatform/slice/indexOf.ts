@@ -10,8 +10,8 @@ import {IndexOfFunc} from "./types";
  * @param [fromIndex=0]{number} - Number to search from.  Default `0`.
  * @returns {Number} - `-1` if element not found else index at which it is found.
  */
-const indexOf: IndexOfFunc =
-    toCurried2Method('indexOf') as IndexOfFunc
+const indexOf: IndexOfFunc<unknown> =
+    toCurried2Method('indexOf') as IndexOfFunc<unknown>
 ;
 
 export default indexOf;

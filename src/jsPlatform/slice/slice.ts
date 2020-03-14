@@ -6,9 +6,10 @@ import {SliceFunc} from "./types";
  * @function module:list.slice
  * @param startIndex {number}
  * @param endIndex {number}
- * @param slice {Slice|*}
- * @returns {Slice|*}
+ * @param slice {Slice<any>|*}
+ * @returns {SliceOf<any>>|*}
  */
-const slice: SliceFunc = toCurried3Method('slice') as SliceFunc;
+const slice: SliceFunc<unknown> =
+    toCurried3Method('slice') as SliceFunc<unknown>;
 
 export default slice;
