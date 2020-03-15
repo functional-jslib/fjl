@@ -3,8 +3,6 @@ import {dropWhile} from '../../src/list/dropWhile';
 import {SliceOf} from "../../src/jsPlatform/slice";
 import {UnaryPred} from "../../src/types";
 
-// @todo make test case message run from within loop
-
 describe('#dropWhile', () => {
     const alnumRegex = /^[a-z]$/i,
         alnumPred = (x): boolean => alnumRegex.test(x),

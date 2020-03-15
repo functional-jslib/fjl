@@ -608,36 +608,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#difference', () => {
-        it('should return an empty list when first list passed in is empty, ' +
-            ' there are no differences between passed in lists, ', () => {
-            [
-                [[[], []], []],
-                [['', ''], []],
-                [[null, undefined], []]
-            ]
-                .forEach(([args, expected]) => {
-                    expectEqual(difference(...args), expected);
-                });
-        });
-        it('should return the difference between two arrays passed in', () => {
-            let testCases = [
-                // subj1, subj2, expectLen, expectedElements
-                [[1, 2, 3], [1, 2, 3, 4, 5], 0, []],
-                [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 5, [4, 5, 6, 7, 8]],
-                [[1, 2, 3, 4, 5], [1, 2, 3], 2, [4, 5]]
-            ];
-            testCases.forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = difference(subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                result.forEach((elm, ind) => {
-                    expectEqual(elm, expectedElms[ind]);
-                });
-            });
-        });
-    });
-
     describe('#intersect', () => {
         it('should return an empty list when either of the first, second ' +
             'or both params passed in are empty arrays, or falsy values', () => {

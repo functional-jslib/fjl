@@ -15,7 +15,7 @@ export const
             findIndexWhereRight(
                 (x, i, xs) => !pred(x, i, xs),
                 list
-            );
+            ) as number;
         if (splitPoint === -1) {
             return of(list);
         }
