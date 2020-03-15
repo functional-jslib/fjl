@@ -2,7 +2,7 @@
  * ListLike operator utils module.
  * @module listUtils
  */
-import {slice, SliceOf} from '../jsPlatform/slice';      // un-curried version good for both strings and arrays
+import {slice, SliceOf, SlicePred} from '../jsPlatform/slice';      // un-curried version good for both strings and arrays
 import {length} from '../jsPlatform/object';
 import {alwaysFalse} from '../boolean';
 import {map} from './map';
@@ -172,7 +172,7 @@ export const
      * @param arr {Array|String}
      * @returns {Number} - `-1` if predicate not matched else `index` found
      */
-    findIndexWhere = curry(<T>(pred, arr: SliceOf<T>): number => {
+    findIndexWhere = curry(<T>(pred: SlicePred<T>, arr: SliceOf<T>): number => {
         let ind = 0;
         const limit = length(arr);
         for (; ind < limit; ind += 1) {
@@ -182,7 +182,7 @@ export const
             }
         }
         return -1;
-    }) as CurryOf2<PredForSliceOf<unknown>, SliceOf<unknown>, number>,
+    }) as CurryOf2<SlicePred<unknown>, SliceOf<unknown>, number>,
 
     /**
      * Finds index in list from right to left.

@@ -1,6 +1,5 @@
 import {curry, CurryOf2} from "../function/curry";
 import {length} from "../jsPlatform/object";
-import {PredicateOf3} from "../jsPlatform/array";
 import {PredForIndexable} from "./types";
 import {Indexable} from "../types";
 

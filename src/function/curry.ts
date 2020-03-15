@@ -48,6 +48,14 @@ export type CurryOf<T, Ret> = CurryOf1<T, Ret> | CurryOf2<T, T, Ret> | CurryOf3<
 
 export type CurryOfX<T, Ret> = CurryOf<T, Ret>;
 
+export type CurryPred2<T> = CurryOf2<T, T, boolean>;
+
+export type CurryPred3<T> = CurryOf3<T, T, T, boolean>;
+
+export type CurryPredOf2<A, B> = CurryOf2<A, B, boolean>;
+
+export type CurryPredOf3<A, B, C> = CurryOf3<A, B, C, boolean>;
+
 export const
 
     /**

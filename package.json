@@ -6,7 +6,7 @@
   "module": "dist/es6-module",
   "types": "./index.d.ts",
   "scripts": {
-    "build": "gulp docs build && npm run test-builds",
+    "build": "yarn install && yarn test && gulp docs build && npm run test-builds",
     "test-builds": "jest --testMatch **/tests/*-test-*.ts",
     "test": "jest --config ./jest.config.js",
     "readme": "gulp readme",
