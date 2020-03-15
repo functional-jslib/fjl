@@ -18,7 +18,7 @@ export type MapType<T1, T2, Functor1, RetFunctor> =
  */
 export const map = curry(<T, RetT>(
     fn: MapFunc<T, number | string, Mappable<T> | Indexable<T>, RetT>,
-    xs: Mappable<T> | Indexable<T>): Mappable<RetT> | Indexable<RetT> | unknown => {
+    xs: Mappable<T> | Indexable<T>): Mappable<RetT> | Indexable<RetT> | any => {
     if (!isset(xs)) return of(xs);
     let out = of(xs),
         limit,

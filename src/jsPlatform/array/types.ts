@@ -27,4 +27,6 @@ export type Some<T, FtrT> = CurryOf2<PredicateOf3<T, number | string, FtrT>, Ftr
 
 export type Predicate<T, FtrT> = (x?: T, i?: number | string | T, xs?: FtrT) => boolean;
 
+export type ArrayPred<T> = (x?: T, i?: number | string | T, xs?: T[]) => boolean;
+
 export type Push<T, FtrT> = CurryOf2<T, FtrT, number>;

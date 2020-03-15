@@ -13,4 +13,5 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sortBy = curry((orderingFn, xs) => sliceCopy(xs).sort(orderingFn || genericAscOrdering));
+    sortBy = curry(<T>(orderingFn, xs: T[]) => (sliceCopy(xs) as T[])
+        .sort(orderingFn || genericAscOrdering));

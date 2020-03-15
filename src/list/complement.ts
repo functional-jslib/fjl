@@ -26,4 +26,4 @@ export const
      * @returns {Array}
      * @curried
      */
-    complement = curry2(_complement) as Complement<SliceOf<unknown>>;
+    complement = curry2(_complement) as Complement<SliceOf<any>>;

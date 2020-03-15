@@ -6,7 +6,7 @@ import {slice, SliceOf, SlicePred} from '../jsPlatform/slice';      // un-currie
 import {length} from '../jsPlatform/object';
 import {alwaysFalse} from '../boolean';
 import {map} from './map';
-import {curry, curry2, CurryOf2, CurryOf4} from '../function/curry';
+import {curry, curry2, CurryOf1, CurryOf2, CurryOf3, CurryOf4} from '../function/curry';
 import {PredForSliceOf} from "./types";
 import {ReduceOp} from "../jsPlatform/array";
 
@@ -41,10 +41,8 @@ export const
      * @function listUtils.sliceCopy
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
-     * @todo Investigate bug with CurryOf2 type used here (ts reporting ->
-     *   "Type Curry1Of<...> is not compatible with `CurryOf2<...>`
      */
-    sliceCopy = sliceFrom(0) as CurryOf2<number, SliceOf<any>, SliceOf<any>>,
+    sliceCopy = sliceFrom(0) as unknown as CurryOf1<SliceOf<any>, SliceOf<any>>,
 
     /**
      * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
@@ -182,7 +180,7 @@ export const
             }
         }
         return -1;
-    }) as CurryOf2<SlicePred<unknown>, SliceOf<unknown>, number>,
+    }) as CurryOf2<SlicePred<any>, SliceOf<any>, number>,
 
     /**
      * Finds index in list from right to left.
@@ -249,11 +247,11 @@ export const
      * @param list {Array}
      * @returns {Array} - Copy of incoming with swapped values at indices.
      */
-    swapped = curry((ind1, ind2, list) => {
-        const out = sliceCopy(list),
+    swapped = curry(<T>(ind1: number, ind2: number, list: T[]): T[] => {
+        const out = sliceCopy(list) as T[],
             tmp = out[ind1];
         out[ind1] = out[ind2];
         out[ind2] = tmp;
         return out;
-    })
+    }) as CurryOf3<number, number, any[], any[]>
 ;

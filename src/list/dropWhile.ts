@@ -28,4 +28,4 @@ export const
      * @refactor
      * @returns {Array|String}
      */
-    dropWhile = curry(_dropWhile) as DropWhile<unknown>;
+    dropWhile = curry(_dropWhile) as DropWhile<any>;

@@ -1,4 +1,5 @@
 import {curry} from "../function/curry";
+import {ArrayPred} from "../jsPlatform/array";
 
 export const
     /**
@@ -8,9 +9,9 @@ export const
      * @param xs {Array} - list or list like.
      * @returns {Array} - Structure of filtered elements.
      */
-    filter = curry((pred, xs) => {
-        let ind = 0,
-            limit = xs.length,
+    filter = curry(<T>(pred: ArrayPred<T>, xs: T[]): T[] => {
+        let ind = 0;
+        const limit = xs.length,
             out: any[] = [];
         if (!limit) {
             return out;
