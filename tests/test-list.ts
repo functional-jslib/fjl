@@ -49,27 +49,6 @@ import {
 
 describe('#list', () => {
 
-    describe('#and', () => {
-        it('should return `true` when all items of a container are "truthy".', () => {
-            expectTrue(and(['a', 1, 99, true, (() => null), {}, []]));
-        });
-        it('should return `false` when not all items of a container are "truthy".', () => {
-            expectFalse(and(['a', 1, 0, true, (() => null), {}, []]));
-        });
-        it('should return `false` when receiving an empty list or nothing.', () => {
-            expectFalse(and(''));
-            expectFalse(and([]));
-            expectFalse(and(['']));
-            expectFalse(and([null]));
-            expectFalse(and([undefined]));
-            expectFalse(and([false]));
-        });
-        it('should an error when receiving nothing', () => {
-            expectError(() => and(undefined));
-            expectError(() => and(null));
-        });
-    });
-
     describe('#or', () => {
         it('should return `true` when, at least, one of the items is "truthy".', () => {
             expectTrue(or([0, false, null, 1, undefined]));
@@ -83,47 +62,6 @@ describe('#list', () => {
         it('should throw an error when receiving nothing (`null` or `undefined`).', () => {
             expectError(() => or(null));
             expectError(() => or(undefined));
-        });
-    });
-
-    describe('#any', () => {
-        const id = x => x;
-        it('should return `true` when any item matches predicate.', () => {
-            expectTrue(any(isTruthy, [0, false, null, 1, undefined]));
-            expectTrue(any(isTruthy, ['hello']));
-            expectTrue(any(x => x === 'e', 'hello'));
-        });
-        it('should return `false` when no item in received items matches predicate.', () => {
-            expectFalse(any(isTruthy, [0, false, null, undefined, '']));
-            expectFalse(any(isTruthy, [0]));
-            expectFalse(any(x => x === 'e', 'avalon'));
-        });
-        it('should return `false` when an empty list is received.', () => {
-            expectFalse(any(id, []));
-            expectFalse(any(id, ''));
-        });
-        it('should throw an error when receiving nothing (`null` or `undefined`).', () => {
-            expectError(() => any(id, null));
-            expectError(() => any(id, undefined));
-        });
-    });
-
-    describe('#all', () => {
-        it('should return true when predicate returns true for all items in list', () => {
-            expectTrue(all(item => item, [true, true, true]));
-            expectTrue(all(char => char !== 'a', 'bcdefg'));
-        });
-        it('should return `false` when predicate returns `false` for an item', () => {
-            expectFalse(all(item => item, [true, false, true]));
-            expectFalse(all(item => item !== 'a', 'bcdaefg'));
-        });
-        it('should return `false` when an empty list is passed in', () => {
-            expectFalse(all(item => item, []));
-            expectFalse(all(item => item, ''));
-        });
-        it('should throw an error when nothing is passed in', () => {
-            expectError(() => all(item => item, null));
-            expectError(() => all(item => item, undefined));
         });
     });
 

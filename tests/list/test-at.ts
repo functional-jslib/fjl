@@ -1,8 +1,9 @@
 import {alphabetArray, alphabetString, expectEqual} from "../helpers";
-import {length} from "../../src/jsPlatform/object";
-import {at} from "../../src/list";
+import length from "../../src/jsPlatform/object/length";
+import {at} from "../../src/list/at";
 
 describe('#at', () => {
+    // @todo tabelize messages in tests
     it('should return an item at a given key/index.', () => {
         [alphabetString, alphabetArray].forEach(subject => {
             const subjectLastInd = length(subject) - 1;
