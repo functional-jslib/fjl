@@ -9,6 +9,7 @@ import {map} from './map';
 import {curry, curry2, CurryOf1, CurryOf2, CurryOf3, CurryOf4} from '../function/curry';
 import {PredForSliceOf} from "./types";
 import {ReduceOp} from "../jsPlatform/array";
+import {Lengthable} from "../types";
 
 export type ReduceUntil = CurryOf4<PredForSliceOf<any>,
     ReduceOp<any, SliceOf<any>, any>, any,
@@ -34,7 +35,8 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sliceTo = curry((toInd, xs) => slice(0, toInd, xs)),
+    sliceTo = curry(<T>(toInd: number, xs: SliceOf<T>): SliceOf<T> =>
+        slice(0, toInd, xs) as SliceOf<T>) as CurryOf2<number, SliceOf<any>, SliceOf<any>>,
 
     /**
      * Slices a copy of list.
@@ -158,7 +160,7 @@ export const
      * @param x {Array|String|*} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
-    lastIndex = x => {
+    lastIndex = (x: Lengthable): number => {
         const len = length(x);
         return len ? len - 1 : 0;
     },
@@ -208,8 +210,8 @@ export const
      */
     findIndicesWhere = curry((pred, xs) => {
         const limit = length(xs);
-        let ind = 0,
-            out: any[] = [];
+        let ind = 0;
+        const out: any[] = [];
         for (; ind < limit; ind++) {
             if (pred(xs[ind], ind, xs)) {
                 out.push(ind);
@@ -225,13 +227,13 @@ export const
      * @returns {*}
      */
     findWhere = curry((pred, xs) => {
-        let ind = 0,
-            limit = length(xs);
+        let ind = 0;
+        const limit = length(xs);
         if (!limit) {
             return;
         }
         for (; ind < limit; ind++) {
-            let elm = xs[ind];
+            const elm = xs[ind];
             if (pred(elm, ind, xs)) {
                 return elm;
             }
