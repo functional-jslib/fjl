@@ -1,4 +1,4 @@
-import {length} from '../jsPlatform/object';
+import length from '../jsPlatform/object/length';
 import {curry, CurryOf2} from '../function/curry';
 import {typeOf} from '../object/typeOf';
 import {of} from '../object/of';
@@ -25,14 +25,14 @@ export const map = curry(<T, RetT>(
         i = 0;
     switch (typeOf(xs)) {
         case 'Array':
-            limit = length(xs);
+            limit = length(xs as Array<T>);
             if (!limit) return out;
             for (; i < limit; i += 1) {
                 out.push(fn(xs[i], i, xs));
             }
             return out;
         case 'String':
-            limit = length(xs);
+            limit = length(xs as unknown as string);
             if (!xs) return out;
             for (; i < limit; i += 1) {
                 out += fn(xs[i], i, xs);

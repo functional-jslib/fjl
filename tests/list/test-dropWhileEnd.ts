@@ -1,7 +1,8 @@
 import {expectEqual, nonAlphaNumsArray, vowelsArray, vowelsString} from "../helpers";
 import {dropWhileEnd} from "../../src/list/dropWhileEnd";
-import {id} from "../../src/function";
+import {id} from "../../src/function/id";
 import {UnaryPred} from "../../src/types";
+import {SliceOf} from "../../src/jsPlatform/slice/types";
 
 // @todo move test-case message(s) into loop
 describe('#dropWhileEnd', () => {
@@ -16,7 +17,7 @@ describe('#dropWhileEnd', () => {
             vowelsAndNonAlnumsArray = vowelsArray.concat(nonAlphaNumsArray),
             vowelsAndNonAlnums = vowelsAndNonAlnumsArray.slice(0).join('')
         ;
-        [
+        (<[[UnaryPred<any>, SliceOf<any>], SliceOf<any>][]>[
             [[id, []], []],
             [[id, ''], ''],
             [[alnumPred, vowelsArray], []],
@@ -35,7 +36,7 @@ describe('#dropWhileEnd', () => {
                 vowelsString.split('').map((c, ind) =>
                     [[getCharCodeGreaterThan(c.charCodeAt(0)), vowelsString], vowelsString.slice(0, ind + 1)]
                 )
-            )
+            ))
             .forEach(([args, expected]) => {
                 const result = dropWhileEnd(args[0], args[1]);
                 expectEqual(result, expected);
