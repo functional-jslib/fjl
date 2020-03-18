@@ -10,7 +10,7 @@ export interface LinkedListNode {data: string, next?: LinkedListNode}
 
 export * from './helpers/curry_';
 
-export let  expectInstanceOf = curry2_((instance, value) => expect(value).toBeInstanceOf(instance)),
+export const  expectInstanceOf = curry2_((instance, value) => expect(value).toBeInstanceOf(instance)),
 
     expectFunction = value => expectInstanceOf(Function, value),
 

@@ -1,19 +1,24 @@
-import {expectTrue} from "../helpers";
-import {all, elemIndex} from "../../src/list";
+import {elemIndex} from "../../src/list/elemIndex";
+import {SliceOf} from "../../src/jsPlatform/slice";
+import {vowelsArray, vowelsString} from "../helpers";
 
+type TestCaseTuple = [[string, SliceOf<string>], number | undefined];
 describe('#elemIndex', () => {
-    it('should return the index where the element is found', () => {
-        const word = 'hello world';
-        expectTrue(
-            all(elm =>
-                    all((elm2, ind2, arr) => elemIndex(elm2, arr) === word.indexOf(elm2), elm),
-                [word.split(''), word]));
-    });
-    it('should return `undefined` when element is not in list', () => {
-        const word = 'hello world';
-        expectTrue(
-            all(elm =>
-                    all((elm2, ind2, arr) => elemIndex('z', arr) === undefined, elm),
-                [word.split(''), word]));
-    });
+    (<TestCaseTuple[]>[
+        [['', vowelsArray], undefined],
+        [['x', vowelsArray], undefined],
+        [['y', vowelsString], undefined],
+        [['z', vowelsString], undefined],
+    ].concat(
+        vowelsArray.map((x, i, xs): [[string, string], any] => {
+            const revIndex: number = xs.length - (i + 1),
+                searchStr = xs.slice(revIndex, xs.length).join('');
+            return [[searchStr, vowelsString], revIndex];
+        })
+    ))
+        .forEach(([args, expected]) => {
+            it(`elemIndex("${args.join('", "')}") === ${expected}`, () => {
+                expect(elemIndex(...args)).toEqual(expected);
+            });
+        })
 });

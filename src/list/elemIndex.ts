@@ -1,5 +1,7 @@
-import {curry} from "../function/curry";
-import {indexOf} from "../jsPlatform/slice";
+import {curry, CurryOf2} from "../function/curry";
+import {indexOf, SliceOf} from "../jsPlatform/slice";
+
+type ElemIndex<T> = CurryOf2<T, SliceOf<T>, number | undefined>;
 
 export const
     /**
@@ -8,8 +10,8 @@ export const
      * @param xs {Array} - list or list like.
      * @returns {*}
      */
-    elemIndex = curry((x, xs) => {
-        const foundInd = indexOf(x, xs);
+    elemIndex = curry(<T>(x: T, xs: SliceOf<T>): number | undefined => {
+        const foundInd = indexOf(x, xs) as number;
         return foundInd !== -1 ? foundInd : undefined;
-    });
+    }) as ElemIndex<any>;
 
