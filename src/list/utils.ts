@@ -208,7 +208,7 @@ export const
      * @param xs {Array|String|*} - list or list like.
      * @returns {Array|undefined}
      */
-    findIndicesWhere = curry((pred, xs) => {
+    findIndicesWhere = curry2(<T>(pred, xs: SliceOf<T>): number[] | undefined => {
         const limit = length(xs);
         let ind = 0;
         const out: any[] = [];
@@ -218,7 +218,7 @@ export const
             }
         }
         return out.length ? out : undefined;
-    }),
+    }) as CurryOf2<SlicePred<any>, SliceOf<any>, number[] | undefined>,
 
     /**
      * @function module:listUtils.findWhere

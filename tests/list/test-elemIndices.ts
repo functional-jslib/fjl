@@ -1,24 +1,25 @@
-import {alphabetArray, expectEqual, expectError, vowelsString} from "../helpers";
-import {elemIndices, range} from "../../src/list";
+import {alphabetArray} from "../helpers";
+import {elemIndices} from "../../src/list/elemIndices";
+import {SliceOf} from "../../src/jsPlatform/slice";
 
 describe('#elemIndices', () => {
-    it('should return all found element indices in a list', () => {
+    (<[SliceOf<any>, any, SliceOf<any> | any][]>[
+        ['aeiou', 'i', [2]],
+        ['sjljs', 'j', [1, 3]],
+        ['radar', 'r', [0, 4]],
+        ['radar', 'a', [1, 3]],
         [
-            [vowelsString, 'i', [2]],
-            [alphabetArray, 'b', [1]],
-            [
-                alphabetArray.concat(alphabetArray, alphabetArray, alphabetArray), 'b', [1, 27, 53, 79]
-            ],
-        ]
-            .forEach(([subj, search, expected]) => {
+            alphabetArray.concat(alphabetArray, alphabetArray, alphabetArray), 'b', [1, 27, 53, 79]
+        ],
+        [[0, 1, 2, 3, 4], 99, undefined]
+    ])
+        .forEach(([subj, search, expected]) => {
+            const subjAsStr = subj.constructor === String ? subj : `[${(subj as any[]).join(', ')}]`,
+                expectedAsStr = !expected || expected.constructor === String ?
+                    expected : `[${(expected as any[]).join(', ')}]`;
+            it(`elemIndices(${search}, ${subjAsStr}) === ${expectedAsStr}`, () => {
                 const result = elemIndices(search, subj);
-                expectEqual(result, expected);
+                expect(result).toEqual(expected);
             });
-    });
-    it('should return `undefined` when element is not found in list', () => {
-        expectEqual(elemIndices(99, range(0, 10)), undefined);
-    });
-    it('should throw an error when second arg is not a list.', () => {
-        [undefined, null, {}].forEach(x => expectError(() => elemIndices(99, x)));
-    });
+        });
 });
