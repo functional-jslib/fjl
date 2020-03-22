@@ -1,9 +1,9 @@
 import {curry3} from "../function/curry";
-import {sliceTo} from "./utils";
 import {length} from "../jsPlatform/object";
 import {reduce, toShortest} from "./utils";
 import {push} from "./push";
 import {map} from "./map";
+import {$sliceTo} from "./utils/sliceTo";
 
 export const
     /**
@@ -25,7 +25,7 @@ export const
         if (!lenOfTrimmed) {
             return [];
         } else if (lenOfTrimmed === 1) {
-            return sliceTo(length(trimmedLists[0]), trimmedLists[0]);
+            return $sliceTo(length(trimmedLists[0]), trimmedLists[0]);
         }
         return reduce((agg, item, ind) =>
                 push(agg, op(map(xs => xs[ind], trimmedLists))),

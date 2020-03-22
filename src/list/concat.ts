@@ -1,6 +1,6 @@
 import {length} from '../jsPlatform/object';
 import {append} from './append';
-import {sliceCopy} from './utils';
+import {sliceCopy} from './utils/sliceCopy';
 import {SliceOf} from "../jsPlatform/slice";
 
 export const

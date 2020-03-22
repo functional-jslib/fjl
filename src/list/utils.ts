@@ -2,49 +2,22 @@
  * ListLike operator utils module.
  * @module listUtils
  */
-import {slice, SliceOf, SlicePred} from '../jsPlatform/slice';      // un-curried version good for both strings and arrays
+import {SliceOf, SlicePred} from '../jsPlatform/slice';      // un-curried version good for both strings and arrays
 import {length} from '../jsPlatform/object';
 import {alwaysFalse} from '../boolean';
 import {map} from './map';
-import {curry, curry2, CurryOf1, CurryOf2, CurryOf3, CurryOf4} from '../function/curry';
+import {curry, curry2, CurryOf2, CurryOf3, CurryOf4} from '../function/curry';
 import {PredForSliceOf} from "./types";
 import {ReduceOp} from "../jsPlatform/array";
 import {Lengthable} from "../types";
+import {$sliceTo} from "./utils/sliceTo";
+import {sliceCopy} from "./utils/sliceCopy";
 
 export type ReduceUntil = CurryOf4<PredForSliceOf<any>,
     ReduceOp<any, SliceOf<any>, any>, any,
     SliceOf<any>, any>;
 
 export const
-
-    /**
-     * Returns a slice of the given list from `startInd` to the end of the list.
-     * @function module:listUtils.sliceFrom
-     * @param startInd {Number}
-     * @param xs {Array|String|*}
-     * @returns {Array|String|*}
-     */
-    sliceFrom = curry(
-        (startInd, xs) => slice(startInd, undefined, xs)
-    ) as CurryOf2<number, SliceOf<any>, SliceOf<any>>,
-
-    /**
-     * Slices from index `0` to given index.
-     * @function module:listUtils.sliceTo
-     * @param toInd {Number}
-     * @param xs {Array|String|*}
-     * @returns {Array|String|*}
-     */
-    sliceTo = curry(<T>(toInd: number, xs: SliceOf<T>): SliceOf<T> =>
-        slice(0, toInd, xs) as SliceOf<T>) as CurryOf2<number, SliceOf<any>, SliceOf<any>>,
-
-    /**
-     * Slices a copy of list.
-     * @function listUtils.sliceCopy
-     * @param xs {Array|String|*}
-     * @returns {Array|String|*}
-     */
-    sliceCopy = sliceFrom(0) as unknown as CurryOf1<SliceOf<any>, SliceOf<any>>,
 
     /**
      * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
@@ -65,8 +38,8 @@ export const
     /**
      * Returns length of all passed lists in list.
      * @function module:listUtils.lengths
-     * @param lists ...{Array|String|*}
-     * @returns {Array|String|*}
+     * @param lists ...{SliceOf<any>}
+     * @returns {SliceOf<any>}
      */
     lengths = (...lists: string[] | [any[]] | any): number[] => map(length, lists),
 
@@ -74,14 +47,14 @@ export const
      * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
      *  'slice to smallest' functionality.
      * @function module:listUtils.toShortest
-     * @param lists {...(Array|String|*)}
-     * @returns {Array|String|*}
+     * @param lists {...(SliceOf<any>)}
+     * @returns {SliceOf<any>}
      */
     toShortest = curry2((...lists): [any[]] => {
         const listLengths = lengths(...lists),
             smallLen = Math.min(...listLengths);
         return map((list, ind) => listLengths[ind] > smallLen ?
-            sliceTo(smallLen, list) : sliceCopy(list), lists);
+            $sliceTo(smallLen, list) : sliceCopy(list), lists);
     }),
 
     /**
@@ -90,7 +63,7 @@ export const
      * @param pred {Function} - `(item, index, list) => Boolean(...)`
      * @param op {Function} - Operation - `(agg, item, index, list) => agg`
      * @param agg {*} - Zero value.
-     * @param xs {Array|String|*} - ListLike.
+     * @param xs {SliceOf<any>} - ListLike.
      * @returns {*}
      */
     reduceUntil = curry((pred, op, agg, xs) => {
@@ -115,7 +88,7 @@ export const
      * @param pred {Function} - `(item, index, list) => Boolean(...)`
      * @param op {Function} - Operation - `(agg, item, index, list) => agg`
      * @param agg {*} - Zero value.
-     * @param xs {Array|String|*} - ListLike.
+     * @param xs {SliceOf<any>} - ListLike.
      * @returns {*}
      */
     reduceUntilRight = curry((pred, op, agg, arr) => {
@@ -139,7 +112,7 @@ export const
      * @function module:listUtils.reduce
      * @param op {Function} - Operation - `(agg, item, index, list) => agg`
      * @param agg {*} - Zero value.
-     * @param xs {Array|String|*} - ListLike.
+     * @param xs {SliceOf<any>} - ListLike.
      * @returns {*}
      */
     reduce = reduceUntil(alwaysFalse),
@@ -149,7 +122,7 @@ export const
      * @function module:listUtils.reduceRight
      * @param op {Function} - Operation - `(agg, item, index, list) => agg`
      * @param agg {*} - Zero value.
-     * @param xs {Array|String|*} - ListLike.
+     * @param xs {SliceOf<any>} - ListLike.
      * @returns {*}
      */
     reduceRight = reduceUntilRight(alwaysFalse),
@@ -157,7 +130,7 @@ export const
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
      * @function module:listUtils.lastIndex
-     * @param x {Array|String|*} - list like or list.
+     * @param x {SliceOf<any>} - list like or list.
      * @returns {Number} - `-1` if no element found.
      */
     lastIndex = (x: Lengthable): number => {
@@ -205,7 +178,7 @@ export const
     /**
      * @function module:listUtils.findIndicesWhere
      * @param pred {Function}
-     * @param xs {Array|String|*} - list or list like.
+     * @param xs {SliceOf<any>} - list or list like.
      * @returns {Array|undefined}
      */
     findIndicesWhere = curry2(<T>(pred, xs: SliceOf<T>): number[] | undefined => {
@@ -223,7 +196,7 @@ export const
     /**
      * @function module:listUtils.findWhere
      * @param pred {Function}
-     * @param xs {Array|String|*} - list or list like.
+     * @param xs {SliceOf<any>} - list or list like.
      * @returns {*}
      */
     findWhere = curry((pred, xs) => {

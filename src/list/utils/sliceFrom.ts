@@ -1,5 +1,5 @@
 import {curry, CurryOf2} from "../../function/curry";
-import {slice, SliceOf} from "../../jsPlatform/slice";
+import {$slice, SliceOf} from "../../jsPlatform/slice";
 
 export const
 
@@ -11,7 +11,8 @@ export const
      * @returns {SliceOf<any>}
      * @generic
      */
-    sliceFrom$ = <T>(startInd: number, xs: SliceOf<T>): SliceOf<T> => slice(startInd, undefined, xs) as SliceOf<T>,
+    $sliceFrom = <T>(startInd: number, xs: SliceOf<T>): SliceOf<T> =>
+        $slice(startInd, undefined, xs) as SliceOf<T>,
 
     /**
      * Returns a slice of the given list from `startInd` to the end of the list.
@@ -22,5 +23,5 @@ export const
      * @curried
      * @generic
      */
-    sliceFrom = curry(sliceFrom$) as CurryOf2<number, SliceOf<any>, SliceOf<any>>
+    sliceFrom = curry($sliceFrom) as CurryOf2<number, SliceOf<any>, SliceOf<any>>
 ;

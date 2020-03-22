@@ -1,5 +1,5 @@
 import {alphabetArray, vowelsArray} from "../helpers";
-import {sliceFrom} from "../../src/list/utils";
+import {sliceFrom} from "../../src/list/utils/sliceFrom";
 import {CurryOf1} from "../../src/function";
 import {SliceOf} from "../../src/jsPlatform/slice";
 

@@ -1,5 +1,6 @@
 import {length} from "../jsPlatform/object";
-import {sliceCopy, swapped} from "./utils";
+import {swapped} from "./utils";
+import {sliceCopy} from "./utils/sliceCopy";
 import {repeat} from "../list/repeat";
 import {SliceOf} from "../jsPlatform/slice";
 

@@ -1,5 +1,6 @@
 import {curry} from "../function/curry";
-import {genericAscOrdering, sliceCopy} from "./utils";
+import {genericAscOrdering} from "./utils";
+import {sliceCopy} from "./utils/sliceCopy";
 
 export const
     /**

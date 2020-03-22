@@ -1,7 +1,8 @@
 import {curry, CurryOf2} from "../function/curry";
-import {findIndexWhereRight, sliceTo} from "./utils";
+import {findIndexWhereRight} from "./utils";
 import {of} from "../object/of";
 import {SliceOf, SlicePred} from "../jsPlatform/slice";
+import {$sliceTo} from "./utils/sliceTo";
 
 type DropWhileEnd<T> = CurryOf2<SlicePred<T>, SliceOf<T>, SliceOf<T>>;
 
@@ -22,5 +23,5 @@ export const
         if (splitPoint === -1) {
             return of(list);
         }
-        return sliceTo(splitPoint + 1, list) as SliceOf<T>;
+        return $sliceTo(splitPoint + 1, list) as SliceOf<T>;
     }) as DropWhileEnd<any>;

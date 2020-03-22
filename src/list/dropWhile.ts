@@ -1,14 +1,15 @@
 import {curry, CurryOf2} from "../function/curry";
 import {length} from "../jsPlatform/object";
-import {findIndexWhere, sliceFrom} from "./utils";
-import {slice, SliceOf} from "../jsPlatform/slice";
+import {findIndexWhere} from "./utils";
+import {$slice, SliceOf} from "../jsPlatform/slice";
 import {PredForSliceOf} from "./types";
+import {$sliceFrom} from "./utils/sliceFrom";
 
 type DropWhile<T> = CurryOf2<PredForSliceOf<T>, SliceOf<T>, SliceOf<T>>;
 
 export const
 
-    _dropWhile = <T>(p: PredForSliceOf<T>, xs: SliceOf<T>): SliceOf<T> => {
+    $dropWhile = <T>(p: PredForSliceOf<T>, xs: SliceOf<T>): SliceOf<T> => {
         const limit = length(xs),
             splitPoint =
                 findIndexWhere(
@@ -16,8 +17,8 @@ export const
                     xs
                 ) as number; // @todo make curry functions return "known" type (so we don't have to cast types)
         return splitPoint === -1 ?
-            sliceFrom(limit, xs) as SliceOf<T> :
-            slice(splitPoint, limit, xs) as SliceOf<T>;
+            $sliceFrom(limit, xs) as SliceOf<T> :
+            $slice(splitPoint, limit, xs) as SliceOf<T>;
     },
 
     /**
@@ -28,4 +29,4 @@ export const
      * @refactor
      * @returns {Array|String}
      */
-    dropWhile = curry(_dropWhile) as DropWhile<any>;
+    dropWhile = curry($dropWhile) as DropWhile<any>;
