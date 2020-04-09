@@ -1,10 +1,10 @@
-import {alphabetArray, alphabetCharCodeRange, alphabetString, expectEqual, expectError} from "../helpers";
-import {concatMap} from "../../src/list/concatMap";
+import {alphabetArray, alphabetCharCodeRange, alphabetString, expectEqual, expectError} from '../helpers';
+import {concatMap} from '../../src/list/concatMap';
 
 describe('#concatMap', () => {
-    const id = x => x;
+    const id = (x: any): any => x;
     it('should map a function on a list and concatenate lists in resulting list into a list.', () => {
-        const charCodeToCharOp = charCode => String.fromCharCode(charCode),
+        const charCodeToCharOp = (charCode: number): string => String.fromCharCode(charCode),
             charCodeRange = alphabetCharCodeRange;
         // @investigate is babel shimming String.fromCharCode;
         //  When passing this function direct to `[].map` it returns a weird result (seems like it's returning

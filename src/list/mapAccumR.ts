@@ -1,5 +1,5 @@
 import {curry} from "../function/curry";
-import {sliceCopy} from "./utils";
+import {sliceCopy} from "./utils/sliceCopy";
 import {length} from "../jsPlatform/object";
 
 export const

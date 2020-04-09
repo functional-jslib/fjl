@@ -1,6 +1,6 @@
 import {length} from '../jsPlatform/object';
 import {append} from './append';
-import {sliceCopy} from './utils';
+import {sliceCopy} from './utils/sliceCopy';
 import {SliceOf} from "../jsPlatform/slice";
 
 export const
@@ -16,7 +16,7 @@ export const
         switch (length(xs)) {
             case undefined:
             case 0:
-                return <SliceOf<any>>[];
+                return <SliceOf<T>>[];
             case 1:
                 item0 = xs[0];
                 return item0 && item0.slice ? sliceCopy(item0) : item0;

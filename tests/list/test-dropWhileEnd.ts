@@ -1,21 +1,25 @@
 import {expectEqual, nonAlphaNumsArray, vowelsArray, vowelsString} from "../helpers";
-import {dropWhileEnd} from "../../src/list";
+import {dropWhileEnd} from "../../src/list/dropWhileEnd";
+import {id} from "../../src/function/id";
+import {UnaryPred} from "../../src/types";
+import {SliceOf} from "../../src/jsPlatform/slice/types";
 
-
+// @todo move test-case message(s) into loop
 describe('#dropWhileEnd', () => {
     it('should drop elements while predicate is fulfilled', () => {
         const alnumRegex = /^[a-z]$/i,
-            alnumPred = x => alnumRegex.test(x),
-            nonAlnumPred = x => !alnumPred(x),
-            getCharCodeGreaterThan = greaterThanCharCode => x => x.charCodeAt(0) > greaterThanCharCode,
+            alnumPred: UnaryPred<string> = x => alnumRegex.test(x),
+            nonAlnumPred: UnaryPred<string> = x => !alnumPred(x),
+            getCharCodeGreaterThan = (greaterThanCharCode): UnaryPred<string> =>
+                (x: string): boolean => x.charCodeAt(0) > greaterThanCharCode,
             nonAlnumsAndVowelsArray = nonAlphaNumsArray.concat(vowelsArray),
             nonAlnumsAndVowels = nonAlnumsAndVowelsArray.join(''),
             vowelsAndNonAlnumsArray = vowelsArray.concat(nonAlphaNumsArray),
             vowelsAndNonAlnums = vowelsAndNonAlnumsArray.slice(0).join('')
         ;
-        [
-            [[x => x, []], []],
-            [[x => x, ''], ''],
+        (<[[UnaryPred<any>, SliceOf<any>], SliceOf<any>][]>[
+            [[id, []], []],
+            [[id, ''], ''],
             [[alnumPred, vowelsArray], []],
             [[alnumPred, vowelsString], ''],
             [[nonAlnumPred, vowelsArray], vowelsArray],
@@ -32,7 +36,7 @@ describe('#dropWhileEnd', () => {
                 vowelsString.split('').map((c, ind) =>
                     [[getCharCodeGreaterThan(c.charCodeAt(0)), vowelsString], vowelsString.slice(0, ind + 1)]
                 )
-            )
+            ))
             .forEach(([args, expected]) => {
                 const result = dropWhileEnd(args[0], args[1]);
                 expectEqual(result, expected);

@@ -1,4 +1,4 @@
-import {length} from '../jsPlatform/object';
+import length from '../jsPlatform/object/length';
 import {curry, CurryOf2} from '../function/curry';
 import {typeOf} from '../object/typeOf';
 import {of} from '../object/of';
@@ -18,21 +18,21 @@ export type MapType<T1, T2, Functor1, RetFunctor> =
  */
 export const map = curry(<T, RetT>(
     fn: MapFunc<T, number | string, Mappable<T> | Indexable<T>, RetT>,
-    xs: Mappable<T> | Indexable<T>): Mappable<RetT> | Indexable<RetT> | unknown => {
+    xs: Mappable<T> | Indexable<T>): Mappable<RetT> | Indexable<RetT> | any => {
     if (!isset(xs)) return of(xs);
     let out = of(xs),
         limit,
         i = 0;
     switch (typeOf(xs)) {
         case 'Array':
-            limit = length(xs);
+            limit = length(xs as Array<T>);
             if (!limit) return out;
             for (; i < limit; i += 1) {
                 out.push(fn(xs[i], i, xs));
             }
             return out;
         case 'String':
-            limit = length(xs);
+            limit = length(xs as unknown as string);
             if (!xs) return out;
             for (; i < limit; i += 1) {
                 out += fn(xs[i], i, xs);

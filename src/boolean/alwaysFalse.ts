@@ -3,6 +3,6 @@
  * @function module:boolean.alwaysFalse
  * @returns {Boolean}
  */
-const alwaysFalse = () => false;
+const alwaysFalse = (): boolean => false;
 
 export default alwaysFalse;

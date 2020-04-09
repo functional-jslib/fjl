@@ -2,7 +2,7 @@ import {curry} from "../function/curry";
 import {isPrefixOf} from "./isPrefixOf";
 import {splitAt} from "./splitAt";
 import {length} from "../jsPlatform/object";
-import {sliceCopy} from "./utils";
+import {sliceCopy} from "./utils/sliceCopy";
 
 export const
     /**

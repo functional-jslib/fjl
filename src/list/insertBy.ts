@@ -3,7 +3,7 @@ import {length} from "../jsPlatform/object";
 import {splitAt} from "./splitAt";
 import {concat} from "./concat";
 import {push} from "./push";
-import {sliceCopy} from "./utils";
+import {sliceCopy} from "./utils/sliceCopy";
 
 export const
     /**

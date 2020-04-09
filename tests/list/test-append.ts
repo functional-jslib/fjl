@@ -1,12 +1,13 @@
 import {expectError, vowelsArray, vowelsString} from '../helpers';
 import {append} from '../../src/list/append';
+import {SliceOf} from "../../src/jsPlatform/slice";
 
 describe('#append', () => {
     it('should be a function', () => {
         expect(append).toBeInstanceOf(Function);
     });
 
-    (<Array<[string, string | string[], string | string[]]>>[
+    (<Array<[string, SliceOf<string>[], SliceOf<string>]>>[
         [`append [vowelsArray, vowelsArray, vowelsArray] ` +
         `shallowEquals vowelsArray.concat(vowelsArray, vowelsArray)`,
             [vowelsArray, vowelsArray, vowelsArray],
@@ -44,14 +45,14 @@ describe('#append', () => {
     ])
         .forEach(([name, args, expected]) => {
             it(name, () => {
-                console.log(args);
-                const result = append.apply(null, args);
+                // console.log(args);
+                const result = append(...args);
                 expect(result).toEqual(expected);
             });
         });
 
     it('should throw an error when receiving Nothing', () => {
-        [[null, null],
+        (<SliceOf<any>[]>[[null, null],
             [undefined, undefined],
             [null, []],
             [null, ''],
@@ -61,7 +62,7 @@ describe('#append', () => {
             ['', null],
             [[], undefined],
             ['', undefined]
-        ]
+        ])
             .forEach(args => {
                 expectError(() => {
                     append(...args);

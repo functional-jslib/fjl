@@ -1,6 +1,8 @@
 import {length} from "../jsPlatform/object";
-import {sliceCopy, swapped} from "./utils";
+import {swapped} from "./utils";
+import {sliceCopy} from "./utils/sliceCopy";
 import {repeat} from "../list/repeat";
+import {SliceOf} from "../jsPlatform/slice";
 
 export const
     /**
@@ -11,22 +13,22 @@ export const
      * @param xs {Array} - ListLike.
      * @returns {Array<Array|String|*>} - Array of permutations.
      */
-    permutations = xs => {
+    permutations = <T>(xs: SliceOf<T>): SliceOf<T>[] => {
         const limit = length(xs);
 
         if (!limit || limit === 1) {
             return [xs];
         }
 
-        let list = sliceCopy(xs),
-            c = repeat(limit, 0),
+        const c = repeat(limit, 0);
+        let list: T[] = sliceCopy(xs) as T[],
             i = 0;
 
         const out = [list];
 
         for (; i < limit; i++) {
             if (c[i] < i) {
-                list = swapped(i % 2 === 0 ? 0 : c[i], i, list);
+                list = swapped(i % 2 === 0 ? 0 : c[i], i, list) as T[];
                 out.push(list);
                 c[i] += 1;
                 i = 0;
@@ -35,5 +37,5 @@ export const
             c[i] = 0;
         }
 
-        return out;
+        return out as SliceOf<T>[];
     };

@@ -36,17 +36,3 @@ export interface NumberIndexable<T> {
 export type Indexable<T> = StringIndexable<T> | NumberIndexable<T>;
 
 export type Num = number;
-
-export interface Slice extends Lengthable {
-    [index: number]: any;
-
-    concat(...slices: Slice[]): Slice;
-
-    slice(startIndex: number, endIndex?: number): Slice;
-
-    includes(searchValue: any, fromIndex?: number): boolean;
-
-    indexOf(searchValue: any, fromIndex?: number): number;
-
-    lastIndexOf(searchValue: any, fromIndex?: number): number;
-}

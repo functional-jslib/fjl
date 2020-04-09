@@ -1,14 +1,34 @@
-import {toCurried3Method} from "../../utils/fnl-method-proxies";
-import {SliceFunc} from "./types";
+import {SliceFunc, SliceOf} from "./types";
+import {curry3} from "../../function";
 
-/**
- * Same as Array.prototype.slice
- * @function module:list.slice
- * @param startIndex {number}
- * @param endIndex {number}
- * @param slice {Slice|*}
- * @returns {Slice|*}
- */
-const slice: SliceFunc = toCurried3Method('slice') as SliceFunc;
+const
+
+    /**
+     * (Array|String).prototype.slice
+     * @function module:list.slice
+     * @returns {SliceOf<any>>}
+     * @param start {number}
+     * @param end {number}
+     * @param xs {SliceOf<any>}
+     * @genric
+     */
+    $slice = <T>(start: number, end: number, xs: SliceOf<T>): SliceOf<T> =>
+        xs.slice(start, end) as SliceOf<T>,
+
+    /**
+     * (Array|String).prototype.slice
+     * @function module:list.slice
+     * @returns {SliceOf<any>>}
+     * @param start {number}
+     * @param end {number}
+     * @param xs {SliceOf<any>}
+     * @curried
+     * @generic
+     */
+    slice = curry3($slice) as SliceFunc<any>
+
+;
+
+export {$slice};
 
 export default slice;

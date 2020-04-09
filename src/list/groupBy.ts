@@ -1,6 +1,6 @@
 import {curry} from "../function/curry";
 import {length} from "../jsPlatform/object";
-import {sliceCopy} from "./utils";
+import {sliceCopy} from "./utils/sliceCopy";
 import {takeWhile} from "./takeWhile";
 import {slice} from "../jsPlatform/slice";
 

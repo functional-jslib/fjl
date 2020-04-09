@@ -1,20 +1,25 @@
-import {alphabetArray, alphabetString, expectEqual} from "../helpers";
+import {alphabetArray, alphabetString} from "../helpers";
 import {filter} from "../../src/list/filter";
+import {SliceOf} from "../../src/jsPlatform/slice";
 
 describe('#filter', () => {
-    it('should be able to filter a list by a predicate.', () => {
-        const pred = (_, ind) => ind % 2 === 0;
-        expectEqual(
-            filter(pred, alphabetString),
+    const pred = (_, ind): boolean => ind % 2 === 0;
+    (<[SliceOf<string>, SliceOf<string>][]>[
+        [
+            filter(pred, alphabetString as unknown as SliceOf<string>), // @todo fix typing
             alphabetString.split('').filter(pred)
-        );
-        expectEqual(
+        ],
+        [
             filter(pred, alphabetArray),
             alphabetString.split('').filter(pred)
-        );
-    });
-    it('should return an empty list when no items match predicate', () => {
-        const pred = char => char === '#';
-        expectEqual(filter(pred, alphabetArray), []);
-    });
+        ],
+        [
+            filter((c): boolean => c === '#', alphabetArray), []
+        ]
+    ])
+        .forEach(([control, expected]) => {
+            it('should return an empty list when no items match predicate', () => {
+                expect(control).toEqual(expected);
+            });
+        });
 });

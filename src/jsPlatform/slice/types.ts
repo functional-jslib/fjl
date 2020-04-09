@@ -1,33 +1,32 @@
-import {Lengthable} from "../../types";
 import {CurryOf1, CurryOf2, CurryOf3} from "../../function";
+import {TernaryPredOf} from "../../types";
 
-export type IncludesFunc = CurryOf2<string, SliceOf<any>, boolean>;
+export type IncludesFunc<T> = CurryOf2<T, SliceOf<T>, boolean>;
 
-export type SliceFunc = CurryOf3<number, number, SliceOf<any>, SliceOf<any>>;
+export type SliceFunc<T> = CurryOf3<number, number, SliceOf<T>, SliceOf<T>>;
 
-export type IndexOfFunc = CurryOf2<any, SliceOf<any>, number>;
+export type IndexOfFunc<T> = CurryOf2<T, SliceOf<T>, number>;
 
-export type LastIndexOfFunc = CurryOf2<any, SliceOf<any>, number>;
+export type LastIndexOfFunc<T> = CurryOf2<T, SliceOf<T>, number>;
 
-export type ConcatFunc = CurryOf1<SliceOf<any>, SliceOf<any>>;
+export type ConcatFunc<T> = CurryOf1<SliceOf<T>, SliceOf<T>>;
 
-export interface Slice extends Lengthable, Object {
-    [index: number]: any;
+export type SlicePred<T> = TernaryPredOf<T, number, SliceOf<T>>;
 
-    concat(...slices: ConcatArray<any>[]): SliceOf<any>;
-
-    slice(startIndex: number, endIndex?: number): SliceOf<any>;
-
-    includes(searchValue: any, fromIndex?: number): boolean;
-
-    indexOf(searchValue: any, fromIndex?: number): number;
-
-    lastIndexOf(searchValue: any, fromIndex?: number): number;
-}
-
-export interface SliceOf<T> extends Slice {
+export interface SliceOf<T> extends Object {
     [index: number]: T;
-    [Symbol.iterator](): T;
-}
 
-export type SliceOfAny = SliceOf<any>;
+    readonly length: number;
+
+    concat(...slices: ConcatArray<T>[]): SliceOf<T>;
+
+    slice(startIndex: number, endIndex?: number): SliceOf<T>;
+
+    includes(searchValue: T, fromIndex?: number): boolean;
+
+    indexOf(searchValue: T, fromIndex?: number): number;
+
+    lastIndexOf(searchValue: T, fromIndex?: number): number;
+
+    [Symbol.iterator](): IterableIterator<T>;
+}

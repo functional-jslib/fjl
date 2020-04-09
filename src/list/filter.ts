@@ -1,16 +1,20 @@
-import {curry} from "../function/curry";
+import {curry, CurryOf2} from "../function/curry";
+import {SliceOf, SlicePred} from "../jsPlatform/slice";
+
+type Filter<T> = CurryOf2<SlicePred<T>, SliceOf<T>, T[]>;
 
 export const
     /**
      * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
      * @function module:list.filter
      * @param pred {Function}
-     * @param xs {Array} - list or list like.
-     * @returns {Array} - Structure of filtered elements.
+     * @param xs {SliceOf<any>}
+     * @returns {Array}
+     * @todo Update this to return `SliceOf<any>`
      */
-    filter = curry((pred, xs) => {
-        let ind = 0,
-            limit = xs.length,
+    filter = curry(<T>(pred: SlicePred<T>, xs: SliceOf<T>): T[] => {
+        let ind = 0;
+        const limit = xs.length,
             out: any[] = [];
         if (!limit) {
             return out;
@@ -21,4 +25,4 @@ export const
             }
         }
         return out;
-    });
+    }) as Filter<any>;

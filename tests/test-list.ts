@@ -49,27 +49,6 @@ import {
 
 describe('#list', () => {
 
-    describe('#and', () => {
-        it('should return `true` when all items of a container are "truthy".', () => {
-            expectTrue(and(['a', 1, 99, true, (() => null), {}, []]));
-        });
-        it('should return `false` when not all items of a container are "truthy".', () => {
-            expectFalse(and(['a', 1, 0, true, (() => null), {}, []]));
-        });
-        it('should return `false` when receiving an empty list or nothing.', () => {
-            expectFalse(and(''));
-            expectFalse(and([]));
-            expectFalse(and(['']));
-            expectFalse(and([null]));
-            expectFalse(and([undefined]));
-            expectFalse(and([false]));
-        });
-        it('should an error when receiving nothing', () => {
-            expectError(() => and(undefined));
-            expectError(() => and(null));
-        });
-    });
-
     describe('#or', () => {
         it('should return `true` when, at least, one of the items is "truthy".', () => {
             expectTrue(or([0, false, null, 1, undefined]));
@@ -83,47 +62,6 @@ describe('#list', () => {
         it('should throw an error when receiving nothing (`null` or `undefined`).', () => {
             expectError(() => or(null));
             expectError(() => or(undefined));
-        });
-    });
-
-    describe('#any', () => {
-        const id = x => x;
-        it('should return `true` when any item matches predicate.', () => {
-            expectTrue(any(isTruthy, [0, false, null, 1, undefined]));
-            expectTrue(any(isTruthy, ['hello']));
-            expectTrue(any(x => x === 'e', 'hello'));
-        });
-        it('should return `false` when no item in received items matches predicate.', () => {
-            expectFalse(any(isTruthy, [0, false, null, undefined, '']));
-            expectFalse(any(isTruthy, [0]));
-            expectFalse(any(x => x === 'e', 'avalon'));
-        });
-        it('should return `false` when an empty list is received.', () => {
-            expectFalse(any(id, []));
-            expectFalse(any(id, ''));
-        });
-        it('should throw an error when receiving nothing (`null` or `undefined`).', () => {
-            expectError(() => any(id, null));
-            expectError(() => any(id, undefined));
-        });
-    });
-
-    describe('#all', () => {
-        it('should return true when predicate returns true for all items in list', () => {
-            expectTrue(all(item => item, [true, true, true]));
-            expectTrue(all(char => char !== 'a', 'bcdefg'));
-        });
-        it('should return `false` when predicate returns `false` for an item', () => {
-            expectFalse(all(item => item, [true, false, true]));
-            expectFalse(all(item => item !== 'a', 'bcdaefg'));
-        });
-        it('should return `false` when an empty list is passed in', () => {
-            expectFalse(all(item => item, []));
-            expectFalse(all(item => item, ''));
-        });
-        it('should throw an error when nothing is passed in', () => {
-            expectError(() => all(item => item, null));
-            expectError(() => all(item => item, undefined));
         });
     });
 
@@ -667,78 +605,6 @@ describe('#list', () => {
             expectError(() => remove(undefined, undefined));
             expectError(() => remove(null, null));
             expectError(() => remove(undefined, undefined));
-        });
-    });
-
-    describe('#complement', () => {
-        it('should be a function', () => {
-            expectFunction(complement);
-        });
-        it('should be curriable', () => {
-            const awaitingRest = complement([1, 2, 3]);
-            expectFunction(awaitingRest);
-            expectEqual(awaitingRest([3, 4, 5]), [4, 5]);
-        });
-        it('should return an empty list when receiving 2 or more values consisting of ' +
-            '`null`, `undefined` and/or empty list (`\'\'`, `[]`).', () => {
-            [
-                [undefined, undefined],
-                [null, null, '', null],
-                [[], null, undefined],
-                [undefined, null, []],
-                [[], [], []],
-                [[], []],
-                ['', ''],
-                ['', undefined, ''],
-                [undefined, '', [], null]
-            ]
-                .forEach(args => expectEqual(complement(...args), []));
-        });
-        it('should return elements not in first list passed to it', () => {
-            let testCases = [
-                // subj1, subj2, expectLen, expectedElements
-                [[[1, 2, 3], [1, 2, 3, 4, 5]], 2, [4, 5]],
-                [[[1, 2, 3], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7, 8]], 7, [4, 5, 4, 5, 6, 7, 8]],
-                [[[1, 2, 3], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 1, 2, 3]], 4, [4, 5, 4, 5]]
-            ];
-            testCases.forEach(testCase => {
-                let [subjects, expectedLen, expectedElms] = testCase,
-                    result = complement.apply(null, subjects);
-                expectEqual(result.length, expectedLen);
-                result.forEach((elm, ind) => {
-                    expectEqual(elm, expectedElms[ind]);
-                });
-            });
-        });
-    });
-
-    describe('#difference', () => {
-        it('should return an empty list when first list passed in is empty, ' +
-            ' there are no differences between passed in lists, ', () => {
-            [
-                [[[], []], []],
-                [['', ''], []],
-                [[null, undefined], []]
-            ]
-                .forEach(([args, expected]) => {
-                    expectEqual(difference(...args), expected);
-                });
-        });
-        it('should return the difference between two arrays passed in', () => {
-            let testCases = [
-                // subj1, subj2, expectLen, expectedElements
-                [[1, 2, 3], [1, 2, 3, 4, 5], 0, []],
-                [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 5, [4, 5, 6, 7, 8]],
-                [[1, 2, 3, 4, 5], [1, 2, 3], 2, [4, 5]]
-            ];
-            testCases.forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = difference(subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                result.forEach((elm, ind) => {
-                    expectEqual(elm, expectedElms[ind]);
-                });
-            });
         });
     });
 

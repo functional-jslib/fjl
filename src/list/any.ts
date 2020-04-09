@@ -1,8 +1,8 @@
 import {curry, CurryOf2} from "../function/curry";
 import {length} from "../jsPlatform/object";
-import {PredicateOf3} from "../jsPlatform/array";
 import {PredForIndexable} from "./types";
 import {Indexable} from "../types";
+import keys from "../jsPlatform/object/keys";
 
 export type Any<Pred, Functor> = CurryOf2<Pred, Functor, boolean>;
 
@@ -13,15 +13,16 @@ export type Any<Pred, Functor> = CurryOf2<Pred, Functor, boolean>;
  * @param xs {Array|String}
  * @returns {Boolean}
  */
-export const any: Any<PredForIndexable<any>, Indexable<any>> = curry(
+export const any = curry(
     <T>(p: PredForIndexable<T>, xs: Indexable<T>): boolean => {
         let ind = 0;
-        const limit = length(xs);
+        const ks= keys(xs),
+            limit = length(ks);
         if (!limit) {
             return false;
         }
         for (; ind < limit; ind += 1) {
-            if (p(xs[ind])) {
+            if (p(xs[ks[ind]])) {
                 return true;
             }
         }

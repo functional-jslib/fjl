@@ -3,7 +3,7 @@ import {findIndex} from "./findIndex";
 import {splitAt} from "./splitAt";
 import {append} from "./append";
 import {tail} from "./tail";
-import {sliceCopy} from "./utils";
+import {sliceCopy} from "./utils/sliceCopy";
 
 export const
     /**

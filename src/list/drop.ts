@@ -1,4 +1,4 @@
-import {sliceFrom} from "./utils";
+import {sliceFrom} from "./utils/sliceFrom";
 
 export const
     /**

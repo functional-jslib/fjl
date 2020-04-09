@@ -6,9 +6,9 @@
  * @instance {*}
  * @returns {Boolean}
  */
-import {curry} from "../../function";
+import {curry} from "../../function/curry";
 import {InstanceOfFunc} from "./types";
 
-const instanceOf: InstanceOfFunc = curry((X: Function, x: any) => x instanceof X) as InstanceOfFunc;
+const instanceOf = curry((X: Function, x: any) => x instanceof X) as InstanceOfFunc;
 
 export default instanceOf;

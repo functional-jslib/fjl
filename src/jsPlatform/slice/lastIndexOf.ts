@@ -9,7 +9,7 @@ import {LastIndexOfFunc} from "./types";
  * @param [fromIndex=0]{number} - Number to search from.  Default `0`.
  * @returns {number} - `-1` if element not found else index at which it is found.
  */
-const lastIndexOf: LastIndexOfFunc =
-    toCurried2Method('lastIndexOf') as LastIndexOfFunc;
+const lastIndexOf: LastIndexOfFunc<unknown> =
+    toCurried2Method('lastIndexOf') as LastIndexOfFunc<unknown>;
 
 export default lastIndexOf;

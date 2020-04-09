@@ -1,4 +1,4 @@
-import {curry} from '../function/curry';
+import {curry2, CurryPred2} from '../function/curry';
 import {BinaryPred} from "../types";
 
 /**
@@ -8,6 +8,6 @@ import {BinaryPred} from "../types";
  * @param [b=undefined] {any}
  * @returns {boolean}
  */
-const equal: BinaryPred<any> = curry((a, b) => a === b) as BinaryPred<any>;
+const equal = curry2(<T>(a: T, b: T): boolean => a === b) as CurryPred2<any>;
 
 export default equal;

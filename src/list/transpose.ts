@@ -1,4 +1,4 @@
-import {length} from "../jsPlatform/object";
+import length from "../jsPlatform/object/length";
 import {lengths} from "./utils";
 import {filter} from "../list/filter";
 import {maximum} from "../list/maximum";
@@ -19,17 +19,17 @@ import {maximum} from "../list/maximum";
  * @param xss {Array}
  * @returns {Array}
  */
-export const transpose = (xss: Array<any[]> | []): Array<any[]> | [] => {
-    let numLists = length(xss),
-        ind = 0, ind2;
+export const transpose = <T>(xss: T[][]): T[][] => {
+    const numLists = length(xss);
+    let ind = 0, ind2;
     if (!numLists) {
         return [];
     }
     const listLengths = lengths(...xss),
         longestListLen = maximum(listLengths),
-        outLists: [any[]] | any[] = [];
+        outLists: T[][] = [];
     for (; ind < longestListLen; ind += 1) {
-        const outList: any[] = [];
+        const outList = [];
         for (ind2 = 0; ind2 < numLists; ind2 += 1) {
             if (listLengths[ind2] < ind + 1) {
                 continue;
@@ -38,5 +38,5 @@ export const transpose = (xss: Array<any[]> | []): Array<any[]> | [] => {
         }
         outLists.push(outList);
     }
-    return filter(x => length(x) > 0, outLists);
+    return filter(x => length(x) > 0, outLists) as T[][];
 };

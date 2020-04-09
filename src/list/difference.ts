@@ -1,5 +1,6 @@
 import {curry, CurryOf2} from "../function/curry";
-import {reduce, sliceCopy} from "./utils";
+import {reduce} from "./utils";
+import {sliceCopy} from "./utils/sliceCopy";
 import {includes, SliceOf} from "../jsPlatform/slice";
 
 export type Difference<Functor> = CurryOf2<Functor, Functor, Functor>
