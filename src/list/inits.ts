@@ -1,7 +1,8 @@
 import {length} from "../jsPlatform/object";
 import {$sliceTo} from "./utils/sliceTo";
+import {SliceOf} from "../jsPlatform/slice";
 
-type Inits<T> = (xs: T[]) => [T[]] | T;
+type Inits<T> = (xs: SliceOf<T>) => [SliceOf<T>] | SliceOf<T>;
 
 export const
     /**
@@ -11,10 +12,10 @@ export const
      * ```
      * @function module:list.inits
      * @haskellType `inits :: [a] -> [[a]]`
-     * @param xs {Array}
-     * @returns {Array}
+     * @param xs {SliceOf<any>}
+     * @returns {SliceOf<any>|SliceOf<any>[]}
      */
-    inits: Inits<any> = <T>(xs: T[]): [T[]] | T[] => {
+    inits: Inits<any> = <T>(xs: SliceOf<T>): SliceOf<T>[] | T[] => {
         const limit = length(xs),
             agg: [any[]] | any[] = [];
         let ind = 0;

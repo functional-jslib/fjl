@@ -2,6 +2,7 @@ import {curry} from "../function/curry";
 import {length} from "../jsPlatform/object";
 import {reduce, toShortest} from "./utils";
 import {push} from "./push";
+import {SliceOf} from "../jsPlatform/slice";
 
 export const
 
@@ -14,11 +15,11 @@ export const
      * @param arr2 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zip = curry((arr1, arr2) => {
+    zip = curry(<T, T2>(arr1: T[], arr2: T2[]): [T, T2][] => {
         if (!length(arr1) || !length(arr2)) {
             return [];
         }
-        const [a1, a2] = toShortest(arr1, arr2);
+        const [a1, a2] = toShortest(arr1, arr2) as SliceOf<T>[];
         return reduce((agg, item, ind) => push(agg, [item, a2[ind]]),
             [], a1);
     });

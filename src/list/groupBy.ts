@@ -1,7 +1,7 @@
 import {curry, CurryOf2} from "../function/curry";
 import {length} from "../jsPlatform/object";
 import {sliceCopy} from "./utils/sliceCopy";
-import {takeWhile} from "./takeWhile";
+import {$takeWhile} from "./takeWhile";
 import {$slice, SliceOf} from "../jsPlatform/slice";
 import {BinaryPred} from "../types";
 import {PredForSliceOf} from "./types";
@@ -13,7 +13,12 @@ export const
         if (!limit) {
             return [sliceCopy(xs)];
         }
-        const predOp: PredForSliceOf<T> = (x: T): boolean => {
+        let ind = 0,
+            prevItem,
+            item
+        ;
+        const _xs = (!xs.push ? Array.from(xs) : xs) as SliceOf<T>,
+            predOp: PredForSliceOf<T> = (x: T): boolean => {
                 if (equalityOp(x, prevItem)) {
                     ind++;
                 }
@@ -25,13 +30,9 @@ export const
             },
             agg: SliceOf<T>[] = []
         ;
-        let ind = 0,
-            prevItem,
-            item
-        ;
         for (; ind < limit; ind += 1) {
             item = xs[ind];
-            agg.push(takeWhile(predOp, $slice(ind, limit, xs)) as SliceOf<T>);
+            agg.push($takeWhile(predOp, $slice(ind, limit, _xs)) as SliceOf<T>);
         }
         return agg;
     },
@@ -45,4 +46,6 @@ export const
      * @param xs {Array}
      * @returns {*}
      */
-    groupBy = curry($groupBy) as CurryOf2<BinaryPred<any>, SliceOf<any>, SliceOf<any>[]>;
+    groupBy = curry($groupBy) as CurryOf2<BinaryPred<any>, SliceOf<any>, SliceOf<any>[]>
+
+;

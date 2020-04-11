@@ -1,5 +1,6 @@
-import {apply, curry2} from "../function";
-import {reduce, toShortest} from "./utils";
+import {curry2} from "../function/curry";
+import {reduce} from "./utils/reduce";
+import {toShortest} from "./utils/toShortest";
 import {push} from "./push";
 import {map} from "./map";
 

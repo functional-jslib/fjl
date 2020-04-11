@@ -16,7 +16,7 @@ export const
      * @returns {(Array<Array<*>>|Array<String>)}
      */
     span = curry((pred, list) => {
-        const splitPoint = findIndexWhere(negateF3(pred), list);
+        const splitPoint = findIndexWhere(negateF3(pred), list) as number;
         return splitPoint === -1 ?
             [$sliceFrom(0, list), of(list)] :
             splitAt(splitPoint, list);

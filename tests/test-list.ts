@@ -128,20 +128,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#inits', () => {
-        it('should unfold a list into list of all possible ' +
-            'non-omitting sequential sets that start with initial item', () => {
-            expectTrue(all(
-                (item, ind) => length(item) === ind,
-                inits(alphabetString)
-            ));
-            expectTrue(all(
-                (item, ind) => length(item) === ind,
-                inits(alphabetArray)
-            ));
-        });
-    });
-
     describe('#tails', () => {
         it('should unfold a list into list of all possible ' +
             'non-omitting sequential sets that start with the last item', () => {
@@ -727,50 +713,6 @@ describe('#list', () => {
         });
         it('should return an empty list when receiving an empty list', () => {
             expectEqual(sortOnIdentity([]), []);
-        });
-    });
-
-    describe('#insert', () => {
-        const injectValueAtIndex = (x, ind, list) => {
-            if (ind <= 0) {
-                return [x].concat(list);
-            }
-            else if (ind > list.length - 1) {
-                return list.concat([x]);
-            }
-            return list.slice(0, ind).concat([x], list.slice(ind));
-        },
-        indexWhere = (where, list) => {
-            let i = 0;
-            const limit = list.length;
-            for (; i < limit; i += 1) {
-                if (where(list[i], i, list)) {
-                    return i;
-                }
-            }
-            return -1;
-        };
-        it('Should insert a value directly before the first value that is less than or equal to it', () => {
-            // expectEqual(insert(99, range(0, 144, 5))
-            const range0To145By5 = range(0, 145, 5),
-                range145To0By5 = range0To145By5.slice(0).reverse(),
-                range0To145By5With99 = injectValueAtIndex(99,
-                    indexWhere(x => x > 99, range0To145By5), range0To145By5
-                ),
-                range145To0By5With99Rev = injectValueAtIndex(99,
-                    indexWhere(x => x > 99, range145To0By5), range145To0By5
-                );
-            [
-                [[99, range0To145By5], range0To145By5With99],
-                [[99, range145To0By5], range145To0By5With99Rev],
-            ]
-                .forEach(([args, expected]) => {
-                    expectEqual(insert(...args), expected);
-                });
-        });
-        it('should insert value even if passed in list is empty', () => {
-            expectEqual(insert(99, []), [99]);
-            expectEqual(insert('a', []), ['a']);
         });
     });
 

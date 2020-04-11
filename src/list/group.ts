@@ -1,4 +1,4 @@
-import {groupBy} from "../list";
+import {groupBy} from "../list/groupBy";
 import {SliceOf} from "../jsPlatform/slice";
 
 export const

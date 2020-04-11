@@ -1,8 +1,15 @@
-import {curry} from "../function/curry";
+import {curry, CurryOf2} from "../function/curry";
 import {unconsr} from "./unconsr";
-import {reduceRight} from "./utils";
+import {reduceRight} from "./utils/reduceRight";
+import {ReduceOp} from "../jsPlatform/array";
+import {SliceOf} from "../jsPlatform/slice";
 
 export const
+
+    $foldr1 = <T, T2>(op: ReduceOp<T, SliceOf<T>, T2>, xs: T[]): T2 => {
+        const parts = unconsr(xs);
+        return !parts ? [] : reduceRight(op, parts[1], parts[0]);
+    },
 
     /**
      * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
@@ -12,9 +19,6 @@ export const
      * @param xs {Array}
      * @returns {*} - Whatever type is lastly returned from `op`.
      */
-    foldr1 = curry((op, xs) => {
-        const parts = unconsr(xs);
-        return !parts ? [] : reduceRight(op, parts[1], parts[0]);
-    })
+    foldr1 = curry($foldr1) as CurryOf2<ReduceOp<any, SliceOf<any>, any>, SliceOf<any>, any>
 
 ;

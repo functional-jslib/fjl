@@ -11,12 +11,12 @@ import {IncludesFunc, SliceOf} from "./types";
  * @param [fromIndex=0] {number}
  * @returns {Boolean}
  */
-const includes: IncludesFunc<unknown> = ((): IncludesFunc<unknown> => (
+const includes: IncludesFunc<any> = ((): IncludesFunc<any> => (
         'includes' in Array.prototype ?
             toCurried2Method('includes') :
             curry2(<T>(searchValue: T, slice: SliceOf<T>, fromIndex = 0): boolean =>
                 slice.indexOf(searchValue, fromIndex) > -1)
-    ) as IncludesFunc<unknown>
+    ) as IncludesFunc<any>
 )();
 
 export default includes;
