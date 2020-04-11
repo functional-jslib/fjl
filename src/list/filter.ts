@@ -4,6 +4,7 @@ import {SliceOf, SlicePred} from "../jsPlatform/slice";
 type Filter<T> = CurryOf2<SlicePred<T>, SliceOf<T>, T[]>;
 
 export const
+
     /**
      * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
      * @function module:list.filter
@@ -25,4 +26,6 @@ export const
             }
         }
         return out;
-    }) as Filter<any>;
+    }) as Filter<any>
+
+;

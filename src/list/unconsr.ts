@@ -1,4 +1,5 @@
-import {init, last} from '.';
+import {init} from './init';
+import {last} from "./last";
 import {length} from '../jsPlatform/object';
 import {of} from '../object/of';
 

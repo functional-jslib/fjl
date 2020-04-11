@@ -1,5 +1,5 @@
 import {SliceFunc, SliceOf} from "./types";
-import {curry3} from "../../function";
+import {curry3, CurryOf3} from "../../function";
 
 const
 
@@ -25,7 +25,7 @@ const
      * @curried
      * @generic
      */
-    slice = curry3($slice) as SliceFunc<any>
+    slice = curry3($slice) as CurryOf3<number, number, SliceOf<any>, SliceOf<any>>
 
 ;
 

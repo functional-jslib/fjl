@@ -1,29 +1,35 @@
-import {findIndices, inits, intersperse, map} from "../../src/list";
-import {alphabetArray, expectError, expectTrue} from "../helpers";
+import {findIndices} from "../../src/list/findIndices";
+import {PredForSliceOf} from "../../src/list/types";
+import {SliceOf} from "../../src/jsPlatform/slice";
+import {alphabetCharCodeRange} from "../helpers";
 
-describe('#findIndices', () => {
-    it('should return indices for all items that match passed in predicate', () => {
-        const tokenInits = inits(intersperse('e', alphabetArray)),
-            indicePred = (x: string) => x === 'e',
-            expectedResults = tokenInits.map(xs =>
-                xs.map((x, ind) => [ind, x])
-                    .filter(([ind, x]) => indicePred(x))
-            )
-                .map(xs => !xs.length ? undefined : xs.map(([x]) => x)),
-            results = map(xs => findIndices(indicePred, xs), tokenInits);
+describe(`#listUtils.findIndices`, () => {
+    const oddPred = (x: number): boolean => x % 2 !== 0,
+        evenPred = (x: number): boolean => x % 2 === 0,
+        [evenCodes, evenIndices, oddCodes, oddIndices]: [number[], number[], number[], number[]] = alphabetCharCodeRange
+            .reduce((agg, x, i): [number[], number[], number[], number[]] => {
+                if (evenPred(x)) {
+                    agg[0].push(x);
+                    agg[1].push(i);
+                } else if (oddPred(x)) {
+                    agg[2].push(x);
+                    agg[3].push(i);
+                }
+                return agg;
+            }, [[], [], [], []]);
 
-        expectTrue(
-            results.every((xs, ind) => {
-                const expected = expectedResults[ind];
-                return xs === expected || ( // match undefined
-                    xs.every((x, ind2) => x === expected[ind2]) &&
-                    xs.length === expected.length
-                );
-            })
-        );
-    });
+    // console.log(evenCodes, oddCodes);
 
-    it('should return `undefined` when doesn\'t find element at indice', () => {
-        [undefined, null, {}].forEach(x => expectError(() => findIndices(99, x)));
-    });
+    (<[PredForSliceOf<any>, SliceOf<any>, number[] | undefined][]>[
+        [oddPred, evenCodes, undefined],
+        [oddPred, alphabetCharCodeRange, oddIndices],
+        [evenPred, oddCodes, undefined],
+        [evenPred, alphabetCharCodeRange, evenIndices],
+    ])
+        .forEach(([pred, xs, expected]) => {
+            it(`findIndices(${pred.toString()}, ${JSON.stringify(xs)}) === ${JSON.stringify(expected)}`, () => {
+                const result = findIndices(pred, xs);
+                expect(result).toEqual(expected);
+            });
+        });
 });

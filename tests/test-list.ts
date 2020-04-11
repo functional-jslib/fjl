@@ -128,17 +128,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#group', () => {
-        it('should return a list of lists which contain the (sequential) matches', () => {
-            const expectedResultFlattened = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
-            expectEqual(group('Mississippi'), expectedResultFlattened.map(xs => xs.join('')));
-            expectEqual(group('Mississippi'.split('')), expectedResultFlattened);
-        });
-        it('should return a list of lists containing individual ungrouped items', () => {
-            expectEqual(group(alphabetArray), alphabetArray.map(char => [char]));
-        });
-    });
-
     describe('#inits', () => {
         it('should unfold a list into list of all possible ' +
             'non-omitting sequential sets that start with initial item', () => {

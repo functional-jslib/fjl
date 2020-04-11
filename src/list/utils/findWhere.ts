@@ -5,6 +5,7 @@ import {SliceOf, SlicePred} from "../../jsPlatform/slice/types";
 export const
 
     /**
+     * Finds an item by predicate or returns `undefined`.
      * @function module:listUtils.$findWhere
      * @param pred {SlicePred<any>>}
      * @param xs {SliceOf<any>} - list or list like.

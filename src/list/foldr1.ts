@@ -3,6 +3,7 @@ import {unconsr} from "./unconsr";
 import {reduceRight} from "./utils";
 
 export const
+
     /**
      * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
      * out from a copy of the container.
@@ -14,4 +15,6 @@ export const
     foldr1 = curry((op, xs) => {
         const parts = unconsr(xs);
         return !parts ? [] : reduceRight(op, parts[1], parts[0]);
-    });
+    })
+
+;

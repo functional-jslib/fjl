@@ -1,4 +1,4 @@
-import {forEach} from "../../src/list";
+import {forEach} from "../../src/list/forEach";
 import {alphabetArray} from "../helpers";
 
 describe('#forEach', () => {

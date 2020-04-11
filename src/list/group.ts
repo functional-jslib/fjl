@@ -1,4 +1,5 @@
 import {groupBy} from "../list";
+import {SliceOf} from "../jsPlatform/slice";
 
 export const
     /**
@@ -13,4 +14,4 @@ export const
      * @param xs {Array|String}
      * @returns {Array<Array|String|*>|*}
      */
-    group = xs => groupBy((a, b) => a === b, xs);
+    group = <T>(xs: SliceOf<T>): SliceOf<T>[] => groupBy((a, b) => a === b, xs) as SliceOf<T>[];

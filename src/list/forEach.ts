@@ -1,6 +1,5 @@
 import {curry} from "../function/curry";
-import {length} from "../jsPlatform/object";
-
+import length from "../jsPlatform/object/length";
 
 export const
 
@@ -20,4 +19,6 @@ export const
         for (; ind < limit; ind += 1) {
             fn(list[ind], ind, list);
         }
-    });
+    })
+
+;

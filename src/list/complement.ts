@@ -1,5 +1,5 @@
 import {curry2, CurryOf2} from '../function/curry';
-import {reduce} from "./utils";
+import {reduce} from "./utils/reduce";
 import {append} from "./append";
 import {difference} from "./difference";
 import {SliceOf} from '../jsPlatform/slice/types';
@@ -26,4 +26,6 @@ export const
      * @returns {Array}
      * @curried
      */
-    complement = curry2(_complement) as Complement<SliceOf<any>>;
+    complement = curry2(_complement) as Complement<SliceOf<any>>
+
+;

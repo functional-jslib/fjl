@@ -1,4 +1,5 @@
-import {head, tail} from '.';
+import {head} from './head';
+import {tail} from "./tail";
 
 export const
     /**
