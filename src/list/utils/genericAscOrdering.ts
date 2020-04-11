@@ -1,4 +1,4 @@
-import {curry, CurryOf2} from "../../function";
+import {curry, CurryOf2} from "../../function/curry";
 
 export type OrderingFunc<T> = (a: T, b: T) => number;
 
@@ -26,7 +26,7 @@ export const
      * @param a {*}
      * @param b {*}
      * @returns {number} - -1, 0, 1
-     * @curried
+     * @curried At upto 2 params.
      */
     genericAscOrdering = curry($genericAscOrdering) as CurryOf2<any, any, number>
 

@@ -1,5 +1,5 @@
 import {map} from "../map";
-import {length} from "../../jsPlatform/object";
+import length from "../../jsPlatform/object/length";
 
 export const
 

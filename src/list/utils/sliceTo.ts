@@ -5,7 +5,7 @@ export const
 
     /**
      * Slices from index `0` to given index.
-     * @function module:listUtils.sliceTo
+     * @function module:listUtils.$sliceTo
      * @param toInd {number}
      * @param xs {SliceOf<any>}
      * @returns {SliceOf<any>}

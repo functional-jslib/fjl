@@ -5,7 +5,7 @@ export const
 
     /**
      * Returns a slice of the given list from `startInd` to the end of the list.
-     * @function module:listUtils.sliceFrom$
+     * @function module:listUtils.$sliceFrom
      * @param startInd {Number}
      * @param xs {SliceOf<any>>}
      * @returns {SliceOf<any>}

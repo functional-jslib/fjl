@@ -1,4 +1,4 @@
-import {curry2, CurryOf2} from "../../function";
+import {curry2, CurryOf2} from "../../function/curry";
 import {lengths} from "./lengths";
 import {map} from "../map";
 import {$sliceTo} from "./sliceTo";
