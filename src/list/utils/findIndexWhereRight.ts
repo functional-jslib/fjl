@@ -1,6 +1,6 @@
 import {curry, CurryOf2} from "../../function/curry";
 import length from "../../jsPlatform/object/length";
-import {SlicePred} from "../../jsPlatform/slice/types";
+import {SliceOf, SlicePred} from "../../jsPlatform/slice/types";
 
 export const
 
@@ -30,6 +30,6 @@ export const
      * @returns {Number} - `-1` if predicate not matched else `index` found
      * @curried At upto 2 params.
      */
-    findIndexWhereRight = curry($findIndexWhereRight) as CurryOf2<SlicePred<any>, any[], number>
+    findIndexWhereRight = curry($findIndexWhereRight) as CurryOf2<SlicePred<any>, SliceOf<any>, number>
 
 ;
