@@ -1,6 +1,7 @@
 import {isFunction, isUsableImmutablePrimitive} from './is';
 import {isset} from './isset';
 import {apply} from '../jsPlatform/function';
+import {TypeConstructor} from "../types";
 
 /**
  * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
@@ -16,14 +17,14 @@ import {apply} from '../jsPlatform/function';
  * @param [args] {...*} - Any args to pass in to matched construction strategy.
  * @returns {*|undefined} - New value of given value's type else `undefined`.
  */
-export const of = (x, ...args) => {
+export const of = <T>(x: T, ...args: any[]): T => {
     if (!isset(x)) { return undefined; }
-    const constructor = x.constructor;
-    if (constructor.hasOwnProperty('of')) {
-        return apply(constructor.of, args);
+    const constructor: TypeConstructor = x.constructor;
+    if (constructor.of) {
+        return constructor.of(...args);
     }
     else if (isUsableImmutablePrimitive(x)) {
-        return apply(constructor, args);
+        return constructor(args);
     }
     else if (isFunction(constructor)) {
         return new constructor(...args);
