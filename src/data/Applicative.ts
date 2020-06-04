@@ -1,42 +1,38 @@
-/**
- * Created by edlc on 12/9/16.
- * Applicative class module.
- * @memberOf module:functor
- */
-import Apply from './Apply';
+import {Apply} from './Apply';
+import instanceOf from "../jsPlatform/object/instanceOf";
+import {CurryOf1} from "../function";
 
-/**
- * @class module:functor.Applicative
- * @extends module:functor.Apply
- */
-export default class Applicative extends Apply {
-    /**
-     * Constructs an applicative with given `value`.
-     * @method module:functor.Applicative.of
-     * @param value {*}
-     * @returns {Applicative}
-     * @static
-     */
-    static of (value) {
-        return new Applicative(value);
+export interface ApplicativeConstructor<T> extends ObjectConstructor {
+    new(x: T): Applicative<T>;
+
+    readonly prototype: Applicative<T>;
+
+    of<X>(value: X): Applicative<X>;
+}
+
+export class Applicative<T> extends Apply<T> {
+    static of<X>(value: X): Applicative<X> {
+        return isApplicative(value) ? new Applicative(value.valueOf() as X) : new Applicative(value);
     }
 
-    static liftA2 (fn, appA, appB) {
-        return appA.constructor.of(
+    static liftA2<T>(fn, appA: Applicative<T>, appB: Applicative<T>): Applicative<T> {
+        return (this.constructor as ApplicativeConstructor<T>).of(
             fn(appA.valueOf(), appB.valueOf)
         );
     }
 
-    static apRight (appA, appB) {
+    static apRight<T>(appA: Applicative<T>, appB: Applicative<T>): Applicative<T> {
         return appB;
     }
 
-    static apLeft (appA, appB) {
+    static apLeft<T>(appA: Applicative<T>, appB?: Applicative<T>): Applicative<T> {
         return appA;
     }
 }
 
 export const
+
+    isApplicative = instanceOf(Applicative) as CurryOf1<any, boolean>,
 
     pureApp = Applicative.of,
 

@@ -1,13 +1,21 @@
-import {isset} from '../object/isset';
 import {MapOp} from "../jsPlatform/array";
+import instanceOf from "../jsPlatform/object/instanceOf";
+import {CurryOf1} from "../function";
 
-export const toFunctor = (x: any): Functor<any> => !isset(x) || !x.map ? new Functor(x) : x;
+export interface FunctorConstructor<T> {
+    new(x: T): Functor<T>;
 
-export default class Functor<T> {
-    readonly value?: T;
+    readonly prototype: Functor<T>;
+}
 
-    constructor(value?: T) {
-        this.value = value;
+export interface Functor<T> {
+    valueOf(): T;
+
+    map<MapOpRet>(fn: MapOp<T, Functor<T>, MapOpRet>): Functor<MapOpRet>; // @todo Functor map type should be `UnaryOf<T, Ret>`
+}
+
+export class Functor<T> {
+    constructor(readonly value?: T) {
     }
 
     valueOf(): T {
@@ -15,10 +23,10 @@ export default class Functor<T> {
     }
 
     map<MapFuncRet>(fn: MapOp<T, Functor<T>, MapFuncRet>): Functor<MapFuncRet> {
-        return new Functor(fn(this.valueOf(), 0, this));
-    }
-
-    fmap<MapFuncRet>(fn: MapOp<T, Functor<T>, MapFuncRet>): Functor<MapFuncRet> {
-        return this.map(fn);
+        return new (this.constructor as FunctorConstructor<MapFuncRet>)(fn(this.valueOf()));
     }
 }
+
+export const isFunctor = instanceOf(Functor) as CurryOf1<any, boolean>,
+
+    toFunctor = <T>(x: T): Functor<T> => !isFunctor(x) ? new Functor(x) : x as unknown as Functor<T>;

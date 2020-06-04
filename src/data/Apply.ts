@@ -1,27 +1,36 @@
 /**
  * Contains `Applicative`'s `Apply` class (class that contains `ap` (a.k.a. `pure`) method).
  * Created by edlc on 12/9/16.
- * @memberOf module:functor
+ * @memberOf module:data
  */
 
-import {toFunction} from 'fjl';
-import Functor from './Functor';
+import {toFunction} from '../function/toFunction';
+import {Functor} from './Functor';
+import {MapOp} from "../jsPlatform/array";
+
+export interface ApplyConstructor<T> extends ObjectConstructor {
+    new(x: T): Apply<T>;
+
+    readonly prototype: Apply<T>;
+}
 
 /**
  * Apply construct.
- * @class module:functor.Apply
+ * @class module:data.Apply
  * @param fn {Function|*}
  * @property value {*}
- * @extends module:functor.Functor
+ * @extends module:data.Functor
  */
-export default class Apply extends Functor {
+export class Apply<T> extends Functor<T> {
     /**
      * Applicative apply operation - applies contained function over passed in functor.
-     * @method module:functor.Apply#ap
-     * @param x {Functor}
+     * @method module:data.Apply#ap
+     * @param f {Functor}
      * @returns {Apply}
      */
-    ap (x) {
-        return x.map(toFunction(this.valueOf()));
+    ap(f: Functor<T>): Apply<T> {
+        return new (this.constructor as ApplyConstructor<T>)(f.map(
+            (toFunction(this.valueOf()) as MapOp<T, Functor<T>, T>)
+        ).valueOf());
     }
 }
