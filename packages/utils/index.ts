@@ -1,1 +1,1 @@
-export * from './fnl-method-proxies';
+export * from './method-proxies';

@@ -1,4 +1,4 @@
-import {toCurried2Method} from "../../utils/fnl-method-proxies";
+import {toCurried2Method} from "../../utils/method-proxies";
 import {curry2} from "../../function";
 import {IncludesFunc, SliceOf} from "./types";
 

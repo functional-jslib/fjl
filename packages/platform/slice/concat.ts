@@ -1,4 +1,4 @@
-import {toCurriedOneOrMoreMethod} from "../../utils/fnl-method-proxies";
+import {toCurriedOneOrMoreMethod} from "../../utils/method-proxies";
 import {ConcatFunc} from "./types";
 
 /**
