@@ -1,5 +1,5 @@
 import {expectEqual, expectError, expectFunction} from '../helpers';
-import {until} from '../../src/function/until';
+import {until} from '../../packages/function/until';
 
 describe ('#until', function () {
     it ('should be a function', function () {

@@ -1,5 +1,5 @@
 import {add} from '../helpers';
-import {call} from '../../src/function/call';
+import {call} from '../../packages/function/call';
 
 describe('#call', () => {
     it('should be a function', () => {

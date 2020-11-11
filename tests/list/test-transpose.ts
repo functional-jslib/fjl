@@ -1,4 +1,4 @@
-import {transpose} from "../../src/list/transpose";
+import {transpose} from "../../packages/list/transpose";
 
 describe('#transpose', () => {
     it('should transpose a list of lists into a rotated list of lists (from columns and rows to rows and' +

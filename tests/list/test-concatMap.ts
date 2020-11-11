@@ -1,5 +1,5 @@
 import {alphabetArray, alphabetCharCodeRange, alphabetString, expectEqual, expectError} from '../helpers';
-import {concatMap} from '../../src/list/concatMap';
+import {concatMap} from '../../packages/list/concatMap';
 
 describe('#concatMap', () => {
     const id = (x: any): any => x;

@@ -1,4 +1,4 @@
-import {fnOrError} from '../../src/function/fnOrError';
+import {fnOrError} from '../../packages/function/fnOrError';
 import {falsyList} from '../helpers';
 
 describe('#fnOrError', () => {

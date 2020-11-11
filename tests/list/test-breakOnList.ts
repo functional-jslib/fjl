@@ -1,7 +1,7 @@
 import {alphabetArray, alphabetString, expectEqual, isVowel, nonAlphaNums, nonAlphaNumsArray} from "../helpers";
-import {breakOnList} from "../../src/list/breakOnList";
-import {UnaryPred} from "../../src/types";
-import {SliceOf} from "../../src/jsPlatform/slice/types";
+import {breakOnList} from "../../packages/list/breakOnList";
+import {UnaryPred} from "../../packages/types";
+import {SliceOf} from "../../packages/platform/slice/types";
 
 describe('#breakOnList', () => {
     // @todo tabelize test message

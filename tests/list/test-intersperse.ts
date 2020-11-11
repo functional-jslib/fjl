@@ -1,6 +1,6 @@
 import {alphabetArray, alphabetString, expectEqual} from "../helpers";
-import {intersperse} from "../../src/list/intersperse";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {intersperse} from "../../packages/list/intersperse";
+import {SliceOf} from "../../packages/platform/slice";
 
 describe('#intersperse', () => {
     it('should be able to inject a list (string or array) in-between the items of a list of the same type.', () => {

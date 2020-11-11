@@ -1,6 +1,6 @@
-import {group} from "../../src/list/group";
+import {group} from "../../packages/list/group";
 import {vowelsArray, vowelsString} from "../helpers";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {SliceOf} from "../../packages/platform/slice";
 
 describe(`#list.group`, () => {
     (<[SliceOf<any>, SliceOf<any>[]][]>[

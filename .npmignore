@@ -1,4 +1,15 @@
-.idea
-.sass-cache
-bower_components
-node_modules
+
+# Dot files
+.idea/
+.eslint*
+.travis*
+.git*
+
+# Dirs
+node_modules/
+tests/
+
+# Files
+babel*
+jest*
+

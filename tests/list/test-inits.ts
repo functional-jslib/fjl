@@ -1,6 +1,6 @@
 import {alphabetArray, alphabetString} from "../helpers";
-import {inits} from "../../src/list/inits";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {inits} from "../../packages/list/inits";
+import {SliceOf} from "../../packages/platform/slice";
 
 describe('#inits', () => {
     it('should unfold a list into list of all possible ' +

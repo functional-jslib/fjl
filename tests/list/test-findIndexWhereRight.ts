@@ -1,6 +1,6 @@
-import {findIndexWhereRight} from "../../src/list/utils";
-import {PredForSliceOf} from "../../src/list/types";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {findIndexWhereRight} from "../../packages/list/utils";
+import {PredForSliceOf} from "../../packages/list/types";
+import {SliceOf} from "../../packages/platform/slice";
 import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
 
 describe(`#listUtils.findIndexWhereRight`, () => {

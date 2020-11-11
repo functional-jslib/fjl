@@ -1,6 +1,6 @@
 import {expectError, vowelsArray} from '../helpers';
-import {concat} from '../../src/list/concat';
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {concat} from '../../packages/list/concat';
+import {SliceOf} from "../../packages/platform/slice";
 
 describe('#concat', () => {
     const

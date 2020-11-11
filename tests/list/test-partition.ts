@@ -1,6 +1,6 @@
 import {expectTrue} from "../helpers";
-import {all, length, partition} from "../../src/list";
-import {isArray, isString} from "../../src/object/is";
+import {all, length, partition} from "../../packages/list";
+import {isArray, isString} from "../../packages/object/is";
 
 describe('#partition', () => {
     it('should take elements into first list while predicate is fulfilled and elements ' +

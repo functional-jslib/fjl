@@ -1,4 +1,4 @@
-import {subsequences} from "../../src/list/subsequence";
+import {subsequences} from "../../packages/list/subsequence";
 import {expectEqual, expectTrue} from "../helpers";
 
 describe('#subsequences', () => {

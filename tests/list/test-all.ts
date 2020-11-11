@@ -1,5 +1,5 @@
 import {expectError, expectFalse, expectTrue} from "../helpers";
-import {all} from "../../src/list/all";
+import {all} from "../../packages/list/all";
 
 describe('#all', () => {
     // @todo tablelize tests here

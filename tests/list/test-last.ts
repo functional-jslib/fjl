@@ -1,5 +1,5 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from '../helpers';
-import {last} from '../../src/list/last';
+import {last} from '../../packages/list/last';
 
 describe('#last', () => {
     it('should return the last item in a list or `undefined` if list is empty.', () => {

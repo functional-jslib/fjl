@@ -1,7 +1,7 @@
 import {expectEqual, expectFunction} from "../helpers";
-import {complement} from "../../src/list/complement";
-import {SliceOf} from "../../src/jsPlatform/slice";
-import {Curry1} from "../../src/function/curry";
+import {complement} from "../../packages/list/complement";
+import {SliceOf} from "../../packages/platform/slice";
+import {Curry1} from "../../packages/function/curry";
 
 describe('#complement', () => {
     it('should be a function', () => {

@@ -1,6 +1,6 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
-import {length} from "../../src/jsPlatform/object";
-import {Lengthable} from "../../src/types";
+import {length} from "../../packages/platform/object";
+import {Lengthable} from "../../packages/types";
 
 describe('#length', () => {
     it('is should return the length of any item that has a `length` property', () => {

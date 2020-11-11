@@ -1,5 +1,5 @@
 import {vowelsArray, vowelsString} from '../helpers';
-import {unconsr} from '../../src/list/unconsr';
+import {unconsr} from '../../packages/list/unconsr';
 
 describe('#unconsr', () => {
     [

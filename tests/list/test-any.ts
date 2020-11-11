@@ -1,6 +1,6 @@
 import {expectError, expectFalse, expectTrue} from "../helpers";
-import {any} from "../../src/list/any";
-import isTruthy from '../../src/boolean/isTruthy'
+import {any} from "../../packages/list/any";
+import isTruthy from '../../packages/boolean/isTruthy'
 
 describe('#any', () => {
     // @todo tabelize tests here

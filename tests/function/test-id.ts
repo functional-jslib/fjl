@@ -1,4 +1,4 @@
-import {id} from '../../src/function/id';
+import {id} from '../../packages/function/id';
 
 describe ('#id', function () {
     it ('should be a function', function () {

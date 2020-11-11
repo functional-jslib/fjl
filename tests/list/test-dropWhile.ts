@@ -1,7 +1,7 @@
 import {expectEqual, vowelsArray, vowelsString} from "../helpers";
-import {dropWhile} from '../../src/list/dropWhile';
-import {SliceOf} from "../../src/jsPlatform/slice";
-import {UnaryPred} from "../../src/types";
+import {dropWhile} from '../../packages/list/dropWhile';
+import {SliceOf} from "../../packages/platform/slice";
+import {UnaryPred} from "../../packages/types";
 
 describe('#dropWhile', () => {
     const alnumRegex = /^[a-z]$/i,

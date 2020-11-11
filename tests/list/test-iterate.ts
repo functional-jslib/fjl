@@ -1,5 +1,5 @@
-import {UnaryOf} from "../../src/types";
-import {iterate} from "../../src/list/iterate";
+import {UnaryOf} from "../../packages/types";
+import {iterate} from "../../packages/list/iterate";
 
 type Num = number;
 

@@ -1,4 +1,4 @@
-import {toFunction} from '../../src/function';
+import {toFunction} from '../../packages/function';
 import {falsyList, truthyList} from '../helpers';
 
 describe('#toFunction', () => {

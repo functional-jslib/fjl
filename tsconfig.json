@@ -16,15 +16,12 @@
     "esModuleInterop": true,
     "outDir": "./dist/es"
   },
-  "files": [
-    "src/index.ts"
-  ],
   "exclude": [
     "node_modules/",
     "dist/"
   ],
   "include": [
-    "src/**/*.ts",
+    "packages/**/*.ts",
     "tests/**/*.ts"
   ]
 }

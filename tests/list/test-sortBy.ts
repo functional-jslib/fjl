@@ -1,11 +1,11 @@
 // @todo remove library methods used as auxillary methods from pertinent tests (et. al. `compose`, `take`, `range` and `reverse`)
 
 import {__, alphabetArray, expectEqual, genericOrdering} from "../helpers";
-import {sortBy} from "../../src/list/sortBy";
-import {range} from "../../src/list/range";
-import {compose} from "../../src/function/compose";
-import {reverse} from "../../src/list/reverse";
-import {take} from "../../src/list/take";
+import {sortBy} from "../../packages/list/sortBy";
+import {range} from "../../packages/list/range";
+import {compose} from "../../packages/function/compose";
+import {reverse} from "../../packages/list/reverse";
+import {take} from "../../packages/list/take";
 
 describe('#sortBy', () => {
     it('should sort a list by ordering function', () => {

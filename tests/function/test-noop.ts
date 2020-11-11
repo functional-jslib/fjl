@@ -1,4 +1,4 @@
-import {noop} from "../../src/function";
+import {noop} from "../../packages/function";
 
 describe('#noop', function () {
     it('should be a function', () => {

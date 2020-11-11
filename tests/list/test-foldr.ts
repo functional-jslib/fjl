@@ -1,8 +1,8 @@
 // @todo remove library methods as testing utilities here (namely 'reverse').
 
 import {expectEqual, expectError, vowelsArray, vowelsLen, vowelsString} from "../helpers";
-import {reverse} from "../../src/list/reverse";
-import {foldr} from "../../src/list/foldr";
+import {reverse} from "../../packages/list/reverse";
+import {foldr} from "../../packages/list/foldr";
 
 describe('#foldr', () => {
     it('should fold a `Foldable` (list, etc.) into some value', () => {

@@ -1,5 +1,5 @@
 import {expectEqual, vowelsArray, vowelsString} from "../helpers";
-import {uncons} from "../../src/list/uncons";
+import {uncons} from "../../packages/list/uncons";
 
 describe('#uncons', () => {
     it('should return a list containing the "head" and "tail" of given list, else should return `undefined`.', () => {

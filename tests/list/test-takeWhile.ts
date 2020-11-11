@@ -7,8 +7,8 @@ import {
     vowelsArray,
     vowelsString
 } from "../helpers";
-import {range} from "../../src/list/range";
-import {takeWhile} from "../../src/list";
+import {range} from "../../packages/list/range";
+import {takeWhile} from "../../packages/list";
 
 describe('#takeWhile', () => {
     it('should take elements while predicate is fulfilled and vice-versa', () => {

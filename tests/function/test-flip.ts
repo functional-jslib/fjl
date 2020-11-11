@@ -1,5 +1,5 @@
 import {expectEqual, expectFunction, subtract} from '../helpers';
-import {flip, flip3, flip4, flip5, flipN} from '../../src/function';
+import {flip, flip3, flip4, flip5, flipN} from '../../packages/function';
 
 describe ('#flip', function () {
     it ('should be a function', function () {

@@ -1,7 +1,7 @@
 import {alphabetArray, vowelsArray} from "../helpers";
-import {sliceFrom} from "../../src/list/utils/sliceFrom";
-import {CurryOf1} from "../../src/function";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {sliceFrom} from "../../packages/list/utils/sliceFrom";
+import {CurryOf1} from "../../packages/function";
+import {SliceOf} from "../../packages/platform/slice";
 
 describe('#sliceFrom', () => {
     it('should be curried', () => {

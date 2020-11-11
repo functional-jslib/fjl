@@ -1,5 +1,5 @@
 import {alphabetArray, alphabetString, expectEqual, isVowel, nonAlphaNums, nonAlphaNumsArray} from "../helpers";
-import {span} from "../../src/list";
+import {span} from "../../packages/list";
 
 describe('#span', () => {
     it('should give the span of elements matching predicate and elements not matching predicate.', () => {

@@ -1,6 +1,6 @@
 import {/*expectEqual,*/ vowelsArray, vowelsString} from "../helpers";
-import {SliceOf} from "../../src/jsPlatform/slice";
-import {insert} from "../../src/list/insert";
+import {SliceOf} from "../../packages/platform/slice";
+import {insert} from "../../packages/list/insert";
 
 const toJson = JSON.stringify;
 

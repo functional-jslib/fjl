@@ -1,6 +1,6 @@
-import {findIndicesWhere} from "../../src/list/utils/findIndicesWhere";
-import {PredForSliceOf} from "../../src/list/types";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {findIndicesWhere} from "../../packages/list/utils/findIndicesWhere";
+import {PredForSliceOf} from "../../packages/list/types";
+import {SliceOf} from "../../packages/platform/slice";
 import {alphabetCharCodeRange} from "../helpers";
 
 describe(`#listUtils.findIndicesWhere`, () => {

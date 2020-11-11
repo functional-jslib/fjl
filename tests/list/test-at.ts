@@ -1,6 +1,6 @@
 import {alphabetArray, alphabetString, expectEqual} from "../helpers";
-import length from "../../src/jsPlatform/object/length";
-import {at} from "../../src/list/at";
+import length from "../../packages/platform/object/length";
+import {at} from "../../packages/list/at";
 
 describe('#at', () => {
     // @todo tabelize messages in tests

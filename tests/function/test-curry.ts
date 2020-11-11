@@ -1,6 +1,6 @@
-import {Curry, curry, Curry1, Curry2, curry2, Curry3, curry3, curry4, Curry5, curry5, curryN, CurryOf2} from '../../src/function';
+import {Curry, curry, Curry1, Curry2, curry2, Curry3, curry3, curry4, Curry5, curry5, curryN, CurryOf2} from '../../packages/function';
 import {alphabetArray} from '../helpers';
-import {Binary, Nary, NaryOf, Unary} from "../../src/types";
+import {Binary, Nary, NaryOf, Unary} from "../../packages/types";
 
 describe('#curryN', () => {
     // Some funcs to use in tests

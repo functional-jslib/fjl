@@ -1,4 +1,4 @@
-import {trampoline} from '../../src/function/trampoline';
+import {trampoline} from '../../packages/function/trampoline';
 
 describe('#trampoline', () => {
     it ('should be able to trampoline a function no matter how many recursive calls are made', () => {

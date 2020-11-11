@@ -1,6 +1,6 @@
 import {expectEqual} from "../helpers";
-import {difference} from "../../src/list/difference";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {difference} from "../../packages/list/difference";
+import {SliceOf} from "../../packages/platform/slice";
 
 describe('#difference', () => {
     // @todo tablelize test messages

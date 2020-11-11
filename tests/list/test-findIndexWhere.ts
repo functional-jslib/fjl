@@ -1,6 +1,6 @@
-import {findIndexWhere} from "../../src/list/utils/findexIndexWhere";
-import {PredForSliceOf} from "../../src/list/types";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {findIndexWhere} from "../../packages/list/utils/findexIndexWhere";
+import {PredForSliceOf} from "../../packages/list/types";
+import {SliceOf} from "../../packages/platform/slice";
 import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
 
 describe(`#listUtils.findIndexWhere`, () => {

@@ -1,4 +1,4 @@
-import {intercalate} from "../../src/list/intercalate";
+import {intercalate} from "../../packages/list/intercalate";
 import {alphabetArray, expectEqual} from "../helpers";
 
 describe('#intercalate', () => {

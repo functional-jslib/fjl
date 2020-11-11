@@ -1,5 +1,5 @@
 import {expectTrue} from "../helpers";
-import {findIndex} from "../../src/list/findIndex";
+import {findIndex} from "../../packages/list/findIndex";
 
 describe('#findIndex', () => {
     const word = 'abcdefg';

@@ -1,5 +1,5 @@
-import slice from "../../src/jsPlatform/slice/slice";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import slice from "../../packages/platform/slice/slice";
+import {SliceOf} from "../../packages/platform/slice";
 import {vowelsString} from "../helpers";
 
 describe('#slice', () => {

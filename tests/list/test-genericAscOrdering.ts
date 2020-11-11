@@ -1,4 +1,4 @@
-import {genericAscOrdering} from "../../src/list/utils/genericAscOrdering";
+import {genericAscOrdering} from "../../packages/list/utils/genericAscOrdering";
 
 describe('#list.genericAscOrdering', () => {
     (<[[any, any], number][]>[

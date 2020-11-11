@@ -1,6 +1,6 @@
-import {length} from "../../src/jsPlatform/object";
+import {length} from "../../packages/platform/object";
 import {expectEqual, expectError} from "../helpers";
-import {foldl} from "../../src/list/foldl";
+import {foldl} from "../../packages/list/foldl";
 
 describe('#foldl', () => {
     it('should fold a `Foldable` (list, etc.) into some value', () => {

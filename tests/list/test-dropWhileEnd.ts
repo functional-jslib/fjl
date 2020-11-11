@@ -1,8 +1,8 @@
 import {expectEqual, nonAlphaNumsArray, vowelsArray, vowelsString} from "../helpers";
-import {dropWhileEnd} from "../../src/list/dropWhileEnd";
-import {id} from "../../src/function/id";
-import {UnaryPred} from "../../src/types";
-import {SliceOf} from "../../src/jsPlatform/slice/types";
+import {dropWhileEnd} from "../../packages/list/dropWhileEnd";
+import {id} from "../../packages/function/id";
+import {UnaryPred} from "../../packages/types";
+import {SliceOf} from "../../packages/platform/slice/types";
 
 // @todo move test-case message(s) into loop
 describe('#dropWhileEnd', () => {

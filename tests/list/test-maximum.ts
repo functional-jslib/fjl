@@ -1,5 +1,5 @@
 import {expectEqual, expectError} from "../helpers";
-import {maximum} from "../../src/list/maximum";
+import {maximum} from "../../packages/list/maximum";
 
 describe('#maximum', () => {
     it('should be able return the maximum of a given list', () => {

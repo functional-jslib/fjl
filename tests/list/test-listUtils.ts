@@ -2,15 +2,15 @@
  * @todo Make sure we've written tests for both strings and arrays (and arrays of each (where required)).
  */
 
-import {sliceTo} from "../../src/list/utils/sliceTo";
-import {sliceFrom} from "../../src/list/utils/sliceFrom";
+import {sliceTo} from "../../packages/list/utils/sliceTo";
+import {sliceFrom} from "../../packages/list/utils/sliceFrom";
 
 import {
     sliceCopy, genericAscOrdering, lengths,
     toShortest, reduceUntil, reduceUntilRight, reduce, reduceRight,
     lastIndex, findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere
 }
-from '../../src/list/utils';
+from '../../packages/list/utils';
 
 import {
     expectEqual,

@@ -1,6 +1,6 @@
-import {apply} from '../../src/jsPlatform/function';
-import {keys} from '../../src/jsPlatform/object';
-import {unfoldr} from '../../src/list';
+import {apply} from '../../packages/platform/function';
+import {keys} from '../../packages/platform/object';
+import {unfoldr} from '../../packages/list';
 import {
     createTypedDescriptor,
     toEnumerableDescriptor,
@@ -9,7 +9,7 @@ import {
     defineEnumProp,
     defineEnumProps
 }
-    from '../../src/object/defineProp';
+    from '../../packages/object/defineProp';
 
 describe ('#object.createTypedDescriptor', function () {
     const someTarget = {},

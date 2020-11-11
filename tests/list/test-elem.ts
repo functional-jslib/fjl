@@ -1,5 +1,5 @@
-import {elem} from "../../src/list/elem";
-import includes from "../../src/jsPlatform/slice/includes";
+import {elem} from "../../packages/list/elem";
+import includes from "../../packages/platform/slice/includes";
 
 describe('#elem', () => {
     it('same as "#includes" test suite (methods should be equal)', () => {

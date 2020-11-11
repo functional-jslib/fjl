@@ -1,4 +1,4 @@
-import {negateF, negateF2, negateF3, negateFN} from '../../src/function/negate';
+import {negateF, negateF2, negateF3, negateFN} from '../../packages/function/negate';
 
 type Predicate = (x: any) => boolean;
 

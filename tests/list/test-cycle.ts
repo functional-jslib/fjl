@@ -1,5 +1,5 @@
-import {cycle} from "../../src/list/cycle";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {cycle} from "../../packages/list/cycle";
+import {SliceOf} from "../../packages/platform/slice";
 
 describe('#cycle', () => {
     const arg = ['a'];

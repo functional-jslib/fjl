@@ -1,5 +1,5 @@
 import {expectLength, expectTrue} from "../helpers";
-import {permutations} from "../../src/list/permutations";
+import {permutations} from "../../packages/list/permutations";
 
 describe('#permutations', () => {
     const areAllPermutesUnique = permutes => {

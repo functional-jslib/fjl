@@ -1,4 +1,4 @@
-import {mapAccumL} from "../../src/list/mapAccumL";
+import {mapAccumL} from "../../packages/list/mapAccumL";
 import {expectEqual} from "../helpers";
 
 describe('#mapAccumL', () => {

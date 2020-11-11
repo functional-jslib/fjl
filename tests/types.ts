@@ -1,4 +1,4 @@
-import {Nameable} from "../src/types";
+import {Nameable} from "../packages/types";
 
 export type ConstructorTestCase = [Nameable, any, boolean];
 type NameTestCase = [string, any, boolean];

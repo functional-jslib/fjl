@@ -1,7 +1,7 @@
-import {groupBy} from "../../src/list/groupBy";
+import {groupBy} from "../../packages/list/groupBy";
 import {vowelsArray, vowelsString} from "../helpers";
-import {SliceOf} from "../../src/jsPlatform/slice";
-import {BinaryPred} from "../../src/types";
+import {SliceOf} from "../../packages/platform/slice";
+import {BinaryPred} from "../../packages/types";
 
 describe(`#list.group`, () => {
     const equal = <T>(a: T, b: T): boolean => a === b;

@@ -1,5 +1,5 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
-import {isEmptyList} from "../../src/object/is";
+import {isEmptyList} from "../../packages/object/is";
 
 describe('#isEmpty (a.k.a. #`null`)', () => {
     it ('should return a boolean indicating whether given list is empty or not', () => {

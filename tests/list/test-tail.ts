@@ -1,5 +1,5 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from '../helpers';
-import {tail} from '../../src/list';
+import {tail} from '../../packages/list';
 
 describe('#tail', () => {
     it('should return everything except the last item of an list', () => {

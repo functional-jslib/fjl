@@ -5,10 +5,10 @@
  * @todo Remove extreme functional programming style (in favor of better readability and testabilty).
  * @todo Remove library functions from tests where they are not being tested (use native functions).
  */
-import {compose, negateF2} from '../src/function';
-import {isArray, isString} from '../src/object/is';
-import {isTruthy} from '../src/boolean';
-import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase} from '../src/string';
+import {compose, negateF2} from '../packages/function';
+import {isArray, isString} from '../packages/object/is';
+import {isTruthy} from '../packages/boolean';
+import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase} from '../packages/string';
 
 import {
     append, all, and, or, any, find,
@@ -22,7 +22,7 @@ import {
     nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn,
     complement, difference, union, intersect, intersectBy, groupBy,
     scanl, scanl1, scanr, scanr1, range
-} from '../src/list';
+} from '../packages/list';
 
 import {
     __,

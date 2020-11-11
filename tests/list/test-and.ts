@@ -1,5 +1,5 @@
 import {expectError, expectFalse, expectTrue} from "../helpers";
-import {and} from "../../src/list/and";
+import {and} from "../../packages/list/and";
 
 describe('#and', () => {
     // @todo tabelize tests here

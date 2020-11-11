@@ -1,7 +1,7 @@
 import {genericOrdering, vowelsArray, vowelsString} from "../helpers";
-import {SliceOf} from "../../src/jsPlatform/slice";
-import {insertBy} from "../../src/list/insertBy";
-import {OrderingFunc} from "../../src/list/utils";
+import {SliceOf} from "../../packages/platform/slice";
+import {insertBy} from "../../packages/list/insertBy";
+import {OrderingFunc} from "../../packages/list/utils";
 
 const toJson = JSON.stringify;
 

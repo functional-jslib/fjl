@@ -1,6 +1,6 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
-import {drop} from "../../src/list/drop";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {drop} from "../../packages/list/drop";
+import {SliceOf} from "../../packages/platform/slice";
 
 describe('#drop', () => {
     it('should return a new list/string with dropped items from original until limit', () => {

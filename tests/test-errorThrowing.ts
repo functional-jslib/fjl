@@ -9,7 +9,7 @@ import {
     errorIfNotType,
     errorIfNotTypes
 }
-    from '../src/errorThrowing';
+    from '../packages/errorThrowing';
 
 import {expectError} from './helpers';
 

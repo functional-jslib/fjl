@@ -1,5 +1,5 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
-import {reverse} from "../../src/list/reverse";
+import {reverse} from "../../packages/list/reverse";
 
 describe('#reverse', () => {
     it('should reverse a list passed in.', () => {

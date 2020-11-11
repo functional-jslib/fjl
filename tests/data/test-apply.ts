@@ -1,4 +1,4 @@
-import {Apply, Functor} from "../../src/data";
+import {Apply, Functor} from "../../packages/data";
 import {add, peek} from "../helpers";
 
 describe('#data.Apply', () => {

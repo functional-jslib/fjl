@@ -1,6 +1,6 @@
-import {findWhere} from "../../src/list/utils/findWhere";
-import {PredForSliceOf} from "../../src/list/types";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {findWhere} from "../../packages/list/utils/findWhere";
+import {PredForSliceOf} from "../../packages/list/types";
+import {SliceOf} from "../../packages/platform/slice";
 import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
 
 describe(`#listUtils.findWhere`, () => {

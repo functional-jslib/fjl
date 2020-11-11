@@ -12,9 +12,9 @@ import {
     isWeakMap, isWeakSet, assignDeep, assign,
     toAssocListDeep, fromAssocListDeep,
     toTypeRef, toTypeRefName, lookup, native
-} from '../src/object';
+} from '../packages/object';
 
-import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../src/list';
+import {foldl, map, and, head, tail, subsequences, unfoldr, all} from '../packages/list';
 
 import {
     expectTrue,
@@ -28,7 +28,7 @@ import {
     vowelsString, vowelsArray
 } from './helpers';
 
-import {Nameable} from '../src/types';
+import {Nameable} from '../packages/types';
 
 describe ('#object', function () {
     const charCodeToCharArrayMap = unfoldr(

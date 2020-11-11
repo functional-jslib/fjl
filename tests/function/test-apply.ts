@@ -1,5 +1,5 @@
 import {add, expectEqual, expectFunction} from "../helpers";
-import apply from '../../src/function/apply';
+import apply from '../../packages/function/apply';
 
 describe ('#apply', function () {
     it ('should be a function', function () {

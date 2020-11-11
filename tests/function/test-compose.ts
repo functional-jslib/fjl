@@ -1,4 +1,4 @@
-import {compose} from '../../src/function/compose';
+import {compose} from '../../packages/function/compose';
 
 describe('#compose', () => {
     it('should be of type function.', () => {

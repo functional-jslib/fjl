@@ -1,4 +1,4 @@
-import {unfoldr} from "../../src/list/unfoldr";
+import {unfoldr} from "../../packages/list/unfoldr";
 
 describe('#unfoldr', () => {
     it('should be able to unfold any value from right to left.', () => {

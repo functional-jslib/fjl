@@ -1,6 +1,6 @@
 import {alphabetArray} from "../helpers";
-import {elemIndices} from "../../src/list/elemIndices";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {elemIndices} from "../../packages/list/elemIndices";
+import {SliceOf} from "../../packages/platform/slice";
 
 describe('#elemIndices', () => {
     (<[SliceOf<any>, any, SliceOf<any> | any][]>[

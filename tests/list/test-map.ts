@@ -1,6 +1,6 @@
 import {expectEqual, expectError, expectInstanceOf, vowelsArray, vowelsString} from "../helpers";
-import Functor from "../../src/data/Functor";
-import map from "../../src/list/map";
+import Functor from "../../packages/data/Functor";
+import map from "../../packages/list/map";
 
 describe('#map', () => {
     const addCharA = char => char + 'a';

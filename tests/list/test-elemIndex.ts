@@ -1,5 +1,5 @@
-import {elemIndex} from "../../src/list/elemIndex";
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {elemIndex} from "../../packages/list/elemIndex";
+import {SliceOf} from "../../packages/platform/slice";
 import {vowelsArray, vowelsString} from "../helpers";
 
 type TestCaseTuple = [[string, SliceOf<string>], number | undefined];

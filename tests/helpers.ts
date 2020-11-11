@@ -2,9 +2,9 @@
  * Created by elyde on 12/10/2016.
  * @todo remove use of 'curry_' from tests and helpers.
  */
-import {compose} from '../src/function';
+import {compose} from '../packages/function';
 import {curry2_, __} from './helpers/curry_';
-import {range} from './../src/list/range';
+import {range} from '../packages/list/range';
 
 export interface LinkedListNode {data: string, next?: LinkedListNode}
 

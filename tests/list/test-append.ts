@@ -1,6 +1,6 @@
 import {expectError, vowelsArray, vowelsString} from '../helpers';
-import {append} from '../../src/list/append';
-import {SliceOf} from "../../src/jsPlatform/slice";
+import {append} from '../../packages/list/append';
+import {SliceOf} from "../../packages/platform/slice";
 
 describe('#append', () => {
     it('should be a function', () => {
