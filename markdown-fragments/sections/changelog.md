@@ -6,7 +6,7 @@
 - Consolidated typescript type files into one types file.
 
 ### 1.10.6
-- Made 'jsPlatform' module public.
+- Made 'platform' module public.
 - Added typescript types for all previously defined "public" modules."
 
 ### 1.10.3

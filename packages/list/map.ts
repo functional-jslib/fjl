@@ -20,12 +20,13 @@ export const map = curry(<T, RetT>(
     fn: MapFunc<T, number | string, Mappable<T> | Indexable<T>, RetT>,
     xs: Mappable<T> | Indexable<T>): Mappable<RetT> | Indexable<RetT> | any => {
     if (!isset(xs)) return of(xs);
-    let out = of(xs),
+    let out,
         limit,
         i = 0;
     switch (typeOf(xs)) {
         case 'Array':
             limit = length(xs as Array<T>);
+            out = [];
             if (!limit) return out;
             for (; i < limit; i += 1) {
                 out.push(fn(xs[i], i, xs));
@@ -33,6 +34,7 @@ export const map = curry(<T, RetT>(
             return out;
         case 'String':
             limit = length(xs as unknown as string);
+            out = '';
             if (!xs) return out;
             for (; i < limit; i += 1) {
                 out += fn(xs[i], i, xs);
@@ -43,7 +45,7 @@ export const map = curry(<T, RetT>(
             return Object.keys(xs).reduce((agg, key) => {
                 out[key] = fn(xs[key], key, xs);
                 return out;
-            }, out);
+            }, of(out));
     }
 }) as MapType<any, any, any, any>;
 

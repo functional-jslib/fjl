@@ -12,4 +12,4 @@ export const
      */
     intersect = curry((arr1, arr2) =>
         !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
-            filter(elm => includes(elm, arr2), arr1));
+            filter(elm => includes(elm, arr2) as boolean, arr1));

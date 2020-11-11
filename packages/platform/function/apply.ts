@@ -6,15 +6,10 @@ const
 
     /**
      * Functional `apply` function (takes no context).
-     * @curried - Upto arity 2.
      * @deprecated
-     * @function module:function.apply
-     * @param fn {Function}
-     * @param args {Array|*}
-     * @returns {*}
      */
     apply: ApplyFunc =
-        curry2((fn: NaryOf<any, unknown>, args: any[]) =>
+        curry2((fn: NaryOf<unknown, unknown>, args: unknown[]) =>
             fn(...args)) as ApplyFunc
 ;
 

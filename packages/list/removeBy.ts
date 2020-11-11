@@ -15,7 +15,7 @@ export const
      * @returns {Array}
      */
     removeBy = curry((pred, x, list) => {
-        const foundIndex = findIndex(item => pred(x, item), list);
+        const foundIndex = findIndex(item => pred(x, item), list) as number;
         if (foundIndex > -1) {
             const parts = splitAt(foundIndex, list);
             return append(parts[0], tail(parts[1]));

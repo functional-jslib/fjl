@@ -1,5 +1,5 @@
 /**
- * @module jsPlatform/slice
+ * @module platform/slice
  */
 import concat from './concat';
 import includes from './includes';

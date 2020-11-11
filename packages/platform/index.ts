@@ -1,5 +1,5 @@
 /**
- * @module jsPlatform
+ * @module platform
  */
 export * from './array';
 export * from './function';

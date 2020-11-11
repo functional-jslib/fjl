@@ -18,6 +18,12 @@ export type TypeConstructor =
     ObjectConstructor
     ;
 
+export interface ConstructableType {
+    new(...args: any[]): any;
+}
+
+export type Constructable = ConstructableType
+
 export interface ErrorTemplateCtx {
     value: any;
     valueName: string;
@@ -37,7 +43,7 @@ export type ErrorIfNotTypesThrower = (
 export type ErrorTemplateCtxToStringFn = (
     tmplCtx: ErrorTemplateCtx) => string;
 
-export type ListPredicate = (x: any, index: number, list: (any[] | string)) => boolean;
+export type ListPredicate = <T>(x: T, index?: number, xs?: (T[] | string)) => boolean;
 
 export type ListMapOperation = (x: any, index: number, list: (any[] | string)) => any;
 

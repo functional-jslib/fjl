@@ -16,9 +16,9 @@ export * from './string';
 export * from './utils';
 export * from './errorThrowing';
 
-import * as jsPlatform from './platform';
+import * as platform from './platform';
 
-export {jsPlatform};
+export {platform};
 
 /**
  * @typedef {String|Function|ArrayBufferConstructor|ArrayConstructor|BooleanConstructor|MapConstructor|NumberConstructor|SetConstructor|WeakMapConstructor|WeakSetConstructor} TypeRef

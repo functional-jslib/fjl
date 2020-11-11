@@ -11,17 +11,18 @@ export const
         }
         const limit = xs.length,
             lastInd = limit - 1;
-        let out = of(xs),
-            i = 0;
+        let i = 0;
         if (isString(xs)) {
+            let out = '';
             for (; i < limit; i += 1) {
                 out += i === lastInd ?
                     xs[i] :
                     (xs[i] as unknown as string) +  // @todo type conversion cleanup
                     (between as unknown as string); // @todo ""
             }
-            return out;
+            return out as unknown as SliceOf<T>;
         }
+        const out = of(xs) as Array<T>;
         for (; i < limit; i += 1) {
             if (i === lastInd) {
                 out.push(xs[i]);

@@ -7,7 +7,7 @@ import native from '../object-statics';
  * import {defineProperties} from 'fjl'
  * defineProperties(descriptor, someObj),
  * // Et. al.
- * @memberOf module:jsPlatform/object
+ * @memberOf module:platform/object
  * @type {{...Object}}
  */
 export default native;

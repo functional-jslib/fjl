@@ -1,6 +1,6 @@
 ## Development:
 - Sources are in './src'
-    - './src/jsPlatform' are native platform specific method versions
+    - './src/platform' are native platform specific method versions
      pulled out for use (functionally), in some places, where we didn't want to
      intermingle library methods with native ones.
 - Distributions are in './dist'

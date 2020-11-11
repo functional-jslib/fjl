@@ -1,5 +1,5 @@
 /**
- * @module jsPlatform/object
+ * @module platform/object
  * Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 

@@ -189,7 +189,7 @@ https://functional-jslib.github.io/fjl/
 
 ## Development:
 - Sources are in './src'
-    - './src/jsPlatform' are native platform specific method versions
+    - './src/platform' are native platform specific method versions
      pulled out for use (functionally), in some places, where we didn't want to
      intermingle library methods with native ones.
 - Distributions are in './dist'
@@ -241,7 +241,7 @@ BSD 3 Clause - Included in sources.
 - Consolidated typescript type files into one types file.
 
 ### 1.10.6
-- Made 'jsPlatform' module public.
+- Made 'platform' module public.
 - Added typescript types for all previously defined "public" modules."
 
 ### 1.10.3

@@ -1,7 +1,7 @@
 import {curry} from "../function/curry";
 import {append} from "./append";
 import {filter} from "./filter";
-import {includes} from "../platform/slice";
+import {includes, SliceOf} from "../platform/slice";
 
 export const
     /**
@@ -11,6 +11,8 @@ export const
      * @param arr2 {Array}
      * @returns {Array}
      */
-    union = curry((arr1, arr2) =>
+    union = curry(<T>(arr1: T[], arr2: T[]) =>
         append(arr1,
-            filter(elm => !includes(elm, arr1), arr2)));
+            filter(elm => !includes(elm, arr1), arr2) as SliceOf<T>
+        )
+    );

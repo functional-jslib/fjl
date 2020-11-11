@@ -5,13 +5,9 @@ import {CallFunc} from "./types";
 /**
  * Functional `call` function (takes no context).
  * @deprecated
- * @function module:function.call
- * @param fn {Function}
- * @param args {...*}
- * @returns {*}
  */
 const call: CallFunc =
-    curry2((fn: NaryOf<any, unknown>, ...args) => fn(...args)) as CallFunc
+    curry2((fn: NaryOf<unknown, unknown>, ...args: unknown[]) => fn(...args)) as CallFunc
 ;
 
 export default call;
