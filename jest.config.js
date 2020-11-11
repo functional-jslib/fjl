@@ -1,7 +1,7 @@
 module.exports = {
     preset: 'ts-jest',
     testMatch: [
-        '**/tests/**/test-*.ts'
+        '**/packages/**/*.test.ts'
     ],
     testEnvironment: 'node',
     globals: {

@@ -1,23 +1,17 @@
 {
   "name": "fjl",
   "version": "1.10.7",
-  "description": "Functional Javascript Library",
+  "description": "Functional Javascript Library.",
   "main": "dist/cjs",
-  "module": "dist/es6-module",
-  "types": "./index.d.ts",
+  "module": "dist/es/index.js",
+  "types": "./dist/es/index.d.ts",
   "scripts": {
-    "build": "yarn install && yarn test && gulp docs build && npm run test-builds",
+    "build": "echo \"Not yet implemented.\"",
     "test-builds": "jest --testMatch **/tests/*-test-*.ts",
     "test": "jest --config ./jest.config.js",
-    "readme": "gulp readme",
-    "docs": "gulp docs"
+    "docs": "echo \"Not yet implemented.\""
   },
-  "directories": {
-    "dist": "dist",
-    "doc": "README.md",
-    "test": "tests",
-    "lib": "src"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
@@ -41,24 +35,12 @@
     "babel-preset-es2015-rollup": "^3.0.0",
     "del": "^5.1.0",
     "eslint": "^6.8.0",
-    "gulp": "4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-better-rollup": "^4.0.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-duration": "0.0.0",
-    "gulp-eslint": "^6.0.0",
-    "gulp-header": "^2.0.9",
-    "gulp-if": "^3.0.0",
-    "gulp-jsdoc3": "^3.0.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-uglify": "^3.0.2",
     "jest": "^25.3.0",
     "rollup": "^2.6.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "ts-jest": "^25.3.1",
     "ts-node": "^8.8.2",
-    "tui-jsdoc-template": "^1.2.2",
     "typescript": "^3.8.3"
   },
   "repository": {
@@ -79,131 +61,5 @@
   "bugs": {
     "url": "https://github.com/functional-jslib/fjl/issues"
   },
-  "homepage": "https://github.com/functional-jslib/fjl#readme",
-  "dependencies": {},
-  "buildConfig": {
-    "inputModuleName": "fjl",
-    "inputFilePath": "./dist/es/index.js",
-    "outputFileName": "index.js",
-    "outputFileNameMjs": "index.mjs",
-    "outputFileNameMin": "index.min.js",
-    "srcsGlob": "./dist/es/**/*.js",
-    "paths": {
-      "dist": "./dist",
-      "docs": "./docs"
-    },
-    "folderNames": {
-      "amd": "amd",
-      "cjs": "cjs",
-      "iife": "iife",
-      "umd": "umd",
-      "es6Module": "es6-module",
-      "package": "package"
-    },
-    "es6ModuleRollup": {
-      "config": {
-        "input": "./dist/es/index.js",
-        "external": []
-      },
-      "write": {
-        "file": "./dist/es6-module/index.js",
-        "format": "es",
-        "sourcemap": true
-      }
-    },
-    "buildAmdOptions": {
-      "babel": {
-        "babelrc": false,
-        "presets": [
-          "@babel/preset-env"
-        ],
-        "plugins": [
-          "@babel/plugin-transform-modules-amd"
-        ],
-        "exclude": [
-          "node_modules/**/*"
-        ]
-      }
-    },
-    "buildCjsOptions": {
-      "babel": {
-        "babelrc": false,
-        "presets": [
-          "@babel/preset-env"
-        ],
-        "plugins": [
-          "@babel/plugin-transform-modules-commonjs"
-        ],
-        "exclude": [
-          "node_modules/**/*"
-        ]
-      }
-    },
-    "buildUmdOptions": {
-      "babel": {
-        "babelrc": false,
-        "presets": [
-          "@babel/preset-env"
-        ],
-        "plugins": [
-          "@babel/plugin-transform-modules-umd"
-        ],
-        "exclude": [
-          "node_modules/**/*"
-        ]
-      }
-    },
-    "buildIifeOptions": {
-      "babel": {
-        "babelrc": false,
-        "presets": [
-          [
-            "@babel/preset-env",
-            {
-              "modules": false
-            }
-          ]
-        ],
-        "exclude": [
-          "node_modules/**/*"
-        ]
-      }
-    },
-    "uglifyOptions": {},
-    "readme": {
-      "files": [
-        "./markdown-fragments/readme-header.md",
-        "./markdown-fragments/sections/sections.md",
-        "./markdown-fragments/sections/requirements.md",
-        "./markdown-fragments/sections/getting-started.md",
-        "./markdown-fragments/sections/docs.md",
-        "./markdown-fragments-generated/module-and-member-list.md",
-        "./markdown-fragments/sections/docs/docs-footer.md",
-        "./markdown-fragments/sections/development.md",
-        "./markdown-fragments/sections/license.md",
-        "./markdown-fragments/sections/resources.md",
-        "./markdown-fragments/sections/changelog.md"
-      ]
-    },
-    "jsdoc": {
-      "opts": {
-        "template": "node_modules/tui-jsdoc-template",
-        "encoding": "utf8",
-        "destination": "./docs/",
-        "recurse": true,
-        "templates": {
-          "useCollapsibles": false
-        }
-      },
-      "templates": {
-        "logo": {
-          "url": "http://elycruz.com/fjl-logo.gif",
-          "width": "144px",
-          "height": "55px",
-          "link": "https://github.com/functional-jslib/fjl"
-        },
-        "footerText": "functional-jslib - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab"
-      }
-    }
-  }
+  "homepage": "https://github.com/functional-jslib/fjl#readme"
 }

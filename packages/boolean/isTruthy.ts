@@ -1,11 +1,7 @@
-import {UnaryPred} from "../types";
 
 /**
- * Returns whether `value` is 'truthy' or not
- * @function module:boolean.isTruthy
- * @param value
- * @returns {Boolean}
+ * Returns whether `value` is 'truthy' or not.
  */
-const isTruthy: UnaryPred<any> = value => !!value;
+const isTruthy = <T>(value: T): boolean => !!value;
 
 export default isTruthy;
