@@ -7,6 +7,8 @@ import {split} from '../platform/string';
 import {compose} from '../function/compose';
 import {join} from '../platform/array';
 import {_errorIfNotType} from '../errorThrowing';
+import {UnaryPred} from "../types";
+import {SliceOf} from "../platform/slice";
 
 export {split};
 
@@ -70,27 +72,19 @@ export const
 
     /**
      * Camel cases (class case) a string.
-     * @function module:string.camelCase
-     * @param xs {String}
-     * @param [pattern=/[^a-z\d/i]/] {RegExp} - Pattern to split on.  Optional.
      * @throws {Error} - Throws error if param `xs` is not a string.
-     * @returns {index.ts}
-     * @curried
      */
-    camelCase = (xs, pattern = /[^a-z\d]/i) => compose(
+    camelCase = (xs: SliceOf<string>, pattern = /[^a-z\d]/i): string => compose(
             join(''),
             map(str => ucaseFirst(str.toLowerCase())),
-            filter(x => !!x),
-            split(pattern)
+            filter(x => !!x) as unknown as (xs: string[]) => string[],
+            split(pattern) as (x: string) => string[]
         )(_errorIfNotType(String, 'camelCase', 'xs', xs)),
 
     /**
      * Class cases a string.  Uses pattern /[^a-z\d/i]/ to split on.
      * If you require a different pattern use `string.camelCase(str, pattern)`
      * and then upper case first character (`ucaseFirst`).
-     * @function module:string.classCase
-     * @param xs {String}
-     * @returns {index.ts}
      * @throws {Error} - Throws error if `xs` is not a string (via `camelCase` call).
      */
     classCase = compose(ucaseFirst, camelCase)

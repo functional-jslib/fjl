@@ -13,5 +13,10 @@ describe('array.every', () => {
                 const rslt = every(pred, xs);
                 expect(rslt).toEqual(expected);
             });
+            it(`every(${JSON.stringify(xs)})(isVowel) === ${expected}`, function () {
+                const prepared = every(pred) as unknown as (_xs: any[]) => boolean,
+                    rslt = prepared(xs);
+                expect(rslt).toEqual(expected);
+            });
         });
 });
