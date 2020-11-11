@@ -3,10 +3,6 @@ import {Filter} from "./types";
 
 /**
  * Filters a functor (list etc.) with passed in function.
- * @function module:platform/array.filter
- * @param fn {Function}
- * @param functor {Array|{filter: {Function}}}
- * @returns {Array|{filter: {Function}}}
  */
 const filter = toCurried2Method('filter') as Filter<any, any[]>;
 

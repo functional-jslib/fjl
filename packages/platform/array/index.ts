@@ -1,6 +1,3 @@
-/**
- * @module jsPlatform/array
- */
 import filter from './filter';
 import forEach from './forEach';
 import join from './join';

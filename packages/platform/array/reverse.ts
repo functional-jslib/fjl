@@ -1,19 +1,6 @@
 /**
  * Reverses a list.
- * @function module:platform/array.reverse
- * @param xs {any[]}
- * @return {any[]}
  */
-import {Reverse} from "./types";
-
-const reverse: Reverse<any[]> = (
-    (): Reverse<any[]> =>
-        Array.prototype.reverse ?
-            (xs: any[]): any[] => xs.reverse() :
-            (xs: any[]): any[] => xs.reduceRight((agg, item) => {
-                agg.push(item);
-                return agg;
-            }, [])
-)();
+const reverse = <T>(xs: T[]): T[] => xs.reverse();
 
 export default reverse;
