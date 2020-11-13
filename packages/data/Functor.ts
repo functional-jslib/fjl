@@ -1,6 +1,6 @@
-import {MapOp} from "../platform/array";
 import {instanceOf} from "../platform/object";
 import {CurryOf1} from "../function";
+import {UnaryOf} from "../types";
 
 export interface FunctorConstructor<T> {
     new(x: T): Functor<T>;
@@ -8,10 +8,12 @@ export interface FunctorConstructor<T> {
     readonly prototype: Functor<T>;
 }
 
+export type FunctorMapFn<T, Ftr, Ret> = UnaryOf<T, Ret>
+
 export interface Functor<T> {
     valueOf(): T;
 
-    map<MapOpRet>(fn: MapOp<T, Functor<T>, MapOpRet>): Functor<MapOpRet>; // @todo Functor map type should be `UnaryOf<T, Ret>`
+    map<MapOpRet>(fn: FunctorMapFn<T, Functor<T>, MapOpRet>): Functor<MapOpRet>;
 }
 
 export class Functor<T> {
@@ -22,8 +24,8 @@ export class Functor<T> {
         return this.value;
     }
 
-    map<MapFuncRet>(fn: MapOp<T, Functor<T>, MapFuncRet>): Functor<MapFuncRet> {
-        return new (this.constructor as FunctorConstructor<MapFuncRet>)(fn(this.valueOf()));
+    map<MapOpRet>(fn: FunctorMapFn<T, Functor<T>, MapOpRet>): Functor<MapOpRet> {
+        return new (this.constructor as FunctorConstructor<MapOpRet>)(fn(this.valueOf()));
     }
 }
 

@@ -84,7 +84,7 @@ export function curryN_ (executeArity, fn, ...curriedArgs) {
  * @memberOf index.ts
  * @type {PlaceHolder}
  */
-export let __ = Object.freeze ? Object.freeze(placeHolderInstance) : placeHolderInstance,
+export let __ = Object.freeze(placeHolderInstance),
 
     /**
      * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call function until 2 or more args).

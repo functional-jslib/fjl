@@ -9,4 +9,5 @@ export const
      * @param [x=undefined] {Function|any}
      * @returns {function(): any}
      */
-    toFunction = (x?: any): Function => isFunction(x) ? x : (): any => x;
+    toFunction = <T>(x?: T): Function => isFunction(x) ?
+        x as unknown as Function: (): T => x;

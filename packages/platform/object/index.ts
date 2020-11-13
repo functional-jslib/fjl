@@ -4,7 +4,7 @@
 
 import native from "./native";
 import {HasOwnPropertyFunc, InstanceOfFunc} from "./types";
-import {curry} from "../../function/curry";
+import {curry, curry2} from "../../function/curry";
 import {toCurried2Method} from "../../utils";
 import {Lengthable} from "../../types";
 
@@ -14,7 +14,7 @@ export const
 
     {assign, keys} = Object,
 
-    instanceOf = curry((X: Function, x: any) => x instanceof X) as InstanceOfFunc,
+    instanceOf = curry2(<T>(X: Function, x: T) => x instanceof X) as InstanceOfFunc,
 
     length = (x: Lengthable | undefined | null): number => !x ? 0 : x.length,
 

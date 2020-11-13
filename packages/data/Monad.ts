@@ -13,6 +13,8 @@ import {Applicative, ApplicativeConstructor} from './Applicative';
 import {curry, trampoline, CurryOf1} from "../function";
 
 import {UnaryOf} from "../types";
+import {Functor, FunctorMapFn} from "./Functor";
+import {MapOp} from "../platform/array";
 
 export interface MonadConstructor<T> extends ApplicativeConstructor<T> {
     new(x: T): Monad<T>;
@@ -20,20 +22,10 @@ export interface MonadConstructor<T> extends ApplicativeConstructor<T> {
     readonly prototype: Monad<T>;
 }
 
-/**
- * @class module:monad.Monad
- * @param x {*}
- * @property value {*}
- * @extends module:data.Applicative
- */
 export class Monad<T> extends Applicative<T> {
     /**
      * Same as `new Monad(...)` just in 'static' function
      * format.
-     * @memberOf module:monad.Monad
-     * @static
-     * @param x {*}
-     * @returns {Monad}
      */
     static of<X>(x: X): Monad<X> {
         return new Monad(x);
@@ -41,8 +33,6 @@ export class Monad<T> extends Applicative<T> {
 
     /**
      * Monadic join - Removes one layer of monadic structure from value.
-     * @memberOf module:monad.Monad
-     * @returns {*}
      */
     join(): T {
         return this.valueOf();
@@ -50,9 +40,6 @@ export class Monad<T> extends Applicative<T> {
 
     /**
      * Flat map operation.
-     * @memberOf module:monad.Monad
-     * @param fn {Function}
-     * @returns {Monad}
      */
     flatMap<RetT>(fn: UnaryOf<T, RetT>): Monad<RetT> {
         const out = unWrapMonadByType(this.constructor, fn(this.join()));
@@ -66,71 +53,47 @@ export const
     /**
      * Returns boolean indicating whether given value is an
      * instance of monad or not.
-     * @function module:monad.isMonad
-     * @param value {*}
-     * @returns {boolean}
      */
     isMonad = instanceOf(Monad) as CurryOf1<any, boolean>,
 
     /**
      * Always returns a monad;  If given value is not
      * a monad creates one using given value.
-     * @function module:monad.toMonad
-     * @param x {Monad|*} - Monad or any.
-     * @returns {*}
      */
-    toMonad = x => !isMonad(x) ? new Monad(x) : x,
+    toMonad = <T>(x: T): Monad<T> => !isMonad(x) ? new Monad(x) : x as unknown as Monad<T>,
 
     /**
      * Calls `valueOf` on value (use for functional composition).
-     * @function module:monad.valueOf
-     * @param x {*}
-     * @returns {*}
      */
-    valueOf = x => x.valueOf(),
+    valueOf = <T>(x: Monad<T>): T => x.valueOf(),
 
     /**
      * Calls `valueOf` on given value.  Same as
      * monadic `join` operation (extracts inner value of
      * container/object).
-     * @function module:monad.join
-     * @param x {*}
-     * @returns {*}
      */
     join = valueOf,
 
     /**
      * Maps given function over given functor.
-     * @function module:monad.fmap
-     * @param fn {Function}
-     * @param x {Functor}
-     * @returns {Functor}
      */
-    fmap = curry((fn, x) => x.map(fn)),
+    fmap = curry(
+        <T, MapperRet>(fn: FunctorMapFn<T, Functor<T>, MapperRet>, x: Functor<T>): Functor<MapperRet> => x.map(fn)
+    ),
 
     /**
      * Applies function contained by applicative to contents of given functor.
      * (Same as functional applicative `apply`).
-     * @function module:monad.ap
-     * @param applicative {Applicative}
-     * @param functor {Functor}
-     * @returns {Applicative}
      */
     ap = curry((applicative, functor) => applicative.ap(functor)),
 
     /**
      * Flat maps a function over given monad's contained value.
-     * @function module:monad.flatMap
-     * @param fn {Function}
-     * @param monad {Monad}
-     * @returns {Monad}
      */
     flatMap = curry((fn, monad) => monad.flatMap(fn)),
 
     /**
      * A recursive monad un-wrapper - Returns monad's unwrapped, inner-mostly, contained value (recursively).
-     * @function module:monad.getMonadUnWrapper
-     * @param Type {Function}
      * @returns {Array.<*>} - [unWrapFunction, tailCallFuncName (used by `trampoline` @see module:fjl.trampoline)]
      */
     getMonadUnWrapper = Type => {
@@ -145,10 +108,6 @@ export const
 
     /**
      * Unwraps monad by type.
-     * @function module:monad.unWrapMonadByType
-     * @param Type {Function}
-     * @param monad {Monad}
-     * @returns {*}
      */
     unWrapMonadByType = (Type, monad) => {
         if (!isset(monad)) {

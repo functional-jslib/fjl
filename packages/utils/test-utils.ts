@@ -1,6 +1,7 @@
 import {range} from "../list";
 
 import {Nameable} from "../types";
+import {curry2_} from "../../tests/helpers/curry_";
 
 export type ConstructorTestCase = [Nameable, any, boolean];
 
@@ -18,6 +19,14 @@ export const
     log = console.log.bind(console),
 
     peek = (...args: any[]): void => (log(...args), args.pop()),
+
+    add = curry2_((...args) => {
+        return args.reduce((agg, num) => num + agg, 0);
+    }),
+
+    subtract = curry2_((arg0, ...args) => {
+        return args.reduce((agg, num) => agg - num, arg0);
+    }),
 
     allYourBase = {all: {your: {base: {are: {belong: {to: {us: 0}}}}}}},
 

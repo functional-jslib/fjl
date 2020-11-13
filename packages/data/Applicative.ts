@@ -34,13 +34,7 @@ export const
 
     isApplicative = instanceOf(Applicative) as CurryOf1<any, boolean>,
 
-    pureApp = Applicative.of,
-
-    liftA2 = Applicative.liftA2,
-
-    apLeft = Applicative.apLeft,
-
-    apRight = Applicative.apRight
+    {of: pureApp, liftA2, apLeft, apRight} = Applicative
 
 ;
 

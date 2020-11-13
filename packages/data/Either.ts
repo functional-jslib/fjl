@@ -1,7 +1,6 @@
 /**
  * Contains `Either` constructs (`Right`, `Left`,  `either` etc.) and associated operations.
  * Created by elyde on 12/10/2016.
- * @module either
  */
 import {isset} from '../object/isset';
 import {curry} from '../function/curry';
@@ -12,34 +11,17 @@ import {Monad} from './Monad';
 
 /**
  * `Left` representation of `Either` construct.
- * @class module:either.Left
- * @param x {*}
- * @property value {*}
- * @extends module:monad.Monad
  */
 export class Left extends Monad {
     /**
      * Same as `new Left(...)`.
-     * @method module:either.Left.of
-     * @static
-     * @param x {*}
-     * @returns {Left}
      */
     static of (x) { return new Left(x); }
 }
 
-/**
- * @class module:either.Right
- * @param x {*}
- * @property value {*}
- * @extends module:maybe.Just
- */
 export class Right extends Just {
     /**
      * Maps a function over contained value and returns result wrapped.
-     * @method module:either.Right#map
-     * @param fn {Function} - Unary operation.
-     * @returns {Either}
      */
     map (fn) {
         const value = this.valueOf();
@@ -56,10 +38,6 @@ export class Right extends Just {
 
     /**
      * Same as `new Right(...)`.
-     * @method module:either.Right.of
-     * @static
-     * @param x {*}
-     * @returns {Right}
      */
     static of (x) { return new Right(x); }
 }
@@ -68,57 +46,36 @@ export const
 
     /**
      * Returns a new `Left`
-     * @function module:either.left
-     * @param x {*}
-     * @returns {Left}
      */
     left = x => new Left(x),
 
     /**
      * Returns a `Right`.
-     * @function module:either.right
-     * @param x {*}
-     * @returns {Right}
      */
     right = x => new Right(x),
 
     /**
      * Checks for instance of `Right` constructor.
-     * @function module:either.isRight
-     * @param x {*}
-     * @returns {boolean}
      */
     isRight = x => x instanceof Right,
 
     /**
      * Checks for instance of `Left` constructor.
-     * @function module:either.isLeft
-     * @param x {*}
-     * @returns {boolean}
      */
     isLeft = x => x instanceof Left,
 
     /**
      * Returns a `Right` - if not a `Right` creates one from given, else returns given.
-     * @function module:either.toRight
-     * @param x {*}
-     * @returns {Right}
      */
     toRight = x => isRight(x) ? x : right(x),
 
     /**
      * Returns a `Left` - if not a `Left` creates one from given, else returns given.
-     * @function module:either.toLeft
-     * @param x {*}
-     * @returns {Left}
      */
     toLeft = x => isLeft(x) ? x : left(x),
 
     /**
      * Converts given to an either (`Right`|`Left`)
-     * @function module:either.toEither
-     * @param x {*}
-     * @returns {Left|Right}
      */
     toEither = x => isLeft(x) || isRight(x) ? x : right(x).map(id),
 
