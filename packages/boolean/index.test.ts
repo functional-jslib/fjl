@@ -1,4 +1,5 @@
-import {alwaysFalse, alwaysTrue, equal} from "./index";
+import {alwaysFalse, alwaysTrue, equal, isFalsy, isTruthy} from "./index";
+import {falsyList, truthyList} from "../utils/test-utils";
 
 describe("#alwaysFalse", () => {
     it('should return `false`', () => {
@@ -23,4 +24,20 @@ describe("#equal", () => {
             expect(equal(a, b)).toEqual(expected);
         });
     });
+});
+
+describe('#isFalsy', () => {
+    falsyList.forEach(x => {
+        it(`isFalsy(${x}) === true`, function () {
+            expect(isFalsy(x)).toEqual(true);
+        });
+    })
+});
+
+describe('#isTruthy', () => {
+    truthyList.forEach(x => {
+        it(`isTruthy(${x}) === true`, function () {
+            expect(isTruthy(x)).toEqual(true);
+        });
+    })
 });
