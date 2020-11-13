@@ -219,7 +219,7 @@ export function fromAssocListDeep<T>(xs: Array<any[]>, OutType: Function): T;
 // function.d.ts
 export type Predicate = (a: any) => boolean;
 
-export function apply(fn: Nary<any>, args: any[]): any;
+export function apply(fn: Nary<any>, args?: any[]): any;
 
 export function call(fn: Nary<any>, ...args: any[]): any;
 
