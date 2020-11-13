@@ -2,7 +2,7 @@ import {curry, CurryOf2} from "../function/curry";
 import {length} from "../platform/object";
 import {PredForIndexable} from "./types";
 import {Indexable} from "../types";
-import keys from "../platform/object/keys";
+import {keys} from "../platform/object";
 
 export type Any<Pred, Functor> = CurryOf2<Pred, Functor, boolean>;
 

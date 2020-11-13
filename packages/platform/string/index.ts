@@ -1,7 +1,6 @@
-import split from './split';
+import {toCurried2Method} from "../../utils";
+import {SplitFunc} from "./types";
 
 export * from './types';
 
-export {
-    split
-};
+export const split = toCurried2Method('split') as SplitFunc;

@@ -1,5 +1,5 @@
 import {negateF2} from "../function/negate";
-import includes from "../platform/slice/includes";
+import {includes} from "../platform/slice";
 import {NaryPred} from "../types";
 
 export const

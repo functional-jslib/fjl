@@ -1,5 +1,5 @@
 import {Apply} from './Apply';
-import instanceOf from "../platform/object/instanceOf";
+import {instanceOf} from "../platform/object";
 import {CurryOf1} from "../function";
 
 export interface ApplicativeConstructor<T> extends ObjectConstructor {

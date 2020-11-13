@@ -1,5 +1,5 @@
 import {curry} from "../function/curry";
-import length from "../platform/object/length";
+import {length} from "../platform/object";
 
 export const
 

@@ -1,4 +1,4 @@
-import length from "../platform/object/length";
+import {length} from "../platform/object";
 import {lengths} from "./utils";
 import {filter} from "./filter";
 import {maximum} from "./maximum";

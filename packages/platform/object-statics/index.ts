@@ -10,13 +10,12 @@ export * from './types';
 
 /**
  * Contains all the static functions from `Object` but curried and flipped;
- * @example
+ * ```
  * // E.g., `Object.defineProperties(obj, descriptor)` can now be used like
  * import {defineProperties} from 'fjl'
  * defineProperties(descriptor, someObj),
  * // Et. al.
- * @memberOf module:objectStatics
- * @type {{...Object}}
+ * ```
  */
 const objectStatics: ObjectStatics = Object.getOwnPropertyNames(Object).reduce((agg, key) => {
     if (typeof Object[key] !== 'function') {

@@ -1,5 +1,5 @@
 import {curry, CurryOf4} from "../../function/curry";
-import length from "../../platform/object/length";
+import {length} from "../../platform/object";
 import {PredForSliceOf} from "../types";
 import {ReduceOp} from "../../platform/array/types";
 import {SliceOf} from "../../platform/slice/types";

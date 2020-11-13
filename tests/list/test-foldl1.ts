@@ -1,4 +1,4 @@
-import length from "../../packages/platform/object/length";
+import {length} from "../../packages/platform/object";
 import {expectEqual} from "../helpers";
 import {foldl1} from "../../packages/list/foldl1";
 import {SliceOf} from "../../packages/platform/slice";

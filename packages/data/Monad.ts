@@ -8,7 +8,7 @@
  */
 
 import {isset} from "../object/isset";
-import instanceOf from '../platform/object/instanceOf';
+import {instanceOf} from '../platform/object';
 import {Applicative, ApplicativeConstructor} from './Applicative';
 import {curry, trampoline, CurryOf1} from "../function";
 

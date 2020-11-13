@@ -1,6 +1,6 @@
 import {curry2, CurryOf2} from "../../function/curry";
 import {SliceOf, SlicePred} from "../../platform/slice/types";
-import length from "../../platform/object/length";
+import {length} from "../../platform/object";
 
 export const
 

@@ -1,6 +1,6 @@
 import {vowelsArray, vowelsString} from "../helpers";
 import {SliceOf} from "../../packages/platform/slice";
-import includes from "../../packages/platform/slice/includes";
+import {includes} from "../../packages/platform/slice";
 
 describe('#includes', () => {
     (<[[string, SliceOf<string>], boolean][]>[

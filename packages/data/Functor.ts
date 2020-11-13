@@ -1,5 +1,5 @@
 import {MapOp} from "../platform/array";
-import instanceOf from "../platform/object/instanceOf";
+import {instanceOf} from "../platform/object";
 import {CurryOf1} from "../function";
 
 export interface FunctorConstructor<T> {

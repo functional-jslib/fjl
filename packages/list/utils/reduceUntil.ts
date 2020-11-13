@@ -2,7 +2,7 @@ import {curry, CurryOf4} from "../../function/curry";
 import {PredForSliceOf} from "../types";
 import {ReduceOp} from "../../platform/array/types";
 import {SliceOf} from "../../platform/slice/types";
-import length from "../../platform/object/length";
+import {length} from "../../platform/object";
 
 export type ReduceUntil<T1, T2> = CurryOf4<
     PredForSliceOf<T1>,

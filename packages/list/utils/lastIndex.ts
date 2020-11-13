@@ -1,5 +1,5 @@
 import {Lengthable} from "../../types";
-import length from "../../platform/object/length";
+import {length} from "../../platform/object";
 
 export const
 

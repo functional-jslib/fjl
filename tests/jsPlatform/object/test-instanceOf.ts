@@ -1,5 +1,5 @@
 import {TypeConstructor} from "../../../packages/types";
-import instanceOf from "../../../packages/platform/object/instanceOf";
+import {instanceOf} from "../../../packages/platform/object";
 
 describe('#instanceOf', () => {
     it('should have more tests', () => {

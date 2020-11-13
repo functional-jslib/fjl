@@ -1,5 +1,5 @@
 import {elem} from "../../packages/list/elem";
-import includes from "../../packages/platform/slice/includes";
+import {includes} from "../../packages/platform/slice";
 
 describe('#elem', () => {
     it('same as "#includes" test suite (methods should be equal)', () => {

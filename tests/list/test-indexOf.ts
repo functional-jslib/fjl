@@ -1,5 +1,5 @@
 import {SliceOf} from "../../packages/platform/slice";
-import indexOf from "../../packages/platform/slice/indexOf";
+import {indexOf} from "../../packages/platform/slice";
 import {vowelsArray, vowelsString} from "../helpers";
 
 describe(`#list.indexOf`, () => {

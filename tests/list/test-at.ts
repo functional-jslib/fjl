@@ -1,5 +1,5 @@
 import {alphabetArray, alphabetString, expectEqual} from "../helpers";
-import length from "../../packages/platform/object/length";
+import {length} from "../../packages/platform/object";
 import {at} from "../../packages/list/at";
 
 describe('#at', () => {
