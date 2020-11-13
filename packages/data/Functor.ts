@@ -1,6 +1,5 @@
-import {instanceOf} from "../platform/object";
-import {CurryOf1} from "../function";
 import {UnaryOf} from "../types";
+import {isset} from "../object/is";
 
 export interface FunctorConstructor<T> {
     new(x: T): Functor<T>;
@@ -29,6 +28,8 @@ export class Functor<T> {
     }
 }
 
-export const isFunctor = instanceOf(Functor) as CurryOf1<any, boolean>,
+export const isFunctor = <T>(x: T): boolean => isset(x) && (
+        x instanceof Functor || x['map'] instanceof Function
+    ),
 
-    toFunctor = <T>(x: T): Functor<T> => !isFunctor(x) ? new Functor(x) : x as unknown as Functor<T>;
+    toFunctor = <T>(x: T): Functor<T> | T => !isFunctor(x) ? new Functor(x) : x;

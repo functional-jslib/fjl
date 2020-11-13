@@ -2,8 +2,42 @@
  * Contains `Just` constructor and associated methods.
  */
 import Nothing, {isNothing} from './Nothing';
-import Monad from './Monad';
-import {isset} from 'fjl';
+import {Monad, MonadConstructor} from './Monad';
+import {isset} from '../object/is';
+import {instanceOf} from "../platform/object";
+import {FunctorMapFn} from "./Functor";
+
+export interface JustConstructor<T> {
+    new(x: T): Just<T>;
+
+    counterConstructor: MonadConstructor<T>;
+
+    of<X>(x: X): Just<X>;
+
+    readonly prototype: Just<T>;
+}
+
+export default class Just<T> extends Monad<T> {
+    static counterConstructor = Nothing;
+
+    /**
+     * Applicative pure - Same as `new Just(...)`.
+     */
+    static of<X>(x: X): Just<X> {
+        return just(x);
+    }
+
+    /**
+     * Maps incoming function over contained value and
+     */
+    map<RetT>(fn: FunctorMapFn<T, Just<T>, RetT>): Just<RetT> | Nothing {
+        const constructor = this.constructor as JustConstructor<T>,
+            counterConstructor = constructor.counterConstructor as MonadConstructor<T>,
+            value = this.valueOf();
+        return isset(value) && !isNothing(value) ? constructor.of(fn(value)) :
+            counterConstructor.of(value) as unknown as Nothing;
+    }
+}
 
 export const
 
@@ -13,7 +47,7 @@ export const
      * @param x {*}
      * @returns {boolean}
      */
-    isJust = x => x instanceof Just,
+    isJust = instanceOf(Just) as <T>(x: T) => boolean,
 
     /**
      * Functional constructor (function that returns an instance) for `Just` -
@@ -22,7 +56,7 @@ export const
      * @param x {Just|*}
      * @returns {Just}
      */
-    just = x => new Just(x),
+    just = <T>(x: T): Just<T> => new Just(x),
 
     /**
      * Ensures `Just`
@@ -30,43 +64,6 @@ export const
      * @param x {Just|*}
      * @returns {Just}
      */
-    toJust = x => isJust(x) ? x : just(x)
+    toJust = <T>(x: T): Just<T> | T => isJust(x) ? x : just(x)
 
 ;
-
-/**
- * @class maybe.Just
- * @param x {*}
- * @property value {*}
- * @extends module:monad.Monad
- */
-export default class Just extends Monad {
-    /**
-     * Maps incoming function over contained value and
-     * returns result wrapped in `Just`.
-     * @method module:maybe.Just#map
-     * @param fn {Function} - Unary operation.
-     * @returns {Just|Nothing}
-     */
-    map (fn) {
-        const {constructor} = this,
-            value = this.valueOf();
-        return isset(value) && !isNothing(value) ? constructor.of(fn(value)) :
-            constructor.counterConstructor.of(value);
-    }
-
-    /**
-     * Applicative pure - Same as `new Just(...)`.
-     * @method module:maybe.Just.of
-     * @static
-     * @param x {*}
-     * @returns {Just}
-     */
-    static of (x) { return just(x); }
-}
-
-/**
- * @static
- * @member {Functor} module:maybe.Just.counterConstructor
- */
-Just.counterConstructor = Nothing;

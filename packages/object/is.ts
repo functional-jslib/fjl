@@ -37,8 +37,7 @@ export const
     toTypeRef = (type: TypeRef | any): TypeRef => {
         if (!type) {
             return typeOf(type);
-        }
-        else if (type.constructor === String || (type instanceof Function)) {
+        } else if (type.constructor === String || (type instanceof Function)) {
             return type;
         }
         return typeOf(type);
@@ -78,10 +77,10 @@ export const
     /**
      * Returns whether a value is a function or not.
      * @function module:object.isFunction
-     * @param value {*}
+     * @param x {*}
      * @returns {Boolean}
      */
-    isFunction = instanceOf(Function) as CurryOf1<any, boolean>,
+    isFunction = <T>(x: T): boolean => x && x instanceof Function,
 
     /**
      * Strict type checker.  Checks if given value is a direct instance of given type;  E.g.,
@@ -227,7 +226,7 @@ export const
      * @param value {*}
      * @returns {Boolean}
      */
-    isWeakMap =isType(_WeakMap) as CurryOf1<any, boolean>,
+    isWeakMap = isType(_WeakMap) as CurryOf1<any, boolean>,
 
     /**
      * Checks whether value is of `WeakSet` or not.

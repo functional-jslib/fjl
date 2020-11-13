@@ -32,7 +32,7 @@ describe('#Functor.valueOf', () => {
 });
 
 describe('#Functor.toFunctor', () => {
-    it('should values that already a functor as they are', () => {
+    it('should return functors untouched', () => {
         const f = [];
         expect(toFunctor(f)).toEqual(f);
     });

@@ -3,28 +3,29 @@
  */
 import Just, {isJust, just} from './Just';
 import Nothing, {isNothing, nothing} from './Nothing';
-import {isset, curry, id, trampoline} from 'fjl';
+import {isset} from '../object/is';
+import {curry, id, trampoline} from '../function';
 import {getMonadUnWrapper} from './Monad';
+import {UnaryOf} from "../types";
 
 export {Just, isJust, isNothing, Nothing, just, nothing};
 
-const
-    /**
-     * @private
-     */
-    [justUnWrapper, justUnWrapperTailCallName] = getMonadUnWrapper(Just)
-;
+export type  Maybe<T> = Just<T> | Nothing;
+
+const [justUnWrapper, justUnWrapperTailCallName] = getMonadUnWrapper(Just);
 
 export const
     /**
-     * The maybe function takes a `replacement` value, a function (unary operation), and a Maybe value. If the Maybe value is `Nothing`, the function returns the `replacement` value. Otherwise, it applies the function to the value contained  by the `Just` and returns the result.
+     * The maybe function takes a `replacement` value, a function (unary operation), and a Maybe value.
+     * If the Maybe value is `Nothing`, the function returns the `replacement` value.
+     * Otherwise, it applies the function to the value contained  by the `Just` and returns the result.
      * @function module:maybe.maybe
      * @param replacement {*}
      * @param fn {Function} - Unary operation.
      * @param maybeInst {(Nothing|Just|*)} - Maybe instance or non-maybe value.
      * @returns {*}
      */
-    maybe = curry((replacement, fn, maybeInst) => {
+    maybe = curry(<A, B, C>(replacement: B, fn: UnaryOf<A, C>, maybeInst: Maybe<A>) => {
         const subject = isset(maybeInst) && isMaybe(maybeInst) ? maybeInst.map(id) : nothing();
         return isNothing(subject) ? replacement : subject.map(fn).join();
     }),
@@ -38,12 +39,12 @@ export const
     unWrapJust = trampoline(justUnWrapper, justUnWrapperTailCallName),
 
     /**
-     * Unwraps maybe (recursively).
+     * Unwraps maybe (recursively) or returns `Nothing`.
      * @function module:maybe.unWrapMaybe
-     * @param x {*} - Expected `Maybe`.
-     * @returns {*}
+     * @param x {Maybe|any}
+     * @returns {Maybe|any}
      */
-    unWrapMaybe = x => isNothing(x) ? nothing() : unWrapJust(x),
+    unWrapMaybe = <T>(x: T): Maybe<T> | T => isNothing(x) ? nothing() : unWrapJust(x),
 
     /**
      * Equality operator for maybes.
@@ -52,7 +53,7 @@ export const
      * @param b {*} - Maybe 2.
      * @returns {boolean}
      */
-    maybeEqual = curry((a, b) => unWrapMaybe(a) === unWrapMaybe(b)),
+    maybeEqual = curry(<A, B>(a: A, b: B) => unWrapMaybe(a) === unWrapMaybe(b)),
 
     /**
      * Checks for maybe.
@@ -60,15 +61,15 @@ export const
      *  @param x {*}.
      * @returns {boolean}
      */
-    isMaybe = x => isNothing(x) || isJust(x),
+    isMaybe = <T>(x: T): boolean => isNothing(x) || isJust(x),
 
     /**
      * Creates maybe from value.
      * @function module:maybe.toMaybe
      * @param x {*}
-     * @returns {Maybe} - `Just` or `Nothing` based on value.
+     * @returns {Just | Nothing}.
      */
-    toMaybe = x => {
+    toMaybe = <T>(x: T): Maybe<T> | T => {
         if (!isset(x)) {
             return nothing();
         }
