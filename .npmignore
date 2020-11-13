@@ -6,8 +6,10 @@
 .git*
 
 # Dirs
+markdown-fragments/
+markdown-fragments-generated/
 node_modules/
-tests/
+node-scripts/
 
 # Files
 babel*

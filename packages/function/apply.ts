@@ -1,3 +1,3 @@
-import apply from '../platform/function/apply';
+import {apply} from '../platform/function';
 
 export default apply;

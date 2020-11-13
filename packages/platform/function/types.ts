@@ -1,4 +1,4 @@
-import {CurryOf2} from "../../function";
+import {CurryOf2} from "../../function/curry";
 
 export type ApplyFunc = CurryOf2<Function, unknown[], unknown>;
 

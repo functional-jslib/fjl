@@ -1,4 +1,4 @@
-import reduceRight from '../platform/array/reduceRight';
+import {reduceRight} from '../platform/array';
 
 /**
  * Composes all functions passed in from right to left passing each functions return value to

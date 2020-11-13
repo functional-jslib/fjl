@@ -1,3 +1,3 @@
-import call from '../platform/function/call';
+import {call} from '../platform/function';
 
 export {call}
