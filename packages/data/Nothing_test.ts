@@ -35,13 +35,8 @@ describe('#Nothing', () => {
     test('Expect calling `Nothing` as a function, with `new` keyword, or via static `of` method, to all ' +
         'equate to same singleton instance of `Nothing`', () => {
         const instance = nothing();
-        expect(
-            all(
-                nothing1 => instance === nothing1,
-                [nothing(), new Nothing(), Nothing.of()]
-            )
-        )
-            .toEqual(true);
+        [nothing(), new Nothing(), Nothing.of()]
+            .forEach(naught => expect(naught).toEqual(instance));
     });
 
     test('Expect it to be extendable via es6 `class` syntax', () => {
@@ -56,13 +51,7 @@ describe('#Nothing', () => {
 
     test('Expect `map`, `ap`, `flatMap`, and `join` methods to exist', () => {
         const instance = nothing();
-        expect(
-            all(methodName =>
-                    (instance[methodName] instanceof Function),
-                methodNames
-            )
-        )
-            .toEqual(true);
+        methodNames.forEach(name => expect(instance[methodName]).toBeInstanceOf(Function);
     });
 
     test('Expect `map`, `ap`, `flatMap`, and `join` methods to all return same singleton instance of `Nothing`', () => {

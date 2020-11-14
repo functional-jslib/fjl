@@ -6,11 +6,8 @@ let NothingSingleton;
  * Constructor and function for creating/fetching `Nothing`.
  * @note Nothing always returns a singleton instance of `Nothing` (whether calling `Nothing` with new or as a
  * function.
- * @function module:maybe.Nothing
  * @param [x=undefined]{*} - Ignored.
  * @returns {Nothing}
- * @constructor
- * @memberOf module:maybe
  */
 export default class Nothing {
     /**

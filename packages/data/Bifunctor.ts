@@ -11,7 +11,7 @@ export interface BifunctorConstructor<A, B> extends ObjectConstructor {
 }
 
 /**
- * Bifunctor class;  Mostly useful for eithers and/or maybes.
+ * Bifunctor class;  Used by './Either' and './Maybe' monads.
  */
 export class Bifunctor<A, B> extends Functor<A> {
     constructor(value1: A, readonly value2: B) {
