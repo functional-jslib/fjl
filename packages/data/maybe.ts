@@ -15,7 +15,7 @@ let NothingSingleton;
  * @note Nothing always returns a singleton instance of `Nothing`.
  * @note Nothing shouldn't be used with generic type as the passed in type is ignored internally.
  */
-export class Nothing<T = void> implements Monad<T> {
+export class Nothing<T = any> implements Monad<T> {
     /**
      * Applicative `pure` - Same as `new Nothing()`, `Nothing()`, and `nothing()`.
      */
@@ -34,22 +34,22 @@ export class Nothing<T = void> implements Monad<T> {
     /**
      * Returns `Nothing`.
      */
-    valueOf(): T {
-        return;
+    valueOf(): any {
+        return this;
     }
 
     /**
      * Returns `Nothing`.
      */
-    join(): T {
-        return this.valueOf();
+    join(): any {
+        return this;
     }
 
     /**
      * Returns `Nothing`.
      */
-    map<RetT>(f: FunctorMapFn<RetT>): Nothing<RetT> {
-        return this as unknown as Nothing<RetT>;
+    map<RetT>(f: FunctorMapFn<RetT>): Nothing | Just<RetT> {
+        return this;
     }
 
     /**
@@ -88,7 +88,7 @@ export interface JustConstructor<T> extends MonadConstructor<T> {
     readonly prototype: Just<T>;
 }
 
-export class Just<T> extends MonadBase<T> implements Monad<T> {
+export class Just<T> extends MonadBase<T> {
     /**
      * Applicative pure - Same as `new Just(...)`.
      */
@@ -102,8 +102,7 @@ export class Just<T> extends MonadBase<T> implements Monad<T> {
     map<RetT>(fn: FunctorMapFn<RetT>): Just<RetT> | Nothing {
         const constructor = this.constructor as JustConstructor<T>,
             value = this.valueOf();
-        return isset(value) && !isNothing(value) ? constructor.of(fn(value)) :
-            (Nothing as unknown as Nothing);
+        return isset(value) && !isNothing(value) ? constructor.of(fn(value)) : nothing();
     }
 }
 
@@ -139,6 +138,11 @@ export const
         const subject = isset(maybeInst) && isMaybe(maybeInst) ? (maybeInst as Just<A>).map(id) : nothing();
         return isNothing(subject) ? replacement : (subject as Just<A>).map(fn).join();
     }),
+
+    /**
+     * Returns received Maybe or makes one from `x`.
+     */
+    toMaybe = <T>(x: T): Maybe<any> => isMaybe(x) ? (x as unknown as Maybe<T>).map(id) : just(x).map(id),
 
     /**
      * Unwraps just (recursively).

@@ -1,16 +1,19 @@
-import {just, isJust, Just, Nothing, nothing, isNothing, Maybe} from './maybe';
-import {all} from '../list/all';
-import {map} from '../list/map';
-import {falsyList} from "../utils/test-utils";
+import {just, isJust, Just, Nothing, nothing, isNothing, Maybe, isMaybe, toMaybe, maybe} from './maybe';
+
 import {left, Left} from "./either";
 import {join} from './monad';
+
+import {all} from '../list/all';
+import {map} from '../list/map';
+
+import {falsyList} from "../utils/test-utils";
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'];
 
 const containsMethods = <T>(x: Maybe<T>, methodNames_: string[]): void => {
     methodNames_.forEach(methodName => {
         it(`#${x.constructor.name}.${methodName} instanceof Function === true`, function () {
-            expect(left[methodName]).toBeInstanceOf(Function);
+            expect(x[methodName]).toBeInstanceOf(Function);
         });
     });
 }
@@ -81,7 +84,6 @@ describe('#Just.valueOf', () => {
         [new Just(), Just.of()].forEach(x => {
             expect(x.valueOf()).toEqual(undefined);
         });
-        console.log(new Just(new Just(99)));
     });
 });
 
@@ -138,7 +140,7 @@ describe('#Just.ap', () => {
     test('should map contained value over passed in functor', () => {
         const op = x => x * 2;
         Just.of(op)
-            .ap(Just.of(() => 2))
+            .ap(Just.of(2))
             .map(x => expect(x).toEqual(op(2)));
     });
     test('should be able to map contained value over functor even if it is not a ' +
@@ -208,5 +210,60 @@ describe('#Nothing', () => {
             )
         )
             .toEqual(true);
+    });
+});
+
+describe('Maybe', () => {
+    describe('Constructor', () => {
+        // @todo should we include `NaN` as a value that gives you a `Nothing` (probably but for simplicities sake (for now)...)
+        test('Should return a `Nothing` when receiving `null` or `undefined`', () => {
+            [null, undefined].forEach(value => {
+                const result = toMaybe(value) as Nothing;
+                expect(result).toBeInstanceOf(Nothing);
+                result.map(x => expect(x).toEqual(undefined));
+            });
+        });
+        test('Should return a `Just` when receiving anything other than `null` or `undefined`', () => {
+            [false, 0, () => ({}), [], {}].forEach(value => {
+                const result = toMaybe(value) as Just<any>;
+                expect(result).toBeInstanceOf(Just);
+                result.map(x => expect(x).toEqual(value));
+            });
+        });
+    });
+    describe('`isMaybe`', () => {
+        test('should return `true` when a value is of type `Maybe`', () => {
+            [].concat([99, undefined].map(toMaybe))
+                .forEach(x => {
+                    expect(isMaybe(x)).toEqual(true);
+                });
+        });
+        test('should return `false` when a value is not a `Maybe`', () => {
+            [false, 0, () => ({}), [], {}].forEach(x => {
+                expect(isMaybe(x)).toEqual(false);
+            });
+        });
+    });
+    describe('`maybe`', () => {
+        test('should return `Maybe`\'s contained value', () => {
+            const caseValue = 99,
+                op = x => x * 2,
+                insteadValue = 27;
+
+            type NumOp = (x: number) => number;
+
+            (<[[number, NumOp], number, Maybe<any> | number][]>[
+                [[insteadValue, op], op(caseValue), toMaybe(caseValue)],
+                [[insteadValue, op], insteadValue, toMaybe(undefined)],
+                [[insteadValue, op], insteadValue, toMaybe(null)],
+                [[insteadValue, op], insteadValue, caseValue],
+            ])
+                .forEach(([args, expectedValue, monad]) => {
+                    const [replacement, operation] = args;
+                    expect(maybe(replacement, operation, monad))
+                        .toEqual(expectedValue);
+                });
+        });
+
     });
 });

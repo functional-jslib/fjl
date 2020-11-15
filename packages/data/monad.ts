@@ -65,9 +65,9 @@ export class MonadBase<T> implements Monad<T>{
     /**
      * Applicative apply operation - applies contained function over passed in functor.
      */
-    ap(f: Functor<T>): Apply<T> {
-        return new (this.constructor as ApplyConstructor<T>)(f.map(
-            (toFunction(this.valueOf()) as FunctorMapFn<T>)
+    ap<X>(f: Functor<X>): Apply<X> {
+        return new (this.constructor as ApplyConstructor<X>)(f.map(
+            (toFunction(this.valueOf()) as FunctorMapFn<X>)
         ).valueOf());
     }
 
