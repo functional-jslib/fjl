@@ -6,29 +6,35 @@ import {isset} from '../object/isset';
 import {curry} from '../function/curry';
 import {id} from '../function/id';
 import {toFunction} from '../function/toFunction';
-import {Just} from './Maybe';
 import {Monad} from './Monad';
+import {FunctorMapFn} from "./Functor";
+import {UnaryOf} from "../types";
+
+export type Either<A, B> = A | B;
 
 /**
  * `Left` representation of `Either` construct.
  */
-export class Left extends Monad {
+export class Left<T> extends Monad<T> {
+
     /**
      * Same as `new Left(...)`.
      */
-    static of (x) { return new Left(x); }
+    static of<X>(x: X): Left<X> {
+        return new Left(x);
+    }
 }
 
-export class Right extends Just {
+export class Right<T> extends Monad<T> {
+
     /**
      * Maps a function over contained value and returns result wrapped.
      */
-    map (fn) {
+    map<Righty>(fn: FunctorMapFn<T, Right<T>, Righty>): Either<Right<Righty>, Left<unknown | string>> {
         const value = this.valueOf();
         if (isLeft(value)) {
-            return value;
-        }
-        else if (!isset(value)) {
+            return value as unknown as Left<unknown>;
+        } else if (!isset(value)) {
             return Left.of(
                 `TypeError: Cannot operate on \`${value}\`.`
             );
@@ -39,7 +45,9 @@ export class Right extends Just {
     /**
      * Same as `new Right(...)`.
      */
-    static of (x) { return new Right(x); }
+    static of<X>(x: X): Right<X> {
+        return new Right(x);
+    }
 }
 
 export const
@@ -47,59 +55,50 @@ export const
     /**
      * Returns a new `Left`
      */
-    left = x => new Left(x),
+    left = <T>(x: T): Left<T> => new Left(x),
 
     /**
      * Returns a `Right`.
      */
-    right = x => new Right(x),
+    right = <T>(x: T): Right<T> => new Right(x),
 
     /**
      * Checks for instance of `Right` constructor.
      */
-    isRight = x => x instanceof Right,
+    isRight = <T>(x: T): boolean => x instanceof Right,
 
     /**
      * Checks for instance of `Left` constructor.
      */
-    isLeft = x => x instanceof Left,
+    isLeft = <T>(x: T): boolean => x instanceof Left,
 
     /**
      * Returns a `Right` - if not a `Right` creates one from given, else returns given.
      */
-    toRight = x => isRight(x) ? x : right(x),
+    toRight = <T>(x: T): Right<T> => (isRight(x) ? x : right(x)) as Right<T>,
 
     /**
      * Returns a `Left` - if not a `Left` creates one from given, else returns given.
      */
-    toLeft = x => isLeft(x) ? x : left(x),
+    toLeft = <T>(x: T): Left<T> => (isLeft(x) ? x : left(x)) as Left<T>,
 
     /**
      * Converts given to an either (`Right`|`Left`)
      */
-    toEither = x => isLeft(x) || isRight(x) ? x : right(x).map(id),
+    toEither = <A, B>(x: unknown): Either<Right<A>, Left<B>> =>
+        (isLeft(x) || isRight(x) ? x : right(x).map(id)) as Either<Right<A>, Left<B>>,
 
     /**
-     * Calls matching callback on incoming `Either`'s type;  If is a `Left`
-     * (after mapping identity func on it) then calls left-callback and unwraps result
-     * else calls right-callback and does the same.  Think of it like a functional
-     * ternary statement (lol).
-     * @function module:either.either
-     * @param leftCallback {Function} - Mapped over value of `monad`'s identity.
-     * @param rightCallback {Function} - "".
-     * @param _either_ {Either|*}
-     * @return {*} - Value of unwrapped resulting value of `flatMap`ped, passed-in callback's on passed in monad.
-     * @example
-     * expect(
-         either(() => 404, () => 200, compose(right, right, right, right)(true))
-       ).toEqual(undefined);
+     * Calls matching callback on incoming `Either`;  If it's an `Left` type, calls left-callback on it,
+     * If it's an `Right` type, calls the right-callback on it.
+     * Returns value of the flat-mapped monad.
      */
-    either = curry((leftCallback, rightCallback, _either_) => {
+    either = curry(<A, B, RetA>(leftCallback: UnaryOf<A, B>, rightCallback: UnaryOf<A, RetA>, _either_: Right<A> | Left<B>) => {
         const identity = toEither(_either_).flatMap(id),
             out = isRight(_either_) ?
-                identity.flatMap(toFunction(rightCallback)) :
+                identity.flatMap(toFunction(rightCallback) as UnaryOf<A, RetA>) :
                 identity.flatMap(leftCallback)
-            ;
+        ;
         return isset(out) ? out.join() : out;
     })
 

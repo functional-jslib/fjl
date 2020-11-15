@@ -14,7 +14,6 @@ import {curry, trampoline, CurryOf1} from "../function";
 
 import {UnaryOf} from "../types";
 import {Functor, FunctorMapFn} from "./Functor";
-import {MapOp} from "../platform/array";
 
 export interface MonadConstructor<T> extends ApplicativeConstructor<T> {
     new(x: T): Monad<T>;
@@ -45,7 +44,6 @@ export class Monad<T> extends Applicative<T> {
         const out = unWrapMonadByType(this.constructor, fn(this.join()));
         return (this.constructor as MonadConstructor<RetT>).of(out) as Monad<RetT>;
     }
-
 }
 
 export const
