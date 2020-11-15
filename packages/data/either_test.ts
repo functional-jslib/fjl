@@ -1,6 +1,4 @@
 import {isLeft, isRight, Left, Right, either, toLeft, toRight} from './either';
-import {Monad} from './monad';
-import {all} from '../list/all';
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'];
 
@@ -51,7 +49,7 @@ describe('`isLeft`', () => {
         });
     });
     test('should return `false` when a value is not a `Left`', () => {
-        [false, 0, () => ({}), [], {}].forEach(x => {
+        [false, 0, (): void => null, [], {}].forEach(x => {
             expect(isLeft(x)).toEqual(false);
         });
     });

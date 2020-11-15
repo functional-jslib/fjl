@@ -1,5 +1,5 @@
-import {UnaryOf} from "../types";
-import {isset} from "../object/is";
+import {UnaryOf} from "../../packages/types";
+import {isset} from "../../packages/object/is";
 
 export interface FunctorConstructor<T> {
     new(x: T): Functor<T>;

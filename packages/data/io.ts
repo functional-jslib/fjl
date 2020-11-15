@@ -6,62 +6,41 @@
  * @module io
  */
 
-import {Monad, unwrapMonadByType} from './monad';
+import {Monad, MonadBase, MonadConstructor, unwrapMonadByType} from './monad';
 import {toFunction} from '../function/toFunction';
 import {compose} from '../function/compose';
 
-/**
- * @class io.IO
- * @param fn {Function} - Operation to contain within `IO`
- * @property `value` {*} - `IO` however wraps non-function values to `function` on construction.
- * @extends module:monad.Monad
- */
-export class IO extends Monad {
+export type IOConstructor<T> = MonadConstructor<T>;
+
+export class IO<T> extends MonadBase<T> implements Monad<T> {
     /**
      * Unwraps an `IO`.
-     * @function module:io.IO.unWrapIO
-     * @static
-     * @param io {IO}
-     * @returns {*}
      */
-    static unWrapIO(io) {
+    static unWrapIO<X>(io: IO<X> | X): X {
         if (!IO.isIO(io)) {
-            return io;
+            return io as unknown as X;
         }
         return unwrapMonadByType(IO, io);
     }
 
     /**
      * Applicative pure;  Same as `new IO(...)`.
-     * @function module:io.IO.of
-     * @static
-     * @param fn {Function} - Unary operation.
-     * @returns {IO}
      */
-    static of(fn) {
+    static of<X>(fn?: X): IO<X> {
         return new IO(fn);
     }
 
     /**
      * Checks for `IO`.
-     * @function module:io.IO.isIO
-     * @static
-     * @param x {*}.
-     * @returns {boolean}
      */
-    static isIO(x) {
+    static isIO(x): boolean {
         return x instanceof IO;
     }
 
     /**
      * Performs io.
-     * @function module:io.IO.isIO
-     * @static
-     * @param io {IO}.
-     * @param args {...*} {IO}.
-     * @returns {boolean}
      */
-    static do(io, ...args) {
+    static do<T = any>(io, ...args): IO<T> {
         const instance = !IO.isIO(io) ? new IO(io) : io;
         return compose(
             IO.of,
@@ -71,20 +50,13 @@ export class IO extends Monad {
         );
     }
 
-    constructor(fn) {
-        super(toFunction(fn));
-    }
-
     /**
      * Maps incoming function onto contained, innermost, value
      * and returns a new `IO` which will containe the result of calling incoming function on originally contained value - A.k.a - flat-map operation.
-     * @memberOf module:io.IO
-     * @param fn {Function} - Unary operation.
-     * @returns {IO}
      */
     flatMap(fn) {
         return compose(
-            this.constructor.of,
+            (this.constructor as IOConstructor<T>).of,
             IO.unWrapIO, fn,
             IO.unWrapIO
         )(
@@ -95,13 +67,10 @@ export class IO extends Monad {
     /**
      * Maps incoming function on contained value and returns
      * a new `IO` container containing result of unary operation (incoming-function's result).
-     * @memberOf module:io.IO
-     * @param fn {Function}
-     * @returns {IO}
      */
     map(fn) {
         return compose(
-            this.constructor.of,
+            (this.constructor as IOConstructor<T>).of,
             fn
         )(
             toFunction(this.valueOf())()

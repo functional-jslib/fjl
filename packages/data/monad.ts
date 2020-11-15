@@ -9,32 +9,66 @@
 
 import {isset} from "../object/isset";
 import {instanceOf} from '../platform/object';
-import {Applicative, ApplicativeConstructor} from './applicative';
-import {curry, trampoline, CurryOf1} from "../function";
+import {curry, trampoline, CurryOf1, toFunction} from "../function";
+import {
+    Applicative, ApplicativeConstructor, Functor,
+    FunctorConstructor, FunctorMapFn, Apply, ApplyConstructor
+} from "./types";
 
-import {UnaryOf} from "../types";
-import {Functor, FunctorMapFn} from "./functor";
-
-export interface MonadConstructor<T> extends ApplicativeConstructor<T> {
-    new(x: T): Monad<T>;
-
-    readonly prototype: Monad<T>;
-
-    of<X>(x?: X): Monadic<X>;
-}
-
-export interface Monadic<T> {
+export interface Monad<T> extends Applicative<T> {
     join(): T;
-    flatMap<RetT>(fn: UnaryOf<T, RetT>): Monadic<RetT>;
+
+    flatMap<RetT>(fn: FunctorMapFn<RetT>): Monad<RetT>;
 }
 
-export class Monad<T> extends Applicative<T> {
+export type MonadConstructor<T> = ApplicativeConstructor<T>;
+
+export class MonadBase<T> implements Monad<T>{
+
     /**
-     * Same as `new Monad(...)` just in 'static' function
-     * format.
+     * Same as `new Monad(...)` just in 'static' function format.
      */
     static of<X>(x: X): Monad<X> {
-        return new Monad(x);
+        return new MonadBase(x);
+    }
+
+    static liftA2<A, B, RetT>(fn, appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
+        return (this.constructor as ApplicativeConstructor<RetT>).of(
+            fn(appA.valueOf(), appB.valueOf)
+        );
+    }
+
+    static apRight<A, B, RetT>(appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
+        (appA.valueOf() as unknown as CallableFunction)();
+        return (appB.constructor as ApplicativeConstructor<RetT>).of(
+            (appB.valueOf() as unknown as CallableFunction)()
+        );
+    }
+
+    static apLeft<A, B, RetT>(appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
+        const out = (appA.valueOf() as unknown as CallableFunction)();
+        (appB.valueOf() as unknown as CallableFunction)();
+        return (appA.constructor as ApplicativeConstructor<RetT>).of(out);
+    }
+
+    constructor(readonly value?: T) {
+    }
+
+    valueOf(): T {
+        return this.value;
+    }
+
+    map<MapOpRet>(fn: FunctorMapFn<MapOpRet>): Functor<MapOpRet> | Functor {
+        return new (this.constructor as FunctorConstructor<MapOpRet>)(fn(this.valueOf()));
+    }
+
+    /**
+     * Applicative apply operation - applies contained function over passed in functor.
+     */
+    ap(f: Functor<T>): Apply<T> {
+        return new (this.constructor as ApplyConstructor<T>)(f.map(
+            (toFunction(this.valueOf()) as FunctorMapFn<T>)
+        ).valueOf());
     }
 
     /**
@@ -47,9 +81,9 @@ export class Monad<T> extends Applicative<T> {
     /**
      * Flat map operation.
      */
-    flatMap<RetT>(fn: UnaryOf<T, RetT>): Monad<RetT> {
+    flatMap<RetT = void>(fn: FunctorMapFn<RetT>): Monad<RetT> {
         const out = unwrapMonadByType(this.constructor, fn(this.join()));
-        return (this.constructor as MonadConstructor<RetT>).of(out) as Monad<RetT>;
+        return (this.constructor as ApplicativeConstructor<RetT>).of(out) as Monad<RetT>;
     }
 }
 
@@ -59,13 +93,13 @@ export const
      * Returns boolean indicating whether given value is an
      * instance of monad or not.
      */
-    isMonad = instanceOf(Monad) as CurryOf1<any, boolean>,
+    isMonad = instanceOf(MonadBase) as CurryOf1<any, boolean>,
 
     /**
      * Always returns a monad;  If given value is not
      * a monad creates one using given value.
      */
-    toMonad = <T>(x: T): Monad<T> => !isMonad(x) ? new Monad(x) : x as unknown as Monad<T>,
+    toMonad = <T>(x: T): Monad<T> => !isMonad(x) ? new MonadBase(x) : x as unknown as Monad<T>,
 
     /**
      * Calls `valueOf` on value (use for functional composition).
@@ -83,7 +117,7 @@ export const
      * Maps given function over given functor.
      */
     fmap = curry(
-        <T, MapperRet>(fn: FunctorMapFn<T, Functor<T>, MapperRet>, x: Functor<T>): Functor<MapperRet> => x.map(fn)
+        <T, MapperRet>(fn: FunctorMapFn<MapperRet>, x: Functor<T>): Functor<MapperRet> | Functor => x.map(fn)
     ),
 
     /**

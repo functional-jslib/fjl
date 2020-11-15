@@ -3,9 +3,9 @@
  */
 import {isset} from '../object/is';
 import {curry, id, trampoline} from '../function';
-import {getMonadUnwrapper, Monad, MonadConstructor} from './monad';
-import {MapFunc, UnaryOf} from "../types";
-import {FunctorMapFn} from "./functor";
+import {getMonadUnwrapper, Monad, MonadBase, MonadConstructor} from './monad';
+import {UnaryOf} from "../types";
+import {FunctorMapFn} from "./types";
 import {instanceOf} from "../platform/object";
 
 let NothingSingleton;
@@ -13,17 +13,17 @@ let NothingSingleton;
 /**
  * Class for creating a `Nothing`.
  * @note Nothing always returns a singleton instance of `Nothing`.
+ * @note Nothing shouldn't be used with generic type as the passed in type is ignored internally.
  */
-export class Nothing extends Monad<any> {
+export class Nothing<T = void> implements Monad<T> {
     /**
      * Applicative `pure` - Same as `new Nothing()`, `Nothing()`, and `nothing()`.
      */
-    static of(x?: any): Monad<any> {
-        return new Nothing();
+    static of<X>(x?: X): Nothing {
+        return new Nothing(x);
     }
 
     constructor(x?: any) {
-        super(x);
         if (NothingSingleton) {
             return NothingSingleton;
         }
@@ -34,22 +34,22 @@ export class Nothing extends Monad<any> {
     /**
      * Returns `Nothing`.
      */
-    valueOf(): this {
-        return this;
+    valueOf(): T {
+        return;
     }
 
     /**
      * Returns `Nothing`.
      */
-    join(): Monad<any> {
-        return this;
+    join(): T {
+        return this.valueOf();
     }
 
     /**
      * Returns `Nothing`.
      */
-    map(f: MapFunc<any, any, any, any>): this {
-        return this;
+    map<RetT>(f: FunctorMapFn<RetT>): Nothing<RetT> {
+        return this as unknown as Nothing<RetT>;
     }
 
     /**
@@ -62,8 +62,8 @@ export class Nothing extends Monad<any> {
     /**
      * Returns `Nothing`.
      */
-    flatMap(f: UnaryOf<any, any>): this {
-        return this;
+    flatMap<RetT>(f: FunctorMapFn<RetT>): Nothing<RetT> {
+        return this as unknown as Nothing<RetT>;
     }
 }
 
@@ -80,19 +80,15 @@ export const
     nothing = (): Nothing => new Nothing()
 ;
 
-export interface JustConstructor<T> {
+export interface JustConstructor<T> extends MonadConstructor<T> {
     new(x: T): Just<T>;
-
-    counterConstructor: MonadConstructor<T>;
 
     of<X>(x: X): Just<X>;
 
     readonly prototype: Just<T>;
 }
 
-export class Just<T> extends Monad<T> {
-    static counterConstructor = Nothing;
-
+export class Just<T> extends MonadBase<T> implements Monad<T> {
     /**
      * Applicative pure - Same as `new Just(...)`.
      */
@@ -103,12 +99,11 @@ export class Just<T> extends Monad<T> {
     /**
      * Maps incoming function over contained value and
      */
-    map<RetT>(fn: FunctorMapFn<T, Just<T>, RetT>): Just<RetT> | Nothing {
+    map<RetT>(fn: FunctorMapFn<RetT>): Just<RetT> | Nothing {
         const constructor = this.constructor as JustConstructor<T>,
-            counterConstructor = constructor.counterConstructor as MonadConstructor<T>,
             value = this.valueOf();
         return isset(value) && !isNothing(value) ? constructor.of(fn(value)) :
-            counterConstructor.of(value) as unknown as Nothing;
+            (Nothing as unknown as Nothing);
     }
 }
 
@@ -141,8 +136,8 @@ export const
      * Otherwise, it applies the function to the value contained  by the `Just` and returns the result.
      */
     maybe = curry(<A, B, C>(replacement: B, fn: UnaryOf<A, C>, maybeInst: Maybe<A>) => {
-        const subject = isset(maybeInst) && isMaybe(maybeInst) ? maybeInst.map(id) : nothing();
-        return isNothing(subject) ? replacement : subject.map(fn).join();
+        const subject = isset(maybeInst) && isMaybe(maybeInst) ? (maybeInst as Just<A>).map(id) : nothing();
+        return isNothing(subject) ? replacement : (subject as Just<A>).map(fn).join();
     }),
 
     /**

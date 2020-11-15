@@ -114,9 +114,7 @@ describe('#Just.map', () => {
         );
     });
     test('should throw an error when receiving anything other than a function as it\'s parameter', () => {
-        expect(() => Just.of(99).map()).toThrow(Error);
         expect(() => Just.of(99).map(null)).toThrow(Error);
-        expect(() => Just.of(99).map(99)).toThrow(Error);
     });
 });
 
@@ -132,9 +130,7 @@ describe('#Just.flatMap', () => {
         );
     });
     test('should throw an error when receiving anything other than a function as it\'s parameter', () => {
-        expect(() => Just.of(99).flatMap()).toThrow(Error);
         expect(() => Just.of(99).flatMap(null)).toThrow(Error);
-        expect(() => Just.of(99).flatMap(99)).toThrow(Error);
     });
 });
 
@@ -142,7 +138,7 @@ describe('#Just.ap', () => {
     test('should map contained value over passed in functor', () => {
         const op = x => x * 2;
         Just.of(op)
-            .ap(Just.of(2))
+            .ap(Just.of(() => 2))
             .map(x => expect(x).toEqual(op(2)));
     });
     test('should be able to map contained value over functor even if it is not a ' +

@@ -6,8 +6,8 @@ import {isset} from '../object/isset';
 import {curry} from '../function/curry';
 import {id} from '../function/id';
 import {toFunction} from '../function/toFunction';
-import {Monad} from './monad';
-import {FunctorMapFn} from "./functor";
+import {MonadBase} from './monad';
+import {FunctorMapFn} from "./types";
 import {UnaryOf} from "../types";
 
 export type Either<A, B> = A | B;
@@ -15,7 +15,7 @@ export type Either<A, B> = A | B;
 /**
  * `Left` representation of `Either` construct.
  */
-export class Left<T> extends Monad<T> {
+export class Left<T> extends MonadBase<T> {
 
     /**
      * Same as `new Left(...)`.
@@ -25,28 +25,28 @@ export class Left<T> extends Monad<T> {
     }
 }
 
-export class Right<T> extends Monad<T> {
-
-    /**
-     * Maps a function over contained value and returns result wrapped.
-     */
-    map<Righty>(fn: FunctorMapFn<T, Right<T>, Righty>): Either<Right<Righty>, Left<unknown | string>> {
-        const value = this.valueOf();
-        if (isLeft(value)) {
-            return value as unknown as Left<unknown>;
-        } else if (!isset(value)) {
-            return Left.of(
-                `TypeError: Cannot operate on \`${value}\`.`
-            );
-        }
-        return Right.of(fn(value));
-    }
+export class Right<T> extends MonadBase<T> {
 
     /**
      * Same as `new Right(...)`.
      */
     static of<X>(x?: X): Right<X> {
         return new Right(x);
+    }
+
+    /**
+     * Maps a function over contained value and returns result wrapped.
+     */
+    map<RightVal, LeftVal>(fn: FunctorMapFn<RightVal>): Either<Right<RightVal>, Left<LeftVal>> {
+        const value = this.valueOf();
+        if (isLeft(value)) {
+            return value as unknown as Left<LeftVal>;
+        } else if (!isset(value)) {
+            return Left.of(
+                `TypeError: Cannot operate on \`${value}\`.`
+            ) as unknown as Left<LeftVal>;
+        }
+        return Right.of(fn(value) as RightVal);
     }
 }
 
