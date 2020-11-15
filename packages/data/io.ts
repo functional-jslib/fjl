@@ -16,7 +16,7 @@ import {compose} from '../function/compose';
  * @property `value` {*} - `IO` however wraps non-function values to `function` on construction.
  * @extends module:monad.Monad
  */
-export default class IO extends Monad {
+export class IO extends Monad {
     /**
      * Unwraps an `IO`.
      * @function module:io.IO.unWrapIO

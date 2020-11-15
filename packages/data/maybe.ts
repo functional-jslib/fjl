@@ -14,15 +14,16 @@ let NothingSingleton;
  * Class for creating a `Nothing`.
  * @note Nothing always returns a singleton instance of `Nothing`.
  */
-export class Nothing {
+export class Nothing extends Monad<any> {
     /**
      * Applicative `pure` - Same as `new Nothing()`, `Nothing()`, and `nothing()`.
      */
-    static of(x?: any): Nothing {
+    static of(x?: any): Monad<any> {
         return new Nothing();
     }
 
     constructor(x?: any) {
+        super(x);
         if (NothingSingleton) {
             return NothingSingleton;
         }
@@ -40,7 +41,7 @@ export class Nothing {
     /**
      * Returns `Nothing`.
      */
-    join(): this {
+    join(): Monad<any> {
         return this;
     }
 
@@ -61,7 +62,7 @@ export class Nothing {
     /**
      * Returns `Nothing`.
      */
-    flatMap(f: MapFunc<any, any, any, any>): this {
+    flatMap(f: UnaryOf<any, any>): this {
         return this;
     }
 }
@@ -95,7 +96,7 @@ export class Just<T> extends Monad<T> {
     /**
      * Applicative pure - Same as `new Just(...)`.
      */
-    static of<X>(x: X): Just<X> {
+    static of<X>(x?: X): Just<X> {
         return just(x);
     }
 
@@ -121,7 +122,7 @@ export const
     /**
      * Wraps `x` in an `Just`.
      */
-    just = <T>(x: T): Just<T> => new Just(x),
+    just = <T>(x?: T): Just<T> => new Just(x),
 
     /**
      * Ensures an `Just`.

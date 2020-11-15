@@ -19,6 +19,13 @@ export interface MonadConstructor<T> extends ApplicativeConstructor<T> {
     new(x: T): Monad<T>;
 
     readonly prototype: Monad<T>;
+
+    of<X>(x?: X): Monadic<X>;
+}
+
+export interface Monadic<T> {
+    join(): T;
+    flatMap<RetT>(fn: UnaryOf<T, RetT>): Monadic<RetT>;
 }
 
 export class Monad<T> extends Applicative<T> {
