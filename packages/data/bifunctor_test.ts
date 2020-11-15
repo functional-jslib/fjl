@@ -1,4 +1,4 @@
-import {Bifunctor} from "./Bifunctor";
+import {Bifunctor} from "./bifunctor";
 import {alphabetArray, vowelsArray} from "../utils/test-utils";
 
 describe('#Bifunctor.value2Of()', () => {

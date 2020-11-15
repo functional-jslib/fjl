@@ -6,7 +6,7 @@
  * @module io
  */
 
-import Monad, {unWrapMonadByType} from './Monad';
+import {Monad, unwrapMonadByType} from './monad';
 import {toFunction} from '../function/toFunction';
 import {compose} from '../function/compose';
 
@@ -28,7 +28,7 @@ export default class IO extends Monad {
         if (!IO.isIO(io)) {
             return io;
         }
-        return unWrapMonadByType(IO, io);
+        return unwrapMonadByType(IO, io);
     }
 
     /**

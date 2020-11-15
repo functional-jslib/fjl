@@ -6,8 +6,8 @@ import {isset} from '../object/isset';
 import {curry} from '../function/curry';
 import {id} from '../function/id';
 import {toFunction} from '../function/toFunction';
-import {Monad} from './Monad';
-import {FunctorMapFn} from "./Functor";
+import {Monad} from './monad';
+import {FunctorMapFn} from "./functor";
 import {UnaryOf} from "../types";
 
 export type Either<A, B> = A | B;
@@ -20,7 +20,7 @@ export class Left<T> extends Monad<T> {
     /**
      * Same as `new Left(...)`.
      */
-    static of<X>(x: X): Left<X> {
+    static of<X>(x?: X): Left<X> {
         return new Left(x);
     }
 }
@@ -45,7 +45,7 @@ export class Right<T> extends Monad<T> {
     /**
      * Same as `new Right(...)`.
      */
-    static of<X>(x: X): Right<X> {
+    static of<X>(x?: X): Right<X> {
         return new Right(x);
     }
 }
@@ -55,7 +55,7 @@ export const
     /**
      * Returns a new `Left`
      */
-    left = <T>(x: T): Left<T> => new Left(x),
+    left = <T>(x?: T): Left<T> => new Left(x),
 
     /**
      * Returns a `Right`.
@@ -75,12 +75,12 @@ export const
     /**
      * Returns a `Right` - if not a `Right` creates one from given, else returns given.
      */
-    toRight = <T>(x: T): Right<T> => (isRight(x) ? x : right(x)) as Right<T>,
+    toRight = <T>(x?: T): Right<T> => (isRight(x) ? x : right(x)) as Right<T>,
 
     /**
      * Returns a `Left` - if not a `Left` creates one from given, else returns given.
      */
-    toLeft = <T>(x: T): Left<T> => (isLeft(x) ? x : left(x)) as Left<T>,
+    toLeft = <T>(x?: T): Left<T> => (isLeft(x) ? x : left(x)) as Left<T>,
 
     /**
      * Converts given to an either (`Right`|`Left`)

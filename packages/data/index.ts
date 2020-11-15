@@ -1,7 +1,7 @@
 /**
  * @module data
  */
-export * from './Functor';
-export * from './Apply';
-export * from './Applicative';
-export * from './Bifunctor';
+export * from './functor';
+export * from './apply';
+export * from './applicative';
+export * from './bifunctor';

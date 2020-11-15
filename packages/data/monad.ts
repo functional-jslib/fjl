@@ -9,11 +9,11 @@
 
 import {isset} from "../object/isset";
 import {instanceOf} from '../platform/object';
-import {Applicative, ApplicativeConstructor} from './Applicative';
+import {Applicative, ApplicativeConstructor} from './applicative';
 import {curry, trampoline, CurryOf1} from "../function";
 
 import {UnaryOf} from "../types";
-import {Functor, FunctorMapFn} from "./Functor";
+import {Functor, FunctorMapFn} from "./functor";
 
 export interface MonadConstructor<T> extends ApplicativeConstructor<T> {
     new(x: T): Monad<T>;
@@ -41,7 +41,7 @@ export class Monad<T> extends Applicative<T> {
      * Flat map operation.
      */
     flatMap<RetT>(fn: UnaryOf<T, RetT>): Monad<RetT> {
-        const out = unWrapMonadByType(this.constructor, fn(this.join()));
+        const out = unwrapMonadByType(this.constructor, fn(this.join()));
         return (this.constructor as MonadConstructor<RetT>).of(out) as Monad<RetT>;
     }
 }
@@ -94,11 +94,11 @@ export const
      * A recursive monad un-wrapper - Returns monad's unwrapped, inner-mostly, contained value (recursively).
      * @returns {Array.<*>} - [unWrapFunction, tailCallFuncName (used by `trampoline` @see module:fjl.trampoline)]
      */
-    getMonadUnWrapper = Type => {
-        return [function unWrapMonadByType(monad) {
+    getMonadUnwrapper = <T extends Function>(Type: T) => {
+        return [function unwrapMonadByType(monad) {
             return instanceOf(Type, monad) ?
                 function trampolineCall() {
-                    return unWrapMonadByType(monad.valueOf());
+                    return unwrapMonadByType(monad.valueOf());
                 } :
                 monad;
         }, 'trampolineCall'];
@@ -107,11 +107,11 @@ export const
     /**
      * Unwraps monad by type.
      */
-    unWrapMonadByType = (Type, monad) => {
+    unwrapMonadByType = (Type, monad) => {
         if (!isset(monad)) {
             return monad;
         }
-        const [unWrapper, tailCallName] = getMonadUnWrapper(Type),
-            unwrap = trampoline(unWrapper, tailCallName);
+        const [unwrapper, tailCallName] = getMonadUnwrapper(Type),
+            unwrap = trampoline(unwrapper, tailCallName);
         return unwrap(monad);
     };

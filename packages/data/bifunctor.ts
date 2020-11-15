@@ -1,7 +1,7 @@
 /**
  * Created 12/9/16.
  */
-import {Functor} from './Functor';
+import {Functor} from './functor';
 import {Unary} from "../types";
 
 export interface BifunctorConstructor<A, B> extends ObjectConstructor {

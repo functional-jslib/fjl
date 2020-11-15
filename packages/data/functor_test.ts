@@ -1,4 +1,4 @@
-import {Functor, toFunctor} from '../../packages/data/Functor';
+import {Functor, toFunctor} from './functor';
 import {falsyList, truthyList} from '../utils/test-utils';
 
 const randomValues = (<any[]>falsyList.concat(<any[]>truthyList));

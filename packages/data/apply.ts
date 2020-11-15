@@ -4,7 +4,7 @@
  */
 
 import {toFunction} from '../function/toFunction';
-import {Functor} from './Functor';
+import {Functor} from './functor';
 import {MapOp} from "../platform/array";
 
 export interface ApplyConstructor<T> extends ObjectConstructor {

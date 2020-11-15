@@ -1,4 +1,4 @@
-import {Apply} from './Apply';
+import {Apply} from './apply';
 import {instanceOf} from "../platform/object";
 import {CurryOf1} from "../function";
 

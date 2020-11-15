@@ -1,10 +1,10 @@
-import Nothing, {nothing, isNothing} from './Nothing';
+import {Nothing, nothing, isNothing} from './maybe';
 import {all} from '../list/all';
 import {map} from '../list/map';
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'];
 
-describe('`isNothing`', () => {
+describe('#isNothing', () => {
     test('should return `true` when a value is of type `Nothing`', () => {
         [nothing(), new Nothing(), Nothing.of()].forEach(x => {
             expect(isNothing(x)).toEqual(true);
@@ -51,7 +51,7 @@ describe('#Nothing', () => {
 
     test('Expect `map`, `ap`, `flatMap`, and `join` methods to exist', () => {
         const instance = nothing();
-        methodNames.forEach(name => expect(instance[methodName]).toBeInstanceOf(Function);
+        methodNames.forEach(name => expect(instance[name]).toBeInstanceOf(Function));
     });
 
     test('Expect `map`, `ap`, `flatMap`, and `join` methods to all return same singleton instance of `Nothing`', () => {

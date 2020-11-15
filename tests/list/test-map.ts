@@ -1,5 +1,5 @@
 import {expectEqual, expectError, expectInstanceOf, vowelsArray, vowelsString} from "../helpers";
-import Functor from "../../packages/data/Functor";
+import Functor from "../../packages/data/functor";
 import map from "../../packages/list/map";
 
 describe('#map', () => {

@@ -1,5 +1,5 @@
-import {Apply} from './Apply';
-import {Functor} from "./Functor";
+import {Apply} from './apply';
+import {Functor} from "./functor";
 import {add, peek} from "../utils/test-utils";
 
 describe('#data.Apply.ap', () => {
