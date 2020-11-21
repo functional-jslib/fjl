@@ -5,10 +5,80 @@
  * @todo Remove extreme functional programming style (in favor of better readability and testabilty).
  * @todo Remove library functions from tests where they are not being tested (use native functions).
  */
-import { compose, negateF2 } from '../packages/function';
-import { lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase } from '../packages/string';
-import { append, all, and, or, zip, zipN, zipWith, unzip, unzipN, map, notElem, head, init, tail, length, reverse, intercalate, take, drop, splitAt, foldl, unfoldr, concat, concatMap, stripPrefix, inits, tails, isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, filter, sum, product, minimum, nub, remove, insertBy, nubBy, removeBy, removeFirstsBy, unionBy, sort, sortOn, union, intersect, intersectBy, groupBy, scanl, scanl1, scanr, scanr1, range } from '../packages/list';
-import { __, expectEqual, expectError, expectLength, expectTrue, expectFalse, alphabetArray, alphabetString, vowelsArray, vowelsString, equal, linkedListToList, genericOrdering, generalEqualityCheck } from './helpers';
+import {compose, negateF2} from '../packages/function';
+import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase} from '../packages/string';
+import {
+    append,
+    all,
+    and,
+    or,
+    zip,
+    zipN,
+    zipWith,
+    unzip,
+    unzipN,
+    map,
+    notElem,
+    head,
+    init,
+    tail,
+    length,
+    reverse,
+    intercalate,
+    take,
+    drop,
+    splitAt,
+    foldl,
+    unfoldr,
+    concat,
+    concatMap,
+    stripPrefix,
+    inits,
+    tails,
+    isPrefixOf,
+    isSuffixOf,
+    isInfixOf,
+    isSubsequenceOf,
+    filter,
+    sum,
+    product,
+    minimum,
+    nub,
+    remove,
+    insertBy,
+    nubBy,
+    removeBy,
+    removeFirstsBy,
+    unionBy,
+    sort,
+    sortOn,
+    union,
+    intersect,
+    intersectBy,
+    groupBy,
+    scanl,
+    scanl1,
+    scanr,
+    scanr1,
+    range
+} from '../packages/list';
+import {
+    __,
+    expectEqual,
+    expectError,
+    expectLength,
+    expectTrue,
+    expectFalse,
+    alphabetArray,
+    alphabetString,
+    vowelsArray,
+    vowelsString,
+    equal,
+    linkedListToList,
+    genericOrdering,
+    generalEqualityCheck
+} from './helpers';
+
 describe('#list', () => {
     describe('#or', () => {
         it('should return `true` when, at least, one of the items is "truthy".', () => {
@@ -154,10 +224,11 @@ describe('#list', () => {
     });
     describe('#zip', () => {
         it('should be able to zip two lists into a list of tuples (list of two items).', () => {
-            const [list1, list2] = splitAt(length(alphabetArray) / 2, alphabetArray), result = zip(list1, list2), expectedResult = foldl((agg, item, ind) => {
-                agg.push([item, list2[ind]]);
-                return agg;
-            }, [], list1);
+            const [list1, list2] = splitAt(length(alphabetArray) / 2, alphabetArray), result = zip(list1, list2),
+                expectedResult = foldl((agg, item, ind) => {
+                    agg.push([item, list2[ind]]);
+                    return agg;
+                }, [], list1);
             expectTrue(all(() => 13, [length(list1), length(list2)]));
             expectEqual(length(result), length(expectedResult));
             expectTrue(all((tuple, ind) => tuple[0] === expectedResult[ind][0] &&
@@ -175,15 +246,16 @@ describe('#list', () => {
         it('should be able to zip the given number of lists.', () => {
             // Unfold alphabet array into an array with arrays of 5 items (as our initial subject).
             const subj = unfoldr(remainder => {
-                return !length(remainder) ?
-                    undefined : splitAt(5, remainder);
-            }, take(25, alphabetArray)), subj2 = [
-                range(1, 5),
-                range(8, 13),
-                [],
-                range(13, 21),
-                []
-            ], subj3 = filter(length, subj), subj4 = filter(length, subj2), testCases = [subj, subj2, subj3, subj4].map(s => [zipN.apply(null, s), s]);
+                    return !length(remainder) ?
+                        undefined : splitAt(5, remainder);
+                }, take(25, alphabetArray)), subj2 = [
+                    range(1, 5),
+                    range(8, 13),
+                    [],
+                    range(13, 21),
+                    []
+                ], subj3 = filter(length, subj), subj4 = filter(length, subj2),
+                testCases = [subj, subj2, subj3, subj4].map(s => [zipN.apply(null, s), s]);
             testCases.forEach(([results, subjects]) => {
                 results.forEach((list, ind) => {
                     list.forEach((char, ind2) => {
@@ -337,9 +409,9 @@ describe('#list', () => {
                 [vowelsString, vowelsString.split('').join('\n')],
             ]
                 .forEach(([subj, expected]) => {
-                const r = unlines(subj);
-                expectEqual(r, expected);
-            });
+                    const r = unlines(subj);
+                    expectEqual(r, expected);
+                });
         });
         it('should return empty lists when receiving empty lists', () => {
             expectEqual(unlines([]), []);
@@ -356,9 +428,9 @@ describe('#list', () => {
                 [vowelsString, vowelsString.split('').join(' ')],
             ]
                 .forEach(([subj, expected]) => {
-                const r = unwords(subj);
-                expectEqual(r, expected);
-            });
+                    const r = unwords(subj);
+                    expectEqual(r, expected);
+                });
         });
         it('should return empty lists when receiving empty lists', () => {
             expectEqual(unwords([]), []);
@@ -418,8 +490,8 @@ describe('#list', () => {
                 [[null, 'abc'], []]
             ]
                 .forEach(([args, expected]) => {
-                expectEqual(intersect(...args), expected);
-            });
+                    expectEqual(intersect(...args), expected);
+                });
         });
         it('should return an intersection of the two arrays passed in', () => {
             let testCases = [
@@ -456,10 +528,10 @@ describe('#list', () => {
                 [mixedMatchRange, range(18, 21), 13, mixedMatchRange.concat(range(18, 21))]
             ]
                 .forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase, result = union(subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                expectEqual(result, expectedElms);
-            });
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase, result = union(subj1, subj2);
+                    expectEqual(result.length, expectedLen);
+                    expectEqual(result, expectedElms);
+                });
         });
         it('should return a copy of left-most array when right-most list is empty', () => {
             [
@@ -469,10 +541,10 @@ describe('#list', () => {
                 [mixedMatchRange, [], 9, mixedMatchRange]
             ]
                 .forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase, result = union(subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                expectEqual(result, expectedElms);
-            });
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase, result = union(subj1, subj2);
+                    expectEqual(result.length, expectedLen);
+                    expectEqual(result, expectedElms);
+                });
         });
         it('should return a copy of right-most list when left-most list is empty', () => {
             [
@@ -482,10 +554,10 @@ describe('#list', () => {
                 [mixedMatchRange, [], 9, mixedMatchRange]
             ]
                 .forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase, result = union(subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                expectEqual(result, expectedElms);
-            });
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase, result = union(subj1, subj2);
+                    expectEqual(result.length, expectedLen);
+                    expectEqual(result, expectedElms);
+                });
         });
         it('should return an empty list when receiving empty lists', () => {
             expectEqual(union('', ''), '');
@@ -510,7 +582,8 @@ describe('#list', () => {
         });
     });
     describe('#sortOn', () => {
-        const identity = x => x, sortOnIdentity = sortOn(identity), range0To10 = range(0, 10), range10To0 = range(10, 0, -1);
+        const identity = x => x, sortOnIdentity = sortOn(identity), range0To10 = range(0, 10),
+            range10To0 = range(10, 0, -1);
         it('should sort a list in ascending order', () => {
             expectEqual(sortOnIdentity(range10To0), range0To10);
             expectEqual(sortOnIdentity(range0To10), range0To10);
@@ -567,18 +640,18 @@ describe('#list', () => {
         const consonants = removeFirstsBy(equal, alphabetString, vowelsString), consonantsArray = consonants.split('');
         it('should remove all first occurrences of items in second list matching predicate.', () => {
             // Remove from first entry on both
-            const fiveArrays = vowelsArray.map(() => alphabetArray), catedArrays = [].concat(...fiveArrays), 
-            // Expected concated arrays
-            expected = vowelsArray.reduce((agg, vowel) => {
-                // Pluck item out of array
-                // ----
-                // Split at concated array at `vowel` index
-                const parts = splitAt(agg.indexOf(vowel), agg);
-                // Put split parts back together again
-                return [].concat(parts[0], parts[1].slice(1));
-            }, catedArrays), 
-            // Remove all first occurrences of `vowels`
-            rslt = removeFirstsBy(equal, concat(fiveArrays), vowelsArray);
+            const fiveArrays = vowelsArray.map(() => alphabetArray), catedArrays = [].concat(...fiveArrays),
+                // Expected concated arrays
+                expected = vowelsArray.reduce((agg, vowel) => {
+                    // Pluck item out of array
+                    // ----
+                    // Split at concated array at `vowel` index
+                    const parts = splitAt(agg.indexOf(vowel), agg);
+                    // Put split parts back together again
+                    return [].concat(parts[0], parts[1].slice(1));
+                }, catedArrays),
+                // Remove all first occurrences of `vowels`
+                rslt = removeFirstsBy(equal, concat(fiveArrays), vowelsArray);
             // Check results
             expectEqual(rslt, expected);
         });
@@ -588,10 +661,10 @@ describe('#list', () => {
         });
     });
     describe('#unionBy', () => {
-        const mixedMatchRange = append(range(13, 8, -1), range(1, 3)), 
-        // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
-        // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
-        equalityCheck = (a, b) => a === b;
+        const mixedMatchRange = append(range(13, 8, -1), range(1, 3)),
+            // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
+            // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
+            equalityCheck = (a, b) => a === b;
         // [ascRanges, descRanges] =
         //     map(argsSet =>
         //         map(rangeArgs => apply(range, rangeArgs), argsSet),
@@ -607,10 +680,11 @@ describe('#list', () => {
                 [mixedMatchRange, range(18, 21), 13, mixedMatchRange.concat(range(18, 21))]
             ]
                 .forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase, result = unionBy(equalityCheck, subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                expectEqual(result, expectedElms);
-            });
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    expectEqual(result.length, expectedLen);
+                    expectEqual(result, expectedElms);
+                });
         });
         it('should return a copy of left-most array when right-most list is empty', () => {
             [
@@ -620,10 +694,11 @@ describe('#list', () => {
                 [mixedMatchRange, [], 9, mixedMatchRange]
             ]
                 .forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase, result = unionBy(equalityCheck, subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                expectEqual(result, expectedElms);
-            });
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    expectEqual(result.length, expectedLen);
+                    expectEqual(result, expectedElms);
+                });
         });
         it('should return a copy of right-most list when left-most list is empty', () => {
             [
@@ -633,10 +708,11 @@ describe('#list', () => {
                 [mixedMatchRange, [], 9, mixedMatchRange]
             ]
                 .forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase, result = unionBy(equalityCheck, subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                expectEqual(result, expectedElms);
-            });
+                    let [subj1, subj2, expectedLen, expectedElms] = testCase,
+                        result = unionBy(equalityCheck, subj1, subj2);
+                    expectEqual(result.length, expectedLen);
+                    expectEqual(result, expectedElms);
+                });
         });
         it('should return an empty list when receiving empty lists', () => {
             expectEqual(unionBy(equalityCheck, '', ''), '');
@@ -673,9 +749,11 @@ describe('#list', () => {
     });
     describe('#groupBy', () => {
         it('should return a list of lists which contain the (sequential) matches on equality function', () => {
-            const expectedResult = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
-            expectEqual(groupBy(generalEqualityCheck, 'Mississippi'), expectedResult.map(xs => xs.join('')));
-            expectEqual(groupBy(generalEqualityCheck, 'Mississippi'.split('')), expectedResult);
+            const expectedResult = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']],
+                rslt1 = groupBy(generalEqualityCheck, 'Mississippi'),
+                rslt2 = groupBy(generalEqualityCheck, 'Mississippi'.split(''));
+            // expectEqual(rslt1, expectedResult.map(xs => xs.join('')));
+            expectEqual(rslt2, expectedResult);
         });
         it('should return a list of lists containing individual un-grouped items or items that do not match equality function', () => {
             expectEqual(groupBy(generalEqualityCheck, alphabetArray), alphabetArray.map(char => [char]));
@@ -685,15 +763,16 @@ describe('#list', () => {
         const injectValueAtIndex = (x, ind, list) => {
             if (ind <= 0) {
                 return [x].concat(list);
-            }
-            else if (ind > list.length - 1) {
+            } else if (ind > list.length - 1) {
                 return list.concat([x]);
             }
             return list.slice(0, ind).concat([x], list.slice(ind));
         }, genericInsert = (x, xs) => insertBy(genericOrdering, x, xs);
         it('Should insert a value before value that matches equality check', () => {
             // expectEqual(genericInsert(99, range(0, 144, 5))
-            const range0To145 = range(0, 145, 5), expectedResult = injectValueAtIndex(99, 20, range0To145), result = genericInsert(99, range0To145), result1 = genericInsert(99, reverse(range0To145)), result2 = genericInsert('x', alphabetArray), result3 = genericInsert('x', reverse(alphabetArray));
+            const range0To145 = range(0, 145, 5), expectedResult = injectValueAtIndex(99, 20, range0To145),
+                result = genericInsert(99, range0To145), result1 = genericInsert(99, reverse(range0To145)),
+                result2 = genericInsert('x', alphabetArray), result3 = genericInsert('x', reverse(alphabetArray));
             expectEqual(result, expectedResult);
             expectEqual(result1, [99].concat(reverse(range0To145)));
             expectEqual(result2, injectValueAtIndex('x', 24, alphabetArray));
@@ -705,14 +784,14 @@ describe('#list', () => {
         });
     });
     describe('#scanl', () => {
-        const unlinkedNodes = alphabetArray.map(char => ({ data: char }));
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
         it('should return a list of successively reduced values from left to right', () => {
             // Generate linked-list structure
             const result = scanl((agg, item) => {
                 agg.next = item;
                 item.next = null;
                 return item;
-            }, { data: '', next: null }, unlinkedNodes);
+            }, {data: '', next: null}, unlinkedNodes);
             // Expect every item in result to be a linked list with remaining items linked to said item
             expect(result.every(node => {
                 const nodesList = linkedListToList(node);
@@ -729,7 +808,7 @@ describe('#list', () => {
         });
     });
     describe('#scanl1', () => {
-        const unlinkedNodes = alphabetArray.map(char => ({ data: char }));
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
         it('should return a list of successively reduced values from left to right', () => {
             // Generate linked-list structure
             const result = scanl1((agg, item) => {
@@ -753,7 +832,7 @@ describe('#list', () => {
         });
     });
     describe('#scanr', () => {
-        const unlinkedNodes = alphabetArray.map(char => ({ data: char }));
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
         it('should return a list of successively reduced values from left to right', () => {
             // Generate linked-list structure
             const result = scanr((agg, item) => {
@@ -767,9 +846,9 @@ describe('#list', () => {
                 return alphabetArray.slice(0, alphabetArray.indexOf(node.data) + 1)
                     .reverse()
                     .every((char, ind1) => {
-                    const charCodeToTest = char.charCodeAt(0);
-                    return nodesList.slice(ind1).every((data, ind2) => data.data.charCodeAt(0) + ind2 === charCodeToTest);
-                });
+                        const charCodeToTest = char.charCodeAt(0);
+                        return nodesList.slice(ind1).every((data, ind2) => data.data.charCodeAt(0) + ind2 === charCodeToTest);
+                    });
             }))
                 .toEqual(true);
         });
@@ -779,7 +858,7 @@ describe('#list', () => {
         });
     });
     describe('#scanr1', () => {
-        const unlinkedNodes = alphabetArray.map(char => ({ data: char }));
+        const unlinkedNodes = alphabetArray.map(char => ({data: char}));
         it('should return a list of successively reduced values from left to right', () => {
             // Generate linked-list structure
             const result = scanr1((agg, item) => {
@@ -794,9 +873,9 @@ describe('#list', () => {
                     .slice(0, alphabetArray.indexOf(node.data) + 1)
                     .reverse()
                     .every((char, ind1) => {
-                    const charCodeToTest = char.charCodeAt(0);
-                    return nodesList.slice(ind1).every((data, ind2) => data.data.charCodeAt(0) + ind2 === charCodeToTest);
-                });
+                        const charCodeToTest = char.charCodeAt(0);
+                        return nodesList.slice(ind1).every((data, ind2) => data.data.charCodeAt(0) + ind2 === charCodeToTest);
+                    });
             }))
                 .toEqual(true);
         });
@@ -837,8 +916,8 @@ describe('#list', () => {
                 ['$$abc', 'Abc']
             ]
                 .forEach(([given, expected]) => {
-                expect(camelCase(given)).toEqual(expected);
-            });
+                    expect(camelCase(given)).toEqual(expected);
+                });
         });
         it('should throw an error when receiving an empty-string or any value that is not a string', () => {
             [null, undefined, [], {}]
@@ -853,8 +932,8 @@ describe('#list', () => {
                 ['$$abc', 'Abc']
             ]
                 .forEach(([given, expected]) => {
-                expect(classCase(given)).toEqual(expected);
-            });
+                    expect(classCase(given)).toEqual(expected);
+                });
         });
         it('should throw an error when receiving an empty-string or any value that is not a string', () => {
             [null, undefined, [], {}]
@@ -862,12 +941,14 @@ describe('#list', () => {
         });
     });
     describe('#range', () => {
-        const zeroToNine = '0123456789'.split('').map(x => parseInt(x, 10)), zeroToNegativeNine = '0,-1,-2,-3,-4,-5,-6,-7,-8,-9'
-            .split(',')
-            .map(x => parseInt(x, 10)), negativeNineToZero = reverse(zeroToNegativeNine), nineToZero = reverse(zeroToNine), checkRanges = rangeSets => rangeSets.forEach(([result, expected]) => {
-            expect(result.length).toEqual(expected.length);
-            expect(result).toEqual(expected);
-        });
+        const zeroToNine = '0123456789'.split('').map(x => parseInt(x, 10)),
+            zeroToNegativeNine = '0,-1,-2,-3,-4,-5,-6,-7,-8,-9'
+                .split(',')
+                .map(x => parseInt(x, 10)), negativeNineToZero = reverse(zeroToNegativeNine),
+            nineToZero = reverse(zeroToNine), checkRanges = rangeSets => rangeSets.forEach(([result, expected]) => {
+                expect(result.length).toEqual(expected.length);
+                expect(result).toEqual(expected);
+            });
         it('should be able to return a forward range (with and without `step`)', () => {
             checkRanges([
                 [range(0, 9), zeroToNine],

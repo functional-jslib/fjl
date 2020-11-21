@@ -9,7 +9,6 @@ import {compose, negateF2} from '../src/function';
 import {isEmptyList, isArray, isString, length} from '../src/object';
 import {isTruthy} from '../src/boolean';
 import {lines, unlines, words, unwords, lcaseFirst, ucaseFirst, camelCase, classCase} from '../src/string';
-import Functor from '../src/data/Functor';
 import {
     append, all, and, or, any, find, findIndex, findIndices,
     zip, zipN, zipWith, unzip, unzipN,
@@ -48,6 +47,21 @@ import {
     nonAlphaNums,
     nonAlphaNumsArray,
 } from './helpers';
+
+class Functor {
+    constructor(value) {
+        this.value = value;
+    }
+    valueOf() {
+        return this.value;
+    }
+    map(fn) {
+        return new this.constructor(fn(this.valueOf()));
+    }
+    fmap (fn) {
+        return this.map(fn);
+    }
+}
 
 describe('#list', () => {
 
