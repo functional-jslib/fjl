@@ -1,15 +1,9 @@
+# Files
+*.log
+
+# Dirs
+.idea/
 .DS_Store/
-
-# IDEs and editors
-.idea/*.iml
-.idea/modules.xml
-.idea/workspace.xml
-.idea/encodings.xml
-
-node_modules/
-.node_modules/
-yarn-error.log
-npm-debug.log
-
 coverage/
-
+dist/
+node_modules/
