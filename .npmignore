@@ -1,4 +1,14 @@
+.babel*
+.eslint*
 .idea
 .sass-cache
-bower_components
-node_modules
+.travis*
+
+gulp*
+
+markdown-fragments/
+markdown-fragments-generated/
+node_modules/
+node-scripts/
+types/
+
