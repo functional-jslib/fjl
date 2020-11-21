@@ -77,7 +77,7 @@ export const
     /**
      * Returns `Nothing`.
      */
-    nothing = (): Nothing => new Nothing()
+    nothing = <T>(x?: T): Nothing => new Nothing()
 ;
 
 export interface JustConstructor<T> extends MonadConstructor<T> {

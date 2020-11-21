@@ -1,9 +1,9 @@
 /**
- * Created by elydelacruz on 2/19/2017.
  * Io module - Contains `IO` class.
- * Fore more on io class
+ * For more on `io` constructor:
  * @see http://learnyouahaskell.com/input-and-output
  * @module io
+ * @tentative - Promises should be used instead (for now).
  */
 
 import {Monad, MonadBase, MonadConstructor, unwrapMonadByType} from './monad';

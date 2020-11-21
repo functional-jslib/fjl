@@ -65,12 +65,12 @@ export const
     /**
      * Checks for instance of `Right` constructor.
      */
-    isRight = <T>(x: T): boolean => x instanceof Right,
+    isRight = <T>(x: T): boolean => isset(x) && x instanceof Right,
 
     /**
      * Checks for instance of `Left` constructor.
      */
-    isLeft = <T>(x: T): boolean => x instanceof Left,
+    isLeft = <T>(x: T): boolean => isset(x) && x instanceof Left,
 
     /**
      * Returns a `Right` - if not a `Right` creates one from given, else returns given.
@@ -85,7 +85,7 @@ export const
     /**
      * Converts given to an either (`Right`|`Left`)
      */
-    toEither = <A, B>(x: unknown): Either<Right<A>, Left<B>> =>
+    toEither = <A, B>(x: A): Either<Right<A>, Left<B>> =>
         (isLeft(x) || isRight(x) ? x : right(x).map(id)) as Either<Right<A>, Left<B>>,
 
     /**

@@ -23,7 +23,7 @@ export interface Monad<T> extends Applicative<T> {
 
 export type MonadConstructor<T> = ApplicativeConstructor<T>;
 
-export class MonadBase<T> implements Monad<T>{
+export class MonadBase<T> implements Monad<T> {
 
     /**
      * Same as `new Monad(...)` just in 'static' function format.
@@ -65,10 +65,11 @@ export class MonadBase<T> implements Monad<T>{
     /**
      * Applicative apply operation - applies contained function over passed in functor.
      */
-    ap<X>(f: Functor<X>): Apply<X> {
-        return new (this.constructor as ApplyConstructor<X>)(f.map(
-            (toFunction(this.valueOf()) as FunctorMapFn<X>)
-        ).valueOf());
+    ap<X, RetT>(f: Functor<X>): Apply<RetT> {
+        return new (this.constructor as ApplyConstructor<T>)(f.map(
+            toFunction(this.valueOf()) as FunctorMapFn<RetT>
+            ).valueOf()
+        ) as unknown as Apply<RetT>;
     }
 
     /**
@@ -85,6 +86,14 @@ export class MonadBase<T> implements Monad<T>{
         const out = unwrapMonadByType(this.constructor, fn(this.join()));
         return (this.constructor as ApplicativeConstructor<RetT>).of(out) as Monad<RetT>;
     }
+
+    /**
+     * Simple to string implementation to make instances where this monad is dumped out
+     * as a string more readable.
+     */
+    toString(): string {
+        return `${this.constructor.name}(${this.valueOf()})`
+    }
 }
 
 export const
@@ -94,12 +103,6 @@ export const
      * instance of monad or not.
      */
     isMonad = instanceOf(MonadBase) as CurryOf1<any, boolean>,
-
-    /**
-     * Always returns a monad;  If given value is not
-     * a monad creates one using given value.
-     */
-    toMonad = <T>(x: T): Monad<T> => !isMonad(x) ? new MonadBase(x) : x as unknown as Monad<T>,
 
     /**
      * Calls `valueOf` on value (use for functional composition).
@@ -124,12 +127,12 @@ export const
      * Applies function contained by applicative to contents of given functor.
      * (Same as functional applicative `apply`).
      */
-    ap = curry((applicative, functor) => applicative.ap(functor)),
+    ap = curry(<A, B, RetT>(applicative: Applicative<A>, functor: Functor<B>): Apply<RetT> => applicative.ap(functor)),
 
     /**
      * Flat maps a function over given monad's contained value.
      */
-    flatMap = curry((fn, monad) => monad.flatMap(fn)),
+    flatMap = curry(<T, RetT>(fn: FunctorMapFn<RetT>, monad: Monad<T>): Monad<RetT> => monad.flatMap(fn)),
 
     /**
      * A recursive monad un-wrapper - Returns monad's unwrapped, inner-mostly, contained value (recursively).

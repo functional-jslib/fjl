@@ -22,7 +22,7 @@ export interface ApplyConstructor<T> extends FunctorConstructor<T> {
 }
 
 export interface Apply<T> extends Functor<T> {
-    ap(f: Functor<T>): Apply<T>;
+    ap<X, RetT>(f: Functor<X>): Apply<RetT>;
 }
 
 export interface ApplicativeConstructor<T> extends ApplyConstructor<T> {
