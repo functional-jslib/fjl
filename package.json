@@ -35,7 +35,7 @@
     "babel-preset-es2015-rollup": "^3.0.0",
     "del": "^5.1.0",
     "eslint": "^6.8.0",
-    "jest": "^25.3.0",
+    "jest": "^26.6.3",
     "rollup": "^2.33.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",

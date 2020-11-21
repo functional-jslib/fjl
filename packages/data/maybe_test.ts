@@ -1,11 +1,5 @@
 import {just, isJust, Just, Nothing, nothing, isNothing, Maybe, isMaybe, toMaybe, maybe} from './maybe';
-
-import {left, Left} from "./either";
 import {join} from './monad';
-
-import {all} from '../list/all';
-import {map} from '../list/map';
-
 import {falsyList} from "../utils/test-utils";
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'];
@@ -110,10 +104,7 @@ describe('#Just.map', () => {
             op = x => x * 2,
             justResult = Just.of(control).map(op);
         expect(justResult instanceof Just).toEqual(true);
-        map(
-            x => expect(x).toEqual(op(control)),
-            justResult
-        );
+        justResult.map(x => expect(x).toEqual(op(control)));
     });
     test('should throw an error when receiving anything other than a function as it\'s parameter', () => {
         expect(() => Just.of(99).map(null)).toThrow(Error);
@@ -126,10 +117,7 @@ describe('#Just.flatMap', () => {
             op = x => x * 2,
             justResult = Just.of(control).flatMap(op);
         expect(justResult instanceof Just).toEqual(true);
-        map(
-            x => expect(x).toEqual(op(control)),
-            justResult
-        );
+        justResult.map(x => expect(x).toEqual(op(control)));
     });
     test('should throw an error when receiving anything other than a function as it\'s parameter', () => {
         expect(() => Just.of(99).flatMap(null)).toThrow(Error);
@@ -203,13 +191,7 @@ describe('#Nothing', () => {
 
     test('Expect `map`, `ap`, `flatMap`, and `join` methods to all return same singleton instance of `Nothing`', () => {
         const instance = nothing();
-        expect(
-            all(
-                result => result === instance,
-                map(methodName => instance[methodName](), methodNames)
-            )
-        )
-            .toEqual(true);
+        methodNames.forEach(x => expect(instance[x]()).toEqual(instance));
     });
 });
 
