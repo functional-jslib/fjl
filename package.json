@@ -1,6 +1,6 @@
 {
   "name": "fjl",
-  "version": "1.12.7",
+  "version": "1.12.8",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl",
   "module": "dist/es6-module/fjl.mjs",
@@ -9,7 +9,6 @@
     "build": "gulp docs build",
     "docs": "gulp docs",
     "eslint": "gulp eslint",
-    "prepare": "npm run test && npm run build",
     "readme": "gulp readme",
     "test": "jest --testMatch **/tests/test-*.js"
   },
