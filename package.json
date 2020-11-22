@@ -6,12 +6,12 @@
   "module": "dist/es6-module/fjl.mjs",
   "types": "./types/index.d.ts",
   "scripts": {
-    "build": "gulp docs build && npm run test-builds",
-    "test-builds": "jest --testMatch **/tests/*-test-*.js",
-    "test": "jest --testMatch **/tests/test-*.js",
+    "build": "gulp docs build",
+    "docs": "gulp docs",
     "eslint": "gulp eslint",
+    "prepare": "npm run test && npm run build",
     "readme": "gulp readme",
-    "docs": "gulp docs"
+    "test": "jest --testMatch **/tests/test-*.js"
   },
   "directories": {
     "dist": "dist",

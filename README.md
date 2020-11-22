@@ -207,7 +207,6 @@ https://functional-jslib.github.io/fjl/
       
 ### Package scripts:
 - `build` - Builds docs and distribution ('./dist'). 
-- `test-builds` - Tests' './dist'
 - `test` - Runs unit tests.
 
 ### Dev notes:
