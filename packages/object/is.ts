@@ -34,7 +34,7 @@ export const
      * @returns {String}
      * @todo write tests for this function.
      */
-    toTypeRef = (type: TypeRef | any): TypeRef => {
+    toTypeRef = (type: TypeRef): TypeRef => {
         if (!type) {
             return typeOf(type);
         } else if (type.constructor === String || (type instanceof Function)) {

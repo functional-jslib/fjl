@@ -5,6 +5,7 @@
     "dist/"
   ],
   "include": [
-    "packages/**/*_test.ts"
+    "packages/**/*_test.ts",
+    "tests/**/test-*.ts"
   ]
 }

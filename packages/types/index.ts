@@ -1,47 +1,16 @@
 export * from './arity';
 export * from './data';
 
-export type TypeRef =
-    string | Function | ArrayBufferConstructor | ArrayConstructor |
-    BooleanConstructor | StringConstructor |
-    NumberConstructor | MapConstructor |
-    SetConstructor | WeakMapConstructor |
-    WeakSetConstructor | PromiseConstructorLike
-    ;
-
-export type TypeConstructor =
-    Function | ArrayBufferConstructor | ArrayConstructor |
-    BooleanConstructor | StringConstructor |
-    NumberConstructor | MapConstructor |
-    SetConstructor | WeakMapConstructor |
-    WeakSetConstructor | PromiseConstructorLike |
-    ObjectConstructor
-    ;
-
+// @todo clean this up and allow only one of these types
 export interface ConstructableType {
     new(...args: any[]): any;
 }
 
+// @todo clean this up and allow only one of these types
 export type Constructable = ConstructableType
-
-export interface ErrorTemplateCtx {
-    value: any;
-    valueName: string;
-    expectedTypeName: string;
-    foundTypeName: string;
-    messageSuffix?: string;
-}
-
-export type ErrorIfNotTypeThrower = (
-    type: TypeRef, contextName: string,
-    valueName: string, value: any, messageSuffix: any) => any;
-
-export type ErrorIfNotTypesThrower = (
-    types: TypeRef[], contextName: string,
-    valueName: string, value: any) => any;
-
-export type ErrorTemplateCtxToStringFn = (
-    tmplCtx: ErrorTemplateCtx) => string;
+export type TypeConstructor = ConstructableType;
+export type TypeName = string;
+export type TypeRef = TypeName | ConstructableType;
 
 export type ListPredicate = <T>(x: T, index?: number, xs?: (T[] | string)) => boolean;
 

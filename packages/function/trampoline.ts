@@ -1,7 +1,7 @@
 /**
  * Trampolines function calls in order to avoid stack overflow errors
  * on recursive function calls; Tail recursion replacement.
- * @example
+ * ```
  * // Instead of ... (which is prone to stack-overflow in
  * //   non-tail-call optimized environments (es5-es3))
  * const factorial = n => n > 1 ? n * factorial(n - 1) : 1;
@@ -19,18 +19,20 @@
  *  // within `trampoline`.
  *
  *  ;
+ *  ```
  *
  * @note function returned by trampoline is not curried (for convenience)!
- * @function module:function.trampoline
  * @param fn {Function} - Function to trampoline.
  * @param [fnName=undefined] {String} - Optionally restrict trampolining only to function with specific name.
  * @returns {*} - Finally returned value.
  */
-export const trampoline = (fn, fnName = undefined) => {
-    return (...args) => {
+import {NaryOf} from "../types";
+
+export const trampoline = <T, RetT>(fn: NaryOf<T, RetT>, fnName?: string): NaryOf<T, RetT> => {
+    return (...args: T[]): RetT => {
         let result = fn(...args);
         while (typeof result === 'function' &&
-            (!fnName || (result.name === fnName))) {
+        (!fnName || (result.name === fnName))) {
             result = result();
         }
         return result;
