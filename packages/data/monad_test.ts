@@ -1,7 +1,7 @@
 import {just, nothing} from "./maybe";
-import {Monad, join, valueOf, fmap} from "./monad";
+import {Monad, join, valueOf, fmap, ap, flatMap} from "./monad";
 import {left, right} from "./either";
-import {FunctorMapFn} from "./types";
+import {Applicative, FunctorMapFn} from "./types";
 import {id} from "../function";
 
 describe('#valueOf()', () => {
@@ -40,7 +40,31 @@ describe('#fmap()', () => {
 });
 
 describe('#ap', () => {
-    it('should have more tests', function () {
-        expect(false).toEqual(true);
-    });
+    (<[Applicative<<T>(x: T) => T>, Monad<any>, Monad<any>][]>[
+        [just((x: number) => x * 2), just(4), just(8)],
+        [just((x: number) => x * 3), just(2), just(6)],
+        [just(x => x), nothing(), nothing()],
+        [just(x => x), just(null), nothing()]
+    ])
+        .forEach(([applicative, functor, expected]) => {
+            it(`${applicative}`, function () {
+                const rslt = ap(applicative, functor) as Monad<any>;
+                expect(rslt.join()).toEqual(expected.join());
+            });
+        });
+});
+
+describe('#flatMap', () => {
+    (<[Monad<any>, FunctorMapFn<any>, Monad<any>][]>[
+        [nothing(), id, nothing()],
+        [just(null), id, nothing()],
+        [just(2), x => x * 2, just(4)],
+        [[1, 2, 3], x => x * 2, [2, 4, 6]]
+    ])
+        .forEach(([monad, mapper, monad2]) => {
+            it(`flatMap(${mapper}, ${monad}).valueOf() == ${monad2}.valueOf()`, function () {
+                const rslt = flatMap(mapper, monad) as Monad<any>;
+                expect(rslt.valueOf()).toEqual(monad2.valueOf());
+            });
+        })
 });

@@ -125,9 +125,10 @@ export const
 
     /**
      * Applies function contained by applicative to contents of given functor.
-     * (Same as functional applicative `apply`).
+     * (Same as functional applicative `apply`).  Returns a functor containing the newly
+     * returned value from the application.
      */
-    ap = curry(<A, B, RetT>(applicative: Applicative<A>, functor: Functor<B>): Apply<RetT> => applicative.ap(functor)),
+    ap = curry(<A, B, RetT>(applicative: Applicative<A>, functor: Functor<B>): Functor<RetT> => applicative.ap(functor)),
 
     /**
      * Flat maps a function over given monad's contained value.
