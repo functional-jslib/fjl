@@ -1,15 +1,12 @@
-import {curry} from "../function/curry";
+import {curry, CurryOf2} from "../function/curry";
 import {filter} from "./filter";
 import {includes} from "../platform/slice";
 
 export const
     /**
      * Performs an intersection on list 1 with  elements from list 2.
-     * @function module:list.intersect
-     * @param arr1 {Array}
-     * @param arr2 {Array}
-     * @returns {Array}
      */
-    intersect = curry((arr1, arr2) =>
+    intersect = curry(<T>(arr1: T[], arr2: T[]) =>
         !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
-            filter(elm => includes(elm, arr2) as boolean, arr1));
+            filter(elm => includes(elm, arr2) as boolean, arr1) as T[]
+    ) as CurryOf2<any[], any[], any[]>;

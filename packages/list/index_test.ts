@@ -1,4 +1,4 @@
-import {intersect} from "../../packages/list";
+import {intersect} from "./intersect";
 
 describe('#intersect', () => {
     it('should return an empty list when either of the first, second ' +

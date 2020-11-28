@@ -583,41 +583,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#intersect', () => {
-        it('should return an empty list when either of the first, second ' +
-            'or both params passed in are empty arrays, or falsy values', () => {
-            [
-                [[[], [1, 2, 3]], []],
-                [[null, null], []],
-                [[undefined, undefined], []],
-                [['', ''], []],
-                [['abc', ''], []],
-                [['abc', null], []],
-                [[null, 'abc'], []]
-            ]
-                .forEach(([args, expected]) => {
-                    expectEqual(intersect(...args), expected);
-                });
-        });
-
-        it('should return an intersection of the two arrays passed in', () => {
-            let testCases = [
-                // subj1, subj2, expectLen, expectedElements
-                [[1, 2, 3], [1, 2, 3, 4, 5], 3, [1, 2, 3]],
-                [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 3, [1, 2, 3]],
-                [[1, 2, 3, 4, 5], [1, 2, 3], 3, [1, 2, 3]]
-            ];
-            testCases.forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = intersect(subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                result.forEach((elm, ind) => {
-                    expectEqual(elm, expectedElms[ind]);
-                });
-            });
-        });
-    });
-
     describe('#union', () => {
         const mixedMatchRange = append(range(13, 8, -1), range(1, 3));
         // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
