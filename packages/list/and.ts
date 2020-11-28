@@ -1,6 +1,7 @@
 import {all} from "./all";
-import {isTruthy} from "../boolean";
+import {equal, isTruthy} from "../boolean";
 import {Indexable} from "../types";
+import {isEmpty} from "../object";
 
 export const
     /**
@@ -10,5 +11,19 @@ export const
      * @param xs {Array|String}
      * @returns {Boolean}
      */
-    and = <T>(xs: Indexable<T>): boolean => all(isTruthy, xs) as boolean
-;
+    and = <T>(xs: Indexable<T>): boolean => {
+        if (isEmpty(xs)) {
+            return false;
+        }
+        const ks = Object.keys(xs);
+        let last: T = xs[ks.pop()],
+            ksLimit = ks.length;
+        while ((--ksLimit) >= 0) {
+            const curr = xs[ks[ksLimit]];
+            if (last !== curr) {
+                return false;
+            }
+            last = curr;
+        }
+        return true;
+    }

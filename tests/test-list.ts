@@ -94,16 +94,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#minimum', () => {
-        it('should be able return the minimum of a given list', () => {
-            expectEqual(minimum(range(1, 5).concat([1, 3, 4, 3, 2, 3])), 1);
-            expectEqual(minimum(range(-5, -1).concat([-3, -5, -7])), -7);
-        });
-        it('should throw an error when no value is passed in (empty list, `null`, or `undefined`)', () => {
-            expectError(() => minimum(null));
-            expectError(() => minimum(undefined));
-        });
-    });
 
     describe('#stripPrefix', () => {
         it('should be able to strip a prefix from a list', () => {
@@ -148,107 +138,6 @@ describe('#list', () => {
                 },
                 tails(alphabetArray)
             ));
-        });
-    });
-
-    describe('#isPrefixOf', () => {
-        it('should return `true` when a list is a prefix of another', () => {
-            expectTrue(all(
-                isPrefixOf('abc'),
-                splitAt(3, inits(alphabetString))[1]
-            ));
-            expectTrue(all(
-                isPrefixOf('abc'.split('')),
-                splitAt(3, inits(alphabetArray))[1]
-            ));
-        });
-        it('should return `false` when a list is not prefix of second list', () => {
-            expectTrue(all(
-                negateF2(isPrefixOf('!@#')),
-                splitAt(3, inits(alphabetString))[1]
-            ));
-            expectTrue(all(
-                negateF2(isPrefixOf('!@#'.split(''))),
-                splitAt(3, inits(alphabetArray))[1]
-            ));
-        });
-    });
-
-    describe('#isSuffixOf', () => {
-        it('should return `true` when a list is a suffix of another', () => {
-            const candidateString = splitAt(length(alphabetString) - 2, tails(alphabetString))[0];
-            expectTrue(all(
-                isSuffixOf('xyz'),
-                candidateString
-            ));
-            expectTrue(all(
-                isSuffixOf('xyz'.split('')),
-                splitAt(length(alphabetArray) - 2, tails(alphabetArray))[0]
-            ));
-        });
-        it('should return `false` when a list is not suffix of second list', () => {
-            expectTrue(all(
-                negateF2(isSuffixOf('!@#')),
-                splitAt(length(alphabetString) - 2, tails(alphabetString))[0]
-            ));
-            expectTrue(all(
-                negateF2(isSuffixOf('!@#'.split(''))),
-                splitAt(length(alphabetString) - 2, tails(alphabetArray))[0]
-            ));
-        });
-    });
-
-    describe('#isInfixOf', () => {
-        it('should return `true` when a list is infixed with another', () => {
-            const results = concatMap(candidate => [
-                isInfixOf(candidate, alphabetString),
-                isInfixOf(candidate, alphabetArray)
-            ], ['abc', 'efg', 'xyz']);
-            expectTrue(and(results));
-        });
-        it('should return `false` when a list is not infix of second list', () => {
-            expectTrue(and([
-                negateF2(isInfixOf('!@#'))(alphabetString),
-                negateF2(isInfixOf('!@#'.split(''))(alphabetArray))
-            ]));
-        });
-    });
-
-    describe('#isSubsequenceOf', () => {
-        it('should return true a list is sub-sequence of another.', () => {
-            const listToSearchIn = take(6, alphabetString);
-            expectTrue(all(
-                listToSearchFor => isSubsequenceOf(listToSearchFor, listToSearchIn),
-                ['bdf', 'ace', 'abc', 'def']
-            ));
-        });
-        it('should return false a list is not sub-sequence of another.', () => {
-            const listToSearchIn = take(6, drop(6, alphabetString));
-            expectTrue(all(
-                listToSearchFor => !isSubsequenceOf(listToSearchFor, listToSearchIn),
-                ['bdf', 'ace', 'abc', 'def']
-            ));
-        });
-    });
-
-    describe('#notElem', () => {
-        it('should return `false` when the element is found in given list', () => {
-            const word = 'hello world';
-            expectTrue(
-                all(() => all((elm2, ind2, arr) => !notElem(elm2, arr), word),
-                    [word.split(''), word]));
-        });
-        it('should return `true` when element is not found in given list', () => {
-            const word = 'hello world';
-            expect(
-                all(elm =>
-                        all(
-                            (elm2, ind2, arr) => notElem('z', arr), elm
-                        ),
-                    [word.split(''), word]
-                )
-            )
-                .toEqual(true);
         });
     });
 
@@ -815,35 +704,7 @@ describe('#list', () => {
         });
     });
 
-    describe('#intersectBy', () => {
-        const equality = (a, b) => a === b;
-        // it ('should have more tests written');
-        it('should return an empty list when receiving an empty list', () => {
-            expectEqual(length(intersectBy(equality, [], [1, 2, 3])), 0);
-        });
-        it('should return an empty list when receiving an empty list as parameter 2', () => {
-            expectEqual(length(intersectBy(equality, [1, 2, 3], [])), 0);
-        });
-        it('should return an empty list when both arrays passed are empty', () => {
-            expectEqual(length(intersectBy(equality, [], [])), 0);
-        });
-        it('should return an intersection of the two arrays on equality function', () => {
-            let testCases = [
-                // subj1, subj2, expectLen, expectedElements
-                [[1, 2, 3], [1, 2, 3, 4, 5], 3, [1, 2, 3]],
-                [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 3, [1, 2, 3]],
-                [[1, 2, 3, 4, 5], [1, 2, 3], 3, [1, 2, 3]]
-            ];
-            testCases.forEach(testCase => {
-                let [subj1, subj2, expectedLen, expectedElms] = testCase,
-                    result = intersectBy(equality, subj1, subj2);
-                expectEqual(result.length, expectedLen);
-                result.forEach((elm, ind) => {
-                    expectEqual(elm, expectedElms[ind]);
-                });
-            });
-        });
-    });
+
 
     describe('#groupBy', () => {
         it('should return a list of lists which contain the (sequential) matches on equality function', () => {

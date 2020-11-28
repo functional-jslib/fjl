@@ -2,25 +2,24 @@ import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
 import {length} from "../../packages/platform/object";
 import {Lengthable} from "../../packages/types";
 
-describe('#length', () => {
-    it('is should return the length of any item that has a `length` property', () => {
-        [
-            [[], 0],
-            [vowelsString, vowelsString.length],
-            [vowelsArray, vowelsArray.length],
-            [(a, b, c) => a + b + c, 3],
-            [function (a, b, c) { return a + b + c; }, 3],
-            [{}, undefined],
-            [0, undefined],
-            [false, undefined]
-        ]
-            .forEach(([item, expected]) =>
-                expectEqual(length(item as Lengthable), expected)
-            );
-    });
-    it('should throw an error when `undefined` or `null` is passed in', () => {
-        expectError(length);
-        expectError(() => length(undefined));
-        expectError(() => length(null));
-    });
+describe('#lengths', () => {
+    [
+        [null, 0],
+        [undefined, 0],
+        [[], 0],
+        [vowelsString, vowelsString.length],
+        [vowelsArray, vowelsArray.length],
+        [(a, b, c): number => a + b + c, 3],
+        [function (a, b, c): number {
+            return a + b + c;
+        }, 3],
+        [{}, undefined],
+        [0, undefined],
+        [false, undefined]
+    ]
+        .forEach(([item, expected]) => {
+            it(`length(${JSON.stringify(item)} === ${expected}`, () => {
+                expect(length(item as Lengthable)).toEqual(expected);
+            });
+        });
 });
