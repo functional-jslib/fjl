@@ -80,7 +80,7 @@ export const
      * @param x {*}
      * @returns {Boolean}
      */
-    isFunction = <T>(x: T): boolean => x && x instanceof Function,
+    isFunction = <T>(x: T): boolean => isset(x) && x instanceof Function,
 
     /**
      * Strict type checker.  Checks if given value is a direct instance of given type;  E.g.,
