@@ -11,7 +11,7 @@ export const
      * @param obj {(Object|Array|*)}
      * @returns {Array.<*, *>}
      */
-    toAssocList = obj => keys(obj).map(key => [key, obj[key]]),
+    toAssocList = <T>(obj: T): [keyof T, any][] => Object.entries(obj) as [keyof T, any][],
 
     /**
      * Returns an associated list from given object (deeply (on incoming object's type)).
