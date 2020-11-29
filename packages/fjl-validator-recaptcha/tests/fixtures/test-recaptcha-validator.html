@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test ReCaptcha Validator</title>
+</head>
+<body>
+    <form name="recaptcha-test-form" action="/test-recaptcha-validator" method="post">
+        <fieldset>
+            <legend>ReCaptcha Validator Test</legend>
+            <div class="g-recaptcha"
+                 data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+            <input type="submit" value="Submit" />
+        </fieldset>
+    </form>
+    <script id="recaptcha-api-script-tag"
+            src="https://www.google.com/recaptcha/api.js"></script>
+</body>
+</html>
