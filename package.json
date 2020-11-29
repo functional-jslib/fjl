@@ -7,7 +7,6 @@
   "types": "./dist/es/index.d.ts",
   "scripts": {
     "build": "echo \"Not yet implemented.\"",
-    "test-builds": "jest --testMatch **/tests/*-test-*.ts",
     "test": "jest --config ./jest.config.js",
     "docs": "echo \"Not yet implemented.\""
   },
