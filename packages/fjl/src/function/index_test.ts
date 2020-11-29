@@ -12,7 +12,7 @@ import {
     falsyList,
     subtract,
     truthyList
-} from "../tests/helpers";
+} from "../../tests/helpers";
 import {flip, flip3, flip4, flip5, flipN} from "./flip";
 import {fnOrError} from "./fnOrError";
 import {id} from "./id";

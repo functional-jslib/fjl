@@ -13,15 +13,6 @@
     "strictFunctionTypes": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "outDir": "./dist/es"
-  },
-  "exclude": [
-    "dist/",
-    "node_modules/",
-    "packages/**/*_test.ts"
-  ],
-  "include": [
-    "packages/**/*.ts"
-  ]
+    "esModuleInterop": true
+  }
 }

@@ -7,7 +7,7 @@ import {
     expectLength,
     vowelsArray,
     vowelsString
-} from "../tests/helpers";
+} from "../../tests/helpers";
 import {camelCase, classCase, lcaseFirst, lines, ucaseFirst, unlines, unwords, words} from "./index";
 
 describe('#lines', () => {

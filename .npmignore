@@ -1,17 +1,17 @@
 
 # Dot files
-.idea/
-.eslint*
-.travis*
-.git*
+**/.idea
+**/.editorconfig
+**/.eslint*
+**/.travis*
+**/.git*
 
 # Dirs
-markdown-fragments/
-markdown-fragments-generated/
-node_modules/
-node-scripts/
+**/markdown-fragments*
+**/node_modules/
+**/node-scripts/
 
 # Files
-babel*
-jest*
+**/babel*
+**/jest*
 

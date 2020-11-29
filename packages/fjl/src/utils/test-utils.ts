@@ -1,7 +1,7 @@
 import {range} from "../list";
 
 import {Nameable} from "../types";
-import {curry2_} from "../tests/helpers/curry_";
+import {curry2_} from "../../tests/helpers/curry_";
 
 export type ConstructorTestCase = [Nameable, any, boolean];
 

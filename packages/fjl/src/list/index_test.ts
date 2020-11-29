@@ -8,7 +8,7 @@ import {
     expectFalse,
     expectLength,
     expectTrue, generalEqualityCheck, genericOrdering, LinkedListNode, linkedListToList, vowelsArray, vowelsString
-} from "../tests/helpers";
+} from "../../tests/helpers";
 import {or} from "./or";
 import {sum} from "./sum";
 import {range} from "./range";

@@ -11,7 +11,7 @@ import {
 }
     from './index';
 
-import {expectError} from '../tests/helpers';
+import {expectError} from '../../tests/helpers';
 import {TypeRef} from "../types";
 
 describe('#errorThrowing', () => {

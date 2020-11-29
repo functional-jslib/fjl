@@ -62,7 +62,7 @@ import {
     alphabetString,
     alphabetArray,
     vowelsString, vowelsArray
-} from '../tests/helpers';
+} from '../../tests/helpers';
 
 import {Nameable, TypeRef} from '../types';
 import {apply} from "../platform/function";
