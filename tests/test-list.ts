@@ -49,22 +49,6 @@ import {
 
 describe('#list', () => {
 
-    describe('#or', () => {
-        it('should return `true` when, at least, one of the items is "truthy".', () => {
-            expectTrue(or([0, false, null, 1, undefined]));
-        });
-        it('should return `false` when all of the items are "falsy".', () => {
-            expectFalse(or([0, false, null, undefined, '']));
-        });
-        it('should return `false` when an empty list is received.', () => {
-            expectFalse(or([]));
-        });
-        it('should throw an error when receiving nothing (`null` or `undefined`).', () => {
-            expectError(() => or(null));
-            expectError(() => or(undefined));
-        });
-    });
-
     describe('#sum', () => {
         it('should be able sum up any given list of numbers list of numbers', () => {
             expectEqual(sum(range(1, 5)), 15);
@@ -433,23 +417,7 @@ describe('#list', () => {
         });
     });
 
-    describe('#nub', () => {
-        it('should remove all but first occurrences of repeat items in a list.', () => {
-            expectEqual(nub('conundrum'.split('')), 'conudrm'.split(''));
-            expectEqual(nub(map(char => char + char, alphabetArray).join('').split('')), alphabetArray);
-        });
-        it('should return a copy of the passed in list with items intact if there ' +
-            'aren\'t any repeat items', () => {
-            expectEqual(nub(alphabetArray), alphabetArray);
-        });
-        it('should return empty lists when receiving empty lists', () => {
-            expectEqual(nub([]), []);
-        });
-        it('should throw Errors when receiving nothing', () => {
-            expectError(() => nub(null));
-            expectError(() => nub(undefined));
-        });
-    });
+
 
     describe('#remove', () => { // same as `delete` (in haskell)
         it('should remove the first occurrence of an item in a list.', () => {
@@ -570,23 +538,6 @@ describe('#list', () => {
         });
     });
 
-    describe('#nubBy', () => {
-        it('should remove all but first occurrences of repeat items in a list.', () => {
-            expectEqual(nubBy(equal, 'conundrum'.split('')), 'conudrm'.split(''));
-            expectEqual(nubBy(equal, map(char => char + char, alphabetArray).join('').split('')), alphabetArray);
-        });
-        it('should return a copy of the passed in list with items intact if there ' +
-            'aren\'t any repeat items', () => {
-            expectEqual(nubBy(equal, alphabetArray), alphabetArray);
-        });
-        it('should return empty lists when receiving empty lists', () => {
-            expectEqual(nubBy(equal, []), []);
-        });
-        it('should throw Errors when receiving nothing', () => {
-            expectError(() => nubBy(equal, null));
-            expectError(() => nubBy(equal, undefined));
-        });
-    });
 
     describe('#removeBy', () => {
         it('should remove the first occurrence of an item in a list.', () => {
