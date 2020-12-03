@@ -1,0 +1,22 @@
+{
+  "name": "fjl-monorepo",
+  "version": "0.0.0",
+  "description": "",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/functional-jslib/fjl.git"
+  },
+  "keywords": [],
+  "author": "Ely De La Cruz <elycruz@elycruz.com>",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/functional-jslib/fjl/issues"
+  },
+  "homepage": "https://github.com/functional-jslib/fjl#readme"
+}
