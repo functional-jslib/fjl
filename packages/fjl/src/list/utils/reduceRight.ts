@@ -1,5 +1,5 @@
 import {reduceUntilRight} from "./reduceUntilRight";
-import alwaysFalse from "../../boolean/alwaysFalse";
+import {alwaysFalse} from "../../boolean/alwaysFalse";
 
 export const
 

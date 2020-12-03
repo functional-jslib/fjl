@@ -1,5 +1,3 @@
-import {all} from "./all";
-import {equal, isTruthy} from "../boolean";
 import {Indexable} from "../types";
 import {isEmpty} from "../object";
 

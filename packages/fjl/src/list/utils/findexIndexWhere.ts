@@ -15,7 +15,7 @@ export const
         let ind = 0;
         const limit = length(arr);
         for (; ind < limit; ind += 1) {
-            const predicateFulfilled = !!pred(arr[ind], ind, arr);
+            const predicateFulfilled = !!pred(arr[ind] as T, ind, arr);
             if (predicateFulfilled) {
                 return ind;
             }

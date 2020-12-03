@@ -13,24 +13,6 @@ export type ConcatFunc<T> = CurryOf1<SliceOf<T>, SliceOf<T>>;
 
 export type SlicePred<T> = TernaryPredOf<T, number, SliceOf<T>>;
 
-export interface SliceOf<T> extends Object {
-    [index: number]: T;
+export type SliceOf<T> = T[] | string;
 
-    readonly length: number;
-
-    concat(...slices: ConcatArray<T>[]): SliceOf<T>;
-
-    slice(startIndex: number, endIndex?: number): SliceOf<T>;
-
-    includes(searchValue: T, fromIndex?: number): boolean;
-
-    indexOf(searchValue: T, fromIndex?: number): number;
-
-    lastIndexOf(searchValue: T, fromIndex?: number): number;
-
-    valueOf(): T;
-
-    [Symbol.iterator](): IterableIterator<T>;
-}
-
-export type Slice<T = any> = SliceOf<T> | string;
+export type Slice<T = any> = T[] | string;

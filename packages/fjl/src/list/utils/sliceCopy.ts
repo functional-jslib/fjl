@@ -1,15 +1,11 @@
-import {SliceOf} from "../../platform/slice";
+import {Slice, SliceOf} from "../../platform/slice";
 import {$sliceFrom} from "./sliceFrom";
 
 export const
 
     /**
-     * Slices a copy of list.
-     * @function list/utils.sliceCopy
-     * @param xs {SliceOf<any>}
-     * @returns {SliceOf<any>}
-     * @generic
+     * Returns a copy of a slice (E.g., an array and/or a string).
      */
-    sliceCopy = <T>(xs: SliceOf<T>): SliceOf<T> => $sliceFrom(0, xs)
+    sliceCopy = <T>(xs: Slice<T>): Slice<T> => $sliceFrom(0, xs)
 
 ;

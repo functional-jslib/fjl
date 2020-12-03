@@ -6,15 +6,13 @@ export * from './types';
 
 export const
 
-    concat: ConcatFunc<unknown> =
-        toCurriedOneOrMoreMethod('concat') as ConcatFunc<unknown>,
-    indexOf: IndexOfFunc<any> =
-        toCurried2Method('indexOf') as IndexOfFunc<any>,
+    concat = toCurriedOneOrMoreMethod('concat') as ConcatFunc<any>,
+
+    indexOf = toCurried2Method('indexOf') as IndexOfFunc<any>,
 
     includes = toCurried2Method('includes') as IncludesFunc<any>,
 
-    lastIndexOf: LastIndexOfFunc<unknown> =
-        toCurried2Method('lastIndexOf') as LastIndexOfFunc<unknown>,
+    lastIndexOf = toCurried2Method('lastIndexOf') as LastIndexOfFunc<any>,
 
     /**
      * (Array|String).prototype.slice

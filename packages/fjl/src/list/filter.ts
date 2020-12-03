@@ -7,13 +7,8 @@ export const
 
     /**
      * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
-     * @function module:list.filter
-     * @param pred {Function}
-     * @param xs {SliceOf<any>}
-     * @returns {Array}
-     * @todo Update this to return `SliceOf<any>`
      */
-    filter = curry(<T>(pred: SlicePred<T>, xs: SliceOf<T>): T[] => {
+    filter = curry(<T>(pred: SlicePred<T>, xs: SliceOf<T>): SliceOf<T> => {
         let ind = 0;
         const limit = xs.length,
             out: any[] = [];
@@ -21,7 +16,7 @@ export const
             return out;
         }
         for (; ind < limit; ind++) {
-            if (pred(xs[ind], ind, xs)) {
+            if (pred(xs[ind] as T, ind, xs)) {
                 out.push(xs[ind]);
             }
         }

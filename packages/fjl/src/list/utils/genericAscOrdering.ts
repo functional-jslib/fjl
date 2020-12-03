@@ -6,10 +6,6 @@ export const
 
     /**
      * Generic ascending ordering func.
-     * @function module:listUtils.$genericAscOrdering
-     * @param a {any}
-     * @param b {any}
-     * @return {number} - -1, 0, 1
      */
     $genericAscOrdering = <T>(a: T, b: T): number => {
         if (a > b) {
@@ -21,12 +17,7 @@ export const
     },
 
     /**
-     * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.)
-     * @function module:listUtils.genericAscOrdering
-     * @param a {*}
-     * @param b {*}
-     * @returns {number} - -1, 0, 1
-     * @curried At upto 2 params.
+     * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.).
      */
     genericAscOrdering = curry($genericAscOrdering) as CurryOf2<any, any, number>
 

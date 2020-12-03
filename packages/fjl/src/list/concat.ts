@@ -6,17 +6,13 @@ import {SliceOf} from "../platform/slice";
 export const
     /**
      * Concatenates all the elements of a container of lists.
-     * @haskellType `concat :: Foldable t => t [a] -> [a]`
-     * @function module:list.concat
-     * @param xs {Array|String|*}
-     * @returns {Array|String|*} - 'Cated' of passed in type.
      */
     concat = <T>(xs: SliceOf<T>[]): SliceOf<T> => {
         let item0;
-        switch (length(xs)) {
+        switch (xs.length) {
             case undefined:
             case 0:
-                return <SliceOf<T>>[];
+                return [] as unknown as SliceOf<T>;
             case 1:
                 item0 = xs[0];
                 return item0 && item0.slice ? sliceCopy(item0) : item0;

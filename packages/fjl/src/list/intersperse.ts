@@ -25,9 +25,9 @@ export const
         const out = of(xs) as Array<T>;
         for (; i < limit; i += 1) {
             if (i === lastInd) {
-                out.push(xs[i]);
+                out.push(xs[i] as T);
             } else {
-                out.push(xs[i], between);
+                out.push(xs[i] as T, between);
             }
         }
         return out;
