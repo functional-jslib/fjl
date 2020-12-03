@@ -20,13 +20,13 @@ export interface ErrorMessageCtx {
     messageSuffix?: string;
 }
 
-export type ErrorIfNotTypeThrower = (
+export type ErrorIfNotTypeThrower<T> = (
     type: TypeRef, contextName: string,
-    valueName: string, value: any, messageSuffix: any) => any;
+    valueName: string, value: T, messageSuffix?: any) => T;
 
-export type ErrorIfNotTypesThrower = (
+export type ErrorIfNotTypesThrower<T> = (
     types: TypeRef[], contextName: string,
-    valueName: string, value: any) => any;
+    valueName: string, value: T) => T;
 
 export type ErrorMessageCtxToString = (errorMessageCtx: ErrorMessageCtx) => string;
 
@@ -69,13 +69,13 @@ export const
     _getErrorIfNotTypeThrower = <T>(
         tmplStrCallback: ErrorMessageCtxToString,
         typeChecker: TypeCheckerPred<TypeRef, any> = isOfType
-    ) =>
+    ): ErrorIfNotTypeThrower<T> =>
         (ValueType: TypeRef,
          contextName: string,
          valueName: string,
          value: T,
-         messageSuffix = ''
-        ): T | void => {
+         messageSuffix?: string
+        ): T => {
             const expectedTypeName = toTypeRef(ValueType),
                 foundTypeName = typeOf(value);
             // If value `Type` matches `ValueType` return it ...
@@ -96,13 +96,13 @@ export const
     _getErrorIfNotTypesThrower = <T>(
         tmplStrCallback: ErrorMessageCtxToString,
         typeChecker: TypeCheckerPred<TypeRef, any> = isOfType
-    ) =>
+    ): ErrorIfNotTypesThrower<T> =>
         (valueTypes: TypeRef[],
          contextName: string,
          valueName: string,
          value: T,
          messageSuffix = ''
-        ): T | void => {
+        ): T  => {
             const expectedTypeNames = valueTypes.map(toTypeRef),
                 matchFound = valueTypes.some(ValueType => typeChecker(ValueType, value)),
                 foundTypeName = typeOf(value);
@@ -122,14 +122,14 @@ export const
      * is not of given `type`.  This is the un-curried version.  For the curried version
      * see `module:errorThrowing.errorIfNotType`.
      */
-    _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall),
+    _errorIfNotType = _getErrorIfNotTypeThrower(defaultErrorMessageCall) as ErrorIfNotTypeThrower<any>,
 
     /**
      * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
      *  is not of one of the given `types`.  This is the un-curried version.  For the curried version
      * see `module:errorThrowing.errorIfNotTypes`.
      */
-    _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall),
+    _errorIfNotTypes = _getErrorIfNotTypesThrower(defaultErrorMessageCall) as ErrorIfNotTypesThrower<any>,
 
     /**
      * Returns a function that can be used to ensure that values are of a given type.
@@ -138,7 +138,7 @@ export const
      */
     getErrorIfNotTypeThrower = (tmplCtxToStrFunc: ErrorMessageCtxToString):
         CurryOf4<TypeRef, string, string, any, any | void> => curry4(
-        _getErrorIfNotTypeThrower(tmplCtxToStrFunc) as ErrorIfNotTypeThrower
+        _getErrorIfNotTypeThrower(tmplCtxToStrFunc)
     ) as CurryOf4<TypeRef, string, string, any, any | void>,
 
     /**
@@ -148,7 +148,7 @@ export const
      */
     getErrorIfNotTypesThrower = (tmplCtxToStrFunc: ErrorMessageCtxToString):
         CurryOf4<TypeRef[], string, string, any, any | void> => curry(
-        _getErrorIfNotTypesThrower(tmplCtxToStrFunc) as ErrorIfNotTypesThrower
+        _getErrorIfNotTypesThrower(tmplCtxToStrFunc)
     ) as CurryOf4<TypeRef[], string, string, any, any | void>,
 
     /**

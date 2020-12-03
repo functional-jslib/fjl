@@ -1,5 +1,5 @@
 import {curry, CurryOf2} from "../../function/curry";
-import {$slice, SliceOf} from "../../platform/slice";
+import {$slice, Slice, SliceOf} from "../../platform/slice";
 
 export const
 
@@ -11,8 +11,8 @@ export const
      * @returns {SliceOf<any>}
      * @generic
      */
-    $sliceTo = <T>(toInd: number, xs: SliceOf<T>): SliceOf<T> =>
-        $slice(0, toInd, xs) as SliceOf<T>,
+    $sliceTo = <T>(toInd: number, xs: Slice<T>): Slice<T> =>
+        $slice(0, toInd, xs) as Slice<T>,
 
     /**
      * Slices from index `0` to given index.

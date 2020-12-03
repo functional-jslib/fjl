@@ -28,5 +28,9 @@ export interface SliceOf<T> extends Object {
 
     lastIndexOf(searchValue: T, fromIndex?: number): number;
 
+    valueOf(): T;
+
     [Symbol.iterator](): IterableIterator<T>;
 }
+
+export type Slice<T = any> = SliceOf<T> | string;

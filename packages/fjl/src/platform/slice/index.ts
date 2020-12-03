@@ -1,4 +1,4 @@
-import {ConcatFunc, IncludesFunc, IndexOfFunc, LastIndexOfFunc, SliceOf} from "./types";
+import {ConcatFunc, IncludesFunc, IndexOfFunc, LastIndexOfFunc, Slice, SliceOf} from "./types";
 import {toCurried2Method, toCurriedOneOrMoreMethod} from "../../utils";
 import {curry3, CurryOf3} from "../../function";
 
@@ -19,13 +19,13 @@ export const
     /**
      * (Array|String).prototype.slice
      */
-    $slice = <T>(start: number, end: number, xs: SliceOf<T>): SliceOf<T> =>
-        xs.slice(start, end) as SliceOf<T>,
+    $slice = <T>(start: number, end: number, xs: Slice<T>): Slice<T> =>
+        xs.slice(start, end) as Slice<T>,
 
     /**
      * (Array|String).prototype.slice
      */
-    slice = curry3($slice) as CurryOf3<number, number, SliceOf<any>, SliceOf<any>>
+    slice = curry3($slice) as CurryOf3<number, number, Slice, Slice>
 
 ;
 
