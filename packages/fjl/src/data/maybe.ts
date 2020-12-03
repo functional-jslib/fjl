@@ -2,8 +2,8 @@
  * @module maybe
  */
 import {isset} from '../object/is';
-import {curry, id, trampoline} from '../function';
-import {getMonadUnwrapper, Monad, MonadBase, MonadConstructor} from './monad';
+import {curry, CurryOf1, id} from '../function';
+import {Monad, MonadBase, MonadConstructor, unwrapMonadByType} from './monad';
 import {UnaryOf} from "../types";
 import {FunctorMapFn} from "./types";
 import {instanceOf} from "../platform/object";
@@ -126,8 +126,6 @@ export const
 
 export type  Maybe<T> = Just<T> | Nothing;
 
-const [justUnWrapper, justUnWrapperTailCallName] = getMonadUnwrapper(Just);
-
 export const
     /**
      * The maybe function takes a `replacement` value, a function (unary operation), and a Maybe value.
@@ -147,17 +145,17 @@ export const
     /**
      * Unwraps just (recursively).
      */
-    unWrapJust = trampoline(justUnWrapper, justUnWrapperTailCallName),
+    unwrapJust = unwrapMonadByType(Just) as UnaryOf<Monad<any>, any>,
 
     /**
      * Unwraps maybe (recursively) or returns `Nothing`.
      */
-    unWrapMaybe = <T>(x: T): Maybe<T> | T => isNothing(x) ? nothing() : unWrapJust(x),
+    unwrapMaybe = <T>(x: Maybe<T>): Maybe<T> | T => isNothing(x) ? nothing() : unwrapJust(x),
 
     /**
      * Equality operator for maybes.
      */
-    maybeEqual = curry(<A, B>(a: A, b: B) => unWrapMaybe(a) === unWrapMaybe(b)),
+    maybeEqual = curry(<A, B>(a: Maybe<A>, b: Maybe<B>) => unwrapMaybe(a) === unwrapMaybe(b)),
 
     /**
      * Checks for maybe.
@@ -165,7 +163,7 @@ export const
     isMaybe = <T>(x: T): boolean => isNothing(x) || isJust(x),
 
     /**
-     * Returns a `Maybe` (always) from `x`.
+     * Always returns a `Maybe` (from `x`).
      */
     alwaysMaybe = <T>(x: T): Maybe<T> => {
         if (!isset(x)) {
