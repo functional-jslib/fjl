@@ -17,7 +17,7 @@ export const
     },
 
     /**
-     * Generic 'ascending order' ordering function (use by the likes of `list.sort` etc.).
+     * Generic 'ascending order' ordering function (same type as function used in `[].sort` etc.).
      */
     genericAscOrdering = curry($genericAscOrdering) as CurryOf2<any, any, number>
 

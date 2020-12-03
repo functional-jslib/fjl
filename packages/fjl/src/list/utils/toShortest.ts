@@ -8,9 +8,6 @@ export const
 
     /**
      * Trims all lists to shortest in `lists`.
-     * @function module:listUtils.$toShortest
-     * @param lists {...any[]}
-     * @return {any[][]}
      */
     $toShortest = <T>(...lists: T[][]): T[][] => {
         const listLengths = lengths(...lists),
@@ -22,9 +19,6 @@ export const
     /**
      * Returns a list of lists trimmed to the shortest length in given list of lists.   @background This method is used by the `zip*` functions to achieve their
      *  'slice to smallest' functionality.
-     * @function module:listUtils.toShortest
-     * @param lists {...(SliceOf<any>)}
-     * @returns {SliceOf<any>}
      * @curried At two or more.
      */
     toShortest = curry2($toShortest) as CurryOf2<any, any, [any[]]>

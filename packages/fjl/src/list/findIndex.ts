@@ -1,11 +1,16 @@
-import {findIndexWhere} from "./utils";
+import {$findIndexWhere, findIndexWhere} from "./utils";
 
 export const
-    /**
-     * Finds index in string or list (alias for `findIndex`).
-     * @function module:list.findIndex
-     * @param pred {Function} - Predicate<element, index, arr>.
-     * @param arr {Array|String}
-     * @returns {Number} - `-1` if predicate not matched else `index` found
-     */
-    findIndex = findIndexWhere;
+
+  /**
+   * Finds index in slice that matches given predicate or -1.
+   */
+  $findIndex = $findIndexWhere,
+
+  /**
+   * Finds index slice that matches given predicate or -1.
+   * Curried version of `$findIndex`.
+   */
+  findIndex = findIndexWhere
+
+;

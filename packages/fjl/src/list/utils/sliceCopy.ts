@@ -1,4 +1,4 @@
-import {Slice, SliceOf} from "../../platform/slice";
+import {Slice} from "../../platform/slice";
 import {$sliceFrom} from "./sliceFrom";
 
 export const

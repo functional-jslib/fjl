@@ -30,7 +30,7 @@ export const
   },
 
   /**
-   * Reduces until predicate.
+   * Reduces a slice until predicate returns `true`.
    */
   reduceUntil = curry($reduceUntil) as ReduceUntil<any, any>
 
