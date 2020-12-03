@@ -65,7 +65,7 @@ import {scanr} from "./scanr";
 import {scanr1} from "./scanr1";
 import {any} from "./any";
 import isTruthy from "../boolean/isTruthy";
-import {SliceOf} from "../platform/slice";
+import {Slice, SliceOf} from "../platform/slice";
 
 describe('#all', () => {
     // @todo tablelize tests here
@@ -320,7 +320,7 @@ describe('#tails', () => {
         'non-omitting sequential sets that start with the last item', () => {
         const limit = length(alphabetString);
         expectTrue(all(
-            (item, ind) => {
+            (item, ind: number) => {
                 const headOfLast = head(item);
                 return length(item) ? length(item) === limit - ind &&
                     headOfLast === alphabetString[ind] : true;
@@ -328,7 +328,7 @@ describe('#tails', () => {
             tails(alphabetString)
         ));
         expectTrue(all(
-            (item, ind) => {
+            (item, ind: number) => {
                 const headOfLast = head(item);
                 return length(item) ? length(item) === limit - ind &&
                     headOfLast === alphabetArray[ind] : true;

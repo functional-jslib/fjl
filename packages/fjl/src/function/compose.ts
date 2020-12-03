@@ -6,4 +6,4 @@ import {UnaryOf} from "../types";
  * the function on the left of itself.
  */
 export const compose = <T, RetT>(...fns: UnaryOf<any, any>[]): UnaryOf<T, RetT> =>
-        (arg0: T): RetT => reduceRight((value, fn) => fn(value), arg0, fns);
+  (arg0: T): RetT => reduceRight((value, fn) => fn(value), arg0, fns);
