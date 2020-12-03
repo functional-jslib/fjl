@@ -6,25 +6,25 @@ import {keys} from "../platform/object";
 
 export type Any<Pred, Functor> = CurryOf2<Pred, Functor, boolean>;
 
-/**
- * Returns true if any item in container passes predicate `p`.
- * @function module:list.any
- * @param p {Function} - Predicate; E.g, `(x, i, xs) => boolean`.
- * @param xs {Array|String}
- * @returns {Boolean}
- */
-export const any = curry(
-    <T>(p: PredForIndexable<T>, xs: Indexable<T>): boolean => {
-        let ind = 0;
-        const ks= keys(xs),
-            limit = length(ks);
-        if (!limit) {
-            return false;
-        }
-        for (; ind < limit; ind += 1) {
-            if (p(xs[ks[ind]])) {
-                return true;
-            }
-        }
-        return false;
-    }) as Any<PredForIndexable<any>, Indexable<any>>;
+export const
+
+  $any = <T>(p: PredForIndexable<T>, xs: Indexable<T>): boolean => {
+    let ind = 0;
+    const ks = keys(xs),
+      limit = length(ks);
+    if (!limit) {
+      return false;
+    }
+    for (; ind < limit; ind += 1) {
+      if (p(xs[ks[ind]])) {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  /**
+   * Returns true if any item in container passes predicate `p`.
+   * @curried
+   */
+    any = curry($any) as Any<PredForIndexable<any>, Indexable<any>>;

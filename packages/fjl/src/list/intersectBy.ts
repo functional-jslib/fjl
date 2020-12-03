@@ -6,11 +6,6 @@ export const
 
     /**
      * Returns an intersection by predicate.
-     * @function module:list.intersectBy
-     * @param pred {Function} - `pred :: a -> b -> Bool`
-     * @param list1 {Array}
-     * @param list2 {Array}
-     * @return {Array}
      */
     intersectBy = curry((pred, list1, list2) =>
         foldl((agg, a) =>

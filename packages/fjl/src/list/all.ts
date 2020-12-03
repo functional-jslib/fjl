@@ -23,9 +23,6 @@ export const $all = <T>(p: PredForIndexable<T>, xs: Indexable<T>): boolean => {
 
 /**
  * Returns true if all items in container return `true` for predicate `p`.
- * @function module:list.all
- * @param p {Function} - Predicate; `(x, i, xs) => boolean`.
- * @param xs {Array|Object|String}
- * @returns {Boolean}
+ * @curried
  */
 export const all = curry($all) as All<PredForIndexable<any>, Indexable<any>>;
