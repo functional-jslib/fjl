@@ -71,6 +71,8 @@ export const
 
   isVowel = (x: string): boolean => vowelsString.indexOf(x) > -1,
 
+  notIsVowel = (x: string): boolean => !isVowel(x),
+
   jsonClone = (x: string): object => JSON.parse(JSON.stringify(x)),
 
   falsyList = [undefined, null, false, 0, ''],

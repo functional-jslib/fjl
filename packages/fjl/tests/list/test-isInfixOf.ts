@@ -1,19 +1,23 @@
-import {and, concatMap, isInfixOf} from "../../src/list";
-import {alphabetArray, alphabetString, expectTrue} from "../helpers";
-import {negateF2} from "../../src/function";
+import {isInfixOf} from "../../src/list";
+import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../../src/utils/test-utils";
+import {Slice} from "../../src/platform/slice";
 
 describe('#isInfixOf', () => {
-    it('should return `true` when a list is infixed with another', () => {
-        const results = concatMap(candidate => [
-            isInfixOf(candidate, alphabetString),
-            isInfixOf(candidate, alphabetArray)
-        ], ['abc', 'efg', 'xyz']);
-        expectTrue(and(results));
-    });
-    it('should return `false` when a list is not infix of second list', () => {
-        expectTrue(and([
-            negateF2(isInfixOf('!@#'))(alphabetString),
-            negateF2(isInfixOf('!@#'.split(''))(alphabetArray))
-        ]));
+  (<[Slice, Slice, boolean][]>[
+    ['', '', false],
+    [[], [], false],
+    [vowelsString, vowelsString, true],
+    [vowelsArray, vowelsArray, true],
+    [alphabetString, 'abc', true],
+    [alphabetArray, ['x', 'y', 'z'], true],
+    [alphabetString, 'efg', true],
+    ['!@#', vowelsString, false],
+    ['!@#'.split(''), vowelsArray, false],
+  ])
+    .forEach(([xs1, xs2, expected]) => {
+      it(`isInfixOf(${JSON.stringify(xs1)}, ${JSON.stringify(xs2)} === ${expected}`, () => {
+        const rslt = isInfixOf(xs1, xs2);
+        expect(rslt).toEqual(expected);
+      });
     });
 });

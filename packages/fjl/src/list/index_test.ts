@@ -10,11 +10,11 @@ import {
   expectTrue, generalEqualityCheck, genericOrdering, LinkedListNode, linkedListToList, vowelsArray, vowelsString
 } from "../../tests/helpers";
 import {
-  all, and, any, append, concatMap, drop, findIndex, foldl, groupBy, head,
+  all, and, any, append, concatMap, drop, filter, findIndex, foldl, groupBy, head,
   init,
   inits, insertBy, intercalate, intersectBy, isInfixOf, isPrefixOf,
   isSubsequenceOf,
-  isSuffixOf, minimum, notElem, nub, nubBy, or, product, range, remove,
+  isSuffixOf, length, minimum, notElem, nub, nubBy, or, product, range, remove,
   removeBy, removeFirstsBy,
   scanl, scanl1,
   scanr, scanr1, sort,
@@ -23,10 +23,14 @@ import {
   unzipN,
   zip, zipN, zipWith
 } from "./index";
-import {SliceOf} from "../platform/slice";
+import {Slice, SliceOf} from "../platform/slice";
 import {camelCase, classCase, lcaseFirst, lines, ucaseFirst, unlines, unwords, words} from "../string";
-import {isTruthy} from "../boolean";
 import {compose, negateF2} from "../function";
+import {isVowel, notIsVowel, revVowelsArray} from "../utils/test-utils";
+import {PredForSliceOf} from "./types";
+import {Unary} from "../types";
+
+const {stringify} = JSON;
 
 describe('#all', () => {
   (<[boolean[], boolean][]>[
@@ -37,7 +41,7 @@ describe('#all', () => {
     [[false, false], false],
   ])
     .forEach(([xs, expected]) => {
-      it(`all(${JSON.stringify(xs)}) === ${expected}`, () => {
+      it(`all(${stringify(xs)}) === ${expected}`, () => {
         const rslt = all(Boolean, xs);
         expect(rslt).toEqual(expected);
       });
@@ -53,7 +57,7 @@ describe('#and', () => {
     [[false, false], true],
   ])
     .forEach(([xs, expected]) => {
-      it(`and(${JSON.stringify(xs)}) === ${expected}`, () => {
+      it(`and(${stringify(xs)}) === ${expected}`, () => {
         const rslt = and(xs);
         expect(rslt).toEqual(expected);
       });
@@ -71,7 +75,7 @@ describe('#any', () => {
     [[true, true], true],
   ])
     .forEach(([xs, expected]) => {
-      it(`any(${predicateToTest}, ${JSON.stringify(xs)}) === ${expected}`, () => {
+      it(`any(${predicateToTest}, ${stringify(xs)}) === ${expected}`, () => {
         const rslt = any(predicateToTest, xs);
         expect(rslt).toEqual(expected);
       });
@@ -144,21 +148,21 @@ describe('#append', () => {
 });
 
 describe('#findIndex', () => {
-  const word = 'abcdefg';
-  it('should find an index where predicate is satisfied', () => {
-    expectTrue(
-      word.split('')
-        .every((char, ind, arr) =>
-          findIndex((x, ind2) => ind === ind2 && x === word[ind], arr) === ind));
-  });
-  it('should return `-1` when item is not found in populated list', () => {
-    const nonAlphaList = '!@#$%^&*()_+'.split(''),
-      vowels = 'aeiou'.split('');
-    vowels.forEach(char => {
-      const result = findIndex(x => x === char, nonAlphaList);
-      expect(result).toEqual(-1);
+  (<[SliceOf<string>, PredForSliceOf<string>, number][]>[
+    ['', isVowel, -1],
+    [[], isVowel, -1],
+    [vowelsArray, isVowel, 0],
+    [vowelsString, isVowel, 0],
+    [vowelsString, notIsVowel, -1],
+    [alphabetString, notIsVowel, 1],
+    [alphabetArray, notIsVowel, 1],
+  ])
+    .forEach(([word, pred, expected]) => {
+      it(`findIndex(${pred}, ${stringify(word)}) === ${expected}`, () => {
+        const rslt = findIndex(pred, word);
+        expect(rslt).toEqual(expected);
+      });
     });
-  });
 });
 
 describe('#intersect', () => {
@@ -346,120 +350,96 @@ describe('#isSuffixOf', () => {
 });
 
 describe('#isInfixOf', () => {
-  it('should return `true` when a list is infixed with another', () => {
-    const results = concatMap(candidate => [
-      isInfixOf(candidate, alphabetString),
-      isInfixOf(candidate, alphabetArray)
-    ], ['abc', 'efg', 'xyz']);
-    expectTrue(and(results));
-  });
-  it('should return `false` when a list is not infix of second list', () => {
-    expectTrue(and([
-      negateF2(isInfixOf('!@#'))(alphabetString),
-      negateF2(isInfixOf('!@#'.split(''))(alphabetArray))
-    ]));
-  });
+  (<[Slice, Slice, boolean][]>[
+    ['', '', false],
+    [[], [], false],
+    [vowelsString, vowelsString, true],
+    [vowelsArray, vowelsArray, true],
+    [alphabetString, 'abc', true],
+    [alphabetArray, ['x', 'y', 'z'], true],
+    [alphabetString, 'efg', true],
+    ['!@#', vowelsString, false],
+    ['!@#'.split(''), vowelsArray, false],
+  ])
+    .forEach(([xs1, xs2, expected]) => {
+      it(`isInfixOf(${stringify(xs1)}, ${stringify(xs2)} === ${expected}`, () => {
+        const rslt = isInfixOf(xs1, xs2);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });
 
 describe('#isSubsequenceOf', () => {
-  it('should return true a list is sub-sequence of another.', () => {
-    const listToSearchIn = take(6, alphabetString);
-    expectTrue(all(
-      listToSearchFor => isSubsequenceOf(listToSearchFor, listToSearchIn),
-      ['bdf', 'ace', 'abc', 'def']
-    ));
-  });
-  it('should return false a list is not sub-sequence of another.', () => {
-    const listToSearchIn = take(6, drop(6, alphabetString));
-    expectTrue(all(
-      listToSearchFor => !isSubsequenceOf(listToSearchFor, listToSearchIn),
-      ['bdf', 'ace', 'abc', 'def']
-    ));
-  });
+  (<[Slice, Slice, boolean][]>[
+    ['abc', alphabetString, true],
+    ['bad', alphabetString, true],
+    ['cab', alphabetString, true],
+    ['ace', alphabetString, true],
+    ['#!@', vowelsString, false],
+    ['!@#$%', 'abc', false],
+    ['!@#$%'.split(''), 'abc'.split(''), false],
+    [['!'], vowelsArray, false],
+    [['!'], vowelsArray, false],
+  ])
+    .forEach(([xs1, xs2, expected]) => {
+      it(`isSubsequenceOf(${stringify(xs1)}, ${stringify(xs2)} === ${expected}`, () => {
+        const rslt = isSubsequenceOf(xs1, xs2);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });
 
 describe('#notElem', () => {
-  it('should return `false` when the element is found in given list', () => {
-    const word = 'hello world';
-    expectTrue(
-      all(() => all((elm2, ind2, arr) => !notElem(elm2, arr), word),
-        [word.split(''), word]));
-  });
-  it('should return `true` when element is not found in given list', () => {
-    const word = 'hello world';
-    expect(
-      all(elm =>
-          all(
-            (elm2, ind2, arr) => notElem('z', arr), elm
-          ),
-        [word.split(''), word]
-      )
-    )
-      .toEqual(true);
-  });
+  (<[Slice, any, boolean][]>[
+    [vowelsArray, 'z', true],
+    [vowelsString, 'z', true],
+    [vowelsString, null, true],
+    [vowelsArray, null, true],
+    [vowelsString, undefined, true],
+    [vowelsArray, undefined, true],
+    ['', null, true],
+    [[], undefined, true],
+  ]
+    .concat(vowelsArray.flatMap(c => [[vowelsArray, c, false], [vowelsString, c, false]])))
+    .forEach(([xs, x, expected]) => {
+      it(`notElem(${stringify(xs)}, ${stringify(x)} === ${expected}`, () => {
+        const rslt = notElem(xs, x);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });
 
 describe('#zip', () => {
-  it('should be able to zip two lists into a list of tuples (list of two items).', () => {
-    const [list1, list2] = splitAt(length(alphabetArray) / 2, alphabetArray),
-      result = zip(list1, list2),
-      expectedResult = foldl((agg, item, ind) => {
-        agg.push([item, list2[ind]]);
-        return agg;
-      }, [], list1);
-    expectTrue(all(() => 13, [length(list1), length(list2)]));
-    expectEqual(length(result), length(expectedResult));
-    expectTrue(all((tuple, ind) => tuple[0] === expectedResult[ind][0] &&
-      tuple[1] === expectedResult[ind][1]
-      , result));
-  });
-  it('should return an empty list when empty lists are passed', () => {
-    expectEqual(zip([], []), []);
-  });
-  it('should return a copy of the passed in populated list when one of them is not populated.', () => {
-    expectEqual(zip([], alphabetArray), []);
-    expectEqual(zip(alphabetArray, []), []);
-  });
+  (<[any[], any[], [any, any]][]>[
+    [[], [], []],
+    [vowelsArray, [], []],
+    [[], vowelsArray, []],
+    [vowelsArray, vowelsArray, vowelsArray.map(x => [x, x])],
+    [vowelsArray, revVowelsArray, vowelsArray.map((x, i) => [x, revVowelsArray[i]])]
+  ])
+    .forEach(([xs1, xs2, expected]) => {
+      it(`zip(${stringify(xs1)}, ${stringify(xs2)}) === ${stringify(expected)}`, () => {
+        const rslt = zip(xs1, xs2);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });
 
 describe('#zipN', () => {
-  it('should be able to zip the given number of lists.', () => {
-    // Unfold alphabet array into an array with arrays of 5 items (as our initial subject).
-    const subj = unfoldr(remainder => {
-        return !length(remainder) ?
-          undefined : splitAt(5, remainder);
-      }, take(25, alphabetArray)),
+  (<[any[][], any[]][]>[
+    [[[], [], []], []],
+    [[vowelsArray, [], []], []],
+    [[[], [], vowelsArray, []], []],
+    [[vowelsArray, vowelsArray], vowelsArray.map(x => [x, x])],
+    [[vowelsArray, revVowelsArray], vowelsArray.map((x, i) => [x, revVowelsArray[i]])]
+  ])
+    .forEach(([xss, expected]) => {
 
-      subj2 = [
-        range(1, 5),
-        range(8, 13),
-        [],
-        range(13, 21),
-        []
-      ],
-
-      subj3 = filter(length, subj),
-
-      subj4 = filter(length, subj2),
-
-      testCases = [subj, subj2, subj3, subj4].map(s => [zipN.apply(null, s), s])
-    ;
-
-    testCases.forEach(([results, subjects]) => {
-      results.forEach((list, ind) => {
-        list.forEach((char, ind2) => {
-          expectEqual(char, subjects[ind2][ind]);
-        });
+      it(`zipN(${xss.map(x => stringify(x)).join(', ')}) === ${stringify(expected)}`, () => {
+        const rslt = zipN(...xss);
+        expect(rslt).toEqual(expected);
       });
     });
-  });
-  it('should return an empty list when empty lists are passed in', () => {
-    expectEqual(zipN([], []), []);
-  });
-  it('should return a copy of the left or right populated list when the other(s) is/are empty.', () => {
-    expectEqual(zipN([], alphabetArray), []);
-    expectEqual(zipN(alphabetArray, []), []);
-  });
 });
 
 describe('#zipWith', () => {
