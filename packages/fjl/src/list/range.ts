@@ -1,7 +1,7 @@
 /**
  * @module object
  */
-import {curry} from '../function/curry';
+import {curry, curry2} from '../function/curry';
 
 /**
  * Normalizes step for `from` and `to` combination.
@@ -21,7 +21,7 @@ export const
    *  (forces `step` to be negative if range required is in the negative direction
    *  and forces `step` to be positive if range required is in the other direction).
    */
-  range = curry((from: number, to: number, step = 1): number[] => {
+  range = curry2((from: number, to: number, step = 1): number[] => {
     let i = from;
     const out: number[] = [];
     step = normalizeStep(from, to, step);

@@ -8,6 +8,7 @@ import {compose} from '../function/compose';
 import {join} from '../platform/array';
 import {_errorIfNotType} from '../errorThrowing';
 import {SliceOf} from "../platform/slice";
+import {UnaryOf} from "../types";
 
 export {split};
 
@@ -16,12 +17,12 @@ export const
   /**
    * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
    */
-  lines = split(/[\n\r]/gm),
+  lines = split(/[\n\r]/gm) as UnaryOf<string, string[]>,
 
   /**
    * Splits a string on all '\s' and/or all '\t' characters.
    */
-  words = split(/[\s\t]/gm),
+  words = split(/[\s\t]/gm) as UnaryOf<string, string[]>,
 
   /**
    * Intersperse an array of strings with '\s' and then concats them.

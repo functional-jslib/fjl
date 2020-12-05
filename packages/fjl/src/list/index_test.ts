@@ -10,11 +10,11 @@ import {
   expectTrue, generalEqualityCheck, genericOrdering, LinkedListNode, linkedListToList, vowelsArray, vowelsString
 } from "../../tests/helpers";
 import {
-  all, and, any, append, concatMap, drop, filter, findIndex, foldl, groupBy, head,
+  all, and, any, append, concat, concatMap, drop, filter, findIndex, foldl, groupBy, head,
   init, inits, insertBy, intercalate, intersectBy, isInfixOf, isPrefixOf,
   isSubsequenceOf, isSuffixOf,
-  length, minimum, notElem, nub, nubBy, or, product, range, remove,
-  removeBy, removeFirstsBy,
+  length, map, minimum, notElem, nub, nubBy, or, product, range, remove,
+  removeBy, removeFirstsBy, reverse,
   scanl, scanl1, scanr, scanr1, sort,
   sortOn, splitAt, stripPrefix, sum, tail, tails, take,
   unfoldr, union, unionBy,
@@ -27,6 +27,7 @@ import {isVowel, notIsVowel, revVowelsArray} from "../utils/test-utils";
 import {PredForSliceOf} from "./types";
 import {TuplizeOp} from "./zipWith";
 import {isEven} from "../number";
+import {Unary} from "../types";
 
 const {stringify} = JSON;
 
@@ -440,13 +441,13 @@ describe('#zipN', () => {
 });
 
 describe('#zipWith', () => {
-  const tuplize = (a, b) => [a, b];
+  const pair = (a, b) => [a, b];
   (<[TuplizeOp<any, any>, any[], any[], [any, any]][]>[
-    [tuplize, [], [], []],
-    [tuplize, vowelsArray, [], []],
-    [tuplize, [], vowelsArray, []],
-    [tuplize, vowelsArray, vowelsArray, vowelsArray.map(x => [x, x])],
-    [tuplize, vowelsArray, revVowelsArray, vowelsArray.map((x, i) => [x, revVowelsArray[i]])]
+    [pair, [], [], []],
+    [pair, vowelsArray, [], []],
+    [pair, [], vowelsArray, []],
+    [pair, vowelsArray, vowelsArray, vowelsArray.map(x => [x, x])],
+    [pair, vowelsArray, revVowelsArray, vowelsArray.map((x, i) => [x, revVowelsArray[i]])]
   ])
     .forEach(([op, xs1, xs2, expected]) => {
       it(`zipWith(${stringify(xs1)}, ${stringify(xs2)}) === ${stringify(expected)}`, () => {
@@ -547,21 +548,20 @@ describe('#words', () => {
   });
   it('should return a copy of original list when no whitespace characters are found.', () => {
     // subject | expectedLength | shallowEqualsTo
-    const subjectsAndExpLens = [
+    (<[string, number, string[]][]>[
       [alphabetString, 1, [alphabetString]],
-      ['helloworld', 1, ['helloworld']]
-    ];
+      [vowelsString, 1, [vowelsString]]
+    ])
+      .forEach(tuple => {
+        const [subj, expectedLen, shallowEqualsTo] = tuple,
+          result = words(subj);
 
-    subjectsAndExpLens.forEach(tuple => {
-      const [subj, expectedLen, shallowEqualsTo] = tuple,
-        result = words(subj);
+        // Check length of result
+        expectLength(expectedLen, result);
 
-      // Check length of result
-      expectLength(expectedLen, result);
-
-      // Check split string
-      expectEqual(shallowEqualsTo, result);
-    });
+        // Check split string
+        expectEqual(shallowEqualsTo, result);
+      });
   });
   it('should throw Errors when receiving nothing', () => {
     expectError(() => words(null));
@@ -649,7 +649,7 @@ describe('#remove', () => { // same as `delete` (in haskell)
 });
 
 describe('#union', () => {
-  const mixedMatchRange = append(range(13, 8, -1), range(1, 3));
+  const mixedMatchRange = range(13, 8, -1).concat(range(1, 3));
   // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
   // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
   // [ascRanges, descRanges] =
@@ -708,42 +708,42 @@ describe('#union', () => {
 });
 
 describe('#sort', () => {
-  it('should sort a list in ascending order', () => {
-    expectEqual(sort(range(10, 0, -1)), range(0, 10, 1));
-    expectEqual(sort(range(0, 10)), range(0, 10));
-    compose(expectEqual(__, alphabetArray), sort, reverse)(alphabetArray);
-    compose(/*log,*/ sort, reverse)(alphabetArray);
-  });
-  it('should return a copy of original list when said list is already sorted', () => {
-    compose(expectEqual(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
-    compose(expectEqual(__, ['a', 'b', 'c']), sort, take(3))(alphabetArray);
-    compose(expectEqual(__, alphabetArray), sort)(alphabetArray);
-    compose(expectEqual(__, range(0, 10)), sort)(range(0, 10));
-  });
-  it('should return an empty list when receiving an empty list', () => {
-    expectEqual(sort([]), []);
-  });
+  (<[any[], any[]][]>[
+    [[2, 3, 1], [3, 2, 1]],
+    [[1, 3, 2], [3, 2, 1]],
+    [[1, 2, 3], [3, 2, 1]],
+    [[3, 2, 1], [3, 2, 1]],
+    [[], []],
+  ])
+    .forEach(([xs, expected]) => {
+      it(`sort(${stringify(xs)}) === ${stringify(expected)}`, () => {
+        const rslt = sort(xs);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });
 
 describe('#sortOn', () => {
   const identity = x => x,
-    sortOnIdentity = sortOn(identity),
-    range0To10 = range(0, 10),
-    range10To0 = range(10, 0, -1);
-  it('should sort a list in ascending order', () => {
-    expectEqual(sortOnIdentity(range10To0), range0To10);
-    expectEqual(sortOnIdentity(range0To10), range0To10);
-    compose(expectEqual(__, alphabetArray), sortOnIdentity, reverse)(alphabetArray);
-    compose(/*log,*/ sortOnIdentity, reverse)(alphabetArray);
-  });
-  it('should return a copy of original list when said list is already sorted', () => {
-    compose(expectEqual(__, ['a', 'b', 'c']), sortOnIdentity, take(3))(alphabetArray);
-    compose(expectEqual(__, alphabetArray), sortOnIdentity)(alphabetArray);
-    compose(expectEqual(__, range0To10), sortOnIdentity)(range0To10);
-  });
-  it('should return an empty list when receiving an empty list', () => {
-    expectEqual(sortOnIdentity([]), []);
-  });
+    second = <T1, T2>(tuple: [T1, T2]): T2 => tuple[1],
+    first = <T1, T2>(tuple: [T1, T2]): T1 => tuple[0],
+    vowelsChainRevAssocList =
+      vowelsArray.map((c, i, xs) => [c, vowelsArray[vowelsArray.length - i - 1]]);
+  (<[Unary<any>, any[], any[]][]>[
+    [identity, [2, 3, 1], [3, 2, 1]],
+    [identity, [1, 3, 2], [3, 2, 1]],
+    [identity, [1, 2, 3], [3, 2, 1]],
+    [identity, [3, 2, 1], [3, 2, 1]],
+    [identity, [], []],
+    [second, vowelsChainRevAssocList, vowelsChainRevAssocList.reverse()],
+    [first, vowelsChainRevAssocList.reverse(), vowelsChainRevAssocList],
+  ])
+    .forEach(([op, xs, expected]) => {
+      it(`sortOn(${stringify(xs)}) === ${stringify(expected)}`, () => {
+        const rslt = sortOn(op, xs);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });
 
 describe('#nubBy', () => {
@@ -821,7 +821,7 @@ describe('#removeFirstsBy', () => {
 });
 
 describe('#unionBy', () => {
-  const mixedMatchRange = append(range(13, 8, -1), range(1, 3)),
+  const mixedMatchRange = range(13, 8, -1).concat(range(1, 3)),
     // ascRangeArgs = [[1, 2], [3, 5], [8, 13], [21, 24]],
     // descRangeArgs = reverse(map(tuple => append(reverse(tuple), [-1]), ascRangeArgs)),
     equalityCheck = (a, b) => a === b;
@@ -1132,7 +1132,7 @@ describe('#camelCase', () => {
   it('should throw an error when receiving an empty-string or any value that is not a string', () => {
     [null, undefined, [], {}]
       .forEach(xs =>
-        expectError(() => camelCase(xs))
+        expectError(() => camelCase(xs as Slice))
       );
   });
 });

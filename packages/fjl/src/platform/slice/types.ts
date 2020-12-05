@@ -15,4 +15,4 @@ export type SlicePred<T> = TernaryPredOf<T, number, SliceOf<T>>;
 
 export type SliceOf<T> = T[] | string;
 
-export type Slice<T = any> = T[] | string;
+export type Slice<T = string> = T[] | string;

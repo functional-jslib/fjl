@@ -3,7 +3,7 @@ import {isEmpty} from "../object";
 
 export const
   /**
-   * Conjuction of container of booleans (or truthy and/or falsy values);  Returns
+   * Conjunction of container of booleans (or truthy and/or falsy values);  Returns
    * `true` if all in container are 'truthy' else returns `false`
    */
   and = <T>(xs: Indexable<T>): boolean => {
