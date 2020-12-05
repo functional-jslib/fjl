@@ -1,9 +1,13 @@
 import {findIndexWhereRight} from "../../src/list/utils";
 import {PredForSliceOf} from "../../src/list/types";
 import {SliceOf} from "../../src/platform/slice";
-import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
+import {
+  alphabetArray,
+  vowelsArray,
+  vowelsString
+} from "../helpers";
 
-describe(`#listUtils.findIndexWhereRight`, () => {
+describe(`#findIndexWhereRight`, () => {
     const getPredForEqualTo = <T>(a: T): PredForSliceOf<T> => (b: T): boolean => a === b;
 
     (<[PredForSliceOf<any>, SliceOf<any>, number][]>[]

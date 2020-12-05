@@ -1,4 +1,4 @@
-import {vowelsArray} from "../helpers";
+import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../helpers";
 import {lengths} from "../../src/list/utils";
 import {SliceOf} from "../../src/platform/slice";
 

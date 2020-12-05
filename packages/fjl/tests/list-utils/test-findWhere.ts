@@ -1,9 +1,9 @@
 import {findWhere} from "../../src/list/utils/findWhere";
 import {PredForSliceOf} from "../../src/list/types";
 import {SliceOf} from "../../src/platform/slice";
-import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
+import {alphabetArray, alphabetString, expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
 
-describe(`#listUtils.findWhere`, () => {
+describe(`#findWhere`, () => {
     const getPredForEqualTo = <T>(a: T): PredForSliceOf<T> => (b: T): boolean => a === b;
 
     (<[PredForSliceOf<any>, SliceOf<any>, number][]>[]

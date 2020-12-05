@@ -1,7 +1,7 @@
 import {findIndicesWhere} from "../../src/list/utils/findIndicesWhere";
 import {PredForSliceOf} from "../../src/list/types";
 import {SliceOf} from "../../src/platform/slice";
-import {alphabetCharCodeRange} from "../helpers";
+import {alphabetCharCodeRange, alphabetString, expectEqual, expectError, vowelIndices, vowelsArray} from "../helpers";
 
 describe(`#listUtils.findIndicesWhere`, () => {
     const oddPred = (x: number): boolean => x % 2 !== 0,
