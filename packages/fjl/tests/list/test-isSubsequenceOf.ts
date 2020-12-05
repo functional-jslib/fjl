@@ -1,19 +1,23 @@
-import {all, drop, isSubsequenceOf, take} from "../../src/list";
-import {alphabetString, expectTrue} from "../helpers";
+import {isSubsequenceOf} from "../../src/list";
+import {alphabetString, vowelsArray, vowelsString} from "../helpers";
+import {Slice} from "../../src/platform";
 
 describe('#isSubsequenceOf', () => {
-    it('should return true a list is sub-sequence of another.', () => {
-        const listToSearchIn = take(6, alphabetString);
-        expectTrue(all(
-            listToSearchFor => isSubsequenceOf(listToSearchFor, listToSearchIn),
-            ['bdf', 'ace', 'abc', 'def']
-        ));
-    });
-    it('should return false a list is not sub-sequence of another.', () => {
-        const listToSearchIn = take(6, drop(6, alphabetString));
-        expectTrue(all(
-            listToSearchFor => !isSubsequenceOf(listToSearchFor, listToSearchIn),
-            ['bdf', 'ace', 'abc', 'def']
-        ));
+  (<[Slice, Slice, boolean][]>[
+    ['abc', alphabetString, true],
+    ['bad', alphabetString, true],
+    ['cab', alphabetString, true],
+    ['ace', alphabetString, true],
+    ['#!@', vowelsString, false],
+    ['!@#$%', 'abc', false],
+    ['!@#$%'.split(''), 'abc'.split(''), false],
+    [['!'], vowelsArray, false],
+    [['!'], vowelsArray, false],
+  ])
+    .forEach(([xs1, xs2, expected]) => {
+      it(`isSubsequenceOf(${JSON.stringify(xs1)}, ${JSON.stringify(xs2)} === ${expected}`, () => {
+        const rslt = isSubsequenceOf(xs1, xs2);
+        expect(rslt).toEqual(expected);
+      });
     });
 });

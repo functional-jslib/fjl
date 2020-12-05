@@ -2,36 +2,35 @@ import {alphabetArray, expectEqual, linkedListToList} from "../helpers";
 import {scanr} from "../../src/list";
 
 describe('#scanr', () => {
-    const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+  const unlinkedNodes = alphabetArray.map(char => ({data: char}));
 
-    it('should return a list of successively reduced values from left to right', () => {
-        // Generate linked-list structure
-        const result = scanr((agg, item) => {
-            agg.next = item;
-            item.next = null;
-            return item;
-        }, {}, unlinkedNodes);
+  it('should return a list of successively reduced values from left to right', () => {
+    // Generate linked-list structure
+    const result = scanr((agg, item) => {
+      agg.next = item;
+      item.next = null;
+      return item;
+    }, {}, unlinkedNodes);
 
-        // Expect every item in result to be a linked list with remaining items linked to said item
-        expect(
-            result.every(node => {
-                const nodesList = linkedListToList(node);
-                return alphabetArray.slice(0, alphabetArray.indexOf(node.data) + 1)
-                    .reverse()
-                    .every((char, ind1) => {
-                        const charCodeToTest = char.charCodeAt(0);
-                        return nodesList.slice(ind1).every((data, ind2) =>
-                            data.data.charCodeAt(0) + ind2 === charCodeToTest
-                        );
-                    });
-            })
-        )
-            .toEqual(true);
-    });
+    // Expect every item in result to be a linked list with remaining items linked to said item
+    expect(
+      result.every(node => {
+        const nodesList = linkedListToList(node);
+        return alphabetArray.slice(0, alphabetArray.indexOf(node.data) + 1)
+          .reverse()
+          .every((char, ind1) => {
+            const charCodeToTest = char.charCodeAt(0);
+            return nodesList.slice(ind1).every((data, ind2) =>
+              data.data.charCodeAt(0) + ind2 === charCodeToTest
+            );
+          });
+      })
+    )
+      .toEqual(true);
+  });
 
-    it('should return an empty list when receiving an empty one', () => {
-        expectEqual(scanr(x => x * 2, 99, []), []);
-        expectEqual(scanr(x => x + 2, '99', ''), []);
-    });
+  it('should return an empty list when receiving an empty one', () => {
+    expectEqual(scanr(x => x * 2, 99, []), []);
+    expectEqual(scanr(x => x + 2, '99', ''), []);
+  });
 });
-
