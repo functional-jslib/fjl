@@ -1,4 +1,4 @@
-import {isLeft, isRight, Left, Right, either, toLeft, toRight} from './either';
+import {isLeft, isRight, Left, Right, either, toLeft, toRight} from '../../src/data/either';
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'];
 

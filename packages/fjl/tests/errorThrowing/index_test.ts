@@ -9,10 +9,10 @@ import {
     errorIfNotType,
     errorIfNotTypes
 }
-    from './index';
+    from '../../src/errorThrowing';
 
-import {expectError} from '../../tests/helpers';
-import {TypeRef} from "../types";
+import {expectError} from '../helpers';
+import {TypeRef} from "../../src/types";
 
 describe('#errorThrowing', () => {
 

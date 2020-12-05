@@ -5,7 +5,6 @@
 import {compose} from '../src/function';
 import {curry2_, __} from './helpers/curry_';
 import {range} from '../src/list/range';
-import {Slice, SliceOf} from "../src/platform/slice";
 
 export interface LinkedListNode {data: string, next?: LinkedListNode}
 

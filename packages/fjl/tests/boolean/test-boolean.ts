@@ -1,5 +1,5 @@
-import {alwaysFalse, alwaysTrue, equal, isFalsy, isTruthy} from "./index";
-import {falsyList, truthyList} from "../utils/test-utils";
+import {alwaysFalse, alwaysTrue, equal, isFalsy, isTruthy} from "../../src/boolean";
+import {falsyList, truthyList} from "../../src/utils/test-utils";
 
 describe("#alwaysFalse", () => {
     it('should return `false`', () => {

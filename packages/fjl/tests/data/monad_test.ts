@@ -1,8 +1,8 @@
-import {just, nothing} from "./maybe";
-import {Monad, join, valueOf, fmap, ap, flatMap} from "./monad";
-import {left, right} from "./either";
-import {Applicative, FunctorMapFn} from "./types";
-import {id} from "../function";
+import {just, nothing} from "../../src/data/maybe";
+import {Monad, join, valueOf, fmap, ap, flatMap} from "../../src/data/monad";
+import {left, right} from "../../src/data/either";
+import {Applicative, FunctorMapFn} from "../../src/data/types";
+import {id} from "../../src/function";
 
 describe('#valueOf()', () => {
     (<[Monad<any>, any][]>[

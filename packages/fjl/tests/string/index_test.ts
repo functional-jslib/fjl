@@ -1,4 +1,4 @@
-import {intercalate, length} from "../list";
+import {intercalate, length} from "../../src/list";
 import {
   alphabetArray,
   alphabetString,
@@ -7,9 +7,9 @@ import {
   expectLength,
   vowelsArray,
   vowelsString
-} from "../../tests/helpers";
-import {camelCase, classCase, lcaseFirst, lines, ucaseFirst, unlines, unwords, words} from "./index";
-import {Slice} from "../platform";
+} from "../helpers";
+import {camelCase, classCase, lcaseFirst, lines, ucaseFirst, unlines, unwords, words} from "../../src/string";
+import {Slice} from "../../src/platform";
 
 describe('#lines', () => {
   it('should split a string on all new line characters.', () => {

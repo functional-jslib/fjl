@@ -1,9 +1,9 @@
-import {add} from "../utils/test-utils";
-import {apply} from './apply';
-import {call} from "../platform/function";
-import {compose} from "./compose";
-import {Binary, Nary, Unary, UnaryPred} from "../types";
-import {curry, Curry, Curry1, curry2, Curry2, curry3, Curry3, curry4, curry5, Curry5, curryN} from "./curry";
+import {add} from "../../src/utils/test-utils";
+import {apply} from '../../src/function/apply';
+import {call} from "../../src/platform/function";
+import {compose} from "../../src/function/compose";
+import {Binary, Nary, Unary, UnaryPred} from "../../src/types";
+import {curry, Curry, Curry1, curry2, Curry2, curry3, Curry3, curry4, curry5, Curry5, curryN} from "../../src/function/curry";
 import {
     alphabetArray,
     expectEqual,
@@ -12,15 +12,15 @@ import {
     falsyList,
     subtract,
     truthyList
-} from "../../tests/helpers";
-import {flip, flip3, flip4, flip5, flipN} from "./flip";
-import {fnOrError} from "./fnOrError";
-import {id} from "./id";
-import {negateF, negateF2, negateF3, negateFN} from "./negate";
-import {noop} from "./noop";
-import {toFunction} from "./toFunction";
-import {trampoline} from "./trampoline";
-import {until} from "./until";
+} from "../helpers";
+import {flip, flip3, flip4, flip5, flipN} from "../../src/function/flip";
+import {fnOrError} from "../../src/function/fnOrError";
+import {id} from "../../src/function/id";
+import {negateF, negateF2, negateF3, negateFN} from "../../src/function/negate";
+import {noop} from "../../src/function/noop";
+import {toFunction} from "../../src/function/toFunction";
+import {trampoline} from "../../src/function/trampoline";
+import {until} from "../../src/function/until";
 
 describe('#apply', () => {
     it('apply instanceof Function', function () {

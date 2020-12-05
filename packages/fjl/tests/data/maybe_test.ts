@@ -1,6 +1,6 @@
-import {just, isJust, Just, Nothing, nothing, isNothing, Maybe, isMaybe, toMaybe, maybe} from './maybe';
-import {join} from './monad';
-import {falsyList} from "../utils/test-utils";
+import {just, isJust, Just, Nothing, nothing, isNothing, Maybe, isMaybe, toMaybe, maybe} from '../../src/data/maybe';
+import {join} from '../../src/data/monad';
+import {falsyList} from "../../src/utils/test-utils";
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'];
 

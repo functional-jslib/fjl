@@ -1,5 +1,5 @@
-import {vowelsArray, isVowel, consonantsArray, nonAlphaNumsArray} from "../../utils/test-utils";
-import {every, ArrayPred} from "./index";
+import {vowelsArray, isVowel, consonantsArray, nonAlphaNumsArray} from "../../src/utils/test-utils";
+import {every, ArrayPred} from "../../src/platform/array";
 
 describe('array.every', () => {
     (<[any[], ArrayPred<any>, boolean][]>[

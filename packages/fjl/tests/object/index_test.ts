@@ -48,9 +48,9 @@ import {
     defineProp,
     defineEnumProp,
     defineProps, defineEnumProps
-} from './index';
+} from '../../src/object';
 
-import {subsequences, all, unfoldr} from '../list';
+import {subsequences, all, unfoldr} from '../../src/list';
 
 import {
     expectTrue,
@@ -62,10 +62,10 @@ import {
     alphabetString,
     alphabetArray,
     vowelsString, vowelsArray
-} from '../../tests/helpers';
+} from '../helpers';
 
-import {Nameable, TypeRef} from '../types';
-import {apply} from "../platform/function";
+import {Nameable, TypeRef} from '../../src/types';
+import {apply} from "../../src/platform/function";
 
 describe('#object', function () {
     const charCodeToCharMap = (() => {
