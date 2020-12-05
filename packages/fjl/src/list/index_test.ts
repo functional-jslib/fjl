@@ -11,24 +11,22 @@ import {
 } from "../../tests/helpers";
 import {
   all, and, any, append, concatMap, drop, filter, findIndex, foldl, groupBy, head,
-  init,
-  inits, insertBy, intercalate, intersectBy, isInfixOf, isPrefixOf,
-  isSubsequenceOf,
-  isSuffixOf, length, minimum, notElem, nub, nubBy, or, product, range, remove,
+  init, inits, insertBy, intercalate, intersectBy, isInfixOf, isPrefixOf,
+  isSubsequenceOf, isSuffixOf,
+  length, minimum, notElem, nub, nubBy, or, product, range, remove,
   removeBy, removeFirstsBy,
-  scanl, scanl1,
-  scanr, scanr1, sort,
+  scanl, scanl1, scanr, scanr1, sort,
   sortOn, splitAt, stripPrefix, sum, tail, tails, take,
   unfoldr, union, unionBy,
-  unzipN,
-  zip, zipN, zipWith
+  unzip, unzipN, zip, zipN, zipWith
 } from "./index";
 import {Slice, SliceOf} from "../platform/slice";
 import {camelCase, classCase, lcaseFirst, lines, ucaseFirst, unlines, unwords, words} from "../string";
 import {compose, negateF2} from "../function";
 import {isVowel, notIsVowel, revVowelsArray} from "../utils/test-utils";
 import {PredForSliceOf} from "./types";
-import {Unary} from "../types";
+import {TuplizeOp} from "./zipWith";
+import {isEven} from "../number";
 
 const {stringify} = JSON;
 
@@ -434,7 +432,6 @@ describe('#zipN', () => {
     [[vowelsArray, revVowelsArray], vowelsArray.map((x, i) => [x, revVowelsArray[i]])]
   ])
     .forEach(([xss, expected]) => {
-
       it(`zipN(${xss.map(x => stringify(x)).join(', ')}) === ${stringify(expected)}`, () => {
         const rslt = zipN(...xss);
         expect(rslt).toEqual(expected);
@@ -444,82 +441,47 @@ describe('#zipN', () => {
 
 describe('#zipWith', () => {
   const tuplize = (a, b) => [a, b];
-  it('should be able to zip the given number of lists.', () => {
-    // Unfold alphabet array into an array with arrays of 5 items (as our initial subject).
-    const subj = unfoldr(remainder => {
-        return !length(remainder) ?
-          undefined : splitAt(5, remainder);
-      }, take(25, alphabetArray)),
-
-      subj2 = [
-        range(1, 5),
-        range(8, 13),
-        [],
-        range(13, 21),
-        []
-      ],
-
-      zipWithResult = zipWith(tuplize, ...subj),
-
-      zipWithResult2 = zipWith(tuplize, ...subj2);
-
-    expectTrue(
-      all(tuple =>
-          all((list, ind) =>
-              all((item, ind2) =>
-                item === tuple[1][ind2][ind], list
-              ),
-            tuple[0]
-          ),
-        [[zipWithResult, filter(length, subj)],
-          [zipWithResult2, filter(length, subj2)]]
-      )
-    );
-  });
-  it('should return an empty list when empty lists are passed', () => {
-    expectEqual(zipWith(tuplize, [], []), []);
-  });
-  it('should return a copy of the passed in populated list when one of them is not populated.', () => {
-    expectEqual(zipWith(tuplize, [], alphabetArray), []);
-    expectEqual(zipWith(tuplize, alphabetArray, []), []);
-  });
+  (<[TuplizeOp<any, any>, any[], any[], [any, any]][]>[
+    [tuplize, [], [], []],
+    [tuplize, vowelsArray, [], []],
+    [tuplize, [], vowelsArray, []],
+    [tuplize, vowelsArray, vowelsArray, vowelsArray.map(x => [x, x])],
+    [tuplize, vowelsArray, revVowelsArray, vowelsArray.map((x, i) => [x, revVowelsArray[i]])]
+  ])
+    .forEach(([op, xs1, xs2, expected]) => {
+      it(`zipWith(${stringify(xs1)}, ${stringify(xs2)}) === ${stringify(expected)}`, () => {
+        const rslt = zipWith(op, xs1, xs2);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });
 
 describe('#unzip', () => {
-  it('should be able to unzip a list of tuples of two.', () => {
-    const subj = unfoldr(remainder => {
-        return !length(remainder) ?
-          undefined : splitAt(2, remainder);
-      }, alphabetArray),
+  (<[[any, any][], [any[], any[]]][]>[
+    vowelsArray.reduce((agg, x, i, xs) => {
+        const [tuples, partsList] = agg;
 
-      lenAlphaArray = length(alphabetArray),
+        // Push tuple
+        tuples.push([x, i === xs.length - 1 ? 'y' : xs[i + 1]]);
 
-      result = unzip(subj);
+        // Push part
+        partsList[isEven(i) ? 0 : 1].push(x);
 
-    // First ensure our subject is valid
-    // --------------------------------------
-    // Check that we have tuples of two (list of two in javascript's/our case)
-    expectTrue(all(tuple => length(tuple) === 2, subj));
+        return agg;
+      },
+      [[], [[], []]] as [
+        [any, any][],
+        [any[], any[]]
+      ]
+    )
+  ])
+    .forEach(([tuples, expected]) => {
+      it(`unzip(${stringify(tuples)} === ${stringify(expected)}`, () => {
+        const rslt = unzip(tuples);
+        expect(rslt).toEqual(expected);
+      });
+    });
 
-    // Ensure subject has expected length of items (tuples)
-    expectEqual(length(subj), lenAlphaArray / 2);
-
-    // Test result
-    // ----------------
-    // Ensure we have two lists (one for each part of tuple in `subj`).
-    expectEqual(length(result), 2);
-
-    // Ensure both lists in result have the expected length
-    expectTrue(all(list => length(list) === lenAlphaArray / 2, result));
-
-    // Ensure resulting lists contain expected items
-    expectTrue(all(
-      (list, i) =>
-        all((item, j) => item === subj[j][i], list),
-      result
-    ));
-
-  });
   it('should throw an error when passed in arg is `null` or `undefined`', () => {
     expect(() => unzip(undefined)).toThrow(Error);
     expect(() => unzip(null)).toThrow(Error);
@@ -527,38 +489,14 @@ describe('#unzip', () => {
 });
 
 describe('#unzipN', () => {
-  it('should be able to unzip a list of tuples of any number.', () => {
-    const subj = unfoldr(remainder => {
-        return !length(remainder) ?
-          undefined : splitAt(2, remainder);
-      }, alphabetArray),
-      lenAlphaArray = length(alphabetArray),
-      result = unzipN(subj);
+  (<[[any, any][], [any[], any[]]][]>[])
+    .forEach(([tuples, expected]) => {
+      it(`unzipN(${stringify(tuples)} === ${stringify(expected)}`, () => {
+        const rslt = unzipN(tuples);
+        expect(rslt).toEqual(expected);
+      });
+    });
 
-    // First ensure our subject is valid
-    // --------------------------------------
-    // Check that we have tuples of two (list of two in javascript's/our case)
-    expectTrue(all(tuple => length(tuple) === 2, subj));
-
-    // Ensure subject has expected length of items (tuples)
-    expectEqual(length(subj), lenAlphaArray / 2);
-
-    // Test result
-    // ----------------
-    // Ensure we have two lists (one for each part of tuple in `subj`).
-    expectEqual(length(result), 2);
-
-    // Ensure both lists in result have the expected length
-    expectTrue(all(list => length(list) === lenAlphaArray / 2, result));
-
-    // Ensure resulting lists contain expected items
-    expectTrue(all(
-      (list, i) =>
-        all((item, j) => item === subj[j][i], list),
-      result
-    ));
-
-  });
   it('should throw an error when passed in arg is `null` or `undefined`', () => {
     expect(() => unzipN(undefined)).toThrow(Error);
     expect(() => unzipN(null)).toThrow(Error);

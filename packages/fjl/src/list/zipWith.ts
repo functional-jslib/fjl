@@ -3,6 +3,9 @@ import {length} from "../platform/object";
 import {reduce, toShortest} from "./utils";
 import {push} from "./push";
 import {SliceOf} from "../platform/slice";
+import {BinaryOf, UnaryOf} from "../types";
+
+export type TuplizeOp<T1, T2> = BinaryOf<T1, T2, [T1, T2]>;
 
 export const
     /**
@@ -26,7 +29,7 @@ export const
      * @param xs2 {Array}
      * @returns {Array<Array<*,*>>}
      */
-    zipWith = curry(<T, T2>(op, xs1: SliceOf<T>, xs2: SliceOf<T2>) => {
+    zipWith = curry(<T, T2>(op: BinaryOf<T, T2, [T, T2]>, xs1: SliceOf<T>, xs2: SliceOf<T2>): [T, T2][] => {
         if (!length(xs1) || !length(xs2)) {
             return [];
         }
