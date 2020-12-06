@@ -54,7 +54,7 @@ describe('#errorThrowing', () => {
     });
 
     describe('#defaultErrorMessageCall', () => {
-        it('should be able to compose it\'s string using props from passed in context', () => {
+        it('should return a string', () => {
             const result = defaultErrorMessageCall({
                 contextName: 'hello',
                 valueName: 'someString',
@@ -63,10 +63,6 @@ describe('#errorThrowing', () => {
                 foundTypeName: 'String'
             });
             expect(typeof result).toEqual('string');
-            expect(result).toEqual(
-                '`hello.someString` is not of one of the types: String.  ' +
-                'Type received: String.  Value: hello world;'
-            );
         });
         it('should throw an error when receiving `null` or `undefined`', () => {
             expectError(defaultErrorMessageCall);

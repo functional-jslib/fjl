@@ -1,42 +1,41 @@
 import {expectEqual, expectError, expectInstanceOf, vowelsArray, vowelsString} from "../helpers";
-import map from "../../src/list/map";
+import {map} from "../../src/list/map";
 import {Functor, FunctorMapFn} from "../../src/data/types";
+import {Slice} from "../../src/platform";
+import {StringIndexable} from "../../src/types";
 
 describe('#map', () => {
   const addCharA = char => char + 'a';
+
   it('should be able to map a function over a list.', () => {
     const vowelsObj = vowelsArray.reduce((agg, x, ind) => {
         agg[ind] = x;
         return agg;
-      }, {}),
+      }, {} as StringIndexable),
+
       augmentedVowelsObj = vowelsArray.reduce((agg, x, ind) => {
         agg[ind] = x + 'a';
         return agg;
-      }, {})
-    ;
-    (<[FunctorMapFn<any>, Functor<any>, Functor<any>][]>[
+      }, {} as StringIndexable),
+
+      _id = <T>(x: T): T => x;
+
+    (<[FunctorMapFn<any>, Slice<any>, Slice<any>][]>[
       [addCharA, vowelsArray, vowelsArray.map(addCharA)],
       [addCharA, vowelsString, vowelsString.split('').map(addCharA).join('')],
       [addCharA, vowelsObj, augmentedVowelsObj],
-      [x => x, [], []],
-      [x => x, '', ''],
-      [x => x, {}, {}],
-      [x => x, [undefined], [undefined]]
+      [_id, [], []],
+      [_id, '', ''],
+      [_id, {}, {}],
+      [_id, [undefined], [undefined]]
     ])
       .forEach(([fn, list, expected]) => {
         expect(map(fn, list)).toEqual(expected);
       });
   });
-  it('should work on custom functors', () => {
-    const
-      rslt = map(addCharA, ['a']),
-      expectedFunctor = [addCharA('a')]
-    ;
-    expectInstanceOf(Array, rslt);
-    expectEqual(rslt.value, expectedFunctor.valueOf());
-  });
+
   it('should throw an error when incoming value is not a functor instance', () => {
-    expectError(() => map(x => x, null));
-    expectError(() => map(x => x, undefined)); // curried so requires second parameter (even if undefined).
+    expectError(() => map(x => x, null as unknown as Slice));
+    expectError(() => map(x => x, undefined as unknown as Slice)); // curried so requires second parameter (even if undefined).
   });
 });

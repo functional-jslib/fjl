@@ -4,23 +4,24 @@
 
 import native from "./native";
 import {HasOwnPropertyFunc, InstanceOfFunc} from "./types";
-import {curry, curry2} from "../../function/curry";
-import {toCurried2Method} from "../../utils";
+import {curry2} from "../../function/curry";
 import {Lengthable} from "../../types";
+import {isset} from "../../object";
 
 export * from './types';
 
 export const
 
-    {assign, keys} = Object,
+  {assign, keys} = Object,
 
-    instanceOf = curry2(<T>(X: Function, x: T) => x instanceof X) as InstanceOfFunc,
+  instanceOf = curry2(<T>(X: Function, x: T) => x instanceof X) as InstanceOfFunc,
 
-    length = (x: Lengthable | undefined | null): number => !x ? 0 : x.length,
+  length = (x: Lengthable | undefined | null): number => !isset(x) ? undefined : x.length,
 
-    hasOwnProperty: HasOwnPropertyFunc = toCurried2Method('hasOwnProperty') as HasOwnPropertyFunc
+  hasOwnProperty: HasOwnPropertyFunc = curry2(<T>(propKey: string, x: T): boolean =>
+    Object.prototype.hasOwnProperty.call(x, propKey))
 ;
 
 export {
-    native
+  native
 };

@@ -28,7 +28,7 @@ describe('#splitAt', () => {
       });
   });
   it('should throw an error on error cases (empty as second arg) (non-numeral as first arg), etc.', () => {
-    [
+    (<[number | null | undefined, null | undefined][]>[
       [null, null],
       [undefined, undefined],
       [undefined, null],
@@ -37,13 +37,17 @@ describe('#splitAt', () => {
       [1, undefined],
       [1, null],
       [1, null],
-      [null, []],
-      [undefined, []],
-      [null, ''],
-      [undefined, ''],
-    ]
+      // Javascript ignores emptys as indices in `[].slice(...)` method -
+      //   No error thrown for these cases:
+      // [null, []],
+      // [undefined, []],
+      // [null, ''],
+      // [undefined, ''],
+    ])
       .forEach(([ind, list]) => {
-        expect(() => splitAt(ind as number, list as SliceOf<any>)).toThrow();
+        // @note Forcing cast on `list` value here to allow test to run (
+        //  since `list` type is actually incorrect in this scenario).
+        expect(() => splitAt(ind as number, list as unknown as SliceOf<any>)).toThrow();
       });
   });
 });

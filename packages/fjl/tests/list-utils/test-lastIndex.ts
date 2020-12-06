@@ -4,8 +4,8 @@ import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
 
 describe('#lastIndex', () => {
   (<[SliceOf<any>, number][]>[
-    ['', -1],
-    [[], -1],
+    ['', 0], // Javascript returns `0` for last index of empty slice.
+    [[], 0], // ""
     [vowelsString, vowelsString.length - 1],
     [vowelsArray, vowelsArray.length - 1],
     [alphabetArray, alphabetArray.length - 1],

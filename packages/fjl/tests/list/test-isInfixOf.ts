@@ -8,11 +8,14 @@ describe('#isInfixOf', () => {
     [[], [], false],
     [vowelsString, vowelsString, true],
     [vowelsArray, vowelsArray, true],
-    [alphabetString, 'abc', true],
-    [alphabetArray, ['x', 'y', 'z'], true],
-    [alphabetString, 'efg', true],
+    ['abc', alphabetString, true],
+    [['x', 'y', 'z'], alphabetArray, true],
+    ['efg', alphabetString, true],
     ['!@#', vowelsString, false],
     ['!@#'.split(''), vowelsArray, false],
+    [vowelsString, 'aei', false],
+    [vowelsArray, 'aei'.split(''), false],
+
   ])
     .forEach(([xs1, xs2, expected]) => {
       it(`isInfixOf(${JSON.stringify(xs1)}, ${JSON.stringify(xs2)} === ${expected}`, () => {

@@ -27,7 +27,7 @@ describe('#join()', () => {
 describe('#fmap()', () => {
     (<[Monad<any>, FunctorMapFn<any>, Monad<any>][]>[
         [nothing(), id, nothing()],
-        [just(null), id, nothing()],
+        [just(null), id, just(null)],
         [just(2), x => x * 2, just(4)],
         [[1, 2, 3], x => x * 2, [2, 4, 6]]
     ])
@@ -44,7 +44,7 @@ describe('#ap', () => {
         [just((x: number) => x * 2), just(4), just(8)],
         [just((x: number) => x * 3), just(2), just(6)],
         [just(x => x), nothing(), nothing()],
-        [just(x => x), just(null), nothing()]
+        [just(x => x), just(null), just(null)]
     ])
         .forEach(([applicative, functor, expected]) => {
             it(`${applicative}`, function () {
@@ -57,7 +57,7 @@ describe('#ap', () => {
 describe('#flatMap', () => {
     (<[Monad<any>, FunctorMapFn<any>, Monad<any>][]>[
         [nothing(), id, nothing()],
-        [just(null), id, nothing()],
+        [just(null), id, just(null)],
         [just(2), x => x * 2, just(4)],
         [[1, 2, 3], x => x * 2, [2, 4, 6]]
     ])

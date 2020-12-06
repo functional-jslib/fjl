@@ -85,7 +85,7 @@ export class MonadBase<T> implements Monad<T> {
    * Flat map operation.
    */
   flatMap<RetT = any>(fn: FunctorMapFn<RetT>): Monad<RetT> {
-    const out = unwrapMonadByType(this.constructor as TypeRef, fn(this.join()) as Monad<RetT> | RetT);
+    const out = unwrapMonadByType(this.constructor as TypeRef, this.map(fn) as Monad<RetT> | RetT);
     return (this.constructor as ApplicativeConstructor<RetT>).of(out) as Monad<RetT>;
   }
 
@@ -122,7 +122,7 @@ export const
    * Maps given function over given functor.
    */
   fmap = curry(
-    <T, MapperRet>(fn: FunctorMapFn<MapperRet>, x: Functor<T>): Functor<MapperRet> | Functor => x.map(fn)
+    <T, RetT>(fn: FunctorMapFn<RetT>, x: Functor<T>): Functor<RetT> | Functor => x.map(fn)
   ),
 
   /**
@@ -130,7 +130,7 @@ export const
    * (Same as functional applicative `apply`).  Returns a functor containing the newly
    * returned value from the application.
    */
-  ap = curry(<A, B, RetT>(applicative: Applicative<A>, functor: Functor<B>): Functor<RetT> => applicative.ap(functor)),
+  ap = curry(<A, B, RetT>(app: Applicative<A>, functor: Functor<B>): Functor<RetT> => app.ap(functor)),
 
   /**
    * Flat maps a function over given monad's contained value.

@@ -20,12 +20,12 @@ export interface Nameable {
     readonly name: string;
 }
 
-export interface StringIndexable<T> {
+export interface StringIndexable<T = any> {
     [index: string]: T;
 }
 
-export interface NumberIndexable<T> {
+export interface NumberIndexable<T = any> {
     [index: number]: T;
 }
 
-export type Indexable<T> = StringIndexable<T> | NumberIndexable<T>;
+export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
