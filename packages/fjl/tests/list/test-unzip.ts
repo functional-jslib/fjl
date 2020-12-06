@@ -1,14 +1,18 @@
-import {all, length, splitAt, unfoldr, unzip} from "../../src/list";
-import {alphabetArray, expectEqual, expectTrue, vowelsArray} from "../helpers";
+import {unzip} from "../../src/list";
+import {vowelsArray} from "../helpers";
 import {isEven} from "../../src/number";
 
 describe('#unzip', () => {
   (<[[any, any][], [any[], any[]]][]>[
-    vowelsArray.reduce((agg, x, i, xs) => {
+    [[], [[], []]],
+    [[[]], [[], []]],
+    vowelsArray.concat(['y']).reduce((agg, x, i, xs) => {
         const [tuples, partsList] = agg;
 
-        // Push tuple
-        tuples.push([x, i === xs.length - 1 ? 'y' : xs[i + 1]]);
+        // If is odd push tuple into list
+        if (!isEven(i)) {
+          tuples.push([xs[i - 1], x]);
+        }
 
         // Push part
         partsList[isEven(i) ? 0 : 1].push(x);

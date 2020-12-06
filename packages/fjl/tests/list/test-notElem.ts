@@ -16,7 +16,7 @@ describe('#notElem', () => {
     .concat(vowelsArray.flatMap(c => [[vowelsArray, c, false], [vowelsString, c, false]])))
     .forEach(([xs, x, expected]) => {
       it(`notElem(${JSON.stringify(xs)}, ${JSON.stringify(x)} === ${expected}`, () => {
-        const rslt = notElem(xs, x);
+        const rslt = notElem(x, xs);
         expect(rslt).toEqual(expected);
       });
     });

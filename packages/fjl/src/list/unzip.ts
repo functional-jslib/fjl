@@ -10,8 +10,10 @@ export const
             throw new Error(`\`unzip\` expects a value.  Received ${JSON.stringify(xss)}`);
         }
         return foldl((agg, item) => {
-            agg[0].push(item[0]);
-            agg[1].push(item[1]);
+            if (item.length) {
+              agg[0].push(item[0]);
+              agg[1].push(item[1]);
+            }
             return agg;
         }, [[], []], xss);
     }
