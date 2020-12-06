@@ -1,4 +1,4 @@
-import {vowelsArray, isVowel, consonantsArray, nonAlphaNumsArray} from "../../src/utils/test-utils";
+import {vowelsArray, isVowel, consonantsArray, nonAlphaNumsArray} from "../helpers";
 import {every, ArrayPred} from "../../src/platform/array";
 
 describe('array.every', () => {

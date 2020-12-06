@@ -21,6 +21,6 @@ export const
      *  'slice to smallest' functionality.
      * @curried At two or more.
      */
-    toShortest = curry2($toShortest) as CurryOf2<any, any, [any[]]>
+    toShortest = curry2($toShortest) as CurryOf2<any, any, any[][]>
 
 ;

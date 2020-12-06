@@ -1,5 +1,5 @@
 import {partition} from "../../src/list";
-import {alphabetArray, alphabetString, isVowel, vowelsArray} from "../../src/utils/test-utils";
+import {alphabetArray, alphabetString, isVowel, vowelsArray} from "../helpers";
 import {SliceOf} from "../../src/platform/slice";
 import {PredForSliceOf} from "../../src/list/types";
 

@@ -1,6 +1,6 @@
 import {all, foldl, length, splitAt, zip} from "../../src/list";
 import {alphabetArray, expectEqual, expectTrue, vowelsArray} from "../helpers";
-import {revVowelsArray} from "../../src/utils/test-utils";
+import {revVowelsArray} from "../helpers";
 
 describe('#zip', () => {
   (<[any[], any[], [any, any]][]>[

@@ -6,137 +6,149 @@ import {compose} from '../src/function';
 import {curry2_, __} from './helpers/curry_';
 import {range} from '../src/list/range';
 
-export interface LinkedListNode {data: string, next?: LinkedListNode}
+export interface LinkedListNode {
+  data: string;
+  next?: LinkedListNode;
+}
 
 export * from './helpers/curry_';
 
-export const  expectInstanceOf = curry2_((instance, value) => expect(value).toBeInstanceOf(instance)),
+export const expectInstanceOf = curry2_((instance, value) => expect(value).toBeInstanceOf(instance)),
 
-    expectFunction = value => expectInstanceOf(Function, value),
+  expectFunction = value => expectInstanceOf(Function, value),
 
-    expectEqual = curry2_((value, value2) => expect(value).toEqual(value2)),
+  expectEqual = curry2_((value, value2) => expect(value).toEqual(value2)),
 
-    expectFalse = value => expectEqual(value, false),
+  expectFalse = value => expectEqual(value, false),
 
-    expectTrue = value => expectEqual(value, true),
+  expectTrue = value => expectEqual(value, true),
 
-    expectLength = curry2_((len, element) => compose(expectEqual(__, len), length)(element)),
+  expectLength = curry2_((len, element) => compose(expectEqual(__, len), length)(element)),
 
-    expectError = curry2_(fn => expect(fn).toThrow()),
+  expectError = curry2_(fn => expect(fn).toThrow()),
 
-    hasOwnProperty = (instance, key) => Object.prototype.hasOwnProperty.call(instance, key),
+  hasOwnProperty = (instance, key) => Object.prototype.hasOwnProperty.call(instance, key),
 
-    length = something => something.length,
+  length = something => something.length,
 
-    add = curry2_((...args) => {
-        return args.reduce((agg, num) => num + agg, 0);
+  shallowCompareOnLeft = curry2_((incoming, against) => Array.isArray(incoming) ?
+    shallowCompareArraysLeft(incoming, against) :
+    shallowCompareObjectsLeft(incoming, against)),
+
+  shallowCompareArraysLeft = curry2_((incoming, against) => !incoming.some((_, ind) => against[ind] !== incoming[ind])),
+
+  shallowCompareObjectsLeft = curry2_((incoming, against, keys) => !(keys || Object.keys(incoming))
+    .some(key => against[key] !== incoming[key])),
+
+  deepCompareObjectsLeft = curry2_((incoming, against, keys) =>
+    !(keys || Object.keys(incoming)).map(key =>
+      typeof against[key] === 'object' && typeof incoming[key] === 'object' ?
+        deepCompareObjectsLeft(incoming[key], against[key]) : incoming[key] === against[key]
+    )
+      .some(bln => !bln)
+  ),
+
+  deepCompareLeft = (incoming, against) =>
+    incoming === against || Object.keys(incoming).every(key => {
+      const typeOfValue = typeof incoming[key];
+      // console.log('deepcompare', incoming[key], against[key]);
+      return typeOfValue === 'object' ?
+        deepCompareLeft(incoming[key], against[key]) :
+        against[key] === incoming[key];
     }),
 
-    subtract = curry2_((arg0, ...args) => {
-        return args.reduce((agg, num) => agg - num, arg0);
-    }),
+  log = console.log.bind(console),
 
-    shallowCompareOnLeft = curry2_((incoming, against) => Array.isArray(incoming) ?
-        shallowCompareArraysLeft(incoming, against) :
-            shallowCompareObjectsLeft(incoming, against) ),
+  peek = (...args: any[]): any => {
+    log(...args);
+    return args.pop();
+  },
 
-    shallowCompareArraysLeft = curry2_((incoming, against) => !incoming.some((_, ind) => against[ind] !== incoming[ind])),
+  add = curry2_((...args: number[]): number => {
+    return args.reduce((agg, num) => num + agg, 0);
+  }),
 
-    shallowCompareObjectsLeft = curry2_((incoming, against, keys) => !(keys || Object.keys(incoming))
-        .some(key => against[key] !== incoming[key]) ),
+  subtract = curry2_((arg0: number, ...args: number[]): number => {
+    return args.reduce((agg, num) => agg - num, arg0);
+  }),
 
-    deepCompareObjectsLeft = curry2_((incoming, against, keys) =>
-        !(keys || Object.keys(incoming)).map(key =>
-            typeof against[key] === 'object' && typeof incoming[key] === 'object' ?
-                deepCompareObjectsLeft(incoming[key], against[key]) : incoming[key] === against[key]
-        )
-            .some(bln => !bln)
-    ),
+  allYourBase = {all: {your: {base: {are: {belong: {to: {us: 0}}}}}}},
 
-    deepCompareLeft = (incoming, against) =>
-        incoming === against || Object.keys(incoming).every(key => {
-            const typeOfValue = typeof incoming[key];
-            // console.log('deepcompare', incoming[key], against[key]);
-            return typeOfValue === 'object' ?
-               deepCompareLeft(incoming[key], against[key]) :
-                against[key] === incoming[key];
-        }),
+  alphabetCharCodeRange: number[] = range('a'.charCodeAt(0), 'z'.charCodeAt(0)),
 
-    log = console.log.bind(console),
+  alphabetArray = alphabetCharCodeRange
+    .map(charCode => String.fromCharCode(charCode)),
 
-    peek = (...args) => (log(...args), args.pop()),
+  alphabetString = alphabetArray.join(''),
 
-    allYourBase = {all: {your: {base: {are: {belong: {to: {us: 0}}}}}}},
+  alphabetLen = alphabetArray.length,
 
-    alphabetCharCodeRange: number[] = range('a'.charCodeAt(0), 'z'.charCodeAt(0)) as number[],
+  alphabetIndices = range(0, alphabetLen - 1) as number[],
 
-    alphabetArray = alphabetCharCodeRange
-        .map(charCode => String.fromCharCode(charCode)),
+  revAlphabetArray = alphabetArray.slice(0).reverse(),
 
-    alphabetString = alphabetArray.join(''),
+  revAlphabetStr = revAlphabetArray.join(''),
 
-    alphabetLen = alphabetArray.length,
+  vowelsString = 'aeiou',
 
-    alphabetIndices = range(0, alphabetLen - 1) as number[],
+  vowelsLen = vowelsString.length,
 
-    revAlphabetArray = alphabetArray.slice(0).reverse(),
+  vowelsArray = vowelsString.split(''),
 
-    revAlphabetStr = revAlphabetArray.join(''),
+  vowelCharCodes = vowelsArray.map(x => x.charCodeAt(0)),
 
-    vowelsString = 'aeiou',
+  vowelIndices = alphabetIndices.filter(x => vowelsString.indexOf(alphabetString[x]) > -1),
 
-    vowelsLen = vowelsString.length,
+  revVowelsArray = vowelsArray.slice(0).reverse(),
 
-    vowelsArray = vowelsString.split(''),
+  revVowelsString = revVowelsArray.join(''),
 
-    vowelCharCodes = vowelsArray.map(x => x.charCodeAt(0)),
+  consonantsArray = alphabetArray.filter(x => vowelsString.indexOf(x) === -1),
 
-    vowelIndices = alphabetIndices.filter(x => vowelsString.indexOf(alphabetString[x]) > -1),
+  consonantsString = consonantsArray.join(''),
 
-    revVowelsArray = vowelsArray.slice(0).reverse(),
+  nums1To10 = range(1, 10),
 
-    revVowelsString = revVowelsArray.join(''),
+  nonAlphaNums = '!@#$%^&*()_+|}{:"?><,./;[]\\\'',
 
-    nums1To10 = range(1, 10),
+  nonAlphaNumsArray = nonAlphaNums.split(''),
 
-    nonAlphaNums = '!@#$%^&*()_+|}{:"?><,./;[]\\\'',
+  revNonAlphaNumsArray = nonAlphaNumsArray.slice(0).reverse(),
 
-    nonAlphaNumsArray = nonAlphaNums.split(''),
+  revNonAlphaNums = revNonAlphaNumsArray.slice(0).reverse().join(''),
 
-    revNonAlphaNumsArray = nonAlphaNumsArray.slice(0).reverse(),
+  isVowel = (x: string): boolean => vowelsString.indexOf(x) > -1,
 
-    revNonAlphaNums = revNonAlphaNumsArray.slice(0).reverse().join(''),
+  notIsVowel = (x: string): boolean => !isVowel(x),
 
-    isVowel = x => vowelsString.indexOf(x) > -1,
+  jsonClone = (x: string): object => JSON.parse(JSON.stringify(x)),
 
-    jsonClone = x => JSON.parse(JSON.stringify(x)),
+  falsyList = [undefined, null, false, 0, ''],
 
-    falsyList = [undefined, null, false, 0, ''],
+  truthyList = [-1, 1, true, 'true', (): void => undefined, function (): void {
+    return;
+  }, {}, []],
 
-    truthyList = [-1, 1, true, 'true', () => undefined, function () {}, {}, []],
+  generalEqualityCheck = (a, b): boolean => a === b,
 
-
-    generalEqualityCheck = (a, b) => a === b,
-
-    genericOrdering = (a, b) => {
-        if (a > b) {
-            return 1;
-        } else if (a < b) {
-            return -1;
-        }
-        return 0;
-    },
-
-    equal = (a, b) => a === b,
-
-    linkedListToList = linkedList => {
-        const out: LinkedListNode[] = [];
-        let node = linkedList;
-        while (node.next) {
-            out.push({data: node.data});
-            node = node.next;
-        }
-        return out;
+  genericOrdering = (a, b): number => {
+    if (a > b) {
+      return 1;
+    } else if (a < b) {
+      return -1;
     }
+    return 0;
+  },
 
+  equal = (a, b): boolean => a === b,
+
+  linkedListToList = (linkedList: LinkedListNode): LinkedListNode[] => {
+    const out: LinkedListNode[] = [];
+    let node = linkedList;
+    while (node.next) {
+      out.push({data: node.data});
+      node = node.next;
+    }
+    return out;
+  }
 ;

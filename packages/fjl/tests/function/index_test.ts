@@ -1,4 +1,4 @@
-import {add} from "../../src/utils/test-utils";
+import {add} from "../helpers";
 import {apply} from '../../src/function/apply';
 import {call} from "../../src/platform/function";
 import {compose} from "../../src/function/compose";

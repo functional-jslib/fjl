@@ -1,6 +1,6 @@
 import {SliceOf} from "../../src/platform";
 import {PredForSliceOf} from "../../src/list/types";
-import {isVowel, notIsVowel} from "../../src/utils/test-utils";
+import {isVowel, notIsVowel} from "../helpers";
 import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../helpers";
 import {findIndex} from "../../src";
 

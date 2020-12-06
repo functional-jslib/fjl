@@ -1,6 +1,6 @@
 import {filter, length, range, splitAt, take, unfoldr, zipN} from "../../src/list";
 import {alphabetArray, expectEqual, vowelsArray} from "../helpers";
-import {revVowelsArray} from "../../src/utils/test-utils";
+import {revVowelsArray} from "../helpers";
 
 describe('#zipN', () => {
   (<[any[][], any[]][]>[

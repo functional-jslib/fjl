@@ -1,8 +1,10 @@
 import {alphabetArray, alphabetLen, vowelsArray, vowelsLen} from "../helpers";
 import {sliceTo} from "../../src";
+import {Unary} from "../../src/types";
+import {Slice} from "../../src/platform";
 
 describe('#sliceTo', () => {
-  it ('should create a slice of an array "from" given index.', () => {
+  it('should create a slice of an array "from" given index.', () => {
     alphabetArray.forEach((_, ind, list) => {
       const result = sliceTo(alphabetLen - ind, list);
 
@@ -13,9 +15,12 @@ describe('#sliceTo', () => {
       expect(alphabetLen - ind).toEqual(result.length);
     });
   });
-  it ('should be curried', () => {
+
+  it('should be curried', () => {
     vowelsArray
-      .map((_, ind) => sliceTo(vowelsLen - ind))
+
+      .map((_, ind): Unary<Slice> => sliceTo(vowelsLen - ind) as unknown as Unary<Slice>)
+
       .forEach((fn, ind) => {
         const result = fn(vowelsArray);
 
@@ -26,12 +31,13 @@ describe('#sliceTo', () => {
         expect(vowelsLen - ind).toEqual(result.length);
       });
   });
-  it ('should return an empty slice when given an empty slice', () => {
+
+  it('should return an empty slice when given an empty slice', () => {
     expect(sliceTo(99, [])).toEqual([]);
   });
-  it ('should throw an error when not receiving a `ListLike` (a sliceable, an array, and/or string).', () => {
+  it('should throw an error when not receiving a `ListLike` (a sliceable, an array, and/or string).', () => {
     [null, undefined, {}, false, 0].forEach(x => {
-      expect(() => sliceTo(99, x)).toThrow(Error);
+      expect(() => sliceTo(99, x as Slice)).toThrow(Error);
     });
   });
 });

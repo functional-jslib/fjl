@@ -1,4 +1,4 @@
-import {isVowel} from "../../src/utils/test-utils";
+import {isVowel} from "../helpers";
 import {UnaryPred} from "../../src/types";
 import {SliceOf} from "../../src/platform";
 import {alphabetArray, alphabetString, expectEqual, nonAlphaNums, nonAlphaNumsArray} from "../helpers";

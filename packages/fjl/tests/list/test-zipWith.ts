@@ -1,7 +1,7 @@
 import {all, filter, length, range, splitAt, take, unfoldr, zipWith} from "../../src/list";
 import {alphabetArray, expectEqual, expectTrue, vowelsArray} from "../helpers";
 import {TuplizeOp} from "../../src/list/zipWith";
-import {revVowelsArray} from "../../src/utils/test-utils";
+import {revVowelsArray} from "../helpers";
 
 describe('#zipWith', () => {
   const pair = (a, b) => [a, b];

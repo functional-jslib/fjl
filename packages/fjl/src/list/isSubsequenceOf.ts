@@ -1,4 +1,4 @@
-import {curry} from "../function/curry";
+import {curry, curry2} from "../function/curry";
 import {length} from "../platform/object";
 import {indexOf} from "../platform/slice";
 
@@ -10,7 +10,7 @@ export const
      * @param xs2 {Array|String|*}
      * @returns {boolean}
      */
-    isSubsequenceOf = curry((xs1, xs2) => {
+    isSubsequenceOf = curry2((xs1, xs2) => {
         const len = Math.pow(2, length(xs2)),
             lenXs1 = length(xs1);
         let foundLen,

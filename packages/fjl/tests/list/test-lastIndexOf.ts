@@ -1,6 +1,6 @@
 import {SliceOf} from "../../src/platform/slice";
 import {lastIndexOf} from "../../src/list";
-import {vowelsArray, vowelsString} from "../../src/utils/test-utils";
+import {vowelsArray, vowelsString} from "../helpers";
 
 describe('#lastIndexOf', () => {
     (<[SliceOf<any>, any, number][]>[

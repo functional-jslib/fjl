@@ -1,13 +1,11 @@
-import {__, alphabetArray, expectEqual} from "../helpers";
-import {range, reverse, sort, take} from "../../src/list";
-import {compose} from "../../src/function";
+import {sort} from "../../src/list/sort";
 
 describe('#sort', () => {
   (<[any[], any[]][]>[
-    [[2, 3, 1], [3, 2, 1]],
-    [[1, 3, 2], [3, 2, 1]],
-    [[1, 2, 3], [3, 2, 1]],
-    [[3, 2, 1], [3, 2, 1]],
+    [[2, 3, 1], [1, 2 ,3]],
+    [[1, 3, 2], [1, 2, 3]],
+    [[1, 2, 3], [1, 2, 3]],
+    [[3, 2, 1], [1, 2, 3]],
     [[], []],
   ])
     .forEach(([xs, expected]) => {

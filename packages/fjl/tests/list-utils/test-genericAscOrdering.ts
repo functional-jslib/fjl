@@ -1,5 +1,6 @@
 import {expectFunction, vowelsArray} from "../helpers";
 import {genericAscOrdering} from "../../src";
+import {UnaryOf} from "../../src/types";
 
 describe('#genericAscOrdering', () => {
   it('should return `-1` when ordering of `a` should be less than ordering of `b`', () => {
@@ -35,7 +36,7 @@ describe('#genericAscOrdering', () => {
       if (!prev) {
         return curr;
       }
-      const fn = genericAscOrdering(curr);
+      const fn = genericAscOrdering(curr) as UnaryOf<string, number>;
       expectFunction(fn);
       expect(fn(prev)).toEqual(1);
       return curr;

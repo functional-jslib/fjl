@@ -1,5 +1,5 @@
 import {isInfixOf} from "../../src/list";
-import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../../src/utils/test-utils";
+import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../helpers";
 import {Slice} from "../../src/platform/slice";
 
 describe('#isInfixOf', () => {

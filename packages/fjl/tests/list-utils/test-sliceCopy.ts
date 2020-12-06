@@ -1,5 +1,6 @@
 import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../helpers";
 import {sliceCopy} from "../../src";
+import {Slice} from "../../src/platform";
 
 describe('#sliceCopy', () => {
   it('should return a copy of given slice', () => {
@@ -17,9 +18,9 @@ describe('#sliceCopy', () => {
         expect(result).toEqual(original);
       });
   });
-  it ('should throw an error when receiving non `ListLike` value (non-(string|array|slicable))', () => {
+  it('should throw an error when receiving non `ListLike` value (non-(string|array|slicable))', () => {
     [null, undefined, {}, () => undefined].forEach(x => {
-      expect(() => sliceCopy(x)).toThrow(Error);
+      expect(() => sliceCopy(x as Slice)).toThrow(Error);
     });
   });
 });

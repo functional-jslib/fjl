@@ -3,11 +3,12 @@ import {alphabetString, vowelsArray, vowelsString} from "../helpers";
 import {Slice} from "../../src/platform";
 
 describe('#isSubsequenceOf', () => {
+  const firstSixOfAlphabet = alphabetString.slice(0, 6);
   (<[Slice, Slice, boolean][]>[
-    ['abc', alphabetString, true],
-    ['bad', alphabetString, true],
-    ['cab', alphabetString, true],
-    ['ace', alphabetString, true],
+    ['abc', firstSixOfAlphabet, true],
+    ['bad', firstSixOfAlphabet, true],
+    ['cab', firstSixOfAlphabet, true],
+    ['ace', firstSixOfAlphabet, true],
     ['#!@', vowelsString, false],
     ['!@#$%', 'abc', false],
     ['!@#$%'.split(''), 'abc'.split(''), false],
