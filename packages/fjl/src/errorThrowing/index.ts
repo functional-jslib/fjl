@@ -52,7 +52,7 @@ export const
                 foundTypeName, messageSuffix
             } = tmplContext,
             isMultiTypeNames = isArray(expectedTypeName),
-            typesStr = isMultiTypeNames ? 'of type' : 'of one of the types',
+            typesStr = isMultiTypeNames ? 'of type' : 'one of',
             typesToMatchStr = isMultiTypeNames ?
                 typeRefsToStringOrError(...(expectedTypeName as TypeRef[])) : expectedTypeName;
 
@@ -147,7 +147,7 @@ export const
      *   containing the value types, names, expected type names, are-required/should-be-used etc.
      */
     getErrorIfNotTypesThrower = (tmplCtxToStrFunc: ErrorMessageCtxToString):
-        CurryOf4<TypeRef[], string, string, any, any | void> => curry(
+        CurryOf4<TypeRef[], string, string, any, any | void> => curry4(
         _getErrorIfNotTypesThrower(tmplCtxToStrFunc)
     ) as CurryOf4<TypeRef[], string, string, any, any | void>,
 
@@ -155,11 +155,11 @@ export const
      * Checks that passed in `value` is of given `type`.  Throws an error if value
      * is not of given `type`.  Curried.
      */
-    errorIfNotType = curry(_errorIfNotType),
+    errorIfNotType = curry4(_errorIfNotType),
 
     /**
      * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
      *  is not of one of the given `types`.  Curried.
      */
-    errorIfNotTypes = curry(_errorIfNotTypes)
+    errorIfNotTypes = curry4(_errorIfNotTypes)
 ;
