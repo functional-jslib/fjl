@@ -1,6 +1,5 @@
 import {$reduceUntil, reduceUntil} from "./reduceUntil";
 import {alwaysFalse} from "../../boolean/alwaysFalse";
-import {PredForSliceOf} from "../types";
 import {ReduceOp} from "../../platform/array";
 import {SliceOf} from "../../platform/slice";
 
