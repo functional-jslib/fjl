@@ -7,11 +7,16 @@
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
-export * from './object';
 export * from './boolean';
+export * from './data';
+export * from './errorThrowing';
 export * from './function';
 export * from './list';
+export * from './number';
+export * from './object';
+export * from './platform/object-statics';
 export * from './string';
+export * from './types';
 export * from './utils';
 export * from './errorThrowing';
 

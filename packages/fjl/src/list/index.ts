@@ -69,13 +69,9 @@ import {stripPrefix} from './stripPrefix';
 import {zip} from './zip';
 import {zipN} from './zipN';
 import {zip3} from './zip3';
-import {zip4} from './zip4';
-import {zip5} from './zip5';
 import {zipWith} from './zipWith';
 import {zipWithN} from './zipWithN';
 import {zipWith3} from './zipWith3';
-import {zipWith4} from './zipWith4';
-import {zipWith5} from './zipWith5';
 import {unzip} from './unzip';
 import {unzipN} from './unzipN';
 import {any} from './any';
@@ -109,22 +105,22 @@ import {complement} from './complement';
 // List method exports
 // ----
 export {
-    append, head, last, tail, init, uncons, unconsr,
-    push, pushMany, concat, concatMap, length, map,
-    reverse, intersperse, intercalate, transpose, filter,
-    maximum, sortBy, take, subsequences, permutations,
-    foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR,
-    iterate, repeat, replicate, cycle, unfoldr,
-    findIndex, findIndices, elemIndex, elemIndices,
-    drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span,
-    breakOnList, at, find, forEach, partition, elem, notElem,
-    isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group,
-    groupBy, inits, tails, stripPrefix, zip, zipN, zip3, zip4,
-    zip5, zipWith, zipWithN, zipWith3, zipWith4, zipWith5,
-    unzip, unzipN, any, all, and, or, not, sum, product, minimum,
-    scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, insert,
-    insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union,
-    intersect, intersectBy, difference, complement,
+  append, head, last, tail, init, uncons, unconsr,
+  push, pushMany, concat, concatMap, length, map,
+  reverse, intersperse, intercalate, transpose, filter,
+  maximum, sortBy, take, subsequences, permutations,
+  foldl, foldl1, foldr, foldr1, mapAccumL, mapAccumR,
+  iterate, repeat, replicate, cycle, unfoldr,
+  findIndex, findIndices, elemIndex, elemIndices,
+  drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span,
+  breakOnList, at, find, forEach, partition, elem, notElem,
+  isPrefixOf, isSuffixOf, isInfixOf, isSubsequenceOf, group,
+  groupBy, inits, tails, stripPrefix, zip, zipN, zip3,
+  zipWith, zipWithN, zipWith3,
+  unzip, unzipN, any, all, and, or, not, sum, product, minimum,
+  scanl, scanl1, scanr, scanr1, nub, remove, sort, sortOn, insert,
+  insertBy, nubBy, removeBy, removeFirstsBy, unionBy, union,
+  intersect, intersectBy, difference, complement,
 };
 
 export {slice, includes, indexOf, lastIndexOf} from '../platform';
