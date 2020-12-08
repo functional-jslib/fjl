@@ -13,6 +13,6 @@ export const
      */
     union = curry(<T>(arr1: T[], arr2: T[]) =>
         append(arr1,
-            filter(elm => !includes(elm, arr1), arr2) as SliceOf<T>
+            filter(elm => !includes(arr1, elm), arr2) as SliceOf<T>
         )
     );

@@ -1,12 +1,8 @@
-import {curry2, CurryOf2} from '../function/curry';
-import {SliceOf} from "../platform/slice";
+import {$concat, concat, SliceOf} from "../platform/slice";
 
 export const
 
-  $append = <T>(...args: SliceOf<T>[]): SliceOf<T> => {
-    const arg0 = args.shift() as SliceOf<T>;
-    return arg0.concat(...args as SliceOf<any>);
-  },
+  $append = $concat,
 
   /**
    * Append two, or more, lists, i.e.,
@@ -24,5 +20,5 @@ export const
    * ```
    * @curried
    */
-  append = curry2($append) as CurryOf2<SliceOf<any>, SliceOf<any>, SliceOf<any>>
+  append = concat
 ;

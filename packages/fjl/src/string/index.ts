@@ -38,30 +38,27 @@ export const
    * Lower cases first character of a non-empty string.
    * @throws {Error} - Throws error if receiving anything that is not a string.
    */
-  lcaseFirst = xs => {
-    _errorIfNotType(String, 'lcaseFirst', 'xs', xs);
-    return xs[0].toLowerCase() + xs.substring(1);
-  },
+  lcaseFirst = xs => xs[0].toLowerCase() + xs.substring(1),
 
   /**
    * Upper cases first character of a non-empty string.
    * @throws {Error} - Throws error if receiving anything that is not a string.
    */
-  ucaseFirst = xs => {
-    _errorIfNotType(String, 'ucaseFirst', 'xs', xs);
-    return xs[0].toUpperCase() + xs.substring(1);
-  },
+  ucaseFirst = xs => xs[0].toUpperCase() + xs.substring(1),
 
   /**
    * Camel cases (class case) a string.
    * @throws {Error} - Throws error if param `xs` is not a string.
    */
-  camelCase = (xs: SliceOf<string>, pattern = /[^a-z\d]/i): string => compose<SliceOf<string>, string>(
-    join(''),
-    map(str => ucaseFirst(str.toLowerCase())),
-    filter(x => !!x) as unknown as (xs: string[]) => string[],
-    split(pattern) as (x: string) => string[]
-  )(_errorIfNotType(String, 'camelCase', 'xs', xs)),
+  camelCase = (xs: string, pattern = /[^a-z\d]/i): string => {
+    if (!xs) {
+      return xs;
+    }
+    return xs.split(pattern)
+      .filter(Boolean)
+      .map(str => ucaseFirst(str.toLowerCase()))
+      .join('');
+  },
 
   /**
    * Class cases a string.  Uses pattern /[^a-z\d/i]/ to split on.

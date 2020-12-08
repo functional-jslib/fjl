@@ -4,13 +4,13 @@ import {includes} from "../../src/platform/slice";
 
 describe('#includes', () => {
     (<[[string, SliceOf<string>], boolean][]>[
-        [['', vowelsArray],  false],
-        [['x', vowelsArray],  false],
-        [['y', vowelsString],  false],
-        [['z', vowelsString],  false],
+        [[vowelsArray, ''],  false],
+        [[ vowelsArray, 'x'],  false],
+        [[ vowelsString, 'y'],  false],
+        [[vowelsString, 'y'],  false],
     ].concat(
         vowelsArray.map((x, i, xs) => {
-            return [[xs.slice(0, i + 1).join(''), vowelsString], true]
+            return [[vowelsString, xs.slice(0, i + 1).join('')], true]
         })
     ))
         .forEach(([args, expected]) => {

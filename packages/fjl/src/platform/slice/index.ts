@@ -1,29 +1,37 @@
-import {ConcatFunc, IncludesFunc, IndexOfFunc, LastIndexOfFunc, Slice, SliceOf} from "./types";
-import {toCurried2Method, toCurriedOneOrMoreMethod} from "../../utils";
-import {curry3, CurryOf3} from "../../function";
+import {Slice} from "./types";
+import {curry3, curry2, CurryOf3} from "../../function";
 
 export * from './types';
 
 export const
 
-    concat = toCurriedOneOrMoreMethod('concat') as ConcatFunc<any>,
+  $concat = <T = any>(...xss): Slice<T> => !xss ? xss : xss.shift().concat(...xss),
 
-    indexOf = toCurried2Method('indexOf') as IndexOfFunc<any>,
+  concat = curry2($concat),
 
-    includes = toCurried2Method('includes') as IncludesFunc<any>,
+  $indexOf = <T = any>(xs: Slice<T>, x: T): number => !xs ? -1 : xs.indexOf(x as any),
 
-    lastIndexOf = toCurried2Method('lastIndexOf') as LastIndexOfFunc<any>,
+  indexOf = curry2($indexOf),
 
-    /**
-     * (Array|String).prototype.slice
-     */
-    $slice = <T>(start: number, end: number, xs: Slice<T>): Slice<T> =>
-        xs.slice(start, end) as Slice<T>,
+  $includes = <T>(xs: Slice<T>, x: T): boolean => xs && xs.includes(x as any),
 
-    /**
-     * (Array|String).prototype.slice
-     */
-    slice = curry3($slice) as CurryOf3<number, number, Slice, Slice>
+  includes = curry2($includes),
+
+  $lastIndexOf = <T>(xs: Slice<T>, x: T): number => !xs ? -1 : xs.lastIndexOf(x as any),
+
+  lastIndexOf = curry2($lastIndexOf),
+
+  /**
+   * Same as `(Array|String).prototype.slice`.
+   */
+  $slice = <T>(start: number, end: number, xs: Slice<T>): Slice<T> =>
+    xs.slice(start, end) as Slice<T>,
+
+  /**
+   * Same as `(Array|String).prototype.slice`.
+   * @curried
+   */
+  slice = curry3($slice) as CurryOf3<number, number, Slice, Slice>
 
 ;
 

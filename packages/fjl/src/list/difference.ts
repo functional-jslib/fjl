@@ -23,6 +23,6 @@ export const
             return [];
         }
         return reduce((agg, elm) =>
-                !includes(elm, array2) ? (agg.push(elm), agg) : agg
+                !includes(array2, elm) ? (agg.push(elm), agg) : agg
             , [], array1);
     }) as Difference<SliceOf<any>>;

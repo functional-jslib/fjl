@@ -13,7 +13,7 @@ describe('#lastIndexOf', () => {
   ))
     .forEach(([subject, needle, expected]) => {
       it(`lastIndexOf(${JSON.stringify(subject)}, ${JSON.stringify(needle)}) === ${expected}`, function () {
-        expect(lastIndexOf(needle, subject)).toEqual(expected);
+        expect(lastIndexOf(subject, needle)).toEqual(expected);
       });
     });
 });

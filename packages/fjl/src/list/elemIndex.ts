@@ -6,12 +6,12 @@ type ElemIndex<T> = CurryOf2<T, SliceOf<T>, number | undefined>;
 export const
     /**
      * @function module:list.elemIndex
-     * @param x {*} - Element to search for.
      * @param xs {Array} - list or list like.
+     * @param x {*} - Element to search for.
      * @returns {*}
      */
-    elemIndex = curry(<T>(x: T, xs: SliceOf<T>): number | undefined => {
-        const foundInd = indexOf(x, xs) as number;
+    elemIndex = curry(<T>(xs: SliceOf<T>, x: T): number | undefined => {
+        const foundInd = indexOf(xs, x) as number;
         return foundInd !== -1 ? foundInd : undefined;
     }) as ElemIndex<any>;
 

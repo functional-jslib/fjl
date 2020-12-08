@@ -4,8 +4,8 @@ import {Unary} from "../../src/types";
 
 describe('#zipWithN', () => {
   const
-    pair = ([a, b]) => [a, b],
-    triplet = ([a, b, c]) => [a, b, c];
+    pair = (a, b) => [a, b],
+    triplet = (a, b, c) => [a, b, c];
   (<[Unary<any[]>, any[][], any[][]][]>[
     [pair, [[], []], []],
     [triplet, [[], [], []], []],

@@ -5,7 +5,7 @@ import {revVowelsArray} from "../helpers";
 import {TernaryOf, UnaryOf} from "../../src/types";
 
 describe('#zipWith3', () => {
-  const triplet = ([a, b, c]) => [a, b, c];
+  const triplet = (a, b, c) => [a, b, c];
   (<[UnaryOf<any[], any[]>, any[], any[], any[], [any, any, any]][]>[
     [triplet, [], [], [], []],
     [triplet, vowelsArray, [], [], []],
@@ -20,3 +20,4 @@ describe('#zipWith3', () => {
       });
     });
 });
+

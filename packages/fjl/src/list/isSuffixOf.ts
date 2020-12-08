@@ -1,19 +1,19 @@
 import {curry} from "../function/curry";
 import {length} from "../platform/object";
-import {indexOf} from "../platform/slice";
+import {indexOf, Slice} from "../platform/slice";
 
 export const
     /**
      * Checks if list `xs1` is a suffix of list `xs2`
      * @function module:list.isSuffixOf
-     * @param xs1 {Array|String|*}
      * @param xs2 {Array|String|*}
+     * @param xs1 {Array|String|*}
      * @returns {boolean}
      */
-    isSuffixOf = curry((xs1, xs2) => {
+    isSuffixOf = curry(<T>(xs2: Slice<T>, xs1: Slice<T>): boolean => {
         const limit1 = length(xs1),
             limit2 = length(xs2);
-        if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs1[0], xs2) === -1) {
+        if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs2, xs1[0]) === -1) {
             return false;
         }
         let ind1 = limit1 - 1,

@@ -160,7 +160,7 @@ describe('#camelCase', () => {
   it('should throw an error when receiving an empty-string or any value that is not a string', () => {
     [null, undefined, [], {}]
       .forEach(xs =>
-        expectError(() => camelCase(xs as Slice))
+        expectError(() => camelCase(xs as string))
       );
   });
 });

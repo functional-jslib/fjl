@@ -8,5 +8,5 @@ export const
      */
     intersect = curry(<T>(arr1: T[], arr2: T[]) =>
         !arr1 || !arr2 || (!arr1 && !arr2) ? [] :
-            filter(elm => includes(elm, arr2) as boolean, arr1) as T[]
+            filter(elm => includes(arr2, elm) as boolean, arr1) as T[]
     ) as CurryOf2<any[], any[], any[]>;
