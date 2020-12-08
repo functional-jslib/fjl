@@ -18,6 +18,6 @@ export const
      * Returns an array with the given indices swapped.
      * @curried at upto 3 params.
      */
-    swapped = curry($swapped) as CurryOf3<number, number, any[], any[]>
+    swap = curry($swapped) as CurryOf3<number, number, any[], any[]>
 
 ;

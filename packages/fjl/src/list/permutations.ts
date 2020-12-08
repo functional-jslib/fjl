@@ -1,5 +1,5 @@
 import {length} from "../platform/object";
-import {swapped} from "./utils";
+import {swap} from "./utils";
 import {sliceCopy} from "./utils/sliceCopy";
 import {repeat} from "./repeat";
 import {SliceOf} from "../platform/slice";
@@ -28,7 +28,7 @@ export const
 
         for (; i < limit; i++) {
             if (c[i] < i) {
-                list = swapped(i % 2 === 0 ? 0 : c[i], i, list) as T[];
+                list = swap(i % 2 === 0 ? 0 : c[i], i, list) as T[];
                 out.push(list);
                 c[i] += 1;
                 i = 0;

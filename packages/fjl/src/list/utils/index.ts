@@ -16,5 +16,5 @@ export * from "./reduceUntilRight";
 export * from "./sliceCopy";
 export * from "./sliceFrom";
 export * from "./sliceTo";
-export * from "./swapped";
+export * from "./swap";
 export * from "./toShortest";
