@@ -1,7 +1,7 @@
 import {curry} from "../function/curry";
 import {length} from "../platform/object";
 import {reduce, toShortest} from "./utils";
-import {push} from "./push";
+import {$push} from "./push";
 import {SliceOf} from "../platform/slice";
 import {BinaryOf, UnaryOf} from "../types";
 
@@ -35,6 +35,6 @@ export const
         }
         const [a1, a2] = toShortest(xs1, xs2) as SliceOf<any>[];
         return reduce((agg, item, ind) =>
-                push(agg, op(item, a2[ind])),
+                $push(op(item, a2[ind]), agg),
             [], a1);
     });

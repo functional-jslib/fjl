@@ -1,14 +1,22 @@
 import {curry2} from "../function/curry";
 
-/**
- * Functional `push` - binary version.  Takes a list and an element to push onto list.  Returns list.
- * @curried - Curried upto `2` items - (takes 2 or more before firing off).
- * @function module:list.push
- * @param list {Array}
- * @param x {any}
- * @returns {Array} - Original list with item pushed onto it.
- */
-export const push = curry2((list, x) => {
-    list.push(x);
-    return list;
-});
+export const
+
+  $push = <T>(x: T, xs: T[]): T[] => (xs.push(x), xs),
+
+  /**
+   * Pushes an item onto an array.
+   * @curried - Curried upto `2` items.
+   */
+  push = curry2($push),
+
+  /**
+   * Pushes one or more items onto `xs`.  Returns `xs.
+   */
+  $pushN =  <T>(xs: T[], ..._xs: T[]): T[] => (xs.push(..._xs), xs),
+
+  /**
+   * Same as `$pushN` but curried.
+   * @curried
+   */
+  pushN = curry2($pushN);

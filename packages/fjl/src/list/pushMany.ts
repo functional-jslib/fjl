@@ -8,7 +8,7 @@ import {curry2} from "../function/curry";
  * @param items {...any}
  * @param {Array} - Original list with items pushed on to it.
  */
-export const pushMany = curry2((list, ...items) => {
+export const pushN = curry2((list, ...items) => {
     list.push(...items);
     return list;
 });

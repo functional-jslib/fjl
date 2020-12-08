@@ -1,7 +1,6 @@
 import {curry3} from "../function/curry";
 import {length} from "../platform/object";
-import {reduce, toShortest} from "./utils";
-import {push} from "./push";
+import {toShortest} from "./utils";
 import {map} from "./map";
 import {$sliceTo} from "./utils/sliceTo";
 

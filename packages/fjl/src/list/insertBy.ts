@@ -2,7 +2,7 @@ import {curry, CurryOf3} from "../function/curry";
 import {length} from "../platform/object";
 import {splitAt} from "./splitAt";
 import {concat} from "./concat";
-import {push} from "./push";
+import {$push} from "./push";
 import {sliceCopy} from "./utils/sliceCopy";
 import {OrderingFunc} from "./utils";
 import {SliceOf} from "../platform/slice";
@@ -28,7 +28,7 @@ export const
         return concat([parts[0], [x], parts[1]]) as SliceOf<T>;
       }
     }
-    return push(sliceCopy(xs), x) as SliceOf<T>;
+    return $push(x, sliceCopy(xs) as T[]) as SliceOf<T>;
   },
 
   /**

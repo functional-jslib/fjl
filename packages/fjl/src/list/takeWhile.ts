@@ -3,9 +3,8 @@ import {negateF3} from "../function/negate";
 import {reduceUntil} from "./utils";
 import {isString} from "../object/is";
 import {of} from "../object/of";
-import {push} from "./push";
+import {$push} from "./push";
 import {SliceOf, SlicePred} from "../platform/slice";
-import {TernaryPredOf} from "../types";
 import {PredForSliceOf} from "./types";
 
 export const
@@ -13,7 +12,7 @@ export const
     $takeWhile = <T>(pred: SlicePred<T>, xs: SliceOf<T>): SliceOf<T> =>
         reduceUntil(
             negateF3(pred),                                     // predicate
-            isString(xs) ? (agg, x): string => agg + x : push,  // operation
+            isString(xs) ? (agg, x): string => agg + x : (agg, x) => $push(x, agg),  // operation
             of(xs),                                             // aggregate
             xs
         ),

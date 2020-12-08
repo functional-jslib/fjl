@@ -1,7 +1,7 @@
 import {curry2} from "../function/curry";
 import {reduce} from "./utils/reduce";
 import {toShortest} from "./utils/toShortest";
-import {push} from "./push";
+import {$push} from "./push";
 import {map} from "./map";
 
 export const
@@ -16,6 +16,6 @@ export const
     zipN = curry2((...lists) => {
         const trimmedLists = toShortest(...lists);
         return reduce((agg, item, ind) =>
-                push(agg, map(xs => xs[ind], trimmedLists)),
+                $push(map(xs => xs[ind], trimmedLists), agg),
             [], trimmedLists[0]);
     });
