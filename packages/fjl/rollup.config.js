@@ -1,38 +1,23 @@
-import nodeResolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-import babel from "@rollup/plugin-babel";
 import {terser} from "rollup-plugin-terser";
 
-export default [{
+export default {
   input: './src/index.ts',
-  output: {
-    dir: './dist/es',
+  output: [{
+    file: './dist/index.es.min.js',
     format: 'es',
-    sourcemap: true
-  },
+    sourcemap: true,
+  }, {
+    file: './dist/index.iife.min.js',
+    format: 'iife',
+    sourcemap: true,
+    name: 'fjl'
+  }],
   plugins: [
-    nodeResolve(),
     typescript({
-      tsconfig: './tsconfig.prod.json'
+      tsconfig: './tsconfig.json',
+      rootDir: './src'
     }),
-    babel(),
     terser()
   ]
-}, {
-  input: './src/index.ts',
-  output: {
-    dir: './dist/cjs',
-    format: 'cjs',
-    sourcemap: true
-  },
-  plugins: [
-    nodeResolve(),
-    typescript({
-      tsconfig: './tsconfig.prod.json',
-      declaration: false,
-      outDir: './dist/cjs',
-    }),
-    babel(),
-    terser()
-  ]
-}]
+}
