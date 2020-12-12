@@ -5,7 +5,7 @@
       "esnext"
     ],
     "noImplicitAny": false,
-    "target": "ESNext",
+    "target": "ES2018",
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": true,

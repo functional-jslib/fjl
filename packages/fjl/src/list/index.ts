@@ -62,7 +62,7 @@ export * from './partition';
 export * from './permutations';
 export * from './product';
 export * from './push';
-export * from './pushMany';
+export * from './pushN';
 export * from './range';
 export * from './remove';
 export * from './removeBy';

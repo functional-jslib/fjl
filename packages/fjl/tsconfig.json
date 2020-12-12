@@ -1,7 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/es"
+    "outDir": "./dist/es",
+    "target": "ES2018",
+    "rootDir": "./src"
   },
   "exclude": [
     "dist/",
