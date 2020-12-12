@@ -1,8 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/es",
+    "declaration": true,
     "declarationDir": "./dist/es",
+    "outDir": "./dist/es",
     "rootDir": "./src"
   },
   "exclude": [

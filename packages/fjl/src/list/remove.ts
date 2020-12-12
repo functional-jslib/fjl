@@ -1,5 +1,5 @@
 import {curry} from "../function/curry";
-import {removeBy} from "./index";
+import {removeBy} from "./removeBy";
 
 export const
     /**

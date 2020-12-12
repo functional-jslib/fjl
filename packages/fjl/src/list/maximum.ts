@@ -1,6 +1,6 @@
 import {last} from "./last";
 import {genericAscOrdering} from "./utils";
-import {sortBy} from "./index";
+import {sortBy} from "./sortBy";
 
 export const
     /**
