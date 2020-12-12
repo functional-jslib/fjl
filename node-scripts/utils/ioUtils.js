@@ -1,6 +1,17 @@
 const
   fs = require('fs'),
   {promisify} = require('util'),
+  child_process = require('child_process'),
+  {exec} = child_process,
+
+  execAsIo = (cmd, options) => new Promise((resolve, reject) => {
+    const p = exec(cmd, options, (err, stdout, stderr) => {
+      if (err) reject(err);
+      resolve(stdout, stderr);
+    });
+    p.stdout.on('data', console.log);
+    p.stderr.on('data', console.warn);
+  }),
 
   ioReadDirectory = promisify(fs.readdir),
   ioReadFile = promisify(fs.readFile),
@@ -14,10 +25,14 @@ const
   canReadAndWriteFileIo = filePath =>
     ioFileAccess(filePath, fs.constants.R_OK | fs.constants.W_OK),
   ioExecuteAndPassThrough = (fn, ...args) => fn(...args)
-    .then(() => args, err => { console.log(err); return args; })
+    .then(() => args, err => {
+      console.log(err);
+      return args;
+    })
 ;
 
 module.exports = {
+  execAsIo,
   ioReadDirectory,
   ioFileAccess,
   ioReadFile,
