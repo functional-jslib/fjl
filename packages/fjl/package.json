@@ -6,7 +6,7 @@
   "module": "dist/es/index.js",
   "types": "dist/es/index.d.ts",
   "scripts": {
-    "build": "node ./build.js",
+    "build": "node ../../node-scripts/tasks/build-package.js fjl",
     "build:all": "npm run build:es && npm run build:cjs && npm run build:umd && npm run build:iife",
     "test": "jest --config ./jest.config.js",
     "docs": "echo \"Not yet implemented.\"",
