@@ -1,16 +1,19 @@
 {
   "name": "fjl-input-filter",
   "version": "1.2.9",
-  "main": "./dist/cjs/fjlInputFilter.js",
-  "module": "./dist/es6-module/fjl-input-filter.js",
   "license": "BSD-3-Clause",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "types": "dist/es/index.d.ts",
   "scripts": {
-    "build": "npm test && gulp readme build docs && npm run test-builds",
-    "test-builds": "jest --testMatch **/tests/*-test-*.js",
-    "test": "jest --testMatch **/tests/test-*.js",
-    "eslint": "gulp eslint",
-    "readme": "gulp readme",
-    "docs": "gulp docs"
+    "build": "node ../../node-scripts/tasks/build-package.js fjl",
+    "build:all": "npm run build:es && npm run build:cjs && npm run build:umd && npm run build:iife",
+    "test": "jest --config ./jest.config.js",
+    "docs": "echo \"Not yet implemented.\"",
+    "build:es": "tsc --project tsconfig.prod.es.json",
+    "build:cjs": "tsc --project tsconfig.prod.cjs.json",
+    "build:umd": "tsc --project tsconfig.prod.umd.json",
+    "build:iife": "rollup -c ./rollup.config.js"
   },
   "dependencies": {
     "fjl": "^1.12.6",

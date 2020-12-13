@@ -2,9 +2,7 @@ const
 
   path = require('path'),
 
-  del = require('del'),
-
-  {log, error} = console,
+  {log} = console,
 
   {ioExec} = require('../../node-scripts/utils')
 
@@ -15,6 +13,7 @@ const
   return await [
     ['fjl'],
     ['fjl-validator', 'fjl'],
+    ['fjl-inputfilter', 'fjl fjl-validator'],
   ]
     .reduce((p, [packageName, packagesToLink]) => {
         const cwd = path.join(__dirname, `../../packages/${packageName}`);

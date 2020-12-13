@@ -1,9 +1,8 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/es",
-    "declaration": true,
-    "declarationDir": "./dist/es",
+    "module": "umd",
+    "outDir": "./dist/umd",
     "rootDir": "./src"
   },
   "exclude": [
