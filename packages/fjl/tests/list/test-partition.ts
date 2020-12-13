@@ -1,11 +1,11 @@
 import {partition} from "../../src/list";
 import {alphabetArray, alphabetString, isVowel, vowelsArray} from "../helpers";
-import {SliceOf} from "../../src/platform/slice";
-import {PredForSliceOf} from "../../src/list/types";
+import {Slice} from "../../src/platform/slice";
+import {PredForSlice} from "../../src/list/types";
 
 describe('#partition', () => {
     const nonVowels = alphabetArray.filter(x => !isVowel(x));
-    (<[SliceOf<any>, PredForSliceOf<any>, [any[], any[]]][]>[
+    (<[Slice<any>, PredForSlice<any>, [any[], any[]]][]>[
         [[], isVowel, [[], []]],
         ['', isVowel, [[], []]],
         [alphabetArray, isVowel, [vowelsArray, nonVowels]],

@@ -1,5 +1,5 @@
 import {curry, CurryOf2} from "../../function/curry";
-import {$slice, Slice, SliceOf} from "../../platform/slice";
+import {$slice,Slice} from "../../platform/slice";
 
 export const
 
@@ -12,5 +12,5 @@ export const
   /**
    * Returns a slice of the given list from `startInd` to the end of the list.
    */
-  sliceFrom = curry($sliceFrom) as CurryOf2<number, Slice, Slice>
+  sliceFrom = curry($sliceFrom) as CurryOf2<number,Slice, Slice>
 ;

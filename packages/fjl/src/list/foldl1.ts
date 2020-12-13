@@ -2,11 +2,11 @@ import {curry, CurryOf2} from "../function/curry";
 import {uncons} from "./uncons";
 import {reduce} from "./utils/reduce";
 import {ReduceOp} from "../platform/array/types";
-import {SliceOf} from "../platform/slice/types";
+import {Slice} from "../platform/slice/types";
 
 export const
 
-    $fold1 = <T, T2>(op: ReduceOp<T, SliceOf<T>, T2>, xs: T[]): T2 => {
+    $fold1 = <T, T2>(op: ReduceOp<T, Slice<T>, T2>, xs: T[]): T2 => {
         const parts = uncons(xs);
         return !parts ? [] : reduce(op, parts[0], parts[1]);
     },
@@ -19,6 +19,6 @@ export const
      * @param xs {Array}
      * @returns {*} - Whatever type is lastly returned from `op`.
      */
-    foldl1 = curry($fold1) as CurryOf2<ReduceOp<any, SliceOf<any>, any>, SliceOf<any>, any>
+    foldl1 = curry($fold1) as CurryOf2<ReduceOp<any, Slice<any>, any>, Slice<any>, any>
 
 ;

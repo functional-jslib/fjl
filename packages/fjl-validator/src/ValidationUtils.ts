@@ -16,22 +16,24 @@ import {
   TypeRef
 } from 'fjl';
 
-export type MessageGetter<T=any> = (x: T, options?: ValidatorOptions<T>) => string
+export type MessageGetter<T = any> = (x?: T, options?: ValidatorOptions<T>) => string;
 
-export interface MessageTemplates<T> {
-  [index: string]: MessageGetter<T>
+export type MessageTemplateRValue<T = any> = string | MessageGetter<T>;
+
+export interface MessageTemplates<T = any> {
+  [index: string]: MessageTemplateRValue<T>;
 }
 
-export interface ValidatorOptions<T> {
-  messageTemplates?: MessageTemplates<T>,
-  valueObscured?: boolean,
-  valueObscurer?: <T>(x: T) => string
+export interface ValidatorOptions<T = any> {
+  messageTemplates?: MessageTemplates<T>;
+  valueObscured?: boolean;
+  valueObscurer?: <T>(x: T) => string;
 }
 
-export interface ValidatorResult<T=any> {
-  result: boolean,
-  messages?: string[],
-  value?: T
+export interface ValidatorResult<T = any> {
+  result: boolean;
+  messages?: string[];
+  value?: T;
 }
 
 export const
@@ -46,13 +48,13 @@ export const
     let message;
     const {messageTemplates, valueObscured, valueObscurer} = options,
       _value = valueObscured ? valueObscurer(value) : value,
-    _keyAsKey = key as keyof MessageTemplates<T>;
+      _keyAsKey = key as keyof MessageTemplates<T>;
     if (isFunction(key)) {
       message = call(key as MessageGetter<T>, _value, options);
     } else if (!isString(key) || !messageTemplates || !messageTemplates[_keyAsKey]) {
       return;
     } else if (isFunction(messageTemplates[_keyAsKey])) {
-      message = call(messageTemplates[_keyAsKey], _value, options);
+      message = call(messageTemplates[_keyAsKey] as MessageGetter<T>, _value, options);
     } else {
       message = messageTemplates[_keyAsKey];
     }
@@ -90,7 +92,7 @@ export const
       ...(options.length ? options : [{}])
     ),
 
-  isOneOf = <T>(x: T, ...types: TypeRef[]): Boolean => {
+  isOneOf = <T>(x: T, ...types: TypeRef[]): boolean => {
     const typeName = typeOf(x);
     return types
       .map(toTypeRefName)

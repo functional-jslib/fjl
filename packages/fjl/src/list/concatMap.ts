@@ -2,7 +2,7 @@ import {curry, CurryOf2} from "../function";
 import {concat} from "./concat";
 import {map} from "./map";
 import {MapOp} from "../platform/array";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 import {Foldable} from "../types";
 
 export type ConcatMap<T, RetT, Mapper, Functor, RetFunctor> =
@@ -21,6 +21,6 @@ export const
         fn: MapOp<T, Foldable<T>, RetT>,
         foldable: Foldable<T>): Foldable<T> =>
         concat(map(fn, foldable)) as Foldable<T>
-    ) as ConcatMap<any, any, MapOp<any, SliceOf<any>, any>, any[], any>
+    ) as ConcatMap<any, any, MapOp<any, Slice<any>, any>, any[], any>
 
 ;

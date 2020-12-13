@@ -2,7 +2,7 @@ import {length} from "../platform/object";
 import {swap} from "./utils";
 import {sliceCopy} from "./utils/sliceCopy";
 import {repeat} from "./repeat";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 
 export const
     /**
@@ -13,7 +13,7 @@ export const
      * @param xs {Array} - ListLike.
      * @returns {Array<Array|String|*>} - Array of permutations.
      */
-    permutations = <T>(xs: SliceOf<T>): SliceOf<T>[] => {
+    permutations = <T>(xs: Slice<T>): Slice<T>[] => {
         const limit = length(xs);
 
         if (!limit || limit === 1) {
@@ -37,5 +37,5 @@ export const
             c[i] = 0;
         }
 
-        return out as SliceOf<T>[];
+        return out as Slice<T>[];
     };

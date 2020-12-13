@@ -1,5 +1,5 @@
 import {groupBy} from "./groupBy";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 import {equal} from "../boolean";
 import {$equal} from "../boolean/equal";
 
@@ -16,4 +16,4 @@ export const
      * @param xs {Array|String}
      * @returns {Array<Array|String|*>|*}
      */
-    group = <T = any>(xs: SliceOf<T>): SliceOf<T>[] => groupBy($equal, xs) as SliceOf<T>[];
+    group = <T = any>(xs: Slice<T>): Slice<T>[] => groupBy($equal, xs) as Slice<T>[];

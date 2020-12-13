@@ -2,7 +2,7 @@ import {expectEqual, nonAlphaNumsArray, vowelsArray, vowelsString} from "../help
 import {dropWhileEnd} from "../../src/list/dropWhileEnd";
 import {id} from "../../src/function/id";
 import {UnaryPred} from "../../src/types";
-import {SliceOf} from "../../src/platform/slice/types";
+import {Slice} from "../../src/platform/slice/types";
 
 // @todo move test-case message(s) into loop
 describe('#dropWhileEnd', () => {
@@ -17,7 +17,7 @@ describe('#dropWhileEnd', () => {
             vowelsAndNonAlnumsArray = vowelsArray.concat(nonAlphaNumsArray),
             vowelsAndNonAlnums = vowelsAndNonAlnumsArray.slice(0).join('')
         ;
-        (<[[UnaryPred<any>, SliceOf<any>], SliceOf<any>][]>[
+        (<[[UnaryPred<any>, Slice<any>], Slice<any>][]>[
             [[id, []], []],
             [[id, ''], ''],
             [[alnumPred, vowelsArray], []],

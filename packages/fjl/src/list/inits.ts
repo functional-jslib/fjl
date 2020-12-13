@@ -1,8 +1,8 @@
 import {length} from "../platform/object";
 import {$sliceTo} from "./utils/sliceTo";
-import {Slice, SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 
-type Inits<T> = (xs: SliceOf<T>) => [SliceOf<T>] | SliceOf<T>;
+type Inits<T> = (xs: Slice<T>) => [Slice<T>] | Slice<T>;
 
 export const
     /**

@@ -1,13 +1,13 @@
 import {curry, CurryOf2} from "../../function/curry";
 import {length} from "../../platform/object";
-import {SliceOf, SlicePred} from "../../platform/slice/types";
+import {Slice, SlicePred} from "../../platform/slice/types";
 
 export const
 
     /**
      * Finds an item by predicate or returns `undefined`.
      */
-    $findWhere = <T>(pred: SlicePred<T>, xs: SliceOf<T>): T | undefined => {
+    $findWhere = <T>(pred: SlicePred<T>, xs: Slice<T>): T | undefined => {
         let ind = 0;
         const limit = length(xs);
         if (!limit) {
@@ -25,6 +25,6 @@ export const
     /**
      * Curried version of `$findWhere`.
      */
-    findWhere = curry($findWhere) as CurryOf2<SlicePred<any>, SliceOf<any>, any | undefined>
+    findWhere = curry($findWhere) as CurryOf2<SlicePred<any>, Slice<any>, any | undefined>
 
 ;

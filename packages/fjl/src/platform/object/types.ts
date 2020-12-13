@@ -1,14 +1,12 @@
 import {CurryOf2, CurryOf3} from "../../function";
 
-export type InstanceOfFunc = CurryOf2<Function, any, boolean>;
+export interface ToString {
+  toString(): string;
+}
 
-export type HasOwnPropertyFunc = CurryOf2<string, any, boolean>;
-
-export type LengthFunc = (x?: any) => number;
-
-export type KeysFunc = (x?: any) => string[];
-
-export type AssignFunc = CurryOf2<any, any[], any>
+export interface ToJSON<T=object> {
+  toJSON(): T;
+}
 
 export type DefinePropertyFunc<T> = CurryOf3<PropertyDescriptor, string, T, T>;
 

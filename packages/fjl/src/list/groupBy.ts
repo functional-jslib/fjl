@@ -1,7 +1,7 @@
 import {curry, CurryOf2} from "../function/curry";
 import {length} from "../platform/object";
 import {sliceCopy} from "./utils/sliceCopy";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 import {BinaryPred} from "../types";
 
 export const
@@ -9,7 +9,7 @@ export const
   /**
    * Groups given items by given predicate.
    */
-  $groupBy = <T>(equalityOp: BinaryPred<T>, xs: SliceOf<T>): SliceOf<T>[] => {
+  $groupBy = <T>(equalityOp: BinaryPred<T>, xs: Slice<T>): Slice<T>[] => {
     // Bail if empty list
     if (!xs) {
       return [];
@@ -23,7 +23,7 @@ export const
     }
 
     // Groupings
-    const groups: SliceOf<T>[] = [];
+    const groups: Slice<T>[] = [];
 
     // Initialize variables for tracking
     let ind = 1,
@@ -56,6 +56,6 @@ export const
   /**
    * Curried version of `$groupBy`.
    */
-  groupBy = curry($groupBy) as CurryOf2<BinaryPred<any>, SliceOf<any>, SliceOf<any>[]>
+  groupBy = curry($groupBy) as CurryOf2<BinaryPred<any>, Slice<any>, Slice<any>[]>
 
 ;

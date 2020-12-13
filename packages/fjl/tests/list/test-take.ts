@@ -1,6 +1,6 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
 import {take} from "../../src/list/take";
-import {SliceOf} from "../../src/platform";
+import {Slice} from "../../src/platform";
 
 describe('#take', () => {
   it('should return taken items from list and/or string until limit', () => {
@@ -29,7 +29,7 @@ describe('#take', () => {
   });
   it('should throw an error when no parameter is passed in', () => {
     [null, undefined, 0, {}].forEach(x =>
-      expectError(() => take(3, x as SliceOf<any>))
+      expectError(() => take(3, x as Slice<any>))
     );
   });
 });

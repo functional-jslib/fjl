@@ -1,9 +1,9 @@
-import {SliceOf} from "../../src/platform/slice";
+import {Slice} from "../../src/platform/slice";
 import {indexOf} from "../../src/platform/slice";
 import {vowelsArray, vowelsString} from "../helpers";
 
 describe(`#list.indexOf`, () => {
-  (<[[any, SliceOf<any>], number][]>[
+  (<[[any, Slice<any>], number][]>[
     [[vowelsArray, ''], -1],
     [[vowelsString, ''], 0], // @todo add this use case to docs
     [[vowelsArray, 'z'], -1],

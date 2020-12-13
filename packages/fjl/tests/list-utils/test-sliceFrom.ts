@@ -1,12 +1,12 @@
 import {alphabetArray, vowelsArray} from "../helpers";
 import {sliceFrom} from "../../src/list/utils/sliceFrom";
 import {CurryOf1} from "../../src/function";
-import {SliceOf} from "../../src/platform/slice";
+import {Slice} from "../../src/platform/slice";
 
 describe('#sliceFrom', () => {
   it('should be curried', () => {
     vowelsArray
-      .map((_, ind) => sliceFrom(ind) as unknown as CurryOf1<SliceOf<any>, SliceOf<any>>)
+      .map((_, ind) => sliceFrom(ind) as unknown as CurryOf1<Slice<any>, Slice<any>>)
       .forEach((fn, ind) => {
         const result = fn(vowelsArray);
         // Compare slices

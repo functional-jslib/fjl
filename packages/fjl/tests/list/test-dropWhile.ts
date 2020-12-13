@@ -1,6 +1,6 @@
 import {expectEqual, vowelsArray, vowelsString} from "../helpers";
 import {dropWhile} from '../../src/list/dropWhile';
-import {SliceOf} from "../../src/platform/slice";
+import {Slice} from "../../src/platform/slice";
 import {UnaryPred} from "../../src/types";
 
 describe('#dropWhile', () => {
@@ -14,7 +14,7 @@ describe('#dropWhile', () => {
             }[methodName];
         }
     ;
-    (<Array<[SliceOf<any>, UnaryPred<any>, SliceOf<any>]>>[
+    (<Array<[Slice<any>, UnaryPred<any>, Slice<any>]>>[
         [vowelsArray, alnumPred, []],
         [vowelsString, alnumPred, ''],
         [vowelsArray, nonAlnumPred, vowelsArray],

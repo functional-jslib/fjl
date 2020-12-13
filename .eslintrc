@@ -7,7 +7,7 @@
   "parserOptions": {
     "ecmaVersion": 2019,
     "sourceType": "module",
-    "project": "./packages/fjl/tsconfig.spec.json",
+    "project": "./tsconfig.json",
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true
     }

@@ -5,20 +5,22 @@
  */
 import {regexValidator} from './regexValidator';
 import {assignDeep, curry} from 'fjl';
+import {ValidatorOptions, ValidatorResult} from "./ValidationUtils";
 
 export const
 
-  alnumValidator = curry((options, value) =>
+  $alnumValidator = <T>(options: ValidatorOptions<T>, value: T): ValidatorResult =>
     regexValidator(assignDeep({
       pattern: /^[\da-z]+$/i,
       messageTemplates: {
-        DOES_NOT_MATCH_PATTERN: x =>
+        DOES_NOT_MATCH_PATTERN: (x: T): string =>
           `Value is not alpha-numeric.  Value received: '${x}'.`
       }
-    }, options), value)
-  ),
+    }, options), value),
 
-  alnumValidator1 = value => alnumValidator(null, value)
+  alnumValidator = curry($alnumValidator),
+
+  alnumValidator1 = <T>(value: T): ValidatorResult => alnumValidator(null, value)
 
 ;
 

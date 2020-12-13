@@ -2,7 +2,6 @@
  * Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 
-import {HasOwnPropertyFunc, InstanceOfFunc} from "./types";
 import {curry, curry2, CurryOf2, CurryOf3, CurryOf4, CurryOf5} from "../../function/curry";
 import {Lengthable} from "../../types";
 import {flip, flip3, flip4, flip5} from "../../function";
@@ -14,11 +13,11 @@ export const
 
   {assign, keys} = Object,
 
-  instanceOf = curry2(<T>(X: Function, x: T) => x instanceof X) as InstanceOfFunc,
+  instanceOf = curry2(<T>(X: Function, x: T) => x instanceof X),
 
   length = (x: Lengthable | undefined | null): number => x === null || x === undefined ? undefined : x.length,
 
-  hasOwnProperty: HasOwnPropertyFunc = curry2(<T>(propKey: string, x: T): boolean =>
+  hasOwnProperty = curry2(<T>(propKey: string, x: T): boolean =>
     Object.prototype.hasOwnProperty.call(x, propKey)),
 
   /**

@@ -1,5 +1,5 @@
 import {Slice} from "./types";
-import {curry3, curry2, CurryOf3} from "../../function";
+import {curry2, curry3, CurryOf3} from "../../function";
 
 export * from './types';
 

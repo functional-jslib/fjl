@@ -4,17 +4,17 @@ import {findIndex} from "./findIndex";
 import {concat} from "./concat";
 import {$intersperse} from "./intersperse";
 import {splitAt} from "./splitAt";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 
 export const
 
-    $insert = <T>(x: T, xs: SliceOf<T>): SliceOf<T> => {
+    $insert = <T>(x: T, xs: Slice<T>): Slice<T> => {
         if (!xs.length) {
             return of(xs, x);
         }
         const foundIndex = findIndex(item => x <= item, xs) as number;
         return foundIndex === -1 ? concat([xs, of(xs, x)]) :
-            concat($intersperse(of(xs, x), splitAt(foundIndex, xs)) as SliceOf<T>[]);
+            concat($intersperse(of(xs, x), splitAt(foundIndex, xs)) as Slice<T>[]);
     },
 
     /**
@@ -28,6 +28,6 @@ export const
      * @param xs {Array|*}
      * @returns {Array}
      */
-    insert = curry($insert) as CurryOf2<any, SliceOf<any>, SliceOf<any>>
+    insert = curry($insert) as CurryOf2<any, Slice<any>, Slice<any>>
 
 ;

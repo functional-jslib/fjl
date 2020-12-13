@@ -1,7 +1,7 @@
 import {length} from "../../src/platform/object";
 import {expectEqual} from "../helpers";
 import {foldl1} from "../../src/list/foldl1";
-import {SliceOf} from "../../src/platform/slice";
+import {Slice} from "../../src/platform/slice";
 
 describe('#foldl1', () => {
     it('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', () => {
@@ -14,7 +14,7 @@ describe('#foldl1', () => {
             foldl1((agg, item, ind) => {
                 agg += getAppendage(ind) + item;
                 return agg;
-            }, phrase as unknown as SliceOf<string>),
+            }, phrase as unknown as Slice<string>),
             expectedTransform.join('')
         );
         expectEqual(

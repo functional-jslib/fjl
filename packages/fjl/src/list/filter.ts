@@ -1,14 +1,14 @@
 import {curry, CurryOf2} from "../function/curry";
-import {SliceOf, SlicePred} from "../platform/slice";
+import {Slice, SlicePred} from "../platform/slice";
 
-type Filter<T> = CurryOf2<SlicePred<T>, SliceOf<T>, T[]>;
+type Filter<T> = CurryOf2<SlicePred<T>, Slice<T>, T[]>;
 
 export const
 
     /**
      * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
      */
-    filter = curry(<T>(pred: SlicePred<T>, xs: SliceOf<T>): SliceOf<T> => {
+    filter = curry(<T>(pred: SlicePred<T>, xs: Slice<T>): Slice<T> => {
         let ind = 0;
         const limit = xs.length,
             out: any[] = [];

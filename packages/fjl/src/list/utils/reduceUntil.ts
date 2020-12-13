@@ -1,19 +1,19 @@
 import {curry, CurryOf4} from "../../function/curry";
-import {PredForSliceOf} from "../types";
+import {PredForSlice} from "../types";
 import {ReduceOp} from "../../platform/array/types";
-import {SliceOf} from "../../platform/slice/types";
+import {Slice} from "../../platform/slice/types";
 import {length} from "../../platform/object";
 
-export type ReduceUntil<T1, T2> = CurryOf4<PredForSliceOf<T1>,
-  ReduceOp<T1, SliceOf<T1>, T2>, // @todo Refactor `ReduceOp`
-  T2, SliceOf<T1>, T2>;
+export type ReduceUntil<T1, T2> = CurryOf4<PredForSlice<T1>,
+  ReduceOp<T1, Slice<T1>, T2>, // @todo Refactor `ReduceOp`
+  T2, Slice<T1>, T2>;
 
 export const
 
   /**
    * Un-curried `reduceUntil` func.
    */
-  $reduceUntil = <T, T2>(pred: PredForSliceOf<T>, op: ReduceOp<T, SliceOf<T>, T2>, agg: T2, xs: SliceOf<T>): T2 => {
+  $reduceUntil = <T, T2>(pred: PredForSlice<T>, op: ReduceOp<T, Slice<T>, T2>, agg: T2, xs: Slice<T>): T2 => {
     const limit = length(xs);
     if (!limit) {
       return agg;

@@ -1,9 +1,9 @@
 import {group} from "../../src/list/group";
 import {vowelsArray, vowelsString} from "../helpers";
-import {SliceOf} from "../../src/platform/slice";
+import {Slice} from "../../src/platform/slice";
 
 describe(`#group`, () => {
-    (<[SliceOf<any>, SliceOf<any>[]][]>[
+    (<[Slice<any>, Slice<any>[]][]>[
         [vowelsArray, vowelsArray.map(x => [x])],
         [vowelsString, vowelsArray],
         ['Mississippi', ['M', 'i', 'ss', 'i', 'ss', 'i', 'pp', 'i']],

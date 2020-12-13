@@ -5,18 +5,18 @@ import {concat} from "./concat";
 import {$push} from "./push";
 import {sliceCopy} from "./utils/sliceCopy";
 import {OrderingFunc} from "./utils";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 import {of} from "../object/of";
 import {typeOf} from "../object/typeOf";
 
 export const
 
-  $insertBy = <T>(orderingFn: OrderingFunc<T>, x: T, xs: SliceOf<T>): SliceOf<T> => {
+  $insertBy = <T>(orderingFn: OrderingFunc<T>, x: T, xs: Slice<T>): Slice<T> => {
     const limit = length(xs);
     if (!limit) {
       switch (typeOf(xs)) {
         case String.name:
-          return `${x}` as unknown as SliceOf<T>;
+          return `${x}` as unknown as Slice<T>;
         default:
           return (of(xs) as T[]).concat([x]);
       }
@@ -25,14 +25,14 @@ export const
     for (; ind < limit; ind += 1) {
       if (orderingFn(x, xs[ind] as T) <= 0) {
         const parts = splitAt(ind, xs);
-        return concat([parts[0], [x], parts[1]]) as SliceOf<T>;
+        return concat([parts[0], [x], parts[1]]) as Slice<T>;
       }
     }
-    return $push(x, sliceCopy(xs) as T[]) as SliceOf<T>;
+    return $push(x, sliceCopy(xs) as T[]) as Slice<T>;
   },
 
   /**
    * A version of `insert` that allows you to specify the ordering of the inserted
    * item;  Before/at, or after
    */
-  insertBy = curry($insertBy) as CurryOf3<OrderingFunc<any>, any, SliceOf<any>, SliceOf<any>>;
+  insertBy = curry($insertBy) as CurryOf3<OrderingFunc<any>, any, Slice<any>, Slice<any>>;

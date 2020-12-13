@@ -1,6 +1,6 @@
 import {isVowel} from "../helpers";
 import {UnaryPred} from "../../src/types";
-import {SliceOf} from "../../src/platform";
+import {Slice} from "../../src/platform";
 import {alphabetArray, alphabetString, expectEqual, nonAlphaNums, nonAlphaNumsArray} from "../helpers";
 import {breakOnList} from "../../src";
 
@@ -9,7 +9,7 @@ describe('#breakOnList', () => {
   it('should take elements into first list while !predicate is fulfilled and elements ' +
     'that didn\'t match into second list', () => {
     const notIsVowel = (x: string): boolean => !isVowel(x);
-    (<[[UnaryPred<string>, SliceOf<string>], [SliceOf<string>, SliceOf<string>]][]>[
+    (<[[UnaryPred<string>, Slice<string>], [Slice<string>, Slice<string>]][]>[
       [[isVowel, ''], ['', '']],
       [[isVowel, []], [[], []]],
       [[isVowel, nonAlphaNums], [nonAlphaNums, '']],

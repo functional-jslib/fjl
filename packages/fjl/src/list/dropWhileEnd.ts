@@ -1,10 +1,10 @@
 import {curry, CurryOf2} from "../function/curry";
 import {findIndexWhereRight} from "./utils";
 import {of} from "../object/of";
-import {SliceOf, SlicePred} from "../platform/slice";
+import {Slice, SlicePred} from "../platform/slice";
 import {$sliceTo} from "./utils/sliceTo";
 
-type DropWhileEnd<T> = CurryOf2<SlicePred<T>, SliceOf<T>, SliceOf<T>>;
+type DropWhileEnd<T> = CurryOf2<SlicePred<T>, Slice<T>, Slice<T>>;
 
 export const
     /**
@@ -14,7 +14,7 @@ export const
      * @refactor
      * @returns {Array|String}
      */
-    dropWhileEnd = curry(<T>(p: SlicePred<T>, list: SliceOf<T>): SliceOf<T> => {
+    dropWhileEnd = curry(<T>(p: SlicePred<T>, list: Slice<T>): Slice<T> => {
         const splitPoint =
             findIndexWhereRight(
                 (x, i, xs) => !p(x, i, xs),
@@ -23,5 +23,5 @@ export const
         if (splitPoint === -1) {
             return of(list);
         }
-        return $sliceTo(splitPoint + 1, list) as SliceOf<T>;
+        return $sliceTo(splitPoint + 1, list) as Slice<T>;
     }) as DropWhileEnd<any>;

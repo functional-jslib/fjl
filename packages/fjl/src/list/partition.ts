@@ -1,6 +1,6 @@
 import {curry, CurryOf2} from "../function";
-import {PredForSliceOf} from "./types";
-import {SliceOf} from "../platform/slice";
+import {PredForSlice} from "./types";
+import {Slice} from "../platform/slice";
 
 export const
 
@@ -10,8 +10,8 @@ export const
    *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
    */
   partition = curry(<T>(
-    pred: PredForSliceOf<T>,
-    list: SliceOf<T>
+    pred: PredForSlice<T>,
+    list: Slice<T>
   ): [T[], T[]] => {
     if (!list) {
       return [[], []];
@@ -28,4 +28,4 @@ export const
       }
     }
     return [front, back];
-  }) as CurryOf2<PredForSliceOf<any>, SliceOf<any>, [any[], any[]]>;
+  }) as CurryOf2<PredForSlice<any>, Slice<any>, [any[], any[]]>;

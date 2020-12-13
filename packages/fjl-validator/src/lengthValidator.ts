@@ -14,9 +14,7 @@ import {
   ValidatorOptions,
   ValidatorResult
 } from './ValidationUtils';
-import {assignDeep, curry, curry2, defineEnumProps, typeOf} from 'fjl';
-
-import {Slice} from 'fjl/dist/es/platform';
+import {assignDeep, curry, curry2, defineEnumProps, typeOf, Slice} from 'fjl';
 
 export interface LenValidatorOptions<T = any> extends ValidatorOptions<Slice<T>> {
   min?: number;
@@ -24,8 +22,8 @@ export interface LenValidatorOptions<T = any> extends ValidatorOptions<Slice<T>>
 }
 
 export interface LenValidatorMessageTemplates<T> extends MessageTemplates<T> {
-  NOT_OF_TYPE: MessageGetter<T>,
-  NOT_WITHIN_RANGE: MessageGetter<T>
+  NOT_OF_TYPE: MessageGetter<T>;
+  NOT_WITHIN_RANGE: MessageGetter<T>;
 }
 
 export const

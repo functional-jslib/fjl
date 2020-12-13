@@ -4,12 +4,12 @@ import {reduceUntil} from "./utils";
 import {isString} from "../object/is";
 import {of} from "../object/of";
 import {$push} from "./push";
-import {SliceOf, SlicePred} from "../platform/slice";
-import {PredForSliceOf} from "./types";
+import {Slice, SlicePred} from "../platform/slice";
+import {PredForSlice} from "./types";
 
 export const
 
-    $takeWhile = <T>(pred: SlicePred<T>, xs: SliceOf<T>): SliceOf<T> =>
+    $takeWhile = <T>(pred: SlicePred<T>, xs: Slice<T>): Slice<T> =>
         reduceUntil(
             negateF3(pred),                                     // predicate
             isString(xs) ? (agg, x): string => agg + x : (agg, x) => $push(x, agg),  // operation
@@ -24,4 +24,4 @@ export const
      * @param list {Array|String}
      * @returns {Array}
      */
-    takeWhile = curry($takeWhile) as CurryOf2<PredForSliceOf<any>, SliceOf<any>, SliceOf<any>>;
+    takeWhile = curry($takeWhile) as CurryOf2<PredForSlice<any>, Slice<any>, Slice<any>>;

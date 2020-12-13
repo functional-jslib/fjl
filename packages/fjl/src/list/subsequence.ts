@@ -1,5 +1,5 @@
 import {length} from "../platform/object";
-import {SliceOf} from "../platform";
+import {Slice} from "../platform";
 
 export const
   /**
@@ -10,7 +10,7 @@ export const
    *  will generate 65536 sub-sequences!  So caution should be taken to not
    *  use this with sequences above a certain length on certain platform (the browser thread in specific).
    */
-  subsequences = <T>(xs: SliceOf<T>): SliceOf<T>[] => {
+  subsequences = <T>(xs: Slice<T>): Slice<T>[] => {
     const listLen = length(xs),
       len = Math.pow(2, listLen),
       out: any[] = [];

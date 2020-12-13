@@ -1,7 +1,7 @@
 import {curry} from "../function";
 import {concat} from "./concat";
 import {replicate} from "./replicate";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 
 /**
  * Replicates a list `limit` number of times and appends the results (concat)
@@ -11,6 +11,6 @@ import {SliceOf} from "../platform/slice";
  * @returns {Array}
  */
 export const cycle = curry(
-    <T>(n: number, xs: SliceOf<T>): SliceOf<T[]> =>
-        concat(replicate(n, xs) as SliceOf<T[]>[])
+    <T>(n: number, xs: Slice<T>): Slice<T[]> =>
+        concat(replicate(n, xs) as Slice<T[]>[])
 );

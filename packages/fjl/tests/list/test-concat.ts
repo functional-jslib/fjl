@@ -1,5 +1,5 @@
 import {expectError, vowelsArray} from "../helpers";
-import {SliceOf} from "../../src/platform";
+import {Slice} from "../../src/platform";
 import {concat} from "../../src";
 
 describe('#concat', () => {
@@ -7,7 +7,7 @@ describe('#concat', () => {
     arg1 = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']],
     arg2 = ['abc', 'def', 'ghi'],
     arg3 = [vowelsArray, vowelsArray, vowelsArray];
-  (<SliceOf<string>[][][]>[
+  (<Slice<string>[][][]>[
     [[], []],
     [['', '', ''], ''],
     [[[], [], []], []],

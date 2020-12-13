@@ -29,3 +29,5 @@ export interface NumberIndexable<T = any> {
 }
 
 export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
+
+export type Slice<T = any> = T[] | string;

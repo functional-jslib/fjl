@@ -1,5 +1,5 @@
 import {curry, CurryOf2} from "../../function/curry";
-import {SliceOf, SlicePred} from "../../platform/slice/types";
+import {Slice, SlicePred} from "../../platform/slice/types";
 import {length} from "../../platform/object";
 
 export const
@@ -7,7 +7,7 @@ export const
   /**
    * Finds index in slice (string|array) that matches given predicate or -1.
    */
-  $findIndexWhere = <T>(pred: SlicePred<T>, arr: SliceOf<T>): number => {
+  $findIndexWhere = <T>(pred: SlicePred<T>, arr: Slice<T>): number => {
     let ind = 0;
     const limit = length(arr);
     for (; ind < limit; ind += 1) {
@@ -22,6 +22,6 @@ export const
   /**
    * Curried version of `$findIndexWhere`.
    */
-  findIndexWhere = curry($findIndexWhere) as CurryOf2<SlicePred<any>, SliceOf<any>, number>
+  findIndexWhere = curry($findIndexWhere) as CurryOf2<SlicePred<any>, Slice<any>, number>
 
 ;

@@ -1,13 +1,13 @@
 import {curry2} from "../function/curry";
 import {length} from "../platform/object";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 
 export const
 
   /**
    * Checks if list `xs1` is an infix of list `xs2`
    */
-  $isInfixOf = <T>(xs1: SliceOf<T>, xs2: SliceOf<T>): boolean => {
+  $isInfixOf = <T>(xs1: Slice<T>, xs2: Slice<T>): boolean => {
     const limit1 = length(xs1),
       limit2 = length(xs2);
     if (limit2 < limit1 || !limit1 || !limit2) {

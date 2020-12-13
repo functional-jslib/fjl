@@ -12,7 +12,7 @@ export const
      * array of arrays;  E.g., [[matching-items], [non-matching-items]]
      * @function list.span
      * @param pred {Function} - ListLike predicate (`(x, i, list) => bool`)
-     * @param list {SliceOf<any>}
+     * @param list {Slice<any>}
      * @returns {(Array<Array<*>>|Array<String>)}
      */
     span = curry((pred, list) => {

@@ -7,7 +7,7 @@ import {split} from '../platform/string';
 import {compose} from '../function/compose';
 import {join} from '../platform/array';
 import {_errorIfNotType} from '../errorThrowing';
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 import {UnaryOf} from "../types";
 
 export {split};

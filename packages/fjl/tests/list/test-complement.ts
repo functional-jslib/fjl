@@ -1,19 +1,19 @@
 import {expectEqual, expectFunction} from "../helpers";
 import {complement, Curry1} from "../../src";
-import {SliceOf} from "../../src/platform";
+import {Slice} from "../../src/platform";
 
 describe('#complement', () => {
   it('should be a function', () => {
     expectFunction(complement);
   });
   it('should be "curry"able', () => {
-    const awaitingRest = complement([1, 2, 3]) as Curry1<SliceOf<number>>;
+    const awaitingRest = complement([1, 2, 3]) as Curry1<Slice<number>>;
     expectFunction(awaitingRest);
     expectEqual(awaitingRest([3, 4, 5]), [4, 5]);
   });
   it('should return an empty list when receiving 2 or more values consisting of ' +
     '`null`, `undefined` and/or empty list (`\'\'`, `[]`).', () => {
-    (<SliceOf<any>[]>[
+    (<Slice<any>[]>[
       [undefined, undefined],
       [null, null, '', null],
       [[], null, undefined],

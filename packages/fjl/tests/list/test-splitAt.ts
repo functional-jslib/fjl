@@ -1,6 +1,6 @@
 import {expectEqual, vowelsArray, vowelsString} from "../helpers";
 import {splitAt} from "../../src/list/splitAt";
-import {SliceOf} from "../../src/platform";
+import {Slice} from "../../src/platform";
 
 describe('#splitAt', () => {
   it('should split an list and/or string at given index', () => {
@@ -47,7 +47,7 @@ describe('#splitAt', () => {
       .forEach(([ind, list]) => {
         // @note Forcing cast on `list` value here to allow test to run (
         //  since `list` type is actually incorrect in this scenario).
-        expect(() => splitAt(ind as number, list as unknown as SliceOf<any>)).toThrow();
+        expect(() => splitAt(ind as number, list as unknown as Slice<any>)).toThrow();
       });
   });
 });

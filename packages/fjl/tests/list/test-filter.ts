@@ -1,12 +1,12 @@
 import {alphabetArray, alphabetString} from "../helpers";
 import {filter} from "../../src/list/filter";
-import {SliceOf} from "../../src/platform/slice";
+import {Slice} from "../../src/platform/slice";
 
 describe('#filter', () => {
     const pred = (_, ind): boolean => ind % 2 === 0;
-    (<[SliceOf<string>, SliceOf<string>][]>[
+    (<[Slice<string>, Slice<string>][]>[
         [
-            filter(pred, alphabetString as unknown as SliceOf<string>), // @todo fix typing
+            filter(pred, alphabetString as unknown as Slice<string>), // @todo fix typing
             alphabetString.split('').filter(pred)
         ],
         [

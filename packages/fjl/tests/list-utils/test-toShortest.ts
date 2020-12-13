@@ -1,11 +1,11 @@
 import {alphabetArray, alphabetString, expectFunction, vowelsArray, vowelsLen, vowelsString} from "../helpers";
 import {toShortest} from "../../src";
-import {SliceOf} from "../../src/platform";
+import {Slice} from "../../src/platform";
 import {Variadic} from "../../src/types";
 
 describe('#toShortest', () => {
   it('should return a list of lists trimmed to the smallest', () => {
-    (<[SliceOf<any>, SliceOf<any>, SliceOf<any>]>[
+    (<[Slice<any>, Slice<any>, Slice<any>]>[
       [vowelsArray, alphabetArray, vowelsLen],
       [vowelsString, alphabetString, vowelsLen],
       ['', [], 0]
@@ -20,7 +20,7 @@ describe('#toShortest', () => {
       });
   });
   it('should be curried up to 2 parameters', () => {
-    (<[SliceOf<any>, SliceOf<any>, SliceOf<any>]>[
+    (<[Slice<any>, Slice<any>, Slice<any>]>[
       [vowelsArray, alphabetArray, vowelsLen],
       [vowelsString, alphabetString, vowelsLen],
       ['', [], 0]

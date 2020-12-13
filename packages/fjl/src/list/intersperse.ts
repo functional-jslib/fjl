@@ -1,11 +1,11 @@
 import {curry, CurryOf2} from "../function/curry";
 import {of} from "../object/of";
 import {isString} from "../object/is";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 
 export const
 
-    $intersperse = <T>(between: T, xs: SliceOf<T>): SliceOf<T> => {
+    $intersperse = <T>(between: T, xs: Slice<T>): Slice<T> => {
         if (!xs || !xs.length) {
             return xs;
         }
@@ -20,7 +20,7 @@ export const
                     (xs[i] as unknown as string) +  // @todo type conversion cleanup
                     (between as unknown as string); // @todo ""
             }
-            return out as unknown as SliceOf<T>;
+            return out as unknown as Slice<T>;
         }
         const out = of(xs) as Array<T>;
         for (; i < limit; i += 1) {
@@ -38,9 +38,9 @@ export const
      *  elements of the list.
      * @function module:list.intersperse
      * @param between {any} - Should be of the same type of elements contained in list.
-     * @param arr {SliceOf<any>} - Array|String.
-     * @returns {SliceOf<any>>} - "".
+     * @param arr {Slice<any>} - Array|String.
+     * @returns {Slice<any>>} - "".
      * @curried
      * @generic
      */
-    intersperse = curry($intersperse) as CurryOf2<any, SliceOf<any>, SliceOf<any>>;
+    intersperse = curry($intersperse) as CurryOf2<any, Slice<any>, Slice<any>>;

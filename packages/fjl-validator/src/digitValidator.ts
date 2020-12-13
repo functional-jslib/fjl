@@ -4,31 +4,28 @@
  * @module digitValidator
  */
 import {regexValidator} from './regexValidator';
-import {curry, assignDeep} from 'fjl';
+import {assignDeep, curry, curry2} from 'fjl';
+import {ValidatorOptions, ValidatorResult} from "./ValidationUtils";
 
 export const
 
-    /**
-     * @function module:digitValidator.digitValidator
-     * @param options {Object}
-     * @param value {*}
-     * @returns {Object}
-     */
-    digitValidator = curry((options, value) => regexValidator(assignDeep({
-        pattern: /^\d+$/,
-        messageTemplates: {
-            DOES_NOT_MATCH_PATTERN: x =>
-                `The value passed in contains non digital characters.  ` +
-                `Value received: "${x}".`
-        }
-    }, options), value)),
+  $digitValidator = <T>(options: ValidatorOptions<T>, value: T): ValidatorResult => regexValidator(assignDeep({
+    pattern: /^\d+$/,
+    messageTemplates: {
+      DOES_NOT_MATCH_PATTERN: x =>
+        `The value passed in contains non digital characters.  ` +
+        `Value received: "${x}".`
+    }
+  }, options), value),
 
-    /**
-     * Same as `digitValidator` though doesn't-require/ignores `options` parameter.
-     * @function module:digitValidator.digitValidator1
-     * @param value {*}
-     * @returns {Object}
-     */
-    digitValidator1 = value => digitValidator(null, value);
+  digitValidator = curry2($digitValidator),
+
+  /**
+   * Same as `digitValidator` though doesn't-require/ignores `options` parameter.
+   * @function module:digitValidator.digitValidator1
+   * @param value {*}
+   * @returns {Object}
+   */
+  digitValidator1 = value => digitValidator(null, value);
 
 export default digitValidator;

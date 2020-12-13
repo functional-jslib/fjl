@@ -1,11 +1,11 @@
 import {/*expectEqual,*/ vowelsArray, vowelsString} from "../helpers";
-import {SliceOf} from "../../src/platform/slice";
+import {Slice} from "../../src/platform/slice";
 import {insert} from "../../src/list/insert";
 
 const toJson = JSON.stringify;
 
 describe(`#list.insert`, () => {
-    (<[[any, SliceOf<any>], SliceOf<any>][]>[
+    (<[[any, Slice<any>], Slice<any>][]>[
         [['a', ''], 'a'],
         [['a', []], ['a']]
     ]

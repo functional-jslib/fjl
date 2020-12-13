@@ -1,9 +1,9 @@
-import {SliceOf} from "../../src/platform";
+import {Slice} from "../../src/platform";
 import {expectError, vowelsArray, vowelsString} from "../helpers";
 import {append} from "../../src";
 
 describe('#append', () => {
-  (<Array<[string, SliceOf<string>[], SliceOf<string>]>>[
+  (<Array<[string, Slice<string>[], Slice<string>]>>[
     [`append [vowelsArray, vowelsArray, vowelsArray] ` +
     `shallowEquals vowelsArray.concat(vowelsArray, vowelsArray)`,
       [vowelsArray, vowelsArray, vowelsArray],
@@ -48,7 +48,7 @@ describe('#append', () => {
     });
 
   it('should throw an error when receiving Nothing', () => {
-    (<SliceOf<any>[]>[[null, null],
+    (<Slice<any>[]>[[null, null],
       [undefined, undefined],
       [null, []],
       [null, ''],

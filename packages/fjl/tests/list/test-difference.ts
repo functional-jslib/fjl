@@ -1,4 +1,4 @@
-import {SliceOf} from "../../src/platform";
+import {Slice} from "../../src/platform";
 import {expectEqual} from "../helpers";
 import {difference} from "../../src";
 
@@ -6,7 +6,7 @@ describe('#difference', () => {
   // @todo tablelize test messages
   it('should return an empty list when first list passed in is empty, ' +
     ' there are no differences between passed in lists, ', () => {
-    (<[[SliceOf<any>, SliceOf<any>], SliceOf<any>][]>[
+    (<[[Slice<any>, Slice<any>], Slice<any>][]>[
       [[[], []], []],
       [['', ''], []],
       [[null, undefined], []]

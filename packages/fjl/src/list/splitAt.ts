@@ -1,6 +1,6 @@
 import {$sliceFrom} from "./utils/sliceFrom";
 import {$sliceTo} from "./utils/sliceTo";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 
 export const
     /**
@@ -8,8 +8,8 @@ export const
      * given index in second part of returned list)).
      * @function module:list.splitAt
      * @param ind {number} - Index to split at.
-     * @param list {SliceOf<any>>} - functor (list or string) to split.
-     * @returns {[SliceOf<any>, SliceOf<any>]} - ListLike like type passed
+     * @param list {Slice<any>>} - functor (list or string) to split.
+     * @returns {[Slice<any>, Slice<any>]} - ListLike like type passed
      */
-    splitAt = <T>(ind: number, list: SliceOf<T>): [SliceOf<T>, SliceOf<T>] =>
+    splitAt = <T>(ind: number, list: Slice<T>): [Slice<T>, Slice<T>] =>
         [$sliceTo(ind, list), $sliceFrom(ind, list)];

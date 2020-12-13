@@ -2,7 +2,7 @@ import {curry} from "../function/curry";
 import {length} from "../platform/object";
 import {reduce, toShortest} from "./utils";
 import {$push} from "./push";
-import {SliceOf} from "../platform/slice";
+import {Slice} from "../platform/slice";
 
 export const
 
@@ -19,7 +19,7 @@ export const
         if (!length(arr1) || !length(arr2)) {
             return [];
         }
-        const [a1, a2] = toShortest(arr1, arr2) as SliceOf<T>[];
+        const [a1, a2] = toShortest(arr1, arr2) as Slice<T>[];
         return reduce((agg, item, ind) => $push([item, a2[ind]], agg),
             [], a1);
     });

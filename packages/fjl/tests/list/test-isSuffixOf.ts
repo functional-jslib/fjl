@@ -1,9 +1,9 @@
 import {isSuffixOf} from "../../src/list";
-import {SliceOf} from "../../src/platform/slice";
+import {Slice} from "../../src/platform/slice";
 import {vowelsArray, vowelsString} from "../helpers";
 
 describe('#isSuffixOf', () => {
-  (<[SliceOf<any>, SliceOf<any>, boolean][]>[
+  (<[Slice<any>, Slice<any>, boolean][]>[
     ...vowelsArray.reduceRight((agg, x, i) => {
       agg.push([vowelsString, vowelsString.substring(i, vowelsString.length), true]);
       agg.push([vowelsArray, vowelsArray.slice(i, vowelsArray.length), true]);
@@ -11,7 +11,7 @@ describe('#isSuffixOf', () => {
     }, [
       [vowelsString, '', false],
       [vowelsArray, '', false],
-    ] as [SliceOf<any>, SliceOf<any>, boolean][])
+    ] as [Slice<any>, Slice<any>, boolean][])
   ])
     .forEach(([xs1, xs2, expected]) => {
       it(`isSuffixOf(${JSON.stringify(xs1)}, ${JSON.stringify(xs2)}) === ${expected}`, () => {
