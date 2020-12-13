@@ -20,6 +20,8 @@ import {defaultErrorHandler} from './Utils';
  * @property {*} filteredValue=null - Filtered result if validation `result` is `true`.
  */
 
+
+
 /**
  * @interface InputOptions
  * @memberOf fjlInputFilter

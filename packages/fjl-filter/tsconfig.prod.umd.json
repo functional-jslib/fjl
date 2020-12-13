@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "umd",
+    "outDir": "./dist/umd",
+    "rootDir": "./src"
+  },
+  "exclude": [
+    "dist/",
+    "node_modules/",
+    "src/**/*_test.ts"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
+}
