@@ -9,7 +9,10 @@
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
   "license": "BSD",
   "scripts": {
-    "build": "echo \"Should be built from monorepo level.",
+    "build": "npm run build:all",
+    "build:all": "npm run build:es && npm run build:cjs",
+    "build:es": "tsc --project tsconfig.prod.es.json",
+    "build:cjs": "tsc --project tsconfig.prod.cjs.json",
     "test": "echo \"Run 'npm run test:fjl-validator' from monorepo level."
   },
   "peerDependencies": {
