@@ -9,7 +9,7 @@ describe('#fjl.validator.toValidationOptions', function () {
     describe('#toValidationOptions', function () {
         const expectedPropertyAndTypes = {
             valueObscured: 'Boolean',
-            valueObscurator: 'Function',
+            valueObscurer: 'Function',
             messageTemplates: 'Object'
         };
         test ('should merge incoming options to `self` on construction', function () {

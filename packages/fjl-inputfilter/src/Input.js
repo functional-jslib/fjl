@@ -30,7 +30,7 @@ import {defaultErrorHandler} from './Utils';
  * @property {Array} validators=[] - Any validators to validate against for given value (to validator).
  * @property {Boolean} breakOnFailure=false - Whether or not to 'break' on a validation failure result or not.
  * @property {Boolean} valueObscured=false - Whether to obscure the value being tested against (to the assigned places) or not).
- * @property {Function} valueObscurator=((x) => x) - Obscurator used for obscuring a value given to validation.
+ * @property {Function} valueObscurer=((x) => x) - Obscurer used for obscuring a value given to validation.
  */
 
 export const
@@ -52,7 +52,7 @@ export const
      */
     validateInput = (input, value) => {
         const {validators, filters, breakOnFailure,
-                valueObscured, valueObscurator, name} = input;
+                valueObscured, valueObscurer, name} = input;
 
         // If value is not required and is `null` or `undefined`
         if (noValidationRequired(input, value)) {
@@ -69,7 +69,7 @@ export const
         // Run validation and filtering
         let vResult = runValidators(validators, breakOnFailure, value),
             fResult = runFilters(filters, value),
-            oResult = valueObscured && valueObscurator ? valueObscurator(fResult) : fResult;
+            oResult = valueObscured && valueObscurer ? valueObscurer(fResult) : fResult;
 
         return toInputValidationResult(assign(vResult, {
             name: name || '',
@@ -90,7 +90,7 @@ export const
      */
     validateIOInput = (input, value) => {
         const {validators, filters, breakOnFailure,
-                valueObscured, valueObscurator} = input;
+                valueObscured, valueObscurer} = input;
 
         // If not required and value is `null` or `undefined` return truthy result
         if (noValidationRequired(input, value)) {
@@ -117,8 +117,8 @@ export const
                     result.rawValue = value;
                     result.value = result.filteredValue = filteredValue;
                     result.obscuredValue =
-                        valueObscured && valueObscurator ?
-                            valueObscurator(filteredValue) : filteredValue;
+                        valueObscured && valueObscurer ?
+                            valueObscurer(filteredValue) : filteredValue;
                     return toInputValidationResult(result);
                 })
             );

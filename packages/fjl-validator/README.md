@@ -149,7 +149,7 @@ stringLengthValidator, default
 ```
 ### `ValidationUtils` methods
  ```
-defaultValueObscurator, getErrorMsgByKey, toValidationOptions,
+defaultValueObscurer, getErrorMsgByKey, toValidationOptions,
 toValidationResult, isOneOf, default
 ```
 
@@ -180,7 +180,7 @@ Returns valid validation options objects that can be used as validator options;
 ##### Params
 - `options {Object}`
   - `valueObscured {Boolean}` 
-  - `valueObscurator {Function.<String>}` - Obscurator function; E.g. `x => "..."`
+  - `valueObscurer {Function.<String>}` - Obscurer function; E.g. `x => "..."`
   - `messageTemplates {Object.<String, (MessageTemplateCallback|Function|String)>}` - Key value pairs of error messages or error message callbacks (
     See virtual type `MessageTemplateCallback` @todo here).
     
@@ -207,7 +207,7 @@ Validates values using a regular expression.
 
 ##### Params
 - `options {Object}`
-  - Inherits all properties from `{ValidationOptions}` type (`{valueObscurator, valueObscured, messageTemplates}`).
+  - Inherits all properties from `{ValidationOptions}` type (`{valueObscurer, valueObscured, messageTemplates}`).
   - `pattern {RegExp}`
   - `messageTemplates {Object}`
     - `DOES_NOT_MATCH_PATTERN` - Key on `messageTemplates` to populate for custom 'does-not-match-pattern' message.
@@ -261,7 +261,7 @@ We'll refer to this set as `Empty` here.
 
 ##### Params
 - `options {Object}`
-  - Inherits all properties from `{ValidationOptions}` type (`{valueObscurator, valueObscured, messageTemplates}`) also.
+  - Inherits all properties from `{ValidationOptions}` type (`{valueObscurer, valueObscured, messageTemplates}`) also.
   - `messageTemplates`
     - `EMPTY_NOT_ALLOWED` - Key that can be populated for custom message on receiving an `Empty` (in virtual types).
 - `value {*}` - Value to validate.
@@ -317,10 +317,10 @@ One of `[null, undefined, '', 0, false, [], {}, Map(), Set(), WeakMap(), WeakSet
 ##### Properties
 - `valueObscured {Boolean}` - Whether to obscure value in validation error messages
 when value doesn't pass validation.  Default `false`.
-- `valueObscurator {Function}` - Function that takes the value
+- `valueObscurer {Function}` - Function that takes the value
 and returns an obscured version;  E.g., 
 ```
-const obscurator = x => Array.fill('*', 0, (x + '').length).join('');
+const obscurer = x => Array.fill('*', 0, (x + '').length).join('');
 obscure('hello') === '*****' // equals `true` 
 ```
 - `messageTemplates {Object}` - Key-value pair hash where

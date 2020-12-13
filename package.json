@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "dependencies": {},
-  "devDependencies":  {
+  "devDependencies": {
     "@babel/cli": "^7.12.7",
     "@babel/core": "^7.12.7",
     "@babel/parser": "^7.12.7",
@@ -42,6 +42,8 @@
     "test": "npm run test:fjl",
     "test:fjl": "jest -c packages/fjl/jest.config.js",
     "test:fjl-validator": "jest --c packages/fjl-validator/jest.config.js",
+    "test:fjl-inputfilter": "jest --c packages/fjl-inputfilter/jest.config.js",
+    "test:fjl-filter": "jest --c packages/fjl-filter/jest.config.js",
     "build": "npm run build:fjl",
     "build:fjl": "cd packages/fjl && npm run build && cd ../../"
   },
