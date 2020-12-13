@@ -1,189 +1,22 @@
 {
   "name": "fjl-validator",
   "version": "0.7.15",
-  "description": "Functional validators for forms and the like.\"",
-  "main": "dist/cjs/fjlValidator.js",
-  "module": "dist/es6-module/fjl-validator.mjs",
+  "description": "Functional validators for forms and the like.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "typings": "dist/es/index.d.ts",
   "repository": "git@github.com:functional-jslib/fjl-validator.git",
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
   "license": "BSD",
   "scripts": {
-    "build": "gulp build docs && npm run test-builds",
-    "test-builds": "jest --testMatch **/tests/*-test-*.js",
-    "test": "jest --testMatch **/tests/test-*.js",
-    "eslint": "gulp eslint",
-    "readme": "gulp readme",
-    "docs": "gulp docs"
+    "build": "echo \"Should be built from monorepo level.",
+    "test": "echo \"Run 'npm run test:fjl-validator' from monorepo level."
   },
-  "directories": {
-    "test": "tests",
-    "lib": "src",
-    "doc": "README.md"
-  },
-  "dependencies": {
+  "peerDependencies": {
     "fjl": "^1.12.4"
   },
-  "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
-    "@babel/plugin-external-helpers": "^7.10.4",
-    "@babel/plugin-transform-modules-amd": "^7.10.5",
-    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
-    "@babel/plugin-transform-modules-umd": "^7.10.4",
-    "@babel/polyfill": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/register": "^7.10.5",
-    "@types/jest": "^24.9.1",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^24.8.0",
-    "babel-upgrade": "1.0.1",
-    "del": "^5.0.0",
-    "gulp": "4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-better-rollup": "^4.0.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-duration": "0.0.0",
-    "gulp-eslint": "^6.0.0",
-    "gulp-header": "^2.0.9",
-    "gulp-if": "^3.0.0",
-    "gulp-jsdoc3": "^2.0.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-uglify": "^3.0.2",
-    "jest": "^24.8.0",
-    "rollup": "^1.32.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "tui-jsdoc-template": "^1.2.2"
-  },
-  "jest": {
-    "testEnvironment": "node"
-  },
-  "buildConfig": {
-    "inputModuleName": "fjlValidator",
-    "inputFilePath": "./src/fjlValidator.js",
-    "outputFileName": "fjl-validator.js",
-    "outputFileNameMjs": "fjl-validator.mjs",
-    "outputFileNameMin": "fjl-validator.min.js",
-    "srcsGlob": "./src/**/*.js",
-    "paths": {
-      "dist": "./dist",
-      "docs": "./docs"
-    },
-    "folderNames": {
-      "amd": "amd",
-      "cjs": "cjs",
-      "iife": "iife",
-      "umd": "umd",
-      "es6Module": "es6-module",
-      "package": "package"
-    },
-    "es6ModuleRollup": {
-      "config": {
-        "input": "./src/fjlValidator.js",
-        "external": [
-          "fjl",
-          "fjl-mutable"
-        ]
-      },
-      "write": {
-        "file": "./dist/es6-module/fjl-validator.js",
-        "format": "es",
-        "sourcemap": true
-      }
-    },
-    "buildAmdOptions": {
-      "babel": {
-        "babelrc": false,
-        "presets": [
-          "@babel/preset-env"
-        ],
-        "plugins": [
-          "@babel/plugin-transform-modules-amd"
-        ],
-        "exclude": [
-          "node_modules/**/*"
-        ]
-      }
-    },
-    "buildCjsOptions": {
-      "babel": {
-        "babelrc": false,
-        "presets": [
-          "@babel/preset-env"
-        ],
-        "plugins": [
-          "@babel/plugin-transform-modules-commonjs"
-        ],
-        "exclude": [
-          "node_modules/**/*"
-        ]
-      }
-    },
-    "buildUmdOptions": {
-      "babel": {
-        "babelrc": false,
-        "presets": [
-          "@babel/preset-env"
-        ],
-        "plugins": [
-          "@babel/plugin-transform-modules-umd"
-        ],
-        "exclude": [
-          "node_modules/**/*"
-        ]
-      }
-    },
-    "buildIifeOptions": {
-      "babel": {
-        "babelrc": false,
-        "presets": [
-          [
-            "@babel/preset-env",
-            {
-              "modules": false
-            }
-          ]
-        ],
-        "exclude": [
-          "node_modules/**/*"
-        ]
-      }
-    },
-    "uglifyOptions": {},
-    "readme": {
-      "files": [
-        "./markdown-fragments/readme-header.md",
-        "./markdown-fragments/sections/sections.md",
-        "./markdown-fragments/sections/requirements.md",
-        "./markdown-fragments/sections/getting-started.md",
-        "./markdown-fragments/sections/docs.md",
-        "./markdown-fragments-generated/module-and-member-list.md",
-        "./markdown-fragments/sections/docs/docs-footer.md",
-        "./markdown-fragments/sections/development.md",
-        "./markdown-fragments/sections/license.md",
-        "./markdown-fragments/sections/resources.md",
-        "./markdown-fragments/sections/changelog.md"
-      ]
-    },
-    "jsdoc": {
-      "opts": {
-        "template": "node_modules/tui-jsdoc-template",
-        "encoding": "utf8",
-        "destination": "./docs/",
-        "recurse": true,
-        "templates": {
-          "useCollapsibles": false
-        }
-      },
-      "templates": {
-        "logo": {
-          "url": "http://elycruz.com/fjl-logo-v2.svg",
-          "width": "144px",
-          "height": "55px",
-          "link": "https://github.com/functional-jslib/fjl-validator"
-        },
-        "footerText": "fjl-validator library - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab"
-      }
-    }
+  "devDependencies": {},
+  "engines": {
+    "node": ">=12.0.0"
   }
 }

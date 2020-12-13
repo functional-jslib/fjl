@@ -5,16 +5,9 @@
 # fjl
 Functional Javascript Library (inspired by Haskell's Prelude).
 
-## Requirements:
-- Javascript Ecmascript 6+.
-
 ### Supported Platforms:
-
-#### Browsers
-- IE9+, and all other modern day browsers.
-
-#### NodeJs
-- 12+
+- Ecmascript 6+.
+- NodeJs v12+
 
 ## Getting Started:
 @todo 
@@ -25,80 +18,9 @@ Functional Javascript Library (inspired by Haskell's Prelude).
 ### In NodeJs: 
 @todo 
 
-
 ## Docs
 
 **JSDocs** [https://functional-jslib.github.io/fjl]
-
-### Library methods:
-
-### `list` methods
- ```
-map, slice, includes, indexOf, lastIndexOf, push, append, head, last,
-tail, init, uncons, unconsr, concat, concatMap, reverse, intersperse,
-intercalate, transpose, subsequences, swapped, permutations, foldl,
-foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate,
-cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take,
-drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList,
-at, find, forEach, filter, partition, elem, notElem, isPrefixOf,
-isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails,
-stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3,
-zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product,
-maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort,
-sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy,
-unionBy, union, intersect, intersectBy, difference, complement,
-sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
-reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
-findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
-aggregateArray, range
-```
-### `listUtils` methods
- ```
-sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
-reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
-findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
-aggregateArray
-```
-### `object` methods
- ```
-instanceOf, hasOwnProperty, length, native, assign, keys, lookup,
-typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames,
-isFunction, isType, isStrictly, isOfType, isLoosely, isClass,
-isCallable, isObject, isBoolean, isNumber, isString, isMap, isSet,
-isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
-isUsableImmutablePrimitive, isEmptyList, isEmptyObject,
-isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf,
-isLooselyOneOf, instanceOfOne, isFunctor, isArray, of, searchObj,
-assignDeep, objUnion, objIntersect, objDifference, objComplement, log,
-error, peek, warn, jsonClone, toArray, toAssocList, toAssocListDeep,
-fromAssocList, fromAssocListDeep
-```
-### `boolean` methods
- ```
-isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll
-```
-### `errorThrowing` methods
- ```
-typeRefsToStringOrError, defaultErrorMessageCall,
-getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType,
-errorIfNotTypes
-```
-### `function` methods
- ```
-apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5,
-flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3,
-negateFN, until, fnOrError, noop, trampoline, toFunction
-```
-### `string` methods
- ```
-split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst,
-camelCase, classCase
-```
-### `utils` methods
- ```
-fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
-fPureTakesOneOrMore
-```
 
 ### Notes/Caveats/Method-Requisites:
 
@@ -106,7 +28,6 @@ fPureTakesOneOrMore
 - All methods that take 2 or more arguments are curried.
 - Methods that take rest params "only" are not curried (except in some cases - see: [`compose`](https://functional-jslib.github.io/fjl/module-function.html#.compose)  and [`peek`](https://functional-jslib.github.io/fjl/module-console.html#.peek) for examples of uncurried functions and [`append`](https://functional-jslib.github.io/fjl/module-list.html#.append) for a curried one).
 - Methods that require one argument and rest params are curried at up to 2 parameters.
-
 
 #### Note: `iterate`, `repeat`, `replicate`, `cycle`
 In javascript we do not have lazy lists (infinite lists) like in haskell so 
@@ -149,9 +70,6 @@ fPureTakesOneOrMore, fPureTakesOne, fPureTakes2, fPureTakesOneOrMore
 
 ### Notable methods not added from the haskell prelude:
 - Math/Integral/Num/etc. methods
-
-Jsdocs here:
-https://functional-jslib.github.io/fjl/
 
 ## Development:
 - Sources are in './src'

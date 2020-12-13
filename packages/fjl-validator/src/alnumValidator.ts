@@ -4,33 +4,21 @@
  * @module alnumValidator
  */
 import {regexValidator} from './regexValidator';
-import {curry, assignDeep} from 'fjl';
+import {assignDeep, curry} from 'fjl';
 
 export const
 
-    /**
-     * @function module:alnumValidator.alnumValidator
-     * @param options {Object}
-     * @param value {*}
-     * @returns {Object}
-     */
-    alnumValidator = curry((options, value) =>
-        regexValidator(assignDeep({
-            pattern: /^[\da-z]+$/i,
-            messageTemplates: {
-                DOES_NOT_MATCH_PATTERN: x =>
-                    `Value is not alpha-numeric.  Value received: '${x}'.`
-            }
-        }, options), value)
-    ),
+  alnumValidator = curry((options, value) =>
+    regexValidator(assignDeep({
+      pattern: /^[\da-z]+$/i,
+      messageTemplates: {
+        DOES_NOT_MATCH_PATTERN: x =>
+          `Value is not alpha-numeric.  Value received: '${x}'.`
+      }
+    }, options), value)
+  ),
 
-    /**
-     * Same as `alnumValidator` though doesn't-require-`options`/ignores parameter.
-     * @function module:alnumValidator.alnumValidator1
-     * @param value {*}
-     * @returns {Object}
-     */
-    alnumValidator1 = value => alnumValidator(null, value)
+  alnumValidator1 = value => alnumValidator(null, value)
 
 ;
 
