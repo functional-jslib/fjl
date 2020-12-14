@@ -59,7 +59,7 @@ export const
         rawValue: value,
         value,
         filteredValue: value,
-        obscuredValue: value
+        obscuredValue: value + ''
       });
     }
 
@@ -73,7 +73,7 @@ export const
       rawValue: value,
       value: fResult,
       filteredValue: fResult,
-      obscuredValue: oResult
+      obscuredValue: oResult + ''
     }));
   },
 
@@ -96,7 +96,7 @@ export const
           rawValue: value,
           value,
           filteredValue: value,
-          obscuredValue: value
+          obscuredValue: value + ''
         })
       );
     }
@@ -212,7 +212,7 @@ export const
    * @param [out = {}] {Object|*}
    * @returns {InputOptions}
    */
-  toInput = <T>(inputObj: InputOptions<T>, out = {} as InputOptions<T>): InputOptions<T> => {
+  toInput = <T>(inputObj?: InputOptions<T> | string, out = {} as InputOptions<T>): InputOptions<T> => {
     const _inputObj = defineEnumProps([
       [String, 'name', ''],
       [Boolean, 'required', false],
@@ -239,7 +239,7 @@ export const
    * @param resultObj {Object|*}
    * @returns {InputValidationResult}
    */
-  toInputValidationResult = resultObj => {
+  toInputValidationResult = <T>(resultObj?: InputValidationResult<T>): InputValidationResult<T> => {
     const _result = defineEnumProps([
       [String, 'name', ''],
       [Boolean, 'result', false],
