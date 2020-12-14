@@ -11,22 +11,20 @@ const
 (async () => {
   log('Linking packages ...\n');
   return await [
-    ['fjl'],
-    ['fjl-validator', 'fjl'],
-    ['fjl-inputfilter', 'fjl fjl-validator'],
+    'fjl',
+    'fjl-validator',
+    // 'fjl-filter',
+    // 'fjl-inputfilter',
   ]
-    .reduce((p, [packageName, packagesToLink]) => {
+    .reduce((p, packageName) => {
         const cwd = path.join(__dirname, `../../packages/${packageName}`);
         return p.then(async () => {
-          if (!packagesToLink) {
-            return;
-          }
-          log(`---------------------------\n\nLinking packages to ${packageName} ...`);
-          return ioExec(`npm link ${packagesToLink}`, {cwd})
+          log(`---------------------------\n\nLinking ${packageName} ...`);
+          return ioExec('npm link .', {cwd})
         })
           .then(async () => {
-            log(`---------------------------\n\nLinking ${packageName} ...`);
-            return ioExec('npm link .', {cwd})
+            log(`---------------------------\n\nLinking ${packageName} to main project ...`);
+            return ioExec(`npm link ${packageName}`, {cwd: path.join(__dirname, '../../')});
           })
       },
       Promise.resolve()

@@ -2,7 +2,14 @@
  * Created by Ely on 7/24/2014.
  */
 import {assign, apply, compose, isString, isArray, isset, defineEnumProps, UnaryOf, Slice} from 'fjl';
-import {toValidationResult, toValidationOptions, notEmptyValidator, ValidatorResult, Validator} from 'fjl-validator';
+import {
+  toValidationResult,
+  toValidationOptions,
+  notEmptyValidator,
+  ValidatorResult,
+  Validator,
+  ValidatorOptions
+} from 'fjl-validator';
 import {defaultErrorHandler} from './Utils';
 
 export interface InputValidationResult<T = any> {
@@ -15,14 +22,14 @@ export interface InputValidationResult<T = any> {
   filteredValue?: T;
 }
 
-export interface InputOptions<T> {
+export interface InputOptions<T> extends ValidatorOptions<T> {
   name: string,
   required?: boolean;
   breakOnFailure?: boolean;
   valueObscured?: boolean;
   valueObscurer?: UnaryOf<T, string>;
-  filters?: UnaryOf<T, any>
-  validators?: UnaryOf<T, ValidatorResult>
+  filters?: UnaryOf<T, any>[]
+  validators?: UnaryOf<T, ValidatorResult>[]
 }
 
 export const
@@ -140,7 +147,7 @@ export const
    * Runs (possibly) IOValidators against given `value`.
    */
   runIOValidators = <T>(
-    validators: Validator<T>,
+    validators: Validator<T>[],
     breakOnFailure: boolean,
     value?: T,
     errorCallback = defaultErrorHandler
@@ -187,18 +194,13 @@ export const
   /**
    * Runs filters on value (successively).
    */
-  runFilters = (filters, value) => filters && filters.length ?
+  runFilters = <T = any>(filters: UnaryOf<T, any>[], value: T): T | any => filters && filters.length ?
     apply(compose, filters)(value) : value,
 
   /**
    * Runs filters on value (successively) and returns result wrapped in a promise.
-   * @function module:fjlInputFilter.runIOFilters
-   * @param filters {Array.<Function>}
-   * @param value {*}
-   * @param [errorCallback=console.error] {Function}
-   * @returns {Promise.<*>}
    */
-  runIOFilters = (filters, value, errorCallback = defaultErrorHandler) =>
+  runIOFilters = <T = any>(filters: UnaryOf<T, any>[], value: T, errorCallback = defaultErrorHandler): Promise<T | any> =>
     runFilters(filters ? filters.map(filter => x => x.then(filter)) : null,
       Promise.resolve(value).catch(errorCallback)),
 
@@ -210,7 +212,7 @@ export const
    * @param [out = {}] {Object|*}
    * @returns {InputOptions}
    */
-  toInput = (inputObj, out = {}) => {
+  toInput = <T>(inputObj: InputOptions<T>, out = {} as InputOptions<T>): InputOptions<T> => {
     const _inputObj = defineEnumProps([
       [String, 'name', ''],
       [Boolean, 'required', false],
@@ -260,8 +262,8 @@ export class Input<T = any> implements InputOptions<T> {
   breakOnFailure = false;
   valueObscured = false;
   valueObscurer = null;
-  filters = null;
-  validators = null;
+  filters: UnaryOf<T, any>[];
+  validators: UnaryOf<T, ValidatorResult>[];
 
   constructor(inputObj) {
     toInput(inputObj, this);

@@ -1,6 +1,6 @@
 {
   "name": "fjl-validator",
-  "version": "0.7.15",
+  "version": "0.8.0",
   "description": "Functional validators for forms and the like.",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -9,7 +9,7 @@
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
   "license": "BSD",
   "scripts": {
-    "build": "npm run build:all",
+    "build": "node ./build.js",
     "build:all": "npm run build:es && npm run build:cjs && npm run build:umd && npm run build:iife",
     "test": "jest --config ./jest.config.js",
     "docs": "echo \"Not yet implemented.\"",

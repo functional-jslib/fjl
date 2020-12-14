@@ -30,7 +30,7 @@ export interface MessageTemplates<T = any> {
 export interface ValidatorOptions<T = any> {
   messageTemplates?: MessageTemplates<T>;
   valueObscured?: boolean;
-  valueObscurer?: <T>(x: T) => string;
+  valueObscurer?: UnaryOf<T, string>;
 }
 
 export interface ValidatorResult<T = any> {

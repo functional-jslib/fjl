@@ -13,7 +13,8 @@
     "build:es": "tsc --project tsconfig.prod.es.json",
     "build:cjs": "tsc --project tsconfig.prod.cjs.json",
     "build:umd": "tsc --project tsconfig.prod.umd.json",
-    "build:iife": "rollup -c ./rollup.config.js"
+    "build:iife": "rollup -c ./rollup.config.js",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.7",

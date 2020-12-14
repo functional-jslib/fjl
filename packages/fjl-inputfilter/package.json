@@ -1,6 +1,6 @@
 {
   "name": "fjl-input-filter",
-  "version": "1.2.9",
+  "version": "1.3.0",
   "license": "BSD-3-Clause",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -15,9 +15,9 @@
     "build:umd": "tsc --project tsconfig.prod.umd.json",
     "build:iife": "rollup -c ./rollup.config.js"
   },
-  "dependencies": {
-    "fjl": "^1.12.6",
-    "fjl-validator": "^0.7.15"
+  "peerDependencies": {
+    "fjl": "^1.13.0",
+    "fjl-validator": "^0.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

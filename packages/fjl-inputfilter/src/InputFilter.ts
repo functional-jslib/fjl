@@ -43,7 +43,7 @@ export const
           map(([key, inputObj]) =>
               [key, validateInput(inputObj, valuesObj[key])],
             toAssocList(inputsObj)
-          )),
+          )) as [InputValidationResult[], InputValidationResult[]],
       messages = foldl((agg, [key, result]) => {
         agg[key] = result.messages;
         return agg;
@@ -79,7 +79,7 @@ export const
       toAssocList(inputsObj)
     )).then(assocList => {
         const [validResults, invalidResults] =
-            partition(([_, result]) => result.result, assocList),
+            partition(([_, result]) => result.result, assocList) as [InputValidationResult[], InputValidationResult[]],
           messages = foldl((agg, [key, result]) => {
             agg[key] = result.messages;
             return agg;
