@@ -1,11 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist/es",
-    "declaration": true,
-    "declarationDir": "./dist/es",
-    "rootDir": "./src"
-  },
   "exclude": [
     "dist/",
     "node_modules/",

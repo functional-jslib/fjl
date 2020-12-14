@@ -1,20 +1,22 @@
 {
   "name": "fjl-validator-recaptcha",
-  "version": "1.2.14",
+  "version": "1.3.0",
   "main": "./dist/cjs/fjlReCaptchaValidator.js",
   "module": "./src/fjlReCaptchaValidator.js",
   "license": "BSD-3-Clause",
   "scripts": {
-    "start": "node tests/mock-server-start.js",
-    "stop": "node tests/mock-server-stop.js",
+    "build": "node ./build.js",
+    "build:all": "npm run build:es && npm run build:cjs && npm run build:umd && npm run build:iife",
+    "build:cjs": "tsc --project tsconfig.prod.cjs.json",
+    "build:es": "tsc --project tsconfig.prod.es.json",
+    "build:iife": "rollup -c ./rollup.config.js",
+    "build:umd": "tsc --project tsconfig.prod.umd.json",
+    "docs": "echo \"Not yet implemented.\"",
     "pretest": "npm start",
     "posttest": "npm stop",
-    "build": "gulp docs build && yarn run test-builds",
-    "test-builds": "jest --testMatch **/tests/*-test-*.js",
-    "test": "jest --testMatch **/tests/test-*.js",
-    "eslint": "gulp eslint",
-    "readme": "gulp readme",
-    "docs": "gulp docs"
+    "start": "node tests/mock-server-start.js",
+    "stop": "node tests/mock-server-stop.js",
+    "test": "jest --config ./jest.config.js"
   },
   "dependencies": {
     "fjl": "^1.12.4",
