@@ -1,13 +1,13 @@
 /**
  * Created by Ely on 7/24/2014.
  */
-import {assign, apply, compose, concat, isString, isArray, isset, defineEnumProps, UnaryOf} from 'fjl';
-import {toValidationResult, toValidationOptions, notEmptyValidator, ValidatorResult} from 'fjl-validator';
+import {assign, apply, compose, isString, isArray, isset, defineEnumProps, UnaryOf, Slice} from 'fjl';
+import {toValidationResult, toValidationOptions, notEmptyValidator, ValidatorResult, Validator} from 'fjl-validator';
 import {defaultErrorHandler} from './Utils';
 
 export interface InputValidationResult<T = any> {
-  name: string;
   result: boolean;
+  name?: string;
   messages?: string[],
   value?: T;
   rawValue?: T;
@@ -20,29 +20,25 @@ export interface InputOptions<T> {
   required?: boolean;
   breakOnFailure?: boolean;
   valueObscured?: boolean;
-  valueObscurer?: boolean;
+  valueObscurer?: UnaryOf<T, string>;
   filters?: UnaryOf<T, any>
   validators?: UnaryOf<T, ValidatorResult>
 }
 
 export const
 
-  noValidationRequired = (input, value) =>
+  noValidationRequired = <T>(input: InputOptions<T>, value: T): boolean =>
     !input.required && (
       !isset(value) || (
         (isString(value) || isArray(value)) &&
-        !value.length
+        !(value as unknown as Slice).length
       )
     ),
 
   /**
    * Validates an input object based.
-   * @function module:fjlInputFilter.validateInput
-   * @param input {Input|InputOptions}
-   * @param value {*}
-   * @returns {InputValidationResult}
    */
-  validateInput = (input, value) => {
+  validateInput = <T>(input: Input<T>, value: T): InputValidationResult<T> => {
     const {
       validators, filters, breakOnFailure,
       valueObscured, valueObscurer, name
@@ -77,12 +73,8 @@ export const
   /**
    * Validates an input object that may have IOValidators.  Returns
    * a validation result wrapped in a promise.
-   * @function module:fjlInputFilter.validateIOInput
-   * @param input {Input|InputOptions}
-   * @param value {*}
-   * @returns {Promise.<InputValidationResult>}
    */
-  validateIOInput = (input, value) => {
+  validateIOInput = <T>(input: InputOptions<T>, value: T): Promise<InputValidationResult<T>> => {
     const {
       validators, filters, breakOnFailure,
       valueObscured, valueObscurer
@@ -104,7 +96,7 @@ export const
 
     let pendingValidation = validators && validators.length ?
       runIOValidators(validators, breakOnFailure, value, input) :
-      Promise.resolve({result: true})
+      Promise.resolve({result: true} as InputValidationResult<T>)
     ;
 
     return pendingValidation.then(result =>
@@ -122,11 +114,6 @@ export const
 
   /**
    * Runs validator against given `value`.
-   * @function module:fjlInputFilter.runValidators
-   * @param validators {Array.<Function>}
-   * @param breakOnFailure {Boolean}
-   * @param value {*}
-   * @returns {*}
    */
   runValidators = (validators, breakOnFailure, value) => {
     let result = true,
@@ -146,19 +133,18 @@ export const
         }
       }
     }
-    return toValidationResult({result, messages: concat(messageResults)});
+    return toValidationResult({result, messages: [].concat(messageResults)});
   },
 
   /**
    * Runs (possibly) IOValidators against given `value`.
-   * @function module:fjlInputFilter.runIOValidators
-   * @param validators {Array.<Function>}
-   * @param breakOnFailure {Boolean}
-   * @param value {*}
-   * @param [errorCallback=console.error] {Function}
-   * @returns {*}
    */
-  runIOValidators = (validators, breakOnFailure, value, errorCallback = defaultErrorHandler) => {
+  runIOValidators = <T>(
+    validators: Validator<T>,
+    breakOnFailure: boolean,
+    value?: T,
+    errorCallback = defaultErrorHandler
+  ): Promise<InputValidationResult> => {
     if (!validators || !validators.length) {
       return Promise.resolve(toValidationResult({result: true}));
     }
@@ -200,10 +186,6 @@ export const
 
   /**
    * Runs filters on value (successively).
-   * @function module:fjlInputFilter.runFilters
-   * @param filters {Array.<Function>}
-   * @param value {*}
-   * @returns {*}
    */
   runFilters = (filters, value) => filters && filters.length ?
     apply(compose, filters)(value) : value,
@@ -270,12 +252,17 @@ export const
   }
 ;
 
-/**
- * @memberOf fjlInputFilter
- * @class Input
- * @extends InputOptions
- */
-export class Input {
+// @todo Remove the use of classes here (since the class isn't doing anything our functions are
+//  already doing we shouldn't bother).
+export class Input<T = any> implements InputOptions<T> {
+  name = '';
+  required = false;
+  breakOnFailure = false;
+  valueObscured = false;
+  valueObscurer = null;
+  filters = null;
+  validators = null;
+
   constructor(inputObj) {
     toInput(inputObj, this);
   }

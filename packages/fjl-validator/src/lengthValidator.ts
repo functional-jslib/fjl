@@ -6,7 +6,6 @@
  */
 import {
   getErrorMsgByKey,
-  isOneOf,
   MessageGetter,
   MessageTemplates,
   toValidationOptions,
@@ -14,7 +13,7 @@ import {
   ValidatorOptions,
   ValidatorResult
 } from './ValidationUtils';
-import {assignDeep, curry, curry2, defineEnumProps, typeOf, Slice} from 'fjl';
+import {assignDeep, curry, curry2, defineEnumProps, typeOf, Slice, isOneOf} from 'fjl';
 
 export interface LenValidatorOptions<T = any> extends ValidatorOptions<Slice<T>> {
   min?: number;

@@ -12,11 +12,12 @@ import {
   isFunction,
   isString,
   repeat,
-  toTypeRefName,
-  typeOf,
-  TypeRef,
-  UnaryOf
+  UnaryOf,
+  isOneOf
 } from 'fjl';
+
+// @todo Deprecate this on version 1.14.0.
+export {isOneOf};
 
 export type MessageGetter<T = any> = (x?: T, options?: ValidatorOptions<T>) => string;
 
@@ -38,7 +39,7 @@ export interface ValidatorResult<T = any> {
   value?: T;
 }
 
-export type Validator<T> = UnaryOf<T, ValidatorResult>;
+export type Validator<T> = UnaryOf<T, ValidatorResult<T>>;
 
 export const
 
@@ -94,15 +95,7 @@ export const
       ], {}),
       {value: undefined},
       ...(options.length ? options : [{}])
-    ),
-
-  isOneOf = <T>(x: T, ...types: TypeRef[]): boolean => {
-    const typeName = typeOf(x);
-    return types
-      .map(toTypeRefName)
-      .some(name => typeName === name);
-  }
-
+    )
 ;
 
 export default toValidationResult;
