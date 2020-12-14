@@ -1,5 +1,6 @@
 /**
  * Created by Ely on 7/21/2014.
+
  * Initial idea borrowed from Zend Framework 2's Zend/Validator
  * @module ValidationUtils
  */
@@ -13,7 +14,8 @@ import {
   repeat,
   toTypeRefName,
   typeOf,
-  TypeRef
+  TypeRef,
+  UnaryOf
 } from 'fjl';
 
 export type MessageGetter<T = any> = (x?: T, options?: ValidatorOptions<T>) => string;
@@ -35,6 +37,8 @@ export interface ValidatorResult<T = any> {
   messages?: string[];
   value?: T;
 }
+
+export type Validator<T> = UnaryOf<T, ValidatorResult>;
 
 export const
 

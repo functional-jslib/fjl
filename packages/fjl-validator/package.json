@@ -9,7 +9,7 @@
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
   "license": "BSD",
   "scripts": {
-    "build": "node ../../node-scripts/tasks/build-package.js fjl-validator",
+    "build": "npm run build:all",
     "build:all": "npm run build:es && npm run build:cjs && npm run build:umd && npm run build:iife",
     "test": "jest --config ./jest.config.js",
     "docs": "echo \"Not yet implemented.\"",
@@ -19,7 +19,7 @@
     "build:iife": "rollup -c ./rollup.config.js"
   },
   "peerDependencies": {
-    "fjl": "^1.12.4"
+    "fjl": "^1.13.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.7",
