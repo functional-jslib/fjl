@@ -14,7 +14,6 @@ import {defaultErrorHandler} from './Utils';
 
 /**
  * @interface InputFilterResult
- * @memberOf fjlInputFilter
  * @property {Boolean} result - Result of validation.
  * @property {Object.<String,InputValidationResult>} validInputs - Valid input results object.
  * @property {Object.<String,InputValidationResult>} invalidInputs - Invalid input results object.
@@ -142,7 +141,7 @@ export const
    * @param outResult {Object|*}
    * @returns {InputFilterResult}
    */
-  toInputFilterResult = (inResult, outResult = {}) => {
+  toInputFilterResult = (inResult?: InputFilterResult, outResult: InputFilterResult = {result: false}) => {
     const _outResult = defineEnumProps([
       [Boolean, 'result', false],
       [Object, 'messages', {}],

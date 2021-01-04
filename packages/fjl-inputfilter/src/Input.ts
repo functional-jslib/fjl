@@ -1,21 +1,22 @@
 /**
  * Created by Ely on 7/24/2014.
  */
-import {assign, apply, compose, isString, isArray, isset, defineEnumProps, UnaryOf, Slice} from 'fjl';
+import {apply, assign, compose, defineEnumProps, isArray, isset, isString, Slice, UnaryOf} from 'fjl';
 import {
-  toValidationResult,
-  toValidationOptions,
+  defaultValueObscurer,
   notEmptyValidator,
-  ValidatorResult,
+  toValidationOptions,
+  toValidationResult,
   Validator,
-  ValidatorOptions
+  ValidatorOptions,
+  ValidatorResult
 } from 'fjl-validator';
 import {defaultErrorHandler} from './Utils';
 
 export interface InputValidationResult<T = any> {
   result: boolean;
   name?: string;
-  messages?: string[],
+  messages?: string[];
   value?: T;
   rawValue?: T;
   obscuredValue?: string;
@@ -23,13 +24,13 @@ export interface InputValidationResult<T = any> {
 }
 
 export interface InputOptions<T> extends ValidatorOptions<T> {
-  name: string,
+  name?: string;
   required?: boolean;
   breakOnFailure?: boolean;
   valueObscured?: boolean;
   valueObscurer?: UnaryOf<T, string>;
-  filters?: UnaryOf<T, any>[]
-  validators?: UnaryOf<T, ValidatorResult>[]
+  filters?: UnaryOf<T, any>[];
+  validators?: UnaryOf<T, ValidatorResult>[];
 }
 
 export const
@@ -64,7 +65,7 @@ export const
     }
 
     // Run validation and filtering
-    let vResult = runValidators(validators, breakOnFailure, value),
+    const vResult = runValidators(validators, breakOnFailure, value),
       fResult = runFilters(filters, value),
       oResult = valueObscured && valueObscurer ? valueObscurer(fResult) : fResult;
 
@@ -101,7 +102,7 @@ export const
       );
     }
 
-    let pendingValidation = validators && validators.length ?
+    const pendingValidation = validators && validators.length ?
       runIOValidators(validators, breakOnFailure, value, input) :
       Promise.resolve({result: true} as InputValidationResult<T>)
     ;
@@ -122,10 +123,10 @@ export const
   /**
    * Runs validator against given `value`.
    */
-  runValidators = (validators, breakOnFailure, value) => {
+  runValidators = <T>(validators: UnaryOf<T, ValidatorResult<T>>[], breakOnFailure: boolean, value: T): InputValidationResult<T> => {
     let result = true,
-      i = 0,
-      messageResults = [];
+      i = 0;
+    const messageResults = [];
     if (!validators || !validators.length) {
       return toValidationResult({result});
     }
@@ -133,14 +134,14 @@ export const
     for (; i < limit; i++) {
       const vResult = validators[i](value);
       if (!vResult.result) {
-        messageResults.push(vResult.messages);
+        messageResults.push(...vResult.messages);
         result = false;
         if (breakOnFailure) {
           break;
         }
       }
     }
-    return toValidationResult({result, messages: [].concat(messageResults)});
+    return toValidationResult({result, messages: messageResults});
   },
 
   /**
@@ -201,7 +202,7 @@ export const
    * Runs filters on value (successively) and returns result wrapped in a promise.
    */
   runIOFilters = <T = any>(filters: UnaryOf<T, any>[], value: T, errorCallback = defaultErrorHandler): Promise<T | any> =>
-    runFilters(filters ? filters.map(filter => x => x.then(filter)) : null,
+    runFilters(filters ? filters.map(filter => (x): Promise<any> => x.then(filter)) : null,
       Promise.resolve(value).catch(errorCallback)),
 
   /**
@@ -212,7 +213,7 @@ export const
    * @param [out = {}] {Object|*}
    * @returns {InputOptions}
    */
-  toInput = <T>(inputObj?: InputOptions<T> | string, out = {} as InputOptions<T>): InputOptions<T> => {
+  toInput = <T>(inputObj?: InputOptions<T> | string, out = new Input()): Input<T> => {
     const _inputObj = defineEnumProps([
       [String, 'name', ''],
       [Boolean, 'required', false],
@@ -261,23 +262,23 @@ export class Input<T = any> implements InputOptions<T> {
   required = false;
   breakOnFailure = false;
   valueObscured = false;
-  valueObscurer = null;
+  valueObscurer = defaultValueObscurer;
   filters: UnaryOf<T, any>[];
-  validators: UnaryOf<T, ValidatorResult>[];
+  validators: UnaryOf<T, ValidatorResult<T>>[];
 
-  constructor(inputObj) {
+  constructor(inputObj?: InputOptions<T>) {
     toInput(inputObj, this);
   }
 
-  static of(inputObj) {
-    return new Input(inputObj);
+  static of<X>(inputObj: Input<X>): Input<X> {
+    return new Input<X>(inputObj);
   }
 
-  validate(value) {
+  validate(value): InputValidationResult<T> {
     return validateInput(this, value);
   }
 
-  validateIO(value) {
+  validateIO(value): Promise<InputValidationResult<T>> {
     return validateIOInput(this, value);
   }
 }
