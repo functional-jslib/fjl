@@ -13,7 +13,7 @@ export const
 
     runHasPropOfType = (Type, propName, [correctValue, incorrectValue], x) => {
         test (`it should have an \`${propName}\` property`, () => {
-            expect(x.hasOwnProperty(propName)).toEqual(true);
+            expect(Object.prototype.hasOwnProperty.call(x, propName)).toEqual(true);
         });
         test (`it should throw an error when setting \`${propName}\` to ${incorrectValue}`, () => {
             expect(() => { x[propName] = incorrectValue; }).toThrow(Error);
@@ -25,7 +25,7 @@ export const
     },
 
     runHasPropOfTypeUnWrapped = (Type, propName, [correctValue, incorrectValue], x) => {
-        expect(x.hasOwnProperty(propName)).toEqual(true);
+        expect(Object.prototype.hasOwnProperty.call(x, propName)).toEqual(true);
         expect(() => { x[propName] = incorrectValue; }).toThrow(Error);
         x[propName] = correctValue;
         expect(x[propName]).toEqual(correctValue);

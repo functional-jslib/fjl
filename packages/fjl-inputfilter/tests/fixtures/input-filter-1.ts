@@ -2,7 +2,7 @@
  * An input filer case for our 'InputFilter' tests.
  * @module inputFilter1
  */
-import {toInputFilter} from '../../src/InputFilter';
+import {toInputMap} from '../../src/InputFilter';
 import {regexValidator,
     stringLengthValidator as stringLength,
     digitValidator} from 'fjl-validator';
@@ -21,7 +21,7 @@ export const
     // For using from the definition below
     required = true,
 
-    inputFilter1 = toInputFilter({
+    inputFilter1 = toInputMap({
         [TEXT_FIELD]: {
             required,
             validators: [

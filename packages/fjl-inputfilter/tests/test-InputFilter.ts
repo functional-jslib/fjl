@@ -1,6 +1,13 @@
 import {hasOwnProperty, keys} from 'fjl';
 import {runHasPropTypes, runHasPropTypesUnWrapped} from './utils';
-import {toInputFilter, toInputFilterResult, validateInputFilter, validateIOInputFilter} from '../src/InputFilter';
+import {
+  InputFilter,
+  InputOptionsMap,
+  toInputFilterResult,
+  toInputMap,
+  validateInputFilter,
+  validateIOInputFilter
+} from '../src/InputFilter';
 
 import {falsyCasesForInputFilter1, inputFilter1, truthyCasesForInputFilter1} from './fixtures/input-filter-1';
 
@@ -15,48 +22,69 @@ describe('#toInputFilterResult', function () {
     ], inputObj));
 });
 
-describe('#toInputFilter', function () {
+describe('#toInputMap', function () {
   const case1Options = {
       name: {required: true},
       zipcode: {required: true},
       phonenumber: {required: true},
       alnum: {}
     },
-    case1 = toInputFilter(case1Options),
+    case1 = toInputMap(case1Options),
     case1Keys = keys(case1);
+
+  (<[string, InputOptionsMap, InputFilter][]>[
+    ['populated input map', case1Options, new InputFilter(case1Options)],
+    ['un-populated input map', {}, new InputFilter({})],
+    ['void', null, new InputFilter(null)],
+  ])
+    .forEach(([testName, inputOpsMap, expected]) => {
+      it(testName, () => {
+        const rslt = toInputMap(inputOpsMap);
+
+        if (!inputOpsMap) {
+          expect(Object.entries(rslt)).toHaveLength(0);
+        } else {
+          // Ensure (serialized) entries in each match
+          Object.entries(inputOpsMap).forEach(([k]) => {
+            expect(JSON.stringify(rslt[k])).toEqual(JSON.stringify(expected[k]));
+          });
+        }
+      });
+    });
+
   test('should return an object with all keys from passed in options', function () {
-    expect(case1Keys.every(key => hasOwnProperty(case1Options, key)))
-      .toEqual(true);
+    case1Keys.forEach(key => expect(case1Options).toHaveProperty(key));
   });
+
   test('should return an object with properties which are un-writable', function () {
     case1Keys.map(key => expect(() => {
+      // @ts-ignore
       case1[key] = 99;
     }).toThrow(Error));
   });
+
   test('should return an object with enumerable properties', function () {
     expect(case1Keys.every(key =>
       Object.getOwnPropertyDescriptor(case1, key).enumerable)).toEqual(true);
   });
+
   test('should return an object that contains input-options objects for all objects set on passed in options object', function () {
     const propNames = ['name', 'required', 'filters', 'validators', 'breakOnFailure'];
-    expect(
-      case1Keys.every(caseKey => {
-        const inputObj = case1[caseKey];
-        return propNames.every(propKey =>
-          hasOwnProperty(inputObj, propKey));
-      })
-    )
-      .toEqual(true);
+    case1Keys.forEach(caseKey => {
+      const inputObj = case1[caseKey];
+      propNames.every(propKey => expect(inputObj).toHaveProperty(propKey));
+    });
   });
+
   test('inputs should obey property types when converting from options to inputFilter', function () {
     // should throw error becase validators can only be of type array
-    expect(() => toInputFilter(({
+    expect(() => toInputMap(({
       name: {required: true, validators: {}}
     }))).toThrow(Error);
 
     // When types are okay shouldn't throw error
     expect(
-      toInputFilter({name: {required: true, validators: []}})
+      toInputMap({name: {required: true, validators: []}})
         .name.validators
     )
       .toBeInstanceOf(Array);

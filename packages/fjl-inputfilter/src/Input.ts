@@ -23,7 +23,7 @@ export interface InputValidationResult<T = any> {
   filteredValue?: T;
 }
 
-export interface InputOptions<T> extends ValidatorOptions<T> {
+export interface InputOptions<T = any> extends ValidatorOptions<T> {
   name?: string;
   required?: boolean;
   breakOnFailure?: boolean;
@@ -267,7 +267,7 @@ export class Input<T = any> implements InputOptions<T> {
   validators: UnaryOf<T, ValidatorResult<T>>[];
 
   constructor(inputObj?: InputOptions<T>) {
-    toInput(inputObj, this);
+    toInput(inputObj, this); // Gets applied to `this`
   }
 
   static of<X>(inputObj: Input<X>): Input<X> {

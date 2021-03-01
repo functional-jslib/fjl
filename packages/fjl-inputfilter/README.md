@@ -72,7 +72,7 @@ toInputValidationResult, Input
 ### `InputFilter` methods
  ```
 validateInputFilter, validateIOInputFilter, validateIOInputWithName,
-toInputFilter, toInputFilterResult, InputFilter
+toInputMap, toInputFilterResult, InputFilter
 ```
 
 
@@ -84,7 +84,7 @@ In-line summary docs follow:
 ### `validateIOInputFilter(inputFilter, incomingData, ioErrorHandler)`
 ### `validateInput(inputObj, value)`
 ### `validateIOInput(inputObj, value, ioErrorHandler)`
-### `toInputFilter(inputsObj, breakOnFailure {Boolean}, out = {})`
+### `toInputMap(inputsObj, breakOnFailure {Boolean}, out = {})`
 ### `toInputFilterResult(resultObj, out = {})`
 ### `toInputValidationResult(resultObj)`
 ### `toInput(inputOptions, out = {})`
