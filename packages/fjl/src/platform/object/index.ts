@@ -2,7 +2,7 @@
  * Defines some of the platform methods for objects (the ones used within `fjl`).
  */
 
-import {curry, curry2, CurryOf2, CurryOf3, CurryOf4, CurryOf5} from "../../function/curry";
+import {curry, curry2, curry3, curry4, curry5, CurryOf2, CurryOf3, CurryOf4, CurryOf5} from "../../function/curry";
 import {Lengthable} from "../../types";
 import {flip, flip3, flip4, flip5} from "../../function";
 import {ObjectStatics} from "./types";
@@ -40,16 +40,20 @@ export const
     const operation = Object[key];
     switch (operation.length) {
       case 2:
-        agg[key] = flip(operation) as CurryOf2<any, any, any>;
+        agg[key] = flip(operation);
+        agg[`$${key}`] = curry2(flip(operation)) as CurryOf2<any, any, any>;
         break;
       case 3:
-        agg[key] = flip3(operation) as CurryOf3<any, any, any, any>;
+        agg[key] = flip3(operation);
+        agg[`$${key}`] = curry3(flip3(operation)) as CurryOf3<any, any, any, any>;
         break;
       case 4:
-        agg[key] = flip4(operation) as CurryOf4<any, any, any, any, any>;
+        agg[key] = flip4(operation);
+        agg[`$${key}`] = curry4(flip4(operation)) as CurryOf4<any, any, any, any, any>;
         break;
       case 5:
-        agg[key] = flip5(operation) as CurryOf5<any, any, any, any, any, any>;
+        agg[key] = flip5(operation);
+        agg[`$${key}`] = curry5(flip5(operation)) as CurryOf5<any, any, any, any, any, any>;
         break;
       default:
         agg[key] = Object[key];

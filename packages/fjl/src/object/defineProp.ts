@@ -1,5 +1,5 @@
 import {curry2, curry3} from '../function/curry';
-import {_errorIfNotType} from '../errorThrowing';
+import {errorIfNotType} from '../errorThrowing';
 import {isUndefined} from './is';
 import {TypeRef} from "../types";
 
@@ -14,7 +14,7 @@ export const
     return {
       get: (): typeof Type => _value,
       set: (value: typeof Type): void => {
-        _value = _errorIfNotType(Type, target.constructor.name, propName, value);
+        _value = errorIfNotType(Type, target.constructor.name, propName, value);
       }
     };
   },

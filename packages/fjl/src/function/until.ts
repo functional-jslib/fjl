@@ -3,7 +3,11 @@ import {Unary, UnaryOf, UnaryPred} from "../types";
 
 export const
 
-  $until = <T, RetT>(
+  /**
+   * Run `operation` until predicate returns `true` (like a functional
+   *  version of a while loop).
+   */
+  until = <T, RetT>(
     predicate: UnaryPred<T | RetT>,
     operation: UnaryOf<T | RetT, T | RetT>,
     startValue: T | RetT
@@ -15,8 +19,4 @@ export const
     return result as RetT;
   },
 
-  /**
-   * Run `operation` until predicate returns `true` (like a functional
-   *  version of a while loop).
-   */
-  until = curry($until) as CurryOf3<UnaryPred<any>, Unary<any>, any, any>;
+  $until = curry(until) as CurryOf3<UnaryPred<any>, Unary<any>, any, any>;
