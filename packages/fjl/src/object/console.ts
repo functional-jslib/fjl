@@ -26,7 +26,7 @@ export const
      * @param args {...*}
      * @returns {*} Last given value (if one or more values) else first value.
      */
-    peek = (...args) => (log(...args), args.pop()),
+    peek = <T>(...args: T[]): T => (log(...args), args.pop()),
 
     /**
      * `Console.warn`.

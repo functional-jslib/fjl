@@ -29,12 +29,13 @@
 import {NaryOf} from "../types";
 
 export const trampoline = <T, RetT>(fn: NaryOf<T, RetT>, fnName?: string): NaryOf<T, RetT> => {
-    return (...args: T[]): RetT => {
-        let result = fn(...args);
-        while (typeof result === 'function' &&
-        (!fnName || (result.name === fnName))) {
-            result = result();
-        }
-        return result;
-    };
+  return (...args: T[]): RetT => {
+    let result = fn(...args);
+    while (typeof result === 'function' &&
+    (!fnName || (result.name === fnName))) {
+      result = result();
+    }
+    return result;
+  };
 };
+

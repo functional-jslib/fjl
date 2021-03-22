@@ -1,3 +1,3 @@
-import {apply} from '../platform/function';
+import {apply, $apply, _apply} from '../platform/function';
 
-export {apply};
+export {apply, $apply, _apply};
