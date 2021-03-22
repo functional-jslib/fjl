@@ -1,4 +1,5 @@
 import {lastIndex} from './utils';
+import {Slice} from "../types";
 
 export const
     /**
@@ -8,4 +9,4 @@ export const
      * @param xs {Array|String}
      * @returns {Array|String}
      */
-    init = xs => xs.slice(0, lastIndex(xs));
+    init = (xs: Slice): any => xs.slice(0, lastIndex(xs));

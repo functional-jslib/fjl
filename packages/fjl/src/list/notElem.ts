@@ -1,5 +1,5 @@
 import {negateF2} from "../function/negate";
-import {includes} from "../platform/slice";
+import {$includes} from "../platform/slice";
 import {NaryPred} from "../types";
 
 export const
@@ -10,4 +10,4 @@ export const
      * @param xs {Array}
      * @returns {Boolean}
      */
-    notElem = negateF2(includes as NaryPred<any>);
+    notElem = negateF2($includes as NaryPred<any>);

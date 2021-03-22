@@ -2,12 +2,9 @@
  * @module string
  * @description Contains functions for strings.
  */
-import {intercalate, map, filter} from '../list';
+import {intercalate} from '../list';
 import {split} from '../platform/string';
 import {compose} from '../function/compose';
-import {join} from '../platform/array';
-import {_errorIfNotType} from '../errorThrowing';
-import {Slice} from "../platform/slice";
 import {UnaryOf} from "../types";
 
 export {split};
@@ -38,13 +35,13 @@ export const
    * Lower cases first character of a non-empty string.
    * @throws {Error} - Throws error if receiving anything that is not a string.
    */
-  lcaseFirst = xs => xs[0].toLowerCase() + xs.substring(1),
+  lcaseFirst = (xs: string): string => xs[0].toLowerCase() + xs.substring(1),
 
   /**
    * Upper cases first character of a non-empty string.
    * @throws {Error} - Throws error if receiving anything that is not a string.
    */
-  ucaseFirst = xs => xs[0].toUpperCase() + xs.substring(1),
+  ucaseFirst = (xs: string): string => xs[0].toUpperCase() + xs.substring(1),
 
   /**
    * Camel cases (class case) a string.

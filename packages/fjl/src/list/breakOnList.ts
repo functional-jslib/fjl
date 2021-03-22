@@ -25,10 +25,12 @@ export type BreakOnList<Pred, Functor> = CurryOf2<Pred, Functor, [Functor, Funct
  * @param list {Array|String|*}
  * @returns {Array}
  */
-export const breakOnList = curry(
-    <T>(pred: SlicePred<T>, list: Slice<T>): [Slice<T>, Slice<T>] => {
-        const splitPoint = findIndexWhere(negateF3(pred), list) as number;
-        return splitPoint === -1 ?
-            [of(list), $sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
-    }) as BreakOnList<SlicePred<any>, Slice<any>>
+export const $breakOnList =
+  <T>(pred: SlicePred<T>, list: Slice<T>): [Slice<T>, Slice<T>] => {
+    const splitPoint = findIndexWhere(negateF3(pred), list) as number;
+    return splitPoint === -1 ?
+      [of(list), $sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
+  },
+
+  breakOnList = curry($breakOnList) as BreakOnList<SlicePred<any>, Slice>
 ;

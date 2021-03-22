@@ -3,7 +3,7 @@ import {Unary, UnaryOf, UnaryPred} from "../types";
 
 export const
 
-  _until = <T, RetT>(
+  $until = <T, RetT>(
     predicate: UnaryPred<T | RetT>,
     operation: UnaryOf<T | RetT, T | RetT>,
     startValue: T | RetT
@@ -14,8 +14,6 @@ export const
     }
     return result as RetT;
   },
-
-  $until = _until,
 
   /**
    * Run `operation` until predicate returns `true` (like a functional

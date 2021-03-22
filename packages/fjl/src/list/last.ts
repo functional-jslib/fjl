@@ -1,4 +1,5 @@
 import {lastIndex} from './utils';
+import {Slice} from "../types";
 
 /**
  * Returns last item of list.
@@ -7,4 +8,4 @@ import {lastIndex} from './utils';
  * @param xs {Array|String}
  * @returns {*}
  */
-export const last = xs => xs[lastIndex(xs)];
+export const last = <T>(xs: Slice<T>): T => xs[lastIndex(xs)] as T;

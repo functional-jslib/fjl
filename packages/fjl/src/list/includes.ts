@@ -1,3 +1,3 @@
-import {includes} from '../platform/slice';
+import {includes, $includes} from '../platform/slice';
 
-export {includes};
+export {includes, $includes};

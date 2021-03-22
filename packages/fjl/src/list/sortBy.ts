@@ -3,6 +3,10 @@ import {genericAscOrdering} from "./utils";
 import {sliceCopy} from "./utils/sliceCopy";
 
 export const
+
+  $sortBy = <T>(orderingFn, xs: T[]): T[] => (sliceCopy(xs) as T[])
+    .sort(orderingFn || genericAscOrdering),
+
     /**
      * The sortBy function is the non-overloaded (in haskell terms) version of sort.
      * @haskellExample ```
@@ -14,5 +18,4 @@ export const
      * @param xs {Array|String|*}
      * @returns {Array|String|*}
      */
-    sortBy = curry(<T>(orderingFn, xs: T[]) => (sliceCopy(xs) as T[])
-        .sort(orderingFn || genericAscOrdering));
+    sortBy = curry($sortBy);

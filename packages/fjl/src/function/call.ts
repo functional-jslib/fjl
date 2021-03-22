@@ -1,3 +1,3 @@
-import {$call, _call, call} from '../platform/function';
+import {$call, call} from '../platform/function';
 
-export {call, _call, $call};
+export {call, $call};

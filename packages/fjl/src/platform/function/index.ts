@@ -5,15 +5,11 @@ export * from './types';
 
 export const
 
-  _apply = <T = any, RetT = any>(fn: NaryOf<T, RetT>, args: T[]): RetT => fn(...args),
-
-  $apply = _apply,
+  $apply = <T = any, RetT = any>(fn: NaryOf<T, RetT>, args: T[]): RetT => fn(...args),
 
   apply = curry2($apply as CurryOf2<NaryOf<any, any>, any, any>),
 
-  _call = <T = any, RetT = any>(fn: NaryOf<T, RetT>, ...args: T[]): RetT => fn(...args),
-
-  $call = _call,
+  $call = <T = any, RetT = any>(fn: NaryOf<T, RetT>, ...args: T[]): RetT => fn(...args),
 
   call = curry2($call) as CurryOf2<NaryOf<any, any>, any, any>
 

@@ -19,8 +19,6 @@ export const
     return -1;
   },
 
-  _findIndexWhere = $findIndexWhere,
-
   /**
    * Curried version of `$findIndexWhere`.
    */

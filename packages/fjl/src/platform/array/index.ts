@@ -27,4 +27,6 @@ export const
 
     some = toCurried2Method('some') as Some<any, any[]>
 
+
+
 ;

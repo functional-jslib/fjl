@@ -1,3 +1,3 @@
-import {indexOf} from "../platform/slice";
+import {indexOf, $indexOf} from "../platform/slice";
 
-export {indexOf};
+export {indexOf, $indexOf};

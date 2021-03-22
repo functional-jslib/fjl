@@ -1,5 +1,5 @@
 import {head} from "./head";
-import {sortBy} from "./sortBy";
+import {$sortBy} from "./sortBy";
 import {genericAscOrdering} from "./utils";
 
 export const
@@ -10,4 +10,4 @@ export const
      * @param list {Array|String}
      * @returns {*} - Whatever type the array is made of (if any).
      */
-    minimum = list => head(sortBy(genericAscOrdering, list));
+    minimum = <T>(list: T[]): T => head($sortBy(genericAscOrdering, list));

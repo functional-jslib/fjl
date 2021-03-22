@@ -2,7 +2,10 @@ import {curry2} from "../function/curry";
 
 export const
 
-  $push = <T>(x: T, xs: T[]): T[] => (xs.push(x), xs),
+  $push = <T>(x: T, xs: T[]): T[] => {
+    xs.push(x);
+    return xs
+  },
 
   /**
    * Pushes an item onto an array.
