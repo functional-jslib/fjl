@@ -7,7 +7,7 @@ export const
   /**
    * Returns found index or -1 if index not found.
    */
-  $findIndexWhereRight = <T>(pred: SlicePred<T>, arr: Slice<T>): number => {
+  findIndexWhereRight = <T>(pred: SlicePred<T>, arr: Slice<T>): number => {
     let ind = length(arr) - 1;
     for (; ind >= 0; ind -= 1) {
       const predicateFulfilled = !!pred(arr[ind] as T, ind, arr);
@@ -19,8 +19,8 @@ export const
   },
 
   /**
-   * Curried version of `$findIndexWhereRight`.
+   * Curried version of `findIndexWhereRight`.
    */
-  findIndexWhereRight = curry($findIndexWhereRight) as CurryOf2<SlicePred<any>, Slice<any>, number>
+  $findIndexWhereRight = curry(findIndexWhereRight) as CurryOf2<SlicePred<any>, Slice<any>, number>
 
 ;

@@ -55,25 +55,4 @@ describe('#reduceUntil', () => {
     expect(result).toEqual('');
     expect(result2).toEqual([]);
   });
-  it('should be curried', () => {
-    const source = 'abc#!@#defg',
-      predicate = x => !/^[a-z]$/.test(x),
-      operation = (agg, item) => agg + item,
-      aggregand = '',
-      reductionFn = reduceUntil(predicate, operation),
-      result = reductionFn(aggregand, source),
-      reductionFn2 = reduceUntil(predicate,
-        (agg, item) => {
-          agg.push(item);
-          return agg;
-        }),
-      result2 = reductionFn2([], source.split(''))
-    ;
-    // Ensure funcs are functions
-    [reductionFn, reductionFn2].forEach(expectFunction);
-
-    // Test results
-    expect(result).toEqual('abc');
-    expect(result2).toEqual(['a', 'b', 'c']);
-  });
 });

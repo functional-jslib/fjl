@@ -6,7 +6,7 @@ export const
     /**
      * Returns an array with the given indices swapped.
      */
-    $swapped = <T>(ind1: number, ind2: number, list: T[]): T[] => {
+    swap = <T>(ind1: number, ind2: number, list: T[]): T[] => {
         const out = sliceCopy(list) as T[],
             tmp = out[ind1];
         out[ind1] = out[ind2];
@@ -16,8 +16,7 @@ export const
 
     /**
      * Returns an array with the given indices swapped.
-     * @curried at upto 3 params.
      */
-    swap = curry($swapped) as CurryOf3<number, number, any[], any[]>
+    $swap = curry(swap) as CurryOf3<number, number, any[], any[]>
 
 ;

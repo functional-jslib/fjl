@@ -1,7 +1,7 @@
 import {curry} from "../function/curry";
 import {$map} from "./map";
 import {$sortBy} from "./sortBy";
-import {$genericAscOrdering} from "./utils";
+import {genericAscOrdering} from "./utils";
 
 export const
 
@@ -13,7 +13,7 @@ export const
       // Decorate and sort
       $sortBy(
         // Ordering
-        ([a0], [b0]) => $genericAscOrdering(a0, b0),
+        ([a0], [b0]) => genericAscOrdering(a0, b0),
 
         // Decorate
         $map(item => [valueFn(item), item], xs)

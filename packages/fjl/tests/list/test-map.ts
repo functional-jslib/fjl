@@ -2,7 +2,7 @@ import {expectEqual, expectError, expectInstanceOf, vowelsArray, vowelsString} f
 import {map} from "../../src/list/map";
 import {Functor, FunctorMapFn} from "../../src/data/types";
 import {Slice} from "../../src/platform";
-import {StringIndexable} from "../../src/types";
+import {Indexable} from "../../src/types";
 
 describe('#map', () => {
   const addCharA = char => char + 'a';
@@ -11,12 +11,12 @@ describe('#map', () => {
     const vowelsObj = vowelsArray.reduce((agg, x, ind) => {
         agg[ind] = x;
         return agg;
-      }, {} as StringIndexable),
+      }, {} as Indexable),
 
       augmentedVowelsObj = vowelsArray.reduce((agg, x, ind) => {
         agg[ind] = x + 'a';
         return agg;
-      }, {} as StringIndexable),
+      }, {} as Indexable),
 
       _id = <T>(x: T): T => x;
 

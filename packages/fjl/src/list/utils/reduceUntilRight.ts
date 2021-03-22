@@ -1,12 +1,18 @@
 import {curry} from "../../function/curry";
 import {length} from "../../platform/object";
+import {Indexable} from "../../types";
+import {PredForIndexable} from "../types";
+import {ReduceOp} from "../../platform";
 
 export const
 
   /**
    * Reduces a slice, from left-to-right, until predicate is reached.
    */
-  $reduceUntilRight = <T, T2>(pred, op, agg: T2, arr: T[]): T2 => {
+  reduceUntilRight = <T, RetT>(pred: PredForIndexable<T>,
+                               op: ReduceOp<T, Indexable<T>, RetT>,
+                               agg: RetT,
+                               arr: Indexable<T>): RetT => {
     const limit = length(arr);
     if (!limit) {
       return agg;
@@ -25,6 +31,6 @@ export const
   /**
    * Curried version of `$reduceUntilRight`.
    */
-  reduceUntilRight = curry($reduceUntilRight)
+  $reduceUntilRight = curry(reduceUntilRight)
 
 ;

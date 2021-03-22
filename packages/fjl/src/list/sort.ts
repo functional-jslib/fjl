@@ -1,6 +1,5 @@
 import {$sortBy} from "./sortBy";
-import {$genericAscOrdering} from "./utils";
-import {Slice} from "../types";
+import {genericAscOrdering} from "./utils";
 
 export const
   /**
@@ -12,4 +11,4 @@ export const
    * @param xs {Array|String|*}
    * @returns {Array}
    */
-  sort = <T>(xs: T[]): T[] => $sortBy($genericAscOrdering, xs);
+  sort = <T>(xs: T[]): T[] => $sortBy(genericAscOrdering, xs);

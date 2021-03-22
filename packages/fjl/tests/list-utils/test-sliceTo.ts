@@ -1,7 +1,7 @@
 import {alphabetArray, alphabetLen, vowelsArray, vowelsLen} from "../helpers";
-import {sliceTo} from "../../src";
 import {Unary} from "../../src/types";
 import {Slice} from "../../src/platform";
+import {sliceTo, $sliceTo} from "../../src/list";
 
 describe('#sliceTo', () => {
   it('should create a slice of an array "from" given index.', () => {
@@ -19,7 +19,7 @@ describe('#sliceTo', () => {
   it('should be curried', () => {
     vowelsArray
 
-      .map((_, ind): Unary<Slice> => sliceTo(vowelsLen - ind) as unknown as Unary<Slice>)
+      .map((_, ind): Unary<Slice> => $sliceTo(vowelsLen - ind) as unknown as Unary<Slice>)
 
       .forEach((fn, ind) => {
         const result = fn(vowelsArray);

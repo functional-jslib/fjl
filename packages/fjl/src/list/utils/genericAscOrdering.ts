@@ -7,7 +7,7 @@ export const
   /**
    * Generic ascending ordering func.
    */
-  $genericAscOrdering = <T>(a: T, b: T): number => {
+  genericAscOrdering = <T>(a: T, b: T): number => {
     if (a > b) {
       return 1;
     } else if (a < b) {
@@ -19,6 +19,6 @@ export const
   /**
    * Generic 'ascending order' ordering function (same type as function used in `[].sort` etc.).
    */
-  genericAscOrdering = curry($genericAscOrdering) as CurryOf2<any, any, number>
+  $genericAscOrdering = curry(genericAscOrdering) as CurryOf2<any, any, number>
 
 ;

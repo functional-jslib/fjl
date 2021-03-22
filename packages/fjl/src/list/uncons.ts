@@ -1,5 +1,6 @@
 import {head} from './head';
 import {tail} from "./tail";
+import {Slice} from "../types";
 
 export const
     /**
@@ -9,5 +10,5 @@ export const
      * @param xs {Array|String}
      * @returns {Array|undefined}
      */
-    uncons = <T>(xs: T[]): [T, T[]] | undefined =>
-        !xs || xs.length === 0 ? undefined : [head(xs), tail(xs)];
+    uncons = <T>(xs: Slice<T>): [T, Slice<T>] | void =>
+        !xs || !xs.length ? undefined : [head(xs), tail(xs)];

@@ -21,18 +21,19 @@ import {noop} from "../../src/function/noop";
 import {toFunction} from "../../src/function/toFunction";
 import {trampoline} from "../../src/function/trampoline";
 import {until} from "../../src/function/until";
+import {$apply, $call} from "../../src/function";
 
 describe('#apply', () => {
     it('apply instanceof Function', function () {
         expect(apply).toBeInstanceOf(Function);
     });
     it('Can do `apply(fn)(args)` (is curried)', function () {
-        const addAllInArray = apply(add);
+        const addAllInArray = $apply(add);
         expect(addAllInArray).toBeInstanceOf(Function);
         expect(addAllInArray([1, 2, 3, 4, 5])).toEqual(15);
     });
     it('should call a function passed into it with args list passed in as second parameter', function () {
-        expect(apply(add)([1, 2, 3, 4, 5])).toEqual(15);
+        expect($apply(add)([1, 2, 3, 4, 5])).toEqual(15);
     });
     it('should fail when argument `1` is not a function', () => {
         expect(() => apply(null, null)).toThrow(Error);
@@ -45,7 +46,7 @@ describe('#call', () => {
         expect(call).toBeInstanceOf(Function);
     });
     it('should be curried', () => {
-        const adder = call(add);
+        const adder = $call(add);
         expect(adder()).toBeInstanceOf(Function);
         expect(adder(1, 2, 3, 4, 5)).toEqual(15);
     });

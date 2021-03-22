@@ -2,6 +2,7 @@ import {alphabetArray, alphabetString, expectFunction, vowelsArray, vowelsLen, v
 import {toShortest} from "../../src";
 import {Slice} from "../../src/platform";
 import {Variadic} from "../../src/types";
+import {$toShortest} from "../../src/list/utils";
 
 describe('#toShortest', () => {
   it('should return a list of lists trimmed to the smallest', () => {
@@ -27,7 +28,7 @@ describe('#toShortest', () => {
     ])
       .forEach(([xs1, xs2, expectedLen]) => {
         const lists = [xs1, xs2],
-          fn = toShortest(xs1) as Variadic<any[]>,
+          fn = $toShortest(xs1) as Variadic<any[]>,
           result = fn(xs2);
         expectFunction(fn);
         result.forEach((sliced, ind) => {

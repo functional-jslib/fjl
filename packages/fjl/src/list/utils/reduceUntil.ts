@@ -1,20 +1,23 @@
 import {curry, CurryOf4} from "../../function/curry";
-import {PredForSlice} from "../types";
+import {PredForIndexable, PredForSlice} from "../types";
 import {ReduceOp} from "../../platform/array/types";
-import {Slice} from "../../platform/slice/types";
 import {length} from "../../platform/object";
+import {Indexable, Lengthable} from "../../types";
 
-export type ReduceUntil<T1, T2> = CurryOf4<PredForSlice<T1>,
-  ReduceOp<T1, Slice<T1>, T2>, // @todo Refactor `ReduceOp`
-  T2, Slice<T1>, T2>;
+export type ReduceUntil<T1, RetT> = CurryOf4<PredForIndexable<T1>,
+  ReduceOp<T1, Indexable<T1>, RetT>, // @todo Refactor `ReduceOp`
+  RetT, Indexable<T1>, RetT>;
 
 export const
 
   /**
    * Un-curried `reduceUntil` func.
    */
-  $reduceUntil = <T, T2>(pred: PredForSlice<T>, op: ReduceOp<T, Slice<T>, T2>, agg: T2, xs: Slice<T>): T2 => {
-    const limit = length(xs);
+  reduceUntil = <T, RetT>(pred: PredForIndexable<T>,
+                          op: ReduceOp<T, Indexable<T>, RetT>,
+                          agg: RetT,
+                          xs: Indexable<T>): RetT => {
+    const limit = length(xs as unknown as Lengthable);
     if (!limit) {
       return agg;
     }
@@ -32,6 +35,6 @@ export const
   /**
    * Reduces a slice until predicate returns `true`.
    */
-  reduceUntil = curry($reduceUntil) as ReduceUntil<any, any>
+  $reduceUntil = curry(reduceUntil) as ReduceUntil<any, any>
 
 ;

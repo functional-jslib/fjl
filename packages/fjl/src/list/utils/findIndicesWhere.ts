@@ -8,7 +8,7 @@ export const
   /**
    * Finds indices by predicate.
    */
-  $findIndicesWhere = <T>(pred: PredForSlice<T>, xs: Slice<T>): number[] | undefined => {
+  findIndicesWhere = <T>(pred: PredForSlice<T>, xs: Slice<T>): number[] | undefined => {
     const limit = length(xs);
     let ind = 0;
     const out: any[] = [];
@@ -21,8 +21,8 @@ export const
   },
 
   /**
-   * @curried At Upto two params.
+   * Curried version of `findIndicesWhere`.
    */
-  findIndicesWhere = curry2($findIndicesWhere) as CurryOf2<SlicePred<any>, Slice<any>, number[] | undefined>
+  $findIndicesWhere = curry2(findIndicesWhere) as CurryOf2<SlicePred<any>, Slice<any>, number[] | undefined>
 
 ;

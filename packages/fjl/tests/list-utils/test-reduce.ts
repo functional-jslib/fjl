@@ -1,5 +1,6 @@
 import {reduce} from "../../src";
 import {alphabetArray, alphabetLen, expectFunction, falsyList} from "../helpers";
+import {$reduce} from "../../dist/es";
 
 describe('#reduce', () => {
   it('should reduce entire list', () => {
@@ -41,28 +42,6 @@ describe('#reduce', () => {
         [], source.split('')
       )
     ;
-    expect(result).toEqual(expectedStr);
-    expect(result2).toEqual(expectedArr);
-  });
-  it('should be curried', () => {
-    const source = 'abc#!@#defg',
-      predicate = x => !/^[a-z]$/.test(x),
-      operation = (agg, item) => predicate(item) ? agg : agg + item,
-      aggregand = '',
-      expectedArr = source.split('').filter(x => !predicate(x)),
-      expectedStr = expectedArr.join(''),
-      reductionFn1 = reduce(operation),
-      result = reductionFn1(aggregand, source),
-      reductioFn2 = reduce((agg, item) => {
-        if (predicate(item)) {
-          return agg;
-        }
-        agg.push(item);
-        return agg;
-      }),
-      result2 = reductioFn2([], source.split(''))
-    ;
-    [reductionFn1, reductioFn2].forEach(expectFunction);
     expect(result).toEqual(expectedStr);
     expect(result2).toEqual(expectedArr);
   });

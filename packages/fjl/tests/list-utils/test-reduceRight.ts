@@ -41,28 +41,6 @@ describe('#reduceRight', () => {
     expect(result).toEqual(expectedStr);
     expect(result2).toEqual(expectedArr);
   });
-  it('should be curried', () => {
-    const source = 'abc#!@#defg',
-      predicate = x => !/^[a-z]$/.test(x),
-      operation = (agg, item) => predicate(item) ? agg : agg + item,
-      aggregand = '',
-      expectedArr = source.split('').filter(x => !predicate(x)).reverse(),
-      expectedStr = expectedArr.join(''),
-      reductionFn1 = reduceRight(operation),
-      result = reductionFn1(aggregand, source),
-      reductioFn2 = reduceRight((agg, item) => {
-        if (predicate(item)) {
-          return agg;
-        }
-        agg.push(item);
-        return agg;
-      }),
-      result2 = reductioFn2([], source.split(''))
-    ;
-    [reductionFn1, reductioFn2].forEach(expectFunction);
-    expect(result).toEqual(expectedStr);
-    expect(result2).toEqual(expectedArr);
-  });
   it('should return the `addend` (aggregand) if given list is empty', () => {
     const op = (agg, item) => agg + item;
     [[], ''].forEach(list => {
