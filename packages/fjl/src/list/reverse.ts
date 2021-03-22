@@ -5,10 +5,6 @@ import {typeOf} from "../object/typeOf";
 export const
     /**
      * Returns a copy of the passed in list reverses.
-     * @haskellType `reverse :: [a] -> [a]`
-     * @function module:list.reverse
-     * @param xs {Array|String}
-     * @returns {Array|String}
      */
     reverse = xs => {
         if (!isset(xs) || !xs.length) {

@@ -1,4 +1,4 @@
-export type Nullary<T> = () => T;
+export type Nullary<T> = (x?: T) => T;
 
 export type Unary<T> = (x: T) => T;
 

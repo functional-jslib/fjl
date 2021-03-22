@@ -125,7 +125,7 @@ describe('#lcaseFirst', () => {
   it('should throw an error when receiving an empty-string or any value that is not a string', () => {
     [null, undefined, [], {}]
       .forEach(xs =>
-        expectError(() => lcaseFirst(xs))
+        expectError(() => lcaseFirst(xs as string))
       );
   });
 });
@@ -140,7 +140,7 @@ describe('#ucaseFirst', () => {
   it('should throw an error when receiving an empty-string or any value that is not a string', () => {
     [null, undefined, [], {}]
       .forEach(xs =>
-        expectError(() => ucaseFirst(xs))
+        expectError(() => ucaseFirst(xs as string))
       );
   });
 });

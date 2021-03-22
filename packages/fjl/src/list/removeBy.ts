@@ -19,10 +19,5 @@ export const
 
   /**
    * Behaves the same as `remove`, but takes a user-supplied equality predicate.
-   * @function module:list.removeBy
-   * @param pred {Function} - Equality predicate `(a, b) => bool`
-   * @param x {*}
-   * @param list {Array|String|*}
-   * @returns {Array}
    */
   removeBy = curry($removeBy);
