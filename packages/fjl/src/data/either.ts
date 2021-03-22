@@ -81,14 +81,17 @@ export const
   toEither = <A, B>(x: A): Either<Right<A>, Left<B>> =>
     (isLeft(x) || isRight(x) ? x : right(x).map(id)) as Either<Right<A>, Left<B>>,
 
-  $either = <A, B, C>(leftCallback: FunctorMapFn<C>, rightCallback: FunctorMapFn<C>, _either_: Left<A> | Right<B>): C =>
-    _either_.map(isRight(_either_) ? rightCallback : leftCallback).join(),
-
   /**
    * Calls matching callback on incoming `Either`;  If it's an `Left` type, calls left-callback on it,
    * If it's an `Right` type, calls the right-callback on it.
    * Returns value of the flat-mapped monad.
    */
-  either = curry($either)
+  either = <A, B, C>(leftCallback: FunctorMapFn<C>, rightCallback: FunctorMapFn<C>, _either_: Left<A> | Right<B>): C =>
+    _either_.map(isRight(_either_) ? rightCallback : leftCallback).join(),
+
+  /**
+   * Curried version `either`.
+   */
+  $either = curry(either)
 
 ;
