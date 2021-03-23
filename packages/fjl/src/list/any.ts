@@ -8,7 +8,10 @@ export type Any<Pred, Functor> = CurryOf2<Pred, Functor, boolean>;
 
 export const
 
-  $any = <T>(p: PredForIndexable<T>, xs: Indexable<T>): boolean => {
+  /**
+   * Returns true if any item in container passes predicate `p`.
+   */
+  any = <T>(p: PredForIndexable<T>, xs: Indexable<T>): boolean => {
     let ind = 0;
     const ks = keys(xs),
       limit = length(ks);
@@ -16,7 +19,7 @@ export const
       return false;
     }
     for (; ind < limit; ind += 1) {
-      if (p(xs[ks[ind]])) {
+      if (p(xs[ks[ind]], ind, xs)) {
         return true;
       }
     }
@@ -24,7 +27,6 @@ export const
   },
 
   /**
-   * Returns true if any item in container passes predicate `p`.
-   * @curried
+   * Curried version of `any`.
    */
-    any = curry($any) as Any<PredForIndexable<any>, Indexable<any>>;
+  $any = curry(any) as Any<PredForIndexable, Indexable>;

@@ -2,6 +2,9 @@ import {$concat, concat} from "../platform/slice";
 
 export const
 
+  /**
+   * Curried version of `append`.
+   */
   $append = $concat,
 
   /**
@@ -18,7 +21,6 @@ export const
    *
    * shallowEquals(result, expected) === true // `true`
    * ```
-   * @curried
    */
   append = concat
 ;

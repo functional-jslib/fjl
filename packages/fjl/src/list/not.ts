@@ -1,4 +1,4 @@
-import {$all} from "./all";
+import {all} from "./all";
 import {isFalsy} from "../boolean";
 
 export const
@@ -11,4 +11,4 @@ export const
    * @param xs {Array|String}
    * @returns {Boolean}
    */
-  not = <T>(xs: T[]): boolean => $all(isFalsy, xs) as boolean;
+  not = <T>(xs: T[]): boolean => all(isFalsy, xs) as boolean;
