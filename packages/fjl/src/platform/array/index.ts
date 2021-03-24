@@ -11,7 +11,7 @@ export const
 
     forEach = toCurried2Method('forEach') as ForEach<any, any[]>,
 
-    flatMap = toCurried2Method('forEach') as ForEach<any, any[]>,
+    flatMap = toCurried2Method('flatMap') as ForEach<any, any[]>,
 
     join = toCurried2Method('join') as Join<any, any[], any>,
 

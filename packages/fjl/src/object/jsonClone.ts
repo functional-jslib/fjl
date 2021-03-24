@@ -6,6 +6,6 @@ export const
      * @param x {*}
      * @returns {*}
      */
-    jsonClone = x => JSON.parse(JSON.stringify(x))
+    jsonClone = (x: any): any => JSON.parse(JSON.stringify(x))
 
 ;

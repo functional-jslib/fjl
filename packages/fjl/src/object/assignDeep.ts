@@ -2,10 +2,11 @@ import {isObject} from './is';
 import {curry2} from '../function/curry';
 
 export const
+
   /**
    * Merges all objects down into one (takes two or more args).
    */
-  assignDeep = curry2((obj0, ...objs) =>
+  assignDeep = (obj0, ...objs) =>
     !obj0 ? obj0 : objs.reduce((topAgg, obj) =>
         !obj ? topAgg : Object.keys(obj).reduce((agg, key) => {
           const propDescription = Object.getOwnPropertyDescriptor(agg, key);
@@ -22,4 +23,6 @@ export const
           }
           return agg;
         }, topAgg)
-      , obj0));
+      , obj0),
+
+  $assignDeep = curry2(assignDeep);

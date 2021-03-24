@@ -9,11 +9,8 @@ const _Number = Number.name,
 
 /**
  * Returns the constructor/class/type name of a value.
- * @note Returns 'NaN' if value is of type `Number` and value is `isNaN`.
- * @note Returns 'Undefined' if value is `undefined`
- * @note Returns 'Null' if value is `null`
- * For values that have no concrete constructors and/or casters
- * (null, NaN, and undefined) we returned normalized names for them ('Null', 'NaN', 'Number')
+ * @note For `NaN`, `null`, and `undefined` we return their names classed case;
+ * 'NaN' (for `NaN`), 'Undefined' for `undefined` and 'Null' for `null`.
  * @function module:object.typeOf
  * @param value {*}
  * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
