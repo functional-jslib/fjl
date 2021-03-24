@@ -17,8 +17,10 @@ export const
 
   length = (x: Lengthable | undefined | null): number => x === null || x === undefined ? undefined : x.length,
 
-  hasOwnProperty = curry2(<T>(propKey: string, x: T): boolean =>
-    Object.prototype.hasOwnProperty.call(x, propKey)),
+  hasOwnProperty = <T>(key: string | PropertyKey, x: T): boolean =>
+    Object.prototype.hasOwnProperty.call(x, key),
+
+  $hasOwnProperty = curry2(hasOwnProperty),
 
   /**
    * Contains all the static functions from `Object` but curried and flipped;
