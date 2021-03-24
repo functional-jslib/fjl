@@ -6,23 +6,16 @@ import {Slice} from "../platform/slice";
 
 export const
 
-  $intercalate = <T>(xs: Slice<T>, xss: Slice<Slice<T>>): Slice<T> => {
+  /**
+   * `intercalate(xs, xss))` is equivalent to (concat (intersperse (xs, xss)) -
+   *   It inserts the list `xs` in between the lists in `xss` and concatenates
+   *   the result.
+   */
+  intercalate = <T>(xs: Slice<T>, xss: Slice<Slice<T>>): Slice<T> => {
     if (isString(xss)) {
       return intersperse(xs, xss) as Slice<T>;
     }
     return concat(intersperse(xs, xss) as Slice<T>[]);
   },
 
-  /**
-   * `intercalate(xs, xss))` is equivalent to (concat (intersperse (xs, xss)) -
-   *   It inserts the list `xs` in between the lists in `xss` and concatenates
-   *   the result.
-   * @haskellType `intercalate :: [a] -> [[a]] -> [a]`
-   * @function module:list.intercalate
-   * @param xs {Slice<any>>}
-   * @param xss {Slice<Slice<any>>}
-   * @returns {Slice<any>}
-   * @curried
-   * @generic
-   */
-  intercalate = curry($intercalate);
+  $intercalate = curry(intercalate);

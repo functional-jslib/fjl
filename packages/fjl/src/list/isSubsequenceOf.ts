@@ -6,7 +6,7 @@ export const
   /**
    * Checks if list `xs1` is a sub-sequence of list `xs2`
    */
-  $isSubsequenceOf = <T>(xs1: Slice<T>, xs2: Slice<T>): boolean => {
+  isSubsequenceOf = <T>(xs1: Slice<T>, xs2: Slice<T>): boolean => {
     const len = Math.pow(2, length(xs2)),
       lenXs1 = length(xs1);
     let foundLen,
@@ -25,8 +25,4 @@ export const
     return false;
   },
 
-  /**
-   * Checks if list `xs1` is a sub-sequence of list `xs2`
-   * @curried
-   */
-  isSubsequenceOf = curry2($isSubsequenceOf);
+  $isSubsequenceOf = curry2(isSubsequenceOf);

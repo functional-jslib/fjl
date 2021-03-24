@@ -6,20 +6,11 @@ export const
 
     /**
      * Returns an associated list from given object.
-     * @note Useful for working with plain javascript objects.
-     * @function module:object.toAssocList
-     * @param obj {(Object|Array|*)}
-     * @returns {Array.<*, *>}
      */
     toAssocList = <T>(obj: T): [keyof T, any][] => Object.entries(obj) as [keyof T, any][],
 
     /**
      * Returns an associated list from given object (deeply (on incoming object's type)).
-     * @note Does deep conversion on all values of passed in type's type.
-     * @function module:object.toAssocListDeep
-     * @param obj {*}
-     * @param [TypeConstraint = Object] {(Constructor|Function)} - Type constraint to convert on.
-     * @returns {*}
      */
     toAssocListDeep = (obj, TypeConstraint: TypeConstructor = Object) => keys(obj).map(key =>
         TypeConstraint && isType(TypeConstraint, obj[key]) ?
@@ -29,10 +20,6 @@ export const
 
     /**
      * From associated list to object.
-     * @function module:object.fromAssocList
-     * @param xs {Array.<Array>} - Associated list.
-     * @param [OutType = Object] {Constructor|Function} - Output type.  Default `Object`.
-     * @returns {*} - Default is `Object`
      */
     fromAssocList = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
         agg[key] = value;
@@ -41,11 +28,6 @@ export const
 
     /**
      * From associated list to object (deep conversion on associative lists (array of 2 value arrays)).
-     * @note Considers array of arrays associated lists.
-     * @function module:object.fromAssocListDeep
-     * @param xs {Array.<Array>} - Associated list.
-     * @param [OutType = Object] {Constructor|Function} - Output type.  Default `Object`.
-     * @returns {*} - Default is `Object`
      */
     fromAssocListDeep = (xs, OutType = Object) => xs.reduce((agg, [key, value]) => {
         if (isArray(value) && isArray(value[0]) && value[0].length === 2) {

@@ -9,7 +9,7 @@ export const
   /**
    * Groups given items by given predicate.
    */
-  $groupBy = <T>(equalityOp: BinaryPred<T>, xs: Slice<T>): Slice<T>[] => {
+  groupBy = <T>(equalityOp: BinaryPred<T>, xs: Slice<T>): Slice<T>[] => {
     // Bail if empty list
     if (!xs) {
       return [];
@@ -56,6 +56,6 @@ export const
   /**
    * Curried version of `$groupBy`.
    */
-  groupBy = curry($groupBy) as CurryOf2<BinaryPred<any>, Slice<any>, Slice<any>[]>
+  $groupBy = curry(groupBy) as CurryOf2<BinaryPred<any>, Slice<any>, Slice<any>[]>
 
 ;

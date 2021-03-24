@@ -11,7 +11,11 @@ import {typeOf} from "../object/typeOf";
 
 export const
 
-  $insertBy = <T>(orderingFn: OrderingFunc<T>, x: T, xs: Slice<T>): Slice<T> => {
+  /**
+   * A version of `insert` that allows you to specify the ordering of the inserted
+   * item;  Before/at, or after
+   */
+  insertBy = <T>(orderingFn: OrderingFunc<T>, x: T, xs: Slice<T>): Slice<T> => {
     const limit = length(xs);
     if (!limit) {
       switch (typeOf(xs)) {
@@ -31,8 +35,4 @@ export const
     return $push(x, sliceCopy(xs) as T[]) as Slice<T>;
   },
 
-  /**
-   * A version of `insert` that allows you to specify the ordering of the inserted
-   * item;  Before/at, or after
-   */
-  insertBy = curry($insertBy) as CurryOf3<OrderingFunc<any>, any, Slice<any>, Slice<any>>;
+  $insertBy = curry(insertBy) as CurryOf3<OrderingFunc<any>, any, Slice<any>, Slice<any>>;

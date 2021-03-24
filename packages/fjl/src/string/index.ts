@@ -2,7 +2,7 @@
  * @module string
  * @description Contains functions for strings.
  */
-import {intercalate} from '../list';
+import {$intercalate} from '../list';
 import {split} from '../platform/string';
 import {compose} from '../function/compose';
 import {UnaryOf} from "../types";
@@ -24,12 +24,12 @@ export const
   /**
    * Intersperse an array of strings with '\s' and then concats them.
    */
-  unwords = intercalate(' '),
+  unwords = $intercalate(' '),
 
   /**
    * Intersperses a '\n' character into a list of strings and then concats it.
    */
-  unlines = intercalate('\n'),
+  unlines = $intercalate('\n'),
 
   /**
    * Lower cases first character of a non-empty string.

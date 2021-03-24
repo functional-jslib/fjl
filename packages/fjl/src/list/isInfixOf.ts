@@ -7,7 +7,7 @@ export const
   /**
    * Checks if list `xs1` is an infix of list `xs2`
    */
-  $isInfixOf = <T>(xs1: Slice<T>, xs2: Slice<T>): boolean => {
+  isInfixOf = <T>(xs1: Slice<T>, xs2: Slice<T>): boolean => {
     const limit1 = length(xs1),
       limit2 = length(xs2);
     if (limit2 < limit1 || !limit1 || !limit2) {
@@ -30,8 +30,4 @@ export const
     return false;
   },
 
-  /**
-   * Checks if list `xs1` is an infix of list `xs2`
-   * @curried
-   */
-  isInfixOf = curry2($isInfixOf);
+  $isInfixOf = curry2(isInfixOf);

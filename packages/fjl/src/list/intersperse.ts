@@ -5,42 +5,36 @@ import {Slice} from "../platform/slice";
 
 export const
 
-    $intersperse = <T>(between: T, xs: Slice<T>): Slice<T> => {
-        if (!xs || !xs.length) {
-            return xs;
-        }
-        const limit = xs.length,
-            lastInd = limit - 1;
-        let i = 0;
-        if (isString(xs)) {
-            let out = '';
-            for (; i < limit; i += 1) {
-                out += i === lastInd ?
-                    xs[i] :
-                    (xs[i] as unknown as string) +  // @todo type conversion cleanup
-                    (between as unknown as string); // @todo ""
-            }
-            return out as unknown as Slice<T>;
-        }
-        const out = of(xs) as Array<T>;
-        for (; i < limit; i += 1) {
-            if (i === lastInd) {
-                out.push(xs[i] as T);
-            } else {
-                out.push(xs[i] as T, between);
-            }
-        }
-        return out;
-    },
+  /**
+   * Takes an element and a list and `intersperses' that element between the
+   *  elements of the list.
+   */
+  intersperse = <T>(between: T, xs: Slice<T>): Slice<T> => {
+    if (!xs || !xs.length) {
+      return xs;
+    }
+    const limit = xs.length,
+      lastInd = limit - 1;
+    let i = 0;
+    if (isString(xs)) {
+      let out = '';
+      for (; i < limit; i += 1) {
+        out += i === lastInd ?
+          xs[i] :
+          (xs[i] as unknown as string) +  // @todo type conversion cleanup
+          (between as unknown as string); // @todo ""
+      }
+      return out as unknown as Slice<T>;
+    }
+    const out = of(xs) as Array<T>;
+    for (; i < limit; i += 1) {
+      if (i === lastInd) {
+        out.push(xs[i] as T);
+      } else {
+        out.push(xs[i] as T, between);
+      }
+    }
+    return out;
+  },
 
-    /**
-     * Takes an element and a list and `intersperses' that element between the
-     *  elements of the list.
-     * @function module:list.intersperse
-     * @param between {any} - Should be of the same type of elements contained in list.
-     * @param arr {Slice<any>} - Array|String.
-     * @returns {Slice<any>>} - "".
-     * @curried
-     * @generic
-     */
-    intersperse = curry($intersperse) as CurryOf2<any, Slice<any>, Slice<any>>;
+  $intersperse = curry(intersperse) as CurryOf2<any, Slice<any>, Slice<any>>;

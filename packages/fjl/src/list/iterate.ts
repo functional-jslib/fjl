@@ -3,7 +3,7 @@ import {Unary} from "../types";
 
 export const
 
-  $iterate = <T>(n: number, op: Unary<T>, x: T): T[] => {
+  iterate = <T>(n: number, op: Unary<T>, x: T): T[] => {
     let ind = 0,
       lastX: T = x;
     const out: T[] = [lastX];
@@ -16,12 +16,6 @@ export const
 
   /**
    * iterate `f(x)` returns a list of repeated applications of `f` to `x` `limit` number of times.
-   * @function module:list.iterate
-   * @example `iterate(5, f, x) == [x, f(x), f(f(x)), ...]`
-   * @param n {Number} - Limit.
-   * @param op {Function} - Operation.
-   * @param x {*} - Starting point.
-   * @returns {*}`
    */
-  iterate = curry($iterate) as CurryOf3<number, Unary<any>, any, any[]>;
+  $iterate = curry(iterate) as CurryOf3<number, Unary<any>, any, any[]>;
 

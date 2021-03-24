@@ -1,5 +1,5 @@
 import {length} from "../platform/object";
-import {$sliceTo} from "./utils/sliceTo";
+import {sliceTo} from "./utils/sliceTo";
 import {Slice} from "../platform/slice";
 
 type Inits<T> = (xs: Slice<T>) => [Slice<T>] | Slice<T>;
@@ -19,7 +19,7 @@ export const
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg.push($sliceTo(ind, xs));
+            agg.push(sliceTo(ind, xs));
         }
         return agg;
     };
