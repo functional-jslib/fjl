@@ -4,7 +4,12 @@ import {Slice} from "../platform/slice";
 
 export const
 
-  $partition = <T>(
+  /**
+   * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
+   * do not match the tuple are in second list in the returned tuple.
+   *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
+   */
+  partition = <T>(
     pred: PredForSlice<T>,
     list: Slice<T>
   ): [T[], T[]] => {
@@ -25,9 +30,4 @@ export const
     return [front, back];
   },
 
-  /**
-   * Partitions a list on a predicate;  Items that match predicate are in first list in tuple;  Items that
-   * do not match the tuple are in second list in the returned tuple.
-   *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
-   */
-  partition = curry($partition) as CurryOf2<PredForSlice<any>, Slice<any>, [any[], any[]]>;
+  $partition = curry(partition) as CurryOf2<PredForSlice<any>, Slice<any>, [any[], any[]]>;

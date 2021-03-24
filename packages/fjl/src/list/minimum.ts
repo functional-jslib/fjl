@@ -5,9 +5,5 @@ import {genericAscOrdering} from "./utils";
 export const
     /**
      * Returns the smallest element in a non-empty structure of elements.
-     * @function module:list.minimum
-     * @haskellType `minimum :: forall a . Ord a => t a -> a`
-     * @param list {Array|String}
-     * @returns {*} - Whatever type the array is made of (if any).
      */
     minimum = <T>(list: T[]): T => head($sortBy(genericAscOrdering, list));

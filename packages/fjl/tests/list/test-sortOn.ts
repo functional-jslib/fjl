@@ -1,11 +1,11 @@
-import {range, reverse, sortOn, take} from "../../src/list";
+import {range, reverse, $sortOn, $take} from "../../src/list";
 import {__, alphabetArray, expectEqual} from "../helpers";
 import {compose} from "../../src/function";
 import {Unary} from "../../src/types";
 
 describe('#sortOn', () => {
   const identity = x => x,
-    sortOnIdentity = sortOn(identity),
+    sortOnIdentity = $sortOn(identity),
     range0To10 = range(0, 10),
     range10To0 = range(10, 0, -1);
   it('should sort a list in ascending order', () => {
@@ -15,7 +15,7 @@ describe('#sortOn', () => {
     compose(/*log,*/ sortOnIdentity, reverse)(alphabetArray);
   });
   it('should return a copy of original list when said list is already sorted', () => {
-    compose(expectEqual(__, ['a', 'b', 'c']), sortOnIdentity, take(3) as unknown as Unary<string[]>)(alphabetArray);
+    compose(expectEqual(__, ['a', 'b', 'c']), sortOnIdentity, $take(3) as unknown as Unary<string[]>)(alphabetArray);
     compose(expectEqual(__, alphabetArray), sortOnIdentity)(alphabetArray);
     compose(expectEqual(__, range0To10), sortOnIdentity)(range0To10);
   });

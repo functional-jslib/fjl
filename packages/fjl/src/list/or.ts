@@ -1,6 +1,6 @@
 import {isTruthy} from "../boolean";
 import {Indexable} from "../types";
-import {$any} from "./any";
+import {any} from "./any";
 
 export const
 
@@ -9,4 +9,4 @@ export const
    * **Note** The haskell type for this function only takes two items, but here
    * we allow the passing of more than one item (may change later to adhere to the haskell type).
    */
-  or = <T>(xs: Indexable<T>): boolean => $any(isTruthy, xs);
+  or = <T>(xs: Indexable<T>): boolean => any(isTruthy, xs);

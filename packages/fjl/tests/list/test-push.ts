@@ -1,4 +1,4 @@
-import {push} from "../../src";
+import {$push} from "../../src";
 import {falsyList, truthyList} from "../helpers";
 
 describe('#push', () => {
@@ -14,7 +14,7 @@ describe('#push', () => {
   )
     .forEach(([args, expected]) => {
       it(`push(${args.map(x => JSON.stringify(x)).join(', ')}) === ${JSON.stringify(expected)}`, () => {
-        const rslt = push(...args);
+        const rslt = $push(...args);
         expect(rslt).toEqual(expected);
         // Expect equal instances also
         expect(rslt).toEqual(args[1]);

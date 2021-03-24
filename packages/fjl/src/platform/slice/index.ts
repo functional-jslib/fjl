@@ -24,14 +24,14 @@ export const
   /**
    * Same as `(Array|String).prototype.slice`.
    */
-  $slice = <T>(start: number, end: number, xs: Slice<T>): Slice<T> =>
+  slice = <T>(start: number, end: number, xs: Slice<T>): Slice<T> =>
     xs.slice(start, end) as Slice<T>,
 
   /**
    * Same as `(Array|String).prototype.slice`.
    * @curried
    */
-  slice = curry3($slice) as CurryOf3<number, number, Slice, Slice>
+  $slice = curry3(slice) as CurryOf3<number, number, Slice, Slice>
 
 ;
 

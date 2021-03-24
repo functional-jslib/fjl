@@ -5,7 +5,7 @@ export const
   /**
    * Pushes one or more items onto `xs`.  Returns `xs.
    */
-  $pushN = <T>(xs: T[], ..._xs: T[]): T[] => {
+  pushN = <T>(xs: T[], ..._xs: T[]): T[] => {
     xs.push(..._xs);
     return xs;
   },
@@ -14,4 +14,4 @@ export const
    * Same as `$pushN` but curried.
    * @curried
    */
-  pushN = curry2($pushN);
+  $pushN = curry2(pushN);

@@ -6,10 +6,6 @@ import {of} from '../object/of';
 export const
     /**
      * Returns `tail` and `head` of passed in list/string in a tuple.
-     * @haskellType `unconsr :: [a] -> Maybe ([a], a)`
-     * @function module:list.unconsr
-     * @param xs {Array|String}
-     * @returns {Array|String|*|undefined}
      */
     unconsr = xs => {
         const len = length(xs),

@@ -15,7 +15,7 @@ const normalizeStep = (from, to, step): number => {
 
 export const
 
-  $range = (from: number, to: number, step = 1): number[] => {
+  range = (from: number, to: number, step = 1): number[] => {
     let i = from;
     const out: number[] = [];
     step = normalizeStep(from, to, step);
@@ -34,6 +34,6 @@ export const
    *  (forces `step` to be negative if range required is in the negative direction
    *  and forces `step` to be positive if range required is in the other direction).
    */
-  range = curry2($range)
+  $range = curry2(range)
 
 ;

@@ -5,18 +5,14 @@ import {scanr} from "./scanr";
 
 export const
 
-  $scanr1 = (fn, xs) => {
+  /**
+   * Same as `scanr` but takes no zero/accumulator value.
+   */
+  scanr1 = (fn, xs) => {
     if (!xs || !xs.length) {
       return [];
     }
     return scanr(fn, last(xs), init(xs));
   },
 
-  /**
-   * Same as `scanr` but takes no zero/accumulator value.
-   * @function module:list.scanr1
-   * @param fn {Function}
-   * @param xs {Array}
-   * @returns {Array|*}
-   */
-  scanr1 = curry($scanr1);
+  $scanr1 = curry(scanr1);

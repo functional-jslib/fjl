@@ -1,5 +1,5 @@
 import {curry, CurryOf2} from "../../function/curry";
-import {$slice, Slice} from "../../platform/slice";
+import {slice, Slice} from "../../platform/slice";
 
 export const
 
@@ -7,7 +7,7 @@ export const
    * Slices from index `0` to given index.
    */
   sliceTo = <T>(toInd: number, xs: Slice<T>): Slice<T> =>
-    $slice(0, toInd, xs) as Slice<T>,
+    slice(0, toInd, xs) as Slice<T>,
 
   /**
    * Curried version of `sliceTo`.

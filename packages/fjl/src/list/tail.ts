@@ -5,4 +5,6 @@
  * @param xs {Array|String}
  * @returns {Array|String}
  */
-export const tail = xs => xs.slice(1);
+import {Slice} from "../types";
+
+export const tail = <T>(xs: Slice<T>): Slice<T> => xs.slice(1);

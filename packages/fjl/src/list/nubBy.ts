@@ -5,7 +5,10 @@ import {Slice} from "../types";
 
 export const
 
-  $nubBy = <T>(pred, list: Slice<T>): Slice<T> => {
+  /**
+   * The nubBy function behaves just like nub, except it uses a user-supplied equality predicate.
+   */
+  nubBy = <T>(pred, list: Slice<T>): Slice<T> => {
     if (!length(list)) {
       return [];
     }
@@ -24,11 +27,4 @@ export const
     return out;
   },
 
-  /**
-   * The nubBy function behaves just like nub, except it uses a user-supplied equality predicate.
-   * @function module:list.nubBy
-   * @param pred {Function}
-   * @param list {Array|String|*}
-   * @returns {Array}
-   */
-  nubBy = curry($nubBy);
+  $nubBy = curry(nubBy);

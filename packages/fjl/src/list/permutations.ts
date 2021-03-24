@@ -10,9 +10,6 @@ export const
    * Returns a list of permutations for passed in list.
    *  Use caution with lists above a length of 15 (will take long due to nature of
    *  algorithm).
-   * @function module:list.permutations
-   * @param xs {Array} - ListLike.
-   * @returns {Array<Array|String|*>} - Array of permutations.
    */
   permutations = <T>(xs: Slice<T>): Slice<T>[] => {
     const limit = length(xs);

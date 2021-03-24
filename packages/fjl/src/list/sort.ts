@@ -1,4 +1,4 @@
-import {$sortBy} from "./sortBy";
+import {sortBy} from "./sortBy";
 import {genericAscOrdering} from "./utils";
 
 export const
@@ -7,8 +7,5 @@ export const
    * It is a special case of sortBy, which allows the programmer
    * to supply their own comparison function.
    * ```shallowCompare(sort ([1,6,4,3,2,5]), [1,2,3,4,5,6]) // true```
-   * @function module:list.sort
-   * @param xs {Array|String|*}
-   * @returns {Array}
    */
-  sort = <T>(xs: T[]): T[] => $sortBy(genericAscOrdering, xs);
+  sort = <T>(xs: T[]): T[] => sortBy(genericAscOrdering, xs);

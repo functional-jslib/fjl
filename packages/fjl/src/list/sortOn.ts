@@ -1,24 +1,10 @@
 import {curry} from "../function/curry";
-import {$map} from "./map";
-import {$sortBy} from "./sortBy";
+import {map} from "./map";
+import {sortBy} from "./sortBy";
 import {genericAscOrdering} from "./utils";
+import {UnaryOf} from "../types";
 
 export const
-
-  $sortOn = (valueFn, xs) =>
-
-    // Un-decorate
-    $map(decorated => decorated[1],
-
-      // Decorate and sort
-      $sortBy(
-        // Ordering
-        ([a0], [b0]) => genericAscOrdering(a0, b0),
-
-        // Decorate
-        $map(item => [valueFn(item), item], xs)
-      )
-    ),
 
   /**
    * Sort a list by comparing the results of a key function applied to each
@@ -37,9 +23,20 @@ export const
    *  [[1,"Hello"],[2,"world"],[4,"!"]]
    * ) // true
    * ```
-   * @function module:list.sortOn
-   * @param valueFn {Function}
-   * @param xs {Array|String|*}
-   * @returns {Array}
    */
-  sortOn = curry($sortOn);
+  sortOn = <T>(valueFn: UnaryOf<T, any>, xs: T[]) =>
+
+    // Un-decorate
+    map(decorated => decorated[1],
+
+      // Decorate and sort
+      sortBy(
+        // Ordering
+        ([a0], [b0]) => genericAscOrdering(a0, b0),
+
+        // Decorate
+        map((item: T) => [valueFn(item), item], xs)
+      )
+    ),
+
+  $sortOn = curry(sortOn);

@@ -8,7 +8,10 @@ import {BinaryPred, Slice} from "../types";
 
 export const
 
-  $removeBy = <T>(pred: BinaryPred<T>, x: T, list: Slice<T>): Slice<T> => {
+  /**
+   * Behaves the same as `remove`, but takes a user-supplied equality predicate.
+   */
+  removeBy = <T>(pred: BinaryPred<T>, x: T, list: Slice<T>): Slice<T> => {
     const foundIndex = findIndex(item => pred(x, item), list) as number;
     if (foundIndex > -1) {
       const parts = splitAt(foundIndex, list);
@@ -17,7 +20,4 @@ export const
     return sliceCopy(list);
   },
 
-  /**
-   * Behaves the same as `remove`, but takes a user-supplied equality predicate.
-   */
-  removeBy = curry($removeBy);
+  $removeBy = curry(removeBy);

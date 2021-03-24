@@ -5,7 +5,11 @@ import {Slice} from "../types";
 
 export const
 
-  $mapAccumR = <T>(op, zero, xs: Slice<T>): Slice<T> => {
+  /**
+   * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
+   * containing the aggregated value and the result of mapping the passed in function on passed in list.
+   */
+  mapAccumR = <T>(op, zero, xs: Slice<T>): Slice<T> => {
     const list = sliceCopy(xs),
       limit = length(xs);
     if (!limit) {
@@ -23,13 +27,4 @@ export const
     return [agg, mapped];
   },
 
-  /**
-   * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
-   * containing the aggregated value and the result of mapping the passed in function on passed in list.
-   * @function module:list.mapAccumR
-   * @param op {Function} - Function<aggregator, item, index> : [aggregated, mapResult]
-   * @param zero {*} - An instance of the passed in list type used to aggregate on.
-   * @param xs {Array} - list type.
-   * @return {Array} - [aggregated, list]
-   */
-  mapAccumR = curry($mapAccumR);
+  $mapAccumR = curry(mapAccumR);

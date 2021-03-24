@@ -3,7 +3,12 @@ import {length} from "../platform/object";
 
 export const
 
-  $scanr = (fn, zero, xs) => {
+  /**
+   * Same as `scanl` but from the right (similar to `foldr`'s relationship to 'foldl').
+   * Note also `scanr`'s relationship ot `foldr`:
+   * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
+   */
+  scanr = (fn, zero, xs) => {
     if (!xs || !length(xs)) {
       return [];
     }
@@ -19,14 +24,4 @@ export const
     return out;
   },
 
-  /**
-   * Same as `scanl` but from the right (similar to `foldr`'s relationship to 'foldl').
-   * Note also `scanr`'s relationship ot `foldr`:
-   * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
-   * @function module:list.scanr
-   * @param fn {Function}
-   * @param zero {*}
-   * @param xs {Array}
-   * @returns {Array|*}
-   */
-  scanr = curry($scanr);
+  $scanr = curry(scanr);

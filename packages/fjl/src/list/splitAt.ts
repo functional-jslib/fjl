@@ -1,5 +1,5 @@
-import {$sliceFrom} from "./utils/sliceFrom";
-import {$sliceTo} from "./utils/sliceTo";
+import {sliceFrom} from "./utils/sliceFrom";
+import {sliceTo} from "./utils/sliceTo";
 import {Slice} from "../platform/slice";
 import {curry} from "../function";
 
@@ -10,6 +10,6 @@ export const
    * given index in second part of returned list)).
    */
   splitAt = <T>(ind: number, list: Slice<T>): [Slice<T>, Slice<T>] =>
-    [$sliceTo(ind, list), $sliceFrom(ind, list)],
+    [sliceTo(ind, list), sliceFrom(ind, list)],
 
   $splitAt = curry(splitAt);
