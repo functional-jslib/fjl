@@ -10,20 +10,15 @@ export type ConcatMap<T, RetT, Mapper, Functor, RetFunctor> =
 
 export const
 
-  $concatMap = <T, RetT>(
-    fn: MapOp<T, Foldable<T>, RetT>,
-    foldable: Foldable<T>): Foldable<T> =>
-    concat(map(fn, foldable)) as Foldable<T>
-  ,
-
   /**
    * Map a function over all the elements of a container and concatenate the resulting lists.
-   * @haskellType `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
-   * @function module:list.concatMap
-   * @param fn {Function} - Mapping function;  E.g., `(x, i, xs) => y`.
-   * @param foldable {Array|String|*}
-   * @returns {Array|String|*}
    */
-  concatMap = curry($concatMap) as ConcatMap<any, any, MapOp<any, Slice<any>, any>, any[], any>
+  concatMap = <T, RetT>(
+    fn: MapOp<T, Foldable<T>, RetT>,
+    foldable: Foldable<T>
+  ): Foldable<T> =>
+    concat(map(fn, foldable)) as Foldable<T>,
+
+  $concatMap = curry(concatMap) as ConcatMap<any, any, MapOp<any, Slice<any>, any>, any[], any>
 
 ;

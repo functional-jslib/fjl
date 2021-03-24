@@ -10,15 +10,13 @@ export const
 
   /**
    * Returns the complement of list 0 and the reset of the passed in arrays.
-   * @function module:list._complement
-   * @param arr0 {Array}
-   * @param arrays {...Array}
-   * @returns {Array}
    */
-  _complement = <T>(arr0: Slice<T>, ...arrays: Slice<T>[]): Slice<T> =>
-    reduce((agg, arr) => append(agg, difference(arr, arr0) as Slice<T>), [], arrays),
-
-  $complement = _complement,
+  complement = <T>(...arrays: Slice<T>[]): Slice<T> => {
+    if (!arrays.length) return [];
+    const [arr0] = arrays;
+    return reduce((agg: Slice<T>, arr: Slice<T>) =>
+      append(agg, difference(arr, arr0) as Slice<T>), [], arrays)
+  },
 
   /**
    * Returns the complement of list 0 and the reset of the passed in arrays.
@@ -28,6 +26,6 @@ export const
    * @returns {Array}
    * @curried
    */
-  complement = curry2(_complement) as Complement<Slice<any>>
+  $complement = curry2(complement) as Complement<Slice<any>>
 
 ;

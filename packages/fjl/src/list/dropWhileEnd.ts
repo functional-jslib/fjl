@@ -8,7 +8,7 @@ type DropWhileEnd<T> = CurryOf2<SlicePred<T>, Slice<T>, Slice<T>>;
 
 export const
 
-  $dropWhileEnd = <T>(p: SlicePred<T>, list: Slice<T>): Slice<T> => {
+  dropWhileEnd = <T>(p: SlicePred<T>, list: Slice<T>): Slice<T> => {
     const splitPoint =
       findIndexWhereRight(
         (x, i, xs) => !p(x, i, xs),
@@ -20,11 +20,4 @@ export const
     return $sliceTo(splitPoint + 1, list) as Slice<T>;
   },
 
-  /**
-   * @function module:list.dropWhileEnd
-   * @param pred {Function} - Predicate<*, index, list|string>
-   * @param list {Array|String}
-   * @refactor
-   * @returns {Array|String}
-   */
-  dropWhileEnd = curry($dropWhileEnd) as DropWhileEnd<any>;
+  $dropWhileEnd = curry(dropWhileEnd) as DropWhileEnd<any>;

@@ -7,7 +7,7 @@ describe('#filter', () => {
     (<[Slice<string>, Slice<string>][]>[
         [
             filter(pred, alphabetString as unknown as Slice<string>), // @todo fix typing
-            alphabetString.split('').filter(pred)
+            alphabetString.split('').filter(pred).join('')
         ],
         [
             filter(pred, alphabetArray),

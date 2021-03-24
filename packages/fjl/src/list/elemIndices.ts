@@ -7,14 +7,10 @@ type ElemIndices<T> = CurryOf2<T, Slice<T>, T | undefined>
 
 export const
 
-  $elemIndices = <T>(value: T, xs: Slice<T>): T | any =>
+  elemIndices = <T>(value: T, xs: Slice<T>): T | any =>
     findIndices($equal(value) as SlicePred<T>, xs),
 
   /**
    * Returns found "value" indices.
-   * @function module:list.elemIndices
-   * @param value {any} - Element to search for.
-   * @param xs {Slice<any>} - list or list like.
-   * @returns {undefined|number[]}
    */
-  elemIndices = curry($elemIndices) as ElemIndices<any>;
+  $elemIndices = curry(elemIndices) as ElemIndices<any>;
