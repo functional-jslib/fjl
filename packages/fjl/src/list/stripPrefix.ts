@@ -1,7 +1,7 @@
 import {curry} from "../function/curry";
 import {isPrefixOf} from "./isPrefixOf";
 import {splitAt} from "./splitAt";
-import {length} from "../platform/object";
+import {length} from "./length";
 import {sliceCopy} from "./utils/sliceCopy";
 import {Slice} from "../types";
 

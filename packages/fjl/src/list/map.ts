@@ -1,4 +1,4 @@
-import {length} from '../platform/object';
+import {length} from './length';
 import {curry, CurryOf2} from '../function/curry';
 import {typeOf} from '../object/typeOf';
 import {of} from '../object/of';

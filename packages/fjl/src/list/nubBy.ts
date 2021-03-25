@@ -1,5 +1,5 @@
 import {curry} from "../function/curry";
-import {length} from "../platform/object";
+import {length} from "./length";
 import {any} from "./any";
 import {Slice} from "../types";
 

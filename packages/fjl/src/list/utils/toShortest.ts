@@ -9,10 +9,10 @@ export const
   /**
    * Trims all lists to shortest in `lists`.
    */
-  toShortest = <T>(...lists: T[][]): T[][] => {
+  toShortest = (...lists: any[][]): any[][] => {
     const listLengths = lengths(...lists),
       smallLen = Math.min(...listLengths);
-    return map((list, ind) => listLengths[ind] > smallLen ?
+    return map((list: any[], ind) => listLengths[ind] > smallLen ?
       sliceTo(smallLen, list) : sliceCopy(list), lists);
   },
 

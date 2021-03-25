@@ -1,7 +1,7 @@
 import {curry, CurryOf4} from "../../function/curry";
 import {PredForIndexable, PredForSlice} from "../types";
 import {ReduceOp} from "../../platform/types";
-import {length} from "../../platform/object";
+import {length} from "../length";;
 import {Indexable, Lengthable} from "../../types";
 
 export type ReduceUntil<T1, RetT> = CurryOf4<PredForIndexable<T1>,

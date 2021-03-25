@@ -1,5 +1,5 @@
 import {curry, CurryOf2} from "../function";
-import {length} from "../platform/object";
+import {length} from "./length";
 import {Indexable} from "../types";
 import {PredForIndexable} from "./types";
 import {keys} from "../platform/object";

@@ -13,6 +13,7 @@ describe('#intersect', () => {
       [[null, 'abc'], []]
     ])
       .forEach(([args, expected]) => {
+        // @ts-ignore
         expect(intersect(...args)).toEqual(expected);
       });
   });
@@ -24,9 +25,8 @@ describe('#intersect', () => {
       [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 3, [1, 2, 3]],
       [[1, 2, 3, 4, 5], [1, 2, 3], 3, [1, 2, 3]]
     ])
-      .forEach(testCase => {
-        const [subj1, subj2, expectedLen, expectedElms] = testCase,
-          result = intersect(subj1, subj2) as any[];
+      .forEach(([subj1, subj2, expectedLen, expectedElms]) => {
+        const result = intersect(subj1, subj2) as any[];
         expect(result.length).toEqual(expectedLen);
         result.forEach((elm, ind) => {
           expect(elm).toEqual(expectedElms[ind]);

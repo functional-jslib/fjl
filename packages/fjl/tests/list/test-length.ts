@@ -1,5 +1,5 @@
 import {vowelsArray, vowelsString} from "../helpers";
-import {length} from "../../src/platform/object";
+import {length} from "../../src/list/length";
 import {Lengthable} from "../../src/types";
 
 describe('#lengths', () => {

@@ -1,26 +1,19 @@
-import {length} from "../../src/platform/object";
-import {alphabetArray, alphabetString, expectTrue} from "../helpers";
-import {all, head, tails} from "../../src/list";
+import {tails} from "../../src/list/tails";
 
 describe('#tails', () => {
-  it('should unfold a list into list of all possible ' +
-    'non-omitting sequential sets that start with the last item', () => {
-    const limit = length(alphabetString);
-    expectTrue(all(
-      (item, ind: number) => {
-        const headOfLast = head(item);
-        return length(item) ? length(item) === limit - ind &&
-          headOfLast === alphabetString[ind] : true;
-      },
-      tails(alphabetString)
-    ));
-    expectTrue(all(
-      (item, ind: number) => {
-        const headOfLast = head(item);
-        return length(item) ? length(item) === limit - ind &&
-          headOfLast === alphabetArray[ind] : true;
-      },
-      tails(alphabetArray)
-    ));
-  });
+  /**
+   * should unfold a list into list of all possible
+   * non-omitting sequential sets that start with the last item.
+   */
+  (<[string, string | string[], (string | string[])[]][]>[
+    [`tails('abc') === ['abc', 'bc', 'c', '']`, 'abc', ['abc', 'bc', 'c', '']],
+    [`tails('abc'.split('')) === ['abc'.split(''), 'bc'.split(''), ['c'], []]`, 'abc'.split(''),
+      ['abc'.split(''), 'bc'.split(''), ['c'], []]],
+  ])
+    .forEach(([testName, arg, expected]) => {
+      it(testName, function () {
+        const rslt = tails(arg);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });

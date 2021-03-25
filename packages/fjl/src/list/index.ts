@@ -47,7 +47,7 @@ export * from './isSuffixOf';
 export * from './iterate';
 export * from './last';
 export * from './lastIndexOf';
-export {length} from '../object/index';
+export * from './length';
 export * from './map';
 export * from './mapAccumL';
 export * from './mapAccumR';

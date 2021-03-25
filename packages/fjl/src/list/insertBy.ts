@@ -1,5 +1,5 @@
 import {curry, CurryOf3} from "../function/curry";
-import {length} from "../platform/object";
+import {length} from "./length";
 import {splitAt} from "./splitAt";
 import {concat} from "./concat";
 import {$push} from "./push";

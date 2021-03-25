@@ -1,6 +1,6 @@
 import {curry} from "../function/curry";
 import {sliceCopy} from "./utils/sliceCopy";
-import {length} from "../platform/object";
+import {length} from "./length";
 import {Slice} from "../types";
 
 export const

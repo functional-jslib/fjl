@@ -1,6 +1,6 @@
 import {init} from './init';
 import {last} from "./last";
-import {length} from '../platform/object';
+import {length} from './length';
 import {of} from '../object/of';
 
 export const

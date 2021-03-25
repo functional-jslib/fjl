@@ -1,4 +1,4 @@
-import {length} from "../platform/object";
+import {length} from "./length";
 import {swap} from "./utils";
 import {sliceCopy} from "./utils/sliceCopy";
 import {repeat} from "./repeat";

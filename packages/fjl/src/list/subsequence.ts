@@ -1,4 +1,4 @@
-import {length} from "../platform/object";
+import {length} from "./length";
 import {Slice} from "../platform";
 
 export const

@@ -4,7 +4,6 @@
 
 import {curry, curry2, curry3, curry4, curry5, CurryOf2, CurryOf3, CurryOf4, CurryOf5} from "../../function/curry";
 import {flip, flip3, flip4, flip5} from "../../function/flip";
-import {Lengthable} from "../../types";
 import {ObjectStatics} from "./types";
 
 export * from './types';
@@ -16,8 +15,6 @@ export const
   instanceOf = <T>(X: Function, x: T) => x instanceof X,
 
   $instanceOf = curry2(instanceOf),
-
-  length = (x: Lengthable | undefined | null): number => x === null || x === undefined ? undefined : x.length,
 
   hasOwnProperty = <T>(key: string | PropertyKey, x: T): boolean =>
     Object.prototype.hasOwnProperty.call(x, key),

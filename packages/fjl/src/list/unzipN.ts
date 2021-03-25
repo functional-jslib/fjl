@@ -1,4 +1,4 @@
-import {length} from "../platform/object";
+import {length} from "./length";
 import {unfoldr} from "./unfoldr";
 import {foldl} from "./foldl";
 

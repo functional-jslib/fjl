@@ -1,5 +1,5 @@
 import {curry, CurryOf2} from "../function/curry";
-import {length} from "../platform/object";
+import {length} from "./length";
 import {findIndexWhere} from "./utils";
 import {slice, Slice} from "../platform/slice";
 import {PredForSlice} from "./types";

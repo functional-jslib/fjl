@@ -1,11 +1,11 @@
-import {length} from "../platform/object";
+import {length} from "./length";
 import {slice} from "../platform/slice";
 import {Slice} from "../types";
 
 export const
 
   /**
-   * The inits function returns all initial segments of the argument, shortest first. For example,
+   * Returns all tail segments of the argument, including the argument;  E.g.,
    * ```
    * shallowEquals(tails('abc'), ['abc', 'bc', 'c',''])
    * ```

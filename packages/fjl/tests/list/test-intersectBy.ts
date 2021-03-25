@@ -1,6 +1,5 @@
 import {expectEqual} from "../helpers";
-import {length} from "../../src/platform/object";
-import {intersectBy} from "../../src/list";
+import {intersectBy, length} from "../../src/list";
 
 describe('#intersectBy', () => {
   const equality = (a, b) => a === b;
@@ -15,19 +14,18 @@ describe('#intersectBy', () => {
     expectEqual(length(intersectBy(equality, [], [])), 0);
   });
   it('should return an intersection of the two arrays on equality function', () => {
-    const testCases = [
+    (<[number[], number[], number, number[]][]>[
       // subj1, subj2, expectLen, expectedElements
       [[1, 2, 3], [1, 2, 3, 4, 5], 3, [1, 2, 3]],
       [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 3, [1, 2, 3]],
       [[1, 2, 3, 4, 5], [1, 2, 3], 3, [1, 2, 3]]
-    ];
-    testCases.forEach(testCase => {
-      const [subj1, subj2, expectedLen, expectedElms] = testCase,
-        result = intersectBy(equality, subj1, subj2);
-      expectEqual(result.length, expectedLen);
-      result.forEach((elm, ind) => {
-        expectEqual(elm, expectedElms[ind]);
+    ])
+      .forEach(([subj1, subj2, expectedLen, expectedElms]) => {
+        const result = intersectBy(equality, subj1, subj2);
+        expectEqual(result.length, expectedLen);
+        result.forEach((elm, ind) => {
+          expectEqual(elm, expectedElms[ind]);
+        });
       });
-    });
   });
 });
