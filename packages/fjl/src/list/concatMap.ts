@@ -1,7 +1,7 @@
 import {curry, CurryOf2} from "../function";
 import {concat} from "./concat";
 import {map} from "./map";
-import {MapOp} from "../platform/array";
+import {MapOp} from "../platform";
 import {Slice} from "../platform/slice";
 import {Foldable} from "../types";
 

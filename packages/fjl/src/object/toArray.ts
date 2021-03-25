@@ -9,7 +9,7 @@ export const
    * @note For `null`, `undefined`, `NaN`, `Number{}`, `Symbol{}`, `Boolean{}` returns an empty array.
    * @note Method does a shallow conversion;
    */
-  toArray = x => {
+  toArray = (x: any): any[] => {
     switch (typeOf(x)) {
       case 'Promise':
       case 'Function':

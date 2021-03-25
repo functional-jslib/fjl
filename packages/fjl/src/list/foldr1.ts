@@ -1,7 +1,7 @@
 import {curry, CurryOf2} from "../function/curry";
 import {unconsr} from "./unconsr";
 import {reduceRight} from "./utils/reduceRight";
-import {ReduceOp} from "../platform/array";
+import {ReduceOp} from "../platform";
 import {Slice} from "../platform/slice";
 
 export const

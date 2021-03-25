@@ -3,6 +3,7 @@ import {of} from "../object/of";
 import {typeOf} from "../object/typeOf";
 
 export const
+
     /**
      * Returns a copy of the passed in list reverses.
      */

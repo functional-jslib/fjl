@@ -1,4 +1,4 @@
-import {PredicateOf3} from "../platform/array";
+import {PredicateOf3} from "../platform";
 import {Slice} from "../platform/slice";
 import {Indexable} from "../types";
 

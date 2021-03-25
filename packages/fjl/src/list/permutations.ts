@@ -18,7 +18,7 @@ export const
       return [xs];
     }
 
-    const c = repeat(limit, 0);
+    const c = repeat(limit, 0) as number[];
     let list: T[] = sliceCopy(xs) as T[],
       i = 0;
 
@@ -26,7 +26,7 @@ export const
 
     for (; i < limit; i++) {
       if (c[i] < i) {
-        list = swap(i % 2 === 0 ? 0 : c[i], i, list) as T[];
+        list = swap((i % 2 === 0 ? 0 : c[i]) as number, i, list) as T[];
         out.push(list);
         c[i] += 1;
         i = 0;

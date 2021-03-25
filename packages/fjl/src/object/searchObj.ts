@@ -19,10 +19,6 @@ export const
    *   // Thing we want to do
    * }
    * ```
-   * @function module:object.searchObj
-   * @param nsString {String}
-   * @param obj {*}
-   * @returns {*}
    */
   searchObj = (nsString, obj) => {
     if (!obj) {

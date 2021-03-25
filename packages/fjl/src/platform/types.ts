@@ -1,5 +1,5 @@
-import {CurryOf2, CurryOf3} from "../../function";
-import {Unary} from "../../types";
+import {CurryOf2, CurryOf3} from "../function";
+import {Unary} from "../types";
 
 export type PredicateOf3<Tx, Ti, Txs> = (x?: Tx, i?: Ti, xs?: Txs) => boolean;
 

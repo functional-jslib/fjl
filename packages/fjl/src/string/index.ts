@@ -3,23 +3,23 @@
  * @description Contains functions for strings.
  */
 import {$intercalate} from '../list';
-import {split} from '../platform/string';
+import {$split, split} from '../platform/string';
 import {compose} from '../function/compose';
 import {UnaryOf} from "../types";
 
-export {split};
+export {split, $split};
 
 export const
 
   /**
    * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
    */
-  lines = split(/[\n\r]/gm) as UnaryOf<string, string[]>,
+  lines = $split(/[\n\r]/gm) as UnaryOf<string, string[]>,
 
   /**
    * Splits a string on all '\s' and/or all '\t' characters.
    */
-  words = split(/[\s\t]/gm) as UnaryOf<string, string[]>,
+  words = $split(/[\s\t]/gm) as UnaryOf<string, string[]>,
 
   /**
    * Intersperse an array of strings with '\s' and then concats them.

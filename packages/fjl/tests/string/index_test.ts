@@ -9,10 +9,11 @@ import {
   vowelsString
 } from "../helpers";
 import {camelCase, classCase, lcaseFirst, lines, ucaseFirst, unlines, unwords, words} from "../../src/string";
+import {Slice} from '../../src/platform'
 
 describe('#lines', () => {
   it('should split a string on all new line characters.', () => {
-    const subj = intercalate('\n', alphabetArray),
+    const subj = intercalate('\n', alphabetArray) as string,
       result = lines(subj);
 
     // Ensure subject is valid first:
@@ -36,21 +37,20 @@ describe('#lines', () => {
 describe('#words', () => {
   it('should split a string on all whitespace characters.', () => {
     // subject | expectedLength | shallowEqualsTo
-    const subjectsAndExpLens = [
+    (<[Slice, number, [string, string]][]>[
       [intercalate(' ', alphabetArray), length(alphabetArray), alphabetArray],
       ['hello world', 2, ['hello', 'world']]
-    ];
+    ])
+      .forEach(tuple => {
+        const [subj, expectedLen, shallowEqualsTo] = tuple,
+          result = words(subj as string);
 
-    subjectsAndExpLens.forEach(tuple => {
-      const [subj, expectedLen, shallowEqualsTo] = tuple,
-        result = words(subj);
+        // Check length of result
+        expectLength(expectedLen, result);
 
-      // Check length of result
-      expectLength(expectedLen, result);
-
-      // Check split string
-      expectEqual(shallowEqualsTo, result);
-    });
+        // Check split string
+        expectEqual(shallowEqualsTo, result);
+      });
   });
   it('should return a copy of original list when no whitespace characters are found.', () => {
     // subject | expectedLength | shallowEqualsTo

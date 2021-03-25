@@ -1,6 +1,6 @@
 import {curry, CurryOf4} from "../../function/curry";
 import {PredForIndexable, PredForSlice} from "../types";
-import {ReduceOp} from "../../platform/array/types";
+import {ReduceOp} from "../../platform/types";
 import {length} from "../../platform/object";
 import {Indexable, Lengthable} from "../../types";
 

@@ -1,6 +1,7 @@
-import {toCurried2Method} from "../../utils";
-import {SplitFunc} from "./types";
+import {curry} from "../../function";
 
 export * from './types';
 
-export const split = toCurried2Method('split') as SplitFunc;
+export const split = (pattern: string | RegExp, xs: string, limit?: number): string[] => (xs || '').split(pattern, limit),
+
+  $split = curry(split);

@@ -8,7 +8,7 @@
  */
 
 import {isset} from "../object/isset";
-import {instanceOf} from '../platform/object';
+import {$instanceOf} from '../platform/object';
 import {curry, trampoline, CurryOf1, toFunction, until, curry2, CurryOf2} from "../function";
 import {
   Applicative, ApplicativeConstructor, Functor,
@@ -104,7 +104,7 @@ export const
    * Returns boolean indicating whether given value is an
    * instance of monad or not.
    */
-  isMonad = instanceOf(MonadBase) as CurryOf1<any, boolean>,
+  isMonad = $instanceOf(MonadBase) as CurryOf1<any, boolean>,
 
   /**
    * Calls `valueOf` on value (use for functional composition).

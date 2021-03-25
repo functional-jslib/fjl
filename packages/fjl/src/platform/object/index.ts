@@ -4,7 +4,7 @@
 
 import {curry, curry2, curry3, curry4, curry5, CurryOf2, CurryOf3, CurryOf4, CurryOf5} from "../../function/curry";
 import {Lengthable} from "../../types";
-import {flip, flip3, flip4, flip5} from "../../function";
+import {flip, flip3, flip4, flip5} from "../../function/flip";
 import {ObjectStatics} from "./types";
 
 export * from './types';
@@ -13,7 +13,9 @@ export const
 
   {assign, keys} = Object,
 
-  instanceOf = curry2(<T>(X: Function, x: T) => x instanceof X),
+  instanceOf = <T>(X: Function, x: T) => x instanceof X,
+
+  $instanceOf = curry2(instanceOf),
 
   length = (x: Lengthable | undefined | null): number => x === null || x === undefined ? undefined : x.length,
 
@@ -40,22 +42,27 @@ export const
       return agg;
     }
     const operation = Object[key];
+    let newOp;
     switch (operation.length) {
       case 2:
-        agg[key] = flip(operation);
-        agg[`$${key}`] = curry2(flip(operation)) as CurryOf2<any, any, any>;
+        newOp = flip(operation);
+        agg[key] = newOp;
+        agg[`$${key}`] = curry2(newOp) as CurryOf2<any, any, any>;
         break;
       case 3:
-        agg[key] = flip3(operation);
-        agg[`$${key}`] = curry3(flip3(operation)) as CurryOf3<any, any, any, any>;
+        newOp = flip3(operation);
+        agg[key] = newOp;
+        agg[`$${key}`] = curry3(newOp) as CurryOf3<any, any, any, any>;
         break;
       case 4:
-        agg[key] = flip4(operation);
-        agg[`$${key}`] = curry4(flip4(operation)) as CurryOf4<any, any, any, any, any>;
+        newOp = flip4(operation);
+        agg[key] = newOp;
+        agg[`$${key}`] = curry4(newOp) as CurryOf4<any, any, any, any, any>;
         break;
       case 5:
-        agg[key] = flip5(operation);
-        agg[`$${key}`] = curry5(flip5(operation)) as CurryOf5<any, any, any, any, any, any>;
+        newOp = flip5(operation);
+        agg[key] = newOp;
+        agg[`$${key}`] = curry5(newOp) as CurryOf5<any, any, any, any, any, any>;
         break;
       default:
         agg[key] = Object[key];

@@ -4,7 +4,7 @@
  */
 
 import {typeOf} from './typeOf';
-import {instanceOf, length, keys} from '../platform/object';
+import {instanceOf, $instanceOf, length, keys} from '../platform/object';
 import {curry, CurryOf1, CurryOf2} from '../function/curry';
 import {isset} from './isset';
 import {TypeRef} from "../types";
@@ -367,7 +367,7 @@ export const
      * @param types {...TypeRef}
      * @returns {boolean}
      */
-    instanceOfOne = (x: any, ...types): boolean => types.some(instanceOf(x) as CurryOf2<Function, any, boolean>),
+    instanceOfOne = (x: any, ...types): boolean => types.some($instanceOf(x) as CurryOf2<Function, any, boolean>),
 
     /**
      * Checks if value qualifies (has `map` method) as a functor.

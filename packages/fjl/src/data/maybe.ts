@@ -6,7 +6,7 @@ import {curry} from '../function';
 import {Monad, MonadBase, MonadConstructor} from './monad';
 import {UnaryOf} from "../types";
 import {FunctorMapFn} from "./types";
-import {instanceOf} from "../platform/object";
+import {$instanceOf} from "../platform/object";
 
 let NothingSingleton;
 
@@ -109,7 +109,7 @@ export const
   /**
    * Checks for `Just`.
    */
-  isJust = instanceOf(Just) as <T>(x: T) => boolean,
+  isJust = $instanceOf(Just) as <T>(x: T) => boolean,
 
   /**
    * Wraps `x` in an `Just`.

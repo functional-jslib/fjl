@@ -35,7 +35,10 @@ export const
     Array.isArray(targetOrTargetDescriptorTuple) ? targetOrTargetDescriptorTuple as [T, PropertyDescriptor?] :
       [targetOrTargetDescriptorTuple],
 
-  $defineProp = <T>(Type: TypeRef, target: T | [T, PropertyDescriptor?], propName: string, defaultValue?: any): [T, PropertyDescriptor] => {
+  /**
+   * Allows you to define a "typed" property on given `target`.
+   */
+  defineProp = <T>(Type: TypeRef, target: T | [T, PropertyDescriptor?], propName: string, defaultValue?: any): [T, PropertyDescriptor] => {
     const [_target, _descriptor] = toTargetDescriptorTuple(target),
       descriptor = _descriptor || createTypedDescriptor(Type, _target, propName);
     Object.defineProperty(_target, propName, descriptor);
@@ -45,12 +48,12 @@ export const
     return [_target, descriptor];
   },
 
-  /**
-   * Allows you to define a "typed" property on given `target`.
-   */
-  defineProp = curry3($defineProp),
+  $defineProp = curry3(defineProp),
 
-  $defineEnumProp = <T>(
+  /**
+   * Allows you to define a "typed", enumerated property on `target`.
+   */
+  defineEnumProp = <T>(
     Type: TypeRef, target: T | [T, PropertyDescriptor?], propName: string, defaultValue?: any
   ): [T, PropertyDescriptor] => {
     const [_target, _descriptor] = toTargetDescriptorTuple(target),
@@ -63,20 +66,21 @@ export const
     ) as unknown as [T, PropertyDescriptor];
   },
 
-  /**
-   * Allows you to define a "typed", enumerated property on `target`.
-   */
-  defineEnumProp = curry3($defineEnumProp),
+  $defineEnumProp = curry3(defineEnumProp),
 
   /**
    * Allows you to define multiple enum props at once on target.
    */
-  defineEnumProps = curry2(createDefinePropsMethod({enumerable: true})),
+  defineEnumProps = createDefinePropsMethod({enumerable: true}),
+
+  $defineEnumProps = curry2(defineEnumProps),
 
   /**
    * Allows you to define multiple props at once on target.
    */
-  defineProps = curry2(createDefinePropsMethod({enumerable: false}))
+  defineProps = createDefinePropsMethod({enumerable: false}),
+
+  $defineProps = curry2(defineProps)
 
 ;
 

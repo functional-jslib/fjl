@@ -4,8 +4,12 @@ export interface ToString {
   toString(): string;
 }
 
-export interface ToJSON<T=object> {
+export interface ToJSON<T = object> {
   toJSON(): T;
+}
+
+export interface Length {
+  length?: number;
 }
 
 export type DefinePropertyFunc<T> = CurryOf3<PropertyDescriptor, string, T, T>;

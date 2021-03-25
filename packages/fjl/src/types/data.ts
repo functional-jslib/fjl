@@ -1,4 +1,4 @@
-import {MapOp, ReduceOp} from "../platform/array";
+import {MapOp, ReduceOp} from "../platform";
 
 export type MapFunc<T, Ind, M, RetT> = (x?: T, i?: Ind, xs?: M) => RetT;
 

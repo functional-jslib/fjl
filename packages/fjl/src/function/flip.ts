@@ -1,5 +1,3 @@
-import {reverse} from '../platform/array';
-import {curry, curry2, CurryOf2, CurryOf3, CurryOf4, CurryOf5} from './curry';
 import {NaryOf, BinaryOf, TernaryOf, QuaternaryOf, QuinaryOf} from "../types";
 
 export const
@@ -9,7 +7,7 @@ export const
    * (returned function expects 2 or more variables (curried at 2 or more args)).
    */
   flipN = <T, RetT>(fn: NaryOf<T, RetT>): NaryOf<T, RetT> =>
-    (...args: T[]): RetT => fn(...reverse(args)),
+    (...args: T[]): RetT => fn(...args.reverse()),
 
   /**
    * Flips a function's first and second arguments and and returns a new function requiring said arguments in reverse.
