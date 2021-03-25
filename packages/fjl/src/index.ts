@@ -14,7 +14,6 @@ export * from './number';
 export * from './object';
 export * from './string';
 export * from './types';
-export * from './utils';
 
 import * as platform from './platform';
 

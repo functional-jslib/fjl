@@ -2,34 +2,36 @@
  * @module string
  * @description Contains functions for strings.
  */
-import {$intercalate} from '../list';
 import {$split, split} from '../platform/string';
-import {compose} from '../function/compose';
-import {UnaryOf} from "../types";
 
 export {split, $split};
+
+const newLineRegex = /[\n\r]/gm,
+  spaceRegex = /[\s\t]/gm,
+  space = ' ',
+  newLine = '\n';
 
 export const
 
   /**
    * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
    */
-  lines = $split(/[\n\r]/gm) as UnaryOf<string, string[]>,
+  lines = (xs: string): string[] => xs.split(newLineRegex),
 
   /**
    * Splits a string on all '\s' and/or all '\t' characters.
    */
-  words = $split(/[\s\t]/gm) as UnaryOf<string, string[]>,
+  words = (xs: string): string[] => xs.split(spaceRegex),
 
   /**
    * Intersperse an array of strings with '\s' and then concats them.
    */
-  unwords = $intercalate(' '),
+  unwords = (xs: string[]): string => xs.join(space),
 
   /**
    * Intersperses a '\n' character into a list of strings and then concats it.
    */
-  unlines = $intercalate('\n'),
+  unlines = (xs: string[]): string => xs.join(newLine),
 
   /**
    * Lower cases first character of a non-empty string.
@@ -63,6 +65,6 @@ export const
    * and then upper case first character (`ucaseFirst`).
    * @throws {Error} - Throws error if `xs` is not a string (via `camelCase` call).
    */
-  classCase = compose(ucaseFirst, camelCase)
+  classCase = (xs: string): string => ucaseFirst(camelCase(xs))
 
 ;

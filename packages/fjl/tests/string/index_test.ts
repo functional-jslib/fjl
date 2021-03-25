@@ -79,15 +79,14 @@ describe('#unlines', () => {
   it('should join a list with new lines.', () => {
     [
       [vowelsArray, vowelsArray.join('\n')],
-      [vowelsString, vowelsString.split('').join('\n')],
     ]
       .forEach(([subj, expected]) => {
-        const r = unlines(subj);
+        const r = unlines(subj as string[]);
         expectEqual(r, expected);
       });
   });
   it('should return empty lists when receiving empty lists', () => {
-    expectEqual(unlines([]), []);
+    expectEqual(unlines([]), '');
   });
   it('should throw Errors when receiving nothing', () => {
     expectError(() => unlines(null));
@@ -99,15 +98,14 @@ describe('#unwords', () => {
   it('should join a list of words with spaces.', () => {
     [
       [vowelsArray, vowelsArray.join(' ')],
-      [vowelsString, vowelsString.split('').join(' ')],
     ]
       .forEach(([subj, expected]) => {
-        const r = unwords(subj);
+        const r = unwords(subj as string[]);
         expectEqual(r, expected);
       });
   });
   it('should return empty lists when receiving empty lists', () => {
-    expectEqual(unwords([]), []);
+    expectEqual(unwords([]), '');
   });
   it('should throw Errors when receiving nothing', () => {
     expectError(() => unwords(null));
@@ -178,7 +176,7 @@ describe('#classCase', () => {
   it('should throw an error when receiving an empty-string or any value that is not a string', () => {
     [null, undefined, [], {}]
       .forEach(xs =>
-        expectError(() => classCase(xs))
+        expectError(() => classCase(xs as string))
       );
   });
 });
