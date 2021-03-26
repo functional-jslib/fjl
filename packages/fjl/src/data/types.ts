@@ -1,4 +1,5 @@
-import {BinaryOf} from "../types";
+import {Binary} from "../types";
+import {Length} from "../platform";
 
 export type FunctorMapFn<RetT> = ((a?: any, b?: any, c?: any, ...args: any[]) => RetT) |
     ((a?: any, b?: any, ...args: any[]) => RetT) | ((a?: any, ...args: any[]) => RetT);
@@ -9,7 +10,7 @@ export interface FunctorConstructor<T = any> {
     readonly prototype: Functor<T>;
 }
 
-export interface Functor<T = any> {
+export interface Functor<T = any> extends Length {
     valueOf(): T;
 
     map<MapRetT>(fn: FunctorMapFn<MapRetT>): Functor<MapRetT> | Functor;
@@ -33,7 +34,7 @@ export interface ApplicativeConstructor<T> extends ApplyConstructor<T> {
     of<X>(value: X): Applicative<X>;
 
     liftA2<A extends T, B, RetT>(
-        fn: BinaryOf<A, B, RetT>,
+        fn: Binary<A, B, RetT>,
         a: Applicative<A>,
         b: Applicative<B>
     ): Applicative<RetT>;

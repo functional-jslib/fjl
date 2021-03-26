@@ -1,5 +1,5 @@
 import {curry, CurryOf3} from './curry';
-import {Unary, UnaryOf, UnaryPred} from "../types";
+import {Unary, UnaryPred} from "../types";
 
 export const
 
@@ -9,7 +9,7 @@ export const
    */
   until = <T, RetT>(
     predicate: UnaryPred<T | RetT>,
-    operation: UnaryOf<T | RetT, T | RetT>,
+    operation: Unary<T | RetT, T | RetT>,
     startValue: T | RetT
   ): RetT => {
     let result: T | RetT = startValue;

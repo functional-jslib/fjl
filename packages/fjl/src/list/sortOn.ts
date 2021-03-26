@@ -2,7 +2,7 @@ import {curry} from "../function/curry";
 import {map} from "./map";
 import {sortBy} from "./sortBy";
 import {genericAscOrdering} from "./utils";
-import {UnaryOf} from "../types";
+import {Unary} from "../types";
 
 export const
 
@@ -24,7 +24,7 @@ export const
    * ) // true
    * ```
    */
-  sortOn = <T>(valueFn: UnaryOf<T, any>, xs: T[]) =>
+  sortOn = <T>(valueFn: Unary<T, any>, xs: T[]) =>
 
     // Un-decorate
     map(decorated => decorated[1],

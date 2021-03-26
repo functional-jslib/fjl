@@ -26,9 +26,9 @@
  * @param [fnName=undefined] {String} - Optionally restrict trampolining only to function with specific name.
  * @returns {*} - Finally returned value.
  */
-import {NaryOf} from "../types";
+import {Nary} from "../types";
 
-export const trampoline = <T, RetT>(fn: NaryOf<T, RetT>, fnName?: string): NaryOf<T, RetT> => {
+export const trampoline = <T, RetT>(fn: Nary<T, RetT>, fnName?: string): Nary<T, RetT> => {
   return (...args: T[]): RetT => {
     let result = fn(...args);
     while (typeof result === 'function' &&

@@ -1,12 +1,11 @@
-import {zipWith, zipWith3} from "../../src/list";
+import {zipWith3} from "../../src/list";
 import {vowelsArray} from "../helpers";
-import {TuplizeOp} from "../../src/list/zipWith";
 import {revVowelsArray} from "../helpers";
-import {TernaryOf, UnaryOf} from "../../src/types";
+import {Unary} from "../../src/types";
 
 describe('#zipWith3', () => {
   const triplet = (a, b, c) => [a, b, c];
-  (<[UnaryOf<any[], any[]>, any[], any[], any[], [any, any, any]][]>[
+  (<[Unary<any[], any[]>, any[], any[], any[], [any, any, any]][]>[
     [triplet, [], [], [], []],
     [triplet, vowelsArray, [], [], []],
     [triplet, [], vowelsArray, [], []],

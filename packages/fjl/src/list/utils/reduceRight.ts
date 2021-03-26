@@ -10,8 +10,8 @@ export const
    */
   reduceRight = <T, RetT>(
     op: ReduceOp<T, Indexable<T>, RetT>,
-    agg: RetT, arr: Indexable<T>): RetT =>
-    reduceUntilRight(alwaysFalse, op, agg, arr),
+    agg: RetT, xs: Indexable<T>): RetT =>
+    reduceUntilRight(alwaysFalse, op, agg, xs),
 
   $reduceRight = $reduceUntilRight(alwaysFalse)
 

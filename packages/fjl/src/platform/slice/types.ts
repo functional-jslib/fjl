@@ -1,5 +1,3 @@
-import {TernaryPredOf} from "../../types";
-
-export type SlicePred<T> = TernaryPredOf<T, number, Slice<T>>;
+export type SlicePred<T> = (x: T, i?: number | string, xs?: Slice<T>) => boolean;
 
 export type Slice<T = any> = T[] | string;

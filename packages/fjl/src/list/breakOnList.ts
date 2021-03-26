@@ -4,8 +4,9 @@ import {findIndexWhere} from "./utils/findexIndexWhere";
 import {of} from "../object/of";
 import {reverse} from "./reverse";
 import {splitAt} from "./splitAt";
-import {Slice, SlicePred} from "../platform/slice/types";
+import {Slice} from "../platform/slice/types";
 import {sliceFrom} from "./utils/sliceFrom";
+import {PredForSlice} from "./types";
 
 export type BreakOnList<Pred, Functor> = CurryOf2<Pred, Functor, [Functor, Functor]>;
 
@@ -23,11 +24,11 @@ export const
    * breakOnList (> 9) [1,2,3] == ([1,2,3],[])
    * ```
    */
-  breakOnList = <T>(pred: SlicePred<T>, list: Slice<T>): [Slice<T>, Slice<T>] => {
+  breakOnList = <T>(pred: PredForSlice<T>, list: Slice<T>): [Slice<T>, Slice<T>] => {
     const splitPoint = findIndexWhere(negateF3(pred), list) as number;
     return splitPoint === -1 ?
       [of(list), sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
   },
 
-  $breakOnList = curry(breakOnList) as BreakOnList<SlicePred<any>, Slice>
+  $breakOnList = curry(breakOnList) as BreakOnList<PredForSlice<any>, Slice>
 ;

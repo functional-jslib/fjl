@@ -4,7 +4,7 @@
 import {isset} from '../object/is';
 import {curry} from '../function';
 import {Monad, MonadBase, MonadConstructor} from './monad';
-import {UnaryOf} from "../types";
+import {Unary} from "../types";
 import {FunctorMapFn} from "./types";
 import {$instanceOf} from "../platform/object";
 
@@ -131,7 +131,7 @@ export const
    * If the Maybe value is `Nothing`, the function returns the `replacement` value.
    * Otherwise, it applies the function to the value contained  by the `Just` and returns the result.
    */
-  maybe = curry(<A, B, C>(replacement: B, fn: UnaryOf<A, C>, maybeInst: Maybe<A>) => {
+  maybe = curry(<A, B, C>(replacement: B, fn: Unary<A, C>, maybeInst: Maybe<A>) => {
     if (!isset(maybeInst) || isNothing(maybeInst)) return replacement;
     return isMaybe(maybeInst) ? (maybeInst as Just<A>).map(fn).join() : maybeInst;
   }),

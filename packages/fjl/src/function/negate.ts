@@ -1,4 +1,4 @@
-import {BinaryPredOf, NaryPred, TernaryPredOf, UnaryPred} from "../types";
+import {BinaryPred, NaryPred, TernaryPred, UnaryPred} from "../types";
 
 export const
 
@@ -12,14 +12,14 @@ export const
      * Takes a function that takes two parameters and returns a negated version of given
      * function.
      */
-    negateF2 = <A, B>(fn: BinaryPredOf<A, B>): BinaryPredOf<A, B> =>
+    negateF2 = <A, B>(fn: BinaryPred<A, B>): BinaryPred<A, B> =>
         (a, b): boolean => !fn(a, b),
 
     /**
      * Takes a function that takes three parameters and returns a
      * negated version of given function.
      */
-    negateF3 = <A, B, C>(fn: TernaryPredOf<A, B, C>): TernaryPredOf<A, B, C> =>
+    negateF3 = <A, B, C>(fn: TernaryPred<A, B, C>): TernaryPred<A, B, C> =>
         (a, b, c): boolean => !fn(a, b, c),
 
     /**

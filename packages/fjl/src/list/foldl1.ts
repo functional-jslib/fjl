@@ -13,8 +13,8 @@ export const
   foldl1 = <T, RetT>(op: ReduceOp<T, Slice<T>, RetT>, xs: Slice<T>): RetT => {
     const parts = uncons(xs);
     if (!parts) return;
-    const [head, tail]: [T, Slice<T>] = parts;
-    return reduce(op, head as unknown as RetT, tail) as RetT;
+    const [_head, _tail]: [T, Slice<T>] = parts;
+    return reduce(op, _head as unknown as RetT, _tail) as RetT;
   },
 
   $foldl1 = curry(foldl1) as CurryOf2<ReduceOp<any, Slice<any>, any>, Slice<any>, any>

@@ -1,4 +1,3 @@
-import {length} from './length';
 import {curry, CurryOf2} from '../function/curry';
 import {typeOf} from '../object/typeOf';
 import {of} from '../object/of';
@@ -22,17 +21,19 @@ export const
     let out,
       limit,
       i = 0;
-    switch (typeOf(xs)) {
-      case 'Array':
-        limit = length(xs as Array<T>);
-        out = [];
-        if (!limit) return out;
-        for (; i < limit; i += 1) {
-          out.push(fn(xs[i], i, xs));
-        }
-        return out;
-      case 'String':
-        limit = length(xs as unknown as string);
+    const type = typeOf(xs);
+    if (type.indexOf(Array.name) === type.length - Array.name.length) {
+      limit = xs.length;
+      out = [];
+      if (!limit) return out;
+      for (; i < limit; i += 1) {
+        out.push(fn(xs[i], i, xs));
+      }
+      return out;
+    }
+    switch (type) {
+      case String.name:
+        limit = xs.length;
         out = '';
         if (!xs) return out;
         for (; i < limit; i += 1) {

@@ -1,55 +1,29 @@
-export type Nullary<T> = (x?: T) => T;
+export type Nullary<T = any> = (x?: T) => T;
 
-export type Unary<T> = (x: T) => T;
+export type Unary<T = any, RetT = any> = (x: T) => RetT;
 
-export type Binary<T> = (a: T, b: T) => T;
+export type Binary<A = any, B = any, RetT = any> = (a: A, b: B) => RetT;
 
-export type Ternary<T> = (a: T, b: T, c: T) => T;
+export type Ternary<A = any, B = any, C = any, RetT = any> = (a: A, b: B, c: C) => RetT;
 
-export type Quaternary<T> = (a: T, b: T, c: T, d: T) => T;
+export type Quaternary<A = any, B = any, C = any, D = any, RetT = any> = (a: A, b: B, c: C, d: D) => RetT;
 
-export type Quinary<T> = (a: T, b: T, c: T, d: T, e: T) => T;
+export type Quinary<A = any, B = any, C = any, D = any, E = any, RetT = any> = (a: A, b: B, c: C, d: D, e: E) => RetT;
 
-export type Variadic<T> = (...xs: T[]) => T;
+export type Variadic<T = any, RetT = any> = (...xs: T[]) => RetT;
 
-export type Nary<T> = Variadic<T>;
+export type Nary<T = any, RetT = any> = Variadic<T, RetT>;
 
-export type Monadic<T> = (x: T, ...xs: T[]) => T;
+export type Monadic<A = any, B = any, Ret = any> = (a: A, ...bs: B[]) => Ret;
 
-export type Polyadic<T> = (x1: T, x2: T, ...xs: T[]) => T;
+export type Polyadic<A = any, B = any, C = any, RetT = any> = (a: A, b: B, ...cs: C[]) => RetT;
 
-export type UnaryOf<T, Ret> = (x: T) => Ret;
+export type UnaryPred<T = any> = (x: T) => boolean;
 
-export type BinaryOf<A, B, Ret> = (a: A, b: B) => Ret;
+export type BinaryPred<A = any, B = any> = (a: A, b: B) => boolean;
 
-export type TernaryOf<A, B, C, Ret> = (a: A, b: B, c: C) => Ret;
+export type TernaryPred<A = any, B = any, C = any> = (a: A, b: B, c: C) => boolean;
 
-export type QuaternaryOf<A, B, C, D, Ret> = (a: A, b: B, c: C, d: D) => Ret;
+export type NaryPred<T = any> = (...xs: T[]) => boolean;
 
-export type QuinaryOf<A, B, C, D, E, Ret> = (a: A, b: B, c: C, d: D, e: E) => Ret;
-
-export type VariadicOf<T, Ret> = (...xs: T[]) => Ret;
-
-export type NaryOf<T, Ret> = VariadicOf<T, Ret>;
-
-export type MonadicOf<T, Ret> = (a: T, ...b: T[]) => Ret;
-
-export type PolyadicOf<A, B, Ret> = (a: A, b: B, ...c: B[]) => Ret;
-
-export type UnaryPred<T> = (x: T) => boolean;
-
-export type BinaryPred<T> = (a: T, b: T) => boolean;
-
-export type TernaryPred<T> = (a: T, b: T, c: T) => boolean;
-
-export type NaryPred<T> = (...x: T[]) => boolean;
-
-export type PolyadicPred<T> = (a: T, b: T, ...c: T[]) => boolean;
-
-export type PolyPred<T> = PolyadicPred<T>;
-
-export type BinaryPredOf<A, B> = (a: A, b: B) => boolean;
-
-export type TernaryPredOf<A, B, C> = (a: A, b: B, c: C) => boolean;
-
-export type PolyadicPredOf<A, B, C> = (a: A, b: B, ...c: C[]) => boolean;
+export type PolyadicPred<A = any, B = any, C = any> = (a: A, b: B, ...cs: C[]) => boolean;
