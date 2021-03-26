@@ -1,7 +1,7 @@
 import {curry} from "../function/curry";
 import {length} from "./length";
 import {reduce, toShortest} from "./utils";
-import {$push} from "./push";
+import {push} from "./push";
 import {Slice} from "../platform/slice";
 
 export const
@@ -15,11 +15,13 @@ export const
    * @param arr2 {Array}
    * @returns {Array<Array<*,*>>}
    */
-  zip = curry(<T, T2>(arr1: T[], arr2: T2[]): [T, T2][] => {
+  zip = <T, T2>(arr1: T[], arr2: T2[]): [T, T2][] => {
     if (!length(arr1) || !length(arr2)) {
       return [];
     }
     const [a1, a2] = toShortest(arr1, arr2) as Slice<T>[];
-    return reduce((agg, item, ind) => $push([item, a2[ind]], agg),
+    return reduce((agg, item, ind) => push([item, a2[ind]], agg),
       [], a1);
-  });
+  },
+
+  $zip = curry(zip);

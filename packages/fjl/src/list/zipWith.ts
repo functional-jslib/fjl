@@ -29,7 +29,7 @@ export const
    * @param xs2 {Array}
    * @returns {Array<Array<*,*>>}
    */
-  zipWith = curry(<T, T2>(op: BinaryOf<T, T2, [T, T2]>, xs1: Slice<T>, xs2: Slice<T2>): [T, T2][] => {
+  zipWith = <T, T2>(op: BinaryOf<T, T2, [T, T2]>, xs1: Slice<T>, xs2: Slice<T2>): [T, T2][] => {
     if (!length(xs1) || !length(xs2)) {
       return [];
     }
@@ -37,4 +37,6 @@ export const
     return reduce((agg, item: T, ind) =>
         $push(op(item, a2[ind]), agg),
       [], a1);
-  });
+  },
+
+  $zipWith = curry(zipWith);

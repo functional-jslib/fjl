@@ -12,7 +12,7 @@ export const
    * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
    *  of lists to zip.
    */
-  zipWithN = curry3((op, ...lists) => {
+  zipWithN = (op, ...lists) => {
     const trimmedLists = toShortest(...lists),
       lenOfTrimmed = length(trimmedLists);
     if (!lenOfTrimmed) {
@@ -24,5 +24,7 @@ export const
         op(...map(xs => xs[ind], trimmedLists)),
       trimmedLists[0]
     );
-  });
+  },
+
+  $zipWithN = curry3(zipWithN);
 
