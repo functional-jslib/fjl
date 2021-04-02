@@ -1,4 +1,4 @@
-import {CurryOf2, CurryOf3} from "../../function/curry";
+import {CurryOf2, CurryOf3} from "../function/curry";
 
 export type DefinePropertyFunc<T> = CurryOf3<PropertyDescriptor, string, T, T>;
 
