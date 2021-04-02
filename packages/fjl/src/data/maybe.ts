@@ -5,7 +5,7 @@ import {isset} from '../object/is';
 import {curry} from '../function';
 import {Monad, MonadBase, MonadConstructor} from './monad';
 import {Unary} from "../types";
-import {FunctorMapFn} from "./types";
+import {FunctorMapFn} from "../types";
 import {$instanceOf} from "../platform/object";
 
 let NothingSingleton;

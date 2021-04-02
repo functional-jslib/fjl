@@ -1,7 +1,7 @@
 import {just, nothing} from "../../src/data/maybe";
 import {Monad, join, valueOf, fmap, ap, flatMap} from "../../src/data/monad";
 import {left, right} from "../../src/data/either";
-import {Applicative, FunctorMapFn} from "../../src/data/types";
+import {Applicative, FunctorMapFn} from "../../src/types";
 import {id} from "../../src/function";
 
 describe('#valueOf()', () => {

@@ -9,12 +9,11 @@
 
 import {isset} from "../object/isset";
 import {$instanceOf} from '../platform/object';
-import {curry, trampoline, CurryOf1, toFunction, until, curry2, CurryOf2} from "../function";
+import {curry, CurryOf1, toFunction, curry2, CurryOf2} from "../function";
 import {
   Applicative, ApplicativeConstructor, Functor,
-  FunctorConstructor, FunctorMapFn, Apply, ApplyConstructor
-} from "./types";
-import {TypeRef} from "../types";
+  FunctorConstructor, FunctorMapFn, Apply, ApplyConstructor, TypeRef
+} from "../types";
 import {isType} from "../object";
 
 export interface Monad<T> extends Applicative<T> {

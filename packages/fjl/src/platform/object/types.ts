@@ -1,16 +1,4 @@
-import {CurryOf2, CurryOf3} from "../../function";
-
-export interface ToString {
-  toString(): string;
-}
-
-export interface ToJSON<T = object> {
-  toJSON(): T;
-}
-
-export interface Length {
-  length?: number;
-}
+import {CurryOf2, CurryOf3} from "../../function/curry";
 
 export type DefinePropertyFunc<T> = CurryOf3<PropertyDescriptor, string, T, T>;
 

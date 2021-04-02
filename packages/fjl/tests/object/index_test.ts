@@ -640,9 +640,9 @@ describe('#object', function () {
       expectFunction(objComplement);
     });
     it('should return an object with only properties not found in the first obj', function () {
-      let subj1 = {a: 1, b: 2, c: 3},
-        subj2 = {d: 4},
-        subj3 = {e: 5, f: 6, g: 7},
+      let subj1 = {a: 1, b: 2, c: 3} as object,
+        subj2 = {d: 4} as object,
+        subj3 = {e: 5, f: 6, g: 7} as object,
         result = objComplement(subj1, subj2, subj3);
       [subj2, subj3].forEach(function (subj) {
         keys(subj).forEach(key => {

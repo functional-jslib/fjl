@@ -3,8 +3,7 @@ import {typeOf} from '../object/typeOf';
 import {of} from '../object/of';
 import {isFunctor} from '../object/is';
 import {isset} from '../object/isset';
-import {Indexable, MapFunc} from "../types";
-import {Functor} from "../data/types";
+import {Indexable, MapFunc, Functor} from "../types";
 
 export type MapType<T1, T2, Functor1, RetFunctor> =
   CurryOf2<MapFunc<T1, number | string, Functor1, T2>, Functor1, RetFunctor>

@@ -6,7 +6,7 @@ import {isset} from '../object/isset';
 import {curry} from '../function/curry';
 import {id} from '../function/id';
 import {MonadBase} from './monad';
-import {FunctorMapFn} from "./types";
+import {FunctorMapFn} from "../types";
 
 export type Either<A, B> = A | B;
 
