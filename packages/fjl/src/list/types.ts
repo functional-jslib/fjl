@@ -1,5 +1,5 @@
 import {PredicateOf3} from "../platform";
-import {Slice} from "../platform/slice";
+import {Slice} from "../types/native";
 import {Indexable} from "../types";
 
 export type PredForIndexable<T = any> = PredicateOf3<T, number | string, Indexable<T>>;

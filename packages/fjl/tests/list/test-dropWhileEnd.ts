@@ -2,7 +2,7 @@ import {expectEqual, nonAlphaNumsArray, vowelsArray, vowelsString} from "../help
 import {dropWhileEnd} from "../../src/list/dropWhileEnd";
 import {id} from "../../src/function/id";
 import {UnaryPred} from "../../src/types";
-import {Slice} from "../../src/platform/slice/types";
+import {Slice} from "../../src/types/native";
 
 // @todo move test-case message(s) into loop
 describe('#dropWhileEnd', () => {

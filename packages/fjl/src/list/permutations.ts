@@ -2,7 +2,7 @@ import {length} from "./length";
 import {swap} from "./utils";
 import {sliceCopy} from "./utils/sliceCopy";
 import {repeat} from "./repeat";
-import {Slice} from "../platform/slice";
+import {Slice} from "../types/native";
 
 export const
 

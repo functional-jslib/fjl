@@ -1,7 +1,7 @@
-import {Slice} from "./types";
+import {Slice, SlicePred} from "../../types/native";
 import {curry2, curry3, CurryOf3} from "../../function";
 
-export * from './types';
+export {Slice, SlicePred};
 
 export const
 

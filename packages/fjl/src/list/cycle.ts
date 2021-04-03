@@ -1,7 +1,7 @@
 import {curry} from "../function";
 import {concat} from "./concat";
 import {replicate} from "./replicate";
-import {Slice} from "../platform/slice";
+import {Slice} from "../types/native";
 
 export const
 

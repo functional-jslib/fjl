@@ -1,4 +1,4 @@
-import {Slice} from "../../platform/slice";
+import {Slice} from "../../types/native";
 import {sliceFrom} from "./sliceFrom";
 
 export const

@@ -1,6 +1,6 @@
 import {expectEqual} from "../helpers";
 import {find} from "../../src/list/find";
-import {Slice} from "../../src/platform/slice/types";
+import {Slice} from "../../src/types/native";
 
 describe('#find', () => {
     const word = 'word';

@@ -5,7 +5,7 @@ import {concat} from "./concat";
 import {$push} from "./push";
 import {sliceCopy} from "./utils/sliceCopy";
 import {OrderingFunc} from "./utils";
-import {Slice} from "../platform/slice";
+import {Slice} from "../types/native";
 import {of} from "../object/of";
 import {typeOf} from "../object/typeOf";
 

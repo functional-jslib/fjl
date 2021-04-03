@@ -4,7 +4,7 @@ import {findIndexWhere} from "./utils/findexIndexWhere";
 import {of} from "../object/of";
 import {reverse} from "./reverse";
 import {splitAt} from "./splitAt";
-import {Slice} from "../platform/slice/types";
+import {Slice} from "../types/native";
 import {sliceFrom} from "./utils/sliceFrom";
 import {PredForSlice} from "./types";
 

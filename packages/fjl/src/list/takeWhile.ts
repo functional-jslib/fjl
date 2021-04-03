@@ -4,7 +4,7 @@ import {reduceUntil} from "./utils";
 import {isString} from "../object/is";
 import {of} from "../object/of";
 import {push} from "./push";
-import {Slice, SlicePred} from "../platform/slice";
+import {Slice, SlicePred} from "../types/native";
 import {PredForSlice} from "./types";
 
 export const

@@ -1,7 +1,7 @@
 import {curry, CurryOf2} from "../function/curry";
 import {findIndexWhereRight} from "./utils";
 import {of} from "../object/of";
-import {Slice, SlicePred} from "../platform/slice";
+import {Slice, SlicePred} from "../types/native";
 import {$sliceTo} from "./utils/sliceTo";
 
 type DropWhileEnd<T> = CurryOf2<SlicePred<T>, Slice<T>, Slice<T>>;

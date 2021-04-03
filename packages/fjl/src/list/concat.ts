@@ -1,6 +1,6 @@
 import {append} from './append';
 import {sliceCopy} from './utils/sliceCopy';
-import {Slice} from "../platform/slice";
+import {Slice} from "../types/native";
 
 export const
 

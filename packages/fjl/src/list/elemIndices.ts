@@ -1,6 +1,6 @@
 import {curry, CurryOf2} from "../function";
 import {findIndices} from "./findIndices";
-import {Slice, SlicePred} from "../platform/slice";
+import {Slice, SlicePred} from "../types/native";
 import {$equal} from "../boolean/equal";
 
 type ElemIndices<T> = CurryOf2<T, Slice<T>, T | undefined>

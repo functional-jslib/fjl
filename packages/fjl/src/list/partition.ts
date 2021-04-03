@@ -1,6 +1,6 @@
 import {curry, CurryOf2} from "../function";
 import {PredForSlice} from "./types";
-import {Slice} from "../platform/slice";
+import {Slice} from "../types/native";
 
 export const
 
