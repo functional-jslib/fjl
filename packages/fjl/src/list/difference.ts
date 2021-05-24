@@ -1,7 +1,8 @@
 import {curry, CurryOf2} from "../function/curry";
 import {reduce} from "./utils";
 import {sliceCopy} from "./utils/sliceCopy";
-import {includes, Slice} from "../platform/slice";
+import {includes} from "../platform/slice";
+import {Slice} from "../types/data";
 
 export type Difference<Functor> = CurryOf2<Functor, Functor, Functor>
 
