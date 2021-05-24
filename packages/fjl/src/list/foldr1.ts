@@ -10,7 +10,7 @@ export const
    * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
    * out from a copy of the container.
    */
-  foldr1 = <T, ZeroT>(op: ReduceOp<T, Slice<T>, ZeroT>, xs: T[]): ZeroT | [] => {
+  foldr1 = <T, ZeroT>(op: ReduceOp<T, Slice<T>, ZeroT>, xs: Slice<T>): ZeroT | [] => {
     const parts = unconsr(xs);
     return !parts ? [] : reduceRight(op, parts[1] as unknown as ZeroT, parts[0]);
   },

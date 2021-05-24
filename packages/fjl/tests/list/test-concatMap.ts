@@ -10,7 +10,7 @@ describe('#concatMap', () => {
     //  When passing this function direct to `[].map` it returns a weird result (seems like it's returning
     //  an instance of `String` using `new` and it's constructor)?
     expectEqual(concatMap(charCodeToCharOp, charCodeRange), alphabetString);
-    expectEqual(concatMap(charCode => [String.fromCharCode(charCode)], charCodeRange), alphabetArray);
+    expectEqual(concatMap((charCode: number): [string] => [String.fromCharCode(charCode)], charCodeRange), alphabetArray);
   });
   it('should return an empty list when receiving an empty list or a list of empty lists', () => {
     expectEqual(concatMap(id, []), []);

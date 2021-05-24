@@ -4,7 +4,7 @@ import {map, nubBy} from "../../src";
 describe('#nubBy', () => {
   it('should remove all but first occurrences of repeat items in a list.', () => {
     expectEqual(nubBy(equal, 'conundrum'.split('')), 'conudrm'.split(''));
-    expectEqual(nubBy(equal, map(char => char + char, alphabetArray).join('').split('')), alphabetArray);
+    expectEqual(nubBy(equal, map((char: string) => char + char, alphabetArray).join('').split('')), alphabetArray);
   });
   it('should return a copy of the passed in list with items intact if there ' +
     'aren\'t any repeat items', () => {

@@ -9,7 +9,7 @@ import {
   vowelsString
 } from "../helpers";
 import {camelCase, classCase, lcaseFirst, lines, ucaseFirst, unlines, unwords, words} from "../../src/string";
-import {Slice} from '../../src/types/native';
+import {Slice} from '../../src/types/data';
 
 describe('#lines', () => {
   it('should split a string on all new line characters.', () => {

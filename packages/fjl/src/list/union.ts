@@ -11,7 +11,7 @@ export const
    * @param arr2 {Array}
    * @returns {Array}
    */
-  union = <T>(arr1: T[], arr2: T[]) =>
+  union = <T>(arr1: Slice<T>, arr2: Slice<T>): Slice<T> =>
     append(arr1,
       filter(elm => !includes(arr1, elm), arr2) as Slice<T>
     ),

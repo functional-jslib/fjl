@@ -3,6 +3,9 @@ import {ReduceOp} from "../platform";
 
 export type MapFunc<T, Ind, M, RetT> = (x?: T, i?: Ind, xs?: M) => RetT;
 
+export type MapAccumFunc<T, ZeroT, Ind = any, Functor = Slice<T>> =
+    (agg?: ZeroT, x?: T, i?: Ind, xs?: Functor) => [ZeroT, ZeroT];
+
 export interface Foldable<T> extends Functor<T> {
   reduce<RetT>(fn: ReduceOp<T, Foldable<T>, RetT>): RetT;
 
@@ -104,4 +107,3 @@ export interface Bifunctor<A, B> extends Functor<A> {
 
   bimap(fn1: FunctorMapFn<A>, fn2: FunctorMapFn<B>): Bifunctor<A, B>;
 }
-

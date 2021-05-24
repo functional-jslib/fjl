@@ -4,7 +4,7 @@ import {init, remove, tail} from "../../src/list";
 describe('#remove', () => { // same as `delete` (in haskell)
   it('should remove the first occurrence of an item in a list.', () => {
     expectEqual(remove('l', 'hello world'), 'helo world');
-    expectEqual(remove('l', 'hello world'.split('')).join(''), 'helo world');
+    expectEqual((remove('l', 'hello world'.split('')) as string[]).join(''), 'helo world');
     expectEqual(remove('a', alphabetString), tail(alphabetString));
     expectEqual(remove('z', alphabetString), init(alphabetString));
     expectEqual(remove('a', alphabetArray), tail(alphabetArray));
