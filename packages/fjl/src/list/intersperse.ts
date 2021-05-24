@@ -1,7 +1,7 @@
 import {curry, CurryOf2} from "../function/curry";
 import {of} from "../object/of";
 import {isString} from "../object/is";
-import {Slice} from "../types/native";
+import {Slice} from "../types/data";
 
 export const
 

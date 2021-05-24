@@ -1,7 +1,7 @@
 import {curry, CurryOf2} from "../function/curry";
 import {length} from "./length";
 import {sliceCopy} from "./utils/sliceCopy";
-import {Slice} from "../types/native";
+import {Slice} from "../types/data";
 import {BinaryPred} from "../types";
 
 export const

@@ -2,7 +2,7 @@ import {curry, CurryOf2} from "../function/curry";
 import {uncons} from "./uncons";
 import {reduce} from "./utils/reduce";
 import {ReduceOp} from "../platform/types";
-import {Slice} from "../types/native";
+import {Slice} from "../types/data";
 
 export const
 

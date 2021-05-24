@@ -40,6 +40,8 @@ export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
 
 export type Slice<T = any> = T[] | string;
 
+export type SlicePred<T> = (x: T, i?: number | string, xs?: Slice<T>) => boolean;
+
 export type FunctorMapFn<RetT> = ((a?: any, b?: any, c?: any, ...args: any[]) => RetT) |
   ((a?: any, b?: any, ...args: any[]) => RetT) | ((a?: any, ...args: any[]) => RetT);
 

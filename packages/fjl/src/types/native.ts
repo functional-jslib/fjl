@@ -1,9 +1,5 @@
 import {CurryOf2, CurryOf3} from "../function/curry";
 
-export type SlicePred<T> = (x: T, i?: number | string, xs?: Slice<T>) => boolean;
-
-export type Slice<T = any> = T[] | string;
-
 export type DefinePropertyFunc<T> = CurryOf3<PropertyDescriptor, string, T, T>;
 
 export type DefinePropertiesFunc<T> = CurryOf2<PropertyDescriptorMap, T, T>;

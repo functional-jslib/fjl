@@ -1,4 +1,4 @@
-import {Slice} from "../../types/native";
+import {Slice} from "../../types/data";
 import {sliceFrom} from "./sliceFrom";
 
 export const

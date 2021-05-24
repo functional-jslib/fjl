@@ -1,5 +1,5 @@
 import {curry, CurryOf2} from "../function/curry";
-import {Slice, SlicePred} from "../types/native";
+import {Slice, SlicePred} from "../types/data";
 import {typeOf} from "../object/typeOf";
 
 type Filter<T> = CurryOf2<SlicePred<T>, Slice<T>, T[]>;

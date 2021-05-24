@@ -1,5 +1,5 @@
 import {curry, CurryOf2} from "../../function/curry";
-import {Slice, SlicePred} from "../../types/native";
+import {Slice, SlicePred} from "../../types/data";
 import {length} from "../length";;
 
 export const

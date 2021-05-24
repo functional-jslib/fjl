@@ -2,7 +2,7 @@ import {curry} from "../function/curry";
 import {length} from "./length";
 import {reduce, toShortest} from "./utils";
 import {push} from "./push";
-import {Slice} from "../types/native";
+import {Slice} from "../types/data";
 
 export const
 

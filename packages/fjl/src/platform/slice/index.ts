@@ -1,4 +1,4 @@
-import {Slice, SlicePred} from "../../types/native";
+import {Slice, SlicePred} from "../../types/data";
 import {curry2, curry3, CurryOf3} from "../../function";
 
 export {Slice, SlicePred};
