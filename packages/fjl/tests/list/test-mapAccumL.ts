@@ -4,8 +4,6 @@ import {MapAccumFunc} from "../../src";
 import {vowelsString} from "../helpers";
 
 describe('#mapAccumL', () => {
-  const stringOp = (agg, item) => String.fromCharCode(item.charCodeAt(0) + 1);
-
   type ZeroT = number | string;
 
   (<[string, MapAccumFunc<ZeroT, ZeroT>, Slice<ZeroT>, ZeroT, [ZeroT, Slice<ZeroT>]][]>[

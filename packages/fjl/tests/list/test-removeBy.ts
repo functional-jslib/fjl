@@ -4,7 +4,7 @@ import {init, removeBy, tail} from "../../src";
 describe('#removeBy', () => {
   it('should remove the first occurrence of an item in a list.', () => {
     expectEqual(removeBy(equal, 'l', 'hello world'), 'helo world');
-    expectEqual(removeBy(equal, 'l', 'hello world'.split('')).join(''), 'helo world');
+    expectEqual((removeBy(equal, 'l', 'hello world'.split('')) as string[]).join(''), 'helo world');
     expectEqual(removeBy(equal, 'a', alphabetString), tail(alphabetString));
     expectEqual(removeBy(equal, 'z', alphabetString), init(alphabetString));
     expectEqual(removeBy(equal, 'a', alphabetArray), tail(alphabetArray));
