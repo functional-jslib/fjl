@@ -8,16 +8,6 @@
   "repository": "git@github.com:functional-jslib/fjl-validator.git",
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
   "license": "BSD",
-  "scripts": {
-    "build": "npm run build:all",
-    "build:all": "npm run build:es && npm run build:cjs && npm run build:umd && npm run build:iife",
-    "test": "jest --config ./jest.config.js",
-    "docs": "echo \"Not yet implemented.\"",
-    "build:es": "tsc --project tsconfig.prod.es.json",
-    "build:cjs": "tsc --project tsconfig.prod.cjs.json",
-    "build:umd": "tsc --project tsconfig.prod.umd.json",
-    "build:iife": "rollup -c ./rollup.config.js"
-  },
   "peerDependencies": {
     "fjl": "^1.13.0"
   },

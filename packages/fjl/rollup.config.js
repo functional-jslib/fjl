@@ -17,7 +17,6 @@ export default {
   plugins: [
     typescript({
       tsconfig: path.join(__dirname, './tsconfig.json'),
-      rootDir: path.join(__dirname, './src/'),
     }),
     terser()
   ]

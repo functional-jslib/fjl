@@ -34,7 +34,12 @@
     "build:fjl:iife": "tsc --project packages/fjl/tsconfig.json",
     "build:fjl:umd": "tsc --project packages/fjl/tsconfig.prod.umd.json",
     "build:fjl:min": "rollup --config packages/fjl/rollup.config.js",
-    "build:fjl-validator": "cd packages/fjl-validator && npm run build && cd ../../",
+    "build:fjl-validator": "npm run test:fjl-validator && npm run build:fjl-validator:cjs && npm run build:fjl-validator:esm && npm run build:fjl-validator:iife && npm run build:fjl-validator:umd && npm run build:fjl-validator:min",
+    "build:fjl-validator:cjs": "tsc --project packages/fjl-validator/tsconfig.prod.cjs.json",
+    "build:fjl-validator:esm": "tsc --project packages/fjl-validator/tsconfig.prod.es.json",
+    "build:fjl-validator:iife": "tsc --project packages/fjl-validator/tsconfig.json",
+    "build:fjl-validator:umd": "tsc --project packages/fjl-validator/tsconfig.prod.umd.json",
+    "build:fjl-validator:min": "rollup --config packages/fjl-validator/rollup.config.js",
     "link:packages": "node node-scripts/tasks/link-packages.js"
   },
   "repository": {
