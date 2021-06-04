@@ -1,16 +1,17 @@
 {
   "name": "fjl",
-  "version": "1.12.8",
+  "version": "1.12.9",
   "description": "Functional Javascript Library",
   "main": "dist/cjs/fjl",
   "module": "dist/es6-module/fjl.mjs",
   "types": "./types/index.d.ts",
   "scripts": {
-    "build": "gulp docs build",
+    "build": "gulp readme docs build",
     "docs": "gulp docs",
     "eslint": "gulp eslint",
     "readme": "gulp readme",
-    "test": "jest --testMatch **/tests/test-*.js"
+    "test": "jest --testMatch **/tests/test-*.js",
+    "prepublishOnly": "npm run test && npm run build"
   },
   "directories": {
     "dist": "dist",
