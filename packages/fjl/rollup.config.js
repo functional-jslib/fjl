@@ -1,23 +1,24 @@
-import typescript from "@rollup/plugin-typescript";
-import {terser} from "rollup-plugin-terser";
+import typescript from '@rollup/plugin-typescript';
+import {terser} from 'rollup-plugin-terser';
+import path from 'path';
 
 export default {
-  input: './src/index.ts',
+  input: path.join(__dirname, './src/index.ts'),
   output: [{
-    file: './dist/index.es.min.js',
+    file: path.join(__dirname, './dist/index.es.min.js'),
     format: 'es',
-    sourcemap: true,
+    sourcemap: true
   }, {
-    file: './dist/index.iife.min.js',
+    file: path.join(__dirname, './dist/index.iife.min.js'),
     format: 'iife',
     sourcemap: true,
     name: 'fjl'
   }],
   plugins: [
     typescript({
-      tsconfig: './tsconfig.json',
-      rootDir: './src'
+      tsconfig: path.join(__dirname, './tsconfig.json'),
+      rootDir: path.join(__dirname, './src/'),
     }),
     terser()
   ]
-}
+};
