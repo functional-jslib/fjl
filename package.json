@@ -28,7 +28,7 @@
     "test:fjl-inputfilter": "jest --c packages/fjl-inputfilter/jest.config.js",
     "test:fjl-filter": "jest --c packages/fjl-filter/jest.config.js",
     "build": "npm run build:fjl",
-    "build:fjl": "cd packages/fjl && npm run build && cd ../../",
+    "build:fjl": "rollup",
     "build:fjl-validator": "cd packages/fjl-validator && npm run build && cd ../../",
     "link:packages": "node node-scripts/tasks/link-packages.js"
   },
@@ -42,5 +42,12 @@
   "bugs": {
     "url": "https://github.com/functional-jslib/fjl/issues"
   },
-  "homepage": "https://github.com/functional-jslib/fjl#readme"
+  "homepage": "https://github.com/functional-jslib/fjl#readme",
+  "workspaces": [
+    "packages/fjl",
+    "packages/fjl-filter",
+    "packages/fjl-inputfilter",
+    "packages/fjl-validator",
+    "packages/fjl-validator-recaptcha"
+  ]
 }
