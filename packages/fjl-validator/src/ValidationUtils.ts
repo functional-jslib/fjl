@@ -12,8 +12,9 @@ import {
   isFunction,
   isString,
   repeat,
-  UnaryOf,
-  isOneOf
+  Unary,
+  isOneOf,
+  ToString
 } from 'fjl';
 
 // @todo Deprecate this on version 1.14.0.
@@ -30,7 +31,7 @@ export interface MessageTemplates<T = any> {
 export interface ValidatorOptions<T = any> {
   messageTemplates?: MessageTemplates<T>;
   valueObscured?: boolean;
-  valueObscurer?: UnaryOf<T, string>;
+  valueObscurer?: Unary<T, ToString>;
 }
 
 export interface ValidatorResult<T = any> {
@@ -39,7 +40,7 @@ export interface ValidatorResult<T = any> {
   value?: T;
 }
 
-export type Validator<T> = UnaryOf<T, ValidatorResult<T>>;
+export type Validator<T = any> = Unary<T, ValidatorResult<T>>;
 
 export const
 
@@ -52,14 +53,14 @@ export const
     options: Options, key: keyof MessageTemplates<T> | MessageGetter<T>, value: T): string | undefined => {
     let message;
     const {messageTemplates, valueObscured, valueObscurer} = options,
-      _value = valueObscured ? valueObscurer(value) : value,
+      _value = (valueObscured ? valueObscurer(value) : value) as T,
       _keyAsKey = key as keyof MessageTemplates<T>;
     if (isFunction(key)) {
-      message = call(key as MessageGetter<T>, _value, options);
+      message = (key as MessageGetter<T>)(_value, options);
     } else if (!isString(key) || !messageTemplates || !messageTemplates[_keyAsKey]) {
       return;
     } else if (isFunction(messageTemplates[_keyAsKey])) {
-      message = call(messageTemplates[_keyAsKey] as MessageGetter<T>, _value, options);
+      message = (messageTemplates[_keyAsKey] as MessageGetter<T>)(_value, options);
     } else {
       message = messageTemplates[_keyAsKey];
     }
@@ -97,5 +98,3 @@ export const
       ...(options.length ? options : [{}])
     )
 ;
-
-export default toValidationResult;

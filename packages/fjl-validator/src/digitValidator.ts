@@ -27,5 +27,3 @@ export const
    * @returns {Object}
    */
   digitValidator1 = value => digitValidator(null, value);
-
-export default digitValidator;

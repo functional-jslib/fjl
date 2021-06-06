@@ -23,5 +23,3 @@ export const
   alnumValidator1 = <T>(value: T): ValidatorResult => alnumValidator(null, value)
 
 ;
-
-export default alnumValidator;

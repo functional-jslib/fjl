@@ -3,39 +3,10 @@
   "version": "0.5.1",
   "main": "./dist/cjs/fjl-input.js",
   "module": "./dist/es6-module/fjl-input.js",
-  "repository": "git@github.com:functional-jslib/fjl-filter.git",
+  "repository": "git@github.com:functional-jslib/fjl.git",
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
   "license": "BSD-3-Clause",
-  "scripts": {
-    "test": "jest --testMatch **/tests/test-*.js"
-  },
   "dependencies": {
-    "fjl": "^1.12.6"
-  },
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-jest": "^24.8.0",
-    "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-register": "^6.26.0",
-    "chai": "^4.1.2",
-    "fjl-range": "^1.0.3",
-    "graceful-fs": "^4.2.4",
-    "jest": "^24.8.0",
-    "lazypipe": "^1.0.1",
-    "minimatch": "^3.0.4",
-    "rollup": "^1.32.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "yargs": "^15.4.1"
-  },
-  "jest": {
-    "testMatch": [
-      "**/tests/test-*.js"
-    ],
-    "testEnvironment": "node"
+    "fjl": "^1.13.0"
   }
 }

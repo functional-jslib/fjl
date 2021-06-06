@@ -3,6 +3,8 @@
  * @description Contains functions for strings.
  */
 import {$split, split} from '../platform/string';
+import {range} from "../list";
+import {randNatNum} from "../number";
 
 export {split, $split};
 
@@ -65,6 +67,13 @@ export const
    * and then upper case first character (`ucaseFirst`).
    * @throws {Error} - Throws error if `xs` is not a string (via `camelCase` call).
    */
-  classCase = (xs: string): string => ucaseFirst(camelCase(xs))
+  classCase = (xs: string): string => ucaseFirst(camelCase(xs)),
+
+  randChar = (min = 0, max = 0x10FFFF): string =>
+    String.fromCharCode(randNatNum(min, max)),
+
+  randStr = (min = 0, max = 100): string =>
+    range(min, max)
+      .reduce(str => str + randChar(min, max), '')
 
 ;

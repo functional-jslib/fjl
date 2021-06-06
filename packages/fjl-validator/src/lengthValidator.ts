@@ -36,12 +36,12 @@ export const
       [Number, 'max', Number.MAX_SAFE_INTEGER]
     ], toValidationOptions());
     _options.messageTemplates = {
-      NOT_OF_TYPE: value => `Value does not have a \`length\` property.  ` +
+      NOT_OF_TYPE: <T>(value: T): string => `Value does not have a \`length\` property.  ` +
         `Type received: \`${typeOf(value)}\`.  ` +
         `Value received: \`${value}\`.`,
-      NOT_WITHIN_RANGE: (value, ops) => `Value's length is not within range ` +
+      NOT_WITHIN_RANGE: <T>(value: T, ops: LenValidatorOptions): string => `Value's length is not within range ` +
         `${ops.min} to ${ops.max}.  ` +
-        `Evaluated length is \`${value.length}\`.  ` +
+        `Evaluated length is \`${(value + '').length}\`.  ` +
         `Value received: \`${value}\`.`
     };
     return options ? assignDeep(_options, options) : _options;
@@ -94,5 +94,3 @@ export const
     return $lengthValidatorNoNormalize(toLengthOptions(options), value);
   })
 ;
-
-export default lengthValidator;

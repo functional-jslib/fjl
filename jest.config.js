@@ -16,7 +16,7 @@ module.exports = {
     'fjl-validator'
   ]
     .map(packageName => {
-      const tsConfigFilePath = path.join(__dirname, `packages/${packageName}/tsconfig.spec.json`)
+      const tsConfigFilePath = path.join(__dirname, `packages/${packageName}/tsconfig.spec.json`);
       return {
         displayName: packageName,
         rootDir: path.dirname(tsConfigFilePath),

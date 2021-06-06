@@ -84,14 +84,14 @@ export const
 
 ;
 
-export type PropsDefiner = <T>(argsTuple: [TypeRef, string, any?], target: T) => T;
+export type PropsDefiner = <T>(argsTuple: [TypeRef, string, any?][], target: T) => T;
 
 /**
  * Creates `defineProps` and `defineEnumProps` methods based on `{enumerable}` param.
  */
 function createDefinePropsMethod({enumerable}: PropertyDescriptor): PropsDefiner {
   const operation = enumerable ? $defineEnumProp : $defineProp;
-  return <T>(argsTuple: [TypeRef, string, any?], target: T): T => {
+  return <T>(argsTuple: [TypeRef, string, any?][], target: T): T => {
     argsTuple.forEach(argTuple => {
       const [TypeRef, propName, defaultValue] = argTuple;
       operation.apply(null, [TypeRef, target, propName, defaultValue]);

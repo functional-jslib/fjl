@@ -5,13 +5,6 @@
   "module": "./src/fjlReCaptchaValidator.js",
   "license": "BSD-3-Clause",
   "scripts": {
-    "build": "node ./build.js",
-    "build:all": "npm run build:es && npm run build:cjs && npm run build:umd && npm run build:iife",
-    "build:cjs": "tsc --project tsconfig.prod.cjs.json",
-    "build:es": "tsc --project tsconfig.prod.es.json",
-    "build:iife": "rollup -c ./rollup.config.js",
-    "build:umd": "tsc --project tsconfig.prod.umd.json",
-    "docs": "echo \"Not yet implemented.\"",
     "pretest": "npm start",
     "posttest": "npm stop",
     "start": "node tests/mock-server-start.js",
@@ -64,93 +57,6 @@
     "secretKey": "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
   },
   "mockServerPort": 10087,
-  "jest": {
-    "testMatch": [
-      "**/tests/test-*.js"
-    ],
-    "testEnvironment": "node"
-  },
-  "buildConfig": {
-    "inputModuleName": "fjlReCaptchaValidator",
-    "inputFilePath": "./src/fjlReCaptchaValidator.js",
-    "outputFileName": "fjl-validator-recaptcha.js",
-    "outputFileNameMjs": "fjl-validator-recaptcha.mjs",
-    "outputFileNameMin": "fjl-validator-recaptcha.min.js",
-    "srcsGlob": "./src/**/*.js",
-    "paths": {
-      "dist": "./dist",
-      "docs": "./docs"
-    },
-    "folderNames": {
-      "amd": "amd",
-      "cjs": "cjs",
-      "iife": "iife",
-      "umd": "umd",
-      "es6Module": "es6-module",
-      "package": "package"
-    },
-    "es6ModuleRollup": {
-      "config": {
-        "input": "./src/fjlReCaptchaValidator.js",
-        "external": []
-      },
-      "write": {
-        "file": "./dist/es6-module/fjl-validator-recaptcha.js",
-        "format": "es",
-        "sourcemap": true
-      }
-    },
-    "buildCjsOptions": {
-      "babel": {
-        "babelrc": false,
-        "presets": [
-          "@babel/preset-env"
-        ],
-        "plugins": [
-          "@babel/plugin-transform-modules-commonjs"
-        ],
-        "exclude": [
-          "node_modules/**/*"
-        ]
-      }
-    },
-    "uglifyOptions": {},
-    "readme": {
-      "files": [
-        "./markdown-fragments/readme-header.md",
-        "./markdown-fragments/sections/sections.md",
-        "./markdown-fragments/sections/requirements.md",
-        "./markdown-fragments/sections/getting-started.md",
-        "./markdown-fragments/sections/docs.md",
-        "./markdown-fragments-generated/module-and-member-list.md",
-        "./markdown-fragments/sections/docs/docs-footer.md",
-        "./markdown-fragments/sections/development.md",
-        "./markdown-fragments/sections/license.md",
-        "./markdown-fragments/sections/resources.md",
-        "./markdown-fragments/sections/changelog.md"
-      ]
-    },
-    "jsdoc": {
-      "opts": {
-        "template": "node_modules/tui-jsdoc-template",
-        "encoding": "utf8",
-        "destination": "./docs/",
-        "recurse": true,
-        "templates": {
-          "useCollapsibles": false
-        }
-      },
-      "templates": {
-        "logo": {
-          "url": "http://elycruz.com/fjl-logo.gif",
-          "width": "144px",
-          "height": "55px",
-          "link": "https://github.com/functional-jslib/fjl-recaptcha-validator"
-        },
-        "footerText": "functional-jslib - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab"
-      }
-    }
-  },
-  "repository": "git@github.com:functional-jslib/fjl-validator-recaptcha.git",
+  "repository": "git@github.com:functional-jslib/fjl.git",
   "author": "Ely De La Cruz <elycruz@elycruz.com>"
 }

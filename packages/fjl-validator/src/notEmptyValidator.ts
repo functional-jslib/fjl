@@ -60,5 +60,3 @@ export const
   notEmptyValidator1 = <T>(value: T): ValidatorResult => notEmptyValidatorNoNormalize(null, value)
 
 ;
-
-export default notEmptyValidator;

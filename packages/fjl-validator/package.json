@@ -5,7 +5,7 @@
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
   "typings": "dist/es/index.d.ts",
-  "repository": "git@github.com:functional-jslib/fjl-validator.git",
+  "repository": "git@github.com:functional-jslib/fjl.git",
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
   "license": "BSD",
   "peerDependencies": {

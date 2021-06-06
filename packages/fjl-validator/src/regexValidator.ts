@@ -21,10 +21,10 @@ export const
   /**
    * Normalizes `regexValidator` options.
    */
-  toRegexValidatorOptions = <T>(options: ValidatorOptions<T>): ValidatorOptions<T> => {
+  toRegexValidatorOptions = <T = any>(options: ValidatorOptions<T>): RegexValidatorOptions<T> => {
     const [_options] = defineEnumProp(RegExp, toValidationOptions(), 'pattern', /./);
     _options.messageTemplates = {
-      DOES_NOT_MATCH_PATTERN: (value, ops) =>
+      DOES_NOT_MATCH_PATTERN: <T = any>(value, ops: RegexValidatorOptions<T>): string =>
         'The value passed in does not match pattern"'
         + ops.pattern + '".  Value passed in: "'
         + value + '".'
@@ -63,5 +63,3 @@ export const
   regexValidator = curry(<T>(options: RegexValidatorOptions<T>, value: T): ValidatorResult => regexValidatorNoNormalize(toRegexValidatorOptions(options), value))
 
 ;
-
-export default regexValidator;

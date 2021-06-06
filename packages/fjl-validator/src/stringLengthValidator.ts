@@ -59,5 +59,3 @@ export const
     stringLengthValidatorNoNormalize(toStringLengthOptions(options), value))
 
 ;
-
-export default stringLengthValidator;
