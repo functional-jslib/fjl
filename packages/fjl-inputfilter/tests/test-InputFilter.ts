@@ -7,7 +7,7 @@ import {
   toInputMap,
   validateInputFilter,
   validateIOInputFilter
-} from '../src/InputFilter';
+} from '../src/inputFilter';
 
 import {falsyCasesForInputFilter1, inputFilter1, truthyCasesForInputFilter1} from './fixtures/input-filter-1';
 

@@ -13,7 +13,8 @@ module.exports = {
   testEnvironment: 'node',
   projects: [
     'fjl',
-    'fjl-validator'
+    'fjl-validator',
+    'fjl-inputfilter'
   ]
     .map(packageName => {
       const tsConfigFilePath = path.join(__dirname, `packages/${packageName}/tsconfig.spec.json`);

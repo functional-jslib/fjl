@@ -1,6 +1,6 @@
 import {assign, defineEnumProps, foldl, map, partition} from 'fjl';
-import {Input, InputOptions, InputValidationResult, toInput, validateInput, validateIOInput} from './Input';
-import {defaultErrorHandler} from './Utils';
+import {Input, InputOptions, InputValidationResult, toInput, validateInput, validateIOInput} from './input';
+import {defaultErrorHandler} from './utils';
 
 export interface InputMap {
   [index: string]: Input;
@@ -34,7 +34,7 @@ export const
     const inputObjEntries = Object.entries(inputsObj),
 
       // Get validation results
-      vResults = map(([key, inputObj]) =>
+      vResults = map(([key, inputObj]: [string, Input]) =>
           [key, validateInput(inputObj, valuesObj[key])],
         inputObjEntries
       ) as [string, InputValidationResult][],
@@ -79,7 +79,7 @@ export const
       return Promise.resolve(toInputFilterResult({result: false}));
     }
 
-    return Promise.all(map(([key, inputObj]) =>
+    return Promise.all(map(([key, inputObj]: [string, Input]) =>
         validateIOInputWithName(inputObj, key, valuesObj[key]),
       Object.entries(inputsObj)
     ) as [string, InputValidationResult][])
@@ -140,10 +140,10 @@ export const
           agg[key] = {
             value: inputObj,
             enumerable: true
-          };
+          } as PropertyDescriptor;
           return agg;
         },
-        {} as InputMap,
+        {} as PropertyDescriptorMap,
         Object.entries(inObj || {})
       )
     ) as InputMap,

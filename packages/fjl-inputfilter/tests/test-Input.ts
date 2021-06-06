@@ -15,7 +15,7 @@ import {
   toInputValidationResult,
   validateInput,
   validateIOInput
-} from '../src/Input';
+} from '../src/input';
 import {runHasPropTypes} from "./utils";
 
 const toSlug = (x: string): string => (x + '').replace(/[^a-z\d\-_]+/gim, '-').toLowerCase(),

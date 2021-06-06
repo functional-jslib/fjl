@@ -11,7 +11,7 @@ const
       .map(_xs => _xs[0].toUpperCase() + _xs.slice(1))
       .join(''),
 
-  projectNames = ['fjl', 'fjl-validator'],
+  projectNames = ['fjl', 'fjl-validator', 'fjl-inputfilter'],
 
   configs = projectNames.flatMap(projectName => {
     const projectPath = path.join(__dirname, `./packages/${projectName}`),
@@ -28,6 +28,7 @@ const
       ];
 
     if (projectName !== 'fjl') configBase.external = ['fjl'];
+    if (projectName === 'fjl-inputfilter') configBase.external = ['fjl', 'fjl-validator'];
 
     return [{
       ...configBase,

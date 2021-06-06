@@ -1,13 +1,11 @@
 import {curry2} from "../function/curry";
 import {iterate} from "./iterate";
-import {Slice} from "../platform";
 
 export const
 
     /**
-     * Repeats `x` n number of times.
+     * Returns a an array containing `x` repeated `n` number of times.
      */
-    repeat = <T>(n: number, x: T): Slice<T> =>
-        (n <= 0 ? [] : iterate(n, a => a, x)) as Slice<T>,
+    repeat = <T>(n: number, x: T): T[] => n <= 0 ? [] : iterate(n, a => a, x),
 
     $repeat = curry2(repeat);

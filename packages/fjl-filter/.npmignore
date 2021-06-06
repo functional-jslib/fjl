@@ -1,0 +1,4 @@
+.editorconfig
+tsconfig*
+src/
+tests/

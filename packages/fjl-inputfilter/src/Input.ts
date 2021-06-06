@@ -1,7 +1,7 @@
 /**
  * Created by Ely on 7/24/2014.
  */
-import {apply, assign, compose, defineEnumProps, isArray, isset, isString, Slice, UnaryOf} from 'fjl';
+import {apply, assign, compose, defineEnumProps, isArray, isset, isString, Slice, Unary} from 'fjl';
 import {
   defaultValueObscurer,
   notEmptyValidator,
@@ -11,7 +11,7 @@ import {
   ValidatorOptions,
   ValidatorResult
 } from 'fjl-validator';
-import {defaultErrorHandler} from './Utils';
+import {defaultErrorHandler} from './utils';
 
 export interface InputValidationResult<T = any> {
   result: boolean;
@@ -28,9 +28,9 @@ export interface InputOptions<T = any> extends ValidatorOptions<T> {
   required?: boolean;
   breakOnFailure?: boolean;
   valueObscured?: boolean;
-  valueObscurer?: UnaryOf<T, string>;
-  filters?: UnaryOf<T, any>[];
-  validators?: UnaryOf<T, ValidatorResult>[];
+  valueObscurer?: Unary<T, string>;
+  filters?: Unary<T, any>[];
+  validators?: Unary<T, ValidatorResult>[];
 }
 
 export const
@@ -123,7 +123,7 @@ export const
   /**
    * Runs validator against given `value`.
    */
-  runValidators = <T>(validators: UnaryOf<T, ValidatorResult<T>>[], breakOnFailure: boolean, value: T): InputValidationResult<T> => {
+  runValidators = <T>(validators: Unary<T, ValidatorResult<T>>[], breakOnFailure: boolean, value: T): InputValidationResult<T> => {
     let result = true,
       i = 0;
     const messageResults = [];
@@ -195,13 +195,13 @@ export const
   /**
    * Runs filters on value (successively).
    */
-  runFilters = <T = any>(filters: UnaryOf<T, any>[], value: T): T | any => filters && filters.length ?
+  runFilters = <T = any>(filters: Unary<T, any>[], value: T): T | any => filters && filters.length ?
     apply(compose, filters)(value) : value,
 
   /**
    * Runs filters on value (successively) and returns result wrapped in a promise.
    */
-  runIOFilters = <T = any>(filters: UnaryOf<T, any>[], value: T, errorCallback = defaultErrorHandler): Promise<T | any> =>
+  runIOFilters = <T = any>(filters: Unary<T, any>[], value: T, errorCallback = defaultErrorHandler): Promise<T | any> =>
     runFilters(filters ? filters.map(filter => (x): Promise<any> => x.then(filter)) : null,
       Promise.resolve(value).catch(errorCallback)),
 
@@ -213,16 +213,16 @@ export const
    * @param [out = {}] {Object|*}
    * @returns {InputOptions}
    */
-  toInput = <T>(inputObj?: InputOptions<T> | string, out = new Input()): Input<T> => {
+  toInput = <T = any>(inputObj?: InputOptions<T> | string, out = new Input()): Input<T> => {
     const _inputObj = defineEnumProps([
       [String, 'name', ''],
       [Boolean, 'required', false],
       [Array, 'filters', []],
       [Array, 'validators', []],
       [Boolean, 'breakOnFailure', false]
-    ], toValidationOptions(out));
+    ], toValidationOptions(out)) as Input<T>;
     if (isString(inputObj)) {
-      _inputObj.name = inputObj;
+      _inputObj.name = inputObj as string;
     } else if (inputObj) {
       assign(_inputObj, inputObj);
     }
@@ -263,8 +263,8 @@ export class Input<T = any> implements InputOptions<T> {
   breakOnFailure = false;
   valueObscured = false;
   valueObscurer = defaultValueObscurer;
-  filters: UnaryOf<T, any>[];
-  validators: UnaryOf<T, ValidatorResult<T>>[];
+  filters: Unary<T, any>[];
+  validators: Unary<T, ValidatorResult<T>>[];
 
   constructor(inputObj?: InputOptions<T>) {
     toInput(inputObj, this); // Gets applied to `this`

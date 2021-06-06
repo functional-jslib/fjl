@@ -1,5 +1,5 @@
 /**
  * @module fjlInputFilter
  */
-export * from './Input';
-export * from './InputFilter';
+export * from './input';
+export * from './inputFilter';
