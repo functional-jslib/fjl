@@ -9,6 +9,9 @@ module.exports = {
     '**/tests/**/test-*.ts',
   ],
   testEnvironment: 'node',
+  transform: {
+    '\\.ts$': 'ts-jest'
+  },
   globals: {
     'ts-jest': {
       tsconfig: tsConfigFilePath
