@@ -1,6 +1,5 @@
 import {typeOf} from './typeOf';
 import {of} from './of';
-import {ArgumentsOf} from "ts-jest/dist/utils/testing";
 
 export const
 
@@ -54,5 +53,3 @@ export const
     }
   }
 ;
-
-export default copy;
