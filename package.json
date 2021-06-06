@@ -36,7 +36,7 @@
   },
   "keywords": [],
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/functional-jslib/fjl/issues"
   },

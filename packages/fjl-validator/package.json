@@ -1,16 +1,31 @@
 {
   "name": "fjl-validator",
   "version": "0.8.0",
-  "description": "Functional validators for forms and the like.",
+  "description": "A collection of validators for validating user supplied inputs.",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
   "typings": "dist/es/index.d.ts",
-  "repository": "git@github.com:functional-jslib/fjl.git",
-  "author": "Ely De La Cruz <elycruz@elycruz.com>",
-  "license": "BSD",
   "peerDependencies": {
     "fjl": "^1.13.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/functional-jslib/fjl.git"
+  },
+  "keywords": [
+    "functional",
+    "fp",
+    "programming",
+    "haskell",
+    "prelude",
+    "combinators"
+  ],
+  "author": "Ely De La Cruz <elycruz@elycruz.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/functional-jslib/fjl/issues"
+  },
+  "homepage": "https://github.com/functional-jslib/fjl#readme",
   "engines": {
     "node": ">=12"
   }

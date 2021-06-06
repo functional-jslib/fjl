@@ -1,12 +1,31 @@
 {
   "name": "fjl-filter",
   "version": "0.5.1",
+  "description": "A collection of filter functions for filtering input to some well-formed output",
   "main": "./dist/cjs/fjl-input.js",
   "module": "./dist/es6-module/fjl-input.js",
-  "repository": "git@github.com:functional-jslib/fjl.git",
+  "peerDependencies": {
+    "fjl": "^1.13.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/functional-jslib/fjl.git"
+  },
+  "keywords": [
+    "functional",
+    "fp",
+    "programming",
+    "haskell",
+    "prelude",
+    "combinators"
+  ],
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
   "license": "BSD-3-Clause",
-  "dependencies": {
-    "fjl": "^1.13.0"
+  "bugs": {
+    "url": "https://github.com/functional-jslib/fjl/issues"
+  },
+  "homepage": "https://github.com/functional-jslib/fjl#readme",
+  "engines": {
+    "node": ">=12"
   }
 }

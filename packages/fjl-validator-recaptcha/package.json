@@ -1,9 +1,9 @@
 {
   "name": "fjl-validator-recaptcha",
   "version": "1.3.0",
+  "description": "A recaptcha validator.",
   "main": "./dist/cjs/fjlReCaptchaValidator.js",
   "module": "./src/fjlReCaptchaValidator.js",
-  "license": "BSD-3-Clause",
   "scripts": {
     "pretest": "npm start",
     "posttest": "npm stop",
@@ -11,7 +11,7 @@
     "stop": "node tests/mock-server-stop.js",
     "test": "jest --config ./jest.config.js"
   },
-  "dependencies": {
+  "peerDependencies": {
     "fjl": "^1.12.4",
     "fjl-validator": "^0.7.14"
   },
@@ -57,6 +57,25 @@
     "secretKey": "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
   },
   "mockServerPort": 10087,
-  "repository": "git@github.com:functional-jslib/fjl.git",
-  "author": "Ely De La Cruz <elycruz@elycruz.com>"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/functional-jslib/fjl.git"
+  },
+  "keywords": [
+    "functional",
+    "fp",
+    "programming",
+    "haskell",
+    "prelude",
+    "combinators"
+  ],
+  "author": "Ely De La Cruz <elycruz@elycruz.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/functional-jslib/fjl/issues"
+  },
+  "homepage": "https://github.com/functional-jslib/fjl#readme",
+  "engines": {
+    "node": ">=12"
+  }
 }
