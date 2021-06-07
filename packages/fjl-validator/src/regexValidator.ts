@@ -43,7 +43,7 @@ export const
    * @returns {*}
    */
   regexValidatorNoNormalize = curry(<T>(options: RegexValidatorOptions<T>, value: T): ValidatorResult => {
-    const result = options.pattern.test(value.toString()),
+    const result = options.pattern.test(value + ''),
 
       // If test failed
       messages = !result ?

@@ -36,10 +36,12 @@ describe('#toInput', function () {
         [Array, 'validators', [[], 99]]
       ], inputObj));
   });
+
   test('should return an instance with the `name` property populated when `options` parameter is a string.', function () {
     const name = 'hello';
     expect((toInput(name)).name).toEqual(name);
   });
+
   test('should populate all properties passed in via hash object.', function () {
     const options = {
         name: 'hello',
@@ -126,16 +128,18 @@ describe('#runIOValidators', function () {
       Promise.resolve(stringLengthValidator(options, x))
     );
 
-  test('it should return a promise whether truthy result or falsy result', function () {
-    const expectedPromise = runIOValidators([
+  test('it should return a promise whether truthy result or falsy result', async function () {
+    const expected = runIOValidators([
       someIOValidateNotEmpty,
       someIOValidateLength({min: 3, max: 21})
-    ], defaulBreakOnFailure, '').catch(peek);
-    expect(expectedPromise).toBeInstanceOf(Promise);
+    ], defaulBreakOnFailure, '')
+      .catch(error);
+
+    expect(expected).toBeInstanceOf(Promise);
   });
 
   test('the retured promise should resolve to a validation result object ' +
-    'whether falsy or truthy result.result', function () {
+    'whether falsy or truthy result.result', async function () {
     return Promise.all([
       runIOValidators([
         someIOValidateNotEmpty,
@@ -156,11 +160,12 @@ describe('#runIOValidators', function () {
           expect(isArray(rslt.messages)).toEqual(true);
           expect(isBoolean(rslt.result)).toEqual(true);
         });
-      }, peek);
+      })
+      .catch(error);
   });
 
-  test('when input doesn\'t have `required` set to `true` should return truthy `result` for validation result.', () => {
-    runIOValidators(toInput().validators, false, '') // (validators, breakOnFailure, value) => Promise<ValidationResult>
+  test('when input doesn\'t have `required` set to `true` should return truthy `result` for validation result.', async () => {
+    return runIOValidators(toInput().validators, false, '') // (validators, breakOnFailure, value) => Promise<ValidationResult>
       .then(({result, messages}) => {
         expect(result).toEqual(true);
         expect(messages.length).toEqual(0);
@@ -179,7 +184,7 @@ describe('#runFilters', function () {
 });
 
 describe('#runIOFilters', function () {
-  test('should run all filters in compositional order', function () {
+  test('should run all filters in compositional order', async function () {
     return runIOFilters([
       x => (x + '').trim(),
       x => Promise.resolve((x + '').toLowerCase()),
@@ -328,7 +333,7 @@ describe('#validateIOInput', function () {
     results = testCases.map(([rslts]) => rslts)
   ;
 
-  test('should return an input validation result object', function () {
+  test('should return an input validation result object', async function () {
     return Promise.all(results)
       .then(rslts => {
         return expect(
@@ -339,7 +344,7 @@ describe('#validateIOInput', function () {
       });
   });
 
-  test('should return expected result object for given arguments', function () {
+  test('should return expected result object for given arguments', async function () {
     return Promise.all(results)
       .then(rslts =>
         rslts.forEach((rslt, ind) => {
@@ -354,7 +359,7 @@ describe('#validateIOInput', function () {
       );
   });
 
-  test('when input has `required` set to true a `notEmptyValidator` should be added to `validators`', function () {
+  test('when input has `required` set to true a `notEmptyValidator` should be added to `validators`', async function () {
     return validateIOInput(toInput({required: true}), '')
       .then(({result, messages}) =>
         Promise.all([
@@ -365,8 +370,8 @@ describe('#validateIOInput', function () {
       );
   });
 
-  test('when input doesn\'t have `required` set to `true` should return truthy `result` for validation result.', () => {
-    validateIOInput(toInput(), '')
+  test('when input doesn\'t have `required` set to `true` should return truthy `result` for validation result.', async () => {
+    return validateIOInput(toInput(), '')
       .then(({result, messages}) => {
         expect(result).toEqual(true);
         expect(messages.length).toEqual(0);

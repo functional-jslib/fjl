@@ -4,7 +4,7 @@ import {
     toReCaptchaTestValue,
     MISSING_INPUT_SECRET,
     MISSING_INPUT_RESPONSE
-} from '../src/fjlReCaptchaValidator';
+} from '../src';
 
 import {log, runHasPropTypes} from './utils';
 import packageJson from '../package.json';

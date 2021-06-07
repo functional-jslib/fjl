@@ -1,4 +1,4 @@
-import {hasOwnProperty, keys} from 'fjl';
+import {error, hasOwnProperty, keys} from 'fjl';
 import {runHasPropTypes, runHasPropTypesUnWrapped} from './utils';
 import {
   InputFilter,
@@ -128,8 +128,8 @@ describe('#validateInputFilter', function () {
 
 describe('#validateIOInputFilter', function () {
   test('should return expected result given both data that passes and fails input filter validation', async () => {
-    [truthyCasesForInputFilter1, falsyCasesForInputFilter1].forEach(async casesAssocList => {
-      casesAssocList.forEach(async ([data, expectedInvalidInputs]) => {
+    return Promise.all([truthyCasesForInputFilter1, falsyCasesForInputFilter1].map(async casesAssocList => {
+      return casesAssocList.map(async ([data, expectedInvalidInputs]) => {
         const result = await validateIOInputFilter(inputFilter1, data),
           foundInvalidFieldKeys = keys(expectedInvalidInputs);
 
@@ -148,12 +148,12 @@ describe('#validateIOInputFilter', function () {
           expect(result.messages[key].length >= 1).toEqual(true);
         });
       });
-    });
+    })).catch(error);
   }); // end of `test` case
 
   test('Ensure results have correctly typed property defined', async () => {
     // Should return a valid InputFilterResult
-    await validateIOInputFilter(inputFilter1, truthyCasesForInputFilter1[0][0])
+    return validateIOInputFilter(inputFilter1, truthyCasesForInputFilter1[0][0])
       .then(results =>
         runHasPropTypesUnWrapped([
           [Boolean, 'result', [false, 99]],
@@ -164,7 +164,7 @@ describe('#validateIOInputFilter', function () {
           [Object, 'invalidInputs', [{}, 99]]
         ], results)
       )
-      .catch(console.error);
+      .catch(error);
   });
 
 });

@@ -19,18 +19,28 @@ const
     .then(() => ioSpawn(npmCmd, ['run', 'build'], {cwd: repoRoot}))
     .then(() => log('Linking packages\n'))
     .then(() => [
-        'fjl',
-        'fjl-validator',
+        ['fjl'],
+        ['fjl-validator', 'fjl'],
         // 'fjl-filter',
-        // 'fjl-inputfilter',
+        ['fjl-inputfilter', 'fjl', 'fjl-validator'],
       ]
-        .reduce((p, packageName) => {
+        .reduce((p, [packageName, ...packagesToLink]) => {
             const cwd = path.join(repoRoot, `packages/${packageName}`);
-            return p.then(async () => {
-              log(`${taskGroupSeparator}Linking ${packageName} ...`);
-              return ioSpawn(npmCmd, ['link', '.'], {cwd});
-            })
-              .then(async () => {
+            // return
+              // .then(() => {
+              //   if (packagesToLink.length) {
+              //     log(`Linking subpackages: ${packagesToLink.join(', ')}`);
+              //     return Promise.all(
+              //       packagesToLink.map(subPackageName =>
+              //         ioSpawn(npmCmd, ['link', subPackageName], {cwd})
+              //       ));
+              //   }
+              // })
+              return p.then(() => {
+                log(`${taskGroupSeparator}Linking ${packageName} ...`);
+                return ioSpawn(npmCmd, ['link'], {cwd});
+              })
+              .then(() => {
                 log(`${taskGroupSeparator}Linking ${packageName} to main project ...`);
                 return ioSpawn(npmCmd, ['link', packageName], {cwd: repoRoot});
               });
