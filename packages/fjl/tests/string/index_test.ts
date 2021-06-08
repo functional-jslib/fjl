@@ -8,7 +8,17 @@ import {
   vowelsArray,
   vowelsString
 } from "../helpers";
-import {camelCase, classCase, lcaseFirst, lines, ucaseFirst, unlines, unwords, words} from "../../src/string";
+import {
+  camelCase,
+  classCase,
+  FirstCharCase,
+  lcaseFirst,
+  lines,
+  ucaseFirst,
+  unlines,
+  unwords,
+  words
+} from "../../src/string";
 import {Slice} from '../../src/types/data';
 
 describe('#lines', () => {
@@ -145,13 +155,16 @@ describe('#ucaseFirst', () => {
 
 describe('#camelCase', () => {
   it('should return a "camel-cased" version of passed in non-empty string', () => {
-    [
-      ['all-your-base', 'AllYourBase'],
-      ['ALL-YOUR-BASE', 'AllYourBase'],
-      ['$$abc', 'Abc']
-    ]
-      .forEach(([given, expected]) => {
-        expect(camelCase(given)).toEqual(expected);
+    (<[string, string, FirstCharCase][]>[
+      ['all-your-base', 'AllYourBase', FirstCharCase.Upper],
+      ['ALL-YOUR-BASE', 'AllYourBase', FirstCharCase.Upper],
+      ['$$abc', 'Abc', FirstCharCase.Upper],
+      ['all-your-base', 'allYourBase', FirstCharCase.Lower],
+      ['ALL-YOUR-BASE', 'allYourBase', FirstCharCase.Lower],
+      ['$$abc', 'abc', FirstCharCase.Lower]
+    ])
+      .forEach(([given, expected, charCase]) => {
+        expect(camelCase(given, charCase)).toEqual(expected);
       });
   });
   it('should throw an error when receiving an empty-string or any value that is not a string', () => {
@@ -163,12 +176,12 @@ describe('#camelCase', () => {
 });
 
 describe('#classCase', () => {
-  it('should return a "camel-cased" version of passed in non-empty string', () => {
-    [
+  it('should return a "class-cased" version of passed in non-empty string', () => {
+    (<[string, string][]>[
       ['all-your-base', 'AllYourBase'],
       ['ALL-YOUR-BASE', 'AllYourBase'],
       ['$$abc', 'Abc']
-    ]
+    ])
       .forEach(([given, expected]) => {
         expect(classCase(given)).toEqual(expected);
       });

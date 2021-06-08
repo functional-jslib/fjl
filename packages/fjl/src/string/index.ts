@@ -5,6 +5,7 @@
 import {$split, split} from '../platform/string';
 import {range} from "../list";
 import {randNatNum} from "../number";
+import {id} from "../function/id";
 
 export {split, $split};
 
@@ -12,6 +13,16 @@ const newLineRegex = /[\n\r]/gm,
   spaceRegex = /[\s\t]/gm,
   space = ' ',
   newLine = '\n';
+
+export enum CharCase {
+  Lower,
+  Upper
+}
+
+export enum FirstCharCase {
+  Lower = CharCase.Lower,
+  Upper = CharCase.Upper
+}
 
 export const
 
@@ -48,17 +59,20 @@ export const
   ucaseFirst = (xs: string): string => xs[0].toUpperCase() + xs.substring(1),
 
   /**
-   * Camel cases (class case) a string.
-   * @throws {Error} - Throws error if param `xs` is not a string.
+   * Camel cases a string.
+   * @throws {TypeError} - Throws error if param `xs` is not a string.
    */
-  camelCase = (xs: string, pattern = /[^a-z\d]/i): string => {
+  camelCase = (xs: string, upperCaseFirst: FirstCharCase | boolean = FirstCharCase.Lower,
+               pattern = /[^a-z\d]/i): string => {
     if (!xs) {
       return xs;
     }
-    return xs.split(pattern)
-      .filter(Boolean)
-      .map(str => ucaseFirst(str.toLowerCase()))
-      .join('');
+    return (upperCaseFirst ? id : lcaseFirst)(
+      xs.split(pattern)
+        .filter(Boolean)
+        .map(str => ucaseFirst(str.toLowerCase()))
+        .join('')
+    );
   },
 
   /**
@@ -67,7 +81,7 @@ export const
    * and then upper case first character (`ucaseFirst`).
    * @throws {Error} - Throws error if `xs` is not a string (via `camelCase` call).
    */
-  classCase = (xs: string): string => ucaseFirst(camelCase(xs)),
+  classCase = (xs: string): string => camelCase(xs, FirstCharCase.Upper),
 
   randChar = (min = 0, max = 0x10FFFF): string =>
     String.fromCharCode(randNatNum(min, max)),
