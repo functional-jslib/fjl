@@ -12,8 +12,10 @@ const
 
 ;
 
-(async () =>
-  Promise.resolve()
+/**
+ * @return {Promise<void>}
+ */
+(async () => Promise.resolve()
     .then(() => ioSpawn(npmCmd, ['i'], {cwd: repoRoot}))
     .then(() => log('Building packages\n'))
     .then(() => ioSpawn(npmCmd, ['run', 'build'], {cwd: repoRoot}))
@@ -43,10 +45,10 @@ const
               .then(() => {
                 log(`${taskGroupSeparator}Linking ${packageName} to main project ...`);
                 return ioSpawn(npmCmd, ['link', packageName], {cwd: repoRoot});
-              });
+              })
+                .catch(error);
           },
           Promise.resolve()
         )
         .then(() => log(taskGroupSeparator + 'Script completed successfully.\n'))
-        .catch(error)
     ))();

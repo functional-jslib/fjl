@@ -42,8 +42,8 @@
   },
   "homepage": "https://github.com/functional-jslib/fjl#readme",
   "workspaces": [
-    "packages/fjl",
-    "packages/fjl-validator",
-    "packages/fjl-inputfilter"
+    "./packages/fjl",
+    "./packages/fjl-validator",
+    "./packages/fjl-inputfilter"
   ]
 }

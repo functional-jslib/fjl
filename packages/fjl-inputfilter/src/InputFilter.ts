@@ -1,6 +1,5 @@
-import {assign, defineEnumProps, foldl, map, partition} from 'fjl';
+import {assign, defineEnumProps, foldl, map, partition, error as defaultErrorHandler} from 'fjl';
 import {Input, InputOptions, InputValidationResult, toInput, validateInput, validateIOInput} from './input';
-import {defaultErrorHandler} from './utils';
 
 export interface InputMap {
   [index: string]: Input;

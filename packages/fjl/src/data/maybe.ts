@@ -131,15 +131,25 @@ export const
    * If the Maybe value is `Nothing`, the function returns the `replacement` value.
    * Otherwise, it applies the function to the value contained  by the `Just` and returns the result.
    */
-  maybe = curry(<A, B, C>(replacement: B, fn: Unary<A, C>, maybeInst: Maybe<A>) => {
+  maybe = <A, B>(replacement: B, fn: Unary<A, B>, maybeInst: Maybe<A> | A | null | undefined): B => {
     if (!isset(maybeInst) || isNothing(maybeInst)) return replacement;
-    return isMaybe(maybeInst) ? (maybeInst as Just<A>).map(fn).join() : maybeInst;
-  }),
+    return isMaybe(maybeInst) ? (maybeInst as Just<A>).map(fn).join() : fn(maybeInst as A);
+  },
+
+  /**
+   * Curried version of `maybe`.
+   */
+  $maybe = curry(maybe),
 
   /**
    * Equality operator for maybes.
    */
-  maybeEqual = curry(<A, B>(a: Maybe<A>, b: Maybe<B>) => a.join() === b.join()),
+  maybeEqual = <A, B>(a: Maybe<A>, b: Maybe<B>): boolean => a.join() === b.join(),
+
+  /**
+   * Curried version of `maybeEqual`.
+   */
+  $maybeEqual = curry(maybeEqual),
 
   /**
    * Checks for maybe.

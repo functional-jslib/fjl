@@ -238,7 +238,7 @@ describe('Maybe', () => {
 
       (<[Replacement, Unary<number>, Maybe<number> | number, Expected][]>[
         [replacementVal, squareX, just(caseValue), squareX(caseValue)],
-        [replacementVal, squareX, caseValue, caseValue],
+        [replacementVal, squareX, caseValue, squareX(caseValue)],
         [replacementVal, squareX, nothing(), replacementVal],
         [replacementVal, squareX, null, replacementVal],
         [replacementVal, squareX, undefined, replacementVal],
