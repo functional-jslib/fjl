@@ -120,26 +120,39 @@ export const
   /**
    * Maps given function over given functor.
    */
-  fmap = curry(
-    <T, RetT>(fn: FunctorMapFn<RetT>, x: Functor<T>): Functor<RetT> | Functor => x.map(fn)
-  ),
+  fmap = <T, RetT>(fn: FunctorMapFn<RetT>, x: Functor<T>): Functor<RetT> | Functor => x.map(fn),
+
+  /**
+   * Curried version of `fmap`.
+   */
+  $fmap = curry(fmap),
 
   /**
    * Applies function contained by applicative to contents of given functor.
    * (Same as functional applicative `apply`).  Returns a functor containing the newly
    * returned value from the application.
    */
-  ap = curry(<A, B, RetT>(app: Applicative<A>, functor: Functor<B>): Functor<RetT> => app.ap(functor)),
+  ap = <A, B, RetT>(app: Applicative<A>, functor: Functor<B>): Functor<RetT> => app.ap(functor),
+
+  /**
+   * Curried version of `ap`.
+   */
+  $ap = curry(ap),
 
   /**
    * Flat maps a function over given monad's contained value.
    */
-  flatMap = curry(<T, RetT>(fn: FunctorMapFn<RetT>, monad: Monad<T>): Monad<RetT> => monad.flatMap(fn)),
+  flatMap = <T, RetT>(fn: FunctorMapFn<RetT>, monad: Monad<T>): Monad<RetT> => monad.flatMap(fn),
+
+  /**
+   * Curried version of `flatMap`.
+   */
+  $flatMap = curry(flatMap),
 
   /**
    * Unwraps monad by type.
    */
-  unwrapMonadByType = curry2(<T>(Type: TypeRef, monad: Monad<T> | T): any => {
+  unwrapMonadByType = <T>(Type: TypeRef, monad: Monad<T> | T): any => {
     if (!isset(monad) || !isType(Type, monad)) {
       return monad;
     }
@@ -151,4 +164,9 @@ export const
       result = (monad as Monad<T>).join();
     }
     return result;
-  }) as CurryOf2<TypeRef, Monad<any> | any, any>;
+  },
+
+  /**
+   * Curried version of `unwrapMonadByType`.
+   */
+  $unwrapMonadByType = curry2(unwrapMonadByType) as CurryOf2<TypeRef, Monad<any> | any, any>;
