@@ -1,5 +1,6 @@
 import {typeOf} from './typeOf';
 import {of} from './of';
+import {id} from "../function/id";
 
 export const
 
@@ -8,7 +9,7 @@ export const
    * @note If incoming value is an immmutable primitive (string, number, symbol, NaN, null, undefined, boolean)
    *  it gets returned as is.
    */
-  copy = (x, out) => {
+  copy = <T>(x, out?: any): T => {
     // if `null`, `undefined`, `''`, `0`, `false` return
     if (!x) {
       return x;
@@ -36,10 +37,10 @@ export const
         return x;
 
       case Function.name:
-        return (...args: any[]) => x(...args);
+        return ((...args: any[]) => x(...args)) as unknown as T;
 
       case Promise.name:
-        return Promise.resolve().then(() => x);
+        return x.then(id) as unknown as T;
 
       case 'Map':
       case 'Set':
