@@ -6,10 +6,12 @@ import {compose} from '../src/function';
 import {curry2_, __} from './helpers/curry_';
 import {range} from '../src/list/range';
 
-export interface LinkedListNode {
-  data: string;
+export interface LinkedListNode<T = any> {
+  data: T;
   next?: LinkedListNode;
 }
+
+export type LLNode = LinkedListNode;
 
 export * from './helpers/curry_';
 

@@ -1,8 +1,8 @@
-import {alphabetArray, expectEqual, linkedListToList} from "../helpers";
+import {alphabetArray, expectEqual, linkedListToList, LLNode} from "../helpers";
 import {scanr} from "../../src/list";
 
 describe('#scanr', () => {
-  const unlinkedNodes = alphabetArray.map(char => ({data: char}));
+  const unlinkedNodes = alphabetArray.map(char => ({data: char})) as LLNode[];
 
   it('should return a list of successively reduced values from left to right', () => {
     // Generate linked-list structure
@@ -10,7 +10,7 @@ describe('#scanr', () => {
       agg.next = item;
       item.next = null;
       return item;
-    }, {}, unlinkedNodes);
+    }, {} as LLNode, unlinkedNodes);
 
     // Expect every item in result to be a linked list with remaining items linked to said item
     expect(
@@ -31,6 +31,6 @@ describe('#scanr', () => {
 
   it('should return an empty list when receiving an empty one', () => {
     expectEqual(scanr(x => x * 2, 99, []), []);
-    expectEqual(scanr(x => x + 2, '99', ''), []);
+    expectEqual(scanr((x: string) => x + 2, '99', ''), []);
   });
 });

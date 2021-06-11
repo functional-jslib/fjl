@@ -1,8 +1,8 @@
-import {alphabetArray, expectEqual, LinkedListNode, linkedListToList} from "../helpers";
-import {scanl} from "../../src/list";
+import {alphabetArray, expectEqual, LinkedListNode, LLNode, linkedListToList} from "../helpers";
+import {scanl} from "../../src/list/scanl";
 
 describe('#scanl', () => {
-  const unlinkedNodes: Array<{ data: string }> = alphabetArray.map(char => ({data: char}));
+  const unlinkedNodes = alphabetArray.map(char => ({data: char})) as LLNode[];
 
   it('should return a list of successively reduced values from left to right', () => {
     // Generate linked-list structure
@@ -10,7 +10,7 @@ describe('#scanl', () => {
       agg.next = item;
       item.next = null;
       return item;
-    }, {data: '', next: null}, unlinkedNodes);
+    }, {data: '', next: null} as LLNode, unlinkedNodes);
 
     // Expect every item in result to be a linked list with remaining items linked to said item
     expect(

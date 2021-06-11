@@ -1,5 +1,8 @@
 import {curry} from "../function/curry";
 import {length} from "./length";
+import {Slice} from "../types";
+
+export type ScanrOp<A, B> = (a: A, b: B, i?: number, xs?: Slice<A>) => B;
 
 export const
 
@@ -8,16 +11,16 @@ export const
    * Note also `scanr`'s relationship ot `foldr`:
    * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
    */
-  scanr = (fn, zero, xs) => {
+  scanr = <A, B>(fn: ScanrOp<A, B>, zero: B, xs: Slice<A>): B[] => {
     if (!xs || !length(xs)) {
       return [];
     }
     const limit = length(xs);
     let ind = limit - 1,
-      result = xs[0],
-      out: any[] = [];
+      result = zero;
+    const out = [] as B[];
     while (ind > -1) {
-      result = fn(result, xs[ind], ind, xs);
+      result = fn(xs[ind] as A, result, ind, xs);
       out.push(result);
       ind--;
     }

@@ -1,14 +1,15 @@
 import {curry} from "../function/curry";
 import {last} from "./last";
 import {init} from "./init";
-import {scanr} from "./scanr";
+import {scanr, ScanrOp} from "./scanr";
+import {Slice} from "../types";
 
 export const
 
   /**
    * Same as `scanr` but takes no zero/accumulator value.
    */
-  scanr1 = (fn, xs) => {
+  scanr1 = <T>(fn: ScanrOp<T, T>, xs: Slice<T>): T[] => {
     if (!xs || !xs.length) {
       return [];
     }

@@ -1,11 +1,12 @@
 import {curry} from "../function/curry";
-import {scanl} from "./scanl";
+import {scanl, ScanlOp} from "./scanl";
 import {head} from "./head";
 import {tail} from "./tail";
+import {Slice} from "../types";
 
 export const
 
-  scanl1 = (fn, xs) => {
+  scanl1 = <T>(fn: ScanlOp<T, T>, xs: Slice<T>): T[] => {
     if (!xs || !xs.length) {
       return [];
     }
