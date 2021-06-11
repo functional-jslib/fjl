@@ -2,7 +2,7 @@ import {curry, CurryOf2} from "../function/curry";
 import {of} from "../object/of";
 import {findIndex} from "./findIndex";
 import {concat} from "./concat";
-import {$intersperse} from "./intersperse";
+import {intersperse} from "./intersperse";
 import {splitAt} from "./splitAt";
 import {Slice} from "../types/data";
 
@@ -14,7 +14,7 @@ export const
     }
     const foundIndex = findIndex(item => x <= item, xs);
     return foundIndex === -1 ? concat([xs, of(xs, x)]) :
-      concat($intersperse(of(xs, x), splitAt(foundIndex, xs)) as Slice<T>[]);
+      concat(intersperse(of(xs, x), splitAt(foundIndex, xs)) as Slice<T>[]);
   },
 
   /**

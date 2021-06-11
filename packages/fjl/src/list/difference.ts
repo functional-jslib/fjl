@@ -12,7 +12,7 @@ export const
    * Returns the difference of list 1 from list 2.
    * @reference https://mathworld.wolfram.com/SetDifference.html
    */
-  $difference = <T>(array1: Slice<T>, array2: Slice<T>): Slice<T> => {
+  difference = <T>(array1: Slice<T>, array2: Slice<T>): Slice<T> => {
     if (array1 && !array2) {
       return sliceCopy(array1);
     } else if (!array1 && array2 || (!array1 && !array2)) {
@@ -26,4 +26,4 @@ export const
   /**
    * Curried version of `$difference`.
    */
-  difference: Difference<Slice<any>> = curry($difference) as Difference<Slice<any>>;
+  $difference: Difference<Slice<any>> = curry(difference) as Difference<Slice<any>>;

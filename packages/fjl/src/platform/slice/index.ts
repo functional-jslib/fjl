@@ -13,13 +13,13 @@ export const
 
   indexOf = curry2($indexOf),
 
-  $includes = <T>(xs: Slice<T>, x: T): boolean => xs && xs.includes(x as any),
+  includes = <T>(xs: Slice<T>, x: T): boolean => xs && xs.includes(x as any),
 
-  includes = curry2($includes),
+  $includes = curry2(includes),
 
-  $lastIndexOf = <T>(xs: Slice<T>, x: T): number => !xs ? -1 : xs.lastIndexOf(x as any),
+  lastIndexOf = <T>(xs: Slice<T>, x: T): number => !xs ? -1 : xs.lastIndexOf(x as any),
 
-  lastIndexOf = curry2($lastIndexOf),
+  $lastIndexOf = curry2(lastIndexOf),
 
   /**
    * Same as `(Array|String).prototype.slice`.
