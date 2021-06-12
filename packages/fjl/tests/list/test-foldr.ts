@@ -8,7 +8,7 @@ describe('#foldr', () => {
   it('should fold a `Foldable` (list, etc.) into some value', () => {
     const vowelsStringIndCount = vowelsLen - 1,
       getAppendage = ind => parseInt(ind, 10) !== vowelsStringIndCount ? '|' : '',
-      expectedTransform = reverse(vowelsArray.map((x, ind) => x + getAppendage(ind)));
+      expectedTransform = reverse(vowelsArray.map((x, ind) => x + getAppendage(ind))) as string[];
     expectEqual(
       foldr((agg, item, ind) => {
         agg += item + getAppendage(ind);

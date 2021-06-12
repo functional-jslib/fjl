@@ -14,12 +14,13 @@ describe('#unionBy', () => {
   // [rl1, rl2, rl3, rl4] = ascRanges,
   // [lr1, lr2, lr3, lr4] = descRanges;
   it('should return a union on list 1 with list two', () => {
-    [// subj1, subj2, expectResultLen, expectedResultElements
+    // subj1, subj2, expectResultLen, expectedResultElements
+    (<[number[], number[], number, number[]][]>[
       [[1, 2, 3], [1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]],
       [[1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3], 8, [1, 2, 3, 4, 5, 6, 7, 8]],
       [[1, 2, 3, 4, 5], [1, 2, 3], 5, [1, 2, 3, 4, 5]],
       [mixedMatchRange, range(18, 21), 13, mixedMatchRange.concat(range(18, 21))]
-    ]
+    ])
       .forEach(testCase => {
         const [subj1, subj2, expectedLen, expectedElms] = testCase,
           result = unionBy(equalityCheck, subj1, subj2);
@@ -28,12 +29,13 @@ describe('#unionBy', () => {
       });
   });
   it('should return a copy of left-most array when right-most list is empty', () => {
-    [// subj1, subj2, expectResultLen, expectedResultElements
+    // subj1, subj2, expectResultLen, expectedResultElements
+    (<[number[], number[], number, number[]][]>[
       [range(1, 5), [], 5, range(1, 5)],
       [range(1, 8), [], 8, range(1, 8)],
       [range(1, 13), [], 13, range(1, 13)],
       [mixedMatchRange, [], 9, mixedMatchRange]
-    ]
+    ])
       .forEach(testCase => {
         const [subj1, subj2, expectedLen, expectedElms] = testCase,
           result = unionBy(equalityCheck, subj1, subj2);
@@ -42,12 +44,13 @@ describe('#unionBy', () => {
       });
   });
   it('should return a copy of right-most list when left-most list is empty', () => {
-    [// subj1, subj2, expectResultLen, expectedResultElements
+    // subj1, subj2, expectResultLen, expectedResultElements
+    (<[number[], number[], number, number[]][]>[
       [range(1, 5), [], 5, range(1, 5)],
       [range(1, 8), [], 8, range(1, 8)],
       [range(1, 13), [], 13, range(1, 13)],
       [mixedMatchRange, [], 9, mixedMatchRange]
-    ]
+    ])
       .forEach(testCase => {
         const [subj1, subj2, expectedLen, expectedElms] = testCase,
           result = unionBy(equalityCheck, subj1, subj2);

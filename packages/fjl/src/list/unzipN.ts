@@ -10,17 +10,18 @@ export const
    * @param list {Array|*} - ListLike of tuples (lists).
    * @returns {Array|*}
    */
-  unzipN = (list: any[][]): any[][] => {
+  unzipN = <T>(list: T[][]): T[][] => {
     if (!list) {
       throw new Error(`\`unzipN\` expects a value.  Received ${JSON.stringify(list)}`);
     }
     if (!length(list)) {
       return [];
     }
-    const lenItem0 = length(list[0]);
-    let zero = lenItem0 ?
-      unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
-      [];
+    const lenItem0 = length(list[0]),
+      zero = (lenItem0 ?
+        unfoldr(numLists => numLists-- ? [[], numLists] : undefined, lenItem0) :
+        []) as T[][]
+    ;
     return foldl((agg, item) => {
       agg.forEach((outList, ind) => outList.push(item[ind]));
       return agg;

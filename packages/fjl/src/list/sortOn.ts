@@ -24,7 +24,7 @@ export const
    * ) // true
    * ```
    */
-  sortOn = <T>(valueFn: Unary<T, any>, xs: T[]) =>
+  sortOn = <T>(valueFn: Unary<T, any>, xs: T[]): T[] =>
 
     // Un-decorate
     map(decorated => decorated[1],

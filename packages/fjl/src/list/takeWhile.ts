@@ -16,7 +16,7 @@ export const
     reduceUntil(
       negateF3(pred),                                     // predicate
       isString(xs) ? (agg: Slice<T>, x): string =>
-        (agg as string) + x : (agg, x) => push(x, agg as T[]),  // operation
+        (agg as string) + x : (agg, x): T[] => push(x, agg as T[]),  // operation
       of(xs),                                             // aggregate
       xs
     ),

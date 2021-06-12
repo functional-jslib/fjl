@@ -21,7 +21,7 @@ describe('#insertBy', () => {
       result2 = genericInsert('x', alphabetArray),
       result3 = genericInsert('x', reverse(alphabetArray));
     expectEqual(result, expectedResult);
-    expectEqual(result1, [99].concat(reverse(range0To145)));
+    expectEqual(result1, [99].concat(reverse(range0To145) as number[]));
     expectEqual(result2, injectValueAtIndex('x', 24, alphabetArray));
     expectEqual(result3, ['x'].concat(reverse(alphabetArray)));
   });

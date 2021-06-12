@@ -8,7 +8,7 @@ export const
   /**
    * Returns `tail` and `head` of passed in list/string in a tuple.
    */
-  unconsr = <T>(xs: Slice<T>): [Slice<T>, T] | void => {
+  unconsr = <T>(xs: Slice<T>): [Slice<T>, T] | undefined => {
     const len = length(xs),
       out = of(xs) as Slice<T>;
     if (!xs || !len) {

@@ -2,7 +2,7 @@ import {curry3} from "../function/curry";
 import {length} from "./length";
 import {toShortest} from "./utils";
 import {map} from "./map";
-import {$sliceTo} from "./utils/sliceTo";
+import {sliceTo} from "./utils/sliceTo";
 
 export const
   /**
@@ -12,13 +12,13 @@ export const
    * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
    *  of lists to zip.
    */
-  zipWithN = (op, ...lists) => {
+  zipWithN = <T = any>(op, ...lists: T[][]): T[][] => {
     const trimmedLists = toShortest(...lists),
       lenOfTrimmed = length(trimmedLists);
     if (!lenOfTrimmed) {
       return [];
     } else if (lenOfTrimmed === 1) {
-      return $sliceTo(length(trimmedLists[0]), trimmedLists[0]);
+      return sliceTo(length(trimmedLists[0]), trimmedLists[0]) as T[][];
     }
     return map((item, ind) =>
         op(...map(xs => xs[ind], trimmedLists)),

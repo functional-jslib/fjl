@@ -68,6 +68,7 @@ import {
 
 import {Nameable, TypeRef} from '../../src/types';
 import {apply} from "../../src/platform/function";
+import {TypeConstructor} from "../../dist/es";
 
 describe('#object', function () {
   const charCodeToCharMap = (() => {
@@ -1062,7 +1063,7 @@ describe('#object', function () {
         return agg;
       }, {}),
       seedPropNames = keys(seedTarget),
-      generateTargetData = () => unfoldr((argTuples, ind, _out) => {
+      generateTargetData = (): any[][] => unfoldr((argTuples, ind, _out) => {
           const
             _argTuples = argTuples.slice(0),
             out = [_argTuples.slice(0), {}];
@@ -1169,14 +1170,14 @@ describe('#object', function () {
   });
 
   describe('#defineEnumProps', function () {
-    const
-      seedArgTuples = [
+    type ArgTuple = [TypeConstructor, string]
+    const seedArgTuples = [
         [String, 'someStringProp'],
         [Number, 'someNumberProp'],
         [Boolean, 'someBooleanProp'],
         [Function, 'someFunctionProp'],
         [Array, 'someArrayProp']
-      ],
+      ] as ArgTuple[],
       seedArgTupleCorrectIncorrectValues = [
         ['99 bottles..', 99],
         [99, 'should-be-number'],
@@ -1191,10 +1192,9 @@ describe('#object', function () {
         return agg;
       }, {}),
       seedPropNames = keys(seedTarget),
-      generateTargetData = () => unfoldr((argTuples, ind, _out) => {
-          const
-            _argTuples = argTuples.slice(0),
-            out = [_argTuples.slice(0), {}];
+      generateTargetData = (): [ArgTuple[], any][] => unfoldr((argTuples: ArgTuple[], ind: number, _out: any[]): [[ArgTuple[], any], ArgTuple[]] => {
+          const _argTuples = argTuples.slice(0),
+            out = [_argTuples.slice(0), {}] as [ArgTuple[], any];
           if (!_out.length) {
             return [out, _argTuples];
           } else if (_argTuples.length) {
@@ -1215,7 +1215,7 @@ describe('#object', function () {
     });
 
     it('should be able to define many enum props on given target with only argTuples of length `2`', function () {
-      generateTargetData().forEach(args => {
+      generateTargetData().forEach((args: any[]) => {
         // log(args);
         const target = apply(defineEnumProps, args),
           propNames = args[0].map(([_, name]) => name);
@@ -1233,7 +1233,7 @@ describe('#object', function () {
 
     it('should have defined properties that throw errors when they are set to the wrong type' +
       'and no errors when set to the correct type', function () {
-      generateTargetData().forEach(args => {
+      generateTargetData().forEach((args: any[]) => {
         // log(args);
         const target = apply(defineEnumProps, args),
           propNames = args[0].map(([_, name]) => name);
@@ -1263,7 +1263,7 @@ describe('#object', function () {
     });
 
     it('should return target and descriptor tuples from operation', function () {
-      generateTargetData().forEach(args => {
+      generateTargetData().forEach((args: any[]) => {
         // log(args);
         const target = apply(defineEnumProps, args),
           propNames = args[0].map(([_, name]) => name);
@@ -1278,15 +1278,15 @@ describe('#object', function () {
 
     it('should be able to set types with argTuples of length of `3`(with [target, descriptor] tuple) ' +
       'and `4` (with defaultValue)', function () {
-      generateTargetData().map(argTuple => {
-        const [args, target] = argTuple;
+      generateTargetData().map((argTuple): [any[], any] => {
+        const [argTuples, target] = argTuple;
         // log(argTuple);
         // Return new version of `argTuple` seeded `defaultValue`
         return [
           // Add `defaultValue` to arg lists
-          args.map((argSet, ind) => {
+          argTuples.map((argSet, ind) => {
             const [correct, _] = seedArgTupleCorrectIncorrectValues[ind];
-            return argSet.concat([correct]);
+            return argSet.concat([correct] as any[]);
           }),
           target
         ];

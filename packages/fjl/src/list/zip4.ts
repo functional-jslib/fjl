@@ -10,6 +10,6 @@ export const /**
    * @param arr4 {Array}
    * @returns {Array<Array<*,*>>}
    */
-  zip4 = (arr1, arr2, arr3, arr4) => zipN(arr1, arr2, arr3, arr4),
+  zip4 = <T = any>(arr1: T[], arr2: T[], arr3: T[], arr4: T[]): T[][] => zipN(arr1, arr2, arr3, arr4),
 
   $zip4 = curry(zip4);
