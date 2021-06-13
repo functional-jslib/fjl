@@ -45,5 +45,8 @@
     "./packages/fjl",
     "./packages/fjl-validator",
     "./packages/fjl-inputfilter"
-  ]
+  ],
+  "engines": {
+    "node": ">=12"
+  }
 }
