@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "fjl": [
-        "../fjl"
+        "../fjl/dist/index"
       ]
     }
   },

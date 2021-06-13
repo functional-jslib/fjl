@@ -4,10 +4,10 @@
     "baseUrl": ".",
     "paths": {
       "fjl": [
-        "../fjl"
+        "../fjl/dist/index"
       ],
       "fjl-validator": [
-        "../fjl-validator"
+        "../fjl-validator/dist/index"
       ]
     }
   },
