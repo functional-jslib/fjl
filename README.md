@@ -234,7 +234,12 @@ BSD 3 Clause - Included in sources.
 - Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html
 - Docs format: http://usejsdoc.org/
 
+
 ## Change log
+### 1.12.10
+- Removed un-required dependencies and stale dependencies (tui-* jsdoc template modules etc.).
+- Removed node 1.15 from .travis.yml.
+
 ### 1.11.0
 - Added `defineEnumProp`, `defineEnumProps`, 
 `defineProp`, `defineProps` methods (easier idomatic way to 
