@@ -1,5 +1,6 @@
 export * from './arity';
 export * from './data';
+export * from './list';
 export * from './native';
 
 // @todo clean this up and allow only one of these types

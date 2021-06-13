@@ -88,7 +88,6 @@ export * from './tails';
 export * from './take';
 export * from './takeWhile';
 export * from './transpose';
-export * from './types';
 export * from './uncons';
 export * from './unconsr';
 export * from './unfoldr';

@@ -1,6 +1,5 @@
 import {findIndicesWhere} from "../../src/list/utils/findIndicesWhere";
-import {PredForSlice} from "../../src/list/types";
-import {Slice} from "../../src/platform/slice";
+import {Slice, PredForSlice} from "../../src/types";
 import {alphabetCharCodeRange, alphabetString, expectEqual, expectError, vowelIndices, vowelsArray} from "../helpers";
 
 describe(`#listUtils.findIndicesWhere`, () => {

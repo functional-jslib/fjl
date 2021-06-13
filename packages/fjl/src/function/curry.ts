@@ -4,7 +4,7 @@
  * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
  */
 
-import {Nary} from '../types/arity';
+import {Nary} from '../types';
 import {noop} from './noop';
 
 export type Curry1<T> = (a?: T, ...b: T[]) => Curry1<T> | T;

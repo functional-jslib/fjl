@@ -2,7 +2,7 @@ import {curry} from "../function/curry";
 import {sliceCopy} from "./utils/sliceCopy";
 import {length} from "./length";
 import {Slice} from "../platform";
-import {Indexable, MapAccumFunc} from "../types";
+import {Indexable, MapAccumOp} from "../types";
 
 export const
 
@@ -10,7 +10,7 @@ export const
    * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
    * containing the aggregated value and the result of mapping the passed in function on passed in list.
    */
-  mapAccumL = <T, ZeroT>(op: MapAccumFunc<T, ZeroT>, zero: ZeroT, xs: Slice<T>): [ZeroT, Slice<ZeroT>] => {
+  mapAccumL = <T, ZeroT>(op: MapAccumOp<T, ZeroT>, zero: ZeroT, xs: Slice<T>): [ZeroT, Slice<ZeroT>] => {
     const list = sliceCopy(xs),
       limit = length(xs);
     if (!limit) {

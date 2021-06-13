@@ -1,7 +1,7 @@
-import {Slice, SlicePred} from "../../types/data";
+import {Slice, PredForSlice} from "../../types";
 import {curry2, curry3, CurryOf3} from "../../function";
 
-export {Slice, SlicePred};
+export {Slice, PredForSlice};
 
 export const
 

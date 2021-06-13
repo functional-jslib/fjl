@@ -1,6 +1,5 @@
 import {findWhere} from "../../src/list/utils/findWhere";
-import {PredForSlice} from "../../src/list/types";
-import {Slice} from "../../src/platform/slice";
+import {Slice, PredForSlice} from "../../src/types";
 import {alphabetArray, alphabetString, expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
 
 describe(`#findWhere`, () => {

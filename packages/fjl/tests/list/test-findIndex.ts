@@ -1,5 +1,4 @@
-import {Slice} from "../../src/platform";
-import {PredForSlice} from "../../src/list/types";
+import {Slice, PredForSlice} from "../../src/types";
 import {isVowel, notIsVowel} from "../helpers";
 import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../helpers";
 import {findIndex} from "../../src";

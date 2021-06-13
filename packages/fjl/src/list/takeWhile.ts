@@ -4,15 +4,14 @@ import {reduceUntil} from "./utils";
 import {isString} from "../object/is";
 import {of} from "../object/of";
 import {push} from "./push";
-import {Slice, SlicePred} from "../types/data";
-import {PredForSlice} from "./types";
+import {Slice, PredForSlice} from "../types";
 
 export const
 
   /**
    * Gives an list with passed elements while predicate was true.
    */
-  takeWhile = <T>(pred: SlicePred<T>, xs: Slice<T>): Slice<T> =>
+  takeWhile = <T>(pred: PredForSlice<T>, xs: Slice<T>): Slice<T> =>
     reduceUntil(
       negateF3(pred),                                     // predicate
       isString(xs) ? (agg: Slice<T>, x): string =>
