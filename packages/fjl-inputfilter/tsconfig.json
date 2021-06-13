@@ -1,15 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "fjl": [
-        "../fjl/dist/index"
-      ],
-      "fjl-validator": [
-        "../fjl-validator/dist/index"
-      ]
-    }
+    "baseUrl": "."
   },
   "exclude": [
     "dist/",

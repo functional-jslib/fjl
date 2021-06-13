@@ -1,12 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "fjl": [
-        "../fjl/dist/index"
-      ]
-    }
+    "baseUrl": "."
   },
   "exclude": [
     "dist/",
