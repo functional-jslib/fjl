@@ -757,7 +757,7 @@ describe('#object', function () {
       (<any[][]>subsequences('abc').concat([
         [99], [true], [undefined], [null], ['Output tested from `peek`']
       ])).forEach(xs => {
-        log('testing-peek');
+        // log('testing-peek');
         expect(peek.apply(null, xs)).toEqual(xs.pop());
       });
     });

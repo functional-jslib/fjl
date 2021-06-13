@@ -16,7 +16,7 @@ describe('#unconsr', () => {
   ])
     .forEach(([xs, expected]) => {
       it(`unconsr(${JSON.stringify(xs)}) === ${JSON.stringify(expected)}`, () => {
-        console.log(xs);
+        // console.log(xs);
         expect(unconsr(xs)).toEqual(expected);
       });
     });
