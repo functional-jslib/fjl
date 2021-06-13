@@ -1,5 +1,16 @@
 {
   "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "fjl": [
+        "../fjl"
+      ],
+      "fjl-validator": [
+        "../fjl-validator"
+      ]
+    }
+  },
   "exclude": [
     "dist/",
     "node_modules/",

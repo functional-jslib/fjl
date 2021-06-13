@@ -143,8 +143,8 @@ describe('#validateIOInputFilter', function () {
           // Falsy cases
           // Expect found-invalid-field-keys to match required criteria for each..
           foundInvalidFieldKeys.forEach(key => {
-            expect(hasOwnProperty(expectedInvalidInputs, key)).toEqual(true);
-            expect(result.messages[key].length >= 1).toEqual(true);
+            expect(expectedInvalidInputs).toHaveProperty(key);
+            expect(result.messages[key].length).toBeGreaterThanOrEqual(1);
           });
         }));
     })).catch(error);
