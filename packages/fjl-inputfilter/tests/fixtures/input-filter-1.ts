@@ -2,7 +2,7 @@
  * An input filer case for our 'InputFilter' tests.
  * @module inputFilter1
  */
-import {toInputMap} from '../../src/InputFilter';
+import {toInputMap} from '../../src/inputFilter';
 import {regexValidator,
     stringLengthValidator as stringLength,
     digitValidator} from 'fjl-validator';
