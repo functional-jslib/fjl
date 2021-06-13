@@ -1,6 +1,5 @@
 import {findIndexWhere} from "../../src/list/utils/findexIndexWhere";
-import {PredForSlice} from "../../src/list/types";
-import {Slice} from "../../src/platform/slice";
+import {Slice, PredForSlice} from "../../src/types";
 import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
 
 describe(`#findIndexWhere`, () => {

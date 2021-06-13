@@ -1,7 +1,6 @@
 import {$reduceUntilRight, reduceUntilRight} from "./reduceUntilRight";
 import {alwaysFalse} from "../../boolean/alwaysFalse";
-import {ReduceOp} from "../../platform";
-import {Indexable} from "../../types";
+import {ReduceOp, Indexable} from "../../types";
 
 export const
 

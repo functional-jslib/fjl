@@ -4,9 +4,8 @@ import {findIndexWhere} from "./utils/findexIndexWhere";
 import {of} from "../object/of";
 import {reverse} from "./reverse";
 import {splitAt} from "./splitAt";
-import {Slice} from "../types";
+import {Slice, PredForSlice} from "../types";
 import {sliceFrom} from "./utils/sliceFrom";
-import {PredForSlice} from "./types";
 
 export type BreakOnList<Pred, Functor> = CurryOf2<Pred, Functor, [Functor, Functor]>;
 

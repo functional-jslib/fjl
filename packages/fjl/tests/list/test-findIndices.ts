@@ -1,6 +1,5 @@
 import {findIndices} from "../../src/list/findIndices";
-import {PredForSlice} from "../../src/list/types";
-import {Slice} from "../../src/platform/slice";
+import {Slice, PredForSlice} from "../../src/types";
 import {alphabetCharCodeRange} from "../helpers";
 
 describe(`#listUtils.findIndices`, () => {

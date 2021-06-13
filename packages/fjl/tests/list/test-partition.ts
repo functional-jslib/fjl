@@ -1,7 +1,6 @@
 import {partition} from "../../src/list";
 import {alphabetArray, alphabetString, isVowel, vowelsArray} from "../helpers";
-import {Slice} from "../../src/platform/slice";
-import {PredForSlice} from "../../src/list/types";
+import {Slice, PredForSlice} from "../../src/types";
 
 describe('#partition', () => {
     const nonVowels = alphabetArray.filter(x => !isVowel(x));
