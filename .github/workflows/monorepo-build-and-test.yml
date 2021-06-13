@@ -10,9 +10,11 @@ on:
     branches: [ monorepo ]
 
 jobs:
-  build:
+  build-and-test:
 
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: CI/CD
 
     strategy:
       matrix:
@@ -26,6 +28,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run link:packages
-      - run: npm run build
+      - run: npm run link-and-build:packages
       - run: npm test
