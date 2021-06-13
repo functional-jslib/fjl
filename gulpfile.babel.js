@@ -11,7 +11,6 @@ import concat from 'gulp-concat';
 import * as eslint from 'gulp-eslint';
 import header from 'gulp-header';
 import uglify from 'gulp-uglify';
-import jsdoc from 'gulp-jsdoc3';
 import gulpBabel from 'gulp-babel';
 
 /** Rollup plugins **/
@@ -198,15 +197,6 @@ const
             ));
     },
 
-    docTask = series(readmeTask, function docTask () {
-        return deleteFilePaths([`${docsBuildPath}/**/*`])
-            .then(() => new Promise((resolve, reject) =>
-                src(['README.md', srcsGlob])
-                    .on('finish', getReadStreamFinish(resolve, reject))
-                    .pipe(jsdoc(buildConfig.jsdoc))
-            ));
-    }),
-
     watchTask = series(buildTask, function watchTask () {
             return gulp.watch([srcsGlob, './node_modules/**'], buildJsTask);
         }
@@ -217,8 +207,6 @@ const
     gulp.task('build', buildTask);
 
     gulp.task('readme', readmeTask);
-
-    gulp.task('docs', docTask);
 
     gulp.task('watch', watchTask);
 

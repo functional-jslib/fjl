@@ -1,0 +1,20 @@
+{
+  "opts": {
+    "encoding": "utf8",
+    "destination": "./docs/",
+    "readme": "./README.md",
+    "recurse": true,
+    "templates": {
+      "useCollapsibles": false
+    }
+  },
+  "templates": {
+    "logo": {
+      "url": "http://elycruz.com/fjl-logo.gif",
+      "width": "144px",
+      "height": "55px",
+      "link": "https://github.com/functional-jslib/fjl"
+    },
+    "footerText": "functional-jslib - BSD 3.0 License - JsDoc Template -> tui-jsdoc-template - by NHN Entertainment - Frontend Development Lab"
+  }
+}
