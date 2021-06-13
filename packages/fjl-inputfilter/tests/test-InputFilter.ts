@@ -102,15 +102,14 @@ describe('#validateInputFilter', function () {
         if (foundInvalidFieldKeys.length === 0) {
           expect(result.result).toEqual(true);
           expect(keys(result.messages).length).toEqual(0);
-          // @todo messages should be null when `result.result` is
-          //  `true` might be better for the library
+          // @todo messages should be null when `result.result` is `true` (better for ergonomics)
         }
 
         // Falsy cases
         // Expect found-invalid-field-keys to match required criteria for each..
         foundInvalidFieldKeys.forEach(key => {
-          expect(hasOwnProperty(expectedInvalidInputs, key)).toEqual(true);
-          expect(result.messages[key].length >= 1).toEqual(true); // has one or more messages
+          expect(expectedInvalidInputs).toHaveProperty(key);
+          expect(result.messages[key].length).toBeGreaterThanOrEqual(1); // has one or more messages
         });
       });
     });
@@ -128,26 +127,26 @@ describe('#validateInputFilter', function () {
 
 describe('#validateIOInputFilter', function () {
   test('should return expected result given both data that passes and fails input filter validation', async () => {
-    return Promise.all([truthyCasesForInputFilter1, falsyCasesForInputFilter1].map(async casesAssocList => {
-      return casesAssocList.map(async ([data, expectedInvalidInputs]) => {
-        const result = await validateIOInputFilter(inputFilter1, data),
-          foundInvalidFieldKeys = keys(expectedInvalidInputs);
+    return Promise.all([truthyCasesForInputFilter1, falsyCasesForInputFilter1].flatMap(casesAssocList => {
+      return casesAssocList.map(([data, expectedInvalidInputs]) => validateIOInputFilter(inputFilter1, data)
+        .then(result => {
+          const foundInvalidFieldKeys = keys(expectedInvalidInputs);
 
-        // Truthy cases
-        if (foundInvalidFieldKeys.length === 0) {
-          expect(result.result).toEqual(true);
-          expect(keys(result.messages).length).toEqual(0);
-          // @todo messages should be null when `result.result` is
-          //  `true` might be better for the library
-        }
+          // Truthy cases
+          if (foundInvalidFieldKeys.length === 0) {
+            expect(result.result).toEqual(true);
+            expect(keys(result.messages).length).toEqual(0);
+            // @todo messages should be null when `result.result` is
+            //  `true` might be better for the library
+          }
 
-        // Falsy cases
-        // Expect found-invalid-field-keys to match required criteria for each..
-        foundInvalidFieldKeys.forEach(key => {
-          expect(hasOwnProperty(expectedInvalidInputs, key)).toEqual(true);
-          expect(result.messages[key].length >= 1).toEqual(true);
-        });
-      });
+          // Falsy cases
+          // Expect found-invalid-field-keys to match required criteria for each..
+          foundInvalidFieldKeys.forEach(key => {
+            expect(hasOwnProperty(expectedInvalidInputs, key)).toEqual(true);
+            expect(result.messages[key].length >= 1).toEqual(true);
+          });
+        }));
     })).catch(error);
   }); // end of `test` case
 

@@ -6,7 +6,6 @@
  */
 import {
   assignDeep,
-  call,
   curry,
   defineEnumProps,
   isFunction,
