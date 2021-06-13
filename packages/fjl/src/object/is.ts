@@ -36,12 +36,10 @@ export const
    * @todo write tests for this function.
    */
   toTypeRef = (type: TypeRef): TypeRef => {
-    if (!type) {
+    if (!isset(type) || !type.constructor || (type.constructor !== String && !(type instanceof Function))) {
       return typeOf(type);
-    } else if (type.constructor === String || (type instanceof Function)) {
-      return type;
     }
-    return typeOf(type);
+    return type;
   },
 
   /**
@@ -100,7 +98,9 @@ export const
    * @param obj {*}
    * @return {Boolean}
    */
-  isType = curry((type, obj) => typeOf(obj) === toTypeRefName(type)) as CurryOf2<any, any, boolean>,
+  isType = <T>(type: TypeRef | any, obj: T): boolean => typeOf(obj) === toTypeRefName(type),
+
+  $isType =curry(isType) as CurryOf2<any, any, boolean>,
 
   /**
    * Synonym for `isType` (or just a more accurate name for `isType`).
@@ -179,7 +179,7 @@ export const
    * @param value
    * @returns {Boolean}
    */
-  isObject = isType(_Object) as CurryOf1<any, boolean>,
+  isObject = $isType(_Object) as CurryOf1<any, boolean>,
 
   /**
    * Checks if value is a boolean.
@@ -187,7 +187,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isBoolean = isType(_Boolean) as CurryOf1<any, boolean>,
+  isBoolean = $isType(_Boolean) as CurryOf1<any, boolean>,
 
   /**
    * Checks if value is a valid number (also checks if isNaN so that you don't have to).
@@ -195,7 +195,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isNumber = isType(_Number) as CurryOf1<any, boolean>,
+  isNumber = $isType(_Number) as CurryOf1<any, boolean>,
 
   /**
    * Checks whether value is a string or not.
@@ -203,7 +203,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isString = isType(_String) as CurryOf1<any, boolean>,
+  isString = $isType(_String) as CurryOf1<any, boolean>,
 
   /**
    * Checks whether value is of `Map` or not.
@@ -211,7 +211,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isMap = isType(_Map) as CurryOf1<any, boolean>,
+  isMap = $isType(_Map) as CurryOf1<any, boolean>,
 
   /**
    * Checks whether value is of `Set` or not.
@@ -219,7 +219,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isSet = isType(_Set) as CurryOf1<any, boolean>,
+  isSet = $isType(_Set) as CurryOf1<any, boolean>,
 
   /**
    * Checks whether value is of `WeakMap` or not.
@@ -227,7 +227,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isWeakMap = isType(_WeakMap) as CurryOf1<any, boolean>,
+  isWeakMap = $isType(_WeakMap) as CurryOf1<any, boolean>,
 
   /**
    * Checks whether value is of `WeakSet` or not.
@@ -235,7 +235,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isWeakSet = isType(_WeakSet) as CurryOf1<any, boolean>,
+  isWeakSet = $isType(_WeakSet) as CurryOf1<any, boolean>,
 
   /**
    * Checks if value is undefined.
@@ -243,7 +243,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isUndefined = isType(_Undefined) as CurryOf1<any, boolean>,
+  isUndefined = $isType(_Undefined) as CurryOf1<any, boolean>,
 
   /**
    * Checks if value is null.
@@ -251,7 +251,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isNull = isType(_Null) as CurryOf1<any, boolean>,
+  isNull = $isType(_Null) as CurryOf1<any, boolean>,
 
   /**
    * Checks if value is a `Symbol`.
@@ -259,7 +259,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isSymbol = isType(_Symbol) as CurryOf1<any, boolean>,
+  isSymbol = $isType(_Symbol) as CurryOf1<any, boolean>,
 
   /**
    * Checks if given `x` is set and of one of
@@ -269,7 +269,7 @@ export const
    * @param x {*}
    * @returns {Boolean}
    */
-  isUsableImmutablePrimitive = (x: any) => {
+  isUsableImmutablePrimitive = (x: any): boolean => {
     const typeOfX = typeOf(x);
     return isset(x) &&
       [_String, _Number, _Boolean, _Symbol]
@@ -290,7 +290,7 @@ export const
    * @param obj {*}
    * @returns {Boolean}
    */
-  isEmptyObject = (obj: any) => isEmptyList(keys(obj)),
+  isEmptyObject = (obj: any): boolean=> isEmptyList(keys(obj)),
 
   /**
    * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).

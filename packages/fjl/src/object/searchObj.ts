@@ -20,7 +20,7 @@ export const
    * }
    * ```
    */
-  searchObj = (nsString, obj) => {
+  searchObj = <T>(nsString: string, obj: T): any => {
     if (!obj) {
       return obj;
     }
