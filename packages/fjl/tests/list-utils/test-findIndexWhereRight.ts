@@ -1,6 +1,5 @@
 import {findIndexWhereRight} from "../../src/list/utils";
-import {PredForSlice} from "../../src/list/types";
-import {Slice} from "../../src/platform/slice";
+import {Slice, PredForSlice} from "../../src/types";
 import {
   alphabetArray,
   vowelsArray,

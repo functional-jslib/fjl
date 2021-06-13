@@ -2,7 +2,7 @@ import {curry} from "../function/curry";
 import {length} from "./length";
 import {reduce, toShortest} from "./utils";
 import {push} from "./push";
-import {Slice} from "../types/data";
+import {Slice} from "../types";
 import {Binary} from "../types";
 
 export type TuplizeOp<T1, T2> = Binary<T1, T2, [T1, T2]>;

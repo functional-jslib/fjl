@@ -1,7 +1,6 @@
 import {curry} from "../function/curry";
 import {length} from "./length";
-import {ForEachOp} from "../platform";
-import {Slice} from "../types";
+import {ForEachOp, Slice} from "../types";
 
 export const
 

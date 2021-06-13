@@ -1,8 +1,6 @@
 import {curry} from "../../function/curry";
-import {length} from "../length";;
-import {Indexable} from "../../types";
-import {PredForIndexable} from "../types";
-import {ReduceOp} from "../../platform";
+import {length} from "../length";
+import {Indexable, ReduceOp, PredForIndexable} from "../../types";
 
 export const
 

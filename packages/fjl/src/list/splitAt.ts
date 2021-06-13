@@ -1,6 +1,6 @@
 import {sliceFrom} from "./utils/sliceFrom";
 import {sliceTo} from "./utils/sliceTo";
-import {Slice} from "../types/data";
+import {Slice} from "../types";
 import {curry} from "../function";
 
 export const

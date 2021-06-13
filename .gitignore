@@ -11,5 +11,5 @@
 
 # Files
 *.log
-**/src/**/*.js
+#**/src/**/*.js
 **/src/**/*.js.map

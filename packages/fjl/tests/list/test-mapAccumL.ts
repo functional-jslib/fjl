@@ -1,12 +1,12 @@
 import {mapAccumL} from "../../src/list/mapAccumL";
 import {Slice} from "../../src/platform";
-import {MapAccumFunc} from "../../src";
+import {MapAccumOp} from "../../src";
 import {vowelsString} from "../helpers";
 
 describe('#mapAccumL', () => {
   type ZeroT = number | string;
 
-  (<[string, MapAccumFunc<ZeroT, ZeroT>, Slice<ZeroT>, ZeroT, [ZeroT, Slice<ZeroT>]][]>[
+  (<[string, MapAccumOp<ZeroT, ZeroT>, Slice<ZeroT>, ZeroT, [ZeroT, Slice<ZeroT>]][]>[
     ['mapAccumL(multBy2Sums, number, number[]) === [number, number[]]',
       (agg: number, item: number) => {
         const product = item * 2;

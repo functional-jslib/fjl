@@ -1,6 +1,6 @@
 import {
   alphabetArray,
-  alphabetString, expectEqual,
+  alphabetString,
   isVowel,
   nonAlphaNums,
   nonAlphaNumsArray,
@@ -8,8 +8,8 @@ import {
   vowelsString
 } from "../helpers";
 import {range} from "../../src/list/range";
-import {forEach, PredForIndexable, takeWhile} from "../../src/list";
-import {Slice} from "../../src/platform/slice";
+import {takeWhile} from "../../src/list";
+import {Slice, PredForIndexable} from "../../src/types";
 
 describe('#takeWhile', () => {
   it('should take elements while predicate is fulfilled and vice-versa', () => {

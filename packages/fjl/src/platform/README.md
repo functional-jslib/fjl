@@ -1,8 +1,7 @@
 ## platform/
-Platform specific, functional version methods. 
+Platform specific, "functional version" methods. 
 
-This directory does not get exported in the project however modules from this directory get exported from other modules (in ../function, ../object modules, etc., for example).
+*Note:* This directory doesn't get exported in the project, directly, however modules from this directory get exported via other exports (in '../function', '../object' modules, etc., for example).
 
-### About testing here:
-Modules here require minimal tests since the methods actually being 
-called are all "native" code.
+### About testing:
+Modules here require minimal tests since the methods here are actually "native" code.
