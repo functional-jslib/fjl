@@ -1,7 +1,5 @@
-import {PredicateOf3} from "../platform";
-import {Slice} from "../types/data";
-import {Indexable} from "../types";
+import {ArrayTernaryPred, Slice, Indexable} from "../types";
 
-export type PredForIndexable<T = any> = PredicateOf3<T, number | string, Indexable<T>>;
+export type PredForIndexable<T = any> = ArrayTernaryPred<T, number | string, Indexable<T>>;
 
-export type PredForSlice<T = any> = PredicateOf3<T, number | string, Slice<T>>;
+export type PredForSlice<T = any> = ArrayTernaryPred<T, number | string, Slice<T>>;

@@ -1,6 +1,6 @@
 import {length} from "./length";
 import {sliceTo} from "./utils/sliceTo";
-import {Slice} from "../types/data";
+import {Slice} from "../types";
 
 type Inits<T> = (xs: Slice<T>) => [Slice<T>] | Slice<T>;
 

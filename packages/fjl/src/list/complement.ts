@@ -2,7 +2,7 @@ import {curry2, CurryOf2} from '../function/curry';
 import {reduce} from "./utils/reduce";
 import {append} from "./append";
 import {difference} from "./difference";
-import {Slice} from '../types/data';
+import {Slice} from '../types';
 
 export type Complement<Functor> = CurryOf2<Functor, Functor, Functor>
 

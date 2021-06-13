@@ -1,16 +1,4 @@
 import {Binary} from "./arity";
-import {ReduceOp} from "../platform";
-
-export type MapFunc<T, Ind, M, RetT> = (x?: T, i?: Ind, xs?: M) => RetT;
-
-export type MapAccumFunc<T, ZeroT, Ind = any, Functor = Slice<T>> =
-    (agg?: ZeroT, x?: T, i?: Ind, xs?: Functor) => [ZeroT, ZeroT];
-
-export interface Foldable<T> extends Functor<T> {
-  reduce<RetT>(fn: ReduceOp<T, Foldable<T>, RetT>): RetT;
-
-  reduceRight<RetT>(fn: ReduceOp<T, Foldable<T>, RetT>): RetT;
-}
 
 export interface Lengthable {
   readonly length?: number;
@@ -43,8 +31,6 @@ export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
 
 export type Slice<T = any> = T[] | string;
 
-export type SlicePred<T> = (x: T, i?: number | string, xs?: Slice<T>) => boolean;
-
 export type FunctorMapFn<RetT> = ((a?: any, b?: any, c?: any, ...args: any[]) => RetT) |
   ((a?: any, b?: any, ...args: any[]) => RetT) | ((a?: any, ...args: any[]) => RetT);
 
@@ -57,7 +43,7 @@ export interface FunctorConstructor<T = any> {
 export interface Functor<T = any> {
   valueOf(): T;
 
-  map<MapRetT>(fn: FunctorMapFn<MapRetT>): Functor<MapRetT> | Functor<any>;
+  map<MapRetT>(fn: FunctorMapFn<MapRetT>): Functor<MapRetT> | Functor;
 
   readonly length?: number;
 }

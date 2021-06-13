@@ -2,7 +2,7 @@ import {curry} from "../function";
 import {isString} from "../object/is";
 import {intersperse} from "./intersperse";
 import {concat} from "./concat";
-import {Slice} from "../types/data";
+import {Slice} from "../types";
 
 export const
 

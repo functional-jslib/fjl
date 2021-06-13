@@ -1,11 +1,11 @@
 import {mapAccumR} from "../../src/list/mapAccumR";
 import {expectEqual, vowelsString} from "../helpers";
-import {MapAccumFunc, mapAccumL, Slice} from "../../src";
+import {MapAccumOp, mapAccumL, Slice} from "../../src";
 
 describe('#mapAccumR', () => {
   type ZeroT = number | string;
 
-  (<[string, MapAccumFunc<ZeroT, ZeroT>, Slice<ZeroT>, ZeroT, [ZeroT, Slice<ZeroT>]][]>[
+  (<[string, MapAccumOp<ZeroT, ZeroT>, Slice<ZeroT>, ZeroT, [ZeroT, Slice<ZeroT>]][]>[
     ['mapAccumR(multBy2Sums, number, number[]) === [number, number[]]',
       (agg: number, item: number) => {
         const product = item * 2;

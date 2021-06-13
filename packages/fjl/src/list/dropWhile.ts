@@ -4,7 +4,7 @@ import {findIndexWhere} from "./utils";
 import {slice} from "../platform/slice";
 import {PredForSlice} from "./types";
 import {sliceFrom} from "./utils/sliceFrom";
-import {Slice} from "../types/data";
+import {Slice} from "../types";
 
 type DropWhile<T> = CurryOf2<PredForSlice<T>, Slice<T>, Slice<T>>;
 

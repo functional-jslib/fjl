@@ -4,7 +4,7 @@ import {findIndex} from "./findIndex";
 import {concat} from "./concat";
 import {intersperse} from "./intersperse";
 import {splitAt} from "./splitAt";
-import {Slice} from "../types/data";
+import {Slice} from "../types";
 
 export const
 

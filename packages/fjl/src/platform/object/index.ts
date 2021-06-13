@@ -4,7 +4,7 @@
 
 import {curry, curry2, curry3, curry4, curry5, CurryOf2, CurryOf3, CurryOf4, CurryOf5} from "../../function/curry";
 import {flip, flip3, flip4, flip5} from "../../function/flip";
-import {ObjectStatics} from "../../types/native";
+import {ObjectStatics} from "../../types";
 
 export const
 

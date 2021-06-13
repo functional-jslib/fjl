@@ -1,7 +1,6 @@
 import {curry2, CurryOf2} from "../../function/curry";
-import {Slice, SlicePred} from "../../types/data";
+import {Slice, PredForSlice} from "../../types";
 import {length} from "../length";;
-import {PredForSlice} from "../types";
 
 export const
 
@@ -23,6 +22,6 @@ export const
   /**
    * Curried version of `findIndicesWhere`.
    */
-  $findIndicesWhere = curry2(findIndicesWhere) as CurryOf2<SlicePred<any>, Slice<any>, number[] | undefined>
+  $findIndicesWhere = curry2(findIndicesWhere) as CurryOf2<PredForSlice<any>, Slice<any>, number[] | undefined>
 
 ;
