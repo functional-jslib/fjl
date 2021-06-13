@@ -34,8 +34,8 @@ export class MonadBase<T> implements Monad<T> {
   }
 
   static liftA2<A, B, RetT>(fn, appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
-    return (this.constructor as ApplicativeConstructor<RetT>).of(
-      fn(appA.valueOf(), appB.valueOf)
+    return (appA.constructor as ApplicativeConstructor<RetT>).of(
+      fn(appA.valueOf(), appB.valueOf())
     );
   }
 
