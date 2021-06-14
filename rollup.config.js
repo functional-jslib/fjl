@@ -48,6 +48,19 @@ const
     }, {
       ...configBase,
       output: {
+        format: 'es',
+        file: path.join(projectPath, 'dist/index.es.min.js'),
+        sourcemap: true
+      },
+      plugins: [
+        typescript({
+          tsconfig: path.join(projectPath, './tsconfig.prod.es.json'),
+        }),
+        terser()
+      ]
+    }, {
+      ...configBase,
+      output: {
         format: 'amd',
         dir: path.join(projectPath, 'dist/amd/'),
         preserveModules: true,
