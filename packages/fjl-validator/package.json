@@ -6,7 +6,7 @@
   "module": "dist/es/index.js",
   "typings": "dist/es/index.d.ts",
   "peerDependencies": {
-    "fjl": "^1.13.0"
+    "fjl": "^2.0.0-alpha"
   },
   "repository": {
     "type": "git",

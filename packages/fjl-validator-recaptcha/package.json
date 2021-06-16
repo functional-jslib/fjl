@@ -13,8 +13,8 @@
     "test": "jest --config ./jest.config.js"
   },
   "peerDependencies": {
-    "fjl": "^1.12.4",
-    "fjl-validator": "^0.7.14"
+    "fjl": "^2.0.0-alhpa",
+    "fjl-validator": "^0.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
