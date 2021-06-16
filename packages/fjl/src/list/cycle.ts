@@ -19,5 +19,8 @@ export const
    * Generates a generator which cycles list (concatenate) to end of last yielded result - On first call last yielded
    * result is initial list.
    */
-  genCycler = <T>(xs: Slice<T>): Generator<Slice<T>, void, Slice<T>> =>
-    genIterator(_xs => _xs.concat(xs), xs)();
+  genCycler = <T>(xs: T[] | string): Generator<Slice<T>, void, Slice<T>> =>
+    genIterator(
+      isType(String, xs) ?
+        (_xs: string) => _xs.concat(xs as string) :
+        (_xs: T[]) => _xs.concat(xs as T[]), xs)();
