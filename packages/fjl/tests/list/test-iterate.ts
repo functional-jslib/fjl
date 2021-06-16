@@ -19,11 +19,11 @@ describe('#iterate', () => {
 
 describe('#genIterate', () => {
   type Zero = number;
-  type Expected = number; // What is expected after `n` iterations
+  type Expected = number; // `Expected` after `n` iterations
   type NumIterations = number;
   (<[string, Unary, Zero, Expected, NumIterations][]>[
     ['genIterate(x => x * 2, 1) after 5 iterations === 32', x => x * 2, 1, 32, 5],
-    ['genIterate(x => x * 2, 1) after 5 iterations === 32', x => x * 2, 1, 32, 5],
+    ['genIterate(x => x / 2, 32) after 5 iterations === 1', x => x / 2, 32, 1, 5],
   ])
     .forEach(([testName, op, zero, expected, iterations]) => {
       it(testName, () => {
