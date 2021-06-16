@@ -5,7 +5,7 @@
   "main": "./dist/cjs/fjl-input.js",
   "module": "./dist/es6-module/fjl-input.js",
   "peerDependencies": {
-    "fjl": "^1.13.0"
+    "fjl": "^2.0.0-alpha"
   },
   "repository": {
     "type": "git",
