@@ -13,7 +13,7 @@ export const
    */
   intercalate = <T>(xs: Slice<T>, xss: Slice<Slice<T>>): Slice<T> => {
     if (isString(xss)) {
-      return intersperse(xs, xss) as Slice<T>;
+      return intersperse(xs, xss) as unknown as Slice<T>;
     }
     return concat(intersperse(xs, xss) as Slice<T>[]);
   },

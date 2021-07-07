@@ -9,18 +9,18 @@ export const
    * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
    * containing the aggregated value and the result of mapping the passed in function on passed in list.
    */
-  mapAccumR = <T, ZeroT>(op: MapAccumOp<T, ZeroT>, zero: ZeroT, xs: Slice<T>): [ZeroT, Slice<ZeroT>] => {
+  mapAccumR = <A = any, B = any, C = any>(op: MapAccumOp<A, B, C>, zero: A, xs: Slice<B>): [A, Slice<C>] => {
     const list = sliceCopy(xs),
       limit = length(xs);
     if (!limit) {
-      return [zero, list as Slice<ZeroT>];
+      return [zero, list as unknown as Slice<C>];
     }
     let ind = limit - 1,
       agg = zero,
       mapped = [],
       tuple;
     for (; ind >= 0; ind--) {
-      tuple = op(agg, (list as Indexable<T>)[ind], ind);
+      tuple = op(agg, (list as Indexable<B>)[ind], ind);
       agg = tuple[0];
       mapped.push(tuple[1]);
     }

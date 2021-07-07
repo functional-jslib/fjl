@@ -13,10 +13,11 @@ export const
    */
   takeWhile = <T>(pred: PredForSlice<T>, xs: Slice<T>): Slice<T> =>
     reduceUntil(
-      negateF3(pred),                                     // predicate
-      isString(xs) ? (agg: Slice<T>, x): string =>
-        (agg as string) + x : (agg, x): T[] => push(x, agg as T[]),  // operation
-      of(xs),                                             // aggregate
+      negateF3(pred),
+      isString(xs) ?
+        (agg, x) => ((agg as unknown as string) + x) as unknown as Slice<T>:
+        (agg, x): T[] => push(x, agg as T[]),
+      of(xs),
       xs
     ),
 

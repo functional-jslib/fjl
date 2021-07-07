@@ -1,5 +1,5 @@
 import {map} from "../map";
-import {length} from "../length";;
+import {length} from "../length";
 
 export const
 

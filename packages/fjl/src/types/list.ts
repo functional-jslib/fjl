@@ -8,8 +8,8 @@ export type MapOp<T, Ind, FtrT, RetT> = (x: T, i?: Ind, xs?: FtrT) => RetT;
 
 export type ReduceOp<T, FtrT, ZeroT> = (agg: ZeroT, x: T, i?: number | string, xs?: FtrT) => ZeroT;
 
-export type MapAccumOp<T, ZeroT, Ind = any, Functor = Slice<T>> =
-  (agg?: ZeroT, x?: T, i?: Ind, xs?: Functor) => [ZeroT, ZeroT];
+export type MapAccumOp<A = any, B = any, C = any, Ind = number | string, Functor = Slice<B>> =
+  (agg?: A, x?: B, i?: Ind, xs?: Functor) => [A, C];
 
 export type PredForIndexable<T = any> = ArrayTernaryPred<T, number | string, Indexable<T>>;
 

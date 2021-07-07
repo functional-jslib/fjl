@@ -9,19 +9,20 @@ export const
   /**
    * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
    * containing the aggregated value and the result of mapping the passed in function on passed in list.
+   * @haskellType mapAccumL :: Traversable t => (a -> b -> (a, c)) -> a -> t b -> (a, t c)
    */
-  mapAccumL = <T, ZeroT>(op: MapAccumOp<T, ZeroT>, zero: ZeroT, xs: Slice<T>): [ZeroT, Slice<ZeroT>] => {
+  mapAccumL = <A = any, B = any, MapRetT = any>(op: MapAccumOp<A, B, MapRetT>, zero: A, xs: Slice<B>): [A, Slice<MapRetT>] => {
     const list = sliceCopy(xs),
       limit = length(xs);
     if (!limit) {
-      return [zero, list as Slice<ZeroT>];
+      return [zero, list as unknown as Slice<MapRetT>];
     }
     let ind = 0,
       agg = zero,
       mapped = [],
       tuple;
     for (; ind < limit; ind++) {
-      tuple = op(agg, (list as Indexable<T>)[ind], ind);
+      tuple = op(agg, (list as Indexable<B>)[ind], ind);
       agg = tuple[0];
       mapped.push(tuple[1]);
     }

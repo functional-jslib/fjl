@@ -13,9 +13,9 @@ export const
     let ind = 0;
     const limit = xs.length,
       isString = typeOf(xs) === 'String';
-    let out = isString ? '' : [] as Slice<T>;
+    let out = isString ? '' : [] as T[];
     if (!limit) {
-      return out;
+      return out as Slice<T>;
     }
     if (typeof xs === 'string') {
       for (; ind < limit; ind++) {
@@ -30,7 +30,7 @@ export const
         }
       }
     }
-    return out;
+    return out as Slice<T>;
   },
 
   $filter = curry(filter) as Filter<any>

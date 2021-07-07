@@ -1,13 +1,13 @@
 import {curry2, CurryOf2} from "../../function/curry";
-import {Slice, PredForSlice} from "../../types";
-import {length} from "../length";;
+import {Indexable, PredForIndexable} from "../../types";
+import {length} from "../length";
 
 export const
 
   /**
    * Finds indices by predicate.
    */
-  findIndicesWhere = <T>(pred: PredForSlice<T>, xs: Slice<T>): number[] | undefined => {
+  findIndicesWhere = <T>(pred: PredForIndexable<T>, xs: Indexable<T>): number[] | undefined => {
     const limit = length(xs);
     let ind = 0;
     const out: any[] = [];
@@ -22,6 +22,6 @@ export const
   /**
    * Curried version of `findIndicesWhere`.
    */
-  $findIndicesWhere = curry2(findIndicesWhere) as CurryOf2<PredForSlice<any>, Slice<any>, number[] | undefined>
+  $findIndicesWhere = curry2(findIndicesWhere) as CurryOf2<PredForIndexable<any>, Indexable<any>, number[] | undefined>
 
 ;

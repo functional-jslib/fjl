@@ -5,13 +5,13 @@ export {Slice, PredForSlice};
 
 export const
 
-  $concat = <T = any>(...xss): Slice<T> => !xss ? xss : xss.shift().concat(...xss),
+  concat = <T = any>(...xss): Slice<T> => !xss ? xss : xss.shift().concat(...xss),
 
-  concat = curry2($concat),
+  $concat = curry2(concat),
 
-  $indexOf = <T = any>(xs: Slice<T>, x: T): number => !xs ? -1 : xs.indexOf(x as any),
+  indexOf = <T = any>(xs: Slice<T>, x: T): number => !xs ? -1 : xs.indexOf(x as any),
 
-  indexOf = curry2($indexOf),
+  $indexOf = curry2(indexOf),
 
   includes = <T>(xs: Slice<T>, x: T): boolean => xs && xs.includes(x as any),
 

@@ -24,7 +24,7 @@ export const
    * ```
    */
   breakOnList = <T>(pred: PredForSlice<T>, list: Slice<T>): [Slice<T>, Slice<T>] => {
-    const splitPoint = findIndexWhere(negateF3(pred), list) as number;
+    const splitPoint = findIndexWhere(negateF3(pred), list);
     return splitPoint === -1 ?
       [of(list), sliceFrom(0, list)] : reverse(splitAt(splitPoint, list)) as [Slice<T>, Slice<T>];
   },
