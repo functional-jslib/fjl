@@ -3,9 +3,9 @@ import {length} from "../length";
 
 export const
 
-    /**
-     * Returns length of all passed in lists in list.
-     */
-    lengths = (...lists: string[] | [any[]] | any): number[] => map(length, lists)
+  /**
+   * Returns length of all passed in lists in list.
+   */
+  lengths = <T = any>(...lists: T[]): number[] => map(length, lists)
 
 ;

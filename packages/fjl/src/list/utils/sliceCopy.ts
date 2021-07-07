@@ -6,6 +6,6 @@ export const
     /**
      * Returns a copy of a slice (E.g., an array and/or a string).
      */
-    sliceCopy = <T>(xs: Slice<T>): Slice<T> => sliceFrom(0, xs)
+    sliceCopy = <T extends Slice>(xs: T): T => sliceFrom(0, xs)
 
 ;

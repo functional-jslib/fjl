@@ -14,7 +14,7 @@ export const
     }
     let i = xs.length - 1;
     if (typeOf(xs) === 'String') {
-      let out = of(xs);
+      let out = of(xs) as string;
       for (; i >= 0; i -= 1) {
         out += xs[i];
       }

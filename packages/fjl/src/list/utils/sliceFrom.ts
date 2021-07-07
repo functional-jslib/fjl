@@ -6,7 +6,7 @@ export const
   /**
    * Returns a slice of the given list from `startInd` to the end of the list.
    */
-  sliceFrom = <T>(startInd: number, xs: Slice<T>): Slice<T> =>
+  sliceFrom = <T extends Slice<any>>(startInd: number, xs: T): T =>
     slice(startInd, undefined, xs),
 
   /**

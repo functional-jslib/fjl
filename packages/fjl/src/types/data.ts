@@ -29,7 +29,13 @@ export interface NumberIndexable<T = any> extends Lengthable {
 
 export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
 
-export type Slice<T = any> = T[] | string;
+export interface Slice<T=any> extends NumberIndexable<T> {
+  slice(from: number, to?: number): Slice<T>;
+  concat(xs: ConcatArray<T> | string[]): Slice<T>;
+  indexOf(x: T): number;
+  includes(x: T): boolean;
+  lastIndexOf(x: T): number;
+}
 
 export type FunctorMapFn<RetT> = ((a?: any, b?: any, c?: any, ...args: any[]) => RetT) |
   ((a?: any, b?: any, ...args: any[]) => RetT) | ((a?: any, ...args: any[]) => RetT);
