@@ -3,7 +3,7 @@ import {curry2} from "../function/curry";
 export const
 
   push = <T>(x: T, xs: T[]): T[] => {
-    xs.push(x);
+    xs[xs.length] = x;
     return xs
   },
 

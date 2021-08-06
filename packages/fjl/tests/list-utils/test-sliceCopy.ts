@@ -12,7 +12,7 @@ describe('#sliceCopy', () => {
       });
 
     // String variant
-    ['', vowelsString, alphabetString]
+    (<Slice<string>[]>['', vowelsString, alphabetString])
       .map(x => [x, sliceCopy(x)])
       .forEach(([original, result]) => {
         expect(result).toEqual(original);
