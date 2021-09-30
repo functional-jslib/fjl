@@ -1,11 +1,11 @@
-import {Slice} from "../../types";
+import {Slice, SliceInterface} from "../../types";
 import {sliceFrom} from "./sliceFrom";
 
 export const
 
-    /**
-     * Returns a copy of a slice (E.g., an array and/or a string).
-     */
-    sliceCopy = <T extends Slice>(xs: T): T => sliceFrom(0, xs)
+  /**
+   * Returns a copy of a slice (E.g., an array and/or a string).
+   */
+  sliceCopy = <T = any, T2 extends SliceInterface>(xs: T2): T2 => sliceFrom(0, xs)
 
 ;

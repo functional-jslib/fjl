@@ -1,4 +1,4 @@
-import {isObject} from './is';
+import {isType} from './is';
 import {curry2} from '../function/curry';
 
 export const
@@ -16,7 +16,7 @@ export const
             !propDescription.writable) {
             return agg;
           }
-          if (isObject(agg[key]) && isObject(obj[key])) {
+          if (isType(Object, agg[key]) && isType(Object, obj[key])) {
             assignDeep(agg[key], obj[key]);
           } else {
             agg[key] = obj[key];
