@@ -1,6 +1,6 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
 import {take} from "../../src/list/take";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 
 describe('#take', () => {
   it('should return taken items from list and/or string until limit', () => {

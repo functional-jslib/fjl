@@ -1,6 +1,6 @@
 import {alphabetArray} from "../helpers";
 import {elemIndices} from "../../src/list/elemIndices";
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 
 describe('#elemIndices', () => {
     (<[Slice<any>, any, Slice<any> | any][]>[

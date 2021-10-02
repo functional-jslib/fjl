@@ -1,6 +1,6 @@
 import {vowelsArray} from "../helpers";
 import {lengths} from "../../src/list/utils";
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 
 describe('#lengths', () => {
   (<[Slice<any>[], number[]][]>[

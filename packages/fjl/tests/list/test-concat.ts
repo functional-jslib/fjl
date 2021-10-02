@@ -1,5 +1,5 @@
 import {expectError, vowelsArray} from "../helpers";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 import {concat} from "../../src";
 
 describe('#concat', () => {

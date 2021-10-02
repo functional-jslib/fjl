@@ -28,7 +28,8 @@
     "test:fjl-inputfilter": "jest -c jest.config.js --selectProjects fjl-inputfilter",
     "test:fjl-validator": "jest -c jest.config.js --selectProjects fjl-validator",
     "build": "rollup --config rollup.config.js",
-    "link-and-build:packages": "node node_scripts/tasks/link-packages.js"
+    "link-and-build:packages": "node node_scripts/tasks/link-packages.js",
+    "link:packages": "npm run link-and-build:packages"
   },
   "repository": {
     "type": "git",

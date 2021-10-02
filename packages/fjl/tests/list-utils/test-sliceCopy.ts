@@ -1,6 +1,6 @@
 import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../helpers";
 import {sliceCopy} from "../../src";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 
 describe('#sliceCopy', () => {
   it('should return a copy of given slice', () => {

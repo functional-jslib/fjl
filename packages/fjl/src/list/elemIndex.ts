@@ -1,5 +1,6 @@
 import {curry, CurryOf2} from "../function/curry";
-import {indexOf, Slice} from "../platform/slice";
+import {indexOf} from "../platform/slice";
+import {Slice} from "../types";
 
 type ElemIndex<T> = CurryOf2<T, Slice<T>, number | undefined>;
 

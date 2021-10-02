@@ -68,7 +68,7 @@ import {
 
 import {Nameable, TypeRef} from '../../src/types';
 import {apply} from "../../src/platform/function";
-import {TypeConstructor} from "../../dist/es";
+import {TypeConstructor} from "../../src/types";
 
 describe('#object', function () {
   const charCodeToCharMap = (() => {

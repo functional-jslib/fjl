@@ -1,8 +1,7 @@
 import {alphabetArray, vowelsArray} from "../helpers";
 import {sliceFrom} from "../../src/list/utils/sliceFrom";
-import {Slice} from "../../src/platform/slice";
 import {$sliceFrom} from "../../src/list";
-import {Unary} from "../../dist/es";
+import {Unary, Slice} from "../../src/types";
 
 describe('#sliceFrom', () => {
   it('should be curried', () => {

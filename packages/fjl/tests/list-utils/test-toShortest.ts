@@ -1,6 +1,6 @@
 import {alphabetArray, alphabetString, expectFunction, vowelsArray, vowelsLen, vowelsString} from "../helpers";
 import {CurryOf1, toShortest} from "../../src";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 import {Variadic} from "../../src/types";
 import {$toShortest} from "../../src/list/utils";
 

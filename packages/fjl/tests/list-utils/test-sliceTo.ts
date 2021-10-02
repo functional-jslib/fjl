@@ -1,6 +1,6 @@
 import {alphabetArray, alphabetLen, vowelsArray, vowelsLen} from "../helpers";
 import {Unary} from "../../src/types";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 import {sliceTo, $sliceTo} from "../../src/list";
 
 describe('#sliceTo', () => {

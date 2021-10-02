@@ -1,5 +1,5 @@
 import {cycle} from "../../src";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 
 describe('#cycle', () => {
   const arg = ['a'];

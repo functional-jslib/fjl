@@ -29,16 +29,20 @@ export interface NumberIndexable<T = any> extends Lengthable {
 
 export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
 
-export interface Slice<T = any> extends NumberIndexable<T> {
+export type  Slice<T = any> = string | any[] | {
+  readonly length: number;
+
+  [index: number]: T;
+
   slice(from: number, to?: number): Slice<T>;
 
-  concat(xs: ConcatArray<T> | string[]): Slice<T>;
+  concat(...xs: string[] | Slice<T>[]): Slice<T>;
 
-  indexOf(x: T): number;
+  indexOf(x: T, position?: number): number;
 
-  includes(x: T): boolean;
+  includes(x: T, position?: number): boolean;
 
-  lastIndexOf(x: T): number;
+  lastIndexOf(x: T, position?: number): number;
 
   [Symbol.iterator](): Iterator<T>;
 }

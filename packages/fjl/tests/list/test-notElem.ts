@@ -1,5 +1,5 @@
 import {notElem} from "../../src/list";
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 import {vowelsArray, vowelsString} from "../helpers";
 
 describe('#notElem', () => {

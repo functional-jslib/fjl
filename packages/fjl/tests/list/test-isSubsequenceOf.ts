@@ -1,6 +1,6 @@
 import {isSubsequenceOf} from "../../src/list";
 import {alphabetString, vowelsArray, vowelsString} from "../helpers";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 
 describe('#isSubsequenceOf', () => {
   const firstSixOfAlphabet = alphabetString.slice(0, 6);
