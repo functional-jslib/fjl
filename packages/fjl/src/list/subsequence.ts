@@ -1,4 +1,3 @@
-import {length} from "./length";
 import {Slice} from "../platform";
 
 export const
@@ -11,14 +10,18 @@ export const
    *  use this with sequences above a certain length on certain platform (the browser thread in specific).
    */
   subsequences = <T>(xs: Slice<T>): Slice<T>[] => {
-    const listLen = length(xs),
+    const listLen = xs.length,
       len = Math.pow(2, listLen),
-      out: any[] = [];
+      out = [] as Slice<T>[];
     for (let i = 0; i < len; i += 1) {
-      const entry: any[] = [];
+      let entry = xs.constructor();
       for (let j = 0; j < listLen; j += 1) {
         if (i & (1 << j)) {
-          entry.push(xs[j]);
+          if (typeof xs === 'string') {
+            entry = entry.concat(xs[j]);
+          } else {
+            (entry as unknown as T[]).push(xs[j]);
+          }
         }
       }
       out.push(entry);
