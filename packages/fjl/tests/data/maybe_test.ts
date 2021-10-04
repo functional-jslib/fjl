@@ -3,7 +3,7 @@ import {join} from '../../src/data/monad';
 import {falsyList} from "../helpers";
 import {Unary} from "../../src/types";
 
-const methodNames = ['ap', 'map', 'flatMap', 'join'];
+const methodNames = ['ap', 'map', 'flatMap', 'join'] as Array<keyof Maybe<any>>;
 
 const containsMethods = <T>(x: Maybe<T>, methodNames_: string[]): void => {
   methodNames_.forEach(methodName => {
@@ -192,7 +192,7 @@ describe('#Nothing', () => {
 
   test('Expect `map`, `ap`, `flatMap`, and `join` methods to all return same singleton instance of `Nothing`', () => {
     const instance = nothing();
-    methodNames.forEach(x => expect(instance[x]()).toEqual(instance));
+    methodNames.forEach(x => expect(instance[x](undefined)).toEqual(instance));
   });
 });
 

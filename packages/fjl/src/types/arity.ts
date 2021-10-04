@@ -1,4 +1,4 @@
-export type Nullary<T = any> = (x?: T) => T;
+export type Nullary<T = any, RetT = any> = (x?: T) => RetT;
 
 export type Unary<T = any, RetT = any> = (x: T) => RetT;
 
@@ -12,6 +12,7 @@ export type Quinary<A = any, B = any, C = any, D = any, E = any, RetT = any> = (
 
 export type Variadic<T = any, RetT = any> = (...xs: T[]) => RetT;
 
+// @todo Should take a function type from which to figure out `Parameters` and `ReturnType` - more flexible.
 export type Nary<T = any, RetT = any> = Variadic<T, RetT>;
 
 export type Monadic<A = any, B = any, Ret = any> = (a: A, ...bs: B[]) => Ret;

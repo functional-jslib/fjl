@@ -56,31 +56,30 @@ export type CurryPredOf2<A, B> = CurryOf2<A, B, boolean>;
 
 export type CurryPredOf3<A, B, C> = CurryOf3<A, B, C, boolean>;
 
+export type CurryNReturnType<ParamRetT> = CurryOf1<any, ParamRetT> |
+  CurryOf2<any, any, ParamRetT> |
+  CurryOf3<any, any, any, ParamRetT> |
+  CurryOf4<any, any, any, any, ParamRetT> |
+  CurryOf5<any, any, any, any, any, ParamRetT>;
+
+export type Curried<Fn extends Nary, Params extends any[] = any[], RetT = any> = ((...args:  Params) => Curried<Fn, Params, RetT>) | RetT;
+
 export const
 
     /**
      * Curries a function up to a given arity.
      * @function module:function.curryN
-     * @param executeArity {Number}
-     * @param fn {Nary<any, any>} - Any function that may take one or more `any`s and return `any`.
-     * @param argsToCurry {...*}
-     * @returns {CurryOfX<any, any>} - One of the `CurryXOf<T, Ret>` types.
-     * @throws {Error} - When `fn` is not a function.
      */
-    curryN = (
+    curryN = <Fn extends Nary>(
         executeArity: number,
-        fn: Nary<any, any>,
+        fn: Fn,
         ...argsToCurry: any[]
     ):
-        CurryOf1<any, any> |
-        CurryOf2<any, any, any> |
-        CurryOf3<any, any, any, any> |
-        CurryOf4<any, any, any, any, any> |
-        CurryOf5<any, any, any, any, any, any> => {
+        CurryNReturnType<any> => {
         if (!fn || !(fn instanceof Function)) {
             throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\`;  Received ${fn};`);
         }
-        const out = (...args: any[]): any => {
+        const curriedFn = (...args: any[]): CurryNReturnType<ReturnType<typeof fn>> => {
             const catedArgs = argsToCurry.concat(args),
                 canBeCalled = (catedArgs.length >= executeArity) || executeArity <= 0;
             return canBeCalled ?
@@ -88,9 +87,11 @@ export const
                 curryN(executeArity - catedArgs.length, fn, ...catedArgs)
                 ;
         };
-        // Set our function's `length` since it is "disguised" as a non-variadic function (since `curryN` currys up to
+
+        curriedFn.bind(null)
+        // Set our function's `length` since it is "disguised" as a non-variadic function (since `curryN` curries up to
         // a given arity).
-        return Object.defineProperty(out, 'length', {
+        return Object.defineProperty(curriedFn, 'length', {
             get() {
                 return executeArity;
             }
@@ -100,18 +101,14 @@ export const
     /**
      * Curries a function based on it's defined arity (note: rest args param (`...rest`) are not counted in arity).
      * @function module:function.curry
-     * @param fn {Nary<any, any>}
+     * @param fn {Nary}
      * @param argsToCurry {...*}
      * @returns {CurryOf1<any, any> | CurryOf2<any, any, any> |
      *  CurryOf3<any, any, any, any> | CurryOf4<any, any, any, any, any> |
      *  CurryOf5<any, any, any, any, any, any}
      */
-    curry = (fn: Nary<any, any>, ...argsToCurry):
-        CurryOf1<any, any> |
-        CurryOf2<any, any, any> |
-        CurryOf3<any, any, any, any> |
-        CurryOf4<any, any, any, any, any> |
-        CurryOf5<any, any, any, any, any, any> => curryN((fn || noop).length, fn, ...argsToCurry),
+    curry = <Fn extends Nary>(fn: Fn, ...argsToCurry: any[]): CurryNReturnType<any> =>
+      curryN((fn || noop).length, fn, ...argsToCurry),
 
     /**
      * Curries a function up to an arity of 2 (won't call function until 2 or more args).
@@ -119,7 +116,7 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry2 = (fn: Nary<any, any>): CurryOf2<any, any, any> =>
+    curry2 = (fn: Nary): CurryOf2<any, any, any> =>
         curryN(2, fn),
 
     /**
@@ -128,7 +125,7 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry3 = (fn: Nary<any, any>): CurryOf3<any, any, any, any> =>
+    curry3 = (fn: Nary): CurryOf3<any, any, any, any> =>
         curryN(3, fn),
 
     /**
@@ -137,7 +134,7 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry4 = (fn: Nary<any, any>): CurryOf4<any, any, any, any, any> =>
+    curry4 = (fn: Nary): CurryOf4<any, any, any, any, any> =>
         curryN(4, fn),
 
     /**
@@ -146,5 +143,5 @@ export const
      * @param fn {Function}
      * @returns {Function}
      */
-    curry5 = (fn: Nary<any, any>): CurryOf5<any, any, any, any, any, any> =>
+    curry5 = (fn: Nary): CurryOf5<any, any, any, any, any, any> =>
         curryN(5, fn);

@@ -1,4 +1,4 @@
-import {curry} from "../function/curry";
+import {Curried, curry, CurryOf2} from "../function/curry";
 import {map} from "./map";
 import {sortBy} from "./sortBy";
 import {genericAscOrdering} from "./utils";
@@ -24,7 +24,7 @@ export const
    * ) // true
    * ```
    */
-  sortOn = <T>(valueFn: Unary<T, any>, xs: T[]): T[] =>
+  sortOn = <T = any>(valueFn: Unary<T>, xs: T[]): T[] =>
 
     // Un-decorate
     map(decorated => decorated[1],
@@ -39,4 +39,4 @@ export const
       )
     ),
 
-  $sortOn = curry(sortOn);
+  $sortOn = curry(sortOn) as Curried<typeof sortOn>;
