@@ -66,7 +66,7 @@ import {
   vowelsString
 } from '../helpers';
 
-import {Nameable, TypeRef} from '../../src/types';
+import {Nameable, Slice, TypeRef} from '../../src/types';
 import {apply} from "../../src/platform/function";
 import {TypeConstructor} from "../../src/types";
 
@@ -755,9 +755,9 @@ describe('#object', function () {
     });
     it('should return last arg passed in when being called with one or more args.', function () {
       log('testing-peek');
-      (<any[][]>subsequences('abc').concat([
+      (subsequences('abc').concat([
         [99], [true], [undefined], [null], ['Output tested from `peek`']
-      ] as any[][])).forEach(xs => {
+      ] as Slice[])).forEach(xs => {
         expect(peek.apply(null, xs)).toEqual(xs[xs.length - 1]);
       });
     });

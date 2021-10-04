@@ -29,14 +29,12 @@ export interface NumberIndexable<T = any> extends Lengthable {
 
 export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
 
-export type  Slice<T = any> = string | any[] | {
+export interface SliceBase<T = any> {
   readonly length: number;
-
-  [index: number]: T;
 
   slice(from: number, to?: number): Slice<T>;
 
-  concat(...xs: string[] | Slice<T>[]): Slice<T>;
+  concat(...xs: ConcatArray<T>[] | string[] | Slice<T>[]): Slice<T>;
 
   indexOf(x: T, position?: number): number;
 
@@ -46,6 +44,12 @@ export type  Slice<T = any> = string | any[] | {
 
   [Symbol.iterator](): Iterator<T>;
 }
+
+export type  Slice<T = any> = {
+  [index in number | string]: T;
+} & SliceBase<T> | {
+  readonly [index: number]: T;
+} & SliceBase<T>
 
 export type FunctorMapFn<RetT> = ((a?: any, b?: any, c?: any, ...args: any[]) => RetT) |
   ((a?: any, b?: any, ...args: any[]) => RetT) | ((a?: any, ...args: any[]) => RetT);
