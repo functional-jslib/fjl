@@ -6,12 +6,12 @@
     ],
     "module": "ESNext",
     "moduleResolution": "node",
+    "strict": true,
     "noImplicitAny": false,
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": true,
     "strictNullChecks": false,
-    "strictFunctionTypes": false,
     "target": "ES2015"
   },
   "exclude": [

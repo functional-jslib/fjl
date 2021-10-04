@@ -8,7 +8,7 @@ import {Unary} from "../types";
 import {FunctorMapFn} from "../types";
 import {$instanceOf} from "../platform/object";
 
-let NothingSingleton;
+let NothingSingleton: Nothing;
 
 /**
  * Class for creating a `Nothing`.
@@ -19,7 +19,7 @@ export class Nothing<T = any> implements Monad<T> {
   /**
    * Applicative `pure` - Same as `new Nothing()`, `Nothing()`, and `nothing()`.
    */
-  static of<X>(x?: X): Nothing {
+  static of(x?: any): Nothing {
     return new Nothing(x);
   }
 
@@ -72,7 +72,7 @@ export const
   /**
    * Checks for `Nothing`.
    */
-  isNothing = <T>(x: T): boolean => x === NothingSingleton,
+  isNothing = (x: any): boolean => x === NothingSingleton,
 
   /**
    * Returns `Nothing`.

@@ -1263,7 +1263,7 @@ describe('#object', function () {
     });
 
     it('should return target and descriptor tuples from operation', function () {
-      generateTargetData().forEach((args: any[]) => {
+      generateTargetData().forEach((args: Parameters<typeof defineEnumProps>) => {
         // log(args);
         const target = apply(defineEnumProps, args),
           propNames = args[0].map(([_, name]) => name);

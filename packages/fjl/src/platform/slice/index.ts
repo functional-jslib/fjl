@@ -23,7 +23,7 @@ export const
   /**
    * Same as `(Array|String).prototype.slice`.
    */
-  slice = <T, T2 extends Slice<T> = Slice<T>>(start: number, end: number, xs: T2): T2 => xs.slice(start, end) as T2,
+  slice = (start: number, end: number, xs: Slice): Slice => xs.slice(start, end),
 
   /**
    * Same as `(Array|String).prototype.slice`.
