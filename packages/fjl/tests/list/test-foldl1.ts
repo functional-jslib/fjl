@@ -1,7 +1,7 @@
 import {length} from "../../src/list/length";
 import {expectEqual} from "../helpers";
 import {foldl1} from "../../src/list/foldl1";
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 
 describe('#foldl1', () => {
   it('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', () => {

@@ -1,6 +1,6 @@
 import {isVowel} from "../helpers";
 import {UnaryPred} from "../../src/types";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 import {alphabetArray, alphabetString, expectEqual, nonAlphaNums, nonAlphaNumsArray} from "../helpers";
 import {breakOnList} from "../../src";
 

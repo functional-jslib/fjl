@@ -1,6 +1,7 @@
 import {curry} from "../function/curry";
 import {length} from "./length";
-import {indexOf, Slice} from "../platform/slice";
+import {indexOf} from "../platform/slice";
+import {Slice} from "../types";
 
 export const
 

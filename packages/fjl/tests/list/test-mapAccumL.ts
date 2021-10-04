@@ -1,5 +1,5 @@
 import {mapAccumL} from "../../src/list/mapAccumL";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 import {MapAccumOp} from "../../src";
 import {vowelsString} from "../helpers";
 

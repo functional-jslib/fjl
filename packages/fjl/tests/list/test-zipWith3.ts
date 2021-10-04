@@ -1,8 +1,7 @@
 import {zipWith3} from "../../src/list";
 import {vowelsArray} from "../helpers";
 import {revVowelsArray} from "../helpers";
-import {Unary} from "../../src/types";
-import {Ternary} from "../../dist/es";
+import {Ternary} from "../../src/types";
 
 describe('#zipWith3', () => {
   const triplet = (a, b, c) => [a, b, c];

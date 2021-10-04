@@ -1,6 +1,6 @@
 import {alphabetArray, alphabetString} from "../helpers";
 import {filter} from "../../src/list/filter";
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 
 describe('#filter', () => {
     const pred = (_, ind): boolean => ind % 2 === 0;

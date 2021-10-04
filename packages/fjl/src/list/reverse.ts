@@ -1,4 +1,3 @@
-import {of} from "../object/of";
 import {Slice} from "../types";
 import {typeOf} from "../object";
 
@@ -7,7 +6,7 @@ export const
   /**
    * Returns a copy of the passed in list reverses.
    */
-  reverse = <T, T1 extends Slice<T>>(xs: T1): T1 => {
+  reverse = <T, T1 extends Slice<T> = Slice<T>>(xs: T1): T1 => {
     if (!xs) return xs;
     if (!xs.length) return xs.slice(0) as T1;
     let i = xs.length - 1;

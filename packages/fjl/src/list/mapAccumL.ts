@@ -1,7 +1,7 @@
 import {curry} from "../function/curry";
 import {sliceCopy} from "./utils/sliceCopy";
 import {length} from "./length";
-import {Slice} from "../platform";
+import {Slice} from "../types/data";
 import {Indexable, MapAccumOp} from "../types";
 
 export const

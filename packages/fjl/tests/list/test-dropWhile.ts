@@ -1,6 +1,6 @@
 import {expectEqual, vowelsArray, vowelsString} from "../helpers";
 import {dropWhile} from '../../src/list/dropWhile';
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 import {UnaryPred} from "../../src/types";
 
 describe('#dropWhile', () => {

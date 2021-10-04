@@ -1,6 +1,5 @@
 import {reduce} from "../../src";
-import {alphabetArray, alphabetLen, expectFunction, falsyList} from "../helpers";
-import {$reduce} from "../../dist/es";
+import {alphabetArray, alphabetLen, falsyList} from "../helpers";
 
 describe('#reduce', () => {
   it('should reduce entire list', () => {

@@ -1,5 +1,5 @@
 import {elemIndex} from "../../src/list/elemIndex";
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 import {vowelsArray, vowelsString} from "../helpers";
 
 type TestCaseTuple = [[string, Slice<string>], number | undefined];

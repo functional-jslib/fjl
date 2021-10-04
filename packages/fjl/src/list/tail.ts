@@ -7,4 +7,4 @@
  */
 import {Slice} from "../types";
 
-export const tail = <T>(xs: Slice<T>): Slice<T> => xs.slice(1);
+export const tail = (xs: Slice): Slice => xs.slice(1);

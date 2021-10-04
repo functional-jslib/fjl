@@ -1,4 +1,4 @@
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
 import {drop} from "../../src";
 

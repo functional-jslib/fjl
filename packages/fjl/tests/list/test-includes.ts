@@ -1,5 +1,5 @@
 import {vowelsArray, vowelsString} from "../helpers";
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 import {includes} from "../../src/platform/slice";
 
 describe('#includes', () => {

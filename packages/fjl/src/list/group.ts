@@ -1,5 +1,5 @@
 import {groupBy} from "./groupBy";
-import {Slice} from "../platform";
+import {Slice} from "../types/data";
 import {equal} from "../boolean";
 
 export const

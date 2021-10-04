@@ -1,4 +1,4 @@
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 import {indexOf} from "../../src/platform/slice";
 import {vowelsArray, vowelsString} from "../helpers";
 

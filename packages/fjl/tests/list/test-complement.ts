@@ -1,6 +1,6 @@
 import {expectEqual, expectFunction} from "../helpers";
 import {complement, Curry1} from "../../src";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 
 describe('#complement', () => {
   it('should be a function', () => {

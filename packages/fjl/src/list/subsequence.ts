@@ -1,4 +1,4 @@
-import {Slice} from "../platform";
+import {Slice} from "../types/data";
 
 export const
   /**
