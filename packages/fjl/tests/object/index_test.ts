@@ -757,8 +757,10 @@ describe('#object', function () {
       log('testing-peek');
       (subsequences('abc').concat([
         [99], [true], [undefined], [null], ['Output tested from `peek`']
-      ] as Slice[])).forEach(xs => {
-        expect(peek.apply(null, xs)).toEqual(xs[xs.length - 1]);
+      ] as Slice[])).forEach((xs, _, xss) => {
+        const isArray = Array.isArray(xs);
+        expect(peek.apply(null,  !isArray? [xs] : xs))
+          .toEqual(!isArray ? xs : xs[xs.length - 1]);
       });
     });
   });
@@ -1131,7 +1133,7 @@ describe('#object', function () {
     it('should return target with defined properties from operation', function () {
       generateTargetData().forEach(args => {
         // log(args);
-        const target = apply(defineProps, args),
+        const target = apply(defineProps, args as Parameters<typeof defineProps>),
           argKeyNames = args[0].map(pair => pair[1]);
         expect(target).toBeInstanceOf(Object);
         argKeyNames.forEach(key => {
@@ -1157,7 +1159,7 @@ describe('#object', function () {
         ];
       }).forEach(args => {
         // log(args);
-        const target = apply(defineProps, args),
+        const target = apply(defineProps, args as Parameters<typeof defineProps>),
           argKeyNames = args[0].map(([_, key]) => key);
         expect(target).toBeInstanceOf(Object);
         argKeyNames.forEach(key => {
@@ -1217,7 +1219,7 @@ describe('#object', function () {
     it('should be able to define many enum props on given target with only argTuples of length `2`', function () {
       generateTargetData().forEach((args: any[]) => {
         // log(args);
-        const target = apply(defineEnumProps, args),
+        const target = apply(defineEnumProps, args as Parameters<typeof defineEnumProps>),
           propNames = args[0].map(([_, name]) => name);
 
         // log(propNames, '\n', target);
@@ -1235,7 +1237,7 @@ describe('#object', function () {
       'and no errors when set to the correct type', function () {
       generateTargetData().forEach((args: any[]) => {
         // log(args);
-        const target = apply(defineEnumProps, args),
+        const target = apply(defineEnumProps, args as Parameters<typeof defineEnumProps>),
           propNames = args[0].map(([_, name]) => name);
 
         // log(propNames, '\n', target);

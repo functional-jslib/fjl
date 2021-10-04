@@ -23,6 +23,6 @@ describe('#subsequences', () => {
   });
   it('should return a list with an empty list when receiving an empty list', () => {
     expectEqual(subsequences([]), [[]]);
-    expectEqual(subsequences(''), []);
+    expectEqual(subsequences(''), ['']);
   });
 });

@@ -91,7 +91,7 @@ describe('#compose', () => {
     const min = a => (b): number => Math.min(a, b),
       max = a => (b): number => Math.max(a, b),
       pow = a => (b): number => Math.pow(a, b),
-      composed = compose<number, number>(min(8), max(5), pow(2)),
+      composed = compose(min(8), max(5), pow(2)),
       randomNum = start => (end: number): number => Math.round(Math.random() * end + start),
       random = randomNum(0),
       expectedFor = (num): number => min(8)(max(5)(pow(num)(2)));
