@@ -2,5 +2,5 @@
 /**
  * Returns whether `value` is 'falsy' or not
  */
-export const isFalsy = <T>(value: T): boolean => !value;
+export const isFalsy = (value: any): boolean => !value;
 

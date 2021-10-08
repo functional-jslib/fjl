@@ -22,6 +22,6 @@ export const
   /**
    * Curried version of `findIndicesWhere`.
    */
-  $findIndicesWhere = curry2(findIndicesWhere) as CurryOf2<PredForIndexable<any>, Indexable<any>, number[] | undefined>
+  $findIndicesWhere = curry2(findIndicesWhere) as CurryOf2<PredForIndexable, Indexable, number[] | undefined>
 
 ;

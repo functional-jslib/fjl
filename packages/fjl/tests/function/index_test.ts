@@ -120,7 +120,7 @@ describe('#curryN', () => {
   });
 
   it('should pass in any values passed in after the arity when executing the curried function', () => {
-    const add3Nums = curryN(3, addRecursive),
+    const add3Nums: Curry3<number> = curryN(3, addRecursive),
       addNums: Curry5<number> = add3Nums as Curry5<number>;
 
     // Curry add to add 3 numbers

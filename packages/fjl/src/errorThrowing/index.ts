@@ -2,7 +2,7 @@
  * @module errorThrowing
  * @description Contains error throwing facilities for when a value doesn't match a type.
  */
-import {curry4, CurryOf4, CurryPredOf2} from '../function/curry';
+import {curry4, CurryOf2, CurryOf4} from '../function/curry';
 import {typeOf} from '../object/typeOf';
 import {isArray, isOfType, toTypeRef, toTypeRefName} from '../object/is';
 import {TypeRef} from "../types";
@@ -30,7 +30,7 @@ export type ErrorIfNotTypesThrower<T> = (
 
 export type ErrorMessageCtxToString = (errorMessageCtx: ErrorMessageCtx) => string;
 
-export type TypeCheckerPred<TRef extends TypeRef, T> = ((typeRef: TRef, x: T) => boolean) | CurryPredOf2<TRef, T>;
+export type TypeCheckerPred<TRef extends TypeRef, T> = ((typeRef: TRef, x: T) => boolean) | CurryOf2<TRef, T, boolean>;
 
 export const
 

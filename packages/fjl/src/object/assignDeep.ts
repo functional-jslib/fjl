@@ -23,6 +23,6 @@ export const
           }
           return agg;
         }, topAgg)
-      , obj0),
+      , obj0);
 
-  $assignDeep = curry2(assignDeep);
+export const $assignDeep = curry2(assignDeep);

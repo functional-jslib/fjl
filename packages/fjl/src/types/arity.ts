@@ -12,8 +12,9 @@ export type Quinary<A = any, B = any, C = any, D = any, E = any, RetT = any> = (
 
 export type Variadic<T = any, RetT = any> = (...xs: T[]) => RetT;
 
-// @todo Should take a function type from which to figure out `Parameters` and `ReturnType` - more flexible.
 export type Nary<T = any, RetT = any> = Variadic<T, RetT>;
+
+export type UnitNary<Params extends any[] = any, RetT = any> = (...params: [...Params]) => RetT;
 
 export type Monadic<A = any, B = any, Ret = any> = (a: A, ...bs: B[]) => Ret;
 
