@@ -6,6 +6,7 @@
 
 import {UnitNary} from '../types';
 import {noop} from './noop';
+import {bind} from "./bind";
 
 export type Curry1<T> = (a?: T, ...b: T[]) => Curry1<T> | T;
 
@@ -101,12 +102,10 @@ export const
       throw new Error(`\`curry*\` functions expect first parameter to be of type \`Function\`;  Received ${fn};`);
     }
     const curriedFn = (...args: [...Params]): Curried<Fn, Params, RetT> => {
-      const catedArgs = argsToCurry.concat(args),
-        canBeCalled = (catedArgs.length >= executeArity) || executeArity <= 0;
-      return canBeCalled ?
+      const catedArgs = argsToCurry.concat(args);
+      return catedArgs.length >= executeArity || executeArity <= 0 ?
         fn(...catedArgs) :
-        curryN(executeArity - catedArgs.length, fn, ...catedArgs)
-        ;
+        curryN(executeArity - catedArgs.length, bind(fn, ...catedArgs));
     };
 
     // Set our function's `length` since it is "disguised" as a non-variadic function (since `curryN` curries up to
