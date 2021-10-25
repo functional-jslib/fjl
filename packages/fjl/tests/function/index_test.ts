@@ -1,6 +1,3 @@
-import {add} from "../helpers";
-import {apply} from '../../src/function/apply';
-import {call} from "../../src/platform/function";
 import {compose} from "../../src/function/compose";
 import {Binary, Nary, Unary, UnaryPred} from "../../src/types";
 import {
@@ -33,43 +30,6 @@ import {noop} from "../../src/function/noop";
 import {toFunction} from "../../src/function/toFunction";
 import {trampoline} from "../../src/function/trampoline";
 import {until} from "../../src/function/until";
-import {$apply, $call} from "../../src/function";
-
-describe('#apply', () => {
-  it('apply instanceof Function', function () {
-    expect(apply).toBeInstanceOf(Function);
-  });
-  it('Can do `apply(fn)(args)` (is curried)', function () {
-    const addAllInArray = $apply(add);
-    expect(addAllInArray).toBeInstanceOf(Function);
-    expect(addAllInArray([1, 2, 3, 4, 5])).toEqual(15);
-  });
-  it('should call a function passed into it with args list passed in as second parameter', function () {
-    expect($apply(add)([1, 2, 3, 4, 5])).toEqual(15);
-  });
-  it('should fail when argument `1` is not a function', () => {
-    expect(() => apply(null, null)).toThrow(Error);
-    expect(() => apply(undefined, undefined)).toThrow(Error);
-  });
-});
-
-describe('#call', () => {
-  it('should be a function', () => {
-    expect(call).toBeInstanceOf(Function);
-  });
-  it('should be curried', () => {
-    const adder = $call(add);
-    expect(adder()).toBeInstanceOf(Function);
-    expect(adder(1, 2, 3, 4, 5)).toEqual(15);
-  });
-  it('should call a function passed into it along with passed in arguments', () => {
-    expect(call(add, 1, 2, 3, 4, 5)).toEqual(15);
-  });
-  it('should fail when argument `1` is not a function', () => {
-    expect(() => call(null, null)).toThrow(Error);
-    expect(() => call(undefined, undefined)).toThrow(Error);
-  });
-});
 
 describe('#compose', () => {
   it('should be of type function.', () => {

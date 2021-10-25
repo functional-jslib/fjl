@@ -1,24 +1,23 @@
 import {Slice} from "../../types";
-import {curry2, curry3, CurryOf2, CurryOf3} from "../../function";
 
 export const
 
   concat = (...xss: Slice[]): Slice =>
     (!xss ? xss : xss.shift().concat(...xss)) as Slice,
 
-  $concat = curry2(concat) as CurryOf2<Slice, Slice, Slice>,
+  $concat = a => (...b) => concat(a, ...b),
 
   indexOf = (xs: Slice, x: any): number => !xs ? -1 : xs.indexOf(x),
 
-  $indexOf = curry2(indexOf) as CurryOf2<Slice, any, number>,
+  $indexOf = xs => x => indexOf(xs, x),
 
   includes = (xs: Slice, x: any): boolean => xs && xs.includes(x),
 
-  $includes = curry2(includes) as CurryOf2<Slice, any, boolean>,
+  $includes = xs => x => includes(xs, x),
 
   lastIndexOf = (xs: Slice, x: any): number => !xs ? -1 : xs.lastIndexOf(x),
 
-  $lastIndexOf = curry2(lastIndexOf) as CurryOf2<Slice, any, number>,
+  $lastIndexOf = xs => x => lastIndexOf(xs, x),
 
   /**
    * Same as `(Array|String).prototype.slice`.
@@ -29,7 +28,7 @@ export const
    * Same as `(Array|String).prototype.slice`.
    * @curried
    */
-  $slice = curry3(slice) as CurryOf3<number, number, Slice, Slice>
+  $slice = start => end => xs => xs.slice(start, end, xs)
 
 ;
 
