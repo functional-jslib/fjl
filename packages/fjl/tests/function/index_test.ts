@@ -3,7 +3,6 @@ import {Binary, Nary, Unary, UnaryPred} from "../../src/types";
 import {
   curry,
   Curry,
-  Curry1,
   curry2,
   Curry2,
   curry3,
@@ -11,7 +10,7 @@ import {
   curry4,
   curry5,
   Curry5,
-  curryN
+  curryN, CurryOf3
 } from "../../src/function/curry";
 import {
   alphabetArray,
@@ -80,20 +79,22 @@ describe('#curryN', () => {
   });
 
   it('should pass in any values passed in after the arity when executing the curried function', () => {
-    const add3Nums: Curry3<number> = curryN(3, addRecursive),
-      addNums: Curry5<number> = add3Nums as Curry5<number>;
+    const add = (...args: any[]): any => args.reduce((agg, x) => agg + x, 0),
+      add3Nums = curryN(3, add) as CurryOf3<number>,
+      addNums = curryN(5, add3Nums) as Curry5<number>;
 
-    // Curry add to add 3 numbers
-    expect((add3Nums() as Curry3<number>)(1, 2, 3)).toEqual(6);
-    expect((add3Nums(1) as Curry2<number>)(2, 3)).toEqual(6);
-    expect((add3Nums(1, 2) as Curry1<number>)(3)).toEqual(6);
+    expect(add3Nums(1)(2, 3)).toEqual(6);
+    expect(add3Nums(1, 2)(3)).toEqual(6);
     expect(add3Nums(1, 2, 3)).toEqual(6);
+    expect(add3Nums(1)(2)(3)).toEqual(6);
 
     // Curry `add` to add any numbers passed required arity
-    expect((addNums() as Curry3<number>)(1, 2, 3, 4, 5)).toEqual(15);
-    expect((addNums(1) as Curry2<number>)(2, 3, 4, 5)).toEqual(15);
-    expect((addNums(1, 2) as Curry1<number>)(3, 4, 5)).toEqual(15);
     expect(addNums(1, 2, 3, 4, 5)).toEqual(15);
+    expect(addNums(1, 2, 3, 4)(5)).toEqual(15);
+    expect(addNums(1, 2, 3)(4, 5)).toEqual(15);
+    expect(addNums(1, 2)(3, 4, 5)).toEqual(15);
+    expect(addNums(1)(2, 3, 4, 5)).toEqual(15);
+    expect(addNums(1)(2)(3)(4)(5)).toEqual(15);
   });
 
   it('should return a function that will not execute until the passed in "executeArity" is met.', () => {
@@ -105,14 +106,13 @@ describe('#curryN', () => {
         [5, 5, 5],
         [5, 5],
         [5]
-      ],
-      partiallyAppliedResults: Array<Curry<number>> = [
-        multiply5Nums() as Curry<number>,
-        multiply5Nums(5) as Curry<number>,
-        multiply5Nums(5, 5) as Curry<number>,
-        multiply5Nums(5, 5, 5) as Curry<number>,
-        multiply5Nums(5, 5, 5, 5) as Curry<number>
-      ];
+      ] as number[][],
+      partiallyAppliedResults = [
+        multiply5Nums(5),
+        multiply5Nums(5, 5),
+        multiply5Nums(5, 5, 5),
+        multiply5Nums(5, 5, 5, 5)
+      ] as Nary[];
 
     // Curry multiply and pass args in non-linear order
     argsToTest.forEach(function (args, index) {
@@ -171,9 +171,9 @@ describe('#curry', () => {
     const min = curry2(Math.min) as Curry2<number>,
       max = curry2(Math.max) as Curry2<number>,
       pow = curry2(Math.pow) as Curry2<number>,
-      min8 = curry(Math.min, 8) as Curry1<number>,
-      max5 = curry(Math.max, 5) as Curry1<number>,
-      pow2 = curry(Math.pow, 2) as Curry1<number>,
+      min8 = curry(Math.min, 8),
+      max5 = curry(Math.max, 5),
+      pow2 = curry(Math.pow, 2),
       isValidTangentLen = curry((a, b, cSqrd) => <number>pow(a, 2) + <number>pow(b, 2) === cSqrd, 2, 2),
       random = curry((start, end) => Math.round(Math.random() * (end - start) + start), 0) as Curry1<number>,
       expectedFor: Unary<number> = num => <number>min(8, <number>max(5, <number>pow(2, num))),

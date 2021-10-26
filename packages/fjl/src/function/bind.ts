@@ -1,4 +1,4 @@
 import {UnitNary} from "../types";
 
-export const bind = <F extends UnitNary, Params extends any[], RetT>(fn: F, ...args: [...Params]): F | RetT =>
+export const bind = <F extends UnitNary>(fn: F, ...args: any[]): ReturnType<F> =>
     fn.bind(null, ...args);

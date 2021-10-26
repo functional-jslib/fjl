@@ -12,7 +12,7 @@ import {$instanceOf} from '../platform/object';
 import {curry, CurryOf1, toFunction, curry2, CurryOf2} from "../function";
 import {
   Applicative, ApplicativeConstructor, Functor,
-  FunctorConstructor, FunctorMapFn, Apply, ApplyConstructor, TypeRef
+  FunctorConstructor, FunctorMapFn, Apply, ApplyConstructor, TypeRef, Unary
 } from "../types";
 import {isType} from "../object";
 
@@ -103,7 +103,7 @@ export const
    * Returns boolean indicating whether given value is an
    * instance of monad or not.
    */
-  isMonad = $instanceOf(MonadBase) as CurryOf1<any, boolean>,
+  isMonad = $instanceOf(MonadBase) as Unary<any, boolean>,
 
   /**
    * Calls `valueOf` on value (use for functional composition).

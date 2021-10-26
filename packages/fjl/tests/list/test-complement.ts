@@ -1,5 +1,5 @@
 import {expectEqual, expectFunction} from "../helpers";
-import {complement, Curry1} from "../../src";
+import {complement} from "../../src";
 import {Slice} from "../../src/types/data";
 
 describe('#complement', () => {

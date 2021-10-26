@@ -1,6 +1,6 @@
-export type Nullary<T = any, RetT = any> = (x?: T) => RetT;
+export type Nullary<T = any, RetT = any> = (x?: T, ...args: T[]) => RetT;
 
-export type Unary<T = any, RetT = any> = (x: T) => RetT;
+export type Unary<T = any, RetT = any> = (x: T, ...args: T[]) => RetT;
 
 export type Binary<A = any, B = any, RetT = any> = (a: A, b: B) => RetT;
 

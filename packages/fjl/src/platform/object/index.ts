@@ -9,9 +9,9 @@ export const
 
   {assign, keys} = Object,
 
-  instanceOf = <T>(X: Function, x: T) => x instanceof X,
+  instanceOf = <T>(X: Function, x: T): boolean => x instanceof X,
 
-  $instanceOf = <T>(X: Function) => (x: T) => x instanceof X,
+  $instanceOf = <T>(X: Function) => (x: T): boolean => x instanceof X,
 
   hasOwnProperty = <T>(key: string | PropertyKey, x: T): boolean =>
     Object.prototype.hasOwnProperty.call(x, key),
