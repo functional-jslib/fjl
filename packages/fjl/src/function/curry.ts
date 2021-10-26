@@ -14,38 +14,30 @@ export type Curry2<T = any> =
   ;
 
 export type Curry3<T = any> =
-  ((a: T) => (b: T) => (c: T, ...d: T[]) => T) &
+  ((a: T) => Curry2<T>) &
   ((a: T, b: T, c: T, ...d: T[]) => T) &
-  ((a: T, b: T) => (c: T, ...d: T[]) => T) &
-  ((a: T) => (b: T, c: T, ...d: T[]) => T)
+  ((a: T, b: T) => (c: T, ...d: T[]) => T)
   ;
 
 export type Curry4<T = any> =
   ((a: T, b: T, c: T, d: T, ...e: T[]) => T) &
   ((a: T, b: T, c: T) => (d: T, ...e: T[]) => T) &
-  ((a: T, b: T) => (c: T, d: T, ...e: T[]) => T) &
-  ((a: T) => (b: T) => (c: T) => (d: T, ...e: T[]) => T) &
-  ((a: T) => (b: T) => (c: T, d: T, ...e: T[]) => T) &
-  ((a: T) => (b: T, c: T, d: T, ...e: T[]) => T) &
-  ((a: T, b: T) => (c: T) => (d: T, ...e: T[]) => T)
+  ((a: T, b: T) => Curry2<T>) &
+  ((a: T) => (b: T) => Curry2<T>) &
+  ((a: T) => Curry3<T>)
   ;
 
 export type Curry5<T = any> =
   ((a: T, b: T, c: T, d: T, e: T, ...f: T[]) => T) &
   ((a: T, b: T, c: T, d: T) => (e: T, ...f: T[]) => T) &
-  ((a: T, b: T, c: T) => (d: T) => (e: T, ...f: T[]) => T) &
-  ((a: T, b: T) => (c: T) => (d: T) => (e: T, ...f: T[]) => T) &
-  ((a: T) => (b: T) => (c: T) => (d: T) => (e: T, ...f: T[]) => T) &
-  ((a: T) => (b: T) => (c: T) => (d: T, e: T, ...f: T[]) => T) &
-  ((a: T) => (b: T) => (c: T, d: T, e: T, ...f: T[]) => T) &
-  ((a: T) => (b: T, c: T, d: T, e: T, ...f: T[]) => T) &
-  ((a: T, b: T) => (c: T, d: T, e: T, ...f: T[]) => T) &
-  ((a: T, b: T, c: T) => (d: T, e: T, ...f: T[]) => T)
+  ((a: T, b: T, c: T) => Curry2<T>) &
+  ((a: T, b: T) => Curry3<T>) &
+  ((a: T) => (b: T) => (c: T) => Curry2<T>) &
+  ((a: T) => (b: T) => Curry3<T>) &
+  ((a: T) => Curry4<T>)
   ;
 
 export type Curry<T> = Curry5<T> | Curry4<T> | Curry3<T> | Curry2<T>;
-
-export type CurryOf1<T = any, Ret = any> = (a: T, ...b: T[]) => Ret;
 
 export type CurryOf2<T = any, T2 = any, RetT = any> =
   ((a: T, b: T2, ...c: T2[]) => RetT) &

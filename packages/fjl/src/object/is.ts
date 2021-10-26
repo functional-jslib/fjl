@@ -5,7 +5,7 @@
 
 import {typeOf} from './typeOf';
 import {instanceOf, $instanceOf, keys} from '../platform/object';
-import {curry, CurryOf1, CurryOf2} from '../function/curry';
+import {curry, CurryOf2} from '../function/curry';
 import {length} from "../list/length";
 import {isset} from './isset';
 import {TypeRef, Unary} from "../types";

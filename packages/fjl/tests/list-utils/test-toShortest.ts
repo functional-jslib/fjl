@@ -1,8 +1,8 @@
 import {alphabetArray, alphabetString, expectFunction, vowelsArray, vowelsLen, vowelsString} from "../helpers";
-import {CurryOf1, toShortest} from "../../src";
+import {toShortest} from "../../src/list/utils";
 import {Slice} from "../../src/types/data";
-import {Variadic} from "../../src/types";
 import {$toShortest} from "../../src/list/utils";
+import {Unary} from "../../src";
 
 describe('#toShortest', () => {
   it('should return a list of lists trimmed to the smallest', () => {
@@ -29,7 +29,7 @@ describe('#toShortest', () => {
     ])
       .forEach(([xs1, xs2, expectedLen]) => {
         const lists = [xs1, xs2],
-          fn = $toShortest(xs1) as CurryOf1<Slice, Slice[]>,
+          fn = $toShortest(xs1) as Unary<Slice, Slice[]>,
           result = fn(xs2) as Slice[];
         expectFunction(fn);
         result.forEach((sliced, ind) => {

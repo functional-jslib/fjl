@@ -80,7 +80,7 @@ describe('#curryN', () => {
 
   it('should pass in any values passed in after the arity when executing the curried function', () => {
     const add = (...args: any[]): any => args.reduce((agg, x) => agg + x, 0),
-      add3Nums = curryN(3, add) as CurryOf3<number>,
+      add3Nums = curryN(3, add) as Curry3<number>,
       addNums = curryN(5, add3Nums) as Curry5<number>;
 
     expect(add3Nums(1)(2, 3)).toEqual(6);
@@ -175,9 +175,9 @@ describe('#curry', () => {
       max5 = curry(Math.max, 5),
       pow2 = curry(Math.pow, 2),
       isValidTangentLen = curry((a, b, cSqrd) => <number>pow(a, 2) + <number>pow(b, 2) === cSqrd, 2, 2),
-      random = curry((start, end) => Math.round(Math.random() * (end - start) + start), 0) as Curry1<number>,
+      random = curry((start, end) => Math.round(Math.random() * (end - start) + start), 0) as Unary<number>,
       expectedFor: Unary<number> = num => <number>min(8, <number>max(5, <number>pow(2, num))),
-      op: Unary<number> = x2 => [min8, max5, pow2].reduceRight((agg, f) => f(agg) as number, x2)
+      op: Unary<number> = x2 => [min8, max5, pow2].reduceRight((agg, f: Unary<number>) => f(agg), x2)
     ;
 
     // Expect functions returned for `curry` calls

@@ -1,4 +1,4 @@
-import {CurriedOf4, curry} from "../../function/curry";
+import {curry, CurryOf4} from "../../function/curry";
 import {length} from "../length";
 import {Indexable, ReduceOp, PredForIndexable} from "../../types";
 
@@ -31,5 +31,4 @@ export type ReduceUntilRight = typeof reduceUntilRight;
 /**
  * Curried version of `$reduceUntilRight`.
  */
-export const $reduceUntilRight = curry(reduceUntilRight) as
-  CurriedOf4<ReduceUntilRight, Parameters<ReduceUntilRight>, ReturnType<ReduceUntilRight>>;
+export const $reduceUntilRight = curry(reduceUntilRight) as CurryOf4;
