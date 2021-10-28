@@ -17,6 +17,7 @@ import {
   validateIOInput
 } from '../src/input';
 import {runHasPropTypes} from "./utils";
+import {log} from "../../fjl/tests/helpers";
 
 const toSlug = (x: string): string => (x + '').replace(/[^a-z\d\-_]+/gim, '-').toLowerCase(),
   trim = (x: string): string => x ? (x + '').trim() : x,
@@ -91,7 +92,9 @@ describe('#runValidators', function () {
     ]
       .concat(
         subsequences('hello')
-          .map(x => [runValidators(inputOptionObjs[0].validators, breakOnFailure, (x as string[]).join('')), true, 0])
+          .map(x => {
+            return [runValidators(inputOptionObjs[0].validators, breakOnFailure, x), true, 0]
+          })
       ))
       .forEach(([rsltObj, expectedResult, expectedMsgsLen]) => {
         const {result, messages} = rsltObj;
