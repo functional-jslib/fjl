@@ -1,4 +1,4 @@
-import {Curried, curry, CurryOf2} from "../function/curry";
+import {curry2, CurryOf2} from "../function/curry";
 import {map} from "./map";
 import {sortBy} from "./sortBy";
 import {genericAscOrdering} from "./utils";
@@ -37,6 +37,9 @@ export const
         // Decorate
         map((item: T) => [valueFn(item), item], xs)
       )
-    ),
+    );
 
-  $sortOn = curry(sortOn) as Curried<typeof sortOn>;
+export type SortOn = typeof sortOn;
+export type SortOnParams = Parameters<SortOn>;
+
+export const $sortOn = curry2(sortOn) as CurryOf2<SortOnParams[0], SortOnParams[1]>;

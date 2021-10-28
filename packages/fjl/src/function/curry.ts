@@ -1,12 +1,11 @@
 /**
  * @author edlc
  * @memberOf function
- * @description "Curry strict" and "curry arbitrarily" functions (`curry`, `curryN`).
+ * @description Curry and CurryN functions.
  */
 
 import {UnitNary} from '../types';
-import {noop} from './noop';
-import {typeOf} from "../object";
+import {typeOf} from "../object/typeOf";
 
 export type Curry2<T = any> =
   ((a: T, b: T, ...c: T[]) => T) &
@@ -14,16 +13,15 @@ export type Curry2<T = any> =
   ;
 
 export type Curry3<T = any> =
-  ((a: T) => Curry2<T>) &
   ((a: T, b: T, c: T, ...d: T[]) => T) &
-  ((a: T, b: T) => (c: T, ...d: T[]) => T)
+  ((a: T, b: T) => (c: T, ...d: T[]) => T) &
+  ((a: T) => Curry2<T>)
   ;
 
 export type Curry4<T = any> =
   ((a: T, b: T, c: T, d: T, ...e: T[]) => T) &
   ((a: T, b: T, c: T) => (d: T, ...e: T[]) => T) &
   ((a: T, b: T) => Curry2<T>) &
-  ((a: T) => (b: T) => Curry2<T>) &
   ((a: T) => Curry3<T>)
   ;
 
@@ -32,8 +30,6 @@ export type Curry5<T = any> =
   ((a: T, b: T, c: T, d: T) => (e: T, ...f: T[]) => T) &
   ((a: T, b: T, c: T) => Curry2<T>) &
   ((a: T, b: T) => Curry3<T>) &
-  ((a: T) => (b: T) => (c: T) => Curry2<T>) &
-  ((a: T) => (b: T) => Curry3<T>) &
   ((a: T) => Curry4<T>)
   ;
 
@@ -44,47 +40,40 @@ export type CurryOf2<T = any, T2 = any, RetT = any> =
   ((a: T) => (b: T2, ...c: T2[]) => RetT)
   ;
 
-export type CurryOf3<T = any, T2 = any, T3 = any, Ret = any> =
-  ((a: T, b: T2, c: T3, ...d: T3[]) => T) &
-  ((a: T, b: T2) => (c: T3, ...d: T3[]) => T) &
-  ((a: T) => (b: T2) => (c: T3, ...d: T3[]) => T) &
-  ((a: T) => (b: T2, c: T3, ...d: T3[]) => T)
+export type CurryOf3<T = any, T2 = any, T3 = any, RetT = any> =
+  ((a: T, b: T2, c: T3, ...d: T3[]) => RetT) &
+  ((a: T, b: T2) => (c: T3, ...d: T3[]) => RetT) &
+  ((a: T) => CurryOf2<T2, T3, RetT>)
   ;
 
-export type CurryOf4<T = any, T2 = any, T3 = any, T4 = any, Ret = any> =
-  ((a: T, b: T2, c: T3, d: T4, ...e: T[]) => T) &
-  ((a: T, b: T2, c: T3) => (d: T4, ...e: T[]) => T) &
-  ((a: T, b: T2) => (c: T3, d: T4, ...e: T[]) => T) &
-  ((a: T) => (b: T2) => (c: T3) => (d: T4, ...e: T[]) => T) &
-  ((a: T) => (b: T2) => (c: T3, d: T4, ...e: T[]) => T) &
-  ((a: T) => (b: T2, c: T3, d: T4, ...e: T[]) => T) &
-  ((a: T, b: T2) => (c: T3) => (d: T4, ...e: T[]) => T)
+export type CurryOf4<T = any, T2 = any, T3 = any, T4 = any, RetT = any> =
+  ((a: T, b: T2, c: T3, d: T4, ...e: T[]) => RetT) &
+  ((a: T, b: T2, c: T3) => (d: T4, ...e: T[]) => RetT) &
+  ((a: T, b: T2) => CurryOf2<T3, T4, RetT>) &
+  ((a: T) => CurryOf3<T2, T3, T4, RetT>)
   ;
 
-export type CurryOf5<T = any, T2 = any, T3 = any, T4 = any, T5 = any, Ret = any> =
-  ((a: T, b: T2, c: T3, d: T4, e: T5, ...f: T[]) => T) &
-  ((a: T, b: T2, c: T3, d: T4) => (e: T5, ...f: T[]) => T) &
-  ((a: T, b: T2, c: T3) => (d: T4) => (e: T5, ...f: T[]) => T) &
-  ((a: T, b: T2) => (c: T3) => (d: T4) => (e: T5, ...f: T[]) => T) &
-  ((a: T) => (b: T2) => (c: T3) => (d: T4) => (e: T5, ...f: T[]) => T) &
-  ((a: T) => (b: T2) => (c: T3) => (d: T4, e: T5, ...f: T[]) => T) &
-  ((a: T) => (b: T2) => (c: T3, d: T4, e: T5, ...f: T[]) => T) &
-  ((a: T) => (b: T2, c: T3, d: T4, e: T5, ...f: T[]) => T) &
-  ((a: T, b: T2) => (c: T3, d: T4, e: T5, ...f: T[]) => T) &
-  ((a: T, b: T2, c: T3) => (d: T4, e: T5, ...f: T[]) => T);
+export type CurryOf5<T = any, T2 = any, T3 = any, T4 = any, T5 = any, RetT = any> =
+  ((a: T, b: T2, c: T3, d: T4, e: T5, ...f: T[]) => RetT) &
+  ((a: T, b: T2, c: T3, d: T4) => (e: T5, ...f: T[]) => RetT) &
+  ((a: T, b: T2, c: T3) => CurryOf2<T4, T5, RetT>) &
+  ((a: T, b: T2) => CurryOf3<T3, T4, T5, RetT>) &
+  ((a: T) => CurryOf4<T2, T3, T4, T5, RetT>)
+  ;
 
-export type Curried<T = any, T2 = any, T3 = any, T4 = any, T5 = any, Ret = any> =
-  CurryOf5<T, T2, T3, T4, T5, Ret> |
-  CurryOf4<T, T2, T3, T4, Ret> |
-  CurryOf3<T, T2, T3, Ret> |
-  CurryOf2<T, T2, Ret>;
+export type Curried<T = any, T2 = any, T3 = any, T4 = any, T5 = any, RetT = any> =
+  CurryOf5<T, T2, T3, T4, T5, RetT> |
+  CurryOf4<T, T2, T3, T4, RetT> |
+  CurryOf3<T, T2, T3, RetT> |
+  CurryOf2<T, T2, RetT>
+  ;
 
 export const
 
   /**
    * Curries a function up to a given arity.
    */
-  curryN = <Fn extends UnitNary, Params extends any[], RetT>(
+  curryN = <Fn extends UnitNary>(
     executeArity: number,
     fn: Fn,
     ...argsToCurry: any[]
@@ -96,9 +85,9 @@ export const
     const curriedFn = (...args: any[]): Curried => {
       const catedArgs = argsToCurry.concat(args),
         canBeCalled = catedArgs.length >= executeArity || executeArity <= 0;
-      if (!args.length && !canBeCalled) throw new Error(`${fn.name} expected one or more arguments. Received none.`);
+      if (!catedArgs.length && !canBeCalled) throw new Error(`${fn.name} expected one or more arguments. Received none.`);
       return canBeCalled ? fn(...catedArgs) :
-        curryN(executeArity - catedArgs.length, fn, ...catedArgs);
+        curryN(executeArity - catedArgs.length, fn.bind(null, ...catedArgs));
     };
 
     // Set our function's `length` since it is "disguised" as a non-variadic function (since `curryN` curries up to
@@ -113,8 +102,8 @@ export const
   /**
    * Curries a function based on it's defined arity (note: rest args param (`...rest`) are not counted in arity).
    */
-  curry = <Fn extends UnitNary, Params extends any[], RetT>(fn: Fn, ...argsToCurry: [...Params]): Curried =>
-    curryN((fn || noop).length, fn, ...argsToCurry),
+  curry = <Fn extends UnitNary>(fn: Fn, ...argsToCurry: any[]): Curried =>
+    curryN(fn.length, fn, ...argsToCurry),
 
   /**
    * Curries a function up to an arity of 2 (won't call function until 2 or more args).

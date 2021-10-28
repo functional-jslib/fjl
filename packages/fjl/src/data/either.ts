@@ -3,7 +3,6 @@
  * Created by elyde on 12/10/2016.
  */
 import {isset} from '../object/isset';
-import {curry} from '../function/curry';
 import {id} from '../function/id';
 import {MonadBase} from './monad';
 import {FunctorMapFn} from "../types";
@@ -92,6 +91,6 @@ export const
   /**
    * Curried version `either`.
    */
-  $either = curry(either)
+  $either = <A, B, C>(leftCallback: FunctorMapFn<C>) => (rightCallback: FunctorMapFn<C>) => (_either_: Left<A> | Right<B>): C => either(leftCallback, rightCallback, _either_)
 
 ;

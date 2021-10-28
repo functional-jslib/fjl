@@ -2,7 +2,6 @@
  * @module maybe
  */
 import {isset} from '../object/is';
-import {curry} from '../function';
 import {Monad, MonadBase, MonadConstructor} from './monad';
 import {Unary} from "../types";
 import {FunctorMapFn} from "../types";
@@ -139,7 +138,7 @@ export const
   /**
    * Curried version of `maybe`.
    */
-  $maybe = curry(maybe),
+  $maybe = <A, B>(replacement: B) => (fn: Unary<A, B>) => (maybeInst: Maybe<A> | A | null | undefined): B => maybe(replacement, fn, maybeInst),
 
   /**
    * Equality operator for maybes.
@@ -149,7 +148,7 @@ export const
   /**
    * Curried version of `maybeEqual`.
    */
-  $maybeEqual = curry(maybeEqual),
+  $maybeEqual = <A>(a: Maybe<A>) => <B>(b: Maybe<B>): boolean => maybeEqual(a, b),
 
   /**
    * Checks for maybe.
@@ -157,7 +156,8 @@ export const
   isMaybe = <T>(x: T): boolean => isNothing(x) || isJust(x),
 
   /**
-   * Always returns a `Maybe` (from `x`).
+   *
+   } Always returns a `Maybe` (from `x`).
    */
   toMaybe = <T>(x: T): Maybe<T> => {
     if (!isset(x)) {

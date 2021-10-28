@@ -14,7 +14,7 @@ export type Variadic<T = any, RetT = any> = (...xs: T[]) => RetT;
 
 export type Nary<T = any, RetT = any> = Variadic<T, RetT>;
 
-export type UnitNary<Params extends any[] = any, RetT = any> = (...params: [...Params]) => RetT;
+export type UnitNary = (...params: any) => any;
 
 export type Monadic<A = any, B = any, Ret = any> = (a: A, ...bs: B[]) => Ret;
 

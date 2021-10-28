@@ -2,15 +2,15 @@ import {compose} from "../../src/function/compose";
 import {Binary, Nary, Unary, UnaryPred} from "../../src/types";
 import {
   curry,
-  Curry,
   curry2,
   Curry2,
   curry3,
   Curry3,
   curry4,
+  Curry4,
   curry5,
   Curry5,
-  curryN, CurryOf3
+  curryN,
 } from "../../src/function/curry";
 import {
   alphabetArray,
@@ -58,15 +58,13 @@ describe('#compose', () => {
       expect(composed(num)).toEqual(expectedFor(num));
     });
   });
-
 });
 
 describe('#curryN', () => {
   // Some funcs to use in tests
   const recursiveBinOp = (op: Binary<number>, start: number): Binary<number> =>
-      (...args: number[]): number => args.reduce((a, b) => {
-        return op(a, b);
-      }, start),
+      (...args: number[]): number =>
+        args.reduce((a, b) => op(a, b), start),
     multiplyRecursive = recursiveBinOp((a, b) => a * b, 1),
     addRecursive = recursiveBinOp((a, b) => a + b, 0);
 
@@ -81,7 +79,7 @@ describe('#curryN', () => {
   it('should pass in any values passed in after the arity when executing the curried function', () => {
     const add = (...args: any[]): any => args.reduce((agg, x) => agg + x, 0),
       add3Nums = curryN(3, add) as Curry3<number>,
-      addNums = curryN(5, add3Nums) as Curry5<number>;
+      addNums = curryN(5, add) as Curry5<number>;
 
     expect(add3Nums(1)(2, 3)).toEqual(6);
     expect(add3Nums(1, 2)(3)).toEqual(6);
@@ -101,7 +99,6 @@ describe('#curryN', () => {
     const multiply5Nums = curryN(5, multiplyRecursive) as Curry5<number>,
       multiplyExpectedResult = Math.pow(5, 5),
       argsToTest = [
-        [5, 5, 5, 5, 5],
         [5, 5, 5, 5],
         [5, 5, 5],
         [5, 5],
@@ -127,7 +124,7 @@ describe('#curryN', () => {
 
 describe('#curry', () => {
 
-  it('should be of type function.', () => {
+   it('should be of type function.', () => {
     expect(curry).toBeInstanceOf(Function);
   });
 
