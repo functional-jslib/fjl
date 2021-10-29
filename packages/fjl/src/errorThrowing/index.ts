@@ -7,7 +7,6 @@ import {typeOf} from '../object/typeOf';
 import {isArray, isOfType, toTypeRef, toTypeRefName} from '../object/is';
 import {TypeRef} from "../types";
 
-
 /**
  * An interface for facilitating more generic error messages from our library.
  */
@@ -155,11 +154,11 @@ export const
    * Checks that passed in `value` is of given `type`.  Throws an error if value
    * is not of given `type`.  Curried.
    */
-  $errorIfNotType = curry4(errorIfNotType),
+  $errorIfNotType = curry4(errorIfNotType) as CurryOf4,
 
   /**
    * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
    *  is not of one of the given `types`.  Curried.
    */
-  $errorIfNotTypes = curry4(errorIfNotTypes)
+  $errorIfNotTypes = curry4(errorIfNotTypes) as CurryOf4
 ;

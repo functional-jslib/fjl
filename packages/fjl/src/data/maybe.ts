@@ -3,9 +3,10 @@
  */
 import {isset} from '../object/is';
 import {Monad, MonadBase, MonadConstructor} from './monad';
-import {Unary} from "../types";
+import {Unary, UnaryPred} from "../types";
 import {FunctorMapFn} from "../types";
 import {$instanceOf} from "../platform/object";
+import {curry2, curry3, CurryOf2, CurryOf3} from "../function";
 
 let NothingSingleton: Nothing;
 
@@ -108,7 +109,7 @@ export const
   /**
    * Checks for `Just`.
    */
-  isJust = $instanceOf(Just) as <T>(x: T) => boolean,
+  isJust = $instanceOf(Just) as UnaryPred,
 
   /**
    * Wraps `x` in an `Just`.
@@ -138,7 +139,7 @@ export const
   /**
    * Curried version of `maybe`.
    */
-  $maybe = <A, B>(replacement: B) => (fn: Unary<A, B>) => (maybeInst: Maybe<A> | A | null | undefined): B => maybe(replacement, fn, maybeInst),
+  $maybe = curry3(maybe) as CurryOf3,
 
   /**
    * Equality operator for maybes.
@@ -148,7 +149,7 @@ export const
   /**
    * Curried version of `maybeEqual`.
    */
-  $maybeEqual = <A>(a: Maybe<A>) => <B>(b: Maybe<B>): boolean => maybeEqual(a, b),
+  $maybeEqual = curry2(maybeEqual) as CurryOf2,
 
   /**
    * Checks for maybe.

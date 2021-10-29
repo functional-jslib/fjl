@@ -6,25 +6,24 @@
  * @see `Either` reference: [http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-Either.html](http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-Either.html)
  * @module monad
  */
-
 import {isset} from "../object/isset";
 import {$instanceOf} from '../platform/object';
 import {toFunction, curry2, CurryOf2} from "../function";
 import {
   Applicative, ApplicativeConstructor, Functor,
-  FunctorConstructor, FunctorMapFn, Apply, ApplyConstructor, TypeRef, Unary
+  FunctorConstructor, FunctorMapFn, Apply, ApplyConstructor, TypeRef, Unary, Binary
 } from "../types";
 import {isType} from "../object";
 
-export interface Monad<T> extends Applicative<T> {
+export interface Monad<T = any> extends Applicative<T> {
   join(): T;
 
   flatMap<RetT>(fn: FunctorMapFn<RetT>): Monad<RetT>;
 }
 
-export type MonadConstructor<T> = ApplicativeConstructor<T>;
+export type MonadConstructor<T = any> = ApplicativeConstructor<T>;
 
-export class MonadBase<T> implements Monad<T> {
+export class MonadBase<T = any> implements Monad<T> {
 
   /**
    * Same as `new Monad(...)` just in 'static' function format.
@@ -33,22 +32,22 @@ export class MonadBase<T> implements Monad<T> {
     return new MonadBase(x);
   }
 
-  static liftA2<A, B, RetT>(fn, appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
+  static liftA2<A, B, RetT>(fn: Binary<A, B, RetT>, appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
     return (appA.constructor as ApplicativeConstructor<RetT>).of(
-      fn(appA.valueOf(), appB.valueOf())
+      fn(toFunction(appA.valueOf())(), toFunction(appB.valueOf())())
     );
   }
 
   static apRight<A, B, RetT>(appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
-    (appA.valueOf() as unknown as CallableFunction)();
+    (toFunction(appA.valueOf()) as unknown as CallableFunction)();
     return (appB.constructor as ApplicativeConstructor<RetT>).of(
-      (appB.valueOf() as unknown as CallableFunction)()
+      (toFunction(appB.valueOf()) as unknown as CallableFunction)()
     );
   }
 
   static apLeft<A, B, RetT>(appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
-    const out = (appA.valueOf() as unknown as CallableFunction)();
-    (appB.valueOf() as unknown as CallableFunction)();
+    const out = (toFunction(appA.valueOf()) as unknown as CallableFunction)();
+    (toFunction(appB.valueOf()) as unknown as CallableFunction)();
     return (appA.constructor as ApplicativeConstructor<RetT>).of(out);
   }
 
@@ -125,7 +124,7 @@ export const
   /**
    * Curried version of `fmap`.
    */
-  $fmap = <T, RetT>(fn: FunctorMapFn<RetT>) => (x: Functor<T>): Functor<RetT> | Functor => fmap(fn, x),
+  $fmap = curry2(fmap) as CurryOf2,
 
   /**
    * Applies function contained by applicative to contents of given functor.
@@ -137,7 +136,7 @@ export const
   /**
    * Curried version of `ap`.
    */
-  $ap = <A, B, RetT>(app: Applicative<A>) => (functor: Functor<B>): Functor<RetT> => ap(app, functor),
+  $ap = curry2(ap) as CurryOf2,
 
   /**
    * Flat maps a function over given monad's contained value.
@@ -147,7 +146,7 @@ export const
   /**
    * Curried version of `flatMap`.
    */
-  $flatMap = <T, RetT>(fn: FunctorMapFn<RetT>) => (monad: Monad<T>): Monad<RetT> => flatMap(fn, monad),
+  $flatMap = curry2(flatMap) as CurryOf2,
 
   /**
    * Unwraps monad by type.
@@ -169,4 +168,4 @@ export const
   /**
    * Curried version of `unwrapMonadByType`.
    */
-  $unwrapMonadByType = <T>(Type: TypeRef) => (monad: Monad<T> | T): any => unwrapMonadByType(Type, monad);
+  $unwrapMonadByType = curry2(unwrapMonadByType) as CurryOf2;
