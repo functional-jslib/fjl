@@ -8,7 +8,7 @@ import {MonadBase} from './monad';
 import {FunctorMapFn} from "../types";
 import {curry3, CurryOf3} from "../function";
 
-export type Either<A, B> = A | B;
+export type Either<A, B> = Right<A> | Right<B>;
 
 /**
  * `Left` representation of `Either` construct.
@@ -79,7 +79,7 @@ export const
    * Converts given to an either (`Right`|`Left`)
    */
   toEither = <A, B>(x: A): Either<Right<A>, Left<B>> =>
-    (isLeft(x) || isRight(x) ? x : right(x).map(id)) as Either<Right<A>, Left<B>>,
+    (isLeft(x) || isRight(x) ? x : (!isset(x) ? left(x) : right(x).map(id))) as Either<Right<A>, Left<B>>,
 
   /**
    * Calls matching callback on incoming `Either`;  If it's an `Left` type, calls left-callback on it,
@@ -90,6 +90,7 @@ export const
     _either_.map(isRight(_either_) ? rightCallback : leftCallback).join();
 
 export type EitherFn = typeof either;
+
 export type EitherFnParams = Parameters<EitherFn>;
 
 /**
