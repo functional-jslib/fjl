@@ -8,7 +8,6 @@ import * as packageJson from './package';
 
 import gulp from 'gulp';
 import concat from 'gulp-concat';
-import * as eslint from 'gulp-eslint';
 import header from 'gulp-header';
 import uglify from 'gulp-uglify';
 import gulpBabel from 'gulp-babel';
@@ -87,12 +86,6 @@ const
             .map(partialPath => path.join(partialPath, '**', '*.js'));
         return deleteFilePaths(pathsToDelete);
     },
-
-    eslintTask = () =>
-        src([srcsGlob, '!node_modules/**'])
-            .pipe(eslint())
-            .pipe(eslint.format())
-            .pipe(eslint.failOnError()),
 
     umdTask = () =>
         src(srcsGlob)
@@ -201,8 +194,6 @@ const
             return gulp.watch([srcsGlob, './node_modules/**'], buildJsTask);
         }
     );
-
-    gulp.task('eslint', eslintTask);
 
     gulp.task('build', buildTask);
 
