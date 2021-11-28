@@ -4,7 +4,7 @@ import {compose} from "../../src/function";
 import {Unary} from "../../src/types";
 
 describe('#sortOn', () => {
-  const identity = x => x,
+  const identity = <T>(x: T): T => x,
     sortOnIdentity = $sortOn(identity),
     range0To10 = range(0, 10),
     range10To0 = range(10, 0, -1);

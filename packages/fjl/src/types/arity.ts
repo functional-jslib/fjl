@@ -1,6 +1,6 @@
-export type Nullary<T = any> = (x?: T) => T;
+export type Nullary<T = any, RetT = any> = (x?: T, ...args: T[]) => RetT;
 
-export type Unary<T = any, RetT = any> = (x: T) => RetT;
+export type Unary<T = any, RetT = any> = (x: T, ...args: T[]) => RetT;
 
 export type Binary<A = any, B = any, RetT = any> = (a: A, b: B) => RetT;
 
@@ -13,6 +13,8 @@ export type Quinary<A = any, B = any, C = any, D = any, E = any, RetT = any> = (
 export type Variadic<T = any, RetT = any> = (...xs: T[]) => RetT;
 
 export type Nary<T = any, RetT = any> = Variadic<T, RetT>;
+
+export type UnitNary = (...params: any) => any;
 
 export type Monadic<A = any, B = any, Ret = any> = (a: A, ...bs: B[]) => Ret;
 

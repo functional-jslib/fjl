@@ -2,6 +2,7 @@ export * from './arity';
 export * from './data';
 export * from './list';
 export * from './native';
+export * from './utility';
 
 // @todo clean this up and allow only one of these types
 export interface ConstructableType {

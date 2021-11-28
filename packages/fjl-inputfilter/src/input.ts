@@ -2,7 +2,7 @@
  * Created by Ely on 7/24/2014.
  */
 import {
-  apply, assign, compose, defineEnumProps, isArray, isset,
+  assign, compose, defineEnumProps, isArray, isset,
   isString, Slice, Unary, error as defaultErrorHandler
 } from 'fjl';
 import {
@@ -198,7 +198,7 @@ export const
    * Runs filters on value (successively).
    */
   runFilters = <T = any>(filters: Unary<T, any>[], value: T): T | any => filters && filters.length ?
-    apply(compose, filters)(value) : value,
+    compose(...filters)(value) : value,
 
   /**
    * Runs filters on value (successively) and returns result wrapped in a promise.

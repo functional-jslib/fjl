@@ -1,4 +1,4 @@
-import {curry, CurryOf2} from "../function";
+import {curry2, CurryOf2} from "../function";
 import {length} from "./length";
 import {PredForIndexable, Indexable} from "../types";
 import {keys} from "../platform/object";
@@ -26,4 +26,4 @@ export const all = <T>(p: PredForIndexable<T>, xs: Indexable<T>): boolean => {
 /**
  * Curried version of `all`.
  */
-export const $all = curry(all) as All<PredForIndexable<any>, Indexable<any>>;
+export const $all = curry2(all) as All<PredForIndexable, Indexable>;

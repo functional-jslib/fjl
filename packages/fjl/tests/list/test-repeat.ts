@@ -1,5 +1,5 @@
 import {repeat} from "../../src/list/repeat";
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 
 describe('#repeat', () => {
     const arg = 'a';

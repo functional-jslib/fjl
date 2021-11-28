@@ -2,13 +2,13 @@
  * @module maybe
  */
 import {isset} from '../object/is';
-import {curry} from '../function';
 import {Monad, MonadBase, MonadConstructor} from './monad';
-import {Unary} from "../types";
+import {Unary, UnaryPred} from "../types";
 import {FunctorMapFn} from "../types";
 import {$instanceOf} from "../platform/object";
+import {curry2, curry3, CurryOf2, CurryOf3} from "../function";
 
-let NothingSingleton;
+let NothingSingleton: Nothing;
 
 /**
  * Class for creating a `Nothing`.
@@ -19,7 +19,7 @@ export class Nothing<T = any> implements Monad<T> {
   /**
    * Applicative `pure` - Same as `new Nothing()`, `Nothing()`, and `nothing()`.
    */
-  static of<X>(x?: X): Nothing {
+  static of(x?: any): Nothing {
     return new Nothing(x);
   }
 
@@ -72,7 +72,7 @@ export const
   /**
    * Checks for `Nothing`.
    */
-  isNothing = <T>(x: T): boolean => x === NothingSingleton,
+  isNothing = (x: any): boolean => x === NothingSingleton,
 
   /**
    * Returns `Nothing`.
@@ -109,7 +109,7 @@ export const
   /**
    * Checks for `Just`.
    */
-  isJust = $instanceOf(Just) as <T>(x: T) => boolean,
+  isJust = $instanceOf(Just) as UnaryPred,
 
   /**
    * Wraps `x` in an `Just`.
@@ -139,7 +139,7 @@ export const
   /**
    * Curried version of `maybe`.
    */
-  $maybe = curry(maybe),
+  $maybe = curry3(maybe) as CurryOf3,
 
   /**
    * Equality operator for maybes.
@@ -149,7 +149,7 @@ export const
   /**
    * Curried version of `maybeEqual`.
    */
-  $maybeEqual = curry(maybeEqual),
+  $maybeEqual = curry2(maybeEqual) as CurryOf2,
 
   /**
    * Checks for maybe.
@@ -157,7 +157,8 @@ export const
   isMaybe = <T>(x: T): boolean => isNothing(x) || isJust(x),
 
   /**
-   * Always returns a `Maybe` (from `x`).
+   *
+   } Always returns a `Maybe` (from `x`).
    */
   toMaybe = <T>(x: T): Maybe<T> => {
     if (!isset(x)) {

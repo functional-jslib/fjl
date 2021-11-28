@@ -1,6 +1,6 @@
 import {expectEqual, vowelsArray, vowelsString} from "../helpers";
 import {splitAt} from "../../src/list/splitAt";
-import {Slice} from "../../src/platform";
+import {Slice} from "../../src/types/data";
 
 describe('#splitAt', () => {
   it('should split an list and/or string at given index', () => {

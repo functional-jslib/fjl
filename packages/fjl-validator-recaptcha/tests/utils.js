@@ -1,4 +1,4 @@
-import {apply, log, peek, range} from 'fjl';
+import {log, peek, range} from 'fjl';
 
 export {log, peek};
 
@@ -32,7 +32,7 @@ export const
         propTypeArgsList.forEach(args => {
             const _args = args.slice(0);
             _args.push(x);
-            apply(runHasPropOfType, _args);
+            runHasPropOfType(..._args);
         })
 
 ;

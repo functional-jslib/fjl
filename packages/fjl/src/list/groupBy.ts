@@ -47,7 +47,7 @@ export const
 
     // If original incoming slice is a string, return a slice of strings.
     if(xs.constructor === String) {
-      return groups.map(_xs => (_xs as T[]).join(''));
+      return groups.map(_xs => (_xs as T[]).join('')) as unknown as Slice<T>[];
     }
 
     return groups;

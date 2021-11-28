@@ -1,6 +1,6 @@
 import {group} from "../../src/list/group";
 import {vowelsArray, vowelsString} from "../helpers";
-import {Slice} from "../../src/platform/slice";
+import {Slice} from "../../src/types/data";
 
 describe(`#group`, () => {
     (<[Slice<any>, Slice<any>[]][]>[

@@ -1,10 +1,9 @@
-import {curry2, CurryPred2} from '../function/curry';
-
 /**
  * Equality combinator.
  */
-export const
+import {curry2, CurryOf2} from "../function";
 
-  equal = <T>(a: T, b: T): boolean => a === b,
-
-  $equal = curry2(equal) as CurryPred2<any>;
+export const equal = <T = any>(a: T, b: T): boolean => a === b;
+export type Equal = typeof equal;
+export type EqualParams = Parameters<Equal>;
+export const $equal = curry2(equal) as CurryOf2<EqualParams[0], EqualParams[1], ReturnType<Equal>>;

@@ -81,7 +81,7 @@ export * from './sortOn';
 export * from './span';
 export * from './splitAt';
 export * from './stripPrefix';
-export * from './subsequence';
+export * from './subsequences';
 export * from './sum';
 export * from './tail';
 export * from './tails';

@@ -1,5 +1,5 @@
 import {typeOf} from '../object/typeOf';
-import {curry2} from "./curry";
+import {curry2, CurryOf2} from "./curry";
 
 export const
 
@@ -15,6 +15,6 @@ export const
     return f;
   },
 
-  $fnOrError = curry2(fnOrError)
+  $fnOrError = curry2(fnOrError) as CurryOf2
 
 ;

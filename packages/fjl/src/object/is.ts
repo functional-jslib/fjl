@@ -5,10 +5,10 @@
 
 import {typeOf} from './typeOf';
 import {instanceOf, $instanceOf, keys} from '../platform/object';
-import {curry, CurryOf1, CurryOf2} from '../function/curry';
+import {curry, CurryOf2} from '../function/curry';
 import {length} from "../list/length";
 import {isset} from './isset';
-import {TypeRef} from "../types";
+import {TypeRef, Unary} from "../types";
 
 export {isset};
 
@@ -179,7 +179,7 @@ export const
    * @param value
    * @returns {Boolean}
    */
-  isObject = $isType(_Object) as CurryOf1<any, boolean>,
+  isObject = $isType(_Object) as Unary<any, boolean>,
 
   /**
    * Checks if value is a boolean.
@@ -187,7 +187,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isBoolean = $isType(_Boolean) as CurryOf1<any, boolean>,
+  isBoolean = $isType(_Boolean) as Unary<any, boolean>,
 
   /**
    * Checks if value is a valid number (also checks if isNaN so that you don't have to).
@@ -195,7 +195,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isNumber = $isType(_Number) as CurryOf1<any, boolean>,
+  isNumber = $isType(_Number) as Unary<any, boolean>,
 
   /**
    * Checks whether value is a string or not.
@@ -203,7 +203,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isString = $isType(_String) as CurryOf1<any, boolean>,
+  isString = $isType(_String) as Unary<any, boolean>,
 
   /**
    * Checks whether value is of `Map` or not.
@@ -211,7 +211,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isMap = $isType(_Map) as CurryOf1<any, boolean>,
+  isMap = $isType(_Map) as Unary<any, boolean>,
 
   /**
    * Checks whether value is of `Set` or not.
@@ -219,7 +219,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isSet = $isType(_Set) as CurryOf1<any, boolean>,
+  isSet = $isType(_Set) as Unary<any, boolean>,
 
   /**
    * Checks whether value is of `WeakMap` or not.
@@ -227,7 +227,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isWeakMap = $isType(_WeakMap) as CurryOf1<any, boolean>,
+  isWeakMap = $isType(_WeakMap) as Unary<any, boolean>,
 
   /**
    * Checks whether value is of `WeakSet` or not.
@@ -235,7 +235,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isWeakSet = $isType(_WeakSet) as CurryOf1<any, boolean>,
+  isWeakSet = $isType(_WeakSet) as Unary<any, boolean>,
 
   /**
    * Checks if value is undefined.
@@ -243,7 +243,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isUndefined = $isType(_Undefined) as CurryOf1<any, boolean>,
+  isUndefined = $isType(_Undefined) as Unary<any, boolean>,
 
   /**
    * Checks if value is null.
@@ -251,7 +251,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isNull = $isType(_Null) as CurryOf1<any, boolean>,
+  isNull = $isType(_Null) as Unary<any, boolean>,
 
   /**
    * Checks if value is a `Symbol`.
@@ -259,7 +259,7 @@ export const
    * @param value {*}
    * @returns {Boolean}
    */
-  isSymbol = $isType(_Symbol) as CurryOf1<any, boolean>,
+  isSymbol = $isType(_Symbol) as Unary<any, boolean>,
 
   /**
    * Checks if given `x` is set and of one of
@@ -368,7 +368,7 @@ export const
    * @param types {...TypeRef}
    * @returns {boolean}
    */
-  instanceOfOne = (x: any, ...types): boolean => types.some($instanceOf(x) as CurryOf2<Function, any, boolean>),
+  instanceOfOne = (x: any, ...types): boolean => types.some($instanceOf(x)),
 
   /**
    * Checks if value qualifies (has `map` method) as a functor.
@@ -376,6 +376,6 @@ export const
    * @param x {*}
    * @returns {boolean}
    */
-  isFunctor = (x: any): boolean => x && x.map && (instanceOf(Function, x.map) as boolean)
+  isFunctor = (x: any): boolean => x && x.map && (instanceOf(Function, x.map))
 
 ;

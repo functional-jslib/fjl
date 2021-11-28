@@ -10,7 +10,7 @@ const getFoldOpForArray = <T>(pred: BinaryPred<T, T>) => (agg: Slice<T>, b: T): 
     return agg;
   },
 
-  getFoldOpForString = <T>(pred: BinaryPred<T, T>) => (agg: Slice<T>, b: T): Slice<T> => {
+  getFoldOpForString = <T>(pred: BinaryPred<T, T>) => (agg: Slice<T>, b: T): string | Slice<T> => {
     const alreadyAdded = any((a: T) => pred(a, b), agg);
     return !alreadyAdded ? (agg as unknown as string) + b : agg; // unknown here is ok (since func. is used internally only).
   };

@@ -3,6 +3,7 @@ import {length} from "./length";
 import {toShortest} from "./utils";
 import {map} from "./map";
 import {sliceTo} from "./utils/sliceTo";
+import {Slice} from "../types";
 
 export const
   /**
@@ -12,13 +13,13 @@ export const
    * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
    *  of lists to zip.
    */
-  zipWithN = <T = any>(op, ...lists: T[][]): T[][] => {
-    const trimmedLists = toShortest(...lists),
-      lenOfTrimmed = length(trimmedLists);
+  zipWithN = <T = any>(op, ...lists: T[][]): Slice<T>[] => {
+    const trimmedLists = toShortest(...lists) as Slice<T>[],
+      lenOfTrimmed = trimmedLists.length;
     if (!lenOfTrimmed) {
       return [];
     } else if (lenOfTrimmed === 1) {
-      return sliceTo(length(trimmedLists[0]), trimmedLists[0]) as T[][];
+      return [trimmedLists[0]];
     }
     return map((item, ind) =>
         op(...map(xs => xs[ind], trimmedLists)),

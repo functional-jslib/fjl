@@ -1,9 +1,7 @@
 /**
  * @module function
  */
-export * from './apply';
 export * from './bind';
-export * from './call';
 export * from './compose';
 export * from './curry';
 export * from './flip';

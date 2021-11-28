@@ -1,8 +1,6 @@
-import {curry, CurryOf2} from "../function/curry";
+import {curry} from "../function/curry";
 import {Slice, PredForSlice} from "../types";
 import {typeOf} from "../object/typeOf";
-
-type Filter<T> = CurryOf2<PredForSlice<T>, Slice<T>, T[]>;
 
 export const
 
@@ -13,9 +11,9 @@ export const
     let ind = 0;
     const limit = xs.length,
       isString = typeOf(xs) === 'String';
-    let out = isString ? '' : [] as Slice<T>;
+    let out = isString ? '' : [] as T[];
     if (!limit) {
-      return out;
+      return out as Slice<T>;
     }
     if (typeof xs === 'string') {
       for (; ind < limit; ind++) {
@@ -30,9 +28,9 @@ export const
         }
       }
     }
-    return out;
+    return out as Slice<T>;
   },
 
-  $filter = curry(filter) as Filter<any>
+  $filter = curry(filter)
 
 ;

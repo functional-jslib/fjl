@@ -1,5 +1,6 @@
 import {alphabetArray, expectEqual, linkedListToList, LLNode} from "../helpers";
 import {scanl1} from "../../src/list";
+import {Slice} from '../../src/types/data';
 
 describe('#scanl1', () => {
   const unlinkedNodes = alphabetArray.map(char => ({data: char}));
@@ -29,6 +30,6 @@ describe('#scanl1', () => {
 
   it('should return an empty list when receiving an empty one', () => {
     expectEqual(scanl1((x: number) => x * 2, []), []);
-    expectEqual(scanl1((x: number) => x + 2, ''), []);
+    expectEqual(scanl1((x: number) => x + 2, '' as Slice), []);
   });
 });

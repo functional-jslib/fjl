@@ -1,4 +1,7 @@
-import {Nary} from "../types";
+import {UnitNary} from "../types";
+import {curry2, CurryOf2} from "./curry";
 
-export const bind = <T, RetT>(fn: Nary<T, RetT>, ...args: T[]): Nary<T, RetT> | RetT =>
-    fn.bind(null, ...args);
+export const bind = <F extends UnitNary>(fn: F, ...args: any[]): ReturnType<F> =>
+    fn.bind(null, ...args),
+
+  $bind = curry2(bind) as CurryOf2;

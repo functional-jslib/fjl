@@ -1,4 +1,14 @@
-import {defaultLeftErrMsgTmpl, either, isLeft, isRight, Left, Right, toLeft, toRight} from '../../src/data/either';
+import {
+  defaultLeftErrMsgTmpl,
+  either,
+  isLeft,
+  isRight,
+  left,
+  Left, right,
+  Right, toEither,
+  toLeft,
+  toRight
+} from '../../src/data/either';
 import {falsyList, truthyList} from "../helpers";
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'];
@@ -102,6 +112,42 @@ describe('`isRight`', () => {
   });
 });
 
+describe('#toRight', () => {
+  (<[string, any, any][]>[
+      ['toRight(Right<"string">) === right("string")', right("string"), right("string")],
+      ['toRight(Right<Left<"Err msg">>) === right(left("Err msg"))', left("Err msg"), right(left("Err msg"))]
+    ].concat(
+      [null, undefined].map(x => [`toRight(${x}) === right(${x})`, x, right(x)]),
+      truthyList.map(x => [`toRight(${x}) === right(${x})`, x, right(x)]) as ConcatArray<any>
+    )
+  )
+    .forEach(([testName, control, expected]) => {
+      it(testName, function () {
+        const result = toRight(control);
+        expect(result).toBeInstanceOf(expected.constructor);
+        expect(result.valueOf()).toEqual(expected.valueOf());
+      });
+    });
+});
+
+describe('#toLeft', () => {
+  (<[string, any, any][]>[
+      ['toLeft(Left("Error message") === left("Error message")', left("Error message"), left("Error message")],
+      ['toLeft(Right("Success") === left(right("Success"))', right("Success"), left(right("Success"))]
+    ].concat(
+      [null, undefined].map(x => [`toLeft(${x}) === left(${x})`, x, left(x)]),
+      truthyList.map(x => [`toLeft(${x}) === left(${x})`, x, left(x)]) as ConcatArray<any>
+    )
+  )
+    .forEach(([testName, control, expected]) => {
+      it(testName, function () {
+        const result = toLeft(control);
+        expect(result).toBeInstanceOf(expected.constructor);
+        expect(result.valueOf()).toEqual(expected.valueOf());
+      });
+    });
+});
+
 describe('#either', () => {
   const successMessage = 'Success message.';
   [].concat(
@@ -115,6 +161,24 @@ describe('#either', () => {
       it(`either(A, B) === ${JSON.stringify(expected)}`, () => {
         const result = either(() => expected, () => successMessage, arg);
         expect(result).toEqual(expected);
+      });
+    });
+});
+
+describe('#toEither', () => {
+  (<[string, any, any][]>[
+      ['toEither(Left("Error message") === Left("Error message")', left("Error message"), left("Error message")],
+      ['toEither(Right("Success") === Right("Success")', right("Success"), right("Success")]
+    ].concat(
+      [null, undefined].map(x => [`toEither(${x}) === left(${x})`, x, left(x)]),
+      truthyList.map(x => [`toEither(${x}) === right(${x})`, x, right(x)]) as ConcatArray<any>
+    )
+  )
+    .forEach(([testName, control, expected]) => {
+      it(testName, function () {
+        const result = toEither(control);
+        expect(result).toBeInstanceOf(expected.constructor);
+        expect(result.valueOf()).toEqual(expected.valueOf());
       });
     });
 });
