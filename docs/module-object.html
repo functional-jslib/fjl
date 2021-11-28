@@ -207,7 +207,10 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// E.g., `Object.defineProperties(obj, descriptor)` can now be used likeimport {defineProperties} from 'fjl'defineProperties(descriptor, someObj),// Et. al.</code></pre>
+    <pre class="prettyprint"><code>// E.g., `Object.defineProperties(obj, descriptor)` can now be used like
+import {defineProperties} from 'fjl'
+defineProperties(descriptor, someObj),
+// Et. al.</code></pre>
 
 
 
@@ -831,7 +834,8 @@
 
 
 <div class="description">
-    Creates a descriptor for a property which is settable but throwserrors when the `Type` is disobeyed.
+    Creates a descriptor for a property which is settable but throws
+errors when the `Type` is disobeyed.
 </div>
 
 
@@ -3566,7 +3570,9 @@
 
 
 <div class="description">
-    Checks to see if passed in value is empty;  I.e., check for one of '', 0, `null`, `undefined`, `NaN`, `false`, empty array, empty object, ~~empty function (zero arity)~~, or empty collection (es6 collection: Map, Set, WeakMap, or WeakSet etc.) (`!value.size`).
+    Checks to see if passed in value is empty;  I.e.,
+ check for one of '', 0, `null`, `undefined`, `NaN`, `false`, empty array, empty object, ~~empty function (zero arity)~~,
+ or empty collection (es6 collection: Map, Set, WeakMap, or WeakSet etc.) (`!value.size`).
 </div>
 
 
@@ -4677,7 +4683,8 @@
 
 
 <div class="description">
-    Checks if given value is either strictly one of given types or isan `instanceof` one of given types.
+    Checks if given value is either strictly one of given types or is
+an `instanceof` one of given types.
 </div>
 
 
@@ -5490,7 +5497,9 @@
 
 
 <div class="description">
-    Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check onconstructor names, else if first check fails and `type` is a constructor, performs an `instanceof` checkon value with constructor.
+    Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check on
+constructor names, else if first check fails and `type` is a constructor, performs an `instanceof` check
+on value with constructor.
 </div>
 
 
@@ -5658,7 +5667,17 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>isOfType(Number, 99) === true        // true  (passes strict type check (numbers are not instances of `Number`                                     //        constructor)isOfType('Number', 99) === true      // true  (passes strict type check)isOfType(Number, NaN) === true       // true. (passes instance of check)                                     //        If you want "true" strict type checking use `isType`isOfType(Object, []) === true        // true  (passes instance of check)isOfType(Array, []) === true         // true  (passes instance of check)isOfType(Object, {}) === true        // true  (passes instance of check)isOfType(Object.name, {}) === true   // true  (Passes strict type check)class Abc extends String {}isOfType(String, new Abc('abcd')) // true (passes instanceof check)</code></pre>
+    <pre class="prettyprint"><code>isOfType(Number, 99) === true        // true  (passes strict type check (numbers are not instances of `Number`
+                                     //        constructor)
+isOfType('Number', 99) === true      // true  (passes strict type check)
+isOfType(Number, NaN) === true       // true. (passes instance of check)
+                                     //        If you want "true" strict type checking use `isType`
+isOfType(Object, []) === true        // true  (passes instance of check)
+isOfType(Array, []) === true         // true  (passes instance of check)
+isOfType(Object, {}) === true        // true  (passes instance of check)
+isOfType(Object.name, {}) === true   // true  (Passes strict type check)
+class Abc extends String {}
+isOfType(String, new Abc('abcd')) // true (passes instanceof check)</code></pre>
 
 
 
@@ -6849,7 +6868,13 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>isType(String, 'abcdefg')  === true // true  isType(String.name, 'abcdefg') === true  isType(Number, NaN) === false  isType(Number, 99) === true  isType('Null', 99) === false // though, for `null` and `undefined` checks                               // @see `isset`, in this module, instead  isType('Undefined', undefined) === true // true</code></pre>
+    <pre class="prettyprint"><code>isType(String, 'abcdefg')  === true // true
+  isType(String.name, 'abcdefg') === true
+  isType(Number, NaN) === false
+  isType(Number, 99) === true
+  isType('Null', 99) === false // though, for `null` and `undefined` checks
+                               // @see `isset`, in this module, instead
+  isType('Undefined', undefined) === true // true</code></pre>
 
 
 
@@ -7022,7 +7047,9 @@
 
 
 <div class="description">
-    Checks if given `x` is set and of one of [String, Boolean, Number, Symbol] (null and undefined are immutable but are not "usable" (usually not what we want to operate on).
+    Checks if given `x` is set and of one of
+ [String, Boolean, Number, Symbol] (null and undefined are immutable
+ but are not "usable" (usually not what we want to operate on).
 </div>
 
 
@@ -7916,7 +7943,8 @@
 <dl>
     <dt>
         <div class="param-desc">
-        - Throws an error if value doesn't have a `length` property ( `null`, `undefined`, {Boolean}, Symbol, et. al.).
+        - Throws an error if value doesn't have a `length` property (
+ `null`, `undefined`, {Boolean}, Symbol, et. al.).
         </div>
     </dt>
     <dd></dd>
@@ -7977,7 +8005,8 @@
 
 
 <div class="description">
-    Looks up property and returns it's value; Else `undefined`.Method is null safe (will not throw on `null` or `undefined`).
+    Looks up property and returns it's value; Else `undefined`.
+Method is null safe (will not throw on `null` or `undefined`).
 </div>
 
 
@@ -8349,7 +8378,11 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// - If exists `(value).constructor.of` uses this.// - If value is of one String, Boolean, Symbol, or Number types calls it's//      constructor as a function (in cast form;  E.g., `constructor(...args)` )// - Else if constructor is a function, thus far, then calls constructor using//      the `new` keyword (with any passed in args).</code></pre>
+    <pre class="prettyprint"><code>// - If exists `(value).constructor.of` uses this.
+// - If value is of one String, Boolean, Symbol, or Number types calls it's
+//      constructor as a function (in cast form;  E.g., `constructor(...args)` )
+// - Else if constructor is a function, thus far, then calls constructor using
+//      the `new` keyword (with any passed in args).</code></pre>
 
 
 
@@ -8367,7 +8400,8 @@
 
 
 <div class="description">
-    Gives you value at key/namespace-key within `obj`;  E.g.,searchObj('all.your.base', {all: {your: {base: 99}}}) === 99 // `true`
+    Gives you value at key/namespace-key within `obj`;  E.g.,
+searchObj('all.your.base', {all: {your: {base: 99}}}) === 99 // `true`
 </div>
 
 
@@ -8532,7 +8566,16 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```if (obj &amp;&amp; obj.all &amp;&amp; obj.all.your &amp;&amp; obj.all.your.base) {  // Thing we want to do}// So with our function becomesif (searchObj('all.your.base', obj)) {  // Thing we want to do}```</code></pre>
+    <pre class="prettyprint"><code>```
+if (obj &amp;&amp; obj.all &amp;&amp; obj.all.your &amp;&amp; obj.all.your.base) {
+  // Thing we want to do
+}
+
+// So with our function becomes
+if (searchObj('all.your.base', obj)) {
+  // Thing we want to do
+}
+```</code></pre>
 
 
 
@@ -9079,7 +9122,8 @@
 
 
 <div class="description">
-    Returns a target-descriptor tuple whose 'descriptor' will be set to enumerable (`enumerable: true`).
+    Returns a target-descriptor tuple whose 'descriptor' will be set to
+ enumerable (`enumerable: true`).
 </div>
 
 
@@ -9902,7 +9946,8 @@
 
 
 <div class="description">
-    Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values intotype refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
+    Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values into
+type refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
 </div>
 
 
@@ -10201,7 +10246,8 @@
 
         
 <div class="param-desc">
-    - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose normalized names are 'Null', 'Undefined', 'NaN' respectively).
+    - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ normalized names are 'Null', 'Undefined', 'NaN' respectively).
 </div>
 
 
@@ -10423,7 +10469,10 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// E.g., `Object.defineProperties(obj, descriptor)` can now be used likeimport {defineProperties} from 'fjl'defineProperties(descriptor, someObj),// Et. al.</code></pre>
+    <pre class="prettyprint"><code>// E.g., `Object.defineProperties(obj, descriptor)` can now be used like
+import {defineProperties} from 'fjl'
+defineProperties(descriptor, someObj),
+// Et. al.</code></pre>
 
 
 
@@ -11047,7 +11096,8 @@
 
 
 <div class="description">
-    Creates a descriptor for a property which is settable but throwserrors when the `Type` is disobeyed.
+    Creates a descriptor for a property which is settable but throws
+errors when the `Type` is disobeyed.
 </div>
 
 
@@ -13782,7 +13832,9 @@
 
 
 <div class="description">
-    Checks to see if passed in value is empty;  I.e., check for one of '', 0, `null`, `undefined`, `NaN`, `false`, empty array, empty object, ~~empty function (zero arity)~~, or empty collection (es6 collection: Map, Set, WeakMap, or WeakSet etc.) (`!value.size`).
+    Checks to see if passed in value is empty;  I.e.,
+ check for one of '', 0, `null`, `undefined`, `NaN`, `false`, empty array, empty object, ~~empty function (zero arity)~~,
+ or empty collection (es6 collection: Map, Set, WeakMap, or WeakSet etc.) (`!value.size`).
 </div>
 
 
@@ -14893,7 +14945,8 @@
 
 
 <div class="description">
-    Checks if given value is either strictly one of given types or isan `instanceof` one of given types.
+    Checks if given value is either strictly one of given types or is
+an `instanceof` one of given types.
 </div>
 
 
@@ -15706,7 +15759,9 @@
 
 
 <div class="description">
-    Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check onconstructor names, else if first check fails and `type` is a constructor, performs an `instanceof` checkon value with constructor.
+    Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check on
+constructor names, else if first check fails and `type` is a constructor, performs an `instanceof` check
+on value with constructor.
 </div>
 
 
@@ -15874,7 +15929,17 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>isOfType(Number, 99) === true        // true  (passes strict type check (numbers are not instances of `Number`                                     //        constructor)isOfType('Number', 99) === true      // true  (passes strict type check)isOfType(Number, NaN) === true       // true. (passes instance of check)                                     //        If you want "true" strict type checking use `isType`isOfType(Object, []) === true        // true  (passes instance of check)isOfType(Array, []) === true         // true  (passes instance of check)isOfType(Object, {}) === true        // true  (passes instance of check)isOfType(Object.name, {}) === true   // true  (Passes strict type check)class Abc extends String {}isOfType(String, new Abc('abcd')) // true (passes instanceof check)</code></pre>
+    <pre class="prettyprint"><code>isOfType(Number, 99) === true        // true  (passes strict type check (numbers are not instances of `Number`
+                                     //        constructor)
+isOfType('Number', 99) === true      // true  (passes strict type check)
+isOfType(Number, NaN) === true       // true. (passes instance of check)
+                                     //        If you want "true" strict type checking use `isType`
+isOfType(Object, []) === true        // true  (passes instance of check)
+isOfType(Array, []) === true         // true  (passes instance of check)
+isOfType(Object, {}) === true        // true  (passes instance of check)
+isOfType(Object.name, {}) === true   // true  (Passes strict type check)
+class Abc extends String {}
+isOfType(String, new Abc('abcd')) // true (passes instanceof check)</code></pre>
 
 
 
@@ -17065,7 +17130,13 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>isType(String, 'abcdefg')  === true // true  isType(String.name, 'abcdefg') === true  isType(Number, NaN) === false  isType(Number, 99) === true  isType('Null', 99) === false // though, for `null` and `undefined` checks                               // @see `isset`, in this module, instead  isType('Undefined', undefined) === true // true</code></pre>
+    <pre class="prettyprint"><code>isType(String, 'abcdefg')  === true // true
+  isType(String.name, 'abcdefg') === true
+  isType(Number, NaN) === false
+  isType(Number, 99) === true
+  isType('Null', 99) === false // though, for `null` and `undefined` checks
+                               // @see `isset`, in this module, instead
+  isType('Undefined', undefined) === true // true</code></pre>
 
 
 
@@ -17238,7 +17309,9 @@
 
 
 <div class="description">
-    Checks if given `x` is set and of one of [String, Boolean, Number, Symbol] (null and undefined are immutable but are not "usable" (usually not what we want to operate on).
+    Checks if given `x` is set and of one of
+ [String, Boolean, Number, Symbol] (null and undefined are immutable
+ but are not "usable" (usually not what we want to operate on).
 </div>
 
 
@@ -18132,7 +18205,8 @@
 <dl>
     <dt>
         <div class="param-desc">
-        - Throws an error if value doesn't have a `length` property ( `null`, `undefined`, {Boolean}, Symbol, et. al.).
+        - Throws an error if value doesn't have a `length` property (
+ `null`, `undefined`, {Boolean}, Symbol, et. al.).
         </div>
     </dt>
     <dd></dd>
@@ -18193,7 +18267,8 @@
 
 
 <div class="description">
-    Looks up property and returns it's value; Else `undefined`.Method is null safe (will not throw on `null` or `undefined`).
+    Looks up property and returns it's value; Else `undefined`.
+Method is null safe (will not throw on `null` or `undefined`).
 </div>
 
 
@@ -18565,7 +18640,11 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// - If exists `(value).constructor.of` uses this.// - If value is of one String, Boolean, Symbol, or Number types calls it's//      constructor as a function (in cast form;  E.g., `constructor(...args)` )// - Else if constructor is a function, thus far, then calls constructor using//      the `new` keyword (with any passed in args).</code></pre>
+    <pre class="prettyprint"><code>// - If exists `(value).constructor.of` uses this.
+// - If value is of one String, Boolean, Symbol, or Number types calls it's
+//      constructor as a function (in cast form;  E.g., `constructor(...args)` )
+// - Else if constructor is a function, thus far, then calls constructor using
+//      the `new` keyword (with any passed in args).</code></pre>
 
 
 
@@ -18583,7 +18662,8 @@
 
 
 <div class="description">
-    Gives you value at key/namespace-key within `obj`;  E.g.,searchObj('all.your.base', {all: {your: {base: 99}}}) === 99 // `true`
+    Gives you value at key/namespace-key within `obj`;  E.g.,
+searchObj('all.your.base', {all: {your: {base: 99}}}) === 99 // `true`
 </div>
 
 
@@ -18748,7 +18828,16 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```if (obj &amp;&amp; obj.all &amp;&amp; obj.all.your &amp;&amp; obj.all.your.base) {  // Thing we want to do}// So with our function becomesif (searchObj('all.your.base', obj)) {  // Thing we want to do}```</code></pre>
+    <pre class="prettyprint"><code>```
+if (obj &amp;&amp; obj.all &amp;&amp; obj.all.your &amp;&amp; obj.all.your.base) {
+  // Thing we want to do
+}
+
+// So with our function becomes
+if (searchObj('all.your.base', obj)) {
+  // Thing we want to do
+}
+```</code></pre>
 
 
 
@@ -19295,7 +19384,8 @@
 
 
 <div class="description">
-    Returns a target-descriptor tuple whose 'descriptor' will be set to enumerable (`enumerable: true`).
+    Returns a target-descriptor tuple whose 'descriptor' will be set to
+ enumerable (`enumerable: true`).
 </div>
 
 
@@ -20118,7 +20208,8 @@
 
 
 <div class="description">
-    Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values intotype refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
+    Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values into
+type refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
 </div>
 
 
@@ -20417,7 +20508,8 @@
 
         
 <div class="param-desc">
-    - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose normalized names are 'Null', 'Undefined', 'NaN' respectively).
+    - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ normalized names are 'Null', 'Undefined', 'NaN' respectively).
 </div>
 
 
@@ -20641,7 +20733,10 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// E.g., `Object.defineProperties(obj, descriptor)` can now be used likeimport {defineProperties} from 'fjl'defineProperties(descriptor, someObj),// Et. al.</code></pre>
+    <pre class="prettyprint"><code>// E.g., `Object.defineProperties(obj, descriptor)` can now be used like
+import {defineProperties} from 'fjl'
+defineProperties(descriptor, someObj),
+// Et. al.</code></pre>
 
 
 
@@ -21265,7 +21360,8 @@
 
 
 <div class="description">
-    Creates a descriptor for a property which is settable but throwserrors when the `Type` is disobeyed.
+    Creates a descriptor for a property which is settable but throws
+errors when the `Type` is disobeyed.
 </div>
 
 
@@ -24000,7 +24096,9 @@
 
 
 <div class="description">
-    Checks to see if passed in value is empty;  I.e., check for one of '', 0, `null`, `undefined`, `NaN`, `false`, empty array, empty object, ~~empty function (zero arity)~~, or empty collection (es6 collection: Map, Set, WeakMap, or WeakSet etc.) (`!value.size`).
+    Checks to see if passed in value is empty;  I.e.,
+ check for one of '', 0, `null`, `undefined`, `NaN`, `false`, empty array, empty object, ~~empty function (zero arity)~~,
+ or empty collection (es6 collection: Map, Set, WeakMap, or WeakSet etc.) (`!value.size`).
 </div>
 
 
@@ -25111,7 +25209,8 @@
 
 
 <div class="description">
-    Checks if given value is either strictly one of given types or isan `instanceof` one of given types.
+    Checks if given value is either strictly one of given types or is
+an `instanceof` one of given types.
 </div>
 
 
@@ -25924,7 +26023,9 @@
 
 
 <div class="description">
-    Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check onconstructor names, else if first check fails and `type` is a constructor, performs an `instanceof` checkon value with constructor.
+    Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check on
+constructor names, else if first check fails and `type` is a constructor, performs an `instanceof` check
+on value with constructor.
 </div>
 
 
@@ -26092,7 +26193,17 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>isOfType(Number, 99) === true        // true  (passes strict type check (numbers are not instances of `Number`                                     //        constructor)isOfType('Number', 99) === true      // true  (passes strict type check)isOfType(Number, NaN) === true       // true. (passes instance of check)                                     //        If you want "true" strict type checking use `isType`isOfType(Object, []) === true        // true  (passes instance of check)isOfType(Array, []) === true         // true  (passes instance of check)isOfType(Object, {}) === true        // true  (passes instance of check)isOfType(Object.name, {}) === true   // true  (Passes strict type check)class Abc extends String {}isOfType(String, new Abc('abcd')) // true (passes instanceof check)</code></pre>
+    <pre class="prettyprint"><code>isOfType(Number, 99) === true        // true  (passes strict type check (numbers are not instances of `Number`
+                                     //        constructor)
+isOfType('Number', 99) === true      // true  (passes strict type check)
+isOfType(Number, NaN) === true       // true. (passes instance of check)
+                                     //        If you want "true" strict type checking use `isType`
+isOfType(Object, []) === true        // true  (passes instance of check)
+isOfType(Array, []) === true         // true  (passes instance of check)
+isOfType(Object, {}) === true        // true  (passes instance of check)
+isOfType(Object.name, {}) === true   // true  (Passes strict type check)
+class Abc extends String {}
+isOfType(String, new Abc('abcd')) // true (passes instanceof check)</code></pre>
 
 
 
@@ -27283,7 +27394,13 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>isType(String, 'abcdefg')  === true // true  isType(String.name, 'abcdefg') === true  isType(Number, NaN) === false  isType(Number, 99) === true  isType('Null', 99) === false // though, for `null` and `undefined` checks                               // @see `isset`, in this module, instead  isType('Undefined', undefined) === true // true</code></pre>
+    <pre class="prettyprint"><code>isType(String, 'abcdefg')  === true // true
+  isType(String.name, 'abcdefg') === true
+  isType(Number, NaN) === false
+  isType(Number, 99) === true
+  isType('Null', 99) === false // though, for `null` and `undefined` checks
+                               // @see `isset`, in this module, instead
+  isType('Undefined', undefined) === true // true</code></pre>
 
 
 
@@ -27456,7 +27573,9 @@
 
 
 <div class="description">
-    Checks if given `x` is set and of one of [String, Boolean, Number, Symbol] (null and undefined are immutable but are not "usable" (usually not what we want to operate on).
+    Checks if given `x` is set and of one of
+ [String, Boolean, Number, Symbol] (null and undefined are immutable
+ but are not "usable" (usually not what we want to operate on).
 </div>
 
 
@@ -28350,7 +28469,8 @@
 <dl>
     <dt>
         <div class="param-desc">
-        - Throws an error if value doesn't have a `length` property ( `null`, `undefined`, {Boolean}, Symbol, et. al.).
+        - Throws an error if value doesn't have a `length` property (
+ `null`, `undefined`, {Boolean}, Symbol, et. al.).
         </div>
     </dt>
     <dd></dd>
@@ -28411,7 +28531,8 @@
 
 
 <div class="description">
-    Looks up property and returns it's value; Else `undefined`.Method is null safe (will not throw on `null` or `undefined`).
+    Looks up property and returns it's value; Else `undefined`.
+Method is null safe (will not throw on `null` or `undefined`).
 </div>
 
 
@@ -28783,7 +28904,11 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// - If exists `(value).constructor.of` uses this.// - If value is of one String, Boolean, Symbol, or Number types calls it's//      constructor as a function (in cast form;  E.g., `constructor(...args)` )// - Else if constructor is a function, thus far, then calls constructor using//      the `new` keyword (with any passed in args).</code></pre>
+    <pre class="prettyprint"><code>// - If exists `(value).constructor.of` uses this.
+// - If value is of one String, Boolean, Symbol, or Number types calls it's
+//      constructor as a function (in cast form;  E.g., `constructor(...args)` )
+// - Else if constructor is a function, thus far, then calls constructor using
+//      the `new` keyword (with any passed in args).</code></pre>
 
 
 
@@ -28801,7 +28926,8 @@
 
 
 <div class="description">
-    Gives you value at key/namespace-key within `obj`;  E.g.,searchObj('all.your.base', {all: {your: {base: 99}}}) === 99 // `true`
+    Gives you value at key/namespace-key within `obj`;  E.g.,
+searchObj('all.your.base', {all: {your: {base: 99}}}) === 99 // `true`
 </div>
 
 
@@ -28966,7 +29092,16 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```if (obj &amp;&amp; obj.all &amp;&amp; obj.all.your &amp;&amp; obj.all.your.base) {  // Thing we want to do}// So with our function becomesif (searchObj('all.your.base', obj)) {  // Thing we want to do}```</code></pre>
+    <pre class="prettyprint"><code>```
+if (obj &amp;&amp; obj.all &amp;&amp; obj.all.your &amp;&amp; obj.all.your.base) {
+  // Thing we want to do
+}
+
+// So with our function becomes
+if (searchObj('all.your.base', obj)) {
+  // Thing we want to do
+}
+```</code></pre>
 
 
 
@@ -29513,7 +29648,8 @@
 
 
 <div class="description">
-    Returns a target-descriptor tuple whose 'descriptor' will be set to enumerable (`enumerable: true`).
+    Returns a target-descriptor tuple whose 'descriptor' will be set to
+ enumerable (`enumerable: true`).
 </div>
 
 
@@ -30336,7 +30472,8 @@
 
 
 <div class="description">
-    Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values intotype refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
+    Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values into
+type refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
 </div>
 
 
@@ -30635,7 +30772,8 @@
 
         
 <div class="param-desc">
-    - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose normalized names are 'Null', 'Undefined', 'NaN' respectively).
+    - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
+ normalized names are 'Null', 'Undefined', 'NaN' respectively).
 </div>
 
 
@@ -30680,7 +30818,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun Jun 13 2021 14:15:50 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Nov 27 2021 22:38:41 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
