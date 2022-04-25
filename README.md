@@ -68,71 +68,70 @@ const fjl = require('fjl');
 
 ### `list` methods
  ```
-map, slice, includes, indexOf, lastIndexOf, push, append, head, last,
-tail, init, uncons, unconsr, concat, concatMap, reverse, intersperse,
-intercalate, transpose, subsequences, swapped, permutations, foldl,
-foldr, foldl1, foldr1, mapAccumL, mapAccumR, iterate, repeat, replicate,
-cycle, unfoldr, findIndex, findIndices, elemIndex, elemIndices, take,
-drop, splitAt, takeWhile, dropWhile, dropWhileEnd, span, breakOnList,
-at, find, forEach, filter, partition, elem, notElem, isPrefixOf,
-isSuffixOf, isInfixOf, isSubsequenceOf, group, groupBy, inits, tails,
-stripPrefix, zip, zipN, zip3, zip4, zip5, zipWith, zipWithN, zipWith3,
-zipWith4, zipWith5, unzip, unzipN, any, all, and, or, not, sum, product,
-maximum, minimum, scanl, scanl1, scanr, scanr1, nub, remove, sort,
-sortOn, sortBy, insert, insertBy, nubBy, removeBy, removeFirstsBy,
-unionBy, union, intersect, intersectBy, difference, complement,
-sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
-reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
+all, and, any, append, at, breakOnList, complement, concat, concatMap,
+cycle, difference, drop, dropWhile, dropWhileEnd, elem, elemIndex,
+elemIndices, filter, find, findIndex, findIndices, foldl, foldl1, foldr,
+foldr1, forEach, group, groupBy, head, includes, indexOf, init, inits,
+insert, insertBy, intercalate, intersect, intersectBy, intersperse,
+isInfixOf, isPrefixOf, isSubsequenceOf, isSuffixOf, iterate, last,
+lastIndexOf, map, mapAccumL, mapAccumR, maximum, minimum, not, notElem,
+nub, nubBy, or, partition, permutations, product, push, remove,
+removeBy, removeFirstsBy, repeat, replicate, reverse, scanl, scanl1,
+scanr, scanr1, slice, sort, sortBy, sortOn, span, splitAt, stripPrefix,
+subsequences, sum, swapped, tail, tails, take, takeWhile, transpose,
+uncons, unconsr, unfoldr, union, unionBy, unzip, unzipN, zip, zip3,
+zip4, zip5, zipN, zipWith, zipWith3, zipWith4, zipWith5, zipWithN,
 findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
-aggregateArray, range
+genericAscOrdering, lastIndex, lengths, reduce, reduceRight,
+reduceUntil, reduceUntilRight, sliceCopy, sliceFrom, sliceTo,
+toShortest, aggregateArray, range
 ```
 ### `listUtils` methods
  ```
-sliceFrom, sliceTo, sliceCopy, genericAscOrdering, lengths, toShortest,
-reduceUntil, reduceUntilRight, reduce, reduceRight, lastIndex,
 findIndexWhere, findIndexWhereRight, findIndicesWhere, findWhere,
-aggregateArray
+genericAscOrdering, lastIndex, lengths, reduce, reduceRight,
+reduceUntil, reduceUntilRight, sliceCopy, sliceFrom, sliceTo,
+toShortest, aggregateArray
 ```
 ### `object` methods
  ```
-instanceOf, hasOwnProperty, length, native, assign, keys, lookup,
-typeOf, copy, toTypeRef, toTypeRefs, toTypeRefName, toTypeRefNames,
-isFunction, isType, isStrictly, isOfType, isLoosely, isClass,
-isCallable, isObject, isBoolean, isNumber, isString, isMap, isSet,
-isWeakMap, isWeakSet, isUndefined, isNull, isSymbol,
-isUsableImmutablePrimitive, isEmptyList, isEmptyObject,
-isEmptyCollection, isEmpty, isset, isOneOf, isStrictlyOneOf,
-isLooselyOneOf, instanceOfOne, isFunctor, isArray, of, searchObj,
-createTypedDescriptor, toEnumerableDescriptor, toTargetDescriptorTuple,
-defineProp, defineEnumProp, defineEnumProps, defineProps, assignDeep,
-objUnion, objIntersect, objDifference, objComplement, log, error, peek,
-warn, jsonClone, toArray, toAssocList, toAssocListDeep, fromAssocList,
-fromAssocListDeep
+assign, hasOwnProperty, instanceOf, keys, length, native, lookup,
+typeOf, copy, instanceOfOne, isArray, isBoolean, isCallable, isClass,
+isEmpty, isEmptyCollection, isEmptyList, isEmptyObject, isFunction,
+isFunctor, isLoosely, isLooselyOneOf, isMap, isNull, isNumber, isObject,
+isOfType, isOneOf, isSet, isStrictly, isStrictlyOneOf, isString,
+isSymbol, isType, isUndefined, isUsableImmutablePrimitive, isWeakMap,
+isWeakSet, isset, toTypeRef, toTypeRefName, toTypeRefNames, toTypeRefs,
+of, searchObj, createTypedDescriptor, defineEnumProp, defineEnumProps,
+defineProp, defineProps, toEnumerableDescriptor,
+toTargetDescriptorTuple, assignDeep, objComplement, objDifference,
+objIntersect, objUnion, error, log, peek, warn, jsonClone, toArray,
+fromAssocList, fromAssocListDeep, toAssocList, toAssocListDeep
 ```
 ### `boolean` methods
  ```
-isTruthy, isFalsy, alwaysTrue, alwaysFalse, equal, equalAll
+alwaysFalse, alwaysTrue, equal, equalAll, isFalsy, isTruthy
 ```
 ### `errorThrowing` methods
  ```
-typeRefsToStringOrError, defaultErrorMessageCall,
-getErrorIfNotTypeThrower, getErrorIfNotTypesThrower, errorIfNotType,
-errorIfNotTypes
+defaultErrorMessageCall, errorIfNotType, errorIfNotTypes,
+getErrorIfNotTypeThrower, getErrorIfNotTypesThrower,
+typeRefsToStringOrError
 ```
 ### `function` methods
  ```
-apply, call, compose, curryN, curry, curry2, curry3, curry4, curry5,
-flipN, flip, flip3, flip4, flip5, id, negateF, negateF2, negateF3,
+apply, call, compose, curry, curry2, curry3, curry4, curry5, curryN,
+flip, flip3, flip4, flip5, flipN, id, negateF, negateF2, negateF3,
 negateFN, until, fnOrError, noop, trampoline, toFunction
 ```
 ### `string` methods
  ```
-split, lines, words, unwords, unlines, lcaseFirst, ucaseFirst,
-camelCase, classCase
+camelCase, classCase, lcaseFirst, lines, split, ucaseFirst, unlines,
+unwords, words
 ```
 ### `utils` methods
  ```
-fPureTakesOne, fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5,
+fPureTakes2, fPureTakes3, fPureTakes4, fPureTakes5, fPureTakesOne,
 fPureTakesOneOrMore
 ```
 
