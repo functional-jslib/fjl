@@ -1,7 +1,10 @@
 import {terser} from 'rollup-plugin-terser';
 import path from 'path';
+import packageJson from './package.json';
 
-const projectPath = __dirname,
+const banner = `/**! fjl (functional js library) v${packageJson.version} | License: ${packageJson.license} | ` +
+        `Built-on: ${new Date()} **/`,
+    projectPath = __dirname,
     iifeName = 'fjl',
     configBase = {
         input: path.join(projectPath, 'src/fjl.js'),
@@ -17,6 +20,7 @@ export default [{
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
         sourcemap: true,
+        banner
     }
 }, {
     ...configBase,
@@ -26,6 +30,7 @@ export default [{
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
         sourcemap: true,
+        banner
     }
 }, {
     ...configBase,
@@ -35,6 +40,7 @@ export default [{
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
         sourcemap: true,
+        banner
     }
 }, {
     ...configBase,
@@ -42,14 +48,16 @@ export default [{
         format: 'umd',
         file: path.join(projectPath, 'dist/umd/fjl.js'),
         sourcemap: true,
-        name: iifeName
+        name: iifeName,
+        banner
     }
 }, {
     ...configBase,
     output: {
         format: 'iife',
-        file: path.join(projectPath, 'dist/fjl.min.js'),
+        file: path.join(projectPath, 'dist/fjl.js'),
         sourcemap: true,
-        name: iifeName
+        name: iifeName,
+        banner
     }
 }];
