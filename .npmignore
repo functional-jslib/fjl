@@ -1,13 +1,17 @@
 .babel*
 .eslint*
+.git*
 .idea
 .sass-cache
 .travis*
 
 gulp*
-
-markdown-fragments/
-markdown-fragments-generated/
-node_modules/
+jsdoc*
+markdown*/
 node-scripts/
-
+node_modules/
+packages/
+rollup*
+src/
+tests/
+tsconfig*
