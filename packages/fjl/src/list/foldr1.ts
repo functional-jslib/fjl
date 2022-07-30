@@ -1,4 +1,3 @@
-import {curry, CurryOf2} from "../function/curry";
 import {unconsr} from "./unconsr";
 import {reduceRight} from "./utils/reduceRight";
 import {Slice, ReduceOp} from "../types";
@@ -14,6 +13,7 @@ export const
     return !parts ? [] : reduceRight(op, parts[1] as unknown as ZeroT, parts[0]);
   },
 
-  $foldr1 = curry(foldr1) as CurryOf2<ReduceOp<any, Slice<any>, any>, Slice<any>, any>
+  $foldr1 = <T, ZeroT>(op: ReduceOp<T, Slice<T>, ZeroT>) =>
+    (xs: Slice<T>): ZeroT | [] => foldr1(op, xs)
 
 ;

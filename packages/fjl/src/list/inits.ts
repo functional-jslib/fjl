@@ -2,8 +2,6 @@ import {length} from "./length";
 import {sliceTo} from "./utils/sliceTo";
 import {Slice} from "../types";
 
-type Inits<T> = (xs: Slice<T>) => [Slice<T>] | Slice<T>;
-
 export const
     /**
      * The inits function returns all initial segments of the argument, shortest first. For example,

@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {Slice, PredForSlice} from "../types";
 import {typeOf} from "../object/typeOf";
 
@@ -31,6 +30,7 @@ export const
     return out as Slice<T>;
   },
 
-  $filter = curry(filter)
+  $filter = <T>(pred: PredForSlice<T>) =>
+    (xs: Slice<T>): Slice<T> => filter(pred, xs)
 
 ;

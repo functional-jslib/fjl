@@ -1,4 +1,3 @@
-import {curry, CurryOf2} from "../function/curry";
 import {length} from "./length";
 import {sliceCopy} from "./utils/sliceCopy";
 import {Slice} from "../types";
@@ -56,6 +55,7 @@ export const
   /**
    * Curried version of `$groupBy`.
    */
-  $groupBy = curry(groupBy) as CurryOf2<BinaryPred<any>, Slice<any>, Slice<any>[]>
+  $groupBy = <T>(equalityOp: BinaryPred<T>) =>
+    (xs: Slice<T>): Slice<T>[] => groupBy(equalityOp, xs)
 
 ;

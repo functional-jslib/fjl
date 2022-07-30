@@ -1,4 +1,3 @@
-import {curry, CurryOf3} from "../function/curry";
 import {length} from "./length";
 import {splitAt} from "./splitAt";
 import {concat} from "./concat";
@@ -9,13 +8,11 @@ import {Slice} from "../types";
 import {of} from "../object/of";
 import {typeOf} from "../object/typeOf";
 
-export const
-
-  /**
-   * A version of `insert` that allows you to specify the ordering of the inserted
-   * item;  Before/at, or after
-   */
-  insertBy = <T>(orderingFn: OrderingFunc<T>, x: T, xs: Slice<T>): Slice<T> => {
+/**
+ * A version of `insert` that allows you to specify the ordering of the inserted
+ * item;  Before/at, or after
+ */
+export const insertBy = <T>(orderingFn: OrderingFunc<T>, x: T, xs: Slice<T>): Slice<T> => {
     const limit = length(xs);
     if (!limit) {
       switch (typeOf(xs)) {
@@ -35,4 +32,8 @@ export const
     return push(x, sliceCopy(xs) as T[]) as Slice<T>;
   },
 
-  $insertBy = curry(insertBy) as CurryOf3<OrderingFunc<any>, any, Slice<any>, Slice<any>>;
+  $insertBy = <T>(orderingFn: OrderingFunc<T>) =>
+    (x: T) =>
+      (xs: Slice<T>): Slice<T> => insertBy(orderingFn, x, xs)
+
+;

@@ -1,4 +1,3 @@
-import {curry, CurryOf2} from "../function/curry";
 import {uncons} from "./uncons";
 import {reduce} from "./utils/reduce";
 import {ReduceOp, Slice} from "../types";
@@ -16,6 +15,7 @@ export const
     return reduce(op, _head as unknown as RetT, _tail) as RetT;
   },
 
-  $foldl1 = curry(foldl1) as CurryOf2<ReduceOp<any, Slice<any>, any>, Slice<any>, any>
+  $foldl1 = <T, RetT>(op: ReduceOp<T, Slice<T>, RetT>) =>
+    (xs: Slice<T>): RetT => foldl1(op, xs)
 
 ;

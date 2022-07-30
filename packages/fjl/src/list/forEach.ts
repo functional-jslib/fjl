@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {length} from "./length";
 import {ForEachOp, Slice} from "../types";
 
@@ -18,6 +17,7 @@ export const
     }
   },
 
-  $forEach = curry(forEach)
+  $forEach = <T>(fn: ForEachOp<T | Slice<T>, Slice<T>>) =>
+    (list: Slice<T>): void => forEach(fn, list)
 
 ;
