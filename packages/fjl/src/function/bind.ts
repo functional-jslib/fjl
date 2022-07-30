@@ -1,7 +1,13 @@
 import {UnitNary} from "../types";
-import {curry2, CurryOf2} from "./curry";
 
+/**
+ * Functional `bind` - ignores first `#Function.bind()` argument.
+ */
 export const bind = <F extends UnitNary>(fn: F, ...args: any[]): ReturnType<F> =>
     fn.bind(null, ...args),
 
-  $bind = curry2(bind) as CurryOf2;
+  /**
+   * Curried version of `bind`.
+   */
+  $bind = <F extends UnitNary>(fn: F) => (...args: any[]): ReturnType<F> =>
+    fn.bind(null, ...args);
