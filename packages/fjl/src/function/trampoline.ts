@@ -40,5 +40,5 @@ export const trampoline = <T, RetT>(fn: Nary<T, RetT>, fnName?: string): Nary<T,
     };
   },
 
-  $trampoline = curry2(trampoline) as CurryOf2;
-
+  $trampoline =  <T, RetT>(fn: Nary<T, RetT>, fnName?: string): Nary<T, RetT> =>
+    trampoline(fn, fnName)

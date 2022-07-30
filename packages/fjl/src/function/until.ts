@@ -1,4 +1,3 @@
-import {curry, CurryOf3} from './curry';
 import {Unary, UnaryPred} from "../types";
 
 export const
@@ -19,4 +18,10 @@ export const
     return result;
   },
 
-  $until = curry(until) as CurryOf3<UnaryPred, Unary>;
+  $until = <T>(predicate: UnaryPred<T>) =>
+    (operation: Unary<T>) =>
+      (startValue: T): T => until(
+        predicate,
+        operation,
+        startValue
+      );

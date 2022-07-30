@@ -1,5 +1,4 @@
 import {typeOf} from '../object/typeOf';
-import {curry2, CurryOf2} from "./curry";
 
 export const
 
@@ -15,6 +14,7 @@ export const
     return f;
   },
 
-  $fnOrError = curry2(fnOrError) as CurryOf2
+  $fnOrError = <T>(symbolName: string) => (f: T): T =>
+    fnOrError(symbolName, f)
 
 ;
