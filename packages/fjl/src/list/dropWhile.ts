@@ -24,4 +24,7 @@ export const
       slice(splitPoint, limit, xs) as Slice<T>;
   },
 
-  $dropWhile = curry(dropWhile) as DropWhile<any>;
+  $dropWhile = <T>(p: PredForSlice<T>) =>
+    (xs: Slice<T>): Slice<T> => dropWhile(p, xs)
+
+;
