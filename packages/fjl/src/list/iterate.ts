@@ -18,7 +18,9 @@ export const
   /**
    * iterate `f(x)` returns a list of repeated applications of `f` to `x` `limit` number of times.
    */
-  $iterate = curry(iterate) as CurryOf3<number, Unary<any>, any, any[]>,
+  $iterate = <T>(n: number) =>
+    (op: Unary<T>) =>
+      (x: T): T[] => iterate(n, op, x),
 
   /**
    * Generates a generator which yields the result of calling operator with last yielded result (on first call last
@@ -32,5 +34,8 @@ export const
     }
   },
 
-  $genIterator = curry(genIterator);
+  $genIterator = <T>(op: Unary<T, T>) =>
+    (x: T): () => Generator<T, void, T> => genIterator(op, x)
+
+;
 

@@ -1,4 +1,3 @@
-import {curry, CurryOf2} from "../function/curry";
 import {of} from "../object/of";
 import {isString} from "../object/is";
 import {Slice} from "../types";
@@ -37,4 +36,7 @@ export const
     return out;
   },
 
-  $intersperse = curry(intersperse) as CurryOf2<any, Slice<any>, Slice<any>>;
+  $intersperse = <T>(between: T) =>
+    (xs: Slice<T>): Slice<T> => intersperse(between, xs)
+
+;

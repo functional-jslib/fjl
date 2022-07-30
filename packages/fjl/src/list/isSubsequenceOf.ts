@@ -1,6 +1,5 @@
-import {curry2} from "../function/curry";
 import {length} from "./length";
-import {indexOf, } from "../platform/slice";
+import {indexOf,} from "../platform/slice";
 import {Slice} from "../types";
 
 export const
@@ -26,4 +25,7 @@ export const
     return false;
   },
 
-  $isSubsequenceOf = curry2(isSubsequenceOf);
+  $isSubsequenceOf = <T>(xs1: Slice<T>) =>
+    (xs2: Slice<T>): boolean => isSubsequenceOf(xs1, xs2)
+
+;

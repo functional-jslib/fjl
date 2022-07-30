@@ -29,4 +29,7 @@ export const
    * Checks if list `xs1` is a suffix of list `xs2`
    * @curried
    */
-  $isSuffixOf = curry(isSuffixOf);
+  $isSuffixOf = <T>(xs2: Slice<T>) =>
+    (xs1: Slice<T>): boolean => isSuffixOf(xs2, xs1)
+
+;

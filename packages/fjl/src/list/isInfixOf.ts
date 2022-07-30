@@ -1,4 +1,3 @@
-import {curry2} from "../function/curry";
 import {length} from "./length";
 import {Slice} from "../types";
 
@@ -30,4 +29,7 @@ export const
     return false;
   },
 
-  $isInfixOf = curry2(isInfixOf);
+  $isInfixOf = <T>(xs1: Slice<T>) =>
+    (xs2: Slice<T>): boolean => isInfixOf(xs1, xs2)
+
+;

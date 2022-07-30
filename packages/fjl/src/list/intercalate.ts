@@ -1,4 +1,3 @@
-import {curry} from "../function";
 import {isString} from "../object/is";
 import {intersperse} from "./intersperse";
 import {concat} from "./concat";
@@ -18,4 +17,6 @@ export const
     return concat(intersperse(xs, xss) as Slice<T>[]);
   },
 
-  $intercalate = curry(intercalate);
+  $intercalate = <T>(xs: Slice<T>) =>
+    (xss: Slice<Slice<T>>): Slice<T> => intercalate(xs, xss)
+;

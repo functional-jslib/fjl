@@ -1,6 +1,5 @@
-import {curry2} from "../function/curry";
 import {length} from "./length";
-import {indexOf, } from "../platform/slice";
+import {indexOf,} from "../platform/slice";
 import {Slice} from "../types";
 
 export const
@@ -23,4 +22,5 @@ export const
     return true;
   },
 
-  $isPrefixOf = curry2(isPrefixOf);
+  $isPrefixOf = <T>(xs1: Slice<T>) =>
+    (xs2: Slice<T>): boolean => isPrefixOf(xs1, xs2);
