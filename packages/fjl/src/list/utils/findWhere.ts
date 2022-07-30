@@ -25,6 +25,7 @@ export const
   /**
    * Curried version of `findWhere`.
    */
-  $findWhere = curry(findWhere) as CurryOf2<PredForIndexable<any>, Indexable<any>, any | undefined>
+  $findWhere = <T>(pred: PredForIndexable<T>) =>
+    (xs: Indexable<T>): T | undefined => findWhere(pred, xs)
 
 ;

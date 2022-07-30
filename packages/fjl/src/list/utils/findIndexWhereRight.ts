@@ -1,4 +1,3 @@
-import {curry, CurryOf2} from "../../function/curry";
 import {length} from "../length";
 import {PredForIndexable, Indexable} from "../../types";
 
@@ -21,6 +20,7 @@ export const
   /**
    * Curried version of `findIndexWhereRight`.
    */
-  $findIndexWhereRight = curry(findIndexWhereRight) as CurryOf2<PredForIndexable, Indexable, number>
+  $findIndexWhereRight = <T>(pred: PredForIndexable<T>) =>
+    (arr: Indexable<T>): number => findIndexWhereRight(pred, arr)
 
 ;

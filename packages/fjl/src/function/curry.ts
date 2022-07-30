@@ -2,6 +2,9 @@
  * @author edlc
  * @memberOf function
  * @description Curry and CurryN functions.
+ * @deprecated Use idiomatic currying, when currying is required - `curry*` function defined here are actually doing
+ * something that is not really currying - forcing currying on argument tuple sets (`(a, b, c)`) - true currying applies
+ * each argument to a new function (`(a) => (b) => c`, etc.).
  */
 
 import {UnitNary} from '../types';
