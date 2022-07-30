@@ -1,4 +1,4 @@
-import {curry, CurryOf2} from "../function/curry";
+import {CurryOf2} from "../function/curry";
 import {length} from "./length";
 import {PredForIndexable, Indexable} from "../types";
 import {keys} from "../platform/object";
@@ -28,4 +28,7 @@ export const
   /**
    * Curried version of `any`.
    */
-  $any = curry(any) as Any<PredForIndexable, Indexable>;
+  $any = <T>(p: PredForIndexable<T>) =>
+    (xs: Indexable<T>): boolean => any(p, xs)
+
+;

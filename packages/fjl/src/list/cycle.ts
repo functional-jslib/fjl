@@ -1,4 +1,3 @@
-import {curry} from "../function";
 import {concat} from "./concat";
 import {replicate} from "./replicate";
 import {Slice} from "../types";
@@ -13,7 +12,8 @@ export const
   cycle = <T>(n: number, xs: Slice<T>): Slice<T[]> =>
     concat(replicate(n, xs) as unknown as Slice<T[]>[]),
 
-  $cycle = curry(cycle),
+  $cycle = <T>(n: number) =>
+    (xs: Slice<T>): Slice<T[]> => cycle(n, xs),
 
   /**
    * Generates a generator which cycles list (concatenate) to end of last yielded result - On first call last yielded

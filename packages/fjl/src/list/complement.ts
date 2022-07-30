@@ -1,10 +1,7 @@
-import {curry2, CurryOf2} from '../function/curry';
 import {reduce} from "./utils/reduce";
 import {append} from "./append";
 import {difference} from "./difference";
 import {Slice} from '../types';
-
-export type Complement<Functor> = CurryOf2<Functor, Functor, Functor>
 
 export const
 
@@ -20,12 +17,8 @@ export const
 
   /**
    * Returns the complement of list 0 and the reset of the passed in arrays.
-   * @function module:list.complement
-   * @param arr0 {Array}
-   * @param arrays {...Array}
-   * @returns {Array}
-   * @curried
    */
-  $complement = curry2(complement) as Complement<Slice<any>>
+  $complement = <T>(xs1: Slice<T>) =>
+    (xs2: Slice<T>, ...arrays: Slice<T>[]): Slice<T> => complement(xs1, xs2, ...arrays)
 
 ;
