@@ -1,4 +1,4 @@
-import {alwaysFalse, alwaysTrue, equal, isFalsy, isTruthy} from "../../src/boolean";
+import {$equal, alwaysFalse, alwaysTrue, equal, isFalsy, isTruthy} from "../../src/boolean";
 import {falsyList, truthyList} from "../helpers";
 
 describe("#alwaysFalse", () => {
@@ -13,7 +13,7 @@ describe("#alwaysTrue", () => {
   });
 });
 
-describe("#equal", () => {
+describe("#equal, $equal", () => {
   (<[any, any, boolean][]>[
     [0, 0, true],
     ["", "", true],
@@ -22,6 +22,7 @@ describe("#equal", () => {
   ]).forEach(([a, b, expected]) => {
     it(`equal(${a}, ${b}) === ${expected}`, () => {
       expect(equal(a, b)).toEqual(expected);
+      expect($equal(a)(b)).toEqual(expected);
     });
   });
 });
