@@ -1,4 +1,4 @@
-import {$reduceUntilRight, reduceUntilRight} from "./reduceUntilRight";
+import {reduceUntilRight} from "./reduceUntilRight";
 import {alwaysFalse} from "../../boolean/alwaysFalse";
 import {ReduceOp, Indexable} from "../../types";
 
@@ -12,6 +12,9 @@ export const
     agg: RetT, xs: Indexable<T>): RetT =>
     reduceUntilRight(alwaysFalse, op, agg, xs),
 
-  $reduceRight = $reduceUntilRight(alwaysFalse)
+  $reduceRight = <T, RetT>(op: ReduceOp<T, Indexable<T>, RetT>) =>
+    (agg: RetT) =>
+      (xs: Indexable<T>): RetT =>
+        reduceUntilRight(alwaysFalse, op, agg, xs)
 
 ;

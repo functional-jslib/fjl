@@ -1,4 +1,4 @@
-import {$reduceUntil, reduceUntil} from "./reduceUntil";
+import {reduceUntil} from "./reduceUntil";
 import {alwaysFalse} from "../../boolean/alwaysFalse";
 import {ReduceOp, Indexable} from "../../types";
 
@@ -17,6 +17,8 @@ export const
   /**
    * Curried `reduce` combinator.
    */
-  $reduce = $reduceUntil(alwaysFalse)
+  $reduce = <T, RetT>(op: ReduceOp<T, Indexable<T>, RetT>) =>
+    (agg: RetT) =>
+      (xs: Indexable<T>): RetT => reduceUntil(alwaysFalse, op, agg, xs)
 
 ;

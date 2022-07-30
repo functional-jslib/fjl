@@ -1,4 +1,3 @@
-import {curry, CurryOf2} from "../../function/curry";
 import {slice} from "../../platform/slice";
 import {Slice} from "../../types";
 
@@ -12,5 +11,6 @@ export const
   /**
    * Curried version of `sliceFrom`.
    */
-  $sliceFrom = curry(sliceFrom) as CurryOf2<number, Slice, Slice>
+  $sliceFrom = <T = any, T2 extends Slice<T> = Slice<T>>(startInd: number) =>
+    (xs: T2): T2 => sliceFrom(startInd, xs)
 ;

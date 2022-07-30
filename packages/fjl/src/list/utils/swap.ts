@@ -1,4 +1,3 @@
-import {curry, CurryOf3} from "../../function";
 import {sliceCopy} from "./sliceCopy";
 
 export const
@@ -17,6 +16,8 @@ export const
     /**
      * Returns an array with the given indices swapped.
      */
-    $swap = curry(swap) as CurryOf3<number, number, any[], any[]>
+    $swap = <T>(ind1: number) =>
+      (ind2: number) =>
+        (list: T[]): T[] => swap(ind1, ind2, list)
 
 ;
