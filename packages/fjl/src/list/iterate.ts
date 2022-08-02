@@ -1,4 +1,3 @@
-import {curry, CurryOf3} from "../function";
 import {Unary} from "../types";
 
 

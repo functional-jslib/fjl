@@ -1,12 +1,8 @@
-import {curry, CurryOf2} from '../function/curry';
 import {typeOf} from '../object/typeOf';
 import {of} from '../object/of';
 import {isFunctor} from '../object/is';
 import {isset} from '../object/isset';
 import {Indexable, MapOp, Functor} from "../types";
-
-export type MapType<T1, T2, Functor1, RetFunctor> =
-  CurryOf2<MapOp<T1, number | string, Functor1, T2>, Functor1, RetFunctor>
 
 /**
  * Maps a function onto a ListLike (string or array) or a functor (value containing a map method).
@@ -50,4 +46,6 @@ export const
     }
   },
 
-  $map = curry(map) as MapType<any, any, any, any>;
+  $map = <T, RetT>(fn: MapOp<T, number | string, Functor<T> | Indexable<T>, RetT>) =>
+    (xs: Functor<T> | Indexable<T>): Functor<RetT> | Indexable<RetT> | any => map(fn, xs)
+;
