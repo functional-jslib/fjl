@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {sliceCopy} from "./utils/sliceCopy";
 import {length} from "./length";
 import {Slice} from "../types/data";
@@ -29,4 +28,7 @@ export const
     return [agg, mapped];
   },
 
-  $mapAccumL = curry(mapAccumL);
+  $mapAccumL = <A = any, B = any, MapRetT = any>(op: MapAccumOp<A, B, MapRetT>) =>
+    (zero: A) =>
+      (xs: Slice<B>): [A, Slice<MapRetT>] =>
+        mapAccumL(op, zero, xs);
