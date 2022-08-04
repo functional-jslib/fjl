@@ -1,5 +1,3 @@
-import {curry2} from "../function/curry";
-
 export const
 
   push = <T>(x: T, xs: T[]): T[] => {
@@ -9,6 +7,5 @@ export const
 
   /**
    * Pushes an item onto an array.
-   * @curried - Curried upto `2` items.
    */
-  $push = curry2(push);
+  $push = <T>(x: T) => (xs: T[]): T[] => push(x, xs);

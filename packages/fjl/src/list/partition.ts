@@ -1,4 +1,3 @@
-import {curry, CurryOf2} from "../function";
 import {PredForSlice, Slice} from "../types";
 
 export const
@@ -29,4 +28,5 @@ export const
     return [front, back];
   },
 
-  $partition = curry(partition) as CurryOf2<PredForSlice<any>, Slice<any>, [any[], any[]]>;
+  $partition = <T>(pred: PredForSlice<T>) =>
+    (list: Slice<T>): [T[], T[]] => partition(pred, list);
