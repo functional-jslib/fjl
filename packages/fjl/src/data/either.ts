@@ -6,7 +6,6 @@ import {isset} from '../object/isset';
 import {id} from '../function/id';
 import {MonadBase} from './monad';
 import {FunctorMapFn} from "../types";
-import {curry3, CurryOf3} from "../function";
 
 export type Either<A, B> = Right<A> | Right<B>;
 
@@ -96,5 +95,6 @@ export type EitherFnParams = Parameters<EitherFn>;
 /**
  * Curried version `either`.
  */
-export const $either =
-  curry3(either) as CurryOf3<EitherFnParams[0], EitherFnParams[1], EitherFnParams[2], ReturnType<EitherFn>>;
+export const $either = <A, B, C>(leftCallback: FunctorMapFn<C>) =>
+  (rightCallback: FunctorMapFn<C>) =>
+    (_either_: Left<A> | Right<B>): C => either(leftCallback, rightCallback, _either_);

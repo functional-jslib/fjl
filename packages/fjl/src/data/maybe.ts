@@ -6,7 +6,6 @@ import {Monad, MonadBase, MonadConstructor} from './monad';
 import {Unary, UnaryPred} from "../types";
 import {FunctorMapFn} from "../types";
 import {$instanceOf} from "../platform/object";
-import {curry2, curry3, CurryOf2, CurryOf3} from "../function";
 
 let NothingSingleton: Nothing;
 
@@ -139,7 +138,10 @@ export const
   /**
    * Curried version of `maybe`.
    */
-  $maybe = curry3(maybe) as CurryOf3,
+  $maybe = <A, B>(replacement: B) =>
+    (fn: Unary<A, B>) =>
+      (maybeInst: Maybe<A> | A | null | undefined): B =>
+        maybe(replacement, fn, maybeInst),
 
   /**
    * Equality operator for maybes.
@@ -149,7 +151,8 @@ export const
   /**
    * Curried version of `maybeEqual`.
    */
-  $maybeEqual = curry2(maybeEqual) as CurryOf2,
+  $maybeEqual =  <A, B>(a: Maybe<A>) =>
+    (b: Maybe<B>): boolean => maybeEqual(a, b),
 
   /**
    * Checks for maybe.

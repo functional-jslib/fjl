@@ -8,7 +8,7 @@
  */
 import {isset} from "../object/isset";
 import {$instanceOf} from '../platform/object';
-import {toFunction, curry2, CurryOf2} from "../function";
+import {toFunction} from "../function";
 import {
   Applicative, ApplicativeConstructor, Functor,
   FunctorConstructor, FunctorMapFn, Apply, ApplyConstructor, TypeRef, Unary, Binary
@@ -124,7 +124,9 @@ export const
   /**
    * Curried version of `fmap`.
    */
-  $fmap = curry2(fmap) as CurryOf2,
+  $fmap = <T, RetT>(fn: FunctorMapFn<RetT>) =>
+    (x: Functor<T>): Functor<RetT> | Functor =>
+      fmap(fn, x),
 
   /**
    * Applies function contained by applicative to contents of given functor.
@@ -136,7 +138,8 @@ export const
   /**
    * Curried version of `ap`.
    */
-  $ap = curry2(ap) as CurryOf2,
+  $ap = <A, B, RetT>(app: Applicative<A>) =>
+    (functor: Functor<B>): Functor<RetT> => app.ap(functor),
 
   /**
    * Flat maps a function over given monad's contained value.
@@ -146,7 +149,8 @@ export const
   /**
    * Curried version of `flatMap`.
    */
-  $flatMap = curry2(flatMap) as CurryOf2,
+  $flatMap = <T, RetT>(fn: FunctorMapFn<RetT>) =>
+    (monad: Monad<T>): Monad<RetT> => monad.flatMap(fn),
 
   /**
    * Unwraps monad by type.
@@ -168,4 +172,6 @@ export const
   /**
    * Curried version of `unwrapMonadByType`.
    */
-  $unwrapMonadByType = curry2(unwrapMonadByType) as CurryOf2;
+  $unwrapMonadByType = <T>(Type: TypeRef) =>
+    (monad: Monad<T> | T): any =>
+      unwrapMonadByType(Type, monad);
