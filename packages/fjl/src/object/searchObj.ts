@@ -1,5 +1,4 @@
 import {isset} from './is';
-import {curry} from '../function/curry';
 
 export const
 

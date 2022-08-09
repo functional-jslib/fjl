@@ -27,7 +27,6 @@
  * @returns {*} - Finally returned value.
  */
 import {Nary} from "../types";
-import {curry2, CurryOf2} from "./curry";
 
 export const trampoline = <T, RetT>(fn: Nary<T, RetT>, fnName?: string): Nary<T, RetT> => {
     return (...args: T[]): RetT => {
