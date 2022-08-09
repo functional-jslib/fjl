@@ -15,4 +15,6 @@ export const
       splitAt(length(prefix), list)[1] :
       sliceCopy(list),
 
-  $stripPrefix = curry(stripPrefix);
+  $stripPrefix = <T>(prefix: Slice<T>) =>
+    (list: Slice<T>): Slice<T> =>
+      stripPrefix(prefix, list)

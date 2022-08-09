@@ -1,8 +1,5 @@
-import {curry3} from "../function/curry";
-import {length} from "./length";
 import {toShortest} from "./utils";
 import {map} from "./map";
-import {sliceTo} from "./utils/sliceTo";
 import {Slice} from "../types";
 
 export const
@@ -27,5 +24,7 @@ export const
     );
   },
 
-  $zipWithN = curry3(zipWithN);
+  $zipWithN = <T = any>(op) =>
+    (...lists: T[][]): Slice<T>[] =>
+      zipWithN(op, ...lists);
 

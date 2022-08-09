@@ -1,4 +1,3 @@
-import {curry2} from "../function/curry";
 import {reduce} from "./utils/reduce";
 import {toShortest} from "./utils/toShortest";
 import {push} from "./push";
@@ -17,4 +16,8 @@ export const
       [], trimmedLists[0]);
   },
 
-  $zipN = curry2(zipN);
+  $zipN = <T = any>(arr1: T[]) =>
+    (...lists: T[][]): T[][] =>
+      zipN(arr1, ...lists)
+
+;

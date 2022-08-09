@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {append} from "./append";
 import {filter} from "./filter";
 import {includes, } from "../platform/slice";
@@ -17,4 +16,6 @@ export const
       filter(elm => !includes(arr1, elm), arr2) as Slice<T>
     ),
 
-  $union = curry(union);
+  $union = <T>(arr1: Slice<T>) =>
+    (arr2: Slice<T>): Slice<T> => union(arr1, arr2)
+;

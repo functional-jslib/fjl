@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {length} from "./length";
 import {reduce, toShortest} from "./utils";
 import {push} from "./push";
@@ -39,4 +38,7 @@ export const
       [], a1);
   },
 
-  $zipWith = curry(zipWith);
+  $zipWith = <T, T2>(op: Binary<T, T2, [T, T2]>) =>
+    (xs1: Slice<T>) =>
+      (xs2: Slice<T2>): [T, T2][] =>
+        zipWith(op, xs1, xs2);

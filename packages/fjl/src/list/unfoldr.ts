@@ -25,4 +25,7 @@ export const
     return out;
   },
 
-  $unfoldr = curry(unfoldr);
+  $unfoldr = <A, B>(op: ((b: B | undefined, i?: number, as?: A[]) => [A, B] | undefined)) =>
+    (bs: B): A[] =>
+      unfoldr(op, bs)
+;

@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {negateF3} from "../function/negate";
 import {findIndexWhere} from "./utils";
 import {of} from "../object/of";
@@ -20,4 +19,5 @@ export const
       splitAt(splitPoint, list);
   },
 
-  $span = curry(span);
+  $span = <T>(pred: PredForSlice<T>) =>
+    (list: Slice<T>): [Slice<T>, Slice<T>] => span(pred, list);

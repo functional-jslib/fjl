@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {zipWithN} from "./zipWithN";
 import {Slice} from "../types";
 
@@ -19,4 +18,7 @@ export const
    */
   zipWith3 = <T = any>(op: ZipWith3Op<T>, xs1: T[], xs2: T[], xs3: T[]): Slice<T>[] => zipWithN(op, xs1, xs2, xs3),
 
-  $zipWith3 = curry(zipWith3);
+  $zipWith3 = <T = any>(op: ZipWith3Op<T>) =>
+    (xs1: T[]) =>
+      (xs2: T[]) =>
+        (xs3: T[]): Slice<T>[] => zipWith3(op, xs1, xs2, xs3);

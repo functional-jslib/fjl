@@ -1,4 +1,3 @@
-import {curry, CurryOf2} from "../function/curry";
 import {negateF3} from "../function/negate";
 import {reduceUntil} from "./utils";
 import {isString} from "../object/is";
@@ -21,4 +20,6 @@ export const
       xs
     ),
 
-  $takeWhile = curry(takeWhile) as CurryOf2<PredForSlice<any>, Slice<any>, Slice<any>>;
+  $takeWhile = <T>(pred: PredForSlice<T>) =>
+    (xs: Slice<T>): Slice<T> =>
+      takeWhile(pred, xs);

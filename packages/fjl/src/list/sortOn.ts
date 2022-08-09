@@ -1,4 +1,3 @@
-import {curry2, CurryOf2} from "../function/curry";
 import {map} from "./map";
 import {sortBy} from "./sortBy";
 import {genericAscOrdering} from "./utils";
@@ -42,4 +41,6 @@ export const
 export type SortOn = typeof sortOn;
 export type SortOnParams = Parameters<SortOn>;
 
-export const $sortOn = curry2(sortOn) as CurryOf2<SortOnParams[0], SortOnParams[1]>;
+export const $sortOn = <T = any>(valueFn: Unary<T>) =>
+  (xs: T[]): T[] =>
+    sortOn(valueFn, xs);

@@ -24,4 +24,7 @@ export const
       [], a1);
   },
 
-  $zip = curry(zip);
+  $zip = <T, T2>(arr1: T[]) =>
+    (arr2: T2[]): [T, T2][] => zip(arr1, arr2)
+
+;

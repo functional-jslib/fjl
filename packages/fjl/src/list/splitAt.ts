@@ -1,7 +1,6 @@
 import {sliceFrom} from "./utils/sliceFrom";
 import {sliceTo} from "./utils/sliceTo";
 import {Slice} from "../types";
-import {curry} from "../function";
 
 export const
 
@@ -12,4 +11,6 @@ export const
   splitAt = <T>(ind: number, list: Slice<T>): [Slice<T>, Slice<T>] =>
     [sliceTo(ind, list), sliceFrom(ind, list)],
 
-  $splitAt = curry(splitAt);
+  $splitAt = <T>(ind: number) =>
+    (list: Slice<T>): [Slice<T>, Slice<T>] =>
+      splitAt(ind, list);

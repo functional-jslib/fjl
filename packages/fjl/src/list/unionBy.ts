@@ -25,4 +25,7 @@ export const
     return foldl(foldOp, sliceCopy(xs1) as Slice<T>, xs2) as Slice<T>;
   },
 
-  $unionBy = curry(unionBy);
+  $unionBy = <T>(pred: BinaryPred<T, T>) =>
+    (xs1: Slice<T>) =>
+      (xs2: Slice<T>): Slice<T> =>
+        unionBy(pred, xs1, xs2);
