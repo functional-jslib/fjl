@@ -29,7 +29,7 @@ export type ErrorIfNotTypesThrower<T> = (
 
 export type ErrorMessageCtxToString = (errorMessageCtx: ErrorMessageCtx) => string;
 
-export type TypeCheckerPred<TRef extends TypeRef, T> = ((typeRef: TRef, x: T) => boolean) | CurryOf2<TRef, T, boolean>;
+export type TypeCheckerPred<TRef extends TypeRef, T> = ((typeRef: TRef, x: T) => boolean);
 
 export const
 

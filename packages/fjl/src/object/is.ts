@@ -5,7 +5,6 @@
 
 import {typeOf} from './typeOf';
 import {instanceOf, $instanceOf, keys} from '../platform/object';
-import {curry, CurryOf2} from '../function/curry';
 import {length} from "../list/length";
 import {isset} from './isset';
 import {TypeRef, Unary} from "../types";
@@ -100,7 +99,8 @@ export const
    */
   isType = <T>(type: TypeRef | any, obj: T): boolean => typeOf(obj) === toTypeRefName(type),
 
-  $isType =curry(isType) as CurryOf2<any, any, boolean>,
+  $isType = <T>(type: TypeRef | any) =>
+    (obj: T): boolean => isType(type, obj),
 
   /**
    * Synonym for `isType` (or just a more accurate name for `isType`).
@@ -137,7 +137,7 @@ export const
    * @param x {*} - Value to check.
    * @returns {Boolean}
    */
-  isOfType = curry((type, x) => isType(type, x) || instanceOf(type, x)) as CurryOf2<any, any, boolean>,
+  isOfType = (type, x) => isType(type, x) || instanceOf(type, x),
 
   /**
    * Synonym for `isOfType` (or just a more accurate name).
