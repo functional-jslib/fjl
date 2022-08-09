@@ -27,4 +27,6 @@ export const
     return out;
   },
 
-  $scanr = curry(scanr);
+  $scanr = <A, B>(fn: ScanrOp<A, B>) =>
+    (zero: B) =>
+      (xs: Slice<A>): B[] => scanr(fn, zero, xs);

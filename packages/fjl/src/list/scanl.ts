@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {length} from "./length";
 import {Slice} from "../types";
 
@@ -32,4 +31,6 @@ export const
     return out;
   },
 
-  $scanl = curry(scanl);
+  $scanl = <A, B>(fn: ScanlOp<A, B>) =>
+    (zero: B) =>
+      (xs: Slice<A>): B[] => scanl(fn, zero, xs);

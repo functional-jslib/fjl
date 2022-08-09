@@ -16,4 +16,5 @@ export const
     return scanr(fn, last(xs), init(xs));
   },
 
-  $scanr1 = curry(scanr1);
+  $scanr1 = <T>(fn: ScanrOp<T, T>) =>
+    (xs: Slice<T>): T[] => scanr1(fn, xs);
