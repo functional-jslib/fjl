@@ -72,45 +72,37 @@ describe('#errorThrowing', () => {
 
     describe('#$getErrorIfNotTypeThrower', () => {
         it('should return a function', () => {
-            const result = $getErrorIfNotTypeThrower(defaultErrorMessageCall)(Array, 'SomeContext');
+            const result = $getErrorIfNotTypeThrower(defaultErrorMessageCall)(Array)('SomeContext');
             expect(result).toBeInstanceOf(Function);
         });
         it('It\'s returned function should throw an error when not able to match' +
             'value to passed in type', () => {
             expectError(
-                () => $getErrorIfNotTypeThrower(defaultErrorMessageCall)(
-                    Array, 'SomeContext')(
-                    'someValueName', someValue
-                )
+                () => $getErrorIfNotTypeThrower(defaultErrorMessageCall)(Array)('SomeContext')('someValueName')(someValue)
             );
         });
         it('It\'s returned function should not throw an error when passed in value ' +
             'matches passed in type', () => {
-            expect($getErrorIfNotTypeThrower(defaultErrorMessageCall)(
-                Array, 'SomeContext')('someValueName', someValueArray)
+            expect($getErrorIfNotTypeThrower(defaultErrorMessageCall)(Array)('SomeContext')('someValueName')(someValueArray)
             ).toEqual(someValueArray); // should return undefined
         });
     });
 
     describe('#$getErrorIfNotTypesThrower', () => {
         it('should return a function', () => {
-            const result = $getErrorIfNotTypesThrower(defaultErrorMessageCall)([], 'SomeContext');
+            const result = $getErrorIfNotTypesThrower(defaultErrorMessageCall)([])('SomeContext');
             expect(result).toBeInstanceOf(Function);
         });
         it('It\'s returned function should throw an error when not able to match' +
             'value to passed in type', () => {
             expectError(
                 () => $getErrorIfNotTypesThrower(defaultErrorMessageCall)(
-                    [Array, Function, Boolean] as TypeRef[], 'SomeContext')(
-                    'someValueName', someValue
-                ));
+                    [Array, Function, Boolean] as TypeRef[])('SomeContext')('someValueName')(someValue));
         });
         it('It\'s returned function should not throw an error when passed in value ' +
             'matches one of passed in types', () => {
             expect($getErrorIfNotTypesThrower(defaultErrorMessageCall)(
-                [Function, Array, Boolean], 'SomeContext')(
-                'someValueName', someValueArray
-            )).toEqual(someValueArray);
+                [Function, Array, Boolean])('SomeContext')('someValueName')( someValueArray)).toEqual(someValueArray);
         });
     });
 
