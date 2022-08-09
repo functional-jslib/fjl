@@ -1,5 +1,4 @@
 import {isType} from './is';
-import {curry2} from '../function/curry';
 
 export const
 
@@ -25,4 +24,7 @@ export const
         }, topAgg)
       , obj0);
 
-export const $assignDeep = curry2(assignDeep);
+export const $assignDeep = (obj0) =>
+  (...objs) => assignDeep(obj0, objs)
+
+;

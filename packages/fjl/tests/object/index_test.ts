@@ -1267,6 +1267,7 @@ describe('#object', function () {
       generateTargetData().forEach((args: Parameters<typeof defineEnumProps>) => {
         // log(args);
         const target = defineEnumProps(...args),
+          // @ts-ignore
           propNames = args[0].map(([_, name]) => name);
         expect(target).toBeInstanceOf(Object);
         propNames.forEach(name => {
