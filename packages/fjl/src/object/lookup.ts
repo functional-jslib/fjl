@@ -13,4 +13,5 @@ export const
   lookup = (key: string | number | symbol, obj: Indexable): any =>
     !obj ? undefined : obj[key],
 
-  $lookup = (key: string | number | symbol) => (obj: Indexable) => lookup(key, obj);
+  $lookup = (key: string | number | symbol) =>
+    (obj: Indexable) => lookup(key, obj);

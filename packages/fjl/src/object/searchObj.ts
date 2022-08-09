@@ -41,5 +41,7 @@ export const
     return parent;
   },
 
-  $searchObj = curry(searchObj)
+  $searchObj = <T>(nsString: string) =>
+    (obj: T): any => searchObj(nsString, obj)
+
 ;

@@ -1,13 +1,12 @@
-import {assignDeep} from './assignDeep';
+import {$assignDeep, assignDeep} from './assignDeep';
 import {keys, hasOwnProperty} from '../platform/object';
 import {reduce} from '../list/utils';
-import {curry, curry2} from '../function/curry';
 
 export const
 
   objUnion = assignDeep,
 
-  $objUnion = curry2(objUnion),
+  $objUnion = $assignDeep,
 
   objIntersect = <T, T2>(obj1: T, obj2: T2): { [index in keyof T] } =>
     reduce((agg, key: keyof T) => {
@@ -17,7 +16,8 @@ export const
       return agg;
     }, {} as { [index in keyof T] }, keys(obj1)),
 
-  $objIntersect = curry(objIntersect),
+  $objIntersect = <T, T2>(obj1: T) =>
+    (obj2: T2): { [index in keyof T] } => objIntersect(obj1, obj2),
 
   objDifference = <T, T2>(obj1: T, obj2: T2): { [index in keyof T] } =>
     reduce((agg, key: keyof T) => {
@@ -27,10 +27,14 @@ export const
       return agg;
     }, {} as { [index in keyof T] }, keys(obj1)),
 
-  $objDifference = curry(objDifference),
+  $objDifference = <T, T2>(obj1: T) =>
+    (obj2: T2): { [index in keyof T] } => objDifference(obj1, obj2),
 
   objComplement = <T, T2>(obj0: T, ...objs: T2[]): { [index in keyof T] } =>
     reduce((agg, obj) =>
       assignDeep(agg, objDifference(obj, obj0)), {} as { [index in keyof T] }, objs),
 
-  $objComplement = curry2(objComplement);
+  $objComplement = <T, T2>(obj0: T) =>
+    (...objs: T2[]): { [index in keyof T] } => objComplement(obj0, ...objs)
+
+;
