@@ -11,12 +11,14 @@ export const
 
   instanceOf = <T>(X: Function, x: T): boolean => x instanceof X,
 
-  $instanceOf = <T>(X: Function) => (x: T): boolean => x instanceof X,
+  $instanceOf = <T>(X: Function) =>
+    (x: T): boolean => x instanceof X,
 
   hasOwnProperty = <T>(key: string | PropertyKey, x: T): boolean =>
     Object.prototype.hasOwnProperty.call(x, key),
 
-  $hasOwnProperty = <T>(key: string | PropertyKey) => (x: T): boolean => hasOwnProperty(key, x),
+  $hasOwnProperty = <T>(key: string | PropertyKey) =>
+    (x: T): boolean => hasOwnProperty(key, x),
 
   /**
    * Contains all the static functions from `Object` but curried and flipped;

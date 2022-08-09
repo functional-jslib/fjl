@@ -3,7 +3,7 @@ import {Slice} from "../../types";
 export const
 
   concat = (...xss: Slice[]): Slice =>
-    (!xss ? xss : xss.shift().concat(...xss)) as Slice,
+    (!xss ? xss : xss.shift().concat(...xss as any[])) as Slice,
 
   $concat = a => (...b) => concat(a, ...b),
 
