@@ -1,9 +1,6 @@
-import {CurryOf2} from "../function/curry";
 import {length} from "./length";
 import {PredForIndexable, Indexable} from "../types";
 import {keys} from "../platform/object";
-
-export type Any<Pred, Functor> = CurryOf2<Pred, Functor, boolean>;
 
 export const
 

@@ -1,11 +1,8 @@
-import {CurryOf2} from "../function/curry";
 import {length} from "./length";
 import {findIndexWhere} from "./utils";
 import {slice} from "../platform/slice";
 import {sliceFrom} from "./utils/sliceFrom";
 import {PredForSlice, Slice} from "../types";
-
-type DropWhile<T> = CurryOf2<PredForSlice<T>, Slice<T>, Slice<T>>;
 
 export const
 
