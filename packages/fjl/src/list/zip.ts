@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {length} from "./length";
 import {reduce, toShortest} from "./utils";
 import {push} from "./push";

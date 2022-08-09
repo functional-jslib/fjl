@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {foldl} from "./foldl";
 import {any} from "./any";
 import {sliceCopy} from "./utils/sliceCopy";

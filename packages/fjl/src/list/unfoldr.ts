@@ -1,5 +1,3 @@
-import {curry} from "../function/curry";
-
 export type UnfoldrOp<A, B> = (b: B | undefined, i?: number, as?: A[]) => [A, B] | undefined;
 
 export const

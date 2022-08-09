@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {zipN} from "./zipN";
 
 export const

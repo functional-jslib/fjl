@@ -1,4 +1,4 @@
-import {curry, CurryOf2} from "../function/curry";
+import {CurryOf2} from "../function/curry";
 import {length} from "./length";
 import {findIndexWhere} from "./utils";
 import {slice} from "../platform/slice";

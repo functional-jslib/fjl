@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {length} from "./length";
 import {Slice} from "../types";
 

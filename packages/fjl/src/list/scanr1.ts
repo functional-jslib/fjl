@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {last} from "./last";
 import {init} from "./init";
 import {scanr, ScanrOp} from "./scanr";

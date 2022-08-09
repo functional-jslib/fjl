@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {length} from "./length";
 import {any} from "./any";
 import {Slice} from "../types";
@@ -27,4 +26,8 @@ export const
     return out;
   },
 
-  $nubBy = curry(nubBy);
+  $nubBy =  <T>(pred) =>
+    (list: Slice<T>): Slice<T> =>
+      nubBy(pred, list)
+
+;

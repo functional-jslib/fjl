@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {isPrefixOf} from "./isPrefixOf";
 import {splitAt} from "./splitAt";
 import {length} from "./length";

@@ -1,4 +1,3 @@
-import {curry, CurryOf2} from "../../function/curry";
 import {length} from "../length";
 import {Indexable, PredForIndexable} from "../../types";
 
