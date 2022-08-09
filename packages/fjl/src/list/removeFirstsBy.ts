@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {foldl} from "./foldl";
 import {removeBy} from "./removeBy";
 
@@ -11,4 +10,6 @@ export const
   removeFirstsBy = (pred, xs1, xs2) =>
     foldl((agg, x) => removeBy(pred, x, agg), xs1, xs2),
 
-  $removeFirstsBy = curry(removeFirstsBy);
+  $removeFirstsBy = (pred) =>
+    (xs1) =>
+      (xs2) => removeFirstsBy(pred, xs1, xs2);

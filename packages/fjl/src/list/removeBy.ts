@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {findIndex} from "./findIndex";
 import {splitAt} from "./splitAt";
 import {append} from "./append";
@@ -20,4 +19,6 @@ export const
     return sliceCopy(list);
   },
 
-  $removeBy = curry(removeBy);
+  $removeBy = <T>(pred: BinaryPred<T>) =>
+    (x: T) =>
+      (list: Slice<T>): Slice<T> => removeBy(pred, x, list);
