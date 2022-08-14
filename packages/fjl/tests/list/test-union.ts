@@ -1,4 +1,4 @@
-import {append, range, union} from "../../src/list";
+import {range, union} from "../../src/list";
 import {expectEqual} from "../helpers";
 
 describe('#union', () => {
@@ -55,7 +55,6 @@ describe('#union', () => {
       });
   });
   it('should return an empty list when receiving empty lists', () => {
-    expectEqual(union('', ''), '');
     expectEqual(union([], []), []);
   });
 });

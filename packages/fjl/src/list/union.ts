@@ -11,11 +11,11 @@ export const
    * @param arr2 {Array}
    * @returns {Array}
    */
-  union = <T>(arr1: Slice<T>, arr2: Slice<T>): Slice<T> =>
+  union = <T>(arr1: T[], arr2: T[]): T[] =>
     append(arr1,
-      filter(elm => !includes(arr1, elm), arr2) as Slice<T>
+      filter(elm => !includes(arr1, elm), arr2) as T[]
     ),
 
-  $union = <T>(arr1: Slice<T>) =>
-    (arr2: Slice<T>): Slice<T> => union(arr1, arr2)
+  $union = <T>(arr1: T[]) =>
+    (arr2: T[]): T[] => union(arr1, arr2)
 ;

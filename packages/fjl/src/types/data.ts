@@ -34,7 +34,7 @@ export interface SliceBase<T = any> {
 
   slice(from: number, to?: number): Slice<T>;
 
-  concat(...xs: ConcatArray<T>[] | string[] | Slice<T>[]): Slice<T>;
+  concat(...xs: (ConcatArray<T> | string | Slice<T>)[]): Slice<T>;
 
   indexOf(x: T, position?: number): number;
 
