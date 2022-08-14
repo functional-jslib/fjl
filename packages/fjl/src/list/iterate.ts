@@ -3,6 +3,9 @@ import {Unary} from "../types";
 
 export const
 
+  /**
+   * iterates `f(x)` and returns a list of repeated applications of `f` to `x` `limit` number of times.
+   */
   iterate = <T>(n: number, op: Unary<T>, x: T): T[] => {
     let ind = 0,
       lastX: T = x;
@@ -14,9 +17,6 @@ export const
     return out;
   },
 
-  /**
-   * iterate `f(x)` returns a list of repeated applications of `f` to `x` `limit` number of times.
-   */
   $iterate = <T>(n: number) =>
     (op: Unary<T>) =>
       (x: T): T[] => iterate(n, op, x),

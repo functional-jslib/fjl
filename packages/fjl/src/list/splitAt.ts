@@ -8,9 +8,9 @@ export const
    * Splits `x` in two at given `index` (exclusive (includes element/character at
    * given index in second part of returned list)).
    */
-  splitAt = <T>(ind: number, list: Slice<T>): [Slice<T>, Slice<T>] =>
+  splitAt = <T, XS extends Slice<T>>(ind: number, list: XS): [XS, XS] =>
     [sliceTo(ind, list), sliceFrom(ind, list)],
 
-  $splitAt = <T>(ind: number) =>
-    (list: Slice<T>): [Slice<T>, Slice<T>] =>
+  $splitAt = <T, XS extends Slice<T>>(ind: number) =>
+    (list: XS): [XS, XS] =>
       splitAt(ind, list);

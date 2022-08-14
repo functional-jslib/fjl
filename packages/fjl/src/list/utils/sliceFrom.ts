@@ -6,7 +6,8 @@ export const
   /**
    * Returns a slice of the given list from `startInd` to the end of the list.
    */
-  sliceFrom = <T = any, T2 extends Slice<T> = Slice<T>>(startInd: number, xs: T2): T2 => slice(startInd, undefined, xs) as T2,
+  sliceFrom = <T = any, T2 extends Slice<T> = Slice<T>>(startInd: number, xs: T2): T2 =>
+    slice(startInd, undefined, xs) as typeof xs,
 
   /**
    * Curried version of `sliceFrom`.

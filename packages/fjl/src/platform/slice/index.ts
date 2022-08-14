@@ -22,7 +22,8 @@ export const
   /**
    * Same as `(Array|String).prototype.slice`.
    */
-  slice = (start: number, end: number, xs: Slice): Slice => xs.slice(start, end),
+  slice = <T, XS extends Slice<T>>(start: number, end: number, xs: XS): XS =>
+    xs.slice(start, end) as typeof xs,
 
   /**
    * Same as `(Array|String).prototype.slice`.

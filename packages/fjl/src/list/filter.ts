@@ -6,31 +6,32 @@ export const
   /**
    * Filters a structure of elements using given predicate (`pred`) (same as `[].filter`).
    */
-  filter = <T>(pred: PredForSlice<T>, xs: Slice<T>): Slice<T> => {
+  filter = <T, XS extends Slice<T>>(pred: PredForSlice<T>, xs: XS): XS => {
     let ind = 0;
     const limit = xs.length,
       isString = typeOf(xs) === 'String';
-    let out = isString ? '' : [] as T[];
+    let out = (isString ? '' : []) as unknown as typeof xs;
     if (!limit) {
-      return out as Slice<T>;
+      return out;
     }
-    if (typeof xs === 'string') {
+    if (isString) {
       for (; ind < limit; ind++) {
-        if (pred(xs[ind] as unknown as T, ind, xs)) {
+        if (pred(xs[ind], ind, xs)) {
+          // @ts-ignore
           out += xs[ind];
         }
       }
     } else {
       for (; ind < limit; ind++) {
-        if (pred(xs[ind] as T, ind, xs)) {
+        if (pred(xs[ind], ind, xs)) {
           (out as T[]).push(xs[ind] as T);
         }
       }
     }
-    return out as Slice<T>;
+    return out;
   },
 
-  $filter = <T>(pred: PredForSlice<T>) =>
-    (xs: Slice<T>): Slice<T> => filter(pred, xs)
+  $filter = <T, XS extends Slice<T>>(pred: PredForSlice<T>) =>
+    (xs: XS): XS => filter(pred, xs)
 
 ;

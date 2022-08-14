@@ -7,13 +7,13 @@ export const
   /**
    * Concatenates all the elements of a container of lists.
    */
-  concat = <T>(xs: Slice<T>[]): Slice<T> => {
+  concat = <T, XS extends Slice<T>>(xs: XS[]): XS => {
     if (!xs || !xs.length) {
-      return [] as unknown as Slice<T>;
+      return [] as unknown as XS;
     } else if (xs.length === 1) {
       const item0 = xs[0];
       return item0 && item0.slice ? sliceCopy(item0) : item0;
     }
-    return append(...xs) as Slice<T>;
+    return append(...xs) as XS;
   }
 ;

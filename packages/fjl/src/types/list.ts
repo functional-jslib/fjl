@@ -14,7 +14,8 @@ export type MapAccumOp<A = any, B = any, C = any, Ind = number | string, Functor
 
 export type PredForIndexable<T = any> = IndexableTernaryPred<T, number | string, Indexable<T>>;
 
-export type PredForSlice<T = any, T2 extends Slice<T> = Slice<T>> = ArrayTernaryPred<T, number | string, T2>;
+export type PredForSlice<T = any, T2 extends Slice<T> = Slice<T>> =
+  ArrayTernaryPred<T, number | string, T2>;
 
 export interface Foldable<T> extends Functor<T> {
   reduce<RetT>(fn: ReduceOp<T, Foldable<T>, RetT>): RetT;

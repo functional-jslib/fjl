@@ -7,21 +7,20 @@ import {PredForSlice, Slice} from "../types";
 export const
 
   /**
-   * Returns an list without elements that match predicate.
+   * Returns a list without elements that match predicate.
    */
-  dropWhile = <T>(p: PredForSlice<T>, xs: Slice<T>): Slice<T> => {
+  dropWhile = <T, XS extends Slice<T>>(p: PredForSlice<T>, xs: XS): XS => {
     const limit = length(xs),
       splitPoint =
         findIndexWhere(
-          (x: T, i: number | string, xs: Slice<T>) => !p(x, i, xs),
+          (x: T, i: number | string, xs: XS) => !p(x, i, xs),
           xs
         ) as number;
-    return splitPoint === -1 ?
-      sliceFrom(limit, xs) as Slice<T> :
-      slice(splitPoint, limit, xs) as Slice<T>;
+    return splitPoint === -1 ? sliceFrom(limit, xs) :
+      slice(splitPoint, limit, xs);
   },
 
-  $dropWhile = <T>(p: PredForSlice<T>) =>
-    (xs: Slice<T>): Slice<T> => dropWhile(p, xs)
+  $dropWhile = <T, XS extends Slice<T>>(p: PredForSlice<T>) =>
+    (xs: XS): XS => dropWhile(p, xs)
 
 ;

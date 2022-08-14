@@ -9,11 +9,11 @@ export const
   /**
    * Replicates a list `limit` number of times and appends the results (concat)
    */
-  cycle = <T>(n: number, xs: Slice<T>): Slice<T[]> =>
-    concat(replicate(n, xs) as unknown as Slice<T[]>[]),
+  cycle = <T, XS extends Slice<T>>(n: number, xs: XS): XS =>
+    concat(replicate(n, xs)),
 
-  $cycle = <T>(n: number) =>
-    (xs: Slice<T>): Slice<T[]> => cycle(n, xs),
+  $cycle = <T, XS extends Slice<T>>(n: number) =>
+    (xs: XS): XS => cycle(n, xs),
 
   /**
    * Generates a generator which cycles list (concatenate) to end of last yielded result - On first call last yielded

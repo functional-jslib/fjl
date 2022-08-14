@@ -32,9 +32,9 @@ export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
 export interface SliceBase<T = any> {
   readonly length: number;
 
-  slice(from: number, to?: number): Slice<T>;
+  slice(from: number, to?: number): typeof this;
 
-  concat(...xs: (ConcatArray<T> | string | Slice<T>)[]): Slice<T>;
+  concat(...xs: (ConcatArray<T> | string | Slice<T>)[]): typeof this;
 
   indexOf(x: T, position?: number): number;
 

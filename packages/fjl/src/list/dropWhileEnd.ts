@@ -5,19 +5,19 @@ import {sliceTo} from "./utils/sliceTo";
 
 export const
 
-  dropWhileEnd = <T>(p: PredForSlice<T>, list: Slice<T>): Slice<T> => {
+  dropWhileEnd = <T, XS extends Slice<T>>(p: PredForSlice<T>, list: XS): XS => {
     const splitPoint =
       findIndexWhereRight(
-        (x: T, i: number | string, xs: Slice<T>) => !p(x, i, xs),
+        (x: T, i: number | string, xs: XS) => !p(x, i, xs),
         list
       ) as number;
     if (splitPoint === -1) {
       return of(list);
     }
-    return sliceTo(splitPoint + 1, list) as Slice<T>;
+    return sliceTo(splitPoint + 1, list);
   },
 
-  $dropWhileEnd = <T>(p: PredForSlice<T>) =>
-    (list: Slice<T>): Slice<T> => dropWhileEnd(p, list)
+  $dropWhileEnd = <T, XS extends Slice<T>>(p: PredForSlice<T>) =>
+    (list: XS): XS => dropWhileEnd(p, list)
 
 ;

@@ -20,12 +20,12 @@ export const
    * breakOnList (> 9) [1,2,3] == ([1,2,3],[])
    * ```
    */
-  breakOnList = <T>(pred: PredForSlice<T>, list: Slice<T>): [Slice<T>, Slice<T>] => {
+  breakOnList = <X, XS extends Slice<X>>(pred: PredForSlice<X>, list: XS): [XS, XS] => {
     const splitPoint = findIndexWhere(negateF3(pred), list);
     return splitPoint === -1 ?
       [of(list), sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
   },
 
-  $breakOnList = <T>(pred: PredForSlice<T>) =>
-    (list: Slice<T>): [Slice<T>, Slice<T>] => breakOnList(pred, list)
+  $breakOnList = <T, XS extends Slice<T>>(pred: PredForSlice<T>) =>
+    (list: XS): [XS, XS] => breakOnList(pred, list)
 ;

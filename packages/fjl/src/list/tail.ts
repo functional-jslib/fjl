@@ -7,4 +7,4 @@
  */
 import {Slice} from "../types";
 
-export const tail = (xs: Slice): Slice => xs.slice(1);
+export const tail = <T extends Slice>(xs: T): T => xs.slice(1) as typeof xs;
