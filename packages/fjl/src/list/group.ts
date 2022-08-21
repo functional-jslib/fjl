@@ -11,4 +11,4 @@ export const
    * It is a special case of groupBy, which allows the programmer to supply
    *  their own equality test.
    */
-  group = <T = any>(xs: Slice<T>): Slice<T>[] => groupBy(equal, xs) as Slice<T>[];
+  group = <T, XS extends Slice<T>>(xs: XS): XS[] => groupBy(equal, xs);

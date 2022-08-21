@@ -8,7 +8,7 @@ export const
   /**
    * Groups given items by given predicate.
    */
-  groupBy = <T>(equalityOp: BinaryPred<T>, xs: Slice<T>): Slice<T>[] => {
+  groupBy = <T, TS extends Slice<T>=T[]>(equalityOp: BinaryPred<T>, xs: TS): TS[] => {
     // Bail if empty list
     if (!xs) {
       return [];
@@ -22,7 +22,7 @@ export const
     }
 
     // Groupings
-    const groups: Slice<T>[] = [];
+    const groups: TS[] = [];
 
     // Initialize variables for tracking
     let ind = 1,
@@ -36,17 +36,17 @@ export const
         prevItem = x;
         continue;
       }
-      groups.push(group);
+      groups.push(group as unknown as TS);
       prevItem = x;
       group = [x];
     }
 
     // Push last group
-    groups.push(group);
+    groups.push(group as unknown as TS);
 
     // If original incoming slice is a string, return a slice of strings.
     if(xs.constructor === String) {
-      return groups.map(_xs => (_xs as T[]).join('')) as unknown as Slice<T>[];
+      return groups.map(_xs => (_xs as T[]).join('')) as unknown as TS[];
     }
 
     return groups;
@@ -55,7 +55,7 @@ export const
   /**
    * Curried version of `$groupBy`.
    */
-  $groupBy = <T>(equalityOp: BinaryPred<T>) =>
-    (xs: Slice<T>): Slice<T>[] => groupBy(equalityOp, xs)
+  $groupBy = <T, TS extends Slice<T>>(equalityOp: BinaryPred<T>) =>
+    (xs: TS): TS[] => groupBy(equalityOp, xs)
 
 ;
