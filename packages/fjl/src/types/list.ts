@@ -14,6 +14,8 @@ export type MapAccumOp<A = any, B = any, C = any, Ind = number | string, Functor
 
 export type PredForIndexable<T = any> = IndexableTernaryPred<T, number | string, Indexable<T>>;
 
+export type PredForArray<T = any> = ArrayTernaryPred<T, number, T[]>;
+
 export type PredForSlice<T = any, T2 extends Slice<T> = Slice<T>> =
   ArrayTernaryPred<T, number | string, T2>;
 
