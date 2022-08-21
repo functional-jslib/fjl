@@ -1,4 +1,4 @@
-import {NumberIndexable} from "../../types";
+import {Indexable, Lengthable, NumberIndexable} from "../../types";
 import {length} from "../length";
 
 export const
@@ -6,8 +6,8 @@ export const
     /**
      * Gets last index of a list/list-like (Array|String|Function etc.).
      */
-    lastIndex = (x: NumberIndexable): number => {
-        const len = length(x);
+    lastIndex = <T, TS extends NumberIndexable<T>>(xs: TS): number => {
+        const len = length(xs);
         return len ? len - 1 : 0;
     }
 ;

@@ -23,8 +23,19 @@ export interface StringIndexable<T = any> extends Lengthable {
   [index: string]: T | any;
 }
 
+export type StringAndOrNumberIndexable<T = any> = Lengthable & {
+  [index in number | string]: T | any;
+}
+
 export interface NumberIndexable<T = any> extends Lengthable {
   [index: number]: T | any;
+}
+
+/**
+ * For immutable lists (strings).
+ */
+export interface ReadonlyNumberIndexable<T = any> extends Lengthable {
+  readonly [index: number]: T;
 }
 
 export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;

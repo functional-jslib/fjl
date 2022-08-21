@@ -12,15 +12,15 @@ import {Slice} from "../types";
  * result will also be sorted. It is a special case of insertBy, which allows
  * the programmer to supply their own comparison function.
  */
-export const insert = <T>(x: T, xs: Slice<T>): Slice<T> => {
+export const insert = <T, TS extends Slice<T>>(x: T, xs: TS): TS => {
     if (!xs.length) {
       return of(xs, x);
     }
     const foundIndex = findIndex(item => x <= item, xs);
     return foundIndex === -1 ? concat([xs, of(xs, x)]) :
-      concat(intersperse(of(xs, x), splitAt(foundIndex, xs)) as Slice<T>[]);
+      concat(intersperse(of(xs, x), splitAt(foundIndex, xs)) as TS[]);
   },
 
-  $insert = <T>(x: T, xs: Slice<T>): Slice<T> => insert(x, xs)
+  $insert = <T, TS extends Slice<T>>(x: T, xs: TS): TS => insert(x, xs)
 
 ;
