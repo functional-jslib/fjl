@@ -9,7 +9,7 @@ export const
    * is the first item, from the right (end of given array).
    */
   foldr1 = <T>(op: ReduceOp<T, T[], T>, xs: T[]): T => {
-    const parts = unconsr(xs);
+    const parts = unconsr(xs) as [T[], T];
     // If no pars return, else pass tail and head, of `unconsr` array.
     return !parts ? undefined : reduceRight(op, parts[1], parts[0]);
   },

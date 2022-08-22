@@ -1,5 +1,3 @@
-import {sliceFrom} from "./utils/sliceFrom";
-import {sliceTo} from "./utils/sliceTo";
 import {Slice} from "../types";
 
 export const
@@ -9,7 +7,7 @@ export const
    * given index in second part of returned list)).
    */
   splitAt = <T, XS extends Slice<T>>(ind: number, list: XS): [XS, XS] =>
-    [sliceTo(ind, list), sliceFrom(ind, list)],
+    [list.slice(0, ind), list.slice(ind)],
 
   $splitAt = <T, XS extends Slice<T>>(ind: number) =>
     (list: XS): [XS, XS] =>

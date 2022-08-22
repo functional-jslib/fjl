@@ -1,10 +1,8 @@
 import {negateF3} from "../function/negate";
 import {findIndexWhere} from "./utils/findexIndexWhere";
-import {of} from "../object/of";
 import {reverse} from "./reverse";
 import {splitAt} from "./splitAt";
 import {TernaryPred} from "../types";
-import {sliceFrom} from "./utils/sliceFrom";
 
 export const
 
