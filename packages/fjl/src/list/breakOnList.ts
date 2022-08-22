@@ -25,7 +25,7 @@ export const
   breakOnList = <T>(pred: TernaryPred<T, number, T[]>, list: T[]): [T[], T[]] => {
     const splitPoint = findIndexWhere(negateF3(pred), list);
     return splitPoint === -1 ?
-      [of(list), sliceFrom(0, list)] : reverse(splitAt(splitPoint, list));
+      [[], list.slice(0)] : reverse(splitAt(splitPoint, list)) as [T[], T[]];
   },
 
   $breakOnList = <T>(pred: TernaryPred<T, number, T[]>) =>
