@@ -9,18 +9,18 @@ export const
   /**
    * Returns a list without elements that match predicate.
    */
-  dropWhile = <T, XS extends Slice<T>>(p: PredForSlice<T>, xs: XS): XS => {
+  dropWhile = <T>(p: PredForSlice<T>, xs: T[]): T[] => {
     const limit = xs.length,
       splitPoint: number =
         findIndexWhere(
-                   (x: T, i: number | string, xs: XS) => !p(x, i, xs),
+                   (x: T, i: number | string, xs: T[]) => !p(x, i, xs),
           xs
         );
     return splitPoint === -1 ? sliceFrom(limit, xs) :
       slice(splitPoint, limit, xs);
   },
 
-  $dropWhile = <T, XS extends Slice<T>>(p: PredForSlice<T>) =>
-    (xs: XS): XS => dropWhile(p, xs)
+  $dropWhile = <T>(p: PredForSlice<T>) =>
+    (xs: T[]): T[] => dropWhile(p, xs)
 
 ;
