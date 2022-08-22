@@ -2,7 +2,6 @@ import {length} from "./length";
 import {lengths} from "./utils";
 import {filter} from "./filter";
 import {maximum} from "./maximum";
-import {Slice} from "../types";
 
 export const
 
@@ -37,5 +36,5 @@ export const
       }
       outLists.push(outList);
     }
-    return filter(x => length(x) > 0, outLists as Slice<T[]>) as unknown as T[][];
+    return filter(x => length(x) > 0, outLists);
   };

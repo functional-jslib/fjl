@@ -10,12 +10,12 @@ export const
    * Returns a list without elements that match predicate.
    */
   dropWhile = <T, XS extends Slice<T>>(p: PredForSlice<T>, xs: XS): XS => {
-    const limit = length(xs),
-      splitPoint =
+    const limit = xs.length,
+      splitPoint: number =
         findIndexWhere(
-          (x: T, i: number | string, xs: XS) => !p(x, i, xs),
+                   (x: T, i: number | string, xs: XS) => !p(x, i, xs),
           xs
-        ) as number;
+        );
     return splitPoint === -1 ? sliceFrom(limit, xs) :
       slice(splitPoint, limit, xs);
   },
