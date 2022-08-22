@@ -9,18 +9,15 @@ export const
   /**
    * Replicates a list `limit` number of times and appends the results (concat)
    */
-  cycle = <T, XS extends Slice<T>>(n: number, xs: XS): XS =>
+  cycle = <T>(n: number, xs: T[]): T[] =>
     concat(replicate(n, xs)),
 
-  $cycle = <T, XS extends Slice<T>>(n: number) =>
-    (xs: XS): XS => cycle(n, xs),
+  $cycle = <T>(n: number) =>
+    (xs: T[]): T[] => cycle(n, xs),
 
   /**
    * Generates a generator which cycles list (concatenate) to end of last yielded result - On first call last yielded
    * result is initial list.
    */
-  genCycler = <T>(xs: T[] | string): Generator<string | T[], void, string | T[]> =>
-    genIterator(
-      isType(String, xs) ?
-        (_xs: string) => _xs.concat(xs as string) :
-        (_xs: T[]) => _xs.concat(xs as T[]), xs)();
+  genCycler = <T>(xs: T[]): Generator<T[], void, T[]> =>
+    genIterator(_xs => _xs.concat(xs), xs)();
