@@ -1,23 +1,19 @@
 import {findIndexWhereRight} from "./utils";
-import {of} from "../object/of";
-import {Slice, PredForSlice} from "../types";
-import {sliceTo} from "./utils/sliceTo";
+import {PredForArray} from "../types";
+import {negateF3} from "../function";
 
 export const
 
-  dropWhileEnd = <T, XS extends Slice<T>>(p: PredForSlice<T>, list: XS): XS => {
-    const splitPoint =
-      findIndexWhereRight(
-        (x: T, i: number | string, xs: XS) => !p(x, i, xs),
-        list
-      ) as number;
+  dropWhileEnd = <T>(pred: PredForArray<T>, list: T[]): T[] => {
+    const splitPoint: number =
+      findIndexWhereRight(negateF3(pred), list);
     if (splitPoint === -1) {
-      return of(list);
+      return [];
     }
-    return sliceTo(splitPoint + 1, list);
+    return list.slice(0, splitPoint + 1);
   },
 
-  $dropWhileEnd = <T, XS extends Slice<T>>(p: PredForSlice<T>) =>
-    (list: XS): XS => dropWhileEnd(p, list)
+  $dropWhileEnd = <T>(p: PredForArray<T>) =>
+    (list: T[]): T[] => dropWhileEnd(p, list)
 
 ;
