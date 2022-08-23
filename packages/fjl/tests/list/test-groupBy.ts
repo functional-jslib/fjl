@@ -1,18 +1,19 @@
-import {alphabetArray, equal} from "../helpers";
-import {groupBy} from "../../src";
+import {alphabetArray, equal, vowelsArray, vowelsString} from "../helpers";
+import {GroupBy, groupBy} from "../../src";
 
 describe('#groupBy', () => {
-  it('should return a list of lists which contain the (sequential) matches on equality function', () => {
-    const expectedResult = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
-
-    expect(groupBy(equal, 'Mississippi'))
-      .toEqual(expectedResult.map(xs => xs.join('')));
-
-    expect(groupBy(equal, 'Mississippi'.split('')))
-      .toEqual(expectedResult);
-  });
-
-  it('should return a list of lists containing individual un-grouped items or items that do not match equality function', () => {
-    expect(groupBy(equal, alphabetArray)).toEqual(alphabetArray.map(char => [char]));
+  const mississippi = 'Mississippi',
+    mississippiArray = mississippi.split(''),
+    mississippiResult = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
+  (<[Parameters<GroupBy>, ReturnType<GroupBy>][]>[
+    [[equal, vowelsArray], vowelsArray.map(x => [x])],
+    [[equal, vowelsString], vowelsArray.map(x => [x])],
+    [[equal, mississippi], mississippiResult],
+    [[equal, mississippiArray], mississippiResult],
+    [[equal, alphabetArray], alphabetArray.map(char => [char])]
+  ]).forEach(([[pred, xs], expected]) => {
+    it(`groupBy(${JSON.stringify(xs)}) === ${JSON.stringify(expected)}`, () => {
+      expect(groupBy(pred, xs)).toEqual(expected);
+    });
   });
 });

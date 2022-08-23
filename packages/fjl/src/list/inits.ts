@@ -1,5 +1,3 @@
-import {length} from "./length";
-import {sliceTo} from "./utils/sliceTo";
 import {Slice} from "../types";
 
 export const
@@ -11,14 +9,14 @@ export const
      * ```
      */
     inits = <T, TS extends Slice<T>>(xs: TS): TS[] | T[] => {
-        const limit = length(xs),
+        const limit = xs.length,
             agg: [any[]] | any[] = [];
         let ind = 0;
         if (!limit) {
             return [];
         }
         for (; ind <= limit; ind += 1) {
-            agg.push(sliceTo(ind, xs));
+            agg.push(xs.slice(0, ind));
         }
         return agg as unknown as TS[] | T[];
     };

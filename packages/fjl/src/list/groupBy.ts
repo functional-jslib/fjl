@@ -1,53 +1,51 @@
-import {length} from "./length";
-import {sliceCopy} from "./utils/sliceCopy";
-import {Slice} from "../types";
-import {BinaryPred} from "../types";
+import {BinaryPred, Slice} from "../types";
 
 export const
 
   /**
-   * Groups given items by given predicate.
+   * `groupBy` Groups given items by given predicate;  Similar to `group` but with 'equality check' predicate.
+   *
+   * ```javascript
+   * groupBy((a, b) => a === b, "Mississippi".slice(0)) ===
+   *  [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], "i"]
+   * ```
    */
-  groupBy = <T, TS extends Slice<T>=T[]>(equalityOp: BinaryPred<T>, xs: TS): TS[] => {
+  groupBy = <T, TS extends Slice<T>>(equalityOp: BinaryPred<T>, xs: TS): T[][] => {
     // Bail if empty list
-    if (!xs) {
-      return [];
-    }
+    if (!xs) return [];
 
-    const limit = length(xs);
+    const limit = xs.length;
 
     // Bail if empty list
-    if (!limit) {
-      return [sliceCopy(xs)];
-    }
+    if (!limit) return [[]];
 
     // Groupings
-    const groups: TS[] = [];
+    const groups: T[][] = [];
 
     // Initialize variables for tracking
     let ind = 1,
       prevItem = xs[0] as T,
       group: T[] = [prevItem];
 
+    // Group remainder of items
     for (; ind < limit; ind += 1) {
       const x = xs[ind] as T;
+
+      // If equality check passed group item, and continue to next
       if (equalityOp(x, prevItem)) {
         group.push(x);
         prevItem = x;
         continue;
       }
-      groups.push(group as unknown as TS);
+
+      // Items for previous group 'grouped'.  Move to next group.
+      groups.push(group);
       prevItem = x;
       group = [x];
     }
 
     // Push last group
-    groups.push(group as unknown as TS);
-
-    // If original incoming slice is a string, return a slice of strings.
-    if(xs.constructor === String) {
-      return groups.map(_xs => (_xs as T[]).join('')) as unknown as TS[];
-    }
+    groups.push(group);
 
     return groups;
   },
@@ -56,6 +54,8 @@ export const
    * Curried version of `$groupBy`.
    */
   $groupBy = <T, TS extends Slice<T>>(equalityOp: BinaryPred<T>) =>
-    (xs: TS): TS[] => groupBy(equalityOp, xs)
+    (xs: TS): T[][] => groupBy(equalityOp, xs)
 
 ;
+
+export type GroupBy = typeof groupBy;
