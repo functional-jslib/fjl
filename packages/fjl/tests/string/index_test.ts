@@ -1,4 +1,3 @@
-import {intercalate, length} from "../../src/list";
 import {
   alphabetArray,
   alphabetString,
@@ -23,13 +22,13 @@ import {Slice} from '../../src/types';
 
 describe('#lines', () => {
   it('should split a string on all new line characters.', () => {
-    const subj = intercalate('\n', alphabetArray) as string,
+    const subj = alphabetArray.join('\n'),
       result = lines(subj);
 
     // Ensure subject is valid first:
     // ------------------------------------
     // Expect new line char before every char except the first
-    expectLength(length(alphabetArray) * 2 - 1, subj);
+    expectLength(alphabetArray.length * 2 - 1, subj);
 
     // Check split string
     expectEqual(alphabetArray, result);
@@ -47,13 +46,13 @@ describe('#lines', () => {
 describe('#words', () => {
   it('should split a string on all whitespace characters.', () => {
     // subject | expectedLength | shallowEqualsTo
-    (<[Slice, number, [string, string]][]>[
-      [intercalate(' ', alphabetArray), length(alphabetArray), alphabetArray],
+    (<[string, number, ReturnType<typeof words>][]>[
+      [alphabetArray.join(' '), alphabetArray.length, alphabetArray],
       ['hello world', 2, ['hello', 'world']]
     ])
       .forEach(tuple => {
         const [subj, expectedLen, shallowEqualsTo] = tuple,
-          result = words(subj as string);
+          result = words(subj);
 
         // Check length of result
         expectLength(expectedLen, result);

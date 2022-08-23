@@ -1,4 +1,3 @@
-import {isString} from "../object/is";
 import {intersperse} from "./intersperse";
 import {concat} from "./concat";
 import {Slice} from "../types";
@@ -10,13 +9,9 @@ export const
    *   It inserts the list `xs` in between the lists in `xss` and concatenates
    *   the result.
    */
-  intercalate = <T>(xs: Slice<T>, xss: Slice<Slice<T>>): Slice<T> => {
-    if (isString(xss)) {
-      return intersperse(xs, xss) as unknown as Slice<T>;
-    }
-    return concat(intersperse(xs, xss) as Slice<T>[]);
-  },
+  intercalate = <T, TS extends Slice<T>>(xs: TS, xss: TS[]): TS =>
+    concat(intersperse(xs, xss)),
 
-  $intercalate = <T>(xs: Slice<T>) =>
-    (xss: Slice<Slice<T>>): Slice<T> => intercalate(xs, xss)
+  $intercalate = <T, TS extends Slice<T>>(xs: TS) =>
+    (xss: TS[]): TS => intercalate(xs, xss)
 ;

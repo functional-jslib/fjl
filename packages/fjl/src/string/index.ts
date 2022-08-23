@@ -10,7 +10,7 @@ import {id} from "../function/id";
 export {split, $split};
 
 const newLineRegex = /[\n\r]/gm,
-  spaceRegex = /[\s\t]/gm,
+  spaceRegex = /[ \t]/gm,
   space = ' ',
   newLine = '\n';
 
