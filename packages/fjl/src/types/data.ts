@@ -27,9 +27,9 @@ export type StringAndOrNumberIndexable<T = any> = Lengthable & {
   [index in number | string]: T | any;
 }
 
-export interface NumberIndexable<T = any> extends Lengthable {
+export type NumberIndexable<T = any> =  Lengthable & ({
   [index: number]: T | any;
-}
+} | ReadonlyNumberIndexable<T>);
 
 /**
  * For immutable lists (strings).
