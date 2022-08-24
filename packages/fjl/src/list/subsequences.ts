@@ -9,12 +9,14 @@ export const
    *  will generate 65536 sub-sequences!  So caution should be taken to not
    *  use this with sequences above a certain length on certain platform (the browser thread in specific).
    */
-  subsequences = <T>(xs: Slice<T>): Slice<T>[] => {
+  subsequences = <T, TS extends Slice<T>>(xs: TS): TS[] => {
     const listLen = xs.length,
       len = Math.pow(2, listLen),
-      out = [] as Slice<T>[];
+      out = [];
+
     for (let i = 0; i < len; i += 1) {
       let entry = xs.constructor();
+
       for (let j = 0; j < listLen; j += 1) {
         if (i & (1 << j)) {
           if (typeof xs === 'string') {

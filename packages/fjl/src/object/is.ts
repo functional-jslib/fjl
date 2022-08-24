@@ -22,8 +22,11 @@ const
   _WeakMap = 'WeakMap',
   _WeakSet = 'WeakSet',
   _Null = 'Null',
-  _Undefined = 'Undefined'
+  _Undefined = 'Undefined',
+  _immutable_type_names = [_String, _Number, _Boolean, _Symbol];
 ;
+
+
 
 export const
 
@@ -271,8 +274,7 @@ export const
    */
   isUsableImmutablePrimitive = (x: any): boolean => {
     const typeOfX = typeOf(x);
-    return isset(x) &&
-      [_String, _Number, _Boolean, _Symbol]
+    return isset(x) && _immutable_type_names
         .some(type => type === typeOfX);
   },
 

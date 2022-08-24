@@ -29,7 +29,9 @@ export type StringAndOrNumberIndexable<T = any> = Lengthable & {
 
 export type NumberIndexable<T = any> =  Lengthable & ({
   [index: number]: T | any;
-} | ReadonlyNumberIndexable<T>);
+} | ReadonlyNumberIndexable<T> | {
+  [index in number | string]: T | any;
+});
 
 /**
  * For immutable lists (strings).
