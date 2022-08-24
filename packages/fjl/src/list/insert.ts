@@ -21,6 +21,7 @@ export const insert = <T, TS extends Slice<T>>(x: T, xs: TS): TS => {
       concat(intersperse(of(xs, x), splitAt(foundIndex, xs)) as TS[]);
   },
 
-  $insert = <T, TS extends Slice<T>>(x: T, xs: TS): TS => insert(x, xs)
+  $insert = <T, TS extends Slice<T>>(x: T) =>
+    (xs: TS): TS => insert(x, xs)
 
 ;
