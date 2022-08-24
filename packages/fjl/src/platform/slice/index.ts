@@ -1,9 +1,9 @@
-import {Slice} from "../../types";
+import {ArrayType, Slice} from "../../types";
 
 export const
 
-  concat = <X, XS extends Slice<X>>(...xss: XS[]): XS =>
-    (!xss ? xss : xss.shift().concat(...xss as XS[])) as XS,
+  concat = <TS extends (ArrayType | string)>(...xss: TS[]): TS =>
+    (!xss ? xss : xss.shift().concat(...xss as TS[])) as TS,
 
   $concat = a => (...b) => concat(a, ...b),
 

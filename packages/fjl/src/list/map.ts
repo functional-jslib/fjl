@@ -1,24 +1,24 @@
-import {ArrayTypeConstructor, ConstructableType, MapOp, NumberIndexable, Slice} from "../types";
+import {ArrayType, ArrayTypeConstructor, MapOp} from "../types";
 
-/**
- * Maps a function onto a ListLike (string or array) or a functor (value containing a map method).
- */
 export const
 
-  map = <T, ArrayType extends Array<T>, RetT, ResultArrayType extends Array<RetT>>(
-    fn: MapOp<T, number, ArrayType, RetT>,
-    xs: ArrayType
-  ): ResultArrayType => {
+  /**
+   * Maps a function onto a ListLike (string or array) or a functor (value containing a map method).
+   */
+  map = <T, TS extends ArrayType<T>, RetT, RetTS extends ArrayType<RetT>>(
+    fn: MapOp<T, number, TS, RetT>,
+    xs: TS
+  ): RetTS => {
     const limit = xs.length,
-      out = new xs.constructor(limit);
+      out = new (xs.constructor as ArrayTypeConstructor)(limit) as RetTS;
     if (!limit) return out;
     for (let i = 0; i < limit; i += 1) {
-      out[i] = fn(xs[i], i, xs);
+      out[i] = fn(xs[i] as T, i, xs) as RetT;
     }
     return out;
   },
 
-  $map = <T, ArrayType extends Array<T>, RetT, ResultArrayType extends Array<RetT>>
-  (fn: MapOp<T, number, ArrayType, RetT>) =>
-    (xs: ArrayType): ResultArrayType => map(fn, xs)
+  $map = <T, TS extends ArrayType<T>, RetT, RetTS extends ArrayType<RetT>>
+  (fn: MapOp<T, number, TS, RetT>) =>
+    (xs: TS): RetTS => map(fn, xs)
 ;

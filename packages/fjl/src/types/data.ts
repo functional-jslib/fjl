@@ -20,18 +20,12 @@ export interface ToJSON<T = object> {
  * Indexable object type;  E.g., Used where strings, arrays and/or objects can be used.
  */
 export interface StringIndexable<T = any> extends Lengthable {
-  [index: string]: T | any;
+  [index: string]: T;
 }
 
 export type StringAndOrNumberIndexable<T = any> = Lengthable & {
-  [index in number | string]: T | any;
+  [index in number | string]: T;
 }
-
-export type NumberIndexable<T = any> =  Lengthable & ({
-  [index: number]: T | any;
-} | ReadonlyNumberIndexable<T> | {
-  [index in number | string]: T | any;
-});
 
 /**
  * For immutable lists (strings).
@@ -40,29 +34,43 @@ export interface ReadonlyNumberIndexable<T = any> extends Lengthable {
   readonly [index: number]: T;
 }
 
+export type NumberIndexable<T = any> = Lengthable & ({
+  [index: number]: T;
+} | ReadonlyNumberIndexable<T> | {
+  [index in number | string]: T;
+}) & {
+  new(...args: any[]): NumberIndexable<T>
+};
+
 export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
 
-export interface SliceBase<T = any> {
-  readonly length: number;
+export type TypedArray =
+  Int8Array |
+  Uint8Array |
+  Int16Array |
+  Uint16Array |
+  Int32Array |
+  Uint32Array |
+  Float32Array |
+  Float64Array |
+  BigInt64Array |
+  BigUint64Array;
 
-  slice(from: number, to?: number): typeof this;
+export type ArrayType<T = any> = Array<T> | TypedArray;
 
-  concat(...xs: (ConcatArray<T> | string | Slice<T>)[]): typeof this;
+export type ArrayTypeConstructor = ArrayConstructor |
+  Int8ArrayConstructor |
+  Uint8ArrayConstructor |
+  Int16ArrayConstructor |
+  Uint16ArrayConstructor |
+  Int32ArrayConstructor |
+  Uint32ArrayConstructor |
+  Float32ArrayConstructor |
+  Float64ArrayConstructor |
+  BigInt64ArrayConstructor |
+  BigUint64ArrayConstructor;
 
-  indexOf(x: T, position?: number): number;
-
-  includes(x: T, position?: number): boolean;
-
-  lastIndexOf(x: T, position?: number): number;
-
-  [Symbol.iterator](): Iterator<T>;
-}
-
-export type  Slice<T = any> = {
-  [index in number | string]: T;
-} & SliceBase<T> | {
-  readonly [index: number]: T;
-} & SliceBase<T>
+export type  Slice<T = any> = ArrayType<T> | string;
 
 export type FunctorMapFn<RetT> = ((a?: any, b?: any, c?: any, ...args: any[]) => RetT) |
   ((a?: any, b?: any, ...args: any[]) => RetT) | ((a?: any, ...args: any[]) => RetT);
