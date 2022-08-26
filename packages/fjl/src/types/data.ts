@@ -23,10 +23,6 @@ export interface StringIndexable<T = any> extends Lengthable {
   [index: string]: T;
 }
 
-export type StringAndOrNumberIndexable<T = any> = Lengthable & {
-  [index in number | string]: T;
-}
-
 /**
  * For immutable lists (strings).
  */
@@ -34,17 +30,15 @@ export interface ReadonlyNumberIndexable<T = any> extends Lengthable {
   readonly [index: number]: T;
 }
 
-export type NumberIndexable<T = any> = Lengthable & ({
+export type   NumberIndexable<T = any> = Lengthable & ({
   [index: number]: T;
-} | ReadonlyNumberIndexable<T> | {
-  [index in number | string]: T;
-}) & {
+} | ReadonlyNumberIndexable<T>) & {
   new(...args: any[]): NumberIndexable<T>
 };
 
 export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
 
-export type TypedArray =
+export type TypedArray = (
   Int8Array |
   Uint8Array |
   Int16Array |
@@ -55,15 +49,13 @@ export type TypedArray =
   Float64Array |
   BigInt64Array |
   BigUint64Array
-  ;
-
-export type ArrayType<T = any> = Array<T> | TypedArray & {
-  concat(...xs: ConcatArray<T>[]): typeof this;
-  concat(...items: (T | ConcatArray<T>)[]): typeof this;
+  ) & {
+  concat(...args: (typeof this)[]): typeof this;
 };
 
-export type ArrayTypeConstructor =
-  ArrayConstructor |
+export type ArrayType<T = any> = Array<T> | TypedArray;
+
+export type ArrayTypeConstructor = ArrayConstructor |
   Int8ArrayConstructor |
   Uint8ArrayConstructor |
   Int16ArrayConstructor |
@@ -73,25 +65,7 @@ export type ArrayTypeConstructor =
   Float32ArrayConstructor |
   Float64ArrayConstructor |
   BigInt64ArrayConstructor |
-  BigUint64ArrayConstructor
-  ;
-
-export interface SliceBase<T = any> {
-  readonly length: number;
-
-  slice(from: number, to?: number): typeof this;
-
-  // @note Concat methods left out here since they're the only ones with differing types between
-  // 'slice like' variants (string, TypedArray, etc.).
-
-  indexOf(x: T, position?: number): number;
-
-  includes(x: T, position?: number): boolean;
-
-  lastIndexOf(x: T, position?: number): number;
-
-  [Symbol.iterator](): IterableIterator<T>;
-}
+  BigUint64ArrayConstructor;
 
 export type  Slice<T = any> = ArrayType<T> | string;
 

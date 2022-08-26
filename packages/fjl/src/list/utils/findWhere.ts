@@ -1,14 +1,13 @@
-import {length} from "../length";
-import {Indexable, PredForIndexable} from "../../types";
+import {NumberIndexable, PredForNumIndexable} from "../../types";
 
 export const
 
   /**
    * Finds an item by predicate or returns `undefined`.
    */
-  findWhere = <T>(pred: PredForIndexable<T>, xs: Indexable<T>): T | undefined => {
+  findWhere = <T>(pred: PredForNumIndexable<T>, xs: NumberIndexable<T>): T | undefined => {
     let ind = 0;
-    const limit = length(xs);
+    const limit = xs.length;
     if (!limit) {
       return;
     }
@@ -24,7 +23,7 @@ export const
   /**
    * Curried version of `findWhere`.
    */
-  $findWhere = <T>(pred: PredForIndexable<T>) =>
-    (xs: Indexable<T>): T | undefined => findWhere(pred, xs)
+  $findWhere = <T>(pred: PredForNumIndexable<T>) =>
+    (xs: NumberIndexable<T>): T | undefined => findWhere(pred, xs)
 
 ;

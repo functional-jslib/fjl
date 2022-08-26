@@ -1,13 +1,12 @@
-import {length} from "../length";
-import {PredForIndexable, Indexable} from "../../types";
+import {PredForNumIndexable, NumberIndexable} from "../../types";
 
 export const
 
   /**
    * Returns found index or -1 if index not found.
    */
-  findIndexWhereRight = <T>(pred: PredForIndexable<T>, arr: Indexable<T>): number => {
-    let ind = length(arr) - 1;
+  findIndexWhereRight = <T>(pred: PredForNumIndexable<T>, arr: NumberIndexable<T>): number => {
+    let ind = arr.length - 1;
     for (; ind >= 0; ind -= 1) {
       const predicateFulfilled = !!pred(arr[ind] as T, ind, arr);
       if (predicateFulfilled) {
@@ -20,7 +19,7 @@ export const
   /**
    * Curried version of `findIndexWhereRight`.
    */
-  $findIndexWhereRight = <T>(pred: PredForIndexable<T>) =>
-    (arr: Indexable<T>): number => findIndexWhereRight(pred, arr)
+  $findIndexWhereRight = <T>(pred: PredForNumIndexable<T>) =>
+    (arr: NumberIndexable<T>): number => findIndexWhereRight(pred, arr)
 
 ;

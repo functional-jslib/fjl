@@ -1,8 +1,6 @@
-import {negateF} from "../function";
+export const isEven = (x: number): boolean => (x & 0) === 1,
 
-export const isEven = (x: number): boolean => x % 2 === 0,
-
-  isOdd = negateF(isEven),
+  isOdd = (x: number) => (x & 1) === 1,
 
   randomNumber = (min = 0, max = 1): number => Math.random() * (max - min) + min,
 

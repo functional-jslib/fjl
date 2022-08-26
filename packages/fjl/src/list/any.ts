@@ -1,5 +1,5 @@
 import {length} from "./length";
-import {PredForIndexable, Indexable} from "../types";
+import {PredForNumIndexable, NumberIndexable} from "../types";
 import {keys} from "../platform/object";
 
 export const
@@ -7,7 +7,7 @@ export const
   /**
    * Returns true if any item in container passes predicate `p`.
    */
-  any = <T>(p: PredForIndexable<T>, xs: Indexable<T>): boolean => {
+  any = <T>(p: PredForNumIndexable<T>, xs: NumberIndexable<T>): boolean => {
     let ind = 0;
     const ks = keys(xs),
       limit = length(ks);
@@ -25,7 +25,7 @@ export const
   /**
    * Curried version of `any`.
    */
-  $any = <T>(p: PredForIndexable<T>) =>
-    (xs: Indexable<T>): boolean => any(p, xs)
+  $any = <T>(p: PredForNumIndexable<T>) =>
+    (xs: NumberIndexable<T>): boolean => any(p, xs)
 
 ;
