@@ -1,6 +1,4 @@
-import {sliceCopy} from "./utils/sliceCopy";
-import {length} from "./length";
-import {Indexable, MapAccumOp, Slice} from "../types";
+import {NumberIndexable, MapAccumOp, Slice} from "../types";
 
 export const
 
@@ -9,8 +7,8 @@ export const
    * containing the aggregated value and the result of mapping the passed in function on passed in list.
    */
   mapAccumR = <A = any, B = any, C = any>(op: MapAccumOp<A, B, C>, zero: A, xs: Slice<B>): [A, Slice<C>] => {
-    const list = sliceCopy(xs),
-      limit = length(xs);
+    const list = xs.slice(0),
+      limit = xs.length;
     if (!limit) {
       return [zero, list as unknown as Slice<C>];
     }
@@ -19,7 +17,7 @@ export const
       mapped = [],
       tuple;
     for (; ind >= 0; ind--) {
-      tuple = op(agg, (list as Indexable<B>)[ind], ind);
+      tuple = op(agg, (list as NumberIndexable<B>)[ind], ind);
       agg = tuple[0];
       mapped.push(tuple[1]);
     }

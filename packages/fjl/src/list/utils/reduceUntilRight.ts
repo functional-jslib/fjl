@@ -1,16 +1,15 @@
-import {length} from "../length";
-import {Indexable, ReduceOp, PredForIndexable} from "../../types";
+import {ReduceOp, PredForNumIndexable, NumberIndexable} from "../../types";
 
 export const
 
   /**
    * Reduces a slice, from left-to-right, until predicate is reached.
    */
-  reduceUntilRight = <T = any, RetT = any>(pred: PredForIndexable<T>,
-                               op: ReduceOp<T, Indexable<T>, RetT>,
+  reduceUntilRight = <T = any, RetT = any>(pred: PredForNumIndexable<T>,
+                               op: ReduceOp<T, NumberIndexable<T>, RetT>,
                                agg: RetT,
-                               arr: Indexable<T>): RetT => {
-    const limit = length(arr);
+                               arr: NumberIndexable<T>): RetT => {
+    const limit = arr.length;
     if (!limit) {
       return agg;
     }
@@ -28,9 +27,9 @@ export const
 /**
  * Curried version of `$reduceUntilRight`.
  */
-export const $reduceUntilRight = <T = any, RetT = any>(pred: PredForIndexable<T>) =>
-    (op: ReduceOp<T, Indexable<T>, RetT>) =>
+export const $reduceUntilRight = <T = any, RetT = any>(pred: PredForNumIndexable<T>) =>
+    (op: ReduceOp<T, NumberIndexable<T>, RetT>) =>
       (agg: RetT) =>
-        (arr: Indexable<T>): RetT =>
+        (arr: NumberIndexable<T>): RetT =>
           reduceUntilRight(pred, op, agg, arr)
   ;

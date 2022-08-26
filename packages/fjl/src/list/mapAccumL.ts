@@ -1,7 +1,5 @@
-import {sliceCopy} from "./utils/sliceCopy";
-import {length} from "./length";
 import {Slice} from "../types/data";
-import {Indexable, MapAccumOp} from "../types";
+import {NumberIndexable, MapAccumOp} from "../types";
 
 export const
 
@@ -11,8 +9,8 @@ export const
    * @haskellType mapAccumL :: Traversable t => (a -> b -> (a, c)) -> a -> t b -> (a, t c)
    */
   mapAccumL = <A = any, B = any, MapRetT = any>(op: MapAccumOp<A, B, MapRetT>, zero: A, xs: Slice<B>): [A, Slice<MapRetT>] => {
-    const list = sliceCopy(xs),
-      limit = length(xs);
+    const list = xs.slice(0),
+      limit = xs.length;
     if (!limit) {
       return [zero, list as unknown as Slice<MapRetT>];
     }
@@ -21,7 +19,7 @@ export const
       mapped = [],
       tuple;
     for (; ind < limit; ind++) {
-      tuple = op(agg, (list as Indexable<B>)[ind], ind);
+      tuple = op(agg, (list as NumberIndexable<B>)[ind], ind);
       agg = tuple[0];
       mapped.push(tuple[1]);
     }

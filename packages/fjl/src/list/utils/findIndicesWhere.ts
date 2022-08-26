@@ -1,13 +1,12 @@
-import {Indexable, PredForIndexable} from "../../types";
-import {length} from "../length";
+import {NumberIndexable, PredForNumIndexable} from "../../types";
 
 export const
 
   /**
    * Finds indices by predicate.
    */
-  findIndicesWhere = <T>(pred: PredForIndexable<T>, xs: Indexable<T>): number[] | undefined => {
-    const limit = length(xs);
+  findIndicesWhere = <T>(pred: PredForNumIndexable<T>, xs: NumberIndexable<T>): number[] | undefined => {
+    const limit = xs.length;
     let ind = 0;
     const out: any[] = [];
     for (; ind < limit; ind++) {
@@ -21,7 +20,7 @@ export const
   /**
    * Curried version of `findIndicesWhere`.
    */
-  $findIndicesWhere = <T>(pred: PredForIndexable<T>) =>
-    (xs: Indexable<T>): number[] | undefined => findIndicesWhere(pred, xs)
+  $findIndicesWhere = <T>(pred: PredForNumIndexable<T>) =>
+    (xs: NumberIndexable<T>): number[] | undefined => findIndicesWhere(pred, xs)
 
 ;

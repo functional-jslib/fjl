@@ -23,10 +23,6 @@ export interface StringIndexable<T = any> extends Lengthable {
   [index: string]: T;
 }
 
-export type StringAndOrNumberIndexable<T = any> = Lengthable & {
-  [index in number | string]: T;
-}
-
 /**
  * For immutable lists (strings).
  */
@@ -34,17 +30,15 @@ export interface ReadonlyNumberIndexable<T = any> extends Lengthable {
   readonly [index: number]: T;
 }
 
-export type NumberIndexable<T = any> = Lengthable & ({
+export type   NumberIndexable<T = any> = Lengthable & ({
   [index: number]: T;
-} | ReadonlyNumberIndexable<T> | {
-  [index in number | string]: T;
-}) & {
+} | ReadonlyNumberIndexable<T>) & {
   new(...args: any[]): NumberIndexable<T>
 };
 
 export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
 
-export type TypedArray =
+export type TypedArray = (
   Int8Array |
   Uint8Array |
   Int16Array |
@@ -54,7 +48,10 @@ export type TypedArray =
   Float32Array |
   Float64Array |
   BigInt64Array |
-  BigUint64Array;
+  BigUint64Array
+  ) & {
+  concat(...args: (typeof this)[]): typeof this;
+};
 
 export type ArrayType<T = any> = Array<T> | TypedArray;
 
