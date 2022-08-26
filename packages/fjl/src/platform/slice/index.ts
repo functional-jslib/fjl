@@ -3,7 +3,7 @@ import {ArrayType, Slice} from "../../types";
 export const
 
   concat = <TS extends (ArrayType | string)>(...xss: TS[]): TS =>
-    (!xss ? xss : xss.shift().concat(...xss as TS[])) as TS,
+    (!xss ? xss : (xss.shift() as TS).concat(...xss as TS[])) as TS,
 
   $concat = a => (...b) => concat(a, ...b),
 

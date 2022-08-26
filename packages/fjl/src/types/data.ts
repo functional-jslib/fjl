@@ -54,11 +54,16 @@ export type TypedArray =
   Float32Array |
   Float64Array |
   BigInt64Array |
-  BigUint64Array;
+  BigUint64Array
+  ;
 
-export type ArrayType<T = any> = Array<T> | TypedArray;
+export type ArrayType<T = any> = Array<T> | TypedArray & {
+  concat(...xs: ConcatArray<T>[]): typeof this;
+  concat(...items: (T | ConcatArray<T>)[]): typeof this;
+};
 
-export type ArrayTypeConstructor = ArrayConstructor |
+export type ArrayTypeConstructor =
+  ArrayConstructor |
   Int8ArrayConstructor |
   Uint8ArrayConstructor |
   Int16ArrayConstructor |
@@ -68,7 +73,25 @@ export type ArrayTypeConstructor = ArrayConstructor |
   Float32ArrayConstructor |
   Float64ArrayConstructor |
   BigInt64ArrayConstructor |
-  BigUint64ArrayConstructor;
+  BigUint64ArrayConstructor
+  ;
+
+export interface SliceBase<T = any> {
+  readonly length: number;
+
+  slice(from: number, to?: number): typeof this;
+
+  // @note Concat methods left out here since they're the only ones with differing types between
+  // 'slice like' variants (string, TypedArray, etc.).
+
+  indexOf(x: T, position?: number): number;
+
+  includes(x: T, position?: number): boolean;
+
+  lastIndexOf(x: T, position?: number): number;
+
+  [Symbol.iterator](): IterableIterator<T>;
+}
 
 export type  Slice<T = any> = ArrayType<T> | string;
 
