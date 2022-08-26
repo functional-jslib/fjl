@@ -1,7 +1,6 @@
 import {length} from "./length";
 import {reduce, toShortest} from "./utils";
 import {push} from "./push";
-import {Slice} from "../types";
 
 export const
 
@@ -18,7 +17,7 @@ export const
     if (!length(arr1) || !length(arr2)) {
       return [];
     }
-    const [a1, a2] = toShortest<any>(arr1, arr2) as Slice<T>[];
+    const [a1, a2] = toShortest<any>(arr1, arr2) as T[][];
     return reduce((agg, item, ind) => push([item, a2[ind]], agg),
       [], a1);
   },

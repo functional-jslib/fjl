@@ -9,18 +9,18 @@ export const
   $objUnion = $assignDeep,
 
   objIntersect = <T, T2>(obj1: T, obj2: T2): { [index in keyof T] } =>
-    reduce((agg, key: keyof T) => {
+    reduce((agg, key: string) => {
       if (hasOwnProperty(key, obj2)) {
         agg[key] = obj2[key as unknown as keyof T2];
       }
       return agg;
-    }, {} as { [index in keyof T] }, keys(obj1)),
+    }, {} as { [index in keyof T]: any }, keys(obj1)),
 
   $objIntersect = <T, T2>(obj1: T) =>
     (obj2: T2): { [index in keyof T] } => objIntersect(obj1, obj2),
 
   objDifference = <T, T2>(obj1: T, obj2: T2): { [index in keyof T] } =>
-    reduce((agg, key: keyof T) => {
+    reduce((agg, key: string) => {
       if (!hasOwnProperty(key, obj2)) {
         agg[key] = obj1[key];
       }

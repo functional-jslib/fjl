@@ -1,4 +1,3 @@
-import {Slice} from "../types";
 
 export const
     /**
@@ -8,7 +7,7 @@ export const
      * shallowEquals(inits('abc'), ['','a','ab','abc'])
      * ```
      */
-    inits = <T, TS extends Slice<T>>(xs: TS): TS[] | T[] => {
+    inits = <T, TS extends T[]>(xs: TS): TS[] | T[] => {
         const limit = xs.length,
             agg: [any[]] | any[] = [];
         let ind = 0;

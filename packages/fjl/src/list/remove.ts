@@ -1,9 +1,8 @@
 import {removeBy} from "./removeBy";
-import {Slice} from "../types";
 
 export const
 
-  remove = <T>(x: T, list: Slice<T>): Slice<T> =>
+  remove = <T>(x: T, list: T[]): T[] =>
     removeBy((a, b) => a === b, x, list),
 
   /**
@@ -11,5 +10,5 @@ export const
    * For example, `remove('a', 'banana') === 'bnana';`
    */
   $remove = <T>(x: T) =>
-    (list: Slice<T>): Slice<T> =>
+    (list: T[]): T[] =>
       remove(x, list)

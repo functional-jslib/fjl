@@ -1,7 +1,6 @@
 import {length} from "./length";
-import {Slice} from "../types";
 
-export type ScanlOp<A, B> = (b: B, a: A, i?: number, xs?: Slice<A>) => B
+export type ScanlOp<A, B> = (b: B, a: A, i?: number, xs?: A[]) => B
 
 export const
 
@@ -15,7 +14,7 @@ export const
    * last (scanl f z xs) == foldl f z xs.
    * ```
    */
-  scanl = <A, B>(fn: ScanlOp<A, B>, zero: B, xs: Slice<A>): B[] => {
+  scanl = <A, B>(fn: ScanlOp<A, B>, zero: B, xs: A[]): B[] => {
     if (!xs || !length(xs)) {
       return [];
     }
@@ -33,4 +32,4 @@ export const
 
   $scanl = <A, B>(fn: ScanlOp<A, B>) =>
     (zero: B) =>
-      (xs: Slice<A>): B[] => scanl(fn, zero, xs);
+      (xs: A[]): B[] => scanl(fn, zero, xs);

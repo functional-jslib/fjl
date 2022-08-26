@@ -1,4 +1,4 @@
-import {PredForSlice, Slice} from "../types";
+import {PredForArray} from "../types";
 
 export const
 
@@ -8,8 +8,8 @@ export const
    *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
    */
   partition = <T>(
-    pred: PredForSlice<T>,
-    list: Slice<T>
+    pred: PredForArray<T>,
+    list: T[]
   ): [T[], T[]] => {
     if (!list) {
       return [[], []];
@@ -28,5 +28,5 @@ export const
     return [front, back];
   },
 
-  $partition = <T>(pred: PredForSlice<T>) =>
-    (list: Slice<T>): [T[], T[]] => partition(pred, list);
+  $partition = <T>(pred: PredForArray<T>) =>
+    (list: T[]): [T[], T[]] => partition(pred, list);

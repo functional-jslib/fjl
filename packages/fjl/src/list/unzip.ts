@@ -1,5 +1,4 @@
 import {foldl} from "./foldl";
-import {Slice} from "../types";
 
 export const
   /**
@@ -10,7 +9,7 @@ export const
     if (!xss) {
       throw new Error(`\`unzip\` expects a value.  Received ${JSON.stringify(xss)}`);
     }
-    return foldl((agg, item: Slice) => {
+    return foldl((agg, item: [T1, T2]) => {
       if (item.length) {
         agg[0].push(item[0]);
         agg[1].push(item[1]);

@@ -10,7 +10,7 @@ import {
   defineEnumProp,
   defineEnumProps,
   defineProp,
-  defineProps,
+  defineProps, DefinePropsArgsTuple,
   error,
   fromAssocList,
   fromAssocListDeep,
@@ -70,9 +70,11 @@ import {Nameable, Slice, TypeRef} from '../../src/types';
 import {TypeConstructor} from "../../src/types";
 
 describe('#object', function () {
+  type LetterNumbersObj = { [index: string]: number };
+
   const charCodeToCharMap = (() => {
-      let i = -1,
-        charCode = 'a'.charCodeAt(0),
+      let i = -1;
+      const charCode = 'a'.charCodeAt(0),
         out = {};
       while (++i < 26) {
         out[charCode] = String.fromCharCode(charCode);
@@ -102,8 +104,8 @@ describe('#object', function () {
         ['Array', []],
         ['Object', {}],
         ['String', ''],
-        ['Function', function () {
-        }],
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        ['Function', console.log],
         ['Function', () => undefined],
         ['Number', 99],
         ['Boolean', true],
@@ -174,13 +176,14 @@ describe('#object', function () {
     it('should return expected result for given values', function () {
       type ConstructorTestCase = [Nameable, any, boolean];
       type NameTestCase = [string, any, boolean];
-      type ConstructorOrNameTestCase = [string | Nameable | Number, any, boolean];
+      type ConstructorOrNameTestCase = [string | Nameable | NumberConstructor, any, boolean];
 
       // [`TypeRef`, `arg`, `expected`]
       const truthySetWithCtors: Array<ConstructorTestCase> = [
           [Array, [], true],
           [Object, {}, true],
           [String, '', true],
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           [Function, function () {
           }, true],
           [Number, 99, true],
@@ -198,6 +201,7 @@ describe('#object', function () {
         falsySetWithCtors: Array<ConstructorTestCase> = [
           [Object, [], false],
           [Array, {}, false],
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           [Number, function () {
           }, false],
           [Function, 99, false],
@@ -230,6 +234,7 @@ describe('#object', function () {
   describe('#isFunction', function () {
     (<[any, boolean][]>[
       [() => undefined, true],
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       [function () {
       }, true],
       [-1, false],
@@ -497,8 +502,7 @@ describe('#object', function () {
         [vowelsString, false],
         [vowelsArray, false],
         [new Set(vowelsArray), false],
-        // @ts-ignore
-        [new Map((<ReadonlyArray<[string, string]>>vowelsArray.map(c => [c, c.charCodeAt(0)]))), false],
+        [new Map(vowelsArray.map(c => [c, c.charCodeAt(0)])), false],
         [Object.defineProperties, false],
         [Object, false],
         [Symbol(), false],
@@ -527,8 +531,7 @@ describe('#object', function () {
 
   describe('#instanceOf', function () {
     it('should return true when parameter two is of type parameter one', function () {
-      expectTrue(instanceOf(Function, function () {
-      }));
+      expectTrue(instanceOf(Function, console.log));
     });
     it('should return false when parameters two is not of type parameter one', function () {
       expectFalse(instanceOf(Function, {}));
@@ -563,7 +566,7 @@ describe('#object', function () {
     it('should assign all props from one object to another recursively', () => {
       // Check all top level properties
       expect(words
-        .map(word => result1.hasOwnProperty(word) && result1[word])
+        .map(word => Object.hasOwn(result1, word) && result1[word])
         .every(result => result)).toEqual(true);
 
       // Expect true that all results (head of return) of accumalated value are `true`
@@ -571,7 +574,7 @@ describe('#object', function () {
       // `head` pulls item at index `0` of list
       const check1 = words.reduce(
         ([_results, _obj, _lastObj], word) => [
-          (_results.push(_obj.hasOwnProperty(word) && _lastObj.hasOwnProperty(word)), _results),
+          (_results.push(Object.hasOwn(_obj, word) && Object.hasOwn(_lastObj, word)), _results),
           _obj[word],
           _lastObj[word]
         ],
@@ -621,7 +624,7 @@ describe('#object', function () {
     it('should assign all props from one object to another recursively', () => {
       // Check all top level properties
       expectTrue(words
-        .map(word => result1.hasOwnProperty(word) && result1[word])
+        .map(word => Object.hasOwn(result1, word) && result1[word])
         .every(result => result));
 
       expect(obj2).toEqual({hair: result1.hair}); // jest does deep check
@@ -640,9 +643,10 @@ describe('#object', function () {
       expectFunction(objComplement);
     });
     it('should return an object with only properties not found in the first obj', function () {
-      let subj1 = {a: 1, b: 2, c: 3} as object,
-        subj2 = {d: 4} as object,
-        subj3 = {e: 5, f: 6, g: 7} as object,
+
+      const subj1 = {a: 1, b: 2, c: 3} as LetterNumbersObj,
+        subj2 = {d: 4} as LetterNumbersObj,
+        subj3 = {e: 5, f: 6, g: 7} as LetterNumbersObj,
         result = objComplement(subj1, subj2, subj3);
       [subj2, subj3].forEach(function (subj) {
         keys(subj).forEach(key => {
@@ -650,7 +654,7 @@ describe('#object', function () {
         });
       });
       keys(subj1).forEach(key => {
-        expectFalse(result.hasOwnProperty(key));
+        expectFalse(Object.hasOwn(result, key));
       });
     });
   });
@@ -662,14 +666,14 @@ describe('#object', function () {
     });
 
     it('should return all the props from obj1 that aren\'t in obj2', function () {
-      let subj1 = {a: 1, b: 2, c: 3},
-        subj2 = {d: 4},
+      const subj1 = {a: 1, b: 2, c: 3} as LetterNumbersObj,
+        subj2 = {d: 4} as LetterNumbersObj,
         result = objDifference(subj1, subj2);
       Object.keys(subj1).forEach(key => {
         expectEqual(result[key], subj1[key]);
       });
       Object.keys(subj2).forEach(key => {
-        expectFalse(result.hasOwnProperty(key));
+        expectFalse(Object.hasOwn(result, key));
       });
     });
 
@@ -680,8 +684,8 @@ describe('#object', function () {
       expectFunction(objUnion);
     });
     it('should return an object containing all properties from the two objects passed in', function () {
-      let subj1 = {a: 1, b: 2, c: 3},
-        subj2 = {e: 5, f: 6, g: 7},
+      const subj1 = {a: 1, b: 2, c: 3} as LetterNumbersObj,
+        subj2 = {e: 5, f: 6, g: 7} as LetterNumbersObj,
         result = objUnion(subj1, subj2);
       [subj2, subj1].forEach(function (subj) {
         Object.keys(subj).forEach(key => {
@@ -696,8 +700,8 @@ describe('#object', function () {
       expectFunction(objUnion);
     });
     it('should return an object that contains values from both passed in objects', function () {
-      let subj1 = {a: 1, b: 2, c: 3, e: 4, f: 8},
-        subj2 = {a: 5, b: 6, c: 7, g: 9},
+      const subj1 = {a: 1, b: 2, c: 3, e: 4, f: 8} as LetterNumbersObj,
+        subj2 = {a: 5, b: 6, c: 7, g: 9} as LetterNumbersObj,
         sharedKeys = ['a', 'b', 'c'],
         result = objIntersect(subj1, subj2);
       sharedKeys.forEach(key => {
@@ -756,9 +760,9 @@ describe('#object', function () {
       log('testing-peek');
       (subsequences('abc').concat([
         [99], [true], [undefined], [null], ['Output tested from `peek`']
-      ] as Slice[])).forEach((xs, _, xss) => {
+      ] as any[])).forEach((xs, _, xss) => {
         const isArray = Array.isArray(xs);
-        expect(peek.apply(null,  !isArray? [xs] : xs))
+        expect(peek(...(!isArray ? [xs] : xs)))
           .toEqual(!isArray ? xs : xs[xs.length - 1]);
       });
     });
@@ -831,7 +835,7 @@ describe('#object', function () {
       expect(isObject(result)).toEqual(true);
       expect(
         all(([charCode, char]) =>
-          result[charCode] === char,
+            result[charCode] === char,
           charCodeToCharArrayMap
         )
       )
@@ -913,8 +917,8 @@ describe('#object', function () {
     it('should return a descriptor with a setter and a getter', function () {
       const ks = keys(result);
       expect(ks.length).toEqual(2);
-      expect(result.hasOwnProperty('get')).toEqual(true);
-      expect(result.hasOwnProperty('set')).toEqual(true);
+      expect(Object.hasOwn(result, 'get')).toEqual(true);
+      expect(Object.hasOwn(result, 'set')).toEqual(true);
     });
 
     it('should return a descriptor whose getters and setters ' +
@@ -938,8 +942,8 @@ describe('#object', function () {
       'it\'s defined property.', function () {
       const ks = keys(result);
       expect(ks.length).toEqual(2);
-      expect(result.hasOwnProperty('get')).toEqual(true);
-      expect(result.hasOwnProperty('set')).toEqual(true);
+      expect(Object.hasOwn(result, 'get')).toEqual(true);
+      expect(Object.hasOwn(result, 'set')).toEqual(true);
     });
   });
 
@@ -947,15 +951,13 @@ describe('#object', function () {
     const descriptor = toEnumerableDescriptor([{}, {}])[1];
 
     it('should return an object with an `enumerable` property set to `true`', function () {
-      expect(descriptor.hasOwnProperty('enumerable')).toEqual(true);
+      expect(Object.hasOwn(descriptor, 'enumerable')).toEqual(true);
       expect(descriptor.enumerable).toEqual(true);
     });
 
     it('should throw an error when no descriptor is passed in `TargetDescriptorPair`', function () {
-      // @ts-ignore
-      expect(() => toEnumerableDescriptor([])).toThrow(Error);
-      // @ts-ignore
-      expect(() => toEnumerableDescriptor([1]).toThrow(Error));
+      expect(() => toEnumerableDescriptor([] as unknown as [any, PropertyDescriptor])).toThrow(Error);
+      expect(() => toEnumerableDescriptor([1] as unknown as [any, PropertyDescriptor])).toThrow(Error);
     });
   });
 
@@ -968,7 +970,7 @@ describe('#object', function () {
       expect(!!descriptor).toEqual(true);
     });
     it('should define property `propName` on `target`', function () {
-      expect(target.hasOwnProperty(propName)).toEqual(true);
+      expect(Object.hasOwn(target, propName)).toEqual(true);
     });
     it('should return a target whose defined `propName` throws an error when ' +
       'the wrong type is passed in', function () {
@@ -1007,7 +1009,7 @@ describe('#object', function () {
       expect(!!descriptor).toEqual(true);
     });
     it('should define property `propName` on `target`', function () {
-      expect(target.hasOwnProperty(propName)).toEqual(true);
+      expect(Object.hasOwn(target, propName)).toEqual(true);
     });
     it('should set `enumerable` to `true` on returned descriptor', function () {
       expect(descriptor.enumerable).toEqual(true);
@@ -1042,6 +1044,7 @@ describe('#object', function () {
   });
 
   describe('#defineProps', function () {
+    type DefinePropsParams = Parameters<typeof defineProps>;
     const
       seedArgTuples = [
         [String, 'someStringProp'],
@@ -1054,17 +1057,16 @@ describe('#object', function () {
         ['99 bottles..', 99],
         [99, 'should-be-number'],
         [false, 1],
-        [function () {
-        }, 99, 99],
-        [[1, 2, 3, 4, 5], function () {
-        }]
+        [console.log, 99, 99],
+        [[1, 2, 3, 4, 5], console.log]
       ],
       seedTarget = seedArgTuples.reduce((agg, tuple) => {
         agg[tuple[1] + ''] = null;
         return agg;
       }, {}),
       seedPropNames = keys(seedTarget),
-      generateTargetData = (): any[][] => unfoldr((argTuples, ind, _out) => {
+      generateTargetData = () => unfoldr(
+        (argTuples: DefinePropsParams[], ind: number, _out: DefinePropsParams[][]) => {
           const
             _argTuples = argTuples.slice(0),
             out = [_argTuples.slice(0), {}];
@@ -1076,7 +1078,7 @@ describe('#object', function () {
           }
           return undefined;
         },
-        seedArgTuples);
+        seedArgTuples as DefinePropsParams[]);
 
     it('data for tests should be in correct format', function () {
       // Test our test parameters
@@ -1090,14 +1092,14 @@ describe('#object', function () {
     it('should be able to define many props on given target with only argTuples of length `2`', function () {
       generateTargetData().forEach(args => {
         // log(args);
-        const target = defineProps.apply(null, args),
+        const target = defineProps(...args),
           propNames = args[0].map(x => x[1]);
 
         // log(propNames, '\n', target);
 
         // Ensure targets have props set
         propNames.forEach(name => {
-          expect(target.hasOwnProperty(name)).toEqual(true);
+          expect(Object.hasOwn(target, name)).toEqual(true);
         });
       });
     });
@@ -1106,7 +1108,7 @@ describe('#object', function () {
       'and no errors when set to the correct type', function () {
       generateTargetData().forEach(args => {
         // log(args);
-        const target = defineProps.apply(null, args),
+        const target = defineProps(...args),
           propNames = args[0].map(x => x[1]);
 
         // log(propNames, '\n', target);
@@ -1116,7 +1118,7 @@ describe('#object', function () {
           const [correct, inCorrect] = seedArgTupleCorrectIncorrectValues[ind];
 
           // Ensure prop exists
-          expect(target.hasOwnProperty(name)).toEqual(true);
+          expect(Object.hasOwn(target, name)).toEqual(true);
 
           // Ensure setter obeys type rule
           expect(() => {
@@ -1183,10 +1185,8 @@ describe('#object', function () {
         ['99 bottles..', 99],
         [99, 'should-be-number'],
         [false, 1],
-        [function () {
-        }, 99, 99],
-        [[1, 2, 3, 4, 5], function () {
-        }]
+        [console.log, 99, 99],
+        [[1, 2, 3, 4, 5], console.log]
       ],
       seedTarget = seedArgTuples.reduce((agg, tuple) => {
         agg[tuple[1] + ''] = null;
@@ -1225,7 +1225,7 @@ describe('#object', function () {
 
         // Ensure targets have enumerable props set
         propNames.forEach(name => {
-          expect(target.hasOwnProperty(name)).toEqual(true);
+          expect(Object.hasOwn(target, name)).toEqual(true);
           expect(Object.getOwnPropertyDescriptor(target, name).enumerable)
             .toEqual(true);
         });
@@ -1246,7 +1246,7 @@ describe('#object', function () {
           const [correct, inCorrect] = seedArgTupleCorrectIncorrectValues[ind];
 
           // Ensure prop exists
-          expect(target.hasOwnProperty(name)).toEqual(true);
+          expect(Object.hasOwn(target, name)).toEqual(true);
 
           // Ensure prop is enumerable
           expect(Object.getOwnPropertyDescriptor(target, name).enumerable)
@@ -1267,7 +1267,6 @@ describe('#object', function () {
       generateTargetData().forEach((args: Parameters<typeof defineEnumProps>) => {
         // log(args);
         const target = defineEnumProps(...args),
-          // @ts-ignore
           propNames = args[0].map(([_, name]) => name);
         expect(target).toBeInstanceOf(Object);
         propNames.forEach(name => {
@@ -1307,7 +1306,7 @@ describe('#object', function () {
           const [correct, inCorrect] = seedArgTupleCorrectIncorrectValues[ind];
 
           // Ensure prop exists
-          expect(target.hasOwnProperty(name)).toEqual(true);
+          expect(Object.hasOwn(target, name)).toEqual(true);
 
           // Ensure prop is enumerable
           expect(Object.getOwnPropertyDescriptor(target, name).enumerable)

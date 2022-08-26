@@ -1,9 +1,9 @@
-import {NumberIndexable, PredForNumIndexable} from "../types";
+import {PredForArray} from "../types";
 
 /**
  * Returns true if all items in container return `true` for predicate `p`.
  */
-export const all = <T>(p: PredForNumIndexable<T>, xs: NumberIndexable<T>): boolean => {
+export const all = <T>(p: PredForArray<T>, xs: T[]): boolean => {
   const limit = xs.length
   let ind = 0;
   if (!limit) return false;
@@ -16,7 +16,7 @@ export const all = <T>(p: PredForNumIndexable<T>, xs: NumberIndexable<T>): boole
 /**
  * Curried version of `all`.
  */
-export const $all = <T>(p: PredForNumIndexable<T>) =>
-  (xs: NumberIndexable<T>): boolean => all(p, xs)
+export const $all = <T>(p: PredForArray<T>) =>
+  (xs: T[]): boolean => all(p, xs)
 
 ;

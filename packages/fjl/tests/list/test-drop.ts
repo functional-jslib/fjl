@@ -4,9 +4,7 @@ import {drop} from "../../src";
 
 describe('#drop', () => {
   it('should return a new list/string with dropped items from original until limit', () => {
-    type DropTest = [[number, Slice<any>], Slice<any>];
-    type DropTestCases = Array<DropTest>;
-    (<DropTestCases>[
+    (<[Parameters<typeof drop>, Slice<any>][]>[
       [[0, ''], ''],
       [[0, []], []],
       [[1, ''], ''],
@@ -28,7 +26,7 @@ describe('#drop', () => {
       });
   });
   it('should throw an error when no parameter is passed in', () => {
-    (<Slice<any>[]>[null, undefined, 0, {}]).forEach(xs =>
+    (<any[]>[null, undefined, 0, {}]).forEach(xs =>
       expectError(() => drop(3, xs))
     );
   });

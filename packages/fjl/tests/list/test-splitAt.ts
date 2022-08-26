@@ -1,26 +1,20 @@
-import {expectEqual, vowelsArray, vowelsString} from "../helpers";
+import {expectEqual, vowelsArray} from "../helpers";
 import {splitAt} from "../../src/list/splitAt";
-import {Slice} from "../../src/types/data";
 
 describe('#splitAt', () => {
+  type TestCase = [Parameters<typeof splitAt>, ReturnType<typeof splitAt>];
   it('should split an list and/or string at given index', () => {
-    (<Array<[[number, string | any[]], [string | any[], string | any[]]]>>[
+    (<TestCase[]>[
       [[0, []], [[], []]],
       [[0, ''], ['', '']],
       [[1, []], [[], []]],
       [[1, ''], ['', '']]
     ]).concat(
-      (<[[number, string | any[]], [string | any[], string | any[]]]>vowelsArray
+      (<TestCase[]>vowelsArray
         .map((_, ind) => [
           [ind, vowelsArray],
           [vowelsArray.slice(0, ind),
             vowelsArray.slice(ind)]
-        ])),
-      (<[[number, string | any[]], [string | any[], string | any[]]]>vowelsString.split('')
-        .map((_, ind) => [
-          [ind, vowelsString],
-          [vowelsString.slice(0, ind),
-            vowelsString.slice(ind)]
         ]))
     )
       .forEach(([args, expected]) => {
@@ -28,7 +22,7 @@ describe('#splitAt', () => {
       });
   });
   it('should throw an error on error cases (empty as second arg) (non-numeral as first arg), etc.', () => {
-    (<[number | null | undefined, null | undefined][]>[
+    (<Parameters<typeof splitAt>[]>[
       [null, null],
       [undefined, undefined],
       [undefined, null],
@@ -47,7 +41,7 @@ describe('#splitAt', () => {
       .forEach(([ind, list]) => {
         // @note Forcing cast on `list` value here to allow test to run (
         //  since `list` type is actually incorrect in this scenario).
-        expect(() => splitAt(ind as number, list as unknown as Slice<any>)).toThrow();
+        expect(() => splitAt(ind as number, list)).toThrow();
       });
   });
 });

@@ -1,6 +1,5 @@
 import {length} from "./length";
 import {slice} from "../platform/slice";
-import {Slice} from "../types";
 
 export const
 
@@ -10,7 +9,7 @@ export const
    * shallowEquals(tails('abc'), ['abc', 'bc', 'c',''])
    * ```
    */
-  tails = <T>(xs: Slice<T>): Slice<T> => {
+  tails = <T>(xs: T[]): T[] => {
     let limit = length(xs),
       ind = 0,
       agg: [any[]] | any[] = [];

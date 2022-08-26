@@ -1,13 +1,12 @@
 import {length} from "./length";
 import {any} from "./any";
-import {Slice} from "../types";
 
 export const
 
   /**
    * The nubBy function behaves just like nub, except it uses a user-supplied equality predicate.
    */
-  nubBy = <T>(pred, list: Slice<T>): Slice<T> => {
+  nubBy = <T>(pred, list: T[]): T[] => {
     if (!length(list)) {
       return [];
     }
@@ -27,7 +26,7 @@ export const
   },
 
   $nubBy =  <T>(pred) =>
-    (list: Slice<T>): Slice<T> =>
+    (list: T[]): T[] =>
       nubBy(pred, list)
 
 ;

@@ -1,4 +1,4 @@
-import {Slice} from "../types/data";
+import {Slice} from "../types";
 
 export const
   /**
@@ -19,11 +19,8 @@ export const
 
       for (let j = 0; j < listLen; j += 1) {
         if (i & (1 << j)) {
-          if (typeof xs === 'string') {
-            entry = entry.concat(xs[j]);
-          } else {
-            (entry as unknown as T[]).push(xs[j]);
-          }
+          if (typeof xs === 'string') entry = entry.concat(xs[j]);
+          else entry.push(xs[j]);
         }
       }
       out.push(entry);

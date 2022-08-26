@@ -1,7 +1,6 @@
 import {length} from "./length";
 import {reduce, toShortest} from "./utils";
 import {push} from "./push";
-import {Slice} from "../types";
 import {Binary} from "../types";
 
 export type TuplizeOp<T1, T2> = Binary<T1, T2, [T1, T2]>;
@@ -28,17 +27,17 @@ export const
    * @param xs2 {Array}
    * @returns {Array<Array<*,*>>}
    */
-  zipWith = <T, T2>(op: Binary<T, T2, [T, T2]>, xs1: Slice<T>, xs2: Slice<T2>): [T, T2][] => {
+  zipWith = <T, T2>(op: Binary<T, T2, [T, T2]>, xs1: T[], xs2: T2[]): [T, T2][] => {
     if (!length(xs1) || !length(xs2)) {
       return [];
     }
-    const [a1, a2] = toShortest(xs1 as T[], xs2 as unknown as T[]) as Slice<any>[];
+    const [a1, a2] = toShortest(xs1 as T[], xs2 as unknown as T[]) as any[][];
     return reduce((agg, item: T, ind) =>
         push(op(item, a2[ind]), agg),
       [], a1);
   },
 
   $zipWith = <T, T2>(op: Binary<T, T2, [T, T2]>) =>
-    (xs1: Slice<T>) =>
-      (xs2: Slice<T2>): [T, T2][] =>
+    (xs1: T[]) =>
+      (xs2: T2[]): [T, T2][] =>
         zipWith(op, xs1, xs2);

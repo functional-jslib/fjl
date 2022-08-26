@@ -1,11 +1,9 @@
-import {NumberIndexable} from "../types";
-
 export const
 
   /**
    * Checks if list `xs1` is an infix of list `xs2`
    */
-  isInfixOf = <T, TS extends NumberIndexable<T>>(xs1: TS, xs2: TS): boolean => {
+  isInfixOf = <T, TS extends T[]>(xs1: TS, xs2: TS): boolean => {
     const limit1 = xs1.length,
       limit2 = xs2.length;
     if (limit2 < limit1 || !limit1 || !limit2) {
@@ -28,7 +26,7 @@ export const
     return false;
   },
 
-  $isInfixOf = <T, TS extends NumberIndexable<T>>(xs1: TS) =>
+  $isInfixOf = <T, TS extends T[]>(xs1: TS) =>
     (xs2: TS): boolean => isInfixOf(xs1, xs2)
 
 ;

@@ -5,7 +5,7 @@ import {ArrayType, ArrayTypeConstructor} from "../types";
 
 export const
 
-  reverse = <T, TS extends ArrayType<T>>(xs: TS): TS => {
+  reverse = <T, TS extends T[]>(xs: TS): TS => {
     const len = xs.length,
       out = new (xs.constructor as ArrayTypeConstructor)(len) as TS,
       lastIndex = len - 1;

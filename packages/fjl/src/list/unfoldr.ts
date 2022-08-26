@@ -1,4 +1,4 @@
-export type UnfoldrOp<A, B> = (b: B | undefined, i?: number, as?: A[]) => [A, B] | undefined;
+export type UnfoldrOp<A, B> = (b: B | undefined, i: number, as: A[]) => [A, B] | undefined;
 
 export const
 
@@ -12,10 +12,10 @@ export const
    *
    * @haskellType `unfoldr :: (b -> Maybe (a, b)) -> b -> [a]` - In our typescript type though `Maybe(a, b)` becomes `[A, B] | undefined | null`.
    */
-  unfoldr = <A, B>(op: ((b: B | undefined, i?: number, as?: A[]) => [A, B] | undefined), bs: B): A[] => {
+  unfoldr = <A, B>(op: ((b: B | undefined, i?: number, _as?: A[]) => [A, B] | undefined), _bs: B): A[] => {
+    const out = [] as A[];
     let ind = 0,
-      out = [] as A[],
-      resultTuple = op(bs, ind, out);
+      resultTuple = op(_bs, ind, out);
     while (resultTuple) {
       out.push(resultTuple[0]);
       resultTuple = op(resultTuple[1], ++ind, out);

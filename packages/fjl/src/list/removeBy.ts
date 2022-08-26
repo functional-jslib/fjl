@@ -3,14 +3,14 @@ import {splitAt} from "./splitAt";
 import {append} from "./append";
 import {tail} from "./tail";
 import {sliceCopy} from "./utils/sliceCopy";
-import {BinaryPred, Slice} from "../types";
+import {BinaryPred} from "../types";
 
 export const
 
   /**
    * Behaves the same as `remove`, but takes a user-supplied equality predicate.
    */
-  removeBy = <T>(pred: BinaryPred<T>, x: T, list: Slice<T>): Slice<T> => {
+  removeBy = <T>(pred: BinaryPred<T>, x: T, list: T[]): T[] => {
     const foundIndex = findIndex(item => pred(x, item), list) as number;
     if (foundIndex > -1) {
       const parts = splitAt(foundIndex, list);
@@ -21,4 +21,4 @@ export const
 
   $removeBy = <T>(pred: BinaryPred<T>) =>
     (x: T) =>
-      (list: Slice<T>): Slice<T> => removeBy(pred, x, list);
+      (list: T[]): T[] => removeBy(pred, x, list);

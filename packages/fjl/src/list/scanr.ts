@@ -1,7 +1,5 @@
 import {length} from "./length";
-import {Slice} from "../types";
-
-export type ScanrOp<A, B> = (a: A, b: B, i?: number, xs?: Slice<A>) => B;
+export type ScanrOp<A, B> = (a: A, b: B, i?: number, xs?: A[]) => B;
 
 export const
 
@@ -10,7 +8,7 @@ export const
    * Note also `scanr`'s relationship ot `foldr`:
    * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
    */
-  scanr = <A, B>(fn: ScanrOp<A, B>, zero: B, xs: Slice<A>): B[] => {
+  scanr = <A, B>(fn: ScanrOp<A, B>, zero: B, xs: A[]): B[] => {
     if (!xs || !length(xs)) {
       return [];
     }
@@ -28,4 +26,4 @@ export const
 
   $scanr = <A, B>(fn: ScanrOp<A, B>) =>
     (zero: B) =>
-      (xs: Slice<A>): B[] => scanr(fn, zero, xs);
+      (xs: A[]): B[] => scanr(fn, zero, xs);

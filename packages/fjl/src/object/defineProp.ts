@@ -1,6 +1,8 @@
 import {errorIfNotType} from '../errorThrowing';
 import {isUndefined} from './is';
-import {TypeRef} from "../types";
+import {ConstructableType, TypeRef} from "../types";
+
+export type DefinePropsArgsTuple = [TypeRef, string, any?];
 
 export const
 
@@ -8,7 +10,7 @@ export const
    * Creates a descriptor for a property which is settable but throws
    * errors when the `Type` is disobeyed.
    */
-  createTypedDescriptor = (Type, target, propName): PropertyDescriptor => {
+  createTypedDescriptor = (Type: TypeRef, target: any, propName: string): PropertyDescriptor => {
     let _value;
     return {
       get: (): typeof Type => _value,
@@ -102,7 +104,7 @@ export type PropsDefiner = <T>(argsTuple: [TypeRef, string, any?][], target: T) 
  */
 function createDefinePropsMethod({enumerable}: PropertyDescriptor): PropsDefiner {
   const operation = enumerable ? defineEnumProp : defineProp;
-  return <T>(argsTuple: [TypeRef, string, any?][], target: T): T => {
+  return <T = any>(argsTuple: [TypeRef, string, any?][], target: T): T => {
     argsTuple.forEach(argTuple => {
       const [TypeRef, propName, defaultValue] = argTuple;
       operation.apply(null, [TypeRef, target, propName, defaultValue]);

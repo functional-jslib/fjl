@@ -3,7 +3,6 @@ import {findIndex} from "./findIndex";
 import {concat} from "./concat";
 import {intersperse} from "./intersperse";
 import {splitAt} from "./splitAt";
-import {Slice} from "../types";
 
 /**
  * The insert function takes an element and a list and inserts the element
@@ -12,7 +11,7 @@ import {Slice} from "../types";
  * result will also be sorted. It is a special case of insertBy, which allows
  * the programmer to supply their own comparison function.
  */
-export const insert = <T, TS extends Slice<T>>(x: T, xs: TS): TS => {
+export const insert = <T, TS extends T[]>(x: T, xs: TS): TS => {
     if (!xs.length) {
       return of(xs, x);
     }
@@ -21,7 +20,7 @@ export const insert = <T, TS extends Slice<T>>(x: T, xs: TS): TS => {
       concat(intersperse(of(xs, x), splitAt(foundIndex, xs)) as TS[]);
   },
 
-  $insert = <T, TS extends Slice<T>>(x: T) =>
+  $insert = <T, TS extends T[]>(x: T) =>
     (xs: TS): TS => insert(x, xs)
 
 ;

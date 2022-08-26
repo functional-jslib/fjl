@@ -5,7 +5,7 @@ export const
   /**
    * Maps a function onto a ListLike (string or array) or a functor (value containing a map method).
    */
-  map = <T, TS extends ArrayType<any>, RetT, RetTS extends ArrayType<RetT>>(
+  map = <T, TS extends any[], RetT, RetTS extends RetT[]>(
     fn: MapOp<T, number, TS, RetT>,
     xs: TS
   ): RetTS => {
@@ -18,7 +18,7 @@ export const
     return out;
   },
 
-  $map = <T, TS extends ArrayType<T>, RetT, RetTS extends ArrayType<RetT>>
+  $map = <T, TS extends T[], RetT, RetTS extends RetT[]>
   (fn: MapOp<T, number, TS, RetT>) =>
     (xs: TS): RetTS => map(fn, xs)
 ;

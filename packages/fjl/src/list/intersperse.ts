@@ -1,12 +1,10 @@
-import {NumberIndexable} from "../types";
-
 export const
 
   /**
    * Takes an element and a list and `intersperses' that element between the
    *  elements of the list.
    */
-  intersperse = <T, TS extends NumberIndexable<T>>(between: T, xs: TS): T[] => {
+  intersperse = <T, TS extends T[]>(between: T, xs: TS): T[] => {
     if (!xs || !xs.length) {
       return [];
     }
@@ -24,7 +22,7 @@ export const
     return out;
   },
 
-  $intersperse = <T, TS extends NumberIndexable<T>>(between: T) =>
+  $intersperse = <T, TS extends T[]>(between: T) =>
     (xs: TS): T[] => intersperse(between, xs)
 
 ;

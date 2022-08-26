@@ -1,4 +1,4 @@
-import {BinaryPred, Slice} from "../types";
+import {BinaryPred} from "../types";
 
 export const
 
@@ -10,7 +10,7 @@ export const
    *  [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], "i"]
    * ```
    */
-  groupBy = <T, TS extends Slice<T>>(equalityOp: BinaryPred<T>, xs: TS): T[][] => {
+  groupBy = <T, TS extends T[]>(equalityOp: BinaryPred<T>, xs: TS): T[][] => {
     // Bail if empty list
     if (!xs) return [];
 
@@ -53,7 +53,7 @@ export const
   /**
    * Curried version of `$groupBy`.
    */
-  $groupBy = <T, TS extends Slice<T>>(equalityOp: BinaryPred<T>) =>
+  $groupBy = <T, TS extends T[]>(equalityOp: BinaryPred<T>) =>
     (xs: TS): T[][] => groupBy(equalityOp, xs)
 
 ;

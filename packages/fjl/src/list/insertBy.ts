@@ -3,14 +3,13 @@ import {concat} from "./concat";
 import {push} from "./push";
 import {sliceCopy} from "./utils/sliceCopy";
 import {OrderingFunc} from "./utils";
-import {Slice} from "../types";
 import {of} from "../object/of";
 
 /**
  * A version of `insert` that allows you to specify the ordering of the inserted
  * item;  Before/at, or after
  */
-export const insertBy = <T, TS extends Slice<T>>(orderingFn: OrderingFunc<T>, x: T, xs: TS): TS => {
+export const insertBy = <T, TS extends T[]>(orderingFn: OrderingFunc<T>, x: T, xs: TS): TS => {
     const limit = xs.length;
 
     if (!limit) return of(xs, x);
@@ -25,7 +24,7 @@ export const insertBy = <T, TS extends Slice<T>>(orderingFn: OrderingFunc<T>, x:
     return push(x, sliceCopy(xs) as unknown as T[]) as unknown as TS;
   },
 
-  $insertBy = <T, TS extends Slice<T>>(orderingFn: OrderingFunc<T>) =>
+  $insertBy = <T, TS extends T[]>(orderingFn: OrderingFunc<T>) =>
     (x: T) =>
       (xs: TS): TS => insertBy(orderingFn, x, xs)
 

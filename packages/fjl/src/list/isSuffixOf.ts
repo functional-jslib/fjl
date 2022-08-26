@@ -1,4 +1,3 @@
-import {NumberIndexable} from "../types";
 import {findIndex} from "./findIndex";
 import {$equal} from "../boolean";
 
@@ -7,7 +6,7 @@ export const
   /**
    * Checks if list `xs1` is a suffix of list `xs2`
    */
-  isSuffixOf = <T, TS extends NumberIndexable<T>>(xs2: TS, xs1: TS): boolean => {
+  isSuffixOf = <T, TS extends T[]>(xs2: TS, xs1: TS): boolean => {
     const limit1 = xs1.length,
       limit2 = xs2.length;
     if (limit2 < limit1 || !limit1 || !limit2 || findIndex($equal(xs1[0]), xs2) === -1) {
@@ -28,7 +27,7 @@ export const
    * Checks if list `xs1` is a suffix of list `xs2`
    * @curried
    */
-  $isSuffixOf = <T, TS extends NumberIndexable<T>>(xs2: TS) =>
+  $isSuffixOf = <T, TS extends T[]>(xs2: TS) =>
     (xs1: TS): boolean => isSuffixOf(xs2, xs1)
 
 ;
