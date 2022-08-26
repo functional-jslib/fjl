@@ -6,6 +6,6 @@ export const
   /**
    * Returns length of all passed in lists in list.
    */
-  lengths = <T = any>(...lists: T[]): number[] => map(length, lists)
+  lengths = <T>(...lists: T[]): number[] => map(length, lists)
 
 ;

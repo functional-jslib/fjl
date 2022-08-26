@@ -1,21 +1,17 @@
-import {NumberIndexable, PredForNumIndexable} from "../../types";
+import {PredForArray} from "../../types";
 
 export const
 
   /**
    * Finds an item by predicate or returns `undefined`.
    */
-  findWhere = <T>(pred: PredForNumIndexable<T>, xs: NumberIndexable<T>): T | undefined => {
+  findWhere = <T>(pred: PredForArray<T>, xs: T[]): T | undefined => {
     let ind = 0;
     const limit = xs.length;
-    if (!limit) {
-      return;
-    }
+    if (!limit) return;
     for (; ind < limit; ind++) {
       const elm = xs[ind];
-      if (pred(elm as T, ind, xs)) {
-        return elm as T;
-      }
+      if (pred(elm, ind, xs)) return elm;
     }
     return undefined;
   },
@@ -23,7 +19,7 @@ export const
   /**
    * Curried version of `findWhere`.
    */
-  $findWhere = <T>(pred: PredForNumIndexable<T>) =>
-    (xs: NumberIndexable<T>): T | undefined => findWhere(pred, xs)
+  $findWhere = <T>(pred: PredForArray<T>) =>
+    (xs: T[]): T | undefined => findWhere(pred, xs)
 
 ;

@@ -1,6 +1,5 @@
 import {
-  ArrayType,
-  PredForArrayType
+  PredForArray,
 } from "../../types";
 
 export const
@@ -8,10 +7,9 @@ export const
   /**
    * Finds index in slice (string|array) that matches given predicate or -1.
    */
-  findIndexWhere = <T=any, TS extends ArrayType<T>=any>(pred: PredForArrayType<T, TS>, xs: TS): number => {
-    let ind = 0;
+  findIndexWhere = <T>(pred: PredForArray<T>, xs: T[]): number => {
     const limit = xs.length;
-    for (; ind < limit; ind += 1) {
+    for (let ind = 0; ind < limit; ind += 1) {
       const predicateFulfilled = pred(xs[ind] as T, ind, xs);
       if (predicateFulfilled) return ind;
     }
@@ -21,7 +19,7 @@ export const
   /**
    * Curried version of `findIndexWhere`.
    */
-  $findIndexWhere = <T=any, TS extends ArrayType<T>=any>(pred: PredForArrayType<T, TS>) =>
-    (xs: TS): number => findIndexWhere(pred, xs)
+  $findIndexWhere = <T>(pred: PredForArray<T>) =>
+    (xs: T[]): number => findIndexWhere(pred, xs)
 
 ;

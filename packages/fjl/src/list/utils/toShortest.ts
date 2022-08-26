@@ -9,7 +9,7 @@ export const
   /**
    * Trims all lists to shortest in `lists`.
    */
-  toShortest = <T = any, T2 extends Slice<T> = Slice<T>>(...lists: T2[]): T2[] => {
+  toShortest = <T>(...lists: T[][]): T[][] => {
     const listLengths = lengths(...lists),
       smallLen = Math.min(...listLengths);
     return map((list: any[], ind) => listLengths[ind] > smallLen ?
@@ -22,7 +22,7 @@ export const
    *  'slice to smallest' functionality.
    * @curried Upto two.
    */
-  $toShortest = <T = any, T2 extends Slice<T> = Slice<T>>(list1: T2) =>
-    (list2: T2, ...lists: T2[]): T2[] => toShortest(list1, list2, ...lists)
+  $toShortest = <T>(list1: T[]) =>
+    (list2: T[], ...lists: T[][]): T[][] => toShortest(list1, list2, ...lists)
 
 ;

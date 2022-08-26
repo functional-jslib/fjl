@@ -30,14 +30,11 @@ export interface ReadonlyNumberIndexable<T = any> extends Lengthable {
   readonly [index: number]: T;
 }
 
-export type   NumberIndexable<T = any> = Lengthable & ({
+export type NumberIndexable<T = any> = Lengthable & ({
   [index: number]: T;
-} | ReadonlyNumberIndexable<T>) & {
-  new(...args: any[]): NumberIndexable<T>;
-  new(x: number): NumberIndexable<T>
-};
+} | ReadonlyNumberIndexable<T>);
 
-export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
+export type Indexable<T = any> = StringIndexable<T> | ReadonlyNumberIndexable<T> | NumberIndexable<T>;
 
 export type TypedArray = (
   Int8Array |
