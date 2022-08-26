@@ -20,7 +20,7 @@ export interface ToJSON<T = object> {
  * Indexable object type;  E.g., Used where strings, arrays and/or objects can be used.
  */
 export interface StringIndexable<T = any> extends Lengthable {
-  [index: string]: T;
+  [index: string]: T | any;
 }
 
 /**
@@ -33,7 +33,8 @@ export interface ReadonlyNumberIndexable<T = any> extends Lengthable {
 export type   NumberIndexable<T = any> = Lengthable & ({
   [index: number]: T;
 } | ReadonlyNumberIndexable<T>) & {
-  new(...args: any[]): NumberIndexable<T>
+  new(...args: any[]): NumberIndexable<T>;
+  new(x: number): NumberIndexable<T>
 };
 
 export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
@@ -68,6 +69,8 @@ export type ArrayTypeConstructor = ArrayConstructor |
   BigUint64ArrayConstructor;
 
 export type  Slice<T = any> = ArrayType<T> | string;
+
+export type SliceConstructor = StringConstructor | ArrayTypeConstructor;
 
 export type FunctorMapFn<RetT> = ((a?: any, b?: any, c?: any, ...args: any[]) => RetT) |
   ((a?: any, b?: any, ...args: any[]) => RetT) | ((a?: any, ...args: any[]) => RetT);

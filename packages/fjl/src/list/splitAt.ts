@@ -7,7 +7,7 @@ export const
    * given index in second part of returned list)).
    */
   splitAt = <T, XS extends Slice<T>>(ind: number, list: XS): [XS, XS] =>
-    [list.slice(0, ind), list.slice(ind)],
+    [list.slice(0, ind) as XS, list.slice(ind) as XS],
 
   $splitAt = <T, XS extends Slice<T>>(ind: number) =>
     (list: XS): [XS, XS] =>

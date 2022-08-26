@@ -1,4 +1,4 @@
-import {Functor, Indexable, NumberIndexable, Slice} from "./data";
+import {ArrayType, Functor, Indexable, NumberIndexable, Slice} from "./data";
 import {TernaryPred} from "./arity";
 
 export type ArrayTernaryPred<T, Ind = number | string, FtrT extends Slice<T> = Slice<T>> = (x: T, i?: Ind, xs?: FtrT) => boolean;
@@ -17,6 +17,7 @@ export type PredForIndexable<T = any> = IndexableTernaryPred<T, number | string,
 export type PredForNumIndexable<T = any> = TernaryPred<T, number, NumberIndexable<T>>;
 
 export type PredForArray<T = any> = TernaryPred<T, number, T[]>;
+export type PredForArrayType<T, TS extends ArrayType<T>> = TernaryPred<T, number, TS>;
 
 export type PredForSlice<T = any, T2 extends Slice<T> = Slice<T>> =
   ArrayTernaryPred<T, number | string, T2>;

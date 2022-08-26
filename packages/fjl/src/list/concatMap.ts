@@ -1,4 +1,4 @@
-import {concat} from "./concat";
+import {concat} from "../platform/slice";
 import {map} from "./map";
 import {MapOp, ArrayType} from "../types";
 
@@ -11,7 +11,7 @@ export const
     fn: MapOp<T, number, TS[], RetT>,
     arr: TS[]
   ): RetTS =>
-    concat(map(fn, arr)),
+    concat(map(fn, arr)) as RetTS,
 
   $concatMap = <T, TS extends ArrayType<T>, RetT, RetTS extends ArrayType<RetT>>
   (fn: MapOp<T, number, TS[], RetT>) =>

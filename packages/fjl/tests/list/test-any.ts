@@ -1,6 +1,6 @@
-import {any} from "../../src/list/any";
+import {$any, any} from "../../src/list/any";
 
-describe('#any', () => {
+describe('#any,$any', () => {
   const predicateToTest = <T>(x: T): boolean => !!x;
 
   (<[boolean[], boolean][]>[
@@ -13,7 +13,9 @@ describe('#any', () => {
     .forEach(([xs, expected]) => {
       it(`any(${predicateToTest}, ${JSON.stringify(xs)}) === ${expected}`, () => {
         const rslt = any(predicateToTest, xs);
+        const rslt2 = $any(predicateToTest)(xs);
         expect(rslt).toEqual(expected);
+        expect(rslt2).toEqual(expected);
       });
     });
 });

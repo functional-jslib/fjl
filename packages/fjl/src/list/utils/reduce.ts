@@ -1,6 +1,6 @@
 import {reduceUntil} from "./reduceUntil";
 import {alwaysFalse} from "../../boolean/alwaysFalse";
-import {ReduceOp, NumberIndexable} from "../../types";
+import {ReduceOp, Slice} from "../../types";
 
 export const
 
@@ -8,17 +8,17 @@ export const
    * Reduces a slice by given reduction function (same as [].reduce but also for strings).
    */
   reduce = <T, RetT>(
-    op: ReduceOp<T, NumberIndexable<T>, RetT>,
+    op: ReduceOp<T, Slice<T>, RetT>,
     agg: RetT,
-    xs: NumberIndexable<T>
+    xs: Slice<T>
   ): RetT =>
     reduceUntil(alwaysFalse, op, agg, xs),
 
   /**
    * Curried `reduce` combinator.
    */
-  $reduce = <T, RetT>(op: ReduceOp<T, NumberIndexable<T>, RetT>) =>
+  $reduce = <T, RetT>(op: ReduceOp<T, Slice<T>, RetT>) =>
     (agg: RetT) =>
-      (xs: NumberIndexable<T>): RetT => reduceUntil(alwaysFalse, op, agg, xs)
+      (xs: Slice<T>): RetT => reduceUntil(alwaysFalse, op, agg, xs)
 
 ;

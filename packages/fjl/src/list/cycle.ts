@@ -1,16 +1,14 @@
 import {concat} from "./concat";
 import {replicate} from "./replicate";
-import {Slice} from "../types";
 import {genIterator} from "./iterate";
-import {isType} from "../object";
 
 export const
 
   /**
-   * Replicates a list `limit` number of times and appends the results (concat)
+   * Replicates a list *n* number of times and appends the results (concat)
    */
   cycle = <T>(n: number, xs: T[]): T[] =>
-    concat(replicate(n, xs)),
+    concat(replicate(n, xs) as T[][]),
 
   $cycle = <T>(n: number) =>
     (xs: T[]): T[] => cycle(n, xs),

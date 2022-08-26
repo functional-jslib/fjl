@@ -1,21 +1,21 @@
-import {ArrayType, Slice} from "../../types";
+import {Slice} from "../../types";
 
 export const
 
-  concat = <TS extends (ArrayType | string)>(...xss: TS[]): TS =>
-    (!xss ? xss : xss.shift().concat(...xss as TS[])) as TS,
+  concat = <T, TS extends Slice<T>>(...xss: TS[]): TS =>
+    xss.shift().concat(...xss),
 
   $concat = a => (...b) => concat(a, ...b),
 
-  indexOf = (xs: Slice, x: any): number => !xs ? -1 : xs.indexOf(x),
+  indexOf = (xs: Slice, x: any): number => xs.indexOf(x),
 
   $indexOf = xs => x => indexOf(xs, x),
 
-  includes = (xs: Slice, x: any): boolean => xs && xs.includes(x),
+  includes = (xs: Slice, x: any): boolean => xs.includes(x),
 
   $includes = xs => x => includes(xs, x),
 
-  lastIndexOf = (xs: Slice, x: any): number => !xs ? -1 : xs.lastIndexOf(x),
+  lastIndexOf = (xs: Slice, x: any): number => xs.lastIndexOf(x),
 
   $lastIndexOf = xs => x => lastIndexOf(xs, x),
 
