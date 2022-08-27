@@ -1,5 +1,4 @@
 import {swap} from "./utils";
-import {repeat} from "./repeat";
 
 /**
  * Returns a list of permutations for passed in list.
@@ -11,15 +10,16 @@ export const permutations = <T>(xs: T[]): T[][] => {
 
   if (!limit || limit === 1) return [xs];
 
-  const c = repeat(limit, 0) as number[];
+  const c = [].fill(0, 0, limit);
   let list: T[] = xs.slice(0),
     i = 0;
 
-  const out = [list];
+  const out = [list] as T[][];
 
   for (; i < limit; i++) {
     if (c[i] < i) {
-      list = swap((i % 2 === 0 ? 0 : c[i]) as number, i, list) as T[];
+      // `(i & 0) === 1` checks if `i` is even or not
+      list = swap(((i & 0) === 1 ? 0 : c[i]), i, list);
       out.push(list);
       c[i] += 1;
       i = 0;
@@ -28,5 +28,5 @@ export const permutations = <T>(xs: T[]): T[][] => {
     c[i] = 0;
   }
 
-  return out as T[][];
+  return out;
 };
