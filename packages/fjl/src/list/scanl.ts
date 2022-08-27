@@ -1,6 +1,4 @@
-import {length} from "./length";
-
-export type ScanlOp<A, B> = (b: B, a: A, i?: number, xs?: A[]) => B
+export type ScanlOp<A = any, B = any, Fnctr = any> = (b: B, a: A, i?: number, xs?: Fnctr) => B
 
 export const
 
@@ -15,13 +13,10 @@ export const
    * ```
    */
   scanl = <A, B>(fn: ScanlOp<A, B>, zero: B, xs: A[]): B[] => {
-    if (!xs || !length(xs)) {
-      return [];
-    }
-    const limit = length(xs);
+    const limit = xs.length,
+      out = [] as B[];
     let ind = 0,
       result = zero;
-    const out = [] as B[];
     while (ind < limit) {
       result = fn(result, xs[ind] as A, ind, xs);
       out.push(result);
@@ -33,3 +28,5 @@ export const
   $scanl = <A, B>(fn: ScanlOp<A, B>) =>
     (zero: B) =>
       (xs: A[]): B[] => scanl(fn, zero, xs);
+
+export type Scanl = typeof scanl;

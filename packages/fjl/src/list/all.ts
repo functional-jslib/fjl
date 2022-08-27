@@ -1,9 +1,9 @@
-import {PredForArray} from "../types";
+import {TernaryPred} from "../types";
 
 /**
  * Returns true if all items in container return `true` for predicate `p`.
  */
-export const all = <T>(p: PredForArray<T>, xs: T[]): boolean => {
+export const all = <T>(p: TernaryPred, xs: T[]): boolean => {
   const limit = xs.length
   let ind = 0;
   if (!limit) return false;
@@ -16,7 +16,7 @@ export const all = <T>(p: PredForArray<T>, xs: T[]): boolean => {
 /**
  * Curried version of `all`.
  */
-export const $all = <T>(p: PredForArray<T>) =>
+export const $all = <T>(p: TernaryPred) =>
   (xs: T[]): boolean => all(p, xs)
 
 ;

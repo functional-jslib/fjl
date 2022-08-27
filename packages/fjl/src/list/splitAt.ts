@@ -1,13 +1,12 @@
-
 export const
 
   /**
    * Splits `x` in two at given `index` (exclusive (includes element/character at
    * given index in second part of returned list)).
    */
-  splitAt = <T, XS extends T[]>(ind: number, list: XS): [XS, XS] =>
-    [list.slice(0, ind) as XS, list.slice(ind) as XS],
+  splitAt = (ind: number, sliceable): [any, any] =>
+    [sliceable.slice(0, ind), sliceable.slice(ind)],
 
-  $splitAt = <T, XS extends T[]>(ind: number) =>
-    (list: XS): [XS, XS] =>
-      splitAt(ind, list);
+  $splitAt = (ind: number) =>
+    (sliceable): [any, any] =>
+      splitAt(ind, sliceable);

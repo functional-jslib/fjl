@@ -1,23 +1,22 @@
-import {ReduceOp, PredForArray} from "../../types";
+import {ReduceOp, TernaryPred} from "../../types";
 
 export const
 
   /**
    * Reduces a slice, from left-to-right, until predicate is reached.
    */
-  reduceUntilRight = <T, RetT>(
-    pred: PredForArray<T>,
-    op: ReduceOp<T, T[], RetT>,
-    agg: RetT,
-    arr: T[]
-  ): RetT => {
-    const limit = arr.length;
+  reduceUntilRight = (
+    pred: TernaryPred,
+    op: ReduceOp,
+    agg,
+    xs
+  ) => {
+    const limit = xs.length;
     if (!limit) return agg;
-    let ind = limit - 1,
-      result = agg;
-    for (; ind >= 0; ind--) {
-      if (pred(arr[ind], ind, arr)) break;
-      result = op(result, arr[ind], ind, arr);
+    let result = agg;
+    for (let ind = limit - 1; ind >= 0; ind--) {
+      if (pred(xs[ind], ind, xs)) break;
+      result = op(result, xs[ind], ind, xs);
     }
     return result;
   },
@@ -25,9 +24,7 @@ export const
   /**
    * Curried version of `$reduceUntilRight`.
    */
-  $reduceUntilRight = <T, RetT>(pred: PredForArray<T>) =>
-    (op: ReduceOp<T, T[], RetT>) =>
-      (agg: RetT) =>
-        (arr: T[]): RetT =>
-          reduceUntilRight(pred, op, agg, arr)
+  $reduceUntilRight = (pred: TernaryPred) =>
+    (op: ReduceOp) => agg => xs =>
+      reduceUntilRight(pred, op, agg, xs)
 ;

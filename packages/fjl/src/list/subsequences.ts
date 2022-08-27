@@ -1,4 +1,5 @@
 import {Slice} from "../types";
+import {of} from "../object";
 
 export const
   /**
@@ -9,18 +10,20 @@ export const
    *  will generate 65536 sub-sequences!  So caution should be taken to not
    *  use this with sequences above a certain length on certain platform (the browser thread in specific).
    */
-  subsequences = <T, TS extends Slice<T>>(xs: TS): TS[] => {
+  subsequences = <T>(xs: Slice<T>): Slice<T>[] => {
     const listLen = xs.length,
       len = Math.pow(2, listLen),
       out = [];
 
     for (let i = 0; i < len; i += 1) {
-      let entry = xs.constructor();
+      let entry = of(xs);
 
       for (let j = 0; j < listLen; j += 1) {
         if (i & (1 << j)) {
           if (typeof xs === 'string') entry = entry.concat(xs[j]);
-          else entry.push(xs[j]);
+
+          // May not be the fastest, for arrays/etc., but appeases type.
+          else entry = entry.concat(xs[j]);
         }
       }
       out.push(entry);

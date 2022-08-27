@@ -1,4 +1,4 @@
-import {PredForArray} from "../types";
+import {TernaryPred} from "../types";
 
 export const
 
@@ -8,7 +8,7 @@ export const
    *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
    */
   partition = <T>(
-    pred: PredForArray<T>,
+    pred: TernaryPred,
     list: T[]
   ): [T[], T[]] => {
     if (!list) {
@@ -28,5 +28,5 @@ export const
     return [front, back];
   },
 
-  $partition = <T>(pred: PredForArray<T>) =>
+  $partition = <T>(pred: TernaryPred) =>
     (list: T[]): [T[], T[]] => partition(pred, list);

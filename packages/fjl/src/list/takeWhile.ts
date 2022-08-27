@@ -3,14 +3,14 @@ import {reduceUntil} from "./utils";
 import {isString} from "../object/is";
 import {of} from "../object/of";
 import {push} from "./push";
-import {PredForArray} from "../types";
+import {TernaryPred} from "../types";
 
 export const
 
   /**
    * Gives an list with passed elements while predicate was true.
    */
-  takeWhile = <T>(pred: PredForArray<T>, xs: T[]): T[] =>
+  takeWhile = <T>(pred: TernaryPred, xs: T[]): T[] =>
     reduceUntil(
       negateF3(pred),
       isString(xs) ?
@@ -20,6 +20,6 @@ export const
       xs
     ),
 
-  $takeWhile = <T>(pred: PredForArray<T>) =>
+  $takeWhile = <T>(pred: TernaryPred) =>
     (xs: T[]): T[] =>
       takeWhile(pred, xs);

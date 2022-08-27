@@ -1,33 +1,33 @@
-import {ReduceOp, PredForSlice, Slice} from "../../types";
+import {ReduceOp, TernaryPred} from "../../types";
 
 export const
 
   /**
-   * Un-curried `reduceUntil` func.
+   * Reduces a "number indexable" until predicate returns `true`.
    */
-  reduceUntil = <T, TS extends Slice<T>, RetT>(
-    pred: PredForSlice<T>,
-    op: ReduceOp<T, TS, RetT>,
-    agg: RetT,
-    xs: TS
-  ): RetT => {
+  reduceUntil = (
+    pred: TernaryPred,
+    op: ReduceOp,
+    agg,
+    xs
+  ) => {
     const limit = xs.length;
     if (!limit) return agg;
     let ind = 0,
       result = agg;
     for (; ind < limit; ind++) {
-      if (pred(xs[ind] as T, ind, xs)) break;
-      result = op(result, xs[ind] as T, ind, xs);
+      if (pred(xs[ind], ind, xs)) break;
+      result = op(result, xs[ind], ind, xs);
     }
     return result;
   },
 
   /**
-   * Reduces a slice until predicate returns `true`.
+   * Curried version of `reduceUntil` function.
    */
-  $reduceUntil = <T, TS extends Slice<T>, RetT>(pred: PredForSlice<T>) =>
-    (op: ReduceOp<T, TS, RetT>) =>
-      (agg: RetT) =>
-        (xs: TS): RetT => reduceUntil(pred, op, agg, xs)
+  $reduceUntil = (pred: TernaryPred) =>
+    (op: ReduceOp) =>
+      agg =>
+        xs => reduceUntil(pred, op, agg, xs)
 
 ;

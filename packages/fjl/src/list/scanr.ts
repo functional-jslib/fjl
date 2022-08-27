@@ -1,4 +1,3 @@
-import {length} from "./length";
 export type ScanrOp<A, B> = (a: A, b: B, i?: number, xs?: A[]) => B;
 
 export const
@@ -9,10 +8,7 @@ export const
    * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
    */
   scanr = <A, B>(fn: ScanrOp<A, B>, zero: B, xs: A[]): B[] => {
-    if (!xs || !length(xs)) {
-      return [];
-    }
-    const limit = length(xs);
+    const limit = xs.length;
     let ind = limit - 1,
       result = zero;
     const out = [] as B[];

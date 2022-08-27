@@ -1,9 +1,9 @@
 import {findIndexWhere} from "../../src/list/utils/findexIndexWhere";
-import {PredForArray, PredForSlice} from "../../src/types";
+import {TernaryPred} from "../../src/types";
 import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
 
 describe(`#findIndexWhere`, () => {
-  const getPredForEqualTo = <T>(a: T): PredForArray<T> => (b: T): boolean => a === b;
+  const getPredForEqualTo = <T>(a: T): TernaryPred => (b: T): boolean => a === b;
 
   (<[Parameters<typeof findIndexWhere>, number][]>[]
     .concat(

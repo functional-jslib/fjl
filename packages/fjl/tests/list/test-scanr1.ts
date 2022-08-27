@@ -32,6 +32,5 @@ describe('#scanr1', () => {
 
   it('should return an empty list when receiving an empty one', () => {
     expectEqual(scanr1(x => x * 2, []), []);
-    expectEqual(scanr1(x => x + 2, '') as string[], []);
   });
 });

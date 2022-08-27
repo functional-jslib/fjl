@@ -65,9 +65,34 @@ export type ArrayTypeConstructor = ArrayConstructor |
   BigInt64ArrayConstructor |
   BigUint64ArrayConstructor;
 
-export type  Slice<T> = Array<T> | string;
+export interface SliceBase {
+  readonly length: number;
 
-export type SliceConstructor = StringConstructor | ArrayTypeConstructor;
+  slice(start: number, end?: number);
+
+  indexOf(x, position: number): number;
+
+  includes(x, position: number): boolean;
+
+  lastIndexOf(x, position: number): number;
+}
+
+/**
+ * `Union + Sum` Slice type - Represents, the intersection, of strings, arrays, and custom structures that meet it's requirements.
+ */
+export type Slice<T = any> = SliceBase & {
+  [Symbol.iterator](): IterableIterator<T>;
+} & ({
+  [index: number]: any
+
+  concat(...xss: ConcatArray<typeof this>[]): typeof this;
+} | {
+  readonly [index: number]: string;
+
+  concat(...xss: string[]): typeof this;
+});
+
+export type SliceConstructor = StringConstructor | ArrayConstructor;
 
 export type FunctorMapFn<T, RetT> = (a?: T, b?, c?, ...args: any[]) => RetT;
 

@@ -1,12 +1,12 @@
 import {findIndexWhere} from "./utils";
-import {PredForArray} from "../types";
+import {TernaryPred} from "../types";
 
 export const
 
   /**
    * Returns a list without elements that match predicate.
    */
-  dropWhile = <T>(p: PredForArray<T>, xs: T[]): T[] => {
+  dropWhile = <T>(p: TernaryPred, xs: T[]): T[] => {
     const limit = xs.length,
       splitPoint: number =
         findIndexWhere(
@@ -17,7 +17,7 @@ export const
       xs.slice(splitPoint, limit);
   },
 
-  $dropWhile = <T>(p: PredForArray<T>) =>
+  $dropWhile = <T>(p: TernaryPred) =>
     (xs: T[]): T[] => dropWhile(p, xs)
 
 ;

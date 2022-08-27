@@ -1,15 +1,9 @@
 import {scanl, ScanlOp} from "./scanl";
-import {head} from "./head";
-import {tail} from "./tail";
 
 export const
 
-  scanl1 = <T>(fn: ScanlOp<T, T>, xs: T[]): T[] => {
-    if (!xs || !xs.length) {
-      return [];
-    }
-    return scanl(fn, head(xs), tail(xs));
-  },
+  scanl1 = <T>(fn: ScanlOp<T, T>, xs: T[]): T[] =>
+    scanl(fn, xs[0], xs.slice(1)),
 
   /**
    * `scanl1` is a variant of `scanl` that has no starting value argument:
