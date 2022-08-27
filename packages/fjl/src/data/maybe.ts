@@ -2,8 +2,8 @@
  * @module maybe
  */
 import {isset} from '../object/is';
-import {Monad, MonadBase, MonadConstructor} from './monad';
-import {Unary, UnaryPred} from "../types";
+import {flatMap, Monad, MonadBase, MonadConstructor} from './monad';
+import {Apply, Functor, Unary, UnaryPred} from "../types";
 import {FunctorMapFn} from "../types";
 import {$instanceOf} from "../platform/object";
 
@@ -26,6 +26,7 @@ export class Nothing<T = any> implements Monad<T> {
     if (NothingSingleton) {
       return NothingSingleton;
     }
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     NothingSingleton = this;
     Object.freeze(NothingSingleton);
   }
@@ -47,21 +48,21 @@ export class Nothing<T = any> implements Monad<T> {
   /**
    * Returns `Nothing`.
    */
-  map<RetT>(f: FunctorMapFn<RetT>): Nothing {
+  map<RetT>(f: FunctorMapFn<T, RetT>): Nothing {
     return this;
   }
 
   /**
    * Returns `Nothing`.
    */
-  ap(x: any): this {
-    return this;
+  ap<X, RetT>(f: Functor<X>): Apply<RetT> {
+    return this as unknown as Apply<RetT>;
   }
 
   /**
    * Returns `Nothing`.
    */
-  flatMap<RetT>(f: FunctorMapFn<RetT>): Nothing<RetT> {
+  flatMap<RetT>(f: FunctorMapFn<T, RetT>): Nothing<RetT> {
     return this as unknown as Nothing<RetT>;
   }
 }
@@ -98,7 +99,7 @@ export class Just<T> extends MonadBase<T> {
   /**
    * Maps incoming function over contained value and
    */
-  map<RetT>(fn: FunctorMapFn<RetT>): Just<RetT> {
+  map<RetT>(fn: FunctorMapFn<T, RetT>): Just<RetT> {
     return super.map(fn) as Just<RetT>;
   }
 }

@@ -23,7 +23,7 @@ export interface Monad<T> extends Applicative<T> {
 
 export type MonadConstructor<T> = ApplicativeConstructor<T>;
 
-export class MonadBase<T> implements Monad<T> {
+export class MonadBase<T = any> implements Monad<T> {
 
   /**
    * Same as `new Monad(...)` just in 'static' function format.

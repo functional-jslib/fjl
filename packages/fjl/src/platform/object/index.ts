@@ -9,10 +9,9 @@ export const
 
   {assign, keys} = Object,
 
-  instanceOf = <T>(X: Constructable, x: T): boolean => x instanceof X,
+  instanceOf = (X: Constructable, x) => x instanceof X,
 
-  $instanceOf = <T>(X: Constructable) =>
-    (x: T): boolean => x instanceof X,
+  $instanceOf = (X: Constructable) => x => x instanceof X,
 
   hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
     Object.hasOwn(x, key),

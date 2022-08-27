@@ -1,6 +1,4 @@
 import {findIndexWhere} from "./utils";
-import {slice} from "../platform/slice";
-import {sliceFrom} from "./utils/sliceFrom";
 import {PredForArray} from "../types";
 
 export const
@@ -15,8 +13,8 @@ export const
           (x, i, xs) => !p(x, i, xs),
           xs
         );
-    return splitPoint === -1 ? sliceFrom(limit, xs) :
-      slice(splitPoint, limit, xs);
+    return splitPoint === -1 ? xs.slice(limit) :
+      xs.slice(splitPoint, limit);
   },
 
   $dropWhile = <T>(p: PredForArray<T>) =>

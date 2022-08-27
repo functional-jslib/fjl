@@ -27,7 +27,7 @@ describe('#join()', () => {
 });
 
 describe('#fmap()', () => {
-  (<[Monad<any>, FunctorMapFn<any>, Monad<any>][]>[
+  (<[Monad<any>, FunctorMapFn<any, any>, Monad<any>][]>[
     [nothing(), id, nothing()],
     [just(null), id, just(null)],
     [just(2), x => x * 2, just(4)],
@@ -57,7 +57,7 @@ describe('#ap', () => {
 });
 
 describe('#flatMap', () => {
-  (<[Monad, FunctorMapFn<any>, Monad][]>[
+  (<[Monad<any>, FunctorMapFn<any, any>, Monad<any>][]>[
     [nothing(), id, nothing()],
     [just(null), id, just(null)],
     [just(2), x => x * 2, just(4)],

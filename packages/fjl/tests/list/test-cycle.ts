@@ -1,17 +1,22 @@
 import {cycle} from "../../src";
+import {vowelsArray} from "../helpers";
 
 describe('#cycle', () => {
-  const arg = ['a'];
-
-  for (let i = 0; i < 5; i += 1) {
-    const expected = new Array(i).fill(arg, 0, i).flatMap(xs => xs),
-      result = cycle(i, arg);
-
-    // Run given tests
-    ((_result, _expected): void => {
-      it(`cycle(${i}, ["${arg.join('", "')}"]) === ["${_expected.join('", "')}"]`, () => {
-        expect(_result).toEqual(_expected);
+  (<[Parameters<typeof cycle>, ReturnType<typeof cycle>][]>[]
+      .concat(
+        [].fill(null, 0, 5)
+          .map((_, i) => new Array(i)
+            .fill(vowelsArray.slice(0, i), 0, i)
+            .flatMap(xs => xs)
+          )
+      )
+  )
+    .forEach(([args, expected]) => {
+      it(`cycle(${args.map(x => JSON.stringify(x)).join(', ')}) === ` +
+        `${JSON.stringify(expected)}`, () => {
+        const result = cycle(...args);
+        expect(result).toEqual(expected);
       });
-    })(result, expected);
-  }
+    });
+
 });
