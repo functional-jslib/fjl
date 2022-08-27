@@ -3,8 +3,8 @@ import {lastIndex} from './utils';
 export const
 
   /**
-   * Returns everything except last item of list as new list.
+   * Returns everything except last item of slice as new slice.
    */
-  init = <T>(xs: T[]): T[] => xs.slice(0, lastIndex(xs))
+  init = xs => xs.slice(0, lastIndex(xs))
 
 ;

@@ -20,9 +20,8 @@ export const
 
       for (let j = 0; j < listLen; j += 1) {
         if (i & (1 << j)) {
-          if (typeof xs === 'string') entry = entry.concat(xs[j]);
+          if (Array.isArray(entry)) entry.push(xs[j]);
 
-          // May not be the fastest, for arrays/etc., but appeases type.
           else entry = entry.concat(xs[j]);
         }
       }

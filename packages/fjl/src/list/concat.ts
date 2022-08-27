@@ -1,5 +1,4 @@
 import {append} from './append';
-import {sliceCopy} from "./utils";
 import {Slice} from "../types";
 
 export const

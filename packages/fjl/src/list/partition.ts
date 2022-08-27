@@ -11,9 +11,6 @@ export const
     pred: TernaryPred,
     list: T[]
   ): [T[], T[]] => {
-    if (!list) {
-      return [[], []];
-    }
     const listLen = list.length,
       front = [],
       back = [];

@@ -68,6 +68,7 @@ import {
 
 import {Nameable, Slice, TypeRef} from '../../src/types';
 import {TypeConstructor} from "../../src/types";
+import {noop} from "../../src";
 
 describe('#object', function () {
   type LetterNumbersObj = { [index: string]: number };
@@ -531,10 +532,10 @@ describe('#object', function () {
 
   describe('#instanceOf', function () {
     it('should return true when parameter two is of type parameter one', function () {
-      expectTrue(instanceOf(Function, console.log));
+      expect(instanceOf(Function, noop)).toEqual(true);
     });
     it('should return false when parameters two is not of type parameter one', function () {
-      expectFalse(instanceOf(Function, {}));
+      expect(instanceOf(Function, {})).toEqual(false);
     });
   });
 
