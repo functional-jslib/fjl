@@ -37,7 +37,7 @@ describe('#sliceTo', () => {
   });
   it('should throw an error when not receiving a `ListLike` (a sliceable, an array, and/or string).', () => {
     [null, undefined, {}, false, 0].forEach(x => {
-      expect(() => sliceTo(99, x as Slice)).toThrow(Error);
+      expect(() => sliceTo(99, x as unknown as Slice<any>)).toThrow(Error);
     });
   });
 });

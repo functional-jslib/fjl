@@ -19,22 +19,22 @@ export interface ToJSON<T = object> {
 /**
  * Indexable object type;  E.g., Used where strings, arrays and/or objects can be used.
  */
-export interface StringIndexable<T = any> extends Lengthable {
+export interface StringIndexable<T> extends Lengthable {
   [index: string]: T | any;
 }
 
 /**
  * For immutable lists (strings).
  */
-export interface ReadonlyNumberIndexable<T = any> extends Lengthable {
+export interface ReadonlyNumberIndexable<T> extends Lengthable {
   readonly [index: number]: T;
 }
 
-export type NumberIndexable<T = any> = Lengthable & ({
+export type NumberIndexable<T> = Lengthable & ({
   [index: number]: T;
 } | ReadonlyNumberIndexable<T>);
 
-export type Indexable<T = any> = StringIndexable<T> | ReadonlyNumberIndexable<T> | NumberIndexable<T>;
+export type Indexable<T> = StringIndexable<T> | ReadonlyNumberIndexable<T> | NumberIndexable<T>;
 
 export type TypedArray = (
   Int8Array |
@@ -51,7 +51,7 @@ export type TypedArray = (
   concat(...args: (typeof this)[]): typeof this;
 };
 
-export type ArrayType<T = any> = Array<T> | TypedArray;
+export type ArrayType<T> = Array<T> | TypedArray;
 
 export type ArrayTypeConstructor = ArrayConstructor |
   Int8ArrayConstructor |
@@ -65,23 +65,22 @@ export type ArrayTypeConstructor = ArrayConstructor |
   BigInt64ArrayConstructor |
   BigUint64ArrayConstructor;
 
-export type  Slice<T = any> = ArrayType<T> | string;
+export type  Slice<T> = Array<T> | string;
 
 export type SliceConstructor = StringConstructor | ArrayTypeConstructor;
 
-export type FunctorMapFn<RetT> = ((a?: any, b?: any, c?: any, ...args: any[]) => RetT) |
-  ((a?: any, b?: any, ...args: any[]) => RetT) | ((a?: any, ...args: any[]) => RetT);
+export type FunctorMapFn<T, RetT> = (a?: T, b?, c?, ...args: any[]) => RetT;
 
-export interface FunctorConstructor<T = any> {
+export interface FunctorConstructor<T> {
   new(x: T): Functor<T>;
 
   readonly prototype: Functor<T>;
 }
 
-export interface Functor<T = any> {
+export interface Functor<T> {
   valueOf(): T;
 
-  map<MapRetT>(fn: FunctorMapFn<MapRetT>): Functor<MapRetT> | Functor;
+  map<MapRetT>(fn: FunctorMapFn<T, MapRetT>): Functor<MapRetT>;
 
   readonly length?: number;
 }
@@ -125,9 +124,9 @@ export interface BifunctorConstructor<A, B> extends FunctorConstructor<A> {
 export interface Bifunctor<A, B> extends Functor<A> {
   value2Of(): B;
 
-  first(fn: FunctorMapFn<A>): Bifunctor<A, B>;
+  first<RetT>(fn: FunctorMapFn<A, RetT>): Bifunctor<RetT, B>;
 
-  second(fn: FunctorMapFn<B>): Bifunctor<A, B>;
+  second<RetT>(fn: FunctorMapFn<B, RetT>): Bifunctor<A, B>;
 
-  bimap(fn1: FunctorMapFn<A>, fn2: FunctorMapFn<B>): Bifunctor<A, B>;
+  bimap<RetA, RetB>(fn1: FunctorMapFn<A, RetA>, fn2: FunctorMapFn<B, RetB>): Bifunctor<RetA, RetB>;
 }

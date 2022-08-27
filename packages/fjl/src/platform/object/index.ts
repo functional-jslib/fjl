@@ -3,21 +3,21 @@
  */
 
 import {flip, flip3, flip4, flip5} from "../../function/flip";
-import {ObjectStatics} from "../../types";
+import {Constructable, ObjectStatics} from "../../types";
 
 export const
 
   {assign, keys} = Object,
 
-  instanceOf = <T>(X: Function, x: T): boolean => x instanceof X,
+  instanceOf = <T>(X: Constructable, x: T): boolean => x instanceof X,
 
-  $instanceOf = <T>(X: Function) =>
+  $instanceOf = <T>(X: Constructable) =>
     (x: T): boolean => x instanceof X,
 
-  hasOwnProperty = <T>(key: string | PropertyKey, x: T): boolean =>
-    Object.prototype.hasOwnProperty.call(x, key),
+  hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
+    Object.hasOwn(x, key),
 
-  $hasOwnProperty = <T>(key: string | PropertyKey) =>
+  $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
     (x: T): boolean => hasOwnProperty(key, x),
 
   /**

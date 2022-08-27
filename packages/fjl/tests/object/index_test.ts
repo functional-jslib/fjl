@@ -1052,7 +1052,7 @@ describe('#object', function () {
         [Boolean, 'someBooleanProp'],
         [Function, 'someFunctionProp'],
         [Array, 'someArrayProp']
-      ],
+      ] as DefinePropsArgsTuple[],
       seedArgTupleCorrectIncorrectValues = [
         ['99 bottles..', 99],
         [99, 'should-be-number'],
@@ -1065,20 +1065,10 @@ describe('#object', function () {
         return agg;
       }, {}),
       seedPropNames = keys(seedTarget),
-      generateTargetData = () => unfoldr(
-        (argTuples: DefinePropsParams[], ind: number, _out: DefinePropsParams[][]) => {
-          const
-            _argTuples = argTuples.slice(0),
-            out = [_argTuples.slice(0), {}];
-          if (!_out.length) {
-            return [out, _argTuples];
-          } else if (_argTuples.length) {
-            _argTuples.pop();
-            return [out, _argTuples];
-          }
-          return undefined;
-        },
-        seedArgTuples as DefinePropsParams[]);
+      generateTargetData = () => seedArgTuples.reduceRight((agg, argTuple,  ind: number) => {
+            agg.push([seedArgTuples.slice(0, ind + 1), {}]);
+            return agg;
+        }, [] as [DefinePropsArgsTuple[], any][]);
 
     it('data for tests should be in correct format', function () {
       // Test our test parameters
@@ -1218,7 +1208,7 @@ describe('#object', function () {
     it('should be able to define many enum props on given target with only argTuples of length `2`', function () {
       generateTargetData().forEach((args: any[]) => {
         // log(args);
-        const target = defineEnumProps(...args as Parameters<typeof defineEnumProps>),
+        const target = defineEnumProps(...args as Parameters<typeof defineEnumProps>) as object,
           propNames = args[0].map(([_, name]) => name);
 
         // log(propNames, '\n', target);
@@ -1236,7 +1226,7 @@ describe('#object', function () {
       'and no errors when set to the correct type', function () {
       generateTargetData().forEach((args: any[]) => {
         // log(args);
-        const target = defineEnumProps(...args as Parameters<typeof defineEnumProps>),
+        const target = defineEnumProps(...args as Parameters<typeof defineEnumProps>) as object,
           propNames = args[0].map(([_, name]) => name);
 
         // log(propNames, '\n', target);

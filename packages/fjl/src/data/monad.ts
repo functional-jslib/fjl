@@ -15,15 +15,15 @@ import {
 } from "../types";
 import {isType} from "../object";
 
-export interface Monad<T = any> extends Applicative<T> {
+export interface Monad<T> extends Applicative<T> {
   join(): T;
 
-  flatMap<RetT>(fn: FunctorMapFn<RetT>): Monad<RetT>;
+  flatMap<RetT>(fn: FunctorMapFn<T, RetT>): Monad<RetT>;
 }
 
-export type MonadConstructor<T = any> = ApplicativeConstructor<T>;
+export type MonadConstructor<T> = ApplicativeConstructor<T>;
 
-export class MonadBase<T = any> implements Monad<T> {
+export class MonadBase<T> implements Monad<T> {
 
   /**
    * Same as `new Monad(...)` just in 'static' function format.
@@ -58,7 +58,7 @@ export class MonadBase<T = any> implements Monad<T> {
     return this.value;
   }
 
-  map<MapOpRet>(fn: FunctorMapFn<MapOpRet>): Functor<MapOpRet> | Functor {
+  map<MapOpRet>(fn: FunctorMapFn<T, MapOpRet>): Functor<MapOpRet> {
     return new (this.constructor as FunctorConstructor<MapOpRet>)(fn(this.valueOf()));
   }
 
@@ -67,7 +67,7 @@ export class MonadBase<T = any> implements Monad<T> {
    */
   ap<X, RetT>(f: Functor<X>): Apply<RetT> {
     return new (this.constructor as ApplyConstructor<T>)(f.map(
-        toFunction(this.valueOf()) as FunctorMapFn<RetT>
+        toFunction(this.valueOf())
       ).valueOf()
     ) as unknown as Apply<RetT>;
   }
@@ -82,7 +82,7 @@ export class MonadBase<T = any> implements Monad<T> {
   /**
    * Flat map operation.
    */
-  flatMap<RetT = any>(fn: FunctorMapFn<RetT>): Monad<RetT> {
+  flatMap<RetT>(fn: FunctorMapFn<T, RetT>): Monad<RetT> {
     const out = unwrapMonadByType(this.constructor as TypeRef, this.map(fn) as Monad<RetT> | RetT);
     return (this.constructor as ApplicativeConstructor<RetT>).of(out) as Monad<RetT>;
   }
@@ -119,13 +119,13 @@ export const
   /**
    * Maps given function over given functor.
    */
-  fmap = <T, RetT>(fn: FunctorMapFn<RetT>, x: Functor<T>): Functor<RetT> | Functor => x.map(fn),
+  fmap = <T, RetT>(fn: FunctorMapFn<T, RetT>, x: Functor<T>): Functor<RetT> => x.map(fn),
 
   /**
    * Curried version of `fmap`.
    */
-  $fmap = <T, RetT>(fn: FunctorMapFn<RetT>) =>
-    (x: Functor<T>): Functor<RetT> | Functor =>
+  $fmap = <T, RetT>(fn: FunctorMapFn<T, RetT>) =>
+    (x: Functor<T>): Functor<RetT> =>
       fmap(fn, x),
 
   /**
@@ -144,12 +144,12 @@ export const
   /**
    * Flat maps a function over given monad's contained value.
    */
-  flatMap = <T, RetT>(fn: FunctorMapFn<RetT>, monad: Monad<T>): Monad<RetT> => monad.flatMap(fn),
+  flatMap = <T, RetT>(fn: FunctorMapFn<T, RetT>, monad: Monad<T>): Monad<RetT> => monad.flatMap(fn),
 
   /**
    * Curried version of `flatMap`.
    */
-  $flatMap = <T, RetT>(fn: FunctorMapFn<RetT>) =>
+  $flatMap = <T, RetT>(fn: FunctorMapFn<T, RetT>) =>
     (monad: Monad<T>): Monad<RetT> => monad.flatMap(fn),
 
   /**

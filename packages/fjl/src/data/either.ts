@@ -21,7 +21,7 @@ export class Left<T> extends MonadBase<T> {
     return new Left(x);
   }
 
-  map<RetT>(fn: FunctorMapFn<RetT>): Left<RetT> {
+  map<RetT>(fn: FunctorMapFn<T, RetT>): Left<RetT> {
     return super.map(fn) as Left<RetT>;
   }
 }
@@ -35,7 +35,7 @@ export class Right<T> extends MonadBase<T> {
     return new Right(x);
   }
 
-  map<RetT>(fn: FunctorMapFn<RetT>): Right<RetT> {
+  map<RetT>(fn: FunctorMapFn<T, RetT>): Right<RetT> {
     return super.map(fn) as Right<RetT>;
   }
 }
@@ -85,8 +85,12 @@ export const
    * If it's an `Right` type, calls the right-callback on it.
    * Returns value of the flat-mapped monad.
    */
-  either = <A, B, C>(leftCallback: FunctorMapFn<C>, rightCallback: FunctorMapFn<C>, _either_: Left<A> | Right<B>): C =>
-    _either_.map(isRight(_either_) ? rightCallback : leftCallback).join();
+  either = <A, B, C>(leftCallback: FunctorMapFn<A, C>, rightCallback: FunctorMapFn<B, C>, _either_: Left<A> | Right<B>): C => {
+    let mapFn;
+    if (isRight(_either_)) mapFn = rightCallback;
+    else mapFn = leftCallback;
+    return _either_.map(mapFn).join() as typeof mapFn;
+  };
 
 export type EitherFn = typeof either;
 
@@ -95,6 +99,7 @@ export type EitherFnParams = Parameters<EitherFn>;
 /**
  * Curried version `either`.
  */
-export const $either = <A, B, C>(leftCallback: FunctorMapFn<C>) =>
-  (rightCallback: FunctorMapFn<C>) =>
-    (_either_: Left<A> | Right<B>): C => either(leftCallback, rightCallback, _either_);
+export const $either = <A, B, C>(leftCallback: FunctorMapFn<A, C>) =>
+  (rightCallback: FunctorMapFn<B, C>) =>
+    (_either_: Left<A> | Right<B>): C =>
+      either(leftCallback, rightCallback, _either_);

@@ -2,13 +2,14 @@ import {lengths} from "./lengths";
 import {map} from "../map";
 import {sliceTo} from "./sliceTo";
 import {sliceCopy} from "./sliceCopy";
+import {Slice} from "../../types";
 
 export const
 
   /**
    * Trims all lists to shortest in `lists`.
    */
-  toShortest = <T>(...lists: T[][]): T[][] => {
+  toShortest = <T>(...lists: Slice<T>[]): Slice<T>[] => {
     const listLengths = lengths(...lists),
       smallLen = Math.min(...listLengths);
     return map((list: any[], ind) => listLengths[ind] > smallLen ?
@@ -21,7 +22,7 @@ export const
    *  'slice to smallest' functionality.
    * @curried Upto two.
    */
-  $toShortest = <T>(list1: T[]) =>
-    (list2: T[], ...lists: T[][]): T[][] => toShortest(list1, list2, ...lists)
+  $toShortest = <T>(list1: Slice<T>) =>
+    (list2: Slice<T>, ...lists: Slice<T>[]): Slice<T>[] => toShortest(list1, list2, ...lists)
 
 ;
