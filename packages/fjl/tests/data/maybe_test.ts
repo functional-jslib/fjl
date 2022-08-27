@@ -147,7 +147,7 @@ describe('#isNothing', () => {
     });
   });
   test('should return `false` when a value is not a `Nothing`', () => {
-    [false, 0, (): {} => ({}), [], {}].forEach(x => {
+    [false, 0, (): object => ({}), [], {}].forEach(x => {
       expect(isNothing(x)).toEqual(false);
     });
   });
@@ -192,7 +192,7 @@ describe('#Nothing', () => {
 
   test('Expect `map`, `ap`, `flatMap`, and `join` methods to all return same singleton instance of `Nothing`', () => {
     const instance = nothing();
-    methodNames.forEach(x => expect(instance[x](undefined)).toEqual(instance));
+    methodNames.forEach(x => expect((instance[x] as Unary)(undefined)).toEqual(instance));
   });
 });
 
