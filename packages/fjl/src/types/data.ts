@@ -48,7 +48,7 @@ export type TypedArray = (
   BigInt64Array |
   BigUint64Array
   ) & {
-  concat(...args: (typeof this)[]): typeof this;
+  concat(...args: ConcatArray<(typeof this)>[]): typeof this;
 };
 
 export type ArrayType<T> = Array<T> | TypedArray;
@@ -65,7 +65,12 @@ export type ArrayTypeConstructor = ArrayConstructor |
   BigInt64ArrayConstructor |
   BigUint64ArrayConstructor;
 
-export interface SliceBase {
+/**
+ * Used to construct `Slice` type.
+ *
+ * @private
+ */
+interface SliceBase {
   readonly length: number;
 
   slice(start: number, end?: number);
