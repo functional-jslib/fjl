@@ -1,4 +1,4 @@
-import {expectLength, expectTrue, vowelsArray} from "../helpers";
+import {vowelsArray} from "../helpers";
 import {permutations} from "../../src/list/permutations";
 
 describe('#permutations', () => {
@@ -17,39 +17,37 @@ describe('#permutations', () => {
     },
 
     howManyPermutes = n => {
-      if (n <= 0) {
-        return 0;
-      }
+      if (n <= 0) return 0;
+      if (n === 1) return 1;
       let lastPermutes = 1,
         i = 1;
-      while (i <= n) {
+      while (i++ < n) {
         lastPermutes = i * lastPermutes;
-        i += 1;
       }
       return lastPermutes;
     };
 
-  it('Should return unique permutations for a given set of items', () => {
-    const lists =
-      vowelsArray.reduceRight((agg, _, ind, list) =>
-          agg.concat([list.slice(ind)]),
-        []
-      );
+  type ExpectedPermutationCount = number;
 
-    // Test initial `lists`
+  (<[Parameters<typeof permutations>, ExpectedPermutationCount][]>
 
-    expect(lists).toHaveLength(vowelsArray.length);
+      // Generate permutation arguments, and expected permutation count
+      vowelsArray.reduceRight((agg, _, ind, list) => {
+        const newList = list.slice(ind);
+        agg.push([[newList], howManyPermutes(list.length - ind)]);
+        return agg;
+      }, [])
+  )
+    .forEach(([[xs], expectedPermutesCount], ind) => {
+      it(`permutations(${JSON.stringify(xs)}).length === ${expectedPermutesCount}`, () => {
+        // Tests initial lists' length
+        expect(xs).toHaveLength(ind + 1)
 
-    // Tests initial lists' length
-    lists.forEach(
-      (xs, ind) => expect(xs).toHaveLength(ind + 1)
-    );
-
-    // Test permutations uniqueness, and number
-    lists.forEach(xs => {
-      const result = permutations(xs);
-      expect(areAllPermutesUnique(result)).toEqual(true)
-      expect(howManyPermutes(xs.length)).toEqual(result.length);
+        // Test permutations' uniqueness', and count
+        const result = permutations(xs);
+        expect(areAllPermutesUnique(result)).toEqual(true)
+        expect(result.length).toEqual(expectedPermutesCount);
+      });
     });
-  });
+
 });

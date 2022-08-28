@@ -8,14 +8,19 @@ describe('#isSubsequenceOf', () => {
     [['bad', firstSixOfAlphabet], true],
     [['cab', firstSixOfAlphabet], true],
     [['ace', firstSixOfAlphabet], true],
-    [['#!@', vowelsString], false],
+    [['ace'.split(''), firstSixOfAlphabet.split('')], true],
+    [['xyz'.split(''), firstSixOfAlphabet.split('')], false],
+    [['#!@'.split(''), vowelsArray], false],
+    [['!@#$%'.split(''), 'abc'.split('')], false],
     [['!@#$%', 'abc'], false],
-    [['!@#$%'.split('')], 'abc'.split(''), false],
-    [[['!'], vowelsArray], false],
+    [[[''], vowelsArray], false],
+    [['', vowelsString], true],
+    [['', ''], true],
+    [[[], []], true],
   ])
-    .forEach(([[xs1, xs2], expected]) => {
-      it(`isSubsequenceOf(${JSON.stringify(xs1)}, ${JSON.stringify(xs2)} === ${expected}`, () => {
-        const rslt = isSubsequenceOf(xs1, xs2);
+    .forEach(([args, expected]) => {
+      it(`isSubsequenceOf(${JSON.stringify(args)}) === ${expected}`, () => {
+        const rslt = isSubsequenceOf(...args);
         expect(rslt).toEqual(expected);
       });
     });

@@ -1,12 +1,14 @@
 import {$equal} from "../boolean";
 import {findIndex} from "./findIndex";
 import {Slice} from "../types";
+import {isset} from "../object";
 
 export const
   /**
    * Checks if list `xs1` is a sub-sequence of list `xs2`
    */
   isSubsequenceOf = <T>(xs1: Slice<T>, xs2: Slice<T>): boolean => {
+    if (!isset(xs1) || !isset(xs2)) return false;
     const len = Math.pow(2, xs2.length),
       lenXs1 = xs1.length;
     let foundLen,

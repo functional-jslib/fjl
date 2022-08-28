@@ -1,4 +1,4 @@
-import {BinaryPred} from "../types";
+import {BinaryPred, Slice} from "../types";
 
 export const
 
@@ -11,24 +11,21 @@ export const
    * ```
    */
   groupBy = <T, TS extends T[]>(equalityOp: BinaryPred<T>, xs: TS): T[][] => {
-    // Bail if empty list
     if (!xs) return [];
 
     const limit = xs.length;
 
-    // Bail if empty list
     if (!limit) return [[]];
 
     // Groupings
     const groups: T[][] = [];
 
     // Initialize variables for tracking
-    let ind = 1,
-      prevItem = xs[0] as T,
+    let prevItem = xs[0] as T,
       group: T[] = [prevItem];
 
     // Group remainder of items
-    for (; ind < limit; ind += 1) {
+    for (let ind = 1; ind < limit; ind += 1) {
       const x = xs[ind] as T;
 
       // If equality check passed group item, and continue to next

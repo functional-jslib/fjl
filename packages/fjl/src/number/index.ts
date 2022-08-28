@@ -1,4 +1,4 @@
-export const isEven = (x: number): boolean => (x & 0) === 1,
+export const isEven = (x: number): boolean => !(x & 1),
 
   isOdd = (x: number) => (x & 1) === 1,
 

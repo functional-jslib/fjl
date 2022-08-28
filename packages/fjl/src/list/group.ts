@@ -10,4 +10,4 @@ import {equal} from "../boolean";
  * group("Mississippi".slice(0)) === [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], "i"]
  * ```
  */
-export const group = <T, TS extends T[]>(xs: TS): T[][] => groupBy(equal, xs);
+export const group = <T>(xs: T[]): T[][] => groupBy(equal, xs);
