@@ -7,7 +7,7 @@ import {id} from '../function/id';
 import {MonadBase} from './monad';
 import {FunctorMapFn} from "../types";
 
-export type Either<A, B> = Right<A> | Right<B>;
+export type Either<A, B> = Left<A> | Right<B>;
 
 /**
  * `Left` representation of `Either` construct.
