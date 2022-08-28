@@ -1,7 +1,3 @@
 ## 'types/'
 
-### Array operator types
-```typescript
-
-
-```
+@todo
