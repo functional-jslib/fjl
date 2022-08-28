@@ -1,18 +1,22 @@
-import {alphabetArray, alphabetCharCodeRange} from "../helpers";
+import {alphabetArray, alphabetCharCodeRange, vowelCharCodes, vowelsArray} from "../helpers";
 import {concatMap} from "../../src/list/concatMap";
+import {id} from "../../src";
 
 describe('#concatMap', () => {
-  const id = (x: any): any => x;
+  const charCodeToCharOp = (charCode: number) => String.fromCharCode(charCode);
 
-  it('should map a function on a list and concatenate lists in resulting list into a list.', () => {
-    const charCodeToCharOp = (charCode: number): string => String.fromCharCode(charCode);
-    expect(concatMap(charCodeToCharOp, alphabetCharCodeRange.map(c => [c]))).toEqual(alphabetArray);
-  });
-
-  it('should return an empty list when receiving an empty list or a list of empty lists', () => {
-    expect(concatMap(id, [])).toEqual([]);
-    expect(concatMap(id, [[], [], []])).toEqual([]);
-  });
+  (<[Parameters<typeof concatMap>, ReturnType<typeof concatMap>][]>[
+    [[id, []], []],
+    [[id, [], [], []], []],
+    [[charCodeToCharOp, vowelCharCodes.map(c => [c])], vowelsArray]
+  ])
+    .forEach(([args, expected]) => {
+      it(`concatMap(${args[0].name}, ${JSON.stringify(args[1])}) === ` +
+        `${JSON.stringify(expected)}`, function () {
+        const result = concatMap(...args);
+        expect(result).toEqual(expected);
+      });
+    });
 
   it('should throw an error when receiving `undefined` or `null` in it\'s list position', () => {
     expect(() => concatMap(id, null)).toThrow();

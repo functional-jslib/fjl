@@ -73,7 +73,7 @@ export type ArrayTypeConstructor = ArrayConstructor |
 interface SliceBase {
   readonly length: number;
 
-  slice(start: number, end?: number);
+  slice(start: number, end?: number): typeof this;
 
   indexOf(x, position: number): number;
 
@@ -83,9 +83,9 @@ interface SliceBase {
 }
 
 /**
- * `Union + Sum` Slice type - Represents, the intersection, of strings, arrays, and custom structures that meet it's requirements.
+ * `Union + Sum` Slice type - Represents, the intersection, of the string, array, and custom structure, types that match the `Slice` "summed" interfaces.
  */
-export type Slice<T = any> = SliceBase & {
+export type Slice<T = any> = string | T[] | (SliceBase & {
   [Symbol.iterator](): IterableIterator<T>;
 } & ({
   [index: number]: any
@@ -95,7 +95,7 @@ export type Slice<T = any> = SliceBase & {
   readonly [index: number]: string;
 
   concat(...xss: string[]): typeof this;
-});
+}));
 
 export type SliceConstructor = StringConstructor | ArrayConstructor;
 

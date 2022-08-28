@@ -7,8 +7,8 @@ describe('#groupBy', () => {
     mississippiResult = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
   (<[Parameters<GroupBy>, ReturnType<GroupBy>][]>[
     [[equal, vowelsArray], vowelsArray.map(x => [x])],
-    [[equal, vowelsString], vowelsArray.map(x => [x])],
-    [[equal, mississippi], mississippiResult],
+    [[equal, vowelsString], vowelsArray],
+    [[equal, mississippi], mississippiResult.map(xs => xs.join(''))],
     [[equal, mississippiArray], mississippiResult],
     [[equal, alphabetArray], alphabetArray.map(char => [char])]
   ]).forEach(([[pred, xs], expected]) => {

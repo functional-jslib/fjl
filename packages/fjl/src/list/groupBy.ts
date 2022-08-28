@@ -1,4 +1,5 @@
 import {BinaryPred, Slice} from "../types";
+import {of} from "../object";
 
 export const
 
@@ -10,27 +11,29 @@ export const
    *  [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], "i"]
    * ```
    */
-  groupBy = <T, TS extends T[]>(equalityOp: BinaryPred<T>, xs: TS): T[][] => {
+  groupBy = <T>(equalityOp: BinaryPred<T>, xs: Slice<T>): Slice<T>[] => {
     if (!xs) return [];
 
-    const limit = xs.length;
-
-    if (!limit) return [[]];
-
-    // Groupings
-    const groups: T[][] = [];
+    const limit = xs.length,
+      groupIsArray = Array.isArray(xs);
 
     // Initialize variables for tracking
-    let prevItem = xs[0] as T,
-      group: T[] = [prevItem];
+    let prevItem = xs[0],
+      group = of(xs, prevItem);
+
+    if (!limit) return [group];
+
+    // Groupings
+    const groups: Slice<T>[] = [];
 
     // Group remainder of items
     for (let ind = 1; ind < limit; ind += 1) {
-      const x = xs[ind] as T;
+      const x = xs[ind];
 
       // If equality check passed group item, and continue to next
       if (equalityOp(x, prevItem)) {
-        group.push(x);
+        if (groupIsArray) (group as T[]).push(x);
+        else group = group.concat(x);
         prevItem = x;
         continue;
       }
@@ -38,7 +41,7 @@ export const
       // Items for previous group 'grouped'.  Move to next group.
       groups.push(group);
       prevItem = x;
-      group = [x];
+      group = of(group, x);
     }
 
     // Push last group
@@ -50,8 +53,8 @@ export const
   /**
    * Curried version of `$groupBy`.
    */
-  $groupBy = <T, TS extends T[]>(equalityOp: BinaryPred<T>) =>
-    (xs: TS): T[][] => groupBy(equalityOp, xs)
+  $groupBy = <T>(equalityOp: BinaryPred<T>) =>
+    (xs: Slice<T>): Slice<T>[] => groupBy(equalityOp, xs)
 
 ;
 

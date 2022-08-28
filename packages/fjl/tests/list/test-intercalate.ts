@@ -1,16 +1,23 @@
 import {intercalate} from "../../src/list/intercalate";
-import {alphabetArray} from "../helpers";
+import {vowelsArray, vowelsString} from "../helpers";
 
 const {stringify} = JSON;
 
 describe('#intercalate', () => {
   type Intercalate = typeof intercalate;
-  const charArrayArray = alphabetArray.map(x => [x]);
+  const vowelsArrayArray = vowelsArray.map(x => [x]),
+    vowelsStringWithCommas = vowelsArray.join(','),
+    vowelsArrayWithCommas = vowelsArray.flatMap((x, i) => i > 0 ? [',', x] : [x])
+  ;
   (<[Parameters<Intercalate>, ReturnType<Intercalate>][]>[
-    [[',', charArrayArray], charArrayArray.map(xs => xs[0]).join(',').split('')],
-    [[[','], charArrayArray], charArrayArray.map(xs => xs[0]).join(',').split('')],
+    [[',', vowelsArray], vowelsStringWithCommas],
+    [[[','], vowelsArrayArray], vowelsArrayWithCommas],
+    [[',', vowelsString], vowelsStringWithCommas],
     [[',', ['a']], 'a'],
     [[[','], ['a']], 'a'],
+    [['', vowelsString], vowelsString],
+    [['', vowelsArray], vowelsString],
+    [['', ''], ''],
     [['', []], []],
     [['', [[]]], []],
     [[[''], []], []],

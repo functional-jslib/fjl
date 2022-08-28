@@ -1,5 +1,6 @@
 import {intersperse} from "./intersperse";
 import {concat} from "./concat";
+import {Slice} from "../types";
 
 export const
 
@@ -8,9 +9,11 @@ export const
    *   It inserts the list `xs` in between the lists in `xss` and concatenates
    *   the result.
    */
-  intercalate = <T, TS extends T[]>(xs: TS, xss: TS[]): TS =>
-    concat(intersperse(xs, xss)),
+  intercalate = <T>(xs: Slice<T>, xss: Slice<T>[]): Slice<T> => {
+    const rslt = intersperse(xs, xss);
+    return !rslt.length ? rslt : concat(rslt);
+  },
 
-  $intercalate = <T, TS extends T[]>(xs: TS) =>
-    (xss: TS[]): TS => intercalate(xs, xss)
+  $intercalate = <T>(xs: Slice<T>) =>
+    (xss: Slice<T>[]): Slice<T> => intercalate(xs, xss)
 ;

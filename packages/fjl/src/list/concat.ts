@@ -4,8 +4,7 @@ import {Slice} from "../types";
 export const
 
   /**
-   * Concatenates all the elements of a container of lists.
+   * Concatenates all the elements of a "container of lists".
    */
-  concat = <T, TS extends Slice<T>>(xs: TS[]): TS =>
-    append(...xs) as TS
+  concat = (xss: Slice | Slice[]) => append(...xss)
 ;
