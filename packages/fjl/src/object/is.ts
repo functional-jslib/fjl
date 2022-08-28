@@ -23,10 +23,8 @@ const
   _WeakSet = 'WeakSet',
   _Null = 'Null',
   _Undefined = 'Undefined',
-  _immutable_type_names = [_String, _Number, _Boolean, _Symbol];
+  _immutable_type_names = [_String, _Number, _Boolean, _Symbol]
 ;
-
-
 
 export const
 
@@ -81,7 +79,7 @@ export const
    * @param x {*}
    * @returns {Boolean}
    */
-  isFunction = <T>(x: T): boolean => isset(x) && x instanceof Function,
+  isFunction = (x: any): boolean => isset(x) && x instanceof Function,
 
   /**
    * Strict type checker.  Checks if given value is a direct instance of given type;  E.g.,
@@ -100,10 +98,10 @@ export const
    * @param obj {*}
    * @return {Boolean}
    */
-  isType = <T>(type: TypeRef | any, obj: T): boolean => typeOf(obj) === toTypeRefName(type),
+  isType = (type: TypeRef | any, obj: any): boolean => typeOf(obj) === toTypeRefName(type),
 
-  $isType = <T>(type: TypeRef | any) =>
-    (obj: T): boolean => isType(type, obj),
+  $isType = (type: TypeRef | any) =>
+    (obj: any): boolean => isType(type, obj),
 
   /**
    * Synonym for `isType` (or just a more accurate name for `isType`).
@@ -267,7 +265,7 @@ export const
   /**
    * Checks if given `x` is set and of one of
    *  [String, Boolean, Number, Symbol] (null and undefined are immutable
-   *  but are not "usable" (usually not what we want to operate on).
+   *  but are not "usable" (e.g., usually not what we want to operate on etc.).
    * @function module:object.isUsableImmutablePrimitive
    * @param x {*}
    * @returns {Boolean}
