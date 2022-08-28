@@ -49,6 +49,6 @@
     "./packages/fjl-inputfilter"
   ],
   "engines": {
-    "node": ">=12"
+    "node": ">=16 || >=18"
   }
 }
