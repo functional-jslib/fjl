@@ -1,3 +1,1 @@
-import {isset} from "../object";
-
-export const length = (x: { readonly length?: number }) => !isset(x) ? undefined : x.length;
+export const length = (x: { readonly length?: number }) => x === undefined || x === null  ? undefined : x.length;

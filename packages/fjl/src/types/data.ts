@@ -28,7 +28,7 @@ export type TypedArray = (
   BigInt64Array |
   BigUint64Array
   ) & {
-  concat(...args: ConcatArray<(typeof this)>[]): typeof this;
+  concat(...args: ConcatArray<any>[]): any;
 };
 
 export type ArrayType<T> = Array<T> | TypedArray;
@@ -53,7 +53,7 @@ export type ArrayTypeConstructor = ArrayConstructor |
 interface SliceBase {
   readonly length: number;
 
-  slice(start: number, end?: number): typeof this;
+  slice(start: number, end?: number): any;
 
   indexOf(x, position: number): number;
 
@@ -70,11 +70,11 @@ export type Slice<T = any> = string | T[] | (SliceBase & {
 } & ({
   [index: number]: any
 
-  concat(...xss: ConcatArray<typeof this>[]): typeof this;
+  concat(...xss: ConcatArray<any>[]): any;
 } | {
   readonly [index: number]: string;
 
-  concat(...xss: string[]): typeof this;
+  concat(...xss: string[]): any;
 }));
 
 export type SliceConstructor = StringConstructor | ArrayConstructor;

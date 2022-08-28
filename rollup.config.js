@@ -11,7 +11,7 @@ const
       .map(_xs => _xs[0].toUpperCase() + _xs.slice(1))
       .join(''),
 
-  projectNames = ['fjl', 'fjl-validator', 'fjl-inputfilter'],
+  projectNames = ['fjl', 'fjl-validator', 'fjl-inputfilter'/*, 'fjl-validator-recaptcha'*/],
 
   configs = projectNames.flatMap(projectName => {
     const projectPath = path.join(__dirname, `./packages/${projectName}`),
@@ -25,10 +25,21 @@ const
           tsconfig: path.join(projectPath, './tsconfig.json'),
         }),
         terser()
-      ];
+      ],
+      outputGlobals = {};
 
-    if (projectName !== 'fjl') configBase.external = ['fjl'];
-    if (projectName === 'fjl-inputfilter') configBase.external = ['fjl', 'fjl-validator'];
+    if (projectName.includes('fjl-validator')) {
+      configBase.external = ['fjl'];
+      Object.assign(outputGlobals, {
+        fjl: 'fjl'
+      })
+    } else if (projectName === 'fjl-inputfilter') {
+      configBase.external = ['fjl', 'fjl-validator'];
+      Object.assign(outputGlobals, {
+        fjl: 'fjl',
+        'fjl-validator': 'fjlValidator'
+      });
+    }
 
     return [{
       ...configBase,
@@ -37,7 +48,8 @@ const
         dir: path.join(projectPath, 'dist/es/'),
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
-        sourcemap: true
+        sourcemap: true,
+        globals: outputGlobals
       },
       plugins: [
         typescript({
@@ -50,11 +62,16 @@ const
       output: {
         format: 'es',
         file: path.join(projectPath, 'dist/index.es.min.js'),
-        sourcemap: true
+        sourcemap: true,
+        globals: outputGlobals
       },
       plugins: [
         typescript({
           tsconfig: path.join(projectPath, './tsconfig.prod.es.json'),
+          compilerOptions: {
+            declaration: false,
+            declarationDir: null
+          }
         }),
         terser()
       ]
@@ -65,7 +82,8 @@ const
         dir: path.join(projectPath, 'dist/amd/'),
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
-        sourcemap: true
+        sourcemap: true,
+        globals: outputGlobals
       },
       plugins
     }, {
@@ -75,7 +93,8 @@ const
         dir: path.join(projectPath, 'dist/cjs/'),
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
-        sourcemap: true
+        sourcemap: true,
+        globals: outputGlobals
       },
       plugins
     }, {
@@ -84,7 +103,8 @@ const
         format: 'umd',
         file: path.join(projectPath, 'dist/index.umd.min.js'),
         sourcemap: true,
-        name: iifeName
+        name: iifeName,
+        globals: outputGlobals
       },
       plugins
     }, {
@@ -93,7 +113,8 @@ const
         format: 'iife',
         file: path.join(projectPath, 'dist/index.iife.min.js'),
         sourcemap: true,
-        name: iifeName
+        name: iifeName,
+        globals: outputGlobals
       },
       plugins
     }];
