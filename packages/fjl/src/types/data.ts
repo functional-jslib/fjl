@@ -16,26 +16,6 @@ export interface ToJSON<T = object> {
   toJSON(): T;
 }
 
-/**
- * Indexable object type;  E.g., Used where strings, arrays and/or objects can be used.
- */
-export interface StringIndexable<T> extends Lengthable {
-  [index: string]: T | any;
-}
-
-/**
- * For immutable lists (strings).
- */
-export interface ReadonlyNumberIndexable<T> extends Lengthable {
-  readonly [index: number]: T;
-}
-
-export type NumberIndexable<T> = Lengthable & ({
-  [index: number]: T;
-} | ReadonlyNumberIndexable<T>);
-
-export type Indexable<T> = StringIndexable<T> | ReadonlyNumberIndexable<T> | NumberIndexable<T>;
-
 export type TypedArray = (
   Int8Array |
   Uint8Array |

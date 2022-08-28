@@ -2,7 +2,7 @@
  * @module maybe
  */
 import {isset} from '../object/is';
-import {flatMap, Monad, MonadBase, MonadConstructor} from './monad';
+import {Monad, MonadBase, MonadConstructor} from './monad';
 import {Apply, Functor, Unary, UnaryPred} from "../types";
 import {FunctorMapFn} from "../types";
 import {$instanceOf} from "../platform/object";
@@ -152,7 +152,7 @@ export const
   /**
    * Curried version of `maybeEqual`.
    */
-  $maybeEqual =  <A, B>(a: Maybe<A>) =>
+  $maybeEqual = <A, B>(a: Maybe<A>) =>
     (b: Maybe<B>): boolean => maybeEqual(a, b),
 
   /**

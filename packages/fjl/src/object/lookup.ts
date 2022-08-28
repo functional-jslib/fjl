@@ -2,16 +2,14 @@
  * @memberOf object
  */
 
-import {Indexable} from "../types";
-
 export const
 
   /**
    * Looks up property and returns it's value; Else `undefined`.
    * Method is null safe (will not throw on `null` or `undefined`).
    */
-  lookup = (key: string | number | symbol, obj: Indexable<any>): any =>
+  lookup = <X extends object>(key: string | number | symbol, obj: X): any =>
     !obj ? undefined : obj[key],
 
-  $lookup = (key: string | number | symbol) =>
-    (obj: Indexable<any>) => lookup(key, obj);
+  $lookup = <X extends object>(key: string | number | symbol) =>
+    (obj: X) => lookup(key, obj);
