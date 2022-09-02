@@ -79,7 +79,7 @@ export type Slice<T = any> = string | T[] | (SliceBase & {
 
 export type SliceConstructor = StringConstructor | ArrayConstructor;
 
-export type FunctorMapFn<T, RetT> = (a?: T, b?, c?, ...args: any[]) => RetT;
+export type FunctorMapOp<T, RetT> = (a?: T, b?: any, c?: Functor<T>, ...rest: any[]) => RetT;
 
 export interface FunctorConstructor<T> {
   new(x: T): Functor<T>;
@@ -90,7 +90,7 @@ export interface FunctorConstructor<T> {
 export interface Functor<T> {
   valueOf(): T;
 
-  map<MapRetT>(fn: FunctorMapFn<T, MapRetT>): Functor<MapRetT>;
+  map<RetT>(fn: FunctorMapOp<T, RetT>): Functor<RetT>;
 
   readonly length?: number;
 }
@@ -102,7 +102,7 @@ export interface ApplyConstructor<T> extends FunctorConstructor<T> {
 }
 
 export interface Apply<T> extends Functor<T> {
-  ap<X, RetT>(f: Functor<X>): Apply<RetT>;
+  ap<T, RetT>(f: Functor<T>): Apply<RetT>;
 }
 
 export interface ApplicativeConstructor<T> extends ApplyConstructor<T> {
@@ -134,9 +134,9 @@ export interface BifunctorConstructor<A, B> extends FunctorConstructor<A> {
 export interface Bifunctor<A, B> extends Functor<A> {
   value2Of(): B;
 
-  first<RetT>(fn: FunctorMapFn<A, RetT>): Bifunctor<RetT, B>;
+  first<RetT>(fn: FunctorMapOp<A, RetT>): Bifunctor<RetT, B>;
 
-  second<RetT>(fn: FunctorMapFn<B, RetT>): Bifunctor<A, B>;
+  second<RetT>(fn: FunctorMapOp<B, RetT>): Bifunctor<A, B>;
 
-  bimap<RetA, RetB>(fn1: FunctorMapFn<A, RetA>, fn2: FunctorMapFn<B, RetB>): Bifunctor<RetA, RetB>;
+  bimap<RetA, RetB>(fn1: FunctorMapOp<A, RetA>, fn2: FunctorMapOp<B, RetB>): Bifunctor<RetA, RetB>;
 }

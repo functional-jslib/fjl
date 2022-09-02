@@ -233,18 +233,15 @@ describe('Maybe', () => {
         squareX = x => x * 2,
         replacementVal = 27;
 
-      type Replacement = number;
-      type Expected = number;
-
-      (<[Replacement, Unary<number>, Maybe<number> | number, Expected][]>[
-        [replacementVal, squareX, just(caseValue), squareX(caseValue)],
-        [replacementVal, squareX, caseValue, squareX(caseValue)],
-        [replacementVal, squareX, nothing(), replacementVal],
-        [replacementVal, squareX, null, replacementVal],
-        [replacementVal, squareX, undefined, replacementVal],
+      (<[Parameters<typeof maybe>, ReturnType<typeof maybe>][]>[
+        [[replacementVal, squareX, just(caseValue)], squareX(caseValue)],
+        [[replacementVal, squareX, caseValue], squareX(caseValue)],
+        [[replacementVal, squareX, nothing()], replacementVal],
+        [[replacementVal, squareX, null], replacementVal],
+        [[replacementVal, squareX, undefined], replacementVal],
       ])
-        .forEach(([replacement, operation, instance, expected]) => {
-          expect(maybe(replacement, operation, instance)).toEqual(expected);
+        .forEach(([args, expected]) => {
+          expect(maybe(...args)).toEqual(expected);
         });
     });
 

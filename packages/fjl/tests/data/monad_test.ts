@@ -1,7 +1,7 @@
 import {just, nothing} from "../../src/data/maybe";
 import {Monad, join, valueOf, fmap, ap, flatMap, MonadBase} from "../../src/data/monad";
 import {left, right} from "../../src/data/either";
-import {Applicative, FunctorMapFn, Nary, Unary, UnitNary} from "../../src/types";
+import {Applicative, FunctorMapOp, Nary, Unary, UnitNary} from "../../src/types";
 import {id} from "../../src/function";
 import {falsyList, truthyList} from "../helpers";
 import {randomNatNumber} from "../../src";
@@ -27,7 +27,7 @@ describe('#join()', () => {
 });
 
 describe('#fmap()', () => {
-  (<[Monad<any>, FunctorMapFn<any, any>, Monad<any>][]>[
+  (<[Monad<any>, FunctorMapOp<any, any>, Monad<any>][]>[
     [nothing(), id, nothing()],
     [just(null), id, just(null)],
     [just(2), x => x * 2, just(4)],
@@ -57,7 +57,7 @@ describe('#ap', () => {
 });
 
 describe('#flatMap', () => {
-  (<[Monad<any>, FunctorMapFn<any, any>, Monad<any>][]>[
+  (<[Monad<any>, FunctorMapOp<any, any>, Monad<any>][]>[
     [nothing(), id, nothing()],
     [just(null), id, just(null)],
     [just(2), x => x * 2, just(4)],
