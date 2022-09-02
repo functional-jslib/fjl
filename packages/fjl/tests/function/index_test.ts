@@ -29,6 +29,7 @@ import {noop} from "../../src/function/noop";
 import {toFunction} from "../../src/function/toFunction";
 import {trampoline} from "../../src/function/trampoline";
 import {until} from "../../src/function/until";
+import {$bind, bind} from "../../src/function/bind";
 
 describe('#compose', () => {
   it('should be of type function.', () => {
@@ -124,7 +125,7 @@ describe('#curryN', () => {
 
 describe('#curry', () => {
 
-   it('should be of type function.', () => {
+  it('should be of type function.', () => {
     expect(curry).toBeInstanceOf(Function);
   });
 
@@ -496,4 +497,30 @@ describe('#until', function () {
       () => until(x => x >= 100, null, 1)
     );
   });
+});
+
+describe('#bind, #$bind', () => {
+  type Bind = typeof bind;
+  type ArgAfter = any; // Argument to pass to resulting function
+
+  const ternaryAdd = (a, b, c) => a + b + c,
+    plus = (a, b) => a + b;
+
+  (<[Parameters<Bind>, ArgAfter, ReturnType<Bind>][]>[
+    [[ternaryAdd, 'a', 'b'], 'c', c => 'ab' + c],
+    [[plus, 1], 1, b => b + 1],
+    [[x => x], 99, x => x],
+  ])
+    .forEach(([args, argAfter, expected], i) => {
+      it(`Iter: ${i}; bind(${args.map((f, i2) => !i2 ? f.name : JSON.stringify(f)).join(', ')})` +
+        `(${JSON.stringify(argAfter)}) === ` +
+        `${JSON.stringify(expected(...args.slice(1).concat([argAfter])))} && (\`$bind\` variant)`, function () {
+        const rslt = bind(...args);
+        const rslt2 = $bind(args[0])(...args.slice(1)); // Should always return a function
+        expect(rslt).toBeInstanceOf(Function);
+        expect(rslt).toHaveLength(expected.length); // Assert arity
+        expect(rslt(argAfter)).toEqual(expected(argAfter)); // Assert result function 'call' result
+        expect(rslt2(argAfter)).toEqual(expected(argAfter));
+      });
+    });
 });
