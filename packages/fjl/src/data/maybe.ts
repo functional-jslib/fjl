@@ -132,7 +132,7 @@ export const
    * Otherwise, it applies the function to the value contained  by the `Just` and returns the result.
    */
   maybe = <A, B>(replacement: B, fn: FunctorMapOp<A, A>, maybeInst: Maybe<A> | A | null | undefined): A | B => {
-    if (!isset(maybeInst) || maybeInst === Nothing) return replacement;
+    if (!isset(maybeInst) || isNothing(maybeInst)) return replacement;
     return maybeInst instanceof Just ? maybeInst.map(fn).join() as A : fn(maybeInst as A);
   },
 

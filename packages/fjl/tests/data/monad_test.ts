@@ -1,10 +1,9 @@
 import {just, nothing} from "../../src/data/maybe";
 import {Monad, join, valueOf, fmap, ap, flatMap, MonadBase} from "../../src/data/monad";
 import {left, right} from "../../src/data/either";
-import {Applicative, FunctorMapOp, Nary, Unary, UnitNary} from "../../src/types";
+import {Applicative, FunctorMapOp, Nary, UnitNary} from "../../src/types";
 import {id} from "../../src/function";
 import {falsyList, truthyList} from "../helpers";
-import {randomNatNumber} from "../../src";
 
 describe('#valueOf()', () => {
   (<[Monad<any>, any][]>[
@@ -111,12 +110,12 @@ describe('#Monad.liftA2', () => {
     .forEach(([testName, f, fOfA, fOfB, throwExpected]) => {
       it(testName, function () {
         if (throwExpected) {
-            expect(() => MonadBase.liftA2(f, fOfA, fOfB)).toThrow();
+          expect(() => MonadBase.liftA2(f, fOfA, fOfB)).toThrow();
           return;
         }
         const result = MonadBase.liftA2(f, fOfA, fOfB),
-        a = fOfA.ap(just()),
-        b = fOfB.ap(just());
+          a = fOfA.ap(just()),
+          b = fOfB.ap(just());
         expect(result).toBeInstanceOf(MonadBase);
         expect(result.valueOf()).toEqual(f(a, b));
       });

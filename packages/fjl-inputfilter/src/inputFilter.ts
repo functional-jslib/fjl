@@ -78,10 +78,9 @@ export const
       return Promise.resolve(toInputFilterResult({result: false}));
     }
 
-    return Promise.all(map(([key, inputObj]: [string, Input]) =>
-        validateIOInputWithName(inputObj, key, valuesObj[key]),
-      Object.entries(inputsObj)
-    ) as [string, InputValidationResult][])
+    return Promise.all(Object.entries(inputsObj).map(([key, inputObj]: [string, Input]) =>
+        validateIOInputWithName(inputObj, key, valuesObj[key]))
+    )
       .then(assocList => {
 
           // Extract results

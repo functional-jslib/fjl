@@ -228,22 +228,22 @@ describe('Maybe', () => {
     });
   });
   describe('`maybe`', () => {
-    test('should return `Maybe`\'s contained value', () => {
-      const caseValue = 99,
-        squareX = x => x * 2,
-        replacementVal = 27;
+    const caseValue = 99,
+      squareX = x => x * 2,
+      replacementVal = 27;
 
-      (<[Parameters<typeof maybe>, ReturnType<typeof maybe>][]>[
-        [[replacementVal, squareX, just(caseValue)], squareX(caseValue)],
-        [[replacementVal, squareX, caseValue], squareX(caseValue)],
-        [[replacementVal, squareX, nothing()], replacementVal],
-        [[replacementVal, squareX, null], replacementVal],
-        [[replacementVal, squareX, undefined], replacementVal],
-      ])
-        .forEach(([args, expected]) => {
+    (<[Parameters<typeof maybe>, ReturnType<typeof maybe>][]>[
+      [[replacementVal, squareX, just(caseValue)], squareX(caseValue)],
+      [[replacementVal, squareX, caseValue], squareX(caseValue)],
+      [[replacementVal, squareX, nothing()], replacementVal],
+      [[replacementVal, squareX, null], replacementVal],
+      [[replacementVal, squareX, undefined], replacementVal],
+    ])
+      .forEach(([args, expected], i) => {
+        test(`iter.: ${i}; maybe(${args.map(arg => typeof arg === 'function' ? arg.name : JSON.stringify(arg)).join(', ')}) === ` +
+          ` ${JSON.stringify(expected)}`, () => {
           expect(maybe(...args)).toEqual(expected);
         });
-    });
-
+      });
   });
 });

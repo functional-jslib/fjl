@@ -22,7 +22,7 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
-    "prepare": "npm run test:fjl",
+    "prepare": "npm run test:fjl && npm run link:packages",
     "test": "jest -c jest.config.js",
     "test:fjl": "jest -c jest.config.js --selectProjects fjl",
     "test:fjl-filter": "jest --c jest.config.js --selectProjects fjl-filter",
