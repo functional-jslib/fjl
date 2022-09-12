@@ -20,7 +20,7 @@ export type Monadic<A = any, B = any, Ret = any> = (a?: A, ...bs: B[]) => Ret;
 
 export type Polyadic<A = any, B = any, C = any, RetT = any> = (a?: A, b?: B, ...cs: C[]) => RetT;
 
-export type UnaryPred<T = any> = (x: T) => boolean;
+export type UnaryPred<T = any> = (x?: T) => boolean;
 
 export type BinaryPred<A = any, B = any> = (a?: A, b?: B) => boolean;
 
