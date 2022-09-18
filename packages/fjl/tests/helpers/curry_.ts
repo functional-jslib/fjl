@@ -10,16 +10,16 @@ import {fnOrError} from '../../src/function/fnOrError';
  * @constructor PlaceHolder
  * @private
  */
-const PlaceHolder = function PlaceHolder() {},
+const PlaceHolder = Symbol('placeholder'),
 
-    notFnErrPrefix = '`fn` in `curry_(fn, ...args)`',
+  notFnErrPrefix = '`fn` in `curry_(fn, ...args)`',
 
-    /**
-     * Placeholder instance.
-     * @type {PlaceHolder}
-     * @private
-     */
-    placeHolderInstance = new PlaceHolder();
+  /**
+   * Placeholder instance.
+   * @type {PlaceHolder}
+   * @private
+   */
+  placeHolderInstance = PlaceHolder;
 
 /**
  * Checks to see if value is a `PlaceHolder`.
@@ -27,8 +27,8 @@ const PlaceHolder = function PlaceHolder() {},
  * @returns {boolean}
  * @private
  */
-function isPlaceHolder (instance) {
-    return instance instanceof PlaceHolder;
+function isPlaceHolder(instance) {
+  return instance === placeHolderInstance;
 }
 
 /**
@@ -39,13 +39,16 @@ function isPlaceHolder (instance) {
  * @param args {Array} - Args from to choose from to replace placeholders.
  * @returns {Array|*} - Returns passed in `list` with placeholders replaced by values in `args`.
  */
-function replacePlaceHolders (array, args) {
-    let out = array.map(element => {
-            if (!isPlaceHolder(element)) { return element; }
-            else if (args.length) { return args.shift(); }
-            return element;
-        });
-    return args.length ? out.concat(args) : out;
+function replacePlaceHolders(array, args) {
+  const out = array.map(element => {
+    if (!isPlaceHolder(element)) {
+      return element;
+    } else if (args.length) {
+      return args.shift();
+    }
+    return element;
+  });
+  return args.length ? out.concat(args) : out;
 }
 
 /**
@@ -56,8 +59,8 @@ function replacePlaceHolders (array, args) {
  * @param argsToCurry {...*}
  * @returns {Function}
  */
-export function curry_ (fn, ...argsToCurry) {
-    return curryN_(fnOrError(notFnErrPrefix, fn).length, fn, ...argsToCurry);
+export function curry_(fn, ...argsToCurry) {
+  return curryN_(fnOrError(notFnErrPrefix, fn).length, fn, ...argsToCurry);
 }
 
 /**
@@ -68,15 +71,15 @@ export function curry_ (fn, ...argsToCurry) {
  * @param curriedArgs {...*} - Allows `Placeholder` (`__`) values.
  * @returns {Function} - Passed in function wrapped in a function for currying.
  */
-export function curryN_ (executeArity, fn, ...curriedArgs) {
-    return (...args) => {
-        let concatedArgs = replacePlaceHolders(curriedArgs, args),
-            placeHolders = concatedArgs.filter(isPlaceHolder),
-            canBeCalled = (concatedArgs.length - placeHolders.length >= executeArity) || !executeArity;
-        return !canBeCalled ?
-            curryN_.apply(null, [executeArity, fnOrError(notFnErrPrefix, fn)].concat(concatedArgs)) :
-            fnOrError(notFnErrPrefix, fn).apply(null, concatedArgs);
-    };
+export function curryN_(executeArity, fn, ...curriedArgs) {
+  return (...args) => {
+    const concatedArgs = replacePlaceHolders(curriedArgs, args),
+      placeHolders = concatedArgs.filter(isPlaceHolder),
+      canBeCalled = (concatedArgs.length - placeHolders.length >= executeArity) || !executeArity;
+    return !canBeCalled ?
+      curryN_(...[executeArity, fnOrError(notFnErrPrefix, fn)].concat(concatedArgs) as Parameters<typeof curryN_>) :
+      fnOrError(notFnErrPrefix, fn)(...concatedArgs);
+  };
 }
 
 /**
@@ -84,38 +87,38 @@ export function curryN_ (executeArity, fn, ...curriedArgs) {
  * @memberOf index.ts
  * @type {PlaceHolder}
  */
-export let __ = Object.freeze(placeHolderInstance),
+export const __ = Object.freeze(placeHolderInstance),
 
-    /**
-     * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call function until 2 or more args).
-     * @function module:function.curry2_
-     * @param fn {Function}
-     * @returns {Function}
-     */
-    curry2_ = fn => curryN_(2, fn),
+  /**
+   * Curries a function up to an arity of 2 (takes into account placeholders `__` (arity enforcers)) (won't call function until 2 or more args).
+   * @function module:function.curry2_
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  curry2_ = fn => curryN_(2, fn),
 
-    /**
-     * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call function until 3 or more args).
-     * @function module:function.curry3_
-     * @param fn {Function}
-     * @returns {Function}
-     */
-    curry3_ = fn => curryN_(3, fn),
+  /**
+   * Curries a function up to an arity of 3 (takes into account placeholders `__` (arity enforcers)) (won't call function until 3 or more args).
+   * @function module:function.curry3_
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  curry3_ = fn => curryN_(3, fn),
 
-    /**
-     * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call function until 4 or more args).
-     * @function module:function.curry4_
-     * @param fn {Function}
-     * @returns {Function}
-     */
-    curry4_ = fn => curryN_(4, fn),
+  /**
+   * Curries a function up to an arity of 4 (takes into account placeholders `__` (arity enforcers))  (won't call function until 4 or more args).
+   * @function module:function.curry4_
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  curry4_ = fn => curryN_(4, fn),
 
-    /**
-     * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call function until 5 or more args).
-     * @function module:function.curry5_
-     * @param fn {Function}
-     * @returns {Function}
-     */
-    curry5_ = fn => curryN_(5, fn)
+  /**
+   * Curries a function up to an arity of 5  (takes into account placeholders `__` (arity enforcers))  (won't call function until 5 or more args).
+   * @function module:function.curry5_
+   * @param fn {Function}
+   * @returns {Function}
+   */
+  curry5_ = fn => curryN_(5, fn)
 
 ;

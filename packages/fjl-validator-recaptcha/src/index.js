@@ -163,7 +163,7 @@ export const
                         // Add error message(s)
                         nonEmptyErrorCodes =
                             normalizedErrorCodes.filter(code =>
-                                options.messageTemplates.hasOwnProperty(code));
+                                Object.hasOwn(options.messageTemplates, code));
 
                         // Get error messages
                         if (!nonEmptyErrorCodes.length) {

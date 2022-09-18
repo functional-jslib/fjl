@@ -8,9 +8,9 @@ describe('regexValidator`', function () {
 
     describe ('#toRegexValidatorOptions', function () {
         test ('should be an object with a `pattern` property', function () {
-            expect(toRegexValidatorOptions(undefined).hasOwnProperty('pattern')).toEqual(true);
+            expect(Object.hasOwn(toRegexValidatorOptions(undefined), 'pattern')).toEqual(true);
         });
-        test ('should have error case(s) tests', () => {});
+        test ('should have error case(s) tests', () => null);
     });
 
     describe ('#regexValidator', function () {

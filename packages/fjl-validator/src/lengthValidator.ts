@@ -54,16 +54,13 @@ export const
    */
   $lengthValidatorNoNormalize = <T>(options: LenValidatorOptions, value: Slice<T>): ValidatorResult => {
     const messages = [];
-    let valLength,
-      isWithinRange,
-      result = false
-    ;
-    if (isOneOf(value, 'Null', 'Undefined', 'NaN', 'Symbol') || !value.hasOwnProperty('length')) {
+    let result = false;
+    if (isOneOf(value, 'Null', 'Undefined', 'NaN', 'Symbol') || !Object.hasOwn(value as object, 'length')) {
       messages.push(getErrorMsgByKey(options, 'NOT_OF_TYPE', value));
       return toValidationResult({result, messages, value});
     }
-    valLength = value.length;
-    isWithinRange = valLength >= options.min && valLength <= options.max;
+    const valLength = value.length,
+      isWithinRange = valLength >= options.min && valLength <= options.max;
     if (!isWithinRange) {
       messages.push(getErrorMsgByKey(options, 'NOT_WITHIN_RANGE', value));
     } else {

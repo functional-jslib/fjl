@@ -18,7 +18,7 @@ export const of = <T>(x: T, ...args: any[]): T => {
     if (constructor['of']) {
         return constructor['of'](...args) as T;
     } else if (isUsableImmutablePrimitive(x)) {
-        return (constructor as unknown as Function)(...args) as T;
+        return (constructor as unknown as (...args:any) => T)(...args) as T;
     } else if (isFunction(constructor)) {
         return new constructor(...args) as T;
     }

@@ -29,7 +29,7 @@ export const expectInstanceOf = curry2_((instance, value) => expect(value).toBeI
 
   expectError = curry2_(fn => expect(fn).toThrow()),
 
-  hasOwnProperty = (instance, key) => Object.prototype.hasOwnProperty.call(instance, key),
+  hasOwnProperty = (instance, key) => Object.hasOwn(instance, key),
 
   length = something => something.length,
 

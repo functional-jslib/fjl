@@ -1,5 +1,5 @@
 import {compose} from "../../src/function/compose";
-import {Binary, Nary, Unary, UnaryPred} from "../../src/types";
+import {Binary, Nary, Unary, UnaryPred, UnitNary} from "../../src/types";
 import {
   curry,
   curry2,
@@ -131,15 +131,12 @@ describe('#curry', () => {
 
   it('should return a function when receiving a function.', () => {
     expect(curry(() => undefined)).toBeInstanceOf(Function);
-    expect(curry(() => {
-    })).toBeInstanceOf(Function);
+    expect(curry(() => null)).toBeInstanceOf(Function);
   });
 
   it('should throw an error when receiving anything other than a function (for first param)', () => {
     [99, false, true, null, undefined, [], {}].forEach(x => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      expect(() => curry(x)).toThrow();
+      expect(() => curry(x as UnitNary)).toThrow();
     });
   });
 
@@ -246,8 +243,7 @@ describe('#flip', () => {
     expectFunction(flip);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flip());
+    expectFunction(flip(undefined));
     expectFunction(flip(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {
@@ -263,8 +259,7 @@ describe('#flipN', () => {
     expectFunction(flipN);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flipN());
+    expectFunction(flipN(undefined));
     expectFunction(flipN(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {
@@ -280,8 +275,7 @@ describe('#flip3', () => {
     expectFunction(flip3);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flip3());
+    expectFunction(flip3(undefined));
     expectFunction(flip3(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {
@@ -297,8 +291,7 @@ describe('#flip4', () => {
     expectFunction(flip4);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flip4());
+    expectFunction(flip4(undefined));
     expectFunction(flip4(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {
@@ -314,8 +307,7 @@ describe('#flip5', () => {
     expectFunction(flip5);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flip5());
+    expectFunction(flip5(undefined));
     expectFunction(flip5(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {

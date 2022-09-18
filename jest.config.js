@@ -1,7 +1,7 @@
 const path = require('path'),
   testMatch = [
-    '**/tests/**/*@(.test|_test|.spec).ts',
-    '**/tests/**/test-*.ts',
+    '**/tests/**/*@(.test|_test|.spec).@(ts|js)',
+    '**/tests/**/test-*.@(ts|js)',
   ],
   transform = {
     '\\.ts$': 'ts-jest'
