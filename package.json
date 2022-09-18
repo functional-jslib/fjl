@@ -27,6 +27,7 @@
     "test:fjl-filter": "jest --c jest.config.js --selectProjects fjl-filter",
     "test:fjl-inputfilter": "jest -c jest.config.js --selectProjects fjl-inputfilter",
     "test:fjl-validator": "jest -c jest.config.js --selectProjects fjl-validator",
+    "test:fjl-validator-recaptcha": "jest -c jest.config.js --selectProjects fjl-validator-recaptcha",
     "build": "rollup --config rollup.config.js",
     "link-and-build:packages": "node node_scripts/tasks/link-packages.js",
     "link:packages": "npm run link-and-build:packages"
@@ -45,6 +46,7 @@
   "workspaces": [
     "./packages/fjl",
     "./packages/fjl-validator",
+    "./packages/fjl-validator-recaptcha",
     "./packages/fjl-inputfilter"
   ],
   "engines": {

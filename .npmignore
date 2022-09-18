@@ -5,6 +5,8 @@
 **/.eslint*
 **/.travis*
 **/.git*
+**/.node-version
+**/.npmrc
 
 # Dirs
 **/markdown-fragments*
