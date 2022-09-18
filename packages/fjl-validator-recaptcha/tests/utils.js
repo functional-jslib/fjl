@@ -1,8 +1,6 @@
-import {log, peek, range} from 'fjl';
+const {log, peek, range} = require('fjl');
 
-export {log, peek};
-
-export const
+const
 
   jsonClone = x => JSON.parse(JSON.stringify(x)),
 
@@ -38,3 +36,5 @@ export const
     })
 
 ;
+
+module.exports = {log, peek, jsonClone, genRan, genRanChar, genRanStr, runHasPropTypes, runHasPropOfType};

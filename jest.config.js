@@ -14,7 +14,7 @@ module.exports = {
   projects: [
     'fjl',
     'fjl-validator',
-    'fjl-validator-recaptcha',
+    // 'fjl-validator-recaptcha',
     'fjl-inputfilter'
   ]
     .map(packageName => {

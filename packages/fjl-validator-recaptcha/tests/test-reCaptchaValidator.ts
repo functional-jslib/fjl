@@ -1,14 +1,14 @@
-import {
-  reCaptchaIOValidator,
-  toReCaptchaValidatorOptions,
-  toReCaptchaTestValue,
-  MISSING_INPUT_SECRET,
-  MISSING_INPUT_RESPONSE
-} from '../src';
+const {
+    reCaptchaIOValidator,
+    toReCaptchaValidatorOptions,
+    toReCaptchaTestValue,
+    MISSING_INPUT_SECRET,
+    MISSING_INPUT_RESPONSE
+  } = require('../src/index'),
 
-import {log, runHasPropTypes} from './utils';
-import packageJson from '../package.json';
-import puppeteer from 'puppeteer';
+  {log, runHasPropTypes} = require('./utils'),
+  packageJson = require('../package.json'),
+  puppeteer = require('puppeteer');
 
 const {recaptchaKeys, mockServerPort} = packageJson,
   unhandledHandler = e => {
