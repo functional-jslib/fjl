@@ -14,7 +14,7 @@ export const
   $instanceOf = (X: Constructable) => x => x instanceof X,
 
   hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
-    Object.hasOwn(x, key),
+    Object.prototype.hasOwnProperty.call(x, key),
 
   $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
     (x: T): boolean => Object.hasOwn(x, key),

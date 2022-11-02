@@ -10,7 +10,7 @@ export const
         !obj ? topAgg : Object.keys(obj).reduce((agg, key) => {
           const propDescription = Object.getOwnPropertyDescriptor(agg, key);
           // If property is not writable move to next item in collection
-          if (Object.hasOwn(agg, key) && propDescription &&
+          if (Object.prototype.hasOwnProperty.call(agg, key) && propDescription &&
             !(propDescription.get && propDescription.set) &&
             !propDescription.writable) {
             return agg;
