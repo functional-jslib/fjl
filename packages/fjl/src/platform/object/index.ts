@@ -17,7 +17,7 @@ export const
     Object.hasOwn(x, key),
 
   $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
-    (x: T): boolean => hasOwnProperty(key, x),
+    (x: T): boolean => Object.hasOwn(x, key),
 
   /**
    * Contains all the static functions from `Object` but curried and flipped;

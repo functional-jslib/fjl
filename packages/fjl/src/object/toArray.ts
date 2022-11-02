@@ -11,10 +11,10 @@ export const
    */
   toArray = (x: any): any[] => {
     switch (typeOf(x)) {
-      case 'Promise':
-      case 'Function':
-      case 'Symbol':
-      case 'Number':
+      case Promise.name:
+      case Function.name:
+      case Symbol.name:
+      case Number.name:
       case 'NaN':
       case 'Null':
       case 'Undefined':
@@ -30,10 +30,10 @@ export const
       case Uint8ClampedArray.name:
       case Uint16Array.name:
       case Uint32Array.name:
-      case 'WeakMap':
-      case 'WeakSet':
-      case 'Map':
-      case 'Set':
+      case WeakMap.name:
+      case WeakSet.name:
+      case Map.name:
+      case Set.name:
         return Array.from(x);
       case Object.name:
       default:

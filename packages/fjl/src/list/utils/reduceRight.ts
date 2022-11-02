@@ -1,5 +1,3 @@
-import {reduceUntilRight} from "./reduceUntilRight";
-import {alwaysFalse} from "../../boolean/alwaysFalse";
 import {ReduceOp, Slice} from "../../types";
 
 export const

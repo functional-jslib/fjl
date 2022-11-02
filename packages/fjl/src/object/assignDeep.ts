@@ -22,9 +22,11 @@ export const
           }
           return agg;
         }, topAgg)
-      , obj0);
+      , obj0),
 
-export const $assignDeep = (obj0) =>
-  (...objs) => assignDeep(obj0, objs)
+  /**
+   * Curried version of `assignDeep`.
+   */
+  $assignDeep = (obj0) => (...objs) => assignDeep(obj0, objs)
 
 ;
