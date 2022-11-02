@@ -1,4 +1,4 @@
-import {error, hasOwnProperty, keys} from 'fjl';
+import {error, keys} from 'fjl';
 import {runHasPropTypes, runHasPropTypesUnWrapped} from './utils';
 import {
   InputFilter,
@@ -10,6 +10,7 @@ import {
 } from '../src/inputFilter';
 
 import {falsyCasesForInputFilter1, inputFilter1, truthyCasesForInputFilter1} from './fixtures/input-filter-1';
+import {Input} from "../src";
 
 describe('#toInputFilterResult', function () {
   // Ensure properties on inputFilter default
@@ -58,8 +59,7 @@ describe('#toInputMap', function () {
 
   test('should return an object with properties which are un-writable', function () {
     case1Keys.map(key => expect(() => {
-      // @ts-ignore
-      case1[key] = 99;
+      case1[key] = 99 as unknown as Input;
     }).toThrow(Error));
   });
 

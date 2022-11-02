@@ -1,26 +1,23 @@
-import {curry} from "../function";
 import {concat} from "./concat";
 import {replicate} from "./replicate";
-import {Slice} from "../types";
 import {genIterator} from "./iterate";
-import {isType} from "../object";
+import {Slice} from "../types";
+import {append} from "./append";
 
 export const
 
   /**
-   * Replicates a list `limit` number of times and appends the results (concat)
+   * Replicates a list *n* number of times and appends the results (concat)
    */
-  cycle = <T>(n: number, xs: Slice<T>): Slice<T[]> =>
-    concat(replicate(n, xs) as unknown as Slice<T[]>[]),
+  cycle = <T>(n: number, xs: Slice<T>): Slice<T> =>
+    concat(replicate(n, xs)),
 
-  $cycle = curry(cycle),
+  $cycle = <T>(n: number) =>
+    (xs: Slice<T>): Slice<T> => cycle(n, xs),
 
   /**
    * Generates a generator which cycles list (concatenate) to end of last yielded result - On first call last yielded
    * result is initial list.
    */
-  genCycler = <T>(xs: T[] | string): Generator<string | T[], void, string | T[]> =>
-    genIterator(
-      isType(String, xs) ?
-        (_xs: string) => _xs.concat(xs as string) :
-        (_xs: T[]) => _xs.concat(xs as T[]), xs)();
+  genCycler = <T>(xs: Slice<T>): Generator<Slice<T>, void, Slice<T>> =>
+    genIterator(_xs => append(_xs, xs), xs)();

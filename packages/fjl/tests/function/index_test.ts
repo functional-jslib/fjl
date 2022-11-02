@@ -1,5 +1,5 @@
 import {compose} from "../../src/function/compose";
-import {Binary, Nary, Unary, UnaryPred} from "../../src/types";
+import {Binary, Nary, Unary, UnaryPred, UnitNary} from "../../src/types";
 import {
   curry,
   curry2,
@@ -29,6 +29,7 @@ import {noop} from "../../src/function/noop";
 import {toFunction} from "../../src/function/toFunction";
 import {trampoline} from "../../src/function/trampoline";
 import {until} from "../../src/function/until";
+import {$bind, bind} from "../../src/function/bind";
 
 describe('#compose', () => {
   it('should be of type function.', () => {
@@ -124,21 +125,18 @@ describe('#curryN', () => {
 
 describe('#curry', () => {
 
-   it('should be of type function.', () => {
+  it('should be of type function.', () => {
     expect(curry).toBeInstanceOf(Function);
   });
 
   it('should return a function when receiving a function.', () => {
     expect(curry(() => undefined)).toBeInstanceOf(Function);
-    expect(curry(() => {
-    })).toBeInstanceOf(Function);
+    expect(curry(() => null)).toBeInstanceOf(Function);
   });
 
   it('should throw an error when receiving anything other than a function (for first param)', () => {
     [99, false, true, null, undefined, [], {}].forEach(x => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      expect(() => curry(x)).toThrow();
+      expect(() => curry(x as UnitNary)).toThrow();
     });
   });
 
@@ -245,8 +243,7 @@ describe('#flip', () => {
     expectFunction(flip);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flip());
+    expectFunction(flip(undefined));
     expectFunction(flip(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {
@@ -262,8 +259,7 @@ describe('#flipN', () => {
     expectFunction(flipN);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flipN());
+    expectFunction(flipN(undefined));
     expectFunction(flipN(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {
@@ -279,8 +275,7 @@ describe('#flip3', () => {
     expectFunction(flip3);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flip3());
+    expectFunction(flip3(undefined));
     expectFunction(flip3(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {
@@ -296,8 +291,7 @@ describe('#flip4', () => {
     expectFunction(flip4);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flip4());
+    expectFunction(flip4(undefined));
     expectFunction(flip4(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {
@@ -313,8 +307,7 @@ describe('#flip5', () => {
     expectFunction(flip5);
   });
   it('should return a function', function () {
-    // @ts-ignore
-    expectFunction(flip5());
+    expectFunction(flip5(undefined));
     expectFunction(flip5(subtract));
   });
   it('should return a function which executes its params in reverse.', function () {
@@ -496,4 +489,30 @@ describe('#until', function () {
       () => until(x => x >= 100, null, 1)
     );
   });
+});
+
+describe('#bind, #$bind', () => {
+  type Bind = typeof bind;
+  type ArgAfter = any; // Argument to pass to resulting function
+
+  const ternaryAdd = (a, b, c) => a + b + c,
+    plus = (a, b) => a + b;
+
+  (<[Parameters<Bind>, ArgAfter, ReturnType<Bind>][]>[
+    [[ternaryAdd, 'a', 'b'], 'c', c => 'ab' + c],
+    [[plus, 1], 1, b => b + 1],
+    [[x => x], 99, x => x],
+  ])
+    .forEach(([args, argAfter, expected], i) => {
+      it(`Iter: ${i}; bind(${args.map((f, i2) => !i2 ? f.name : JSON.stringify(f)).join(', ')})` +
+        `(${JSON.stringify(argAfter)}) === ` +
+        `${JSON.stringify(expected(...args.slice(1).concat([argAfter])))} && (\`$bind\` variant)`, function () {
+        const rslt = bind(...args);
+        const rslt2 = $bind(args[0])(...args.slice(1)); // Should always return a function
+        expect(rslt).toBeInstanceOf(Function);
+        expect(rslt).toHaveLength(expected.length); // Assert arity
+        expect(rslt(argAfter)).toEqual(expected(argAfter)); // Assert result function 'call' result
+        expect(rslt2(argAfter)).toEqual(expected(argAfter));
+      });
+    });
 });

@@ -1,5 +1,5 @@
 /**
- * Slice (array|string) combinator utils.
+ * Array combinator utils.
  * @module listUtils
  */
 export * from "./findexIndexWhere";

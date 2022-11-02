@@ -1,19 +1,22 @@
-import {curry, CurryOf2} from "../function/curry";
-import {unconsr} from "./unconsr";
 import {reduceRight} from "./utils/reduceRight";
-import {Slice, ReduceOp} from "../types";
+import {ReduceOp, Slice} from "../types";
+import {unconsr} from "./unconsr";
 
 export const
 
   /**
-   * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting point/value will be pulled
-   * out from a copy of the container.
+   * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting value passed in
+   * is the first item, from the right (end of given list).
    */
-  foldr1 = <T, ZeroT>(op: ReduceOp<T, Slice<T>, ZeroT>, xs: Slice<T>): ZeroT | [] => {
-    const parts = unconsr(xs);
-    return !parts ? [] : reduceRight(op, parts[1] as unknown as ZeroT, parts[0]);
+  foldr1 = <T>(op: ReduceOp<T, Slice<T>, T>, xs: Slice<T>): T => {
+    const parts = unconsr(xs) as [Slice<T>, T];
+    // If no parts return, else pass tail and head, of `unconsr` array to `reduceRight` func..
+    return !parts ? undefined : reduceRight(op, parts[1], parts[0]);
   },
 
-  $foldr1 = curry(foldr1) as CurryOf2<ReduceOp<any, Slice<any>, any>, Slice<any>, any>
+  $foldr1 = <T>(op: ReduceOp<T, Slice<T>, T>) =>
+    (xs: Slice<T>): T => foldr1(op, xs)
 
 ;
+
+  export type Foldr1 = typeof foldr1;

@@ -84,18 +84,18 @@ export const
    * Validates an input object that may have IOValidators.  Returns
    * a validation result wrapped in a promise.
    */
-  validateIOInput = <T>(input: InputOptions<T>, value: T): Promise<InputValidationResult<T>> => {
+  validateIOInput = <T>(inputStruct: InputOptions<T>, value: T): Promise<InputValidationResult<T>> => {
     const {
       validators, filters, breakOnFailure,
       valueObscured, valueObscurer
-    } = input;
+    } = inputStruct;
 
     // If not required and value is `null` or `undefined` return truthy result
-    if (noValidationRequired(input, value)) {
+    if (noValidationRequired(inputStruct, value)) {
       return Promise.resolve(
         toInputValidationResult({
           result: true,
-          name: input.name || '',
+          name: inputStruct.name || '',
           rawValue: value,
           value,
           filteredValue: value,
@@ -104,22 +104,21 @@ export const
       );
     }
 
-    const pendingValidation = validators && validators.length ?
-      runIOValidators(validators, breakOnFailure, value, input) :
-      Promise.resolve({result: true} as InputValidationResult<T>)
-    ;
-
-    return pendingValidation.then(result =>
-      runIOFilters(filters, value)
-        .then(filteredValue => {
-          result.rawValue = value;
-          result.value = result.filteredValue = filteredValue;
-          result.obscuredValue =
-            valueObscured && valueObscurer ?
-              valueObscurer(filteredValue) : filteredValue;
-          return toInputValidationResult(result);
-        })
-    );
+    return (validators && validators.length ?
+        runIOValidators(validators, breakOnFailure, value, inputStruct) :
+        Promise.resolve({result: true} as InputValidationResult<T>)
+    )
+      .then(result =>
+        runIOFilters(filters, value)
+          .then(filteredValue => {
+            result.rawValue = value;
+            result.value = result.filteredValue = filteredValue;
+            result.obscuredValue =
+              valueObscured && valueObscurer ?
+                valueObscurer(filteredValue) : filteredValue;
+            return toInputValidationResult(result);
+          })
+      );
   },
 
   /**
@@ -203,9 +202,16 @@ export const
   /**
    * Runs filters on value (successively) and returns result wrapped in a promise.
    */
-  runIOFilters = <T = any>(filters: Unary<T, any>[], value: T, errorCallback = defaultErrorHandler): Promise<T | any> =>
-    runFilters(filters ? filters.map(filter => (x): Promise<any> => x.then(filter)) : null,
-      Promise.resolve(value).catch(errorCallback)),
+  runIOFilters = <T = any>(
+    filters: Unary<T, any>[],
+    value: T, errorCallback = defaultErrorHandler
+  ): Promise<T | any> =>
+    Promise.resolve(value)
+      .then(x1 => runFilters(
+      filters ? filters.map(filter => (x: any): Promise<any> =>
+        Promise.resolve(x).then(filter)) : null,
+      x1
+    )).catch(errorCallback),
 
   /**
    * Returns an `InputOptions` object from given object and optionally turns the `out` object into

@@ -3,17 +3,16 @@
  */
 import {isset} from '../object/is';
 import {Monad, MonadBase, MonadConstructor} from './monad';
-import {Unary, UnaryPred} from "../types";
-import {FunctorMapFn} from "../types";
+import {Apply, Functor, UnaryPred} from "../types";
+import {FunctorMapOp} from "../types";
 import {$instanceOf} from "../platform/object";
-import {curry2, curry3, CurryOf2, CurryOf3} from "../function";
 
 let NothingSingleton: Nothing;
 
 /**
  * Class for creating a `Nothing`.
  * @note Nothing always returns a singleton instance of `Nothing`.
- * @note Nothing shouldn't be used with an generic type as the passed in type is ignored internally.
+ * @note Nothing shouldn't be used with a generic type as the passed in type is ignored internally.
  */
 export class Nothing<T = any> implements Monad<T> {
   /**
@@ -27,6 +26,7 @@ export class Nothing<T = any> implements Monad<T> {
     if (NothingSingleton) {
       return NothingSingleton;
     }
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     NothingSingleton = this;
     Object.freeze(NothingSingleton);
   }
@@ -48,21 +48,21 @@ export class Nothing<T = any> implements Monad<T> {
   /**
    * Returns `Nothing`.
    */
-  map<RetT>(f: FunctorMapFn<RetT>): Nothing {
+  map<RetT>(f: FunctorMapOp<T, RetT>): Nothing {
     return this;
   }
 
   /**
    * Returns `Nothing`.
    */
-  ap(x: any): this {
-    return this;
+  ap<X, RetT>(f: Functor<X>): Apply<RetT> {
+    return this as unknown as Apply<RetT>;
   }
 
   /**
    * Returns `Nothing`.
    */
-  flatMap<RetT>(f: FunctorMapFn<RetT>): Nothing<RetT> {
+  flatMap<RetT>(f: FunctorMapOp<T, RetT>): Nothing<RetT> {
     return this as unknown as Nothing<RetT>;
   }
 }
@@ -99,7 +99,7 @@ export class Just<T> extends MonadBase<T> {
   /**
    * Maps incoming function over contained value and
    */
-  map<RetT>(fn: FunctorMapFn<RetT>): Just<RetT> {
+  map<RetT>(fn: FunctorMapOp<T, RetT>): Just<RetT> {
     return super.map(fn) as Just<RetT>;
   }
 }
@@ -131,15 +131,18 @@ export const
    * If the Maybe value is `Nothing`, the function returns the `replacement` value.
    * Otherwise, it applies the function to the value contained  by the `Just` and returns the result.
    */
-  maybe = <A, B>(replacement: B, fn: Unary<A, B>, maybeInst: Maybe<A> | A | null | undefined): B => {
+  maybe = <A, B>(replacement: B, fn: FunctorMapOp<A, A>, maybeInst: Maybe<A> | A | null | undefined): A | B => {
     if (!isset(maybeInst) || isNothing(maybeInst)) return replacement;
-    return isMaybe(maybeInst) ? (maybeInst as Just<A>).map(fn).join() : fn(maybeInst as A);
+    return maybeInst instanceof Just ? maybeInst.map(fn).join() as A : fn(maybeInst as A);
   },
 
   /**
    * Curried version of `maybe`.
    */
-  $maybe = curry3(maybe) as CurryOf3,
+  $maybe = <A, B>(replacement: B) =>
+    (fn: FunctorMapOp<A, A>) =>
+      (maybeInst: Maybe<A> | A | null | undefined): A | B =>
+        maybe(replacement, fn, maybeInst),
 
   /**
    * Equality operator for maybes.
@@ -149,7 +152,8 @@ export const
   /**
    * Curried version of `maybeEqual`.
    */
-  $maybeEqual = curry2(maybeEqual) as CurryOf2,
+  $maybeEqual = <A, B>(a: Maybe<A>) =>
+    (b: Maybe<B>): boolean => maybeEqual(a, b),
 
   /**
    * Checks for maybe.

@@ -1,6 +1,6 @@
-import {$reduceUntilRight, reduceUntilRight} from "./reduceUntilRight";
+import {reduceUntilRight} from "./reduceUntilRight";
 import {alwaysFalse} from "../../boolean/alwaysFalse";
-import {ReduceOp, Indexable} from "../../types";
+import {ReduceOp, Slice} from "../../types";
 
 export const
 
@@ -8,10 +8,22 @@ export const
    * Reduces a list with given operation (`op`) function (from right-to-left).
    */
   reduceRight = <T, RetT>(
-    op: ReduceOp<T, Indexable<T>, RetT>,
-    agg: RetT, xs: Indexable<T>): RetT =>
-    reduceUntilRight(alwaysFalse, op, agg, xs),
+    op: ReduceOp<T, Slice<T>, RetT>,
+    agg: RetT,
+    xs: Slice<T>
+  ): RetT => {
+    const limit = xs.length;
+    if (!limit) return agg;
+    let result = agg;
+    for (let ind = limit - 1; ind >= 0; ind--) {
+      result = op(result, xs[ind], ind, xs);
+    }
+    return result;
+  },
 
-  $reduceRight = $reduceUntilRight(alwaysFalse)
+  $reduceRight = <T, RetT>(op: ReduceOp<T, Slice<T>, RetT>) =>
+    (agg: RetT) =>
+      (xs: Slice<T>): RetT =>
+        reduceRight(op, agg, xs)
 
 ;

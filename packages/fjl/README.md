@@ -1,7 +1,3 @@
-[![GitHub version](https://badge.fury.io/gh/functional-jslib%2Ffjl.svg)](http://badge.fury.io/gh/functional-jslib%2Ffjl)
-[![NPM version](https://badge.fury.io/js/fjl.svg)](http://badge.fury.io/js/fjl)
-[![Dependencies](https://david-dm.org/functional-jslib/fjl.png)](https://david-dm.org/functional-jslib/fjl)
-
 # fjl
 
 Functional Javascript Library (inspired by Haskell's Prelude).
@@ -16,7 +12,7 @@ Functional Javascript Library (inspired by Haskell's Prelude).
 ```javascript
 import {partition, isEven} from 'fjl';
 
-const numbers = '0123456789'.split('').map(x => parseInt(x, 10)),
+const numbers = Array(10).fill(0, 0, 10).map((_, i) => i),
 
   [even, odd] = partition(x => isEven(x), numbers);
 
@@ -26,45 +22,39 @@ console.log('Odd numbers: ', odd);
 
 ### In Browser:
 
-Reference one of the index.*.min.js files, from './dist' folder.
+Reference one of the index.*.min.js files, from './dist' folder, or modules individually.
 
 ## Docs
 
-Old docs (new docs are in progress): **JSDocs** [https://functional-jslib.github.io/fjl]
+@todo 
 
-### Notes/Caveats/Method-Requisites:
+### About Currying:
 
-#### About currying:
-- All methods have curried counterparts, when they take more than one argument (not counting rest params);  Curried counterparts have a prefixed `$` sign pre-pended to them; E.g., `foldl`'s counterpart is `$foldl`.
+- All methods have curried counterparts which are named with a leading '$' sign;  E.g., `foldl`'s curried version is `$foldl`.
+- Methods that take only 'rest' parameters don't have curried counterparts `concat`, `append` etc..
 
 #### Note: `iterate`, `repeat`, `replicate`, `cycle`
 
-In javascript we do not have lazy lists, like in haskell, so `iterate`, `repeat`, `replicate`, and `cycle` take an integer as their first parameter in order to offer the same functionality; E.g.,
+In javascript we do not have lazy lists, like in haskell, so `iterate`, `repeat`, `replicate`, and `cycle` take an integer as their first parameter in order to generate a list upto a given number of items;  E.g.,
 
-In haskell: `take 3 $ iterate (a -> a * 2) [1..]` (`[1..]` is syntax for infinite/lazy list)
-In javascript, we have no choice but to make our function call:
+In haskell: `take 3 $ iterate (a -> a * 2) [1..]` (`[1..]` is syntax for infinite/lazy list) will take the first `3` items of an infinite list of even numbers.
+
+In javascript, we have no choice but to make our function call contain the `limit` information:
 
 ```
 iterate(3, a => a * 2, range(1, 3)).join('') === [2, 4, 6].join('')
 ```
 
-In our implementation these generator methods look like:
+Here are what the types look like for the list generation methods:
 
 ```typescript
-type iterate<T> = (numTimes: number, operation: (a: T) => T) => T[];
-type repeat<T> = (numTimes: number, a: T) => T[];
+type Slice<T = any> = string | T[] /* | ... */;
+
+type iterate<T> = (n: number, op: Unary<T>, x: T) => T[];
+type repeat<T> = (n: number, x: T) => T[];
 type replicate<T> = repeat<T>;
-type cycle<T> = (numTimes: number, ayes: T[]) => T[];
+type cycle<T> = (n: number, xs: Slice<T>) => Slice<T>;
 ```
-
-, in haskell:
-
-- `iterate :: (a -> a) -> [a]`
-- `repeat :: a -> [a]`
-- `replicate :: Int -> a -> [a]`
-- `cycle :: [a] -> [a]`
-
-*Note:* Javascript does have generators though initial implementation of these methods were done a time back when generators weren't generally supported/popular.
 
 ### Notable methods not added from the haskell prelude:
 
@@ -73,38 +63,36 @@ type cycle<T> = (numTimes: number, ayes: T[]) => T[];
 ## Development:
 
 - Sources are in './src'
-  - './src/platform' are native platform specific method versions pulled, out for use (functionally), in some places, where we didn't want to intermingle library methods with native ones.
+  - './src/platform' are native platform specific method versions pulled out for use, in some places, where we didn't want to intermingle library methods with native ones.
 - Distributions are in './dist'
 - Docs are generated via typedoc to './docs' dir.
-- Docs are written inline, in source using [jsdoc](http://usejsdoc.com) previously but are being converted to just by typedoc comments.
-- About non-conformity to full modularity (one-function-per-file) - This approach is a work in progress and eventually all files will be standalone.
+- Docs are written inline, in source using [jsdoc](http://usejsdoc.com), and tsdoc syntax.
+- About non-conformity to full modularity (one-function-per-file) method layout - This approach is a work in progress and eventually all files will be standalone.
 
 ### Package scripts:
 
 - `build` - Builds docs and distribution ('./dist').
 - `test` - Runs unit tests.
 
-### Dev notes:
-
-- './.babelrc' is used only for tests. Babel configurations found in './gulpfileConfig.json' are the configurations used for building the project.
 
 ### Unit testing:
 
-We are using 'jest' for testing.
+We are using 'jest' for unit tests, but plan on migrating to 'deno'.
 
 All tests can be, currently, found in './tests' dir.
 
 
 ## License:
 
-BSD 3 Clause - Included in sources.
+BSD 3 Clause - Included in sub-package sources.
 
 ## Resources:
 
 - Haskell docs search engine: https://www.haskell.org/hoogle/
-- Listing of entire Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html
+- Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html
 - Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html
 - Docs format: http://usejsdoc.org/
+- Typedocs format: https://typedoc.org/
 
 ## Change log
 

@@ -1,10 +1,9 @@
 import {alphabetArray, alphabetString, expectEqual, isVowel, nonAlphaNums, nonAlphaNumsArray} from "../helpers";
 import {span} from "../../src/list";
-import {PredForIndexable, Slice} from "../../src/types";
 
 describe('#span', () => {
   it('should give the span of elements matching predicate and elements not matching predicate.', () => {
-    (<[[PredForIndexable, Slice], [Slice, Slice]][]>[
+    (<[Parameters<typeof span>, ReturnType<typeof span>][]>[
       [[isVowel, ''], ['', '']],
       [[isVowel, []], [[], []]],
       [[isVowel, nonAlphaNums], ['', nonAlphaNums]],

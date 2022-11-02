@@ -1,21 +1,15 @@
-import {Indexable} from "../types";
-import {isEmpty} from "../object";
-
 export const
   /**
    * Conjunction of container of booleans (or truthy and/or falsy values);  Returns
    * `true` if all in container are 'truthy' else returns `false`
    */
-  and = <T>(xs: Indexable<T>): boolean => {
-    if (isEmpty(xs)) {
+  and = <T>(xs: T[]): boolean => {
+    if (!xs || !xs.length) {
       return false;
     }
-    const ks = Object.keys(xs);
-    let ksLimit = ks.length;
-    while ((--ksLimit) >= 0) {
-      if (!xs[ks[ksLimit]]) {
-        return false;
-      }
+    let limit = xs.length;
+    while ((--limit) >= 0) {
+      if (!xs[limit]) return false;
     }
     return true;
   };

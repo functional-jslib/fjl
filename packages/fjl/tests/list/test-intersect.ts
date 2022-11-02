@@ -3,7 +3,7 @@ import {intersect} from "../../src";
 describe('#intersect', () => {
   it('should return an empty list when either of the first, second ' +
     'or both params passed in are empty arrays, or falsy values', () => {
-    (<[any[], any[]][]>[
+    (<[Parameters<typeof intersect>, ReturnType<typeof intersect>][]>[
       [[[], [1, 2, 3]], []],
       [[null, null], []],
       [[undefined, undefined], []],
@@ -13,7 +13,6 @@ describe('#intersect', () => {
       [[null, 'abc'], []]
     ])
       .forEach(([args, expected]) => {
-        // @ts-ignore
         expect(intersect(...args)).toEqual(expected);
       });
   });

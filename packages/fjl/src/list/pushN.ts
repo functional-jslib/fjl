@@ -1,5 +1,3 @@
-import {curry2} from "../function";
-
 export const
 
   /**
@@ -14,7 +12,8 @@ export const
   },
 
   /**
-   * Same as `$pushN` but curried.
-   * @curried
+   * Curried version of `$pushN`.
    */
-  $pushN = curry2(pushN);
+  $pushN = <T>(xs: T[]) =>
+    (xs2: T, ..._xs: T[]): T[] =>
+      pushN(xs, xs2, ..._xs)

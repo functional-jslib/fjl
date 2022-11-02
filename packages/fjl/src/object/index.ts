@@ -4,16 +4,17 @@
  */
 
 export * from '../platform/object';
-export * from './lookup';
-export * from './typeOf';
+export * from './assignDeep';
+export * from './assocList';
+export * from './console';
 export * from './copy';
+export * from './defineProp';
 export * from './is';
+export * from './jsonClone';
+export * from './lookup';
+export * from './mapObj';
 export * from './of';
 export * from './searchObj';
-export * from './assignDeep';
 export * from './setTheory';
-export * from './console';
-export * from './jsonClone';
 export * from './toArray';
-export * from './assocList';
-export * from './defineProp';
+export * from './typeOf';

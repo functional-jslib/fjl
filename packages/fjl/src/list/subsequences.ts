@@ -1,4 +1,5 @@
-import {Slice} from "../types/data";
+import {Slice} from "../types";
+import {of} from "../object";
 
 export const
   /**
@@ -12,16 +13,16 @@ export const
   subsequences = <T>(xs: Slice<T>): Slice<T>[] => {
     const listLen = xs.length,
       len = Math.pow(2, listLen),
-      out = [] as Slice<T>[];
+      out = [];
+
     for (let i = 0; i < len; i += 1) {
-      let entry = xs.constructor();
+      let entry = of(xs);
+
       for (let j = 0; j < listLen; j += 1) {
         if (i & (1 << j)) {
-          if (typeof xs === 'string') {
-            entry = entry.concat(xs[j]);
-          } else {
-            (entry as unknown as T[]).push(xs[j]);
-          }
+          if (Array.isArray(entry)) entry.push(xs[j]);
+
+          else entry = entry.concat(xs[j]);
         }
       }
       out.push(entry);

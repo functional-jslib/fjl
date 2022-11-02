@@ -1,5 +1,5 @@
-import {filter, length, range, splitAt, take, unfoldr, zipN} from "../../src/list";
-import {alphabetArray, expectEqual, vowelsArray} from "../helpers";
+import {zipN} from "../../src/list";
+import {vowelsArray} from "../helpers";
 import {revVowelsArray} from "../helpers";
 
 describe('#zipN', () => {

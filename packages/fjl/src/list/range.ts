@@ -1,7 +1,6 @@
 /**
  * @module object
  */
-import {curry2} from '../function/curry';
 
 /**
  * Normalizes step for `from` and `to` combination.
@@ -34,6 +33,8 @@ export const
    *  (forces `step` to be negative if range required is in the negative direction
    *  and forces `step` to be positive if range required is in the other direction).
    */
-  $range = curry2(range)
+  $range = (from: number) =>
+    (to: number, step = 1): number[] =>
+      range(from, to, step)
 
 ;

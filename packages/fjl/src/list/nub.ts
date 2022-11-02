@@ -1,5 +1,4 @@
 import {nubBy} from "./nubBy";
-import {Slice} from "../types";
 
 export const
   /**
@@ -9,4 +8,4 @@ export const
    * allows the programmer to supply their own equality test.
    * ```shallowCompare( nub ([1,2,3,4,3,2,1,2,4,3,5]), [1,2,3,4,5] )```
    */
-  nub = <T>(list: Slice<T>): Slice<T> => nubBy((a, b) => a === b, list);
+  nub = <T>(list: T[]): T[] => nubBy((a, b) => a === b, list);

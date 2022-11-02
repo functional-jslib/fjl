@@ -1,17 +1,15 @@
-import {curry} from "../function/curry";
-import {length} from "./length";
-import {indexOf} from "../platform/slice";
-import {Slice} from "../types";
+import {findIndex} from "./findIndex";
+import {$equal} from "../boolean";
 
 export const
 
   /**
    * Checks if list `xs1` is a suffix of list `xs2`
    */
-  isSuffixOf = <T>(xs2: Slice<T>, xs1: Slice<T>): boolean => {
-    const limit1 = length(xs1),
-      limit2 = length(xs2);
-    if (limit2 < limit1 || !limit1 || !limit2 || indexOf(xs2, xs1[0]) === -1) {
+  isSuffixOf = <T, TS extends T[]>(xs2: TS, xs1: TS): boolean => {
+    const limit1 = xs1.length,
+      limit2 = xs2.length;
+    if (limit2 < limit1 || !limit1 || !limit2 || findIndex($equal(xs1[0]), xs2) === -1) {
       return false;
     }
     let ind1 = limit1 - 1,
@@ -29,4 +27,7 @@ export const
    * Checks if list `xs1` is a suffix of list `xs2`
    * @curried
    */
-  $isSuffixOf = curry(isSuffixOf);
+  $isSuffixOf = <T, TS extends T[]>(xs2: TS) =>
+    (xs1: TS): boolean => isSuffixOf(xs2, xs1)
+
+;

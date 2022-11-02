@@ -1,5 +1,4 @@
 import {isType} from './is';
-import {curry2} from '../function/curry';
 
 export const
 
@@ -11,7 +10,7 @@ export const
         !obj ? topAgg : Object.keys(obj).reduce((agg, key) => {
           const propDescription = Object.getOwnPropertyDescriptor(agg, key);
           // If property is not writable move to next item in collection
-          if (Object.prototype.hasOwnProperty.call(agg, key) && propDescription &&
+          if (Object.hasOwn(agg, key) && propDescription &&
             !(propDescription.get && propDescription.set) &&
             !propDescription.writable) {
             return agg;
@@ -25,4 +24,7 @@ export const
         }, topAgg)
       , obj0);
 
-export const $assignDeep = curry2(assignDeep);
+export const $assignDeep = (obj0) =>
+  (...objs) => assignDeep(obj0, objs)
+
+;

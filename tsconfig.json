@@ -11,10 +11,11 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "strictNullChecks": false,
-    "target": "ES2015"
+    "target": "ES2015",
+    "declaration": false
   },
   "exclude": [
     "**/node_modules",
     "**/dist"
-  ],
+  ]
 }

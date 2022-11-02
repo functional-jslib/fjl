@@ -1,22 +1,20 @@
-import {curry, CurryOf2} from "../function";
-import {concat} from "./concat";
+import {concat} from "../platform/slice";
 import {map} from "./map";
-import {MapOp, Indexable} from "../types";
-
-export type ConcatMap<T, RetT, Mapper, Functor, RetFunctor> =
-  CurryOf2<Mapper, Functor, RetT>
+import {MapOp, ArrayType} from "../types";
 
 export const
 
   /**
    * Map a function over all the elements of a container and concatenate the resulting lists.
    */
-  concatMap = <T, RetT>(
-    fn: MapOp<T, number | string, Indexable<T>, RetT>,
-    indexable: Indexable<T>
-  ): Indexable<T> =>
-    concat(map(fn, indexable)),
+  concatMap = <T, TS extends T[], RetT, RetTS extends RetT[]>(
+    fn: MapOp<T, number, TS[], RetT>,
+    arr: TS[]
+  ): RetTS =>
+    concat(map(fn, arr)) as RetTS,
 
-  $concatMap = curry(concatMap) as ConcatMap<any, any, MapOp<any, number | string, Indexable, any>, Indexable, any>
+  $concatMap = <T, TS extends T[], RetT, RetTS extends RetT[]>
+  (fn: MapOp<T, number, TS[], RetT>) =>
+    (arr: TS[]): RetTS => concatMap(fn, arr)
 
 ;

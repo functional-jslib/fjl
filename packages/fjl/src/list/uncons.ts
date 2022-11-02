@@ -1,14 +1,7 @@
-import {head} from './head';
-import {tail} from "./tail";
-import {Slice} from "../types";
-
-export const
-    /**
-     * Returns `head` and `tail` of passed in list/string in a tuple.
-     * @haskellType `uncons :: [a] -> Maybe (a, [a])`
-     * @function module:list.uncons
-     * @param xs {Array|String}
-     * @returns {Array|undefined}
-     */
-    uncons = <T>(xs: Slice<T>): [T, Slice<T>] | void =>
-        !xs || !xs.length ? undefined : [head(xs), tail(xs)];
+/**
+ * Returns `head` and `tail` of passed in list/string in a tuple.
+ * @param {Array} xs
+ * @returns {Array|undefined}
+ */
+export const uncons = <T>(xs: T[]): [T, T[]] | void =>
+  !xs || !xs.length ? undefined : [xs[0], xs.slice(1)];

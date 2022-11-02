@@ -6,7 +6,7 @@ import {digitValidator} from '../src/digitValidator';
 describe('digitValidator', function () {
 
     test ('should return `true` if value contains only digits.', function () {
-        let validator = digitValidator(null),
+        const validator = digitValidator(null),
             values = [
                 [true, '999'],
                 [true, '123'],

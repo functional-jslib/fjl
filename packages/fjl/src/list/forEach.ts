@@ -1,13 +1,12 @@
-import {curry} from "../function/curry";
 import {length} from "./length";
-import {ForEachOp, Slice} from "../types";
+import {ForEachOp} from "../types";
 
 export const
 
   /**
    * For each function (same as `[].forEach` except in functional format).
    */
-  forEach = <T>(fn: ForEachOp<T | Slice<T>, Slice<T>>, list: Slice<T>): void => {
+  forEach = <T>(fn: ForEachOp<T, T[]>, list: T[]): void => {
     const limit = length(list);
     if (!limit) {
       return;
@@ -18,6 +17,7 @@ export const
     }
   },
 
-  $forEach = curry(forEach)
+  $forEach = <T>(fn: ForEachOp<T, T[]>) =>
+    (list: T[]): void => forEach(fn, list)
 
 ;

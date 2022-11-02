@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {genericAscOrdering} from "./utils";
 import {sliceCopy} from "./utils/sliceCopy";
 
@@ -10,4 +9,5 @@ export const
   sortBy = <T>(orderingFn, xs: T[]): T[] => (sliceCopy(xs) as T[])
     .sort(orderingFn || genericAscOrdering),
 
-  $sortBy = curry(sortBy);
+  $sortBy = <T>(orderingFn) =>
+    (xs: T[]): T[] => sortBy(orderingFn, xs);

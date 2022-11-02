@@ -2,7 +2,6 @@
  * @module errorThrowing
  * @description Contains error throwing facilities for when a value doesn't match a type.
  */
-import {curry4, CurryOf2, CurryOf4} from '../function/curry';
 import {typeOf} from '../object/typeOf';
 import {isArray, isOfType, toTypeRef, toTypeRefName} from '../object/is';
 import {TypeRef} from "../types";
@@ -23,13 +22,23 @@ export type ErrorIfNotTypeThrower<T> = (
   type: TypeRef, contextName: string,
   valueName: string, value: T, messageSuffix?: any) => T;
 
+export type ErrorIfNotTypeThrowerCurried<T> = (type: TypeRef) =>
+  (contextName: string) =>
+    (valueName: string) =>
+      (value: T, messageSuffix?: any) => T;
+
 export type ErrorIfNotTypesThrower<T> = (
   types: TypeRef[], contextName: string,
-  valueName: string, value: T) => T;
+  valueName: string, value: T, messageSuffix?: any) => T;
+
+export type ErrorIfNotTypesThrowerCurried<T> = (types: TypeRef[]) =>
+  (contextName: string) =>
+    (valueName: string) =>
+      (value: T, messageSuffix?: any) => T;
 
 export type ErrorMessageCtxToString = (errorMessageCtx: ErrorMessageCtx) => string;
 
-export type TypeCheckerPred<TRef extends TypeRef, T> = ((typeRef: TRef, x: T) => boolean) | CurryOf2<TRef, T, boolean>;
+export type TypeCheckerPred<TRef extends TypeRef, T> = ((typeRef: TRef, x: T) => boolean);
 
 export const
 
@@ -89,6 +98,18 @@ export const
       );
     },
 
+  getErrorIfNotTypeThrowerCurried = <T>(
+    tmplStrCallback: ErrorMessageCtxToString,
+    typeChecker: TypeCheckerPred<TypeRef, any> = isOfType
+  ): ErrorIfNotTypeThrowerCurried<T> => {
+    const method = getErrorIfNotTypeThrower(tmplStrCallback, typeChecker) as ErrorIfNotTypeThrower<T>;
+    return (ValueType: TypeRef) =>
+      (contextName: string) =>
+        (valueName: string) =>
+          (value: T, messageSuffix?: string): T =>
+            method(ValueType, contextName, valueName, value, messageSuffix);
+  },
+
   /**
    * Gets the error message thrower seeded with passed in errorMessage template call.
    */
@@ -116,6 +137,18 @@ export const
       );
     },
 
+  getErrorIfNotTypesThrowerCurried = <T>(
+    tmplStrCallback: ErrorMessageCtxToString,
+    typeChecker: TypeCheckerPred<TypeRef, any> = isOfType
+  ): ErrorIfNotTypesThrowerCurried<T> => {
+    const method = getErrorIfNotTypesThrower(tmplStrCallback, typeChecker) as ErrorIfNotTypesThrower<T>;
+    return (valueTypes: TypeRef[]) =>
+      (contextName: string) =>
+        (valueName: string) =>
+          (value: T, messageSuffix = ''): T =>
+            method(valueTypes, contextName, valueName, value, messageSuffix);
+  },
+
   /**
    * Checks that passed in `value` is of given `type`.  Throws an error if value
    * is not of given `type`.  This is the un-curried version.  For the curried version
@@ -134,31 +167,37 @@ export const
    * Returns a function that can be used to ensure that values are of a given type.
    *   Also throws informative error messages containing the value types, names, expected type names,
    *   etc.
+   * @returns {Function} - Returns curried version of `ErrorIfNotType` thrower.
    */
-  $getErrorIfNotTypeThrower = (tmplCtxToStrFunc: ErrorMessageCtxToString):
-    CurryOf4<TypeRef, string, string, any, any | void> => curry4(
-    getErrorIfNotTypeThrower(tmplCtxToStrFunc)
-  ) as CurryOf4<TypeRef, string, string, any, any | void>,
+  $getErrorIfNotTypeThrower = <T>(tmplCtxToStrFunc: ErrorMessageCtxToString): ErrorIfNotTypeThrowerCurried<T> =>
+    getErrorIfNotTypeThrowerCurried(tmplCtxToStrFunc),
 
   /**
    * Returns a function that can be used to ensure that a value is of one or more given types.
    *   The returned function is used in cases where informative error messages
    *   containing the value types, names, expected type names, are-required/should-be-used etc.
+   * @returns {Function} - Returns curried version of `ErrorIfNotTypes` thrower.
    */
-  $getErrorIfNotTypesThrower = (tmplCtxToStrFunc: ErrorMessageCtxToString):
-    CurryOf4<TypeRef[], string, string, any, any | void> => curry4(
-    getErrorIfNotTypesThrower(tmplCtxToStrFunc)
-  ) as CurryOf4<TypeRef[], string, string, any, any | void>,
+  $getErrorIfNotTypesThrower = <T>(tmplCtxToStrFunc: ErrorMessageCtxToString): ErrorIfNotTypesThrowerCurried<T> =>
+    getErrorIfNotTypesThrowerCurried(tmplCtxToStrFunc),
 
   /**
    * Checks that passed in `value` is of given `type`.  Throws an error if value
    * is not of given `type`.  Curried.
    */
-  $errorIfNotType = curry4(errorIfNotType) as CurryOf4,
+  $errorIfNotType = <T>(type: TypeRef) =>
+    (contextName: string) =>
+      (valueName: string) =>
+        (value: T, messageSuffix?: any) =>
+          errorIfNotType(type, contextName, valueName, value, messageSuffix),
 
   /**
    * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
    *  is not of one of the given `types`.  Curried.
    */
-  $errorIfNotTypes = curry4(errorIfNotTypes) as CurryOf4
+  $errorIfNotTypes = <T>(types: TypeRef[]) =>
+    (contextName: string) =>
+      (valueName: string) =>
+        (value: T, messageSuffix?: any) =>
+          errorIfNotTypes(types, contextName, valueName, value, messageSuffix)
 ;

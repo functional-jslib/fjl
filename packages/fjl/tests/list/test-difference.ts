@@ -6,7 +6,7 @@ describe('#difference', () => {
   // @todo tablelize test messages
   it('should return an empty list when first list passed in is empty, ' +
     ' there are no differences between passed in lists, ', () => {
-    (<[[Slice<any>, Slice<any>], Slice<any>][]>[
+    (<[Parameters<typeof difference>, Slice][]>[
       [[[], []], []],
       [['', ''], []],
       [[null, undefined], []]

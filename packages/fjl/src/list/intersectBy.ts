@@ -1,8 +1,10 @@
-import {curry} from "../function/curry";
 import {foldl} from "./foldl";
 import {any} from "./any";
 import {BinaryPred} from "../types";
 
+/**
+ * Returns an intersection by predicate.
+ */
 export const
 
   intersectBy = <T>(pred: BinaryPred<T>, list1: T[], list2: T[]): T[] =>
@@ -12,7 +14,6 @@ export const
       , [], list1
     ),
 
-  /**
-   * Returns an intersection by predicate.
-   */
-  $intersectBy = curry(intersectBy);
+  $intersectBy = <T>(pred: BinaryPred<T>) =>
+    (list1: T[]) =>
+      (list2: T[]): T[] => intersectBy(pred, list1, list2);

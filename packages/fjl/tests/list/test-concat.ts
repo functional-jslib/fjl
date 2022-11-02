@@ -8,7 +8,7 @@ describe('#concat', () => {
     arg2 = ['abc', 'def', 'ghi'],
     arg3 = [vowelsArray, vowelsArray, vowelsArray];
   (<Slice<string>[][][]>[
-    [[], []],
+    [[], undefined],
     [['', '', ''], ''],
     [[[], [], []], []],
     [arg1, [].concat(...arg1)],

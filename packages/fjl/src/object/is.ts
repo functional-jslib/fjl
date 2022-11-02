@@ -5,7 +5,6 @@
 
 import {typeOf} from './typeOf';
 import {instanceOf, $instanceOf, keys} from '../platform/object';
-import {curry, CurryOf2} from '../function/curry';
 import {length} from "../list/length";
 import {isset} from './isset';
 import {TypeRef, Unary} from "../types";
@@ -23,7 +22,8 @@ const
   _WeakMap = 'WeakMap',
   _WeakSet = 'WeakSet',
   _Null = 'Null',
-  _Undefined = 'Undefined'
+  _Undefined = 'Undefined',
+  _immutable_type_names = [_String, _Number, _Boolean, _Symbol]
 ;
 
 export const
@@ -79,7 +79,7 @@ export const
    * @param x {*}
    * @returns {Boolean}
    */
-  isFunction = <T>(x: T): boolean => isset(x) && x instanceof Function,
+  isFunction = (x: any): boolean => isset(x) && x instanceof Function,
 
   /**
    * Strict type checker.  Checks if given value is a direct instance of given type;  E.g.,
@@ -98,9 +98,10 @@ export const
    * @param obj {*}
    * @return {Boolean}
    */
-  isType = <T>(type: TypeRef | any, obj: T): boolean => typeOf(obj) === toTypeRefName(type),
+  isType = (type: TypeRef | any, obj: any): boolean => typeOf(obj) === toTypeRefName(type),
 
-  $isType =curry(isType) as CurryOf2<any, any, boolean>,
+  $isType = (type: TypeRef | any) =>
+    (obj: any): boolean => isType(type, obj),
 
   /**
    * Synonym for `isType` (or just a more accurate name for `isType`).
@@ -137,7 +138,7 @@ export const
    * @param x {*} - Value to check.
    * @returns {Boolean}
    */
-  isOfType = curry((type, x) => isType(type, x) || instanceOf(type, x)) as CurryOf2<any, any, boolean>,
+  isOfType = (type, x) => isType(type, x) || instanceOf(type, x),
 
   /**
    * Synonym for `isOfType` (or just a more accurate name).
@@ -264,15 +265,14 @@ export const
   /**
    * Checks if given `x` is set and of one of
    *  [String, Boolean, Number, Symbol] (null and undefined are immutable
-   *  but are not "usable" (usually not what we want to operate on).
+   *  but are not "usable" (e.g., usually not what we want to operate on etc.).
    * @function module:object.isUsableImmutablePrimitive
    * @param x {*}
    * @returns {Boolean}
    */
   isUsableImmutablePrimitive = (x: any): boolean => {
     const typeOfX = typeOf(x);
-    return isset(x) &&
-      [_String, _Number, _Boolean, _Symbol]
+    return isset(x) && _immutable_type_names
         .some(type => type === typeOfX);
   },
 

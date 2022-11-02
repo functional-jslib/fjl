@@ -1,25 +1,25 @@
-import {alphabetArray, alphabetString} from "../helpers";
+import {alphabetArray} from "../helpers";
 import {filter} from "../../src/list/filter";
-import {Slice} from "../../src/types/data";
 
 describe('#filter', () => {
-    const pred = (_, ind): boolean => ind % 2 === 0;
-    (<[Slice<string>, Slice<string>][]>[
-        [
-            filter(pred, alphabetString as unknown as Slice<string>), // @todo fix typing
-            alphabetString.split('').filter(pred).join('')
-        ],
-        [
-            filter(pred, alphabetArray),
-            alphabetString.split('').filter(pred)
-        ],
-        [
-            filter((c): boolean => c === '#', alphabetArray), []
-        ]
-    ])
-        .forEach(([control, expected]) => {
-            it('should return an empty list when no items match predicate', () => {
-                expect(control).toEqual(expected);
-            });
-        });
+  type TestName = string;
+
+  const evenIndexChars = (_, ind): boolean => ind % 2 === 0;
+
+  (<[TestName, Parameters<typeof filter>, ReturnType<typeof filter>][]>[
+    ['Expect every other letter in `alphabetArray`',
+      [evenIndexChars, alphabetArray],
+      alphabetArray.filter(evenIndexChars)
+    ],
+    ['Expect empty array',
+      [c => c === '#', alphabetArray],
+      []
+    ]
+  ])
+    .forEach(([testName, [pred, xs], expected]) => {
+      it(testName, () => {
+        const rslt = filter(pred, xs);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });

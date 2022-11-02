@@ -1,10 +1,5 @@
-import {curry, CurryOf2} from "../function/curry";
-import {reduce} from "./utils";
-import {sliceCopy} from "./utils/sliceCopy";
-import {includes} from "../platform/slice";
-import {Slice} from "../types";
-
-export type Difference<Functor> = CurryOf2<Functor, Functor, Functor>
+import {reduce, sliceCopy} from "./utils";
+import {includes} from "./includes";
 
 export const
 
@@ -12,7 +7,7 @@ export const
    * Returns the difference of list 1 from list 2.
    * @reference https://mathworld.wolfram.com/SetDifference.html
    */
-  difference = <T>(array1: Slice<T>, array2: Slice<T>): Slice<T> => {
+  difference = <T>(array1: T[], array2: T[]): T[] => {
     if (array1 && !array2) {
       return sliceCopy(array1);
     } else if (!array1 && array2 || (!array1 && !array2)) {
@@ -26,4 +21,5 @@ export const
   /**
    * Curried version of `$difference`.
    */
-  $difference: Difference<Slice<any>> = curry(difference) as Difference<Slice<any>>;
+  $difference = <T>(array1: T[]) =>
+    (array2: T[]): T[] => difference(array1, array2);

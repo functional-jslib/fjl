@@ -1,38 +1,33 @@
-import {curry, CurryOf4} from "../../function/curry";
-import {ReduceOp, PredForIndexable, Indexable, Lengthable} from "../../types";
-import {length} from "../length";
-
-export type ReduceUntil<T1, RetT> = CurryOf4<PredForIndexable<T1>,
-  ReduceOp<T1, Indexable<T1>, RetT>, // @todo Refactor `ReduceOp`
-  RetT, Indexable<T1>, RetT>;
+import {ReduceOp, TernaryPred} from "../../types";
 
 export const
 
   /**
-   * Un-curried `reduceUntil` func.
+   * Reduces a "number indexable" until predicate returns `true`.
    */
-  reduceUntil = <T, RetT>(pred: PredForIndexable<T>,
-                          op: ReduceOp<T, Indexable<T>, RetT>,
-                          agg: RetT,
-                          xs: Indexable<T>): RetT => {
-    const limit = length(xs as unknown as Lengthable);
-    if (!limit) {
-      return agg;
-    }
+  reduceUntil = (
+    pred: TernaryPred,
+    op: ReduceOp,
+    agg,
+    xs
+  ) => {
+    const limit = xs.length;
+    if (!limit) return agg;
     let ind = 0,
       result = agg;
     for (; ind < limit; ind++) {
-      if (pred(xs[ind] as T, ind, xs)) {
-        break;
-      }
-      result = op(result, xs[ind] as T, ind, xs);
+      if (pred(xs[ind], ind, xs)) break;
+      result = op(result, xs[ind], ind, xs);
     }
     return result;
   },
 
   /**
-   * Reduces a slice until predicate returns `true`.
+   * Curried version of `reduceUntil` function.
    */
-  $reduceUntil = curry(reduceUntil) as ReduceUntil<any, any>
+  $reduceUntil = (pred: TernaryPred) =>
+    (op: ReduceOp) =>
+      agg =>
+        xs => reduceUntil(pred, op, agg, xs)
 
 ;

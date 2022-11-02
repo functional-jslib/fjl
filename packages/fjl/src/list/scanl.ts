@@ -1,8 +1,4 @@
-import {curry} from "../function/curry";
-import {length} from "./length";
-import {Slice} from "../types";
-
-export type ScanlOp<A, B> = (b: B, a: A, i?: number, xs?: Slice<A>) => B
+export type ScanlOp<A = any, B = any, Fnctr = any> = (b: B, a: A, i?: number, xs?: Fnctr) => B
 
 export const
 
@@ -16,14 +12,11 @@ export const
    * last (scanl f z xs) == foldl f z xs.
    * ```
    */
-  scanl = <A, B>(fn: ScanlOp<A, B>, zero: B, xs: Slice<A>): B[] => {
-    if (!xs || !length(xs)) {
-      return [];
-    }
-    const limit = length(xs);
+  scanl = <A, B>(fn: ScanlOp<A, B>, zero: B, xs: A[]): B[] => {
+    const limit = xs.length,
+      out = [] as B[];
     let ind = 0,
       result = zero;
-    const out = [] as B[];
     while (ind < limit) {
       result = fn(result, xs[ind] as A, ind, xs);
       out.push(result);
@@ -32,4 +25,8 @@ export const
     return out;
   },
 
-  $scanl = curry(scanl);
+  $scanl = <A, B>(fn: ScanlOp<A, B>) =>
+    (zero: B) =>
+      (xs: A[]): B[] => scanl(fn, zero, xs);
+
+export type Scanl = typeof scanl;

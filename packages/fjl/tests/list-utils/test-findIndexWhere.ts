@@ -1,11 +1,11 @@
 import {findIndexWhere} from "../../src/list/utils/findexIndexWhere";
-import {Slice, PredForSlice} from "../../src/types";
+import {TernaryPred} from "../../src/types";
 import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
 
 describe(`#findIndexWhere`, () => {
-  const getPredForEqualTo = <T>(a: T): PredForSlice<T> => (b: T): boolean => a === b;
+  const getPredForEqualTo = <T>(a: T): TernaryPred => (b: T): boolean => a === b;
 
-  (<[PredForSlice<any>, Slice<any>, number][]>[]
+  (<[Parameters<typeof findIndexWhere>, number][]>[]
     .concat(
       // Falsy variations
       alphabetArray.slice(0)
@@ -14,8 +14,8 @@ describe(`#findIndexWhere`, () => {
         .flatMap(x => {
           const pred = getPredForEqualTo(x);
           return [
-            [pred, vowelsArray, -1],
-            [pred, vowelsString, -1],
+            [[pred, vowelsArray], -1],
+            [[pred, vowelsString], -1],
           ];
         }),
 
@@ -23,12 +23,12 @@ describe(`#findIndexWhere`, () => {
       vowelsArray.flatMap((x, i) => {
         const pred = getPredForEqualTo(x);
         return [
-          [pred, vowelsArray, i],
-          [pred, vowelsString, i],
+          [[pred, vowelsArray], i],
+          [[pred, vowelsString], i],
         ];
       })
     ))
-    .forEach(([pred, xs, expectedIndex]) => {
+    .forEach(([[pred, xs], expectedIndex]) => {
       it(`findIndexWhere(${pred.toString()}, ${JSON.stringify(xs)}) === ${JSON.stringify(expectedIndex)}`, () => {
         const result = findIndexWhere(pred, xs);
         expect(result).toEqual(expectedIndex);

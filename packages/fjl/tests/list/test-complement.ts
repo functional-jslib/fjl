@@ -1,6 +1,5 @@
 import {expectEqual, expectFunction} from "../helpers";
 import {complement} from "../../src";
-import {Slice} from "../../src/types/data";
 
 describe('#complement', () => {
   it('should be a function', () => {
@@ -8,7 +7,7 @@ describe('#complement', () => {
   });
   it('should return an empty list when receiving 2 or more values consisting of ' +
     '`null`, `undefined` and/or empty list (`\'\'`, `[]`).', () => {
-    (<Slice<any>[]>[
+    (<any[][]>[
       [undefined, undefined],
       [null, null, '', null],
       [[], null, undefined],
@@ -19,7 +18,10 @@ describe('#complement', () => {
       ['', undefined, ''],
       [undefined, '', [], null]
     ])
-      .forEach(args => expectEqual(complement(...args), []));
+      .forEach(args => {
+        console.log(`complement(${args.join(', ')}) === []`);
+        expect(complement(...args)).toEqual([])
+      });
   });
   it('should return elements not in first list passed to it', () => {
     const testCases: Array<[number[][], number, number[]]> = [

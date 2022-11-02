@@ -1,26 +1,16 @@
-import {curry, CurryOf2} from "../function/curry";
-import {length} from "./length";
-import {PredForIndexable, Indexable} from "../types";
-import {keys} from "../platform/object";
-
-export type Any<Pred, Functor> = CurryOf2<Pred, Functor, boolean>;
+import {TernaryPred} from "../types";
 
 export const
 
   /**
    * Returns true if any item in container passes predicate `p`.
    */
-  any = <T>(p: PredForIndexable<T>, xs: Indexable<T>): boolean => {
+  any = <T>(p: TernaryPred, xs: T[]): boolean => {
     let ind = 0;
-    const ks = keys(xs),
-      limit = length(ks);
-    if (!limit) {
-      return false;
-    }
+    const limit = xs.length;
+    if (!limit) return false;
     for (; ind < limit; ind += 1) {
-      if (p(xs[ks[ind]], ind, xs)) {
-        return true;
-      }
+      if (p(xs[ind], ind, xs)) return true;
     }
     return false;
   },
@@ -28,4 +18,7 @@ export const
   /**
    * Curried version of `any`.
    */
-  $any = curry(any) as Any<PredForIndexable, Indexable>;
+  $any = <T>(p: TernaryPred) =>
+    (xs: T[]): boolean => any(p, xs)
+
+;

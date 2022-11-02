@@ -1,15 +1,20 @@
-import {cycle} from "../../src";
-import {Slice} from "../../src/types/data";
+import {cycle} from "../../src/list/cycle";
+
+const {stringify} = JSON;
 
 describe('#cycle', () => {
-  const arg = ['a'];
-  for (let i = 0; i < 5; i += 1) {
-    const expected = new Array(i).fill(arg, 0, i).flatMap(xs => xs),
-      result = cycle(i, arg) as Slice<string[]>;
-    ((_result, _expected): void => {
-      it(`cycle(${i}, ["${arg.join('", "')}"]) === ["${_expected.join('", "')}"]`, () => {
-        expect(_result).toEqual(_expected);
+  (<[Parameters<typeof cycle>, ReturnType<typeof cycle>][]>[
+    [[5, 'x'], 'xxxxx'],
+    [[5, ['x']], 'xxxxx'.split('')],
+    [[5, ''], ''],
+    [[5, []], []],
+  ])
+    .forEach(([args, expected]) => {
+      it(`cycle(${args.map(x => stringify(x)).join(', ')}) === ` +
+        `${stringify(expected)}`, () => {
+        console.table(args);
+        const result = cycle(...args);
+        expect(result).toEqual(expected);
       });
-    })(result, expected);
-  }
+    });
 });

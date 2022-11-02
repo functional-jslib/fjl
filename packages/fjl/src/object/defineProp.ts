@@ -1,7 +1,8 @@
-import {curry2, curry3} from '../function/curry';
 import {errorIfNotType} from '../errorThrowing';
 import {isUndefined} from './is';
-import {TypeRef} from "../types";
+import {ConstructableType, TypeRef} from "../types";
+
+export type DefinePropsArgsTuple = [TypeRef, string, any?];
 
 export const
 
@@ -9,7 +10,7 @@ export const
    * Creates a descriptor for a property which is settable but throws
    * errors when the `Type` is disobeyed.
    */
-  createTypedDescriptor = (Type, target, propName): PropertyDescriptor => {
+  createTypedDescriptor = (Type: TypeRef, target: any, propName: string): PropertyDescriptor => {
     let _value;
     return {
       get: (): typeof Type => _value,
@@ -48,17 +49,22 @@ export const
     return [_target, descriptor];
   },
 
-  $defineProp = curry3(defineProp),
+  $defineProp = <T>(Type: TypeRef) =>
+    (target: T | [T, PropertyDescriptor?]) =>
+      (propName: string, defaultValue?: any): [T, PropertyDescriptor] =>
+        defineProp(Type, target, propName, defaultValue),
 
   /**
    * Allows you to define a "typed", enumerated property on `target`.
    */
   defineEnumProp = <T>(
-    Type: TypeRef, target: T | [T, PropertyDescriptor?], propName: string, defaultValue?: any
+    Type: TypeRef, target: T | [T, PropertyDescriptor?],
+    propName: string,
+    defaultValue?: any
   ): [T, PropertyDescriptor] => {
     const [_target, _descriptor] = toTargetDescriptorTuple(target),
       descriptor = _descriptor || createTypedDescriptor(Type, _target, propName);
-    return $defineProp(
+    return defineProp(
       Type,
       toEnumerableDescriptor([_target, descriptor]),
       propName,
@@ -66,21 +72,28 @@ export const
     ) as unknown as [T, PropertyDescriptor];
   },
 
-  $defineEnumProp = curry3(defineEnumProp),
+  $defineEnumProp = <T>(Type: TypeRef) =>
+    (target: T | [T, PropertyDescriptor?]) =>
+      (propName: string, defaultValue?: any): [T, PropertyDescriptor] =>
+        defineEnumProp(Type, target, propName, defaultValue),
 
   /**
    * Allows you to define multiple enum props at once on target.
    */
   defineEnumProps = createDefinePropsMethod({enumerable: true}),
 
-  $defineEnumProps = curry2(defineEnumProps),
+  $defineEnumProps = <T>(argsTuple: [TypeRef, string, any?][]) =>
+    (target: T) =>
+      defineEnumProps(argsTuple, target),
 
   /**
    * Allows you to define multiple props at once on target.
    */
   defineProps = createDefinePropsMethod({enumerable: false}),
 
-  $defineProps = curry2(defineProps)
+  $defineProps = <T>(argsTuple: [TypeRef, string, any?][]) =>
+    (target: T) =>
+      defineProps(argsTuple, target)
 
 ;
 
@@ -90,8 +103,8 @@ export type PropsDefiner = <T>(argsTuple: [TypeRef, string, any?][], target: T) 
  * Creates `defineProps` and `defineEnumProps` methods based on `{enumerable}` param.
  */
 function createDefinePropsMethod({enumerable}: PropertyDescriptor): PropsDefiner {
-  const operation = enumerable ? $defineEnumProp : $defineProp;
-  return <T>(argsTuple: [TypeRef, string, any?][], target: T): T => {
+  const operation = enumerable ? defineEnumProp : defineProp;
+  return <T = any>(argsTuple: [TypeRef, string, any?][], target: T): T => {
     argsTuple.forEach(argTuple => {
       const [TypeRef, propName, defaultValue] = argTuple;
       operation.apply(null, [TypeRef, target, propName, defaultValue]);

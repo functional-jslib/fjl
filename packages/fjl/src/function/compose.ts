@@ -6,4 +6,4 @@ import {Unary} from "../types";
  * the function on the left of itself.
  */
 export const compose = (...fns: Unary[]): Unary =>
-  (arg0: any): any => reduceRight((value: any, fn: Unary) => fn(value), arg0, fns);
+  (arg0: Unary): any => reduceRight((value: any, fn: Unary) => fn(value), arg0, fns);

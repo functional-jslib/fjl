@@ -6,7 +6,7 @@ export * from './utility';
 
 // @todo clean this up and allow only one of these types
 export interface ConstructableType {
-    new(...args: any[]): any;
+  new(...args: any[]): any;
 }
 
 // @todo clean this up and allow only one of these types

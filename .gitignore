@@ -13,3 +13,5 @@
 *.log
 #**/src/**/*.js
 **/src/**/*.js.map
+
+**/.local*

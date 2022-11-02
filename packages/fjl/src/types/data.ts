@@ -16,54 +16,81 @@ export interface ToJSON<T = object> {
   toJSON(): T;
 }
 
+export type TypedArray = (
+  Int8Array |
+  Uint8Array |
+  Int16Array |
+  Uint16Array |
+  Int32Array |
+  Uint32Array |
+  Float32Array |
+  Float64Array |
+  BigInt64Array |
+  BigUint64Array
+  ) & {
+  concat(...args: ConcatArray<any>[]): any;
+};
+
+export type ArrayType<T> = Array<T> | TypedArray;
+
+export type ArrayTypeConstructor = ArrayConstructor |
+  Int8ArrayConstructor |
+  Uint8ArrayConstructor |
+  Int16ArrayConstructor |
+  Uint16ArrayConstructor |
+  Int32ArrayConstructor |
+  Uint32ArrayConstructor |
+  Float32ArrayConstructor |
+  Float64ArrayConstructor |
+  BigInt64ArrayConstructor |
+  BigUint64ArrayConstructor;
+
 /**
- * Indexable object type;  E.g., Used where strings, arrays and/or objects can be used.
+ * Used to construct `Slice` type.
+ *
+ * @private
  */
-export interface StringIndexable<T = any> extends Lengthable {
-  [index: string]: T | any;
-}
-
-export interface NumberIndexable<T = any> extends Lengthable {
-  [index: number]: T | any;
-}
-
-export type Indexable<T = any> = StringIndexable<T> | NumberIndexable<T>;
-
-export interface SliceBase<T = any> {
+interface SliceBase {
   readonly length: number;
 
-  slice(from: number, to?: number): Slice<T>;
+  slice(start: number, end?: number): any;
 
-  concat(...xs: ConcatArray<T>[] | string[] | Slice<T>[]): Slice<T>;
+  indexOf(x, position: number): number;
 
-  indexOf(x: T, position?: number): number;
+  includes(x, position: number): boolean;
 
-  includes(x: T, position?: number): boolean;
-
-  lastIndexOf(x: T, position?: number): number;
-
-  [Symbol.iterator](): Iterator<T>;
+  lastIndexOf(x, position: number): number;
 }
 
-export type  Slice<T = any> = {
-  [index in number | string]: T;
-} & SliceBase<T> | {
-  readonly [index: number]: T;
-} & SliceBase<T>
+/**
+ * `Union + Sum` Slice type - Represents, the intersection, of the string, array, and custom structure, types that match the `Slice` "summed" interfaces.
+ */
+export type Slice<T = any> = string | T[] | (SliceBase & {
+  [Symbol.iterator](): IterableIterator<T>;
+} & ({
+  [index: number]: any
 
-export type FunctorMapFn<RetT> = ((a?: any, b?: any, c?: any, ...args: any[]) => RetT) |
-  ((a?: any, b?: any, ...args: any[]) => RetT) | ((a?: any, ...args: any[]) => RetT);
+  concat(...xss: ConcatArray<any>[]): any;
+} | {
+  readonly [index: number]: string;
 
-export interface FunctorConstructor<T = any> {
+  concat(...xss: string[]): any;
+}));
+
+export type SliceConstructor = StringConstructor | ArrayConstructor;
+
+export type FunctorMapOp<T, RetT> = (a?: T, b?: any, c?: Functor<T>, ...rest: any[]) => RetT;
+
+export interface FunctorConstructor<T> {
   new(x: T): Functor<T>;
 
   readonly prototype: Functor<T>;
 }
 
-export interface Functor<T = any> {
+export interface Functor<T> {
   valueOf(): T;
 
-  map<MapRetT>(fn: FunctorMapFn<MapRetT>): Functor<MapRetT> | Functor;
+  map<RetT>(fn: FunctorMapOp<T, RetT>): Functor<RetT>;
 
   readonly length?: number;
 }
@@ -75,7 +102,7 @@ export interface ApplyConstructor<T> extends FunctorConstructor<T> {
 }
 
 export interface Apply<T> extends Functor<T> {
-  ap<X, RetT>(f: Functor<X>): Apply<RetT>;
+  ap<T, RetT>(f: Functor<T>): Apply<RetT>;
 }
 
 export interface ApplicativeConstructor<T> extends ApplyConstructor<T> {
@@ -107,9 +134,9 @@ export interface BifunctorConstructor<A, B> extends FunctorConstructor<A> {
 export interface Bifunctor<A, B> extends Functor<A> {
   value2Of(): B;
 
-  first(fn: FunctorMapFn<A>): Bifunctor<A, B>;
+  first<RetT>(fn: FunctorMapOp<A, RetT>): Bifunctor<RetT, B>;
 
-  second(fn: FunctorMapFn<B>): Bifunctor<A, B>;
+  second<RetT>(fn: FunctorMapOp<B, RetT>): Bifunctor<A, B>;
 
-  bimap(fn1: FunctorMapFn<A>, fn2: FunctorMapFn<B>): Bifunctor<A, B>;
+  bimap<RetA, RetB>(fn1: FunctorMapOp<A, RetA>, fn2: FunctorMapOp<B, RetB>): Bifunctor<RetA, RetB>;
 }

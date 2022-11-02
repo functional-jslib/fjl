@@ -1,4 +1,3 @@
-import {curry} from "../function/curry";
 import {isPrefixOf} from "./isPrefixOf";
 import {splitAt} from "./splitAt";
 import {length} from "./length";
@@ -15,4 +14,6 @@ export const
       splitAt(length(prefix), list)[1] :
       sliceCopy(list),
 
-  $stripPrefix = curry(stripPrefix);
+  $stripPrefix = <T>(prefix: Slice<T>) =>
+    (list: Slice<T>): Slice<T> =>
+      stripPrefix(prefix, list)

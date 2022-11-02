@@ -147,7 +147,7 @@ describe('#isNothing', () => {
     });
   });
   test('should return `false` when a value is not a `Nothing`', () => {
-    [false, 0, (): {} => ({}), [], {}].forEach(x => {
+    [false, 0, (): object => ({}), [], {}].forEach(x => {
       expect(isNothing(x)).toEqual(false);
     });
   });
@@ -192,7 +192,7 @@ describe('#Nothing', () => {
 
   test('Expect `map`, `ap`, `flatMap`, and `join` methods to all return same singleton instance of `Nothing`', () => {
     const instance = nothing();
-    methodNames.forEach(x => expect(instance[x](undefined)).toEqual(instance));
+    methodNames.forEach(x => expect((instance[x] as Unary)(undefined)).toEqual(instance));
   });
 });
 
@@ -228,25 +228,22 @@ describe('Maybe', () => {
     });
   });
   describe('`maybe`', () => {
-    test('should return `Maybe`\'s contained value', () => {
-      const caseValue = 99,
-        squareX = x => x * 2,
-        replacementVal = 27;
+    const caseValue = 99,
+      squareX = x => x * 2,
+      replacementVal = 27;
 
-      type Replacement = number;
-      type Expected = number;
-
-      (<[Replacement, Unary<number>, Maybe<number> | number, Expected][]>[
-        [replacementVal, squareX, just(caseValue), squareX(caseValue)],
-        [replacementVal, squareX, caseValue, squareX(caseValue)],
-        [replacementVal, squareX, nothing(), replacementVal],
-        [replacementVal, squareX, null, replacementVal],
-        [replacementVal, squareX, undefined, replacementVal],
-      ])
-        .forEach(([replacement, operation, instance, expected]) => {
-          expect(maybe(replacement, operation, instance)).toEqual(expected);
+    (<[Parameters<typeof maybe>, ReturnType<typeof maybe>][]>[
+      [[replacementVal, squareX, just(caseValue)], squareX(caseValue)],
+      [[replacementVal, squareX, caseValue], squareX(caseValue)],
+      [[replacementVal, squareX, nothing()], replacementVal],
+      [[replacementVal, squareX, null], replacementVal],
+      [[replacementVal, squareX, undefined], replacementVal],
+    ])
+      .forEach(([args, expected], i) => {
+        test(`iter.: ${i}; maybe(${args.map(arg => typeof arg === 'function' ? arg.name : JSON.stringify(arg)).join(', ')}) === ` +
+          ` ${JSON.stringify(expected)}`, () => {
+          expect(maybe(...args)).toEqual(expected);
         });
-    });
-
+      });
   });
 });

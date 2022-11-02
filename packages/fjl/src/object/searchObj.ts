@@ -1,5 +1,4 @@
 import {isset} from './is';
-import {curry} from '../function/curry';
 
 export const
 
@@ -41,5 +40,7 @@ export const
     return parent;
   },
 
-  $searchObj = curry(searchObj)
+  $searchObj = <T>(nsString: string) =>
+    (obj: T): any => searchObj(nsString, obj)
+
 ;

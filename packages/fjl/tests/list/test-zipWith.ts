@@ -1,5 +1,5 @@
-import {all, filter, length, range, splitAt, take, unfoldr, zipWith} from "../../src/list";
-import {alphabetArray, expectEqual, expectTrue, vowelsArray} from "../helpers";
+import {zipWith} from "../../src/list";
+import {vowelsArray} from "../helpers";
 import {TuplizeOp} from "../../src/list/zipWith";
 import {revVowelsArray} from "../helpers";
 

@@ -1,7 +1,5 @@
-import {curry, CurryOf2} from "../function/curry";
-import {of} from "../object/of";
-import {isString} from "../object/is";
 import {Slice} from "../types";
+import {of} from "../object";
 
 export const
 
@@ -9,32 +7,25 @@ export const
    * Takes an element and a list and `intersperses' that element between the
    *  elements of the list.
    */
-  intersperse = <T>(between: T, xs: Slice<T>): Slice<T> => {
-    if (!xs || !xs.length) {
-      return xs;
-    }
-    const limit = xs.length,
+  intersperse = <T = string | any>(between: T, xs: Slice<T>): Slice<T> => {
+    const limit = xs.length;
+    if (!limit) return of(xs);
+    const isArrayXs = Array.isArray(xs),
       lastInd = limit - 1;
-    let i = 0;
-    if (isString(xs)) {
-      let out = '';
-      for (; i < limit; i += 1) {
-        out += i === lastInd ?
-          xs[i] :
-          (xs[i] as unknown as string) +  // @todo type conversion cleanup
-          (between as unknown as string); // @todo ""
-      }
-      return out as unknown as Slice<T>;
-    }
-    const out = of(xs) as Array<T>;
-    for (; i < limit; i += 1) {
+    let out = of(xs);
+    for (let i = 0; i < limit; i += 1) {
       if (i === lastInd) {
-        out.push(xs[i] as T);
+        if (isArrayXs) (out as T[]).push(xs[i]);
+        else out = out.concat(xs[i]);
       } else {
-        out.push(xs[i] as T, between);
+        if (isArrayXs) (out as T[]).push(xs[i], between);
+        else out = out.concat(xs[i], between as unknown as any);
       }
     }
     return out;
   },
 
-  $intersperse = curry(intersperse) as CurryOf2<any, Slice<any>, Slice<any>>;
+  $intersperse = <T>(between: T) =>
+    (xs: Slice<T>): Slice<T> => intersperse(between, xs)
+
+;

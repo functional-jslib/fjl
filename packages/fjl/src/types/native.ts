@@ -1,14 +1,12 @@
-import {CurryOf2, CurryOf3} from "../function/curry";
+export type DefinePropertyFunc<T> = (pd: PropertyDescriptor, propName: string, applicand: T) => T;
 
-export type DefinePropertyFunc<T> = CurryOf3<PropertyDescriptor, string, T, T>;
+export type DefinePropertiesFunc<T> = (pdm: PropertyDescriptorMap, applicand: T) => T;
 
-export type DefinePropertiesFunc<T> = CurryOf2<PropertyDescriptorMap, T, T>;
+export type GetOwnPropertyDescriptorFunc = (propName: string, applicand: any) => PropertyDescriptor;
 
-export type GetOwnPropertyDescriptorFunc = CurryOf2<string, any, PropertyDescriptor>;
+export type CreateFunc = (pdm: PropertyDescriptorMap, applicand: any) => any;
 
-export type CreateFunc = CurryOf2<PropertyDescriptorMap, any, any>;
-
-export type IsFunc = CurryOf2<any, any, boolean>;
+export type IsFunc = (Type: any, value: any) => boolean;
 
 export interface ObjectStatics {
   assign: (...xs: any[]) => any;

@@ -1,5 +1,5 @@
 /**
  * Returns `true`.
  */
-export const alwaysTrue = (): boolean => true;
+export const alwaysTrue = () => true;
 

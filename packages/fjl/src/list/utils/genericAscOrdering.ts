@@ -1,5 +1,3 @@
-import {curry, CurryOf2} from "../../function/curry";
-
 export type OrderingFunc<T> = (a: T, b: T) => number;
 
 export const
@@ -19,6 +17,7 @@ export const
   /**
    * Generic 'ascending order' ordering function (same type as function used in `[].sort` etc.).
    */
-  $genericAscOrdering = curry(genericAscOrdering) as CurryOf2<any, any, number>
+  $genericAscOrdering = <T>(a: T) =>
+    (b: T): number => genericAscOrdering(a, b)
 
 ;

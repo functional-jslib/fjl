@@ -1,7 +1,5 @@
 import {length} from "../../src/list/length";
-import {expectEqual} from "../helpers";
 import {foldl1} from "../../src/list/foldl1";
-import {Slice} from "../../src/types/data";
 
 describe('#foldl1', () => {
   it('should fold a `Foldable` (list, etc.) into some value with no starting point value passed in.', () => {
@@ -10,30 +8,23 @@ describe('#foldl1', () => {
       phraseIndCount = phraseLen - 1,
       getAppendage = ind => parseInt(ind, 10) < phraseIndCount ? '|' : '',
       expectedTransform = phrase.split('').map((x, ind) => x + getAppendage(ind));
-    expectEqual(
+    expect(
       foldl1((agg, item, ind) => {
         agg += getAppendage(ind) + item;
         return agg;
-      }, phrase as unknown as Slice<string>),
-      expectedTransform.join('')
-    );
-    expectEqual(
-      foldl1((agg, item) => agg + item, [1, 2, 3, 4, 5]),
-      15
-    );
-    expectEqual(
-      foldl1((agg, item) => agg * item, [1, 2, 3, 4, 5]),
-      120
-    );
-    expectEqual(
-      foldl1((agg, item, ind) => {
-        agg += getAppendage(ind) + item;
-        return agg;
-      }, phrase.split('')),
-      expectedTransform.join('')
-    );
+      }, phrase.split(''))
+    )
+      .toEqual(expectedTransform.join(''));
+    expect(
+      foldl1((agg, item) => agg + item, [1, 2, 3, 4, 5])
+    )
+      .toEqual(15);
+    expect(
+      foldl1((agg, item) => agg * item, [1, 2, 3, 4, 5])
+    )
+      .toEqual(120);
   });
-  it('should return the zero value when an empty list is passed in', () => {
-    expectEqual(foldl1((agg, item) => agg + item, []), undefined);
+  it('should return `undefined` when an empty list is passed in', () => {
+    expect(foldl1((agg, item) => agg + item, [])).toEqual(undefined);
   });
 });

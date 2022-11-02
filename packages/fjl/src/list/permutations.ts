@@ -1,39 +1,34 @@
-import {length} from "./length";
 import {swap} from "./utils";
-import {sliceCopy} from "./utils/sliceCopy";
-import {repeat} from "./repeat";
-import {Slice} from "../types";
+import {isEven} from "../number";
 
-export const
+/**
+ * Returns a list of permutations for passed in list.
+ *  Use caution with lists above a length of 15 (will take long due to nature of
+ *  algorithm).
+ */
+export const permutations = <T>(xs: T[]): T[][] => {
+  const limit = xs.length;
 
-  /**
-   * Returns a list of permutations for passed in list.
-   *  Use caution with lists above a length of 15 (will take long due to nature of
-   *  algorithm).
-   */
-  permutations = <T>(xs: Slice<T>): Slice<T>[] => {
-    const limit = length(xs);
+  if (!limit || limit === 1) return [xs];
 
-    if (!limit || limit === 1) {
-      return [xs];
-    }
+  const c = Array(limit).fill(0, 0, limit);
+  let list: T[] = xs.slice(0),
+    i = 0
 
-    const c = repeat(limit, 0) as number[];
-    let list: T[] = sliceCopy(xs) as T[],
+  const out = [list] as T[][];
+
+  while (i < limit) {
+    if (c[i] < i) {
+      // `(i & 1) === 0` checks if `i` is even or not
+      list = swap((isEven(i) ? 0 : c[i]), i, list);
+      out.push(list);
+      c[i] += 1;
       i = 0;
-
-    const out = [list];
-
-    for (; i < limit; i++) {
-      if (c[i] < i) {
-        list = swap((i % 2 === 0 ? 0 : c[i]) as number, i, list) as T[];
-        out.push(list);
-        c[i] += 1;
-        i = 0;
-        continue;
-      }
-      c[i] = 0;
+      continue;
     }
+    c[i] = 0;
+    i += 1;
+  }
 
-    return out as Slice<T>[];
-  };
+  return out;
+};

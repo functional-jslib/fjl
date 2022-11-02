@@ -1,27 +1,17 @@
-import {Slice} from "../types";
-import {typeOf} from "../object";
+/**
+ * Returns a copy of the passed in list, though reversed.
+ */
+import {ArrayType, ArrayTypeConstructor} from "../types";
 
 export const
 
-  /**
-   * Returns a copy of the passed in list reverses.
-   */
-  reverse = <T, T1 extends Slice<T> = Slice<T>>(xs: T1): T1 => {
-    if (!xs) return xs;
-    if (!xs.length) return xs.slice(0) as T1;
-    let i = xs.length - 1;
-    let out;
-    if (typeOf(xs) === 'String') {
-      out = '';
-      for (; i >= 0; i -= 1) {
-        out += xs[i];
-      }
-    } else {
-      const len = xs.length - 1;
-      out = new Array(len);
-      for (; i >= 0; i -= 1) {
-        out[len - i] = xs[i];
-      }
+  reverse = <T, TS extends T[]>(xs: TS): TS => {
+    const len = xs.length,
+      out = new (xs.constructor as ArrayTypeConstructor)(len) as TS,
+      lastIndex = len - 1;
+
+    for (let i = len - 1; i >= 0; i -= 1) {
+      out[lastIndex - i] = xs[i];
     }
     return out;
   };

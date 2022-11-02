@@ -1,8 +1,4 @@
-import {curry} from "../function/curry";
-import {sliceCopy} from "./utils/sliceCopy";
-import {length} from "./length";
-import {Slice} from "../types/data";
-import {Indexable, MapAccumOp} from "../types";
+import {MapAccumOp, Slice} from "../types";
 
 export const
 
@@ -11,22 +7,25 @@ export const
    * containing the aggregated value and the result of mapping the passed in function on passed in list.
    * @haskellType mapAccumL :: Traversable t => (a -> b -> (a, c)) -> a -> t b -> (a, t c)
    */
-  mapAccumL = <A = any, B = any, MapRetT = any>(op: MapAccumOp<A, B, MapRetT>, zero: A, xs: Slice<B>): [A, Slice<MapRetT>] => {
-    const list = sliceCopy(xs),
-      limit = length(xs);
+  mapAccumL = <A, B, MapRetT>(op: MapAccumOp<A, B, MapRetT>, zero: A, xs: Slice<B>): [A, Slice<MapRetT>] => {
+    const list = xs.slice(0),
+      limit = xs.length;
     if (!limit) {
-      return [zero, list as unknown as Slice<MapRetT>];
+      return [zero, list as Slice<MapRetT>];
     }
+    const mapped = [];
     let ind = 0,
       agg = zero,
-      mapped = [],
       tuple;
     for (; ind < limit; ind++) {
-      tuple = op(agg, (list as Indexable<B>)[ind], ind);
+      tuple = op(agg, (list as Slice<B>)[ind], ind);
       agg = tuple[0];
       mapped.push(tuple[1]);
     }
     return [agg, mapped];
   },
 
-  $mapAccumL = curry(mapAccumL);
+  $mapAccumL = <A, B, MapRetT>(op: MapAccumOp<A, B, MapRetT>) =>
+    (zero: A) =>
+      (xs: Slice<B>): [A, Slice<MapRetT>] =>
+        mapAccumL(op, zero, xs);

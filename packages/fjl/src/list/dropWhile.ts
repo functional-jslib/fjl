@@ -1,27 +1,23 @@
-import {curry, CurryOf2} from "../function/curry";
-import {length} from "./length";
 import {findIndexWhere} from "./utils";
-import {slice} from "../platform/slice";
-import {sliceFrom} from "./utils/sliceFrom";
-import {PredForSlice, Slice} from "../types";
-
-type DropWhile<T> = CurryOf2<PredForSlice<T>, Slice<T>, Slice<T>>;
+import {TernaryPred} from "../types";
 
 export const
 
   /**
-   * Returns an list without elements that match predicate.
+   * Returns a list without elements that match predicate.
    */
-  dropWhile = <T>(p: PredForSlice<T>, xs: Slice<T>): Slice<T> => {
-    const limit = length(xs),
-      splitPoint =
+  dropWhile = <T>(p: TernaryPred, xs: T[]): T[] => {
+    const limit = xs.length,
+      splitPoint: number =
         findIndexWhere(
-          (x: T, i: number | string, xs: Slice<T>) => !p(x, i, xs),
+          (x, i, xs) => !p(x, i, xs),
           xs
-        ) as number;
-    return splitPoint === -1 ?
-      sliceFrom(limit, xs) as Slice<T> :
-      slice(splitPoint, limit, xs) as Slice<T>;
+        );
+    return splitPoint === -1 ? xs.slice(limit) :
+      xs.slice(splitPoint, limit);
   },
 
-  $dropWhile = curry(dropWhile) as DropWhile<any>;
+  $dropWhile = <T>(p: TernaryPred) =>
+    (xs: T[]): T[] => dropWhile(p, xs)
+
+;

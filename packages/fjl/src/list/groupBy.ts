@@ -1,54 +1,51 @@
-import {curry, CurryOf2} from "../function/curry";
-import {length} from "./length";
-import {sliceCopy} from "./utils/sliceCopy";
-import {Slice} from "../types";
-import {BinaryPred} from "../types";
+import {BinaryPred, Slice} from "../types";
+import {of} from "../object";
 
 export const
 
   /**
-   * Groups given items by given predicate.
+   * `groupBy` Groups given items by given predicate;  Similar to `group` but with 'equality check' predicate.
+   *
+   * ```javascript
+   * groupBy((a, b) => a === b, "Mississippi".slice(0)) ===
+   *  [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], "i"]
+   * ```
    */
   groupBy = <T>(equalityOp: BinaryPred<T>, xs: Slice<T>): Slice<T>[] => {
-    // Bail if empty list
-    if (!xs) {
-      return [];
-    }
+    if (!xs) return [];
 
-    const limit = length(xs);
+    const limit = xs.length,
+      groupIsArray = Array.isArray(xs);
 
-    // Bail if empty list
-    if (!limit) {
-      return [sliceCopy(xs)];
-    }
+    // Initialize variables for tracking
+    let prevItem = xs[0],
+      group = of(xs, prevItem);
+
+    if (!limit) return [group];
 
     // Groupings
     const groups: Slice<T>[] = [];
 
-    // Initialize variables for tracking
-    let ind = 1,
-      prevItem = xs[0] as T,
-      group: T[] = [prevItem];
+    // Group remainder of items
+    for (let ind = 1; ind < limit; ind += 1) {
+      const x = xs[ind];
 
-    for (; ind < limit; ind += 1) {
-      const x = xs[ind] as T;
+      // If equality check passed group item, and continue to next
       if (equalityOp(x, prevItem)) {
-        group.push(x);
+        if (groupIsArray) (group as T[]).push(x);
+        else group = group.concat(x);
         prevItem = x;
         continue;
       }
+
+      // Items for previous group 'grouped'.  Move to next group.
       groups.push(group);
       prevItem = x;
-      group = [x];
+      group = of(group, x);
     }
 
     // Push last group
     groups.push(group);
-
-    // If original incoming slice is a string, return a slice of strings.
-    if(xs.constructor === String) {
-      return groups.map(_xs => (_xs as T[]).join('')) as unknown as Slice<T>[];
-    }
 
     return groups;
   },
@@ -56,6 +53,9 @@ export const
   /**
    * Curried version of `$groupBy`.
    */
-  $groupBy = curry(groupBy) as CurryOf2<BinaryPred<any>, Slice<any>, Slice<any>[]>
+  $groupBy = <T>(equalityOp: BinaryPred<T>) =>
+    (xs: Slice<T>): Slice<T>[] => groupBy(equalityOp, xs)
 
 ;
+
+export type GroupBy = typeof groupBy;

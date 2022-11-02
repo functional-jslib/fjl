@@ -1,15 +1,13 @@
-import {curry, CurryOf2} from "../function/curry";
 import {indexOf} from "../platform/slice";
-import {Slice} from "../types";
-
-type ElemIndex<T> = CurryOf2<T, Slice<T>, number | undefined>;
 
 export const
 
-  elemIndex = <T>(xs: Slice<T>, x: T): number | undefined => {
-    const foundInd = indexOf(xs, x) as number;
+  elemIndex = <T>(xs: T[], x: T): number | undefined => {
+    const foundInd = indexOf(xs, x);
     return foundInd !== -1 ? foundInd : undefined;
   },
 
-  $elemIndex = curry(elemIndex) as ElemIndex<any>;
+  $elemIndex = <T>(xs: T[]) =>
+    (x: T): number | undefined => elemIndex(xs, x)
+;
 
