@@ -31,10 +31,10 @@ const {reCaptchaValidator} = require('fjl-validator-recaptcha');
 ```
 
 ## Usage:
-The library exports several methods but most notably `reCaptchaValidator` and `reCaptchaValidatorV2` are the 
+The library exports several methods but most notably `reCaptchaValidator` and `$reCaptchaValidatorV2` are the 
 ones you'll need.
 - `reCaptchaValidator` is curried and takes `options` parameter first and `value` parameter second.
-- `reCaptchaValidatorV2` takes the `value` parameter first and `options` one second (good for the non-functional-programming-style initiates) 
+- `$reCaptchaValidatorV2` takes the `value` parameter first and `options` one second (good for the non-functional-programming-style initiates) 
 (though note: this version is also curried).
 
 ### Promised based:
@@ -47,7 +47,7 @@ import {recaptchValidator} from 'fjl-validator-recaptcha';
 // ...
 
 const validator = reCaptchaValidator(null); // If no `options` pass `null` when using curried version 
-// (un-curried version is `reCaptchaValidator$` and 'value' first version is `reCaptchaValidatorV2`).
+// (un-curried version is `reCaptchaValidator$` and 'value' first version is `$reCaptchaValidatorV2`).
 
 router.post('/test-recaptcha-validator', (req, res) => {
     res.type('application/json');

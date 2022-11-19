@@ -8,6 +8,7 @@ const {
 
   {log, runHasPropTypes} = require('./utils'),
   packageJson = require('../package.json'),
+  puppeteerConfig = require('../../../.puppeteerrc.cjs'),
   puppeteer = require('puppeteer');
 
 const {recaptchaKeys, mockServerPort} = packageJson,
@@ -37,7 +38,7 @@ describe('#toReCaptchaValidatorOptions', function () {
   });
 });
 
-describe('#reCaptchaIOValidator', function () {
+describe('#$reCaptchaIOValidator', function () {
   const messagesTemplatesForTests = toReCaptchaValidatorOptions().messageTemplates,
     browserUserAgentString = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) ' +
       'Ubuntu Chromium/60.0.3112.113 Chrome/60.0.3112.113 Safari/537.36';
@@ -46,7 +47,7 @@ describe('#reCaptchaIOValidator', function () {
     '`g-recaptcha-response` are well-formed', async (done) => {
     expect.assertions(3);
     const anchorName = '.rc-anchor-content',
-      browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']}),
+      browser = await puppeteer.launch(puppeteerConfig),
       page = await browser.newPage();
     await page.setUserAgent(browserUserAgentString);
     await page.goto(`http://localhost:${mockServerPort}/test-recaptcha-validator.html`);

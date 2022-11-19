@@ -73,7 +73,10 @@ router.post('/test-recaptcha-validator', (req, res) => {
     })
         .then(
             result => res.json(result),
-            (result, errCodes) => log(jsonClone(result), errCodes)
+            (result, errCodes) => {
+              log(jsonClone(result), errCodes);
+              return result;
+            }
         );
 });
 
