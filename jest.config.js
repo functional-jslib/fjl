@@ -24,6 +24,7 @@ module.exports = {
         rootDir: path.dirname(tsConfigFilePath),
         testMatch,
         transform,
+        preset: packageName.includes('recaptcha') ? 'jest-puppeteer' : 'ts-jest',
         globals: {
           'ts-jest': {
             tsconfig: tsConfigFilePath

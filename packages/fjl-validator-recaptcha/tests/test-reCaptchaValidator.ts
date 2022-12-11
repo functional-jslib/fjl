@@ -11,7 +11,9 @@ const {
   puppeteerConfig = require('../../../.puppeteerrc.cjs'),
   puppeteer = require('puppeteer');
 
-const {recaptchaKeys, mockServerPort} = packageJson,
+const {recaptchaKeys} = packageJson,
+  {mockServerPort} = require('../../../package.json'),
+
   unhandledHandler = e => {
     console.error(e);
     process.exit(1);
@@ -51,12 +53,14 @@ describe('#$reCaptchaIOValidator', function () {
       page = await browser.newPage();
     await page.setUserAgent(browserUserAgentString);
     await page.goto(`http://localhost:${mockServerPort}/test-recaptcha-validator.html`);
-    await page.waitFor(3000);
-    const recaptchaFrame = page.mainFrame().childFrames()[0];
-    await recaptchaFrame.waitFor(anchorName);
-    const $anchor = await recaptchaFrame.$(anchorName);
-    await $anchor.click();
-    await page.waitFor(3000);
+    await page.waitForFrame(async frame => {
+      const recaptchaFrame = frame.childFrames()[0];
+      await recaptchaFrame.waitForSelector(anchorName);
+      const $anchor = await recaptchaFrame.$(anchorName);
+      await $anchor.click();
+      await page.waitForFrame(() => null, {timeout: 3000});
+    }, {timeout: 3000});
+
     page.on('console', log);
     log('Awaiting response');
     page.on('response', async res => {

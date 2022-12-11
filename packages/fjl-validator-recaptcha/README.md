@@ -213,8 +213,8 @@ This is just an overview of members included in library.  For in-depth docs view
 - `toReCaptchaTestValue (options)` - Returns a normalized `reCaptchaValidatorTestValue` object.
 
 ## Development
-- Requires `npm install -g forever` - Due to using it for 'travis-ci' automated testing. 
-- @see package.json "scripts" sections.
+- ~~Requires `npm install -g forever` - Due to using it for 'travis-ci' automated testing.~~  Testing now done via `jest-puppeteer` (no `forever` module required anymore).
+- ~~@see package.json "scripts" sections.~~ Test commands are now in repo root. 
 - @note `recaptchaKeys` in package.json are the ones prescribed by recaptcha
 team for doing `always true` (response from recaptcha service) testing.
 
