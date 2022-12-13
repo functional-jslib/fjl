@@ -2,14 +2,13 @@ import {lengths} from "./lengths";
 import {map} from "../map";
 import {sliceTo} from "./sliceTo";
 import {sliceCopy} from "./sliceCopy";
-import {Slice} from "../../types";
 
 export const
 
   /**
-   * Trims all lists to shortest in `lists`.
+   * Trims all list lengths to shortest in `lists`.
    */
-  toShortest = <T>(...lists: Slice<T>[]): Slice<T>[] => {
+  toShortest = <XS>(...lists: XS[]): XS[] => {
     const listLengths = lengths(...lists),
       smallLen = Math.min(...listLengths);
     return map((list: any[], ind) => listLengths[ind] > smallLen ?
@@ -20,9 +19,9 @@ export const
    * Returns a list of lists trimmed to the shortest length in given list of lists.
    * @background This method is used by the `zip*` functions to achieve their
    *  'slice to smallest' functionality.
-   * @curried Upto two.
+   * @curried Up-to two params.
    */
-  $toShortest = <T>(list1: Slice<T>) =>
-    (list2: Slice<T>, ...lists: Slice<T>[]): Slice<T>[] => toShortest(list1, list2, ...lists)
+  $toShortest = <XS>(list1: XS) =>
+    (list2: XS, ...lists: XS[]): XS[] => toShortest(list1, list2, ...lists)
 
 ;
