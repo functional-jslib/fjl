@@ -1,10 +1,9 @@
-import {$lookup, lookup} from "../object/lookup";
-
-export const
-
-  $at = $lookup,
+/**
+ * Gets item at index;  Same as` [].at()` (allows negative/right-to-left indexing (see mdn Array.at method).
+ */
+export const at = <T>(i: number, xs: T[]): T => xs.at(i),
 
   /**
-   * Gets item at index.
+   * Curried version of `at`.
    */
-  at = lookup;
+  $at = <T>(i: number) => (xs: T[]): T => xs.at(i);
