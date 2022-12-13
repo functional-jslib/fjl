@@ -17,7 +17,7 @@ if (isDevEnv) {
 }
 
 // Preliminaries
-const {appSessionSecret} = process.env,
+const {appSessionSecret = 'Supercalifragilisticexpialidocious'} = process.env,
     {mockServerPort: port} = require('../../../package'),
     express = require('express'),
     helmet = require('helmet'),

@@ -7,6 +7,7 @@ const path = require('path'),
     '\\.ts$': 'ts-jest'
   }
 ;
+
 module.exports = {
   preset: 'ts-jest',
   collectCoverage: true,
@@ -18,18 +19,22 @@ module.exports = {
     'fjl-inputfilter'
   ]
     .map(packageName => {
-      const tsConfigFilePath = path.join(__dirname, `packages/${packageName}/tsconfig.spec.json`);
-      return {
-        displayName: packageName,
-        rootDir: path.dirname(tsConfigFilePath),
-        testMatch,
-        transform,
-        preset: packageName.includes('recaptcha') ? 'jest-puppeteer' : 'ts-jest',
-        globals: {
-          'ts-jest': {
-            tsconfig: tsConfigFilePath
+      const tsConfigFilePath = path.join(__dirname, `packages/${packageName}/tsconfig.spec.json`),
+
+        out = {
+          displayName: packageName,
+          rootDir: path.dirname(tsConfigFilePath),
+          testMatch,
+          transform,
+          globals: {
+            'ts-jest': {
+              tsconfig: tsConfigFilePath
+            }
           }
-        }
-      };
+        };
+
+      if (packageName.includes('recaptcha')) out.preset = 'jest-puppeteer';
+
+      return out;
     }),
 };
