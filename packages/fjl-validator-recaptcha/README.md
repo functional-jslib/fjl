@@ -31,10 +31,10 @@ const {reCaptchaValidator} = require('fjl-validator-recaptcha');
 ```
 
 ## Usage:
-The library exports several methods but most notably `reCaptchaValidator` and `reCaptchaValidatorV2` are the 
+The library exports several methods but most notably `reCaptchaValidator` and `$reCaptchaValidatorV2` are the 
 ones you'll need.
 - `reCaptchaValidator` is curried and takes `options` parameter first and `value` parameter second.
-- `reCaptchaValidatorV2` takes the `value` parameter first and `options` one second (good for the non-functional-programming-style initiates) 
+- `$reCaptchaValidatorV2` takes the `value` parameter first and `options` one second (good for the non-functional-programming-style initiates) 
 (though note: this version is also curried).
 
 ### Promised based:
@@ -47,7 +47,7 @@ import {recaptchValidator} from 'fjl-validator-recaptcha';
 // ...
 
 const validator = reCaptchaValidator(null); // If no `options` pass `null` when using curried version 
-// (un-curried version is `reCaptchaValidator$` and 'value' first version is `reCaptchaValidatorV2`).
+// (un-curried version is `reCaptchaValidator$` and 'value' first version is `$reCaptchaValidatorV2`).
 
 router.post('/test-recaptcha-validator', (req, res) => {
     res.type('application/json');
@@ -195,11 +195,8 @@ fetch('/validate-recaptcha', {
 ```
 
 ## Pre-Requisites/Caveats
-### Node versions:
-- node v6.12+
 
-### Tested on:
-Tested on node v6.12 and v8.9
+- node v16+
 
 ## Docs
 **JSDocs format:**  
@@ -213,10 +210,10 @@ This is just an overview of members included in library.  For in-depth docs view
 - `toReCaptchaTestValue (options)` - Returns a normalized `reCaptchaValidatorTestValue` object.
 
 ## Development
-- Requires `npm install -g forever` - Due to using it for 'travis-ci' automated testing. 
-- @see package.json "scripts" sections.
-- @note `recaptchaKeys` in package.json are the ones prescribed by recaptcha
-team for doing `always true` (response from recaptcha service) testing.
+- ~~Requires `npm install -g forever` - Due to using it for 'travis-ci' automated testing.~~  Testing now done via `jest-puppeteer` (no `forever` module required anymore).
+- ~~@see package.json "scripts" sections.~~ Test commands are now in repo root. 
+- @note `recaptchaKeys` in package.json are the ones prescribed by recaptcha team for doing `always true` (response from recaptcha service) testing.
+- `PUPPETEER_EXE_PATH` env. variable is required - Set it to 'chrome' executable path.
 
 ## Resources:
 ### ReCaptcha Api links:

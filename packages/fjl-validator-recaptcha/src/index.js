@@ -10,16 +10,14 @@
 const https = require('https'),
   querystring = require('querystring'),
   {getErrorMsgByKey: getErrorMessageByKey, toValidationResult, toValidationOptions} = require('fjl-validator'),
-  {assign, assignDeep, isEmpty, curry, flip, defineEnumProps} = require('fjl');
+  {assign, assignDeep, isEmpty, defineEnumProps} = require('fjl');
 
-const
-
-  /**
-   * @memberOf module:fjlValidatorReCaptcha
-   * @property MISSING_INPUT_SECRET
-   * @type {string}
-   */
-  MISSING_INPUT_SECRET = 'missing-input-secret',
+/**
+ * @memberOf module:fjlValidatorReCaptcha
+ * @property MISSING_INPUT_SECRET
+ * @type {string}
+ */
+const MISSING_INPUT_SECRET = 'missing-input-secret',
 
   /**
    * @memberOf module:fjlValidatorReCaptcha
@@ -114,7 +112,7 @@ const
    * @param reject {Function} - Reject/failure callback - Receives validation result object and errorCodes array.
    * @returns {void}
    */
-  makeReCaptchaRequest$ = (options, value, resolve, reject) => {
+  makeReCaptchaRequest = (options, value, resolve, reject) => {
     const messages = [],
       {secret, remoteip, response} = value;
 
@@ -126,7 +124,6 @@ const
     }
     if (messages.length) {
       resolve(toValidationResult({result: false, messages}));
-      return; // Exiting explicitly here due to function being able to be used in callback style (old-style)
     }
 
     const formParams = {secret, remoteip, response},
@@ -163,7 +160,7 @@ const
             // Add error message(s)
             nonEmptyErrorCodes =
               normalizedErrorCodes.filter(code =>
-                Object.hasOwn(options.messageTemplates, code));
+                Object.prototype.hasOwnProperty.call(options.messageTemplates, code));
 
             // Get error messages
             if (!nonEmptyErrorCodes.length) {
@@ -196,18 +193,18 @@ const
   },
 
   /**
-   * Validates a test value against google's reCaptchaV2 backend validation service;
-   * @note unlike `makeReCaptchaRequest$` this method validates/normalizes the passed in data objects before making
-   * the validation request to the backend-validation-service.
-   * @function module:fjlValidatorReCaptcha.reCaptchaValidator$
+   * Validates a test value against Google's reCaptchaV2 backend validation service;
+   * @note unlike `makeReCaptchaRequest` this method validates/normalizes the passed in data
+   * objects before making the validation request to the backend-validation-service.
+   * @function module:fjlValidatorReCaptcha.reCaptchaValidator
    * @param options {ReCaptchaValidatorOptions}
    * @param value {ReCaptchaTestValue}
    * @param resolve {Function} - Resolve/success callback - Receives validation result object.
    * @param reject {Function} - Reject/failure callback - Receives validation result object and errorCodes array.
    * @returns {void}
    */
-  reCaptchaValidator$ = (options, value, resolve, reject) =>
-    makeReCaptchaRequest$(
+  reCaptchaValidator = (options, value, resolve, reject) =>
+    makeReCaptchaRequest(
       toReCaptchaValidatorOptions(options),
       toReCaptchaTestValue(value),
       resolve, reject
@@ -215,48 +212,50 @@ const
 
   /**
    * Validates a test value against reCaptchaV2 backend service;
-   * @note When a reject occurs it will receive validation result object and `errorCodes` array (which contains
-   *  error code sent back by reCaptcha service.
-   * @function module:fjlValidatorReCaptcha.reCaptchaIOValidator$
-   * @param options {ReCaptchaValidatorOptions}
-   * @param value {ReCaptchaTestValue}
-   * @returns {(Promise.<ValidationResult>|Promise.<ValidationResult, Array.<String>>)}
-   */
-  reCaptchaIOValidator$ = (options, value) =>
-    (new Promise((resolve, reject) =>
-        reCaptchaValidator$(options, value, resolve, reject))
-    ),
-
-  /**
-   * Curried version of `reCaptchaIOValidator$`.
+   * @note When a reject occurs it will receive validation result object and `errorCodes`
+   * array (which contains error code sent back by reCaptcha service).
    * @function module:fjlValidatorReCaptcha.reCaptchaIOValidator
    * @param options {ReCaptchaValidatorOptions}
    * @param value {ReCaptchaTestValue}
    * @returns {(Promise.<ValidationResult>|Promise.<ValidationResult, Array.<String>>)}
-   * @curried - Is curried.
    */
-  reCaptchaIOValidator = curry(reCaptchaIOValidator$),
+  reCaptchaIOValidator = (options, value) =>
+    (new Promise((resolve, reject) =>
+        reCaptchaValidator(options, value, resolve, reject))
+    ),
 
   /**
-   * Alias of `reCaptchaIOValidator`.
-   * @function module:fjlValidatorReCaptcha.reCaptchaValidator
+   * Curried version of `reCaptchaIOValidator`.
+   * @function module:fjlValidatorReCaptcha.$reCaptchaIOValidator
    * @param options {ReCaptchaValidatorOptions}
    * @param value {ReCaptchaTestValue}
    * @returns {(Promise.<ValidationResult>|Promise.<ValidationResult, Array.<String>>)}
    * @curried - Is curried.
    */
-  reCaptchaValidator = reCaptchaIOValidator,
+  $reCaptchaIOValidator = (options) =>
+    (value) => reCaptchaIOValidator(options, value),
 
   /**
-   * Same as `reCaptchaIOValidator` though with arguments flipped;
-   *  Takes `value` parameter first and the `options` one second.
-   * @function module:fjlValidatorReCaptcha.reCaptchaValidatorV2
+   * Alias of `$reCaptchaIOValidator`.
+   * @function module:fjlValidatorReCaptcha.$reCaptchaValidator
+   * @param options {ReCaptchaValidatorOptions}
+   * @param value {ReCaptchaTestValue}
+   * @returns {(Promise.<ValidationResult>|Promise.<ValidationResult, Array.<String>>)}
+   * @curried - Is curried.
+   */
+  $reCaptchaValidator = $reCaptchaIOValidator,
+
+  /**
+   * Same as `$reCaptchaIOValidator` just named after the recaptcha version that it validates
+   * against.
+   * @function module:fjlValidatorReCaptcha.$reCaptchaValidatorV2
    * @param value {ReCaptchaTestValue}
    * @param options {ReCaptchaValidatorOptions}
    * @returns {(Promise.<ValidationResult>|Promise.<ValidationResult, Array.<String>>)}
    * @curried - Is curried.
    */
-  reCaptchaValidatorV2 = curry(flip(reCaptchaIOValidator$));
+  $reCaptchaValidatorV2 = (options) =>
+    (value) => reCaptchaIOValidator(options, value);
 
 module.exports = {
   MISSING_INPUT_SECRET,
@@ -267,12 +266,11 @@ module.exports = {
   UNKNOWN_ERROR,
   toReCaptchaTestValue,
   toReCaptchaValidatorOptions,
-  makeReCaptchaRequest$,
-  reCaptchaValidator$,
-  reCaptchaIOValidator$,
-  reCaptchaValidator$,
+  makeReCaptchaRequest,
   reCaptchaValidator,
-  reCaptchaValidatorV2
+  reCaptchaIOValidator,
+  $reCaptchaValidator,
+  $reCaptchaValidatorV2
 };
 
 /*-------------------

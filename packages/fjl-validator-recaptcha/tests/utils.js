@@ -1,4 +1,4 @@
-const {log, peek, range} = require('fjl');
+const {log, error, peek, range} = require('fjl');
 
 const
 
@@ -33,8 +33,10 @@ const
       const _args = args.slice(0);
       _args.push(x);
       runHasPropOfType(..._args);
-    })
+    }),
+
+  waitFor = timeout => new Promise(resolve => setTimeout(resolve, timeout))
 
 ;
 
-module.exports = {log, peek, jsonClone, genRan, genRanChar, genRanStr, runHasPropTypes, runHasPropOfType};
+module.exports = {log, error, peek, jsonClone, genRan, genRanChar, genRanStr, runHasPropTypes, runHasPropOfType, waitFor};

@@ -16,11 +16,11 @@ const
   _Number = Number.name,
   _Object = Object.name,
   _Boolean = Boolean.name,
-  _Symbol = 'Symbol',
-  _Map = 'Map',
-  _Set = 'Set',
-  _WeakMap = 'WeakMap',
-  _WeakSet = 'WeakSet',
+  _Symbol = Symbol.name,
+  _Map = Map.name,
+  _Set = Set.name,
+  _WeakMap = WeakMap.name,
+  _WeakSet = WeakSet.name,
   _Null = 'Null',
   _Undefined = 'Undefined',
   _immutable_type_names = [_String, _Number, _Boolean, _Symbol]
@@ -273,7 +273,7 @@ export const
   isUsableImmutablePrimitive = (x: any): boolean => {
     const typeOfX = typeOf(x);
     return isset(x) && _immutable_type_names
-        .some(type => type === typeOfX);
+      .some(type => type === typeOfX);
   },
 
   /**
@@ -290,7 +290,7 @@ export const
    * @param obj {*}
    * @returns {Boolean}
    */
-  isEmptyObject = (obj: any): boolean=> isEmptyList(keys(obj)),
+  isEmptyObject = (obj: any): boolean => isEmptyList(keys(obj)),
 
   /**
    * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).

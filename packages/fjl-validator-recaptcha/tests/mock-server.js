@@ -17,8 +17,8 @@ if (isDevEnv) {
 }
 
 // Preliminaries
-const {appSessionSecret} = process.env,
-    {mockServerPort: port} = require('../package'),
+const {appSessionSecret = 'Supercalifragilisticexpialidocious'} = process.env,
+    {mockServerPort: port} = require('../../../package'),
     express = require('express'),
     helmet = require('helmet'),
     session = require('express-session'),
@@ -29,7 +29,7 @@ const {appSessionSecret} = process.env,
 
 const {log, jsonClone} = require('fjl');
 
-const {reCaptchaIOValidator} = require('../dist/cjs/fjlReCaptchaValidator');
+const {reCaptchaIOValidator} = require('../src/index');
 
 // Security features
 // @see https://expressjs.com/en/advanced/best-practice-security.html#use-helmet
@@ -73,7 +73,10 @@ router.post('/test-recaptcha-validator', (req, res) => {
     })
         .then(
             result => res.json(result),
-            (result, errCodes) => log(jsonClone(result), errCodes)
+            (result, errCodes) => {
+              log(jsonClone(result), errCodes);
+              return result;
+            }
         );
 });
 

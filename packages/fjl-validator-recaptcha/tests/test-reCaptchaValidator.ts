@@ -6,11 +6,15 @@ const {
     MISSING_INPUT_RESPONSE
   } = require('../src/index'),
 
-  {log, runHasPropTypes} = require('./utils'),
+  {log, error, runHasPropTypes} = require('./utils'),
   packageJson = require('../package.json'),
-  puppeteer = require('puppeteer');
+  puppeteerConfig = require('../../../.puppeteerrc.cjs'),
+  puppeteer = require('puppeteer'),
+  {waitFor} = require('./utils');
 
-const {recaptchaKeys, mockServerPort} = packageJson,
+const {recaptchaKeys} = packageJson,
+  {mockServerPort} = require('../../../package.json'),
+
   unhandledHandler = e => {
     console.error(e);
     process.exit(1);
@@ -37,29 +41,36 @@ describe('#toReCaptchaValidatorOptions', function () {
   });
 });
 
-describe('#reCaptchaIOValidator', function () {
+describe('#$reCaptchaIOValidator', function () {
   const messagesTemplatesForTests = toReCaptchaValidatorOptions().messageTemplates,
     browserUserAgentString = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) ' +
       'Ubuntu Chromium/60.0.3112.113 Chrome/60.0.3112.113 Safari/537.36';
 
   test('should return a "success" ({result: true, ...}) validation result when `secret` and ' +
-    '`g-recaptcha-response` are well-formed', async (done) => {
+    '`g-recaptcha-response` are well-formed', async () => {
     expect.assertions(3);
     const anchorName = '.rc-anchor-content',
-      browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']}),
-      page = await browser.newPage();
+      browser = await puppeteer.launch(puppeteerConfig),
+      page = await browser.newPage(),
+      url = `http://localhost:${mockServerPort}/test-recaptcha-validator.html`
+    ;
     await page.setUserAgent(browserUserAgentString);
-    await page.goto(`http://localhost:${mockServerPort}/test-recaptcha-validator.html`);
-    await page.waitFor(3000);
-    const recaptchaFrame = page.mainFrame().childFrames()[0];
-    await recaptchaFrame.waitFor(anchorName);
-    const $anchor = await recaptchaFrame.$(anchorName);
-    await $anchor.click();
-    await page.waitFor(3000);
+    await page.goto(url);
+    await page.waitForFrame(url, {timeout: 3000})
+      .then(async frame => {
+        const recaptchaFrame = frame.childFrames()[0];
+        await recaptchaFrame.waitForSelector(anchorName);
+        const $anchor = await recaptchaFrame.$(anchorName);
+        await $anchor.click();
+        await waitFor(3000);
+      });
+
     page.on('console', log);
+
     log('Awaiting response');
+
     page.on('response', async res => {
-      log('Received response');
+      log(`Received response; Status Text: "${res.statusText()}"`);
       await res.json()
         .then(json => {
           log('Received json', json);
@@ -67,14 +78,14 @@ describe('#reCaptchaIOValidator', function () {
           expect(Array.isArray(json.messages)).toEqual(true);
           expect(!json.messages.length).toEqual(true);
         })
-        .catch(log);
+        .catch(error);
     });
+
     // await page.screenshot({path: '../.test-screenshots/example.png'});
     await page.click('input[type="submit"]');
-    await page.waitFor(3000); // Allow time for 'response' event handler (on `page` object) to be triggered.
+    await waitFor(3000); // Allow time for 'response' event handler (on `page` object) to be triggered.
     // await page.screenshot({path: '../.test-screenshots/example2.png'});
-    await browser.close();
-    done();
+    return browser.close();
   });
 
   test('should resolve with with validation result `result` set to `false` when `secret` and `response` are both missing', () => {

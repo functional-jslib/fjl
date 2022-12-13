@@ -14,10 +14,10 @@ export const
   $instanceOf = (X: Constructable) => x => x instanceof X,
 
   hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
-    Object.hasOwn(x, key),
+    Object.prototype.hasOwnProperty.call(x, key),
 
   $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
-    (x: T): boolean => hasOwnProperty(key, x),
+    (x: T): boolean => Object.hasOwn(x, key),
 
   /**
    * Contains all the static functions from `Object` but curried and flipped;
