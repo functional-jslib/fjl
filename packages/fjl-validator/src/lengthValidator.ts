@@ -13,7 +13,7 @@ import {
   ValidatorOptions,
   ValidatorResult
 } from './ValidationUtils';
-import {assignDeep, curry, curry2, defineEnumProps, typeOf, Slice, isOneOf} from 'fjl';
+import {assignDeep, curry, curry2, defineEnumProps, typeOf, Slice, isOneOf, hasOwnProperty} from 'fjl';
 
 export interface LenValidatorOptions<T = any> extends ValidatorOptions<Slice<T>> {
   min?: number;
@@ -55,7 +55,7 @@ export const
   $lengthValidatorNoNormalize = <T>(options: LenValidatorOptions, value: Slice<T>): ValidatorResult => {
     const messages = [];
     let result = false;
-    if (isOneOf(value, 'Null', 'Undefined', 'NaN', 'Symbol') || !Object.hasOwn(value as object, 'length')) {
+    if (isOneOf(value, 'Null', 'Undefined', 'NaN', 'Symbol') || !hasOwnProperty('length', value as object)) {
       messages.push(getErrorMsgByKey(options, 'NOT_OF_TYPE', value));
       return toValidationResult({result, messages, value});
     }

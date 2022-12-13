@@ -14,10 +14,11 @@ export const
   $instanceOf = (X: Constructable) => x => x instanceof X,
 
   hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
+    // @note `Object.hasOwn` cannot be used here until it is more broadly adopted (until node v24+ release etc.).
     Object.prototype.hasOwnProperty.call(x, key),
 
   $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
-    (x: T): boolean => Object.hasOwn(x, key),
+    (x: T): boolean => hasOwnProperty(key, x),
 
   /**
    * Contains all the static functions from `Object` but curried and flipped;
