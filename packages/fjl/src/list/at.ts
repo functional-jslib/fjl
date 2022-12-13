@@ -1,9 +1,9 @@
 /**
- * Gets item at index;  Same as` [].at()` (allows negative/right-to-left indexing (see mdn Array.at method).
+ * Gets item at index;  Same as` [].at()` (allows negative/right-to-left indexing (see mdn (Array|String).at method).
  */
-export const at = <T>(i: number, xs: T[]): T => xs.at(i),
+export const at = (i: number, xs) => xs.at(i),
 
   /**
    * Curried version of `at`.
    */
-  $at = <T>(i: number) => (xs: T[]): T => xs.at(i);
+  $at = (i: number) => (xs) => xs.at(i);
