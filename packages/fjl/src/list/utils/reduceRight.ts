@@ -1,15 +1,11 @@
-import {ReduceOp, Slice} from "../../types";
+import {ReduceOp} from "../../types";
 
 export const
 
   /**
-   * Reduces a list with given operation (`op`) function (from right-to-left).
+   * Reduces a "number indexable", from right-to-left, by given reduction function (same as [].reduceRight but also for strings and arbitrary "number indexable" objects/etc.).
    */
-  reduceRight = <T, RetT>(
-    op: ReduceOp<T, Slice<T>, RetT>,
-    agg: RetT,
-    xs: Slice<T>
-  ): RetT => {
+  reduceRight = (op: ReduceOp, agg, xs) => {
     const limit = xs.length;
     if (!limit) return agg;
     let result = agg;
@@ -19,9 +15,7 @@ export const
     return result;
   },
 
-  $reduceRight = <T, RetT>(op: ReduceOp<T, Slice<T>, RetT>) =>
-    (agg: RetT) =>
-      (xs: Slice<T>): RetT =>
-        reduceRight(op, agg, xs)
+  $reduceRight = (op: ReduceOp) => agg => xs =>
+    reduceRight(op, agg, xs)
 
 ;

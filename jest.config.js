@@ -25,12 +25,7 @@ module.exports = {
           displayName: packageName,
           rootDir: path.dirname(tsConfigFilePath),
           testMatch,
-          transform,
-          globals: {
-            'ts-jest': {
-              tsconfig: tsConfigFilePath
-            }
-          }
+          transform
         };
 
       if (packageName.includes('recaptcha')) out.preset = 'jest-puppeteer';

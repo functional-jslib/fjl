@@ -3,7 +3,7 @@ import {BinaryPred, NaryPred, TernaryPred, UnaryPred} from "../types";
 export const
 
     /**
-     * Negates an unary function (a function that takes one).
+     * Negates an unary function (a function that takes one argument).
      */
     negateF = <T>(fn: UnaryPred<T>): UnaryPred<T> =>
         (x: T): boolean => !fn(x),

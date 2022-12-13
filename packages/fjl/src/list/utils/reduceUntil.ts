@@ -3,7 +3,7 @@ import {ReduceOp, TernaryPred} from "../../types";
 export const
 
   /**
-   * Reduces a "number indexable" until predicate returns `true`.
+   * Reduces a "number indexable" object (array, object, etc.) until predicate returns `true`.
    */
   reduceUntil = (
     pred: TernaryPred,

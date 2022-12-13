@@ -10,7 +10,7 @@ export const
     (...args: T[]): RetT => fn(...args.reverse()),
 
   /**
-   * Flips a function's first and second arguments and and returns a new function requiring said arguments in reverse.
+   * Flips a function's first and second arguments and returns a new function requiring said arguments in reverse.
    */
   flip = <A, B, RetT>(fn: Binary<A, B, RetT>): Binary<B, A, RetT> =>
     (b, a) => fn(a, b),
