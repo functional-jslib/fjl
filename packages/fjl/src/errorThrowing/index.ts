@@ -1,6 +1,9 @@
 /**
  * @module errorThrowing
- * @description Contains error throwing facilities for when a value doesn't match a type.
+ *
+ * Contains error throwing combinators for enforcing value types at runtime.
+ *
+ * **Notable mentions** `errorIfNotType`, and `errorIfNotTypes`.
  */
 import {typeOf} from '../object/typeOf';
 import {isArray, isOfType, toTypeRef, toTypeRefName} from '../object/is';

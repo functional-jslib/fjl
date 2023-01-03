@@ -11,12 +11,18 @@ export const
    * @todo Should [tentatively] be using `structuredClone` here (should be looked into for a future release).
    */
   copy = <T>(x, out?: any): T => {
-    // if `null`, `undefined`, `''`, `0`, `false` return
-    if (!x) {
-      return x;
-    }
+    // if falsy value (immutable primitive) return it
+    if (!x) return x;
 
     switch (typeOf(x)) {
+      // If immutable primitive, return it
+      case Symbol.name:
+      case Boolean.name:
+      case String.name:
+      case Number.name:
+      case 'NaN':
+        return x;
+
       case Array.name:
       case Int8Array.name:
       case Int16Array.name:
@@ -28,14 +34,6 @@ export const
       case Uint16Array.name:
       case Uint32Array.name:
         return !out ? x.slice(0) : Object.assign(out, x);
-
-      // If immutable primitive, return it
-      case Symbol.name:
-      case Boolean.name:
-      case String.name:
-      case Number.name:
-      case 'NaN':
-        return x;
 
       case Function.name:
         return ((...args: any[]) => x(...args)) as unknown as T;
@@ -51,6 +49,7 @@ export const
 
       // Else make copy
       default:
+        // @todo Upgrade this (in a future release) to use `structuredClone`.
         return Object.assign(!out ? of(x) : out, x);
     }
   }

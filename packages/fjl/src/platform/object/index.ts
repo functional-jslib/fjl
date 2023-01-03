@@ -1,5 +1,5 @@
 /**
- * Defines some of the platform methods for objects (the ones used within `fjl`).
+ * Defines (object) platform functional method counter-parts used in the library.
  */
 
 import {flip, flip3, flip4, flip5} from "../../function/flip";
@@ -22,6 +22,7 @@ export const
 
   /**
    * Contains all the static functions from `Object` but curried and flipped;
+   *
    * ```
    * // E.g., `Object.defineProperties(obj, descriptor)` can now be used like
    * import {defineProperties} from 'fjl'

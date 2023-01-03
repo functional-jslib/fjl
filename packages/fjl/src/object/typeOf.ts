@@ -1,6 +1,5 @@
 /**
- * Created by elyde on 12/18/2016.
- * @memberOf object
+ * @module typeOf
  */
 const _Number = Number.name,
     _NaN = 'NaN',
@@ -8,13 +7,12 @@ const _Number = Number.name,
     _Undefined = 'Undefined';
 
 /**
- * Returns the constructor/class/type name of a value.
- * @note For `NaN`, `null`, and `undefined` we return their names classed case;
- * 'NaN' (for `NaN`), 'Undefined' for `undefined` and 'Null' for `null`.
- * @function module:object.typeOf
- * @param value {*}
- * @returns {string} - Constructor's name or derived name (in the case of `null`, `undefined`, or `NaN` (whose
- *  normalized names are 'Null', 'Undefined', 'NaN' respectively).
+ * Fine-grained (efficient) version of `typeof` which returns the incoming value's
+ * constructor's name, and or it's type name - Easier to use, and offers a way to
+ * perform strict type checking (easily) at run-time;  In the case of incoming `NaN`,
+ * `null`, and/or `undefined` values their type names are class cased names equivalent
+ * to their values - 'NaN' (for `NaN`), 'Undefined' for `undefined` and 'Null' for
+ * `null`.
  */
 export function typeOf (value: any): string {
     let retVal;

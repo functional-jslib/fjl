@@ -8,6 +8,7 @@ export type CreateFunc = (pdm: PropertyDescriptorMap, applicand: any) => any;
 
 export type IsFunc = (Type: any, value: any) => boolean;
 
+// @todo Need to added es > es6 methods below.
 export interface ObjectStatics {
   assign: (...xs: any[]) => any;
   create: CreateFunc;

@@ -1,13 +1,14 @@
 import {typeOf} from './typeOf';
-import {toAssocList} from './assocList';
 
 export const
 
   /**
-   * Converts incoming value to an array.
-   * @note For `WeakMap`, `WeakSet`, `Map` and `Set` result is the same as calling `Array.from` on such.
-   * @note For `null`, `undefined`, `NaN`, `Number{}`, `Symbol{}`, `Boolean{}` returns an empty array.
-   * @note Method does a shallow conversion;
+   * Converts incoming value to an array - Pairs up incoming value with
+   * appropriate method (`Array.from`, `Object.entries`, etc.) based on incoming value.
+   * For non parseable values (`NaN`, `null`, `undefined`, etc.) returns an empty array.
+   *
+   * @deprecated Use `Array.from`, an empty array, or `Object.entries` (directly)
+   *  as needed.
    */
   toArray = (x: any): any[] => {
     switch (typeOf(x)) {
@@ -37,7 +38,7 @@ export const
         return Array.from(x);
       case Object.name:
       default:
-        return toAssocList(x);
+        return Object.entries(x);
     }
   }
 
