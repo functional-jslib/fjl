@@ -6,8 +6,9 @@ export const
 
   /**
    * Make a copy of a value or optionally copy incoming value onto an outgoing value (second parameter).
-   * @note If incoming value is an immmutable primitive (string, number, symbol, NaN, null, undefined, boolean)
+   * @note If incoming value is an immutable primitive (string, number, symbol, NaN, null, undefined, boolean)
    *  it gets returned as is.
+   * @todo Should [tentatively] be using `structuredClone` here (should be looked into for a future release).
    */
   copy = <T>(x, out?: any): T => {
     // if `null`, `undefined`, `''`, `0`, `false` return

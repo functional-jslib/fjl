@@ -1,3 +1,6 @@
+/**
+ * @todo Should be using new methods here (Object.fromEntries, etc.) and deprecating existing ones (in favor of fjl.native.*, and or natively built-in ones).
+ */
 import {isArray, isType} from './is';
 import {keys} from '../platform/object';
 import {TypeConstructor} from "../types";

@@ -1,6 +1,6 @@
 import {errorIfNotType} from '../errorThrowing';
 import {isUndefined} from './is';
-import {ConstructableType, TypeRef} from "../types";
+import {TypeRef} from "../types";
 
 export type DefinePropsArgsTuple = [TypeRef, string, any?];
 
