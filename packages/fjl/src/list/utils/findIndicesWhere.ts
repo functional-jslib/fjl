@@ -5,7 +5,7 @@ export const
   /**
    * Finds indices by predicate.
    */
-  findIndicesWhere = (pred: TernaryPred, xs) => {
+  findIndicesWhere = (pred: TernaryPred, xs): number[] | undefined => {
     const limit = xs.length;
     const out = [];
     for (let ind = 0; ind < limit; ind++) {
@@ -18,6 +18,6 @@ export const
    * Curried version of `findIndicesWhere`.
    */
   $findIndicesWhere = (pred: TernaryPred) =>
-    xs => findIndicesWhere(pred, xs)
+    (xs): number[] | undefined => findIndicesWhere(pred, xs)
 
 ;

@@ -74,20 +74,20 @@ export const expectInstanceOf = curry2_((instance, value) => expect(value).toBeI
     return args.reduce((agg, num) => agg - num, arg0);
   }),
 
-  allYourBase = {all: {your: {base: {are: {belong: {to: {us: 0}}}}}}},
+  allYourBase = Object.freeze({all: {your: {base: {are: {belong: {to: {us: 0}}}}}}}) as object,
 
-  alphabetCharCodeRange: number[] = range('a'.charCodeAt(0), 'z'.charCodeAt(0)),
+  alphabetCharCodeRange = Object.freeze(range('a'.charCodeAt(0), 'z'.charCodeAt(0))) as number[],
 
-  alphabetArray = alphabetCharCodeRange
-    .map(charCode => String.fromCharCode(charCode)),
+  alphabetArray = Object.freeze(alphabetCharCodeRange
+    .map(charCode => String.fromCharCode(charCode))) as string[],
 
   alphabetString = alphabetArray.join(''),
 
   alphabetLen = alphabetArray.length,
 
-  alphabetIndices = range(0, alphabetLen - 1) as number[],
+  alphabetIndices = Object.freeze(range(0, alphabetLen - 1)) as number[],
 
-  revAlphabetArray = alphabetArray.slice(0).reverse(),
+  revAlphabetArray = Object.freeze(alphabetArray.slice(0).reverse()) as string[],
 
   revAlphabetStr = revAlphabetArray.join(''),
 
@@ -95,27 +95,27 @@ export const expectInstanceOf = curry2_((instance, value) => expect(value).toBeI
 
   vowelsLen = vowelsString.length,
 
-  vowelsArray = vowelsString.split(''),
+  vowelsArray = Object.freeze(vowelsString.split('')) as string[],
 
-  vowelCharCodes = vowelsArray.map(x => x.charCodeAt(0)),
+  vowelCharCodes = Object.freeze(vowelsArray.map(x => x.charCodeAt(0))) as number[],
 
-  vowelIndices = alphabetIndices.filter(x => vowelsString.indexOf(alphabetString[x]) > -1),
+  vowelIndices = Object.freeze(alphabetIndices.filter(x => vowelsString.indexOf(alphabetString[x]) > -1)) as number[],
 
-  revVowelsArray = vowelsArray.slice(0).reverse(),
+  revVowelsArray = Object.freeze(vowelsArray.slice(0).reverse()) as string[],
 
   revVowelsString = revVowelsArray.join(''),
 
-  consonantsArray = alphabetArray.filter(x => vowelsString.indexOf(x) === -1),
+  consonantsArray = Object.freeze(alphabetArray.filter(x => vowelsString.indexOf(x) === -1)) as string[],
 
   consonantsString = consonantsArray.join(''),
 
-  nums1To10 = range(1, 10),
+  nums1To10 = Object.freeze(range(1, 10)) as number[],
 
   nonAlphaNums = '!@#$%^&*()_+|}{:"?><,./;[]\\\'',
 
-  nonAlphaNumsArray = nonAlphaNums.split(''),
+  nonAlphaNumsArray = Object.freeze(nonAlphaNums.split('')) as string[],
 
-  revNonAlphaNumsArray = nonAlphaNumsArray.slice(0).reverse(),
+  revNonAlphaNumsArray = Object.freeze(nonAlphaNumsArray.slice(0).reverse()) as string[],
 
   revNonAlphaNums = revNonAlphaNumsArray.slice(0).reverse().join(''),
 
@@ -125,11 +125,11 @@ export const expectInstanceOf = curry2_((instance, value) => expect(value).toBeI
 
   jsonClone = (x: string): object => JSON.parse(JSON.stringify(x)),
 
-  falsyList = [undefined, null, false, 0, ''],
+  falsyList = Object.freeze([undefined, null, false, 0, '']) as any[],
 
-  truthyList = [-1, 1, true, 'true', (): void => undefined, function (): void {
+  truthyList = Object.freeze([-1, 1, true, 'true', (): void => undefined, function (): void {
     return;
-  }, {}, []],
+  }, {}, []]) as any[],
 
   generalEqualityCheck = (a, b): boolean => a === b,
 
