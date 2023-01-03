@@ -1,12 +1,12 @@
 // @todo remove library methods as testing utilities here (namely 'reverse').
 import {vowelsArray, vowelsString} from "../helpers";
 import {Foldr1, foldr1} from "../../src/list/foldr1";
-import {id} from "../../src";
 
 const {stringify} = JSON;
 
 describe('#foldr1', () => {
-  const times2 = x => x * 2,
+  const id = x => x,
+    times2 = x => x * 2,
     aggTimes2 = (agg, x, i, xs): number[] => {
       const result = i === xs.length - 1 ? agg.map(times2).concat(x.map(times2)) : agg.concat(x.map(times2));
       console.log(xs, result);

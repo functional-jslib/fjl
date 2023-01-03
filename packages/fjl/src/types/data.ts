@@ -60,10 +60,12 @@ interface SliceBase {
   includes(x, position: number): boolean;
 
   lastIndexOf(x, position: number): number;
+
+  at(index: number): any
 }
 
 /**
- * `Union + Sum` Slice type - Represents, the intersection, of the string, array, and custom structure, types that match the `Slice` "summed" interfaces.
+ * `Union + Sum` Slice type - Represents, the intersection, of the string, array, and custom structure, types that match the `Slice` "summed" interfaces - Basically, string, and/or array structure like type.
  */
 export type Slice<T = any> = string | T[] | (SliceBase & {
   [Symbol.iterator](): IterableIterator<T>;

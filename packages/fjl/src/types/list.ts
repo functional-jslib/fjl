@@ -1,7 +1,7 @@
 import {Functor, Slice} from "./data";
 import {TernaryPred} from "./arity";
 
-export type ForEachOp<T, FtrT> = (x: T, i?: number | string, xs?: FtrT) => void | any;
+export type ForEachOp<T = any, FtrT = any> = (x: T, i?: number | string, xs?: FtrT) => void | any;
 
 export type MapOp<T, Ind, FtrT, RetT> = (x: T, i?: Ind, xs?: FtrT) => RetT;
 

@@ -3,14 +3,15 @@ import {ReduceOp} from "../../types";
 export const
 
   /**
-   * Reduces a "number indexable" by given reduction function (same as [].reduce but also for strings/arbitrary "number indexable" objects/etc.).
+   * Reduces an iterable by given reduction function - same as [].reduce but also for strings/objects with defined iterators, etc.).
+   * **Note:** If iterable is falsy, aggregator gets returned.
    */
-  reduce = (op: ReduceOp, agg, xs) => {
-    const limit = xs.length;
-    if (!limit) return agg;
-    let result = agg;
-    for (let ind = 0; ind < limit; ind++) {
-      result = op(result, xs[ind], ind, xs);
+  reduce = (op: ReduceOp, agg, xs): ReturnType<typeof op> => {
+    if (!xs) return agg;
+    let result = agg,
+      ind = 0;
+    for (const x of xs) {
+      result = op(result, x, ind++, xs);
     }
     return result;
   },
@@ -18,7 +19,7 @@ export const
   /**
    * Curried `reduce` combinator.
    */
-  $reduce = (op: ReduceOp) => agg => xs =>
+  $reduce = (op: ReduceOp) => agg => (xs): ReturnType<typeof op> =>
     reduce(op, agg, xs)
 
 ;

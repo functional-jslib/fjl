@@ -1,21 +1,20 @@
 import {uncons} from "./uncons";
 import {reduce} from "./utils/reduce";
-import {ReduceOp} from "../types";
+import {ReduceOp, Slice} from "../types";
 
 export const
 
   /**
-   * A variant of `foldl` except that this one doesn't require the starting point value.  The starting point/value will be pulled
-   * out from a copy of the container.
+   * A variant of `foldl` except without requiring the starting point value.  The starting point/value gets referenced internally (slice's first value) by the method.
    */
-  foldl1 = <T>(op: ReduceOp<T, T[], T>, xs: T[]): T => {
+  foldl1 = <T>(op: ReduceOp, xs: Slice<T>): ReturnType<typeof op> => {
     const parts = uncons(xs);
     if (!parts) return;
-    const [_head, _tail]: [T, T[]] = parts;
+    const [_head, _tail] = parts;
     return reduce(op, _head, _tail);
   },
 
-  $foldl1 = <T>(op: ReduceOp<T, T[], T>) =>
-    (xs: T[]): T => foldl1(op, xs)
+  $foldl1 = <T>(op: ReduceOp) =>
+    (xs: Slice<T>): ReturnType<typeof op> => foldl1(op, xs)
 
 ;

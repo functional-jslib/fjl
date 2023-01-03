@@ -1,23 +1,19 @@
-import {length} from "./length";
 import {ForEachOp} from "../types";
 
 export const
 
   /**
-   * For each function (same as `[].forEach` except in functional format).
+   * "For each" function - same as `[].forEach` except for iterables (strings, `Map`s, ...) in general.
    */
-  forEach = <T>(fn: ForEachOp<T, T[]>, list: T[]): void => {
-    const limit = length(list);
-    if (!limit) {
-      return;
-    }
+  forEach = <T>(fn: ForEachOp, iter: Iterable<T>): void => {
+    if (!iter) return;
     let ind = 0;
-    for (; ind < limit; ind += 1) {
-      fn(list[ind], ind, list);
+    for (const x of iter) {
+      fn(x, ind++, iter);
     }
   },
 
-  $forEach = <T>(fn: ForEachOp<T, T[]>) =>
-    (list: T[]): void => forEach(fn, list)
+  $forEach = <T>(fn: ForEachOp) =>
+    (iter: Iterable<T>): void => forEach(fn, iter)
 
 ;

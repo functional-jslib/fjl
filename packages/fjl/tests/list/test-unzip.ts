@@ -1,9 +1,10 @@
 import {unzip} from "../../src/list";
 import {vowelsArray} from "../helpers";
-import {isEven} from "../../src/number";
 
 describe('#unzip', () => {
   (<[[any, any][], ReturnType<typeof unzip>][]>[
+    [null, [[], []]],
+    [undefined, [[], []]],
     [[], [[], []]],
     [[[]], [[], []]],
     // Create test case tuples
@@ -12,13 +13,12 @@ describe('#unzip', () => {
         const y = xs[i + 1];
 
         // If is odd push tuple into list
-        if (isEven(i)) {
+        if (i % 2 === 0) {
           tuples.push([x, y]);
           // Push unzipped parts
           partsList[0].push(x);
           partsList[1].push(y);
         }
-
 
         return agg;
       },
@@ -34,9 +34,4 @@ describe('#unzip', () => {
         expect(rslt).toEqual(expected);
       });
     });
-
-  it('should throw an error when passed in arg is `null` or `undefined`', () => {
-    expect(() => unzip(undefined)).toThrow();
-    expect(() => unzip(null)).toThrow();
-  });
 });
