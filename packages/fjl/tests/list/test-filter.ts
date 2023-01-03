@@ -1,4 +1,4 @@
-import {alphabetArray} from "../helpers";
+import {alphabetArray, alphabetString} from "../helpers";
 import {filter} from "../../src/list/filter";
 
 describe('#filter', () => {
@@ -14,6 +14,10 @@ describe('#filter', () => {
     ['Expect empty array',
       [c => c === '#', alphabetArray],
       []
+    ],
+    ['Every other in string',
+      [evenIndexChars, alphabetString],
+      alphabetString.split('').filter(evenIndexChars).join('')
     ]
   ])
     .forEach(([testName, [pred, xs], expected]) => {
