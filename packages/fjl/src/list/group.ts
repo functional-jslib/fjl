@@ -8,7 +8,7 @@ import {Slice} from "../types";
  *  sublist in the result contains only equal elements. For example:
  *
  * ```javascript
- * group("Mississippi".slice(0)) === [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], "i"]
+ * group("Mississippi".slice(0)) === [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"],[ "i"]]
  * ```
  */
 export const group = <T>(xs: Slice<T>): Slice<T>[] => groupBy(equal, xs);

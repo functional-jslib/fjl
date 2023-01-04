@@ -6,6 +6,10 @@ describe('#groupBy', () => {
     mississippiArray = mississippi.split(''),
     mississippiResult = [['M'], ['i'], ['s', 's'], ['i'], ['s', 's'], ['i'], ['p', 'p'], ['i']];
   (<[Parameters<GroupBy>, ReturnType<GroupBy>][]>[
+    [[equal, ''], []],
+    [[equal, []], []],
+    [[equal, null], []],
+    [[equal, undefined], []],
     [[equal, vowelsArray], vowelsArray.map(x => [x])],
     [[equal, vowelsString], vowelsArray],
     [[equal, mississippi], mississippiResult.map(xs => xs.join(''))],

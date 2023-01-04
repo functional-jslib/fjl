@@ -1,5 +1,7 @@
 import {BinaryPred, Slice} from "../types";
 import {of} from "../object";
+import {pushN} from "./pushN";
+import {append} from "./append";
 
 export const
 
@@ -8,32 +10,26 @@ export const
    *
    * ```javascript
    * groupBy((a, b) => a === b, "Mississippi".slice(0)) ===
-   *  [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], "i"]
+   *  [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], ["i"]]
    * ```
    */
-  groupBy = <T>(equalityOp: BinaryPred<T>, xs: Slice<T>): Slice<T>[] => {
-    if (!xs) return [];
-
-    const limit = xs.length,
-      groupIsArray = Array.isArray(xs);
+  groupBy = <T>(equalityOp: BinaryPred, xs: Slice<T>): Slice<T>[] => {
+    if (!xs || !xs.length) return [];
 
     // Initialize variables for tracking
     let prevItem = xs[0],
-      group = of(xs, prevItem);
-
-    if (!limit) return [group];
+      group = of(xs, prevItem); // new group with `prevItem` as first item`
 
     // Groupings
-    const groups: Slice<T>[] = [];
+    const groups: Slice<T>[] = [],
+      appender = Array.isArray(xs) ? pushN : append;
 
     // Group remainder of items
-    for (let ind = 1; ind < limit; ind += 1) {
-      const x = xs[ind];
+    for (const x of xs.slice(1)) {
 
       // If equality check passed group item, and continue to next
       if (equalityOp(x, prevItem)) {
-        if (groupIsArray) (group as T[]).push(x);
-        else group = group.concat(x);
+        group = appender(group, x);
         prevItem = x;
         continue;
       }
