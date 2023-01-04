@@ -1,5 +1,4 @@
 import {BinaryPred, Slice} from "../types";
-import {of} from "../object";
 import {pushN} from "./pushN";
 import {append} from "./append";
 
@@ -16,16 +15,18 @@ export const
   groupBy = <T>(equalityOp: BinaryPred, xs: Slice<T>): Slice<T>[] => {
     if (!xs || !xs.length) return [];
 
-    // Initialize variables for tracking
-    let prevItem = xs[0],
-      group = of(xs, prevItem); // new group with `prevItem` as first item`
-
     // Groupings
     const groups: Slice<T>[] = [],
       appender = Array.isArray(xs) ? pushN : append;
 
+    // Initialize variables for tracking
+    let prevItem = xs[0],
+      group = appender(xs.slice(0, 0), prevItem); // new group with `prevItem` as first item`
+
+    const xsToIterate = xs.slice(1);
+
     // Group remainder of items
-    for (const x of xs.slice(1)) {
+    for (const x of xsToIterate) {
 
       // If equality check passed group item, and continue to next
       if (equalityOp(x, prevItem)) {
@@ -37,7 +38,7 @@ export const
       // Items for previous group 'grouped'.  Move to next group.
       groups.push(group);
       prevItem = x;
-      group = of(group, x);
+      group = appender(group.slice(0, 0), x);
     }
 
     // Push last group

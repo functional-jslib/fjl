@@ -1,5 +1,7 @@
 import {Slice} from "../types";
 import {of} from "../object";
+import {pushN} from "./pushN";
+import {append} from "./append";
 
 export const
 
@@ -8,18 +10,16 @@ export const
    *  elements of the list.
    */
   intersperse = <T = string | any>(between: T, xs: Slice<T>): Slice<T> => {
-    const limit = xs.length;
+    const limit = xs?.length;
     if (!limit) return of(xs);
-    const isArrayXs = Array.isArray(xs),
+    const appender = Array.isArray(xs) ? pushN : append,
       lastInd = limit - 1;
     let out = of(xs);
     for (let i = 0; i < limit; i += 1) {
       if (i === lastInd) {
-        if (isArrayXs) (out as T[]).push(xs[i]);
-        else out = out.concat(xs[i]);
+        out = appender(out, xs[i]);
       } else {
-        if (isArrayXs) (out as T[]).push(xs[i], between);
-        else out = out.concat(xs[i], between as unknown as any);
+        out = appender(out, between);
       }
     }
     return out;

@@ -7,13 +7,10 @@ export const
    * ```
    */
   inits = (xs: any): any[] => {
-    const limit = xs.length,
+    const limit = xs?.length,
       agg = [];
-    let ind = 0;
-    if (!limit) {
-      return [];
-    }
-    for (; ind <= limit; ind += 1) {
+    if (!limit) return agg;
+    for (let ind = 0; ind <= limit; ind += 1) {
       agg.push(xs.slice(0, ind));
     }
     return agg;
