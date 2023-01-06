@@ -66,6 +66,8 @@ interface SliceBase {
 
 /**
  * `Union + Sum` Slice type - Represents, the intersection, of the string, array, and custom structure, types that match the `Slice` "summed" interfaces - Basically, string, and/or array structure like type.
+ *
+ * @deprecated Used direct types (as required) instead.
  */
 export type Slice<T = any> = string | T[] | (SliceBase & {
   [Symbol.iterator](): IterableIterator<T>;
@@ -79,6 +81,9 @@ export type Slice<T = any> = string | T[] | (SliceBase & {
   concat(...xss: string[]): any;
 }));
 
+/**
+ * @deprecated - Use direct types instead.
+ */
 export type SliceConstructor = StringConstructor | ArrayConstructor;
 
 export type FunctorMapOp<T, RetT> = (a?: T, b?: any, c?: Functor<T>, ...rest: any[]) => RetT;

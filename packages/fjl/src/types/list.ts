@@ -1,11 +1,13 @@
 import {Functor, Slice} from "./data";
 import {TernaryPred} from "./arity";
 
-export type ForEachOp<T = any, FtrT = any> = (x: T, i?: number | string, xs?: FtrT) => void | any;
+// @todo Normalize these types - They should accept same type params instead mixed length params.
 
-export type MapOp<T, Ind, FtrT, RetT> = (x: T, i?: Ind, xs?: FtrT) => RetT;
+export type ForEachOp<T = any, FtrT = any> = (x: T, i?: number | keyof FtrT, xs?: FtrT) => void | any;
 
-export type ReduceOp<T = any, Fnctr = any, ZeroT = any> = (agg: ZeroT, x: T, i?: number | keyof Fnctr, xs?: Fnctr) => ZeroT;
+export type MapOp<T = any, FtrT = any, RetT = any> = (x: T, i?: number | keyof FtrT, xs?: FtrT) => RetT;
+
+export type ReduceOp<T = any, FnctrT = any, ZeroT = any> = (agg: ZeroT, x: T, i?: number | keyof FnctrT, xs?: FnctrT) => ZeroT;
 
 export type FoldOp = ReduceOp;
 

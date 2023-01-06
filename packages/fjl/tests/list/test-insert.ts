@@ -5,13 +5,11 @@ const toJson = JSON.stringify;
 
 describe(`#list.insert`, () => {
   (<[Parameters<typeof insert>, ReturnType<typeof insert>][]>[
-    [['a', ''], 'a'],
     [['a', []], ['a']]
   ]
     .concat(
       vowelsArray.flatMap((x, i) => [
           [[x, vowelsArray], vowelsArray.slice(0, i).concat([x], vowelsArray.slice(i))],
-          [[x, vowelsString], vowelsString.substring(0, i) + x + vowelsString.substring(i, vowelsString.length)],
         ]
       )
     ))

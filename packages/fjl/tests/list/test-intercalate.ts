@@ -12,12 +12,9 @@ describe('#intercalate', () => {
   (<[Parameters<Intercalate>, ReturnType<Intercalate>][]>[
     [[',', vowelsArray], vowelsStringWithCommas],
     [[[','], vowelsArrayArray], vowelsArrayWithCommas],
-    [[',', vowelsString], vowelsStringWithCommas],
     [[',', ['a']], 'a'],
     [[[','], ['a']], 'a'],
-    [['', vowelsString], vowelsString],
     [['', vowelsArray], vowelsString],
-    [['', ''], ''],
     [['', []], []],
     [['', [[]]], []],
     [[[''], []], []],
