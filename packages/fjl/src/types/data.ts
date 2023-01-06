@@ -50,26 +50,28 @@ export type ArrayTypeConstructor = ArrayConstructor |
  *
  * @private
  */
-interface SliceBase {
+interface SliceBase<T = any> {
   readonly length: number;
 
   slice(start: number, end?: number): any;
 
-  indexOf(x, position: number): number;
+  indexOf(x: T, position?: number): number;
 
-  includes(x, position: number): boolean;
+  includes(x: T, position?: number): boolean;
 
-  lastIndexOf(x, position: number): number;
+  lastIndexOf(x: T, position?: number): number;
 
   at(index: number): any
 }
 
 /**
- * `Union + Sum` Slice type - Represents, the intersection, of the string, array, and custom structure, types that match the `Slice` "summed" interfaces - Basically, string, and/or array structure like type.
+ * `Union + Sum` Slice type - Represents, the intersection, of the string,
+ * array, and custom structure, types that match the `Slice` "summed" interfaces -
+ * Basically a type for representing string, and/or array structure like types.
  *
  * @deprecated Used direct types (as required) instead.
  */
-export type Slice<T = any> = string | T[] | (SliceBase & {
+export type Slice<T = any> = SliceBase<T> & {
   [Symbol.iterator](): IterableIterator<T>;
 } & ({
   [index: number]: any
@@ -79,7 +81,7 @@ export type Slice<T = any> = string | T[] | (SliceBase & {
   readonly [index: number]: string;
 
   concat(...xss: string[]): any;
-}));
+});
 
 /**
  * @deprecated - Use direct types instead.

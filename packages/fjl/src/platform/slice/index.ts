@@ -1,3 +1,5 @@
+import {Slice} from "../../types";
+
 export const
 
   /**
@@ -17,7 +19,7 @@ export const
 
   $indexOf = xs => x => indexOf(xs, x),
 
-  includes = (xs, x): boolean => xs.includes(x),
+  includes = (xs: Slice, x): boolean => xs.includes(x),
 
   $includes = xs => x => includes(xs, x),
 

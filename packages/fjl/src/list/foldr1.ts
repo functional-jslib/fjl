@@ -19,4 +19,4 @@ export const
 
 ;
 
-  export type Foldr1 = typeof foldr1;
+export type Foldr1 = typeof foldr1;

@@ -3,7 +3,7 @@ import {Slice} from "../../src/types/data";
 import {includes} from "../../src/platform/slice";
 
 describe('#includes', () => {
-    (<[[string, Slice<string>], boolean][]>[
+    (<[[string, Slice], boolean][]>[
         [[vowelsArray, ''],  false],
         [[ vowelsArray, 'x'],  false],
         [[ vowelsString, 'y'],  false],
