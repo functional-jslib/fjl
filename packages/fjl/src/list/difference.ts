@@ -1,5 +1,5 @@
-import {reduce, sliceCopy} from "./utils";
-import {includes} from "./includes";
+import {reduce} from "./utils";
+import {Slice} from "../types";
 
 export const
 
@@ -7,19 +7,19 @@ export const
    * Returns the difference of list 1 from list 2.
    * @reference https://mathworld.wolfram.com/SetDifference.html
    */
-  difference = <T>(array1: T[], array2: T[]): T[] => {
+  difference = <T = any>(array1: Slice<T>, array2: Slice<T>): Slice<T> => {
     if (array1 && !array2) {
-      return sliceCopy(array1);
+      return array1.slice(0);
     } else if (!array1 && array2 || (!array1 && !array2)) {
       return [];
     }
     return reduce((agg, elm) =>
-        !includes(array2, elm) ? (agg.push(elm), agg) : agg
+        !array2.includes(elm) ? (agg.push(elm), agg) : agg
       , [], array1);
   },
 
   /**
    * Curried version of `$difference`.
    */
-  $difference = <T>(array1: T[]) =>
-    (array2: T[]): T[] => difference(array1, array2);
+  $difference = <T = any>(array1: Slice<T>) =>
+    (array2: Slice<T>): Slice<T> => difference(array1, array2);

@@ -13,11 +13,11 @@ export const
   tails = <T, TS extends Slice<T>>(xs: TS): TS[] => {
     const limit = xs.length;
     if (!limit) {
-      return [of(xs)];
+      return [xs.slice(0, 0)];
     }
     const agg: TS[] = [];
     for (let ind = 0; ind <= limit; ind += 1) {
-      agg.push(slice(ind, limit, xs));
+      agg.push(xs.slice(ind, limit));
     }
     return agg;
   };

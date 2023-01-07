@@ -1,5 +1,3 @@
-import {Slice} from "../../types";
-
 export const
 
   /**
@@ -17,27 +15,30 @@ export const
 
   indexOf = (xs, x): number => xs.indexOf(x),
 
-  $indexOf = xs => x => indexOf(xs, x),
+  $indexOf = xs => (x): number => indexOf(xs, x),
 
-  includes = (xs: Slice, x): boolean => xs.includes(x),
+  includes = (xs, x): boolean => xs.includes(x),
 
-  $includes = xs => x => includes(xs, x),
+  $includes = xs => (x): boolean => includes(xs, x),
 
   lastIndexOf = (xs, x): number => xs.lastIndexOf(x),
 
-  $lastIndexOf = xs => x => lastIndexOf(xs, x),
+  $lastIndexOf = xs => (x): number => lastIndexOf(xs, x),
 
   /**
-   * Same as `(Array|String).prototype.slice`.
+   * Same as `(Array|String).prototype.slice`, but in functional format.
    */
-  slice = (start: number, end: number, xs) =>
+  slice = (start: number, end: number, xs): typeof xs =>
     xs.slice(start, end),
 
   /**
-   * Same as `(Array|String).prototype.slice`.
+   * Same as `slice` but curried.
    * @curried
    */
-  $slice = start => end => xs => slice(start, end, xs)
+  $slice = (start: number) =>
+    (end: number) =>
+      (xs): typeof xs =>
+        slice(start, end, xs)
 
 ;
 
