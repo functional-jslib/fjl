@@ -46,7 +46,7 @@ export type ArrayTypeConstructor = ArrayConstructor |
   BigUint64ArrayConstructor;
 
 /**
- * Used to construct `Slice` type.
+ * Used to compose `Slice` type.
  *
  * @private
  */

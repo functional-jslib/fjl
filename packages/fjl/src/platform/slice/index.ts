@@ -1,8 +1,12 @@
 export const
 
   /**
-   * Concatenates a list of lists down to a list.  Returns `undefined` if no lists are passed in).
-   * @note This method is not be confused with 'list/concat' - 'list' version of the method actually uses this one internally.  This method is actually exported from the library as `append` - See 'list/append' module.
+   * Concatenates a list of lists down to a list.  Returns `undefined`
+   * if no lists are passed in).
+   * @note This method is not be confused with 'list/concat' - 'list'
+   * version of the method actually uses this one internally.  This
+   * method is actually exported from the library as `append` - See
+   * 'list/append' module.
    * @param {ConcatArray<any>[] | string[]} xss
    */
   concat = (...xss) =>

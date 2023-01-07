@@ -9,9 +9,9 @@ export const
 
   {assign, keys} = Object,
 
-  instanceOf = (X: Constructable, x) => x instanceof X,
+  instanceOf = (X: Constructable, x): boolean => x instanceof X,
 
-  $instanceOf = (X: Constructable) => x => x instanceof X,
+  $instanceOf = (X: Constructable) => (x): boolean => x instanceof X,
 
   hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
     // @note `Object.hasOwn` cannot be used here until it is more broadly adopted (until node v24+ release etc.).
@@ -35,7 +35,8 @@ export const
       return agg;
     }
     if (key === 'is') { // should not flip `is` method (as it just compares `a` and `b`).
-      agg[key] = a => b => Object.is(a, b);
+      agg[key] = Object.is;
+      agg[`$${key}`] = a => b => Object.is(a, b);
       return agg;
     }
     const operation = Object[key];

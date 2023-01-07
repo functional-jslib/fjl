@@ -1,6 +1,4 @@
-import {slice} from "../platform/slice";
 import {Slice} from "../types";
-import {of} from "../object";
 
 export const
 

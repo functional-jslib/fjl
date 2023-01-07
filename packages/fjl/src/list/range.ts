@@ -28,6 +28,21 @@ export const
   },
 
   /**
+   * Range iterator generator.
+   */
+  rangeIter = function* (from: number, to: number, step = 1) {
+    let i = from;
+    const _step = normalizeStep(from, to, step);
+    if (_step === 0 || from === to) {
+      return from;
+    }
+    for (; (to - i) * _step >= 0; i += _step) {
+      yield i;
+    }
+    return i + 1;
+  },
+
+  /**
    * Returns a list of numbers representing given range.
    * @note normalizes `step` to be valid if range numbers given are invalid
    *  (forces `step` to be negative if range required is in the negative direction
