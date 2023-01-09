@@ -6,7 +6,7 @@ export const
    * Finds an item by predicate or returns `undefined`.
    */
   findWhere = (pred: TernaryPred, xs) => {
-    const limit = xs.length;
+    const limit = xs?.length;
     if (!limit) return;
     for (let ind = 0; ind < limit; ind++) {
       const elm = xs[ind];

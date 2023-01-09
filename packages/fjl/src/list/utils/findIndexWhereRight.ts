@@ -6,7 +6,7 @@ export const
    * Returns found index or -1 if index not found.
    */
   findIndexWhereRight = (pred: TernaryPred, xs): number => {
-    let ind = xs.length - 1;
+    let ind = xs?.length - 1;
     for (; ind >= 0; ind -= 1) {
       const predicateFulfilled = !!pred(xs[ind], ind, xs);
       if (predicateFulfilled) return ind;

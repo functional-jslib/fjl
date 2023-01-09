@@ -1,24 +1,21 @@
 import {TernaryPred} from "../types";
-import {pushN} from "./pushN";
-import {append} from "./append";
 
 export const
 
   /**
    * Filters given slice (string, and or array-like) against structure of elements using given predicate (`pred`) - same as `[].filter` but for any type containing intersection of array & string interfaces.
    */
-  filter = <T>(pred: TernaryPred<T, number, typeof xs>, xs): typeof xs => {
-    const limit = xs.length,
-      appender = Array.isArray(xs) ? pushN : append;
+  filter = <T>(pred: TernaryPred<T, number, T[]>, xs: T[]): T[] => {
+    const limit = xs?.length,
+      out = xs?.slice(0, 0);
 
-    let out = xs.slice(0, 0);
-
-    // If no items, exit
     if (!limit) return out;
 
+    let ind = 0;
+
     // Filter items against predicate
-    for (let ind = 0; ind < limit; ind++) {
-      if (pred(xs[ind], ind, xs)) out = appender(out, xs[ind]);
+    for (const x of xs) {
+      if (pred(x, ind++, xs)) out.push(x);
     }
 
     return out;

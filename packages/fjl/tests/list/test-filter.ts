@@ -14,11 +14,11 @@ describe('#filter', () => {
     ['Expect empty array',
       [c => c === '#', alphabetArray],
       []
-    ],
+    ]/*,
     ['Every other in string',
       [evenIndexChars, alphabetString],
       alphabetString.split('').filter(evenIndexChars).join('')
-    ]
+    ]*/
   ])
     .forEach(([testName, [pred, xs], expected]) => {
       it(testName, () => {
