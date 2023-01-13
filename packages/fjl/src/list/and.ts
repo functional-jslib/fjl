@@ -4,10 +4,8 @@ export const
    * `true` if all in container are 'truthy' else returns `false`
    */
   and = <T>(xs: T[]): boolean => {
-    if (!xs || !xs.length) {
-      return false;
-    }
-    let limit = xs.length;
+    let limit = xs?.length;
+    if (!limit) return false;
     while ((--limit) >= 0) {
       if (!xs[limit]) return false;
     }

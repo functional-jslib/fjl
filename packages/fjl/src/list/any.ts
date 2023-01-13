@@ -7,7 +7,7 @@ export const
    */
   any = <T>(p: TernaryPred, xs: T[]): boolean => {
     let ind = 0;
-    const limit = xs.length;
+    const limit = xs?.length;
     if (!limit) return false;
     for (; ind < limit; ind += 1) {
       if (p(xs[ind], ind, xs)) return true;
