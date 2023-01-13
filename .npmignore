@@ -8,6 +8,7 @@
 gulp*
 jsdoc*
 markdown*/
+docs*/
 node-scripts/
 node_modules/
 packages/
