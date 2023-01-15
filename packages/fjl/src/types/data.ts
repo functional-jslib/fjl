@@ -76,11 +76,12 @@ export type Slice<T = any> = SliceBase<T> & {
 } & ({
   [index: number]: any
 
-  concat(...xss: ConcatArray<any>[]): any;
+  // ConcatArray<any>[] is too strict to use here
+  concat(...xss: any[]): any;
 } | {
   readonly [index: number]: string;
 
-  concat(...xss: string[]): any;
+  concat(...xss: string[]): string;
 });
 
 /**

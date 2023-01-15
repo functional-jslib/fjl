@@ -2,13 +2,13 @@
  * Created by edelacruz on 7/28/2014.
  */
 import {regexValidator, toRegexValidatorOptions} from '../src/regexValidator';
-import {keys} from 'fjl';
+import {hasOwnProperty, keys} from 'fjl';
 
 describe('regexValidator`', function () {
 
     describe ('#toRegexValidatorOptions', function () {
         test ('should be an object with a `pattern` property', function () {
-            expect(Object.hasOwn(toRegexValidatorOptions(undefined), 'pattern')).toEqual(true);
+            expect(hasOwnProperty('pattern', toRegexValidatorOptions(undefined))).toEqual(true);
         });
         test ('should have error case(s) tests', () => {
           expect(true).toEqual(true);

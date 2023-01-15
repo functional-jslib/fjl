@@ -567,7 +567,7 @@ describe('#object', function () {
     it('should assign all props from one object to another recursively', () => {
       // Check all top level properties
       expect(words
-        .map(word => Object.hasOwn(result1, word) && result1[word])
+        .map(word => hasOwnProperty(word, result1) && result1[word])
         .every(result => result)).toEqual(true);
 
       // Expect true that all results (head of return) of accumalated value are `true`
@@ -575,7 +575,7 @@ describe('#object', function () {
       // `head` pulls item at index `0` of list
       const check1 = words.reduce(
         ([_results, _obj, _lastObj], word) => [
-          (_results.push(Object.hasOwn(_obj, word) && Object.hasOwn(_lastObj, word)), _results),
+          (_results.push(hasOwnProperty(word, _obj) && hasOwnProperty(word, _lastObj)), _results),
           _obj[word],
           _lastObj[word]
         ],
@@ -625,7 +625,7 @@ describe('#object', function () {
     it('should assign all props from one object to another recursively', () => {
       // Check all top level properties
       expectTrue(words
-        .map(word => Object.hasOwn(result1, word) && result1[word])
+        .map(word => hasOwnProperty(word, result1) && result1[word])
         .every(result => result));
 
       expect(obj2).toEqual({hair: result1.hair}); // jest does deep check
@@ -655,7 +655,7 @@ describe('#object', function () {
         });
       });
       keys(subj1).forEach(key => {
-        expectFalse(Object.hasOwn(result, key));
+        expectFalse(hasOwnProperty(key, result));
       });
     });
   });
@@ -674,7 +674,7 @@ describe('#object', function () {
         expectEqual(result[key], subj1[key]);
       });
       Object.keys(subj2).forEach(key => {
-        expectFalse(Object.hasOwn(result, key));
+        expectFalse(hasOwnProperty(key, result));
       });
     });
 
@@ -918,8 +918,8 @@ describe('#object', function () {
     it('should return a descriptor with a setter and a getter', function () {
       const ks = keys(result);
       expect(ks.length).toEqual(2);
-      expect(Object.hasOwn(result, 'get')).toEqual(true);
-      expect(Object.hasOwn(result, 'set')).toEqual(true);
+      expect(hasOwnProperty('get', result)).toEqual(true);
+      expect(hasOwnProperty('set', result)).toEqual(true);
     });
 
     it('should return a descriptor whose getters and setters ' +
@@ -943,8 +943,8 @@ describe('#object', function () {
       'it\'s defined property.', function () {
       const ks = keys(result);
       expect(ks.length).toEqual(2);
-      expect(Object.hasOwn(result, 'get')).toEqual(true);
-      expect(Object.hasOwn(result, 'set')).toEqual(true);
+      expect(hasOwnProperty('get', result)).toEqual(true);
+      expect(hasOwnProperty('set', result)).toEqual(true);
     });
   });
 
@@ -952,7 +952,7 @@ describe('#object', function () {
     const descriptor = toEnumerableDescriptor([{}, {}])[1];
 
     it('should return an object with an `enumerable` property set to `true`', function () {
-      expect(Object.hasOwn(descriptor, 'enumerable')).toEqual(true);
+      expect(hasOwnProperty('enumerable', descriptor)).toEqual(true);
       expect(descriptor.enumerable).toEqual(true);
     });
 
@@ -971,7 +971,7 @@ describe('#object', function () {
       expect(!!descriptor).toEqual(true);
     });
     it('should define property `propName` on `target`', function () {
-      expect(Object.hasOwn(target, propName)).toEqual(true);
+      expect(hasOwnProperty(propName, target)).toEqual(true);
     });
     it('should return a target whose defined `propName` throws an error when ' +
       'the wrong type is passed in', function () {
@@ -1010,7 +1010,7 @@ describe('#object', function () {
       expect(!!descriptor).toEqual(true);
     });
     it('should define property `propName` on `target`', function () {
-      expect(Object.hasOwn(target, propName)).toEqual(true);
+      expect(hasOwnProperty(propName, target)).toEqual(true);
     });
     it('should set `enumerable` to `true` on returned descriptor', function () {
       expect(descriptor.enumerable).toEqual(true);
@@ -1090,7 +1090,7 @@ describe('#object', function () {
 
         // Ensure targets have props set
         propNames.forEach(name => {
-          expect(Object.hasOwn(target, name)).toEqual(true);
+          expect(hasOwnProperty(name, target)).toEqual(true);
         });
       });
     });
@@ -1109,7 +1109,7 @@ describe('#object', function () {
           const [correct, inCorrect] = seedArgTupleCorrectIncorrectValues[ind];
 
           // Ensure prop exists
-          expect(Object.hasOwn(target, name)).toEqual(true);
+          expect(hasOwnProperty(name, target)).toEqual(true);
 
           // Ensure setter obeys type rule
           expect(() => {
@@ -1216,7 +1216,7 @@ describe('#object', function () {
 
         // Ensure targets have enumerable props set
         propNames.forEach(name => {
-          expect(Object.hasOwn(target, name)).toEqual(true);
+          expect(hasOwnProperty(name, target)).toEqual(true);
           expect(Object.getOwnPropertyDescriptor(target, name).enumerable)
             .toEqual(true);
         });
@@ -1237,7 +1237,7 @@ describe('#object', function () {
           const [correct, inCorrect] = seedArgTupleCorrectIncorrectValues[ind];
 
           // Ensure prop exists
-          expect(Object.hasOwn(target, name)).toEqual(true);
+          expect(hasOwnProperty(name, target)).toEqual(true);
 
           // Ensure prop is enumerable
           expect(Object.getOwnPropertyDescriptor(target, name).enumerable)
@@ -1297,7 +1297,7 @@ describe('#object', function () {
           const [correct, inCorrect] = seedArgTupleCorrectIncorrectValues[ind];
 
           // Ensure prop exists
-          expect(Object.hasOwn(target, name)).toEqual(true);
+          expect(hasOwnProperty(name, target)).toEqual(true);
 
           // Ensure prop is enumerable
           expect(Object.getOwnPropertyDescriptor(target, name).enumerable)

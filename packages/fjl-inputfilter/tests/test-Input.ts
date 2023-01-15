@@ -17,13 +17,13 @@ import {
   validateIOInput
 } from '../src/input';
 import {runHasPropTypes} from "./utils";
-import {log} from "../../fjl/tests/helpers";
+import {hasOwnProperty} from "fjl";
 
 const toSlug = (x: string): string => (x + '').replace(/[^a-z\d\-_]+/gim, '-').toLowerCase(),
   trim = (x: string): string => x ? (x + '').trim() : x,
   isValidateInputResult = (rsltObj: any): boolean =>
     ['result', 'messages', 'value', 'rawValue', 'filteredValue', 'obscuredValue']
-      .every(key => Object.hasOwn(rsltObj, key));
+      .every(key => hasOwnProperty(key, rsltObj));
 
 describe('#toInput', function () {
   describe('#Input', function () {

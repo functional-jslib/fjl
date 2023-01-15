@@ -1,4 +1,4 @@
-import {range} from 'fjl';
+import {hasOwnProperty, range} from 'fjl';
 import {TypeRef} from "../../fjl/src";
 
 export const
@@ -14,7 +14,7 @@ export const
 
   runHasPropOfType = (Type: TypeRef, propName: string, [correctValue, incorrectValue]: [any, any], x: any): void => {
     test(`it should have an \`${propName}\` property`, () => {
-      expect(Object.hasOwn(x, propName)).toEqual(true);
+      expect(hasOwnProperty(propName, x)).toEqual(true);
     });
     test(`it should throw an error when setting \`${propName}\` to ${incorrectValue}`, () => {
       expect(() => {
@@ -28,7 +28,7 @@ export const
   },
 
   runHasPropOfTypeUnWrapped = (Type, propName, [correctValue, incorrectValue], x) => {
-    expect(Object.hasOwn(x, propName)).toEqual(true);
+    expect(hasOwnProperty(propName, x)).toEqual(true);
     expect(() => {
       x[propName] = incorrectValue;
     }).toThrow(Error);
