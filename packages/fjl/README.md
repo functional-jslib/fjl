@@ -33,7 +33,7 @@ Reference one of the index.*.min.js files, from './dist' folder, or modules indi
 - All methods have curried counterparts which are named with a leading '$' sign;  E.g., `foldl`'s curried version is `$foldl`.
 - Methods that take only 'rest' parameters don't have curried counterparts `concat`, `append` etc..
 
-#### Note: `iterate`, `repeat`, `replicate`, `cycle`
+#### Note on `iterate`, `repeat`, `replicate`, `cycle`
 
 In javascript we do not have lazy lists, like in haskell, so `iterate`, `repeat`, `replicate`, and `cycle` take an integer as their first parameter in order to generate a list upto a given number of items;  E.g.,
 

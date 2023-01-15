@@ -42,5 +42,7 @@ export const
       (xs): typeof xs =>
         slice(start, end, xs)
 
+  // @todo Add `at` method here.
+
 ;
 
