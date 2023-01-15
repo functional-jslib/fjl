@@ -38,9 +38,14 @@ export const
    * @todo write tests for this function.
    */
   toTypeRef = (type: TypeRef): TypeRef => {
-    if (!isset(type) || !type.constructor || (type.constructor !== String && !(type instanceof Function))) {
-      return typeOf(type);
+    const typeOfType = typeOf(type);
+
+    if (typeOfType === _String) {
+      return type;
+    } else if (!isset(type) || !type.constructor || !(type instanceof Function)) {
+      return typeOfType;
     }
+
     return type;
   },
 
