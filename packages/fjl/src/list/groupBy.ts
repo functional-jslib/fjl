@@ -1,4 +1,4 @@
-import {BinaryPred, Slice} from "../types";
+import {BinaryPred} from "../types";
 import {pushN} from "./pushN";
 import {append} from "./append";
 
@@ -12,11 +12,13 @@ export const
    *  [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], ["i"]]
    * ```
    */
-  groupBy = <T>(equalityOp: BinaryPred, xs: Slice<T>): Slice<T>[] => {
-    if (!xs || !xs.length) return [];
+  groupBy = <X = string | any, XS extends string | X[] = X[]>(
+    equalityOp: BinaryPred, xs: XS
+  ): XS[] => {
+    if (!xs?.length) return [];
 
     // Groupings
-    const groups: Slice<T>[] = [],
+    const groups: XS[] = [],
       appender = Array.isArray(xs) ? pushN : append;
 
     // Initialize variables for tracking
@@ -26,7 +28,7 @@ export const
     const xsToIterate = xs.slice(1);
 
     // Group remainder of items
-    for (const x of xsToIterate) {
+    for (const x of xsToIterate) { // @todo should use 'for i less than' loop here
 
       // If equality check passed group item, and continue to next
       if (equalityOp(x, prevItem)) {
@@ -50,8 +52,11 @@ export const
   /**
    * Curried version of `$groupBy`.
    */
-  $groupBy = <T>(equalityOp: BinaryPred<T>) =>
-    (xs: Slice<T>): Slice<T>[] => groupBy(equalityOp, xs)
+  $groupBy = <X = string | any, XS extends string | X[] = X[]>(
+    equalityOp: BinaryPred
+  ) =>
+    (xs: XS): XS[] =>
+      groupBy(equalityOp, xs)
 
 ;
 

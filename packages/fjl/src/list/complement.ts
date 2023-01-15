@@ -5,7 +5,7 @@ import {reduce} from "./utils";
 export const
 
   /**
-   * Returns the complement of list 0 and the reset of the passed in arrays.
+   * Returns the complement of array 0 and the rest of the passed in arrays.
    */
   complement = <T>(...arrays: T[][]): T[] => {
     if (!arrays.length) return [];

@@ -9,14 +9,13 @@ describe('#complement', () => {
     '`null`, `undefined` and/or empty list (`\'\'`, `[]`).', () => {
     (<any[][]>[
       [undefined, undefined],
-      [null, null, '', null],
+      [null, null, [], null],
       [[], null, undefined],
       [undefined, null, []],
       [[], [], []],
       [[], []],
-      ['', ''],
-      ['', undefined, ''],
-      [undefined, '', [], null]
+      [[], undefined, []],
+      [undefined, [], [], null]
     ])
       .forEach(args => {
         console.log(`complement(${args.join(', ')}) === []`);

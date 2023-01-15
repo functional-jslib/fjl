@@ -5,10 +5,9 @@ import {NumberIndexable, TernaryPred} from "../types";
  */
 export const all = <T = any>(p: TernaryPred<T, number, NumberIndexable<T>>, xs: NumberIndexable<T>): boolean => {
   const limit = xs.length
-  let ind = 0;
   if (!limit) return false;
-  for (; ind < limit; ind++) {
-    if (!p(xs[ind], ind, xs)) return false;
+  for (let i = 0; i < limit; i++) {
+    if (!p(xs[i], i, xs)) return false;
   }
   return true;
 };

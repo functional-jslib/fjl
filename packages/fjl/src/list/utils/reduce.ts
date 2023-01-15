@@ -1,4 +1,4 @@
-import {ReduceOp} from "../../types";
+import {NumberIndexable, ReduceOp} from "../../types";
 
 export const
 
@@ -6,7 +6,7 @@ export const
    * Reduces an iterable by given reduction function - same as [].reduce but also for strings/objects with defined iterators, etc.).
    * **Note:** If iterable is falsy, aggregator gets returned.
    */
-  reduce = (op: ReduceOp, agg: any, xs: any[]): ReturnType<typeof op> => {
+  reduce = (op: ReduceOp, agg: any, xs: NumberIndexable): ReturnType<typeof op> => {
     const limit = xs?.length;
     if (!limit) return agg;
     let result = agg;

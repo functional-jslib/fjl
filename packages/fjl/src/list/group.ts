@@ -1,6 +1,5 @@
 import {groupBy} from "./groupBy";
 import {equal} from "../boolean";
-import {Slice} from "../types";
 
 /**
  * The group function takes a list and returns a list of lists such that
@@ -11,4 +10,4 @@ import {Slice} from "../types";
  * group("Mississippi".slice(0)) === [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"],[ "i"]]
  * ```
  */
-export const group = <T>(xs: Slice<T>): Slice<T>[] => groupBy(equal, xs);
+export const group = (xs: string | any[]): (string | any[])[] => groupBy(equal, xs);

@@ -6,11 +6,10 @@ export const
    * Returns true if any item in container passes predicate `p`.
    */
   any = <T>(p: TernaryPred, xs: NumberIndexable<T>): boolean => {
-    let ind = 0;
-    const limit = xs?.length;
+    const limit = xs.length;
     if (!limit) return false;
-    for (; ind < limit; ind += 1) {
-      if (p(xs[ind], ind, xs)) return true;
+    for (let i = 0; i < limit; i += 1) {
+      if (p(xs[i], i, xs)) return true;
     }
     return false;
   },

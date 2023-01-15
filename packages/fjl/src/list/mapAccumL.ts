@@ -1,31 +1,35 @@
-import {MapAccumOp, Slice} from "../types";
+import {MapAccumOp} from "../types";
 
 export const
 
   /**
-   * Performs a map then a reduce all in one (from left-to-right). Returns a tuple
-   * containing the aggregated value and the result of mapping the passed in function on passed in list.
-   * @haskellType mapAccumL :: Traversable t => (a -> b -> (a, c)) -> a -> t b -> (a, t c)
+   * Performs a `map`, then a `reduce`, all in one (from left-to-right). Returns a tuple
+   * containing the aggregated value and the result of mapping the passed in
+   * function on passed in list.
    */
-  mapAccumL = <A, B, MapRetT>(op: MapAccumOp<A, B, MapRetT>, zero: A, xs: Slice<B>): [A, Slice<MapRetT>] => {
-    const list = xs.slice(0),
-      limit = xs.length;
-    if (!limit) {
-      return [zero, list as Slice<MapRetT>];
-    }
+  mapAccumL = <A, B, MapRetT>(
+    op: MapAccumOp<A, B, MapRetT>,
+    zero: A,
+    xs: string | B[]
+  ): [A, string | MapRetT[] | undefined] => {
+    const limit = xs.length;
+
+    if (!limit) return [zero, xs.slice(0) as string | MapRetT[]];
+
     const mapped = [];
-    let ind = 0,
-      agg = zero,
-      tuple;
-    for (; ind < limit; ind++) {
-      tuple = op(agg, (list as Slice<B>)[ind], ind);
+
+    let agg = zero;
+
+    for (let i = 0; i < limit; i++) {
+      const tuple = op(agg, xs[i] as B, i);
       agg = tuple[0];
       mapped.push(tuple[1]);
     }
+
     return [agg, mapped];
   },
 
   $mapAccumL = <A, B, MapRetT>(op: MapAccumOp<A, B, MapRetT>) =>
     (zero: A) =>
-      (xs: Slice<B>): [A, Slice<MapRetT>] =>
+      (xs: string | B[]): [A, string | MapRetT[]] =>
         mapAccumL(op, zero, xs);

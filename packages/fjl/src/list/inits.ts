@@ -6,7 +6,7 @@ export const
    * shallowEquals(inits('abc'), ['','a','ab','abc'])
    * ```
    */
-  inits = (xs: any): any[] => {
+  inits = (xs: string | any[]): (typeof xs)[] => {
     const limit = xs?.length,
       agg = [];
     if (!limit) return agg;

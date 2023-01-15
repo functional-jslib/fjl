@@ -1,5 +1,4 @@
-import {MapAccumOp, Slice} from "../types";
-import {of} from "../object";
+import {MapAccumOp} from "../types";
 
 export const
 
@@ -10,26 +9,26 @@ export const
   mapAccumR = <A, B, C>(
     op: MapAccumOp<A, B, C>,
     zero: A,
-    xs: Slice<B>
-  ): [A, Slice<C>] => {
-    const list = xs.slice(0),
-      limit = xs.length;
-    if (!limit) {
-      return [zero, of(list) as Slice<C>];
-    }
+    xs: string | B[]
+  ): [A, string | C[]] => {
+    const limit = xs.length;
+
+    if (!limit) return [zero, xs.slice(0) as string | C[]];
+
     const mapped = [];
-    let ind = limit - 1,
-      agg = zero,
-      tuple;
-    for (; ind >= 0; ind--) {
-      tuple = op(agg,(list as Slice<B>)[ind], ind);
+
+    let agg = zero;
+
+    for (let i = limit - 1; i >= 0; i--) {
+      const tuple = op(agg, xs[i] as B, i);
       agg = tuple[0];
       mapped.push(tuple[1]);
     }
+
     return [agg, mapped];
   },
 
   $mapAccumR = <A, B, C>(op: MapAccumOp<A, B, C>) =>
     (zero: A) =>
-      (xs: Slice<B>): [A, Slice<C>] =>
+      (xs: string | B[]): [A, string | C[]] =>
         mapAccumR(op, zero, xs);

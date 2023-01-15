@@ -10,12 +10,11 @@ import {of} from "../object";
 export const insertBy = <T extends string | any, TS extends string | T[]>(
     orderingFn: OrderingFunc<T>, x: T, xs: TS
   ): TS => {
-    const limit = xs?.length;
+    const limit = xs.length;
 
     if (!limit) return of(xs, x);
 
-    let ind = 0;
-    for (; ind < limit; ind += 1) {
+    for (let ind = 0; ind < limit; ind += 1) {
       if (orderingFn(x, xs[ind] as T) <= 0) {
         const parts = splitAt(ind, xs);
         return append(parts[0], of(xs, x), parts[1]);

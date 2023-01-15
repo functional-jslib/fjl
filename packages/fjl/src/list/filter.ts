@@ -6,12 +6,12 @@ export const
    * Filters given slice (string, and or array-like) against structure of elements using given predicate (`pred`) - same as `[].filter` but for any type containing intersection of array & string interfaces.
    */
   filter = <T>(pred: TernaryPred<T, number, T[]>, xs: T[]): T[] => {
-    const limit = xs?.length,
-      out = xs?.slice(0, 0);
+    const limit = xs.length,
+      out = xs.slice(0, 0);
 
     if (!limit) return out;
 
-    let ind = 0;
+    let ind = 0; // @todo Should be using 'for i less than' loop here (below).
 
     // Filter items against predicate
     for (const x of xs) {
