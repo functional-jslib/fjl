@@ -13,9 +13,8 @@ export const
   ) => {
     const limit = xs.length;
     if (!limit) return agg;
-    let ind = 0,
-      result = agg;
-    for (; ind < limit; ind++) {
+    let result = agg;
+    for (let ind = 0; ind < limit; ind++) {
       if (pred(xs[ind], ind, xs)) break;
       result = op(result, xs[ind], ind, xs);
     }

@@ -3,8 +3,6 @@ import {vowelsArray} from "../helpers";
 
 describe('#unzip', () => {
   (<[[any, any][], ReturnType<typeof unzip>][]>[
-    [null, [[], []]],
-    [undefined, [[], []]],
     [[], [[], []]],
     [[[]], [[], []]],
     // Create test case tuples
@@ -34,4 +32,14 @@ describe('#unzip', () => {
         expect(rslt).toEqual(expected);
       });
     });
+
+  it('should throw on `null`, and/or `undefined`', () => {
+    (<Parameters<typeof unzip>[]>[
+      [null],
+      [undefined],
+    ])
+      .forEach(([args]) => {
+        expect(() => unzip(args)).toThrow();
+      });
+  });
 });
