@@ -2,9 +2,9 @@
  * @module typeOf
  */
 const _Number = Number.name,
-    _NaN = 'NaN',
-    _Null = 'Null',
-    _Undefined = 'Undefined';
+  _NaN = 'NaN',
+  _Null = 'Null',
+  _Undefined = 'Undefined';
 
 /**
  * Fine-grained (efficient) version of `typeof` which returns the incoming value's
@@ -14,18 +14,16 @@ const _Number = Number.name,
  * to their values - 'NaN' (for `NaN`), 'Undefined' for `undefined` and 'Null' for
  * `null`.
  */
-export function typeOf (value: any): string {
-    let retVal;
-    if (value === undefined) {
-        retVal = _Undefined;
-    }
-    else if (value === null) {
-        retVal = _Null;
-    }
-    else {
-        const {name: constructorName} = (value).constructor;
-        retVal = constructorName === _Number && isNaN(value) ?
-            _NaN : constructorName;
-    }
-    return retVal;
+export function typeOf(value: any): string {
+  let retVal;
+  if (value === undefined) {
+    retVal = _Undefined;
+  } else if (value === null) {
+    retVal = _Null;
+  } else {
+    const {name: constructorName} = (value).constructor;
+    retVal = constructorName === _Number && Number.isNaN(value) ?
+      _NaN : constructorName;
+  }
+  return retVal;
 }

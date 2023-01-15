@@ -4,6 +4,7 @@
 
 import {flip, flip3, flip4, flip5} from "../../function/flip";
 import {Constructable, ObjectStatics} from "../../types";
+import {isset} from "../../object/isset";
 
 export const
 
@@ -15,7 +16,7 @@ export const
 
   hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
     // @note `Object.hasOwn` cannot be used here until it is more broadly adopted (until node v24+ release etc.).
-    Object.prototype.hasOwnProperty.call(x, key),
+    isset(x) && Object.prototype.hasOwnProperty.call(x, key),
 
   $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
     (x: T): boolean => hasOwnProperty(key, x),

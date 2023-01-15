@@ -14,6 +14,7 @@ export {isset};
 const
   _String = String.name,
   _Number = Number.name,
+  _BigInt = BigInt?.name,
   _Object = Object.name,
   _Boolean = Boolean.name,
   _Symbol = Symbol.name,
@@ -23,7 +24,8 @@ const
   _WeakSet = WeakSet.name,
   _Null = 'Null',
   _Undefined = 'Undefined',
-  _immutable_type_names = [_String, _Number, _Boolean, _Symbol]
+  _usable_immutable_type_names = [_String, _Number, _BigInt, _Boolean, _Symbol],
+  _immutable_type_names = [_Null, _Undefined].concat(_usable_immutable_type_names)
 ;
 
 export const
@@ -263,6 +265,16 @@ export const
   isSymbol = $isType(_Symbol) as Unary<any, boolean>,
 
   /**
+   * Returns `true` if given value is one of the seven native javascript primitives
+   *  [String, Boolean, Number, BigInt, Symbol, null, undefined].
+   */
+  isPrimitive = (x: any): boolean => {
+    const typeOfX = typeOf(x);
+    return _immutable_type_names
+      .some(type => type === typeOfX);
+  },
+
+  /**
    * Checks if given `x` is set and of one of
    *  [String, Boolean, Number, Symbol] (null and undefined are immutable
    *  but are not "usable" (e.g., usually not what we want to operate on etc.).
@@ -272,7 +284,7 @@ export const
    */
   isUsableImmutablePrimitive = (x: any): boolean => {
     const typeOfX = typeOf(x);
-    return isset(x) && _immutable_type_names
+    return isset(x) && _usable_immutable_type_names
       .some(type => type === typeOfX);
   },
 
