@@ -1,10 +1,9 @@
 import {append} from './append';
-import {Slice} from "../types";
 
 export const
 
   /**
-   * Concatenates all the elements of a "container of lists".
+   * Concatenates container of concat-ables into one..
    */
-  concat = (xss: Slice | Slice[]) => append(...xss)
+  concat = (xss: string[] | any[][]) => append(...xss)
 ;

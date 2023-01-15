@@ -1,11 +1,11 @@
-import {TernaryPred} from "../types";
+import {NumberIndexable, TernaryPred} from "../types";
 
 export const
 
   /**
    * Returns true if any item in container passes predicate `p`.
    */
-  any = <T>(p: TernaryPred, xs: T[]): boolean => {
+  any = <T>(p: TernaryPred, xs: NumberIndexable<T>): boolean => {
     let ind = 0;
     const limit = xs?.length;
     if (!limit) return false;
@@ -19,6 +19,6 @@ export const
    * Curried version of `any`.
    */
   $any = <T>(p: TernaryPred) =>
-    (xs: T[]): boolean => any(p, xs)
+    (xs: NumberIndexable<T>): boolean => any(p, xs)
 
 ;

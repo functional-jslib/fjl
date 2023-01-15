@@ -7,7 +7,7 @@ export type ForEachOp<T = any, FtrT = any> = (x: T, i?: number | keyof FtrT, xs?
 
 export type MapOp<T = any, FtrT = any, RetT = any> = (x: T, i?: number | keyof FtrT, xs?: FtrT) => RetT;
 
-export type ReduceOp<T = any, FnctrT = any, ZeroT = any> = (agg: ZeroT, x: T, i?: number | keyof FnctrT, xs?: FnctrT) => ZeroT;
+export type ReduceOp<T = any, FnctrT = any, ZeroT = any> = (agg: ZeroT, x?: T, i?: number | keyof FnctrT, xs?: FnctrT) => ZeroT;
 
 export type FoldOp = ReduceOp;
 

@@ -6,12 +6,12 @@ export const
    * Reduces an iterable by given reduction function - same as [].reduce but also for strings/objects with defined iterators, etc.).
    * **Note:** If iterable is falsy, aggregator gets returned.
    */
-  reduce = (op: ReduceOp, agg, xs): ReturnType<typeof op> => {
-    if (!xs) return agg;
-    let result = agg,
-      ind = 0;
-    for (const x of xs) {
-      result = op(result, x, ind++, xs);
+  reduce = (op: ReduceOp, agg: any, xs: any[]): ReturnType<typeof op> => {
+    const limit = xs?.length;
+    if (!limit) return agg;
+    let result = agg;
+    for (let i = 0; i < limit; i += 1) {
+      result = op(result, xs[i], i, xs);
     }
     return result;
   },
@@ -19,7 +19,9 @@ export const
   /**
    * Curried `reduce` combinator.
    */
-  $reduce = (op: ReduceOp) => agg => (xs): ReturnType<typeof op> =>
-    reduce(op, agg, xs)
+  $reduce = (op: ReduceOp) =>
+    (agg: any) =>
+      (xs: any[]): ReturnType<typeof op> =>
+        reduce(op, agg, xs)
 
 ;

@@ -1,9 +1,9 @@
-import {TernaryPred} from "../types";
+import {NumberIndexable, TernaryPred} from "../types";
 
 /**
  * Returns true if all items in container return `true` for predicate `p`.
  */
-export const all = <T>(p: TernaryPred, xs: T[]): boolean => {
+export const all = <T = any>(p: TernaryPred<T, number, NumberIndexable<T>>, xs: NumberIndexable<T>): boolean => {
   const limit = xs.length
   let ind = 0;
   if (!limit) return false;
@@ -16,7 +16,7 @@ export const all = <T>(p: TernaryPred, xs: T[]): boolean => {
 /**
  * Curried version of `all`.
  */
-export const $all = <T>(p: TernaryPred) =>
-  (xs: T[]): boolean => all(p, xs)
+export const $all = (p: TernaryPred) =>
+  (xs: NumberIndexable): boolean => all(p, xs)
 
 ;

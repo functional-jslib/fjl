@@ -1,5 +1,6 @@
 import {append} from "./append";
 import {difference} from "./difference";
+import {reduce} from "./utils";
 
 export const
 
@@ -9,8 +10,8 @@ export const
   complement = <T>(...arrays: T[][]): T[] => {
     if (!arrays.length) return [];
     const [arr0] = arrays;
-    return arrays.reduce((agg: T[], arr: T[]) =>
-      append(agg, difference(arr, arr0)), []);
+    return reduce((agg: T[], arr: T[]) =>
+      append(agg, difference(arr, arr0)), [], arrays);
   },
 
   /**

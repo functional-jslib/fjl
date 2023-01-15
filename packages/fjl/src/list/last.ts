@@ -1,6 +1,4 @@
-import {Slice} from "../types";
-
 /**
- * Returns last item of list.
+ * Returns last item of string, and/or, array..
  */
-export const last = <T>(xs: Slice<T>): T | undefined => xs.at(-1);
+export const last = (xs: string | any[]): string | any => xs.at(-1);

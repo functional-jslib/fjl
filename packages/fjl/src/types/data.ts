@@ -16,6 +16,10 @@ export interface ToJSON<T = object> {
   toJSON(): T;
 }
 
+export type  NumberIndexable<T = any> = Lengthable & {
+  [index: number]: T
+};
+
 export type TypedArray = (
   Int8Array |
   Uint8Array |
@@ -46,43 +50,13 @@ export type ArrayTypeConstructor = ArrayConstructor |
   BigUint64ArrayConstructor;
 
 /**
- * Used to compose `Slice` type.
- *
- * @private
- */
-interface SliceBase<T = any> {
-  readonly length: number;
-
-  slice(start: number, end?: number): any;
-
-  indexOf(x: T, position?: number): number;
-
-  includes(x: T, position?: number): boolean;
-
-  lastIndexOf(x: T, position?: number): number;
-
-  at(index: number): any
-}
-
-/**
  * `Union + Sum` Slice type - Represents, the intersection, of the string,
  * array, and custom structure, types that match the `Slice` "summed" interfaces -
  * Basically a type for representing string, and/or array structure like types.
  *
  * @deprecated Used direct types (as required) instead.
  */
-export type Slice<T = any> = SliceBase<T> & {
-  [Symbol.iterator](): IterableIterator<T>;
-} & ({
-  [index: number]: any
-
-  // ConcatArray<any>[] is too strict to use here
-  concat(...xss: any[]): any;
-} | {
-  readonly [index: number]: string;
-
-  concat(...xss: string[]): string;
-});
+export type Slice<T = any> = string | T[];
 
 /**
  * @deprecated - Use direct types instead.
