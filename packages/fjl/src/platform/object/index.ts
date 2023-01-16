@@ -10,13 +10,15 @@ export const
 
   {assign, keys} = Object,
 
-  instanceOf = (X: Constructable, x): boolean => x instanceof X,
+  instanceOf = (X: Constructable, x): boolean =>
+    isset(x) && x.constructor === X || x instanceof X, // @todo remove null check (isset) here (in future release).
 
-  $instanceOf = (X: Constructable) => (x): boolean => x instanceof X,
+  $instanceOf = (X: Constructable) => (x): boolean => instanceOf(X, x),
 
   hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
     // @note `Object.hasOwn` cannot be used here until it is more broadly adopted (until node v24+ release etc.).
-    isset(x) && Object.prototype.hasOwnProperty.call(x, key),
+    isset(x) && Object.prototype.hasOwnProperty.call(x, key) // @todo shouldn't be checking for null/undefined here
+  ,
 
   $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
     (x: T): boolean => hasOwnProperty(key, x),

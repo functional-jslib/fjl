@@ -12,12 +12,8 @@ import {
   isString,
   repeat,
   Unary,
-  isOneOf,
   ToString
 } from 'fjl';
-
-// @todo Deprecate this on version 1.14.0.
-export {isOneOf};
 
 export type MessageGetter<T = any> = (x?: T, options?: ValidatorOptions<T>) => string;
 
@@ -83,7 +79,7 @@ export const
       [Object, 'messageTemplates', {}],
       [Boolean, 'valueObscured', false],
       [Function, 'valueObscurer', defaultValueObscurer]
-    ], {}), ...(options.length ? options : [{}])),
+    ], {}), ...options),
 
   /**
    * Returns a strongly typed, normalized validation result object.
@@ -94,6 +90,6 @@ export const
         [Array, 'messages', []]
       ], {}),
       {value: undefined},
-      ...(options.length ? options : [{}])
+      ...options
     )
 ;

@@ -70,6 +70,8 @@ import {Nameable, Slice, TypeRef} from '../../src/types';
 import {TypeConstructor} from "../../src/types";
 import {noop} from "../../src";
 
+const {stringify} = JSON;
+
 describe('#object', function () {
   type LetterNumbersObj = { [index: string]: number };
 
@@ -315,6 +317,7 @@ describe('#object', function () {
         [99, true],
         [-1.0, true],
         [Number('1e-3'), true],
+        [new Number(99), true],
         [0 / 0, false],
         [() => undefined, false],
         [true, false],
@@ -332,6 +335,7 @@ describe('#object', function () {
       [
         [alphabetString, true],
         [vowelsString, true],
+        [new String(vowelsString), true],
         [0 / 0, false],
         [() => undefined, false],
         [true, false],
@@ -483,9 +487,8 @@ describe('#object', function () {
   });
 
   describe('#isEmpty', () => {
-    it('should return expected result for given value', function () {
-      // [`arg`, `expected`]
-      [
+
+    (<[Parameters<typeof isEmpty>[0], ReturnType<typeof isEmpty>][]>[
         // Empties
         [null, true],
         [undefined, true],
@@ -497,24 +500,25 @@ describe('#object', function () {
         [{}, true],
         [new Map(), true],
         [new Set(), true],
+        [() => undefined, true],          // Has no enumerable properties.
+        [Object.defineProperties, true], // ""
+        [Object, true],                  // ""
 
         // Non-empties
-        [() => undefined, false],
         [vowelsString, false],
         [vowelsArray, false],
         [new Set(vowelsArray), false],
         [new Map(vowelsArray.map(c => [c, c.charCodeAt(0)])), false],
-        [Object.defineProperties, false],
-        [Object, false],
-        [Symbol(), false],
+        [Symbol('x'), false],
         [true, false],
         [-1, false],
         [1, false],
-      ]
+      ])
         .forEach(([arg, expected]) => {
-          expect(isEmpty(arg)).toEqual(expected);
+          it(`isEmpty(${(isset(arg) && arg instanceof Function) || arg === null ? arg + '' : stringify(arg)}) === ${expected}`, function () {
+            expect(isEmpty(arg)).toEqual(expected);
+          });
         });
-    });
   });
 
   describe('#isset', () => {

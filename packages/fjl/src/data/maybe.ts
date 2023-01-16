@@ -161,8 +161,7 @@ export const
   isMaybe = <T>(x: T): boolean => isNothing(x) || isJust(x),
 
   /**
-   *
-   } Always returns a `Maybe` (from `x`).
+   * Always returns a `Maybe` (from `x`).
    */
   toMaybe = <T>(x: T): Maybe<T> => {
     if (!isset(x)) {

@@ -29,7 +29,9 @@ export const
   /**
    * Validates whether incoming `value` is empty* or not also doesn't normalize the passed in
    * options parameter (since currently `notEmptyValidator` has no options other than it's `messageTemplates`
-   * field). * 'empty' in our context means one of `null`, `undefined`, empty lists (strings/arrays) (`x.length === 0`), `false`, empty object (obj with `0` enumerable props), and empty collection/iterable object (`Map`, `Set` etc.), NaN,
+   * field). * 'empty' in our context means one of `null`, `undefined`, empty lists (strings/arrays)
+   * (`x.length === 0`), `false`, empty object (obj with `0` enumerable props), and empty collection/iterable
+   * object (`Map`, `Set` etc.), NaN.
    * Also this method is useful when the user, themselves, have to call `toNotEmptyOptions` for a specific reason.
    */
   $notEmptyValidatorNoNormalize = <T>(options: ValidatorOptions<T>, value: T): ValidatorResult => {

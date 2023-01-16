@@ -1,8 +1,7 @@
 /**
  * @module typeOf
  */
-const _Number = Number.name,
-  _NaN = 'NaN',
+const _NaN = 'NaN',
   _Null = 'Null',
   _Undefined = 'Undefined';
 
@@ -21,8 +20,11 @@ export function typeOf(value: any): string {
   } else if (value === null) {
     retVal = _Null;
   } else {
-    const {name: constructorName} = (value).constructor;
-    retVal = constructorName === _Number && Number.isNaN(value) ?
+    const {name: constructorName} = value.constructor;
+    retVal = (
+      constructorName === Number.name ||
+      constructorName === BigInt.name
+    ) && Number.isNaN(value) ?
       _NaN : constructorName;
   }
   return retVal;

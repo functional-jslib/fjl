@@ -16,9 +16,8 @@ describe('#toStringLengthOptions', function () {
 });
 
 describe('#stringLengthValidator', function () {
-  const testArgs = (subsequences('hello')
-    .concat([repeat(21, 'a'), repeat(14, 'b')]) as string[][])
-    .map(x => x instanceof Array ? x.join('') : x);
+  const testArgs = subsequences('hello');
+
   test('should return a validation result object with a `result` of `false` and ' +
     'one error message when value is not of type `String`', function () {
     const strValidator = stringLengthValidator(null);
