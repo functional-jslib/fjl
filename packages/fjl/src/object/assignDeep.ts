@@ -1,4 +1,4 @@
-import {isPrimitive} from './is';
+import {containsEnumerables, isPrimitive} from './is';
 
 export const
 
@@ -27,10 +27,9 @@ export const
         const existingValue = agg[key],
           value = obj[key];
 
-        // If LHV, and RHV, are not primitives then assume they are 'assign'able.
-        if (propDescriptor &&
-          !isPrimitive(existingValue) &&
-          !isPrimitive(value)
+        // If LHV is not a primitive, and RHV contains enumerables then values are assignable
+        if (!isPrimitive(existingValue) &&
+          containsEnumerables(value)
         ) {
           assignDeep(existingValue, value);
         } else {

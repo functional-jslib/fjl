@@ -17,6 +17,7 @@ describe('#toValidationOptions', function () {
     valueObscurer: 'Function',
     messageTemplates: 'Object'
   };
+
   test('should merge incoming options to `self` on construction', function () {
     const messageTemplates = {
         A: 'some message',
@@ -32,6 +33,7 @@ describe('#toValidationOptions', function () {
     // Ensure not allowed type is blocked
     expect(() => toValidationOptions({messageTemplates: 99 as unknown as MessageTemplates})).toThrow(Error);
   });
+
   test('should have the expected properties as expected types.', function () {
     const validator = toValidationOptions();
     Object.keys(expectedPropertyAndTypes).forEach(key => {
@@ -39,6 +41,7 @@ describe('#toValidationOptions', function () {
       expect(typeOf(validator[key])).toEqual(expectedPropertyAndTypes[key]);
     });
   });
+
   test('should still return a valid "ValidationOptions" object even if receiving `null` or `undefined`.', () => {
     [toValidationOptions(null), toValidationOptions()]
       .forEach(validationOptions => {

@@ -4,7 +4,6 @@
 
 import {typeOf} from './typeOf';
 import {instanceOf, keys} from '../platform/object';
-import {length} from "../list/length";
 import {isset} from './isset';
 import {Constructable, TypeRef, Unary} from "../types";
 
@@ -21,6 +20,8 @@ export const
 
   /**
    * Resolves/normalizes a type name from either a string or a constructor.
+   *
+   * @deprecated
    * @todo write tests for this function.
    */
   toTypeRef = (type: TypeRef): TypeRef => {
@@ -39,12 +40,16 @@ export const
    * Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values into
    * type refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
    * @todo Ensure tests are written for this function.
+   *
+   * @deprecated
    */
   toTypeRefs = (...types: any[]): TypeRef[] => types.map(toTypeRef),
 
   /**
    * Returns possible Type's TypeRef name.
    * @todo Ensure tests are written for this function.
+   *
+   * @deprecated
    */
   toTypeRefName = (type: any): TypeRef => {
     const ref = toTypeRef(type);
@@ -54,6 +59,8 @@ export const
   /**
    * Returns possible Types' TypeRef names.
    * @todo Ensure tests are written for this function.
+   *
+   * @deprecated
    */
   toTypeRefNames = (...types: any): string[] => types.map(toTypeRefName),
 
@@ -118,7 +125,7 @@ export const
    * ```
    */
   isInstanceOf = (x: any, ...types: Constructable[]): boolean => types.some(t =>
-    instanceOf(x, t)),
+    instanceOf(t, x)),
 
   /**
    * Loose type checker;  E.g., If `type` is not a constructor, but a constructor name, does a type check on
@@ -256,7 +263,7 @@ export const
     if (!isset(x)) return true;
     const {constructor: xConstructor} = x;
     return _primitive_constructors
-      .some(type => type.constructor === xConstructor);
+      .some(type => type.constructor === xConstructor || x instanceof type);
   },
 
   /**
@@ -278,14 +285,18 @@ export const
    *
    * @deprecated check length directly and/or create a new method for the purpose;  e.g., `const notLength = x => !(x?.length)`, etc.
    */
-  isEmptyList = (x: any): boolean => !length(x),
+  isEmptyList = (x: any): boolean => !(x?.length),
 
   /**
-   * Checks if object has own properties/enumerable-props or not.
-   *
-   * @deprecated Iterate on keys directly (if iteration is required), else, check keys directly (`x && Object.keys(x).length`), etc.;
+   * Checks if object contains enumerable properties or not.
+   * @todo requires tests.
    */
-  isEmptyObject = (obj: any): boolean => isEmptyList(keys(obj)),
+  containsEnumerables = (x: any): boolean => isset(x) && keys(x).length > 0,
+
+  /**
+   * @deprecated Use `containsEnumerables`.
+   */
+  isEmptyObject = containsEnumerables,
 
   /**
    * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).

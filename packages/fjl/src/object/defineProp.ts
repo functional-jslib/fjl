@@ -1,5 +1,4 @@
 import {errorIfNotType} from '../errorThrowing';
-import {isUndefined} from './is';
 import {TypeRef} from "../types";
 
 export type DefinePropsArgsTuple = [TypeRef, string, any?];
@@ -43,7 +42,7 @@ export const
     const [_target, _descriptor] = toTargetDescriptorTuple(target),
       descriptor = _descriptor || createTypedDescriptor(Type, _target, propName);
     Object.defineProperty(_target, propName, descriptor);
-    if (!isUndefined(defaultValue)) {
+    if (defaultValue !== undefined) {
       _target[propName] = defaultValue;
     }
     return [_target, descriptor];
