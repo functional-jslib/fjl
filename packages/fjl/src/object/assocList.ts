@@ -16,6 +16,9 @@ export const
 
   /**
    * Returns a deep associated list from given object, on incoming `TypeConstraint` constructor.
+   *
+   * @deprecated Not to many algorithms require this kind of functionality - Perform functionality
+   * directly, and/or, define method as required.
    */
   toAssocListDeep = (obj, TypeConstraint: TypeConstructor = Object) =>
     map(key =>
@@ -35,6 +38,8 @@ export const
 
   /**
    * From associated list to object (deep conversion on associative lists (array of 2 value arrays)).
+   *
+   * @deprecated Method is too specific - Define functionality/method in your use cases as required.
    */
   fromAssocListDeep = (xs, OutType = Object) => foldl((agg, [key, value]) => {
     if (isArray(value) && isArray(value[0]) && value[0].length === 2) {

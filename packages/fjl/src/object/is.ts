@@ -9,7 +9,7 @@ import {Constructable, TypeRef, Unary} from "../types";
 
 export {isset};
 
-// Used for 'isOfConstructablePrimitive', checks, etc.
+// Used for 'isConstructablePrimitive', checks, etc.
 const _primitive_constructors = Object.freeze([
     String, Number, BigInt, Boolean, Symbol
   ]) as readonly Constructable[],
@@ -270,15 +270,15 @@ export const
    * Checks if given value is not `null`, not `undefined`, and is a constructable primitive (e.g., instance/literal of
    *  one of `String`, `Boolean`, `Number`, `BigInt`, and/or, `Symbol`);
    */
-  isOfConstructablePrimitive = (x: any): boolean =>
+  isConstructablePrimitive = (x: any): boolean =>
     !isset(x) ? false :
       _primitive_constructors
         .some(type => instanceOf(type, x)),
 
   /**
-   * @deprecated Use `isOfConstructablePrimitive` instead.
+   * @deprecated Use `isConstructablePrimitive` instead.
    */
-  isUsableImmutablePrimitive = isOfConstructablePrimitive,
+  isUsableImmutablePrimitive = isConstructablePrimitive,
 
   /**
    * Checks if !length.
