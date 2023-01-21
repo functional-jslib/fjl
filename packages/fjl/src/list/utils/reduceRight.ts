@@ -15,7 +15,9 @@ export const
     return result;
   },
 
-  $reduceRight = (op: ReduceOp) => agg => xs =>
-    reduceRight(op, agg, xs)
+  $reduceRight = (op: ReduceOp) =>
+    (agg: any) =>
+      (xs: NumberIndexable): ReturnType<typeof op> =>
+        reduceRight(op, agg, xs)
 
 ;

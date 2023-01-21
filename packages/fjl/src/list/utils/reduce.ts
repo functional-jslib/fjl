@@ -21,7 +21,7 @@ export const
    */
   $reduce = (op: ReduceOp) =>
     (agg: any) =>
-      (xs: any[]): ReturnType<typeof op> =>
+      (xs: NumberIndexable): ReturnType<typeof op> =>
         reduce(op, agg, xs)
 
 ;

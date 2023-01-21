@@ -1,4 +1,4 @@
-import {ReduceOp, TernaryPred} from "../../types";
+import {NumberIndexable, ReduceOp, TernaryPred} from "../../types";
 
 export const
 
@@ -8,8 +8,8 @@ export const
   reduceUntil = (
     pred: TernaryPred,
     op: ReduceOp,
-    agg,
-    xs
+    agg: any,
+    xs: NumberIndexable
   ) => {
     const limit = xs.length;
     if (!limit) return agg;
@@ -26,7 +26,7 @@ export const
    */
   $reduceUntil = (pred: TernaryPred) =>
     (op: ReduceOp) =>
-      agg =>
-        xs => reduceUntil(pred, op, agg, xs)
+      (agg: any) =>
+        (xs: NumberIndexable) => reduceUntil(pred, op, agg, xs)
 
 ;

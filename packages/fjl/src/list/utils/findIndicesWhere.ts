@@ -1,11 +1,14 @@
-import {TernaryPred} from "../../types";
+import {NumberIndexable, TernaryPred} from "../../types";
 
 export const
 
   /**
    * Finds indices by predicate.
    */
-  findIndicesWhere = (pred: TernaryPred, xs): number[] | undefined => {
+  findIndicesWhere = (
+    pred: TernaryPred,
+    xs: NumberIndexable
+  ): number[] | undefined => {
     const limit = xs.length;
     const out = [];
     for (let ind = 0; ind < limit; ind++) {
@@ -18,6 +21,7 @@ export const
    * Curried version of `findIndicesWhere`.
    */
   $findIndicesWhere = (pred: TernaryPred) =>
-    (xs): number[] | undefined => findIndicesWhere(pred, xs)
+    (xs: NumberIndexable): number[] | undefined =>
+      findIndicesWhere(pred, xs)
 
 ;

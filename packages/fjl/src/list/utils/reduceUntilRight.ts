@@ -1,4 +1,4 @@
-import {ReduceOp, TernaryPred} from "../../types";
+import {NumberIndexable, ReduceOp, TernaryPred} from "../../types";
 
 export const
 
@@ -8,8 +8,8 @@ export const
   reduceUntilRight = (
     pred: TernaryPred,
     op: ReduceOp,
-    agg,
-    xs
+    agg: any,
+    xs: NumberIndexable
   ) => {
     const limit = xs.length;
     if (!limit) return agg;
@@ -25,6 +25,8 @@ export const
    * Curried version of `$reduceUntilRight`.
    */
   $reduceUntilRight = (pred: TernaryPred) =>
-    (op: ReduceOp) => agg => xs =>
+    (op: ReduceOp) =>
+      (agg: any) =>
+        (xs: NumberIndexable): ReturnType<typeof op> =>
       reduceUntilRight(pred, op, agg, xs)
 ;
