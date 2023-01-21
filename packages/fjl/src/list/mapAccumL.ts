@@ -1,13 +1,11 @@
 import {MapAccumOp} from "../types";
 
-export const
-
-  /**
-   * Performs a `map`, then a `reduce`, all in one (from left-to-right). Returns a tuple
-   * containing the aggregated value and the result of mapping the passed in
-   * function on passed in list.
-   */
-  mapAccumL = <A, B, MapRetT>(
+/**
+ * Performs a `map`, then a `reduce`, all in one (from left-to-right).
+ * Returns a tuple containing the aggregated value and the result of
+ * mapping the passed in function on passed in list.
+ */
+export const mapAccumL = <A, B, MapRetT>(
     op: MapAccumOp<A, B, MapRetT>,
     zero: A,
     xs: string | B[]

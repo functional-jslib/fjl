@@ -1,12 +1,14 @@
 import {foldl} from "./foldl";
 import {BinaryPred} from "../types";
 
-export const
-
-  /**
-   * Returns the union on elements matching boolean check passed in.
-   */
-  unionBy = <T = any>(pred: BinaryPred<T[], T>, xs1: T[], xs2: T[]): T[] =>
+/**
+ * Returns the union on elements matching boolean check passed in.
+ */
+export const unionBy = <T = any>(
+    pred: BinaryPred<T[], T>,
+    xs1: T[],
+    xs2: T[]
+  ): T[] =>
     foldl((agg, x) => {
       if (pred(agg, x)) agg.push(x);
       return agg;

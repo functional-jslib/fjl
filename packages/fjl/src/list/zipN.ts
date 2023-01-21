@@ -3,13 +3,12 @@ import {toShortest} from "./utils/toShortest";
 import {push} from "./push";
 import {map} from "./map";
 
-export const
-  /**
-   * zipN takes one or more lists and returns a list containing lists of all indices
-   * at a given index, index by index.
-   * If one input list is short, excess elements of the longer list are discarded.
-   */
-  zipN = <T = any>(...lists: T[][]): T[][] => {
+/**
+ * zipN takes one or more lists and returns a list containing lists of all indices
+ * at a given index, index by index.
+ * If one input list is short, excess elements of the longer list are discarded.
+ */
+export const zipN = <T = any>(...lists: T[][]): T[][] => {
     const trimmedLists = toShortest(...lists);
     return reduce((agg, item, ind) =>
         push(map(xs => xs[ind], trimmedLists), agg),

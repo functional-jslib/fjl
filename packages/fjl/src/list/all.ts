@@ -3,7 +3,10 @@ import {NumberIndexable, TernaryPred} from "../types";
 /**
  * Returns true if all items in container return `true` for predicate `p`.
  */
-export const all = <T = any>(p: TernaryPred<T, number, NumberIndexable<T>>, xs: NumberIndexable<T>): boolean => {
+export const all = <T = any>(
+  p: TernaryPred<T, number, NumberIndexable<T>>,
+  xs: NumberIndexable<T>
+): boolean => {
   const limit = xs.length
   if (!limit) return false;
   for (let i = 0; i < limit; i++) {
