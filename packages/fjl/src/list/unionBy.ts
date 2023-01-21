@@ -1,29 +1,30 @@
 import {foldl} from "./foldl";
-import {any} from "./any";
-import {sliceCopy} from "./utils/sliceCopy";
 import {BinaryPred} from "../types";
-
-const getFoldOpForArray = <T>(pred: BinaryPred<T, T>) => (agg: T[], b: T): T[] => {
-    const alreadyAdded = any((a: T) => pred(a, b), agg);
-    if (!alreadyAdded) (agg as T[]).push(b);
-    return agg;
-  },
-
-  getFoldOpForString = <T>(pred: BinaryPred<T, T>) => (agg: T[], b: T): string | T[] => {
-    const alreadyAdded = any((a: T) => pred(a, b), agg);
-    return !alreadyAdded ? (agg as unknown as string) + b : agg; // unknown here is ok (since func. is used internally only).
-  };
 
 export const
 
   /**
    * Returns the union on elements matching boolean check passed in.
    */
-  unionBy = <T>(pred: BinaryPred<T, T>, xs1, xs2) => {
-    const foldOp = typeof xs1 === 'string' ? getFoldOpForString(pred) : getFoldOpForArray(pred);
-    return foldl(foldOp, sliceCopy(xs1), xs2);
-  },
+  unionBy = <T = any>(pred: BinaryPred<T[], T>, xs1: T[], xs2: T[]): T[] =>
+    foldl((agg, x) => {
+      if (pred(agg, x)) agg.push(x);
+      return agg;
+    }, xs1.slice(0), xs2),
 
-  $unionBy = <T>(pred: BinaryPred<T, T>) =>
-      xs1 =>
-          xs2 => unionBy(pred, xs1, xs2);
+  /**
+   * Curried version of `unionBy`.
+   */
+  $unionBy = <T = any>(pred: BinaryPred<T[], T>) =>
+    xs1 =>
+      xs2 => unionBy(pred, xs1, xs2);
+
+/**
+ * `unionBy` method type.
+ */
+export type UnionBy = typeof unionBy;
+
+/**
+ * `$unionBy` method type
+ */
+export type $UnionBy = typeof $unionBy;

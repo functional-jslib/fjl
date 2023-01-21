@@ -5,7 +5,8 @@ export const
   /**
    * Returns true if any item in container passes predicate `p`.
    */
-  any = <T>(p: TernaryPred, xs: NumberIndexable<T>): boolean => {
+  any = <T>(p: TernaryPred<T, number, NumberIndexable<T>>,
+            xs: NumberIndexable<T>): boolean => {
     const limit = xs.length;
     if (!limit) return false;
     for (let i = 0; i < limit; i += 1) {
@@ -17,7 +18,7 @@ export const
   /**
    * Curried version of `any`.
    */
-  $any = <T>(p: TernaryPred) =>
+  $any = <T>(p: TernaryPred<T, number, NumberIndexable<T>>) =>
     (xs: NumberIndexable<T>): boolean => any(p, xs)
 
 ;
