@@ -10,7 +10,6 @@ export const
     xs: NumberIndexable<T>
   ): boolean => {
     const limit = xs.length;
-    if (!limit) return false;
     for (let i = 0; i < limit; i += 1) {
       if (p(xs[i], i, xs)) return true;
     }

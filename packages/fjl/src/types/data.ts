@@ -1,5 +1,8 @@
 import {Binary} from "./arity";
 
+/**
+ * @deprecated Use `NumberIndexable` instead.
+ */
 export interface Lengthable {
   readonly length?: number;
 }
@@ -16,9 +19,17 @@ export interface ToJSON<T = object> {
   toJSON(): T;
 }
 
-export type  NumberIndexable<T = any> = Lengthable & {
-  [index: number]: T
-};
+export type  NumberIndexable<T = any> = ({
+  length: number;
+  [index: number]: T;
+} |
+  /**
+   * Support for `string` type
+   */
+  {
+    readonly length: number;
+    readonly [index: number]: any;
+  });
 
 export type TypedArray = (
   Int8Array |
@@ -52,14 +63,14 @@ export type ArrayTypeConstructor = ArrayConstructor |
 /**
  * `Union + Sum` Slice type - Represents, the intersection, of the string,
  * array, and custom structure, types that match the `Slice` "summed" interfaces -
- * Basically a type for representing string, and/or array structure like types.
+ * Basically a type for representing string, and/or "array structure" like types.
  *
  * @deprecated Used direct types (as required) instead.
  */
 export type Slice<T = any> = string | T[];
 
 /**
- * @deprecated - Use direct types instead.
+ * @deprecated - Use direct type constructors instead.
  */
 export type SliceConstructor = StringConstructor | ArrayConstructor;
 

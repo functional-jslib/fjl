@@ -1,8 +1,8 @@
 import {vowelsArray, vowelsString} from "../helpers";
 import {length} from "../../src/list/length";
-import {Lengthable} from "../../src/types";
+import {NumberIndexable} from "../../src/types";
 
-describe('#lengths', () => {
+describe('#length', () => {
   [
     [null, undefined],
     [undefined, undefined],
@@ -13,13 +13,15 @@ describe('#lengths', () => {
     [function (a, b, c): number {
       return a + b + c;
     }, 3],
+    ['', 0],
+    ['abc', 3],
     [{}, undefined],
     [0, undefined],
     [false, undefined]
   ]
     .forEach(([item, expected]) => {
       it(`length(${JSON.stringify(item)}) === ${expected}`, () => {
-        expect(length(item as Lengthable)).toEqual(expected);
+        expect(length(item as NumberIndexable)).toEqual(expected);
       });
     });
 });

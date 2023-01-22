@@ -3,8 +3,10 @@ import {$any, any} from "../../src/list/any";
 describe('#any,$any', () => {
   const predicateToTest = <T>(x: T): boolean => !!x;
 
-  (<[boolean[], boolean][]>[
+  (<[boolean[], ReturnType<typeof any>][]>[
     [[], false],
+    [[false], false],
+    [[true], true],
     [[false, false], false],
     [[true, false], true],
     [[false, true], true],

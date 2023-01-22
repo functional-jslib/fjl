@@ -1,11 +1,11 @@
-import {Slice} from "../types";
+import {NumberIndexable} from "../types";
 
 export const
 
   /**
    * Checks if list `xs1` is an infix of list `xs2`
    */
-  isInfixOf = <T>(xs1: Slice<T>, xs2: Slice<T>): boolean => {
+  isInfixOf = <T>(xs1: NumberIndexable<T>, xs2: NumberIndexable<T>): boolean => {
     const limit1 = xs1.length,
       limit2 = xs2.length;
 
@@ -28,7 +28,7 @@ export const
     return false;
   },
 
-  $isInfixOf = <T>(xs1: Slice<T>) =>
-    (xs2: Slice<T>): boolean => isInfixOf(xs1, xs2)
+  $isInfixOf = <T>(xs1: NumberIndexable<T>) =>
+    (xs2: NumberIndexable<T>): boolean => isInfixOf(xs1, xs2)
 
 ;

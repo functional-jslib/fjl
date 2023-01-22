@@ -8,7 +8,6 @@ export const
    */
   reduce = (op: ReduceOp, agg: any, xs: NumberIndexable): ReturnType<typeof op> => {
     const limit = xs.length;
-    if (!limit) return agg;
     let result = agg;
     for (let i = 0; i < limit; i += 1) {
       result = op(result, xs[i], i, xs);

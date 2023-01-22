@@ -5,17 +5,10 @@ describe('#complement', () => {
   it('should be a function', () => {
     expectFunction(complement);
   });
-  it('should return an empty list when receiving 2 or more values consisting of ' +
-    '`null`, `undefined` and/or empty list (`\'\'`, `[]`).', () => {
+  it('should return an empty list when receiving empty lists', () => {
     (<any[][]>[
-      [undefined, undefined],
-      [null, null, [], null],
-      [[], null, undefined],
-      [undefined, null, []],
       [[], [], []],
       [[], []],
-      [[], undefined, []],
-      [undefined, [], [], null]
     ])
       .forEach(args => {
         console.log(`complement(${args.join(', ')}) === []`);

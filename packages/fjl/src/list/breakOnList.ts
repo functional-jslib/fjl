@@ -19,17 +19,17 @@ export const
    * breakOnList((x => x > 9), [1,2,3]) == [[1,2,3],[]];
    * ```
    */
-  breakOnList = <T = any, TS extends string | T[] = T[]>(
+  breakOnList = <T, TS extends string | T[]>(
     pred: TernaryPred<T, number, TS>, xs: TS
-  ): [TS, TS] => {
+  ): [typeof xs, typeof xs] => {
     const splitPoint = findIndexWhere(negateF3(pred), xs);
     return splitPoint === -1 ?
       [xs.slice(0, 0), xs.slice(0)] :
       reverse(splitAt(splitPoint, xs));
   },
 
-  $breakOnList = <T = any, TS extends string | T[] = T[]>(
+  $breakOnList = <T, TS extends string | T[]>(
     pred: TernaryPred<T, number, TS>
   ) =>
-    (xs: TS): [TS, TS] => breakOnList(pred, xs)
+    (xs: TS): [typeof xs, typeof xs] => breakOnList(pred, xs)
 ;

@@ -1,25 +1,27 @@
-import {MapAccumOp} from "../types";
+import {Quaternary} from "../types";
 
 /**
- * Performs a `map`, then a `reduce`, all in one (from left-to-right).
- * Returns a tuple containing the aggregated value and the result of
- * mapping the passed in function on passed in list.
+ * Performs a `reduce` and a `map` all in one (from left-to-right);
+ * Takes a reduce function that returns a tuple containing
+ * the aggregated result, and the mapped value, in a tuple, and
+ * returns a tuple containing the aggregated value,
+ * and the collected mapped values.
  */
-export const mapAccumL = <A, B, MapRetT>(
-    op: MapAccumOp<A, B, MapRetT>,
-    zero: A,
-    xs: string | B[]
-  ): [A, string | MapRetT[] | undefined] => {
+export const mapAccumL = <Agg, X>(
+    op: (agg?: Agg, x?: X, i?: number, xs?: X[]) => [Agg, X],
+    zero: Agg,
+    xs: X[]
+  ): [Agg, typeof xs] => {
     const limit = xs.length;
 
-    if (!limit) return [zero, xs.slice(0) as string | MapRetT[]];
+    if (!limit) return [zero, xs.slice(0)];
 
-    const mapped = [];
-
+    const mapped = xs.slice(0, 0);
     let agg = zero;
 
     for (let i = 0; i < limit; i++) {
-      const tuple = op(agg, xs[i] as B, i);
+      const tuple = op(agg, xs[i], i, xs);
+
       agg = tuple[0];
       mapped.push(tuple[1]);
     }
@@ -27,7 +29,9 @@ export const mapAccumL = <A, B, MapRetT>(
     return [agg, mapped];
   },
 
-  $mapAccumL = <A, B, MapRetT>(op: MapAccumOp<A, B, MapRetT>) =>
-    (zero: A) =>
-      (xs: string | B[]): [A, string | MapRetT[]] =>
+  $mapAccumL = <Agg, X>(
+    op: Quaternary<Agg, X, number, X[], [Agg, X]>
+  ) =>
+    (zero: Agg) =>
+      (xs: X[]): [Agg, typeof xs] =>
         mapAccumL(op, zero, xs);

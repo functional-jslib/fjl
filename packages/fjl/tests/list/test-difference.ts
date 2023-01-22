@@ -8,7 +8,6 @@ describe('#difference', () => {
     ' there are no differences between passed in lists, ', () => {
     (<[Parameters<typeof difference>, Slice][]>[
       [[[], []], []],
-      [[null, undefined], undefined]
     ])
       .forEach(([args, expected]) => {
         expectEqual(difference(...args), expected);

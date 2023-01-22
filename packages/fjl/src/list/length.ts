@@ -1,1 +1,1 @@
-export const length = (x: { readonly length?: number }) => x?.length;
+export const length = (x: { length: number }): number => x?.length;

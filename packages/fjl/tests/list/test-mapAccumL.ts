@@ -1,36 +1,40 @@
 import {mapAccumL} from "../../src/list/mapAccumL";
-import {Slice} from "../../src/types/data";
-import {MapAccumOp} from "../../src";
-import {vowelsString} from "../helpers";
+import {vowelsArray} from "../helpers";
 
 describe('#mapAccumL', () => {
-  type ZeroT = number | string;
-
-  (<[string, MapAccumOp<ZeroT, ZeroT>, Slice<ZeroT>, ZeroT, [ZeroT, Slice<ZeroT>]][]>[
+  (<[
+    string,
+    Parameters<typeof mapAccumL>,
+    ReturnType<typeof mapAccumL>
+  ][]>[
     ['mapAccumL(multBy2Sums, number, number[]) === [number, number[]]',
-      (agg: number, item: number) => {
+      [(agg: number, item: number) => {
         const product = item * 2;
         return [agg + product, product];
       },
-      [1, 2, 3, 4, 5], 1,
+        1,
+        [1, 2, 3, 4, 5]
+      ],
       [31, [2, 4, 6, 8, 10]]
     ],
     ['mapAccumL(charSums, number, string) === [number, number[]]',
-      (agg: number, char: string) => {
+      [(agg: number, char: string) => {
         const charCode = char.charCodeAt(0);
         return [agg + charCode, charCode];
       },
-      vowelsString, 0,
+        0,
+        vowelsArray
+      ],
       ((): [number, number[]] => {
-        const charCodes = vowelsString.split('').map(xs => xs.charCodeAt(0)),
+        const charCodes = vowelsArray.map(xs => xs.charCodeAt(0)),
           charCodesSum = charCodes.reduce((agg, x) => agg + x, 0);
         return [charCodesSum, charCodes];
       })()
     ],
   ])
-    .forEach(([testName, op, incoming, zero, expected]) => {
+    .forEach(([testName, args, expected]) => {
       it(testName, () => {
-        const result = mapAccumL(op, zero, incoming);
+        const result = mapAccumL(...args);
         expect(result).toEqual(expected);
       });
     });

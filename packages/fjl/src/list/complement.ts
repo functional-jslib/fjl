@@ -1,23 +1,24 @@
-import {append} from "./append";
 import {difference} from "./difference";
 import {reduce} from "./utils";
 
 export const
 
   /**
-   * Returns the complement of array 0 and the rest of the passed in arrays.
+   * Returns the complement of an array and one or more other arrays.
    */
   complement = <T>(...arrays: T[][]): T[] => {
-    if (!arrays.length) return [];
-    const [arr0] = arrays;
-    return reduce((agg: T[], arr: T[]) =>
-      append(agg, difference(arr, arr0)), [], arrays);
+    const arr0 = arrays.shift();
+    return reduce((agg: T[], arr: T[]) => {
+        agg.push(...difference(arr, arr0));
+        return agg;
+    }, arr0.slice(0, 0), arrays);
   },
 
   /**
-   * Returns the complement of list 0 and the reset of the passed in arrays.
+   * Curried version of `complement`.
    */
   $complement = <T>(xs1: T[]) =>
-    (xs2: T[], ...arrays: T[][]): T[] => complement(xs1, xs2, ...arrays)
+    (xs2: T[], ...arrays: T[][]): T[] =>
+      complement(xs1, xs2, ...arrays)
 
 ;

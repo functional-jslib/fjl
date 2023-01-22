@@ -11,7 +11,6 @@ export const
   ): ReturnType<typeof fn>[] => {
     const limit = xs.length,
       out = new (xs.constructor as Constructable)(limit);
-    if (!limit) return out;
     for (let i = 0; i < limit; i += 1) {
       out[i] = fn(xs[i], i, xs);
     }

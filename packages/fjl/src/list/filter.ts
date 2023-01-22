@@ -11,11 +11,10 @@ export const
 
     if (!limit) return out;
 
-    let ind = 0; // @todo Should be using 'for i less than' loop here (below).
-
     // Filter items against predicate
-    for (const x of xs) {
-      if (pred(x, ind++, xs)) out.push(x);
+    for (let i = 0; i < limit; i += 1) {
+      const x = xs[i];
+      if (pred(x, i, xs)) out.push(x);
     }
 
     return out;

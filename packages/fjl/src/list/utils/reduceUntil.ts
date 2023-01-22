@@ -12,7 +12,6 @@ export const
     xs: NumberIndexable
   ) => {
     const limit = xs.length;
-    if (!limit) return agg;
     let result = agg;
     for (let ind = 0; ind < limit; ind++) {
       if (pred(xs[ind], ind, xs)) break;

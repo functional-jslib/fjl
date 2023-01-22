@@ -4,16 +4,20 @@ import {negateF3} from "../function";
 
 export const
 
-  dropWhileEnd = <T>(pred: TernaryPred, list: T[]): T[] => {
+  dropWhileEnd = <T>(
+    pred: TernaryPred,
+    xs: string | T[]
+  ): typeof xs => {
     const splitPoint: number =
-      findIndexWhereRight(negateF3(pred), list);
+      findIndexWhereRight(negateF3(pred), xs);
     if (splitPoint === -1) {
-      return [];
+      return xs.constructor();
     }
-    return list.slice(0, splitPoint + 1);
+    return xs.slice(0, splitPoint + 1);
   },
 
   $dropWhileEnd = <T>(p: TernaryPred) =>
-    (list: T[]): T[] => dropWhileEnd(p, list)
+    (xs: string | T[]): typeof xs =>
+      dropWhileEnd(p, xs)
 
 ;

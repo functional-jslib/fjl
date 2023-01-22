@@ -1,25 +1,25 @@
-import {alphabetArray, alphabetString, expectEqual, expectError} from "../helpers";
-import {stripPrefix} from "../../src/list";
+import {vowelsArray, vowelsString} from "../helpers";
+import {stripPrefix} from "../../src/list/stripPrefix";
+
+const {stringify} = JSON;
 
 describe('#stripPrefix', () => {
-  it('should be able to strip a prefix from a list', () => {
-    expectEqual(
-      stripPrefix('abc', alphabetArray.slice(0, 10)),
-      alphabetArray.slice(3, 10));
+  type StripPrefix = typeof stripPrefix;
 
-    expectEqual(
-      stripPrefix('abc', alphabetString.substring(0, 10)),
-      alphabetString.substring(3, 10));
-  });
-  it('should return a copy of the passed in list when prefix is not found', () => {
-    expectEqual(stripPrefix('!*&', alphabetArray), alphabetArray);
-    expectEqual(stripPrefix('!*&', alphabetString), alphabetString);
-    expectEqual(stripPrefix('!*&', ''), '');
-    expectEqual(stripPrefix('!*&', []), []);
-  });
-  it('should throw an error when receiving nothing in either position', () => {
-    expectError(() => stripPrefix(null, 'abc'));
-    expectError(() => stripPrefix(null, null));
-    expectError(() => stripPrefix('abc', null));
-  });
+  (<[Parameters<StripPrefix>, ReturnType<StripPrefix>][]>[
+    [['aei', vowelsString], vowelsString.slice(3)],
+    [['#!*', vowelsString], vowelsString],
+    [['aei'.split(''), vowelsArray], vowelsArray.slice(3)],
+    [['#!*'.split(''), vowelsArray], vowelsArray],
+    [[vowelsString, vowelsString], ''],
+    [[vowelsArray, vowelsArray], []],
+    [['', vowelsString], vowelsString],
+    [[[], vowelsArray], vowelsArray],
+  ])
+    .forEach(([args, expected]) => {
+      it(`stripPrefix(...${stringify(args)}) === ${stringify(expected)}`, function () {
+        const rslt = stripPrefix(...args);
+        expect(rslt).toEqual(expected);
+      });
+    });
 });

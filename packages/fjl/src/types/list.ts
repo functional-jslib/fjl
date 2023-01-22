@@ -12,7 +12,7 @@ export type ReduceOp<T = any, FnctrT = any, ZeroT = any> = (agg: ZeroT, x?: T, i
 export type FoldOp = ReduceOp;
 
 export type MapAccumOp<A = any, B = any, C = any, Ind = number | string, Functor = Slice<B>> =
-  (agg?: A, x?: B, i?: Ind, xs?: Functor) => [A, C];
+  (agg?: A, b?: B, i?: Ind, bs?: Functor) => [A, C];
 
 export type PredForSlice<T = any, TS extends Slice<T> = Slice<T>> = TernaryPred<T, number, TS>;
 

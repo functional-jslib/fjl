@@ -7,7 +7,6 @@ export const
    */
   reduceRight = (op: ReduceOp, agg: any, xs: NumberIndexable): ReturnType<typeof op> => {
     const limit = xs.length;
-    if (!limit) return agg;
     let result = agg;
     for (let ind = limit - 1; ind >= 0; ind--) {
       result = op(result, xs[ind], ind, xs);
