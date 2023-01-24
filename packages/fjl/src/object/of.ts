@@ -3,13 +3,17 @@ import {isset} from './isset';
 import {Constructable} from "../types";
 
 /**
- * Creates a value `of` given type;  Checks for one of the following construction strategies (in order listed):
- * - If exists `(value).constructor.of` uses this.
- * - If value is a constructable primitive [String, Boolean, Symbol, Number, BigInt] calls value's
- *   constructor in cast form (E.g., `constructor(...args)` )
- * - Else if constructor is an instance of `Function`, calls constructor, using
- *   the `new` keyword (with any passed in args).
- * - Else returns nothing.
+ * Creates a value `of` given type;  Checks for one of
+ * the following construction strategies (in order listed):
+ *
+ *   - If exists `(value).constructor.of` uses this.
+ *   - If value is a constructable primitive [String,
+ *      Boolean, Symbol, Number, BigInt] calls value's
+ *     constructor in cast form (E.g., `constructor(...args)` )
+ *   - Else if constructor is an instance of `Function`,
+ *     calls constructor, using the `new` keyword (with any
+ *     passed in args).
+ *   - Else returns nothing.
  */
 export const of = <T>(x: T, ...args: any[]): T => {
     if (!isset(x)) return undefined;

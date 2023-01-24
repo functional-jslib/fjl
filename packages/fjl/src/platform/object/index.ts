@@ -23,7 +23,8 @@ export const
    * @todo Method should take object as first argument.
    */
   hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
-    // @note `Object.hasOwn` cannot be used here until it is more broadly adopted (until node v24+ release etc.).
+    // @note `Object.hasOwn` cannot be used here until it is more broadly
+    //   adopted (until node v24+ release etc.).
     isset(x) && Object.prototype.hasOwnProperty.call(x, key) // @todo shouldn't be checking for null/undefined here
   ,
 
@@ -32,12 +33,20 @@ export const
 
   /**
    * Contains all the static functions from `Object` but curried and flipped;
+   * Methods that only take one parameter, or only 'rest' args, are exported as is.
    *
-   * ```
-   * // E.g., `Object.defineProperties(obj, descriptor)` can now be used like
-   * import {defineProperties} from 'fjl'
+   * ```typescript
+   * // E.g., `Object.defineProperties(obj, descriptor)` can now be used flipped,
+   * // and/or, curried:
+   * import {defineProperties, $defineProperties} from 'fjl'
+   *
+   * // Flipped
    * defineProperties(descriptor, someObj),
-   * // Et. al.
+   *
+   * // Flipped and Curried
+   * $defineProperties(descriptor)(someObj);
+   *
+   * // etc.
    * ```
    */
   native: ObjectStatics = Object.getOwnPropertyNames(Object).reduce((agg, key) => {
