@@ -3,8 +3,8 @@ import {Unary, UnaryPred} from "../types";
 export const
 
   /**
-   * Run `operation` until predicate returns `true` (like a functional
-   *  version of a while loop).
+   * Run `operation` until predicate returns `true` (functional
+   * while loop).
    */
   until = <T>(
     predicate: UnaryPred<T>,

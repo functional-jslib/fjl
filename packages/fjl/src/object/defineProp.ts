@@ -1,6 +1,9 @@
 import {errorIfNotType} from '../errorThrowing';
 import {TypeRef} from "../types";
 
+/**
+ * @todo move module to it's own standalone package.
+ */
 export type DefinePropsArgsTuple = [TypeRef, string, any?];
 
 export const

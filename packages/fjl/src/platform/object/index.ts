@@ -8,13 +8,20 @@ import {isset} from "../../object/isset";
 
 export const
 
+  // @todo We shouldn' be returning these directly.
   {assign, keys} = Object,
 
+  /**
+   * @todo Method should take object as first argument.
+   */
   instanceOf = (X: Constructable, x): boolean =>
     isset(x) && x.constructor === X || x instanceof X, // @todo remove null check (isset) here (in future release).
 
   $instanceOf = (X: Constructable) => (x): boolean => instanceOf(X, x),
 
+  /**
+   * @todo Method should take object as first argument.
+   */
   hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
     // @note `Object.hasOwn` cannot be used here until it is more broadly adopted (until node v24+ release etc.).
     isset(x) && Object.prototype.hasOwnProperty.call(x, key) // @todo shouldn't be checking for null/undefined here

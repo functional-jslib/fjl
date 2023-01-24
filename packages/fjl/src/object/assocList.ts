@@ -1,5 +1,10 @@
 /**
- * @todo Should be using new methods here (Object.fromEntries, etc.) and deprecating existing ones (in favor of fjl.native.*, and or natively built-in ones).
+ * @deprecated Use `Object.(entries|fromEntries)`, or
+ * `fjl.native.(entries|fromEntries)`, instead.
+ *
+ * @todo Should be using new methods here (Object.fromEntries, etc.)
+ *   and deprecating existing ones (in favor of fjl.native.*, and or
+ *   natively built-in ones).
  */
 import {isArray} from './is';
 import {keys} from '../platform/object';
@@ -15,10 +20,13 @@ export const
   toAssocList = <T>(obj: T): [keyof T, any][] => Object.entries(obj) as [keyof T, any][],
 
   /**
-   * Returns a deep associated list from given object, on incoming `TypeConstraint` constructor.
+   * @deprecated Not to many algorithms require this kind of
+   * functionality - User should perform this functionality
+   * directly, and/or, define this method for their situation,
+   * as required.
    *
-   * @deprecated Not to many algorithms require this kind of functionality - Perform functionality
-   * directly, and/or, define method as required.
+   * Returns a deep associated list from given object, on incoming
+   * `TypeConstraint`.
    */
   toAssocListDeep = (obj, TypeConstraint: TypeConstructor = Object) =>
     map(key =>
@@ -37,9 +45,11 @@ export const
   }, zero, xs),
 
   /**
-   * From associated list to object (deep conversion on associative lists (array of 2 value arrays)).
+   * @deprecated Method is too specific - Define functionality/method
+   * in your use cases as required.
    *
-   * @deprecated Method is too specific - Define functionality/method in your use cases as required.
+   * From associated list to object (deep conversion on associative
+   * lists (array of 2 value arrays)).
    */
   fromAssocListDeep = (xs, OutType = Object) => foldl((agg, [key, value]) => {
     if (isArray(value) && isArray(value[0]) && value[0].length === 2) {

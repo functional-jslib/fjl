@@ -3,12 +3,12 @@ import {typeOf} from './typeOf';
 export const
 
   /**
-   * Converts incoming value to an array - Pairs up incoming value with
-   * appropriate method (`Array.from`, `Object.entries`, etc.) based on incoming value.
-   * For non parseable values (`NaN`, `null`, `undefined`, etc.) returns an empty array.
+   * @deprecated Use `Array.(from|of)`, an empty array, or `Object.entries`, etc., (directly) as required.
    *
-   * @deprecated Use `Array.from`, an empty array, or `Object.entries` (directly)
-   *  as needed.
+   * Converts incoming value to an array - Pairs up incoming value with
+   * appropriate method (`Array.from`, `Object.entries`, etc.) based on
+   * incoming value. For non parseable values (`NaN`, `null`,
+   * `undefined`, etc.) returns an empty array.
    */
   toArray = (x: any): any[] => {
     switch (typeOf(x)) {

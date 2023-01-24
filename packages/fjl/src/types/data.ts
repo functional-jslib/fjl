@@ -1,22 +1,7 @@
 import {Binary} from "./arity";
 
-/**
- * @deprecated Use `NumberIndexable` instead.
- */
-export interface Lengthable {
-  readonly length?: number;
-}
-
 export interface Nameable {
   readonly name: string;
-}
-
-export interface ToString {
-  toString(): string;
-}
-
-export interface ToJSON<T = object> {
-  toJSON(): T;
 }
 
 export type  NumberIndexable<T = any> = ({
@@ -28,44 +13,16 @@ export type  NumberIndexable<T = any> = ({
    */
   {
     readonly length: number;
-    readonly [index: number]: any;
+    readonly [index: number]: any; // for `String`/`string`, type here
+    // should actually be `string`, this is too strict, however, for
+    // a Sum type so `any` is used instead (works fine)
+    // interchangeably targeting `string`, and/or `Array` types.
   });
-
-export type TypedArray = (
-  Int8Array |
-  Uint8Array |
-  Int16Array |
-  Uint16Array |
-  Int32Array |
-  Uint32Array |
-  Float32Array |
-  Float64Array |
-  BigInt64Array |
-  BigUint64Array
-  ) & {
-  concat(...args: ConcatArray<any>[]): any;
-};
-
-export type ArrayType<T> = Array<T> | TypedArray;
-
-export type ArrayTypeConstructor = ArrayConstructor |
-  Int8ArrayConstructor |
-  Uint8ArrayConstructor |
-  Int16ArrayConstructor |
-  Uint16ArrayConstructor |
-  Int32ArrayConstructor |
-  Uint32ArrayConstructor |
-  Float32ArrayConstructor |
-  Float64ArrayConstructor |
-  BigInt64ArrayConstructor |
-  BigUint64ArrayConstructor;
 
 /**
  * `Union + Sum` Slice type - Represents, the intersection, of the string,
  * array, and custom structure, types that match the `Slice` "summed" interfaces -
  * Basically a type for representing string, and/or "array structure" like types.
- *
- * @deprecated Used direct types (as required) instead.
  */
 export type Slice<T = any> = string | T[];
 
@@ -135,3 +92,49 @@ export interface Bifunctor<A, B> extends Functor<A> {
 
   bimap<RetA, RetB>(fn1: FunctorMapOp<A, RetA>, fn2: FunctorMapOp<B, RetB>): Bifunctor<RetA, RetB>;
 }
+
+
+/**
+ * @deprecated Use `NumberIndexable` instead.
+ */
+export interface Lengthable {
+  readonly length?: number;
+}
+
+/**
+ * @deprecated Use types directly.
+ */
+export type TypedArray = (
+  Int8Array |
+  Uint8Array |
+  Int16Array |
+  Uint16Array |
+  Int32Array |
+  Uint32Array |
+  Float32Array |
+  Float64Array |
+  BigInt64Array |
+  BigUint64Array
+  ) & {
+  concat(...args: ConcatArray<any>[]): any;
+};
+
+/**
+ * @deprecated Use types directly.
+ */
+export type ArrayType<T> = Array<T> | TypedArray;
+
+/**
+ *  @deprecated Use types directly.
+ */
+export type ArrayTypeConstructor = ArrayConstructor |
+  Int8ArrayConstructor |
+  Uint8ArrayConstructor |
+  Int16ArrayConstructor |
+  Uint16ArrayConstructor |
+  Int32ArrayConstructor |
+  Uint32ArrayConstructor |
+  Float32ArrayConstructor |
+  Float64ArrayConstructor |
+  BigInt64ArrayConstructor |
+  BigUint64ArrayConstructor;

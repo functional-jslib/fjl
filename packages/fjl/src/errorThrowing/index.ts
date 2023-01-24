@@ -4,6 +4,8 @@
  * Contains error throwing combinators for enforcing value types at runtime.
  *
  * **Notable mentions** `errorIfNotType`, and `errorIfNotTypes`.
+ *
+ * @todo move package to it's own standalone package.
  */
 import {typeOf} from '../object/typeOf';
 import {isArray, isOfType, toTypeRef, toTypeRefName} from '../object/is';

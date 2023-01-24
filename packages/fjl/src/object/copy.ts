@@ -5,14 +5,15 @@ import {id} from "../function/id";
 export const
 
   /**
-   * Make a copy of a value or optionally copy incoming value onto an outgoing value (second parameter).
+   * @deprecated use `structuredClone`, or existing object methods,
+   * etc., instead.
    *
-   * @note If incoming value is an immutable primitive (string, number, symbol, NaN, null, undefined, boolean)
-   *  it gets returned as is.
+   * Make a copy of a value or optionally copy incoming value onto an
+   * outgoing value (second parameter).
    *
-   * @todo Should [tentatively] be using `structuredClone` here (should be looked into for a future release).
-   *
-   * @deprecated use `structuredClone`, or existing objects methods, etc.
+   * @note If incoming value is an immutable primitive (string, number,
+   * symbol, NaN, null, undefined, boolean)
+   * it gets returned as is.
    */
   copy = <T>(x, out?: any): T => {
     // if falsy value (immutable primitive) return it
