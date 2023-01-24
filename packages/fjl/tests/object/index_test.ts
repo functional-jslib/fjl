@@ -500,9 +500,7 @@ describe('#object', function () {
         [{}, true],
         [new Map(), true],
         [new Set(), true],
-        [() => undefined, true],          // Has no enumerable properties.
-        [Object.defineProperties, true], // ""
-        [Object, true],                  // ""
+        [() => undefined, true],          // Has no enumerable properties, and `length` equal to `0`.
 
         // Non-empties
         [vowelsString, false],
@@ -510,6 +508,8 @@ describe('#object', function () {
         [new Set(vowelsArray), false],
         [new Map(vowelsArray.map(c => [c, c.charCodeAt(0)])), false],
         [Symbol('x'), false],
+        [Object.defineProperties, false], // Has truthy `length`
+        [Object, false],                  // Has `length` of `1`
         [true, false],
         [-1, false],
         [1, false],
@@ -598,6 +598,18 @@ describe('#object', function () {
       expect(clonedObj).toEqual(originalObjects.clonedObj);
       expect(obj2).toEqual(originalObjects.obj2);
     });
+
+    it ('should work on arrays', () => {
+      (<[Parameters<typeof assignDeep>, ReturnType<typeof assignDeep>][]>[
+        [[[], []], []],
+        [[[], [1, 2, 3]], [1, 2, 3]],
+        [[[2, 1, 2, 4, 5], [1, 2, 3]], [1, 2, 3, 4, 5]]
+      ])
+        .forEach(([args, expected]) => {
+          const rslt = assignDeep(...args);
+          expect(rslt).toEqual(expected);
+        })
+    })
   });
 
   describe('#assign', function () {

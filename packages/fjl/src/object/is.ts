@@ -312,7 +312,7 @@ export const
   isEmptyCollection = (x: { readonly size: number }): boolean => x.size === 0,
 
   /**
-   * @deprecated Check value type state directly.
+   * @deprecated Check values/value type states directly.
    *
    * Checks if passed in value is falsy, an empty array,
    * an empty es6 collection object (Map, Set, etc.),
