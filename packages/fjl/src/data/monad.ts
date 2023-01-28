@@ -15,13 +15,13 @@ import {
 } from "../types";
 import {isType} from "../object";
 
-export interface Monad<T> extends Applicative<T> {
+export interface Monad<T = any> extends Applicative<T> {
   join(): T;
 
   flatMap<RetT>(fn: FunctorMapOp<T, RetT>): Monad<RetT>;
 }
 
-export type MonadConstructor<T> = ApplicativeConstructor<T>;
+export type MonadConstructor<T = any> = ApplicativeConstructor<T>;
 
 export class MonadBase<T = any> implements Monad<T> {
 

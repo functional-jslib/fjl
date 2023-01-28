@@ -39,7 +39,7 @@ export interface FunctorConstructor<T> {
   readonly prototype: Functor<T>;
 }
 
-export interface Functor<T> {
+export interface Functor<T = any> {
   valueOf(): T;
 
   map<RetT>(fn: FunctorMapOp<T, RetT>): Functor<RetT>;
@@ -53,11 +53,11 @@ export interface ApplyConstructor<T> extends FunctorConstructor<T> {
   readonly prototype: Apply<T>;
 }
 
-export interface Apply<T> extends Functor<T> {
+export interface Apply<T = any> extends Functor<T> {
   ap<T, RetT>(f: Functor<T>): Apply<RetT>;
 }
 
-export interface ApplicativeConstructor<T> extends ApplyConstructor<T> {
+export interface ApplicativeConstructor<T = any> extends ApplyConstructor<T> {
   new(x: T): Applicative<T>;
 
   readonly prototype: Applicative<T>;
@@ -75,15 +75,15 @@ export interface ApplicativeConstructor<T> extends ApplyConstructor<T> {
   apLeft<A, B>(a: Applicative<A>, b: Applicative<B>): Applicative<A>;
 }
 
-export type Applicative<T> = Apply<T>;
+export type Applicative<T = any> = Apply<T>;
 
-export interface BifunctorConstructor<A, B> extends FunctorConstructor<A> {
+export interface BifunctorConstructor<A = any, B = any> extends FunctorConstructor<A> {
   new(a: A, b: B): Bifunctor<A, B>;
 
   readonly prototype: Bifunctor<A, B>;
 }
 
-export interface Bifunctor<A, B> extends Functor<A> {
+export interface Bifunctor<A = any, B = any> extends Functor<A> {
   value2Of(): B;
 
   first<RetT>(fn: FunctorMapOp<A, RetT>): Bifunctor<RetT, B>;

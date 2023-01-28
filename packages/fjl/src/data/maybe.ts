@@ -3,81 +3,84 @@
  */
 import {isset} from '../object/is';
 import {Monad, MonadBase, MonadConstructor} from './monad';
-import {Apply, Functor, UnaryPred} from "../types";
+import {Apply, Functor, Ternary, UnaryPred} from "../types";
 import {FunctorMapOp} from "../types";
 import {$instanceOf} from "../platform/object";
 
-let NothingSingleton: Nothing;
-
-/**
- * Class for creating a `Nothing`.
- * @note Nothing always returns a singleton instance of `Nothing`.
- * @note Nothing shouldn't be used with a generic type as the passed in type is ignored internally.
- */
-export class Nothing<T = any> implements Monad<T> {
-  /**
-   * Applicative `pure` - Same as `new Nothing()`, `Nothing()`, and `nothing()`.
-   */
-  static of(x?: any): Nothing {
-    return new Nothing(x);
-  }
-
-  constructor(x?: any) {
-    if (NothingSingleton) {
-      return NothingSingleton;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    NothingSingleton = this;
-    Object.freeze(NothingSingleton);
-  }
-
-  /**
-   * Returns `Nothing`.
-   */
-  valueOf(): any {
-    return this;
-  }
-
-  /**
-   * Returns `Nothing`.
-   */
-  join(): any {
-    return this;
-  }
-
-  /**
-   * Returns `Nothing`.
-   */
-  map<RetT>(f: FunctorMapOp<T, RetT>): Nothing {
-    return this;
-  }
-
-  /**
-   * Returns `Nothing`.
-   */
-  ap<X, RetT>(f: Functor<X>): Apply<RetT> {
-    return this as unknown as Apply<RetT>;
-  }
-
-  /**
-   * Returns `Nothing`.
-   */
-  flatMap<RetT>(f: FunctorMapOp<T, RetT>): Nothing<RetT> {
-    return this as unknown as Nothing<RetT>;
-  }
-}
+const _nothingTag = '[object Nothing]';
 
 export const
 
   /**
+   * `Nothing` functor;  Will always equal/return `Nothing`, for `new Nothing()`,
+   * `Nothing()`, and all of it's `Monad` interface methods`.
+   */
+  Nothing = (() => {
+    const out = Object.assign(function Nothing() {
+      return Nothing;
+    }, {
+      // [Symbol.hasInstance](x) {
+      //   return x === Nothing;
+      // },
+
+      [Symbol.iterator]() {
+        return this.valueOf();
+      },
+
+      [Symbol.toStringTag]() {
+        return _nothingTag;
+      },
+
+      /**
+       * Returns `Nothing`.
+       */
+      valueOf(): any {
+        return this;
+      },
+
+      /**
+       * Returns `Nothing`.
+       */
+      join(): any {
+        return this;
+      },
+
+      /**
+       * Returns `Nothing`.
+       */
+      map(f: Ternary) {
+        return this;
+      },
+
+      /**
+       * Returns `Nothing`.
+       */
+      ap(f: Functor): Apply {
+        return this;
+      },
+
+      /**
+       * Returns `Nothing`.
+       */
+      flatMap(f: Ternary) {
+        return this;
+      },
+    }) as Monad & CallableFunction;
+
+    Object.freeze(out);
+
+    return out;
+  })(),
+
+  /**
    * Checks for `Nothing`.
    */
-  isNothing = (x: any): boolean => x === NothingSingleton,
+  isNothing = (x: any): boolean => x === Nothing,
 
   /**
    * Returns `Nothing`.
    */
-  nothing = Nothing.of
+  nothing = Nothing
 ;
 
 export interface JustConstructor<T> extends MonadConstructor<T> {
@@ -122,7 +125,7 @@ export const
   alwaysJust = <T>(x: T): Just<T> | T => isJust(x) ? x : just(x)
 ;
 
-export type  Maybe<T> = Just<T> | Nothing;
+export type  Maybe<T> = Just<T> | typeof Nothing;
 
 export const
 
@@ -165,7 +168,7 @@ export const
    */
   toMaybe = <T>(x: T): Maybe<T> => {
     if (!isset(x)) {
-      return nothing();
+      return Nothing;
     }
     return isMaybe(x) ? x as unknown as Maybe<T> : just(x);
   }

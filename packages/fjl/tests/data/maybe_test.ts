@@ -142,7 +142,7 @@ describe('#Just.ap', () => {
 
 describe('#isNothing', () => {
   test('should return `true` when a value is of type `Nothing`', () => {
-    [nothing(), new Nothing(), Nothing.of()].forEach(x => {
+    [Nothing, Nothing()].forEach(x => {
       expect(isNothing(x)).toEqual(true);
     });
   });
@@ -154,45 +154,21 @@ describe('#isNothing', () => {
 });
 
 describe('#Nothing', () => {
-  test('Should return singleton instance of `Nothing` whenever called with `new`', () => {
-    expect(new Nothing() === new Nothing()).toEqual(true);
-  });
-
-  test('Should return singleton instance when called as a function', () => {
-    expect(nothing() === nothing() && nothing() === new Nothing())
-      .toEqual(true);
-  });
-
-  test('Should return singleton instance when called with via static factory (`of`)', () => {
-    expect(Nothing.of() === Nothing.of() && Nothing.of() === new Nothing())
-      .toEqual(true);
-  });
-
-  test('Expect calling `Nothing` as a function, with `new` keyword, or via static `of` method, to all ' +
-    'equate to same singleton instance of `Nothing`', () => {
-    const instance = nothing();
-    [nothing(), new Nothing(), Nothing.of()]
-      .forEach(naught => expect(naught).toEqual(instance));
-  });
-
-  test('Expect it to be extendable via es6 `class` syntax', () => {
-    class Hello extends Nothing {
-      constructor(something?: any) {
-        super(something);
-      }
-    }
-
-    expect(new Hello() === new Nothing()).toEqual(true);
+  test('Should return singleton instance when called as a function, or with the `new` keyword', () => {
+    [[Nothing(), Nothing],
+      // @ts-ignore
+      [new Nothing(), Nothing]]
+      .forEach(([a, b]) => {
+        expect(a).toEqual(b);
+      });
   });
 
   test('Expect `map`, `ap`, `flatMap`, and `join` methods to exist', () => {
-    const instance = nothing();
-    methodNames.forEach(name => expect(instance[name]).toBeInstanceOf(Function));
+    methodNames.forEach(name => expect(Nothing[name]).toBeInstanceOf(Function));
   });
 
   test('Expect `map`, `ap`, `flatMap`, and `join` methods to all return same singleton instance of `Nothing`', () => {
-    const instance = nothing();
-    methodNames.forEach(x => expect((instance[x] as Unary)(undefined)).toEqual(instance));
+    methodNames.forEach(x => expect((Nothing[x] as Unary)(undefined)).toEqual(Nothing));
   });
 });
 
@@ -201,8 +177,8 @@ describe('Maybe', () => {
     // @todo should we include `NaN` as a value that gives you a `Nothing` (probably but for simplicities sake (for now)...)
     test('Should return a `Nothing` when receiving `null` or `undefined`', () => {
       [null, undefined].forEach(value => {
-        const result = toMaybe(value) as Nothing;
-        expect(result).toBeInstanceOf(Nothing);
+        const result = toMaybe(value);
+        expect(result).toEqual(Nothing);
         result.map(x => expect(x).toEqual(undefined));
       });
     });
@@ -235,7 +211,7 @@ describe('Maybe', () => {
     (<[Parameters<typeof maybe>, ReturnType<typeof maybe>][]>[
       [[replacementVal, squareX, just(caseValue)], squareX(caseValue)],
       [[replacementVal, squareX, caseValue], squareX(caseValue)],
-      [[replacementVal, squareX, nothing()], replacementVal],
+      [[replacementVal, squareX, Nothing], replacementVal],
       [[replacementVal, squareX, null], replacementVal],
       [[replacementVal, squareX, undefined], replacementVal],
     ])

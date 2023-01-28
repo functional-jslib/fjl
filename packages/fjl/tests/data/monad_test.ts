@@ -1,4 +1,4 @@
-import {just, nothing} from "../../src/data/maybe";
+import {just, Nothing} from "../../src/data/maybe";
 import {Monad, join, valueOf, fmap, ap, flatMap, MonadBase} from "../../src/data/monad";
 import {left, right} from "../../src/data/either";
 import {Applicative, FunctorMapOp, Nary, UnitNary} from "../../src/types";
@@ -27,7 +27,7 @@ describe('#join()', () => {
 
 describe('#fmap()', () => {
   (<[Monad<any>, FunctorMapOp<any, any>, Monad<any>][]>[
-    [nothing(), id, nothing()],
+    [Nothing, id, Nothing],
     [just(null), id, just(null)],
     [just(2), x => x * 2, just(4)],
     [[1, 2, 3], x => x * 2, [2, 4, 6]]
@@ -44,7 +44,7 @@ describe('#ap', () => {
   (<[Applicative<<T>(x: T) => T>, Monad<any>, Monad<any>][]>[
     [just((x: number) => x * 2), just(4), just(8)],
     [just((x: number) => x * 3), just(2), just(6)],
-    [just(x => x), nothing(), nothing()],
+    [just(x => x), Nothing, Nothing],
     [just(x => x), just(null), just(null)]
   ])
     .forEach(([applicative, functor, expected]) => {
@@ -57,7 +57,7 @@ describe('#ap', () => {
 
 describe('#flatMap', () => {
   (<[Monad<any>, FunctorMapOp<any, any>, Monad<any>][]>[
-    [nothing(), id, nothing()],
+    [Nothing, id, Nothing],
     [just(null), id, just(null)],
     [just(2), x => x * 2, just(4)],
     [[1, 2, 3], x => x * 2, [2, 4, 6]]
