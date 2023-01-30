@@ -2,12 +2,43 @@
  * @module maybe
  */
 import {isset} from '../object/is';
-import {Monad, MonadBase, MonadConstructor} from './monad';
-import {Apply, Functor, Ternary, UnaryPred} from "../types";
-import {FunctorMapOp} from "../types";
-import {$instanceOf} from "../platform/object";
+import {Monad} from './monad';
+import {
+  Apply,
+  Functor,
+  Ternary,
+} from "../types";
 
-const _nothingTag = '[object Nothing]';
+interface Nothing extends Monad {
+}
+
+const _nothingTag = '[object Nothing]',
+
+  NothingProto = {
+    valueOf(): any {
+      return undefined;
+    },
+
+    join(): any {
+      return undefined;
+    },
+
+    map(f: Ternary) {
+      return this;
+    },
+
+    ap(f: Functor): Apply {
+      return this;
+    },
+
+    flatMap(f: Ternary) {
+      return this;
+    },
+  },
+
+  VALUE_SYM = Symbol('value');
+
+type MaybeTernaryOp<A = any, RetT = any> = (a: A, i?: keyof Maybe<A>, as?: Maybe<A>) => RetT;
 
 export const
 
@@ -16,56 +47,23 @@ export const
    * `Nothing()`, and all of it's `Monad` interface methods`.
    */
   Nothing = (() => {
-    const out = Object.assign(function Nothing() {
+    function Nothing() {
       return Nothing;
-    }, {
-      // [Symbol.hasInstance](x) {
-      //   return x === Nothing;
-      // },
+    }
 
-      [Symbol.iterator]() {
-        return this.valueOf();
-      },
+    Nothing.prototype = NothingProto;
+    Nothing.prototype.constructor = Nothing;
+    Nothing.of = Nothing;
 
-      [Symbol.toStringTag]() {
-        return _nothingTag;
-      },
+    const out = Object.assign(Nothing, NothingProto);
 
-      /**
-       * Returns `Nothing`.
-       */
-      valueOf(): any {
-        return this;
-      },
+    /*out[Symbol.hasInstance] = (x) => {
+      return x === Nothing;
+    };*/
 
-      /**
-       * Returns `Nothing`.
-       */
-      join(): any {
-        return this;
-      },
-
-      /**
-       * Returns `Nothing`.
-       */
-      map(f: Ternary) {
-        return this;
-      },
-
-      /**
-       * Returns `Nothing`.
-       */
-      ap(f: Functor): Apply {
-        return this;
-      },
-
-      /**
-       * Returns `Nothing`.
-       */
-      flatMap(f: Ternary) {
-        return this;
-      },
-    }) as Monad & CallableFunction;
+    out[Symbol.species] = () => {
+      return Nothing;
+    };
 
     Object.freeze(out);
 
@@ -80,52 +78,63 @@ export const
   /**
    * Returns `Nothing`.
    */
-  nothing = Nothing
-;
+  nothing = Nothing;
 
-export interface JustConstructor<T> extends MonadConstructor<T> {
-  new(x: T): Just<T>;
-
-  of<X>(x: X): Just<X>;
-
-  readonly prototype: Just<T>;
+type Just<T = any> = Monad<T> & {
+  map(fn: Ternary<T>): Maybe<T>
 }
 
-export class Just<T> extends MonadBase<T> {
-  /**
-   * Applicative pure - Same as `new Just(...)`.
-   */
-  static of<X>(x?: X): Just<X> {
-    return new Just(x);
-  }
+export function Just<T>(value?: T): Maybe<T> {
+  if (!isset(value)) return Nothing;
 
-  /**
-   * Maps incoming function over contained value and
-   */
-  map<RetT>(fn: FunctorMapOp<T, RetT>): Just<RetT> {
-    return super.map(fn) as Just<RetT>;
-  }
+  const out = Object.create(Just.prototype, {
+    [VALUE_SYM]: {value},
+  });
+
+  // out[Symbol.species] = () => Just;
+  // out[Symbol.hasInstance] = isJust
+
+  return out;
 }
 
-export const
+Just.prototype.valueOf = function () {
+  return this[VALUE_SYM];
+};
 
-  /**
-   * Checks for `Just`.
-   */
-  isJust = $instanceOf(Just) as UnaryPred,
+Just.prototype.map = function (fn) {
+  return Just(fn(this.valueOf()));
+}
 
-  /**
-   * Wraps `x` in an `Just`.
-   */
-  just = Just.of,
+Just.prototype.ap = function (fnctr) {
+  const value = this.valueOf(),
+    fn = (value ?? false) instanceof Function ? value : () => value;
+  return Just(fnctr.map(fn).join());
+}
 
-  /**
-   * Ensures an `Just`.
-   */
-  alwaysJust = <T>(x: T): Just<T> | T => isJust(x) ? x : just(x)
-;
+Just.prototype.join = function () {
+  return this.valueOf();
+}
 
-export type  Maybe<T> = Just<T> | typeof Nothing;
+Just.prototype.flatMap = function (fn) {
+  let out = this.map(fn);
+  while (isJust(out)) {
+    out = out.join();
+  }
+  return Just(out);
+}
+
+Just.prototype.toString = function () {
+  return `${Just.name}(${this.valueOf()})`
+};
+
+Just.of = Just;
+
+/**
+ * Checks for `Just`.
+ */
+export const isJust = x => isset(x) && x instanceof Just;
+
+export type  Maybe<T = any> = Just<T> | Nothing;
 
 export const
 
@@ -134,17 +143,17 @@ export const
    * If the Maybe value is `Nothing`, the function returns the `replacement` value.
    * Otherwise, it applies the function to the value contained  by the `Just` and returns the result.
    */
-  maybe = <A, B>(replacement: B, fn: FunctorMapOp<A, A>, maybeInst: Maybe<A> | A | null | undefined): A | B => {
+  maybe = <A, B>(replacement: B, fn: MaybeTernaryOp<A>, maybeInst: Maybe<A> | A): A | B => {
     if (!isset(maybeInst) || isNothing(maybeInst)) return replacement;
-    return maybeInst instanceof Just ? maybeInst.map(fn).join() as A : fn(maybeInst as A);
+    return maybeInst.constructor === Just ? (maybeInst as Just<A>).map(fn).join() : fn(maybeInst as A);
   },
 
   /**
    * Curried version of `maybe`.
    */
   $maybe = <A, B>(replacement: B) =>
-    (fn: FunctorMapOp<A, A>) =>
-      (maybeInst: Maybe<A> | A | null | undefined): A | B =>
+    (fn: MaybeTernaryOp<A>) =>
+      (maybeInst: Maybe<A> | A): A | B =>
         maybe(replacement, fn, maybeInst),
 
   /**
@@ -170,6 +179,6 @@ export const
     if (!isset(x)) {
       return Nothing;
     }
-    return isMaybe(x) ? x as unknown as Maybe<T> : just(x);
+    return isMaybe(x) ? x as unknown as Maybe<T> : Just(x);
   }
 ;

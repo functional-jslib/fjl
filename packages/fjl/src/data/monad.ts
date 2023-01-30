@@ -23,13 +23,13 @@ export interface Monad<T = any> extends Applicative<T> {
 
 export type MonadConstructor<T = any> = ApplicativeConstructor<T>;
 
-export class MonadBase<T = any> implements Monad<T> {
+export class Boxed<T = any> implements Monad<T> {
 
   /**
    * Same as `new Monad(...)` just in 'static' function format.
    */
-  static of<X>(x: X): Monad<X> {
-    return new MonadBase(x);
+  static of<X>(x?: X): Monad<X> {
+    return new Boxed(x);
   }
 
   static liftA2<A, B, RetT>(fn: Binary<A, B, RetT>, appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
@@ -102,7 +102,7 @@ export const
    * Returns boolean indicating whether given value is an
    * instance of monad or not.
    */
-  isMonad = $instanceOf(MonadBase) as Unary<any, boolean>,
+  isMonad = $instanceOf(Boxed) as Unary<any, boolean>,
 
   /**
    * Calls `valueOf` on value (use for functional composition).

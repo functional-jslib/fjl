@@ -1,5 +1,5 @@
-import {just, Nothing} from "../../src/data/maybe";
-import {Monad, join, valueOf, fmap, ap, flatMap, MonadBase} from "../../src/data/monad";
+import {Just, Maybe, Nothing} from "../../src/data/maybe";
+import {Monad, join, valueOf, fmap, ap, flatMap, Boxed} from "../../src/data/monad";
 import {left, right} from "../../src/data/either";
 import {Applicative, FunctorMapOp, Nary, UnitNary} from "../../src/types";
 import {id} from "../../src/function";
@@ -7,8 +7,8 @@ import {falsyList, truthyList} from "../helpers";
 
 describe('#valueOf()', () => {
   (<[Monad<any>, any][]>[
-    [just(20), 20],
-    [just(null), null],
+    [Just(20), 20],
+    [Just(null), undefined],
     [right(20), 20],
     [left('Oh no ... an error occurred.'), 'Oh no ... an error occurred.'],
   ])
@@ -28,8 +28,8 @@ describe('#join()', () => {
 describe('#fmap()', () => {
   (<[Monad<any>, FunctorMapOp<any, any>, Monad<any>][]>[
     [Nothing, id, Nothing],
-    [just(null), id, just(null)],
-    [just(2), x => x * 2, just(4)],
+    [Just(null), id, Just(null)],
+    [Just(2), x => x * 2, Just(4)],
     [[1, 2, 3], x => x * 2, [2, 4, 6]]
   ])
     .forEach(([monad, mapper, monad2]) => {
@@ -42,14 +42,15 @@ describe('#fmap()', () => {
 
 describe('#ap', () => {
   (<[Applicative<<T>(x: T) => T>, Monad<any>, Monad<any>][]>[
-    [just((x: number) => x * 2), just(4), just(8)],
-    [just((x: number) => x * 3), just(2), just(6)],
-    [just(x => x), Nothing, Nothing],
-    [just(x => x), just(null), just(null)]
+    [Just((x: number) => x * 2), Just(4), Just(8)],
+    [Just((x: number) => x * 3), Just(2), Just(6)],
+    [Just(x => x), Just(null), Nothing],
+    [Just(x => x), Just(), Nothing],
+    [Just(x => x), Nothing, Nothing],
   ])
     .forEach(([applicative, functor, expected]) => {
-      it(`${applicative}`, function () {
-        const rslt = ap(applicative, functor) as Monad<any>;
+      it(`ap(${applicative}, ${functor}) === ${expected}`, function () {
+        const rslt = ap(applicative, functor) as Maybe;
         expect(rslt.join()).toEqual(expected.join());
       });
     });
@@ -58,8 +59,8 @@ describe('#ap', () => {
 describe('#flatMap', () => {
   (<[Monad<any>, FunctorMapOp<any, any>, Monad<any>][]>[
     [Nothing, id, Nothing],
-    [just(null), id, just(null)],
-    [just(2), x => x * 2, just(4)],
+    [Just(null), id, Just(null)],
+    [Just(2), x => x * 2, Just(4)],
     [[1, 2, 3], x => x * 2, [2, 4, 6]]
   ])
     .forEach(([monad, mapper, monad2]) => {
@@ -78,8 +79,8 @@ describe('#Monad.of', () => {
     ))
     .forEach(([testName, control]) => {
       it(testName, function () {
-        const result = MonadBase.of(control);
-        expect(result).toBeInstanceOf(MonadBase);
+        const result = Boxed.of(control);
+        expect(result).toBeInstanceOf(Boxed);
         expect(result.valueOf()).toEqual(control);
       });
     });
@@ -87,36 +88,37 @@ describe('#Monad.of', () => {
 
 describe('#Monad.liftA2', () => {
   it('Should be a static function', () => {
-    expect(MonadBase.liftA2).toBeInstanceOf(Function);
-    expect(MonadBase.liftA2.length).toEqual(3);
+    expect(Boxed.liftA2).toBeInstanceOf(Function);
+    expect(Boxed.liftA2.length).toEqual(3);
   });
 
   type ShouldThrow = boolean;
   const shouldThrow = true;
 
-  (<[string, UnitNary, MonadBase, MonadBase, ShouldThrow?][]>[
-    ['MonadBase.liftA2(Math.pow, MonadBase.of(() => 3), MonadBase.of(() => 6)).valueOf() === Math.pow(3, 6)',
+  (<[string, UnitNary, Boxed, Boxed, ShouldThrow?][]>[
+    ['Boxed.liftA2(Math.pow, Boxed.of(() => 3), Boxed.of(() => 6)).valueOf() === ' +
+    'Math.pow(3, 6)',
       Math.pow.bind(Math),
-      MonadBase.of(() => 3),
-      MonadBase.of(() => 6)
+      Boxed.of(() => 3),
+      Boxed.of(() => 6)
     ],
-    ['MonadBase.liftA2(null, a, b) Should throw',
+    ['Boxed.liftA2(null, a, b) Should throw',
       null,
-      MonadBase.of(() => 3),
-      MonadBase.of(() => 6),
+      Boxed.of(() => 3),
+      Boxed.of(() => 6),
       shouldThrow
     ]
   ])
     .forEach(([testName, f, fOfA, fOfB, throwExpected]) => {
       it(testName, function () {
         if (throwExpected) {
-          expect(() => MonadBase.liftA2(f, fOfA, fOfB)).toThrow();
+          expect(() => Boxed.liftA2(f, fOfA, fOfB)).toThrow();
           return;
         }
-        const result = MonadBase.liftA2(f, fOfA, fOfB),
-          a = fOfA.ap(just()),
-          b = fOfB.ap(just());
-        expect(result).toBeInstanceOf(MonadBase);
+        const result = Boxed.liftA2(f, fOfA, fOfB),
+          a = fOfA.ap(Boxed.of()),
+          b = fOfB.ap(Boxed.of());
+        expect(result).toBeInstanceOf(Boxed);
         expect(result.valueOf()).toEqual(f(a, b));
       });
     });
@@ -124,21 +126,21 @@ describe('#Monad.liftA2', () => {
 
 describe('#Monad.apRight', () => {
   it('Should be a static function', () => {
-    expect(MonadBase.apRight).toBeInstanceOf(Function);
-    expect(MonadBase.apRight.length).toEqual(2);
+    expect(Boxed.apRight).toBeInstanceOf(Function);
+    expect(Boxed.apRight.length).toEqual(2);
   });
 
   type ShouldThrow = boolean;
   type Expected = number;
   const shouldThrow = true;
 
-  (<[string, MonadBase<Nary<number>>, MonadBase<Nary<number>>, Expected, ShouldThrow?][]>[
-    ['MonadBase.apRight(MonadBase.of(() => 3), MonadBase.of(() => 6)).valueOf() === 6',
-      MonadBase.of(() => 3),
-      MonadBase.of(() => 6),
+  (<[string, Boxed<Nary<number>>, Boxed<Nary<number>>, Expected, ShouldThrow?][]>[
+    ['Boxed.apRight(Boxed.of(() => 3), Boxed.of(() => 6)).valueOf() === 6',
+      Boxed.of(() => 3),
+      Boxed.of(() => 6),
       6,
     ],
-    ['MonadBase.apRight(null, a, b) Should throw',
+    ['Boxed.apRight(null, a, b) Should throw',
       null,
       null,
       null,
@@ -148,11 +150,11 @@ describe('#Monad.apRight', () => {
     .forEach(([testName, fOfA, fOfB, expected, throwExpected]) => {
       it(testName, function () {
         if (throwExpected) {
-          expect(() => MonadBase.apRight(fOfA, fOfB)).toThrow();
+          expect(() => Boxed.apRight(fOfA, fOfB)).toThrow();
           return;
         }
-        const result = MonadBase.apRight(fOfA, fOfB);
-        expect(result).toBeInstanceOf(MonadBase);
+        const result = Boxed.apRight(fOfA, fOfB);
+        expect(result).toBeInstanceOf(Boxed);
         expect(result.valueOf()).toEqual(expected);
       });
     });
@@ -160,21 +162,21 @@ describe('#Monad.apRight', () => {
 
 describe('#Monad.apLeft', () => {
   it('Should be a static function', () => {
-    expect(MonadBase.apLeft).toBeInstanceOf(Function);
-    expect(MonadBase.apLeft.length).toEqual(2);
+    expect(Boxed.apLeft).toBeInstanceOf(Function);
+    expect(Boxed.apLeft.length).toEqual(2);
   });
 
   type ShouldThrow = boolean;
   type Expected = number;
   const shouldThrow = true;
 
-  (<[string, MonadBase<Nary<number>>, MonadBase<Nary<number>>, Expected, ShouldThrow?][]>[
-    ['MonadBase.apLeft(MonadBase.of(() => 3), MonadBase.of(() => 6)).valueOf() === 3',
-      MonadBase.of(() => 3),
-      MonadBase.of(() => 6),
+  (<[string, Boxed<Nary<number>>, Boxed<Nary<number>>, Expected, ShouldThrow?][]>[
+    ['Boxed.apLeft(Boxed.of(() => 3), Boxed.of(() => 6)).valueOf() === 3',
+      Boxed.of(() => 3),
+      Boxed.of(() => 6),
       3,
     ],
-    ['MonadBase.apLeft(null, a, b) Should throw',
+    ['Boxed.apLeft(null, a, b) Should throw',
       null,
       null,
       null,
@@ -184,11 +186,11 @@ describe('#Monad.apLeft', () => {
     .forEach(([testName, fOfA, fOfB, expected, throwExpected]) => {
       it(testName, function () {
         if (throwExpected) {
-          expect(() => MonadBase.apLeft(fOfA, fOfB)).toThrow();
+          expect(() => Boxed.apLeft(fOfA, fOfB)).toThrow();
           return;
         }
-        const result = MonadBase.apLeft(fOfA, fOfB);
-        expect(result).toBeInstanceOf(MonadBase);
+        const result = Boxed.apLeft(fOfA, fOfB);
+        expect(result).toBeInstanceOf(Boxed);
         expect(result.valueOf()).toEqual(expected);
       });
     });

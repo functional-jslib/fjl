@@ -4,7 +4,7 @@
  */
 import {isset} from '../object/isset';
 import {id} from '../function/id';
-import {MonadBase} from './monad';
+import {Boxed} from './monad';
 import {FunctorMapOp} from "../types";
 
 export type Either<A, B> = Left<A> | Right<B>;
@@ -12,7 +12,7 @@ export type Either<A, B> = Left<A> | Right<B>;
 /**
  * `Left` representation of `Either` construct.
  */
-export class Left<T> extends MonadBase<T> {
+export class Left<T> extends Boxed<T> {
 
   /**
    * Same as `new Left(...)`.
@@ -26,7 +26,7 @@ export class Left<T> extends MonadBase<T> {
   }
 }
 
-export class Right<T> extends MonadBase<T> {
+export class Right<T> extends Boxed<T> {
 
   /**
    * Same as `new Right(...)`.

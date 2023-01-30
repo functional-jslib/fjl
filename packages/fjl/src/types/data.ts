@@ -1,4 +1,4 @@
-import {Binary} from "./arity";
+import {Binary, Ternary} from "./arity";
 
 export interface Nameable {
   readonly name: string;
@@ -31,7 +31,8 @@ export type Slice<T = any> = string | T[];
  */
 export type SliceConstructor = StringConstructor | ArrayConstructor;
 
-export type FunctorMapOp<T, RetT> = (a?: T, b?: any, c?: Functor<T>, ...rest: any[]) => RetT;
+export type FunctorMapOp<T = any, RetT = any> =
+  (a?: T, b?: keyof Functor<T>, c?: Functor<T>, ...rest: any[]) => RetT;
 
 export interface FunctorConstructor<T> {
   new(x: T): Functor<T>;
@@ -42,7 +43,7 @@ export interface FunctorConstructor<T> {
 export interface Functor<T = any> {
   valueOf(): T;
 
-  map<RetT>(fn: FunctorMapOp<T, RetT>): Functor<RetT>;
+  map<RetT = any>(fn: Ternary<T, keyof Functor<T>, Functor<T>, RetT>): Functor<RetT>;
 
   readonly length?: number;
 }

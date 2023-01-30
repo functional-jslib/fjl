@@ -1,4 +1,4 @@
-import {isJust, isMaybe, isNothing, just, Just, Maybe, maybe, Nothing, nothing, toMaybe} from '../../src/data/maybe';
+import {isJust, isMaybe, isNothing, Just, Maybe, maybe, Nothing, toMaybe} from '../../src/data/maybe';
 import {join} from '../../src/data/monad';
 import {falsyList} from "../helpers";
 import {Unary} from "../../src/types";
@@ -13,70 +13,58 @@ const containsMethods = <T>(x: Maybe<T>, methodNames_: string[]): void => {
   });
 }
 
-describe('#just', () => {
-  it('should be a method', () => {
-    expect(just).toBeInstanceOf(Function);
-  });
-  it('should always return an `Just` which should contain passed in value', () => {
-    [null, undefined, false, 0, (): void => undefined, [], {}, '']
-      .forEach(x => {
-        const result = just(x);
-        expect(result).toBeInstanceOf(Just);
-        expect(result.valueOf()).toEqual(x);
-      });
-  });
-});
-
 describe('#isJust', () => {
   [
-    [new Just(), true],
-    [Just.of(), true],
-    ...(falsyList.map(x => ([x, false])))
+    [Just(1), true],
+    // @ts-ignore
+    [new Just(1), true],
+    ...(falsyList.map(x => ([x, false]))),
+    [Just(), false],
+    // @ts-ignore
+    [new Just(), false],
   ]
     .forEach(([x, expected]) => {
-      expect(isJust(x)).toEqual(expected);
+      it(`${isJust.name}(${x}) === ${expected}`, function () {
+        expect(isJust(x)).toEqual(expected);
+      });
     });
 });
 
 describe('#Just', () => {
-
   test('Should be constructable', () => {
-    expect(new Just()).toBeInstanceOf(Just);
+    // @ts-ignore
+    expect(new Just(1)).toBeInstanceOf(Just);
   });
 
   test('Should contain passed in value on construction', () => {
+    // @ts-ignore
     expect(new Just(99).valueOf()).toEqual(99);
   });
 
   test('should be extendable', () => {
+    // @ts-ignore
     class Hello<T> extends Just<T> {
+      constructor(x = null) {
+        super(x);
+      }
     }
 
-    expect(new Hello()).toBeInstanceOf(Just);
+    expect(new Hello(1)).toBeInstanceOf(Just);
   });
 
+  // @ts-ignore
   containsMethods(new Just(99), methodNames);
-});
-
-describe('#Just.of', () => {
-  test('should be a static method', () => {
-    expect(Just.of instanceof Function).toEqual(true);
-  });
-  test('should return an instance when called', () => {
-    expect(Just.of() instanceof Just).toEqual(true);
-  });
-  test('should return an instance with passed in value captured in returned instance', () => {
-    expect((Just.of(99)).valueOf()).toEqual(99);
-  });
 });
 
 describe('#Just.valueOf', () => {
   test('should return contained value of container (`undefined` or whatever was passed ' +
     'on construction of container)', () => {
-    [new Just(99), Just.of(99)].forEach(x => {
+    // @ts-ignore
+    [new Just(99), Just(99)].forEach(x => {
       expect(x.valueOf()).toEqual(99);
     });
-    [new Just(), Just.of()].forEach(x => {
+    // @ts-ignore
+    [new Just(), Just()].forEach(x => {
       expect(x.valueOf()).toEqual(undefined);
     });
   });
@@ -85,13 +73,13 @@ describe('#Just.valueOf', () => {
 describe('#Just.join', () => {
   test('should remove one layer of monadic structure from container', () => {
     (<[Maybe<any>, any][]>[
-      [just(), undefined],
-      [just(null), null],
-      [just(false), false],
-      [just(''), ''],
-      [just(99), 99],
-      [just(just(99)), just(99)],
-      [just(just(just(99))), just(just(99))],
+      [Just(), undefined],
+      [Just(null), undefined],
+      [Just(false), false],
+      [Just(''), ''],
+      [Just(99), 99],
+      [Just(Just(99)), Just(99)],
+      [Just(Just(Just(99))), Just(Just(99))],
     ])
       .forEach(([arg, expected]) => {
         expect(join(arg)).toEqual(expected); // does deep equality check here
@@ -103,12 +91,12 @@ describe('#Just.map', () => {
   test('should return an instance of `Just` after map operation', () => {
     const control = 99,
       op = x => x * 2,
-      justResult = Just.of(control).map(op);
+      justResult = Just(control).map(op);
     expect(justResult instanceof Just).toEqual(true);
     justResult.map(x => expect(x).toEqual(op(control)));
   });
   test('should throw an error when receiving anything other than a function as it\'s parameter', () => {
-    expect(() => Just.of(99).map(null)).toThrow(Error);
+    expect(() => Just(99).map(null)).toThrow(Error);
   });
 });
 
@@ -116,26 +104,26 @@ describe('#Just.flatMap', () => {
   test('should return an instance of `Just` after `flatMap` operation', () => {
     const control = 99,
       op = x => x * 2,
-      justResult = Just.of(control).flatMap(op);
+      justResult = Just(control).flatMap(op);
     expect(justResult instanceof Just).toEqual(true);
     justResult.map(x => expect(x).toEqual(op(control)));
   });
   test('should throw an error when receiving anything other than a function as it\'s parameter', () => {
-    expect(() => Just.of(99).flatMap(null)).toThrow(Error);
+    expect(() => Just(99).flatMap(null)).toThrow(Error);
   });
 });
 
 describe('#Just.ap', () => {
   test('should map contained value over passed in functor', () => {
     const op = x => x * 2;
-    Just.of(op)
-      .ap(Just.of(2))
+    Just(op)
+      .ap(Just(2))
       .map(x => expect(x).toEqual(op(2)));
   });
   test('should be able to map contained value over functor even if it is not a ' +
     'function (call should internally wrap non-function values in functions', () => {
-    Just.of()
-      .ap(Just.of(99))
+    Just()
+      .ap(Just(99))
       .map(x => expect(x).toEqual(undefined));
   });
 });
@@ -168,7 +156,7 @@ describe('#Nothing', () => {
   });
 
   test('Expect `map`, `ap`, `flatMap`, and `join` methods to all return same singleton instance of `Nothing`', () => {
-    methodNames.forEach(x => expect((Nothing[x] as Unary)(undefined)).toEqual(Nothing));
+    methodNames.forEach(x => expect((Nothing[x] as Unary)(undefined)).toEqual(x === 'join' || x === 'valueOf' ? undefined : Nothing));
   });
 });
 
@@ -184,7 +172,7 @@ describe('Maybe', () => {
     });
     test('Should return a `Just` when receiving anything other than `null` or `undefined`', () => {
       [false, 0, () => ({}), [], {}].forEach(value => {
-        const result = toMaybe(value) as Just<any>;
+        const result = toMaybe(value);
         expect(result).toBeInstanceOf(Just);
         result.map(x => expect(x).toEqual(value));
       });
@@ -209,7 +197,7 @@ describe('Maybe', () => {
       replacementVal = 27;
 
     (<[Parameters<typeof maybe>, ReturnType<typeof maybe>][]>[
-      [[replacementVal, squareX, just(caseValue)], squareX(caseValue)],
+      [[replacementVal, squareX, Just(caseValue)], squareX(caseValue)],
       [[replacementVal, squareX, caseValue], squareX(caseValue)],
       [[replacementVal, squareX, Nothing], replacementVal],
       [[replacementVal, squareX, null], replacementVal],
