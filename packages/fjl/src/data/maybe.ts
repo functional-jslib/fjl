@@ -3,14 +3,9 @@
  */
 import {isset} from '../object/is';
 import {Monad} from './monad';
-import {
-  Apply,
-  Functor,
-  Ternary,
-} from "../types";
+import {Apply, Functor, Ternary,} from "../types";
 
-interface Nothing extends Monad {
-}
+type Nothing = Monad
 
 const _nothingTag = '[object Nothing]',
 
@@ -87,14 +82,12 @@ type Just<T = any> = Monad<T> & {
 export function Just<T>(value?: T): Maybe<T> {
   if (!isset(value)) return Nothing;
 
-  const out = Object.create(Just.prototype, {
-    [VALUE_SYM]: {value},
-  });
-
   // out[Symbol.species] = () => Just;
   // out[Symbol.hasInstance] = isJust
 
-  return out;
+  return Object.create(Just.prototype, {
+    [VALUE_SYM]: {value},
+  });
 }
 
 Just.prototype.valueOf = function () {
@@ -170,15 +163,5 @@ export const
   /**
    * Checks for maybe.
    */
-  isMaybe = <T>(x: T): boolean => isNothing(x) || isJust(x),
-
-  /**
-   * Always returns a `Maybe` (from `x`).
-   */
-  toMaybe = <T>(x: T): Maybe<T> => {
-    if (!isset(x)) {
-      return Nothing;
-    }
-    return isMaybe(x) ? x as unknown as Maybe<T> : Just(x);
-  }
+  isMaybe = <T>(x: T): boolean => isNothing(x) || isJust(x)
 ;

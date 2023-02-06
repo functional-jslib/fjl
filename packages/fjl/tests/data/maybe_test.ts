@@ -1,7 +1,7 @@
-import {isJust, isMaybe, isNothing, Just, Maybe, maybe, Nothing, toMaybe} from '../../src/data/maybe';
+import {isJust, isMaybe, isNothing, Just, Maybe, maybe, Nothing} from '../../src/data/maybe';
 import {join} from '../../src/data/monad';
 import {falsyList} from "../helpers";
-import {Unary} from "../../src/types";
+import {Nameable, Unary} from "../../src/types";
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'] as Array<keyof Maybe<any>>;
 
@@ -165,14 +165,14 @@ describe('Maybe', () => {
     // @todo should we include `NaN` as a value that gives you a `Nothing` (probably but for simplicities sake (for now)...)
     test('Should return a `Nothing` when receiving `null` or `undefined`', () => {
       [null, undefined].forEach(value => {
-        const result = toMaybe(value);
+        const result = Just(value);
         expect(result).toEqual(Nothing);
         result.map(x => expect(x).toEqual(undefined));
       });
     });
     test('Should return a `Just` when receiving anything other than `null` or `undefined`', () => {
       [false, 0, () => ({}), [], {}].forEach(value => {
-        const result = toMaybe(value);
+        const result = Just(value);
         expect(result).toBeInstanceOf(Just);
         result.map(x => expect(x).toEqual(value));
       });
@@ -180,7 +180,7 @@ describe('Maybe', () => {
   });
   describe('`isMaybe`', () => {
     test('should return `true` when a value is of type `Maybe`', () => {
-      [].concat([99, undefined].map(toMaybe))
+      [].concat([99, undefined].map(Just))
         .forEach(x => {
           expect(isMaybe(x)).toEqual(true);
         });
@@ -204,7 +204,8 @@ describe('Maybe', () => {
       [[replacementVal, squareX, undefined], replacementVal],
     ])
       .forEach(([args, expected], i) => {
-        test(`iter.: ${i}; maybe(${args.map(arg => typeof arg === 'function' ? arg.name : JSON.stringify(arg)).join(', ')}) === ` +
+        test(`iter.: ${i}; maybe(${args.map(arg => typeof arg === 'function' ?
+            (arg as Nameable).name : JSON.stringify(arg)).join(', ')}) === ` +
           ` ${JSON.stringify(expected)}`, () => {
           expect(maybe(...args)).toEqual(expected);
         });
