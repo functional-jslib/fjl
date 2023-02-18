@@ -7,45 +7,48 @@
  * @module monad
  */
 import {isset} from "../object/isset";
-import {$instanceOf} from '../platform/object';
 import {toFunction} from "../function";
 import {
   Applicative, ApplicativeConstructor, Functor,
-  FunctorConstructor, FunctorMapOp, Apply, ApplyConstructor, TypeRef, Unary, Binary
+  FunctorMapOp, TypeRef, Binary, Ternary
 } from "../types";
 import {isType} from "../object";
 
 export interface Monad<T = any> extends Applicative<T> {
   join(): T;
 
-  flatMap<RetT>(fn: FunctorMapOp<T, RetT>): Monad<RetT>;
+  flatMap<RetT>(fn: Ternary<T, keyof this, this, RetT>): ThisType<RetT>;
 }
 
 export type MonadConstructor<T = any> = ApplicativeConstructor<T>;
+
+export interface BoxedConstructor<T = any> extends MonadConstructor<T> {
+  new(x: T): Boxed<T>;
+}
 
 export class Boxed<T = any> implements Monad<T> {
 
   /**
    * Same as `new Monad(...)` just in 'static' function format.
    */
-  static of<X>(x?: X): Monad<X> {
+  static of<X>(x?: X): Boxed<X> {
     return new Boxed(x);
   }
 
-  static liftA2<A, B, RetT>(fn: Binary<A, B, RetT>, appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
+  static liftA2<A, B, RetT>(fn: Binary<A, B, RetT>, appA: Applicative<A>, appB: Applicative<B>): ThisType<RetT> {
     return (appA.constructor as ApplicativeConstructor<RetT>).of(
       fn(toFunction(appA.valueOf())(), toFunction(appB.valueOf())())
     );
   }
 
-  static apRight<A, B, RetT>(appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
+  static apRight<A, B, RetT>(appA: Applicative<A>, appB: Applicative<B>): ThisType<RetT> {
     (toFunction(appA.valueOf()) as unknown as CallableFunction)();
     return (appB.constructor as ApplicativeConstructor<RetT>).of(
       (toFunction(appB.valueOf()) as unknown as CallableFunction)()
     );
   }
 
-  static apLeft<A, B, RetT>(appA: Applicative<A>, appB: Applicative<B>): Applicative<RetT> {
+  static apLeft<A, B, RetT>(appA: Applicative<A>, appB: Applicative<B>): ThisType<RetT> {
     const out = (toFunction(appA.valueOf()) as unknown as CallableFunction)();
     (toFunction(appB.valueOf()) as unknown as CallableFunction)();
     return (appA.constructor as ApplicativeConstructor<RetT>).of(out);
@@ -58,18 +61,17 @@ export class Boxed<T = any> implements Monad<T> {
     return this.value;
   }
 
-  map<RetT>(fn: FunctorMapOp<T, RetT>): Functor<RetT> {
-    return new (this.constructor as FunctorConstructor<RetT>)(fn(this.valueOf()));
+  map<RetT = any>(fn: Ternary<T, keyof this, this, RetT>): ThisType<RetT> {
+    return Object.getPrototypeOf(this).constructor.of(fn(this.valueOf()));
   }
 
   /**
    * Applicative apply operation - applies contained function over passed in functor.
    */
-  ap<X, RetT>(f: Functor<X>): Apply<RetT> {
-    return new (this.constructor as ApplyConstructor<T>)(f.map(
-        toFunction(this.valueOf())
-      ).valueOf()
-    ) as unknown as Apply<RetT>;
+  ap<X, RetT>(fnctr: Functor<X>): ThisType<RetT> {
+    return Object.getPrototypeOf(this).constructor.of(
+      fnctr.map(this.valueOf() as Ternary).valueOf()
+    );
   }
 
   /**
@@ -82,9 +84,9 @@ export class Boxed<T = any> implements Monad<T> {
   /**
    * Flat map operation.
    */
-  flatMap<RetT>(fn: FunctorMapOp<T, RetT>): Monad<RetT> {
-    const out = unwrapMonadByType(this.constructor as TypeRef, this.map(fn) as Monad<RetT> | RetT);
-    return (this.constructor as ApplicativeConstructor<RetT>).of(out) as Monad<RetT>;
+  flatMap<RetT>(fn: Ternary<T, keyof this, this, RetT>): ThisType<RetT> {
+    const out = unwrapMonadByType(this.constructor as TypeRef, this.map(fn) as ThisType<RetT> | RetT);
+    return (this.constructor as ApplicativeConstructor<RetT>).of(out) as ThisType<RetT>;
   }
 
   /**
@@ -97,12 +99,6 @@ export class Boxed<T = any> implements Monad<T> {
 }
 
 export const
-
-  /**
-   * Returns boolean indicating whether given value is an
-   * instance of monad or not.
-   */
-  isMonad = $instanceOf(Boxed) as Unary<any, boolean>,
 
   /**
    * Calls `valueOf` on value (use for functional composition).
@@ -119,13 +115,13 @@ export const
   /**
    * Maps given function over given functor.
    */
-  fmap = <T, RetT>(fn: FunctorMapOp<T, RetT>, x: Functor<T>): Functor<RetT> => x.map(fn),
+  fmap = <T, RetT>(fn: Ternary<T, keyof Functor<T>, Functor<T>, RetT>, x: Functor<T>): ThisType<T> => x.map(fn),
 
   /**
    * Curried version of `fmap`.
    */
   $fmap = <T, RetT>(fn: FunctorMapOp<T, RetT>) =>
-    (x: Functor<T>): Functor<RetT> =>
+    (x: Functor<T>): ThisType<RetT> =>
       fmap(fn, x),
 
   /**
@@ -133,13 +129,13 @@ export const
    * (Same as functional applicative `apply`).  Returns a functor containing the newly
    * returned value from the application.
    */
-  ap = <A, B, RetT>(app: Applicative<A>, functor: Functor<B>): Functor<RetT> => app.ap(functor),
+  ap = <A, B, RetT>(app: Applicative<A>, functor: Functor<B>): Applicative<RetT> => app.ap(functor),
 
   /**
    * Curried version of `ap`.
    */
   $ap = <A, B, RetT>(app: Applicative<A>) =>
-    (functor: Functor<B>): Functor<RetT> => app.ap(functor),
+    (functor: Functor<B>): Applicative<RetT> => app.ap(functor),
 
   /**
    * Flat maps a function over given monad's contained value.

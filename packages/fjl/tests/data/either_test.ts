@@ -3,11 +3,8 @@ import {
   either,
   isLeft,
   isRight,
-  left,
-  Left, right,
-  Right, toEither,
-  toLeft,
-  toRight
+  Left,
+  Right,
 } from '../../src/data/either';
 import {falsyList, truthyList} from "../helpers";
 
@@ -15,10 +12,12 @@ const methodNames = ['ap', 'map', 'flatMap', 'join'];
 
 describe('#Left', () => {
   test('should return an instance of `Left`', () => {
+    // @ts-ignore
     expect(new Left() instanceof Left).toEqual(true);
   });
 
   test('should be extendable', () => {
+    // @ts-ignore
     class Hello<T> extends Left<T> {
       constructor(something?: T) {
         super(something);
@@ -29,7 +28,7 @@ describe('#Left', () => {
   });
 
   ((): void => {
-    const left = Left.of();
+    const left = Left();
     methodNames.forEach(methodName => {
       it(`#Left.${methodName} instanceof Function === true`, function () {
         expect(left[methodName]).toBeInstanceOf(Function);
@@ -38,24 +37,26 @@ describe('#Left', () => {
   })();
 
   test('Expect `map` and `flatMap` should return instances of `Left`', () => {
-    expect(Left.of('something').map(x => x)).toBeInstanceOf(Left);
-    expect(Left.of('something-else').flatMap(x => Left.of(x))).toBeInstanceOf(Left);
+    expect(Left('something').map(x => x)).toBeInstanceOf(Left);
+    expect(Left('something-else').flatMap(x => Left(x))).toBeInstanceOf(Left);
   });
 
   test('Expect calling `ap` on a `#Left` to return containing value of `Left`', () => {
     const value = 'Hello World',
-      left = Left.of(value);
-    left.ap(Right.of('99')).map(x => expect(x).toEqual(value));
+      left = Left(value);
+    left.ap(Right('99')).map(x => expect(x).toEqual(value));
   });
 
   test('#join should return whatever is contained within `Left`', () => {
-    expect(Left.of(99).join()).toEqual(99);
+    expect(Left(99).join()).toEqual(99);
   });
 });
 
 describe('`isLeft`', () => {
   test('should return `true` when value is a `Left`', () => {
-    [Left.of(), new Left(), Left.of()].forEach(x => {
+    [ // @ts-ignore
+      new Left(),
+      Left()].forEach(x => {
       expect(isLeft(x)).toEqual(true);
     });
   });
@@ -78,7 +79,7 @@ describe('#Right', () => {
   });
 
   ((): void => {
-    const right = Right.of();
+    const right = Right();
     methodNames.forEach(methodName => {
       it(`#Left.${methodName} instanceof Function === true`, function () {
         expect(right[methodName]).toBeInstanceOf(Function);
@@ -87,21 +88,23 @@ describe('#Right', () => {
   })();
 
   test('Expect `map`, `flatMap`, and `join` methods to return a new instance of `Right`', () => {
-    const right = Right.of('Only right');
-    // expect(Right.of(right).join()).toBeInstanceOf(Right);
+    const right = Right('Only right');
+    // expect(Right(right).join()).toBeInstanceOf(Right);
     expect(right.map(x => x)).toBeInstanceOf(Right);
-    expect(right.flatMap(x => Right.of(x))).toBeInstanceOf(Right);
+    expect(right.flatMap(x => Right(x))).toBeInstanceOf(Right);
   });
   test('Expect calling `ap` on a `#Right` to return containing value of `Right`', () => {
     const value = 'Hello World',
-      right = Right.of(value);
-    right.ap(Right.of('99')).map(x => expect(x).toEqual(value));
+      right = Right(value);
+    right.ap(Right('99')).map(x => expect(x).toEqual(value));
   });
 });
 
 describe('`isRight`', () => {
   test('should return `true` when value is a `Right`', () => {
-    [Right.of(), new Right(), Right.of()].forEach(x => {
+    [ // @ts-ignore
+      new Right(),
+      Right()].forEach(x => {
       expect(isRight(x)).toEqual(true);
     });
   });
@@ -112,36 +115,36 @@ describe('`isRight`', () => {
   });
 });
 
-describe('#toRight', () => {
+describe('#Right(', () => {
   (<[string, any, any][]>[
-      ['toRight(Right<"string">) === right("string")', right("string"), right("string")],
-      ['toRight(Right<Left<"Err msg">>) === right(left("Err msg"))', left("Err msg"), right(left("Err msg"))]
+      ['Right(Right<"string">) === Right("string")', Right("string"), Right("string")],
+      ['Right(Right<Left<"Err msg">>) === Right(Left("Err msg"))', Left("Err msg"), Right(Left("Err msg"))]
     ].concat(
-      [null, undefined].map(x => [`toRight(${x}) === right(${x})`, x, right(x)]),
-      truthyList.map(x => [`toRight(${x}) === right(${x})`, x, right(x)]) as ConcatArray<any>
+      [null, undefined].map(x => [`Right(${x}) === Right(${x})`, x, Right(x)]),
+      truthyList.map(x => [`Right(${x}) === Right(${x})`, x, Right(x)]) as ConcatArray<any>
     )
   )
     .forEach(([testName, control, expected]) => {
       it(testName, function () {
-        const result = toRight(control);
+        const result = Right(control);
         expect(result).toBeInstanceOf(expected.constructor);
         expect(result.valueOf()).toEqual(expected.valueOf());
       });
     });
 });
 
-describe('#toLeft', () => {
+describe('#Left(', () => {
   (<[string, any, any][]>[
-      ['toLeft(Left("Error message") === left("Error message")', left("Error message"), left("Error message")],
-      ['toLeft(Right("Success") === left(right("Success"))', right("Success"), left(right("Success"))]
+      ['Left(Left("Error message") === Left("Error message")', Left("Error message"), Left("Error message")],
+      ['Left(Right("Success") === Left(Right("Success"))', Right("Success"), Left(Right("Success"))]
     ].concat(
-      [null, undefined].map(x => [`toLeft(${x}) === left(${x})`, x, left(x)]),
-      truthyList.map(x => [`toLeft(${x}) === left(${x})`, x, left(x)]) as ConcatArray<any>
+      [null, undefined].map(x => [`Left(${x}) === Left(${x})`, x, Left(x)]),
+      truthyList.map(x => [`Left(${x}) === Left(${x})`, x, Left(x)]) as ConcatArray<any>
     )
   )
     .forEach(([testName, control, expected]) => {
       it(testName, function () {
-        const result = toLeft(control);
+        const result = Left(control);
         expect(result).toBeInstanceOf(expected.constructor);
         expect(result.valueOf()).toEqual(expected.valueOf());
       });
@@ -151,34 +154,16 @@ describe('#toLeft', () => {
 describe('#either', () => {
   const successMessage = 'Success message.';
   [].concat(
-    truthyList.map(x => [toRight(x), successMessage]),
-    falsyList.map(x => [toLeft(x), defaultLeftErrMsgTmpl(x)]),
+    truthyList.map(x => [Right(x), successMessage]),
+    falsyList.map(x => [Left(x), defaultLeftErrMsgTmpl(x)]),
     [
-      [toRight(), successMessage],
-      [toLeft(), defaultLeftErrMsgTmpl()]
+      [Right(), successMessage],
+      [Left(), defaultLeftErrMsgTmpl()]
     ])
     .forEach(([arg, expected]) => {
       it(`either(A, B) === ${JSON.stringify(expected)}`, () => {
         const result = either(() => expected, () => successMessage, arg);
         expect(result).toEqual(expected);
-      });
-    });
-});
-
-describe('#toEither', () => {
-  (<[string, any, any][]>[
-      ['toEither(Left("Error message") === Left("Error message")', left("Error message"), left("Error message")],
-      ['toEither(Right("Success") === Right("Success")', right("Success"), right("Success")]
-    ].concat(
-      [null, undefined].map(x => [`toEither(${x}) === left(${x})`, x, left(x)]),
-      truthyList.map(x => [`toEither(${x}) === right(${x})`, x, right(x)]) as ConcatArray<any>
-    )
-  )
-    .forEach(([testName, control, expected]) => {
-      it(testName, function () {
-        const result = toEither(control);
-        expect(result).toBeInstanceOf(expected.constructor);
-        expect(result.valueOf()).toEqual(expected.valueOf());
       });
     });
 });

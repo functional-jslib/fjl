@@ -35,35 +35,35 @@ export type FunctorMapOp<T = any, RetT = any> =
   (a?: T, b?: keyof Functor<T>, c?: Functor<T>, ...rest: any[]) => RetT;
 
 export interface FunctorConstructor<T> {
-  new(x: T): Functor<T>;
+  new(x: T): ThisType<T>;
 
-  readonly prototype: Functor<T>;
+  readonly prototype: ThisType<T>;
 }
 
 export interface Functor<T = any> {
   valueOf(): T;
 
-  map<RetT = any>(fn: Ternary<T, keyof Functor<T>, Functor<T>, RetT>): Functor<RetT>;
+  map<RetT = any>(fn: Ternary<T, keyof this, this, RetT>): ThisType<T>;
 
   readonly length?: number;
 }
 
 export interface ApplyConstructor<T> extends FunctorConstructor<T> {
-  new(x: T): Apply<T>;
+  new(x: T): ThisType<T>;
 
-  readonly prototype: Apply<T>;
+  readonly prototype: ThisType<T>;
 }
 
 export interface Apply<T = any> extends Functor<T> {
-  ap<T, RetT>(f: Functor<T>): Apply<RetT>;
+  ap<T, RetT>(f: Functor<T>): ThisType<RetT>;
 }
 
 export interface ApplicativeConstructor<T = any> extends ApplyConstructor<T> {
-  new(x: T): Applicative<T>;
+  new(x: T): ThisType<T>;
 
-  readonly prototype: Applicative<T>;
+  readonly prototype: ThisType<T>;
 
-  of<X>(value: X): Applicative<X>;
+  of<X>(value: X): ThisType<X>;
 
   liftA2<A extends T, B, RetT>(
     fn: Binary<A, B, RetT>,
@@ -71,9 +71,9 @@ export interface ApplicativeConstructor<T = any> extends ApplyConstructor<T> {
     b: Applicative<B>
   ): Applicative<RetT>;
 
-  apRight<A, B>(a: Applicative<A>, b: Applicative<B>): Applicative<B>;
+  apRight<A, B>(a: Applicative<A>, b: Applicative<B>): ThisType<B>;
 
-  apLeft<A, B>(a: Applicative<A>, b: Applicative<B>): Applicative<A>;
+  apLeft<A, B>(a: Applicative<A>, b: Applicative<B>): ThisType<A>;
 }
 
 export type Applicative<T = any> = Apply<T>;

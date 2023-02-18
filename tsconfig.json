@@ -7,6 +7,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": false,
+    "noImplicitThis": true,
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": true,

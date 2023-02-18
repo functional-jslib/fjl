@@ -1,16 +1,16 @@
 import {Just, Maybe, Nothing} from "../../src/data/maybe";
 import {Monad, join, valueOf, fmap, ap, flatMap, Boxed} from "../../src/data/monad";
-import {left, right} from "../../src/data/either";
 import {Applicative, FunctorMapOp, Nary, UnitNary} from "../../src/types";
 import {id} from "../../src/function";
 import {falsyList, truthyList} from "../helpers";
+import {Left, Right} from "../../src";
 
 describe('#valueOf()', () => {
   (<[Monad<any>, any][]>[
     [Just(20), 20],
     [Just(null), undefined],
-    [right(20), 20],
-    [left('Oh no ... an error occurred.'), 'Oh no ... an error occurred.'],
+    [Right(20), 20],
+    [Left('Oh no ... an error occurred.'), 'Oh no ... an error occurred.'],
   ])
     .forEach(([monad, expectedValue]) => {
       it(`valueOf(${monad}) === ${expectedValue}`, () => {
