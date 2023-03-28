@@ -1,7 +1,7 @@
-import {isJust, isMaybe, isNothing, Just, Maybe, maybe, Nothing} from '../../src/data/maybe';
-import {join} from '../../src/data/monad';
-import {falsyList} from "../helpers";
-import {Nameable, Unary} from "../../src/types";
+import {isJust, isMaybe, isNothing, Just, Maybe, maybe, Nothing} from './maybe';
+import {join} from './monad';
+import {falsyList} from "../../tests/helpers";
+import {Nameable, Unary} from "../types";
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'] as Array<keyof Maybe<any>>;
 

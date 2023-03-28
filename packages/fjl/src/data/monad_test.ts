@@ -1,9 +1,9 @@
-import {Just, Maybe, Nothing} from "../../src/data/maybe";
-import {Monad, join, valueOf, fmap, ap, flatMap, Boxed} from "../../src/data/monad";
-import {Applicative, FunctorMapOp, Nary, UnitNary} from "../../src/types";
-import {id} from "../../src/function";
-import {falsyList, truthyList} from "../helpers";
-import {Left, Right} from "../../src";
+import {Just, Maybe, Nothing} from "./maybe";
+import {Monad, join, valueOf, fmap, ap, flatMap, Boxed} from "./monad";
+import {Applicative, FunctorMapOp, Nary, UnitNary} from "../types";
+import {id} from "../function";
+import {falsyList, truthyList} from "../../tests/helpers";
+import {Left, Right} from "./index";
 
 describe('#valueOf()', () => {
   (<[Monad<any>, any][]>[

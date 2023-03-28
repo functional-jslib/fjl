@@ -5,8 +5,8 @@ import {
   isRight,
   Left,
   Right,
-} from '../../src/data/either';
-import {falsyList, truthyList} from "../helpers";
+} from './either';
+import {falsyList, truthyList} from "../../tests/helpers";
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'];
 

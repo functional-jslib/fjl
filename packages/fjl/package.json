@@ -3,8 +3,8 @@
   "version": "2.0.0-alpha.3",
   "description": "Functional Javascript Library.",
   "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
-  "typings": "dist/es/index.d.ts",
+  "module": "dist/esm/index.js",
+  "typings": "dist/esm/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/functional-jslib/fjl.git"
@@ -17,6 +17,16 @@
     "prelude",
     "combinators"
   ],
+  "exports": {
+    ".": {
+      "require": "dist/cjs/index.js",
+      "module": "dist/esm/index.js"
+    },
+    "./*": {
+      "require": "dist/cjs/*.js",
+      "module": "dist/esm/*.js"
+    }
+  },
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
   "license": "BSD-3-Clause",
   "bugs": {
@@ -24,6 +34,7 @@
   },
   "homepage": "https://github.com/functional-jslib/fjl#readme",
   "engines": {
-    "node": ">=16 || >=18"
+    "node": ">=16 || >=18",
+    "npm": ">=8 || >= 9"
   }
 }

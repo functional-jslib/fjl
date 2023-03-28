@@ -35,23 +35,23 @@ export type FunctorMapOp<T = any, RetT = any> =
   (a?: T, b?: keyof Functor<T>, c?: Functor<T>, ...rest: any[]) => RetT;
 
 export interface FunctorConstructor<T> {
-  new(x: T): ThisType<T>;
+  new<R>(x: T): R
 
-  readonly prototype: ThisType<T>;
+  readonly prototype: InstanceType<this>;
 }
 
 export interface Functor<T = any> {
   valueOf(): T;
 
-  map<RetT = any>(fn: Ternary<T, keyof this, this, RetT>): ThisType<T>;
+  map<RetT = any>(fn: Ternary<T, keyof this, this, RetT>): unknown;
 
   readonly length?: number;
 }
 
 export interface ApplyConstructor<T> extends FunctorConstructor<T> {
-  new(x: T): ThisType<T>;
+  new(x: T): InstanceType<this>;
 
-  readonly prototype: ThisType<T>;
+  readonly prototype: InstanceType<this>;
 }
 
 export interface Apply<T = any> extends Functor<T> {
@@ -94,6 +94,13 @@ export interface Bifunctor<A = any, B = any> extends Functor<A> {
   bimap<RetA, RetB>(fn1: FunctorMapOp<A, RetA>, fn2: FunctorMapOp<B, RetB>): Bifunctor<RetA, RetB>;
 }
 
+export interface Monad<T = any> extends Applicative<T> {
+  join(): T;
+
+  flatMap<RetT>(fn: Ternary<T, keyof this, this, RetT>): ThisType<RetT>;
+}
+
+export type MonadConstructor<T = any> = ApplicativeConstructor<T>;
 
 /**
  * @deprecated Use `NumberIndexable` instead.

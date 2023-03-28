@@ -3,8 +3,8 @@
   "version": "1.3.0",
   "description": "A recaptcha validator.",
   "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
-  "typings": "dist/es/index.d.ts",
+  "module": "dist/esm/index.js",
+  "typings": "dist/esm/index.d.ts",
   "peerDependencies": {
     "fjl": "^2.0.0-alhpa",
     "fjl-validator": "^0.8.0"

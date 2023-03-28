@@ -6,7 +6,6 @@
  * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
  */
 export * from './boolean';
-export * from './data';
 export * from './errorThrowing';
 export * from './function';
 export * from './list';

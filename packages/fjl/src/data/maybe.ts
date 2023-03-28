@@ -2,8 +2,7 @@
  * @module maybe
  */
 import {isset} from '../object/is';
-import {Monad} from './monad';
-import {Apply, Functor, Ternary,} from "../types";
+import {Apply, Functor, Ternary, Monad} from "../types";
 
 type Nothing = Monad
 

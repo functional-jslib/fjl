@@ -45,7 +45,7 @@ const
       ...configBase,
       output: {
         format: 'es',
-        dir: path.join(projectPath, 'dist/es/'),
+        dir: path.join(projectPath, 'dist/esm/'),
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
         sourcemap: true,
@@ -53,7 +53,7 @@ const
       },
       plugins: [
         typescript({
-          tsconfig: path.join(projectPath, './tsconfig.prod.es.json'),
+          tsconfig: path.join(projectPath, './tsconfig.prod.esm.json'),
         }),
         terser()
       ]
@@ -61,13 +61,13 @@ const
       ...configBase,
       output: {
         format: 'es',
-        file: path.join(projectPath, 'dist/index.es.min.js'),
+        file: path.join(projectPath, 'dist/index.esm.min.js'),
         sourcemap: true,
         globals: outputGlobals
       },
       plugins: [
         typescript({
-          tsconfig: path.join(projectPath, './tsconfig.prod.es.json'),
+          tsconfig: path.join(projectPath, './tsconfig.prod.esm.json'),
           compilerOptions: {
             declaration: false,
             declarationDir: null

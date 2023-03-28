@@ -10,20 +10,12 @@ import {isset} from "../object/isset";
 import {toFunction} from "../function";
 import {
   Applicative, ApplicativeConstructor, Functor,
-  FunctorMapOp, TypeRef, Binary, Ternary
+  FunctorMapOp, TypeRef, Binary, Ternary, MonadConstructor, Monad
 } from "../types";
 import {isType} from "../object";
 
-export interface Monad<T = any> extends Applicative<T> {
-  join(): T;
-
-  flatMap<RetT>(fn: Ternary<T, keyof this, this, RetT>): ThisType<RetT>;
-}
-
-export type MonadConstructor<T = any> = ApplicativeConstructor<T>;
-
 export interface BoxedConstructor<T = any> extends MonadConstructor<T> {
-  new(x: T): Boxed<T>;
+  new(x: T);
 }
 
 export class Boxed<T = any> implements Monad<T> {
@@ -115,7 +107,7 @@ export const
   /**
    * Maps given function over given functor.
    */
-  fmap = <T, RetT>(fn: Ternary<T, keyof Functor<T>, Functor<T>, RetT>, x: Functor<T>): ThisType<T> => x.map(fn),
+  fmap = <T, RetT>(fn: Ternary<T, keyof Functor<T>, Functor<T>, RetT>, x: Functor<T>): InstanceType<typeof x> => x.map(fn),
 
   /**
    * Curried version of `fmap`.
