@@ -1,7 +1,7 @@
 /**
  * Returns a copy of the passed in list, though reversed.
  */
-import {ArrayType, ArrayTypeConstructor} from "../types";
+import {ArrayTypeConstructor} from "../types";
 
 export const
 

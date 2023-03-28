@@ -4,7 +4,7 @@
  * @module digitValidator
  */
 import {regexValidator} from './regexValidator';
-import {assignDeep, curry, curry2} from 'fjl';
+import {assignDeep, curry2} from 'fjl';
 import {ValidatorOptions, ValidatorResult} from "./ValidationUtils";
 
 export const

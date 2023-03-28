@@ -24,7 +24,7 @@ const
         // 'fjl-filter',
         ['fjl-inputfilter', 'fjl', 'fjl-validator'],
       ]
-        .reduce((p, [packageName, ...packagesToLink]) => {
+        .reduce((p, [packageName/*, ...packagesToLink*/]) => {
             const cwd = path.join(repoRoot, `packages/${packageName}`);
             // return
             // .then(() => {

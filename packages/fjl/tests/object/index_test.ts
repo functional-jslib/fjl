@@ -66,7 +66,7 @@ import {
   vowelsString
 } from '../helpers';
 
-import {Nameable, Slice, TypeRef} from '../../src/types';
+import {Nameable, TypeRef} from '../../src/types';
 import {TypeConstructor} from "../../src/types";
 import {noop} from "../../src";
 
@@ -777,7 +777,7 @@ describe('#object', function () {
       log('testing-peek');
       (subsequences('abc').concat([
         [99], [true], [undefined], [null], ['Output tested from `peek`']
-      ] as any[])).forEach((xs, _, xss) => {
+      ] as any[])).forEach((xs) => {
         const isArray = Array.isArray(xs);
         expect(peek(...(!isArray ? [xs] : xs)))
           .toEqual(!isArray ? xs : xs[xs.length - 1]);
@@ -894,12 +894,12 @@ describe('#object', function () {
 
   describe('#lookup', function () {
     it('should return found value when key is set on type instance', function () {
-      charCodeToCharArrayMap.forEach(([charCode, char]) => {
+      charCodeToCharArrayMap.forEach(([charCode]) => {
         expect(lookup(charCode + '', charCodeToCharMap)).toEqual(charCodeToCharMap[charCode]);
       });
     });
     it('should return `undefined` when element is not found in given list', function () {
-      charCodeToCharArrayMap.forEach(([charCode, char]) => {
+      charCodeToCharArrayMap.forEach(([charCode]) => {
         expect(lookup(charCode + '', {})).toEqual(undefined);
       });
     });
@@ -1061,7 +1061,6 @@ describe('#object', function () {
   });
 
   describe('#defineProps', function () {
-    type DefinePropsParams = Parameters<typeof defineProps>;
     const
       seedArgTuples = [
         [String, 'someStringProp'],

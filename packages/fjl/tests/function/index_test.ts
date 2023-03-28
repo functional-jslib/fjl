@@ -7,7 +7,6 @@ import {
   curry3,
   Curry3,
   curry4,
-  Curry4,
   curry5,
   Curry5,
   curryN,
@@ -66,8 +65,7 @@ describe('#curryN', () => {
   const recursiveBinOp = (op: Binary<number>, start: number): Binary<number> =>
       (...args: number[]): number =>
         args.reduce((a, b) => op(a, b), start),
-    multiplyRecursive = recursiveBinOp((a, b) => a * b, 1),
-    addRecursive = recursiveBinOp((a, b) => a + b, 0);
+    multiplyRecursive = recursiveBinOp((a, b) => a * b, 1);
 
   it('should be of type function.', () => {
     expect(curryN).toBeInstanceOf(Function);

@@ -18,7 +18,6 @@ import {
   unwords,
   words
 } from "../../src/string";
-import {Slice} from '../../src/types';
 
 describe('#lines', () => {
   it('should split a string on all new line characters.', () => {

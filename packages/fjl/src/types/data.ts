@@ -35,27 +35,27 @@ export type FunctorMapOp<T = any, RetT = any> =
   (a?: T, b?: keyof Functor<T>, c?: Functor<T>, ...rest: any[]) => RetT;
 
 export interface FunctorConstructor<T> {
-  new<R>(x: T): R
+  new<Ret>(x: T): Ret
 
-  readonly prototype: InstanceType<this>;
+  readonly prototype: Functor<T>;
 }
 
 export interface Functor<T = any> {
   valueOf(): T;
 
-  map<RetT = any>(fn: Ternary<T, keyof this, this, RetT>): unknown;
+  map<RetT = any, Ret = any>(fn: Ternary<T, keyof this, this, RetT>): Ret;
 
   readonly length?: number;
 }
 
 export interface ApplyConstructor<T> extends FunctorConstructor<T> {
-  new(x: T): InstanceType<this>;
+  new<Ret>(x: T): Ret;
 
-  readonly prototype: InstanceType<this>;
+  readonly prototype: Apply<T>;
 }
 
 export interface Apply<T = any> extends Functor<T> {
-  ap<T, RetT>(f: Functor<T>): ThisType<RetT>;
+  ap<T, RetT>(f: Functor<T>): Apply<RetT>;
 }
 
 export interface ApplicativeConstructor<T = any> extends ApplyConstructor<T> {

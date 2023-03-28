@@ -11,7 +11,6 @@ import {
   isNumber,
   isString,
   until,
-  defineEnumProp,
   defineEnumProps
 } from 'fjl';
 

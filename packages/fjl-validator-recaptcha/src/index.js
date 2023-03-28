@@ -297,7 +297,7 @@ module.exports = {
 
 /**
  * @typedef {Object.<String, String>} ReCaptchaTestValue
- * @property {String} secret - The 'secret' key sent to the google reCaptcha-v2 backend service.
+ * @property {String} secret - The 'secret' key sent to the Google reCaptcha-v2 backend service.
  * @property {String} response - The 'response' string sent to the reCaptcha-v2 backend service.
  * @property {String} [remoteip=undefined] - Optional.  The 'remoteip' string sent to the reCaptcha-v2 backend-validation service.
  */

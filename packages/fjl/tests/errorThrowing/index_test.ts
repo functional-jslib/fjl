@@ -4,8 +4,6 @@
 import {
   typeRefsToStringOrError,
   defaultErrorMessageCall,
-  getErrorIfNotTypeThrower,
-  getErrorIfNotTypesThrower,
   errorIfNotType,
   errorIfNotTypes, $getErrorIfNotTypeThrower, $getErrorIfNotTypesThrower
 }

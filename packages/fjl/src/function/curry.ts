@@ -112,7 +112,7 @@ export const
    * Curries a function up to an arity of 2 (won't call function until 2 or more args).
    */
   curry2 = <F extends UnitNary, Params extends any[], RetT = any>(fn: F):
-    CurryOf2<Params[0], Params[1]> => curryN(2, fn) as CurryOf2<Params[0], Params[1]>,
+    CurryOf2<Params[0], Params[1]> => curryN(2, fn) as CurryOf2<Params[0], Params[1], RetT>,
 
   /**
    * Curries a function up to an arity of 3 (won't call function until 3 or more args).
