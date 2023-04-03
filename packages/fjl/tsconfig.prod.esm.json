@@ -2,8 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "declarationDir": "./dist/es",
-    "outDir": "./dist/es",
+    "declarationDir": "./dist/esm",
+    "outDir": "./dist/esm",
     "rootDir": "./src"
   }
 }

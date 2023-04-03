@@ -1,4 +1,4 @@
-import {Functor, Slice} from "./data";
+import {Slice} from "./data";
 import {TernaryPred} from "./arity";
 
 // @todo Normalize these types - They should accept same type params instead mixed length params.
@@ -16,8 +16,3 @@ export type MapAccumOp<A = any, B = any, C = any, Ind = number | string, Functor
 
 export type PredForSlice<T = any, TS extends Slice<T> = Slice<T>> = TernaryPred<T, number, TS>;
 
-export interface Foldable<T> extends Functor<T> {
-  reduce<RetT>(fn: ReduceOp<T, Foldable<T>, RetT>): RetT;
-
-  reduceRight<RetT>(fn: ReduceOp<T, Foldable<T>, RetT>): RetT;
-}
