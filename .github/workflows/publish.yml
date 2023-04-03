@@ -20,7 +20,7 @@ jobs:
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
       - run: npm ci
-      - run: npm publish
+      - run: cd packages/fjl && npm ci && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           PUPPETEER_EXE_PATH: $(which chrome)
