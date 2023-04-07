@@ -1,4 +1,5 @@
 import {append} from './append';
+import {Slice} from "../types";
 
 export const
 
@@ -6,5 +7,5 @@ export const
    * Concatenates container of concat-ables
    * into one..
    */
-  concat = (xss: string[] | any[][]): typeof xss[0] => append(...xss)
+  concat = <TS extends Slice>(xss: TS[] ): typeof xss[0] => append(...xss)
 ;

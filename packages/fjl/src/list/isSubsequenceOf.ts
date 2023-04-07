@@ -5,7 +5,7 @@ import {isset} from "../object";
 
 export const
   /**
-   * Checks if list `xs1` is a sub-sequence of list `xs2`
+   * Checks if list one is a subsequence of list two.
    */
   isSubsequenceOf = <T>(xs1: NumberIndexable<T>, xs2: NumberIndexable<T>): boolean => {
     if (!isset(xs1) || !isset(xs2)) return false;

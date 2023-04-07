@@ -1,4 +1,5 @@
 import {nubBy} from "./nubBy";
+import {equal} from "../boolean";
 
 /**
  * The nub function removes duplicate elements from a list.
@@ -8,4 +9,4 @@ import {nubBy} from "./nubBy";
  * ```shallowCompare( nub ([1,2,3,4,3,2,1,2,4,3,5]), [1,2,3,4,5] )```
  */
 export const nub = <T>(list: T[]): T[] =>
-  nubBy((a, b) => a === b, list);
+  nubBy(equal, list);

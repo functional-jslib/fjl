@@ -1,5 +1,3 @@
-import {Binary, Ternary} from "./arity";
-
 export interface Nameable {
   readonly name: string;
 }
@@ -62,7 +60,7 @@ export type TypedArray = (
 export type ArrayType<T> = Array<T> | TypedArray;
 
 /**
- *  @deprecated Use types directly.
+ * @deprecated Use types directly.
  */
 export type ArrayTypeConstructor = ArrayConstructor |
   Int8ArrayConstructor |

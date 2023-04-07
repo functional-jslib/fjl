@@ -7,16 +7,21 @@ export const
    * The nubBy function behaves just like nub, except it uses a user-supplied equality predicate.
    */
   nubBy = <T>(pred, list: T[]): T[] => {
-    if (!length(list)) {
+    const len = list.length;
+
+    if (!len) {
       return [];
     }
-    const limit = length(list);
+
     let ind = 0,
       currItem;
+
     const out: any[] = [],
       anyOp = (storedItem: T): boolean => pred(currItem, storedItem);
-    for (; ind < limit; ind += 1) {
+
+    for (; ind < len; ind += 1) {
       currItem = list[ind];
+
       if (any(anyOp, out)) {
         continue;
       }

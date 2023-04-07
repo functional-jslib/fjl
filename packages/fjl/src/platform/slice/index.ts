@@ -1,8 +1,10 @@
 export const
 
   /**
-   * Concatenates a list of concat-able elements (string/array) down to one instance.  Returns `undefined`  if no items are passed in.
-   * @note This method is not be confused with '../list/concat' - 'list'
+   * Concatenates a list of concat-able elements (string/array) down
+   * to one instance.  Returns `undefined`  if no items are passed in.
+   *
+   * @note This method is not be confused with '../list/concat' - this latter
    * version of the method actually uses this one internally.  This
    * method, itself, is actually exported from the library as `append`
    * (same as '+' for strings) See '../list/append' module.
@@ -40,9 +42,18 @@ export const
   $slice = (start: number) =>
     (end: number) =>
       (xs): typeof xs =>
-        slice(start, end, xs)
+        slice(start, end, xs),
 
-  // @todo Add `at` method here.
+  /**
+   * Gets item at index;  Same as` [].at()` (allows
+   *  negative/right-to-left indexing (see mdn `(Array|String).at` method).
+   */
+  at = (i: number, xs: string | any[]) => xs.at(i),
+
+  /**
+   * Curried version of `at`.
+   */
+  $at = (i: number) => (xs: string | any[]) => xs.at(i)
 
 ;
 
