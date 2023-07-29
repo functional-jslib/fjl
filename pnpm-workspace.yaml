@@ -1,0 +1,7 @@
+packages:
+  - "packages/fjl"
+  - "packages/fjl-filter"
+  - "packages/fjl-inputfilter"
+  - "packages/fjl-labs"
+  - "packages/fjl-validator"
+  - "packages/fjl-validator-recaptcha"
