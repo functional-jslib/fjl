@@ -69,7 +69,7 @@ function toConversionRules(rules) {
     return [];
   }
   if (rules && rules.indexOf(/all/i) > -1) {
-    let out = new Set(keys(castingRules));
+    const out = new Set(keys(castingRules));
     out.delete('byNative');
     return Array.from(out.values());
   }
@@ -82,7 +82,7 @@ function castValue(value, conversionRules, translations) {
   }
   const rules = toConversionRules(conversionRules),
     result = until(
-      ([rules, lastResult], _, list) => isBoolean(lastResult) || !list.length,
+      ([_rules, lastResult], _, list) => isBoolean(lastResult) || !list.length,
       ([rules]) => [rules, rules.shift()(value, translations)],
       [rules.map(rule => castingRules[rule]), null]
     );

@@ -84,7 +84,7 @@ export const
                 `to conform to html tag/element name format.  Please review passed in tags`);
         }
         return tags.reduce((out, tag) => {
-            let regex = new RegExp(createTagRegexPartial(tag), 'gum');
+            const regex = new RegExp(createTagRegexPartial(tag), 'gum');
             return out.replace(regex, '');
         }, value);
     },
@@ -99,7 +99,7 @@ export const
         }
         let out = value;
         attribs.forEach(function (attrib) {
-            let regex = new RegExp(
+            const regex = new RegExp(
                         '([\\n\\r\\t\\s]*' + attrib + '=\\"[^\\"]*\\")',
                     'gim'
                 );

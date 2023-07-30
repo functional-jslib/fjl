@@ -10,9 +10,9 @@ import {
   ValidatorOptions,
   ValidatorResult
 } from './ValidationUtils';
-import {assignDeep, curry, defineEnumProp, ToString} from 'fjl';
+import {assignDeep, curry, defineEnumProp} from 'fjl';
 
-export interface RegexValidatorOptions<T extends ToString> extends ValidatorOptions<T> {
+export interface RegexValidatorOptions<T=string> extends ValidatorOptions<T> {
   pattern?: RegExp;
 }
 

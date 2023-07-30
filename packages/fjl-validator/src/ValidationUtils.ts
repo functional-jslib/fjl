@@ -11,8 +11,7 @@ import {
   isFunction,
   isString,
   repeat,
-  Unary,
-  ToString
+  Unary
 } from 'fjl';
 
 export type MessageGetter<T = any> = (x?: T, options?: ValidatorOptions<T>) => string;
@@ -26,7 +25,7 @@ export interface MessageTemplates<T = any> {
 export interface ValidatorOptions<T = any> {
   messageTemplates?: MessageTemplates<T>;
   valueObscured?: boolean;
-  valueObscurer?: Unary<T, ToString>;
+  valueObscurer?: Unary<T, string>;
 }
 
 export interface ValidatorResult<T = any> {
@@ -35,7 +34,7 @@ export interface ValidatorResult<T = any> {
   value?: T;
 }
 
-export type Validator<T = any> = Unary<T, ValidatorResult<T>>;
+export type Validator<T = unknown> = Unary<T, ValidatorResult<T>>;
 
 export const
 
@@ -74,7 +73,7 @@ export const
    * @param options {...Object}
    * @returns {Object}
    */
-  toValidationOptions = <T = any>(...options: ValidatorOptions<T>[]): ValidatorOptions<T> =>
+  toValidationOptions = <T = unknown>(...options: ValidatorOptions<T>[]): ValidatorOptions<T> =>
     assignDeep(defineEnumProps([
       [Object, 'messageTemplates', {}],
       [Boolean, 'valueObscured', false],

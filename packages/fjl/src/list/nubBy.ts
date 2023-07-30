@@ -1,12 +1,12 @@
-import {length} from "./length";
 import {any} from "./any";
+import {BinaryPred} from "../types";
 
 export const
 
   /**
    * The nubBy function behaves just like nub, except it uses a user-supplied equality predicate.
    */
-  nubBy = <T>(pred, list: T[]): T[] => {
+  nubBy = <T>(pred: BinaryPred<T>, list: T[]): T[] => {
     const len = list.length;
 
     if (!len) {
@@ -14,7 +14,7 @@ export const
     }
 
     let ind = 0,
-      currItem;
+      currItem: T;
 
     const out: any[] = [],
       anyOp = (storedItem: T): boolean => pred(currItem, storedItem);
@@ -30,7 +30,7 @@ export const
     return out;
   },
 
-  $nubBy =  <T>(pred) =>
+  $nubBy =  <T>(pred: BinaryPred<T>) =>
     (list: T[]): T[] =>
       nubBy(pred, list)
 

@@ -1,15 +1,12 @@
 import {toShortest} from "./utils";
 import {map} from "./map";
+import {Nary} from "../types";
 
 export const
   /**
-   * Zips all given lists with tupling function. Note: Haskell types do not have
-   *  a way (that I know of) to show one or more for params in a function so `@haskellType` below
-   *  is left there for general purpose not for exactness as is told by aforementioned.
-   * @haskellType `zipWithN :: (a -> b -> c) -> [a] -> [b] -> [c]` - Where `N` is the number
-   *  of lists to zip.
+   * Zips all given lists using tupling function.
    */
-  zipWithN = <T = any>(op, ...lists: T[][]): T[][] => {
+  zipWithN = <T = any>(op: Nary<T, T[]>, ...lists: T[][]): T[][] => {
     const trimmedLists = toShortest(...lists) as T[][],
       lenOfTrimmed = trimmedLists.length;
     if (!lenOfTrimmed) {
@@ -17,13 +14,13 @@ export const
     } else if (lenOfTrimmed === 1) {
       return [trimmedLists[0]];
     }
-    return map((item, ind) =>
+    return map((_item, ind) =>
         op(...map(xs => xs[ind], trimmedLists)),
       trimmedLists[0]
     );
   },
 
-  $zipWithN = <T = any>(op) =>
+  $zipWithN = <T = any>(op: Nary<T, T[]>) =>
     (...lists: T[][]): T[][] =>
       zipWithN(op, ...lists);
 

@@ -143,11 +143,12 @@ const MISSING_INPUT_SECRET = 'missing-input-secret',
           body += chunk;
         });
         res.on('end', () => {
-          let responseData = JSON.parse(body),
+          const responseData = JSON.parse(body),
             errorCodes = responseData['error-codes'],
             hasErrorCodes = !!errorCodes && !!errorCodes.length,
-            normalizedErrorCodes = hasErrorCodes ? errorCodes.map(x => x.toLowerCase()) : [],
-            nonEmptyErrorCodes = [];
+            normalizedErrorCodes = hasErrorCodes ? errorCodes.map(x => x.toLowerCase()) : [];
+
+            let nonEmptyErrorCodes = [];
 
           // If validation failed (false, null, undefined)
           if (!isEmpty(responseData.success)) {
@@ -306,5 +307,4 @@ module.exports = {
  * @typedef {Object.<String, *>} ValidationResult
  * @property {Boolean} result - Result of validators validation (`true` or `false`).
  * @property {Array.<String>} messages - Validation failure messages;  Reasons why tested value(s) didn't pass validation.
- * @type {string}
  */

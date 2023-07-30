@@ -10,7 +10,7 @@ import {map} from "./map";
  */
 export const zipN = <T = any>(...lists: T[][]): T[][] => {
     const trimmedLists = toShortest(...lists);
-    return reduce((agg, item, ind) =>
+    return reduce((agg, _item, ind) =>
         push(map(xs => xs[ind], trimmedLists), agg),
       [], trimmedLists[0]);
   },

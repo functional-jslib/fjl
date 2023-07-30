@@ -77,20 +77,20 @@ export const
                 }),
             ]
         },
-        [TEXT_FIELD]: {
-            required,
-            validators: [
-                regexValidator({
-                    pattern: /^[a-z\d][a-z\d\s.\-,"'\n\t\r]+$/im,
-                    messageTemplates: {
-                        DOES_NOT_MATCH_PATTERN: () =>
-                            `Locations format is incorrect.  ` +
-                            `Only a-z, A-Z, ",", " ", 0-9, "'", """, or "-" are allowed.`
-                    }
-                }),
-                stringLength({min: 3, max: 144})
-            ]
-        },
+        // [TEXT_FIELD]: {
+        //     required,
+        //     validators: [
+        //         regexValidator({
+        //             pattern: /^[a-z\d][a-z\d\s.\-,"'\n\t\r]+$/im,
+        //             messageTemplates: {
+        //                 DOES_NOT_MATCH_PATTERN: () =>
+        //                     `Locations format is incorrect.  ` +
+        //                     `Only a-z, A-Z, ",", " ", 0-9, "'", """, or "-" are allowed.`
+        //             }
+        //         }),
+        //         stringLength({min: 3, max: 144})
+        //     ]
+        // },
         [TEXTAREA_FIELD]: {
             filters: [
                 x => x ? (x + '').trim() : x,

@@ -2,7 +2,7 @@ export interface Nameable {
   readonly name: string;
 }
 
-export type  NumberIndexable<T = any> = ({
+export type  NumberIndexable<T = unknown> = ({
   length: number;
   [index: number]: T;
 } |

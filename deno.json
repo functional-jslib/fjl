@@ -1,0 +1,21 @@
+{
+  "lint": {
+    "include": [
+      "**/packages/**/src",
+      "**/node_scripts/"
+    ],
+    "exclude": [
+      "**/dist/",
+      "**/node_modules/"
+    ],
+    "rules": {
+      "include": [
+        "ban-untagged-todo"
+      ],
+      "exclude": [
+        "no-explicit-any",
+        "require-await"
+      ]
+    }
+  }
+}
