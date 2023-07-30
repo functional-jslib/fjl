@@ -1,10 +1,14 @@
 /**
+ * @deprecated Use idiomatic currying, when currying is required, instead - `curry*` functions defined here are actually
+ * doing something that is not really currying - forcing currying on argument tuple sets (`(a, b, c)`) - true currying applies
+ * each argument to a new function (`(a) => (b) => c`, etc.).  Hence why this module is deprecated, and idiomatic curry
+ * is favored instead.
+ *
  * @author edlc
+ *
  * @memberOf function
+ *
  * @description Curry and CurryN functions.
- * @deprecated Use idiomatic currying, when currying is required - `curry*` function defined here are actually doing
- * something that is not really currying - forcing currying on argument tuple sets (`(a, b, c)`) - true currying applies
- * each argument to a new function (`(a) => (b) => c`, etc.).
  */
 
 import {UnitNary} from '../types';
@@ -88,7 +92,10 @@ export const
     const curriedFn = (...args: any[]): Curried => {
       const catedArgs = argsToCurry.concat(args),
         canBeCalled = catedArgs.length >= executeArity || executeArity <= 0;
-      if (!catedArgs.length && !canBeCalled) throw new Error(`${fn.name} expected one or more arguments. Received none.`);
+
+      if (!catedArgs.length && !canBeCalled)
+        throw new Error(`${fn.name} expected one or more arguments. Received none.`);
+
       return canBeCalled ? fn(...catedArgs) :
         curryN(executeArity - catedArgs.length, fn.bind(null, ...catedArgs));
     };
