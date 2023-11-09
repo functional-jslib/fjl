@@ -1,5 +1,6 @@
 /**
  * Returns `true`.
+ *
+ * @returns {boolean}
  */
-export const alwaysTrue = () => true;
-
+export const alwaysTrue = (): boolean => true;

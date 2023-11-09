@@ -12,7 +12,6 @@
 
 # Files
 *.log
-#**/src/**/*.js
 **/src/**/*.js.map
 
 **/.local*

@@ -13,7 +13,7 @@ export const
    * errors when the `Type` is disobeyed.
    */
   createTypedDescriptor = (Type: TypeRef, target: any, propName: string): PropertyDescriptor => {
-    let _value;
+    let _value: TypeRef;
     return {
       get: (): typeof Type => _value,
       set: (value: typeof Type): void => {

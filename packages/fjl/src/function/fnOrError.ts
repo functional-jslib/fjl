@@ -16,6 +16,15 @@ export const
     return f;
   },
 
+  /**
+   * @deprecated Check for your error in place instead.
+   *
+   * @param {string} symbolName
+   *
+   * @throws {Error} if given `f` is not a function.
+   *
+   * @returns {<T>(f: T) => T}
+   */
   $fnOrError = <T>(symbolName: string) => (f: T): T =>
     fnOrError(symbolName, f)
 

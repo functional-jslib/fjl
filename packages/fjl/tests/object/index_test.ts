@@ -4,6 +4,8 @@
  * @todo Continue tests refactor (from `isEmpty` tests downward).
  */
 import {
+  $defineEnumProp,
+  $defineProp,
   assign,
   assignDeep,
   createTypedDescriptor,
@@ -980,84 +982,106 @@ describe('#object', function () {
 
   describe('#defineProp', function () {
     const someTarget = {},
-      propName = 'someNum',
-      [target, descriptor] = defineProp(Number, [someTarget], propName);
-    it('should return a `target` and `descriptor` pair (tuple)', function () {
-      expect(target).toEqual(someTarget);
-      expect(!!descriptor).toEqual(true);
-    });
-    it('should define property `propName` on `target`', function () {
-      expect(hasOwnProperty(propName, target)).toEqual(true);
-    });
-    it('should return a target whose defined `propName` throws an error when ' +
-      'the wrong type is passed in', function () {
-      expect(() => {
-        target[propName] = 'some value';
-      }).toThrow(Error);
-    });
-    it('should return a target whose defined `propName` doesn\'t throw' +
-      'an error when the correct type of value is passed in', function () {
-      target[propName] = 99;
-      expect(target[propName]).toEqual(99);
-    });
-    it('should allow the user to pass in his/her own `descriptor`', function () {
-      const somePropName = 'somePropName',
-        someValue = (new Date()).getTime(),
-        customDescriptor = {
-          value: someValue,
-          enumerable: true
-        },
-        [target2, descriptor2] = defineProp(Number, [someTarget, customDescriptor], somePropName);
-      expect(() => {
-        target2[somePropName] = 99;
-      }).toThrow(Error);
-      expect(target2[somePropName]).toEqual(someValue);
-      expect(descriptor2).toEqual(customDescriptor);
-      expect(descriptor2.enumerable).toEqual(true);
-    });
+      someTarget2 = {},
+      propName = 'someNum';
+    (<[any, [any, PropertyDescriptor]][]>[
+      [someTarget, defineProp(Number, [someTarget], propName)],
+      [someTarget2, $defineProp(Number)([someTarget2])(propName)]
+    ])
+      .forEach(([originalTrgt, [target, descriptor]]) => {
+        it('should return a `target` and `descriptor` pair (tuple)', function () {
+          expect(target).toEqual(originalTrgt);
+          expect(!!descriptor).toEqual(true);
+        });
+
+        it('should define property `propName` on `target`', function () {
+          expect(hasOwnProperty(propName, target)).toEqual(true);
+        });
+
+        it('should return a target whose defined `propName` throws an error when ' +
+          'the wrong type is passed in', function () {
+          expect(() => {
+            target[propName] = 'some value';
+          }).toThrow(Error);
+        });
+
+        it('should return a target whose defined `propName` doesn\'t throw' +
+          'an error when the correct type of value is passed in', function () {
+          target[propName] = 99;
+          expect(target[propName]).toEqual(99);
+        });
+
+        it('should allow the user to pass in his/her own `descriptor`', function () {
+          const somePropName = 'somePropName',
+            someValue = (new Date()).getTime(),
+            customDescriptor = {
+              value: someValue,
+              enumerable: true
+            },
+            [target2, descriptor2] = defineProp(Number, [originalTrgt, customDescriptor], somePropName);
+          expect(() => {
+            target2[somePropName] = 99;
+          }).toThrow(Error);
+          expect(target2[somePropName]).toEqual(someValue);
+          expect(descriptor2).toEqual(customDescriptor);
+          expect(descriptor2.enumerable).toEqual(true);
+        });
+      });
   });
 
   describe('#defineEnumProp', function () {
     const someTarget = {},
-      propName = 'someNum',
-      [target, descriptor] = defineEnumProp(Number, [someTarget], propName);
-    it('should return a `target` and `descriptor` pair (tuple)', function () {
-      expect(target).toEqual(someTarget);
-      expect(!!descriptor).toEqual(true);
-    });
-    it('should define property `propName` on `target`', function () {
-      expect(hasOwnProperty(propName, target)).toEqual(true);
-    });
-    it('should set `enumerable` to `true` on returned descriptor', function () {
-      expect(descriptor.enumerable).toEqual(true);
-      expect(Object.getOwnPropertyDescriptor(target, propName).enumerable).toEqual(true);
-    });
-    it('should return a target whose defined `propName` throws an error when ' +
-      'the wrong type is passed in', function () {
-      expect(() => {
-        target[propName] = 'some value';
-      }).toThrow(Error);
-    });
-    it('should return a target whose defined `propName` doesn\'t throw' +
-      'an error when the correct type of value is passed in', function () {
-      target[propName] = 99;
-      expect(target[propName]).toEqual(99);
-    });
-    it('should allow the user to pass in his/her own `descriptor`', function () {
-      const somePropName = 'somePropName',
-        someValue = (new Date()).getTime(),
-        customDescriptor = {
-          value: someValue,
-          enumerable: false
-        },
-        [target2, descriptor2] = defineEnumProp(Number, [someTarget, customDescriptor], somePropName);
-      expect(() => {
-        target2[somePropName] = 99;
-      }).toThrow(Error);
-      expect(target2[somePropName]).toEqual(someValue);
-      expect(descriptor2).toEqual(customDescriptor);
-      expect(descriptor2.enumerable).toEqual(true);
-    });
+      someTarget2 = {},
+      propName = 'someNum';
+
+    (<[any, [any, PropertyDescriptor]][]>[
+      [someTarget, defineEnumProp(Number, [someTarget], propName)],
+      [someTarget2, $defineEnumProp(Number)([someTarget2])(propName)],
+    ])
+      .forEach(([originalTrgt, [target, descriptor]]) => {
+        it('should return a `target` and `descriptor` pair (tuple)', function () {
+          expect(target).toEqual(originalTrgt);
+          expect(!!descriptor).toEqual(true);
+        });
+
+        it('should define property `propName` on `target`', function () {
+          expect(hasOwnProperty(propName, target)).toEqual(true);
+        });
+
+        it('should set `enumerable` to `true` on returned descriptor', function () {
+          expect(descriptor.enumerable).toEqual(true);
+          expect(Object.getOwnPropertyDescriptor(target, propName).enumerable).toEqual(true);
+        });
+
+        it('should return a target whose defined `propName` throws an error when ' +
+          'the wrong type is passed in', function () {
+          expect(() => {
+            target[propName] = 'some value';
+          }).toThrow(Error);
+        });
+
+        it('should return a target whose defined `propName` doesn\'t throw' +
+          'an error when the correct type of value is passed in', function () {
+          target[propName] = 99;
+          expect(target[propName]).toEqual(99);
+        });
+
+        it('should allow the user to pass in his/her own `descriptor`', function () {
+          const somePropName = 'somePropName',
+            someValue = (new Date()).getTime(),
+            customDescriptor = {
+              value: someValue,
+              enumerable: false
+            },
+            [target2, descriptor2] = defineEnumProp(Number, [originalTrgt, customDescriptor], somePropName);
+          expect(() => {
+            target2[somePropName] = 99;
+          }).toThrow(Error);
+          expect(target2[somePropName]).toEqual(someValue);
+          expect(descriptor2).toEqual(customDescriptor);
+          expect(descriptor2.enumerable).toEqual(true);
+        });
+      });
   });
 
   describe('#defineProps', function () {

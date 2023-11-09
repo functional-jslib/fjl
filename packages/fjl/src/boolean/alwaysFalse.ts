@@ -1,5 +1,7 @@
 /**
  * Returns `false`.
+ *
+ * @returns {boolean}
  */
-export const alwaysFalse = () => false;
+export const alwaysFalse = (): boolean => false;
 

@@ -21,7 +21,7 @@ import {
   truthyList
 } from "../helpers";
 import {flip, flip3, flip4, flip5, flipN} from "../../src/function/flip";
-import {fnOrError} from "../../src/function/fnOrError";
+import {$fnOrError, fnOrError} from "../../src/function/fnOrError";
 import {id} from "../../src/function/id";
 import {negateF, negateF2, negateF3, negateFN} from "../../src/function/negate";
 import {noop} from "../../src/function/noop";
@@ -319,18 +319,24 @@ describe('#flip5', () => {
 describe('#fnOrError', () => {
   it('should be a function', () => {
     expect(fnOrError).toBeInstanceOf(Function);
+    expect($fnOrError).toBeInstanceOf(Function);
   });
   it('should have an arity of 2', () => {
     expect(fnOrError.length).toEqual(2);
+    expect($fnOrError.length).toEqual(1);
+    expect($fnOrError(null).length).toEqual(1);
   });
   it('should throw an error when not receiving a function', () => {
     falsyList.forEach(f => {
       expect(() => fnOrError('f', f)).toThrow();
+      expect(() => $fnOrError('f')(f)).toThrow();
     });
   });
   it('should not throw an error when receiving a function', () => {
     const result = fnOrError('fnOrError', fnOrError);
+    const result2 = $fnOrError('fnOrError')($fnOrError);
     expect(result).toBeInstanceOf(Function);
+    expect(result2).toBeInstanceOf(Function);
   });
 });
 
