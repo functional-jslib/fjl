@@ -1,6 +1,6 @@
 import {mapAccumR} from "../../src/list/mapAccumR";
-import {expectEqual, vowelsString} from "../helpers";
-import {MapAccumOp, mapAccumL, Slice} from "../../src";
+import {vowelsString} from "../helpers";
+import {MapAccumOp, Slice} from "../../src";
 
 describe('#mapAccumR', () => {
   type ZeroT = number | string;

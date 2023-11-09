@@ -32,7 +32,7 @@ export const
   },
 
   /**
-   * Returns an target and descriptor tuple from given.
+   * Returns a target and descriptor tuple from given.
    */
   toTargetDescriptorTuple = <T>(targetOrTargetDescriptorTuple: T | [T, PropertyDescriptor?]): [T, PropertyDescriptor?] =>
     Array.isArray(targetOrTargetDescriptorTuple) ? targetOrTargetDescriptorTuple as [T, PropertyDescriptor?] :

@@ -68,8 +68,7 @@ import {
   vowelsString
 } from '../helpers';
 
-import {Nameable, TypeRef} from '../../src/types';
-import {TypeConstructor} from "../../src/types";
+import {Nameable, TypeRef, TypeConstructor} from '../../src/types';
 import {noop} from "../../src";
 
 const {stringify} = JSON;
@@ -980,7 +979,7 @@ describe('#object', function () {
     });
   });
 
-  describe('#defineProp', function () {
+  describe('#defineProp, #$defineProp', function () {
     const someTarget = {},
       someTarget2 = {},
       propName = 'someNum';
@@ -1029,7 +1028,7 @@ describe('#object', function () {
       });
   });
 
-  describe('#defineEnumProp', function () {
+  describe('#defineEnumProp, #$defineEnumProp', function () {
     const someTarget = {},
       someTarget2 = {},
       propName = 'someNum';
@@ -1084,7 +1083,7 @@ describe('#object', function () {
       });
   });
 
-  describe('#defineProps', function () {
+  describe('#defineProps, #$defineProps', function () {
     const
       seedArgTuples = [
         [String, 'someStringProp'],
@@ -1202,7 +1201,7 @@ describe('#object', function () {
 
   });
 
-  describe('#defineEnumProps', function () {
+  describe('#defineEnumProps, #$defineEnumProps', function () {
     type ArgTuple = [TypeConstructor, string]
     const seedArgTuples = [
         [String, 'someStringProp'],
