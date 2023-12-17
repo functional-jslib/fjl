@@ -50,13 +50,13 @@ export const
    * Lower cases first character of a non-empty string.
    * @throws {Error} - Throws error if receiving anything that is not a string.
    */
-  lcaseFirst = (xs: string): string => xs[0].toLowerCase() + xs.substring(1),
+  lcaseFirst = (xs: string): string => !xs ? '' : xs[0].toLowerCase() + xs.substring(1),
 
   /**
    * Upper cases first character of a non-empty string.
    * @throws {Error} - Throws error if receiving anything that is not a string.
    */
-  ucaseFirst = (xs: string): string => xs[0].toUpperCase() + xs.substring(1),
+  ucaseFirst = (xs: string): string => !xs ? '' : xs[0].toUpperCase() + xs.substring(1),
 
   /**
    * Camel cases a string.
@@ -69,7 +69,6 @@ export const
     }
     return (upperCaseFirst ? id : lcaseFirst)(
       xs.split(pattern)
-        .filter(Boolean)
         .map(str => ucaseFirst(str.toLowerCase()))
         .join('')
     );
@@ -83,9 +82,15 @@ export const
    */
   classCase = (xs: string): string => camelCase(xs, FirstCharCase.Upper),
 
+  /**
+   * Generates a random character.
+   */
   randChar = (min = 0, max = 0x10FFFF): string =>
     String.fromCharCode(randNatNum(min, max)),
 
+  /**
+   * Generates a random string.
+   */
   randStr = (min = 0, max = 100): string =>
     range(min, max)
       .reduce(str => str + randChar(min, max), '')

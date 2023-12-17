@@ -1,7 +1,7 @@
 /**
  * Equality combinator.
  */
-export const equal = <T = any>(a: T, b: T) => a === b,
+export const equal = <T>(a: T, b: T) => a === b,
 
   /**
    * Curried version of `equal`
