@@ -7,7 +7,7 @@ export const
    * Slices from index `0` to given index.
    */
   sliceTo = (toInd: number, xs: Slice): typeof xs =>
-    slice(0, toInd, xs),
+    xs.slice(0, toInd),
 
   /**
    * Curried version of `sliceTo`.

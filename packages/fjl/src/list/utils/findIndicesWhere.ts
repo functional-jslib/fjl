@@ -11,9 +11,8 @@ export const
   ): number[] | undefined => {
     const limit = xs.length;
     const out = [];
-    for (let ind = 0; ind < limit; ind++) {
+    for (let ind = 0; ind < limit; ind++)
       if (pred(xs[ind], ind, xs)) out.push(ind);
-    }
     return out.length ? out : undefined;
   },
 

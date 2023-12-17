@@ -23,6 +23,7 @@ export const
    * @curried Up-to two params.
    */
   $toShortest = <T>(list1: NumberIndexable<T>) =>
-    (list2: NumberIndexable<T>, ...lists: NumberIndexable<T>[]): NumberIndexable<T>[] => toShortest(list1, list2, ...lists)
+    (list2: NumberIndexable<T>, ...lists: NumberIndexable<T>[]): NumberIndexable<T>[] =>
+      toShortest(list1, list2, ...lists)
 
 ;

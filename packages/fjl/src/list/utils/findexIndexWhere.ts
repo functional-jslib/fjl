@@ -13,10 +13,8 @@ export const
     xs: NumberIndexable
   ): number => {
     const limit = xs.length;
-    for (let ind = 0; ind < limit; ind += 1) {
-      const predicateFulfilled = pred(xs[ind], ind, xs);
-      if (predicateFulfilled) return ind;
-    }
+    for (let ind = 0; ind < limit; ind += 1)
+      if (pred(xs[ind], ind, xs)) return ind;
     return -1;
   },
 

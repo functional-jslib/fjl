@@ -1,9 +1,9 @@
 /**
  * Equality combinator.
  */
-export const equal = (a: any, b: any) => a === b,
+export const equal = <T = any>(a: T, b: T) => a === b,
 
   /**
    * Curried version of `equal`
    */
-  $equal = (a: any) => (b: any) => a === b;
+  $equal = <T>(a: T) => (b: T) => a === b;

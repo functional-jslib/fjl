@@ -7,14 +7,14 @@ export type  NumberIndexable<T = unknown> = ({
   [index: number]: T;
 } |
   /**
-   * Support for `string` type
+   * Else support `string`.
    */
   {
     readonly length: number;
     readonly [index: number]: any; // for `String`/`string`, type here
     // should actually be `string`, this is too strict, however, for
     // a Sum type so `any` is used instead (works fine)
-    // interchangeably targeting `string`, and/or `Array` types.
+    // interchangeably targeting `string`, and/or `Array` types, from overall type.
   });
 
 /**
