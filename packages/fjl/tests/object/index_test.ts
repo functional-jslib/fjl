@@ -22,18 +22,14 @@ import {
   isBoolean,
   isEmpty,
   isFunction,
-  isMap,
   isNull,
   isNumber,
   isObject,
-  isSet,
   isset,
   isString,
   isSymbol,
   isType,
   isUndefined,
-  isWeakMap,
-  isWeakSet,
   jsonClone,
   keys,
   log,
@@ -349,88 +345,6 @@ describe('#object', function () {
     });
   });
 
-  if (typeof Map !== 'undefined') {
-    describe('#isMap', function () {
-      it('should return expected result for given value', function () {
-        // [`arg`, `expected`]
-        [
-          ['', false],
-          [vowelsString, false],
-          [0 / 0, false],
-          [() => undefined, false],
-          [new Map(), true],
-          [new Map(vowelsArray.map(c => [c, c.charCodeAt(0)])), true],
-          [false, false],
-          [0, false],
-          [undefined, false],
-          [null, false],
-        ]
-          .forEach(([arg, expected]) => expect(isMap(arg)).toEqual(expected));
-      });
-    });
-  }
-
-  if (typeof Set !== 'undefined') {
-    describe('#isSet', function () {
-      it('should return expected result for given value', function () {
-        // [`arg`, `expected`]
-        [
-          ['', false],
-          [vowelsString, false],
-          [0 / 0, false],
-          [() => undefined, false],
-          [new Set(), true],
-          [new Set(vowelsArray), true],
-          [false, false],
-          [0, false],
-          [undefined, false],
-          [null, false],
-        ]
-          .forEach(([arg, expected]) => expect(isSet(arg)).toEqual(expected));
-      });
-    });
-  }
-
-  if (typeof WeakMap !== 'undefined') {
-    describe('#isWeakMap', function () {
-      it('should return expected result for given value', function () {
-        // [`arg`, `expected`]
-        [
-          ['', false],
-          [vowelsString, false],
-          [0 / 0, false],
-          [() => undefined, false],
-          [new WeakMap(), true],
-          [false, false],
-          [0, false],
-          [undefined, false],
-          [null, false],
-        ]
-          .forEach(([arg, expected]) => expect(isWeakMap(arg)).toEqual(expected));
-      });
-    });
-  }
-
-  if (typeof WeakSet !== 'undefined') {
-    describe('#isWeakSet', function () {
-      it('should return expected result for given value', function () {
-        // [`arg`, `expected`]
-        [
-          ['', false],
-          [vowelsString, false],
-          [0 / 0, false],
-          [() => undefined, false],
-          [new WeakSet(), true],
-          [false, false],
-          [0, false],
-          [undefined, false],
-          [null, false],
-        ]
-          .forEach(([arg, expected]) => expect(isWeakSet(arg)).toEqual(expected));
-      });
-    });
-  }
-
   describe('#isUndefined', function () {
     it('should return expected result for given value', function () {
       // [`arg`, `expected`]
@@ -488,7 +402,6 @@ describe('#object', function () {
   });
 
   describe('#isEmpty', () => {
-
     (<[Parameters<typeof isEmpty>[0], ReturnType<typeof isEmpty>][]>[
         // Empties
         [null, true],

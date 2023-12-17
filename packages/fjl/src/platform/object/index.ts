@@ -12,26 +12,6 @@ export const
   {assign, keys} = Object,
 
   /**
-   * @todo Method should take object as first argument.
-   */
-  instanceOf = (X: Constructable, x): boolean =>
-    isset(x) && x.constructor === X || x instanceof X, // @todo remove null check (isset) here (in future release).
-
-  $instanceOf = (X: Constructable) => (x): boolean => instanceOf(X, x),
-
-  /**
-   * @todo Method should take object as first argument.
-   */
-  hasOwnProperty = <T extends object>(key: string | PropertyKey, x: T): boolean =>
-    // @note `Object.hasOwn` cannot be used here until it is more broadly
-    //   adopted (until node v24+ release etc.).
-    isset(x) && Object.prototype.hasOwnProperty.call(x, key) // @todo shouldn't be checking for null/undefined here
-  ,
-
-  $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
-    (x: T): boolean => hasOwnProperty(key, x),
-
-  /**
    * Contains all the static functions from `Object` but curried and flipped;
    * Methods that only take one parameter, or only 'rest' args, are exported as is.
    *
@@ -86,6 +66,26 @@ export const
         break;
     }
     return agg;
-  }, {}) as ObjectStatics
+  }, {}) as ObjectStatics,
+
+  /**
+   * @todo Method should take object as first argument.
+   */
+  instanceOf = (X: Constructable, x): boolean =>
+    isset(x) && x.constructor === X || x instanceof X, // @todo remove null check (isset) here (in future release).
+
+  $instanceOf = (X: Constructable) => (x): boolean => instanceOf(X, x),
+
+  /**
+   * @todo Method should take object as first argument.
+   */
+  hasOwnProperty = native.hasOwn ?? (<T extends object>(key: string | PropertyKey, x: T): boolean =>
+    // @note `Object.hasOwn` cannot be used here until it is more broadly
+    //   adopted (until node v24+ release etc.).
+    isset(x) && Object.prototype.hasOwnProperty.call(x, key)) // @todo shouldn't be checking for null/undefined here
+  ,
+
+  $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
+    (x: T): boolean => hasOwnProperty(key, x)
 
 ;

@@ -3,7 +3,7 @@
  */
 
 import {typeOf} from './typeOf';
-import {instanceOf, keys} from '../platform/object';
+import {hasOwnProperty, instanceOf, keys} from '../platform/object';
 import {isset} from './isset';
 import {Constructable, TypeRef, Unary} from "../types";
 
@@ -70,8 +70,8 @@ export const
   isFunction = (x: any): boolean => instanceOf(Function, x),
 
   /**
-   * @deprecated Use `instanceOf` instead (checks both value's
-   * constructor, against passed in type, else `instanceof` check).
+   * @deprecated Use `instanceOf` instead (performs equality check on constructors
+   * and, ultimately, performs `instanceof` check, if constructors are not the same).
    *
    * Strict type checker.  Checks if given value is a direct instance of given type;  E.g.,
    * @example
@@ -87,21 +87,6 @@ export const
    *
    */
   isType = (type: TypeRef | any, obj: any): boolean => typeOf(obj) === toTypeRefName(type),
-
-  /**
-   * @deprecated Use `$instanceOf` instead (checks both value's
-   * constructor, against passed in type, else `instanceof` check).
-   */
-  $isType = (type: TypeRef | any) =>
-    (obj: any): boolean => isType(type, obj),
-
-  /**
-   * @deprecated Use `instanceOf` instead (checks both value's
-   * constructor, against passed in type, else `instanceof` check).
-   *
-   * Synonym for `isType` (or just a more accurate name for `isType`).
-   */
-  isStrictly = isType,
 
   /**
    * Checks if given value contains a constructor equal to one of the passed in ones,
@@ -124,6 +109,8 @@ export const
    * isInstanceOf([], Array) === true
    * isInstanceOf({}, Object) === true
    * ```
+   *
+   * @todo consolidate implementation into `instanceOf`.
    */
   isInstanceOf = (x: any, ...types: Constructable[]): boolean =>
     types.some(t => instanceOf(t, x)),
@@ -154,19 +141,12 @@ export const
   isOfType = (type, x) => isType(type, x) || instanceOf(type, x),
 
   /**
-   * @deprecated Use `isInstanceOf`.
-   *
-   * Synonym for `isInstanceOf` (or just a more accurate name).
-   */
-  isLoosely = isInstanceOf,
-
-  /**
    * Checks if `value` is an es2015 (user defined) `class`.
    */
   isClass = (x: any): boolean => x && _classPrefixRegex.test((x + '').substring(0, 11)),
 
   /**
-   * Returns a boolean depicting whether a value is callable or not.
+   * Returns a boolean denoting whether a value is callable or not.
    */
   isCallable = (x: any): boolean => isFunction(x) && !isClass(x),
 
@@ -182,11 +162,12 @@ export const
 
   /**
    * Checks if value is a boolean.
+   * @todo Replace instances of `isset(...)` with optional chaining (since it is now in the spec).
    */
   isBoolean = x => isset(x) && x.constructor === Boolean,
 
   /**
-   * Checks if value is a number, and/or a bigint, and not `NaN`.
+   * Checks if value is not `NaN`, and is a number, and/or a bigint.
    *
    * ```typescript
    * isNumber(99) === true;
@@ -217,34 +198,6 @@ export const
     isset(x) && x.constructor === String,
 
   /**
-   * @deprecated Perform `instanceof` check instead.
-   *
-   * Checks whether value is of `Map` or not.
-   */
-  isMap = x => isset(x) && x instanceof Map,
-
-  /**
-   * @deprecated Perform `instanceof` check instead.
-   *
-   * Checks whether value is of `Set` or not.
-   */
-  isSet = $isType(Set.name) as Unary<any, boolean>,
-
-  /**
-   * @deprecated Perform `instanceof` check instead.
-   *
-   * Checks whether value is of `WeakMap` or not.
-   */
-  isWeakMap = $isType(WeakMap.name) as Unary<any, boolean>,
-
-  /**
-   * @deprecated Perform `instanceof` check instead.
-   *
-   * Checks whether value is of `WeakSet` or not.
-   */
-  isWeakSet = $isType(WeakSet.name) as Unary<any, boolean>,
-
-  /**
    * Checks if value is undefined.
    */
   isUndefined = x => x === undefined,
@@ -272,8 +225,8 @@ export const
   },
 
   /**
-   * Checks if given value is not `null`, not `undefined`, and is a constructable primitive (e.g., instance/literal of
-   *  one of `String`, `Boolean`, `Number`, `BigInt`, and/or, `Symbol`);
+   * Checks if given value is not `null`, not `undefined`, and is a constructable primitive (
+   *  e.g., instance/literal of one of `String`, `Boolean`, `Number`, `BigInt`, and/or, `Symbol`);
    */
   isConstructablePrimitive = (x: any): boolean =>
     !isset(x) ? false :
@@ -281,39 +234,13 @@ export const
         .some(type => instanceOf(type, x)),
 
   /**
-   * @deprecated Use `isConstructablePrimitive` instead.
-   */
-  isUsableImmutablePrimitive = isConstructablePrimitive,
-
-  /**
-   * @deprecated check length directly and/or create a new method for
-   * the purpose;  e.g., `const notLength = x => !(x?.length)`, etc.
-   *
-   * Checks if !length.
-   */
-  isEmptyList = (x: any): boolean => !(x?.length),
-
-  /**
    * Checks if object contains enumerable properties or not.
-   * @todo requires tests.
+   * @todo write tests.
    */
   containsEnumerables = (x: any): boolean => isset(x) && keys(x).length > 0,
 
-  /**
-   * @deprecated Use `containsEnumerables`.
-   */
-  isEmptyObject = containsEnumerables,
 
   /**
-   * @deprecated Check values directly.
-   *
-   * Checks if collection is empty or not (Map, WeakMap, WeakSet, Set etc.).
-   */
-  isEmptyCollection = (x: { readonly size: number }): boolean => x.size === 0,
-
-  /**
-   * @deprecated Check values/value type states directly.
-   *
    * Checks if passed in value is falsy, an empty array,
    * an empty es6 collection object (Map, Set, etc.),
    * and/or, contains no enumerable properties/is an empty object (of
@@ -323,9 +250,7 @@ export const
     // if '', `0`/`0n`, `null`, `undefined`, `NaN`, or `false` then value is empty
     if (!x) return true;
 
-    const {constructor} = x;
-
-    switch (constructor) {
+    switch (x.constructor) {
       // If is a constructable primitive, it's not empty (at this point)
       case String:
       case Number:
@@ -336,52 +261,10 @@ export const
       default:
         if (isInstanceOf(x, Map, Set, WeakSet, WeakMap)) return !x.size;
 
-        if (x?.length) return false;
+        if (x.length) return false;
 
         // Else check if object doesn't contain enumerable properties
         return !keys(x).length;
     }
-  },
-
-  /**
-   * @deprecated - Use `isInstanceOf` method.
-   *
-   * Checks to see if `x` is of one of the given type refs;  Strict
-   * type check (not-instanceof check).
-   *
-   * @todo write tests for this function.
-   */
-  isOneOf = (x: any, ...types: any): boolean => {
-    const typeName = typeOf(x);
-    return toTypeRefNames(types).some(name => typeName === name);
-  },
-
-  /**
-   * @deprecated Use `isInstanceOf` method.
-   *
-   * Checks if given value is strictly one of given types.
-   */
-  isStrictlyOneOf = isOneOf,
-
-  /**
-   * @deprecated Use `isInstanceOf` instead.
-   *
-   * Checks if given value is either strictly one of given types or is
-   * an `instanceof` one of given types.
-   */
-  isLooselyOneOf = (x: any, ...types: any): boolean =>
-    types.some(type => isType(type, x) || instanceOf(x, type)),
-
-  /**
-   * @deprecated Use `isInstanceOf`.
-   */
-  instanceOfOne = isInstanceOf,
-
-  /**
-   * @deprecated Checks types directly.
-   *
-   * Checks if value qualifies (has `map` method) as a functor.
-   */
-  isFunctor = (x: any): boolean => isset(x) && isFunction(x.map)
-
+  }
 ;

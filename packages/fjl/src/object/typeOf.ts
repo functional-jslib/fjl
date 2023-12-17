@@ -15,18 +15,16 @@ const _NaN = 'NaN',
  * `undefined` and 'Null' for `null`.
  */
 export function typeOf(value: any): string {
-  let retVal;
   if (value === undefined) {
-    retVal = _Undefined;
+    return  _Undefined;
   } else if (value === null) {
-    retVal = _Null;
+    return  _Null;
   } else {
     const {name: constructorName} = value.constructor;
-    retVal = (
+    return (
       constructorName === Number.name ||
       constructorName === BigInt.name
     ) && Number.isNaN(value) ?
       _NaN : constructorName;
   }
-  return retVal;
 }

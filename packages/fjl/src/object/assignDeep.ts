@@ -17,7 +17,7 @@ export const
         // If property being visited is not settable, skip it
         if (propDescriptor && (
           propDescriptor.writable === false || (
-            propDescriptor.writable === undefined &&
+            !propDescriptor.writable &&
             !propDescriptor.set
           )
         )) {
@@ -28,13 +28,10 @@ export const
           value = obj[key];
 
         // If LHV is not a primitive, and RHV contains enumerables then values are assignable
-        if (!isPrimitive(existingValue) &&
-          containsEnumerables(value)
-        ) {
+        if (!isPrimitive(existingValue) && containsEnumerables(value))
           assignDeep(existingValue, value);
-        } else {
+        else
           agg[key] = value;
-        }
 
         return agg;
       }, topAgg);

@@ -17,7 +17,7 @@ export const
   /**
    * Returns an associated list from given object.
    */
-  toAssocList = <T>(obj: T): [keyof T, any][] => Object.entries(obj) as [keyof T, any][],
+  toAssocList = Object.entries,
 
   /**
    * @deprecated Not to many algorithms require this kind of
@@ -39,10 +39,8 @@ export const
   /**
    * From associated list to zero object.
    */
-  fromAssocList = (xs, zero = {}) => foldl((agg, [key, value]) => {
-    agg[key] = value;
-    return agg;
-  }, zero, xs),
+  fromAssocList = Object.fromEntries ?? ((xs, zero = {}) => foldl((agg, [key, value]) => (
+    agg[key] = value, agg), zero, xs)),
 
   /**
    * @deprecated Method is too specific - Define functionality/method
