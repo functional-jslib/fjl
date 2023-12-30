@@ -3,9 +3,9 @@
  */
 
 import {typeOf} from './typeOf';
-import {hasOwnProperty, instanceOf, keys} from '../platform/object';
+import {instanceOf, keys} from '../platform/object';
 import {isset} from './isset';
-import {Constructable, TypeRef, Unary} from "../types";
+import {Constructable, TypeRef} from "../types";
 
 export {isset};
 
