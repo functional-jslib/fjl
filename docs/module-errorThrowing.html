@@ -28,10 +28,6 @@
 
 <header>
     
-        
-            
-        
-    
 </header>
 
 <article>
@@ -42,20 +38,6 @@
         
 
         
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <dl class="details">
@@ -99,24 +81,6 @@
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
     
     </div>
@@ -152,8 +116,7 @@
 
 
 <div class="description">
-    Checks that passed in `value` is of given `type`.  Throws an error if value
-is not of given `type`.  Curried.
+    Checks that passed in `value` is of given `type`.  Throws an error if valueis not of given `type`.  Curried.
 </div>
 
 
@@ -475,8 +438,7 @@ is not of given `type`.  Curried.
 
 
 <div class="description">
-    Checks that passed in `value` is of one of the given `types`.  Throws an error if value
- is not of one of the given `types`.  Curried.
+    Checks that passed in `value` is of one of the given `types`.  Throws an error if value is not of one of the given `types`.  Curried.
 </div>
 
 
@@ -696,173 +658,6 @@ is not of given `type`.  Curried.
     
 
     
-    <h4 class="name" id=".getErrorIfNotTypesThrower"><span class="type-signature">(static) </span>getErrorIfNotTypesThrower<span class="signature">(errorMessageCall)</span><span class="type-signature"> &rarr; {function|<a href="global.html#ErrorIfNotTypes">ErrorIfNotTypes</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Returns a function that can be used to ensure that a value is of one or more given types.
-  The returned function is used in cases where informative error messages
-  containing the value types, names, expected type names, are-required/should-be-used etc.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>errorMessageCall</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-|
-
-<span class="param-type"><a href="global.html#ErrorMessageCall">ErrorMessageCall</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Template function (takes an info-object and returns a printed string).</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="errorThrowing.js.html">errorThrowing.js</a>, <a href="errorThrowing.js.html#line125">line 125</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - Returns a function with the same signature as `errorIfNotTypes` though curried.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">function</span>
-|
-
-<span class="param-type"><a href="global.html#ErrorIfNotTypes">ErrorIfNotTypes</a></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id=".getErrorIfNotTypeThrower"><span class="type-signature">(static) </span>getErrorIfNotTypeThrower<span class="signature">(errorMessageCall)</span><span class="type-signature"> &rarr; {function|<a href="global.html#ErrorIfNotType">ErrorIfNotType</a>}</span></h4>
     
 
@@ -871,9 +666,7 @@ is not of given `type`.  Curried.
 
 
 <div class="description">
-    Returns a function that can be used to ensure that values are of a given type.
-  Also throws informative error messages containing the value types, names, expected type names,
-  etc.
+    Returns a function that can be used to ensure that values are of a given type.  Also throws informative error messages containing the value types, names, expected type names,  etc.
 </div>
 
 
@@ -1025,6 +818,171 @@ is not of given `type`.  Curried.
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id=".getErrorIfNotTypesThrower"><span class="type-signature">(static) </span>getErrorIfNotTypesThrower<span class="signature">(errorMessageCall)</span><span class="type-signature"> &rarr; {function|<a href="global.html#ErrorIfNotTypes">ErrorIfNotTypes</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Returns a function that can be used to ensure that a value is of one or more given types.  The returned function is used in cases where informative error messages  containing the value types, names, expected type names, are-required/should-be-used etc.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>errorMessageCall</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type"><a href="global.html#ErrorMessageCall">ErrorMessageCall</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Template function (takes an info-object and returns a printed string).</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="errorThrowing.js.html">errorThrowing.js</a>, <a href="errorThrowing.js.html#line125">line 125</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Returns a function with the same signature as `errorIfNotTypes` though curried.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+|
+
+<span class="param-type"><a href="global.html#ErrorIfNotTypes">ErrorIfNotTypes</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -1046,7 +1004,7 @@ is not of given `type`.  Curried.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Jan 13 2023 15:14:16 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Dec 30 2023 12:10:22 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

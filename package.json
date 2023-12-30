@@ -39,7 +39,7 @@
     "del-cli": "^4.0.1",
     "eslint": "^8.14.0",
     "jest": "^27.5.1",
-    "jsdoc": "^3.6.10",
+    "jsdoc": "^4.0.2",
     "rollup": "^2.70.2",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
