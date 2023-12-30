@@ -17,19 +17,18 @@ jobs:
       - name: pnpm-setup
         uses: pnpm/action-setup@v2
         with:
-          version: 8.10
+          version: 8
 
       - name: node-setup
       - uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: 20.x
           registry-url: https://registry.npmjs.org/
 
       - name: chrome-setup
       - uses: browser-actions/setup-chrome@latest
-      - run: chrome --version
 
-      - name: run-ci
+      - run: chrome --version
       - run: pnpm ci
       - run: cd packages/fjl && pnpm publish
         env:

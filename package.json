@@ -53,8 +53,9 @@
     "./packages/fjl-inputfilter"
   ],
   "engines": {
-    "node": ">=16 || >=18",
-    "npm": ">=8 || >=9"
+    "node": ">=16",
+    "npm": ">=8",
+    "pnpm": ">=8"
   },
   "mockServerPort": 10087,
   "mockServerCommand": "node ./packages/fjl-validator-recaptcha/tests/mock-server.js"
