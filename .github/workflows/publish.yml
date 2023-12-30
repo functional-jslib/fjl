@@ -29,7 +29,7 @@ jobs:
       - uses: browser-actions/setup-chrome@latest
 
       - run: chrome --version
-      - run: pnpm ci
+      - run: pnpm i
       - run: cd packages/fjl && pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
