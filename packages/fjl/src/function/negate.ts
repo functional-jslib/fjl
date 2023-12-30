@@ -3,28 +3,25 @@ import {BinaryPred, NaryPred, TernaryPred, UnaryPred} from "../types";
 export const
 
     /**
-     * Negates an unary function (a function that takes one argument).
+     * Returns negated version of `fn`.
      */
     negateF = <T>(fn: UnaryPred<T>): UnaryPred<T> =>
         (x: T): boolean => !fn(x),
 
     /**
-     * Takes a function that takes two parameters and returns a negated version of given
-     * function.
+     * Returns a negated version of `fn` (containing arity of two).
      */
     negateF2 = <A, B>(fn: BinaryPred<A, B>): BinaryPred<A, B> =>
         (a, b): boolean => !fn(a, b),
 
     /**
-     * Takes a function that takes three parameters and returns a
-     * negated version of given function.
+     * Returns a negated version of `fn` (containing arity of three).
      */
     negateF3 = <A, B, C>(fn: TernaryPred<A, B, C>): TernaryPred<A, B, C> =>
         (a, b, c): boolean => !fn(a, b, c),
 
     /**
-     * Returns a negated version of given function.
-     * Returned function is variadic and un-curried.
+     * Returns a negated version of `fn` (requiring nary args (none, or more)).
      */
     negateFN = <T>(fn: NaryPred<T>): NaryPred<T> =>
         (...args: T[]): boolean => !fn(...args);

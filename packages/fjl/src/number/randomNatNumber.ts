@@ -1,6 +1,10 @@
 import {randomNumber} from "./randomNumber";
 
-export const randomNatNumber = (min = 0, max = 1): number => Math.round(randomNumber(min, max)),
+/**
+ * Returns a random natural number, between given `min` and `max` values (inclusive).
+ */
+export const randomNatNumber = (min = 0, max = 1) =>
+    Math.round(randomNumber(min, max)),
 
   randNatNum = randomNatNumber
 

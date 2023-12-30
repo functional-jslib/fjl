@@ -1,4 +1,4 @@
 /**
- * Returns passed in parameter.
+ * Returns passed in value.
  */
-export const id = x => x;
+export const id = <T>(x: T) => x;
