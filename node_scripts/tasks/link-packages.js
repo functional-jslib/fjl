@@ -4,7 +4,7 @@ const
 
   {log, error} = console,
 
-  {ioSpawn, npmCmd} = require('../utils'),
+  {ioSpawn} = require('../utils'),
 
   repoRoot = path.join(__dirname, '../../'),
 
@@ -16,7 +16,7 @@ const
  * @return {Promise<void>}
  */
 (async () => Promise.resolve()
-    .then(() => !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? ioSpawn(npmCmd, ['i'], {cwd: repoRoot}) : void 0)
+    .then(() => !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? ioSpawn('pnpm', ['i'], {cwd: repoRoot}) : void 0)
     .then(() => log('Linking packages\n'))
     .then(() => [
         ['fjl'],
@@ -32,17 +32,17 @@ const
             //     log(`Linking subpackages: ${packagesToLink.join(', ')}`);
             //     return Promise.all(
             //       packagesToLink.map(subPackageName =>
-            //         ioSpawn(npmCmd, ['link', subPackageName], {cwd})
+            //         ioSpawn('pnpm', ['link', subPackageName], {cwd})
             //       ));
             //   }
             // })
             return p.then(() => {
               log(`${taskGroupSeparator}Linking ${packageName} ...`);
-              return ioSpawn(npmCmd, ['link'], {cwd});
+              return ioSpawn('pnpm', ['link', '.'], {cwd});
             })
               .then(() => {
                 log(`${taskGroupSeparator}Linking ${packageName} to main project ...`);
-                return ioSpawn(npmCmd, ['link', packageName], {cwd: repoRoot});
+                return ioSpawn('pnpm', ['link', packageName], {cwd: repoRoot});
               })
               .catch(error);
           },
@@ -51,5 +51,5 @@ const
         .then(() => log(taskGroupSeparator + 'Script completed successfully.\n'))
     )
     .then(() => log('Building packages\n'))
-    .then(() => ioSpawn(npmCmd, ['run', 'build'], {cwd: repoRoot}))
+    .then(() => ioSpawn('pnpm', ['run', 'build'], {cwd: repoRoot}))
 )();

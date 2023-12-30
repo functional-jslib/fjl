@@ -7,6 +7,16 @@ settings:
 importers:
 
   .:
+    optionalDependencies:
+      fjl:
+        specifier: ^2.0.0-alpha.5
+        version: link:packages/fjl
+      fjl-inputfilter:
+        specifier: ^1.3.0
+        version: link:packages/fjl-inputfilter
+      fjl-validator:
+        specifier: ^0.8.0
+        version: link:packages/fjl-validator
     devDependencies:
       '@rollup/plugin-node-resolve':
         specifier: ^15.2.3

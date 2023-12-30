@@ -58,5 +58,10 @@
     "pnpm": ">=8"
   },
   "mockServerPort": 10087,
-  "mockServerCommand": "node ./packages/fjl-validator-recaptcha/tests/mock-server.js"
+  "mockServerCommand": "node ./packages/fjl-validator-recaptcha/tests/mock-server.js",
+  "dependencies": {
+    "fjl": "^2.0.0-alpha.5",
+    "fjl-inputfilter": "^1.3.0",
+    "fjl-validator": "^0.8.0"
+  }
 }
