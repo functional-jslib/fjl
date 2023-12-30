@@ -1,7 +1,17 @@
+/**
+ * General data types used in the library.
+ */
+
+/**
+ * Any type that contains a "readonly" `name` (functions, et al.).
+ */
 export interface Nameable {
   readonly name: string;
 }
 
+/**
+ * Represents strings, arrays, and/or, any structures that contain a `length`, and number indices.
+ */
 export type  NumberIndexable<T = unknown> = ({
   length: number;
   [index: number]: T;
@@ -12,15 +22,15 @@ export type  NumberIndexable<T = unknown> = ({
   {
     readonly length: number;
     readonly [index: number]: any; // for `String`/`string`, type here
-    // should actually be `string`, this is too strict, however, for
-    // a Sum type so `any` is used instead (works fine)
+    // should actually be `string`, this is too strict, for
+    // a Sum type, however, so `any` is used instead (works fine)
     // interchangeably targeting `string`, and/or `Array` types, from overall type.
   });
 
 /**
  * `Union + Sum` Slice type - Represents, the intersection, of the string,
  * array, and custom structure, types that match the `Slice` "summed" interfaces -
- * Basically a type for representing string, and/or "array structure" like types.
+ * Basically a type for representing string, and/or "array structure" types.
  */
 export type Slice<T = any> = string | T[];
 

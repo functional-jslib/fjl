@@ -1,10 +1,9 @@
 import {Unary} from "../types";
 
-
 export const
 
   /**
-   * iterates `f(x)` and returns a list of repeated applications of `f` to `x` `limit` number of times.
+   * Iterates `f`, `n - 1` number of times (first with `x`, then with the result of the previous call to `f`), and  returns `x`, and the results of calls to `f`, in a list.
    */
   iterate = <T>(n: number, op: Unary<T>, x: T): T[] => {
     let ind = 0,
@@ -27,6 +26,7 @@ export const
    */
   genIterator = <T>(op: Unary<T, T>, x: T): () => Generator<T, void, T> => function* () {
     let lastX = x;
+    yield lastX;
     while (true) {
       lastX = op(lastX);
       yield lastX;

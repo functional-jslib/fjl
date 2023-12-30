@@ -22,8 +22,10 @@ describe('#genIterate', () => {
   type Expected = number; // `Expected` after `n` iterations
   type NumIterations = number;
   (<[string, Unary, Zero, Expected, NumIterations][]>[
-    ['genIterate(x => x * 2, 1) after 5 iterations === 32', x => x * 2, 1, 32, 5],
-    ['genIterate(x => x / 2, 32) after 5 iterations === 1', x => x / 2, 32, 1, 5],
+    // @note Remember that on it's first iteration the function isn't called due to there being no last value,
+    //   instead what happens is first value yielded is the first one going in.
+    ['genIterate(x => x * 2, 1) after 5 iterations === 32', x => x * 2, 1, 16, 5],
+    ['genIterate(x => x / 2, 32) after 5 iterations === 1', x => x / 2, 32, 2, 5],
   ])
     .forEach(([testName, op, zero, expected, iterations]) => {
       it(testName, () => {

@@ -1,3 +1,1 @@
-import {slice, $slice} from "../platform/slice";
-
-export {slice, $slice};
+export {slice, $slice} from "../platform/slice";
