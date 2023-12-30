@@ -34,5 +34,5 @@ jobs:
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
       - run: pnpm i
-      - run: pnpm run link-and-build:packages
+      - run: pnpm link-and-build:packages
       - run: pnpm test

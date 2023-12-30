@@ -22,8 +22,8 @@ jobs:
           version: 8
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
-      - run: npm ci
-      - run: npm run link-and-build:packages
+      - run: pnpm i
+      - run: pnpm link-and-build:packages
       - run: cd packages/fjl && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
