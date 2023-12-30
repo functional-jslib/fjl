@@ -13,15 +13,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: pnpm-setup
+        uses: pnpm/action-setup@v2
+
+      - name: node-setup
       - uses: actions/setup-node@v2
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
+
+      - name: chrome-setup
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
-      - run: npm ci
-      - run: npm run link-and-build:packages
-      - run: cd packages/fjl && npm publish
+
+      - name: run-ci
+      - run: pnpm ci
+      - run: cd packages/fjl && pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           PUPPETEER_EXE_PATH: $(which chrome)
