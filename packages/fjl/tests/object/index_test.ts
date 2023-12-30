@@ -435,26 +435,34 @@ describe('#object', function () {
         });
   });
 
-  describe('#isset', () => {
-    it('should return `true` if value is set (I.e., if value is not `null` or `undefined`).', () => {
-      ['', 0, false, {}, [], new Map()].forEach(x => {
-        expect(isset(x)).toEqual(true);
+  describe(`#${isset.name}`, () => {
+    [
+      ['', true],
+      [0, true],
+      [false, true],
+      [{}, true],
+      [[], true],
+      [new Map(), true],
+      [null, false],
+      [undefined, false]
+    ]
+      .forEach(([value, expected]) => {
+        it(`${isset.name}(${stringify(value)}) === ${expected}`, () => {
+          expect(isset(value)).toEqual(expected);
+        });
       });
-    });
-    it('should return `false` if value is not set (I.e., if value is `null` or `undefined`).', () => {
-      [null, undefined].forEach(x => {
-        expect(isset(x)).toEqual(false);
-      });
-    });
   });
 
-  describe('#instanceOf', function () {
-    it('should return true when parameter two is of type parameter one', function () {
-      expect(instanceOf(Function, noop)).toEqual(true);
-    });
-    it('should return false when parameters two is not of type parameter one', function () {
-      expect(instanceOf(Function, {})).toEqual(false);
-    });
+  describe(`#${instanceOf.name}`, function () {
+    (<[[TypeConstructor, any], boolean][]>[
+      [[Function, noop], true],
+      [[Function, {}], false],
+    ])
+      .forEach(([args, expected]) => {
+        it(`${instanceOf.name}(${args[0].name}, ${args[1].toString()}) === ${expected}`, function () {
+          expect(instanceOf(...args)).toEqual(expected);
+        });
+      });
   });
 
   describe('#assignDeep', function () {

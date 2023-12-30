@@ -12,7 +12,7 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "strictNullChecks": false,
-    "target": "ES2020",
+    "target": "ES2017",
     "declaration": false
   },
   "exclude": [
