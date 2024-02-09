@@ -18,7 +18,7 @@ export const
     obj2: T2
   ): { [index in keyof T] } =>
     reduce((agg, key) => {
-      if (hasOwnProperty(key, obj2)) {
+      if (hasOwnProperty(obj2, key)) {
         agg[key] = obj2[key];
       }
       return agg;
@@ -29,7 +29,7 @@ export const
 
   objDifference = <T extends object, T2 extends object>(obj1: T, obj2: T2): { [index in keyof T] } =>
     reduce((agg, key: string) => {
-      if (!hasOwnProperty(key, obj2)) {
+      if (!hasOwnProperty(obj2, key)) {
         agg[key] = obj1[key];
       }
       return agg;
