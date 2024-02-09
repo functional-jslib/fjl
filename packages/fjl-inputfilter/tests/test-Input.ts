@@ -23,7 +23,7 @@ const toSlug = (x: string): string => (x + '').replace(/[^a-z\d\-_]+/gim, '-').t
   trim = (x: string): string => x ? (x + '').trim() : x,
   isValidateInputResult = (rsltObj: any): boolean =>
     ['result', 'messages', 'value', 'rawValue', 'filteredValue', 'obscuredValue']
-      .every(key => hasOwnProperty(key, rsltObj));
+      .every(key => hasOwnProperty(rsltObj, key));
 
 describe('#toInput', function () {
   describe('#Input', function () {

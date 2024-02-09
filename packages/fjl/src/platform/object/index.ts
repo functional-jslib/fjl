@@ -4,7 +4,7 @@
 
 import {flip, flip3, flip4, flip5} from "../../function/flip";
 import {Constructable, ObjectStatics} from "../../types";
-import {isset} from "../../object/isset";
+import {notNullish} from "../../object/is";
 
 export const
 
@@ -68,24 +68,18 @@ export const
     return agg;
   }, {}) as ObjectStatics,
 
-  /**
-   * @todo Method should take object as first argument.
-   */
-  instanceOf = (X: Constructable, x): boolean =>
-    isset(x) && x.constructor === X || x instanceof X, // @todo remove null check (isset) here (in future release).
+  instanceOf = (x, X: Constructable): boolean =>
+    notNullish(x) && x.constructor === X || x instanceof X, // @todo remove null check (isset) here (in future release).
 
-  $instanceOf = (X: Constructable) => (x): boolean => instanceOf(X, x),
+  $instanceOf = (x) => (X: Constructable): boolean => instanceOf(x, X),
 
-  /**
-   * @todo Method should take object as first argument.
-   */
-  hasOwnProperty = native.hasOwn ?? (<T extends object>(key: string | PropertyKey, x: T): boolean =>
+  hasOwnProperty = Object.hasOwn ?? (<T extends object>(x: T, key: string | PropertyKey): boolean =>
     // @note `Object.hasOwn` cannot be used here until it is more broadly
     //   adopted (until node v24+ release etc.).
-    isset(x) && Object.prototype.hasOwnProperty.call(x, key)) // @todo shouldn't be checking for null/undefined here
+    notNullish(x) && Object.prototype.hasOwnProperty.call(x, key)) // @todo shouldn't be checking for null/undefined here
   ,
 
-  $hasOwnProperty = <T extends object>(key: string | PropertyKey) =>
-    (x: T): boolean => hasOwnProperty(key, x)
+  $hasOwnProperty = <T extends object>(x: T) =>
+    (key: string | PropertyKey): boolean => hasOwnProperty(x, key)
 
 ;

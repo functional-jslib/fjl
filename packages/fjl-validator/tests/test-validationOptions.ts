@@ -37,7 +37,7 @@ describe('#toValidationOptions', function () {
   test('should have the expected properties as expected types.', function () {
     const validator = toValidationOptions();
     Object.keys(expectedPropertyAndTypes).forEach(key => {
-      expect(hasOwnProperty(key, validator)).toEqual(true);
+      expect(hasOwnProperty(validator, key)).toEqual(true);
       expect(typeOf(validator[key])).toEqual(expectedPropertyAndTypes[key]);
     });
   });
@@ -46,7 +46,7 @@ describe('#toValidationOptions', function () {
     [toValidationOptions(null), toValidationOptions()]
       .forEach(validationOptions => {
         Object.keys(expectedPropertyAndTypes).forEach(key => {
-          expect(hasOwnProperty(key, validationOptions)).toEqual(true);
+          expect(hasOwnProperty(validationOptions, key)).toEqual(true);
           expect(typeOf(validationOptions[key])).toEqual(expectedPropertyAndTypes[key]);
         });
       });
@@ -93,7 +93,7 @@ describe('#toValidationResults', function () {
     const vResults = toValidationResult();
     expect(
       ['messages', 'result', 'value']
-        .every(key => hasOwnProperty(key, vResults))
+        .every(key => hasOwnProperty(vResults, key))
     )
       .toEqual(true);
   });
@@ -136,7 +136,7 @@ describe('#toValidationResults', function () {
     [toValidationResult(null), toValidationResult()]
       .forEach(validationResult => {
         Object.keys(expectedPropertyAndTypes).forEach(key => {
-          expect(hasOwnProperty(key, validationResult)).toEqual(true);
+          expect(hasOwnProperty(validationResult, key)).toEqual(true);
           expect(typeOf(validationResult[key])).toEqual(expectedPropertyAndTypes[key]);
         });
       });

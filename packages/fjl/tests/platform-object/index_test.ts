@@ -14,8 +14,8 @@ describe('#instanceOf', () => {
         [99, Boolean, false],
     ])
         .forEach(([x, Type, expected]) => {
-            it( `instanceOf(${Type.name}, ${JSON.stringify(x)}) === ${expected}`, () => {
-                expect(instanceOf(Type, x)).toEqual(expected);
+            it( `instanceOf(${JSON.stringify(x)}, ${Type.name}) === ${expected}`, () => {
+                expect(instanceOf(x, Type)).toEqual(expected);
             });
         });
 });

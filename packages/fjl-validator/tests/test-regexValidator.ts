@@ -8,7 +8,7 @@ describe('regexValidator`', function () {
 
     describe ('#toRegexValidatorOptions', function () {
         test ('should be an object with a `pattern` property', function () {
-            expect(hasOwnProperty('pattern', toRegexValidatorOptions(undefined))).toEqual(true);
+            expect(hasOwnProperty(toRegexValidatorOptions(undefined), 'pattern')).toEqual(true);
         });
         test ('should have error case(s) tests', () => {
           expect(true).toEqual(true);
