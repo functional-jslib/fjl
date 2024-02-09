@@ -455,8 +455,8 @@ describe('#object', function () {
 
   describe(`#${instanceOf.name}`, function () {
     (<[[TypeConstructor, any], boolean][]>[
-      [[Function, noop], true],
-      [[Function, {}], false],
+      [[noop, Function], true],
+      [[{}, Function], false],
     ])
       .forEach(([args, expected]) => {
         it(`${instanceOf.name}(${args[0].name}, ${args[1].toString()}) === ${expected}`, function () {

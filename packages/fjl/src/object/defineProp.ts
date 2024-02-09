@@ -10,7 +10,7 @@ export const
 
   /**
    * Creates a descriptor for a property which is settable but throws
-   * errors when the `Type` is disobeyed.
+   * errors when the `Type` isn't conformed to.
    */
   createTypedDescriptor = (Type: TypeRef, target: any, propName: string): PropertyDescriptor => {
     let _value: TypeRef;

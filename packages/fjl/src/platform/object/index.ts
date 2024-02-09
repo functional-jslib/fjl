@@ -71,10 +71,10 @@ export const
   /**
    * @todo Method should take object as first argument.
    */
-  instanceOf = (X: Constructable, x): boolean =>
+  instanceOf = (x, X: Constructable): boolean =>
     isset(x) && x.constructor === X || x instanceof X, // @todo remove null check (isset) here (in future release).
 
-  $instanceOf = (X: Constructable) => (x): boolean => instanceOf(X, x),
+  $instanceOf = (x) => (X: Constructable): boolean => instanceOf(x, X),
 
   /**
    * @todo Method should take object as first argument.

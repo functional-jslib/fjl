@@ -67,7 +67,7 @@ export const
   /**
    * Returns whether a value is a function or not.
    */
-  isFunction = (x: any): boolean => instanceOf(Function, x),
+  isFunction = (x: any): boolean => instanceOf(x, Function),
 
   /**
    * @deprecated Use `instanceOf` instead (performs equality check on constructors
@@ -113,7 +113,7 @@ export const
    * @todo consolidate implementation into `instanceOf`.
    */
   isInstanceOf = (x: any, ...types: Constructable[]): boolean =>
-    types.some(t => instanceOf(t, x)),
+    types.some(t => instanceOf(x, t)),
 
   /**
    * @deprecated Use `isInstanceOf` instead.
@@ -138,7 +138,7 @@ export const
    * class Abc extends String {}
    * isOfType(String, new Abc('abcd')) // true (passes instanceof check)
    */
-  isOfType = (type, x) => isType(type, x) || instanceOf(type, x),
+  isOfType = (type, x) => isType(type, x) || instanceOf(x, type),
 
   /**
    * Checks if `value` is an es2015 (user defined) `class`.
@@ -231,7 +231,7 @@ export const
   isConstructablePrimitive = (x: any): boolean =>
     !isset(x) ? false :
       _primitive_constructors
-        .some(type => instanceOf(type, x)),
+        .some(type => instanceOf(x, type)),
 
   /**
    * Checks if object contains enumerable properties or not.
