@@ -4,7 +4,7 @@
 
 import {flip, flip3, flip4, flip5} from "../../function/flip";
 import {Constructable, ObjectStatics} from "../../types";
-import {notNullish} from "../../object/isset";
+import {notNullish} from "../../object/is";
 
 export const
 
