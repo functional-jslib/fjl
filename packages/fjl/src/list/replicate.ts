@@ -1,10 +1,12 @@
-import {$repeat, repeat} from "./repeat";
-
 export const
 
-  $replicate = $repeat,
+  /**
+   * Returns a list containing `x` repeated `n` number of times.
+   */
+  replicate = <T>(n: number, x: T): T[] => Array(n).fill(x, 0, n),
 
   /**
-   * Same as `repeat` due to the nature of javascript (see haskell version for usage).
+   * Curried version of `replicate`.
    */
-  replicate = repeat;
+  $replicate = <T>(n: number) => (x: T): T[] => replicate(n, x)
+;
