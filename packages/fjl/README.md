@@ -30,31 +30,8 @@ Reference one of the index.*.min.js files, from './dist' folder, or modules indi
 
 ### About Currying:
 
-- All methods have curried counterparts which are named with a leading '$' sign;  E.g., `foldl`'s curried version is `$foldl`.
+- All methods, with arity greater than one, have curried counterparts, which start with a leading `$` symbol;  E.g., `foldl`'s curried version is `$foldl`.
 - Methods that take only 'rest' parameters don't have curried counterparts `concat`, `append` etc..
-
-#### Note on `iterate`, `repeat`, `replicate`, `cycle`
-
-In javascript we do not have lazy lists, like in haskell, so `iterate`, `repeat`, `replicate`, and `cycle` take an integer as their first parameter in order to generate a list upto a given number of items;  E.g.,
-
-In haskell: `take 3 $ iterate (a -> a * 2) [1..]` (`[1..]` is syntax for infinite/lazy list) will take the first `3` items of an infinite list of even numbers.
-
-In javascript, we have no choice but to make our function call contain the `limit` information:
-
-```
-iterate(3, a => a * 2, range(1, 3)).join('') === [2, 4, 6].join('')
-```
-
-Here are what the types look like for the list generation methods:
-
-```typescript
-type Slice<T = any> = string | T[] /* | ... */;
-
-type iterate<T> = (n: number, op: Unary<T>, x: T) => T[];
-type repeat<T> = (n: number, x: T) => T[];
-type replicate<T> = repeat<T>;
-type cycle<T> = (n: number, xs: Slice<T>) => Slice<T>;
-```
 
 ### Notable methods not added from the haskell prelude:
 

@@ -1,21 +1,18 @@
-import {concat} from "./concat";
-import {replicate} from "./replicate";
-import {genIterator} from "./iterate";
-import {append} from "./append";
+import {Slice} from "../types";
 
 export const
 
   /**
-   * Replicates a list *n* number of times and appends the results (concat)
+   * Generator that ties a finite list into a circular one, or equivalently, the infinite repetition of the original list.
+   * It is the identity on infinite lists method.
    */
-  cycle = (n: number, xs): typeof xs =>
-    concat(replicate(n, xs)),
+  cycle = function* cycle<T = any, TS extends Slice<T> = Slice<T>>(xs: TS): Generator<TS, void> {
+    let out = xs.slice(0) as TS;
+    yield out;
+    while (true) {
+      // @ts-expect-error - Assume `#.concat` returns same type as `xs`.
+      out = out.concat(xs);
+      yield out;
+    }
+  }
 
-  $cycle = (n: number) => xs => cycle(n, xs),
-
-  /**
-   * Generates a generator which cycles list (concatenate) to end of last yielded result - On first call last yielded
-   * result is initial list.
-   */
-  genCycler = (xs): Generator<typeof xs, void, typeof xs> =>
-    genIterator(_xs => append(_xs, xs), xs)();
