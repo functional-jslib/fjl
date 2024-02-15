@@ -1,40 +1,38 @@
 import {Unary} from "../types";
 
-export const
-
-  /**
-   * Iterates `f`, `n - 1` number of times (first with `x`, then with the result of the previous call to `f`), and  returns `x`, and the results of calls to `f`, in a list.
-   */
-  iterate = <T>(n: number, op: Unary<T>, x: T): T[] => {
-    let ind = 0,
-      lastX: T = x;
-    const out: T[] = [lastX];
-    for (; ind < n - 1; ind += 1) {
-      lastX = op(lastX);
-      out.push(lastX);
-    }
-    return out;
-  },
-
-  $iterate = <T>(n: number) =>
-    (op: Unary<T>) =>
-      (x: T): T[] => iterate(n, op, x),
-
-  /**
-   * Generates a generator which yields the result of calling operator with last yielded result (on first call last
-   * yielded result is incoming `x` value).
-   */
-  genIterator = <T>(op: Unary<T, T>, x: T): () => Generator<T, void, T> => function* () {
-    let lastX = x;
-    yield lastX;
-    while (true) {
-      lastX = op(lastX);
-      yield lastX;
-    }
-  },
-
-  $genIterator = <T>(op: Unary<T, T>) =>
-    (x: T): () => Generator<T, void, T> => genIterator(op, x)
-
-;
+/**
+ * Generator that yields a list of `x` and the result of calling `f` on previous result appended to list; E.g.,
+ *
+ * ```javascript
+ * const addOne = (a) => a + 1;
+ * const startValue = 5;
+ *
+ * // Inline
+ * // ----
+ * const gen = iterate(addOne, startValue);
+ * console.log(gen.next().value); // [5]
+ * console.log(gen.next().value); // [5, 6]
+ * // ...
+ *
+ * // In loop
+ * // ----
+ * // Loop through 5 iterations
+ * for (const x of iterate(addOne, startValue)) {
+ *   if (x > 10) break;
+ *   console.log(x); // [5],
+ *   // ...          // [5, 6],
+ *   // ...          // ...
+ *   // ...          // [5, 6, ..., 10]
+ * }
+ * ```
+ */
+export function* iterate<T>(op: Unary<T>, x: T): Generator<T[], void> {
+  let lastX = x;
+  const out = [lastX];
+  while (true) {
+    yield out;
+    lastX = op(lastX);
+    out.push(lastX);
+  }
+}
 

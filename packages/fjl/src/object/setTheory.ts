@@ -2,11 +2,6 @@ import {$assignDeep, assignDeep} from './assignDeep';
 import {keys, hasOwnProperty} from '../platform/object';
 import {reduce} from '../list/utils';
 
-/**
- * @todo Method names here should have trailing 'Obj' suffix (instead
- *   of having it as a prefix) for all methods.
- */
-
 export const
 
   objUnion = assignDeep,

@@ -5,7 +5,7 @@ export const
   /**
    * @recommendation Use optional chaining (all?.your?.base, etc.),
    * and/or value coalescing (`(all?.your?.base ?? {})`, etc.) instead
-   * - This method can still be used however the language contains
+   * - This method can still be used, however the language contains
    * idiomatic ways of achieving the same functionality.
    *
    * Gives you value at key/namespace-key within `obj`;  E.g.,
@@ -20,7 +20,7 @@ export const
    *   // Thing we want to do
    * }
    *
-   * // So with our function becomes
+   * // With `searchObj`:
    * if (searchObj('all.your.base', obj)) {
    *   // Thing we want to do
    * }

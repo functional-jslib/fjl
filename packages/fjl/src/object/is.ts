@@ -4,10 +4,9 @@
 
 import {typeOf} from './typeOf';
 import {instanceOf, keys} from '../platform/object';
-import {isset} from './isset';
-import {Constructable, TypeRef} from "../types";
+import {Constructable, TypeConstructor, TypeRef} from "../types";
 
-export {isset};
+export * from './isset';
 
 // Used for 'isConstructablePrimitive', checks, etc.
 const _primitive_constructors = Object.freeze([
@@ -76,12 +75,12 @@ export const
   /**
    * Checks whether value is 'strictly' an object (pojo) or not.
    */
-  isObject = x => x?.constructor === Object,
+  isObject = (x: any) => x?.constructor === Object,
 
   /**
    * Checks if value is a boolean.
    */
-  isBoolean = x => x?.constructor === Boolean,
+  isBoolean = (x: any) => x?.constructor === Boolean,
 
   /**
    * Checks if value is not `NaN`, and is a number, and/or a bigint.
@@ -96,8 +95,8 @@ export const
    * isNumber(new BigInt(99)) === true;
    * ```
    */
-  isNumber = x =>
-    notNullish(x) && !Number.isNaN(x) && (
+  isNumber = (x: any) => notNullish(x) &&
+    !Number.isNaN(x) && (
       x.constructor === Number ||
       x.constructor === BigInt
     ),
@@ -105,29 +104,27 @@ export const
   /**
    * Checks whether given value is an `BigInt`, and, not `NaN`.
    */
-  isBigInt = x => notNullish(x) && !Number.isNaN(x) &&
-    x.constructor === BigInt,
+  isBigInt = (x: any) => notNullish(x) && !Number.isNaN(x) && x.constructor === BigInt,
 
   /**
    * Checks whether value is a string or not.
    */
-  isString = x =>
-    notNullish(x) && x.constructor === String,
+  isString = (x: any) => x?.constructor === String,
 
   /**
    * Checks if value is undefined.
    */
-  isUndefined = x => x === undefined,
+  isUndefined = (x: any) => x === undefined,
 
   /**
    * Checks if value is null.
    */
-  isNull = x => x === null,
+  isNull = (x: any) => x === null,
 
   /**
    * Checks if value is a `Symbol` instance.
    */
-  isSymbol = x => x?.constructor === Symbol,
+  isSymbol = (x: any) => x?.constructor === Symbol,
 
   /**
    * Returns `true` if given value is one of the seven native javascript
@@ -275,6 +272,6 @@ export const
    * class Abc extends String {}
    * isOfType(String, new Abc('abcd')) // true (passes instanceof check)
    */
-  isOfType = (type, x) => isType(type, x) || instanceOf(x, type)
+  isOfType = (type: TypeConstructor, x: any) => isType(type, x) || instanceOf(x, type)
 
 ;
