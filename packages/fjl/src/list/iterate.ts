@@ -36,3 +36,7 @@ export function* iterate<T>(op: Unary<T>, x: T): Generator<T[], void> {
   }
 }
 
+/**
+ * Curried version of `iterate`.
+ */
+export const $iterate = <T>(op: Unary<T>) => (x: T) => iterate(op, x);

@@ -5,7 +5,7 @@
 /**
  * Normalizes step for `from` and `to` combination.
  */
-const normalizeStep = (from, to, step): number => {
+const normalizeStep = <T>(from: T, to: T, step: number): number => {
   if (from > to) {
     return step > 0 ? -step : step; // make step negative
   }
