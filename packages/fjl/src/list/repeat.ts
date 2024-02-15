@@ -1,14 +1,20 @@
-import {genIterator, iterate} from "./iterate";
-import {id} from "../function";
-
 export const
 
   /**
-   * Returns an array containing `x` repeated `n` number of times.
+   * Generator that infinitely yields repetitions of `x` as a list;
+   *
+   * ```javascript
+   * const gen = repeat(0);
+   * console.log(gen.next().value); // [0]
+   * console.log(gen.next().value); // [0, 0]
+   * // ...
+   * ```
    */
-  repeat = <T>(n: number, x: T): T[] => n <= 0 ? [] : iterate(n, a => a, x),
+  repeat = function* repeat<T>(x: T): Generator<T[], void> {
+    const out = [x];
 
-  $repeat = <T>(n: number) =>
-    (x: T): T[] => repeat(n, x),
-
-  genRepeater = <T>(x: T): Generator<T, void, T> => genIterator(id, x)();
+    while (true) {
+      yield out;
+      out.push(x);
+    }
+  }

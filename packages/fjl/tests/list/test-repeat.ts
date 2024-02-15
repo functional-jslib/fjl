@@ -1,15 +1,20 @@
 import {repeat} from "../../src/list/repeat";
-import {Slice} from "../../src/types/data";
 
 describe('#repeat', () => {
-    const arg = 'a';
-    for (let i = 0; i < 5; i += 1) {
-        const expected = new Array(i).fill(arg, 0, i).join(''),
-            result = repeat(i, arg) as Slice<string>;
-        ((_result, _expected): void => {
-            it(`repeat(${i}, "${arg}") === "${_expected}"`, () => {
-                expect(_result).toEqual(_expected.split(''));
-            });
-        })(result, expected);
-    }
+  type Yield = number;
+  type NumIterations = number;
+
+  (<[Parameters<typeof repeat<Yield>>[0], Yield[], NumIterations][]>[
+    [0, [0, 0, 0, 0], 4],
+    [1, [1, 1, 1, 1], 4],
+    [2, [2, 2, 2, 2], 4],
+  ]).forEach(([arg, expected, numIters]) => {
+    it(`repeat(${arg}) === ${JSON.stringify(expected)}`, () => {
+      let count = 0;
+      for (const result of repeat(arg)) {
+        expect(result.slice(0, ++count)).toEqual(expected.slice(0, count));
+        if (count === numIters) break;
+      }
+    });
+  });
 });
