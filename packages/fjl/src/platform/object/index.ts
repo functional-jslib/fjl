@@ -4,7 +4,6 @@
 
 import {flip, flip3, flip4, flip5} from "../../function/flip";
 import {Constructable, ObjectStatics} from "../../types";
-import {notNullish} from "../../object/is";
 
 export const
 
@@ -68,15 +67,15 @@ export const
     return agg;
   }, {}) as ObjectStatics,
 
-  instanceOf = (x, X: Constructable): boolean =>
-    notNullish(x) && x.constructor === X || x instanceof X,
+  instanceOf = (x: any, X: Constructable): boolean =>
+    x.constructor === X || x instanceof X,
 
-  $instanceOf = (x) => (X: Constructable): boolean => instanceOf(x, X),
+  $instanceOf = (x: any) => (X: Constructable): boolean => instanceOf(x, X),
 
   hasOwnProperty = Object.hasOwn ?? (<T extends object>(x: T, key: string | PropertyKey): boolean =>
     // @note `Object.hasOwn` cannot be used here until it is more broadly
     //   adopted (until node v24+ release etc.).
-    notNullish(x) && Object.prototype.hasOwnProperty.call(x, key))
+    Object.prototype.hasOwnProperty.call(x, key))
   ,
 
   $hasOwnProperty = <T extends object>(x: T) =>

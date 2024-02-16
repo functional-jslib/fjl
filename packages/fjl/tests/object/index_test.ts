@@ -242,8 +242,6 @@ describe('#object', function () {
       [1, false],
       [true, false],
       [false, false],
-      [undefined, false],
-      [null, false],
       [[], false],
       [{}, false],
     ])

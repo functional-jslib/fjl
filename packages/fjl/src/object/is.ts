@@ -3,7 +3,7 @@
  */
 
 import {typeOf} from './typeOf';
-import {instanceOf, keys} from '../platform/object';
+import {$instanceOf, instanceOf, keys} from '../platform/object';
 import {Constructable, TypeConstructor, TypeRef} from "../types";
 
 export * from './isset';
@@ -12,7 +12,13 @@ export * from './isset';
 const _primitive_constructors = Object.freeze([
     String, Number, BigInt, Boolean, Symbol
   ]) as readonly Constructable[],
-  _classPrefixRegex = /^\s{0,3}class\s{1,3}/
+  _classPrefixRegex = /^\s{0,3}class\s{1,3}/,
+
+  /**
+   * Generator function constructor.
+   * @ref https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction
+   */
+  GeneratorFunction = () => function* () {}.constructor
 ;
 
 export const
@@ -31,6 +37,11 @@ export const
    * Returns whether a value is a function or not.
    */
   isFunction = (x: any): boolean => instanceOf(x, Function),
+
+  /**
+   * Returns bool indicating whether a value is a generator function or not.
+   */
+  isGeneratorFunction = (x: any) => instanceOf(x, GeneratorFunction as unknown as TypeConstructor),
 
   /**
    * Special case of `instanceOf` where the method checks if given value contains a constructor equal

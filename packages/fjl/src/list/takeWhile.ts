@@ -1,19 +1,23 @@
-import {Slice, TernaryPred} from "../types";
+import {TernaryPred} from "../types";
+import {instanceOf} from "../platform";
 
 export const
 
   /**
-   * Returns a slice containing elements that match predicate upto non-matching element.
+   * Returns items upto point where predicate doesn't hold.
+   * For string type returns a string.
    */
-  takeWhile = <T>(pred: TernaryPred, xs: Slice<T>): typeof xs => {
-    const limit = xs.length;
+  takeWhile = <T>(pred: TernaryPred, xs: Iterable<T>): typeof xs | T[] => {
     let i = 0;
-    for (; i < limit; i += 1) {
-      if (!pred(xs[i], i, xs)) break;
+    const out = [];
+    for (const x of xs) {
+      if (!pred(x, i, xs)) break;
+      out.push(x);
+      i += 1;
     }
-    return xs.slice(0, i);
+    return instanceOf(xs, String) ? out.join('') as typeof xs : out;
   },
 
   $takeWhile = <T>(pred: TernaryPred) =>
-    (xs: Slice<T>): typeof xs =>
+    (xs: Iterable<T>): typeof xs | T[] =>
       takeWhile(pred, xs);

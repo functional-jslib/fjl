@@ -10,6 +10,6 @@ export const
      * function (function that returns given value untouched) else
      * returns given value. (useful in functional composition).
      */
-    toFunction = <T>(x?: T): Nary => (isFunction(x) ?
+    toFunction = <T>(x?: T): Nary => (x && isFunction(x) ?
       x : () => x
     ) as Nary;
