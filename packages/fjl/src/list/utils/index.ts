@@ -2,7 +2,7 @@
  * Array combinator utils.
  * @module listUtils
  */
-export * from "./findexIndexWhere";
+export * from "./findIndexWhere";
 export * from "./findIndexWhereRight";
 export * from "./findIndicesWhere";
 export * from "./findWhere";

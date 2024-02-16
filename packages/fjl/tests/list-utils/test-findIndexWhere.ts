@@ -1,4 +1,4 @@
-import {findIndexWhere} from "../../src/list/utils/findexIndexWhere";
+import {findIndexWhere} from "../../src/list/utils/findIndexWhere";
 import {TernaryPred} from "../../src/types";
 import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
 

@@ -1,5 +1,5 @@
 import {negateF3} from "../function/negate";
-import {findIndexWhere} from "./utils/findexIndexWhere";
+import {findIndexWhere} from "./utils/findIndexWhere";
 import {reverse} from "./reverse";
 import {splitAt} from "./splitAt";
 import {Slice, TernaryPred} from "../types";
