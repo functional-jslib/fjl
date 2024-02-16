@@ -164,6 +164,8 @@ export const
   containsEnumerables = (x: any): boolean => notNullish(x) && keys(x).length > 0,
 
   /**
+   * @deprecated - Perform check directly.
+   *
    * Checks if passed in value is falsy, an empty array,
    * an empty es6 collection object (Map, Set, etc.),
    * and/or, contains no enumerable properties/is an empty object (of
@@ -192,9 +194,9 @@ export const
   },
 
   /**
-   * Resolves/normalizes a type name from either a string or a constructor.
-   *
    * @deprecated - Compare instance type (via `instanceOf`, etc.), or type names directly.
+   *
+   * Resolves/normalizes a type name from either a string or a constructor.
    *
    * @todo write tests for this function.
    */
