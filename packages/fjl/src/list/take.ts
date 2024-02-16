@@ -1,10 +1,21 @@
-import {$sliceTo, sliceTo} from "./utils/sliceTo";
+/**
+ * Returns the first `n` items from an iterable (e.g., string, array, generator, etc.).
+ * **Note:** string type is returned for strings, array type otherwise.
+ */
+export const take = <T>(n: number, xs: Iterable<T>): Iterable<T> => {
+    if (typeof xs === 'string' || Array.isArray(xs))
+      return xs.slice(0, n);
 
-export const
-
-  $take = $sliceTo,
+    const out = [] as T[];
+    for (const x of xs) {
+      if (n-- === 0) break;
+      out.push(x);
+    }
+    return out;
+  },
 
   /**
-   * Takes `n` items from start of list to `limit` (exclusive).
+   * Curried version of `take`.
    */
-  take = sliceTo;
+  $take = <T>(n: number) =>
+    (xs: Iterable<T> | Generator<T>): Iterable<T> => take(n, xs);

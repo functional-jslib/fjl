@@ -20,7 +20,8 @@ export const
    * ```
    */
   breakOnList = <T, TS extends Slice<T>>(
-    pred: TernaryPred<T, number, TS>, xs: TS
+    pred: TernaryPred<T, number, TS>,
+    xs: TS
   ): [typeof xs, typeof xs] => {
     const splitPoint = findIndexWhere(negateF3(pred), xs);
     return splitPoint === -1 ?

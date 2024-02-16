@@ -1,4 +1,3 @@
-import {slice} from "../../platform/slice";
 import {Slice} from "../../types";
 
 export const
