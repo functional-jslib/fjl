@@ -2,7 +2,7 @@
  * @module string
  * @description Contains functions for strings.
  */
-import {$split, split} from '../platform/string';
+import {$split, split} from '../_platform/string';
 import {range} from "../list";
 import {randNatNum} from "../number";
 import {id} from "../function/id";

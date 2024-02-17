@@ -3,7 +3,7 @@
  * @description Object operations/combinators.
  */
 
-export * from '../platform/object';
+export * from '../_platform/object';
 export * from './assignDeep';
 export * from './assocList';
 export * from './console';

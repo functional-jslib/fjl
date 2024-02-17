@@ -1,4 +1,4 @@
-import {indexOf} from "../platform/slice";
+import {indexOf} from "../_platform/slice";
 
 export const
 

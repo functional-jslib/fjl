@@ -1,1 +1,1 @@
-export {at, $at} from '../platform/slice';
+export {at, $at} from '../_platform/slice';

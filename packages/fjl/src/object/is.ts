@@ -3,7 +3,7 @@
  */
 
 import {typeOf} from './typeOf';
-import {$instanceOf, instanceOf, keys} from '../platform/object';
+import {$instanceOf, instanceOf, keys} from '../_platform/object';
 import {Constructable, TypeConstructor, TypeRef} from "../types";
 
 export * from './isset';

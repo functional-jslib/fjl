@@ -1,5 +1,5 @@
 import {TypeConstructor} from "../../src/types";
-import {instanceOf} from "../../src/platform/object";
+import {instanceOf} from "../../src/_platform/object";
 
 describe('#instanceOf', () => {
     (<[any, TypeConstructor, boolean][]>[

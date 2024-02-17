@@ -1,4 +1,4 @@
-import {$concat, concat} from "../platform/slice";
+import {$concat, concat} from "../_platform/slice";
 
 export const
 

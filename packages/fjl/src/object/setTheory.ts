@@ -1,5 +1,5 @@
 import {$assignDeep, assignDeep} from './assignDeep';
-import {keys, hasOwnProperty} from '../platform/object';
+import {keys, hasOwnProperty} from '../_platform/object';
 import {reduce} from '../list/utils';
 
 export const

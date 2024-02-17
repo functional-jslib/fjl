@@ -14,6 +14,6 @@ export * from './object';
 export * from './string';
 export * from './types';
 
-import * as platform from './platform';
+import * as platform from './_platform';
 
 export {platform};

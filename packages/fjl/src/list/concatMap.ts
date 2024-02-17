@@ -1,4 +1,4 @@
-import {concat} from "../platform/slice";
+import {concat} from "../_platform/slice";
 import {map} from "./map";
 import {MapOp, Slice} from "../types";
 

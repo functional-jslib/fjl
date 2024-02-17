@@ -7,7 +7,7 @@
  *   natively built-in ones).
  */
 import {isArray} from './is';
-import {keys} from '../platform/object';
+import {keys} from '../_platform/object';
 import {TypeConstructor} from "../types";
 import {map} from "../list/map";
 import {foldl} from "../list/foldl";

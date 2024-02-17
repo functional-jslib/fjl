@@ -1,3 +1,3 @@
-import {lastIndexOf, $lastIndexOf} from "../platform/slice";
+import {lastIndexOf, $lastIndexOf} from "../_platform/slice";
 
 export {lastIndexOf, $lastIndexOf};

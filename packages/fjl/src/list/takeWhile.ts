@@ -1,5 +1,5 @@
 import {TernaryPred} from "../types";
-import {instanceOf} from "../platform";
+import {instanceOf} from "../_platform";
 
 export const
 
