@@ -1,7 +1,6 @@
 /**
- * Defines (object) platform functional method counter-parts used in the library.
+ * Defines `Object` platform functional method counter-parts used in the library.
  */
-
 import {flip, flip3, flip4, flip5} from "../../function/flip";
 import {Constructable, ObjectStatics} from "../../types";
 
@@ -67,17 +66,29 @@ export const
     return agg;
   }, {}) as ObjectStatics,
 
+  /**
+   * Functional version of `instanceof` operator.
+   */
   instanceOf = (x: any, X: Constructable): boolean =>
     x.constructor === X || x instanceof X,
 
+  /**
+   * Curried version of `instanceOf`.
+   */
   $instanceOf = (x: any) => (X: Constructable): boolean => instanceOf(x, X),
 
+  /**
+   * Functional version of `Object.prototype.hasOwnProperty`.
+   */
   hasOwnProperty = Object.hasOwn ?? (<T extends object>(x: T, key: string | PropertyKey): boolean =>
     // @note `Object.hasOwn` cannot be used here until it is more broadly
     //   adopted (until node v24+ release etc.).
     Object.prototype.hasOwnProperty.call(x, key))
   ,
 
+  /**
+   * Curried version of `hasOwnProperty`.
+   */
   $hasOwnProperty = <T extends object>(x: T) =>
     (key: string | PropertyKey): boolean => hasOwnProperty(x, key)
 
