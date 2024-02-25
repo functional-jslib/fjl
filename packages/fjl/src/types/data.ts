@@ -3,7 +3,7 @@
  */
 
 /**
- * Any type that contains a "readonly" `name` (functions, et al.).
+ * Any type that contains a "readonly" `name` (functions, et al.) property.
  */
 export interface Nameable {
   readonly name: string;
@@ -11,6 +11,8 @@ export interface Nameable {
 
 /**
  * Represents strings, arrays, and/or, any structures that contain a `length`, and number indices.
+ *
+ * @todo Consider deprecating this for [native] `Iterable<T>` type.
  */
 export type  NumberIndexable<T = unknown> = ({
   length: number;

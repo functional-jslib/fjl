@@ -13,7 +13,3 @@ export * from './number';
 export * from './object';
 export * from './string';
 export * from './types';
-
-import * as platform from './_platform';
-
-export {platform};

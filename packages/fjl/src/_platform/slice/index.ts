@@ -1,3 +1,6 @@
+/**
+ * Methods that apply to the `Slice` Sum Type (e.g., intersection of `Array` and `String` types).
+ */
 export const
 
   /**
