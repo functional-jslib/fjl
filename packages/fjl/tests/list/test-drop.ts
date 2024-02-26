@@ -1,34 +1,30 @@
-import {Slice} from "../../src/types/data";
-import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
-import {drop} from "../../src";
+import {vowelsArray} from "../helpers";
+import {drop, $drop} from "../../src";
 
-describe('#drop', () => {
-  it('should return a new list/string with dropped items from original until length', () => {
-    (<[Parameters<typeof drop>, Slice][]>[
-      [[0, ''], ''],
-      [[0, []], []],
-      [[1, ''], ''],
-      [[1, []], []],
-    ].concat(
-      vowelsArray
-        .map((_, ind) => [
-          [ind, vowelsArray],
-          vowelsArray.slice(ind)
-        ]),
-      vowelsString.split('')
-        .map((_, ind) => [
-          [ind, vowelsString],
-          vowelsString.slice(ind)
-        ])
-    ))
-      .forEach(([args, expected]) => {
-        expectEqual(drop(...args), expected);
+const {stringify} = JSON;
+
+describe('#drop, #$drop', () => {
+  (<[Parameters<typeof drop>, any[]][]>[
+    [[0, []], []],
+    [[1, []], []],
+  ].concat(
+    vowelsArray
+      .map((_, ind) => [
+        [ind, vowelsArray],
+        vowelsArray.slice(ind)
+      ])
+  ))
+    .forEach(([args, expected]) => {
+      it(`drop(${stringify(args)}) === ${stringify(expected)}`, () => {
+        expect(drop(...args)).toEqual(expected);
+        expect($drop(args[0])(args[1])).toEqual(expected);
       });
-  });
+    });
 
-  it('should throw an error when no parameter is passed in', () => {
-    (<any[]>[null, undefined, 0, {}]).forEach(xs =>
-      expectError(() => drop(3, xs))
-    );
+  (<any[]>[null, undefined, 0, {}]).forEach(xs => {
+    it(`should throw when: drop(3, ${xs + ''})`, () => {
+      expect(() => drop(3, xs)).toThrow();
+      expect(() => $drop(3)(xs)).toThrow();
+    });
   });
 });

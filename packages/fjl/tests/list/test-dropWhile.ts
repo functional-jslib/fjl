@@ -4,9 +4,9 @@ import {UnaryPred} from "../../src/types";
 
 describe('#dropWhile', () => {
   const alnumRegex = /^[a-z]$/i,
-    alnumPred = (x): boolean => alnumRegex.test(x),
-    nonAlnumPred = (x): boolean => !alnumPred(x),
-    getCharCodeLessThan = (lessThanCharCode): UnaryPred<any> => {
+    alnumPred = (x: any): boolean => alnumRegex.test(x),
+    nonAlnumPred = (x: any): boolean => !alnumPred(x),
+    getCharCodeLessThan = (lessThanCharCode: any): UnaryPred<any> => {
       const methodName = `charCodeLessThan${lessThanCharCode}`;
       return {
         [methodName]: (x): boolean => (x + '').charCodeAt(0) < lessThanCharCode
@@ -29,4 +29,10 @@ describe('#dropWhile', () => {
         expect(result).toEqual(expected);
       });
     });
+
+  [null, undefined, 0, {}].forEach(x =>
+    it(`should throw an error when: \`dropWhile(() => null, ${x + ''})\``, () => {
+      expect(() => dropWhile(() => null, x as Iterable<any>)).toThrow()
+    })
+  );
 });

@@ -1,15 +1,9 @@
-import {instanceOfSome} from "../object";
-
 export const
 
   /**
-   * Drops `n` items from start of iterable and returns a corresponding list (
-   *  string (if iterable is a string), or array).
+   * Drops `n` items from start of iterable and returns an array containing the non-dropped items.
    */
-  drop = <T = any>(n: number, xs: Iterable<T>): typeof xs | T[] => {
-    if (instanceOfSome(xs, String, Array))
-      return (xs as (string | T[])).slice(n) as typeof xs;
-
+  drop = <T = any>(n: number, xs: Iterable<T>): T[] => {
     const out = [] as T[];
     for (const x of xs) {
       if (n-- > 0) continue;
@@ -24,6 +18,6 @@ export const
    * @curried
    */
   $drop = <T = any>(n: number) =>
-    (xs: Iterable<T>): typeof xs | T[] => drop(n, xs)
+    (xs: Iterable<T>): T[] => drop(n, xs)
 
 ;

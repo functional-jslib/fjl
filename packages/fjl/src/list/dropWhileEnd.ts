@@ -4,6 +4,9 @@ import {negateF3} from "../function";
 
 export const
 
+  /**
+   * Drops items off end of list while predicate holds.
+   */
   dropWhileEnd = <T>(
     pred: TernaryPred,
     xs: string | T[]
@@ -16,6 +19,9 @@ export const
     return xs.slice(0, splitPoint + 1);
   },
 
+  /**
+   * Curried version of `dropWhileEnd`.
+   */
   $dropWhileEnd = <T>(p: TernaryPred) =>
     (xs: string | T[]): typeof xs =>
       dropWhileEnd(p, xs)
