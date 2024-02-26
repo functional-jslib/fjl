@@ -1,16 +1,14 @@
-import {Slice} from "../types";
 import {instanceOfSome} from "../object";
 
 export const
 
   /**
-   * Drops `n` items from start of list.
-   *
-   * **Note:** Returns `string` type for strings, and `Array` type otherwise.
+   * Drops `n` items from start of iterable and returns a corresponding list (
+   *  string (if iterable is a string), or array).
    */
-  drop = <T = any>(n: number, xs: Slice<T> | Iterable<T>): typeof xs | T[] => {
+  drop = <T = any>(n: number, xs: Iterable<T>): typeof xs | T[] => {
     if (instanceOfSome(xs, String, Array))
-      return (xs as (string | T[])).slice(n);
+      return (xs as (string | T[])).slice(n) as typeof xs;
 
     const out = [] as T[];
     for (const x of xs) {
@@ -26,6 +24,6 @@ export const
    * @curried
    */
   $drop = <T = any>(n: number) =>
-    (xs: Slice<T> | Iterable<T>): typeof xs | T[] => drop(n, xs)
+    (xs: Iterable<T>): typeof xs | T[] => drop(n, xs)
 
 ;

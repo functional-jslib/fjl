@@ -1,23 +1,34 @@
-import {findIndexWhere} from "./utils";
 import {TernaryPred} from "../types";
+import {instanceOf} from "../_platform";
 
 export const
 
   /**
-   * Returns a list without elements that match predicate.
+   * Drops elements, from start of iterable, fulfilling predicate, and returns
+   * a list (string if iterable is a string) of the remaining items.
    */
-  dropWhile = <T>(p: TernaryPred, xs: string | T[]): typeof xs => {
-    const limit = xs.length,
-      splitPoint: number = findIndexWhere(
-        (x, i, xs) => !p(x, i, xs),
-        xs
-      );
-    return splitPoint === -1 ? xs.slice(limit) :
-      xs.slice(splitPoint, limit);
+  dropWhile = <T>(p: TernaryPred, xs: Iterable<T>): typeof xs | T[] => {
+    let index = -1,
+      thresholdReached = false;
+
+    const out = [];
+
+    for (const x of xs) {
+      index++;
+      const dropCurrent = p(x, index, xs);
+      if (!thresholdReached && dropCurrent) continue;
+      else if (!thresholdReached && !dropCurrent) thresholdReached = true;
+      out.push(x);
+    }
+
+    return instanceOf(xs, String) ? (out.join("") as Iterable<T>) : out;
   },
 
+  /**
+   * Curried version of `dropWhile`.
+   */
   $dropWhile = <T>(p: TernaryPred) =>
-    (xs: string | T[]): typeof xs =>
+    (xs: Iterable<T>): typeof xs | T[] =>
       dropWhile(p, xs)
 
 ;
