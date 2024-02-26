@@ -1,5 +1,5 @@
 import {nonAlphaNumsArray, vowelsArray} from "../helpers";
-import {dropWhileEnd} from "../../src/list/dropWhileEnd";
+import {$dropWhileEnd, dropWhileEnd} from "../../src/list/dropWhileEnd";
 import {id} from "../../src/function/id";
 import {UnaryPred} from "../../src/types";
 
@@ -29,6 +29,7 @@ describe('#dropWhileEnd', () => {
       .forEach(([args, expected]) => {
         const result = dropWhileEnd(args[0], args[1]);
         expect(result).toEqual(expected);
+        expect($dropWhileEnd(args[0])(args[1])).toEqual(expected);
       });
   });
 });
