@@ -12,7 +12,7 @@ export interface Nameable {
 /**
  * Represents strings, arrays, and/or, any structures that contain a `length`, and number indices.
  *
- * @todo Consider deprecating this for [native] `Iterable<T>` type.
+ * @todo Consider using `Iterable<T>` type, instead of this type, where it makes sense.
  */
 export type  NumberIndexable<T = unknown> = ({
   length: number;
@@ -23,10 +23,11 @@ export type  NumberIndexable<T = unknown> = ({
    */
   {
     readonly length: number;
-    readonly [index: number]: any; // for `String`/`string`, type here
-    // should actually be `string`, this is too strict, for
-    // a Sum type, however, so `any` is used instead (works fine)
-    // interchangeably targeting `string`, and/or `Array` types, from overall type.
+    readonly [index: number]: any; // Even though string variant type here
+    // should actually be `string`, this is too strict for
+    // a Sum type so `any` is used instead - this allows
+    // `string`, and/or `Array` types, to be used where `NumberIndexable` type is required,
+    // interchangeably.
   });
 
 /**

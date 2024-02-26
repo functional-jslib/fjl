@@ -5,14 +5,14 @@ export const
   /**
    * Append two, or more, lists, i.e.,
    * ```
-   * expectEqual(append(take(13, alphabetString), drop(13, alphabetString)), alphabetString); // true
+   * expect(append(take(13, alphabetString), drop(13, alphabetString))).toEqual(alphabetString); // true
    *
    * // Another example
    * const result = append(
    *   alphabetStr.split(''),
    *   alphabetStr.split('')
    * ),
-   * expected = repeat(2, alphabetStr).split('');
+   * expected = take(2, repeat(alphabetStr));
    *
    * shallowEquals(result, expected) === true // `true`
    * ```

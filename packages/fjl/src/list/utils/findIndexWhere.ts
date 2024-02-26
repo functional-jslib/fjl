@@ -7,6 +7,8 @@ export const
 
   /**
    * Finds index in "number indexable" (string|array|etc.) that matches given predicate or -1.
+   *
+   * @todo Should support any indexable/Iterable/IterableIterator types
    */
   findIndexWhere = (
     pred: TernaryPred,

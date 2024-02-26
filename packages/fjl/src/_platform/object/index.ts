@@ -67,7 +67,9 @@ export const
   }, {}) as ObjectStatics,
 
   /**
-   * Functional version of `instanceof` operator.
+   * Functional `instanceof` combinator which first checks
+   * if passed in value's constructor is equal to the given one, and if result is `false`
+   * checks whether value is an instance of the given constructor.
    */
   instanceOf = (x: any, X: Constructable): boolean =>
     x.constructor === X || x instanceof X,
@@ -79,6 +81,8 @@ export const
 
   /**
    * Functional version of `Object.prototype.hasOwnProperty`.
+   * Note: Is defined as `Object.hasOwn` if available, otherwise uses
+   * `Object.prototype.hasOwnProperty` in declaration.
    */
   hasOwnProperty = Object.hasOwn ?? (<T extends object>(x: T, key: string | PropertyKey): boolean =>
     // @note `Object.hasOwn` cannot be used here until it is more broadly
