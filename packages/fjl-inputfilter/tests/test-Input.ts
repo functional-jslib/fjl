@@ -1,7 +1,7 @@
 /**
  * Created by Ely on 3/26/2016.
  */
-import {curry, error, isArray, isBoolean, isEmpty, keys, peek, repeat, subsequences} from 'fjl';
+import {curry, error, isArray, isBoolean, isEmpty, keys, repeat, subsequences, take} from 'fjl';
 import {notEmptyValidator, regexValidator, stringLengthValidator} from 'fjl-validator';
 import {
   Input,
@@ -88,7 +88,7 @@ describe('#runValidators', function () {
       // [ValidationResult, ExpectedResultResult, MessagesLength]
       [runValidators(inputOptionObjs[0].validators, breakOnFailure, 'hello-world'), true, 0],
       [runValidators(inputOptionObjs[1].validators, breakOnFailure, ''), false, 2],
-      [runValidators(inputOptionObjs[1].validators, breakOnFailure, repeat(100, 'a').join('')), false, 1]
+      [runValidators(inputOptionObjs[1].validators, breakOnFailure, take(100, repeat('a')).join('')), false, 1]
     ]
       .concat(
         subsequences('hello')

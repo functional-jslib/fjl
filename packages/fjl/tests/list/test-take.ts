@@ -1,35 +1,29 @@
-import {expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
+import {vowelsArray} from "../helpers";
 import {take} from "../../src/list/take";
-import {Slice} from "../../src/types/data";
+
+const {stringify} = JSON;
 
 describe('#take', () => {
-  it('should return taken items from list and/or string until limit', () => {
-    type TakeTest = [[number, string | any[]], string | any[]];
-    type TakeTestCases = Array<TakeTest>;
-    (<TakeTestCases>[
-      [[0, ''], ''],
-      [[0, []], []],
-      [[1, ''], ''],
-      [[1, []], []],
-    ]).concat(
-      (<TakeTestCases>vowelsArray
-        .map((_, ind) => [
-          [ind, vowelsArray],
-          vowelsArray.slice(0, ind)
-        ])),
-      (<TakeTestCases>vowelsString.split('')
-        .map((_, ind) => [
-          [ind, vowelsString],
-          vowelsString.slice(0, ind)
-        ]))
-    )
-      .forEach(([args, expected]) => {
-        expectEqual(take(...args), expected);
+  type TakeTest = [[number, string | any[]], string | any[]];
+  type TakeTestCases = Array<TakeTest>;
+  (<TakeTestCases>[
+    [[0, []], []],
+    [[1, []], []],
+  ]).concat(
+    (<TakeTestCases>vowelsArray.map((_, ind) => [
+      [ind, vowelsArray],
+      vowelsArray.slice(0, ind)
+    ])),
+  )
+    .forEach(([args, expected]) => {
+      it(`take(${stringify(args)}) === ${stringify(expected)}`, () => {
+        expect(take(...args)).toEqual(expected);
       });
-  });
-  it('should throw an error when no parameter is passed in', () => {
-    [null, undefined, 0, {}].forEach(x =>
-      expectError(() => take(3, x as Slice<any>))
-    );
-  });
+    });
+
+  [null, undefined, 0, {}].forEach(x =>
+    it(`should throw an error when: \`take(3, ${x + ''})\``, () => {
+        expect(() => take(3, x as Iterable<any>)).toThrow()
+      })
+  );
 });

@@ -11,6 +11,7 @@ import {
   isFunction,
   isString,
   repeat,
+  take,
   Unary
 } from 'fjl';
 
@@ -41,7 +42,7 @@ export const
   /**
    * Default value obscurer.
    */
-  defaultValueObscurer = <T>(x: T): string => repeat((x + '').length, '*') as unknown as string,
+  defaultValueObscurer = <T>(x: T): string => take((x + '').length, repeat('*')).join(''),
 
   $getErrorMsgByKey = <T, Options extends ValidatorOptions<T>>(
     options: Options, key: keyof MessageTemplates<T> | MessageGetter<T>, value: T): string | undefined => {

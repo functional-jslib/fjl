@@ -1,18 +1,11 @@
-import {Slice} from "../types";
-import {instanceOfSome} from "../object";
-
 /**
  * Returns the first `n` items from an iterable (e.g., string, array, generator, etc.).
- * **Note:** string type is returned for strings, array type otherwise.
  */
-export const take = <T=any>(n: number, xs: Slice<T> | Iterable<T>): typeof xs | T[] => {
-    if (instanceOfSome(xs, String, Array))
-      return (xs as (string | T[])).slice(0, n);
-
+export const take = <T>(n: number, xs: Iterable<any>): T[] => {
     const out = [] as T[];
     for (const x of xs) {
       if (n-- === 0) break;
-      out.push(x as T);
+      out.push(x);
     }
     return out;
   },
@@ -20,5 +13,4 @@ export const take = <T=any>(n: number, xs: Slice<T> | Iterable<T>): typeof xs | 
   /**
    * Curried version of `take`.
    */
-  $take = <T>(n: number) =>
-    (xs: Slice<T> | Iterable<T>): typeof xs | T[] => take(n, xs);
+  $take = <T>(n: number) => (xs: Iterable<T>): T[] => take(n, xs);
