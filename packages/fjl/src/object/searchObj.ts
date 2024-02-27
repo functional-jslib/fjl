@@ -1,4 +1,4 @@
-import {isset} from './is';
+import {notNullish} from './is';
 
 export const
 
@@ -39,7 +39,7 @@ export const
       parent = obj;
     for (; ind < limit; ind += 1) {
       const node = parent[parts[ind]];
-      if (!isset(node)) {
+      if (notNullish(node)) {
         return node;
       }
       parent = node;

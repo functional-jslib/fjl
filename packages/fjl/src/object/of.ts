@@ -1,5 +1,4 @@
-import {isConstructablePrimitive} from './is';
-import {isset} from './isset';
+import {isConstructablePrimitive, isNullish} from './is';
 import {Constructable} from "../types";
 
 /**
@@ -13,10 +12,11 @@ import {Constructable} from "../types";
  *   - Else if constructor is an instance of `Function`,
  *     calls constructor, using the `new` keyword (with any
  *     passed in args).
- *   - Else returns nothing.
+ *   - Else returns void.
  */
 export const of = <T>(x: T, ...args: any[]): T => {
-    if (!isset(x)) return undefined;
+    if (isNullish(x))
+      return undefined;
 
     const constructor = x.constructor as Constructable;
 
