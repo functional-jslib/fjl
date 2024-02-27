@@ -10,7 +10,7 @@ export const
    * @note This method is not be confused with '../list/concat' - this latter
    * version of the method actually uses this one internally.  This
    * method, itself, is actually exported from the library as `append`
-   * (same as '+' for strings) See '../list/append' module.
+   * (same as '+' for strings, but for concatables) See '../list/append' module.
    */
   concat = (...xss: any[]): any =>
     xss.shift()?.concat(...xss),
