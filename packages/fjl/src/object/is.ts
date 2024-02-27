@@ -3,7 +3,7 @@
  */
 
 import {typeOf} from './typeOf';
-import {$instanceOf, instanceOf, keys} from '../_platform/object';
+import {instanceOf, keys} from '../_platform/object';
 import {Constructable, TypeConstructor, TypeRef} from "../types";
 
 export * from './isset';
@@ -18,18 +18,18 @@ const _primitive_constructors = Object.freeze([
    * Generator function constructor.
    * @ref https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction
    */
-  GeneratorFunction = () => function* () {}.constructor
+  GeneratorFunction = () => function* () { yield void 0; }.constructor
 ;
 
 export const
 
   /**
-   * Returns a boolean indicating whether passed in value is nullish (`undefined`, or `null`) or not.
+   * Returns a boolean indicating whether passed in value is equal to `undefined` or `null`.
    */
   isNullish = (x: any): boolean => x === null || x === undefined,
 
   /**
-   * Returns a boolean indicating whether passed in value is not nullish (`undefined`, or `null`) or vice-versa.
+   * Returns a boolean indicating whether passed in value isn't equal to `undefined` and/or `null`.
    */
   notNullish = (x: any): boolean => !isNullish(x),
 
@@ -161,22 +161,23 @@ export const
    *
    * @todo write tests.
    */
-  containsEnumerables = (x: any): boolean => notNullish(x) && keys(x).length > 0,
+  containsEnumerables = (x: any): boolean => keys(x).length > 0,
 
   /**
    * @deprecated - Perform check directly.
    *
    * Checks if passed in value is falsy, an empty array,
    * an empty es6 collection object (Map, Set, etc.),
-   * and/or, contains no enumerable properties/is an empty object (of
-   * any type).
+   * and/or, contains no enumerable properties.
+   *
+   * **Note:** Functions with no arity (`length === 0`) are considered empty.
    */
   isEmpty = (x: any): boolean => {
     // if '', `0`/`0n`, `null`, `undefined`, `NaN`, or `false` then value is empty
     if (!x) return true;
 
     switch (x.constructor) {
-      // If is a constructable primitive, it's not empty (at this point)
+      // At this point, if value is a constructable primitive, it isn't empty
       case String:
       case Number:
       case BigInt:
