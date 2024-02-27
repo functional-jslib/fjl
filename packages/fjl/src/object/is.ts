@@ -255,7 +255,7 @@ export const
    *   isType(Number, NaN) === false
    *   isType(Number, 99) === true
    *   isType('Null', 99) === false // though, for `null` and `undefined` checks
-   *                                // @see `isset`, in this module, instead
+   *                                // @see `isNullish`/`notNullish`, in this module, instead
    *   isType('Undefined', undefined) === true // true
    *
    * @note Useful where absolute types, or some semblance thereof, are required.
@@ -271,7 +271,7 @@ export const
    * on value with constructor.
    * @note Use care when checking for `Array` since it is an `instanceof` Object.
    * @note For `null` and `undefined` their class cased names can be used for type checks
-   * `isOfType('Null', null) === true (passes strict type check)` (or better yet @link `module:object.isset` can be used).
+   * `isOfType('Null', null) === true (passes strict type check)` (or better yet @link `module:object.notNullish` can be used).
    * @throwsafe - Doesn't throw on `null` or `undefined` `obj` values.
    * @example
    * isOfType(Number, 99) === true        // true  (passes strict type check (numbers are not instances of `Number`

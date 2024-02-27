@@ -427,7 +427,7 @@ describe('#object', function () {
         [1, false],
       ])
         .forEach(([arg, expected]) => {
-          it(`isEmpty(${(isset(arg) && arg instanceof Function) || arg === null ? arg + '' : stringify(arg)}) === ${expected}`, function () {
+          it(`isEmpty(${((arg === null || arg === undefined) && arg instanceof Function) || arg === null ? arg + '' : stringify(arg)}) === ${expected}`, function () {
             expect(isEmpty(arg)).toEqual(expected);
           });
         });
