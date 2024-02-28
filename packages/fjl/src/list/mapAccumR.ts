@@ -1,19 +1,19 @@
-import {MapAccumOp} from "../types";
+import {MapAccumOp, Slice} from "../types";
 
 export const
 
   /**
-   * Performs a map and a reduce all in one (from right-to-left). Returns a tuple
-   * containing the aggregated value and the result of mapping the passed in function on passed in list.
+   * Takes a map reduce function and returns the result of the map (on each item) and the reducePerforms a map and a reduce all in one (from right-to-left) and returns the result of the reduce,
+   * and the map as a tuple.
    */
   mapAccumR = <A, B, C>(
     op: MapAccumOp<A, B, C>,
     zero: A,
-    xs: string | B[]
-  ): [A, string | C[]] => {
+    xs: Slice<B>
+  ): [A, Slice<C>] => {
     const limit = xs.length;
 
-    if (!limit) return [zero, xs.slice(0) as string | C[]];
+    if (!limit) return [zero, xs.slice(0) as unknown as Slice<C>];
 
     const mapped = [];
 
@@ -28,7 +28,10 @@ export const
     return [agg, mapped];
   },
 
+  /**
+   * Curried version of `mapAccumR`.
+   */
   $mapAccumR = <A, B, C>(op: MapAccumOp<A, B, C>) =>
     (zero: A) =>
-      (xs: string | B[]): [A, string | C[]] =>
+      (xs: Slice<B>): [A, Slice] =>
         mapAccumR(op, zero, xs);

@@ -1,6 +1,7 @@
 import {BinaryPred} from "../types";
 import {pushN} from "./pushN";
 import {append} from "./append";
+import {Slice} from "../types";
 
 export const
 
@@ -12,8 +13,8 @@ export const
    *  [["M"], ["i"], ["s", "s"], ["i"], ["s", "s"], ["i"], ["p", "p"], ["i"]]
    * ```
    */
-  groupBy = <X = string | any, XS extends string | X[] = X[]>(
-    equalityOp: BinaryPred, xs: XS
+  groupBy = <X = any, XS extends Slice<X> = Slice<X>>(
+    equalityOp: BinaryPred<X, X>, xs: XS
   ): XS[] => {
     if (!xs?.length) return [];
 
@@ -52,7 +53,7 @@ export const
   /**
    * Curried version of `$groupBy`.
    */
-  $groupBy = <X = string | any, XS extends string | X[] = X[]>(
+  $groupBy = <X = any, XS extends Slice<X> = Slice<X>>(
     equalityOp: BinaryPred
   ) =>
     (xs: XS): XS[] =>
