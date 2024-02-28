@@ -29,8 +29,8 @@ export interface Slice<T = any> extends Iterable<T> {
 
   at(i: number): any;  // @note Method not supported by older versions of typescript versions.
   concat(...items: (Slice<T> | ConcatArray<any>)[]): this;
-  indexOf(x: any): number;
   includes(x: any): boolean;
+  indexOf(x: any): number;
   lastIndexOf(x: any): number;
   slice(start: number, end?: number): this;
 }
