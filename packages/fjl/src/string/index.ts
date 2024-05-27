@@ -92,7 +92,7 @@ export const
    * Generates a random string.
    */
   randStr = (min = 0, max = 100): string =>
-    range(min, max)
+    range(min, max) // @todo should use a generator here.
       .reduce(str => str + randChar(min, max), '')
 
 ;

@@ -1,6 +1,6 @@
 const path = require('path'),
   testMatch = [
-    '**/tests/**/*@(.test|_test|.spec).@(ts|js)',
+    '**/(tests|src)/**/*@(.test|_test|.spec).@(ts|js)',
     '**/tests/**/test-*.@(ts|js)',
   ],
   transform = {
