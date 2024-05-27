@@ -3,13 +3,6 @@
  */
 
 /**
- * Any type that contains a "readonly" `name` (functions, et al.) property.
- */
-export interface Nameable {
-  readonly name: string;
-}
-
-/**
  * Represents strings, arrays, and/or, any structures that contain a `length`, and number indices.
  *
  * @todo Consider using `Iterable<T>` type, instead of this type, where it makes sense.
@@ -19,23 +12,37 @@ export type  NumberIndexable<T = unknown> = ({
   [index: number]: T;
 } |
   /**
-   * Else support `string`.
+   * Else support `string`, and other array types.
    */
   {
     readonly length: number;
-    readonly [index: number]: any; // Even though string variant type here
-    // should actually be `string`, this is too strict for
-    // a Sum type so `any` is used instead - this allows
-    // `string`, and/or `Array` types, to be used where `NumberIndexable` type is required,
-    // interchangeably.
+    readonly [index: number]: any;
   });
 
 /**
- * `Union + Sum` Slice type - Represents, the intersection, of the string,
- * array, and custom structure, types that match the `Slice` "summed" interfaces -
- * Basically a type for representing string, and/or "array structure" types.
+ * The Slice type represents the intersection of string, array, and/or array-like, types.
  */
-export type Slice<T = any> = string | T[];
+export interface Slice<T = any> extends Iterable<T> {
+  readonly length: number;
+
+  [index: number]: any;
+
+  at(i: number): any;  // @note Method not supported by older versions of typescript versions.
+  concat(...items: (Slice<T> | ConcatArray<any>)[]): this;
+  includes(x: any): boolean;
+  indexOf(x: any): number;
+  lastIndexOf(x: any): number;
+  slice(start: number, end?: number): this;
+}
+
+/**
+ * @deprecated Use your own type and/or existing native/otherwise types.
+ *
+ * Any type that contains a "readonly" `name` (functions, et al.) property.
+ */
+export interface Nameable {
+  readonly name: string;
+}
 
 /**
  * @deprecated - Use direct type constructors instead.

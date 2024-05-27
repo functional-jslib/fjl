@@ -2,9 +2,15 @@
   "name": "fjl",
   "version": "2.0.0-alpha.5",
   "description": "Functional Javascript Library.",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "typings": "dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "typings": "./dist/esm/index.d.ts",
+  "files": [
+    "./dist",
+    "./README.md",
+    "./package.json",
+    "./LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/functional-jslib/fjl.git"
@@ -19,12 +25,12 @@
   ],
   "exports": {
     ".": {
-      "require": "dist/cjs/index.js",
-      "module": "dist/esm/index.js"
+      "require": "./dist/cjs/index.js",
+      "module": "./dist/esm/index.js"
     },
     "./*": {
-      "require": "dist/cjs/*.js",
-      "module": "dist/esm/*.js"
+      "require": "./dist/cjs/*.js",
+      "module": "./dist/esm/*.js"
     }
   },
   "author": "Ely De La Cruz <elycruz@elycruz.com>",
@@ -34,7 +40,6 @@
   },
   "homepage": "https://github.com/functional-jslib/fjl#readme",
   "engines": {
-    "node": ">=16 || >=18",
-    "npm": ">=8 || >= 9"
+    "node": ">=16 || >=18 || >=20 || >=22 || >= 24 || >=26"
   }
 }

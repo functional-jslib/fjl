@@ -1,6 +1,8 @@
 /**
  * Methods that apply to the `Slice` Sum Type (e.g., intersection of `Array` and `String` types).
  */
+import {Slice} from "../../types";
+
 export const
 
   /**
@@ -12,8 +14,8 @@ export const
    * method, itself, is actually exported from the library as `append`
    * (same as '+' for strings, but for concatables) See '../list/append' module.
    */
-  concat = (...xss: any[]): any =>
-    xss.shift()?.concat(...xss),
+  concat = <T extends Slice>(...xss: (T | ConcatArray<any>)[]): any =>
+    (xss.shift() as Slice)?.concat(...xss),
 
   /**
    * Curried version of `concat`.
@@ -51,12 +53,12 @@ export const
    * Gets item at index;  Same as` [].at()` (allows
    *  negative/right-to-left indexing (see mdn `(Array|String).at` method).
    */
-  at = (i: number, xs: string | any[]) => xs.at(i),
+  at = (i: number, xs: Slice) => xs.at(i),
 
   /**
    * Curried version of `at`.
    */
-  $at = (i: number) => (xs: string | any[]) => xs.at(i)
+  $at = (i: number) => (xs: Slice) => xs.at(i)
 
 ;
 

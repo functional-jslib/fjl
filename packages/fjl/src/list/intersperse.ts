@@ -15,6 +15,9 @@ export const
     return out;
   },
 
+  /**
+   * Curried version of `intersperse`.
+   */
   $intersperse = <T = any, TS extends any[] = any[]>(between: T) =>
     (xs: TS): any[] => intersperse(between, xs)
 

@@ -1,19 +1,17 @@
 /**
- * @module object
+ * @module list/range
  */
-
-/**
- * Normalizes step for `from` and `to` combination.
- */
-const normalizeStep = <T>(from: T, to: T, step: number): number => {
-  if (from > to) {
-    return step > 0 ? -step : step; // make step negative
-  }
-  return step < 0 ? -1 * step : step; // make step positive
-};
+import {
+  normalizeStepOrThrow as normalizeStep
+} from "../number/normalizeStepOrThrow";
 
 export const
-
+  /**
+   * Returns an array of numbers defined by the given range (inclusive).
+   *
+   * @todo Rename to `rangeArray`.
+   * @todo Move (all methods here) to '../number' module.
+   */
   range = (from: number, to: number, step = 1): number[] => {
     let i = from;
     const out: number[] = [];
@@ -29,6 +27,8 @@ export const
 
   /**
    * Range iterator generator.
+   *
+   * @todo Rename to `range`.
    */
   rangeIter = function* (from: number, to: number, step = 1) {
     let i = from;

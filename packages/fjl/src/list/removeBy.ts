@@ -19,6 +19,9 @@ export const
     return sliceCopy(list);
   },
 
+  /**
+   * Curried version of `removeBy`.
+   */
   $removeBy = <T>(pred: BinaryPred<T>) =>
     (x: T) =>
       (list: Slice<T>): Slice<T> => removeBy(pred, x, list);
