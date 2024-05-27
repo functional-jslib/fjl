@@ -8,20 +8,20 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
     "@types/jest": "^29.5.12",
-    "@types/node": "^18.19.17",
+    "@types/node": "^18.19.33",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "del": "^7.1.0",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
     "jest-puppeteer": "^8.0.6",
     "puppeteer": "^21.11.0",
     "rollup": "^2.79.1",
-    "ts-jest": "^29.1.2",
+    "ts-jest": "^29.1.3",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   },
   "scripts": {
     "eslint": "eslint -c .eslintrc.json",
@@ -63,5 +63,6 @@
     "fjl": "workspace:2.0.0-alpha.5",
     "fjl-inputfilter": "workspace:^",
     "fjl-validator": "workspace:^"
-  }
+  },
+  "packageManager": "pnpm@8.13.1+sha512.758bebc6989cb6462c5138129840193b10c258ddcdb0ab43ee0ef9dd87784bc218d6e41cb5beeac362b8ce33f1f8b08025b599933c0bce82050a9a36b8474d43"
 }
