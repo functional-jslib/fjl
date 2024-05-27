@@ -3,8 +3,8 @@ import {MapAccumOp, Slice} from "../types";
 export const
 
   /**
-   * Takes a map reduce function and returns the result of the map (on each item) and the reducePerforms a map and a reduce all in one (from right-to-left) and returns the result of the reduce,
-   * and the map as a tuple.
+   * Performs a map and a reduce, all in one (from right-to-left), on each item, and returns the result of the reduce,
+   * and the map, as a tuple.
    */
   mapAccumR = <A, B, C>(
     op: MapAccumOp<A, B, C>,

@@ -7,7 +7,7 @@ import {
 
 export const
   /**
-   * Returns an array of numbers defined by given range (inclusive).
+   * Returns an array of numbers defined by the given range (inclusive).
    *
    * @todo Rename to `rangeArray`.
    * @todo Move (all methods here) to '../number' module.
