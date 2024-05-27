@@ -44,7 +44,7 @@ export const
           (out as Constructable & {from: (_x: any) => T}).from(x)) as T;
 
       case Function.name:
-        return Object.assign((...args: any[]) => (x as Function)(...args), x) as T;
+        return Object.assign((...args: any[]) => (x as CallableFunction)(...args), x) as T;
 
       case Promise.name:
         return (out ? (out as Promise<any>).then(() => x) :
