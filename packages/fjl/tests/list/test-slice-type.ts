@@ -7,40 +7,40 @@ import {Slice} from "../../src";
 const {stringify} = JSON;
 
 describe('Slice type', () => {
-  it('Should be able to stand in for `string`, and `T[]` in function types', () => {
-    const concat = <T extends Slice>(...xss: (T | ConcatArray<any>)[]): any =>
-      xss[0].slice(0, 0).concat(...xss);
+  const concat = <T extends Slice>(...xss: (T | ConcatArray<any>)[]): any =>
+    (xss.shift() as Slice)?.concat(...xss);
 
-    ([
-      [['abc', 'def'], 'abcdef'],
-      ['abcdef'.split('').map(x => [x]), 'abcdef']
-    ] as Slice[])
-      .forEach(([args, expected]) => {
-        it(`function context test: concat(${args.map((x: any) => stringify(x)).join(', ')}) === ${stringify(expected)}`, () => {
-          const result: string = concat(...args); // Ensure return value is inferred to our inline declarations type,
-          // e.g., no TSC error is thrown
+  ([
+    [['abc', 'def'], 'abcdef'],
+    ['abcdef'.split('').map(x => [x]), 'abcdef'.split('')]
+  ] as Slice[])
+    .forEach(([args, expected]) => {
+      it(`'Should be able to stand in for \`string\`, and \`T[]\` in: ` +
+        `concat(${args.map((x: any) => stringify(x)).join(', ')}) === ${stringify(expected)}`, () => {
+        const result: string = concat(...args); // Ensure return value is inferred to our inline declarations type,
+        // e.g., no TSC error is thrown
 
-          expect(result).toEqual(expected);
-        });
+        expect(result).toEqual(expected);
       });
-  });
+    });
 
   it('Should be able to stand in for `string`, and `T[]` types in standalone value declaration contexts;' +
     ' e.g., it should not throw any TSC errors', () => {
-      // Should be able to represent string values interchangeably (when calling `concat`, and/or `slice`, methods)
-      const ctrlHead = 'all your base';
-      const ctrlTail = 'belong to us';
-      const someArray: Slice = ctrlHead.split(' ').map(x => x);
+    // Should be able to represent string values interchangeably (when calling `concat`, and/or `slice`, methods)
+    const ctrlHead = 'all your base';
+    const ctrlTail = 'belong to us';
+    const someArray: Slice = ctrlHead.split(' ').map(x => x);
 
-      expect(ctrlHead.concat(ctrlTail)).toEqual(ctrlHead + ctrlTail);
+    expect(ctrlHead.concat(ctrlTail)).toEqual(ctrlHead + ctrlTail);
 
-      expect(someArray.concat(...'all your base'.split(' ').map(xs => [xs]))).toEqual(['all', 'your', 'base']);
+    expect(someArray.concat(...'all your base'.split(' ')
+      .map(xs => [xs]))).toEqual(['all', 'your', 'base', 'all', 'your', 'base']);
 
-      // Should ignore generic type param when value is a string;  E.g., should not throw error
-      // ----
-      let someStr2: Slice<string> = 'hi';
+    // Should ignore generic type param when value is a string;  E.g., should not throw error
+    // ----
+    let someStr2: Slice<string> = 'hi';
 
-      someStr2 = ''.slice.call(someStr2, 0);
-      expect(someStr2).toEqual('hi');
+    someStr2 = ''.slice.call(someStr2, 0);
+    expect(someStr2).toEqual('hi');
   });
 });

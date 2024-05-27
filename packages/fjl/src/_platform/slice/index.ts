@@ -15,7 +15,7 @@ export const
    * (same as '+' for strings, but for concatables) See '../list/append' module.
    */
   concat = <T extends Slice>(...xss: (T | ConcatArray<any>)[]): any =>
-    xss.slice(0, 0).concat(...xss),
+    (xss.shift() as Slice)?.concat(...xss),
 
   /**
    * Curried version of `concat`.
