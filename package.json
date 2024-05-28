@@ -27,10 +27,9 @@
     "typescript": "^5.4.5"
   },
   "scripts": {
-    "build": "rollup --config rollup.config.js",
+    "build": "rollup --config rollup.config.mjs",
     "eslint": "eslint -c .eslintrc.json .",
-    "link-and-build:packages": "node node_scripts/tasks/link-packages.js",
-    "link:packages": "npm run link-and-build:packages",
+    "link-packages": "node node_scripts/tasks/link-packages.js",
     "lint": "pnpm eslint",
     "lintfix": "pnpm eslint --fix",
     "lint-staged": "lint-staged",
@@ -66,7 +65,10 @@
     "pnpm": ">=8"
   },
   "lint-staged": {
-    "*.{js,cjs,mjs,ts}": ["tsc-files --noEmit", "eslint --fix"]
+    "*.{js,cjs,mjs,ts}": [
+      "tsc-files --noEmit",
+      "eslint --fix"
+    ]
   },
   "mockServerPort": 10087,
   "mockServerCommand": "node ./packages/fjl-validator-recaptcha/tests/mock-server.js",
