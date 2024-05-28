@@ -71,23 +71,6 @@ const
       ...configBase,
       output: {
         ...outputBase,
-        format: 'es',
-        file: path.join(projectPath, 'dist/index.esm.min.js'),
-      },
-      plugins: [
-        typescript({
-          tsconfig: path.join(projectPath, './tsconfig.prod.esm.json'),
-          compilerOptions: {
-            declaration: false,
-            declarationDir: null
-          }
-        }),
-        terser()
-      ]
-    }, {
-      ...configBase,
-      output: {
-        ...outputBase,
         format: 'cjs',
         dir: path.join(projectPath, 'dist/cjs/'),
         preserveModules: true,
