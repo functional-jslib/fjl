@@ -9,6 +9,8 @@ const
 
   {log, error, warn} = console,
 
+  isDev = !process.env.NODE_ENV || process.env.NODE_ENV.toLowerCase().startsWith('dev'),
+
   nonAlnumRegex = /[^a-z\d]+/g,
 
   camelCase = xs =>
@@ -31,7 +33,11 @@ const
         }),
         terser()
       ],
-      outputGlobals = {};
+      outputGlobals = {},
+      outputBase = {
+        sourcemap: isDev,
+        globals: outputGlobals
+      };
 
     if (projectName.includes('fjl-validator')) {
       configBase.external = ['fjl'];
@@ -49,12 +55,11 @@ const
     return [{
       ...configBase,
       output: {
+        ...outputBase,
         format: 'es',
         dir: path.join(projectPath, 'dist/esm/'),
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
-        sourcemap: true,
-        globals: outputGlobals
       },
       plugins: [
         typescript({
@@ -65,10 +70,9 @@ const
     }, {
       ...configBase,
       output: {
+        ...outputBase,
         format: 'es',
         file: path.join(projectPath, 'dist/index.esm.min.js'),
-        sourcemap: true,
-        globals: outputGlobals
       },
       plugins: [
         typescript({
@@ -83,22 +87,20 @@ const
     }, {
       ...configBase,
       output: {
+        ...outputBase,
         format: 'cjs',
         dir: path.join(projectPath, 'dist/cjs/'),
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
-        sourcemap: true,
-        globals: outputGlobals
       },
       plugins
     }, {
       ...configBase,
       output: {
+        ...outputBase,
         format: 'iife',
         file: path.join(projectPath, 'dist/index.iife.min.js'),
-        sourcemap: true,
         name: iifeName,
-        globals: outputGlobals
       },
       plugins
     }];
