@@ -106,26 +106,24 @@ const
 
 // Clean project distro paths
 // ----
+log('Cleaning dist paths:');
 await Promise.all(projectNames.map(projectName => {
   const distPath = path.join(__dirname, `./packages/${projectName}/dist/`);
 
-  log(`Cleaning dist path: ${distPath}`);
+  log(`\n- ./packages/${projectName}/dist/`);
 
   // Delete files in 'dist/' paths for each project
   return fs.readdir(distPath)
-
     .then(files => files.map(file => {
       const filePath = path.join(distPath, file);
+      const projectPath = `./${filePath.split(__dirname)[1]}`;
       return fs.rm(filePath, {recursive: true})
-        .then(() => (log(`${filePath} removed`), filePath),
-          () => log(`Skipping removal of ${filePath}`))
+        .then(() => null, // (log(`${projectPath} removed`), filePath),
+          () => log(`Skipping removal of ${projectPath}`))
     }))
-
     .then(removals => Promise.all(removals))
-
-    .then(() => log('Cleaning completed.'))
-
-    .catch(error)
-}));
+}))
+  .then(() => log('\nCleaning completed.'))
+  .catch(error);
 
 export default configs;
