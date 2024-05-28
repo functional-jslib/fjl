@@ -1,0 +1,3 @@
+# Allow script to run in different shells;  Change '*bin/bash' to appropriate value.
+
+pnpm lint-staged

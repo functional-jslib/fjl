@@ -1,8 +1,13 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
-import path from 'path';
 
 const
+
+  __dirname = path.dirname(new URL(import.meta.url).pathname),
+
+  {log, error, warn} = console,
 
   nonAlnumRegex = /[^a-z\d]+/g,
 
@@ -78,32 +83,11 @@ const
     }, {
       ...configBase,
       output: {
-        format: 'amd',
-        dir: path.join(projectPath, 'dist/amd/'),
-        preserveModules: true,
-        preserveModulesRoot: path.join(projectPath, 'src'),
-        sourcemap: true,
-        globals: outputGlobals
-      },
-      plugins
-    }, {
-      ...configBase,
-      output: {
         format: 'cjs',
         dir: path.join(projectPath, 'dist/cjs/'),
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
         sourcemap: true,
-        globals: outputGlobals
-      },
-      plugins
-    }, {
-      ...configBase,
-      output: {
-        format: 'umd',
-        file: path.join(projectPath, 'dist/index.umd.min.js'),
-        sourcemap: true,
-        name: iifeName,
         globals: outputGlobals
       },
       plugins
@@ -119,5 +103,27 @@ const
       plugins
     }];
   });
+
+// Clean project distro paths
+// ----
+log('Cleaning dist paths:');
+await Promise.all(projectNames.map(projectName => {
+  const distPath = path.join(__dirname, `./packages/${projectName}/dist/`);
+
+  log(`\n- ./packages/${projectName}/dist/`);
+
+  // Delete files in 'dist/' paths for each project
+  return fs.readdir(distPath)
+    .then(files => files.map(file => {
+      const filePath = path.join(distPath, file);
+      const projectPath = `./${filePath.split(__dirname)[1]}`;
+      return fs.rm(filePath, {recursive: true})
+        .then(() => null, // (log(`${projectPath} removed`), filePath),
+          () => log(`Skipping removal of ${projectPath}`))
+    }))
+    .then(removals => Promise.all(removals))
+}))
+  .then(() => log('\nCleaning completed.'))
+  .catch(error);
 
 export default configs;
