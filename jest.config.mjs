@@ -1,14 +1,16 @@
-const path = require('path'),
-  testMatch = [
+import path from 'path';
+
+const testMatch = [
     '**/(tests|src)/**/*@(.test|_test|.spec).@(ts|js)',
     '**/tests/**/test-*.@(ts|js)',
   ],
   transform = {
     '\\.ts$': 'ts-jest'
-  }
+  },
+  __dirname = path.dirname(new URL(import.meta.url).pathname)
 ;
 
-module.exports = {
+export default {
   preset: 'ts-jest',
   collectCoverage: true,
   testEnvironment: 'node',

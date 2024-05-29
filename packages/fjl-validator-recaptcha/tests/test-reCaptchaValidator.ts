@@ -1,20 +1,19 @@
-const {
-    reCaptchaIOValidator,
-    toReCaptchaValidatorOptions,
-    toReCaptchaTestValue,
-    MISSING_INPUT_SECRET,
-    MISSING_INPUT_RESPONSE
-  } = require('../src/index'),
+import {
+  reCaptchaIOValidator,
+  toReCaptchaValidatorOptions,
+  toReCaptchaTestValue,
+  MISSING_INPUT_SECRET,
+  MISSING_INPUT_RESPONSE
+} from '../src/index';
 
-  {log, error, runHasPropTypes} = require('./utils'),
-  packageJson = require('../package.json'),
-  puppeteerConfig = require('../../../.puppeteerrc.cjs'),
-  puppeteer = require('puppeteer'),
-  {waitFor} = require('./utils');
+import { mockServerPort } from '../../../package.json';
+import { log, error, runHasPropTypes } from './utils';
+import packageJson from '../package.json';
+import puppeteerConfig from '../../../.puppeteerrc';
+import puppeteer from 'puppeteer';
+import { waitFor } from './utils';
 
 const {recaptchaKeys} = packageJson,
-  {mockServerPort} = require('../../../package.json'),
-
   unhandledHandler = e => {
     console.error(e);
     process.exit(1);
