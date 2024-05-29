@@ -7,22 +7,14 @@ const
 
   __dirname = path.dirname(new URL(import.meta.url).pathname),
 
-  {log, error, warn} = console,
+  {log, error} = console,
 
   isDev = !process.env.NODE_ENV || process.env.NODE_ENV.toLowerCase().startsWith('dev'),
-
-  nonAlnumRegex = /[^a-z\d]+/g,
-
-  camelCase = xs =>
-    xs.split(nonAlnumRegex)
-      .map(_xs => _xs[0].toUpperCase() + _xs.slice(1))
-      .join(''),
 
   projectNames = ['fjl', 'fjl-validator', 'fjl-inputfilter'/*, 'fjl-validator-recaptcha'*/],
 
   configs = projectNames.flatMap(projectName => {
     const projectPath = path.join(__dirname, `./packages/${projectName}`),
-      iifeName = camelCase(projectName),
       configBase = {
         input: path.join(projectPath, 'src/index.ts'),
         treeshake: false,
@@ -64,6 +56,9 @@ const
       plugins: [
         typescript({
           tsconfig: path.join(projectPath, './tsconfig.prod.esm.json'),
+          compilerOptions: {
+            sourceMap: isDev
+          }
         }),
         terser()
       ]
@@ -75,15 +70,6 @@ const
         dir: path.join(projectPath, 'dist/cjs/'),
         preserveModules: true,
         preserveModulesRoot: path.join(projectPath, 'src'),
-      },
-      plugins
-    }, {
-      ...configBase,
-      output: {
-        ...outputBase,
-        format: 'iife',
-        file: path.join(projectPath, 'dist/index.iife.min.js'),
-        name: iifeName,
       },
       plugins
     }];

@@ -31,7 +31,7 @@ Reference 'dist/index.*.min.js', and/or 'dist/(esm/cjs)/index*' directly (or use
 ### About Currying:
 
 - All methods, with arity greater than one, have curried counterparts, which start with a leading `$` symbol;  E.g., `foldl`'s curried version is `$foldl`.
-- Methods that take only 'rest' parameters don't have curried counterparts `concat`, `append` etc..
+- Methods that take only 'rest' parameters don't have curried counterparts `concat`, `append` etc.
 
 ### Notable methods not added from the haskell prelude:
 
@@ -42,21 +42,20 @@ Reference 'dist/index.*.min.js', and/or 'dist/(esm/cjs)/index*' directly (or use
 - Sources are in './src'
   - './src/_platform' are native platform specific method versions pulled out for use, in some places, where we didn't want to intermingle library methods with native ones.
 - Distributions are in '**/dist'
-- Docs are generated via typedoc to './docs' dir.
+- Docs are generated via typedoc to './docs'.
 - Docs are written inline, in source using [jsdoc](http://usejsdoc.com), and tsdoc syntax.
-- About non-conformity to full modularity (one-function-per-file) method layout - This approach is a work in progress and eventually all methods will have standalone files.
 
 ### Package scripts:
 
 - `build` - Builds docs and distribution ('./dist').
 - `test` - Runs unit tests.
-- See 'package.json.scripts' for more.
+- ... See 'package.json.scripts' for more.
 
 ### Unit testing:
 
-We are using 'jest' for unit tests, but plan on migrating to 'deno'.
+We are using 'jest' for unit tests, currently, but plan on migrating to 'deno', for development, linting, testing, etc.
 
-All tests can be, currently, found in './tests' dir.
+All tests currently found in './tests'.
 
 ## License:
 
