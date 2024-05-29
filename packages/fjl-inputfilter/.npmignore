@@ -1,4 +1,4 @@
-.editorconfig
+.*
 tsconfig*
 src/
 tests/

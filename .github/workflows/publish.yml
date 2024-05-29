@@ -12,6 +12,8 @@ jobs:
   build-test-publish-to-npm:
     runs-on: ubuntu-latest
     env:
+      NODE_ENV: CI/CD
+      PUPPETEER_EXE_PATH: $(which chrome)
       HUSKY: 0
     steps:
       - uses: actions/checkout@v2

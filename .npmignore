@@ -1,18 +1,11 @@
-
 # Dot files
-**/.idea
-**/.editorconfig
-**/.eslint*
-**/.travis*
-**/.git*
-**/.node-version
+**/.*
 
 # Dirs
-**/markdown-fragments*
 **/node_modules/
 **/node-scripts/
+**/node_scripts/
 
 # Files
 **/babel*
 **/jest*
-

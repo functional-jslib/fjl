@@ -12,7 +12,7 @@ export const
    * input list. This is called the decorate-sort-undecorate paradigm, or
    * Schwartzian transform.
    *
-   * Elements are arranged from from lowest to highest, keeping duplicates
+   * Elements are arranged from lowest to highest, keeping duplicates
    * in the order they appeared in the input.
    *
    * Ex:
