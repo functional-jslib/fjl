@@ -1,6 +1,3 @@
-/**
- * Created by elyde on 1/15/2016.
- */
 import {notEmptyValidator} from '../src/notEmptyValidator';
 
 describe('notEmptyValidator', function () {

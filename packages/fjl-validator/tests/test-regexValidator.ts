@@ -1,6 +1,3 @@
-/**
- * Created by edelacruz on 7/28/2014.
- */
 import {regexValidator, toRegexValidatorOptions} from '../src/regexValidator';
 import {hasOwnProperty, keys} from 'fjl';
 

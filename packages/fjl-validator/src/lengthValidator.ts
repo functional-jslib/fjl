@@ -1,5 +1,4 @@
 /**
- * Created by Ely on 1/21/2015.
  * @module lengthValidator
  * @todo Allow validator option generators to receive `zero` object (object on which to extend on).
  * @todo Allow validator option generators to receive more than one options object.

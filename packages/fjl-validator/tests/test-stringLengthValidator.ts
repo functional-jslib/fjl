@@ -1,5 +1,5 @@
 import {stringLengthValidator, toStringLengthOptions} from '../src/stringLengthValidator';
-import {repeat, subsequences, typeOf} from 'fjl';
+import {subsequences, typeOf} from 'fjl';
 
 describe('#toStringLengthOptions', function () {
   const strLenOptions = toStringLengthOptions();

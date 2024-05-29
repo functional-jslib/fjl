@@ -1,5 +1,4 @@
 /**
- * Created by Ely on 1/21/2015.
  * @module stringLengthValidator
  */
 import {getErrorMsgByKey, toValidationResult, ValidatorResult} from './ValidationUtils';
