@@ -2,10 +2,10 @@
  * Contains `Either` constructs (`Right`, `Left`,  `either` etc.) and associated operations.
  * Created by elyde on 12/10/2016.
  */
-import {Boxed, Monad} from './monad';
-import {Ternary} from "../../fjl/src/types";
+import {Boxed} from './monad';
+import {Monad} from "../types";
+import {type Ternary, isset} from "fjl";
 import {VALUE_SYM} from "./symbols";
-import {isset} from "../../fjl/src/object";
 
 interface Left<T = any> extends Monad<T> {
   new(...args: any[]): any;

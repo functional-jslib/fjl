@@ -1,7 +1,7 @@
 import {isJust, isMaybe, isNothing, Just, Maybe, maybe, Nothing} from './maybe';
 import {join} from './monad';
 import {falsyList} from "../../fjl/tests/helpers";
-import {Nameable, Unary} from "../../fjl/src/types";
+import {Nameable, Unary} from "fjl";
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'] as Array<keyof Maybe<any>>;
 
