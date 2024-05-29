@@ -1,6 +1,3 @@
-/**
- * Created by elyde on 1/15/2016.
- */
 import {digitValidator} from '../src/digitValidator';
 
 describe('digitValidator', function () {

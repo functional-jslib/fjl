@@ -1,6 +1,4 @@
 /**
- * Created by Ely on 7/21/2014.
-
  * Initial idea borrowed from Zend Framework 2's Zend/Validator
  * @module ValidationUtils
  */

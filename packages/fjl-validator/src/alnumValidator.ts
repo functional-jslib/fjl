@@ -1,5 +1,4 @@
 /**
- * Created by Ely on 1/21/2015.
  * Module for validating alpha-numeric values.
  * @module alnumValidator
  */

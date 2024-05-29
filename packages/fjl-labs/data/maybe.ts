@@ -1,8 +1,8 @@
 /**
  * @module maybe
  */
-import {isset} from '../../fjl/src/object/is';
-import {Apply, Ternary, Monad, Functor} from "../../fjl/src/types";
+import {isset, type Ternary} from 'fjl';
+import {Apply, Monad, Functor} from "../types";
 
 type Nothing = Monad
 

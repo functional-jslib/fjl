@@ -6,13 +6,14 @@
  * @see `Either` reference: [http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-Either.html](http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-Either.html)
  * @module monad
  */
-import {isset} from "../../fjl/src/object/isset";
-import {toFunction} from "../../fjl/src/function";
+import {isset, isType, toFunction} from "fjl";
+
+import type {TypeRef, Binary, Ternary} from 'fjl';
+
 import {
   Applicative, ApplicativeConstructor, Functor,
-  FunctorMapOp, TypeRef, Binary, Ternary, MonadConstructor, Monad
-} from "../../fjl/src/types";
-import {isType} from "../../fjl/src/object";
+  FunctorMapOp,  MonadConstructor, Monad
+} from "../types";
 
 export interface BoxedConstructor<T = any> extends MonadConstructor<T> {
   new(x: T);

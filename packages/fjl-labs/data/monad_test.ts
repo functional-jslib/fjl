@@ -1,7 +1,7 @@
 import {Just, Maybe, Nothing} from "./maybe";
-import {Monad, join, valueOf, fmap, ap, flatMap, Boxed} from "./monad";
-import {Applicative, FunctorMapOp, Nary, UnitNary} from "../../fjl/src/types";
-import {id} from "../../fjl/src/function";
+import {join, valueOf, fmap, ap, flatMap, Boxed} from "./monad";
+import {Monad, Applicative, FunctorMapOp} from "../types";
+import {id, type Nary, type UnitNary} from "fjl";
 import {falsyList, truthyList} from "../../fjl/tests/helpers";
 import {Left, Right} from "./index";
 

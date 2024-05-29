@@ -1,6 +1,3 @@
-/**
- * Created by elyde on 1/15/2016.
- */
 import {alnumValidator} from '../src/alnumValidator';
 
 describe('alnumValidator', function () {
