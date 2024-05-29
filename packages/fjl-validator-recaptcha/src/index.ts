@@ -1,5 +1,4 @@
 /**
- * Created by elydelacruz on 6/10/16.
  * @module fjlValidatorReCaptcha
  * @recaptchaVersion v2
  * @reference see below:
@@ -7,10 +6,10 @@
  * @see https://developers.google.com/recaptcha/docs/verify
  * @todo Request handlers should be separated out from inlined definitions
  */
-const https = require('https'),
-  querystring = require('querystring'),
-  {getErrorMsgByKey: getErrorMessageByKey, toValidationResult, toValidationOptions} = require('fjl-validator'),
-  {assign, assignDeep, isEmpty, defineEnumProps} = require('fjl');
+import https from 'https';
+import querystring from 'querystring';
+import { getErrorMsgByKey as getErrorMessageByKey, toValidationResult, toValidationOptions } from 'fjl-validator';
+import { assign, assignDeep, isEmpty, defineEnumProps } from 'fjl';
 
 /**
  * @memberOf module:fjlValidatorReCaptcha
@@ -258,7 +257,7 @@ const MISSING_INPUT_SECRET = 'missing-input-secret',
   $reCaptchaValidatorV2 = (options) =>
     (value) => reCaptchaIOValidator(options, value);
 
-module.exports = {
+export {
   MISSING_INPUT_SECRET,
   MISSING_INPUT_RESPONSE,
   INVALID_INPUT_RESPONSE,

@@ -1,15 +1,14 @@
-const
+import path from "node:path";
+import {ioSpawn} from '../utils/index.mjs';
 
-  path = require('path'),
 
-  {log, error} = console,
+const {log, error} = console,
 
-  {ioSpawn} = require('../utils'),
+  __dirname = path.dirname(new URL(import.meta.url).pathname),
 
   repoRoot = path.join(__dirname, '../../'),
 
   taskGroupSeparator = '---------------------------\n\n'
-
 ;
 
 /**

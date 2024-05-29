@@ -3,9 +3,7 @@ import path from 'node:path';
 import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 
-const
-
-  __dirname = path.dirname(new URL(import.meta.url).pathname),
+const __dirname = path.dirname(new URL(import.meta.url).pathname),
 
   {log, error} = console,
 
@@ -85,7 +83,8 @@ await Promise.all(projectNames.map(projectName => {
 
   // Delete files in 'dist/' paths for each project
   return fs.readdir(distPath)
-    .then(files => files.map(file => {
+    .catch(() => [])
+    .then(files => files?.map(file => {
       const filePath = path.join(distPath, file);
       const projectPath = `./${filePath.split(__dirname)[1]}`;
       return fs.rm(filePath, {recursive: true})

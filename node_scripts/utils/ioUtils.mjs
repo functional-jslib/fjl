@@ -1,11 +1,10 @@
-const
-  fs = require('fs'),
-  os = require('os'),
-  child_process = require('child_process'),
-  {exec, spawn} = child_process,
-  {log, warn} = console,
+import fs from 'fs';
+import os from 'os';
+import { exec, spawn } from 'child_process';
 
-  npmCmd = os.platform().indexOf('win') === 0 ? 'npm.cmd' : 'npm',
+const {log, warn} = console;
+
+export const npmCmd = os.platform().indexOf('win') === 0 ? 'npm.cmd' : 'npm',
 
   ioExec = (cmd, options) => new Promise((resolve, reject) => {
     const p = exec(cmd, options, (err, stdout, stderr) => {
@@ -53,14 +52,6 @@ const
     })
 ;
 
-module.exports = {
-  ioExec,
-  ioFileExists,
-  canWriteFileIo,
-  canReadFileIo,
-  canReadAndExistsFileIo,
-  canReadAndWriteFileIo,
-  ioPassTailThroughAndContinue: ioExecuteAndPassThrough,
-  ioSpawn,
-  npmCmd
+export {
+  ioExecuteAndPassThrough as ioPassTailThroughAndContinue,
 };
