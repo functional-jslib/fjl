@@ -1,18 +1,39 @@
 import {NumberIndexable, Slice} from "./data";
 import {TernaryPred} from "./arity";
 
-// @todo Normalize these types - They should accept same type params instead of mixed length params.
+/**
+ * @deprecated Use `Ternary` type instead.
+ *
+ * Foreach operation function type.
+ */
+export type ForEachOp<T, IterT extends Iterable<T>> = (x: T, i?: number | keyof IterT, xs?: IterT) => void | any;
 
-export type ForEachOp<T = any, FtrT = any> = (x: T, i?: number | keyof FtrT, xs?: FtrT) => void | any;
+/**
+ * @deprecated Use `Ternary` instead.
+ *
+ * Map operation function type.
+ */
+export type MapOp<T = any, FtrT = any, FtrT2 extends FtrT = any> = (x: T, i?: number | keyof FtrT, xs?: FtrT) => FtrT2;
 
-export type MapOp<T = any, FtrT = any> = (x: T, i?: number | keyof FtrT, xs?: FtrT) => FtrT;
+/**
+ * @deprecated Use `Quaternary` instead.
+ *
+ * Reduce operation function type.
+ */
+export type ReduceOp<T = any, FtrT = any, ZeroT = any> = (agg: ZeroT, x?: T, i?: number | keyof FtrT, xs?: FtrT) => ZeroT;
 
-export type ReduceOp<T = any, FnctrT = any, ZeroT = any> = (agg: ZeroT, x?: T, i?: number | keyof FnctrT, xs?: FnctrT) => ZeroT;
-
+/**
+ * @deprecated Use `Quinary` instead.
+ *
+ * "Map + Accumulate", A.K.A. Map-Reduce, function type.
+ */
 export type MapAccumOp<A = any, B = any, C = any, Ind = number | string, Functor = Slice<B>> =
   (agg?: A, b?: B, i?: Ind, bs?: Functor) => [A, C];
 
 /**
+ * @deprecated Use `TernaryPred` instead.
+ *
+ * Predicate for Slice operation func type.
  * @todo Should this be `PredForNumIndexable`, instead?
  */
 export type PredForSlice<T = any, TS extends NumberIndexable<T> = NumberIndexable<T>> = TernaryPred<T, number, TS>;

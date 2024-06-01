@@ -1,11 +1,11 @@
-import {ForEachOp} from "../types";
+import {Ternary} from "../types";
 
 export const
 
   /**
    * "For each" function - same as `[].forEach` except for iterables (strings, `Map`s, ...) in general.
    */
-  forEach = <T>(fn: ForEachOp, iter: Iterable<T>): void => {
+  forEach = <T, TS extends Iterable<T>>(fn: Ternary<T, number, TS>, iter: TS): void => {
     if (!iter) return;
     let ind = 0;
     for (const x of iter) {
@@ -13,7 +13,7 @@ export const
     }
   },
 
-  $forEach = <T>(fn: ForEachOp) =>
-    (iter: Iterable<T>): void => forEach(fn, iter)
+  $forEach = <T, TS extends Iterable<T>>(fn: Ternary<T, number, TS>) =>
+    (iter: TS): void => forEach(fn, iter)
 
 ;

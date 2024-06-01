@@ -4,6 +4,7 @@
 import {getErrorMsgByKey, toValidationResult, ValidatorResult} from './ValidationUtils';
 import {assignDeep, curry, curry2, isString, typeOf} from 'fjl';
 import {LenValidatorOptions, toLengthOptions} from "./lengthValidator";
+import type {NumberIndexable} from "fjl";
 
 export const
 
@@ -32,7 +33,7 @@ export const
   $stringLengthValidatorNoNormalize = <T>(options: LenValidatorOptions<T>, value: T): ValidatorResult => {
     const messages = [],
       isOfType = isString(value),
-      valLength = isOfType ? (value as unknown as string).length : 0,
+      valLength = isOfType ? (value as NumberIndexable).length : 0,
       isWithinRange = valLength >= options.min && valLength <= options.max;
     if (!isOfType) {
       messages.push(getErrorMsgByKey(options, 'NOT_OF_TYPE', value));

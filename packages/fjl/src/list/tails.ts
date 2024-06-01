@@ -1,3 +1,5 @@
+import {Slice} from "../types";
+
 export const
 
   /**
@@ -6,7 +8,7 @@ export const
    * shallowEquals(tails('abc'), ['abc', 'bc', 'c',''])
    * ```
    */
-  tails = (xs: string | any[]): any[] => {
+  tails = <TS extends Slice>(xs: TS): TS[] => {
     const limit = xs.length;
     if (!limit) {
       return [xs.slice(0, 0)];

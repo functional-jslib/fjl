@@ -28,7 +28,9 @@ const
       outputGlobals = {},
       outputBase = {
         sourcemap: isDev,
-        globals: outputGlobals
+        globals: outputGlobals,
+        preserveModules: true,
+        preserveModulesRoot: path.join(projectPath, 'src')
       };
 
     if (projectName.includes('fjl-validator')) {
@@ -50,8 +52,7 @@ const
         ...outputBase,
         format: 'es',
         dir: path.join(projectPath, 'dist/esm/'),
-        preserveModules: true,
-        preserveModulesRoot: path.join(projectPath, 'src'),
+        entryFileNames: '[name].mjs'
       },
       plugins: [
         typescript({
@@ -68,8 +69,7 @@ const
         ...outputBase,
         format: 'cjs',
         dir: path.join(projectPath, 'dist/cjs/'),
-        preserveModules: true,
-        preserveModulesRoot: path.join(projectPath, 'src'),
+        entryFileNames: '[name].cjs'
       },
       plugins
     }];
