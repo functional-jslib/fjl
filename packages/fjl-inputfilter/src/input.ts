@@ -41,7 +41,7 @@ export const
     !input.required && (
       !isset(value) || (
         (isString(value) || isArray(value)) &&
-        !(value as unknown as Slice).length
+        !(value as Slice).length
       )
     ),
 

@@ -3,6 +3,9 @@
   "compilerOptions": {
     "baseUrl": "."
   },
+  "files": [
+    "./src/index.ts"
+  ],
   "exclude": [
     "dist/",
     "node_modules/",

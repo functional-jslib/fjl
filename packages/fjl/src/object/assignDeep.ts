@@ -5,7 +5,7 @@ export const
   /**
    * Merges all objects down into one (takes two or more args).
    */
-  assignDeep = (obj0, ...objs) => {
+  assignDeep = (obj0: any, ...objs: any[]): any => {
     if (!obj0) return obj0;
 
     return objs.reduce((topAgg, obj) => {
@@ -42,6 +42,6 @@ export const
   /**
    * Curried version of `assignDeep`.
    */
-  $assignDeep = (obj0) => (...objs) => assignDeep(obj0, objs)
+  $assignDeep = (obj0: any) => (...objs: any[]) => assignDeep(obj0, objs)
 
 ;

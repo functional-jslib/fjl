@@ -3,11 +3,9 @@
  */
 
 /**
- * Represents strings, arrays, and/or, any structures that contain a `length`, and number indices.
- *
- * @todo Consider using `Iterable<T>` type, instead of this type, where it makes sense.
+ * Represents types that have a `length` property, and that are "number" indexable.
  */
-export type  NumberIndexable<T = unknown> = ({
+export type NumberIndexable<T=any> = ({
   length: number;
   [index: number]: T;
 } |
@@ -20,14 +18,16 @@ export type  NumberIndexable<T = unknown> = ({
   });
 
 /**
- * The Slice type represents the intersection of string, array, and/or array-like, types.
+ * The Slice type represents the intersection of string, array, and/or (compatible*) array-like, types.
+ *
+ * *Typed array types are not compatible with this type, as they don't definitions for most of the slice methods.
  */
 export interface Slice<T = any> extends Iterable<T> {
   readonly length: number;
 
   [index: number]: any;
 
-  at(i: number): any;  // @note Method not supported by older versions of typescript versions.
+  at(i: number): any;  // @note Method not supported by older versions of typescript.
   concat(...items: (Slice<T> | ConcatArray<any>)[]): this;
   includes(x: any): boolean;
   indexOf(x: any): number;
@@ -57,7 +57,7 @@ export interface Lengthable {
 }
 
 /**
- * @deprecated Use types directly.
+ * Represents "built-in" typed arrays.
  */
 export type TypedArray = (
   Int8Array |
@@ -75,14 +75,19 @@ export type TypedArray = (
 };
 
 /**
- * @deprecated Use types directly.
+ * @deprecated Use constructor array types directly.
+ *
+ * Represents built-in Array types (Typed arrays, and `Array`).
  */
-export type ArrayType<T> = Array<T> | TypedArray;
+export type ArrayType<T> = {
+  constructor: ArrayTypeConstructor,
+} & NumberIndexable<T>
 
 /**
- * @deprecated Use types directly.
+ * Represents built-in Array type constructors.
  */
-export type ArrayTypeConstructor = ArrayConstructor |
+export type ArrayTypeConstructor =
+  ArrayConstructor |
   Int8ArrayConstructor |
   Uint8ArrayConstructor |
   Int16ArrayConstructor |

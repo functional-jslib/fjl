@@ -3,6 +3,9 @@
   "compilerOptions": {
     "declaration": false
   },
+  "files": [
+    "./src/index.ts"
+  ],
   "exclude": [
     "dist/",
     "node_modules/",

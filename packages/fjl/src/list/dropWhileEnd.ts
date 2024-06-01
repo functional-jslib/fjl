@@ -1,5 +1,5 @@
 import {findIndexWhereRight} from "./utils";
-import {TernaryPred} from "../types";
+import {Slice, TernaryPred} from "../types";
 import {negateF3} from "../function";
 
 export const
@@ -7,9 +7,9 @@ export const
   /**
    * Drops items off end of list while predicate holds.
    */
-  dropWhileEnd = <T>(
-    pred: TernaryPred,
-    xs: string | T[]
+  dropWhileEnd = <T, TS extends Slice<T>>(
+    pred: TernaryPred<T, number, TS>,
+    xs: TS
   ): typeof xs => {
     const splitPoint: number =
       findIndexWhereRight(negateF3(pred), xs);
@@ -22,8 +22,10 @@ export const
   /**
    * Curried version of `dropWhileEnd`.
    */
-  $dropWhileEnd = <T>(p: TernaryPred) =>
-    (xs: string | T[]): typeof xs =>
+  $dropWhileEnd = <T, TS extends Slice<T>>(
+    p: TernaryPred<T, number, TS>
+  ) =>
+    (xs: TS): typeof xs =>
       dropWhileEnd(p, xs)
 
 ;

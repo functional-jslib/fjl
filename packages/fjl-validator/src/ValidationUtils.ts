@@ -33,7 +33,7 @@ export interface ValidatorResult<T = any> {
   value?: T;
 }
 
-export type Validator<T = unknown> = Unary<T, ValidatorResult<T>>;
+export type Validator<T=any> = Unary<T, ValidatorResult<T>>;
 
 export const
 
@@ -72,7 +72,7 @@ export const
    * @param options {...Object}
    * @returns {Object}
    */
-  toValidationOptions = <T = unknown>(...options: ValidatorOptions<T>[]): ValidatorOptions<T> =>
+  toValidationOptions = <T>(...options: ValidatorOptions<T>[]): ValidatorOptions<T> =>
     assignDeep(defineEnumProps([
       [Object, 'messageTemplates', {}],
       [Boolean, 'valueObscured', false],
