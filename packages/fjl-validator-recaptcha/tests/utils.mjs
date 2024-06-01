@@ -1,4 +1,4 @@
-const {log, error, peek, range} = require('fjl');
+import { log, error, peek, range } from 'fjl';
 
 const
 
@@ -39,4 +39,4 @@ const
 
 ;
 
-module.exports = {log, error, peek, jsonClone, genRan, genRanChar, genRanStr, runHasPropTypes, runHasPropOfType, waitFor};
+export {log, error, peek, jsonClone, genRan, genRanChar, genRanStr, runHasPropTypes, runHasPropOfType, waitFor};

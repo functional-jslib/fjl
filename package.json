@@ -31,18 +31,18 @@
   "scripts": {
     "build": "rollup --config rollup.config.mjs",
     "eslint": "eslint -c .eslintrc.json .",
-    "link-packages": "node node_scripts/tasks/link-packages.js",
+    "link-packages": "node node_scripts/tasks/link-packages.mjs",
     "lint": "pnpm eslint",
     "lintfix": "pnpm eslint --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky",
-    "test": "jest -c jest.config.js",
-    "test:fjl": "jest -c jest.config.js --selectProjects fjl",
-    "test:fjl-filter": "jest --c jest.config.js --selectProjects fjl-filter",
-    "test:fjl-inputfilter": "jest -c jest.config.js --selectProjects fjl-inputfilter",
-    "test:fjl-validator": "jest -c jest.config.js --selectProjects fjl-validator",
-    "test:fjl-validator-recaptcha": "jest -c jest.config.js --selectProjects fjl-validator-recaptcha",
-    "test:staged": "jest -c jest.config.js --bail --findRelatedTests"
+    "test": "jest -c jest.config.mjs",
+    "test:fjl": "jest -c jest.config.mjs --selectProjects fjl",
+    "test:fjl-filter": "jest --c jest.config.mjs --selectProjects fjl-filter",
+    "test:fjl-inputfilter": "jest -c jest.config.mjs --selectProjects fjl-inputfilter",
+    "test:fjl-validator": "jest -c jest.config.mjs --selectProjects fjl-validator",
+    "test:fjl-validator-recaptcha": "jest -c jest.config.mjs --selectProjects fjl-validator-recaptcha",
+    "test:staged": "jest -c jest.config.mjs --bail --findRelatedTests"
   },
   "repository": {
     "type": "git",

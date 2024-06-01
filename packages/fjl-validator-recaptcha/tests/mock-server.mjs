@@ -3,33 +3,24 @@
  * @script
  * @standalone
  */
+import path from "node:path";
+import express from 'express';
+import helmet from 'helmet';
+import session from 'express-session';
+import compression from 'compression';
+import bodyParser from 'body-parser';
+import { log, jsonClone } from 'fjl';
+import { reCaptchaIOValidator } from '../src';
 
-// If 'NODE_ENV' not set, set it
-if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'dev';
-}
+import { appSessionSecret, mockServerPort as port } from '../../../package.json';
 
-const isDevEnv = process.env.NODE_ENV.toLowerCase().indexOf('dev') === 0;
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-// If dev mode load local environment config
-if (isDevEnv) {
-    require('dotenv').config();
-}
+const isDevEnv = (process.env.NODE_ENV ?? 'dev').toLowerCase().includes('dev');
 
 // Preliminaries
-const {appSessionSecret = 'Supercalifragilisticexpialidocious'} = process.env,
-    {mockServerPort: port} = require('../../../package'),
-    express = require('express'),
-    helmet = require('helmet'),
-    session = require('express-session'),
-    compression = require('compression'),
-    bodyParser = require('body-parser'),
-    router = new express.Router(),
+const router = new express.Router(),
     app = express();
-
-const {log, jsonClone} = require('fjl');
-
-const {reCaptchaIOValidator} = require('../src/index');
 
 // Security features
 // @see https://expressjs.com/en/advanced/best-practice-security.html#use-helmet
