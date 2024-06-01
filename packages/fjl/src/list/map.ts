@@ -5,9 +5,9 @@ export const
   /**
    * Maps a function over an "array type" container of values.
    */
-  map = <T = any>(
-    fn: Ternary<T, number, T[]>,
-    xs: T[]
+  map = <T=any, TS extends any[]=any[]>(
+    fn: Ternary<T, number, TS>,
+    xs: TS
   ): ReturnType<typeof fn>[] => {
     const limit = xs.length,
       out = new (xs.constructor as ArrayTypeConstructor)(limit);
@@ -20,8 +20,8 @@ export const
   /**
    * Curried version of `map` method.
    */
-  $map = <T = any>
-  (fn: Ternary<T, number, T[]>) =>
-    (xs: T[]): ReturnType<typeof fn>[] =>
+  $map = <T=any, TS extends any[]=any[]>
+  (fn: Ternary<T, number, TS>) =>
+    (xs: TS): ReturnType<typeof fn>[] =>
       map(fn, xs)
 ;

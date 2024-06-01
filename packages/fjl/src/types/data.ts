@@ -5,7 +5,7 @@
 /**
  * Represents types that have a `length` property, and that are "number" indexable.
  */
-export type NumberIndexable<T = unknown> = ({
+export type NumberIndexable<T=any> = ({
   length: number;
   [index: number]: T;
 } |

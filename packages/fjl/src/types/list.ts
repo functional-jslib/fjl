@@ -20,15 +20,14 @@ export type MapOp<T = any, FtrT = any, FtrT2 extends FtrT = any> = (x: T, i?: nu
  *
  * Reduce operation function type.
  */
-export type ReduceOp<T = any, FtrT = any, ZeroT = any> = (agg: ZeroT, x?: T, i?: number | keyof FtrT, xs?: FtrT) => ZeroT;
+export type ReduceOp<T=any, FtrT=any, ZeroT=any> =
+  (agg: ZeroT, x?: T, i?: number | keyof FtrT, xs?: FtrT) => ZeroT;
 
 /**
- * @deprecated Use `Quinary` instead.
- *
  * "Map + Accumulate", A.K.A. Map-Reduce, function type.
  */
-export type MapAccumOp<A = any, B = any, C = any, Ind = number | string, Functor = Slice<B>> =
-  (agg?: A, b?: B, i?: Ind, bs?: Functor) => [A, C];
+export type MapAccumOp<AccumVal=any, B=any, MapOfB=any, Index=number|string, SliceOfBs extends Slice<B>=Slice<B>> =
+  (agg?: AccumVal, b?: B, i?: Index, bs?: SliceOfBs) => [AccumVal, MapOfB];
 
 /**
  * @deprecated Use `TernaryPred` instead.

@@ -1,4 +1,4 @@
-import {Quaternary} from "../types";
+import type {Quaternary} from "../types";
 
 /**
  * Performs a `reduce` and a `map` all in one (from left-to-right);
@@ -7,16 +7,16 @@ import {Quaternary} from "../types";
  * returns a tuple containing the aggregated value,
  * and the collected mapped values.
  */
-export const mapAccumL = <Agg, X>(
-    op: (agg?: Agg, x?: X, i?: number, xs?: X[]) => [Agg, X],
-    zero: Agg,
-    xs: X[]
-  ): [Agg, typeof xs] => {
+export const mapAccumL = <AccumVal, B, MapOfB, Bs extends B[], MapOfBs extends MapOfB[]>(
+    op: Quaternary<AccumVal, B, number, Bs, [AccumVal, MapOfB]>,
+    zero: AccumVal,
+    xs: Bs
+  ): [AccumVal, MapOfBs] => {
     const limit = xs.length;
 
-    if (!limit) return [zero, xs.slice(0)];
+    if (!limit) return [zero, xs.slice(0) as unknown as MapOfBs];
 
-    const mapped = xs.slice(0, 0);
+    const mapped = [];
     let agg = zero;
 
     for (let i = 0; i < limit; i++) {
@@ -26,12 +26,12 @@ export const mapAccumL = <Agg, X>(
       mapped.push(tuple[1]);
     }
 
-    return [agg, mapped];
+    return [agg, mapped as unknown as MapOfBs];
   },
 
-  $mapAccumL = <Agg, X>(
-    op: Quaternary<Agg, X, number, X[], [Agg, X]>
+  $mapAccumL = <AccumVal, B, MapOfB, Bs extends B[], MapOfBs extends MapOfB[]>(
+    op: Quaternary<AccumVal, B, number, Bs, [AccumVal, MapOfB]>,
   ) =>
-    (zero: Agg) =>
-      (xs: X[]): [Agg, typeof xs] =>
+    (zero: AccumVal) =>
+      (xs: Bs): [AccumVal, MapOfBs] =>
         mapAccumL(op, zero, xs);
