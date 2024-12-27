@@ -6,13 +6,8 @@ const _NaN = 'NaN',
   _Undefined = 'Undefined';
 
 /**
- * Fine-grained (efficient) version of `typeof` which returns the
- * incoming value's constructor's name, and or it's type name -
- * Easier to use, and offers a way to perform strict type checking
- * (easily) at run-time;  In the case of incoming `NaN`, `null`,
- * and/or `undefined` values their type names are class cased names
- * equivalent to their values - 'NaN' (for `NaN`), 'Undefined' for
- * `undefined` and 'Null' for `null`.
+ * Version of `typeof` which returns given value's type name, e.g., Constructor name,
+ * 'Undefined', 'Null', and/or 'NaN' (for 'NaN' values), based on given value.
  */
 export function typeOf(value: any): string {
   if (value === undefined) {
