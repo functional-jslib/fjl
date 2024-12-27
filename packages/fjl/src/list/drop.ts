@@ -5,8 +5,9 @@ export const
    */
   drop = <T = any>(n: number, xs: Iterable<T>): T[] => {
     const out = [] as T[];
+    let count = Math.abs(n);
     for (const x of xs) {
-      if (n-- > 0) continue;
+      if (count-- > 0) continue;
       out.push(x as T);
     }
     return out;

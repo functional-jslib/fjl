@@ -1,10 +1,10 @@
-export type DefinePropertyFunc<T> = (pd: PropertyDescriptor, propName: string, applicand: T) => T;
+export type DefinePropertyFunc<T> = (pd: PropertyDescriptor, propName: string, applicant: T) => T;
 
-export type DefinePropertiesFunc<T> = (pdm: PropertyDescriptorMap, applicand: T) => T;
+export type DefinePropertiesFunc<T> = (pdm: PropertyDescriptorMap, applicant: T) => T;
 
-export type GetOwnPropertyDescriptorFunc = (propName: string, applicand: any) => PropertyDescriptor;
+export type GetOwnPropertyDescriptorFunc = (propName: string, applicant: any) => PropertyDescriptor;
 
-export type CreateFunc = (pdm: PropertyDescriptorMap, applicand: any) => any;
+export type CreateFunc = (pdm: PropertyDescriptorMap, applicant: any) => any;
 
 export type IsFunc = (Type: any, value: any) => boolean;
 

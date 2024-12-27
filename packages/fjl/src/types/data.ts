@@ -20,7 +20,8 @@ export type NumberIndexable<T=any> = ({
 /**
  * The Slice type represents the intersection of string, array, and/or (compatible*) array-like, types.
  *
- * *Typed array types are not compatible with this type, as they don't definitions for most of the slice methods.
+ * *Note: Typed array types are not compatible with this type, as they don't have definitions for most of
+ *   the slice methods required by this type.
  */
 export interface Slice<T = any> extends Iterable<T> {
   readonly length: number;
@@ -36,9 +37,9 @@ export interface Slice<T = any> extends Iterable<T> {
 }
 
 /**
- * @deprecated Use your own type and/or existing native/otherwise types.
+ * @deprecated Use your own type and/or existing native, or other, types.
  *
- * Any type that contains a "readonly" `name` (functions, et al.) property.
+ * Any type that contains a "readonly" `name` (e.g, functions, et al.) property.
  */
 export interface Nameable {
   readonly name: string;

@@ -3,8 +3,8 @@ import {NumberIndexable, ReduceOp} from "../../types";
 export const
 
   /**
-   * Reduces an iterable by given reduction function - same as [].reduce but also for strings/objects with defined iterators, etc.).
-   * **Note:** If iterable is falsy, aggregator gets returned.
+   * Reduces a number indexable structure by given reduction function - same as [].reduce but also for strings,
+   * and user-land number-indexable types.
    */
   reduce = (op: ReduceOp, agg: any, xs: NumberIndexable): ReturnType<typeof op> => {
     const limit = xs.length;

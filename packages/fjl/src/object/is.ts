@@ -157,7 +157,8 @@ export const
     isNullish(x) ? false : instanceOfSome(x, ..._primitive_constructors),
 
   /**
-   * Safe (doesn't error out on nullish value)  check for enumerable properties on given value.
+   * Safe (doesn't error out on nullish value (via safe version of `Object.keys`)  check for enumerable
+   * properties on given value.
    *
    * @todo write tests.
    */

@@ -9,7 +9,6 @@ Functional validator(s) implementation (inspired by Zend/Validator validators).
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
 - [Docs](#docs)
-- [Motivation](#motivations)
 - [Development](#development)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
@@ -182,7 +181,7 @@ Returns valid validation options objects that can be used as validator options;
   - `valueObscured {Boolean}` 
   - `valueObscurer {Function.<String>}` - Obscurer function; E.g. `x => "..."`
   - `messageTemplates {Object.<String, (MessageTemplateCallback|Function|String)>}` - Key value pairs of error messages or error message callbacks (
-    See virtual type `MessageTemplateCallback` @todo here).
+    See virtual type `MessageTemplateCallback` TODO here).
     
 ##### Returns
 `{ValidationOptions}` -  A strictly typed options object;  Merges passed in options onto strictly typed version which 
@@ -347,8 +346,8 @@ import {digitValidator} from 'fjl-validator';
 ##### Parameters
 - `value {*}`
 - `options {ValidationOptions}`
-@todo `MessageTemplateCallback`'s signature should be `f(options, value)` not other way around (`f(value, options)`).
-@todo Should be changed in later version of lib. 
+TODO `MessageTemplateCallback`'s signature should be `f(options, value)` not other way around (`f(value, options)`).
+TODO Should be changed in later version of lib. 
 
 #### `ValidationResult {Object}`
 ##### Properties

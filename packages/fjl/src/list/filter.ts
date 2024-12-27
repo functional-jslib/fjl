@@ -9,8 +9,6 @@ export const
     const limit = xs.length,
       out = xs.slice(0, 0);
 
-    if (!limit) return out;
-
     // Filter items against predicate
     for (let i = 0; i < limit; i += 1) {
       const x = xs[i];

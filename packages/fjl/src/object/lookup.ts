@@ -8,6 +8,7 @@ export const
    * Method is null safe (will not throw on `null` or `undefined`).
    *
    * @todo Should take `obj` as first argument.
+   * @todo Should be strictly typed.
    */
   lookup = (key, obj): any => obj[key],
 

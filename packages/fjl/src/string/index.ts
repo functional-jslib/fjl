@@ -3,7 +3,6 @@
  * @description Contains functions for strings.
  */
 import {$split, split} from '../_platform/string';
-import {range} from "../list";
 import {randNatNum} from "../number";
 import {id} from "../function/id";
 
@@ -85,14 +84,27 @@ export const
   /**
    * Generates a random character.
    */
-  randChar = (min = 0, max = 0x10FFFF): string =>
-    String.fromCharCode(randNatNum(min, max)),
+  randChar = (minCharCode = 0, maxCharCode = 0x10FFFF): string =>
+    String.fromCharCode(randNatNum(minCharCode, maxCharCode)),
 
   /**
    * Generates a random string.
    */
-  randStr = (min = 0, max = 100): string =>
-    range(min, max) // @todo should use a generator here.
-      .reduce(str => str + randChar(min, max), '')
+  randStr = (strMinLen = 0, strMaxLen = 100, minCharCode = 0, maxCharCode = 100): string => {
+    let out = '';
+    do {
+      out += randChar(minCharCode, maxCharCode)
+    } while (out.length < strMinLen);
+    return out.slice(0, strMaxLen);
+  },
 
+  /**
+   * Generator that generates random strings using given min, and max, lengths.
+   * Note: Should be used with 'for ... of' loop, or similar.
+   */
+  randStrIter = function *(strMinLen = 0, strMaxLen = 100, minCharCode = 0, maxCharCode = 100) {
+    while (true) {
+      yield randStr(strMinLen, strMaxLen, minCharCode, maxCharCode);
+    }
+  }
 ;

@@ -26,7 +26,7 @@ Reference 'dist/index.*.min.js', and/or 'dist/(esm/cjs)/index*' directly (or use
 
 ## Docs
 
-@todo 
+TODO 
 
 ### About Currying:
 

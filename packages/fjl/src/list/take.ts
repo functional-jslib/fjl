@@ -3,8 +3,9 @@
  */
 export const take = <T>(n: number, xs: Iterable<any>): T[] => {
     const out = [] as T[];
+    let count = Math.abs(n);
     for (const x of xs) {
-      if (n-- === 0) break;
+      if (count-- === 0) break;
       out.push(x);
     }
     return out;

@@ -1,3 +1,3 @@
 ## 'types/'
 
-@todo
+TODO
