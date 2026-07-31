@@ -1,9 +1,9 @@
 import {vowelsArray} from "../helpers";
 import {lengths} from "../../src/list/utils";
-import {Slice} from "../../src/types/data";
+import {NumberIndexable} from "../../src/types/data";
 
 describe('#lengths', () => {
-  (<[Slice<any>[], number[]][]>[
+  (<[NumberIndexable[], number[]][]>[
     (vowelsArray.reduce((agg, c, i) => {
       agg[0].push(vowelsArray.slice(0, i + 1))
       agg[1].push(i + 1);

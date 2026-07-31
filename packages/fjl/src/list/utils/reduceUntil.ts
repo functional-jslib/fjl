@@ -1,4 +1,4 @@
-import {NumberIndexable, ReduceOp, TernaryPred} from "../../types";
+import {NumberIndexable, Quaternary, TernaryPred} from "../../types";
 
 export const
 
@@ -7,7 +7,7 @@ export const
    */
   reduceUntil = (
     pred: TernaryPred,
-    op: ReduceOp,
+    op: Quaternary,
     agg: any,
     xs: NumberIndexable
   ) => {
@@ -24,7 +24,7 @@ export const
    * Curried version of `reduceUntil` function.
    */
   $reduceUntil = (pred: TernaryPred) =>
-    (op: ReduceOp) =>
+    (op: Quaternary) =>
       (agg: any) =>
         (xs: NumberIndexable) => reduceUntil(pred, op, agg, xs)
 

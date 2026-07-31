@@ -1,6 +1,5 @@
 import {alphabetArray, alphabetLen, vowelsArray, vowelsLen} from "../helpers";
 import {Unary} from "../../src/types";
-import {Slice} from "../../src/types/data";
 import {sliceTo, $sliceTo} from "../../src/list";
 
 describe('#sliceTo', () => {
@@ -19,7 +18,7 @@ describe('#sliceTo', () => {
   it('should be curried', () => {
     vowelsArray
 
-      .map((_, ind): Unary<Slice> => $sliceTo(vowelsLen - ind) as unknown as Unary<Slice>)
+      .map((_, ind): Unary<string[]> => $sliceTo(vowelsLen - ind) as unknown as Unary<string[]>)
 
       .forEach((fn, ind) => {
         const result = fn(vowelsArray);
@@ -37,7 +36,7 @@ describe('#sliceTo', () => {
   });
   it('should throw an error when not receiving a `ListLike` (a sliceable, an array, and/or string).', () => {
     [null, undefined, {}, false, 0].forEach(x => {
-      expect(() => sliceTo(99, x as unknown as Slice<any>)).toThrow(Error);
+      expect(() => sliceTo(99, x as unknown as any[])).toThrow(Error);
     });
   });
 });

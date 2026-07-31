@@ -1,4 +1,4 @@
-export type OrderingFunc<T> = (a: T, b: T) => number;
+export type OrderingFunc<T = any> = (a: T, b: T) => number;
 
 export const
 

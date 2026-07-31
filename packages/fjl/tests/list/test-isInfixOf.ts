@@ -1,9 +1,9 @@
 import {isInfixOf} from "../../src/list";
 import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../helpers";
-import {Slice} from "../../src/types/data";
+import {NumberIndexable} from "../../src/types/data";
 
 describe('#isInfixOf', () => {
-  (<[Slice, Slice, boolean][]>[
+  (<[NumberIndexable, NumberIndexable, boolean][]>[
     ['', '', false],
     [[], [], false],
     [vowelsString, vowelsString, true],

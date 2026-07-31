@@ -1,6 +1,5 @@
 import {expectEqual, expectError, vowelsArray, vowelsString} from '../helpers';
 import {init} from '../../src/list/init';
-import {Slice} from '../../src/types';
 
 describe('#init', () => {
   it('should return everything except the last item of an list and/or string', () => {
@@ -17,7 +16,7 @@ describe('#init', () => {
   it('should throw an error when no parameter is passed in', () => {
     [undefined, null, 0, {}]
       .forEach(x =>
-        expect((xs => () => init(xs as Slice))(x)).toThrow(Error)
+        expect((xs => () => init(xs as string | any[]))(x)).toThrow(Error)
       );
     expectError(init);
   });

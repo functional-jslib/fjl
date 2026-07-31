@@ -1,5 +1,3 @@
-import {Slice} from "../types";
-
 /**
  * Generator that appends given list onto a copy of said list, infinitely;  E.g., Identity on infinite lists.
  *
@@ -17,7 +15,7 @@ import {Slice} from "../types";
  * // [1, 2, 3, 1, 2, 3, 1, 2, 3]
  * // ...
  */
-export function* cycle<T = any, TS extends Slice<T> = Slice<T>>(xs: TS): Generator<TS, void> {
+export function* cycle<T = any, TS extends string | T[] = T[]>(xs: TS): Generator<TS, void> {
   let out = xs.slice(0) as TS;
   while (true) {
     yield out;

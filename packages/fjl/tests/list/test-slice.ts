@@ -1,9 +1,8 @@
-import {Slice} from "../../src/types/data";
 import {slice} from "../../src/list";
 import {vowelsArray, vowelsString} from "../helpers";
 
 describe('#slice', () => {
-  (<[[number, number, Slice], Slice][]>[
+  (<[[number, number, string | any[]], string | any[]][]>[
     [[0, 1, ''], ''],
     [[0, 1, []], []],
     ...vowelsArray.flatMap((c, i) =>

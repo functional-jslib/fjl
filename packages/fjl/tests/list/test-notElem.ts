@@ -1,9 +1,8 @@
 import {notElem} from "../../src/list";
-import {Slice} from "../../src/types/data";
 import {vowelsArray, vowelsString} from "../helpers";
 
 describe('#notElem', () => {
-  (<[Slice<any>, any, boolean][]>[
+  (<[string | any[], any, boolean][]>[
       [vowelsArray, 'z', true],
       [vowelsString, 'z', true],
       [vowelsString, null, true],

@@ -1,5 +1,3 @@
-import {Slice} from "../types";
-
 export const
   /**
    * The inits function returns all initial segments of the argument (shortest first).  For example:
@@ -8,7 +6,7 @@ export const
    * shallowEquals(inits('abc'), ['','a','ab','abc'])
    * ```
    */
-  inits = (xs: Slice): (typeof xs)[] => {
+  inits = <TS extends string | any[]>(xs: TS): TS[] => {
     const limit = xs?.length,
       agg = [];
     if (!limit) return agg;

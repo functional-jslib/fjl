@@ -1,4 +1,4 @@
-export type ScanrOp<A, B> = (a: A, b: B, i?: number, xs?: A[]) => B;
+export type ScanrOp<A = any, B = any> = (a: A, b: B, i?: number, xs?: A[]) => B;
 
 export const
 
