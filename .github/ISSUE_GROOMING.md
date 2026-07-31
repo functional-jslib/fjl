@@ -9,10 +9,11 @@ All claims below were verified against the working tree at commit `472067e`
 ("Merge pull request #117 from functional-jslib/dev"). Where verification
 contradicted an earlier assumption, the correction is called out inline.
 
-Net effect: 18 open issues → 12, with 2 closed as duplicate/obsolete (#61, #55),
-6 moved to a backlog milestone, a single canonical per-module typing checklist
-instead of four competing ones, and every remaining issue labeled, milestoned,
-and carrying acceptance criteria.
+Net effect: 18 open issues → 18, but sorted — 2 closed as duplicate/obsolete
+(#61, #55), 2 filed to capture untracked work, 6 moved to a backlog milestone,
+leaving a **focused 12-issue v2.0 milestone**. One canonical per-module typing
+checklist replaces four competing ones, and every remaining issue is labeled,
+milestoned, and carries acceptance criteria.
 
 ## Contents
 
@@ -23,13 +24,13 @@ and carrying acceptance criteria.
 - [4. Rescope the implementations review](#4-rescope-the-implementations-review)
 - [5. Dress the under-described issues](#5-dress-the-under-described-issues)
 - [6. Re-validate the remainder](#6-re-validate-the-remainder)
-- [7. New issue to file](#7-new-issue-to-file)
+- [7. New issues to file](#7-new-issues-to-file)
 - [8. Rewrite the #57 tracking issue](#8-rewrite-the-57-tracking-issue)
 - [Summary table](#summary-table)
 
 ## Findings that change the plan
 
-Five verification results that contradict the assumptions the plan was drafted
+Seven verification results that contradict the assumptions the plan was drafted
 from. Each one changes what the corresponding issue should say.
 
 ### #121 must not be closed — there is a real remaining tail
@@ -61,7 +62,7 @@ The last row is the important one: removing `Slice` breaks downstream packages
 in this workspace, so the work has to be sequenced with them rather than landed
 as an isolated `fjl` change.
 
-### #116 has more offenders than `MapAccumOp`
+### #116's real defect is inconsistency, not generic count
 
 | Type | Generic params | Location |
 | --- | --- | --- |
@@ -69,9 +70,34 @@ as an isolated `fjl` change.
 | `MapAccumOp<AccumVal, B, MapOfB, Index, SliceOfBs>` | 5 | `packages/fjl/src/types/list.ts:29` |
 | `Quaternary<A, B, C, D, RetT>` | 5 | `packages/fjl/src/types/arity.ts:9` |
 
-The arity types use positional single letters, which is the exact smell the
-issue targets — though for arity types that may well be intentional. See #116
-below for how to resolve that.
+The count-based framing in the issue title flags the wrong types. The `arity.ts`
+entries are anonymous function shapes whose generics are *meant* to be
+positional, while `MapAccumOp` mixes four named generics with a stray positional
+`B`. See [#116 below](#116--types-that-take-more-than-three-generic-args-should-have-clear-type-names)
+for the resolution.
+
+### Much of #114's target surface is already marked `@deprecated`
+
+`types/list.ts` and `types/data.ts` carry `@deprecated` doc blocks that name
+their own replacements — `ForEachOp`/`MapOp` → `Ternary`, `ReduceOp` →
+`Quaternary`, `PredForSlice` → `TernaryPred`, `SliceConstructor` → direct
+constructors, `Lengthable` → `NumberIndexable`. #114 is therefore a
+delete-and-migrate job with the migration targets already chosen, not a redesign.
+
+Two consequences: #114 is more tractable than its one-line title suggests, and
+#116 shrinks considerably, because three of its apparent targets are deprecated
+types that should be deleted rather than renamed.
+
+### #77 was closed but the test co-location never happened
+
+`packages/fjl/tests/` still holds 125 test files against ~170 source files;
+exactly one test is co-located (`src/number/numRange.test.ts`). Three naming
+conventions are live at once — `test-*.ts`, `index_test.ts`, and `*.test.ts` —
+and `jest.config.mjs` matches all of them.
+
+This is the second closed issue found to be materially undone, after #75. Two
+independent mis-ticks in the same batch is a pattern rather than an accident,
+which is why the audit below is recommended rather than optional.
 
 ### #20 is essentially not started, not "partially done"
 
@@ -206,10 +232,29 @@ v2.0. Append:
 > **Files defining the types:** `packages/fjl/src/types/data.ts`,
 > `packages/fjl/src/types/list.ts`.
 >
-> **Includes the leftover `Slice` removal**, moved here from #57. #43 replaced
-> `Slice` with `Iterable` at the API level, but the type and its aliases remain:
+> **Most of the work is already sign-posted in-code.** These types are marked
+> `@deprecated` with their replacement named in the doc block, so this is a
+> delete-and-migrate job rather than a redesign:
 >
-> - [ ] Remove `Slice`, `SliceConstructor`, and `PredForSlice` from sources
+> | Deprecated | Replacement |
+> | --- | --- |
+> | `ForEachOp` | `Ternary` |
+> | `MapOp` | `Ternary` |
+> | `ReduceOp` | `Quaternary` |
+> | `PredForSlice` | `TernaryPred` |
+> | `SliceConstructor` | direct type constructors |
+> | `Lengthable` | `NumberIndexable` |
+> | `Nameable` | own/native types |
+>
+> - [ ] Migrate call sites to the named replacements, then delete each
+>       deprecated type
+>
+> **Includes the leftover `Slice` removal**, moved here from #57. #43 replaced
+> `Slice` with `Iterable` at the API level, but the type remains — and unlike
+> the table above, `Slice` itself carries no `@deprecated` marker and no named
+> replacement, so it needs a decision before it can be removed:
+>
+> - [ ] Remove `Slice` and `SliceConstructor` from sources
 > - [ ] Remove from tests
 > - [ ] Remove from docs
 >
@@ -225,32 +270,78 @@ v2.0. Append:
 
 ### #116 — "Types that take more than three generic args should have clear type names"
 
-Set parent to #32. Labels `tech-debt`, `groomed`. Milestone v2.0. Append:
+Set parent to #32. Labels `tech-debt`, `groomed`. Milestone v2.0.
 
-> Offenders to rename to intent-revealing generic names:
->
-> - `MapAccumOp<AccumVal, B, MapOfB, Index, SliceOfBs>` — `types/list.ts:29`
-> - `Quinary<A, B, C, D, E, RetT>` — `types/arity.ts:11`
-> - `Quaternary<A, B, C, D, RetT>` — `types/arity.ts:9`
->
-> Positional single letters are acceptable for the arity types *if* documented
-> as intentionally positional; otherwise rename them. Either way, decide and
-> record the convention in `src/types/README.md` — that decision is what closes
-> this issue.
+**Decision: exclude the `arity.ts` types; narrow this issue to domain types.**
+
+`Quinary<A, B, C, D, E, RetT>` and `Quaternary<A, B, C, D, RetT>` describe
+*anonymous function shapes*. Their generics have no domain meaning to reveal —
+the meaning **is** positional, and `A` is already the clearest possible name for
+"the type of the first argument." The file is internally consistent (`A`…`E`
+for parameters, `RetT` for the return), so renaming would cost churn and buy
+nothing. Counting generic parameters turns out to be the wrong test.
+
+The right test is **consistency**: a type should not mix named and positional
+generics. Applying that filter — and discounting types already marked
+`@deprecated`, where refining generics is wasted effort — leaves a much smaller
+issue than the title implies:
+
+| Type | Status | Verdict |
+| --- | --- | --- |
+| `MapAccumOp<AccumVal, B, MapOfB, Index, SliceOfBs>` | live | **The one real target.** Four named generics plus a stray positional `B`, which is the element type and should be named to match its siblings. |
+| `MapOp<T, FtrT, FtrT2>` | `@deprecated` → `Ternary` | Delete, don't rename. Belongs to #114. |
+| `ReduceOp<T, FtrT, ZeroT>` | `@deprecated` → `Quaternary` | Delete, don't rename. Belongs to #114. |
+| `PredForSlice<T, TS>` | `@deprecated` → `TernaryPred` | Delete, don't rename. Belongs to #114. |
+| `Quinary`, `Quaternary` | live | Exempt — intentionally positional. |
+| `UnfoldrOp<A, B>` | live, in `list/unfoldr.ts` | Carries its own `@todo` saying the letters should be flipped; fold that `@todo` in here. |
+
+Rewritten acceptance criteria:
+
+- [ ] `MapAccumOp`'s positional `B` is renamed to match its named siblings.
+- [ ] `UnfoldrOp`'s in-code `@todo` is resolved or removed.
+- [ ] Purely positional function-shape types (`arity.ts`) stay as they are, by
+      documented exception.
+- [ ] The convention is recorded in `packages/fjl/src/types/README.md`.
+
+The last item is done — see the commit that added this document; the README
+previously contained only an `@todo`. Note that #116 is now small enough that it
+could reasonably be absorbed into #114; keeping it separate is a judgement call
+in favour of preserving the documented exemption for `arity.ts`.
 
 ## 4. Rescope the implementations review
 
 ### #122 — "v2.0 - Implementations review"
 
-Keep open, but scope it so it stops competing with #32's checklist. Labels
-`tech-debt`, `groomed`. Milestone v2.0. Prepend to the body:
+**Decision: keep it separate from #32.** Three reasons, in order of weight:
+
+1. **There is substantive behavioural work that #32 cannot absorb.** The `fjl`
+   package has ~170 non-test source files and 125 test files, all but one still
+   in the legacy `packages/fjl/tests/` tree, under three different naming
+   conventions (`test-*.ts`, `index_test.ts`, `*.test.ts`). That is a coverage
+   and layout problem, not a typing problem.
+2. **The two passes are verified differently.** #32 is a type-level refactor
+   confirmed by `tsc` with no runtime behaviour change; #122 requires actually
+   running tests and reading implementations. Merging them produces a checklist
+   where a module cannot be ticked until both a compiler check and a test review
+   pass — which forfeits the ability to land the type cleanup incrementally.
+3. **Their tick states already disagree**, which is the empirical proof they
+   measure different things: #32/#61 tick `number/`, `object/`, `string/`,
+   `types/`; #122 ticks `_platform/`, `boolean/`, `function/`. Neither is wrong
+   — they are answering different questions about the same modules.
+
+Keep open. Labels `tech-debt`, `groomed`. Milestone v2.0. Prepend to the body:
 
 > **Scope: behavioural review only** — implementation correctness and test
 > coverage per module. The *typing* pass is tracked separately in #32; do not
 > duplicate type checklists here.
+>
+> Per module, "reviewed" means: every exported member has a test; tests exercise
+> behaviour rather than re-implementing it; and no test depends on untested
+> library code (see #41 for the `object/` case).
 
-If in practice the review turns out to be "finish the type cleanup, then re-read
-each module," fold it into #32 and close it instead.
+Sequencing: run #122 on a module *after* #32 has ticked it, so the review reads
+final signatures. This ordering is a preference, not a blocker — the two can
+proceed independently where convenient.
 
 ## 5. Dress the under-described issues
 
@@ -344,12 +435,30 @@ A tracking issue with no children. Either add the child checklist or close it
 until the work is real. If kept, label `epic`, `wishlist` and put it on the
 Backlog milestone.
 
-## 7. New issue to file
+## 7. New issues to file
 
-**Title:** v2.0 — Add tests asserting curried methods are actually curried
+### v2.0 — Add tests asserting curried methods are actually curried
 
 Labels `enhancement`, `groomed`. Milestone v2.0. This is the one remaining #57
 item with no ticket of its own; #57's rewritten body references it.
+
+### Audit the 2024 "done" batch for mis-ticked issues
+
+Labels `tech-debt`, `groomed`. Milestone v2.0.
+
+Two closed issues have been found materially undone — #75 (`replicate` was never
+converted to a generator) and #77 (test co-location never happened; 125 of 126
+test files are still in `packages/fjl/tests/`). Both were closed in the same
+Feb–May 2024 push, so the remaining closures from that period should be spot
+checked before #57 is declared complete.
+
+- [ ] Re-verify each issue closed between 2024-02-09 and 2024-06-01 against the
+      current tree
+- [ ] Reopen, or file follow-ups for, any whose acceptance criteria are unmet
+- [ ] Correct #57's "Done" list if any of its ticked references turn out to be
+      premature
+
+This is deliberately scoped as a one-off audit, not a process change.
 
 ## 8. Rewrite the #57 tracking issue
 
@@ -367,7 +476,7 @@ Labels `enhancement`, `epic`. Milestone v2.0.
 >
 > ## Done
 >
-> Idiomatic currying across all modules (#40, #77); set-theory consolidation
+> Idiomatic currying across all modules (#40); set-theory consolidation
 > #79; boolean-returning method arg order #80; `curry_` removal #86;
 > generator-friendly `take`/`takeWhile` #87; nullish-check removal #90;
 > `platform/` → `_platform/` #91; `apply` re-added #94; `unknown` generics
@@ -375,6 +484,10 @@ Labels `enhancement`, `epic`. Milestone v2.0.
 >
 > Sub-packages updated: `fjl-validator`, `fjl-inputfilter`,
 > `fjl-validator-recaptcha`, `fjl-filter`, `fjl-labs`.
+>
+> *#77 (test co-location) was ticked here but is not done — 125 of 126 test
+> files are still under `packages/fjl/tests/`. It has been dropped from this
+> list pending the audit below.*
 >
 > ## Remaining for 2.0
 >
@@ -384,6 +497,7 @@ Labels `enhancement`, `epic`. Milestone v2.0.
 > - [ ] #121 — remaining iterator → generator conversions
 > - [ ] #122 — implementations/behavioural review
 > - [ ] *(new)* tests asserting curried methods are curried
+> - [ ] *(new)* audit the 2024 "done" batch for mis-ticked issues
 >
 > ## Out of scope for 2.0
 >
@@ -404,6 +518,7 @@ Labels `enhancement`, `epic`. Milestone v2.0.
 | #102 | Confirm criteria | `enhancement`, `ci/cd` | `groomed` | v2.0 |
 | #101 | Confirm still valid | `ci/cd` | `groomed` | v2.0 |
 | *(new)* | Curried-method tests | `enhancement` | `groomed` | v2.0 |
+| *(new)* | Audit the 2024 "done" batch | `tech-debt` | `groomed` | v2.0 |
 | #61 | **Close** — duplicate of #32 | — | — | — |
 | #55 | **Close** — obsolete/not planned | — | — | — |
 | #120 | Write body; post-2.0 feature | `enhancement`, `wishlist` | `groomed` | Backlog |
