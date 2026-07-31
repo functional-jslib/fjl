@@ -5,12 +5,14 @@
 **/.cache
 
 # Directories
+.claude/worktrees
 **/coverage
 **/node_modules
 **/dist
 **/docs
 
 # Files
+.claude/settings.local.json
 *.log
 **/src/**/*.js.map
 
