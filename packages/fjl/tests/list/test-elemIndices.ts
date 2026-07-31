@@ -1,9 +1,8 @@
 import {alphabetArray} from "../helpers";
 import {elemIndices} from "../../src/list/elemIndices";
-import {Slice} from "../../src/types/data";
 
 describe('#elemIndices', () => {
-    (<[Slice<any>, any, Slice<any> | any][]>[
+    (<[string | any[], any, any[] | any][]>[
         ['aeiou', 'i', [2]],
         ['sjljs', 'j', [1, 3]],
         ['radar', 'r', [0, 4]],

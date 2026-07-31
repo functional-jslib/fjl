@@ -1,10 +1,9 @@
 import {cycle} from "../../src/list/cycle";
-import {Slice} from "../../src/types";
 
 const {stringify} = JSON;
 
 describe('#cycle', () => {
-  (<[Parameters<typeof cycle>[0], number, Slice][]>[
+  (<[Parameters<typeof cycle>[0], number, string | any[]][]>[
     ['x', 5, 'xxxxx'],
     [['x'], 5, 'xxxxx'.split('')],
     ['', 5, ''],

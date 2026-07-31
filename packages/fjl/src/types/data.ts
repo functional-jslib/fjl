@@ -18,24 +18,6 @@ export type NumberIndexable<T=any> = ({
   });
 
 /**
- * The Slice type represents the intersection of string, array, and/or (compatible*) array-like, types.
- *
- * *Typed array types are not compatible with this type, as they don't definitions for most of the slice methods.
- */
-export interface Slice<T = any> extends Iterable<T> {
-  readonly length: number;
-
-  [index: number]: any;
-
-  at(i: number): any;  // @note Method not supported by older versions of typescript.
-  concat(...items: (Slice<T> | ConcatArray<any>)[]): this;
-  includes(x: any): boolean;
-  indexOf(x: any): number;
-  lastIndexOf(x: any): number;
-  slice(start: number, end?: number): this;
-}
-
-/**
  * Represents "built-in" typed arrays.
  */
 export type TypedArray = (

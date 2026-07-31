@@ -1,5 +1,5 @@
 import {findIndexWhereRight} from "../../src/list/utils";
-import {Slice, TernaryPred} from "../../src/types";
+import {NumberIndexable, TernaryPred} from "../../src/types";
 import {
   alphabetArray,
   vowelsArray,
@@ -9,7 +9,7 @@ import {
 describe(`#findIndexWhereRight`, () => {
     const getPredForEqualTo = <T>(a: T): TernaryPred<T, number> => (b: T): boolean => a === b;
 
-    (<[TernaryPred, Slice<any>, number][]>[]
+    (<[TernaryPred, NumberIndexable, number][]>[]
         .concat(
             // Falsy variations
             alphabetArray.slice(0)

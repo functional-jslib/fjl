@@ -1,5 +1,5 @@
 import {findIndices} from "../../src/list/findIndices";
-import {Slice, TernaryPred} from "../../src/types";
+import {NumberIndexable, TernaryPred} from "../../src/types";
 import {alphabetCharCodeRange} from "../helpers";
 
 describe(`#listUtils.findIndices`, () => {
@@ -19,7 +19,7 @@ describe(`#listUtils.findIndices`, () => {
 
     // console.log(evenCodes, oddCodes);
 
-    (<[TernaryPred, Slice<any>, number[] | undefined][]>[
+    (<[TernaryPred, NumberIndexable, number[] | undefined][]>[
         [oddPred, evenCodes, undefined],
         [oddPred, alphabetCharCodeRange, oddIndices],
         [evenPred, oddCodes, undefined],

@@ -1,5 +1,5 @@
 import {findWhere} from "../../src/list/utils/findWhere";
-import {Slice, TernaryPred} from "../../src/types";
+import {TernaryPred} from "../../src/types";
 import {alphabetArray, alphabetString, expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
 
 describe(`#findWhere`, () => {
