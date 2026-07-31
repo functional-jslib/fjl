@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "fjl": ["./packages/fjl/src/index.ts"],
+      "fjl-validator": ["./packages/fjl-validator/src/index.ts"],
+      "fjl-inputfilter": ["./packages/fjl-inputfilter/src/index.ts"],
+      "fjl-validator-recaptcha": ["./packages/fjl-validator-recaptcha/src/index.ts"]
+    }
+  },
+  "include": [
+    "packages/fjl/src/**/*.ts",
+    "packages/fjl-validator/src/**/*.ts",
+    "packages/fjl-inputfilter/src/**/*.ts",
+    "packages/fjl-validator-recaptcha/src/**/*.ts"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/tests"
+  ]
+}
