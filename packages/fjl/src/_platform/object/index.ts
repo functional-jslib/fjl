@@ -13,16 +13,18 @@ export const
    * Contains all the static functions from `Object` but curried and flipped;
    * Methods that only take one parameter, or only 'rest' args, are exported as is.
    *
+   * @note These live on `native` - they are not top-level `fjl` exports.
+   *
    * ```typescript
    * // E.g., `Object.defineProperties(obj, descriptor)` can now be used flipped,
    * // and/or, curried:
-   * import {defineProperties, $defineProperties} from 'fjl'
+   * import {native} from 'fjl'
    *
    * // Flipped
-   * defineProperties(descriptor, someObj),
+   * native.defineProperties(descriptor, someObj),
    *
    * // Flipped and Curried
-   * $defineProperties(descriptor)(someObj);
+   * native.$defineProperties(descriptor)(someObj);
    *
    * // etc.
    * ```
