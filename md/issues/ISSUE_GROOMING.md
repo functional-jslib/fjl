@@ -1,5 +1,11 @@
 # Issue grooming and consolidation plan
 
+> **Status: applied — 2026-07-31.** Every action below has been executed against
+> `functional-jslib/fjl`. The `v2.0` and `Backlog (post-2.0)` milestones exist,
+> #61 and #55 are closed, #124 and #125 are filed, and #113/#114/#116 are real
+> GitHub sub-issues of #32. Two deviations found during execution are recorded
+> in [Deviations on application](#deviations-on-application).
+
 A ready-to-apply pass over the repository's open issues: consolidate the
 overlapping typing-cleanup tickets into one epic, dress the under-described
 issues with acceptance criteria, close the stale ones, and normalize labels and
@@ -17,6 +23,7 @@ milestoned, and carries acceptance criteria.
 
 ## Contents
 
+- [Deviations on application](#deviations-on-application)
 - [Findings that change the plan](#findings-that-change-the-plan)
 - [1. Label and milestone prerequisites](#1-label-and-milestone-prerequisites)
 - [2. Close](#2-close)
@@ -27,6 +34,30 @@ milestoned, and carries acceptance criteria.
 - [7. New issues to file](#7-new-issues-to-file)
 - [8. Rewrite the #57 tracking issue](#8-rewrite-the-57-tracking-issue)
 - [Summary table](#summary-table)
+
+## Deviations on application
+
+Two places where the plan as written was internally inconsistent, and what was
+applied instead.
+
+### `_platform/` is **not** ticked on #32's checklist
+
+Section 3's proposed #32 body ticks `_platform/`, but its own following note
+says the ticks are the union of the pre-consolidation #32 and #61 bodies —
+neither of which ticks it. Verification settles it: `_platform/object/index.ts`
+still takes `any` (`instanceOf`, `$instanceOf`) and `_platform/slice/index.ts`
+still depends on `Slice` and returns `any`. It was left unticked, with the
+reason recorded in the issue body. `_platform/` *is* correctly ticked on #122,
+which measures behaviour, not typing — exactly the distinction section 4 argues
+for.
+
+### #101 keeps its `enhancement` label alongside `ci/cd`
+
+The summary table gives #101 the single type label `ci/cd` while giving #102
+both `enhancement` and `ci/cd`, though the two issues are the same kind of
+ticket. Rather than make near-identical issues inconsistent, both kept
+`enhancement` + `ci/cd`. If the one-type-label rule is to be enforced strictly,
+drop `enhancement` from both, not just #101.
 
 ## Findings that change the plan
 
@@ -197,7 +228,7 @@ Labels: `enhancement`, `tech-debt`, `groomed`, `epic`. Milestone: v2.0.
 >
 > A module is ticked only when **sources + tests + docs** are all done.
 >
-> - [x] `_platform/`
+> - [ ] `_platform/` (see [Deviations](#deviations-on-application))
 > - [x] `boolean/`
 > - [ ] `errorThrowing/`
 > - [x] `function/`
@@ -437,12 +468,12 @@ Backlog milestone.
 
 ## 7. New issues to file
 
-### v2.0 — Add tests asserting curried methods are actually curried
+### v2.0 — Add tests asserting curried methods are actually curried — filed as #124
 
 Labels `enhancement`, `groomed`. Milestone v2.0. This is the one remaining #57
 item with no ticket of its own; #57's rewritten body references it.
 
-### Audit the 2024 "done" batch for mis-ticked issues
+### Audit the 2024 "done" batch for mis-ticked issues — filed as #125
 
 Labels `tech-debt`, `groomed`. Milestone v2.0.
 
@@ -507,7 +538,7 @@ Labels `enhancement`, `epic`. Milestone v2.0.
 
 | Issue | Action | Type label | State | Milestone |
 | --- | --- | --- | --- | --- |
-| #57 | Rewrite as thin index | `enhancement`, `epic` | — | v2.0 |
+| #57 | Rewrite as thin index | `enhancement`, `epic` | `groomed` | v2.0 |
 | #32 | Retitle to epic; canonical checklist | `enhancement`, `tech-debt`, `epic` | `groomed` | v2.0 |
 | #113 | Re-parent under #32 | `enhancement`, `tech-debt` | `groomed` | v2.0 |
 | #114 | Re-parent; add `Slice` criteria + consumers | `tech-debt` | `groomed` | v2.0 |
@@ -516,9 +547,9 @@ Labels `enhancement`, `epic`. Milestone v2.0.
 | #121 | Write body; `replicate`/`unfoldr` remain | `enhancement` | `groomed` | v2.0 |
 | #118 | Write body; workflow triggers | `ci/cd` | `groomed` | v2.0 |
 | #102 | Confirm criteria | `enhancement`, `ci/cd` | `groomed` | v2.0 |
-| #101 | Confirm still valid | `ci/cd` | `groomed` | v2.0 |
-| *(new)* | Curried-method tests | `enhancement` | `groomed` | v2.0 |
-| *(new)* | Audit the 2024 "done" batch | `tech-debt` | `groomed` | v2.0 |
+| #101 | Confirm still valid | `enhancement`, `ci/cd` | `groomed` | v2.0 |
+| #124 | Curried-method tests | `enhancement` | `groomed` | v2.0 |
+| #125 | Audit the 2024 "done" batch | `tech-debt` | `groomed` | v2.0 |
 | #61 | **Close** — duplicate of #32 | — | — | — |
 | #55 | **Close** — obsolete/not planned | — | — | — |
 | #120 | Write body; post-2.0 feature | `enhancement`, `wishlist` | `groomed` | Backlog |
