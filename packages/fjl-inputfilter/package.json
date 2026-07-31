@@ -9,6 +9,11 @@
     "fjl": "^2.0.0-alpha",
     "fjl-validator": "^0.8.0"
   },
+  "scripts": {
+    "preversion": "node ../../node_scripts/tasks/version.mjs precheck && pnpm -w run test:fjl-inputfilter",
+    "version": "pnpm -w run build",
+    "postversion": "node ../../node_scripts/tasks/version.mjs commit-and-tag"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/functional-jslib/fjl.git"
