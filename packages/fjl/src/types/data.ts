@@ -36,27 +36,6 @@ export interface Slice<T = any> extends Iterable<T> {
 }
 
 /**
- * @deprecated Use your own type and/or existing native/otherwise types.
- *
- * Any type that contains a "readonly" `name` (functions, et al.) property.
- */
-export interface Nameable {
-  readonly name: string;
-}
-
-/**
- * @deprecated - Use direct type constructors instead.
- */
-export type SliceConstructor = StringConstructor | ArrayConstructor;
-
-/**
- * @deprecated Use `NumberIndexable` instead.
- */
-export interface Lengthable {
-  readonly length?: number;
-}
-
-/**
  * Represents "built-in" typed arrays.
  */
 export type TypedArray = (
@@ -73,15 +52,6 @@ export type TypedArray = (
   ) & {
   concat(...args: ConcatArray<any>[]): any;
 };
-
-/**
- * @deprecated Use constructor array types directly.
- *
- * Represents built-in Array types (Typed arrays, and `Array`).
- */
-export type ArrayType<T> = {
-  constructor: ArrayTypeConstructor,
-} & NumberIndexable<T>
 
 /**
  * Represents built-in Array type constructors.

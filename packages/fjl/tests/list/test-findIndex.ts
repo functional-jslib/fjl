@@ -1,10 +1,10 @@
-import {Slice, PredForSlice} from "../../src/types";
+import {Slice, TernaryPred} from "../../src/types";
 import {isVowel, notIsVowel} from "../helpers";
 import {alphabetArray, alphabetString, vowelsArray, vowelsString} from "../helpers";
 import {findIndex} from "../../src";
 
 describe('#findIndex', () => {
-  (<[Slice<string>, PredForSlice<string>, number][]>[
+  (<[Slice<string>, TernaryPred<string, number>, number][]>[
     ['', isVowel, -1],
     [[], isVowel, -1],
     [vowelsArray, isVowel, 0],

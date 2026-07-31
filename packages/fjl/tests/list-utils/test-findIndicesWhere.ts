@@ -1,5 +1,5 @@
 import {findIndicesWhere} from "../../src/list/utils/findIndicesWhere";
-import {Slice, PredForSlice} from "../../src/types";
+import {Slice, TernaryPred} from "../../src/types";
 import {alphabetCharCodeRange, alphabetString, expectEqual, expectError, vowelIndices, vowelsArray} from "../helpers";
 
 describe(`#listUtils.findIndicesWhere`, () => {
@@ -19,7 +19,7 @@ describe(`#listUtils.findIndicesWhere`, () => {
 
     // console.log(evenCodes, oddCodes);
 
-    (<[PredForSlice<any>, Slice<any>, number[] | undefined][]>[
+    (<[TernaryPred, Slice<any>, number[] | undefined][]>[
         [oddPred, evenCodes, undefined],
         [oddPred, alphabetCharCodeRange, oddIndices],
         [evenPred, oddCodes, undefined],

@@ -1,5 +1,5 @@
 import {reduce} from "../list/utils";
-import {MapOp} from "../types";
+import {Ternary} from "../types";
 import {of} from "./of";
 
 /**
@@ -8,7 +8,7 @@ import {of} from "./of";
  *
  * Maps a function over an objects own key, and values.
  */
-export const mapObj = <T extends object>(fn: MapOp, obj: T): T =>
+export const mapObj = <T extends object>(fn: Ternary<any, string, T>, obj: T): T =>
   reduce((agg, [key, value]) => {
     agg[key] = fn(value, key, obj);
     return agg;
