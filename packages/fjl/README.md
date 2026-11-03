@@ -5,7 +5,7 @@ Functional Javascript Library (inspired by Haskell's Prelude).
 ### Supported Platforms:
 
 - Ecmascript 6+.
-- NodeJs v18+
+- NodeJs v20+
 
 ## Getting Started:
 

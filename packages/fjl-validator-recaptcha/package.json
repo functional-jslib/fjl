@@ -42,6 +42,6 @@
   },
   "homepage": "https://github.com/functional-jslib/fjl#readme",
   "engines": {
-    "node": ">=16 || >=18"
+    "node": ">=20"
   }
 }
