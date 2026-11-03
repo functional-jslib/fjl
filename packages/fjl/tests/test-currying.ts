@@ -147,9 +147,6 @@ const
 
     // object
     $assignDeep: {
-      knownFailure: '`$assignDeep` forwards its rest-args as a single array ' +
-        '(`assignDeep(obj0, objs)` instead of `assignDeep(obj0, ...objs)`), so ' +
-        'the curried form merges an *array* into `obj0` - see PR for #124',
       reusablePartial: false,
       cases: [{
         args: () => [{a: 1}, {b: 2}, {c: 3}],
@@ -200,7 +197,6 @@ const
     $objIntersect: {cases: [{args: fixed({a: 1, b: 2}, {b: 3})}]},
 
     $objUnion: {
-      knownFailure: '`$objUnion` is `$assignDeep` - see the `$assignDeep` entry',
       reusablePartial: false,
       cases: [{args: () => [{a: 1}, {b: 2}], groups: [1, 1]}]
     },
@@ -255,7 +251,7 @@ const
     $isInfixOf: {cases: [{args: fixed('bcd', alphabet)}]},
     $isPrefixOf: {cases: [{args: fixed('abc', alphabet)}]},
     $isSubsequenceOf: {cases: [{args: fixed('ace', 'abcde')}]},
-    $isSuffixOf: {cases: [{args: fixed(alphabet, 'xyz')}]},
+    $isSuffixOf: {cases: [{args: fixed('xyz', alphabet)}]},
 
     $iterate: {cases: [{args: fixed(incr, 5), finalize: takeFromGen(3)}]},
 
