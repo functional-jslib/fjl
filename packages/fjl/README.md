@@ -26,7 +26,8 @@ Reference 'dist/index.*.min.js', and/or 'dist/(esm/cjs)/index*' directly (or use
 
 ## Docs
 
-@todo 
+- [Migrating to 2.0](https://github.com/functional-jslib/fjl/blob/main/md/MIGRATION_V2.md)
+- API docs: run `pnpm run docs` from the repository root to generate them with TypeDoc.
 
 ### About Currying:
 

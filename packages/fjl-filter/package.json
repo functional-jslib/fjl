@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/functional-jslib/fjl#readme",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   }
 }

@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       fjl:
-        specifier: workspace:2.0.0-alpha.5
+        specifier: workspace:^
         version: link:packages/fjl
       fjl-inputfilter:
         specifier: workspace:^
@@ -117,7 +117,7 @@ importers:
   packages/fjl-validator-recaptcha:
     dependencies:
       fjl:
-        specifier: ^2.0.0-alhpa
+        specifier: ^2.0.0-alpha
         version: link:../fjl
       fjl-validator:
         specifier: ^0.8.0

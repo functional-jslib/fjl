@@ -64,7 +64,7 @@
     "./packages/fjl-inputfilter"
   ],
   "engines": {
-    "node": ">=20",
+    "node": ">=22",
     "npm": ">=8",
     "pnpm": ">=8"
   },
@@ -77,7 +77,7 @@
   "mockServerPort": 10087,
   "mockServerCommand": "node ./packages/fjl-validator-recaptcha/tests/mock-server.js",
   "dependencies": {
-    "fjl": "workspace:2.0.0-alpha.5",
+    "fjl": "workspace:^",
     "fjl-inputfilter": "workspace:^",
     "fjl-validator": "workspace:^"
   },
