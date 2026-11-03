@@ -1,4 +1,3 @@
-import {Slice} from "../../src/types/data";
 import {expectEqual} from "../helpers";
 import {difference} from "../../src";
 
@@ -6,7 +5,7 @@ describe('#difference', () => {
   // @todo tablelize test messages
   it('should return an empty list when first list passed in is empty, ' +
     ' there are no differences between passed in lists, ', () => {
-    (<[Parameters<typeof difference>, Slice][]>[
+    (<[Parameters<typeof difference>, any[]][]>[
       [[[], []], []],
     ])
       .forEach(([args, expected]) => {

@@ -1,9 +1,9 @@
 import {findWhere} from "../../src/list/utils/findWhere";
-import {Slice, PredForSlice, TernaryPred} from "../../src/types";
+import {TernaryPred} from "../../src/types";
 import {alphabetArray, alphabetString, expectEqual, expectError, vowelsArray, vowelsString} from "../helpers";
 
 describe(`#findWhere`, () => {
-    const getPredForEqualTo = <T>(a: T): PredForSlice<T> => (b: T): boolean => a === b;
+    const getPredForEqualTo = <T>(a: T): TernaryPred<T, number> => (b: T): boolean => a === b;
 
     (<[TernaryPred, any[], number][]>[]
         .concat(

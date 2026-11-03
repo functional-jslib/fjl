@@ -2,7 +2,7 @@ import {negateF3} from "../function/negate";
 import {findIndexWhere} from "./utils/findIndexWhere";
 import {reverse} from "./reverse";
 import {splitAt} from "./splitAt";
-import {Slice, TernaryPred} from "../types";
+import {TernaryPred} from "../types";
 
 export const
 
@@ -19,17 +19,17 @@ export const
    * breakOnList((x => x > 9), [1,2,3]) == [[1,2,3],[]];
    * ```
    */
-  breakOnList = <T, TS extends Slice<T>>(
+  breakOnList = <T, TS extends string | T[]>(
     pred: TernaryPred<T, number, TS>,
     xs: TS
   ): [typeof xs, typeof xs] => {
     const splitPoint = findIndexWhere(negateF3(pred), xs);
     return splitPoint === -1 ?
-      [xs.slice(0, 0), xs.slice(0)] :
+      [xs.slice(0, 0) as TS, xs.slice(0) as TS] :
       reverse(splitAt(splitPoint, xs));
   },
 
-  $breakOnList = <T, TS extends Slice<T>>(
+  $breakOnList = <T, TS extends string | T[]>(
     pred: TernaryPred<T, number, TS>
   ) =>
     (xs: TS): [typeof xs, typeof xs] => breakOnList(pred, xs)

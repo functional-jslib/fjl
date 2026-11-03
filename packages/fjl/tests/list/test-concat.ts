@@ -1,5 +1,4 @@
 import {expectError, vowelsArray} from "../helpers";
-import {Slice} from "../../src/types/data";
 import {concat} from "../../src";
 
 const {stringify} = JSON;

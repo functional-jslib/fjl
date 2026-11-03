@@ -1,9 +1,9 @@
-import {Slice} from "../../src/types/data";
+import {NumberIndexable} from "../../src/types/data";
 import {lastIndex} from "../../src/list/utils";
 import {alphabetArray, vowelsArray, vowelsString} from "../helpers";
 
 describe('#lastIndex', () => {
-  (<[Slice, number][]>[
+  (<[NumberIndexable, number][]>[
     ['', -1], // Javascript returns `0` for last index of empty slice.
     [[], -1], // ""
     [vowelsString, vowelsString.length - 1],

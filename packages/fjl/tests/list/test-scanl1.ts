@@ -1,6 +1,5 @@
 import {alphabetArray, expectEqual, linkedListToList, LLNode} from "../helpers";
 import {scanl1} from "../../src/list";
-import {Slice} from '../../src/types/data';
 
 describe('#scanl1', () => {
   const unlinkedNodes = alphabetArray.map(char => ({data: char}));

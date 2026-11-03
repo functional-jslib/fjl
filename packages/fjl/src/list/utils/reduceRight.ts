@@ -1,11 +1,11 @@
-import {NumberIndexable, ReduceOp} from "../../types";
+import {NumberIndexable, Quaternary} from "../../types";
 
 export const
 
   /**
    * Reduces a "number indexable", from right-to-left, by given reduction function (same as [].reduceRight but also for strings and arbitrary "number indexable" objects/etc.).
    */
-  reduceRight = (op: ReduceOp, agg: any, xs: NumberIndexable): ReturnType<typeof op> => {
+  reduceRight = (op: Quaternary, agg: any, xs: NumberIndexable): ReturnType<typeof op> => {
     const limit = xs.length;
     let result = agg;
     for (let ind = limit - 1; ind >= 0; ind--)
@@ -13,7 +13,7 @@ export const
     return result;
   },
 
-  $reduceRight = (op: ReduceOp) =>
+  $reduceRight = (op: Quaternary) =>
     (agg: any) =>
       (xs: NumberIndexable): ReturnType<typeof op> =>
         reduceRight(op, agg, xs)

@@ -3,7 +3,7 @@
  */
 import {
   assign, compose, defineEnumProps, isArray, isset,
-  isString, Slice, Unary, error as defaultErrorHandler
+  isString, NumberIndexable, Unary, error as defaultErrorHandler
 } from 'fjl';
 import {
   defaultValueObscurer,
@@ -41,7 +41,7 @@ export const
     !input.required && (
       !isset(value) || (
         (isString(value) || isArray(value)) &&
-        !(value as Slice).length
+        !(value as NumberIndexable).length
       )
     ),
 

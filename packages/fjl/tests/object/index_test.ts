@@ -64,7 +64,7 @@ import {
   vowelsString
 } from '../helpers';
 
-import {Nameable, TypeRef, TypeConstructor} from '../../src/types';
+import {TypeRef, TypeConstructor} from '../../src/types';
 import {noop} from "../../src";
 
 const {stringify} = JSON;
@@ -174,9 +174,9 @@ describe('#object', function () {
 
   describe('#isType', function () {
     it('should return expected result for given values', function () {
-      type ConstructorTestCase = [Nameable, any, boolean];
+      type ConstructorTestCase = [{readonly name: string}, any, boolean];
       type NameTestCase = [string, any, boolean];
-      type ConstructorOrNameTestCase = [string | Nameable | NumberConstructor, any, boolean];
+      type ConstructorOrNameTestCase = [string | {readonly name: string} | NumberConstructor, any, boolean];
 
       // [`TypeRef`, `arg`, `expected`]
       const truthySetWithCtors: Array<ConstructorTestCase> = [

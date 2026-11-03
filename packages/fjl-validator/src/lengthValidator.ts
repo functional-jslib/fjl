@@ -12,9 +12,9 @@ import {
   ValidatorOptions,
   ValidatorResult
 } from './ValidationUtils';
-import {assignDeep, curry, curry2, defineEnumProps, typeOf, Slice, isset} from 'fjl';
+import {assignDeep, curry, curry2, defineEnumProps, typeOf, NumberIndexable, isset} from 'fjl';
 
-export interface LenValidatorOptions<T = any> extends ValidatorOptions<Slice<T>> {
+export interface LenValidatorOptions<T = any> extends ValidatorOptions<NumberIndexable<T>> {
   min?: number;
   max?: number;
 }
@@ -51,7 +51,7 @@ export const
    *  given range (if given) but doesn't normalize options.
    *  (@see `toLengthOptions` for range props).
    */
-  $lengthValidatorNoNormalize = <T>(options: LenValidatorOptions, value: Slice<T>): ValidatorResult => {
+  $lengthValidatorNoNormalize = <T>(options: LenValidatorOptions, value: NumberIndexable<T>): ValidatorResult => {
     const messages = [];
     let result = false;
     if (!isset(value) || value.length === undefined) {
@@ -86,7 +86,7 @@ export const
    *  given range (if given).  Same as `lengthValidatorNoNormalize` except normalizes incoming options.
    *  (@see `toLengthOptions` for more on options).
    */
-  lengthValidator = curry2(<T>(options: LenValidatorOptions<T>, value: Slice<T>): ValidatorResult => {
+  lengthValidator = curry2(<T>(options: LenValidatorOptions<T>, value: NumberIndexable<T>): ValidatorResult => {
     return $lengthValidatorNoNormalize(toLengthOptions(options), value);
   })
 ;

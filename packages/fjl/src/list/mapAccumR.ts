@@ -1,4 +1,4 @@
-import {Quaternary, Slice} from "../types";
+import {Quaternary} from "../types";
 
 export const
 
@@ -6,7 +6,7 @@ export const
    * Performs a map and a reduce, all in one (from right-to-left), on each item in the given array, and
    * returns the result of the reduce, and the map, as a tuple, respectively.
    */
-  mapAccumR = <AccumVal, B, MapOfB, Bs extends Slice<B>, MapOfBs extends Slice<MapOfB>>(
+  mapAccumR = <AccumVal, B, MapOfB, Bs extends string | B[], MapOfBs extends string | MapOfB[]>(
     op: Quaternary<AccumVal, B, number, Bs, [AccumVal, MapOfB]>,
     zero: AccumVal,
     bs: Bs
@@ -31,7 +31,7 @@ export const
   /**
    * Curried version of `mapAccumR`.
    */
-  $mapAccumR = <AccumVal, B, MapOfB, Bs extends Slice<B>, MapOfBs extends Slice<MapOfB>>(
+  $mapAccumR = <AccumVal, B, MapOfB, Bs extends string | B[], MapOfBs extends string | MapOfB[]>(
     op: Quaternary<AccumVal, B, number, Bs, [AccumVal, MapOfB]>,
   ) =>
     (zero: AccumVal) =>

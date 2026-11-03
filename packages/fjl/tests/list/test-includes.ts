@@ -1,9 +1,8 @@
 import {vowelsArray, vowelsString} from "../helpers";
-import {Slice} from "../../src/types/data";
 import {includes} from "../../src/_platform/slice";
 
 describe('#includes', () => {
-    (<[[string, Slice], boolean][]>[
+    (<[[string, string | any[]], boolean][]>[
         [[vowelsArray, ''],  false],
         [[ vowelsArray, 'x'],  false],
         [[ vowelsString, 'y'],  false],

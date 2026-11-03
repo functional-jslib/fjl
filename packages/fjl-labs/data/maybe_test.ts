@@ -1,7 +1,7 @@
 import {isJust, isMaybe, isNothing, Just, Maybe, maybe, Nothing} from './maybe';
 import {join} from './monad';
 import {falsyList} from "../../fjl/tests/helpers";
-import {Nameable, Unary} from "fjl";
+import {Unary} from "fjl";
 
 const methodNames = ['ap', 'map', 'flatMap', 'join'] as Array<keyof Maybe<any>>;
 
@@ -205,7 +205,7 @@ describe('Maybe', () => {
     ])
       .forEach(([args, expected], i) => {
         test(`iter.: ${i}; maybe(${args.map(arg => typeof arg === 'function' ?
-            (arg as Nameable).name : JSON.stringify(arg)).join(', ')}) === ` +
+            (arg as {name: string}).name : JSON.stringify(arg)).join(', ')}) === ` +
           ` ${JSON.stringify(expected)}`, () => {
           expect(maybe(...args)).toEqual(expected);
         });

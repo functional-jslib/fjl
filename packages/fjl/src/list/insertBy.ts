@@ -2,13 +2,12 @@ import {splitAt} from "./splitAt";
 import {OrderingFunc} from "./utils";
 import {append} from "./append";
 import {of} from "../object";
-import {Slice} from "../types";
 
 /**
  * A version of `insert` that allows you to specify the ordering of the inserted
  * item;  Before/at, or after
  */
-export const insertBy = <T, TS extends Slice<T>>(
+export const insertBy = <T, TS extends string | T[]>(
     orderingFn: OrderingFunc<T>, x: T, xs: TS
   ): TS => {
     const limit = xs.length;
@@ -24,7 +23,7 @@ export const insertBy = <T, TS extends Slice<T>>(
     return append(xs, of(xs, x));
   },
 
-  $insertBy = <T, TS extends Slice<T>>(
+  $insertBy = <T, TS extends string | T[]>(
     orderingFn: OrderingFunc<T>
   ) =>
     (x: T) =>

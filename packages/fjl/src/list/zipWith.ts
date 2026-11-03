@@ -3,7 +3,7 @@ import {reduce, toShortest} from "./utils";
 import {push} from "./push";
 import {Binary} from "../types";
 
-export type TuplizeOp<T1, T2> = Binary<T1, T2, [T1, T2]>;
+export type TuplizeOp<T1 = any, T2 = any> = Binary<T1, T2, [T1, T2]>;
 
 export const
   /**

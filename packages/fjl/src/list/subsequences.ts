@@ -1,6 +1,5 @@
 import {push} from "./push";
 import {append} from "./append";
-import {Slice} from "../types";
 
 export const
   /**
@@ -11,7 +10,7 @@ export const
    *  will generate 65536 sub-sequences!  So caution should be taken to not
    *  use this with sequences above a certain length on certain platform (the browser thread in specific).
    */
-  subsequences = <TS extends Slice>(xs: TS): TS[] => {
+  subsequences = <TS extends string | any[]>(xs: TS): TS[] => {
     const listLen = xs.length,
       len = Math.pow(2, listLen),
       appender = listLen && Array.isArray(xs) ? push : append,
