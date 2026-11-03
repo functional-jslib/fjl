@@ -132,6 +132,7 @@ const
     },
 
     // string / _platform.string
+    $charRange: {cases: [{args: fixed('a', 'e'), finalize: takeFromGen(3)}]},
     $split: {cases: [{args: fixed(',', 'a,b,c')}]},
 
     // _platform.object

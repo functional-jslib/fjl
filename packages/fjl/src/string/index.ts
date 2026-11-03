@@ -8,6 +8,7 @@ import {randNatNum} from "../number";
 import {id} from "../function/id";
 
 export {split, $split};
+export * from './charRange';
 
 const newLineRegex = /[\n\r]/gm,
   spaceRegex = /[ \t]/gm,
