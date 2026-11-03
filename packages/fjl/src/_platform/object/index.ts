@@ -2,7 +2,7 @@
  * Defines `Object` platform functional method counter-parts used in the library.
  */
 import {flip, flip3, flip4, flip5} from "../../function/flip";
-import {Constructable, ObjectStatics} from "../../types";
+import {ConstructableType, ObjectStatics} from "../../types";
 
 export const
 
@@ -73,13 +73,13 @@ export const
    * if passed in value's constructor is equal to the given one, and if result is `false`
    * checks whether value is an instance of the given constructor.
    */
-  instanceOf = (x: any, X: Constructable): boolean =>
-    x.constructor === X || x instanceof X,
+  instanceOf = (x: unknown, X: ConstructableType): boolean =>
+    (x as object).constructor === X || x instanceof X,
 
   /**
    * Curried version of `instanceOf`.
    */
-  $instanceOf = (x: any) => (X: Constructable): boolean => instanceOf(x, X),
+  $instanceOf = (x: unknown) => (X: ConstructableType): boolean => instanceOf(x, X),
 
   /**
    * Functional version of `Object.prototype.hasOwnProperty`.

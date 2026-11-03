@@ -8,7 +8,7 @@
  */
 import {isArray} from './is';
 import {keys} from '../_platform/object';
-import {TypeConstructor} from "../types";
+import {ConstructableType} from "../types";
 import {map} from "../list/map";
 import {foldl} from "../list/foldl";
 
@@ -28,7 +28,7 @@ export const
    * Returns a deep associated list from given object, on incoming
    * `TypeConstraint`.
    */
-  toAssocListDeep = (obj, TypeConstraint: TypeConstructor = Object) =>
+  toAssocListDeep = (obj, TypeConstraint: ConstructableType = Object) =>
     map(key =>
         TypeConstraint === obj[key]?.constructor ?
           [key, toAssocListDeep(obj[key], TypeConstraint)] :

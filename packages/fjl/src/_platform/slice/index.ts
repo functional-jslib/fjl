@@ -3,6 +3,31 @@
  * built-in types that support `slice`, `concat`, `at`, and numeric indexing).
  */
 
+/**
+ * The built-in "sliceable" union; `any` is the idiomatic array constraint, and is what lets
+ * `TS extends Sliceable` keep the caller's element type.
+ */
+type Sliceable<T = any> = string | T[];
+
+/**
+ * `string` inputs give a `string`, arrays give an array of their element type, and a generic
+ * "sliceable" gives back its own type.
+ */
+type Concat = {
+  (...xss: string[]): string;
+  <T>(...xss: ConcatArray<T>[]): T[];
+  <TS extends Sliceable>(...xss: TS[]): TS;
+};
+
+/**
+ * Curried form of `Concat`.
+ */
+type $Concat = {
+  (a: string): (...b: string[]) => string;
+  <T>(a: ConcatArray<T>): (...b: ConcatArray<T>[]) => T[];
+  <TS extends Sliceable>(a: TS): (...b: TS[]) => TS;
+};
+
 export const
 
   /**
@@ -14,31 +39,30 @@ export const
    * method, itself, is actually exported from the library as `append`
    * (same as '+' for strings, but for concatables) See '../list/append' module.
    */
-  concat = <T extends string | any[]>(...xss: (T | ConcatArray<any>)[]): any =>
-    (xss.shift() as any[])?.concat(...xss),
+  concat = ((...xss: any[]) => xss.shift()?.concat(...xss)) as Concat,
 
   /**
    * Curried version of `concat`.
    */
-  $concat = a => (...b) => concat(a, ...b),
+  $concat = (<TS extends Sliceable>(a: TS) => (...b: TS[]): TS => concat(a, ...b)) as $Concat,
 
-  indexOf = (xs, x): number => xs.indexOf(x),
+  indexOf = <T>(xs: Sliceable<T>, x: T): number => (xs as T[]).indexOf(x),
 
-  $indexOf = xs => (x): number => indexOf(xs, x),
+  $indexOf = <T>(xs: Sliceable<T>) => (x: T): number => indexOf(xs, x),
 
-  includes = (xs, x): boolean => xs.includes(x),
+  includes = <T>(xs: Sliceable<T>, x: T): boolean => (xs as T[]).includes(x),
 
-  $includes = xs => (x): boolean => includes(xs, x),
+  $includes = <T>(xs: Sliceable<T>) => (x: T): boolean => includes(xs, x),
 
-  lastIndexOf = (xs, x): number => xs.lastIndexOf(x),
+  lastIndexOf = <T>(xs: Sliceable<T>, x: T): number => (xs as T[]).lastIndexOf(x),
 
-  $lastIndexOf = xs => (x): number => lastIndexOf(xs, x),
+  $lastIndexOf = <T>(xs: Sliceable<T>) => (x: T): number => lastIndexOf(xs, x),
 
   /**
    * Same as `(Array|String).prototype.slice`, but in functional format.
    */
-  slice = (start: number, end: number, xs): typeof xs =>
-    xs.slice(start, end),
+  slice = <TS extends Sliceable>(start: number, end: number, xs: TS): TS =>
+    xs.slice(start, end) as TS,
 
   /**
    * Same as `slice` but curried.
@@ -46,7 +70,7 @@ export const
    */
   $slice = (start: number) =>
     (end: number) =>
-      (xs): typeof xs =>
+      <TS extends Sliceable>(xs: TS): TS =>
         slice(start, end, xs),
 
   /**

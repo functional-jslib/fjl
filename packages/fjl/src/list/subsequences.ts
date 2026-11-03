@@ -13,11 +13,14 @@ export const
   subsequences = <TS extends string | any[]>(xs: TS): TS[] => {
     const listLen = xs.length,
       len = Math.pow(2, listLen),
-      appender = listLen && Array.isArray(xs) ? push : append,
-      out = [];
+      // `push` and `append` have different signatures (item vs. "sliceable"), so widen to the
+      // call shape used below.
+      appender = (listLen && Array.isArray(xs) ? push : append) as
+        (x: TS[number], xs: TS) => TS,
+      out: TS[] = [];
 
     for (let i = 0; i < len; i += 1) {
-      let entry = xs.slice(0, 0);
+      let entry = xs.slice(0, 0) as TS;
 
       for (let j = 0; j < listLen; j += 1) {
         if (i & (1 << j)) {

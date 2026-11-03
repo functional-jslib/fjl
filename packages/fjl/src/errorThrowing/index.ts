@@ -16,7 +16,7 @@ import {TypeRef} from "../types";
  */
 export interface ErrorMessageCtx {
   contextName: string;
-  value: any;
+  value: unknown;
   valueName: string;
   expectedTypeName: string | TypeRef | TypeRef[];
   foundTypeName: string;
@@ -25,21 +25,21 @@ export interface ErrorMessageCtx {
 
 export type ErrorIfNotTypeThrower<T> = (
   type: TypeRef, contextName: string,
-  valueName: string, value: T, messageSuffix?: any) => T;
+  valueName: string, value: T, messageSuffix?: string) => T;
 
 export type ErrorIfNotTypeThrowerCurried<T> = (type: TypeRef) =>
   (contextName: string) =>
     (valueName: string) =>
-      (value: T, messageSuffix?: any) => T;
+      (value: T, messageSuffix?: string) => T;
 
 export type ErrorIfNotTypesThrower<T> = (
   types: TypeRef[], contextName: string,
-  valueName: string, value: T, messageSuffix?: any) => T;
+  valueName: string, value: T, messageSuffix?: string) => T;
 
 export type ErrorIfNotTypesThrowerCurried<T> = (types: TypeRef[]) =>
   (contextName: string) =>
     (valueName: string) =>
-      (value: T, messageSuffix?: any) => T;
+      (value: T, messageSuffix?: string) => T;
 
 export type ErrorMessageCtxToString = (errorMessageCtx: ErrorMessageCtx) => string;
 
@@ -81,7 +81,7 @@ export const
    */
   getErrorIfNotTypeThrower = <T>(
     tmplStrCallback: ErrorMessageCtxToString,
-    typeChecker: TypeCheckerPred<TypeRef, any> = isOfType
+    typeChecker: TypeCheckerPred<TypeRef, T> = isOfType
   ): ErrorIfNotTypeThrower<T> =>
     (ValueType: TypeRef,
      contextName: string,
@@ -105,7 +105,7 @@ export const
 
   getErrorIfNotTypeThrowerCurried = <T>(
     tmplStrCallback: ErrorMessageCtxToString,
-    typeChecker: TypeCheckerPred<TypeRef, any> = isOfType
+    typeChecker: TypeCheckerPred<TypeRef, T> = isOfType
   ): ErrorIfNotTypeThrowerCurried<T> => {
     const method = getErrorIfNotTypeThrower(tmplStrCallback, typeChecker) as ErrorIfNotTypeThrower<T>;
     return (ValueType: TypeRef) =>
@@ -120,7 +120,7 @@ export const
    */
   getErrorIfNotTypesThrower = <T>(
     tmplStrCallback: ErrorMessageCtxToString,
-    typeChecker: TypeCheckerPred<TypeRef, any> = isOfType
+    typeChecker: TypeCheckerPred<TypeRef, T> = isOfType
   ): ErrorIfNotTypesThrower<T> =>
     (valueTypes: TypeRef[],
      contextName: string,
@@ -144,7 +144,7 @@ export const
 
   getErrorIfNotTypesThrowerCurried = <T>(
     tmplStrCallback: ErrorMessageCtxToString,
-    typeChecker: TypeCheckerPred<TypeRef, any> = isOfType
+    typeChecker: TypeCheckerPred<TypeRef, T> = isOfType
   ): ErrorIfNotTypesThrowerCurried<T> => {
     const method = getErrorIfNotTypesThrower(tmplStrCallback, typeChecker) as ErrorIfNotTypesThrower<T>;
     return (valueTypes: TypeRef[]) =>
@@ -159,14 +159,18 @@ export const
    * is not of given `type`.  This is the un-curried version.  For the curried version
    * see `module:errorThrowing.errorIfNotType`.
    */
-  errorIfNotType = getErrorIfNotTypeThrower(defaultErrorMessageCall) as ErrorIfNotTypeThrower<any>,
+  errorIfNotType = getErrorIfNotTypeThrower(defaultErrorMessageCall) as <T>(
+    ...args: Parameters<ErrorIfNotTypeThrower<T>>
+  ) => T,
 
   /**
    * Checks that passed in `value` is of one of the given `types`.  Throws an error if value
    *  is not of one of the given `types`.  This is the un-curried version.  For the curried version
    * see `module:errorThrowing.errorIfNotTypes`.
    */
-  errorIfNotTypes = getErrorIfNotTypesThrower(defaultErrorMessageCall) as ErrorIfNotTypesThrower<any>,
+  errorIfNotTypes = getErrorIfNotTypesThrower(defaultErrorMessageCall) as <T>(
+    ...args: Parameters<ErrorIfNotTypesThrower<T>>
+  ) => T,
 
   /**
    * Returns a function that can be used to ensure that values are of a given type.
@@ -193,7 +197,7 @@ export const
   $errorIfNotType = <T>(type: TypeRef) =>
     (contextName: string) =>
       (valueName: string) =>
-        (value: T, messageSuffix?: any) =>
+        (value: T, messageSuffix?: string) =>
           errorIfNotType(type, contextName, valueName, value, messageSuffix),
 
   /**
@@ -203,6 +207,6 @@ export const
   $errorIfNotTypes = <T>(types: TypeRef[]) =>
     (contextName: string) =>
       (valueName: string) =>
-        (value: T, messageSuffix?: any) =>
+        (value: T, messageSuffix?: string) =>
           errorIfNotTypes(types, contextName, valueName, value, messageSuffix)
 ;

@@ -4,14 +4,14 @@
 
 import {typeOf} from './typeOf';
 import {instanceOf, keys} from '../_platform/object';
-import {Constructable, TypeConstructor, TypeRef} from "../types";
+import {ConstructableType, TypeRef} from "../types";
 
 export * from './isset';
 
 // Used for 'isConstructablePrimitive', checks, etc.
 const _primitive_constructors = Object.freeze([
     String, Number, BigInt, Boolean, Symbol
-  ]) as readonly Constructable[],
+  ]) as readonly ConstructableType[],
   _classPrefixRegex = /^\s{0,3}class\s{1,3}/,
 
   /**
@@ -41,7 +41,7 @@ export const
   /**
    * Returns bool indicating whether a value is a generator function or not.
    */
-  isGeneratorFunction = (x: any) => instanceOf(x, GeneratorFunction as unknown as TypeConstructor),
+  isGeneratorFunction = (x: any) => instanceOf(x, GeneratorFunction as unknown as ConstructableType),
 
   /**
    * Special case of `instanceOf` where the method checks if given value contains a constructor equal
@@ -65,7 +65,7 @@ export const
    * instanceOfSome({}, Object) === true             // ...
    * ```
    */
-  instanceOfSome = (x: any, ...types: Constructable[]): boolean =>
+  instanceOfSome = (x: any, ...types: ConstructableType[]): boolean =>
     types.some(t => instanceOf(x, t)),
 
   /**
@@ -286,6 +286,6 @@ export const
    * class Abc extends String {}
    * isOfType(String, new Abc('abcd')) // true (passes instanceof check)
    */
-  isOfType = (type: TypeConstructor, x: any) => isType(type, x) || instanceOf(x, type)
+  isOfType = (type: ConstructableType, x: any) => isType(type, x) || instanceOf(x, type)
 
 ;
