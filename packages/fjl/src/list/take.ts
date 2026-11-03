@@ -1,7 +1,7 @@
 /**
  * Returns the first `n` items from an iterable (e.g., string, array, generator, etc.).
  */
-export const take = <T>(n: number, xs: Iterable<any>): T[] => {
+export const take = <T>(n: number, xs: Iterable<T>): T[] => {
     const out = [] as T[];
     for (const x of xs) {
       if (n-- === 0) break;

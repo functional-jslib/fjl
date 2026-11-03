@@ -7,6 +7,6 @@ export const
   /**
    * Returns length of all passed in lists in list.
    */
-  lengths = (...lists: NumberIndexable[]): number[] => map(length, lists)
+  lengths = (...lists: NumberIndexable<unknown>[]): number[] => map(length, lists)
 
 ;

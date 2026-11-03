@@ -5,9 +5,9 @@ export const
   /**
    * Finds indices by predicate.
    */
-  findIndices = (
-    pred: TernaryPred,
-    xs: NumberIndexable
+  findIndices = <T = any>(
+    pred: TernaryPred<T, number, NumberIndexable<T>>,
+    xs: NumberIndexable<T>
   ): number[] | undefined => {
     const limit = xs.length;
     const out = [];
@@ -19,8 +19,8 @@ export const
   /**
    * Curried version of `findIndices`.
    */
-  $findIndices = (pred: TernaryPred) =>
-    (xs: NumberIndexable): number[] | undefined =>
+  $findIndices = <T = any>(pred: TernaryPred<T, number, NumberIndexable<T>>) =>
+    (xs: NumberIndexable<T>): number[] | undefined =>
       findIndices(pred, xs)
 
 ;

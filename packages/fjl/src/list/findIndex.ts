@@ -7,9 +7,9 @@ export const
    *
    * @todo Should support any indexable/Iterable/IterableIterator types
    */
-  findIndex = (
-    pred: TernaryPred,
-    xs: NumberIndexable
+  findIndex = <T = any>(
+    pred: TernaryPred<T, number, NumberIndexable<T>>,
+    xs: NumberIndexable<T>
   ): number => {
     const limit = xs.length;
     for (let ind = 0; ind < limit; ind += 1)
@@ -20,8 +20,8 @@ export const
   /**
    * Curried version of `findIndex`.
    */
-  $findIndex = (pred: TernaryPred) =>
-    (xs: NumberIndexable): number =>
+  $findIndex = <T = any>(pred: TernaryPred<T, number, NumberIndexable<T>>) =>
+    (xs: NumberIndexable<T>): number =>
       findIndex(pred, xs)
 
 ;

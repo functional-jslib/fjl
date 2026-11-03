@@ -8,12 +8,12 @@ export const
    *  Essentially `[filter(p, xs), filter(negateF3(p), xs)]`.
    */
   partition = <T>(
-    pred: TernaryPred,
+    pred: TernaryPred<T, number, T[]>,
     list: T[]
   ): [T[], T[]] => {
     const listLen = list.length,
-      front = [],
-      back = [];
+      front: T[] = [],
+      back: T[] = [];
     for (let i = 0; i < listLen; i += 1) {
       const current = list[i];
       if (pred(current as T, i, list)) {
@@ -25,5 +25,5 @@ export const
     return [front, back];
   },
 
-  $partition = <T>(pred: TernaryPred) =>
+  $partition = <T>(pred: TernaryPred<T, number, T[]>) =>
     (list: T[]): [T[], T[]] => partition(pred, list);

@@ -1,13 +1,14 @@
 import {findIndices} from "./findIndices";
 import {$equal} from "../boolean/equal";
+import {NumberIndexable} from "../types";
 
 /**
  * Returns found "value" indices.
  */
-export const elemIndices = (value, xs): number[] =>
+export const elemIndices = <T>(value: T, xs: NumberIndexable<T>): number[] =>
     findIndices($equal(value), xs),
 
-  $elemIndices = value =>
-    (xs): number[] =>
+  $elemIndices = <T>(value: T) =>
+    (xs: NumberIndexable<T>): number[] =>
       elemIndices(value, xs)
 ;

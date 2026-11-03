@@ -5,12 +5,12 @@ export const
   /**
    * Reduces a "number indexable" object (array, object, etc.) until predicate returns `true`.
    */
-  reduceUntilRight = (
-    pred: TernaryPred,
-    op: Quaternary,
-    agg: any,
-    xs: NumberIndexable
-  ) => {
+  reduceUntilRight = <T = any, A = any>(
+    pred: TernaryPred<T, number, NumberIndexable<T>>,
+    op: Quaternary<A, T, number, NumberIndexable<T>, A>,
+    agg: A,
+    xs: NumberIndexable<T>
+  ): A => {
     const limit = xs.length;
     let result = agg;
     for (let ind = limit - 1; ind >= 0; ind--) {
@@ -23,9 +23,9 @@ export const
   /**
    * Curried version of `$reduceUntilRight`.
    */
-  $reduceUntilRight = (pred: TernaryPred) =>
-    (op: Quaternary) =>
-      (agg: any) =>
-        (xs: NumberIndexable): ReturnType<typeof op> =>
+  $reduceUntilRight = <T = any>(pred: TernaryPred<T, number, NumberIndexable<T>>) =>
+    <A = any>(op: Quaternary<A, T, number, NumberIndexable<T>, A>) =>
+      (agg: A) =>
+        (xs: NumberIndexable<T>): A =>
       reduceUntilRight(pred, op, agg, xs)
 ;

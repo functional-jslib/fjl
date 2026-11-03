@@ -5,6 +5,6 @@ export const
   /**
    * Returns everything except last item of slice as new slice.
    */
-  init = xs => xs.slice(0, lastIndex(xs))
+  init = <TS extends string | any[]>(xs: TS): TS => xs.slice(0, lastIndex(xs)) as TS
 
 ;

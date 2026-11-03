@@ -10,7 +10,7 @@ export const
    */
   intercalate = <T>(xs: string | T[], xss: (string | T[])[]): string | T[] => {
     const rslt = intersperse(xs, xss);
-    return !rslt.length ? rslt : concat(rslt);
+    return !rslt.length ? [] : concat(rslt);
   },
 
   $intercalate = <T>(xs: string | T[]) =>

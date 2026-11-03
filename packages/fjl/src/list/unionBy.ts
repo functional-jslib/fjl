@@ -18,8 +18,8 @@ export const unionBy = <T = any>(
    * Curried version of `unionBy`.
    */
   $unionBy = <T = any>(pred: BinaryPred<T[], T>) =>
-    xs1 =>
-      xs2 => unionBy(pred, xs1, xs2);
+    (xs1: T[]) =>
+      (xs2: T[]): T[] => unionBy(pred, xs1, xs2);
 
 /**
  * `unionBy` method type.

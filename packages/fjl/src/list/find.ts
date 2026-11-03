@@ -5,10 +5,10 @@ export const
   /**
    * Finds an item by predicate or returns `undefined`.
    */
-  find = (
-    pred: TernaryPred,
-    xs: NumberIndexable
-  ): undefined | any => {
+  find = <T = any>(
+    pred: TernaryPred<T, number, NumberIndexable<T>>,
+    xs: NumberIndexable<T>
+  ): T | undefined => {
     const limit = xs.length;
     if (!limit) return;
     for (let ind = 0; ind < limit; ind++) {
@@ -21,8 +21,8 @@ export const
   /**
    * Curried version of `find`.
    */
-  $find = (pred: TernaryPred) =>
-    (xs: NumberIndexable): undefined | any =>
+  $find = <T = any>(pred: TernaryPred<T, number, NumberIndexable<T>>) =>
+    (xs: NumberIndexable<T>): T | undefined =>
       find(pred, xs)
 
 ;

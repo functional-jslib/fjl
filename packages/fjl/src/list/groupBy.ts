@@ -56,7 +56,7 @@ export const
    * Curried version of `$groupBy`.
    */
   $groupBy = <X = any, XS extends string | X[] = X[]>(
-    equalityOp: BinaryPred
+    equalityOp: BinaryPred<X, X>
   ) =>
     (xs: XS): XS[] =>
       groupBy(equalityOp, xs)

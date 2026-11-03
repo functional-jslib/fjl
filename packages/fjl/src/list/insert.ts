@@ -8,7 +8,7 @@ import {splitAt} from "./splitAt";
  * result will also be sorted. It is a special case of insertBy, which allows
  * the programmer to supply their own comparison function.
  */
-export const insert = <T = any, TS extends T[] = T[]>(x: T, xs: TS): any[] => {
+export const insert = <T = any>(x: T, xs: T[]): T[] => {
     const {length} = xs;
     if (!length || length <= 1) return xs.concat([x]);
     const foundIndex = findIndex(item => x <= item, xs);
@@ -17,7 +17,7 @@ export const insert = <T = any, TS extends T[] = T[]>(x: T, xs: TS): any[] => {
     return a.concat([x], b);
   },
 
-  $insert = <T, TS extends T[] = T[]>(x: T) =>
-    (xs: TS): any[] => insert(x, xs)
+  $insert = <T>(x: T) =>
+    (xs: T[]): T[] => insert(x, xs)
 
 ;
