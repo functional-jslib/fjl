@@ -1,4 +1,4 @@
-import {genericAscOrdering} from "./utils";
+import {genericAscOrdering, OrderingFunc} from "./utils";
 import {sliceCopy} from "./utils/sliceCopy";
 
 export const
@@ -6,8 +6,8 @@ export const
   /**
    * The sortBy function is the non-overloaded (in haskell terms) version of sort.
    */
-  sortBy = <T>(orderingFn, xs: T[]): T[] => (sliceCopy(xs) as T[])
+  sortBy = <T>(orderingFn: OrderingFunc<T>, xs: T[]): T[] => (sliceCopy(xs) as T[])
     .sort(orderingFn || genericAscOrdering),
 
-  $sortBy = <T>(orderingFn) =>
+  $sortBy = <T>(orderingFn: OrderingFunc<T>) =>
     (xs: T[]): T[] => sortBy(orderingFn, xs);

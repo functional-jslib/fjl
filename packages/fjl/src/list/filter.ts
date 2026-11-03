@@ -23,7 +23,7 @@ export const
   /**
    * Curried version of `filter`.
    */
-  $filter = (pred: TernaryPred) =>
-    xs => filter(pred, xs)
+  $filter = <T>(pred: TernaryPred<T, number, T[]>) =>
+    (xs: T[]): T[] => filter(pred, xs)
 
 ;

@@ -17,7 +17,7 @@ export const
         agg[key] = obj2[key];
       }
       return agg;
-    }, {}, keys(obj1)),
+    }, {} as { [index in keyof T] }, keys(obj1)),
 
   $objIntersect = <T extends object, T2 extends object>(obj1: T) =>
     (obj2: T2): { [index in keyof T] } => objIntersect(obj1, obj2),

@@ -8,10 +8,10 @@ export const
    */
   inits = <TS extends string | any[]>(xs: TS): TS[] => {
     const limit = xs?.length,
-      agg = [];
+      agg: TS[] = [];
     if (!limit) return agg;
     for (let ind = 0; ind <= limit; ind += 1) {
-      agg.push(xs.slice(0, ind));
+      agg.push(xs.slice(0, ind) as TS);
     }
     return agg;
   };

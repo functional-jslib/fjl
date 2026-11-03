@@ -18,7 +18,7 @@ export const all = <T = any>(
 /**
  * Curried version of `all`.
  */
-export const $all = (p: TernaryPred) =>
-  (xs: NumberIndexable): boolean => all(p, xs)
+export const $all = <T = any>(p: TernaryPred<T, number, NumberIndexable<T>>) =>
+  (xs: NumberIndexable<T>): boolean => all(p, xs)
 
 ;

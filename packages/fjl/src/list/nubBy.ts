@@ -16,7 +16,7 @@ export const
     let ind = 0,
       currItem: T;
 
-    const out: any[] = [],
+    const out: T[] = [],
       anyOp = (storedItem: T): boolean => pred(currItem, storedItem);
 
     for (; ind < len; ind += 1) {

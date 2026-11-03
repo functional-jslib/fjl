@@ -11,9 +11,9 @@ export const
     if (!limit) {
       return [xs.slice(0, 0) as TS];
     }
-    const agg = [];
+    const agg: TS[] = [];
     for (let ind = 0; ind <= limit; ind += 1) {
-      agg.push(xs.slice(ind, limit));
+      agg.push(xs.slice(ind, limit) as TS);
     }
     return agg;
   };

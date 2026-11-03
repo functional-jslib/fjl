@@ -23,7 +23,7 @@ export const
     pred: TernaryPred<T, number, TS>,
     xs: TS
   ): [typeof xs, typeof xs] => {
-    const splitPoint = findIndex(negateF3(pred), xs);
+    const splitPoint = findIndex(negateF3(pred) as TernaryPred, xs);
     return splitPoint === -1 ?
       [xs.slice(0, 0) as TS, xs.slice(0) as TS] :
       reverse(splitAt(splitPoint, xs));

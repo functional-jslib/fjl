@@ -12,7 +12,7 @@ export const
     xs: TS
   ): typeof xs => {
     const splitPoint: number =
-      findLastIndex(negateF3(pred), xs);
+      findLastIndex(negateF3(pred) as TernaryPred, xs);
     if (splitPoint === -1) {
       return xs.constructor() as TS;
     }

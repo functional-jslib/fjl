@@ -23,7 +23,7 @@ export const
    * ) // true
    * ```
    */
-  sortOn = <T = any>(valueFn: Unary<T>, xs: T[]): T[] =>
+  sortOn = <T = any, K = any>(valueFn: Unary<T, K>, xs: T[]): T[] =>
 
     // Un-decorate
     map(decorated => decorated[1],
@@ -34,13 +34,13 @@ export const
         ([a0], [b0]) => genericAscOrdering(a0, b0),
 
         // Decorate
-        map((item: T) => [valueFn(item), item], xs)
+        map((item: T) => [valueFn(item), item] as [K, T], xs)
       )
     );
 
 export type SortOn = typeof sortOn;
 export type SortOnParams = Parameters<SortOn>;
 
-export const $sortOn = <T = any>(valueFn: Unary<T>) =>
+export const $sortOn = <T = any, K = any>(valueFn: Unary<T, K>) =>
   (xs: T[]): T[] =>
     sortOn(valueFn, xs);

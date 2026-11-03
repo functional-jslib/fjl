@@ -6,9 +6,9 @@ export const
    *
    * @todo Slicing here should be inclusive (on the left).
    */
-  splitAt = (ind: number, sliceable): [typeof sliceable, typeof sliceable] =>
-    [sliceable.slice(0, ind), sliceable.slice(ind)],
+  splitAt = <TS extends string | any[]>(ind: number, sliceable: TS): [TS, TS] =>
+    [sliceable.slice(0, ind) as TS, sliceable.slice(ind) as TS],
 
   $splitAt = (ind: number) =>
-    (sliceable): [typeof sliceable, typeof sliceable] =>
+    <TS extends string | any[]>(sliceable: TS): [TS, TS] =>
       splitAt(ind, sliceable);

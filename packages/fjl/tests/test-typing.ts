@@ -2,7 +2,9 @@
  * Compile-time checks for exported signatures - `ts-jest` reports type errors as test failures,
  * so each assignment and `@ts-expect-error` below is the assertion;  Pins the #32 typing rule.
  */
-import {append, errorIfNotType, includes} from '../src';
+import {
+  append, errorIfNotType, find, foldl, head, includes, map, sortBy, tail, take, uncons
+} from '../src';
 import {instanceOf} from '../src/_platform/object';
 
 describe('exported signatures', () => {
@@ -31,5 +33,37 @@ describe('exported signatures', () => {
     expect(instanceOf([], Array)).toEqual(true);
     // @ts-expect-error - Not `new`-able.
     expect(() => instanceOf([], 'Array')).toThrow(TypeError);
+  });
+
+  test('`foldl` returns the type of the accumulator', () => {
+    const sum: number = foldl((agg: number, x: number) => agg + x, 0, [1, 2]);
+    // @ts-expect-error - Accumulator is a `number`.
+    const notSum: string = foldl((agg: number, x: number) => agg + x, 0, [1, 2]);
+    expect([sum, notSum]).toEqual([3, 3]);
+  });
+
+  test('`find` and `head` return the element type', () => {
+    const found: number = find(x => x > 1, [1, 2]),
+      first: number = head([1, 2]);
+    // @ts-expect-error - Elements are numbers.
+    const notFound: string = find(x => x > 1, [1, 2]);
+    expect([found, first, notFound]).toEqual([2, 1, 2]);
+  });
+
+  test('`map` returns the mapped type', () => {
+    const strs: string[] = map(x => `${x}`, [1, 2]);
+    // @ts-expect-error - Mapped values are strings.
+    const notStrs: number[] = map(x => `${x}`, [1, 2]);
+    expect([strs, notStrs]).toEqual([['1', '2'], ['1', '2']]);
+  });
+
+  test('`take`, `tail`, `uncons`, and `sortBy` keep the list type', () => {
+    const taken: number[] = take(1, [1, 2]),
+      rest: number[] = tail([1, 2]),
+      [h, t] = uncons([1, 2]) as [number, number[]],
+      sorted: number[] = sortBy((a, b) => a - b, [2, 1]);
+    // @ts-expect-error - Elements are numbers.
+    const notTaken: string[] = take(1, [1, 2]);
+    expect([taken, rest, h, t, sorted, notTaken]).toEqual([[1], [2], 1, [2], [1, 2], [1]]);
   });
 });

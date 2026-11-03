@@ -1,8 +1,10 @@
+import {NumberIndexable} from "../types";
+
 export const
 
   /**
    * Returns head of list (first item of list).
    */
-  head = xs => xs[0]
+  head = <T>(xs: NumberIndexable<T>): T => xs[0]
 
 ;

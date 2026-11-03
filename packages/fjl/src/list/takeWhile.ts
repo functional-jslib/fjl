@@ -5,9 +5,9 @@ export const
   /**
    * Returns items upto point where predicate doesn't hold.
    */
-  takeWhile = <T>(pred: TernaryPred, xs: Iterable<T>): T[] => {
+  takeWhile = <T>(pred: TernaryPred<T, number, Iterable<T>>, xs: Iterable<T>): T[] => {
     let i = 0;
-    const out = [];
+    const out: T[] = [];
     for (const x of xs) {
       if (!pred(x, i, xs)) break;
       out.push(x);
@@ -16,7 +16,7 @@ export const
     return out;
   },
 
-  $takeWhile = <T>(pred: TernaryPred) =>
+  $takeWhile = <T>(pred: TernaryPred<T, number, Iterable<T>>) =>
     (xs: Iterable<T>): T[] => takeWhile(pred, xs)
 
 ;

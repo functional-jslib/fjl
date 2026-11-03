@@ -6,4 +6,4 @@
  * @returns {Array}
  */
 
-export const tail = xs => xs.slice(1);
+export const tail = <TS extends string | any[]>(xs: TS): TS => xs.slice(1) as TS;
