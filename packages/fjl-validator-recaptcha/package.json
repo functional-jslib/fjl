@@ -6,7 +6,7 @@
   "module": "dist/esm/index.mjs",
   "typings": "dist/esm/index.d.ts",
   "peerDependencies": {
-    "fjl": "^2.0.0-alhpa",
+    "fjl": "^2.0.0-alpha",
     "fjl-validator": "^0.8.0"
   },
   "devDependencies": {
@@ -42,6 +42,6 @@
   },
   "homepage": "https://github.com/functional-jslib/fjl#readme",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   }
 }
