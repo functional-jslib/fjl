@@ -291,6 +291,7 @@ const
     $removeBy: {cases: [{args: fixed(eq, 3, nums)}]},
     $removeFirstsBy: {cases: [{args: fixed(eq, nums, [2, 4])}]},
     $replicate: {cases: [{args: fixed(3, 'a')}]},
+    $replicateIter: {cases: [{args: fixed(3, 'a'), finalize: takeFromGen(3)}]},
     $scanl: {cases: [{args: fixed(add, 0, nums)}]},
     $scanl1: {cases: [{args: fixed(add, nums)}]},
     $scanr: {cases: [{args: fixed(add, 0, nums)}]},
@@ -310,6 +311,13 @@ const
     $unfoldr: {
       cases: [{
         args: fixed((b: number) => b < 5 ? [b, b + 1] : undefined, 0)
+      }]
+    },
+
+    $unfoldrIter: {
+      cases: [{
+        args: fixed((b: number) => b < 5 ? [b, b + 1] : undefined, 0),
+        finalize: takeFromGen(3)
       }]
     },
 
