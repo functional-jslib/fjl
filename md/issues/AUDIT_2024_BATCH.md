@@ -1,9 +1,20 @@
 # Audit of the 2024 "done" batch
 
-> **Status: findings only — nothing has been actioned.** No GitHub issue was
-> reopened, closed, commented on, or relabeled, and no source file was changed.
-> Every recommended mutation is listed, with its exact `gh` command, in
-> [Recommended actions](#recommended-actions).
+> **Status: applied — 2026-11-03.** The
+> [Recommended actions](#recommended-actions) were re-checked against `main` and
+> carried out, with these differences:
+>
+> - **#77** was reopened into `Backlog (post-2.0)` rather than v2.0.
+> - **#43**'s comment was rewritten. `Slice` was removed by PR #134, which also
+>   closed #114, so the closure was premature but the work is now done.
+> - **#121**'s comment (action 7) was skipped. PR #130 closed #121 and kept
+>   `replicate` eager on purpose, adding `replicateIter` alongside it; see
+>   [`GENERATOR_AUDIT.md`](./GENERATOR_AUDIT.md).
+> - **#135** (action 9) and **#136** (action 10) are the new issues.
+> - **#57** was also updated for the work closed since this audit.
+>
+> Everything below, including the commands, is the record as verified at
+> `61a9632d`, and some of it has since gone stale. No source file was changed.
 
 This resolves the verification half of #125. Two issues closed in the Feb–May
 2024 push were already known to be materially undone (#75, #77), and the premise
