@@ -196,7 +196,7 @@ fetch('/validate-recaptcha', {
 
 ## Pre-Requisites/Caveats
 
-- node v16+
+- node v20+
 
 ## Docs
 **JSDocs format:**  

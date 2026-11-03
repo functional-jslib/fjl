@@ -64,7 +64,7 @@
     "./packages/fjl-inputfilter"
   ],
   "engines": {
-    "node": ">=16",
+    "node": ">=20",
     "npm": ">=8",
     "pnpm": ">=8"
   },
