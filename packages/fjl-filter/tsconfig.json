@@ -6,7 +6,9 @@
   "exclude": [
     "dist/",
     "node_modules/",
-    "src/**/*_test.ts"
+    "src/**/*_test.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts"
   ],
   "include": [
     "src/**/*.ts"
