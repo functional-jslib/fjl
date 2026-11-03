@@ -5,8 +5,8 @@ describe('#isSubsequenceOf', () => {
   const firstSixOfAlphabet = alphabetString.slice(0, 6);
   (<[Parameters<typeof isSubsequenceOf>, boolean][]>[
     [['abc', firstSixOfAlphabet], true],
-    [['bad', firstSixOfAlphabet], true],
-    [['cab', firstSixOfAlphabet], true],
+    [['bad', firstSixOfAlphabet], false],
+    [['cab', firstSixOfAlphabet], false],
     [['ace', firstSixOfAlphabet], true],
     [['ace'.split(''), firstSixOfAlphabet.split('')], true],
     [['xyz'.split(''), firstSixOfAlphabet.split('')], false],

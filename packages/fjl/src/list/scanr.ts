@@ -8,13 +8,14 @@ export const
    * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
    */
   scanr = <A, B>(fn: ScanrOp<A, B>, zero: B, xs: A[]): B[] => {
-    const limit = xs.length;
+    const limit = xs.length,
+      out = new Array(limit + 1) as B[];
     let ind = limit - 1,
       result = zero;
-    const out = [] as B[];
+    out[limit] = zero;
     while (ind > -1) {
       result = fn(xs[ind] as A, result, ind, xs);
-      out.push(result);
+      out[ind] = result;
       ind--;
     }
     return out;

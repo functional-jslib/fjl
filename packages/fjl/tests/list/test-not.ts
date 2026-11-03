@@ -8,7 +8,7 @@ describe('#not', () => {
         [[true, false, true], false],
         [[true, false, false], false],
         [[false, false, false], true],
-        [[], false],
+        [[], true],
     ])
         .forEach(([xs, expected]) => {
             it(`not(${JSON.stringify(xs)}) === ${expected}`, () => {

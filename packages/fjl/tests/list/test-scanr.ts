@@ -29,7 +29,11 @@ describe('#scanr', () => {
       .toEqual(true);
   });
 
-  it('should return an empty list when receiving an empty one', () => {
-    expectEqual(scanr(x => x * 2, 99, []), []);
+  it('should start with the `foldr` result, and end with the seed value', () => {
+    expectEqual(scanr((a: number, b: number) => a + b, 0, [1, 2]), [3, 2, 0]);
+  });
+
+  it('should return only the seed value when receiving an empty list', () => {
+    expectEqual(scanr(x => x * 2, 99, []), [99]);
   });
 });

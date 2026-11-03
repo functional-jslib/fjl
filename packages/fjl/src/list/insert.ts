@@ -9,8 +9,6 @@ import {splitAt} from "./splitAt";
  * the programmer to supply their own comparison function.
  */
 export const insert = <T = any>(x: T, xs: T[]): T[] => {
-    const {length} = xs;
-    if (!length || length <= 1) return xs.concat([x]);
     const foundIndex = findIndex(item => x <= item, xs);
     if (foundIndex === -1) return xs.concat([x]);
     const [a, b] = splitAt(foundIndex, xs)

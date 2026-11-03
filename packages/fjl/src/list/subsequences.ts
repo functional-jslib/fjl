@@ -13,9 +13,8 @@ export const
   subsequences = <TS extends string | any[]>(xs: TS): TS[] => {
     const listLen = xs.length,
       len = Math.pow(2, listLen),
-      // `push` and `append` have different signatures (item vs. "sliceable"), so widen to the
-      // call shape used below.
-      appender = (listLen && Array.isArray(xs) ? push : append) as
+      // Appends to end of entry, for both arrays and strings, so items stay in sequence order.
+      appender = (Array.isArray(xs) ? push : (x: string, str: string) => append(str, x)) as
         (x: TS[number], xs: TS) => TS,
       out: TS[] = [];
 

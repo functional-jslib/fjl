@@ -11,8 +11,6 @@ export const
       lenOfTrimmed = trimmedLists.length;
     if (!lenOfTrimmed) {
       return [];
-    } else if (lenOfTrimmed === 1) {
-      return [trimmedLists[0]];
     }
     return map((_item, ind) =>
         op(...map(xs => xs[ind], trimmedLists)),

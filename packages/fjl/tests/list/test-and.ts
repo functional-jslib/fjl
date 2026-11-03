@@ -2,7 +2,7 @@ import {and} from "../../src/list";
 
 describe('#and', () => {
   (<[boolean[], boolean][]>[
-    [[], false],
+    [[], true],
     [[true, true], true],
     [[true, false], false],
     [[false, true], false],

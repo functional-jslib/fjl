@@ -18,7 +18,7 @@ const _primitive_constructors = Object.freeze([
    * Generator function constructor.
    * @ref https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction
    */
-  GeneratorFunction = () => function* () { yield void 0; }.constructor
+  GeneratorFunction = (function* () { yield void 0; }).constructor
 ;
 
 export const
@@ -146,7 +146,7 @@ export const
     if (isNullish(x)) return true;
     const {constructor: xConstructor} = x;
     return _primitive_constructors
-      .some(type => type.constructor === xConstructor || x instanceof type);
+      .some(type => type === xConstructor || x instanceof type);
   },
 
   /**
@@ -159,7 +159,6 @@ export const
   /**
    * Safe (doesn't error out on nullish value)  check for enumerable properties on given value.
    *
-   * @todo write tests.
    */
   containsEnumerables = (x: any): boolean => keys(x).length > 0,
 
@@ -199,7 +198,6 @@ export const
    *
    * Resolves/normalizes a type name from either a string or a constructor.
    *
-   * @todo write tests for this function.
    */
   toTypeRef = (type: TypeRef): TypeRef => {
     const typeOfType = typeOf(type);
@@ -219,7 +217,6 @@ export const
    * Returns an array of type refs from possible type refs (converts null, undefined, NaN, and other values into
    * type refs (either constructor name or constructor name based on whether value(s) is a string, a constructor, or not).
    *
-   * @todo Ensure tests are written for this function.
    */
   toTypeRefs = (...types: any[]): TypeRef[] => types.map(toTypeRef),
 
@@ -228,7 +225,6 @@ export const
    *
    * Returns possible Type's TypeRef name.
    *
-   * @todo Ensure tests are written for this function.
    */
   toTypeRefName = (type: any): TypeRef => {
     const ref = toTypeRef(type);
@@ -240,7 +236,6 @@ export const
    *
    * Returns possible Types' TypeRef names.
    *
-   * @todo Ensure tests are written for this function.
    */
   toTypeRefNames = (...types: any): string[] => types.map(toTypeRefName),
 

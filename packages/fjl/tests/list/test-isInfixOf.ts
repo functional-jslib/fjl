@@ -4,8 +4,8 @@ import {NumberIndexable} from "../../src/types/data";
 
 describe('#isInfixOf', () => {
   (<[NumberIndexable, NumberIndexable, boolean][]>[
-    ['', '', false],
-    [[], [], false],
+    ['', '', true],
+    [[], [], true],
     [vowelsString, vowelsString, true],
     [vowelsArray, vowelsArray, true],
     ['abc', alphabetString, true],

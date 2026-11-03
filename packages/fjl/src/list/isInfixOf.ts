@@ -9,7 +9,8 @@ export const
     const limit1 = xs1.length,
       limit2 = xs2.length;
 
-    if (limit2 < limit1 || !limit1 || !limit2) return false;
+    if (limit2 < limit1) return false;
+    if (!limit1) return true;
 
     let ind1,
       foundLen;

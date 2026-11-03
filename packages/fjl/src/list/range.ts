@@ -9,8 +9,6 @@ export const
   /**
    * Returns an array of numbers defined by the given range (inclusive).
    *
-   * @todo Rename to `rangeArray`.
-   * @todo Move (all methods here) to '../number' module.
    */
   range = (from: number, to: number, step = 1): number[] => {
     let i = from;
@@ -28,7 +26,6 @@ export const
   /**
    * Range iterator generator.
    *
-   * @todo Rename to `range`.
    */
   rangeIter = function* (from: number, to: number, step = 1) {
     let i = from;

@@ -19,10 +19,10 @@ describe(`#findIndices`, () => {
 
     // console.log(evenCodes, oddCodes);
 
-    (<[TernaryPred, NumberIndexable, number[] | undefined][]>[
-        [oddPred, evenCodes, undefined],
+    (<[TernaryPred, NumberIndexable, number[]][]>[
+        [oddPred, evenCodes, []],
         [oddPred, alphabetCharCodeRange, oddIndices],
-        [evenPred, oddCodes, undefined],
+        [evenPred, oddCodes, []],
         [evenPred, alphabetCharCodeRange, evenIndices],
     ])
         .forEach(([pred, xs, expected]) => {
