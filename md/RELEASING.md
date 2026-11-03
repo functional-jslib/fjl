@@ -103,11 +103,14 @@ To publish `fjl`:
 
 1. Bump and push as in the TL;DR.
 2. Create a GitHub Release pointing at the new tag.
-3. `publish.yml` installs, builds, and runs `npm publish` from `packages/fjl`.
+3. `publish.yml` installs, builds, tests, and runs `npm publish` from
+   `packages/fjl`. Prerelease versions (`2.0.0-alpha.6`) are published under the
+   `next` dist-tag, since npm 11 refuses a prerelease with no `--tag`. All other
+   versions go to `latest`.
 
-`fjl-validator` and `fjl-inputfilter` are not covered by that workflow yet - it
-only publishes `packages/fjl`. Until it is extended, publish them by hand once
-the version commit is pushed:
+The workflow only runs for `fjl@*` tags, so a Release for a sibling package's tag
+does nothing. `fjl-validator` and `fjl-inputfilter` are not covered by it yet.
+Until it is extended, publish them by hand once the version commit is pushed:
 
 ```shell
 pnpm -w run build
