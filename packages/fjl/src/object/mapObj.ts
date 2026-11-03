@@ -1,4 +1,4 @@
-import {reduce} from "../list/utils";
+import {reduce} from "../list/foldl";
 import {Ternary} from "../types";
 import {of} from "./of";
 

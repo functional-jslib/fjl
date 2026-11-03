@@ -1,4 +1,4 @@
-import {findIndexWhereRight} from "../../src/list/utils";
+import {findLastIndex} from "../../src/list/findLastIndex";
 import {NumberIndexable, TernaryPred} from "../../src/types";
 import {
   alphabetArray,
@@ -6,7 +6,7 @@ import {
   vowelsString
 } from "../helpers";
 
-describe(`#findIndexWhereRight`, () => {
+describe(`#findLastIndex`, () => {
     const getPredForEqualTo = <T>(a: T): TernaryPred<T, number> => (b: T): boolean => a === b;
 
     (<[TernaryPred, NumberIndexable, number][]>[]
@@ -33,9 +33,14 @@ describe(`#findIndexWhereRight`, () => {
             })
         ))
         .forEach(([pred, xs, expectedIndex]) => {
-            it(`findIndexWhereRight(${pred.toString()}, ${JSON.stringify(xs)}) === ${JSON.stringify(expectedIndex)}`, () => {
-                const result = findIndexWhereRight(pred, xs);
+            it(`findLastIndex(${pred.toString()}, ${JSON.stringify(xs)}) === ${JSON.stringify(expectedIndex)}`, () => {
+                const result = findLastIndex(pred, xs);
                 expect(result).toEqual(expectedIndex);
             });
         });
+
+    it('should return the last match when more than one element matches', () => {
+        expect(findLastIndex((x: string) => x === 'a', ['a', 'b', 'a', 'c'])).toEqual(2);
+        expect(findLastIndex((x: string) => x === 'a', 'abac')).toEqual(2);
+    });
 });

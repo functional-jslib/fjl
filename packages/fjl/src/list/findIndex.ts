@@ -1,15 +1,27 @@
-import {$findIndexWhere, findIndexWhere} from "./utils";
+import {NumberIndexable, TernaryPred} from "../types";
 
 export const
 
   /**
-   * Curried version of `findIndex`.
+   * Finds index in "number indexable" (string|array|etc.) that matches given predicate or -1.
+   *
+   * @todo Should support any indexable/Iterable/IterableIterator types
    */
-  $findIndex = $findIndexWhere,
+  findIndex = (
+    pred: TernaryPred,
+    xs: NumberIndexable
+  ): number => {
+    const limit = xs.length;
+    for (let ind = 0; ind < limit; ind += 1)
+      if (pred(xs[ind], ind, xs)) return ind;
+    return -1;
+  },
 
   /**
-   * Finds index slice that matches given predicate or -1.
+   * Curried version of `findIndex`.
    */
-  findIndex = findIndexWhere
+  $findIndex = (pred: TernaryPred) =>
+    (xs: NumberIndexable): number =>
+      findIndex(pred, xs)
 
 ;

@@ -19,4 +19,36 @@ describe('#findIndex', () => {
         expect(rslt).toEqual(expected);
       });
     });
+
+  const getPredForEqualTo = <T>(a: T): TernaryPred => (b: T): boolean => a === b;
+
+  (<[Parameters<typeof findIndex>, number][]>[]
+    .concat(
+      // Falsy variations
+      alphabetArray.slice(0)
+        .filter(x => vowelsString.indexOf(x) === -1)
+        .slice(0, vowelsString.length) // take only enough for tests
+        .flatMap(x => {
+          const pred = getPredForEqualTo(x);
+          return [
+            [[pred, vowelsArray], -1],
+            [[pred, vowelsString], -1],
+          ];
+        }),
+
+      // Truthy variations
+      vowelsArray.flatMap((x, i) => {
+        const pred = getPredForEqualTo(x);
+        return [
+          [[pred, vowelsArray], i],
+          [[pred, vowelsString], i],
+        ];
+      })
+    ))
+    .forEach(([[pred, xs], expectedIndex]) => {
+      it(`findIndex(${pred.toString()}, ${JSON.stringify(xs)}) === ${JSON.stringify(expectedIndex)}`, () => {
+        const result = findIndex(pred, xs);
+        expect(result).toEqual(expectedIndex);
+      });
+    });
 });

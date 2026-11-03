@@ -229,11 +229,8 @@ const
     $filter: {cases: [{args: fixed(isEven, nums)}]},
     $find: {cases: [{args: fixed(isEven, nums)}]},
     $findIndex: {cases: [{args: fixed(isEven, nums)}]},
-    $findIndexWhere: {cases: [{args: fixed(isEven, nums)}]},
-    $findIndexWhereRight: {cases: [{args: fixed(isEven, nums)}]},
     $findIndices: {cases: [{args: fixed(isEven, nums)}]},
-    $findIndicesWhere: {cases: [{args: fixed(isEven, nums)}]},
-    $findWhere: {cases: [{args: fixed(isEven, nums)}]},
+    $findLastIndex: {cases: [{args: fixed(isEven, nums)}]},
     $foldl: {cases: [{args: fixed(add, 0, nums)}]},
     $foldl1: {cases: [{args: fixed(add, nums)}]},
     $foldr: {cases: [{args: fixed(add, 0, nums)}]},
@@ -441,7 +438,7 @@ describe('curried methods (`$`-prefixed exports)', () => {
 
     it('found the expected number of curried methods', () => {
       // Sanity check - update when curried methods are added/removed
-      expect(dollarNames.length).toBeGreaterThanOrEqual(109);
+      expect(dollarNames.length).toBeGreaterThanOrEqual(108);
     });
   });
 

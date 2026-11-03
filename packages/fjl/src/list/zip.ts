@@ -1,5 +1,6 @@
 import {length} from "./length";
-import {reduce, toShortest} from "./utils";
+import {reduce} from "./foldl";
+import {toShortest} from "./utils";
 import {push} from "./push";
 
 /**

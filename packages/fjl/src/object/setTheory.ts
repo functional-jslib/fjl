@@ -1,6 +1,6 @@
 import {$assignDeep, assignDeep} from './assignDeep';
 import {keys, hasOwnProperty} from '../_platform/object';
-import {reduce} from '../list/utils';
+import {reduce} from '../list/foldl';
 
 export const
 
