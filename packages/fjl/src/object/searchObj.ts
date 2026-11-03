@@ -1,4 +1,4 @@
-import {notNullish} from './is';
+import {isNullish} from './is';
 
 export const
 
@@ -38,11 +38,8 @@ export const
     let ind = 0,
       parent = obj;
     for (; ind < limit; ind += 1) {
-      const node = parent[parts[ind]];
-      if (notNullish(node)) {
-        return node;
-      }
-      parent = node;
+      if (isNullish(parent)) return undefined;
+      parent = parent[parts[ind]];
     }
     return parent;
   },

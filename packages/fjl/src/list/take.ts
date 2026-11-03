@@ -4,7 +4,7 @@
 export const take = <T>(n: number, xs: Iterable<T>): T[] => {
     const out = [] as T[];
     for (const x of xs) {
-      if (n-- === 0) break;
+      if (n-- <= 0) break;
       out.push(x);
     }
     return out;

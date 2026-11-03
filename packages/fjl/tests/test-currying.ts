@@ -321,6 +321,7 @@ const
     },
     $zip: {cases: [{args: fixed([1, 2], ['a', 'b'])}]},
     $zip3: {cases: [{args: fixed([1, 2], ['a', 'b'], [true, false])}]},
+    $zip4: {cases: [{args: fixed([1, 2], ['a', 'b'], [true, false], [3, 4])}]},
     $zipN: {cases: [{args: fixed([1, 2], ['a', 'b'], [true, false]), groups: [1, 2]}]},
     $zipWith: {cases: [{args: fixed(tuple2, [1, 2], ['a', 'b'])}]},
     $zipWith3: {cases: [{args: fixed(tuple3, [1, 2], ['a', 'b'], [true, false])}]},

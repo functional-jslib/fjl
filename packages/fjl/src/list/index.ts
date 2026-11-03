@@ -100,6 +100,7 @@ export * from './unzip';
 export * from './unzipN';
 export * from './zip';
 export * from './zip3';
+export * from './zip4';
 export * from './zipN';
 export * from './zipWith';
 export * from './zipWith3';

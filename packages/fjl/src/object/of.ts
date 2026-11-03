@@ -20,12 +20,12 @@ export const of = <T>(x: T, ...args: any[]): T => {
 
     const constructor = x.constructor as ConstructableType;
 
-    if (constructor['of']) {
+    if (constructor?.['of']) {
         return constructor['of'](...args) as T;
     } else if (isConstructablePrimitive(x)) { // If constructable
       // primitive, means it can also be called in cast mode:
         return (constructor as unknown as (...args:any) => T)(...args) as T;
-    } else if (x instanceof Function) {
+    } else if (constructor instanceof Function) {
         return new constructor(...args) as T;
     }
 
