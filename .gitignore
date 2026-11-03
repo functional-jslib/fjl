@@ -11,6 +11,9 @@
 **/dist
 **/docs
 
+# Generated API reference (TypeDoc) - see md/adr/0001-documentation-generation-strategy.md
+**/docs-dist
+
 # Files
 .claude/settings.local.json
 *.log

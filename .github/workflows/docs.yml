@@ -1,0 +1,70 @@
+# Builds the TypeDoc API reference and publishes it to GitHub Pages.
+#
+# Triggered on the same event `publish.yml` uses (`release: [created]`), so the
+# published docs always describe the release that just went to npm. Also
+# runnable by hand via `workflow_dispatch`.
+#
+# Rendering strategy and the reasoning behind it:
+#   md/adr/0001-documentation-generation-strategy.md
+#
+# NOTE: this deploys only once GitHub Pages' build source is set to
+# "GitHub Actions" (Settings > Pages > Build and deployment > Source).
+
+name: Docs
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+# Allow the workflow to publish to Pages via OIDC.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; let a newer release supersede an in-flight run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: CI/CD
+      HUSKY: 0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - run: pnpm i
+      # TypeDoc reads `packages/*/src`, not `dist/`, so no build step is needed.
+      # `run` is required - bare `pnpm docs` is swallowed by npm's built-in
+      # `docs` command (pnpm forwards unknown commands to npm) and is a no-op.
+      - run: pnpm run docs
+      - name: Verify docs were generated
+        run: |
+          test -f docs-dist/index.html || {
+            echo "::error::docs-dist/index.html missing - TypeDoc produced no output"
+            exit 1
+          }
+          echo "Generated $(find docs-dist -type f | wc -l) files."
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs-dist
+
+  deploy-docs:
+    needs: build-docs
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

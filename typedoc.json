@@ -1,0 +1,31 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "fjl",
+  "entryPoints": [
+    "packages/fjl/src/index.ts",
+    "packages/fjl-validator/src/index.ts",
+    "packages/fjl-inputfilter/src/index.ts",
+    "packages/fjl-validator-recaptcha/src/index.ts"
+  ],
+  "entryPointStrategy": "resolve",
+  "tsconfig": "./tsconfig.docs.json",
+  "out": "docs-dist",
+  "readme": "./README.md",
+  "includeVersion": false,
+  "githubPages": false,
+  "hideGenerator": false,
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "sort": ["alphabetical"],
+  "categorizeByGroup": true,
+  "navigationLinks": {
+    "GitHub": "https://github.com/functional-jslib/fjl",
+    "npm": "https://www.npmjs.com/package/fjl"
+  },
+  "validation": {
+    "notExported": false,
+    "invalidLink": false,
+    "notDocumented": false
+  }
+}
