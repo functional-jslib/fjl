@@ -1,5 +1,5 @@
 import {isConstructablePrimitive, isNullish} from './is';
-import {Constructable} from "../types";
+import {ConstructableType} from "../types";
 
 /**
  * Creates a value `of` given type;  Checks for one of
@@ -18,7 +18,7 @@ export const of = <T>(x: T, ...args: any[]): T => {
     if (isNullish(x))
       return undefined;
 
-    const constructor = x.constructor as Constructable;
+    const constructor = x.constructor as ConstructableType;
 
     if (constructor['of']) {
         return constructor['of'](...args) as T;

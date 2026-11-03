@@ -1,8 +1,8 @@
-import {TypeConstructor} from "../../src/types";
+import {ConstructableType} from "../../src/types";
 import {instanceOf} from "../../src/_platform/object";
 
 describe('#instanceOf', () => {
-    (<[any, TypeConstructor, boolean][]>[
+    (<[any, ConstructableType, boolean][]>[
         [() => undefined, Function, true],
         [[], Array, true],
         [{}, Object, true],

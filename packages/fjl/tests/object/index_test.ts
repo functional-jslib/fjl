@@ -64,7 +64,7 @@ import {
   vowelsString
 } from '../helpers';
 
-import {TypeRef, TypeConstructor} from '../../src/types';
+import {TypeRef, ConstructableType} from '../../src/types';
 import {noop} from "../../src";
 
 const {stringify} = JSON;
@@ -452,7 +452,7 @@ describe('#object', function () {
   });
 
   describe(`#${instanceOf.name}`, function () {
-    (<[[TypeConstructor, any], boolean][]>[
+    (<[[ConstructableType, any], boolean][]>[
       [[noop, Function], true],
       [[{}, Function], false],
     ])
@@ -1121,7 +1121,7 @@ describe('#object', function () {
   });
 
   describe('#defineEnumProps, #$defineEnumProps', function () {
-    type ArgTuple = [TypeConstructor, string]
+    type ArgTuple = [ConstructableType, string]
     const seedArgTuples = [
         [String, 'someStringProp'],
         [Number, 'someNumberProp'],

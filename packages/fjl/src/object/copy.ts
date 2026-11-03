@@ -1,7 +1,7 @@
 import {typeOf} from './typeOf';
 import {of} from './of';
 import {id} from "../function/id";
-import {Constructable} from "../types";
+import {ConstructableType} from "../types";
 
 export const
 
@@ -40,8 +40,8 @@ export const
       case Uint8ClampedArray.name:
       case Uint16Array.name:
       case Uint32Array.name:
-        return (!out ? (x.constructor as Constructable & {from: (_x: any) => T}).from(x) :
-          (out as Constructable & {from: (_x: any) => T}).from(x)) as T;
+        return (!out ? (x.constructor as ConstructableType & {from: (_x: any) => T}).from(x) :
+          (out as ConstructableType & {from: (_x: any) => T}).from(x)) as T;
 
       case Function.name:
         return Object.assign((...args: any[]) => (x as CallableFunction)(...args), x) as T;
@@ -60,14 +60,14 @@ export const
               (out as Map<any, any>).set(key, value);
             return out as T;
           }
-          return new (x.constructor as Constructable)(Array.from(x as unknown as Iterable<any>));
+          return new (x.constructor as ConstructableType)(Array.from(x as unknown as Iterable<any>));
         } else if (x instanceof Set || x instanceof WeakSet) {
           if (out) {
             for (const value of x[Symbol.iterator]())
               (out as Set<any>).add(value);
             return out as T;
           }
-          return new (x.constructor as Constructable)(Array.from(x as unknown as Iterable<any>));
+          return new (x.constructor as ConstructableType)(Array.from(x as unknown as Iterable<any>));
         }
         // Else here not expected to be reached;  Statement is here only to appease type checker.
         else {
