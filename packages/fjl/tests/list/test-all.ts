@@ -2,7 +2,7 @@ import {all} from "../../src/list";
 
 describe('#all', () => {
   (<[boolean[], boolean][]>[
-    [[], false],
+    [[], true],
     [[true, true], true],
     [[true, false], false],
     [[true, false], false],

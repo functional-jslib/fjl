@@ -7,7 +7,6 @@ export const
    */
   and = <T>(xs: NumberIndexable<T>): boolean => {
     let limit = xs.length;
-    if (!limit) return false;
     while ((--limit) >= 0) {
       if (!xs[limit]) return false;
     }

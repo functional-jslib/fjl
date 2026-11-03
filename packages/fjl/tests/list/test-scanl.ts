@@ -14,7 +14,7 @@ describe('#scanl', () => {
 
     // Expect every item in result to be a linked list with remaining items linked to said item
     expect(
-      result.every(node => {
+      result.slice(1).every(node => {
         const nodesList: LinkedListNode[] = linkedListToList(node);
         return alphabetArray.slice(alphabetArray.indexOf(node.data)).every((char, ind1) => {
           const charCodeToTest = char.charCodeAt(0);
@@ -27,7 +27,11 @@ describe('#scanl', () => {
       .toEqual(true);
   });
 
-  it('should return an empty list when receiving an empty one', () => {
-    expectEqual(scanl(x => x * 2, 99, []), []);
+  it('should start with the seed value, and end with the `foldl` result', () => {
+    expectEqual(scanl((a: number, b: number) => a + b, 0, [1, 2]), [0, 1, 3]);
+  });
+
+  it('should return only the seed value when receiving an empty list', () => {
+    expectEqual(scanl(x => x * 2, 99, []), [99]);
   });
 });

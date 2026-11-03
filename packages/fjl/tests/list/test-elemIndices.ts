@@ -10,7 +10,7 @@ describe('#elemIndices', () => {
         [
             alphabetArray.concat(alphabetArray, alphabetArray, alphabetArray), 'b', [1, 27, 53, 79]
         ],
-        [[0, 1, 2, 3, 4], 99, undefined]
+        [[0, 1, 2, 3, 4], 99, []]
     ])
         .forEach(([subj, search, expected]) => {
             const subjAsStr = subj.constructor === String ? subj : `[${(subj as any[]).join(', ')}]`,

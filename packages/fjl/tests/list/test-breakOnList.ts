@@ -12,7 +12,11 @@ describe('#breakOnList', () => {
       [[isVowel, nonAlphaNums], [nonAlphaNums, '']],
       [[isVowel, nonAlphaNumsArray], [nonAlphaNumsArray, []]],
       [[notIsVowel, nonAlphaNumsArray], [[], nonAlphaNumsArray]],
-      [[isVowel, alphabetArray], [alphabetArray.slice(1), ['a']]],
+      [[isVowel, alphabetArray], [[], alphabetArray]],
+      [[(x: number) => x > 3, [1, 2, 3, 4, 1]], [[1, 2, 3], [4, 1]]],
+      [[(x: number) => x > 9, [1, 2, 3]], [[1, 2, 3], []]],
+      [[(x: number) => x < 9, [1, 2, 3]], [[], [1, 2, 3]]],
+      [[(x: string) => x === 'c', 'abcd'], ['ab', 'cd']],
     ]).forEach(([args, expected]) => {
       expect(breakOnList(...args)).toEqual(expected);
     });

@@ -7,7 +7,7 @@ describe('#isSuffixOf', () => {
       agg.push([[vowelsArray.slice(i, vowelsArray.length), vowelsArray], true]);
       return agg;
     }, [
-      [['', vowelsArray], false],
+      [['', vowelsArray], true],
       [[vowelsArray, vowelsArray.slice(1)], false],
       [[vowelsArray.slice(0, 1), vowelsArray], false],
     ])

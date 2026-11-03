@@ -25,8 +25,17 @@ export const
       case Boolean.name:
       case String.name:
       case Number.name:
+      case BigInt.name:
       case 'NaN':
         return x;
+      // Contents aren't enumerable, so these can't be copied - Return as is.
+      case WeakMap.name:
+      case WeakSet.name:
+        return x;
+      case Date.name:
+        return new Date((x as unknown as Date).getTime()) as T;
+      case RegExp.name:
+        return new RegExp(x as unknown as RegExp) as T;
 
       case Array.name:
         return (!out ? (x as any[]).slice(0) : (out as any[]).concat(x)) as T;
@@ -52,16 +61,14 @@ export const
 
       case Map.name:
       case Set.name:
-      case WeakMap.name:
-      case WeakSet.name:
-        if (x instanceof Map || x instanceof WeakMap) {
+        if (x instanceof Map) {
           if (out) {
             for (const [key, value] of x[Symbol.iterator]())
               (out as Map<any, any>).set(key, value);
             return out as T;
           }
           return new (x.constructor as ConstructableType)(Array.from(x as unknown as Iterable<any>));
-        } else if (x instanceof Set || x instanceof WeakSet) {
+        } else if (x instanceof Set) {
           if (out) {
             for (const value of x[Symbol.iterator]())
               (out as Set<any>).add(value);

@@ -1,5 +1,3 @@
-import {findIndex} from "./findIndex";
-import {$equal} from "../boolean";
 import {NumberIndexable} from "../types";
 
 export const
@@ -10,7 +8,7 @@ export const
   isPrefixOf = <T>(xs1: NumberIndexable<T>, xs2: NumberIndexable<T>): boolean => {
     const limit1 = xs1.length,
       limit2 = xs2.length;
-    if (limit2 < limit1 || !limit1 || !limit2 || findIndex($equal(xs1[0]), xs2) === -1) {
+    if (limit2 < limit1) {
       return false;
     }
     let ind = 0;

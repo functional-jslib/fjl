@@ -14,7 +14,7 @@ export const
    */
   scanl = <A, B>(fn: ScanlOp<A, B>, zero: B, xs: A[]): B[] => {
     const limit = xs.length,
-      out = [] as B[];
+      out = [zero] as B[];
     let ind = 0,
       result = zero;
     while (ind < limit) {

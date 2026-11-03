@@ -87,7 +87,7 @@ export const
    * Generates a random character.
    */
   randChar = (min = 0, max = 0x10FFFF): string =>
-    String.fromCharCode(randNatNum(min, max)),
+    String.fromCodePoint(randNatNum(min, max)),
 
   /**
    * Generates a random string.

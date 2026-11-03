@@ -14,7 +14,7 @@ describe('#scanl1', () => {
 
     // Expect every item in result to be a linked list with remaining items linked to said item
     expect(
-      result.every(node => {
+      result.slice(1).every(node => {
         const nodesList = linkedListToList(node);
         return alphabetArray.slice(alphabetArray.indexOf(node.data)).every((char, ind1) => {
           const charCodeToTest = char.charCodeAt(0);
@@ -25,6 +25,10 @@ describe('#scanl1', () => {
       })
     )
       .toEqual(true);
+  });
+
+  it('should start with the first item', () => {
+    expectEqual(scanl1((a: number, b: number) => a + b, [1, 2, 3]), [1, 3, 6]);
   });
 
   it('should return an empty list when receiving an empty one', () => {
