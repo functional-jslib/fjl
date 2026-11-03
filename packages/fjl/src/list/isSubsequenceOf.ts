@@ -4,7 +4,18 @@ import {isNullish} from "../object";
 
 export const
   /**
-   * Checks if list one is a subsequence of list two.
+   * Checks if all the items of list one occur, in order, in list two;  The items don't have to
+   * occur consecutively.  Same as Haskell's `isSubsequenceOf`, so `isSubsequenceOf(xs1, xs2)` is
+   * equivalent to checking that `xs1` is a member of `subsequences(xs2)`.  Unlike Haskell's,
+   * returns `false` for nullish lists.
+   *
+   * ```javascript
+   * isSubsequenceOf('ace', 'abcde') === true;
+   * isSubsequenceOf('bad', 'abcdef') === false; // Out of order
+   * isSubsequenceOf('', 'abc') === true;
+   * ```
+   *
+   * @see https://hackage-content.haskell.org/package/base-4.22.0.0/docs/Data-List.html
    */
   isSubsequenceOf = <T>(xs1: NumberIndexable<T>, xs2: NumberIndexable<T>): boolean => {
     if (isNullish(xs1) || isNullish(xs2)) return false;

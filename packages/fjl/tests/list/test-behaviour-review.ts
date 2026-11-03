@@ -3,7 +3,7 @@
  */
 import {
   $zip4, all, and, any, breakOnList, inits, insert, isInfixOf, isPrefixOf, isSubsequenceOf, isSuffixOf, or,
-  pushN, rangeIter, sortBy, stripPrefix, subsequences, tails, take, zip4, zipN, zipWithN
+  pushN, rangeIter, sortBy, span, stripPrefix, subsequences, tails, take, zip4, zipN, zipWithN
 } from "../../src/list";
 
 describe('list/ behaviour review', () => {
@@ -29,6 +29,19 @@ describe('list/ behaviour review', () => {
       it(`isSubsequenceOf('${xs1}', '${xs2}') === ${expected}`, () => {
         expect(isSubsequenceOf(xs1, xs2)).toEqual(expected);
       });
+    });
+
+    it('should match Haskell\'s law: `x` is a member of `subsequences(y)`', () => {
+      // All strings, of up to 3 characters, over a two character alphabet, as both `x` and `y`.
+      const strs = [''];
+      for (let i = 0; strs[i].length < 3; i += 1) {
+        strs.push(strs[i] + 'a', strs[i] + 'b');
+      }
+      strs.forEach(x => strs.forEach(y => {
+        expect(isSubsequenceOf(x, y)).toEqual(subsequences(y).includes(x));
+        expect(isSubsequenceOf(x.split(''), y.split('')))
+          .toEqual(subsequences(y.split('')).some(xs => xs.join('') === x));
+      }));
     });
 
     it('should handle lists longer than 32 items', () => {
@@ -62,6 +75,21 @@ describe('list/ behaviour review', () => {
     it('should split on the first item satisfying the predicate', () => {
       expect(breakOnList((x: number) => x > 3, [1, 2, 3, 4, 1, 2, 3, 4]))
         .toEqual([[1, 2, 3], [4, 1, 2, 3, 4]]);
+    });
+
+    it('should match Haskell\'s law: same as `span` with the negated predicate', () => {
+      const isTwo = (x: number): boolean => x === 2;
+      (<[(x: number) => boolean, number[]][]>[
+        [isTwo, []],
+        [isTwo, [2]],
+        [isTwo, [1, 3]],
+        [isTwo, [1, 2, 3, 2]],
+        [isTwo, [2, 1, 3]],
+      ]).forEach(([p, xs]) => {
+        expect(breakOnList(p, xs)).toEqual(span((x: number) => !p(x), xs));
+      });
+      expect(breakOnList((x: string) => x === 'c', 'abcd'))
+        .toEqual(span((x: string) => x !== 'c', 'abcd'));
     });
   });
 

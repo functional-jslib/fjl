@@ -7,7 +7,8 @@ export const
   /**
    * `breakOnList`, applied to a predicate `p` and a list `xs`, returns a tuple
    * where first element is the longest prefix (possibly empty) of `xs` of elements
-   * that do not satisfy `p` and second element is the remainder of the list.
+   * that do not satisfy `p` and second element is the remainder of the list.  Same as Haskell's
+   * `break`, so `breakOnList(p, xs)` is equivalent to `span(x => !p(x), xs)`.
    *
    * Example:
    *
@@ -16,6 +17,8 @@ export const
    * breakOnList((x => x < 9), [1,2,3]) == [[],[1,2,3]];
    * breakOnList((x => x > 9), [1,2,3]) == [[1,2,3],[]];
    * ```
+   *
+   * @see https://hackage-content.haskell.org/package/base-4.22.0.0/docs/Data-List.html
    */
   breakOnList = <T, TS extends string | T[]>(
     pred: TernaryPred<T, number, TS>,
