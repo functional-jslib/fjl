@@ -7,8 +7,7 @@ export const all = <T = any>(
   p: TernaryPred<T, number, NumberIndexable<T>>,
   xs: NumberIndexable<T>
 ): boolean => {
-  const limit = xs.length
-  if (!limit) return false;
+  const limit = xs.length;
   for (let i = 0; i < limit; i++) {
     if (!p(xs[i], i, xs)) return false;
   }

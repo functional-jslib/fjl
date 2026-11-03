@@ -2,8 +2,8 @@
  * Behaviours pinned by the #122 review, for methods whose edge cases weren't covered elsewhere.
  */
 import {
-  $zip4, breakOnList, insert, isSubsequenceOf, pushN, rangeIter, sortBy, subsequences, take, zip4, zipN,
-  zipWithN
+  $zip4, all, and, any, breakOnList, inits, insert, isInfixOf, isPrefixOf, isSubsequenceOf, isSuffixOf, or,
+  pushN, rangeIter, sortBy, stripPrefix, subsequences, tails, take, zip4, zipN, zipWithN
 } from "../../src/list";
 
 describe('list/ behaviour review', () => {
@@ -105,6 +105,34 @@ describe('list/ behaviour review', () => {
     it('should yield the same items as `range`', () => {
       expect(Array.from(rangeIter(1, 3))).toEqual([1, 2, 3]);
       expect(Array.from(rangeIter(3, 1))).toEqual([3, 2, 1]);
+    });
+  });
+
+  describe('empty input', () => {
+    it('#isPrefixOf, #isInfixOf, #isSuffixOf should accept an empty needle', () => {
+      [isPrefixOf, isInfixOf, isSuffixOf].forEach(fn => {
+        expect(fn('', 'abc')).toEqual(true);
+        expect(fn('', '')).toEqual(true);
+        expect(fn([], [1])).toEqual(true);
+        expect(fn('a', '')).toEqual(false);
+      });
+    });
+
+    it('#stripPrefix should handle an empty prefix', () => {
+      expect(stripPrefix('', 'abc')).toEqual('abc');
+    });
+
+    it('#inits should match #tails for empty lists', () => {
+      expect(inits('')).toEqual(['']);
+      expect(inits([])).toEqual([[]]);
+      expect(inits('')).toEqual(tails(''));
+    });
+
+    it('#all, #and should be vacuously true, and #any, #or should not', () => {
+      expect(all(x => x, [])).toEqual(true);
+      expect(and([])).toEqual(true);
+      expect(any(x => x, [])).toEqual(false);
+      expect(or([])).toEqual(false);
     });
   });
 });

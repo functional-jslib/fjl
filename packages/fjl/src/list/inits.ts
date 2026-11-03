@@ -9,7 +9,7 @@ export const
   inits = <TS extends string | any[]>(xs: TS): TS[] => {
     const limit = xs?.length,
       agg: TS[] = [];
-    if (!limit) return agg;
+    if (limit === undefined) return agg;
     for (let ind = 0; ind <= limit; ind += 1) {
       agg.push(xs.slice(0, ind) as TS);
     }

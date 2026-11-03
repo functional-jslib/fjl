@@ -30,6 +30,10 @@ describe('#scanr1', () => {
       .toEqual(true);
   });
 
+  it('should end with the last item', () => {
+    expectEqual(scanr1((a: number, b: number) => a + b, [1, 2, 3]), [6, 5, 3]);
+  });
+
   it('should return an empty list when receiving an empty one', () => {
     expectEqual(scanr1(x => x * 2, []), []);
   });

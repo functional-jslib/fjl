@@ -8,19 +8,19 @@ export const
   findIndices = <T = any>(
     pred: TernaryPred<T, number, NumberIndexable<T>>,
     xs: NumberIndexable<T>
-  ): number[] | undefined => {
+  ): number[] => {
     const limit = xs.length;
-    const out = [];
+    const out: number[] = [];
     for (let ind = 0; ind < limit; ind++)
       if (pred(xs[ind], ind, xs)) out.push(ind);
-    return out.length ? out : undefined;
+    return out;
   },
 
   /**
    * Curried version of `findIndices`.
    */
   $findIndices = <T = any>(pred: TernaryPred<T, number, NumberIndexable<T>>) =>
-    (xs: NumberIndexable<T>): number[] | undefined =>
+    (xs: NumberIndexable<T>): number[] =>
       findIndices(pred, xs)
 
 ;
