@@ -12,3 +12,8 @@ Mono repo for libraries in the functional-jslib org.
 
 - Test commands are defined on repo root.
 
+### Releasing
+
+- See [md/RELEASING.md](./md/RELEASING.md) for how package versions are bumped,
+  tagged, and published.
+
