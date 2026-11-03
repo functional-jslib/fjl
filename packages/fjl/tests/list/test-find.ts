@@ -1,5 +1,6 @@
-import {expectEqual} from "../helpers";
+import {alphabetArray, expectEqual, vowelsArray, vowelsString} from "../helpers";
 import {find} from "../../src/list/find";
+import {TernaryPred} from "../../src/types";
 
 describe('#find', () => {
     const word = 'word';
@@ -13,5 +14,37 @@ describe('#find', () => {
         expectEqual(find(pred, word as unknown as string[]), undefined);
         expectEqual(find(pred, word.split('')), undefined);
     });
+
+    const getPredForEqualTo = <T>(a: T): TernaryPred<T, number> => (b: T): boolean => a === b;
+
+    (<[TernaryPred, any[], number][]>[]
+        .concat(
+            // Falsy variations
+            alphabetArray.slice(0)
+                .filter(x => vowelsString.indexOf(x) === -1)
+                .slice(0, vowelsString.length) // take only enough for tests
+                .flatMap(x => {
+                    const pred = getPredForEqualTo(x);
+                    return [
+                        [pred, vowelsArray, undefined],
+                        [pred, vowelsString, undefined],
+                    ];
+                }),
+
+            // Truthy variations
+            vowelsArray.flatMap((x) => {
+                const pred = getPredForEqualTo(x);
+                return [
+                    [pred, vowelsArray, x],
+                    [pred, vowelsString, x],
+                ];
+            })
+        ))
+        .forEach(([pred, slice, expected]) => {
+            it(`find(${pred.toString()}, ${JSON.stringify(slice)}) === ${JSON.stringify(expected)}`, () => {
+                const result = find(pred, slice);
+                expect(result).toEqual(expected);
+            });
+        });
 });
 

@@ -1,4 +1,4 @@
-import {reduce} from "./utils";
+import {reduce} from "./foldl";
 
 
 /**

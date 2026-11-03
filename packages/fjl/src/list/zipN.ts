@@ -1,4 +1,4 @@
-import {reduce} from "./utils/reduce";
+import {reduce} from "./foldl";
 import {toShortest} from "./utils/toShortest";
 import {push} from "./push";
 import {map} from "./map";

@@ -1,11 +1,11 @@
-import {NumberIndexable, Quaternary, TernaryPred} from "../../types";
+import {NumberIndexable, Quaternary, TernaryPred} from "../types";
 
 export const
 
   /**
    * Reduces a "number indexable" object (array, object, etc.) until predicate returns `true`.
    */
-  reduceUntil = (
+  reduceUntilRight = (
     pred: TernaryPred,
     op: Quaternary,
     agg: any,
@@ -13,7 +13,7 @@ export const
   ) => {
     const limit = xs.length;
     let result = agg;
-    for (let ind = 0; ind < limit; ind++) {
+    for (let ind = limit - 1; ind >= 0; ind--) {
       if (pred(xs[ind], ind, xs)) break;
       result = op(result, xs[ind], ind, xs);
     }
@@ -21,11 +21,11 @@ export const
   },
 
   /**
-   * Curried version of `reduceUntil` function.
+   * Curried version of `$reduceUntilRight`.
    */
-  $reduceUntil = (pred: TernaryPred) =>
+  $reduceUntilRight = (pred: TernaryPred) =>
     (op: Quaternary) =>
       (agg: any) =>
-        (xs: NumberIndexable) => reduceUntil(pred, op, agg, xs)
-
+        (xs: NumberIndexable): ReturnType<typeof op> =>
+      reduceUntilRight(pred, op, agg, xs)
 ;

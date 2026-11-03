@@ -1,5 +1,5 @@
 import {negateF3} from "../function/negate";
-import {findIndexWhere} from "./utils";
+import {findIndex} from "./findIndex";
 import {of} from "../object/of";
 import {splitAt} from "./splitAt";
 import {sliceFrom} from "./utils/sliceFrom";
@@ -13,7 +13,7 @@ export const
    * array of arrays;  E.g., given list of 'xs' - [[matching-xs-items], [non-matching-xs-items]]
    */
   span = <T, TS extends string | T[]>(pred: TernaryPred, xs: TS): [TS, TS] => {
-    const splitPoint = findIndexWhere(negateF3(pred), xs);
+    const splitPoint = findIndex(negateF3(pred), xs);
     return splitPoint === -1 ?
       [sliceFrom(0, xs), of(xs)] :
       splitAt(splitPoint, xs);

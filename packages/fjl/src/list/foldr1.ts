@@ -1,4 +1,4 @@
-import {reduceRight} from "./utils/reduceRight";
+import {reduceRight} from "./foldr";
 import {Quaternary} from "../types";
 import {unconsr} from "./unconsr";
 

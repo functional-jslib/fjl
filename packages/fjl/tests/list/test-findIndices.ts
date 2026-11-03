@@ -2,7 +2,7 @@ import {findIndices} from "../../src/list/findIndices";
 import {NumberIndexable, TernaryPred} from "../../src/types";
 import {alphabetCharCodeRange} from "../helpers";
 
-describe(`#listUtils.findIndices`, () => {
+describe(`#findIndices`, () => {
     const oddPred = (x: number): boolean => x % 2 !== 0,
         evenPred = (x: number): boolean => x % 2 === 0,
         [evenCodes, evenIndices, oddCodes, oddIndices]: [number[], number[], number[], number[]] = alphabetCharCodeRange

@@ -1,5 +1,5 @@
 import {uncons} from "./uncons";
-import {reduce} from "./utils/reduce";
+import {reduce} from "./foldl";
 import {Quaternary} from "../types";
 
 export const

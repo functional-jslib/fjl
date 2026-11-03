@@ -1,10 +1,28 @@
-import {$findWhere, findWhere} from "./utils";
+import {NumberIndexable, TernaryPred} from "../types";
 
 export const
 
   /**
-   * Find an item in structure of elements based on given predicate (`pred`).
+   * Finds an item by predicate or returns `undefined`.
    */
-  $find = $findWhere,
+  find = (
+    pred: TernaryPred,
+    xs: NumberIndexable
+  ): undefined | any => {
+    const limit = xs.length;
+    if (!limit) return;
+    for (let ind = 0; ind < limit; ind++) {
+      const elm = xs[ind];
+      if (pred(elm, ind, xs)) return elm;
+    }
+    return undefined;
+  },
 
-  find = findWhere;
+  /**
+   * Curried version of `find`.
+   */
+  $find = (pred: TernaryPred) =>
+    (xs: NumberIndexable): undefined | any =>
+      find(pred, xs)
+
+;

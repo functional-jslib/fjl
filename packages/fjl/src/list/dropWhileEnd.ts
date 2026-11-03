@@ -1,4 +1,4 @@
-import {findIndexWhereRight} from "./utils";
+import {findLastIndex} from "./findLastIndex";
 import {TernaryPred} from "../types";
 import {negateF3} from "../function";
 
@@ -12,7 +12,7 @@ export const
     xs: TS
   ): typeof xs => {
     const splitPoint: number =
-      findIndexWhereRight(negateF3(pred), xs);
+      findLastIndex(negateF3(pred), xs);
     if (splitPoint === -1) {
       return xs.constructor() as TS;
     }

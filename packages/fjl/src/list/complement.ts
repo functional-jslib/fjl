@@ -1,5 +1,5 @@
 import {difference} from "./difference";
-import {reduce} from "./utils";
+import {reduce} from "./foldl";
 
 export const
 

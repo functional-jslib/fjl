@@ -1,5 +1,5 @@
 import {negateF3} from "../function/negate";
-import {findIndexWhere} from "./utils/findIndexWhere";
+import {findIndex} from "./findIndex";
 import {reverse} from "./reverse";
 import {splitAt} from "./splitAt";
 import {TernaryPred} from "../types";
@@ -23,7 +23,7 @@ export const
     pred: TernaryPred<T, number, TS>,
     xs: TS
   ): [typeof xs, typeof xs] => {
-    const splitPoint = findIndexWhere(negateF3(pred), xs);
+    const splitPoint = findIndex(negateF3(pred), xs);
     return splitPoint === -1 ?
       [xs.slice(0, 0) as TS, xs.slice(0) as TS] :
       reverse(splitAt(splitPoint, xs));

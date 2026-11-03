@@ -1,4 +1,4 @@
-import {reduceRight} from '../list/utils/reduceRight';
+import {reduceRight} from '../list/foldr';
 import {Unary} from "../types";
 
 /**
