@@ -41,6 +41,13 @@ export const
 
   /**
    * Curried version of `assignDeep`.
+   *
+   * @todo **Known bug** - the rest-args are forwarded as a single array
+   *  (`assignDeep(obj0, objs)` instead of `assignDeep(obj0, ...objs)`), so
+   *  `$assignDeep(a)(b, c)` merges the *array* `[b, c]` into `a` (producing
+   *  `{0: b, 1: c, ...a}`) rather than `b` and `c` themselves.  `$objUnion`
+   *  aliases this method and inherits the bug.  Pinned by `it.failing` cases
+   *  in `tests/test-currying.ts` (see issue #124) - remove those when fixed.
    */
   $assignDeep = (obj0: any) => (...objs: any[]) => assignDeep(obj0, objs)
 

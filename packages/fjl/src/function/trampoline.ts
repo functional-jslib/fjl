@@ -39,5 +39,13 @@ export const trampoline = <T, RetT>(fn: Nary<T, RetT>, fnName?: string): Nary<T,
     };
   },
 
+  /**
+   * @note Despite its `$` prefix (the library's "curried sibling" convention),
+   *  `$trampoline` is **not** idiomatically curried - it takes the same
+   *  argument tuple as `trampoline` (`(fn, fnName?)`), and is therefore an
+   *  alias for it.  `fnName` is optional, so `$trampoline(fn)` "reads" curried,
+   *  but `$trampoline(fn)` does *not* return a function awaiting `fnName`.
+   *  See `tests/test-currying.ts`.
+   */
   $trampoline =  <T, RetT>(fn: Nary<T, RetT>, fnName?: string): Nary<T, RetT> =>
     trampoline(fn, fnName)
