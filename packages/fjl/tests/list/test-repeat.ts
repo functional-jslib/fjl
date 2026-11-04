@@ -1,20 +1,19 @@
 import {repeat} from "../../src/list/repeat";
+import {take} from "../../src/list/take";
 
 describe('#repeat', () => {
-  type UnwrappedYield = number;
-  type NumIterations = number;
-
-  (<[Parameters<typeof repeat<UnwrappedYield>>[0], UnwrappedYield[], NumIterations][]>[
-    [0, [0, 0, 0, 0], 4],
-    [1, [1, 1, 1, 1], 4],
-    [2, [2, 2, 2, 2], 4],
-  ]).forEach(([arg, expected, numIterations]) => {
-    it(`repeat(${arg}) === ${JSON.stringify(expected)}`, () => {
-      let count = 0;
-      for (const result of repeat(arg)) {
-        expect(result.slice(0, ++count)).toEqual(expected.slice(0, count));
-        if (count === numIterations) break;
-      }
+  (<[number, number, number[]][]>[
+    [17, 3, [17, 17, 17]],
+    [17, 0, []],
+    [0, 4, [0, 0, 0, 0]],
+  ]).forEach(([x, n, expected]) => {
+    it(`take(${n}, repeat(${x})) === ${JSON.stringify(expected)}`, () => {
+      expect(take(n, repeat(x))).toEqual(expected);
     });
+  });
+
+  it('should yield the item itself, not a list of it', () => {
+    const x = {};
+    expect(repeat(x).next().value).toBe(x);
   });
 });

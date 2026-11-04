@@ -1,16 +1,16 @@
-import {difference} from "./difference";
 import {reduce} from "./foldl";
 
 export const
 
   /**
-   * Returns the complement of an array and one or more other arrays.
+   * Returns the items of the other arrays that aren't in the first array, keeping every
+   * occurrence (unlike `difference`, which removes one occurrence per item).
    */
   complement = <T>(...arrays: T[][]): T[] => {
     const arr0 = arrays.shift();
     return reduce((agg: T[], arr: T[]) => {
-        agg.push(...difference(arr, arr0));
-        return agg;
+      agg.push(...arr.filter(x => !arr0.includes(x)));
+      return agg;
     }, arr0.slice(0, 0), arrays);
   },
 

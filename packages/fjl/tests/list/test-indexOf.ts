@@ -14,8 +14,8 @@ describe(`#list.indexOf`, () => {
     ])
   ))
     .forEach(([args, expected]) => {
-      it(`indexOf(${args[0]}, ${args[1]}) === ${expected}`, () => {
-        expect(indexOf(...args)).toEqual(expected);
+      it(`indexOf(${args[1]}, ${args[0]}) === ${expected}`, () => {
+        expect(indexOf(args[1], args[0])).toEqual(expected);
       });
     });
 });

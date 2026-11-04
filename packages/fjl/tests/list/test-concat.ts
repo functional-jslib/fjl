@@ -10,7 +10,7 @@ describe('#concat', () => {
     arg3 = [vowelsArray, vowelsArray, vowelsArray];
 
   (<[Parameters<typeof concat>, ReturnType<typeof concat>][]>[
-    [[[]], undefined],
+    [[[]], []],
     [[['', '', '']], ''],
     [[[[], [], []]], []],
     [[arg1], [].concat(...arg1)],

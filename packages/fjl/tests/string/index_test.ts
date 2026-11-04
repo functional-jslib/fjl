@@ -34,7 +34,26 @@ describe('#lines', () => {
   });
   it('should return original string when no new lines are found in string', () => {
     expectEqual(lines('hello world'), ['hello world']);
-    expectEqual(lines(''), ['']);
+  });
+  it('should match the documented Haskell examples', () => {
+    (<[string, string[]][]>[
+      ['', []],
+      ['\n', ['']],
+      ['one', ['one']],
+      ['one\n', ['one']],
+      ['one\n\n', ['one', '']],
+      ['one\ntwo', ['one', 'two']],
+      ['one\ntwo\n', ['one', 'two']],
+    ]).forEach(([subj, expected]) => expectEqual(lines(subj), expected));
+  });
+  it('should count `\\r`, `\\r\\n`, and `\\n\\r` as one line break', () => {
+    expectEqual(lines('a\rb\r\nc\n\rd\r\n'), ['a', 'b', 'c', 'd']);
+  });
+  it('should keep `unlines . lines` idempotent', () => {
+    ['', '\n', 'one', 'one\n', 'one\n\n', 'one\ntwo', 'one\ntwo\n'].forEach(subj => {
+      const once = unlines(lines(subj));
+      expectEqual(unlines(lines(once)), once);
+    });
   });
   it('should throw Errors when receiving nothing', () => {
     expectError(() => lines(null));
@@ -60,6 +79,13 @@ describe('#words', () => {
         expectEqual(shallowEqualsTo, result);
       });
   });
+  it('should match the documented Haskell examples', () => {
+    expectEqual(words('Lorem ipsum\ndolor'), ['Lorem', 'ipsum', 'dolor']);
+    expectEqual(words(' foo bar '), ['foo', 'bar']);
+    expectEqual(words(' foo  bar\t\r\n'), ['foo', 'bar']);
+    expectEqual(words(''), []);
+    expectEqual(words('  '), []);
+  });
   it('should return a copy of original list when no whitespace characters are found.', () => {
     // subject | expectedLength | shallowEqualsTo
     (<[string, number, string[]][]>[
@@ -84,9 +110,10 @@ describe('#words', () => {
 });
 
 describe('#unlines', () => {
-  it('should join a list with new lines.', () => {
+  it('should end each item with a new line.', () => {
     [
-      [vowelsArray, vowelsArray.join('\n')],
+      [vowelsArray, vowelsArray.join('\n') + '\n'],
+      [['Hello', 'World', '!'], 'Hello\nWorld\n!\n'],
     ]
       .forEach(([subj, expected]) => {
         const r = unlines(subj as string[]);

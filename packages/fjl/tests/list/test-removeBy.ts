@@ -10,6 +10,11 @@ describe('#removeBy', () => {
     expectEqual(removeBy(equal, 'a', alphabetArray), tail(alphabetArray));
     expectEqual(removeBy(equal, 'z', alphabetArray), init(alphabetArray));
   });
+  it('should match the documented Haskell examples', () => {
+    const range1to10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    expectEqual(removeBy((a: number, b: number) => a <= b, 4, range1to10), [1, 2, 3, 5, 6, 7, 8, 9, 10]);
+    expectEqual(removeBy((a: number, b: number) => a !== b, 5, [5, 5, 4, 3, 5, 2]), [5, 5, 3, 5, 2]);
+  });
   it('should return an empty list when receiving an empty list', () => {
     expectEqual(removeBy(equal, 'a', ''), '');
     expectEqual(removeBy(equal, 'a', []), []);

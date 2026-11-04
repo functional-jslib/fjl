@@ -10,6 +10,13 @@ describe('#remove', () => { // same as `delete` (in haskell)
     expectEqual(remove('a', alphabetArray), tail(alphabetArray));
     expectEqual(remove('z', alphabetArray), init(alphabetArray));
   });
+  it('should match the documented Haskell examples', () => {
+    expectEqual(remove('a', 'banana'), 'bnana');
+    expectEqual(remove('not', ['haskell', 'is', 'not', 'awesome']), ['haskell', 'is', 'awesome']);
+  });
+  it('should remove a whole surrogate pair', () => {
+    expectEqual(remove('😁', '😀😁'), '😀');
+  });
   it('should return an empty list when receiving an empty list', () => {
     expectEqual(remove('a', ''), '');
     expectEqual(remove('a', []), []);

@@ -1,23 +1,21 @@
-import {foldl} from "./foldl";
 import {any} from "./any";
 import {BinaryPred} from "../types";
-import {push} from "./push";
-import {take} from "./take";
+import {fromItems, ListOf, toItems} from "./utils/items";
 
 /**
- * Returns an intersection by predicate.
+ * Returns the items of `xs1` that match an item of `xs2`, by predicate, called as
+ * `pred(itemOfXs1, itemOfXs2)`.  Duplicates in `xs1` stay.
  */
-export const intersectBy = <T>(pred: BinaryPred<T>, xs1: T[], xs2: T[]): T[] =>
-    foldl((agg: T[], a: T) =>
-        any((b: T) => pred(a, b), xs2) ?
-          push(a, agg) : agg,
-      take(0, xs1),
-      xs1
-    ),
+export const intersectBy = <TS extends string | any[]>(pred: BinaryPred<TS[number]>, xs1: TS, xs2: TS): ListOf<TS> => {
+    const others = toItems(xs2);
+    return fromItems(xs1, toItems(xs1).filter((a: TS[number]) =>
+      any((b: TS[number]) => pred(a, b), others)
+    ));
+  },
 
   /**
    * Curried version of `intersectBy`.
    */
   $intersectBy = <T>(pred: BinaryPred<T>) =>
-    (xs1: T[]) =>
-      (xs2: T[]): T[] => intersectBy(pred, xs1, xs2);
+    <TS extends string | T[]>(xs1: TS) =>
+      (xs2: TS): ListOf<TS> => intersectBy(pred, xs1, xs2);

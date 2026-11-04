@@ -46,17 +46,26 @@ export const
    */
   $concat = (<TS extends Sliceable>(a: TS) => (...b: TS[]): TS => concat(a, ...b)) as $Concat,
 
-  indexOf = <T>(xs: Sliceable<T>, x: T): number => (xs as T[]).indexOf(x),
+  /**
+   * Same as `(Array|String).prototype.indexOf`, but list last.
+   */
+  indexOf = <T>(x: T, xs: Sliceable<T>): number => (xs as T[]).indexOf(x),
 
-  $indexOf = <T>(xs: Sliceable<T>) => (x: T): number => indexOf(xs, x),
+  $indexOf = <T>(x: T) => (xs: Sliceable<T>): number => indexOf(x, xs),
 
-  includes = <T>(xs: Sliceable<T>, x: T): boolean => (xs as T[]).includes(x),
+  /**
+   * Same as `(Array|String).prototype.includes`, but list last.
+   */
+  includes = <T>(x: T, xs: Sliceable<T>): boolean => (xs as T[]).includes(x),
 
-  $includes = <T>(xs: Sliceable<T>) => (x: T): boolean => includes(xs, x),
+  $includes = <T>(x: T) => (xs: Sliceable<T>): boolean => includes(x, xs),
 
-  lastIndexOf = <T>(xs: Sliceable<T>, x: T): number => (xs as T[]).lastIndexOf(x),
+  /**
+   * Same as `(Array|String).prototype.lastIndexOf`, but list last.
+   */
+  lastIndexOf = <T>(x: T, xs: Sliceable<T>): number => (xs as T[]).lastIndexOf(x),
 
-  $lastIndexOf = <T>(xs: Sliceable<T>) => (x: T): number => lastIndexOf(xs, x),
+  $lastIndexOf = <T>(x: T) => (xs: Sliceable<T>): number => lastIndexOf(x, xs),
 
   /**
    * Same as `(Array|String).prototype.slice`, but in functional format.

@@ -10,8 +10,8 @@ import {id} from "../function/id";
 export {split, $split};
 export * from './charRange';
 
-const newLineRegex = /[\n\r]/gm,
-  spaceRegex = /[ \t]/gm,
+const lineBreakRegex = /\r\n|\n\r|\n|\r/,
+  spaceRegex = /\s+/,
   space = ' ',
   newLine = '\n';
 
@@ -28,14 +28,23 @@ export enum FirstCharCase {
 export const
 
   /**
-   * Splits a string on all '\n', '\r', '\n\r', or '\r\n' characters.
+   * Splits a string into lines, as with Haskell's `lines`: a line break ends a line, rather than
+   * separating two, so `lines('one\n')` gives `['one']`, and `lines('')` gives `[]`.
+   *
+   * @note Differs from Haskell's `lines`, on purpose: '\r', '\n\r', and '\r\n' also count as one
+   * line break.
    */
-  lines = (xs: string): string[] => xs.split(newLineRegex),
+  lines = (xs: string): string[] => {
+    const parts = xs.split(lineBreakRegex);
+    if (!parts[parts.length - 1]) parts.pop();
+    return parts;
+  },
 
   /**
-   * Splits a string on all '\s' and/or all '\t' characters.
+   * Splits a string on runs of whitespace, and ignores any at the start or end, as with Haskell's
+   * `words`: `words(' foo  bar ')` gives `['foo', 'bar']`.
    */
-  words = (xs: string): string[] => xs.split(spaceRegex),
+  words = (xs: string): string[] => xs.split(spaceRegex).filter(Boolean),
 
   /**
    * Intersperse an array of strings with '\s' and then concats them.
@@ -43,9 +52,10 @@ export const
   unwords = (xs: string[]): string => xs.join(space),
 
   /**
-   * Intersperses a '\n' character into a list of strings and then concats it.
+   * Appends a '\n' character to each string and then concats them, as with Haskell's `unlines`:
+   * `unlines(['a', 'b'])` gives `'a\nb\n'`.
    */
-  unlines = (xs: string[]): string => xs.join(newLine),
+  unlines = (xs: string[]): string => xs.map(x => x + newLine).join(''),
 
   /**
    * Lower cases first character of a non-empty string.

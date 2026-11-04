@@ -13,6 +13,14 @@ describe('#nub', () => {
   it('should return empty lists when receiving empty lists', () => {
     expectEqual(nub([]), []);
   });
+  it('should match the documented Haskell examples', () => {
+    expectEqual(nub([1, 2, 3, 4, 3, 2, 1, 2, 4, 3, 5]), [1, 2, 3, 4, 5]);
+    expectEqual(nub('hello, world!'), 'helo, wrd!');
+    expectEqual(nub(''), '');
+  });
+  it('should keep surrogate pairs whole', () => {
+    expectEqual(nub('😀😁😀'), '😀😁');
+  });
   it('should throw Errors when receiving nothing', () => {
     expectError(() => nub(null));
     expectError(() => nub(undefined));

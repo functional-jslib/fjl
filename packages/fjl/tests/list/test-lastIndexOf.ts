@@ -11,8 +11,8 @@ describe('#lastIndexOf', () => {
     }) as [string | any[], any, number][]
   ))
     .forEach(([subject, needle, expected]) => {
-      it(`lastIndexOf(${JSON.stringify(subject)}, ${JSON.stringify(needle)}) === ${expected}`, function () {
-        expect(lastIndexOf(subject, needle)).toEqual(expected);
+      it(`lastIndexOf(${JSON.stringify(needle)}, ${JSON.stringify(subject)}) === ${expected}`, function () {
+        expect(lastIndexOf(needle, subject)).toEqual(expected);
       });
     });
 });

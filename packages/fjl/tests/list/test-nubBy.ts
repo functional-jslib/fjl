@@ -18,3 +18,14 @@ describe('#nubBy', () => {
     expectError(() => nubBy(equal, undefined));
   });
 });
+
+describe('#nubBy - Haskell parity', () => {
+  it('should give back a string for a string', () => {
+    expectEqual(nubBy(equal, 'conundrum'), 'conudrm');
+  });
+  it('should call the predicate as `pred(keptItem, item)`', () => {
+    expectEqual(nubBy((x: number, y: number) => x % 3 === y % 3, [1, 2, 4, 5, 6]), [1, 2, 6]);
+    expectEqual(nubBy((a: number, b: number) => a !== b, [2, 7, 1, 8, 2, 8, 1, 8, 2, 8]), [2, 2, 2]);
+    expectEqual(nubBy((a: number, b: number) => a > b, [1, 2, 3, 2, 1, 5, 4, 5, 3, 2]), [1, 2, 3, 5, 5]);
+  });
+});

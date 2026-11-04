@@ -1,18 +1,16 @@
 /**
- * Generator that infinitely yields repetitions of `x` as a list;
+ * Generator that infinitely yields `x`;  Same items as Haskell's `repeat`.
  *
  * ```javascript
- * const gen = repeat(0);
- * console.log(gen.next().value); // [0]
- * console.log(gen.next().value); // [0, 0]
- * // ...
+ * take(3, repeat(0)); // [0, 0, 0]
  * ```
+ *
+ * @note Differs from Haskell in that the result is a single-use generator, not a
+ *  list:  Only iterable-consuming methods (`take`, `takeWhile`, `for...of`, etc.)
+ *  accept it, and it can only be consumed once.
  */
-export function* repeat<T>(x: T): Generator<T[], void> {
-  const out = [x];
-
+export function* repeat<T>(x: T): Generator<T, void> {
   while (true) {
-    yield out;
-    out.push(x);
+    yield x;
   }
 }

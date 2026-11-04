@@ -6,5 +6,6 @@ export const
 
   /**
    * Returns a boolean indicating whether an element exists in given structure of elements.
+   * Takes the list last, as with Haskell's `elem`.
    */
   elem = includes;

@@ -23,6 +23,23 @@ These changes don't throw or fail to compile. Calls keep working but give differ
 | `take` | Returns `[]` for a negative count. |
 | `subsequences` | Keeps string items in order: `'ab'`, not `'ba'`. |
 | `zipWithN` | Applies its operation when given a single list. |
+| `elem`, `notElem`, `elemIndex`, `includes`, `indexOf`, `lastIndexOf`, and their `$` forms | Take the value first, like `elemIndices`: `includes(3, xs)`. Calls in the old order usually just return `false`, `-1` or `undefined`, or throw when the value isn't a list. |
+| `scanr`, `scanr1` | Call `fn(acc, x, i, xs)`, like `foldr`, not `fn(x, acc, i, xs)`. |
+| `repeat`, `cycle`, `iterate`, `replicateIter`, `unfoldrIter` | Yield items, not growing lists: `take(3, repeat(17))` gives `[17, 17, 17]`. |
+| `cycle` | Throws on first pull for an empty list. Walks strings by code point. |
+| `take` | Pulls exactly `n` items, not `n + 1`. `take(0, null)` gives `[]`. |
+| `mapAccumR` | Returns its list in input order. It used to be reversed. |
+| `groupBy` | Compares each item with its group's first item, not the previous item. |
+| `nubBy` | Calls `pred(kept, item)`, not `pred(item, kept)`. Only matters for asymmetric predicates. |
+| `splitAt` | A negative position gives `[[], xs]`, and no longer counts from the end. |
+| `intercalate` | `intercalate(',', [])` gives `''`, not `[]`. |
+| `lines` | A line break ends a line: `lines('one\n')` gives `['one']`, and `lines('')` gives `[]`. `\r\n` and `\n\r` count as one break. |
+| `words` | Splits on runs of any whitespace, and ignores it at the start and end: `words(' foo  bar ')` gives `['foo', 'bar']`. |
+| `unlines` | Ends every line with `\n`: `unlines(['a', 'b'])` gives `'a\nb\n'`. |
+| `unionBy`, `$unionBy` | Take an equality predicate `eq(a, b)`, not `pred(accumulatedList, x)`. Duplicates in the second list are dropped. |
+| `union` | `NaN` no longer equals itself, as with `===`. |
+| `difference` | Removes one occurrence per item: `difference([1, 1, 2], [1])` gives `[1, 2]`. `complement` still removes every occurrence. |
+| `nub`, `nubBy`, `union`, `unionBy`, `intersect`, `intersectBy`, `difference` | Give back a string for strings: `nub('hello')` gives `'helo'`. These used to give an array or throw. |
 
 ## Bugs fixed
 
@@ -38,6 +55,10 @@ These calls threw or returned something unusable before, so no migration should 
 - `insert` misplaced items on one-item lists.
 - `randChar` wrapped above `0xFFFF`.
 - `$assignDeep` didn't forward its objects.
+- `replicate` threw on a negative count, and now gives `[]`.
+- `concat([])` returned `undefined`, and now gives `[]`.
+- `remove`, `removeBy` and `removeFirstsBy` couldn't match a surrogate pair in a string.
+- `fjl-validator`'s `defaultValueObscurer` returned `"*,*,*,**,*,*,**,*,*,*"` for `'abc'`, and now gives `"***"`.
 
 `copy` now returns `WeakMap` and `WeakSet` values as is, because their contents can't be enumerated. It used to return an empty copy.
 
@@ -75,7 +96,7 @@ These calls threw or returned something unusable before, so no migration should 
 Many signatures that used `any` are now generic, including `foldl`, `foldr`, `map`, `find`, `head`, `append`, `includes` and `errorIfNotType`. Runtime behaviour doesn't change, but some calls can now fail to compile:
 
 - Code that relied on an `any` result, such as `const s: string = find(x => x > 1, [1, 2])`.
-- Mismatched arguments, such as `includes([1, 2], 'a')`.
+- Mismatched arguments, such as `includes('a', [1, 2])`.
 - A non-string `messageSuffix` on the `errorIfNotType*` methods.
 - Explicit type arguments on `map`, `span`, `insert`, `intersperse`, `uncons` and `unconsr`, whose generic parameters changed.
 

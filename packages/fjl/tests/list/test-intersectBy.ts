@@ -13,6 +13,12 @@ describe('#intersectBy', () => {
   it('should return an empty list when both arrays passed are empty', () => {
     expectEqual(length(intersectBy(equality, [], [])), 0);
   });
+  it('should call the predicate as `pred(itemOfFirst, itemOfSecond)`', () => {
+    expectEqual(intersectBy((a: number, b: number) => a > b, [1, 2, 3], [2]), [3]);
+  });
+  it('should give back a string for strings', () => {
+    expectEqual(intersectBy(equality, 'coot', 'heron'), 'oo');
+  });
   it('should return an intersection of the two arrays on equality function', () => {
     (<[number[], number[], number, number[]][]>[
       // subj1, subj2, expectLen, expectedElements

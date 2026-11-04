@@ -1,4 +1,5 @@
 import {$unfoldr, $unfoldrIter, unfoldr, unfoldrIter, UnfoldrOp} from "../../src/list/unfoldr";
+import {take} from "../../src/list/take";
 
 const countdownFrom: UnfoldrOp<number, number> = minuend => {
     const diff = minuend - 1;
@@ -34,23 +35,8 @@ describe('#unfoldr', () => {
 });
 
 describe('#unfoldrIter', () => {
-  it('should yield every prefix of the list `unfoldr` builds', () => {
-    const out = [] as number[][];
-
-    for (const xs of unfoldrIter(countdownFrom, 10)) {
-      out.push(xs.slice(0));
-      if (out.length === 3) break;
-    }
-
-    expect(out).toEqual([[10], [10, 9], [10, 9, 8]]);
-  });
-
-  it('should yield a last value equal to `unfoldr`\'s return value', () => {
-    let last = [] as number[];
-    for (const xs of unfoldrIter(countdownFrom, 10)) {
-      last = xs.slice(0);
-    }
-    expect(last).toEqual(unfoldr(countdownFrom, 10));
+  it('should yield the items of the list `unfoldr` builds', () => {
+    expect([...unfoldrIter(countdownFrom, 10)]).toEqual(unfoldr(countdownFrom, 10));
   });
 
   it('should yield nothing when the operation returns `undefined` immediately', () => {
@@ -77,19 +63,17 @@ describe('#unfoldrIter', () => {
 
   it('should allow the caller to stop early on a non-terminating operation', () => {
     // The motivating case:  the eager `unfoldr` would loop forever here.
-    const out = [] as number[];
+    expect(take(3, unfoldrIter(countUpFrom, 0))).toEqual([0, 1, 2]);
+  });
 
-    for (const xs of unfoldrIter(countUpFrom, 0)) {
-      if (xs.length === 3) {
-        out.push(...xs);
-        break;
-      }
-    }
-
-    expect(out).toEqual([0, 1, 2]);
+  it('should support the fibonacci example from Haskell\'s docs', () => {
+    expect(take(8, unfoldrIter(
+      ([x, y]: [number, number]) => [x, [y, x + y]] as [number, [number, number]],
+      [0, 1] as [number, number]
+    ))).toEqual([0, 1, 1, 2, 3, 5, 8, 13]);
   });
 
   it('should be curried via `$unfoldrIter`', () => {
-    expect([...$unfoldrIter(countdownFrom)(3)].pop()).toEqual([3, 2, 1]);
+    expect([...$unfoldrIter(countdownFrom)(3)]).toEqual([3, 2, 1]);
   });
 });

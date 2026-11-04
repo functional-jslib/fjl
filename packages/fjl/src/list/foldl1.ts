@@ -6,6 +6,8 @@ export const
 
   /**
    * A variant of `foldl` except without requiring the starting point value.  The starting point/value gets referenced internally (slice's first value) by the method.
+   *
+   * @note Returns `undefined` for an empty list, where Haskell's raises an error.
    */
   foldl1 = <T>(op: Quaternary<T, T, number, NumberIndexable<T>, T>, xs: T[]): T => {
     const parts = uncons(xs) as [T, T[]];

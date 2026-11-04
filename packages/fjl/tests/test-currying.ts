@@ -141,9 +141,9 @@ const
 
     // _platform.slice
     $at: {cases: [{args: fixed(1, nums)}, {args: fixed(-1, nums)}]},
-    $includes: {cases: [{args: fixed(nums, 3)}]},
-    $indexOf: {cases: [{args: fixed(nums, 3)}]},
-    $lastIndexOf: {cases: [{args: fixed([1, 2, 1], 1)}]},
+    $includes: {cases: [{args: fixed(3, nums)}]},
+    $indexOf: {cases: [{args: fixed(3, nums)}]},
+    $lastIndexOf: {cases: [{args: fixed(1, [1, 2, 1])}]},
     $slice: {cases: [{args: fixed(1, 3, nums)}]},
 
     // object
@@ -220,8 +220,8 @@ const
     $drop: {cases: [{args: fixed(2, nums)}]},
     $dropWhile: {cases: [{args: fixed(lt3, nums)}]},
     $dropWhileEnd: {cases: [{args: fixed((x: number) => x > 3, nums)}]},
-    $elem: {cases: [{args: fixed(nums, 3)}]},
-    $elemIndex: {cases: [{args: fixed(nums, 3)}]},
+    $elem: {cases: [{args: fixed(3, nums)}]},
+    $elemIndex: {cases: [{args: fixed(3, nums)}]},
     $elemIndices: {cases: [{args: fixed(2, [1, 2, 2, 3])}]},
     $filter: {cases: [{args: fixed(isEven, nums)}]},
     $find: {cases: [{args: fixed(isEven, nums)}]},
@@ -317,7 +317,7 @@ const
 
     $union: {cases: [{args: fixed([1, 2], [2, 3])}]},
     $unionBy: {
-      cases: [{args: fixed((xs: number[], x: number) => !xs.includes(x), [1, 2], [2, 3])}]
+      cases: [{args: fixed(eq, [1, 2], [2, 3])}]
     },
     $zip: {cases: [{args: fixed([1, 2], ['a', 'b'])}]},
     $zip3: {cases: [{args: fixed([1, 2], ['a', 'b'], [true, false])}]},

@@ -4,7 +4,8 @@ export const
 
   /**
    * Performs a map and a reduce, all in one (from right-to-left), on each item in the given array, and
-   * returns the result of the reduce, and the map, as a tuple, respectively.
+   * returns the result of the reduce, and the map, as a tuple, respectively.  Mapped items stay in the
+   * same order as their inputs.
    */
   mapAccumR = <AccumVal, B, MapOfB, Bs extends string | B[], MapOfBs extends string | MapOfB[]>(
     op: Quaternary<AccumVal, B, number, Bs, [AccumVal, MapOfB]>,
@@ -15,14 +16,14 @@ export const
 
     if (!limit) return [zero, bs.slice(0) as unknown as MapOfBs];
 
-    const mapped = [];
+    const mapped = new Array(limit);
 
     let agg = zero;
 
     for (let i = limit - 1; i >= 0; i--) {
       const tuple = op(agg, bs[i] as B, i, bs);
       agg = tuple[0];
-      mapped.push(tuple[1]);
+      mapped[i] = tuple[1];
     }
 
     return [agg, mapped as unknown as MapOfBs];

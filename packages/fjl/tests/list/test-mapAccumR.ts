@@ -12,7 +12,7 @@ describe('#mapAccumR', () => {
         return [agg + product, product];
       },
       [1, 2, 3, 4, 5], 1,
-      [31, [10, 8, 6, 4, 2]]
+      [31, [2, 4, 6, 8, 10]]
     ],
     ['mapAccumR(charSums, number, string) === [number, number[]]',
       (agg: number, char: string) => {
@@ -21,7 +21,7 @@ describe('#mapAccumR', () => {
       },
       vowelsString, 0,
       ((): [number, number[]] => {
-        const charCodes = vowelsString.split('').reverse().map(xs => xs.charCodeAt(0)),
+        const charCodes = vowelsString.split('').map(xs => xs.charCodeAt(0)),
           charCodesSum = charCodes.reduce((agg, x) => agg + x, 0);
         return [charCodesSum, charCodes];
       })()
@@ -33,4 +33,13 @@ describe('#mapAccumR', () => {
         expect(result).toEqual(expected);
       });
     });
+});
+
+describe('#mapAccumR - Haskell parity', () => {
+  it('should thread the accumulator right-to-left, and keep mapped items in input order', () => {
+    expect(mapAccumR((a: number, b: number) => [a + b, a], 0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+      .toEqual([55, [54, 52, 49, 45, 40, 34, 27, 19, 10, 0]]);
+    expect(mapAccumR((a: string, b: number) => [a + b, a], '0', [1, 2, 3, 4, 5]))
+      .toEqual(['054321', ['05432', '0543', '054', '05', '0']]);
+  });
 });

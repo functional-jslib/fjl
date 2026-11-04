@@ -5,7 +5,7 @@ export const
    *
    * @note Eager;  For the lazy variant @see `replicateIter`.
    */
-  replicate = <T>(n: number, x: T): T[] => Array(n).fill(x, 0, n),
+  replicate = <T>(n: number, x: T): T[] => n < 0 ? [] : Array(n).fill(x, 0, n),
 
   /**
    * Curried version of `replicate`.
@@ -14,29 +14,18 @@ export const
 ;
 
 /**
- * Generator that yields each successive prefix of `replicate(n, x)` - the bounded
- * form of `repeat`;  Yields `n` times, then completes (`replicateIter(n, x)` is to
- * `repeat(x)` what `take(n, xs)` is to `xs`).
+ * Generator that yields the items of `replicate(n, x)` - the bounded form of `repeat`;
+ * Yields `x`, `n` times, then completes.
  *
  * ```javascript
- * const gen = replicateIter(3, 'a');
- * console.log(gen.next().value);  // ['a']
- * console.log(gen.next().value);  // ['a', 'a']
- * console.log(gen.next().value);  // ['a', 'a', 'a']
- * console.log(gen.next().done);   // true
+ * [...replicateIter(3, 'a'); // ['a', 'a', 'a']
  * ```
  *
- * @note The last value yielded is (deep) equal to `replicate(n, x)`.
- * @note As with `iterate`, and `repeat`, the yielded list is the same, growing,
- *  list reference on every iteration - `slice` it when a snapshot is required.
  * @note `n` of `Infinity` gives `repeat(x)`;  `n` of `0` (or less) yields nothing.
  */
-export function* replicateIter<T>(n: number, x: T): Generator<T[], void> {
-  const out = [] as T[];
-
+export function* replicateIter<T>(n: number, x: T): Generator<T, void> {
   for (let i = 0; i < n; i += 1) {
-    out.push(x);
-    yield out;
+    yield x;
   }
 }
 
@@ -44,4 +33,4 @@ export function* replicateIter<T>(n: number, x: T): Generator<T[], void> {
  * Curried version of `replicateIter`.
  */
 export const $replicateIter = <T>(n: number) =>
-  (x: T): Generator<T[], void> => replicateIter(n, x);
+  (x: T): Generator<T, void> => replicateIter(n, x);

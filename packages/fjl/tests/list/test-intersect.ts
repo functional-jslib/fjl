@@ -16,4 +16,11 @@ describe('#intersect', () => {
         expect(rslt).toEqual(expected);
       });
     });
+
+  it('should match the documented Haskell examples', () => {
+    expect(intersect([1, 2, 3, 4], [2, 4, 6, 8])).toEqual([2, 4]);
+    expect(intersect('coot', 'heron')).toEqual('oo');
+    expect(intersect('heron', 'coot')).toEqual('o');
+    expect(intersect('', 'abc')).toEqual('');
+  });
 });

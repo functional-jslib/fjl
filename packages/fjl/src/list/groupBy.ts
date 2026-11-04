@@ -6,6 +6,8 @@ export const
 
   /**
    * `groupBy` Groups given items by given predicate;  Similar to `group` but with 'equality check' predicate.
+   * Each item is checked against the first item of its group - `equalityOp(first, item)` - not against the
+   * item before it, as with Haskell's `groupBy`.
    *
    * ```javascript
    * groupBy((a, b) => a === b, "Mississippi".slice(0)) ===
@@ -25,8 +27,8 @@ export const
         (xs: any, ...items: any[]) => any;
 
     // Initialize variables for tracking
-    let prevItem = xs[0] as X,
-      group = appender(xs.slice(0, 0), prevItem); // new group with `prevItem` as first item`
+    let firstItem = xs[0] as X,
+      group = appender(xs.slice(0, 0), firstItem); // new group with `firstItem` as first item
 
     const xsToIterate = xs.slice(1) as unknown as Iterable<X>;
 
@@ -34,15 +36,14 @@ export const
     for (const x of xsToIterate) { // @todo should use 'for i less than' loop here
 
       // If equality check passed group item, and continue to next
-      if (equalityOp(x, prevItem)) {
+      if (equalityOp(firstItem, x)) {
         group = appender(group, x);
-        prevItem = x;
         continue;
       }
 
       // Items for previous group 'grouped'.  Move to next group.
       groups.push(group);
-      prevItem = x;
+      firstItem = x;
       group = appender(group.slice(0, 0), x);
     }
 

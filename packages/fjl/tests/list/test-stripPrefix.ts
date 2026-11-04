@@ -22,4 +22,10 @@ describe('#stripPrefix', () => {
         expect(rslt).toEqual(expected);
       });
     });
+
+  it('should return a list that lacks the prefix unchanged, unlike Haskell\'s `Nothing`', () => {
+    expect(stripPrefix('foo', 'barfoo')).toEqual('barfoo');
+    expect(stripPrefix('foo', 'foobar')).toEqual('bar');
+    expect(stripPrefix('foo', 'foo')).toEqual('');
+  });
 });

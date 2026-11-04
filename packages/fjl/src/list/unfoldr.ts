@@ -10,30 +10,22 @@
 export type UnfoldrOp<A, B> = (b: B | undefined, i?: number, as?: A[]) => [A, B] | undefined;
 
 /**
- * Generator that yields each successive prefix of the list `unfoldr` builds;
- * i.e., the lazy sibling of `unfoldr` - it lets callers stop early, and so lets
- * `op`s that never return `undefined` be consumed safely.
+ * Generator that yields the items of the list `unfoldr` builds;  i.e., the lazy
+ * sibling of `unfoldr` - it lets callers stop early, and so lets `op`s that never
+ * return `undefined` be consumed safely.
  *
  * ```javascript
  * const countdown = (x) => x - 1 >= 0 ? [x, x - 1] : undefined;
  *
- * const gen = unfoldrIter(countdown, 10);
- * console.log(gen.next().value);  // [10]
- * console.log(gen.next().value);  // [10, 9]
- * // ...
+ * [...unfoldrIter(countdown, 3)]; // [3, 2, 1]
  *
  * // Stop early on an operation that never terminates
- * for (const xs of unfoldrIter(x => [x, x + 1], 0)) {
- *   if (xs.length === 3) break;  // [0, 1, 2]
- * }
+ * take(3, unfoldrIter(x => [x, x + 1], 0)); // [0, 1, 2]
  * ```
  *
- * @note The last value yielded is (deep) equal to `unfoldr(op, b)`.
- * @note As with `iterate`, and `repeat`, the yielded list is the same, growing,
- *  list reference on every iteration - `slice` it when a snapshot is required;
- *  it is also the list handed to `op` as its third argument.
+ * @note `op` still receives the items so far as its third argument.
  */
-export function* unfoldrIter<A, B>(op: UnfoldrOp<A, B>, b: B): Generator<A[], void> {
+export function* unfoldrIter<A, B>(op: UnfoldrOp<A, B>, b: B): Generator<A, void> {
   const out = [] as A[];
 
   let ind = 0,
@@ -41,7 +33,7 @@ export function* unfoldrIter<A, B>(op: UnfoldrOp<A, B>, b: B): Generator<A[], vo
 
   while (resultTuple) {
     out.push(resultTuple[0]);
-    yield out;
+    yield resultTuple[0];
     resultTuple = op(resultTuple[1], ++ind, out);
   }
 }
@@ -50,7 +42,7 @@ export function* unfoldrIter<A, B>(op: UnfoldrOp<A, B>, b: B): Generator<A[], vo
  * Curried version of `unfoldrIter`.
  */
 export const $unfoldrIter = <A, B>(op: UnfoldrOp<A, B>) =>
-  (b: B): Generator<A[], void> => unfoldrIter(op, b);
+  (b: B): Generator<A, void> => unfoldrIter(op, b);
 
 export const
 
@@ -67,15 +59,7 @@ export const
    * @note Eager - `op` must eventually return `undefined`, else the call never
    *  returns;  For the lazy variant @see `unfoldrIter`.
    */
-  unfoldr = <A, B>(op: UnfoldrOp<A, B>, b: B): A[] => {
-    let out = [] as A[];
-
-    for (const xs of unfoldrIter(op, b)) {
-      out = xs;
-    }
-
-    return out;
-  },
+  unfoldr = <A, B>(op: UnfoldrOp<A, B>, b: B): A[] => [...unfoldrIter(op, b)],
 
   /**
    * Curried version of `unfoldr`.

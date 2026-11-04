@@ -1,4 +1,4 @@
-import {union} from "../../src/list";
+import {union, unionBy} from "../../src/list";
 
 const {stringify} = JSON;
 
@@ -19,4 +19,16 @@ describe('#union', () => {
         expect(result).toEqual(expected);
       });
     });
+
+  it('should match the documented Haskell examples', () => {
+    expect(union('dog', 'cow')).toEqual('dogcw');
+    expect(union('coot', 'duck')).toEqual('cootduk');
+    expect(union('duck', 'coot')).toEqual('duckot');
+  });
+
+  it('should keep the first list\'s item when items are equal', () => {
+    const a = {id: 1}, b = {id: 1}, sameId = (x: {id: number}, y: {id: number}) => x.id === y.id;
+    expect(unionBy(sameId, [a], [b])[0]).toBe(a);
+    expect(unionBy(sameId, [], [a, b])).toEqual([a]);
+  });
 });
