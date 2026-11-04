@@ -1,25 +1,27 @@
-import {foldl} from "./foldl";
+import {append} from "./append";
+import {nubBy} from "./nubBy";
+import {removeFirstsBy} from "./removeFirstsBy";
 import {BinaryPred} from "../types";
+import {ListOf} from "./utils/items";
 
 /**
- * Returns the union on elements matching boolean check passed in.
+ * Returns `xs1` followed by the items of `xs2` that aren't already in it, using a
+ * user-supplied equality predicate, as with Haskell's `unionBy`.  Duplicates in `xs2` are
+ * dropped, while any in `xs1` stay.
  */
-export const unionBy = <T = any>(
-    pred: BinaryPred<T[], T>,
-    xs1: T[],
-    xs2: T[]
-  ): T[] =>
-    foldl((agg, x) => {
-      if (pred(agg, x)) agg.push(x);
-      return agg;
-    }, xs1.slice(0), xs2),
+export const unionBy = <TS extends string | any[]>(
+    eq: BinaryPred<TS[number]>,
+    xs1: TS,
+    xs2: TS
+  ): ListOf<TS> =>
+    append(xs1 as any, removeFirstsBy(eq, nubBy(eq, xs2) as TS, xs1) as any) as ListOf<TS>,
 
   /**
    * Curried version of `unionBy`.
    */
-  $unionBy = <T = any>(pred: BinaryPred<T[], T>) =>
-    (xs1: T[]) =>
-      (xs2: T[]): T[] => unionBy(pred, xs1, xs2);
+  $unionBy = <T>(eq: BinaryPred<T>) =>
+    <TS extends string | T[]>(xs1: TS) =>
+      (xs2: TS): ListOf<TS> => unionBy(eq, xs1, xs2);
 
 /**
  * `unionBy` method type.

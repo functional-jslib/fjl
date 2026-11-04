@@ -2,8 +2,8 @@
  * @module fjl
  * @description Exports all module methods (object, list, string modules etc.).
  * @inspiredby preludejs, lodash/fp, RamdaJs, Haskell.
- * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Prelude.html
- * @see http://hackage.haskell.org/package/base-4.10.0.0/docs/Data-List.html
+ * @see https://hackage-content.haskell.org/package/base-4.22.0.0/docs/Prelude.html
+ * @see https://hackage-content.haskell.org/package/base-4.22.0.0/docs/Data-List.html
  */
 export * from './boolean';
 export * from './errorThrowing';

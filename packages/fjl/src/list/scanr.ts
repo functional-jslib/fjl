@@ -1,11 +1,13 @@
-export type ScanrOp<A = any, B = any> = (a: A, b: B, i?: number, xs?: A[]) => B;
+export type ScanrOp<A = any, B = any> = (acc: B, x: A, i?: number, xs?: A[]) => B;
 
 export const
 
   /**
    * Same as `scanl` but from the right (similar to `foldr`'s relationship to 'foldl').
-   * Note also `scanr`'s relationship ot `foldr`:
-   * `head (scanr(fn, z, xs)) === foldr(fn, z, xs).
+   * Note also `scanr`'s relationship to `foldr`:
+   * `head(scanr(fn, z, xs)) === foldr(fn, z, xs)`.
+   *
+   * `fn` is called as `fn(acc, x, i, xs)`, like `foldr` (Haskell's is `f x acc`).
    */
   scanr = <A, B>(fn: ScanrOp<A, B>, zero: B, xs: A[]): B[] => {
     const limit = xs.length,
@@ -14,7 +16,7 @@ export const
       result = zero;
     out[limit] = zero;
     while (ind > -1) {
-      result = fn(xs[ind] as A, result, ind, xs);
+      result = fn(result, xs[ind] as A, ind, xs);
       out[ind] = result;
       ind--;
     }

@@ -29,3 +29,40 @@ describe('#take, #$take', () => {
     })
   });
 });
+
+describe('#take - laziness', () => {
+  const countPulls = () => {
+    const state = {pulls: 0},
+      gen = (function* () {
+        while (true) {
+          state.pulls += 1;
+          yield state.pulls;
+        }
+      })();
+    return {state, gen};
+  };
+
+  [0, 1, 2, 5].forEach(n => {
+    it(`should pull exactly ${n} item(s) for \`take(${n}, gen)\``, () => {
+      const {state, gen} = countPulls();
+      expect(take(n, gen).length).toEqual(n);
+      expect(state.pulls).toEqual(n);
+    });
+  });
+
+  it('should not pull anything for a negative count', () => {
+    const {state, gen} = countPulls();
+    expect(take(-1, gen)).toEqual([]);
+    expect(state.pulls).toEqual(0);
+  });
+
+  it('should not read `xs` at all for a count of `0`, as in Haskell', () => {
+    expect(take(0, null as unknown as Iterable<any>)).toEqual([]);
+  });
+
+  it('should close the generator it reads from', () => {
+    const {gen} = countPulls();
+    take(1, gen);
+    expect(gen.next().done).toEqual(true);
+  });
+});

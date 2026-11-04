@@ -34,6 +34,10 @@ describe('#scanr1', () => {
     expectEqual(scanr1((a: number, b: number) => a + b, [1, 2, 3]), [6, 5, 3]);
   });
 
+  it('should call `fn` as `fn(acc, x)`', () => {
+    expectEqual(scanr1((acc: string, x: string) => acc + x, ['a', 'b', 'c']), ['cba', 'cb', 'c']);
+  });
+
   it('should return an empty list when receiving an empty one', () => {
     expectEqual(scanr1(x => x * 2, []), []);
   });

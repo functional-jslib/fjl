@@ -65,7 +65,7 @@ BSD 3 Clause.
 ## Resources:
 
 - Haskell docs search engine: https://www.haskell.org/hoogle/
-- Haskell prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Prelude.html
-- Haskell List Prelude: http://hackage.haskell.org/package/base-4.10.1.0/docs/Data-List.html
+- Haskell prelude: https://hackage-content.haskell.org/package/base-4.22.0.0/docs/Prelude.html
+- Haskell List Prelude: https://hackage-content.haskell.org/package/base-4.22.0.0/docs/Data-List.html
 - Docs format: http://usejsdoc.org/
 - Typedocs format: https://typedoc.org/

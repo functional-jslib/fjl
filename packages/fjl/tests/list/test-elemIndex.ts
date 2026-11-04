@@ -1,16 +1,18 @@
-import {elemIndex} from "../../src/list/elemIndex";
-import {vowelsArray} from "../helpers";
+import {$elemIndex, elemIndex} from "../../src/list/elemIndex";
+import {vowelsArray, vowelsString} from "../helpers";
 
 describe('#elemIndex', () => {
-  type ElemIndex = typeof elemIndex;
-
-  (<[Parameters<ElemIndex>, ReturnType<ElemIndex>][]>[
-    [[vowelsArray, ''], undefined],
-    [[vowelsArray, 'x'], undefined],
+  (<[string, string | string[], number | undefined][]>[
+    ['', vowelsArray, undefined],
+    ['x', vowelsArray, undefined],
+    ['x', vowelsString, undefined],
+    ['i', vowelsArray, 2],
+    ['i', vowelsString, 2],
   ])
-    .forEach(([args, expected]) => {
-      it(`elemIndex("${args.join('", "')}") === ${expected}`, () => {
-        expect(elemIndex(...args)).toEqual(expected);
+    .forEach(([x, xs, expected]) => {
+      it(`elemIndex("${x}", ${JSON.stringify(xs)}) === ${expected}`, () => {
+        expect(elemIndex(x, xs)).toEqual(expected);
+        expect($elemIndex(x)(xs)).toEqual(expected);
       });
-    })
+    });
 });

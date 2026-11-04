@@ -17,9 +17,9 @@ describe('exported signatures', () => {
   });
 
   test('`includes` checks the needle against the element type', () => {
-    expect(includes([1, 2], 1)).toEqual(true);
+    expect(includes(1, [1, 2])).toEqual(true);
     // @ts-expect-error - `string` isn't an element of `number[]`.
-    expect(includes([1, 2], 'a')).toEqual(false);
+    expect(includes('a', [1, 2])).toEqual(false);
   });
 
   test('`errorIfNotType` returns the type of the given value', () => {

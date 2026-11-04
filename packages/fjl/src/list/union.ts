@@ -1,16 +1,17 @@
 import {unionBy} from "./unionBy";
-import {includes} from "./includes";
+import {equal} from "../boolean/equal";
+import {ListOf} from "./utils/items";
 
 /**
- * Creates a union of arrays.
+ * Returns `xs1` followed by the items of `xs2` that aren't already in it.  Duplicates in `xs2`
+ * are dropped, while any in `xs1` stay: `union('coot', 'duck')` gives `'cootduk'`.
  */
-export const union = <T>(arr1: T[], arr2: T[]): T[] =>
-  unionBy((xs, x) => !includes(xs, x),
-    arr1, arr2),
+export const union = <TS extends string | any[]>(xs1: TS, xs2: TS): ListOf<TS> =>
+    unionBy(equal, xs1, xs2),
 
   /**
    * Curried version of `union`.
    */
-  $union = <T>(arr1: T[]) =>
-    (arr2: T[]): T[] => union(arr1, arr2)
+  $union = <TS extends string | any[]>(xs1: TS) =>
+    (xs2: TS): ListOf<TS> => union(xs1, xs2)
 ;

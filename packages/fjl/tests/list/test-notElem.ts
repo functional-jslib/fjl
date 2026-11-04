@@ -17,8 +17,8 @@ describe('#notElem', () => {
       ]))
   )
     .forEach(([xs, x, expected]) => {
-      it(`notElem(${JSON.stringify(xs)}, ${JSON.stringify(x)} === ${expected}`, () => {
-        const rslt = notElem(xs, x);
+      it(`notElem(${JSON.stringify(x)}, ${JSON.stringify(xs)}) === ${expected}`, () => {
+        const rslt = notElem(x, xs);
         expect(rslt).toEqual(expected);
       });
     });

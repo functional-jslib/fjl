@@ -1,5 +1,5 @@
 import {expectEqual} from "../helpers";
-import {difference} from "../../src";
+import {append, difference} from "../../src";
 
 describe('#difference', () => {
   // @todo tablelize test messages
@@ -11,6 +11,21 @@ describe('#difference', () => {
       .forEach(([args, expected]) => {
         expectEqual(difference(...args), expected);
       });
+  });
+  it('should remove one occurrence per item of the second list', () => {
+    expectEqual(difference([1, 1, 2], [1]), [1, 2]);
+    expectEqual(difference([1, 1, 2], [1, 1, 1]), [2]);
+    expectEqual(difference('Hello World!', 'ell W'), 'Hoorld!');
+  });
+  it('should satisfy `difference(append(xs, ys), xs)` equals `ys`', () => {
+    (<[number[], number[]][]>[
+      [[], []], [[1], []], [[], [1]], [[1, 2], [3]], [[1, 2], [1, 2]], [[1, 1, 2], [2, 1, 1, 3]],
+    ]).forEach(([xs, ys]) => expectEqual(difference(append(xs, ys), xs), ys));
+  });
+  it('should not give back the same array', () => {
+    const xs = [1, 2];
+    expect(difference(xs, [])).not.toBe(xs);
+    expectEqual(difference(xs, []), xs);
   });
   it('should return the difference between two arrays passed in', () => {
     const testCases: [number[], number[], number, number[]][] = [

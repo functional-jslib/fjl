@@ -13,8 +13,8 @@ describe('#includes', () => {
         })
     ))
         .forEach(([args, expected]) => {
-            it(`includes("${args.join('", "')}") === ${expected}`, () => {
-                const result = includes(...args);
+            it(`includes("${args[1]}", ${JSON.stringify(args[0])}) === ${expected}`, () => {
+                const result = includes(args[1], args[0]);
                 expect(result).toEqual(expected);
             });
         })

@@ -1,7 +1,7 @@
 # Haskell parity findings (#152)
 
-> **Status: in progress, 2026-11-03.** The audit is done, but some fixes are still
-> waiting on decisions. See [Open decisions](#open-decisions).
+> **Status: fixes applied, not yet merged, 2026-11-04.** See [Decisions](#decisions) and
+> [Follow-ups](#follow-ups).
 
 Compares each exported `fjl` method that has a Haskell counterpart against
 [`Prelude`](https://hackage-content.haskell.org/package/base-4.22.0.0/docs/Prelude.html)
@@ -41,7 +41,6 @@ method that's out of line with its `fjl` siblings is still worth raising.
 | **Match** | Behaves as documented, apart from notation such as tuples being arrays |
 | **Fixed** | Changed for #152, not yet merged |
 | **Different** | Deliberate difference, to be kept and documented |
-| **Open** | Waiting on a [decision](#open-decisions) |
 
 `Maybe` results map to a value or `undefined`, and that isn't listed as a difference.
 
@@ -56,11 +55,21 @@ method that's out of line with its `fjl` siblings is still worth raising.
 | `take` | Pulled `n + 1` items | Pulls exactly `n`. `take(0, null)` now gives `[]` instead of throwing, as Haskell's `take 0 undefined` does |
 | `mapAccumR` | Result list reversed | Keeps input order |
 | `groupBy` | Compared with the previous item | Compares with the group's first item: `equalityOp(first, item)` |
-| `nubBy` | `pred(item, kept)` | `pred(kept, item)`. See [decision 4](#open-decisions) |
+| `nubBy` | `pred(item, kept)`, array result for strings | `pred(kept, item)`, string result for strings |
 | `splitAt` | `splitAt(-1, [1, 2, 3])` gave `[[1, 2], [3]]` | `[[], [1, 2, 3]]`, so the `take` and `drop` law holds |
 | `replicate` | `replicate(-1, x)` threw `RangeError` | `[]` |
 | `concat` | `concat([])` gave `undefined` | `[]` |
 | `intercalate` | `intercalate(',', [])` gave `[]` | `''`, an empty list of the same type as the separator |
+| `scanr`, `scanr1` | `fn(x, acc, i, xs)` | `fn(acc, x, i, xs)`, like `foldr` |
+| `elem`, `notElem`, `elemIndex`, `includes`, `indexOf`, `lastIndexOf` | `(xs, x)` | `(x, xs)`, like `elemIndices` |
+| `lines` | `lines('one\n')` gave `['one', '']`, `lines('')` gave `['']`, and `\r\n` split twice | `['one']`, `[]`, and `\r\n` is one break |
+| `words` | Split on each space or tab | Splits on runs of any whitespace, and ignores it at the ends |
+| `unlines` | `'a\nb'` | `'a\nb\n'` |
+| `unionBy` | `pred(accumulatedList, x)` | `eq(a, b)`, built as Haskell defines it |
+| `union` | Threw on strings, and treated `NaN` as equal to itself | Follows `unionBy`, gives a string for strings, and compares with `===` |
+| `difference` | Removed every occurrence, and was arrays only | Removes one per item, so `(xs ++ ys) \\ xs == ys` holds, and gives a string for strings |
+| `nub`, `intersect`, `intersectBy` | A string input gave an array | Gives a string |
+| `remove`, `removeBy`, `removeFirstsBy` | Worked on UTF-16 units in strings | Work on code points |
 
 ## Inventory
 
@@ -104,7 +113,7 @@ method that's out of line with its `fjl` siblings is still worth raising.
 | `fjl` | Haskell | Status | Notes |
 | --- | --- | --- | --- |
 | `scanl`, `scanl1` | `scanl`, `scanl1` | Match | `last(scanl(f, z, xs)) === foldl(f, z, xs)` holds |
-| `scanr`, `scanr1` | `scanr`, `scanr1` | Open | Results match, but the callback order differs from `foldr`. See [decision 1](#open-decisions) |
+| `scanr`, `scanr1` | `scanr`, `scanr1` | Fixed | `fn(acc, x, i, xs)`, like `foldr`, where Haskell's is `f x acc` |
 | `mapAccumL` | `mapAccumL` | Match | |
 | `mapAccumR` | `mapAccumR` | Fixed | |
 
@@ -130,7 +139,7 @@ All of these are single-use generators, not lists. See
 | `dropWhileEnd` | `dropWhileEnd` | Match | Includes strings |
 | `span` | `span` | Match | |
 | `breakOnList` | `break` | Match | Different name, because `break` is reserved |
-| `stripPrefix` | `stripPrefix` | Open | See [decision 3](#open-decisions) |
+| `stripPrefix` | `stripPrefix` | Different | Returns the list unchanged when the prefix doesn't match, where Haskell gives `Nothing` |
 | `group` | `group` | Match | Includes strings |
 | `groupBy` | `groupBy` | Fixed | |
 | `inits`, `tails` | `inits`, `tails` | Match | |
@@ -140,15 +149,17 @@ All of these are single-use generators, not lists. See
 ### Searching and indexing
 | `fjl` | Haskell | Status | Notes |
 | --- | --- | --- | --- |
-| `elem`, `includes` | `elem` | Different | `(xs, x)`, like native `includes` |
-| `notElem` | `notElem` | Different | `(xs, x)` |
+| `elem` | `elem` | Fixed | `(x, xs)` |
+| `includes` | `elem` | Fixed | `(x, xs)` |
+| `notElem` | `notElem` | Fixed | `(x, xs)` |
 | `lookup` | `lookup` | Different | Takes a key and an object, not an association list |
 | `find` | `find` | Match | |
 | `filter` | `filter` | Different | Arrays only: throws on strings |
 | `partition` | `partition` | Different | A string input gives arrays |
 | `at` | `(!?)`, `(!!)` | Different | `(i, xs)`, and negative indexes count from the end, like native `at`. Out of range gives `undefined` |
-| `elemIndex`, `indexOf` | `elemIndex` | Different | `(xs, x)`. `indexOf` returns `-1`, like native, and `elemIndex` returns `undefined` |
-| `elemIndices` | `elemIndices` | Open | Results match, but its order differs from `elemIndex`. See [decision 2](#open-decisions) |
+| `elemIndex` | `elemIndex` | Fixed | `(x, xs)`. `undefined` when nothing matches |
+| `indexOf` | `elemIndex` | Different | `(x, xs)`, and `-1` when nothing matches, like native |
+| `elemIndices` | `elemIndices` | Match | `(x, xs)` |
 | `findIndex` | `findIndex` | Different | `-1` when nothing matches, like native |
 | `findIndices` | `findIndices` | Match | |
 
@@ -166,24 +177,24 @@ All of these are single-use generators, not lists. See
 ### Strings
 | `fjl` | Haskell | Status | Notes |
 | --- | --- | --- | --- |
-| `lines` | `lines` | Open | See [decision 3](#open-decisions) |
-| `words` | `words` | Open | See [decision 3](#open-decisions) |
-| `unlines` | `unlines` | Open | See [decision 3](#open-decisions) |
+| `lines` | `lines` | Fixed | `\r`, `\r\n` and `\n\r` also count as one line break |
+| `words` | `words` | Fixed | Whitespace is JavaScript's `\s`, which also includes `\uFEFF` |
+| `unlines` | `unlines` | Fixed | |
 | `unwords` | `unwords` | Match | |
 
 ### "Set" operations
 | `fjl` | Haskell | Status | Notes |
 | --- | --- | --- | --- |
-| `nub` | `nub` | Different | A string input gives an array |
+| `nub` | `nub` | Fixed | |
 | `nubBy` | `nubBy` | Fixed | |
 | `remove` | `delete` | Match | Different name, because `delete` is reserved |
 | `removeBy` | `deleteBy` | Match | |
 | `removeFirstsBy` | `deleteFirstsBy` | Match | |
-| `difference` | `(\\)` | Open | See [decision 3](#open-decisions). Arrays only |
-| `union` | `union` | Different | Arrays only: throws on strings. Results match for arrays |
-| `unionBy` | `unionBy` | Open | See [decision 3](#open-decisions) |
-| `intersect` | `intersect` | Different | A string input gives an array |
-| `intersectBy` | `intersectBy` | Match | |
+| `difference` | `(\\)` | Fixed | |
+| `union` | `union` | Fixed | |
+| `unionBy` | `unionBy` | Fixed | |
+| `intersect` | `intersect` | Fixed | |
+| `intersectBy` | `intersectBy` | Fixed | |
 
 ### Ordered lists
 | `fjl` | Haskell | Status | Notes |
@@ -228,40 +239,37 @@ These remain after the generator fixes, and need documenting:
 - **`drop` and `dropWhile`:** neither returns on an infinite generator, because
   each collects everything that remains.
 
-Supporting iterables in those methods would be a separate feature, out of scope here.
+Supporting generators in those methods is tracked in #155.
 
-## Open decisions
-1. **`scanr`, `scanr1` callback order:** they use `fn(x, acc, i, xs)`, and their
-   siblings `foldr`, `scanl` and `mapAccumR` put the accumulator first.
-   **Recommended:** move to `fn(acc, x, i, xs)`. The law
-   `head(scanr(f, z, xs)) === foldr(f, z, xs)` then holds in `fjl`'s own order.
-2. **`elemIndices` argument order:** it takes `(value, xs)`, and `elemIndex` takes
-   `(xs, x)`. **Recommended:** move to `(xs, x)`.
-3. **Breaking fixes:** each of these changes results silently. **Recommended:** all.
-   - **A. `stripPrefix`:** return `undefined` when the prefix doesn't match, not the
-     unchanged list.
-   - **B. `lines`, `words`, `unlines`:** follow the documented examples.
-     - `lines('one\n')` gives `['one']`, and `lines('')` gives `[]`.
-     - `words(' foo  bar ')` gives `['foo', 'bar']`, splitting on any whitespace.
-     - `unlines(['a', 'b'])` gives `'a\nb\n'`.
-     - `\r\n` still counts as one line break, as `lines`' doc comment promises. That
-       part stays different from Haskell.
-   - **D. `unionBy`, `difference`:**
-     - `unionBy` takes `eq(a, b)` in place of `pred(accumulatedList, x)`.
-     - `difference` removes one occurrence per item, so `[1, 1, 2]` minus `[1]` gives
-       `[1, 2]`, and `(xs ++ ys) \\ xs == ys` holds.
-     - `complement` keeps its current results through a private helper.
-4. **`nubBy` callback order:** `pred(kept, item)` has been applied, and it's what
-   the docs' `nubBy (>)` example needs. It's also an argument-order choice taken from
-   Haskell, so it falls under the rule above. **Recommended:** keep it, because
-   earlier-item-first fits `reduce`'s accumulator-first style.
+## Decisions
+Made by the project owner on 2026-11-04.
 
-Option C from the earlier discussion, moving `elem`, `notElem` and `elemIndex` to
-value-first, was dropped under the rule above.
+1. **`scanr`, `scanr1`:** moved to `fn(acc, x, i, xs)`. The law
+   `head(scanr(f, z, xs)) === foldr(f, z, xs)` now holds in `fjl`'s own order.
+2. **Value searches:** `elem`, `notElem`, `elemIndex`, `elemIndices`, `includes`, `indexOf`
+   and `lastIndexOf` all take `(x, xs)`, even where the native method is called on the list.
+   This refines the [rule for comparing](#rule-for-comparing).
+3. **`stripPrefix`:** keeps returning the list unchanged when the prefix doesn't match.
+   A method that returns a variation of its list returns the list when nothing changes.
+4. **`lines`, `words`, `unlines`:** match Haskell. `lines` still counts `\r`, `\r\n` and
+   `\n\r` as one line break, as its doc comment promised.
+5. **"Set" methods:** match Haskell, including strings giving strings.
+   `complement` has no counterpart, and keeps its results.
+6. **`nubBy`:** keeps `pred(kept, item)`.
+
+## Follow-ups
+- **#154:** under decision 3, some methods don't return the list when nothing changes for
+  a string input. `take`, `drop`, `takeWhile`, `dropWhile` and `intersperse` give an array,
+  and `filter`, `map`, `sort`, `sortBy`, `sortOn` and `reverse` throw. Arrays are fine.
+- **#155:** accept generators wherever Haskell permits an infinite list. See
+  [Limits of generators](#limits-of-generators).
 
 ## Remaining work
-- [ ] Resolve the open decisions and apply the results.
-- [ ] Add doc comments for the deliberate differences.
-- [ ] Add `md/MIGRATION_V2.md` entries for the fixes above, including the generators
+- [x] Resolve the decisions and apply the results.
+- [x] Document the deliberate differences, in doc comments for the ones #152 names and in
+  this file's tables for the rest.
+- [x] Add `md/MIGRATION_V2.md` entries for the fixes above, including the generators
   and `take`.
-- [ ] Add tests for any further fixes, checking the documented law where there is one.
+- [x] Add tests for the fixes, checking the documented law where there is one.
+- [x] Open tickets for the [follow-ups](#follow-ups).
+- [ ] Open the PR.

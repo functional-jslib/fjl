@@ -1,5 +1,7 @@
 import {expectEqual, vowelsArray} from "../helpers";
 import {splitAt} from "../../src/list/splitAt";
+import {take} from "../../src/list/take";
+import {drop} from "../../src/list/drop";
 
 describe('#splitAt', () => {
   type TestCase = [Parameters<typeof splitAt>, ReturnType<typeof splitAt>];
@@ -20,6 +22,15 @@ describe('#splitAt', () => {
       .forEach(([args, expected]) => {
         expectEqual(splitAt(...args), expected);
       });
+  });
+  it('should treat a negative position as `0`', () => {
+    expectEqual(splitAt(-1, [1, 2, 3]), [[], [1, 2, 3]]);
+    expectEqual(splitAt(-1, 'abc'), ['', 'abc']);
+  });
+  it('should hold `splitAt(n, xs) == [take(n, xs), drop(n, xs)]`', () => {
+    [-1, 0, 1, 3, 4].forEach(n => {
+      expectEqual(splitAt(n, [1, 2, 3]), [take(n, [1, 2, 3]), drop(n, [1, 2, 3])]);
+    });
   });
   it('should throw an error on error cases (empty as second arg) (non-numeral as first arg), etc.', () => {
     (<Parameters<typeof splitAt>[]>[

@@ -7,6 +7,9 @@ export const
   /**
    * A variant of `foldr` except that this one doesn't require the starting point/value.  The starting value passed in
    * is the first item, from the right (end of given list).
+   *
+   * @note `op` is called as `op(acc, x, i, xs)`, like `foldr`, and an empty list gives `undefined`, where
+   * Haskell's raises an error.
    */
   foldr1 = <T>(op: Quaternary<T, T, number, NumberIndexable<T>, T>, xs: T[]): T => {
     const parts = unconsr(xs) as [T[], T];
